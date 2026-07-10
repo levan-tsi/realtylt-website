@@ -16,7 +16,11 @@ pending from owner (non-blocking): Who-We-Are final bio + portrait, real blog ar
 real social URLs, Google reviews URL confirmation (placeholder is a Maps search link in
 `content/testimonials.ts`).
 
-## Status — updated 2026-07-10 (Phase B COMPLETE, Builder agent, branch `feat/build`)
+## Status — updated 2026-07-10 (ALL PHASES COMPLETE — deploy-ready pending owner keys)
+
+Phases A+B+C merged to `develop` and marked stable on `main` (local; not pushed).
+34/34 tests, `next build` green (100 static pages). The site runs fully on fixture/stub mode
+today; supplying the keys above flips IDX + lead delivery live with zero code changes.
 
 | Phase | State |
 |---|---|
