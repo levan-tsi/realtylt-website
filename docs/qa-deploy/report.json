@@ -1,0 +1,1023 @@
+{
+  "base": "https://realtylt-website.vercel.app",
+  "when": "2026-07-10T22:49:04.817Z",
+  "pages": {
+    "/": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT | Levan Tsiklauri | United Real Estate — Hudson Valley Homes",
+        "desc": "Let's find home. Search Hudson Valley homes for sale across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties — or get your home's value and a cash offer in 24 hours.",
+        "canonical": "",
+        "imgCount": 17,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT | Levan Tsiklauri | United Real Estate — Hudson Valley Homes",
+        "desc": "Let's find home. Search Hudson Valley homes for sale across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties — or get your home's value and a cash offer in 24 hours.",
+        "canonical": "",
+        "imgCount": 17,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/search": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Search Listings — Hudson Valley Homes for Sale | RealtyLT",
+        "desc": "Search homes for sale across Orange, Dutchess, Westchester, Putnam, Rockland and Ulster counties. Filter by price, beds, baths and more — grid or map view.",
+        "canonical": "",
+        "imgCount": 12,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Search Listings — Hudson Valley Homes for Sale | RealtyLT",
+        "desc": "Search homes for sale across Orange, Dutchess, Westchester, Putnam, Rockland and Ulster counties. Filter by price, beds, baths and more — grid or map view.",
+        "canonical": "",
+        "imgCount": 12,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/buying": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Buying — Ready to Find Your Dream Home? | RealtyLT",
+        "desc": "Free buyer consultation with our Hudson Valley specialists — home search, listing alerts, favorites and tours, offers and closing. Buyers pay no cost; we're compensated by sellers.",
+        "canonical": "",
+        "imgCount": 6,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Buying — Ready to Find Your Dream Home? | RealtyLT",
+        "desc": "Free buyer consultation with our Hudson Valley specialists — home search, listing alerts, favorites and tours, offers and closing. Buyers pay no cost; we're compensated by sellers.",
+        "canonical": "",
+        "imgCount": 6,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/selling": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Sell Your Home — Cash Offer in 24 Hours or Full-Service Listing | RealtyLT",
+        "desc": "See your home's cash value vs market list price. Get a guaranteed fair cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
+        "canonical": "",
+        "imgCount": 3,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Sell Your Home — Cash Offer in 24 Hours or Full-Service Listing | RealtyLT",
+        "desc": "See your home's cash value vs market list price. Get a guaranteed fair cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
+        "canonical": "",
+        "imgCount": 3,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/financing": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Financing — The Home Loan Process, Demystified | RealtyLT",
+        "desc": "Understand the home loan process from pre-approval to closing, estimate your monthly payment with our mortgage calculator, and get connected with trusted local lenders.",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Financing — The Home Loan Process, Demystified | RealtyLT",
+        "desc": "Understand the home loan process from pre-approval to closing, estimate your monthly payment with our mortgage calculator, and get connected with trusted local lenders.",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/home-value": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Home Value — How Much Is Your Home Really Worth? | RealtyLT",
+        "desc": "Get an accurate, human-prepared valuation of your Hudson Valley home — a 15-comp market analysis plus your cash-offer number, free and with no obligation.",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Home Value — How Much Is Your Home Really Worth? | RealtyLT",
+        "desc": "Get an accurate, human-prepared valuation of your Hudson Valley home — a 15-comp market analysis plus your cash-offer number, free and with no obligation.",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/connect": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Connect — Contact Us Anytime | RealtyLT",
+        "desc": "Reach RealtyLT seven days a week — call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Connect — Contact Us Anytime | RealtyLT",
+        "desc": "Reach RealtyLT seven days a week — call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Top Areas — Six Counties Along the Hudson | RealtyLT",
+        "desc": "Explore the six Hudson Valley counties we serve — Westchester, Rockland, Putnam, Orange, Dutchess and Ulster — with local market notes, commute times, and homes for sale in each.",
+        "canonical": "",
+        "imgCount": 6,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Top Areas — Six Counties Along the Hudson | RealtyLT",
+        "desc": "Explore the six Hudson Valley counties we serve — Westchester, Rockland, Putnam, Orange, Dutchess and Ulster — with local market notes, commute times, and homes for sale in each.",
+        "canonical": "",
+        "imgCount": 6,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/dutchess": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Dutchess County Homes for Sale — Our home county — river towns to horse country | RealtyLT",
+        "desc": "Dutchess is where RealtyLT is based, and it shows the whole Hudson Valley story in one county: Beacon's art-town energy, Poughkeepsie's riverfront revival,…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/dutchess",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Dutchess County Homes for Sale — Our home county — river towns to horse country | RealtyLT",
+        "desc": "Dutchess is where RealtyLT is based, and it shows the whole Hudson Valley story in one county: Beacon's art-town energy, Poughkeepsie's riverfront revival,…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/dutchess",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/westchester": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Westchester County Homes for Sale — The classic first step out of the city | RealtyLT",
+        "desc": "Westchester is the most established market we cover: strong school districts, walkable downtowns, and housing stock that runs from Yonkers lofts to Scarsda…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/westchester",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Westchester County Homes for Sale — The classic first step out of the city | RealtyLT",
+        "desc": "Westchester is the most established market we cover: strong school districts, walkable downtowns, and housing stock that runs from Yonkers lofts to Scarsda…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/westchester",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/putnam": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Putnam County Homes for Sale — Lake country in the Hudson Highlands | RealtyLT",
+        "desc": "Putnam sits between Westchester's polish and Dutchess's countryside: lake communities, Highlands hiking, and villages like Cold Spring that draw weekenders…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/putnam",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Putnam County Homes for Sale — Lake country in the Hudson Highlands | RealtyLT",
+        "desc": "Putnam sits between Westchester's polish and Dutchess's countryside: lake communities, Highlands hiking, and villages like Cold Spring that draw weekenders…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/putnam",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/rockland": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Rockland County Homes for Sale — River villages and mountain parks, west of the Hudson | RealtyLT",
+        "desc": "Rockland is the smallest county in New York outside the boroughs — and it packs river villages, mountain parks, and solid family suburbs into that footprin…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/rockland",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Rockland County Homes for Sale — River villages and mountain parks, west of the Hudson | RealtyLT",
+        "desc": "Rockland is the smallest county in New York outside the boroughs — and it packs river villages, mountain parks, and solid family suburbs into that footprin…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/rockland",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/ulster": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Ulster County Homes for Sale — Catskills edge, creative heart | RealtyLT",
+        "desc": "Ulster is the Hudson Valley at its most independent: Kingston's historic districts and food scene, New Paltz under the Shawangunk cliffs, Woodstock's arts …",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/ulster",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Ulster County Homes for Sale — Catskills edge, creative heart | RealtyLT",
+        "desc": "Ulster is the Hudson Valley at its most independent: Kingston's historic districts and food scene, New Paltz under the Shawangunk cliffs, Woodstock's arts …",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/ulster",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/top-areas/orange": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Orange County Homes for Sale — Room to grow on the Hudson's west bank | RealtyLT",
+        "desc": "Orange County is where Hudson Valley value lives: first-time buyers, growing families, and investors all find room here. Newburgh's historic architecture i…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/orange",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Orange County Homes for Sale — Room to grow on the Hudson's west bank | RealtyLT",
+        "desc": "Orange County is where Hudson Valley value lives: first-time buyers, growing families, and investors all find room here. Newburgh's historic architecture i…",
+        "canonical": "https://realtylt-website.vercel.app/top-areas/orange",
+        "imgCount": 7,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/who-we-are": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Who We Are — Levan Tsiklauri | United Real Estate | RealtyLT",
+        "desc": "Meet RealtyLT: Levan Tsiklauri, investor and Realtor with United Real Estate, serving six Hudson Valley counties from Lagrangeville, NY.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Who We Are — Levan Tsiklauri | United Real Estate | RealtyLT",
+        "desc": "Meet RealtyLT: Levan Tsiklauri, investor and Realtor with United Real Estate, serving six Hudson Valley counties from Lagrangeville, NY.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/reviews": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Reviews — What Our Clients Say | RealtyLT",
+        "desc": "Read Google reviews from RealtyLT clients across the Hudson Valley — 5.0-rated service for buyers and sellers, seven days a week.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Reviews — What Our Clients Say | RealtyLT",
+        "desc": "Read Google reviews from RealtyLT clients across the Hudson Valley — 5.0-rated service for buyers and sellers, seven days a week.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/blog": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Blog — Stay Up To Date | RealtyLT",
+        "desc": "Hudson Valley real estate advice from RealtyLT — buying, selling, moving, and homeownership guides written for New York.",
+        "canonical": "",
+        "imgCount": 10,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Blog — Stay Up To Date | RealtyLT",
+        "desc": "Hudson Valley real estate advice from RealtyLT — buying, selling, moving, and homeownership guides written for New York.",
+        "canonical": "",
+        "imgCount": 10,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/saved": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Saved — Your Homes & Searches | RealtyLT",
+        "desc": "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Saved — Your Homes & Searches | RealtyLT",
+        "desc": "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/privacy-policy": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Privacy Policy | RealtyLT",
+        "desc": "How RealtyLT collects, uses, and protects your information.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "Privacy Policy | RealtyLT",
+        "desc": "How RealtyLT collects, uses, and protects your information.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/dmca-terms": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "DMCA & Terms of Service | RealtyLT",
+        "desc": "Terms of use and DMCA copyright policy for realtylt.com.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "DMCA & Terms of Service | RealtyLT",
+        "desc": "Terms of use and DMCA copyright policy for realtylt.com.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/this-page-does-not-exist": {
+      "390": {
+        "status": 404,
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 ()"
+        ],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT | Levan Tsiklauri | United Real Estate",
+        "desc": "Hudson Valley real estate with RealtyLT — search homes across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties, get your home value, or a cash offer in 24 hours.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 404,
+        "errors": [
+          "Failed to load resource: the server responded with a status of 404 ()"
+        ],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT | Levan Tsiklauri | United Real Estate",
+        "desc": "Hudson Valley real estate with RealtyLT — search homes across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties, get your home value, or a cash offer in 24 hours.",
+        "canonical": "",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/blog/top-5-renovations-increase-home-value-ny": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "The Top 5 Renovations That Actually Increase Your Homes Value in New York | RealtyLT",
+        "desc": "You watch the home improvement shows, you see the stunning transformations — but which projects actually pay you back at the closing table in New York?",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 2,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "The Top 5 Renovations That Actually Increase Your Homes Value in New York | RealtyLT",
+        "desc": "You watch the home improvement shows, you see the stunning transformations — but which projects actually pay you back at the closing table in New York?",
+        "canonical": "",
+        "imgCount": 1,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 2,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/listing/H6400001": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "24 Verplanck Ave, Beacon NY 12508 — $585,000 | RealtyLT",
+        "desc": "Craftsman bungalow with the details intact — tapered porch columns, built-in cabinetry, a beamed dining room and a kitchen renovated in keeping with the era. Se",
+        "canonical": "",
+        "imgCount": 4,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 2,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "24 Verplanck Ave, Beacon NY 12508 — $585,000 | RealtyLT",
+        "desc": "Craftsman bungalow with the details intact — tapered porch columns, built-in cabinetry, a beamed dining room and a kitchen renovated in keeping with the era. Se",
+        "canonical": "",
+        "imgCount": 4,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 2,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        }
+      }
+    },
+    "/ai": {
+      "390": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT AI — AI Automation for Real Estate Agents",
+        "desc": "Nine real-estate AI systems — voice agents, lead-gen, listing marketing, and a digital twin of you — running live at a New York brokerage. Built solo with n8n + Claude.",
+        "canonical": "https://realtylt.com/ai",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": false,
+          "main": false,
+          "footer": false
+        }
+      },
+      "1280": {
+        "status": 200,
+        "errors": [],
+        "failedReqs": [],
+        "hscroll": false,
+        "h1s": 1,
+        "title": "RealtyLT AI — AI Automation for Real Estate Agents",
+        "desc": "Nine real-estate AI systems — voice agents, lead-gen, listing marketing, and a digital twin of you — running live at a New York brokerage. Built solo with n8n + Claude.",
+        "canonical": "https://realtylt.com/ai",
+        "imgCount": 0,
+        "brokenImgs": [],
+        "jsonLdOk": true,
+        "jsonLdCount": 1,
+        "landmarks": {
+          "header": true,
+          "nav": false,
+          "main": false,
+          "footer": false
+        }
+      }
+    }
+  },
+  "flows": {},
+  "meta": {
+    "listingId": "H6400001",
+    "blogPost": "/blog/top-5-renovations-increase-home-value-ny"
+  }
+}
