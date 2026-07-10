@@ -22,7 +22,7 @@ real social URLs, Google reviews URL confirmation (placeholder is a Maps search 
 |---|---|
 | A — understand/plan/scaffold | ✅ DONE (merged to develop) |
 | B — Builder (whole site) | ✅ DONE on `feat/build` — all pages built + verified; tests green; build green |
-| C — QA | not started |
+| C — QA | ✅ DONE on `feat/qa` (2026-07-10) — independent re-verification of everything; 2 real bugs found + fixed; 34/34 tests, build green |
 
 ### Phase B — everything built (per PLAN.md)
 
@@ -83,11 +83,69 @@ reveal/draw/zoom, branded 404, legacy redirects already in next.config.ts
 - `npm test` 33/33 green · `npm run build` green (34 static routes + 63 listing SSG)
 
 ### Known gaps / for QA (Phase C)
-- OSM tiles render grey in headless screenshots (pins/attribution fine) — check in a real browser
+- ~~OSM tiles render grey in headless screenshots~~ — RESOLVED by QA: timing artifact, tiles load 16/16 (see Phase C below)
 - MlsGridClient is typed + built but UNTESTED against a live feed (needs owner keys) — feed-dependent
 - Email listing alerts: opt-in captured as lead; actual alert sending needs live feed + CRM wiring
 - Live-site Brivity footer socials intentionally omitted; mailto fixed vs live's broken one
 - lifestyle/buying.jpg is B&W (used with sepia treatment on /buying hero) — swap if owner prefers
+
+## Phase C — QA (branch `feat/qa`, 2026-07-10, independent QA agent)
+
+Re-verified EVERYTHING against docs/BRIEF.txt, docs/reference/ screenshots and
+docs/reference/page-inventory.json. Trusted nothing from Phase B; all Builder claims re-tested.
+
+### Bugs found → FIXED (committed on feat/qa)
+1. **Home carousels repeated listings** (orchestrator suspect confirmed): Featured and New rails
+   both led with H6400001 (24 Verplanck Ave) and also shared H6402523. Red test first
+   (`fixture.test.ts` overlap test), then: `FixtureIdxClient.getNew` excludes featured;
+   `MlsGridClient.getNew` skips past the freshest actives its `getFeatured` surfaces so rails stay
+   distinct in live-feed mode too. Verified in browser: rails now fully disjoint.
+2. **WCAG AA contrast**: `stone #6e7681` = 4.40:1 on paper (muted body text/labels site-wide);
+   `porchlight-deep #c98f2b` = 2.70:1 on white (sample-data notice, kickers, save-search button,
+   primary-button hover). Tokens darkened → `#646c77` / `#8a5f10`; every light surface (white,
+   paper, mist) now ≥4.5:1. Dark surfaces unaffected (they use `text-paper/*` / `text-porchlight`).
+
+### Builder claims re-verified TRUE (evidence: docs/qa/ + scripts/qa-*.mjs, all green)
+- **"OSM tiles grey in headless" is NOT a real bug** — timing artifact. Tiles return HTTP 200 in
+  headless Chromium and paint after ~3–5 s; qa-search-flows asserts 16/16 tiles loaded, 12 price
+  pins correctly placed over Hudson Valley towns, OSM attribution shown. No code change needed.
+- All 23 pages captured at 1280+390 (docs/qa/), compared side-by-side vs docs/reference/: every
+  live-site section/CTA/form present (page-inventory.json crossed off), mobile clean, zero console
+  errors (only the intentional /404 resource log).
+- Flows (scripts/qa-search-flows.mjs — 26 checks; scripts/qa-flows2.mjs — 32 checks; ALL PASS):
+  filters (location/price/beds/baths/sqft/type) filter fixture results correctly (also verified at
+  the API layer), county chips ↔ URL sync both directions, sort asc/desc, pagination (page 2 ≠
+  page 1, URL sync, aria-current), grid/map toggle, heart → header badge (1)→(2) → /saved →
+  persists across reload → unheart removes; save-search label on /saved; alert opt-in → lead in
+  `.leads-dev.jsonl`; mobile menu (all links + Top Areas counties) ; calculator $3,198.20 default,
+  recompute on price/rate, Reset restores; footer lead POST → stub line with source page +
+  interest reason + timestamp; honeypot → 200 silent + NOT written; invalid email → inline error +
+  NOT written; direct invalid API POST → 400.
+- Redirects all 308: /index→/, /top_areas→/top-areas, /homevalue + /home_value→/home-value,
+  /realestateagent/search→/who-we-are.
+- SEO: unique title+description on all 22 routes; RealEstateAgent JSON-LD site-wide +
+  RealEstateListing + BlogPosting parse as valid JSON; sitemap.xml (92 urls) + robots.txt serve;
+  OG tags + real 1200×630 og.png; canonical on all 6 county pages.
+- a11y (scripts/qa-a11y-scan.mjs CLEAN on all 22 pages): every img has alt, every control
+  labelled, exactly one h1/page, header/nav/main/footer landmarks, skip link first-Tab + visible,
+  Top Areas dropdown fully keyboard-operable, focus ring on nav, reduced-motion shows all content
+  without scroll, honeypot aria-hidden + off-screen + tabIndex −1; footer interest-reason dropdown
+  = the exact 6 options from brief §7.
+- MLS compliance: One Key attribution + data-last-updated + © near ALL IDX content (search — also
+  after client render, county pages, home carousels, listing detail); "Listed with <office>" on
+  every card; sample-data notice everywhere in fixture mode.
+- Secrets hygiene: `.env`/`.env.*`/`.leads-dev.jsonl` git-ignored and untracked; `.env.example`
+  carries the 5 labelled owner slots (brief §4); Fair Housing bar links to the NYS DOS PDF.
+- `npm test` 34/34 green (was 33 — QA added the rails-overlap test) · `npm run build` green.
+
+### QA: could not fill (external constraints — do not fake)
+- **Live MLS feed** (MlsGridClient end-to-end) and **CRM webhook delivery** — need owner keys
+  (see top of this file). Stub/fixture paths are fully exercised.
+- **Analytics** (brief §9 launch line): nothing wired — needs owner's tool choice + property ID;
+  privacy policy already written to accommodate ("If we add analytics…"). One-liner to add later.
+- **Who-We-Are bio/portrait, real blog articles, social URLs, Google-reviews URL** — owner
+  content; placeholders are clearly marked on-page by design.
+- **Email listing alerts**: opt-in is captured as a lead; actual sending needs live feed + CRM.
 
 ## Decisions log (why)
 
