@@ -1,0 +1,176 @@
+REALTYLT WEBSITE REBUILD — DETAILED DEVELOPER BRIEF (v2)
+Prepared for: Levan Tsiklauri | United Real Estate | RealtyLT
+Target build: original, improved site on your own stack (e.g. Hostinger)
+Uses current Brivity/Blue Roof site ONLY as design & structure reference.
+================================================================================
+
+0) NOTE ON SOURCE CODE
+--------------------------------------------------------------------------------
+Brivity does not expose downloadable/runnable source. Rendered output is compiled on
+their servers and tied to their proprietary platform + MLS hooks. This brief specifies
+WHAT to build and HOW it behaves so the builder produces ORIGINAL code that is yours.
+
+1) BRAND / IDENTITY
+--------------------------------------------------------------------------------
+Business: Levan Tsiklauri | United Real Estate  (brand: RealtyLT)
+Website: realtylt.com   CRM: app.realtylt.com
+Office: 1097 Route 55 Suite 9, Lagrangeville, NY 12540
+Phone: (917) 905-7923
+Disclaimer: "Each office is independently owned and operated."
+Notices: Fair Housing Notice (top bar, links to NYS Fair Housing PDF), Privacy Policy,
+DMCA & Terms of Service, Sitemap. Logo: RealtyLT "RT" mark (blue/black).
+
+2) THEME
+--------------------------------------------------------------------------------
+Fonts: Header = Nunito Bold; Body = Nunito Light.
+Colors: menu link #808080 / hover #000000; dropdown link #808080, bg #FFFFFF,
+hover bg #000000 text #FFFFFF; heading text #000000; body text #808080;
+link #000000 / hover #808080. Accent: brand blue (from logo).
+Improvement: add one distinct accent color + refreshed hero imagery so design is original.
+
+3) NAVIGATION & PAGE MAP
+--------------------------------------------------------------------------------
+Top nav: Home | Search Listings | Buying | Selling | Top Areas (dropdown) | Financing |
+Home Value | Who We Are | Blog | Connect | Sign In
+Real URL slugs (current site, for reference):
+  Home /index   Search /search   Buying /buying   Selling /selling
+  Top Areas /top_areas   Financing /financing   Home Value /homevalue (also /home_value)
+  Who We Are /realestateagent/search   Blog /blog   Connect /connect
+Full page list (from builder): Home, Search Listings, Buying, Selling, Top Areas
+(+ Dutchess, Westchester, Putnam, Rockland, Ulster), Financing, Home Value, Who We Are,
+Connect, Reviews, plus utility pages: agent_profile, HomeValue, links, app, AI, template.
+
+================================================================================
+4) CONNECTION / CREDENTIALS AREA  *** OWNER FILLS THIS IN — DO NOT EMBED IN CODE ***
+================================================================================
+The builder must create a dedicated, secure config area (environment variables / secrets
+manager), NOT hard-coded values. The OWNER inserts credentials himself in these slots:
+
+  [MLS_API_KEY]        = <<< OWNER PASTES MLS/IDX API KEY HERE, IN THE SECRETS STORE >>>
+  [MLS_API_ENDPOINT]   = <<< MLS/IDX feed base URL / provider >>>
+  [MLS_FEED_ID/BOARD]  = <<< MLS board or feed identifier if required >>>
+  [CRM_LEAD_WEBHOOK]   = <<< app.realtylt.com lead-intake endpoint / webhook URL >>>
+  [CRM_API_TOKEN]      = <<< CRM auth token if required — OWNER inserts >>>
+
+RULES FOR THE BUILDER:
+- Read these ONLY from environment/secrets at runtime. Never write keys into source files,
+  logs, client-side JS, HTML, or this document's committed copy.
+- Provide a single config panel / .env template with the labeled slots above so the owner
+  drops values in one place ("Connection area").
+- For the autonomous test loop: use the owner-supplied TEST key from the secrets store to
+  verify the IDX feed and lead flow, then the owner swaps in the PRODUCTION key at launch.
+- After successful testing, the owner removes/rotates the test key. Do not persist it.
+
+(Claude did NOT place any API key in this file. The key is a credential and must be entered
+by the owner directly into the secrets store.)
+
+================================================================================
+5) INTEGRATIONS — DETAILED
+================================================================================
+A) MLS / IDX  (uses [MLS_API_KEY], [MLS_API_ENDPOINT])
+   Powers: Search Listings, Featured Listings, New Listings, Top Areas county views,
+   single-listing detail, saved searches, listing alerts, favorites.
+   Components:
+     - Search bar with filters (location, price, beds, baths, sqft, type).
+     - Results grid + map view.
+     - Listing card: price, address, beds|baths|sqft, "Listed With [brokerage]", View button.
+     - Single-listing detail page (photos, description, features, agent contact CTA).
+     - "Save this search" -> triggers listing-alert emails.
+     - "Favorite" (heart) -> saved to user favorites.
+   Test: with owner's test key, confirm live listings render and pagination works.
+
+B) CRM LEAD CAPTURE  (uses [CRM_LEAD_WEBHOOK])
+   Every form POSTs to app.realtylt.com. Payload: name, email, phone, message,
+   interest-reason (see 7), source page, timestamp. Confirm lead appears in CRM/Agent Loop.
+
+C) MORTGAGE CALCULATOR (no external service — pure JS)
+   Inputs: Price, Annual Tax, Loan Term (yrs), Down Payment %, Interest Rate %, Monthly HOA,
+   Monthly Insurance. Output: estimated monthly payment + breakdown
+   (Principal / Taxes / HOA / Insurance with %). Include a Reset button.
+
+================================================================================
+6) PAGE-BY-PAGE (content + layout)
+================================================================================
+HOME
+  Hero "Let's Find Home" + search bar; CTAs SEARCH / SELL YOUR HOME / SEE HOME VALUE.
+  "Find Your Home Value" intro + "Tell Us About Your Home" lead form.
+  Featured Listings carousel (IDX). New Listings carousel (IDX). "Why Work With Us?" section.
+  Footer contact form + REACH OUT block.
+
+SEARCH LISTINGS — full IDX search experience (see 5A).
+
+BUYING ("Ready to Find Your Dream Home?")
+  Buyer-specialist free consultation CTA (phone + Book Free Consultation; "Available 7 days
+  a week - Fast response - No obligation"). Sections: The Home Buying Process; Start Your
+  Home Search; Get Listing Alerts; Save & See Listings (favorites/tour); Making an Offer and
+  Closing ("We're with you till the end"; buyer pays no cost, compensated by sellers).
+
+SELLING (strongest page — keep dual-path)
+  Headline "See Your Home's Cash Value vs Market List Price." Cash offer in 24h OR list for
+  max profit. Trust row: 5.0 stars, Fast Response, Free Consultation. CTA "Get Your Cash
+  Offer & Home Value" (60-sec form).
+  PATH 1 FAST CASH OFFER: cash in 15-30 days; AS-IS, no repairs; no agent fees; choose
+  closing date; guaranteed closing; no showings. For: inherited, repairs needed, behind on
+  payments, foreclosure, divorce, quick relocation, tired of landlording.
+  PATH 2 TRADITIONAL LISTING: top market value; pro photos & tours; MLS + 100+ sites; expert
+  pricing; staging consult; full marketing; max exposure. For: move-in ready, no rush, max exposure.
+  "Not sure which is best? We'll show you both - no pressure."
+  Testimonials (Google reviews): Giorgi Sokhadze; Grace Nyambura; Mariam Kereselidze.
+  Pricing strategy: 15 comps (5 active / 5 pending / 5 sold). Sections: Making Your Listing
+  Shine (photos/3D/video); Innovative Internet Marketing (92% search online); Stay in the
+  Loop (real-time portal updates).
+
+TOP AREAS  *** IMPORTANT STRUCTURE NOTE ***
+  Parent /top_areas is a NAV HUB (dropdown), not a content page. The five area pages —
+  DUTCHESS, WESTCHESTER, PUTNAM, ROCKLAND, ULSTER — are each a COUNTY-FILTERED IDX SEARCH
+  VIEW (no unique written copy in the current site). BUILD each as: area hero/banner + IDX
+  results pre-filtered to that county + area CTA. RECOMMENDED IMPROVEMENT: add original
+  localized copy per county (market overview, lifestyle, schools, "why buy here") for SEO.
+
+FINANCING ("The Home Loan Process — Demystifying Home Loans")
+  Sections: Get Pre-Approval; Estimate Your Monthly Payment (CALCULATOR 5C); Helping You Get
+  the Best Loan (lender-connect form); Application & Processing; Closing.
+
+HOME VALUE — valuation lead-capture form ("Tell Us About Your Home").
+WHO WE ARE — agent/team bio (owner supplies updated copy from Drive).
+REVIEWS — testimonials aggregation, link to Google reviews.
+BLOG — posts from owner's Google Drive; add after updating.
+CONNECT — main contact page (form + REACH OUT block).
+
+================================================================================
+7) SHARED FOOTER / CONTACT FORM
+================================================================================
+Footer nav: Home, Listings, Buying, Selling, Financing, Home Value, Who We Are, Connect.
+Interest-reason dropdown:
+  - I'm interested in buying a home
+  - I'm interested in selling a home
+  - I'm interested in buying and selling
+  - I'm interested in finding a home to rent
+  - I'm interested in a real estate career
+  - Other reason to contact an agent
+Buttons: SEND US A MESSAGE / SEND MESSAGE.
+REACH OUT: address + phone (section 1).
+Legal: (c) 2026 Levan Tsiklauri | United Real Estate; independently owned & operated;
+Privacy Policy; DMCA & Terms of Service; Sitemap.
+
+================================================================================
+8) IMPROVEMENTS (recommended)
+================================================================================
+Mobile-first responsive; performance/SEO; distinct accent color + fresh hero; consolidate
+duplicate value-prop copy; unified "Get Home Value / Cash Offer" conversion flow site-wide;
+Schema.org structured data (RealEstateAgent + listings); accessibility pass; localized Top
+Areas copy for SEO.
+
+================================================================================
+9) BUILD & TEST CHECKLIST (for autonomous builder)
+================================================================================
+[ ] Scaffold pages per section 6; shared header/footer components.
+[ ] Create Connection/Credentials config (section 4) as env/secrets with labeled slots.
+[ ] Owner inserts TEST MLS key + CRM webhook into secrets store.
+[ ] Wire IDX (5A) -> verify listings render, filters + pagination work with test key.
+[ ] Wire lead forms (5B) -> submit test lead -> confirm it lands in CRM / Agent Loop.
+[ ] Build + QA mortgage calculator math (5C).
+[ ] Owner reviews; owner swaps in PRODUCTION MLS key; owner rotates/removes test key.
+[ ] Add legal pages, analytics, sitemap; launch.
+
+END OF BRIEF v2
