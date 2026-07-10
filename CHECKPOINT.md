@@ -16,6 +16,43 @@ pending from owner (non-blocking): Who-We-Are final bio + portrait, real blog ar
 real social URLs, Google reviews URL confirmation (placeholder is a Maps search link in
 `content/testimonials.ts`).
 
+## Deployment — LIVE (private pre-launch), 2026-07-10, branch `feat/deploy`
+
+**The rebuild is deployed as its own Vercel project — the old Brivity realtylt.com is untouched.**
+
+- **Live URL (stable alias): https://realtylt-website.vercel.app** — deployment READY,
+  project `realtylt-website` (team levans-projects-a543d940, prj_0envsZqHojmxmbjnVCqqeXhUFQIl).
+- **NOINDEXED (pre-launch)**: `PRELAUNCH=1` env → robots.txt `Disallow: /` (app/robots.ts) +
+  `X-Robots-Tag: noindex, nofollow` on every route (next.config headers()). Verified live.
+- **Env vars set** (all of production/preview/development, via CLI):
+  `PRELAUNCH=1`, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`,
+  `CRM_LEAD_WEBHOOK=https://wpfmhmnceflfruhssqqb.supabase.co/functions/v1/website-lead` (leads LIVE),
+  `NEXT_PUBLIC_SITE_URL=https://realtylt-website.vercel.app`.
+- **Leads are LIVE**: /api/lead forwards valid submissions to the Supabase edge fn → CRM leads
+  table. Verified to the boundary WITHOUT inserting rows: honeypot POST → 200 silent drop
+  (before webhook), invalid → 400, malformed → 400; webhook itself answers (OPTIONS 204/GET 405).
+  A genuine submit is Levan's test to run.
+- **/ai is wired via REWRITE (not redirect)** — the marketing site proxies the separate
+  `realtylt-ai-page` project (stable alias https://realtylt-ai-page.vercel.app) at /ai.
+  Its assets are RELATIVE and resolve to the root from the /ai document, so the root
+  namespaces `styles.css`, `src/*`, `assets/*`, `vendor/*` are proxied too (afterFiles —
+  real routes/public files always win; **don't create site routes/files under those names**).
+  Verified in a real browser: galaxy hero renders through the proxy, WebGL boots, no errors.
+  Footer "RealtyLT AI" link → /ai works (MPA navigation through the rewrite).
+- **QA of the DEPLOYED site** (docs/qa-deploy/ + report.json): all 24 routes at 1280+390 —
+  zero console errors (only the intentional /404 log), no failed requests, no horizontal
+  scroll at 390, one h1/page, valid JSON-LD, unique titles, images load. Flow suites green
+  (favorites/save-search/calculator/mobile menu/a11y; lead flows against a LOCAL stub server —
+  never the live webhook). CRM preview (read-only check) loads: crm-preview-{1280,390}.png
+  (behind Vercel deployment protection; used a temporary share link to verify it renders).
+- **Fixes this pass**: stale honeypot field in scripts/qa-flows2.mjs (`website`→`rlt_hp`);
+  site-wide self-canonical (`alternates: "./"` in app/layout.tsx); footer link to /ai.
+  38/38 tests, build green (100 pages) throughout.
+- **To flip PUBLIC at launch**: remove `PRELAUNCH` from Vercel env (all envs), set
+  `NEXT_PUBLIC_SITE_URL=https://realtylt.com`, point the realtylt.com domain at the
+  `realtylt-website` project, redeploy. Consider adding /ai to sitemap at that point.
+  robots.txt + headers flip automatically; canonicals follow NEXT_PUBLIC_SITE_URL.
+
 ## Status — updated 2026-07-10 (ALL PHASES COMPLETE — deploy-ready pending owner keys)
 
 Phases A+B+C merged to `develop` and marked stable on `main` (local; not pushed).
