@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -192,9 +191,6 @@ export default function BuyingPage() {
         </div>
       </section>
 
-      <div className="bg-paper">
-        <ValleyDivider className="py-8" />
-      </div>
     </>
   );
 }

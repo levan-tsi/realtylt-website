@@ -79,10 +79,10 @@ export function ValleyMap() {
             <span
               className={`whitespace-nowrap ${c.map.side === "west" ? "text-right" : ""}`}
             >
-              <span className="block font-display text-lg leading-tight text-paper transition-colors group-hover:text-porchlight">
+              <span className="block font-display text-sm leading-tight text-paper transition-colors group-hover:text-porchlight sm:text-lg">
                 {c.short}
               </span>
-              <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50 transition-colors group-hover:text-paper/80">
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.14em] text-paper/50 transition-colors group-hover:text-paper/80 sm:block">
                 median {fmtM(c.medianPrice)} · explore →
               </span>
             </span>
