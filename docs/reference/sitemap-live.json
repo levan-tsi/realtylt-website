@@ -1,0 +1,588 @@
+{
+  "header": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "HOME",
+      "href": "/index"
+    },
+    {
+      "text": "SEARCH LISTINGS",
+      "href": "/search"
+    },
+    {
+      "text": "BUYING",
+      "href": "/buying"
+    },
+    {
+      "text": "SELLING",
+      "href": "/selling"
+    },
+    {
+      "text": "TOP AREAS",
+      "href": "/top_areas"
+    },
+    {
+      "text": "DUTCHESS",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Dutchess%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "WESTCHESTER",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Westchester%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "PUTNAM",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Putnam%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "ROCKLAND",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Rockland%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "ULSTER",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Ulster%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "FINANCING",
+      "href": "/financing"
+    },
+    {
+      "text": "HOME VALUE",
+      "href": "/home_value"
+    },
+    {
+      "text": "WHO WE ARE",
+      "href": "/realestateagent/search"
+    },
+    {
+      "text": "BLOG",
+      "href": "/blog"
+    },
+    {
+      "text": "CONNECT",
+      "href": "/connect"
+    }
+  ],
+  "footer": [
+    {
+      "text": "Home",
+      "href": "/index"
+    },
+    {
+      "text": "Listings",
+      "href": "/search"
+    },
+    {
+      "text": "Buying",
+      "href": "/buying"
+    },
+    {
+      "text": "Selling",
+      "href": "/selling"
+    },
+    {
+      "text": "Financing",
+      "href": "/financing"
+    },
+    {
+      "text": "Home Value",
+      "href": "/homevalue"
+    },
+    {
+      "text": "Who We Are",
+      "href": "/realestateagent/search"
+    },
+    {
+      "text": "Connect",
+      "href": "/connect"
+    },
+    {
+      "text": "(917) 905-7923",
+      "href": "tel:19179057923"
+    },
+    {
+      "text": "",
+      "href": "mailtolevan@realtylt.com"
+    },
+    {
+      "text": "",
+      "href": "https://www.facebook.com/Brivity"
+    },
+    {
+      "text": "",
+      "href": "https://twitter.com/Brivity"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company-beta/3122486/"
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/brivityplatform/"
+    },
+    {
+      "text": "",
+      "href": "https://www.youtube.com/user/BrivityInfo"
+    },
+    {
+      "text": "",
+      "href": "https://www.pinterest.com/brivityv/"
+    }
+  ],
+  "all": [
+    {
+      "text": "Collections",
+      "href": "/myportal/collections"
+    },
+    {
+      "text": "Saved Searches",
+      "href": "/myportal/searches"
+    },
+    {
+      "text": "My Reports",
+      "href": "/myportal/reports"
+    },
+    {
+      "text": "",
+      "href": "/myportal/profile"
+    },
+    {
+      "text": "Log Out",
+      "href": "javascript:void()"
+    },
+    {
+      "text": "Sign In",
+      "href": "#"
+    },
+    {
+      "text": "Fair Housing Notice",
+      "href": "https://cdn1.brivityidx.com/assets/uploads/8838/pdfs/NYS_Fair_Housing_Notice.pdf"
+    },
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "HOME",
+      "href": "/index"
+    },
+    {
+      "text": "SEARCH LISTINGS",
+      "href": "/search"
+    },
+    {
+      "text": "BUYING",
+      "href": "/buying"
+    },
+    {
+      "text": "SELLING",
+      "href": "/selling"
+    },
+    {
+      "text": "TOP AREAS",
+      "href": "/top_areas"
+    },
+    {
+      "text": "DUTCHESS",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Dutchess%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "WESTCHESTER",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Westchester%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "PUTNAM",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Putnam%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "ROCKLAND",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Rockland%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "ULSTER",
+      "href": "/search?q_limit=36&mlsId=280&price=10000:&multi_search=Ulster%20County,%20NY&multi_cat=CountyState&propertyType=Residential|Multi-Family&status=1&q_sort=createdAt-&q_offset=0"
+    },
+    {
+      "text": "FINANCING",
+      "href": "/financing"
+    },
+    {
+      "text": "HOME VALUE",
+      "href": "/home_value"
+    },
+    {
+      "text": "WHO WE ARE",
+      "href": "/realestateagent/search"
+    },
+    {
+      "text": "BLOG",
+      "href": "/blog"
+    },
+    {
+      "text": "CONNECT",
+      "href": "/connect"
+    },
+    {
+      "text": "Sell Your Home",
+      "href": "https://www.realtylt.com/selling"
+    },
+    {
+      "text": "See Home Value",
+      "href": "/homevalue"
+    },
+    {
+      "text": "",
+      "href": "#scroll-stop"
+    },
+    {
+      "text": "$90,000,000281 County Route 3, Ancramdale, NY 125034 bd | 5 ba | 5670 sqftListed",
+      "href": "/homes-for-sale/NY/ancramdale/12503/281-county-route-3/bid-38-922447"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/ancramdale/12503/281-county-route-3/bid-38-922447"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/ancramdale/12503/281-county-route-3/bid-38-922447"
+    },
+    {
+      "text": "$85,000,000100 & 90 Briar Patch Rd, East Hampton, NY 1193710 bd | 15 ba | 13800 ",
+      "href": "/homes-for-sale/NY/east-hampton/11937/100--90-briar-patch-rd/bid-38-1018596"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/east-hampton/11937/100--90-briar-patch-rd/bid-38-1018596"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/east-hampton/11937/100--90-briar-patch-rd/bid-38-1018596"
+    },
+    {
+      "text": "$75,000,0001233 Rock Rimmon Rd, Stamford, CT 069038 bd | 14 ba | 15944 sqftListe",
+      "href": "/homes-for-sale/CT/stamford/06903/1233-rock-rimmon-rd/bid-38-959838"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/CT/stamford/06903/1233-rock-rimmon-rd/bid-38-959838"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/CT/stamford/06903/1233-rock-rimmon-rd/bid-38-959838"
+    },
+    {
+      "text": "$65,000,00045 Hitchcock Ln, Millbrook, NY 1254510 bd | 8 ba | 14706 sqftListed W",
+      "href": "/homes-for-sale/NY/millbrook/12545/45-hitchcock-ln/bid-38-H6314256"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/millbrook/12545/45-hitchcock-ln/bid-38-H6314256"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/millbrook/12545/45-hitchcock-ln/bid-38-H6314256"
+    },
+    {
+      "text": "$49,500,0008 bd | 10 ba | 26079 sqftListed With William Raveis-New York LLC View",
+      "href": "/homes-for-sale/NY/bedford-corners/10549/96-westwood-dr/bid-38-000006"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/bedford-corners/10549/96-westwood-dr/bid-38-000006"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/bedford-corners/10549/96-westwood-dr/bid-38-000006"
+    },
+    {
+      "text": "$39,000,0009 Mitchell Dunes Ln, Amagansett, NY 119307 bd | 9 ba | 8000 sqftListe",
+      "href": "/homes-for-sale/NY/amagansett/11930/9-mitchell-dunes-ln/bid-38-934317"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/amagansett/11930/9-mitchell-dunes-ln/bid-38-934317"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/amagansett/11930/9-mitchell-dunes-ln/bid-38-934317"
+    },
+    {
+      "text": "$35,000,000227 Dock Ln, Great Neck, NY 1102413 bd | 14 ba | 23000 sqftListed Wit",
+      "href": "/homes-for-sale/NY/great-neck/11024/227-dock-ln/bid-38-903415"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/great-neck/11024/227-dock-ln/bid-38-903415"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/great-neck/11024/227-dock-ln/bid-38-903415"
+    },
+    {
+      "text": "$34,995,0002 \"a\" W Water St, Sag Harbor, NY 119638 bd | 10 ba | 16974 sqftListed",
+      "href": "/homes-for-sale/NY/sag-harbor/11963/2-a-w-water-st/bid-38-959468"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/sag-harbor/11963/2-a-w-water-st/bid-38-959468"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/sag-harbor/11963/2-a-w-water-st/bid-38-959468"
+    },
+    {
+      "text": "See More Listings",
+      "href": "/search"
+    },
+    {
+      "text": "Previous",
+      "href": "#testimonials-5"
+    },
+    {
+      "text": "Next",
+      "href": "#testimonials-5"
+    },
+    {
+      "text": "$12,500,000207 Everit Ave, Hewlett Harbor, NY 115577 bd | 11 ba | 18560 sqftList",
+      "href": "/homes-for-sale/NY/hewlett-harbor/11557/207-everit-ave/bid-38-1022306"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/hewlett-harbor/11557/207-everit-ave/bid-38-1022306"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/hewlett-harbor/11557/207-everit-ave/bid-38-1022306"
+    },
+    {
+      "text": "$7,950,00055 Post Crossing, Southampton, NY 119686 bd | 6 ba | 4741 sqftListed W",
+      "href": "/homes-for-sale/NY/southampton/11968/55-post-crossing/bid-38-1022948"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/southampton/11968/55-post-crossing/bid-38-1022948"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/southampton/11968/55-post-crossing/bid-38-1022948"
+    },
+    {
+      "text": "$7,850,0009 E Division St, Westhampton Beach, NY 119785 bd | 6 ba | 4850 sqftLis",
+      "href": "/homes-for-sale/NY/westhampton-beach/11978/9-e-division-st/bid-38-1021659"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/westhampton-beach/11978/9-e-division-st/bid-38-1021659"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/westhampton-beach/11978/9-e-division-st/bid-38-1021659"
+    },
+    {
+      "text": "$6,195,0005 Cooper Rd, Scarsdale, NY 105834 bd | 6 ba | 8651 sqftListed With Com",
+      "href": "/homes-for-sale/NY/scarsdale/10583/5-cooper-rd/bid-38-1020480"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/scarsdale/10583/5-cooper-rd/bid-38-1020480"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/scarsdale/10583/5-cooper-rd/bid-38-1020480"
+    },
+    {
+      "text": "$5,995,00021 Dolma Rd, Scarsdale, NY 105835 bd | 6 ba | 5817 sqftListed With Com",
+      "href": "/homes-for-sale/NY/scarsdale/10583/21-dolma-rd/bid-38-1015644"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/scarsdale/10583/21-dolma-rd/bid-38-1015644"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/scarsdale/10583/21-dolma-rd/bid-38-1015644"
+    },
+    {
+      "text": "$5,750,0001 Bromley Ct, Muttontown, NY 117917 bd | 10 ba | 6953 sqftListed With ",
+      "href": "/homes-for-sale/NY/muttontown/11791/1-bromley-ct/bid-38-1022087"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/muttontown/11791/1-bromley-ct/bid-38-1022087"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/muttontown/11791/1-bromley-ct/bid-38-1022087"
+    },
+    {
+      "text": "$5,295,0005 Farmwoods Ln, Upper Brookville, NY 115456 bd | 9 ba | 6921 sqftListe",
+      "href": "/homes-for-sale/NY/upper-brookville/11545/5-farmwoods-ln/bid-38-1021182"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/upper-brookville/11545/5-farmwoods-ln/bid-38-1021182"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/upper-brookville/11545/5-farmwoods-ln/bid-38-1021182"
+    },
+    {
+      "text": "$4,999,00012 Magnolia Dr, Purchase, NY 105776 bd | 9 ba | 9725 sqftListed With H",
+      "href": "/homes-for-sale/NY/purchase/10577/12-magnolia-dr/bid-38-1022813"
+    },
+    {
+      "text": "",
+      "href": "/homes-for-sale/NY/purchase/10577/12-magnolia-dr/bid-38-1022813"
+    },
+    {
+      "text": "View",
+      "href": "/homes-for-sale/NY/purchase/10577/12-magnolia-dr/bid-38-1022813"
+    },
+    {
+      "text": "See More Listings",
+      "href": "/search"
+    },
+    {
+      "text": "Previous",
+      "href": "#promo-slider-1"
+    },
+    {
+      "text": "Next",
+      "href": "#promo-slider-1"
+    },
+    {
+      "text": "Home",
+      "href": "/index"
+    },
+    {
+      "text": "Listings",
+      "href": "/search"
+    },
+    {
+      "text": "Buying",
+      "href": "/buying"
+    },
+    {
+      "text": "Selling",
+      "href": "/selling"
+    },
+    {
+      "text": "Financing",
+      "href": "/financing"
+    },
+    {
+      "text": "Home Value",
+      "href": "/homevalue"
+    },
+    {
+      "text": "Who We Are",
+      "href": "/realestateagent/search"
+    },
+    {
+      "text": "Connect",
+      "href": "/connect"
+    },
+    {
+      "text": "(917) 905-7923",
+      "href": "tel:19179057923"
+    },
+    {
+      "text": "",
+      "href": "mailtolevan@realtylt.com"
+    },
+    {
+      "text": "",
+      "href": "https://www.facebook.com/Brivity"
+    },
+    {
+      "text": "",
+      "href": "https://twitter.com/Brivity"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company-beta/3122486/"
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/brivityplatform/"
+    },
+    {
+      "text": "",
+      "href": "https://www.youtube.com/user/BrivityInfo"
+    },
+    {
+      "text": "",
+      "href": "https://www.pinterest.com/brivityv/"
+    },
+    {
+      "text": "Brivity",
+      "href": "https://www.brivity.com/"
+    },
+    {
+      "text": "Admin Log In",
+      "href": "https://login.brivityidx.com/login"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy_policy"
+    },
+    {
+      "text": "DMCA & Terms of Service",
+      "href": "/tos"
+    },
+    {
+      "text": "Sitemap",
+      "href": "/sitemap"
+    },
+    {
+      "text": "Back to login",
+      "href": "#"
+    },
+    {
+      "text": "Already have an account? Sign In",
+      "href": "#signin"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy_policy"
+    },
+    {
+      "text": "Terms & Conditions",
+      "href": "/tos"
+    },
+    {
+      "text": "Terms & Conditions",
+      "href": "/tos"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy_policy"
+    },
+    {
+      "text": "Forgot your password?",
+      "href": "#"
+    },
+    {
+      "text": "Don't have an account? Sign Up",
+      "href": "#create_step_1"
+    },
+    {
+      "text": "Terms & Conditions",
+      "href": "/tos"
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "/privacy_policy"
+    },
+    {
+      "text": "service areas.",
+      "href": "/city"
+    },
+    {
+      "text": "service areas",
+      "href": "/city"
+    }
+  ]
+}
