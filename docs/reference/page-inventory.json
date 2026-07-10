@@ -1,0 +1,1659 @@
+{
+  "home": {
+    "url": "https://www.realtylt.com/",
+    "title": "RealtyLT | Levan Tsiklauri​ | United Real Estate",
+    "h1": [
+      "Let's Find Home"
+    ],
+    "h2": [
+      "Find Your Home Value",
+      "Tell Us About Your Home",
+      "Featured Listings",
+      "\"We found a home we love.\"",
+      "\"I was very impressed with the entire team.\"",
+      "\"We are very happy with the service provided to us.\"",
+      "New Listings",
+      "Why Work With Us?",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "hidden",
+          "Search for Homes",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "lead_type",
+          "city",
+          "locality",
+          "postal_code",
+          "country",
+          "contact3_fname",
+          "age_required",
+          "contact3_lname",
+          "contact3_email",
+          "contact3_phone",
+          "street_address",
+          "contact3_message",
+          "contact3_robot_field"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Search",
+      "Sell Your Home",
+      "See Home Value",
+      "Send Message",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "1/ 125",
+      "See More Listings",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "View",
+      "1/ 125",
+      "See More Listings",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel"
+    ]
+  },
+  "search": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Orange+County%2C+NY%7CDutchess+County%2C+NY%7CWestchester+County%2C+NY%7CPutnam+County%2C+NY%7CRockland+County%2C+NY%7CUlster+County%2C+NY&multi_cat=CountyState%7CCountyState%7CCountyState%7CCountyState%7CCountyState%7CCountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Orange County, NY | Dutchess County, NY | Westchester County, NY | Putnam County, NY | Rockland County, NY | Ulster County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$1,100,000",
+      "$950,000",
+      "$1,150,000",
+      "$1,300,000",
+      "$850,000",
+      "$699,000",
+      "$1,350,000",
+      "$749,999",
+      "$899,000",
+      "$319,000",
+      "$1,295,000",
+      "$450,000",
+      "$279,000",
+      "$2,995,000",
+      "$1,250,000",
+      "$1,000,000",
+      "$835,000",
+      "$1,325,000",
+      "$519,000",
+      "$899,000",
+      "$1,850,000",
+      "$1,075,000",
+      "$1,500,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Orange County, NY - County",
+      "Dutchess County, NY - County",
+      "Westchester County, NY - County",
+      "Putnam County, NY - County",
+      "Rockland County, NY - County",
+      "Ulster County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active"
+    ]
+  },
+  "buying": {
+    "url": "https://www.realtylt.com/buying",
+    "title": "Buy a Home with RealtyLT | Find Your Dream Home Today",
+    "h1": [],
+    "h2": [
+      "Ready to Find Your Dream Home?",
+      "The Home Buying Process",
+      "Start Your Home Search",
+      "Get Listing Alerts",
+      "Save and See Listings",
+      "Making An Offer And Closing",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Start Searching",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back",
+      "×Close",
+      "Find out home value"
+    ]
+  },
+  "selling": {
+    "url": "https://www.realtylt.com/selling",
+    "title": "Sell Your Home with RealtyLT: Expert Realtor & Investor",
+    "h1": [],
+    "h2": [
+      "See Your Home’s Cash Value vs Market List Price",
+      "Choose the Path That's Right for You",
+      "Our Pricing Strategy",
+      "Making Your Listing Shine",
+      "Innovative Internet Marketing",
+      "Stay in the Loop - Every Step of the Way",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "tags",
+          "lead_type",
+          "contact1_fname",
+          "contact1_lname",
+          "city",
+          "locality",
+          "postal_code",
+          "country",
+          "full_name",
+          "contact1_email",
+          "contact1_phone",
+          "street_address",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "GET MY FREE OFFER & ANALYSIS →",
+      "Get Your FREE Cash Offer →",
+      "Get Free Consultation →",
+      "Get My Home Value & Cash Offer ↑",
+      "Get Your Free Cash Offer & Analysis ↑",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done"
+    ]
+  },
+  "top_areas": {
+    "url": "https://www.realtylt.com/top_areas",
+    "title": "Top Real Estate Areas | Find Your Dream Location - RealtyLT",
+    "h1": [],
+    "h2": [
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back",
+      "×Close",
+      "Find out home value",
+      "Confirm Phone",
+      "×Close"
+    ]
+  },
+  "financing": {
+    "url": "https://www.realtylt.com/financing",
+    "title": "Home Loan Process: Demystifying Home Loans | RealtyLT",
+    "h1": [],
+    "h2": [
+      "The Home Loan Process",
+      "Demystifying Home Loans",
+      "Get Pre-Approval",
+      "ESTIMATE YOUR MONTHLY PAYMENT",
+      "$3,198.20",
+      "Helping You Get The Best Loan",
+      "Application & Processing",
+      "Closing",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "age_required",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "contact1_message",
+          "contact1_robot_field"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Reset",
+      "Reset",
+      "Let's Get Started",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back"
+    ]
+  },
+  "homevalue": {
+    "url": "https://www.realtylt.com/homevalue",
+    "title": "Get Your Home Value - Find Out What Your Home is Worth | RealtyLT",
+    "h1": [
+      "How Much Is Your Home Really Worth?"
+    ],
+    "h2": [
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "home_value_my_portal_search_address",
+          "home_value_my_portal_search_address_unit"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Find Out",
+      "Find Out",
+      "Find Out",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back"
+    ]
+  },
+  "who_we_are": {
+    "url": "https://www.realtylt.com/realestateagent/search",
+    "title": "Find a Real Estate Agent | RealtyLT Agent Search",
+    "h1": [],
+    "h2": [
+      "Who We Are",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "first_name",
+          "last_name",
+          "keywords",
+          "office_id"
+        ]
+      },
+      {
+        "fields": [
+          "name",
+          "agentId",
+          "age_required",
+          "email",
+          "phone",
+          "message"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Find Agent",
+      "Call",
+      "Contact",
+      "×",
+      "Contact",
+      "Nevermind",
+      "×",
+      "Close",
+      "×",
+      "Call",
+      "Call",
+      "Text",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook"
+    ]
+  },
+  "blog": {
+    "url": "https://www.realtylt.com/blog",
+    "title": "Real Estate Blog | News & Insights | RealtyLT",
+    "h1": [],
+    "h2": [
+      "Stay Up To Date",
+      "The Top 5 Renovations That Actually Increase Your Homes Value in New York",
+      "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
+      "Moving to the Hudson Valley: Rental vs. Buying – What Makes the Most Sense?",
+      "Relocating to the Hudson Valley: What Newcomers Need to Know About Small-Town Charm Meets Big-City Access",
+      "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing",
+      "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move",
+      "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move",
+      "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners",
+      "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs",
+      "Thinking of Finishing Your Basement? What to Know About Cost and Value",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Read More",
+      "Load More",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back",
+      "×Close"
+    ]
+  },
+  "connect": {
+    "url": "https://www.realtylt.com/connect",
+    "title": "Contact Us | RealtyLT - Your Real Estate Experts",
+    "h1": [],
+    "h2": [
+      "Contact Us Anytime",
+      "Forgot Password?",
+      "Reset Password",
+      "Confirm Your Account",
+      "Sign Up for Free",
+      "Almost there...",
+      "Welcome back!",
+      "",
+      "Confirm Password"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Send Us A Message",
+      "Send me an email",
+      "Go Back",
+      "Change Password",
+      "Cancel",
+      "Continue with Facebook",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Continue with Email",
+      "×",
+      "Sign Up",
+      "Go Back",
+      "×",
+      "Continue with Google",
+      "Continue with Facebook",
+      "Continue with Apple",
+      "Sign In",
+      "Back",
+      "Back",
+      "Back",
+      "Submit",
+      "Done",
+      "Back",
+      "Back",
+      "×Close",
+      "Find out home value",
+      "Confirm Phone"
+    ]
+  },
+  "dutchess": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Dutchess+County%2C+NY&multi_cat=CountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Dutchess County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$835,000",
+      "$899,000",
+      "$1,000,000",
+      "$595,000",
+      "$435,000",
+      "$360,000",
+      "$895,000",
+      "$825,000",
+      "$384,900",
+      "$499,999",
+      "$489,000",
+      "$459,900",
+      "$599,900",
+      "$619,900",
+      "$700,000",
+      "$410,000",
+      "$399,000",
+      "$420,000",
+      "$435,000",
+      "$894,900",
+      "$499,900",
+      "$334,900",
+      "$625,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Dutchess County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active",
+      "Active With Contingency",
+      "Pending",
+      "Fireplace",
+      "New Construction",
+      "Central Air"
+    ]
+  },
+  "westchester": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Westchester+County%2C+NY&multi_cat=CountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Westchester County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$950,000",
+      "$2,995,000",
+      "$1,295,000",
+      "$1,325,000",
+      "$1,850,000",
+      "$875,000",
+      "$3,495,000",
+      "$479,000",
+      "$2,320,000",
+      "$1,500,000",
+      "$3,599,000",
+      "$1,075,000",
+      "$2,599,000",
+      "$699,000",
+      "$385,000",
+      "$749,000",
+      "$145,000",
+      "$999,000",
+      "$699,000",
+      "$995,000",
+      "$689,000",
+      "$779,999",
+      "$1,114,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Westchester County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active",
+      "Active With Contingency",
+      "Pending",
+      "Fireplace",
+      "New Construction",
+      "Central Air"
+    ]
+  },
+  "putnam": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Putnam+County%2C+NY&multi_cat=CountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Putnam County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$1,300,000",
+      "$699,000",
+      "$1,395,000",
+      "$599,000",
+      "$650,000",
+      "$450,000",
+      "$400,000",
+      "$999,000",
+      "$535,000",
+      "$1,799,999",
+      "$575,000",
+      "$350,000",
+      "$715,000",
+      "$800,000",
+      "$599,000",
+      "$399,999",
+      "$699,900",
+      "$549,999",
+      "$549,000",
+      "$749,900",
+      "$400,000",
+      "$998,000",
+      "$575,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Putnam County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active",
+      "Active With Contingency",
+      "Pending",
+      "Fireplace",
+      "New Construction",
+      "Central Air"
+    ]
+  },
+  "rockland": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Rockland+County%2C+NY&multi_cat=CountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Rockland County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$1,100,000",
+      "$850,000",
+      "$1,350,000",
+      "$899,000",
+      "$1,250,000",
+      "$899,000",
+      "$1,375,000",
+      "$1,095,000",
+      "$669,000",
+      "$999,000",
+      "$675,000",
+      "$695,000",
+      "$839,000",
+      "$799,900",
+      "$1,250,000",
+      "$115,000",
+      "$875,000",
+      "$315,000",
+      "$789,000",
+      "$645,000",
+      "$1,695,000",
+      "$849,000",
+      "$790,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Rockland County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active",
+      "Active With Contingency",
+      "Pending",
+      "Fireplace",
+      "New Construction",
+      "Central Air"
+    ]
+  },
+  "ulster": {
+    "url": "https://www.realtylt.com/search?price=10000%3A&multi_search=Ulster+County%2C+NY&multi_cat=CountyState&propertyType=Residential%7CMulti-Family&status=1&view=hybrid_view",
+    "title": "Ulster County, NY Real Estate",
+    "h1": [
+      ""
+    ],
+    "h2": [
+      "",
+      "Save a Search",
+      "$1,150,000",
+      "$279,000",
+      "$699,999",
+      "$1,175,000",
+      "$525,000",
+      "$449,900",
+      "$425,000",
+      "$480,000",
+      "$399,999",
+      "$465,000",
+      "$355,000",
+      "$699,000",
+      "$559,000",
+      "$315,000",
+      "$429,000",
+      "$449,000",
+      "$599,999",
+      "$649,999",
+      "$649,999",
+      "$499,900",
+      "$199,000",
+      "$1,850,000",
+      "$649,000"
+    ],
+    "forms": [
+      {
+        "fields": [
+          "schedule_date",
+          "name",
+          "email",
+          "schedule_phone",
+          "availability",
+          "availability",
+          "availability",
+          "availability",
+          "hcontacmodal_robot_field",
+          "notes"
+        ]
+      },
+      {
+        "fields": [
+          "tags",
+          "contact1_fname",
+          "contact1_lname",
+          "contact1_email",
+          "contact1_phone",
+          "lead_type",
+          "contact1_message",
+          "contact1_robot_field",
+          "age_required"
+        ]
+      },
+      {
+        "fields": [
+          "latitude",
+          "longitude",
+          "street",
+          "address",
+          "address_auto",
+          "state",
+          "zipcode",
+          "city",
+          "county",
+          "search_address_modal",
+          "property_type",
+          "search_area",
+          "year",
+          "acreage",
+          "sq_feet"
+        ]
+      },
+      {
+        "fields": [
+          "Your Phone Number (Used as password)"
+        ]
+      },
+      {
+        "fields": [
+          "frse-h_robot_field",
+          "frg-h-tags",
+          "Jane Smith",
+          "age_required",
+          "Enter email",
+          "+1(000)000-0000"
+        ]
+      }
+    ],
+    "buttons": [
+      "Toggle navigation",
+      "Bed",
+      "Bath",
+      "Price",
+      "Neighborhood",
+      "More",
+      "More",
+      "Save Search",
+      "Save Search",
+      "View Results",
+      "Include Properties Without Photos",
+      "Ulster County, NY - County",
+      "NEW LISTINGS ONLY",
+      "OPEN HOUSES ONLY",
+      "PRICE REDUCED",
+      "Business Opportunity",
+      "Commercial Lease",
+      "Commercial Sale",
+      "Condo/Townhome",
+      "Manufactured Home",
+      "Multi-Family",
+      "Residential",
+      "Residential Lease",
+      "Vacant Land",
+      "Active",
+      "Active With Contingency",
+      "Pending",
+      "Fireplace",
+      "New Construction",
+      "Central Air"
+    ]
+  }
+}
