@@ -1,13 +1,16 @@
 import Link from "next/link";
+import { LeadForm } from "@/components/leads/LeadForm";
+import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 
-/** Shared footer: nav, REACH OUT block, legal row (brief §7).
- * The footer contact form (LeadForm) is added in Phase B. */
+/** Shared footer: nav, contact form (every page — brief §7), REACH OUT block, legal row. */
 export function Footer() {
   return (
     <footer className="bg-ink text-paper/80">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-3 lg:px-8">
+      <ValleyDivider dark className="pt-10" />
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 md:grid-cols-[1fr_1.6fr_1fr] lg:px-8">
         <nav aria-label="Footer">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-paper/50">Explore</p>
           <ul className="space-y-2 text-sm">
             {FOOTER_NAV.map((item) => (
               <li key={item.href}>
@@ -19,8 +22,12 @@ export function Footer() {
           </ul>
         </nav>
 
-        {/* Footer contact form slot — LeadForm lands here in Phase B */}
-        <div data-slot="footer-lead-form" />
+        <section aria-label="Contact form">
+          <p className="mb-4 font-sans text-lg font-bold tracking-widest text-paper">
+            SEND US A MESSAGE
+          </p>
+          <LeadForm dark compact submitLabel="Send Message" />
+        </section>
 
         <div>
           <p className="font-sans text-lg font-bold tracking-widest text-paper">

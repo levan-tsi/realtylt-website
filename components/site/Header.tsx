@@ -1,15 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV, SITE } from "@/lib/site";
+import { savedCount, SAVED_EVENT } from "@/lib/saved";
 
 /** Site header: logo, primary nav (Top Areas dropdown), Saved hearts, phone.
  * Mobile: sheet menu. Polished further in Phase B. */
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [saved, setSaved] = useState(0);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setSaved(savedCount());
+    const sync = () => setSaved(savedCount());
+    window.addEventListener(SAVED_EVENT, sync);
+    return () => window.removeEventListener(SAVED_EVENT, sync);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-paper/95 backdrop-blur border-b border-mist">
@@ -60,10 +69,17 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/saved"
-            className="text-stone hover:text-porchlight-deep transition-colors"
-            aria-label="Saved homes and searches"
+            className="relative grid h-9 w-9 place-items-center text-stone hover:text-porchlight-deep transition-colors"
+            aria-label={`Saved homes and searches${saved ? ` (${saved})` : ""}`}
           >
-            ♥
+            <svg aria-hidden viewBox="0 0 24 24" className="h-5 w-5 fill-transparent stroke-current" strokeWidth="1.8">
+              <path d="M12 20.3 4.7 13a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l.5.5.5-.5a4.8 4.8 0 0 1 6.8 6.8L12 20.3z" />
+            </svg>
+            {saved > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-porchlight px-1 font-mono text-[9px] font-bold text-ink">
+                {saved}
+              </span>
+            )}
           </Link>
           <a
             href={SITE.phoneHref}
