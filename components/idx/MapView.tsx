@@ -32,9 +32,11 @@ function FitBounds({ listings }: { listings: Listing[] }) {
 }
 
 export default function MapView({ listings }: { listings: Listing[] }) {
+  // Feed rows without coordinates map to lat/lng 0 — never pin (or fit bounds to) Null Island.
+  const located = useMemo(() => listings.filter((l) => l.lat && l.lng), [listings]);
   const pins = useMemo(
     () =>
-      listings.map((l) => ({
+      located.map((l) => ({
         listing: l,
         icon: divIcon({
           className: "",
@@ -42,7 +44,7 @@ export default function MapView({ listings }: { listings: Listing[] }) {
           iconSize: [0, 0],
         }),
       })),
-    [listings],
+    [located],
   );
 
   return (
@@ -57,7 +59,7 @@ export default function MapView({ listings }: { listings: Listing[] }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds listings={listings} />
+      <FitBounds listings={located} />
       {pins.map(({ listing: l, icon }) => (
         <Marker key={l.id} position={[l.lat, l.lng]} icon={icon}>
           <Popup>

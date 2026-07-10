@@ -2,6 +2,10 @@
  * BODIES ARE PLACEHOLDERS: owner supplies final articles from Drive (CHECKPOINT.md).
  * Adding a post = add an entry here; pages generate automatically. */
 
+/** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
+export const fmtDate = (iso: string) =>
+  new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
 export interface BlogPost {
   slug: string;
   title: string;

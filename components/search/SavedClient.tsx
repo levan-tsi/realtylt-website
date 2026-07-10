@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
-import { getFavorites, getSavedSearches, removeSearch, SAVED_EVENT, type SavedSearch } from "@/lib/saved";
+import { getFavorites, getSavedSearches, removeFavorite, removeSearch, SAVED_EVENT, type SavedSearch } from "@/lib/saved";
 import type { Listing } from "@/lib/idx/types";
 
-export function SavedClient() {
+export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
   const [favIds, setFavIds] = useState<string[] | null>(null);
   const [searches, setSearches] = useState<SavedSearch[]>([]);
   const [listings, setListings] = useState<Listing[]>([]);
-  const [fixtureMode, setFixtureMode] = useState(false);
+  const [missingIds, setMissingIds] = useState<string[]>([]);
 
   useEffect(() => {
     const sync = () => {
@@ -27,20 +28,24 @@ export function SavedClient() {
   useEffect(() => {
     if (!favIds || favIds.length === 0) {
       setListings([]);
+      setMissingIds([]);
       return;
     }
     let cancelled = false;
     Promise.all(
       favIds.map((id) =>
         fetch(`/api/idx/listing/${encodeURIComponent(id)}`)
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
+          .then(async (r) => {
+            if (r.ok) return { id, listing: ((await r.json()) as { listing: Listing }).listing };
+            // 404 = the listing left the feed (removable); other errors are transient.
+            return { id, gone: r.status === 404 };
+          })
+          .catch(() => ({ id, gone: false })),
       ),
     ).then((results) => {
       if (cancelled) return;
-      const ok = results.filter(Boolean) as { listing: Listing; fixtureMode: boolean }[];
-      setListings(ok.map((r) => r.listing));
-      if (ok[0]) setFixtureMode(ok[0].fixtureMode);
+      setListings(results.filter((r) => "listing" in r && r.listing).map((r) => (r as { listing: Listing }).listing));
+      setMissingIds(results.filter((r) => "gone" in r && r.gone).map((r) => r.id));
     });
     return () => {
       cancelled = true;
@@ -61,20 +66,30 @@ export function SavedClient() {
             Tap the heart on any listing to keep it here, or save a search and come back to it
             anytime.
           </p>
-          <Link
-            href="/search"
-            className="mt-6 inline-block rounded-[2px] bg-porchlight px-6 py-3 font-bold text-ink transition-colors hover:bg-porchlight-deep hover:text-paper"
-          >
+          <Button href="/search" size="lg" className="mt-6">
             Start searching
-          </Link>
+          </Button>
         </div>
       ) : (
         <>
           {/* Favorites */}
           <section aria-labelledby="fav-heading">
             <h2 id="fav-heading" className="font-display text-2xl text-ink">
-              Saved homes <span className="font-mono text-lg text-stone">({favIds.length})</span>
+              Saved homes <span className="font-mono text-lg text-stone">({listings.length})</span>
             </h2>
+            {missingIds.length > 0 && (
+              <p className="mt-4 flex flex-wrap items-center gap-3 rounded-[2px] border border-ink/10 bg-mist px-4 py-3 text-sm text-stone">
+                {missingIds.length} saved {missingIds.length === 1 ? "home is" : "homes are"} no
+                longer available.
+                <button
+                  type="button"
+                  onClick={() => missingIds.forEach(removeFavorite)}
+                  className="rounded-[2px] border border-ink/20 px-3 py-1.5 text-sm font-bold text-ink transition-colors hover:border-red-500 hover:text-red-600"
+                >
+                  Remove them
+                </button>
+              </p>
+            )}
             {favIds.length === 0 ? (
               <p className="mt-4 text-sm text-stone">
                 No homes hearted yet —{" "}

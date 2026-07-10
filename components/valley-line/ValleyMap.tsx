@@ -2,15 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { COUNTY_CONTENT } from "@/content/counties";
+import { fmtM } from "@/lib/format";
 
 /** The Valley Line, fully realized (spec §4): an interactive map of the Hudson's course with
  * the six serviced counties in true geographic order — Westchester/Rockland south,
- * Ulster/Dutchess north. Hover lights a county; click opens its page. */
+ * Ulster/Dutchess north. Hover lights a county; click opens its page.
+ * Takes a slim county array as props so the server page doesn't ship all of
+ * COUNTY_CONTENT's prose into the client bundle. */
 
-const fmtM = (n: number) => `$${Math.round(n / 1000)}K`;
+export interface ValleyMapCounty {
+  slug: string;
+  short: string;
+  medianPrice: number;
+  map: { left: number; top: number; side: "west" | "east" };
+}
 
-export function ValleyMap() {
+export function ValleyMap({ counties }: { counties: ValleyMapCounty[] }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,7 +74,7 @@ export function ValleyMap() {
       </svg>
 
       {/* County markers (HTML overlay for real links + focus) */}
-      {COUNTY_CONTENT.map((c) => (
+      {counties.map((c) => (
         <Link
           key={c.slug}
           href={`/top-areas/${c.slug}`}

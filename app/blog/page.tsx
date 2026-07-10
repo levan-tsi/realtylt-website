@@ -2,16 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
-import { POSTS } from "@/content/blog/posts";
+import { fmtDate, POSTS } from "@/content/blog/posts";
 
 export const metadata: Metadata = {
   title: "Blog — Stay Up To Date",
   description:
     "Hudson Valley real estate advice from RealtyLT — buying, selling, moving, and homeownership guides written for New York.",
 };
-
-const fmtDate = (iso: string) =>
-  new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
 export default function BlogIndexPage() {
   const [featured, ...rest] = POSTS;

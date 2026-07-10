@@ -154,6 +154,63 @@ docs/reference/page-inventory.json. Trusted nothing from Phase B; all Builder cl
   content; placeholders are clearly marked on-page by design.
 - **Email listing alerts**: opt-in is captured as a lead; actual sending needs live feed + CRM.
 
+## Hardening pass (code review) — branch `feat/hardening`, 2026-07-10
+
+Applied verified findings from a full code review. 38/38 tests, `npm run build` green
+(100 pages), all key pages re-screenshotted at 1280+390 (docs/verify/) — layout unchanged.
+
+### Critical (deploy blockers on Vercel)
+- **Stub leads on read-only FS**: `submitLead` stub mode wrote `.leads-dev.jsonl` uncaught —
+  EROFS on Vercel broke the "never throws" contract. Now: full lead JSON is ALWAYS
+  `console.log`ged server-side (function logs are the record), file append is try/caught,
+  still returns `{ ok: true, stub: true }`. New vitest covers the read-only-FS path.
+- **/api/lead** wrapped in try/catch — unexpected errors return JSON 502, never a non-JSON 500
+  (client always calls `res.json()`).
+- **next/image remote host**: `images.remotePatterns` allows `**.mlsgrid.com` — live photos are
+  external URLs; CONFIRM the real feed's media host when MLS keys arrive.
+- **No-photo fallback**: `ListingCard` + listing detail render a branded `NoPhoto` mist block
+  when a live feed row has no Media — `undefined` never reaches next/image.
+
+### High (production correctness)
+- `getIdxClient()` = lazy module-level singleton per mode — MlsGridClient's 15-min replication
+  cache now actually persists (was: full feed re-replication per request).
+- listing/[id]: lookup wrapped in React `cache()` (generateMetadata + page = one fetch);
+  `generateStaticParams` returns `[]` outside fixture mode; `revalidate = 3600`.
+- mls-grid: `getNew()` = newest excluding `getFeatured()`'s ids (real semantics); `mapProperty`
+  DROPS non-Residential/Residential-Income rows (Land/Commercial/Lease no longer mislabeled) —
+  filtered locally since PropertyType stays out of the `$filter`.
+- MapView excludes lat/lng 0 listings from pins and FitBounds (no Null Island).
+- /api/idx/search clamps page + pageSize to ≥1 (pageSize=0 → totalPages Infinity→null);
+  paging constants shared from `lib/idx/types`; route-level test added.
+- **Honeypot renamed `website` → `rlt_hp`** (client + server): Chrome address autofill fills
+  "website" fields for REAL visitors, silently dropping their leads. Regression test added.
+- SearchClient re-syncs filters from the URL on searchParams change (header link / Back).
+- /saved: fixtureMode passed from the server page; 404'd favorites surfaced with a
+  "no longer available — remove them" action (new `removeFavorite()`); loaded count shown.
+- lib/saved validates localStorage shape on read (resets on mismatch).
+- `revalidate = 3600` on home, county pages, listing pages, sitemap; `SITE.url` strips
+  trailing slashes from `NEXT_PUBLIC_SITE_URL`.
+
+### Cleanups
+- `SITE.phoneE164` added; all hardcoded phone strings now use SITE constants.
+- JSON-LD `areaServed` + mls-grid county lookup + county display names derived from `COUNTIES`.
+- Shared `fmtM` (lib/format.ts) + blog `fmtDate` (content/blog/posts); dead
+  `saveSearch(alertOptIn)` param + unused lib/idx barrel re-exports removed.
+- Home hero submit + /saved empty-state CTA use `components/ui/Button`.
+- ValleyMap takes slim `{slug, short, medianPrice, map}` props — county prose out of the bundle.
+- Oversized public images re-encoded in place (scripts/compress-images.mjs, sharp installed →
+  removed): 8 files >400KB → ~6.5MB saved; ulster.jpg 3.1MB→91KB, visually verified.
+
+### Skipped (noted future cleanups — deliberate)
+Unifying the three IntersectionObserver patterns; unifying saved-subscription boilerplate into
+`useSyncExternalStore`; batching SavedClient's per-favorite fetches; county chip ordering.
+
+### Vercel deploy notes
+- Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` in the Vercel env (playwright is a devDependency;
+  don't download browsers at install).
+- Leave `NEXT_PUBLIC_SITE_URL` unset, or set it to exactly `https://realtylt.com`.
+- **Set `CRM_LEAD_WEBHOOK` before real traffic** — stub-mode leads only live in function logs.
+
 ## Decisions log (why)
 
 - 6 county pages incl. Orange — live search proves Orange is serviced; static pages + localized copy for SEO (brief §8)

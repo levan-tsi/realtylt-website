@@ -10,7 +10,6 @@ export interface SavedSearch {
   /** URL query string for /search, e.g. "county=dutchess&priceMax=500000". */
   query: string;
   createdAt: string;
-  alertOptIn?: boolean;
 }
 
 const FAV_KEY = "rlt:favorites";
@@ -37,7 +36,11 @@ function write(key: string, value: unknown) {
 }
 
 export function getFavorites(): string[] {
-  return read<string[]>(FAV_KEY, []);
+  const v = read<unknown>(FAV_KEY, []);
+  // Validate shape — wrong-shaped-but-valid JSON (old schema) would crash consumers.
+  if (Array.isArray(v) && v.every((x) => typeof x === "string")) return v;
+  write(FAV_KEY, []);
+  return [];
 }
 
 export function isFavorite(id: string): boolean {
@@ -51,17 +54,32 @@ export function toggleFavorite(id: string): boolean {
   return next.includes(id);
 }
 
-export function getSavedSearches(): SavedSearch[] {
-  return read<SavedSearch[]>(SEARCH_KEY, []);
+export function removeFavorite(id: string) {
+  write(FAV_KEY, getFavorites().filter((f) => f !== id));
 }
 
-export function saveSearch(label: string, query: string, alertOptIn = false): SavedSearch {
+function isSavedSearch(v: unknown): v is SavedSearch {
+  const s = v as SavedSearch;
+  return (
+    typeof s === "object" && s !== null &&
+    typeof s.id === "string" && typeof s.label === "string" &&
+    typeof s.query === "string" && typeof s.createdAt === "string"
+  );
+}
+
+export function getSavedSearches(): SavedSearch[] {
+  const v = read<unknown>(SEARCH_KEY, []);
+  if (Array.isArray(v) && v.every(isSavedSearch)) return v;
+  write(SEARCH_KEY, []);
+  return [];
+}
+
+export function saveSearch(label: string, query: string): SavedSearch {
   const s: SavedSearch = {
     id: `s${Date.now().toString(36)}`,
     label,
     query,
     createdAt: new Date().toISOString(),
-    alertOptIn,
   };
   write(SEARCH_KEY, [...getSavedSearches(), s]);
   return s;

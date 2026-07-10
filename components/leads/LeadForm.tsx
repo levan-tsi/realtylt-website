@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
-import { INTEREST_REASONS } from "@/lib/site";
+import { INTEREST_REASONS, SITE } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -50,14 +50,14 @@ export function LeadForm({
       });
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        setError(json.error ?? "Something went wrong on our end. Call or text (917) 905-7923 instead.");
+        setError(json.error ?? `Something went wrong on our end. Call or text ${SITE.phone} instead.`);
         setStatus("error");
         return;
       }
       setStatus("success");
       form.reset();
     } catch {
-      setError("We couldn't reach the server. Check your connection and try again, or call (917) 905-7923.");
+      setError(`We couldn't reach the server. Check your connection and try again, or call ${SITE.phone}.`);
       setStatus("error");
     }
   }
@@ -78,10 +78,11 @@ export function LeadForm({
 
   return (
     <form onSubmit={onSubmit} noValidate={false} className="grid gap-4">
-      {/* Honeypot — hidden from humans, bots fill it and get dropped server-side. */}
+      {/* Honeypot — hidden from humans, bots fill it and get dropped server-side.
+          Non-semantic name on purpose: browser autofill recognizes "website" fields. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="lead-website">Website</label>
-        <input id="lead-website" type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="lead-hp">Leave this field empty</label>
+        <input id="lead-hp" type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

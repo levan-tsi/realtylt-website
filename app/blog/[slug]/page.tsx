@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { getPost, POSTS } from "@/content/blog/posts";
+import { fmtDate, getPost, POSTS } from "@/content/blog/posts";
 import { SITE } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto max-w-3xl px-4 lg:px-0">
           <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-paper/60">
             <Link href="/blog" className="hover:text-porchlight">Blog</Link> /{" "}
-            {new Date(post.date + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+            {fmtDate(post.date)}
           </nav>
           <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.15] tracking-tight md:text-5xl">
             {post.title}

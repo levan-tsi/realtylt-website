@@ -3,7 +3,8 @@
 export const SITE = {
   name: "RealtyLT",
   legalName: "Levan Tsiklauri | United Real Estate",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://realtylt.com",
+  // Trailing slash stripped — "https://realtylt.com/" in the env var would double-slash canonicals.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://realtylt.com").replace(/\/+$/, ""),
   address: {
     street: "1097 Route 55 Suite 9",
     locality: "Lagrangeville",
@@ -12,6 +13,7 @@ export const SITE = {
   },
   phone: "(917) 905-7923",
   phoneHref: "tel:+19179057923",
+  phoneE164: "+19179057923",
   email: "levan@realtylt.com",
   disclaimer: "Each office is independently owned and operated.",
   fairHousingPdf:

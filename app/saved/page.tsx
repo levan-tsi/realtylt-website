@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SavedClient } from "@/components/search/SavedClient";
+import { isFixtureMode } from "@/lib/idx";
 
 export const metadata: Metadata = {
   title: "Saved — Your Homes & Searches",
@@ -22,7 +23,7 @@ export default function SavedPage() {
           </p>
         </div>
       </header>
-      <SavedClient />
+      <SavedClient fixtureMode={isFixtureMode()} />
     </>
   );
 }

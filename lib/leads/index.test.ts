@@ -8,7 +8,7 @@ const validBody = {
   phone: "(845) 555-0100",
   message: "Looking in Beacon",
   interestReason: "I'm interested in buying a home",
-  website: "", // honeypot, empty = human
+  rlt_hp: "", // honeypot, empty = human
 };
 
 describe("parseLead", () => {
@@ -24,8 +24,13 @@ describe("parseLead", () => {
   });
 
   it("silently drops submissions with the honeypot filled", () => {
-    const r = parseLead({ ...validBody, website: "http://spam.example" }, "/");
+    const r = parseLead({ ...validBody, rlt_hp: "http://spam.example" }, "/");
     expect(r.kind).toBe("spam");
+  });
+
+  it("ignores a `website` field — Chrome autofills those for real visitors", () => {
+    const r = parseLead({ ...validBody, website: "https://autofilled.example" }, "/");
+    expect(r.kind).toBe("lead");
   });
 
   it("rejects a missing name or email", () => {
@@ -80,6 +85,18 @@ describe("submitLead", () => {
     expect(r).toEqual({ ok: true, stub: true });
     const line = fs.readFileSync(".leads-dev.jsonl", "utf8").trim().split("\n").pop()!;
     expect(JSON.parse(line).email).toBe("jane@example.com");
+  });
+
+  it("stub mode: read-only filesystem (Vercel) → still ok:true, lead logged in full", async () => {
+    vi.stubEnv("CRM_LEAD_WEBHOOK", "");
+    vi.spyOn(fs, "appendFileSync").mockImplementation(() => {
+      throw Object.assign(new Error("EROFS: read-only file system"), { code: "EROFS" });
+    });
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const r = await submitLead(lead);
+    expect(r).toEqual({ ok: true, stub: true });
+    const logged = logSpy.mock.calls.flat().join("\n");
+    expect(logged).toContain("jane@example.com"); // full lead JSON survives in function logs
   });
 
   it("webhook mode: POSTs JSON with bearer token and returns ok on 2xx", async () => {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { SITE } from "@/lib/site";
 
 export default function NotFound() {
   return (
@@ -18,7 +19,7 @@ export default function NotFound() {
           <Button href="/" variant="outline-light" size="lg">Back to home</Button>
         </div>
         <p className="mt-8 text-sm text-paper/50">
-          Or just call us: <Link href="tel:+19179057923" className="text-porchlight hover:underline">(917) 905-7923</Link>
+          Or just call us: <Link href={SITE.phoneHref} className="text-porchlight hover:underline">{SITE.phone}</Link>
         </p>
       </div>
     </section>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
-import { formatPrice } from "@/components/idx/ListingCard";
+import { formatPrice, NoPhoto } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,13 +14,17 @@ import { COUNTIES, SITE } from "@/lib/site";
 
 export async function generateStaticParams() {
   // Fixture ids pre-render; live-feed ids resolve on demand (dynamicParams).
-  return FIXTURE_LISTINGS.map((l) => ({ id: l.id }));
+  return isFixtureMode() ? FIXTURE_LISTINGS.map((l) => ({ id: l.id })) : [];
 }
 export const dynamicParams = true;
+export const revalidate = 3600; // keep "Data last updated" honest in live mode
+
+// generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
+const getListing = cache((id: string) => getIdxClient().getListing(id));
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const l = await getIdxClient().getListing(id);
+  const l = await getListing(id);
   if (!l) return { title: "Listing not found" };
   return {
     title: `${l.address}, ${l.city} NY ${l.zip} — ${formatPrice(l.price)}`,
@@ -29,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const l = await getIdxClient().getListing(id);
+  const l = await getListing(id);
   if (!l) notFound();
   const county = COUNTIES.find((c) => c.slug === l.county);
 
@@ -71,14 +76,18 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
       <section className="bg-ink" aria-label="Photos">
         <div className="mx-auto grid max-w-7xl gap-1.5 px-0 md:grid-cols-[2fr_1fr] lg:px-8 lg:py-6">
           <div className="photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px]">
-            <Image
-              src={l.photos[0]}
-              alt={`${l.address}, ${l.city} — main photo`}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 60vw"
-              className="object-cover"
-            />
+            {l.photos.length > 0 ? (
+              <Image
+                src={l.photos[0]}
+                alt={`${l.address}, ${l.city} — main photo`}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 60vw"
+                className="object-cover"
+              />
+            ) : (
+              <NoPhoto />
+            )}
             <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
             {l.status !== "Active" && (
               <span className="absolute left-4 top-4 rounded-[2px] bg-ink/80 px-2.5 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-porchlight backdrop-blur">
