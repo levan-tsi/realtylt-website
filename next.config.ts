@@ -4,14 +4,64 @@ import path from "node:path";
 // The AI recruiter journey is its own Vercel project; the stable production alias.
 const AI_PAGE_URL = "https://realtylt-ai-page.vercel.app";
 
+// Content-Security-Policy — ONE policy applied to every route (Next.js sends a
+// duplicate CSP header when multiple `source` rules match the same path, and browsers
+// enforce the INTERSECTION of duplicates, which would silently break the /ai WebGL app).
+// So this single policy must satisfy both the marketing site AND the proxied Three.js
+// journey under /ai. Notes on each directive:
+//  - script-src needs 'unsafe-inline' for Next.js's inline hydration/RSC bootstrap
+//    scripts (this site is statically generated — a nonce-based CSP would force every
+//    page dynamic and cannot cover the separately-built /ai app served via rewrite).
+//    'unsafe-eval'/'wasm-unsafe-eval' + blob: worker-src keep the WebGL journey working.
+//  - style-src 'unsafe-inline' is required by Next's injected styles + Leaflet's inline
+//    marker/style attributes.
+//  - img-src allows OSM map tiles + (live-mode) MLS Grid listing photos + data:/blob:.
+//  - frame-ancestors 'none' / object-src 'none' / base-uri 'self' / form-action 'self'
+//    are the high-value hardening directives (clickjacking, base-tag & form hijacking).
+const CSP = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+// Security headers applied to every response (both pre-launch and public).
+const SECURITY_HEADERS = [
+  { key: "Content-Security-Policy", value: CSP },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "X-DNS-Prefetch-Control", value: "off" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()",
+  },
+];
+
 const nextConfig: NextConfig = {
   // A stray lockfile in the user home dir makes Next infer the wrong workspace root
   outputFileTracingRoot: path.join(__dirname),
   images: {
     // Live-mode listing photos are external MLS Grid CDN URLs; without an allowed host
-    // every next/image render throws. TODO: confirm the real feed's media host(s) when
-    // owner MLS keys arrive and tighten/extend this pattern accordingly.
+    // every next/image render throws. The optimizer (/_next/image?url=…) will only ever
+    // fetch hosts matching this pattern, so the abuse surface is limited to https images
+    // on mlsgrid.com subdomains. TODO: confirm the real feed's media host(s) when owner
+    // MLS keys arrive and tighten this to the exact CDN host.
     remotePatterns: [{ protocol: "https", hostname: "**.mlsgrid.com" }],
+    // Never let the optimizer render SVG (an SVG can carry inline script) — default is
+    // false; pinned explicitly so a future edit can't silently enable an XSS vector.
+    dangerouslyAllowSVG: false,
+    contentDispositionType: "attachment",
   },
   async redirects() {
     return [
@@ -38,15 +88,14 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
-    // Pre-launch: belt-and-suspenders noindex on every route (robots.ts also disallows).
-    // Flip to public by removing PRELAUNCH from the environment.
-    if (process.env.PRELAUNCH !== "1") return [];
-    return [
-      {
-        source: "/:path*",
-        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
-      },
-    ];
+    // Security headers apply on every route, always. Pre-launch also adds a
+    // belt-and-suspenders noindex header (robots.ts disallows too); flip to public
+    // by removing PRELAUNCH from the environment.
+    const headers = [...SECURITY_HEADERS];
+    if (process.env.PRELAUNCH === "1") {
+      headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
+    }
+    return [{ source: "/:path*", headers }];
   },
 };
 

@@ -11,6 +11,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { getIdxClient, isFixtureMode } from "@/lib/idx";
 import { COUNTIES, SITE } from "@/lib/site";
+import { jsonLdScript } from "@/lib/jsonld";
 
 export async function generateStaticParams() {
   // Fixture ids pre-render; live-feed ids resolve on demand (dynamicParams).
@@ -70,7 +71,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
 
       {/* ── Gallery */}
       <section className="bg-ink" aria-label="Photos">

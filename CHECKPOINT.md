@@ -53,6 +53,61 @@ real social URLs, Google reviews URL confirmation (placeholder is a Maps search 
   `realtylt-website` project, redeploy. Consider adding /ai to sitemap at that point.
   robots.txt + headers flip automatically; canonicals follow NEXT_PUBLIC_SITE_URL.
 
+## Security hardening — branch `feat/security`, 2026-07-10 (DEPLOYED + verified live)
+
+Red-team + hardening of the marketing site, its `/api/lead` route, and the `website-lead`
+edge fn logic. CRM + AI page untouched (read-only neighbors). No rows inserted into the prod
+`leads` table — only reject paths exercised. 47/47 tests, build green, deployed to prod and
+re-verified against https://realtylt-website.vercel.app.
+
+### Fixed (in code, verified)
+- **Security headers + CSP (was: none).** `next.config.ts headers()` now emits — on EVERY
+  route, always — `Content-Security-Policy`, `Strict-Transport-Security`,
+  `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`,
+  `X-DNS-Prefetch-Control` (pre-launch still adds `X-Robots-Tag: noindex`). ONE CSP for the
+  whole site + the proxied /ai (duplicate CSP headers enforce as an intersection → would break
+  /ai). **Important: on Vercel the CSP DOES apply to the external-rewrite `/ai`** (it does NOT
+  under local `next start`) — so the policy must stay WebGL-compatible: `script-src` keeps
+  `'unsafe-inline'` (Next static hydration) + `'unsafe-eval'`/`'wasm-unsafe-eval'`/`blob:` and
+  `worker-src blob:` for the Three.js app. Strict where it counts: `frame-ancestors 'none'`,
+  `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`, `img-src`/`connect-src`
+  allowlists (OSM tiles + `*.mlsgrid.com`). **Verified LIVE: 0 CSP violations** on home,
+  /search (Leaflet map 16/16 tiles), /financing, /listing, /blog, /who-we-are, /connect, and
+  /ai (2 WebGL canvases). Evidence: `docs/security/csp-report.json` + `csp-*.png`.
+- **Latent stored-XSS in JSON-LD** (listing/blog/layout): `JSON.stringify` doesn't escape `<`,
+  so a live-feed listing field with `</script>` would break out and execute. New
+  `lib/jsonld.ts` escapes `<>&`+U+2028/9; 3 tests. Latent today (fixture data trusted) — fixed
+  before the MLS feed connects.
+- **`/api/lead`**: enforce `application/json` content-type (415) + 16 KB body cap (413) before
+  parse; generic errors, no input echo. 6 route tests. Verified LIVE: 405/415/413/400/200-drop.
+- **next/image**: pinned `dangerouslyAllowSVG:false` + `contentDispositionType:attachment`.
+
+### Checked CLEAN
+- No secrets in the client bundle (`grep .next/static` for webhook/tokens/keys → none); all
+  secrets server-only; only `NEXT_PUBLIC_SITE_URL` is public; no client source maps. Git: only
+  `.env.example` tracked (`.env*`, `.vercel`, `.env.local` OIDC token all ignored).
+- No reflected XSS on /search (`q`/filters go through React text nodes only). MLS Grid
+  `$filter` uses server-owned constants + `encodeURIComponent` (no user text in the query).
+- `/ai` rewrite is NOT an open proxy — host/scheme are fixed; `/ai/https://x` → 308 to a
+  same-origin normalized path, never off-site.
+
+### Staged, NOT deployed (needs Levan's approval)
+- `supabase/functions/website-lead/` — version-controlled copy of the live edge fn
+  (reconstructed from probed reject-path behavior) + proposed hardening (explicit origin
+  allowlist, best-effort per-IP rate limit, optional `WEBSITE_LEAD_SECRET` shared-secret,
+  field caps). Redeploy = `supabase functions deploy website-lead` — do NOT run without review
+  (see its README). Reject-path probe of the live fn: OPTIONS 204, GET 405, bad-json 400,
+  honeypot 200-drop, missing-contact 422.
+
+### Residual recommendations
+- **Vercel WAF / Firewall rate rules on `/api/lead`** (serverless in-memory limiting doesn't
+  hold across instances) — the real rate-limit answer.
+- `npm audit`: 2 moderate via `next`'s NESTED `postcss` (`</style>` stringify XSS, build-time
+  only on our own CSS). Left AS-IS — the only `audit fix --force` remedy downgrades Next to v9.
+  Resolves when Next bumps its dep.
+- Nonce-based strict CSP (drop `unsafe-inline`/`unsafe-eval`) only viable if the site leaves
+  static generation AND /ai is excluded from the policy.
+
 ## Status — updated 2026-07-10 (ALL PHASES COMPLETE — deploy-ready pending owner keys)
 
 Phases A+B+C merged to `develop` and marked stable on `main` (local; not pushed).

@@ -1,11 +1,34 @@
 import { NextResponse } from "next/server";
 import { parseLead, submitLead } from "@/lib/leads";
 
+// A lead is a handful of short text fields — cap the accepted body well below any
+// legitimate submission so oversized/garbage payloads are rejected before parsing.
+const MAX_BODY_BYTES = 16 * 1024;
+
 export async function POST(req: Request) {
   try {
+    // Enforce JSON content-type (the only thing the client sends) — blocks form-encoded
+    // and other simple-request shapes that don't belong here.
+    const contentType = req.headers.get("content-type") ?? "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 415 });
+    }
+
+    // Reject oversized bodies — first cheaply by the declared length, then by the
+    // actual bytes read (a lying/absent Content-Length can't slip a huge body through).
+    const declared = Number(req.headers.get("content-length"));
+    if (Number.isFinite(declared) && declared > MAX_BODY_BYTES) {
+      return NextResponse.json({ ok: false, error: "Request too large." }, { status: 413 });
+    }
+
+    const raw = await req.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ ok: false, error: "Request too large." }, { status: 413 });
+    }
+
     let body: unknown;
     try {
-      body = await req.json();
+      body = JSON.parse(raw);
     } catch {
       return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
     }

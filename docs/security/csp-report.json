@@ -1,0 +1,96 @@
+[
+  {
+    "route": "/",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/search?view=map",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": {
+      "container": true,
+      "tiles": 16,
+      "tilesLoaded": 16
+    },
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/financing",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/listing/H6400001",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/blog/top-5-renovations-increase-home-value-ny",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/who-we-are",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/connect",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": null,
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  },
+  {
+    "route": "/ai",
+    "httpStatus": 200,
+    "cspEvents": [],
+    "cspConsole": [],
+    "mapInfo": null,
+    "aiInfo": {
+      "canvas": 2
+    },
+    "failed": [],
+    "consoleErrorCount": 0,
+    "consoleErrors": []
+  }
+]

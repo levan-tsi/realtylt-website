@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { fmtDate, getPost, POSTS } from "@/content/blog/posts";
 import { SITE } from "@/lib/site";
+import { jsonLdScript } from "@/lib/jsonld";
 
 export function generateStaticParams() {
   return POSTS.map((p) => ({ slug: p.slug }));
@@ -37,7 +38,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <header className="bg-ink py-14 text-paper md:py-20">
         <div className="mx-auto max-w-3xl px-4 lg:px-0">
           <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-paper/60">
