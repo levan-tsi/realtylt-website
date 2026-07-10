@@ -4,6 +4,7 @@ import { FairHousingBar } from "@/components/site/FairHousingBar";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { COUNTIES, SITE } from "@/lib/site";
+import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -79,7 +80,7 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(AGENT_JSON_LD) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(AGENT_JSON_LD) }}
         />
         <a
           href="#main"
