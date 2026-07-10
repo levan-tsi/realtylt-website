@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* ── RealtyLT design tokens — "Hudson Twilight / Valley Line"
+   See docs/superpowers/specs/2026-07-10-realtylt-website-design.md §4 */
+@theme {
+  --color-ink: #101820;
+  --color-ink-soft: #1b2530;
+  --color-paper: #fafaf8;
+  --color-mist: #edf0ef;
+  --color-stone: #6e7681;
+  --color-river: #2b6cb0;
+  --color-porchlight: #e8b04b;
+  --color-porchlight-deep: #c98f2b;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-mono: var(--font-spline-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
+
+/* Visible keyboard focus everywhere (a11y floor) */
+:focus-visible {
+  outline: 2px solid var(--color-river);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-porchlight);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
