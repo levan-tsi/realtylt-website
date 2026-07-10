@@ -7,10 +7,13 @@
   --color-ink-soft: #1b2530;
   --color-paper: #fafaf8;
   --color-mist: #edf0ef;
-  --color-stone: #6e7681;
+  /* stone + porchlight-deep tuned for WCAG AA small-text contrast on paper/white/mist
+     (QA 2026-07-10: #6e7681 was 4.40:1 on paper, #c98f2b was 2.70:1 — both below 4.5:1;
+      values below clear 4.5:1 on every light surface incl. mist) */
+  --color-stone: #646c77;
   --color-river: #2b6cb0;
   --color-porchlight: #e8b04b;
-  --color-porchlight-deep: #c98f2b;
+  --color-porchlight-deep: #8a5f10;
 
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-sans: var(--font-nunito), system-ui, sans-serif;

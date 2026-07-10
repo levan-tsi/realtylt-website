@@ -85,9 +85,12 @@ export class MlsGridClient implements IdxClient {
     return new FixtureIdxClient(this.cache).getNew(limit);
   }
 
-  async getNew(limit?: number): Promise<Listing[]> {
+  async getNew(limit = 8): Promise<Listing[]> {
     await this.ensureSynced();
-    return new FixtureIdxClient(this.cache).getNew(limit);
+    // getFeatured surfaces the freshest actives, so skip past those to keep the
+    // home page's two rails distinct.
+    const fresh = await new FixtureIdxClient(this.cache).getNew(limit * 2);
+    return fresh.slice(limit);
   }
 
   /** Replicate the feed into memory (allowed-field $filter only), then filter locally. */
