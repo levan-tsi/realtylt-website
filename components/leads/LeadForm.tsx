@@ -78,10 +78,11 @@ export function LeadForm({
 
   return (
     <form onSubmit={onSubmit} noValidate={false} className="grid gap-4">
-      {/* Honeypot — hidden from humans, bots fill it and get dropped server-side. */}
+      {/* Honeypot — hidden from humans, bots fill it and get dropped server-side.
+          Non-semantic name on purpose: browser autofill recognizes "website" fields. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor="lead-website">Website</label>
-        <input id="lead-website" type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="lead-hp">Leave this field empty</label>
+        <input id="lead-hp" type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getIdxClient, isFixtureMode } from "@/lib/idx";
+import { DEFAULT_PAGE_SIZE, getIdxClient, isFixtureMode, MAX_PAGE_SIZE } from "@/lib/idx";
 import type { PropertyType, SearchParams, SortKey } from "@/lib/idx";
 import { COUNTIES, type CountySlug } from "@/lib/site";
 
@@ -29,8 +29,10 @@ export async function GET(req: Request) {
     sqftMin: num(q.get("sqftMin")),
     propertyType: type && TYPES.includes(type) ? type : undefined,
     sort: sort && SORTS.includes(sort) ? sort : undefined,
-    page: num(q.get("page")),
-    pageSize: Math.min(num(q.get("pageSize")) ?? 12, 100),
+    // Clamp to ≥1 — page/pageSize of 0 pass the `>= 0` check but break paging math
+    // (Math.ceil(total / 0) = Infinity → totalPages serializes as null).
+    page: Math.max(1, num(q.get("page")) ?? 1),
+    pageSize: Math.min(Math.max(1, num(q.get("pageSize")) ?? DEFAULT_PAGE_SIZE), MAX_PAGE_SIZE),
   };
 
   try {

@@ -5,6 +5,9 @@ import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
 import { SITE } from "@/lib/site";
 
+// Regenerate hourly — harmless in fixture mode, honest once the live feed rotates.
+export const revalidate = 3600;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.url.replace(/\/$/, "");
   const now = new Date();

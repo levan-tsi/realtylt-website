@@ -99,6 +99,14 @@ export function SearchClient() {
     [router],
   );
 
+  // Re-sync when the URL changes underneath us (header "Search Listings" click,
+  // browser Back/Forward) — state only seeds from the URL once on mount otherwise.
+  // Serialized comparison keeps our own router.replace() calls from looping.
+  useEffect(() => {
+    const next = fromParams(new URLSearchParams(searchParams));
+    setFilters((prev) => (toQuery(prev, false) === toQuery(next, false) ? prev : next));
+  }, [searchParams]);
+
   useEffect(() => {
     let cancelled = false;
     setState("loading");

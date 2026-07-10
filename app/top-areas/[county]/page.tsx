@@ -15,6 +15,8 @@ export function generateStaticParams() {
   return COUNTY_CONTENT.map((c) => ({ county: c.slug }));
 }
 export const dynamicParams = false;
+// Re-render hourly in live mode so listing counts + "Data last updated" stay honest.
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ county: string }> }): Promise<Metadata> {
   const { county } = await params;

@@ -87,10 +87,11 @@ export class MlsGridClient implements IdxClient {
 
   async getNew(limit = 8): Promise<Listing[]> {
     await this.ensureSynced();
-    // getFeatured surfaces the freshest actives, so skip past those to keep the
-    // home page's two rails distinct.
-    const fresh = await new FixtureIdxClient(this.cache).getNew(limit * 2);
-    return fresh.slice(limit);
+    // Newest by listedAt, excluding whatever getFeatured (default limit) surfaces,
+    // so the home page's two rails stay distinct.
+    const featuredIds = new Set((await this.getFeatured()).map((l) => l.id));
+    const fresh = await new FixtureIdxClient(this.cache).getNew(limit + featuredIds.size);
+    return fresh.filter((l) => !featuredIds.has(l.id)).slice(0, limit);
   }
 
   /** Replicate the feed into memory (allowed-field $filter only), then filter locally. */
@@ -132,6 +133,10 @@ export class MlsGridClient implements IdxClient {
 /** Map a RESO property to our Listing; drop rows we can't display compliantly. */
 export function mapProperty(p: ResoProperty): Listing | null {
   if (p.MlgCanView === false) return null;
+  // Only the two types we present — Land/Commercial/Lease etc. are dropped, not
+  // mislabeled "Residential". PropertyType is not in MLS Grid's allowed $filter
+  // fields, so this stays a local filter (sync $filter untouched).
+  if (p.PropertyType !== "Residential" && p.PropertyType !== "Residential Income") return null;
   const county = COUNTY_MAP[(p.CountyOrParish ?? "").trim().toLowerCase()];
   const id = p.ListingId ?? p.ListingKey;
   if (!county || !id || p.ListPrice == null) return null;

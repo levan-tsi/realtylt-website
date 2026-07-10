@@ -8,7 +8,7 @@ const validBody = {
   phone: "(845) 555-0100",
   message: "Looking in Beacon",
   interestReason: "I'm interested in buying a home",
-  website: "", // honeypot, empty = human
+  rlt_hp: "", // honeypot, empty = human
 };
 
 describe("parseLead", () => {
@@ -24,8 +24,13 @@ describe("parseLead", () => {
   });
 
   it("silently drops submissions with the honeypot filled", () => {
-    const r = parseLead({ ...validBody, website: "http://spam.example" }, "/");
+    const r = parseLead({ ...validBody, rlt_hp: "http://spam.example" }, "/");
     expect(r.kind).toBe("spam");
+  });
+
+  it("ignores a `website` field — Chrome autofills those for real visitors", () => {
+    const r = parseLead({ ...validBody, website: "https://autofilled.example" }, "/");
+    expect(r.kind).toBe("lead");
   });
 
   it("rejects a missing name or email", () => {

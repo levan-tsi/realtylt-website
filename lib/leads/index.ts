@@ -13,12 +13,14 @@ export type ParsedLead =
   | { kind: "spam" }
   | { kind: "invalid"; error: string };
 
-/** Validate a raw form body. Honeypot field is `website` — bots fill it, humans never see it. */
+/** Validate a raw form body. Honeypot field is `rlt_hp` — bots fill it, humans never see it.
+ * (Deliberately non-semantic: a `website` field gets filled by Chrome address autofill for
+ * real visitors, silently dropping their leads.) */
 export function parseLead(body: unknown, source: string): ParsedLead {
   const b = (body ?? {}) as Record<string, unknown>;
   const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
-  if (str(b.website) !== "") return { kind: "spam" };
+  if (str(b.rlt_hp) !== "") return { kind: "spam" };
 
   const name = str(b.name);
   const email = str(b.email);

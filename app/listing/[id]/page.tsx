@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,13 +14,17 @@ import { COUNTIES, SITE } from "@/lib/site";
 
 export async function generateStaticParams() {
   // Fixture ids pre-render; live-feed ids resolve on demand (dynamicParams).
-  return FIXTURE_LISTINGS.map((l) => ({ id: l.id }));
+  return isFixtureMode() ? FIXTURE_LISTINGS.map((l) => ({ id: l.id })) : [];
 }
 export const dynamicParams = true;
+export const revalidate = 3600; // keep "Data last updated" honest in live mode
+
+// generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
+const getListing = cache((id: string) => getIdxClient().getListing(id));
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const l = await getIdxClient().getListing(id);
+  const l = await getListing(id);
   if (!l) return { title: "Listing not found" };
   return {
     title: `${l.address}, ${l.city} NY ${l.zip} — ${formatPrice(l.price)}`,
@@ -29,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ListingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const l = await getIdxClient().getListing(id);
+  const l = await getListing(id);
   if (!l) notFound();
   const county = COUNTIES.find((c) => c.slug === l.county);
 

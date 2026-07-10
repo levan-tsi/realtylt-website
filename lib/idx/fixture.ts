@@ -2,9 +2,8 @@
  * Deterministic in-memory search over ~60 OneKey-shaped sample listings. */
 
 import { FIXTURE_LISTINGS } from "./fixture-data";
+import { DEFAULT_PAGE_SIZE } from "./types";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
-
-const DEFAULT_PAGE_SIZE = 12;
 
 export class FixtureIdxClient implements IdxClient {
   private readonly listings: Listing[];
