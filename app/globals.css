@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* ── RealtyLT design tokens — "Hudson Twilight / Valley Line"
+   See docs/superpowers/specs/2026-07-10-realtylt-website-design.md §4 */
+@theme {
+  --color-ink: #101820;
+  --color-ink-soft: #1b2530;
+  --color-paper: #fafaf8;
+  --color-mist: #edf0ef;
+  /* stone + porchlight-deep tuned for WCAG AA small-text contrast on paper/white/mist
+     (QA 2026-07-10: #6e7681 was 4.40:1 on paper, #c98f2b was 2.70:1 — both below 4.5:1;
+      values below clear 4.5:1 on every light surface incl. mist) */
+  --color-stone: #646c77;
+  --color-river: #2b6cb0;
+  --color-porchlight: #e8b04b;
+  --color-porchlight-deep: #8a5f10;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-mono: var(--font-spline-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
+
+/* Visible keyboard focus everywhere (a11y floor) */
+:focus-visible {
+  outline: 2px solid var(--color-river);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-porchlight);
+  color: var(--color-ink);
+}
+
+/* ── Motion: reveal-on-scroll (Reveal component toggles .is-visible) */
+.reveal {
+  opacity: 0;
+  translate: 0 26px;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ── Valley Line stroke draw (ValleyLine component toggles .is-visible) */
+.vl-draw path.vl-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.15s;
+}
+.vl-draw.is-visible path.vl-path {
+  stroke-dashoffset: 0;
+}
+
+/* ── Card hover lift + slow photo scale */
+.lift {
+  transition:
+    translate 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lift:hover {
+  translate: 0 -4px;
+  box-shadow: 0 18px 40px -18px rgb(16 24 32 / 0.35);
+}
+.photo-zoom img {
+  transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.photo-zoom:hover img {
+  scale: 1.045;
+}
+
+/* ── Hero slow zoom */
+@keyframes hero-zoom {
+  from {
+    scale: 1.08;
+  }
+  to {
+    scale: 1;
+  }
+}
+.hero-zoom {
+  animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .vl-draw path.vl-path {
+    stroke-dashoffset: 0;
+  }
+}
