@@ -10,7 +10,6 @@ export interface SavedSearch {
   /** URL query string for /search, e.g. "county=dutchess&priceMax=500000". */
   query: string;
   createdAt: string;
-  alertOptIn?: boolean;
 }
 
 const FAV_KEY = "rlt:favorites";
@@ -75,13 +74,12 @@ export function getSavedSearches(): SavedSearch[] {
   return [];
 }
 
-export function saveSearch(label: string, query: string, alertOptIn = false): SavedSearch {
+export function saveSearch(label: string, query: string): SavedSearch {
   const s: SavedSearch = {
     id: `s${Date.now().toString(36)}`,
     label,
     query,
     createdAt: new Date().toISOString(),
-    alertOptIn,
   };
   write(SEARCH_KEY, [...getSavedSearches(), s]);
   return s;

@@ -92,12 +92,9 @@ export default async function HomePage() {
               placeholder="Town, ZIP, or address — try “Beacon”"
               className="w-full rounded-[2px] border border-paper/25 bg-ink/60 px-5 py-4 text-paper backdrop-blur placeholder:text-paper/50 focus:border-paper/50 focus:outline-none focus:ring-2 focus:ring-porchlight/70"
             />
-            <button
-              type="submit"
-              className="shrink-0 rounded-[2px] bg-porchlight px-7 font-bold tracking-wide text-ink transition-colors hover:bg-porchlight-deep hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-porchlight"
-            >
+            <Button type="submit" size="lg" className="shrink-0">
               Search
-            </button>
+            </Button>
           </form>
 
           <div className="mt-5 flex flex-wrap gap-3">

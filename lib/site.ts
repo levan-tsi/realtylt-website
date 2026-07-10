@@ -13,6 +13,7 @@ export const SITE = {
   },
   phone: "(917) 905-7923",
   phoneHref: "tel:+19179057923",
+  phoneE164: "+19179057923",
   email: "levan@realtylt.com",
   disclaimer: "Each office is independently owned and operated.",
   fairHousingPdf:

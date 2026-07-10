@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { saveSearch } from "@/lib/saved";
-import { COUNTIES, type CountySlug } from "@/lib/site";
+import { COUNTIES, SITE, type CountySlug } from "@/lib/site";
 import type { Listing } from "@/lib/idx/types";
 
 const MapView = dynamic(() => import("@/components/idx/MapView"), {
@@ -321,7 +321,7 @@ export function SearchClient() {
           <p className="font-display text-xl text-ink">Search is temporarily unavailable.</p>
           <p className="mt-2 text-sm text-stone">
             Try again in a moment, or call us at{" "}
-            <a href="tel:+19179057923" className="font-bold text-river">(917) 905-7923</a> — we&rsquo;ll run it for you.
+            <a href={SITE.phoneHref} className="font-bold text-river">{SITE.phone}</a> — we&rsquo;ll run it for you.
           </p>
         </div>
       ) : state === "loading" && !result ? (

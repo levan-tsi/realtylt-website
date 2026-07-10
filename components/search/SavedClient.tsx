@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
@@ -65,12 +66,9 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
             Tap the heart on any listing to keep it here, or save a search and come back to it
             anytime.
           </p>
-          <Link
-            href="/search"
-            className="mt-6 inline-block rounded-[2px] bg-porchlight px-6 py-3 font-bold text-ink transition-colors hover:bg-porchlight-deep hover:text-paper"
-          >
+          <Button href="/search" size="lg" className="mt-6">
             Start searching
-          </Link>
+          </Button>
         </div>
       ) : (
         <>

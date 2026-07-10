@@ -2,10 +2,11 @@
  * Voice: professional + human, plain words. Median prices are indicative 2026 figures;
  * owner can tune as the market moves. Geographic order: south → north along the Hudson. */
 
-import type { CountySlug } from "@/lib/site";
+import { COUNTIES, type CountySlug } from "@/lib/site";
 
 export interface CountyContent {
   slug: CountySlug;
+  /** Display name — derived from COUNTIES (lib/site) by slug, not retyped here. */
   name: string;
   short: string;
   tagline: string;
@@ -20,10 +21,9 @@ export interface CountyContent {
   towns: string[];
 }
 
-export const COUNTY_CONTENT: CountyContent[] = [
+const COUNTY_DATA: Omit<CountyContent, "name">[] = [
   {
     slug: "westchester",
-    name: "Westchester County",
     short: "Westchester",
     tagline: "The classic first step out of the city",
     heroImage: "/images/counties/westchester.jpg",
@@ -45,7 +45,6 @@ export const COUNTY_CONTENT: CountyContent[] = [
   },
   {
     slug: "rockland",
-    name: "Rockland County",
     short: "Rockland",
     tagline: "River villages and mountain parks, west of the Hudson",
     heroImage: "/images/counties/rockland.jpg",
@@ -67,7 +66,6 @@ export const COUNTY_CONTENT: CountyContent[] = [
   },
   {
     slug: "putnam",
-    name: "Putnam County",
     short: "Putnam",
     tagline: "Lake country in the Hudson Highlands",
     heroImage: "/images/counties/putnam.jpg",
@@ -89,7 +87,6 @@ export const COUNTY_CONTENT: CountyContent[] = [
   },
   {
     slug: "orange",
-    name: "Orange County",
     short: "Orange",
     tagline: "Room to grow on the Hudson's west bank",
     heroImage: "/images/counties/orange.jpg",
@@ -111,7 +108,6 @@ export const COUNTY_CONTENT: CountyContent[] = [
   },
   {
     slug: "dutchess",
-    name: "Dutchess County",
     short: "Dutchess",
     tagline: "Our home county — river towns to horse country",
     heroImage: "/images/counties/dutchess.jpg",
@@ -133,7 +129,6 @@ export const COUNTY_CONTENT: CountyContent[] = [
   },
   {
     slug: "ulster",
-    name: "Ulster County",
     short: "Ulster",
     tagline: "Catskills edge, creative heart",
     heroImage: "/images/counties/ulster.jpg",
@@ -154,6 +149,11 @@ export const COUNTY_CONTENT: CountyContent[] = [
     towns: ["Kingston", "New Paltz", "Woodstock", "Saugerties", "Highland", "Stone Ridge", "Marlboro", "Gardiner", "Phoenicia"],
   },
 ];
+
+export const COUNTY_CONTENT: CountyContent[] = COUNTY_DATA.map((c) => ({
+  ...c,
+  name: COUNTIES.find((s) => s.slug === c.slug)!.name,
+}));
 
 export function getCounty(slug: string): CountyContent | undefined {
   return COUNTY_CONTENT.find((c) => c.slug === slug);

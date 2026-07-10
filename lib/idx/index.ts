@@ -6,8 +6,6 @@ import { MlsGridClient } from "./mls-grid";
 import type { IdxClient } from "./types";
 
 export * from "./types";
-export { FixtureIdxClient } from "./fixture";
-export { MlsGridClient } from "./mls-grid";
 
 /** True when running on sample data (no owner MLS keys) — UI shows the "sample data" notice. */
 export function isFixtureMode(): boolean {

@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { COUNTY_CONTENT, getCounty } from "@/content/counties";
+import { fmtM } from "@/lib/format";
 import { getIdxClient, isFixtureMode } from "@/lib/idx";
 import { SITE, type CountySlug } from "@/lib/site";
 
@@ -28,8 +29,6 @@ export async function generateMetadata({ params }: { params: Promise<{ county: s
     alternates: { canonical: `${SITE.url}/top-areas/${c.slug}` },
   };
 }
-
-const fmtM = (n: number) => `$${Math.round(n / 1000)}K`;
 
 export default async function CountyPage({ params }: { params: Promise<{ county: string }> }) {
   const { county } = await params;

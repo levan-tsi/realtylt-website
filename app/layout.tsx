@@ -3,7 +3,7 @@ import { Fraunces, Nunito, Spline_Sans_Mono } from "next/font/google";
 import { FairHousingBar } from "@/components/site/FairHousingBar";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { SITE } from "@/lib/site";
+import { COUNTIES, SITE } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -49,7 +49,7 @@ const AGENT_JSON_LD = {
   name: SITE.legalName,
   alternateName: SITE.name,
   url: SITE.url,
-  telephone: "+1-917-905-7923",
+  telephone: SITE.phoneE164,
   email: SITE.email,
   logo: `${SITE.url}/og.png`,
   address: {
@@ -60,14 +60,7 @@ const AGENT_JSON_LD = {
     postalCode: SITE.address.postalCode,
     addressCountry: "US",
   },
-  areaServed: [
-    "Dutchess County, NY",
-    "Westchester County, NY",
-    "Putnam County, NY",
-    "Rockland County, NY",
-    "Ulster County, NY",
-    "Orange County, NY",
-  ],
+  areaServed: COUNTIES.map((c) => `${c.name}, NY`),
   founder: { "@type": "Person", name: "Levan Tsiklauri" },
   slogan: "Let's Find Home",
 };

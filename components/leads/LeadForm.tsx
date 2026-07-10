@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
-import { INTEREST_REASONS } from "@/lib/site";
+import { INTEREST_REASONS, SITE } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -50,14 +50,14 @@ export function LeadForm({
       });
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        setError(json.error ?? "Something went wrong on our end. Call or text (917) 905-7923 instead.");
+        setError(json.error ?? `Something went wrong on our end. Call or text ${SITE.phone} instead.`);
         setStatus("error");
         return;
       }
       setStatus("success");
       form.reset();
     } catch {
-      setError("We couldn't reach the server. Check your connection and try again, or call (917) 905-7923.");
+      setError(`We couldn't reach the server. Check your connection and try again, or call ${SITE.phone}.`);
       setStatus("error");
     }
   }

@@ -6,14 +6,13 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ValleyMap } from "@/components/valley-line/ValleyMap";
 import { COUNTY_CONTENT } from "@/content/counties";
+import { fmtM } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Top Areas — Six Counties Along the Hudson",
   description:
     "Explore the six Hudson Valley counties we serve — Westchester, Rockland, Putnam, Orange, Dutchess and Ulster — with local market notes, commute times, and homes for sale in each.",
 };
-
-const fmtM = (n: number) => `$${Math.round(n / 1000)}K`;
 
 export default function TopAreasPage() {
   return (
@@ -46,7 +45,9 @@ export default function TopAreasPage() {
             </ul>
           </div>
           <Reveal delay={120}>
-            <ValleyMap />
+            <ValleyMap
+              counties={COUNTY_CONTENT.map(({ slug, short, medianPrice, map }) => ({ slug, short, medianPrice, map }))}
+            />
           </Reveal>
         </div>
       </section>

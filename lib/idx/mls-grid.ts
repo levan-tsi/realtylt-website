@@ -11,7 +11,7 @@
  *   `modificationTimestamp` + `listOfficeName` carried on every mapped listing.
  */
 
-import type { CountySlug } from "@/lib/site";
+import { COUNTIES, type CountySlug } from "@/lib/site";
 import { FixtureIdxClient } from "./fixture";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
 
@@ -47,14 +47,8 @@ interface ResoProperty {
   ExteriorFeatures?: string[];
 }
 
-const COUNTY_MAP: Record<string, CountySlug> = {
-  dutchess: "dutchess",
-  westchester: "westchester",
-  putnam: "putnam",
-  rockland: "rockland",
-  ulster: "ulster",
-  orange: "orange",
-};
+/** Lowercased CountyOrParish values we serve — derived from the site's county list. */
+const COUNTY_SLUGS = new Set<string>(COUNTIES.map((c) => c.slug));
 
 const SYNC_TTL_MS = 15 * 60 * 1000; // refresh replicated cache every 15 min
 
@@ -137,7 +131,8 @@ export function mapProperty(p: ResoProperty): Listing | null {
   // mislabeled "Residential". PropertyType is not in MLS Grid's allowed $filter
   // fields, so this stays a local filter (sync $filter untouched).
   if (p.PropertyType !== "Residential" && p.PropertyType !== "Residential Income") return null;
-  const county = COUNTY_MAP[(p.CountyOrParish ?? "").trim().toLowerCase()];
+  const rawCounty = (p.CountyOrParish ?? "").trim().toLowerCase();
+  const county = COUNTY_SLUGS.has(rawCounty) ? (rawCounty as CountySlug) : undefined;
   const id = p.ListingId ?? p.ListingKey;
   if (!county || !id || p.ListPrice == null) return null;
 
