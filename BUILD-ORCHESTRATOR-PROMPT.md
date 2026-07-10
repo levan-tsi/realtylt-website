@@ -9,11 +9,14 @@ proceed. Only surface the one genuine external blocker (owner keys, bottom).
 --------------------------------------------------------------------------------
 ## PHASE A — Understand, verify, plan, scaffold  (YOU do this yourself; do not dispatch yet)
 1. Read `docs/BRIEF.txt` (the authoritative developer brief) in full.
-2. Open the LIVE `realtylt.com` in a real browser and walk EVERY nav page + the footer (Home, Search,
-   Buying, Selling, Top Areas + the 5 county views, Financing, Home Value, Who We Are, Blog, Connect,
-   Reviews). Screenshot each. **Reconcile the brief against reality:** confirm every page/section/form/
-   CTA/legal link the brief lists, and FLAG anything the brief missed. This is the "is it mapped
-   properly / what's missing" check.
+2. **The brief is TEXT-ONLY — there are no reference pictures, so the LIVE site is your visual ground
+   truth.** Use **Playwright** (`page.goto('https://realtylt.com')`) — or the Claude Chrome extension —
+   to open the live site and walk EVERY nav page + the footer (Home, Search, Buying, Selling, Top Areas
+   + the 5 county views, Financing, Home Value, Who We Are, Blog, Connect, Reviews). **Screenshot each
+   page at 1280 AND 390 and save them under `docs/reference/`** — that folder is the visual reference
+   the whole build checks its work against. Reconcile the brief against reality: confirm every page/
+   section/form/CTA/legal link the brief lists, and FLAG anything the brief missed. This is the "is it
+   mapped properly / what's missing" check — and since the map is words only, the pictures come from here.
 3. Use the `brainstorming` skill on: information architecture, the design direction, and the technical
    architecture. **Design bar (non-negotiable, CLAUDE.md §5):** premium, distinctive, alive — the
    RealtyLT `/ai` page is the taste reference; NOT a Brivity clone and NOT a framework-default template.
@@ -34,14 +37,17 @@ proceed. Only surface the one genuine external blocker (owner keys, bottom).
 When the plan + scaffold are ready, dispatch a **Builder** sub-agent to build the WHOLE site per
 `PLAN.md`/`ARCHITECTURE.md`: every page, IDX search/results behind the mock, all lead forms → the
 webhook stub, the mortgage calc, full SEO, legal pages, mobile-first responsive — to the `/ai`-page
-design bar. It works with TDD + systematic-debugging, verifies each page in a real browser at 1280 AND
-390, commits on its branch, keeps `CHECKPOINT.md` current, and reports what it built + evidence.
+design bar. It works with TDD + systematic-debugging, and **verifies each page with Playwright at 1280
+AND 390, side-by-side against the `docs/reference/` live-site screenshots** (match the structure, then
+improve on it — never a pixel clone). Commits on its branch, keeps `CHECKPOINT.md` current, reports evidence.
 (If the site is large, it may fan out per page — but one Builder owns the build phase.)
 
 ## PHASE C — QA / debug / fill the gaps  (summon a SECOND sub-agent)
 When the build is done, dispatch a **QA** sub-agent to INDEPENDENTLY test and check EVERYTHING against
-the brief + the live-site reference: drive every page + every flow at 1280 + 390, run `next build` +
-tests, and catch bugs, regressions, missing sections, broken forms, console errors, a11y and SEO gaps.
+the brief + the `docs/reference/` live-site screenshots: use **Playwright** to drive every page + every
+flow at 1280 + 390, re-capture each page and diff it against its reference (structure/sections/CTAs all
+present and improved, nothing dropped), run `next build` + tests, and catch bugs, regressions, missing
+sections, broken forms, console errors, a11y and SEO gaps.
 It FIXES what it finds (red-before-fix where testable), lists anything it could not fill, and **reports
 back to you (main)**. You reconcile the report, integrate the fixes, and update `CHECKPOINT.md`.
 
