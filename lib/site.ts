@@ -61,7 +61,7 @@ export const FOOTER_NAV = [
   { label: "Who We Are", href: "/who-we-are" },
   { label: "Reviews", href: "/reviews" },
   { label: "Connect", href: "/connect" },
-  { label: "RealtyLT AI", href: "/ai" },
+  { label: "RealtyLT AI", href: "/ai", external: true },
 ] as const;
 
 /** Interest-reason dropdown — exact options from brief §7. */

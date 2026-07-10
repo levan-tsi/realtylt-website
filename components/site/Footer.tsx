@@ -12,13 +12,23 @@ export function Footer() {
         <nav aria-label="Footer">
           <p className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-paper/50">Explore</p>
           <ul className="space-y-2 text-sm">
-            {FOOTER_NAV.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="hover:text-porchlight transition-colors">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {FOOTER_NAV.map((item) =>
+              "external" in item && item.external ? (
+                // /ai is served by an external rewrite, not an RSC route — a plain anchor
+                // avoids a 404 from Next's link prefetch.
+                <li key={item.href}>
+                  <a href={item.href} className="hover:text-porchlight transition-colors">
+                    {item.label}
+                  </a>
+                </li>
+              ) : (
+                <li key={item.href}>
+                  <Link href={item.href} className="hover:text-porchlight transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </nav>
 
