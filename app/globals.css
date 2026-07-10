@@ -36,6 +36,60 @@ body {
   color: var(--color-ink);
 }
 
+/* ── Motion: reveal-on-scroll (Reveal component toggles .is-visible) */
+.reveal {
+  opacity: 0;
+  translate: 0 26px;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ── Valley Line stroke draw (ValleyLine component toggles .is-visible) */
+.vl-draw path.vl-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.15s;
+}
+.vl-draw.is-visible path.vl-path {
+  stroke-dashoffset: 0;
+}
+
+/* ── Card hover lift + slow photo scale */
+.lift {
+  transition:
+    translate 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lift:hover {
+  translate: 0 -4px;
+  box-shadow: 0 18px 40px -18px rgb(16 24 32 / 0.35);
+}
+.photo-zoom img {
+  transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.photo-zoom:hover img {
+  scale: 1.045;
+}
+
+/* ── Hero slow zoom */
+@keyframes hero-zoom {
+  from {
+    scale: 1.08;
+  }
+  to {
+    scale: 1;
+  }
+}
+.hero-zoom {
+  animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -44,5 +98,12 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .vl-draw path.vl-path {
+    stroke-dashoffset: 0;
   }
 }

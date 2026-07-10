@@ -21,6 +21,17 @@ for (const p of targets) {
       // 'networkidle' never settles on the Next.js runtime — use 'load' + settle wait
       await page.goto(base + p, { waitUntil: 'load', timeout: 30000 });
       await page.waitForTimeout(1200);
+      // Scroll through the page so reveal-on-scroll (IntersectionObserver) content becomes
+      // visible — otherwise below-fold sections screenshot as blank.
+      await page.evaluate(async () => {
+        const step = window.innerHeight * 0.8;
+        for (let y = 0; y < document.body.scrollHeight; y += step) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 120));
+        }
+        window.scrollTo(0, 0);
+      });
+      await page.waitForTimeout(900);
       await page.screenshot({ path: path.join(outDir, `${slug}-${width}.png`), fullPage: true });
       console.log(`OK  ${p} @${width}${errors.length ? '  CONSOLE-ERRORS: ' + JSON.stringify(errors) : ''}`);
     } catch (e) {
