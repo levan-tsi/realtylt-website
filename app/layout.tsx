@@ -24,6 +24,9 @@ const splineMono = Spline_Sans_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
+  // "./" resolves per-route against metadataBase — self-canonical on every page.
+  // Pages that set their own alternates (county pages) override this.
+  alternates: { canonical: "./" },
   title: {
     default: `${SITE.name} | ${SITE.legalName}`,
     template: `%s | ${SITE.name}`,
