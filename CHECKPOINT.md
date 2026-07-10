@@ -136,6 +136,9 @@ docs/reference/page-inventory.json. Trusted nothing from Phase B; all Builder cl
   every card; sample-data notice everywhere in fixture mode.
 - Secrets hygiene: `.env`/`.env.*`/`.leads-dev.jsonl` git-ignored and untracked; `.env.example`
   carries the 5 labelled owner slots (brief §4); Fair Housing bar links to the NYS DOS PDF.
+- Crawl (scripts/qa-crawl.mjs, ALL PASS): all 132 internal links resolve <400; zero horizontal
+  overflow at 390 on all 22 pages; each county page shows only in-county listings; search empty
+  state + "Clear all filters" restores results; listing JSON-LD content matches the listing.
 - `npm test` 34/34 green (was 33 — QA added the rails-overlap test) · `npm run build` green.
 
 ### QA: could not fill (external constraints — do not fake)
