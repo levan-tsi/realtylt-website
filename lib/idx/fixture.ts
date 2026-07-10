@@ -81,7 +81,9 @@ export class FixtureIdxClient implements IdxClient {
   }
 
   async getNew(limit = 8): Promise<Listing[]> {
-    return [...this.listings]
+    // Exclude featured listings so the home page's two rails never repeat a card.
+    return this.listings
+      .filter((l) => !l.isFeatured)
       .sort((a, b) => +new Date(b.listedAt) - +new Date(a.listedAt))
       .slice(0, limit);
   }

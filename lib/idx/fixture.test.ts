@@ -136,6 +136,12 @@ describe("FixtureIdxClient — single, featured, new", () => {
     const times = n.map((l) => +new Date(l.listedAt));
     expect(times).toEqual([...times].sort((a, b) => b - a));
   });
+
+  it("getFeatured and getNew never overlap (home shows two distinct rails)", async () => {
+    const [featured, fresh] = await Promise.all([client.getFeatured(8), client.getNew(8)]);
+    const featuredIds = new Set(featured.map((l) => l.id));
+    expect(fresh.filter((l) => featuredIds.has(l.id)).map((l) => l.id)).toEqual([]);
+  });
 });
 
 describe("getIdxClient factory", () => {
