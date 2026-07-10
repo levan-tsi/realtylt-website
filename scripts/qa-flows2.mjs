@@ -138,7 +138,7 @@ const check = (name, ok, detail = '') => {
     const r = await fetch('/api/lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Bot', email: 'bot@spam.io', phone: '000', interestReason: 'Other reason to contact an agent', sourcePage: '/qa', website: 'http://spam.example' }),
+      body: JSON.stringify({ name: 'Bot', email: 'bot@spam.io', phone: '000', interestReason: 'Other reason to contact an agent', sourcePage: '/qa', rlt_hp: 'http://spam.example' }),
     });
     return { status: r.status, body: await r.text() };
   });
