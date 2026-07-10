@@ -82,6 +82,18 @@ describe("submitLead", () => {
     expect(JSON.parse(line).email).toBe("jane@example.com");
   });
 
+  it("stub mode: read-only filesystem (Vercel) → still ok:true, lead logged in full", async () => {
+    vi.stubEnv("CRM_LEAD_WEBHOOK", "");
+    vi.spyOn(fs, "appendFileSync").mockImplementation(() => {
+      throw Object.assign(new Error("EROFS: read-only file system"), { code: "EROFS" });
+    });
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const r = await submitLead(lead);
+    expect(r).toEqual({ ok: true, stub: true });
+    const logged = logSpy.mock.calls.flat().join("\n");
+    expect(logged).toContain("jane@example.com"); // full lead JSON survives in function logs
+  });
+
   it("webhook mode: POSTs JSON with bearer token and returns ok on 2xx", async () => {
     vi.stubEnv("CRM_LEAD_WEBHOOK", "https://crm.example/leads");
     vi.stubEnv("CRM_API_TOKEN", "tok_123");

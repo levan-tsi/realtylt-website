@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
-import { formatPrice } from "@/components/idx/ListingCard";
+import { formatPrice, NoPhoto } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -71,14 +71,18 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
       <section className="bg-ink" aria-label="Photos">
         <div className="mx-auto grid max-w-7xl gap-1.5 px-0 md:grid-cols-[2fr_1fr] lg:px-8 lg:py-6">
           <div className="photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px]">
-            <Image
-              src={l.photos[0]}
-              alt={`${l.address}, ${l.city} — main photo`}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 60vw"
-              className="object-cover"
-            />
+            {l.photos.length > 0 ? (
+              <Image
+                src={l.photos[0]}
+                alt={`${l.address}, ${l.city} — main photo`}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 60vw"
+                className="object-cover"
+              />
+            ) : (
+              <NoPhoto />
+            )}
             <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
             {l.status !== "Active" && (
               <span className="absolute left-4 top-4 rounded-[2px] bg-ink/80 px-2.5 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-porchlight backdrop-blur">

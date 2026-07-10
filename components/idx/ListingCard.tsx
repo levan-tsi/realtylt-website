@@ -7,6 +7,20 @@ export function formatPrice(n: number): string {
   return `$${n.toLocaleString("en-US")}`;
 }
 
+/** Branded fallback when a listing arrives without photos (live feed rows without Media). */
+export function NoPhoto() {
+  return (
+    <div className="absolute inset-0 grid place-items-center bg-mist" aria-hidden>
+      <span className="text-center">
+        <span className="block font-display text-4xl text-stone/50">⌂</span>
+        <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.18em] text-stone/70">
+          RealtyLT · Photo coming soon
+        </span>
+      </span>
+    </div>
+  );
+}
+
 /** IDX listing card — price (mono), address, beds|baths|sqft, "Listed with <office>" (compliance),
  * heart save, status badge. Whole card links to the listing. */
 export function ListingCard({ listing, priority = false }: { listing: Listing; priority?: boolean }) {
@@ -22,14 +36,18 @@ export function ListingCard({ listing, priority = false }: { listing: Listing; p
         aria-label={`${l.address}, ${l.city} — ${formatPrice(l.price)}`}
       />
       <div className="photo-zoom relative aspect-[3/2] overflow-hidden bg-mist">
-        <Image
-          src={l.photos[0]}
-          alt={`${l.address}, ${l.city}, NY`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={priority}
-          className="object-cover"
-        />
+        {l.photos[0] ? (
+          <Image
+            src={l.photos[0]}
+            alt={`${l.address}, ${l.city}, NY`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
+            className="object-cover"
+          />
+        ) : (
+          <NoPhoto />
+        )}
         {badge && (
           <span className="absolute left-3 top-3 rounded-[2px] bg-ink/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-porchlight backdrop-blur">
             {badge}

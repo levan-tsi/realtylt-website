@@ -55,8 +55,14 @@ export async function submitLead(lead: LeadPayload): Promise<LeadResult> {
   const webhook = process.env.CRM_LEAD_WEBHOOK;
 
   if (!webhook) {
-    console.log(`[lead:stub] ${lead.source} ${lead.email}`);
-    fs.appendFileSync(STUB_FILE, JSON.stringify(lead) + "\n");
+    // Always log the full lead server-side — on Vercel the function logs are the only
+    // place stub-mode leads survive (the filesystem is read-only).
+    console.log(`[lead:stub] ${JSON.stringify(lead)}`);
+    try {
+      fs.appendFileSync(STUB_FILE, JSON.stringify(lead) + "\n");
+    } catch {
+      /* read-only FS (e.g. Vercel) — the console.log above is the record */
+    }
     return { ok: true, stub: true };
   }
 
