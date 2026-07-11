@@ -195,6 +195,27 @@ export class MlsGridClient implements IdxClient {
     ].join("&");
   }
 
+  /** Newest-modified six-county rows WITH live signed media URLs — the sync cron's
+   * PRIORITY photo set (the default /search sort and the home rails surface these rows
+   * first, so their photos should fill before the long tail). Uses the one allowed
+   * $orderby (ModificationTimestamp desc) + $skip paging. Gaps BEFORE every request —
+   * including the first — because the cron calls this right after replicateDeep's last
+   * request and the account must stay strictly under 2 req/sec across that seam. */
+  async replicateNewest(opts: { maxPages: number; deadline: number }): Promise<Listing[]> {
+    const kept: Listing[] = [];
+    for (let page = 0; page < opts.maxPages; page++) {
+      if (Date.now() >= opts.deadline) break;
+      await new Promise((r) => setTimeout(r, PAGE_GAP_MS));
+      const rows = await this.fetchPage(page * PAGE_SIZE);
+      for (const p of rows) {
+        const mapped = mapProperty(p);
+        if (mapped) kept.push(mapped); // photos stay as SIGNED source URLs on purpose
+      }
+      if (rows.length < PAGE_SIZE) break; // feed window exhausted
+    }
+    return kept;
+  }
+
   /** Serve fresh cache; stale cache revalidates in the background; only the very first
    * request (empty cache) waits — and falls back to fixture data instead of crashing. */
   private async ensureSynced(): Promise<void> {

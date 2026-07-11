@@ -27,7 +27,9 @@ import {
  *   2. incrementally copies listing photos into Vercel Blob, budget- and time-bounded
  *      (media.mlsgrid.com has a hard per-ACCOUNT request budget — never mass-fetch;
  *      photo 0 of every listing first, so partial coverage still gives every card an
- *      image; stops cleanly on 429 and resumes next run).
+ *      image; stops cleanly on 429 and resumes next run). A small newest-modified head
+ *      refetch (replicateNewest) front-loads the plan with the listings users actually
+ *      see first: Featured/own-office rows, then the default-sort first pages.
  *   3. publishes mls/listings.json with durable Blob photo URLs for the site to read.
  * Auth: Vercel Cron sends `Authorization: Bearer ${CRON_SECRET}`; manual triggers must
  * send the same header. Optional query params: ?force=1 (skip freshness guard),
@@ -37,11 +39,13 @@ import {
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-const DEFAULT_PHOTO_BUDGET = 150;
-const PHOTO_GAP_MS = 250; // pace media CDN requests
+const DEFAULT_PHOTO_BUDGET = 1000; // per-run cap; the media CDN's own per-window budget is the real limit (stop-on-429)
+const PHOTO_CONCURRENCY = 3; // parallel downloaders — media.mlsgrid.com only, NEVER api.mlsgrid.com
+const PHOTO_GAP_MS = 150; // per-worker pacing → ~4-5 req/s aggregate against the media CDN
 const TIME_BUDGET_MS = 240_000; // leave headroom under maxDuration for the final put
 const DATA_TIME_BUDGET_MS = 130_000; // data pass stops here so photos still get a window
 const DATA_MAX_PAGES = 25; // ≤25 sequential feed requests per run (~12.5k rows scanned)
+const PRIORITY_PAGES = 2; // newest-modified head refetch (~1k rows) — the priority photo set
 const MAX_SNAPSHOT_LISTINGS = 8000; // sanity cap — keep the newest-modified beyond this
 const MIN_SYNC_GAP_MS = 5 * 60_000; // overlapping triggers must not double-hit MLS Grid
 const ATTEMPT_GAP_MS = 10 * 60_000; // global gap between MLS attempts, success OR failure
@@ -70,7 +74,7 @@ export async function GET(req: Request) {
   const started = Date.now();
   const q = new URL(req.url).searchParams;
   const photoBudget = Math.min(
-    500,
+    2000,
     Math.max(0, Number(q.get("photoBudget") ?? process.env.MLS_PHOTO_BUDGET ?? DEFAULT_PHOTO_BUDGET) || 0),
   );
 
@@ -102,9 +106,10 @@ export async function GET(req: Request) {
   //    On failure the previous snapshot and pass state stay in place untouched.
   const pass: PassState =
     parsePassState(await readJsonBlob(PASS_STATE_PATHNAME).catch(() => null)) ?? newPassState();
+  const mls = new MlsGridClient();
   let deep;
   try {
-    deep = await new MlsGridClient().replicateDeep({
+    deep = await mls.replicateDeep({
       watermark: pass.watermark,
       maxPages: DATA_MAX_PAGES,
       deadline: started + DATA_TIME_BUDGET_MS,
@@ -113,6 +118,26 @@ export async function GET(req: Request) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[sync-mls] replication failed — previous snapshot kept:", msg);
     return NextResponse.json({ error: `MLS replication failed: ${msg}` }, { status: 502 });
+  }
+
+  // 1b. PRIORITY photo set — the rows users actually see first. The rolling pass walks
+  //     the feed oldest-modified → newest, so the newest rows (default /search sort,
+  //     home rails) would otherwise be photographed LAST. Refetch the head fresh (live
+  //     signed URLs) and put it at the FRONT of the photo plan: Featured (own-office)
+  //     rows first, then newest-listed. Best-effort — photos must still flow without it.
+  let priority: Awaited<ReturnType<MlsGridClient["replicateNewest"]>> = [];
+  try {
+    priority = await mls.replicateNewest({
+      maxPages: PRIORITY_PAGES,
+      deadline: started + DATA_TIME_BUDGET_MS + 15_000,
+    });
+    priority.sort(
+      (a, b) =>
+        Number(!!b.isFeatured) - Number(!!a.isFeatured) ||
+        Date.parse(b.listedAt) - Date.parse(a.listedAt),
+    );
+  } catch (e) {
+    console.error("[sync-mls] priority head fetch failed — continuing with the pass slice:", e);
   }
 
   // Fold this run's slice into the pass (signed photo URLs expire in ~1h — never persist
@@ -157,40 +182,55 @@ export async function GET(req: Request) {
     cursor = page.cursor;
   } while (cursor);
 
-  // 3. Incremental photo top-up — planned from THIS run's freshly scanned listings only
-  //    (their signed media URLs are the live ones; rows from earlier runs re-enter the
-  //    plan when the rolling pass re-scans them with fresh URLs).
-  const plan = planPhotoFetches(deep.listings, new Set(cachedUrls.keys()), photoBudget);
+  // 3. Incremental photo top-up — priority head first, then THIS run's freshly scanned
+  //    slice newest-first (only fresh rows carry live signed URLs; rows from earlier
+  //    runs re-enter the plan when the rolling pass re-scans them). mergeListings
+  //    dedupes by id with the priority rows keeping their front position, and
+  //    planPhotoFetches keeps photo-0-first across the whole ordered set.
+  const photoSource = mergeListings(
+    priority,
+    [...deep.listings].sort(
+      (a, b) => Date.parse(b.modificationTimestamp) - Date.parse(a.modificationTimestamp),
+    ),
+  );
+  const plan = planPhotoFetches(photoSource, new Set(cachedUrls.keys()), photoBudget);
   let uploaded = 0;
   let failed = 0;
   let budgetExhausted = false;
-  for (const { pathname, url } of plan) {
-    if (Date.now() - started > TIME_BUDGET_MS) break;
-    try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(15_000) });
-      if (res.status === 429) {
-        budgetExhausted = true; // media budget window exhausted — resume next run
-        break;
-      }
-      if (!res.ok) {
+  let planCursor = 0;
+  // Small paced worker pool against the media CDN (its limit is a per-window request
+  // BUDGET, not the data API's 2 req/s). First 429 stops ALL workers — resume next run.
+  const downloadWorker = async () => {
+    while (!budgetExhausted && Date.now() - started < TIME_BUDGET_MS) {
+      const next = plan[planCursor++]; // single-threaded event loop — no race
+      if (!next) return;
+      try {
+        const res = await fetch(next.url, { signal: AbortSignal.timeout(15_000) });
+        if (res.status === 429) {
+          budgetExhausted = true; // media budget window exhausted — resume next run
+          return;
+        }
+        if (!res.ok) {
+          failed++;
+        } else {
+          const blob = await put(next.pathname, await res.arrayBuffer(), {
+            access: "public",
+            addRandomSuffix: false,
+            allowOverwrite: true,
+            contentType: res.headers.get("content-type") ?? "image/jpeg",
+            cacheControlMaxAge: 31_536_000, // photos are immutable at their pathname
+          });
+          cachedUrls.set(next.pathname, blob.url);
+          uploaded++;
+        }
+      } catch (e) {
         failed++;
-      } else {
-        const blob = await put(pathname, await res.arrayBuffer(), {
-          access: "public",
-          addRandomSuffix: false,
-          allowOverwrite: true,
-          contentType: res.headers.get("content-type") ?? "image/jpeg",
-          cacheControlMaxAge: 31_536_000, // photos are immutable at their pathname
-        });
-        cachedUrls.set(pathname, blob.url);
-        uploaded++;
+        console.error(`[sync-mls] photo ${next.pathname}:`, e instanceof Error ? e.message : e);
       }
-    } catch (e) {
-      failed++;
-      console.error(`[sync-mls] photo ${pathname}:`, e instanceof Error ? e.message : e);
+      await new Promise((r) => setTimeout(r, PHOTO_GAP_MS));
     }
-    await new Promise((r) => setTimeout(r, PHOTO_GAP_MS));
-  }
+  };
+  await Promise.all(Array.from({ length: PHOTO_CONCURRENCY }, downloadWorker));
 
   // 4. Publish the snapshot — only durable Blob photo URLs ever reach the site —
   //    then persist the pass cursor so the next run resumes (or starts fresh).
@@ -231,6 +271,7 @@ export async function GET(req: Request) {
     photosUploaded: uploaded,
     photosFailed: failed,
     photosPlanned: plan.length,
+    priorityListings: priority.length,
     budgetExhausted,
     ms: Date.now() - started,
   };

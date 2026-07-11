@@ -168,3 +168,36 @@ describe("replicateDeep (rolling full-inventory pass)", () => {
     expect(out.listings).toHaveLength(1);
   });
 });
+
+describe("replicateNewest (priority photo set)", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("orders by ModificationTimestamp desc, keeps signed URLs, stops on a short page", async () => {
+    const calls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: RequestInfo | URL) => {
+        calls.push(String(url));
+        return new Response(
+          JSON.stringify({
+            value: [
+              { ...row, ListingId: "N1" },
+              { ...row, ListingId: "OUT", CountyOrParish: "Nassau" },
+            ],
+          }),
+          { status: 200 },
+        );
+      }),
+    );
+
+    const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
+    const out = await client.replicateNewest({ maxPages: 3, deadline: Date.now() + 60_000 });
+
+    expect(calls).toHaveLength(1); // short page (< $top) → head exhausted, no page 2
+    expect(calls[0]).toContain("$orderby=ModificationTimestamp%20desc");
+    expect(calls[0]).toContain("$skip=0");
+    expect(out.map((l) => l.id)).toEqual(["N1"]); // six-county filter still applies
+    // Photos stay as the ORIGINAL signed source URLs — the cron copies them into Blob.
+    expect(out[0].photos[0]).toMatch(/^https:\/\/media\.example\.com\//);
+  }, 15_000);
+});
