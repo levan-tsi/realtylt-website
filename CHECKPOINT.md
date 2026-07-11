@@ -1,6 +1,66 @@
 # CHECKPOINT — RealtyLT Website
 
-## ▶ ROUND 3 START HERE
+## ▶ FINAL ROUND COMPLETE (2026-07-11) — SHIP-READY, awaiting owner go-live
+
+**State:** deployed + verified at **https://realtylt-website.vercel.app** (private,
+noindexed). 66/66 tests, build green, main pushed. Real MLS data live (251 listings,
+6 counties, snapshot <1h old at verification). 0 console errors / 0 CSP violations /
+0 horizontal overflow (1280 + 390) across ALL routes on the DEPLOYED site.
+
+### What this round did
+1. **Design round 3 → ~95%** (docs/DESIGN-MATCH.md "ROUND 3"): measured live via
+   getComputedStyle, then applied — global container 1152→1250 (live ≈1186 content),
+   home hero ~670px + portrait 63/100 tiles (live 283×450) + bold rail headings + 36px
+   quote + 60px section pads + brighter B&W hero (luminance ~80 vs live 79); per-page
+   hero pads/titles (buying 154/45px, selling 154/50px, financing 192/46px, connect
+   51/46px); home-value bright near-full-height hero w/ Lato-bold 64px (live loads
+   Montserrat — the "serif" in old captures was a headless font fallback). Evidence:
+   docs/final/compare (1280) + compare-m (390). Similarity: home/search/connect/
+   home-value ~95, buying/selling ~94, financing ~93 (rest of gap = Brivity's
+   product-mockup assets — recorded deviation). Blog design untouched.
+2. **`LEAD_TEST_MODE=1` safety switch** (lib/leads): forces stub mode even when
+   CRM_LEAD_WEBHOOK is set — set it on ANY server used for lead QA and test rows can
+   never reach the production CRM. Covered by a unit test; documented in .env.example.
+   (This round ran every lead flow against a no-webhook stub server only.)
+3. **Branded no-photo state** (until the media-budget cooldown clears): navy line-house
+   + azure "porch light" + RealtyLT wordmark — identical in ListingCard NoPhoto and the
+   /api/media placeholder SVG (verified live: 200 image/svg+xml, no broken tiles/502s).
+   Listing detail with 0 photos now shows one full-width band (no black void).
+4. **Real-data bug found & fixed**: 251 listings → 21 pagination buttons overflowed
+   /search at 390 (local fixture's 6 pages never triggered it) → windowed pagination
+   (1 … n-1 n n+1 … last). Also fixed /blog 390 overflow (min-w-0 on grid items — the
+   truncate title forced ~816px), JSON-LD geo 0,0 omitted for coordinate-less rows,
+   map pins restyled on-brand (black/Lato, was amber mono) + tasteful "Locations
+   approximate" chip.
+5. **Full QA battery green** against the new build: qa-crawl (133 links, 390 overflow,
+   county filtering), qa-a11y-scan (CLEAN), qa-search-flows, qa-flows2 (lead paths on
+   stub), verify-calc-menu ($3,198.20 → $3,677.84 → reset), verify-saved-flow (heart →
+   header count → save search → /saved → alert opt-in). Live: final-probe 0/0/0,
+   verify-live-mls ALL PASS, all-route sweep clean at both viewports, home TTFB ~100ms /
+   FCP ~340ms, sitemap 29 evergreen URLs, X-Robots-Tag noindex + robots Disallow intact.
+
+### BEFORE PUBLIC LAUNCH (owner)
+- [ ] Delete the Round-2 QA lead from the CRM leads table: "QA Footer" /
+      qa-footer@example.com (see Round-3 note below). CRM-side only.
+- [ ] Photos: backfilling automatically (daily 06:00 UTC cron + >4h stale self-refresh,
+      ≤150/run, photo-0-first) once the MLS media budget window clears — no action
+      needed; to accelerate see "Photo coverage top-up" below (≥1h apart, never loop).
+- [ ] Owner content (non-blocking): Who-We-Are final bio + portrait, real blog articles
+      (Drive), real social URLs, Google-reviews URL (placeholder = Maps search link in
+      content/testimonials.ts).
+- [ ] Go-live: swap MLS TEST key → PRODUCTION key (then rotate test key), set
+      `NEXT_PUBLIC_SITE_URL=https://realtylt.com`, REMOVE `PRELAUNCH` env (re-enables
+      indexing), point the realtylt.com domain at the Vercel project, redeploy, then
+      re-run scripts/final-probe.mjs + verify-live-mls.mjs against the domain.
+- [ ] After launch: submit sitemap in Search Console; keep LEAD_TEST_MODE unset in prod.
+
+### Rules that stay in force
+- NEVER call api.mlsgrid.com / media.mlsgrid.com directly (cron owns replication;
+  docs/MLS-INTEGRATION.md before touching anything MLS).
+- Lead QA ONLY against a stub (`CRM_LEAD_WEBHOOK="" …` or `LEAD_TEST_MODE=1`).
+- .env.local is gitignored and holds the live webhook — never load it for lead tests.
+
+## ROUND 3 (superseded — kept for history)
 
 **⚠️ FIRST: one QA test lead reached the PRODUCTION CRM** during Round 2 (qa-flows2 was
 mistakenly run against a server loaded with the live CRM_LEAD_WEBHOOK). Row to delete from
