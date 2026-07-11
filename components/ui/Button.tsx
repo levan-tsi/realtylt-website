@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "primary" | "outline" | "outline-light" | "ghost";
+type Variant = "primary" | "outline" | "outline-light" | "light" | "ghost";
 type Size = "md" | "lg";
 
 /* Matched to live realtylt.com buttons: black CTAs (14px/600 uppercase, ls 1.4px,
@@ -17,6 +17,8 @@ const variants: Record<Variant, string> = {
     "uppercase tracking-[0.1em] border-2 border-ink text-ink hover:bg-ink hover:text-paper active:translate-y-px",
   "outline-light":
     "uppercase tracking-[0.1em] border border-paper text-paper hover:bg-paper hover:text-ink active:translate-y-px",
+  light:
+    "rounded-[4px] uppercase tracking-[0.1em] bg-paper text-ink hover:bg-mist active:translate-y-px",
   ghost: "text-ink hover:text-stone underline-offset-4 hover:underline",
 };
 

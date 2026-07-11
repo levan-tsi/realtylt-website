@@ -5,7 +5,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
-import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 import { SITE } from "@/lib/site";
@@ -74,23 +73,23 @@ export default function SellingPage() {
         </div>
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:px-8">
           <div className="self-center">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-porchlight">Selling in the Hudson Valley</p>
-            <h1 id="selling-hero" className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-paper md:text-6xl">
-              See your home&rsquo;s <span className="text-porchlight">cash value</span> vs market list price
+            <h1 id="selling-hero" className="text-4xl font-light leading-[1.15] text-paper md:text-5xl">
+              See Your Home&rsquo;s <strong className="font-bold">Cash Value</strong> vs{" "}
+              <strong className="font-bold">Market List Price</strong>
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-paper/80">
-              Get a guaranteed fair cash offer in 24 hours, or list with us for maximum profit.
-              You compare. You decide.
+            <p className="mt-5 max-w-xl text-lg text-paper/85">
+              Get a guaranteed fair Cash Offer in 24 hours OR list with us for maximum profit. You
+              compare, you decide.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-paper/80">
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-paper/85">
               <span className="flex items-center gap-2">
-                <Stars /> <strong className="font-mono text-paper">5.0</strong> on Google
+                Google <Stars /> <strong className="text-paper">5.0</strong>
               </span>
-              <span className="border-l border-paper/20 pl-8">Fast response</span>
-              <span className="border-l border-paper/20 pl-8">Free consultation</span>
+              <span className="border-l border-paper/25 pl-8">Fast Response</span>
+              <span className="border-l border-paper/25 pl-8">Free Consultation</span>
             </div>
-            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">
-              No obligation · Zero pressure · Honest advice
+            <p className="mt-4 text-xs tracking-wide text-paper/60">
+              • No obligation • Zero pressure • Honest advice
             </p>
             <a
               href={SITE.phoneHref}
@@ -101,9 +100,9 @@ export default function SellingPage() {
           </div>
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
-            <div id="offer-form" className="scroll-mt-28 rounded-[2px] border border-paper/15 bg-ink-soft/90 p-6 shadow-2xl backdrop-blur md:p-8">
-              <h2 className="font-display text-2xl text-paper">Get your cash offer &amp; home value</h2>
-              <p className="mb-5 mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">
+            <div id="offer-form" className="scroll-mt-28 border border-paper/20 bg-black/50 p-6 shadow-2xl backdrop-blur md:p-8">
+              <h2 className="text-xl font-bold text-paper">Get Your Cash Offer &amp; Home Value</h2>
+              <p className="mb-5 mt-1 text-xs tracking-wide text-paper/60">
                 Takes less than 60 seconds
               </p>
               <LeadForm
@@ -124,95 +123,100 @@ export default function SellingPage() {
       <section className="bg-paper py-16 md:py-24" aria-labelledby="paths-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Two ways to sell" align="center" as="h2">
-              <span id="paths-heading">Choose the path that&rsquo;s right for you</span>
+            <SectionHeading align="center" as="h2">
+              <span id="paths-heading">Choose the Path That&rsquo;s Right for You</span>
             </SectionHeading>
             <p className="mx-auto mt-4 max-w-xl text-center text-stone">
               Every home and situation is different. We offer two solutions so you get the outcome
-              that matters to you.
+              that matters most to you.
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-8 lg:grid-cols-2">
             {/* Path 1 — cash */}
             <Reveal>
-              <article className="flex h-full flex-col rounded-[2px] border-2 border-porchlight bg-white p-7 md:p-9">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-porchlight-deep">Path 01</p>
-                <h3 className="mt-2 font-display text-3xl text-ink">Fast cash offer</h3>
-                <p className="mt-2 text-stone">
-                  Cash in 15–30 days — built for homes that need work, or sellers who need speed.
+              <article className="flex h-full flex-col border border-[#dddddd] bg-white p-7 text-center md:p-8">
+                <span aria-hidden className="mx-auto grid h-9 w-9 place-items-center rounded-full border-2 border-ink text-sm font-bold text-ink">
+                  1
+                </span>
+                <h3 className="mt-4 text-xl font-bold uppercase tracking-wide text-ink">Fast Cash Offer</h3>
+                <p className="mt-2 text-sm text-stone">
+                  Get cash in 15–30 days — perfect for homes that need work or sellers who need
+                  speed.
                 </p>
-                <p className="mt-4 inline-block self-start rounded-[2px] bg-porchlight/15 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-porchlight-deep">
-                  Free cash offer in 24–48 hours
+                <p className="-mx-7 mt-5 bg-ink px-4 py-2.5 text-sm font-bold text-paper md:-mx-8">
+                  Free Cash offer in 24–48 hours
                 </p>
-                <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+                <ul className="mx-auto mt-6 grid gap-2.5 text-left sm:grid-cols-2">
                   {CASH_POINTS.map((p) => (
-                    <li key={p} className="flex items-start gap-2 text-sm text-ink">
-                      <span aria-hidden className="mt-0.5 text-porchlight-deep">✓</span> {p}
+                    <li key={p} className="flex items-start gap-2 text-sm text-ink-soft">
+                      <span aria-hidden className="mt-0.5 font-bold">✓</span> {p}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 border-t border-ink/10 pt-5">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone">Perfect if you have</p>
-                  <p className="mt-2 text-sm leading-relaxed text-stone">{CASH_FITS.join(" · ")}</p>
+                <div className="mt-6 border-t border-[#dddddd] pt-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone">Perfect if you have:</p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone">{CASH_FITS.join(" • ")}</p>
                 </div>
                 <div className="mt-auto pt-7">
-                  <Button href="#offer-form" size="lg">Get your free cash offer →</Button>
+                  <Button href="#offer-form" variant="outline">Get Your Free Cash Offer →</Button>
                 </div>
               </article>
             </Reveal>
 
             {/* Path 2 — listing */}
             <Reveal delay={120}>
-              <article className="flex h-full flex-col rounded-[2px] border border-ink/15 bg-ink p-7 text-paper md:p-9">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-porchlight">Path 02</p>
-                <h3 className="mt-2 font-display text-3xl">Traditional listing</h3>
-                <p className="mt-2 text-paper/70">
-                  Maximum value — built for move-in-ready homes and sellers with time on their side.
+              <article className="flex h-full flex-col border border-[#dddddd] bg-white p-7 text-center md:p-8">
+                <span aria-hidden className="mx-auto grid h-9 w-9 place-items-center rounded-full border-2 border-ink text-sm font-bold text-ink">
+                  2
+                </span>
+                <h3 className="mt-4 text-xl font-bold uppercase tracking-wide text-ink">Traditional Listing</h3>
+                <p className="mt-2 text-sm text-stone">
+                  Get maximum value — perfect for move-in-ready homes and sellers who have time.
                 </p>
-                <p className="mt-4 inline-block self-start rounded-[2px] bg-paper/10 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-porchlight">
+                <p className="-mx-7 mt-5 bg-ink px-4 py-2.5 text-sm font-bold text-paper md:-mx-8">
                   Get top market value
                 </p>
-                <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+                <ul className="mx-auto mt-6 grid gap-2.5 text-left sm:grid-cols-2">
                   {LIST_POINTS.map((p) => (
-                    <li key={p} className="flex items-start gap-2 text-sm">
-                      <span aria-hidden className="mt-0.5 text-porchlight">✓</span> {p}
+                    <li key={p} className="flex items-start gap-2 text-sm text-ink-soft">
+                      <span aria-hidden className="mt-0.5 font-bold">✓</span> {p}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 border-t border-paper/15 pt-5">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Perfect if you want</p>
-                  <p className="mt-2 text-sm leading-relaxed text-paper/70">{LIST_FITS.join(" · ")}</p>
+                <div className="mt-6 border-t border-[#dddddd] pt-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone">Perfect if you want:</p>
+                  <p className="mt-2 text-sm leading-relaxed text-stone">{LIST_FITS.join(" • ")}</p>
                 </div>
                 <div className="mt-auto pt-7">
-                  <Button href="#offer-form" variant="outline-light" size="lg">Get a free consultation →</Button>
+                  <Button href="#offer-form" variant="outline">Get Free Consultation →</Button>
                 </div>
               </article>
             </Reveal>
           </div>
 
-          {/* No-pressure banner */}
-          <Reveal className="mt-10">
-            <aside className="rounded-[2px] border border-ink/10 bg-mist px-6 py-8 text-center md:px-12">
-              <p className="font-display text-2xl text-ink">
-                Not sure which is best? <span className="text-porchlight-deep">We&rsquo;ll show you both — no pressure.</span>
+          {/* No-pressure banner — live: black band */}
+          <Reveal className="mt-12">
+            <aside className="bg-ink px-6 py-8 text-center text-paper md:px-12">
+              <p className="text-lg font-bold uppercase tracking-wide">
+                Not sure which option is best? We&rsquo;ll show you both — no pressure.
               </p>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-stone">
-                Tell us about your property and we&rsquo;ll give you honest advice on which path works
-                best for your situation.
+              <p className="mx-auto mt-2 max-w-2xl text-sm text-paper/70">
+                Tell us about your property and we&rsquo;ll give you honest advice on which path
+                works best for your situation.
               </p>
             </aside>
           </Reveal>
         </div>
       </section>
 
-      {/* ── Testimonials */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="clients-heading">
+      {/* ── Testimonials — live: white, small bold uppercase heading */}
+      <section className="bg-paper py-16 md:py-20" aria-labelledby="clients-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Google reviews" align="center" as="h2">
-              <span id="clients-heading">What our clients say</span>
-            </SectionHeading>
+            <h2 id="clients-heading" className="text-center text-xl font-bold uppercase tracking-[0.14em] text-ink">
+              What Our Clients Say
+            </h2>
           </Reveal>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t, i) => (
@@ -226,7 +230,7 @@ export default function SellingPage() {
               href={GOOGLE_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-river underline-offset-4 hover:underline"
+              className="text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
             >
               See all our Google reviews →
             </a>
@@ -238,20 +242,23 @@ export default function SellingPage() {
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="pricing-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Our pricing strategy" dark as="h2">
-              <span id="pricing-heading">Priced by the market, not by guesswork</span>
+            <SectionHeading dark as="h2">
+              <span id="pricing-heading">Our <strong className="font-bold">Pricing Strategy</strong></span>
             </SectionHeading>
+            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
+              We use the most accurate method to price your home
+            </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               The right price for your property is determined by current market conditions. We
               analyze <strong className="text-paper">15 comparable properties</strong> — five
               active, five pending, five sold — so your home hits the market at the number that
               sells, and you get the price you deserve.
             </p>
-            <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
+            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
               Want to know what your home is worth?
             </p>
             <div className="mt-7">
-              <Button href="#offer-form" size="lg">Get my home value &amp; cash offer ↑</Button>
+              <Button href="#offer-form" variant="light">Get My Home Value &amp; Cash Offer ↑</Button>
             </div>
           </Reveal>
 
@@ -309,9 +316,12 @@ export default function SellingPage() {
             </div>
           </Reveal>
           <Reveal className="order-1 lg:order-2">
-            <SectionHeading eyebrow="Making your listing shine" as="h2">
-              <span id="shine-heading">Photographs, virtual tours, 3D walkthroughs and video</span>
+            <SectionHeading as="h2">
+              <span id="shine-heading">Making Your Listing <strong className="font-bold">Shine</strong></span>
             </SectionHeading>
+            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+              Photographs, virtual tours, 3D walkthroughs and videos
+            </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               Today&rsquo;s buyers are armed with more information than ever. They tell their agents
               which homes they want to see — and skip listings with too few or poor-quality photos.
@@ -329,15 +339,16 @@ export default function SellingPage() {
         </div>
       </section>
 
-      <ValleyDivider />
-
       {/* ── Internet marketing */}
       <section className="bg-paper pb-16 pt-10 md:pb-24" aria-labelledby="marketing-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Innovative internet marketing" as="h2">
-              <span id="marketing-heading">Reach the 92% of buyers who search online</span>
+            <SectionHeading as="h2">
+              <span id="marketing-heading">Innovative <strong className="font-bold">Internet Marketing</strong></span>
             </SectionHeading>
+            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+              We know how to reach the 92% of buyers who search online
+            </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               We target our marketing strategy and resources to match where buyers are finding homes
               right now. The more places your property is marketed, the more buyers see it — and the
@@ -369,9 +380,12 @@ export default function SellingPage() {
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="loop-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Stay in the loop" dark as="h2">
-              <span id="loop-heading">Real-time updates until your home is sold</span>
+            <SectionHeading dark as="h2">
+              <span id="loop-heading">Stay in the Loop — <strong className="font-bold">Every Step of the Way</strong></span>
             </SectionHeading>
+            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
+              Real-time updates until your home is sold
+            </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               Most agents leave you in the dark. We believe in complete transparency: instant
               updates on showings, offers, and buyer feedback through our online portal — you know
@@ -379,9 +393,9 @@ export default function SellingPage() {
               &ldquo;what&rsquo;s going on?&rdquo;
             </p>
             <div className="mt-7">
-              <Button href="#offer-form" size="lg">Get your free cash offer &amp; analysis ↑</Button>
+              <Button href="#offer-form" variant="light">Get Your Free Cash Offer &amp; Analysis ↑</Button>
             </div>
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">
+            <p className="mt-3 text-xs tracking-wide text-paper/60">
               Takes less than 60 seconds · No obligation
             </p>
           </Reveal>
