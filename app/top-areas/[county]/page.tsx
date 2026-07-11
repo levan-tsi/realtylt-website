@@ -9,7 +9,7 @@ import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { COUNTY_CONTENT, getCounty } from "@/content/counties";
 import { fmtM } from "@/lib/format";
-import { getIdxClient, isFixtureMode } from "@/lib/idx";
+import { getIdxClient, isSampleData } from "@/lib/idx";
 import { SITE, type CountySlug } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -36,7 +36,7 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
   if (!c) notFound();
 
   const result = await getIdxClient().search({ county: c.slug as CountySlug, pageSize: 6 });
-  const fixture = isFixtureMode();
+  const fixture = isSampleData();
 
   return (
     <>

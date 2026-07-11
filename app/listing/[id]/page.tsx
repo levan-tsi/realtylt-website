@@ -9,7 +9,7 @@ import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
-import { getIdxClient, isFixtureMode } from "@/lib/idx";
+import { getIdxClient, isFixtureMode, isSampleData } from "@/lib/idx";
 import { COUNTIES, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 
@@ -164,7 +164,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             <p className="mt-8 rounded-[2px] bg-mist px-4 py-3 text-sm text-stone">
               Listed with <strong className="text-ink">{l.listOfficeName}</strong> · Source: {l.originatingSystem}
             </p>
-            <MlsAttribution dataLastUpdated={l.modificationTimestamp} fixtureMode={isFixtureMode()} className="mt-4" />
+            <MlsAttribution dataLastUpdated={l.modificationTimestamp} fixtureMode={isSampleData()} className="mt-4" />
           </div>
 
           {/* Contact CTA */}

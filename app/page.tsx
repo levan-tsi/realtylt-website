@@ -10,7 +10,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { TESTIMONIALS } from "@/content/testimonials";
-import { getIdxClient, isFixtureMode } from "@/lib/idx";
+import { getIdxClient, isSampleData } from "@/lib/idx";
 import { COUNTIES } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
@@ -43,8 +43,8 @@ const WHY_US = [
 
 export default async function HomePage() {
   const idx = getIdxClient();
-  const fixture = isFixtureMode();
   const [featured, fresh] = await Promise.all([idx.getFeatured(8), idx.getNew(8)]);
+  const fixture = isSampleData(); // after the awaits — reflects what was actually served
   const dataLastUpdated =
     [...featured, ...fresh].map((l) => l.modificationTimestamp).sort().pop() ??
     new Date().toISOString();

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { DEFAULT_PAGE_SIZE, getIdxClient, isFixtureMode, MAX_PAGE_SIZE } from "@/lib/idx";
+import { DEFAULT_PAGE_SIZE, getIdxClient, isSampleData, MAX_PAGE_SIZE } from "@/lib/idx";
 import type { PropertyType, SearchParams, SortKey } from "@/lib/idx";
 import { COUNTIES, type CountySlug } from "@/lib/site";
 
@@ -37,7 +37,7 @@ export async function GET(req: Request) {
 
   try {
     const result = await getIdxClient().search(params);
-    return NextResponse.json({ ...result, fixtureMode: isFixtureMode() });
+    return NextResponse.json({ ...result, fixtureMode: isSampleData() });
   } catch (e) {
     console.error("[idx/search]", e);
     return NextResponse.json({ error: "Search is temporarily unavailable." }, { status: 502 });

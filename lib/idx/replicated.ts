@@ -26,6 +26,7 @@ export class ReplicatedIdxClient implements IdxClient {
   private listings: Listing[] = [];
   /** Replication timestamp — the compliant "Data last updated" for IDX surfaces. */
   private syncedAt = "";
+  private fixtureFallback = false;
   private loadedAt = 0;
   private loading: Promise<void> | null = null;
   private snapshotUrl: string | null = null;
@@ -78,6 +79,7 @@ export class ReplicatedIdxClient implements IdxClient {
         console.error("[idx-replicated] no snapshot yet — serving fixture sample data");
         this.listings = [...FIXTURE_LISTINGS];
         this.syncedAt = "";
+        this.fixtureFallback = true; // surfaces the on-page "sample data" notice (isSampleData)
       }
     }
     this.maybeTriggerSync();
@@ -99,6 +101,12 @@ export class ReplicatedIdxClient implements IdxClient {
     this.listings = snap.listings;
     this.syncedAt = snap.syncedAt;
     this.loadedAt = Date.now();
+    this.fixtureFallback = false;
+  }
+
+  /** True while the last load left us on the fixture fallback (no readable snapshot). */
+  get servingFixture(): boolean {
+    return this.fixtureFallback;
   }
 
   /** Fire ONE background sync when the snapshot is stale — plan-agnostic freshness

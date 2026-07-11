@@ -33,3 +33,11 @@ export function getIdxClient(): IdxClient {
     return (liveClient ??= new MlsGridClient());
   return (fixtureClient ??= new FixtureIdxClient());
 }
+
+/** True when the data being SERVED is sample data — env-level fixture mode OR the
+ * replicated client's last-resort fixture fallback (no readable snapshot yet). Drives the
+ * on-page "sample data" notice honestly in both cases. Call AFTER awaiting the data you
+ * are labeling — the fallback state is set during loads. */
+export function isSampleData(): boolean {
+  return isFixtureMode() || (replicatedClient?.servingFixture ?? false);
+}
