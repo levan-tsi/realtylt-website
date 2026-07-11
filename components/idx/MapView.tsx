@@ -40,7 +40,7 @@ export default function MapView({ listings }: { listings: Listing[] }) {
         listing: l,
         icon: divIcon({
           className: "",
-          html: `<span style="display:inline-block;transform:translate(-50%,-100%);background:#101820;color:#E8B04B;font:600 11px/1 'Spline Sans Mono',monospace;padding:5px 7px;border-radius:2px;white-space:nowrap;box-shadow:0 2px 8px rgb(0 0 0/.35)">${shortPrice(l.price)}</span>`,
+          html: `<span style="display:inline-block;transform:translate(-50%,-100%);background:#000;color:#fff;font:700 11px/1 Lato,Helvetica,Arial,sans-serif;padding:5px 8px;white-space:nowrap;box-shadow:0 2px 8px rgb(0 0 0/.3)">${shortPrice(l.price)}</span>`,
           iconSize: [0, 0],
         }),
       })),
@@ -50,7 +50,7 @@ export default function MapView({ listings }: { listings: Listing[] }) {
   return (
     <div className="relative h-full min-h-96 w-full">
       {/* The live feed carries no coordinates — pins sit at zip-centroid (approximate). */}
-      <p className="pointer-events-none absolute bottom-1 left-1 z-[500] bg-white/85 px-1.5 py-0.5 text-[10px] text-stone">
+      <p className="pointer-events-none absolute bottom-2 left-2 z-[500] border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
         Locations approximate
       </p>
     <MapContainer
@@ -74,7 +74,7 @@ export default function MapView({ listings }: { listings: Listing[] }) {
                 {l.address}, {l.city} {l.zip}
               </p>
               <p style={{ margin: "4px 0", fontSize: 11, color: "#6E7681" }}>Listed with {l.listOfficeName}</p>
-              <Link href={`/listing/${l.id}`} style={{ color: "#2B6CB0", fontWeight: 700 }}>
+              <Link href={`/listing/${l.id}`} style={{ color: "#102c54", fontWeight: 700 }}>
                 View listing →
               </Link>
             </div>
