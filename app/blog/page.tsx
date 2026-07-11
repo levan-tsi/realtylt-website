@@ -69,7 +69,9 @@ export default function BlogIndexPage() {
           {/* Grid — live: photo, centered date, centered bold title */}
           <ul className="mt-14 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p, i) => (
-              <Reveal key={p.slug} as="li" delay={(i % 3) * 100}>
+              // min-w-0 lets the truncated title actually truncate (grid items default to
+              // min-width:auto → the nowrap H2 forced ~816px width + horizontal scroll @390).
+              <Reveal key={p.slug} as="li" delay={(i % 3) * 100} className="min-w-0">
                 <article className="group relative h-full text-center">
                   <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10" aria-label={p.title} />
                   <div className="photo-zoom relative aspect-[16/11] overflow-hidden">

@@ -19,11 +19,11 @@ const pressed = await page.locator('button[aria-pressed="true"]').count();
 if (pressed < 1) fail("heart did not toggle");
 else console.log("OK heart toggled");
 
-// 2. Header badge shows 1
+// 2. Header saved link shows the count — rendered as text "Saved (1)", not a badge span
 await page.waitForTimeout(300);
-const badge = await page.locator('a[href="/saved"] span').last().textContent();
-if (badge?.trim() !== "1") fail(`header badge expected 1, got "${badge}"`);
-else console.log("OK header badge = 1");
+const badge = await page.locator('a[href="/saved"]').first().textContent();
+if (!badge?.includes("(1)")) fail(`header saved count expected "(1)", got "${badge?.trim()}"`);
+else console.log("OK header saved count = (1)");
 
 // 3. Save the search (with a county filter applied first)
 await page.getByRole("button", { name: /Dutchess County/i }).click();

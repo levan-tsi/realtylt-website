@@ -13,8 +13,8 @@ const navVisible = await page.locator('nav[aria-label="Mobile"]').isVisible();
 console.log(navVisible ? "OK mobile menu opens" : "FAIL mobile menu");
 await page.locator('button[aria-label="Close menu"]').click();
 
-// Calculator default = live worked example
-const out = page.locator('p.font-mono.text-5xl');
+// Calculator default = live worked example (result <p> lives in the aria-live output panel)
+const out = page.locator('[aria-live="polite"] p').first();
 const def = (await out.textContent())?.trim();
 console.log(def === "$3,198.20" ? "OK default $3,198.20" : `FAIL default: ${def}`);
 

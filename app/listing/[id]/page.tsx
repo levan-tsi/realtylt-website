@@ -59,7 +59,8 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         addressRegion: "NY",
         postalCode: l.zip,
       },
-      geo: { "@type": "GeoCoordinates", latitude: l.lat, longitude: l.lng },
+      // Feed rows without coordinates (zip-centroid mode) must not claim geo 0,0.
+      ...(l.lat && l.lng ? { geo: { "@type": "GeoCoordinates", latitude: l.lat, longitude: l.lng } } : {}),
     },
     offers: {
       "@type": "Offer",

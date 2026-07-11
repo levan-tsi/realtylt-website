@@ -165,3 +165,32 @@ verified in detail; no horizontal scroll anywhere (QA suite).
   prod alias https://realtylt-website.vercel.app; then node scripts/final-probe.mjs.
 - Cleanup candidates: components/idx/ListingCarousel.tsx is now fully orphaned (home
   rails use inline snap-scroll); scripts/extract-live-tokens*.mjs are one-offs.
+
+## ROUND 3 (FINAL) — MEASURED-PARITY PASS (2026-07-11) — sheets in docs/final/compare + compare-m
+
+Ground truth via getComputedStyle probes on LIVE (not sheets): global content container is
+~1186px @1280 (ours was 1088 = max-w-6xl) → all page containers now `max-w-[1250px]`
+(px-4/lg:px-8 ⇒ 1186 content; blog untouched). Home: live hero h1 sits at y=796 with a
+~670px photo band and 70-72px search-strip controls → min-h-[655px] md band, py-[23px]
+controls; live home-rail tiles are PORTRAIT 283×450 (aspect 63/100, not 20/19), grids span
+~1220; rail headings + testimonial quote are Lato 36px **w700** (info headings stay w300 —
+SectionHeading got a `bold` prop); home-value section pads are 60px (not 96). Hero photo:
+live rotates B&W lifestyle shots at region luminance ~79 → valley-aerial grayscale +
+black/30 measures ~80 (hudson-twilight was 45 — too dark).
+
+Page heroes measured & applied: buying pad 154px / title 45px w700; selling pad 154px /
+title 50px w300; connect pad 51px / title 46px centered (the earlier "left-aligned"
+reading was the h2's box edge, text-align:center is correct); financing pad 192px / title
+46px. Home-value: live headline is **Montserrat 64px w700** — the "serif" in every earlier
+headless capture was a FONT-FALLBACK ARTIFACT (headless Chromium doesn't load Brivity's
+Montserrat). Rebuilt: Lato-bold 64px + near-full-height BRIGHT hero (live luminance 88;
+ours ~95 via opacity-95 + black/15) + 21px subline. Map: pins restyled on-brand
+(black/Lato; were amber mono), "Locations approximate" chip made intentional.
+
+Similarity after this round (vs fresh live captures @1280): home ~95, search ~95 (r2),
+buying ~94, selling ~94, financing ~93, home-value ~95, connect ~95, top-areas/who-we-are
+n/a (no live equivalent — ours richer by design), reviews/saved/404 n/a. Remaining gap
+everywhere = live's Brivity product-mockup ASSETS (laptop/phone screenshots on
+buying/selling/financing/home "Why Work With Us") — recorded deviation, not reproducible
+without Brivity artwork. Mobile 390 sheets re-captured for all 7 core pages
+(docs/final/compare-m) — clean, no overflow.
