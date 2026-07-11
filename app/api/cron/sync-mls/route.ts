@@ -6,6 +6,7 @@ import {
   PHOTO_PREFIX,
   planPhotoFetches,
   SNAPSHOT_PATHNAME,
+  SYNC_STATE_PATHNAME,
 } from "@/lib/idx/replication";
 
 /** Scheduled MLS replication (Vercel Cron + stale-triggered self-calls; see vercel.json
@@ -29,6 +30,7 @@ const DEFAULT_PHOTO_BUDGET = 150;
 const PHOTO_GAP_MS = 250; // pace media CDN requests
 const TIME_BUDGET_MS = 240_000; // leave headroom under maxDuration for the final put
 const MIN_SYNC_GAP_MS = 5 * 60_000; // overlapping triggers must not double-hit MLS Grid
+const ATTEMPT_GAP_MS = 10 * 60_000; // global gap between MLS attempts, success OR failure
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -49,12 +51,29 @@ export async function GET(req: Request) {
     Math.max(0, Number(q.get("photoBudget") ?? process.env.MLS_PHOTO_BUDGET ?? DEFAULT_PHOTO_BUDGET) || 0),
   );
 
-  // Freshness guard — cheap (blob metadata only), keeps concurrent triggers single-flight.
+  const force = q.get("force") === "1"; // manual operator override — NEVER script in a loop
+  // Guard 1 — snapshot freshness (cheap: blob metadata only).
   const existing = await list({ prefix: SNAPSHOT_PATHNAME, limit: 1 });
   const prevUploadedAt = existing.blobs[0]?.uploadedAt;
-  if (q.get("force") !== "1" && prevUploadedAt && Date.now() - +new Date(prevUploadedAt) < MIN_SYNC_GAP_MS) {
+  if (!force && prevUploadedAt && Date.now() - +new Date(prevUploadedAt) < MIN_SYNC_GAP_MS) {
     return NextResponse.json({ skipped: "snapshot is fresh", uploadedAt: prevUploadedAt });
   }
+  // Guard 2 — GLOBAL attempt claim, shared by every serverless instance via Blob. MLS Grid
+  // blocks the whole ACCOUNT when concurrent syncs push past 2 req/sec (and touching the
+  // API while blocked re-arms the block), so at most one attempt — success OR failure —
+  // is allowed per ATTEMPT_GAP_MS cluster-wide. The claim is written BEFORE replicating.
+  const claim = await list({ prefix: SYNC_STATE_PATHNAME, limit: 1 });
+  const lastAttempt = claim.blobs[0]?.uploadedAt;
+  if (!force && lastAttempt && Date.now() - +new Date(lastAttempt) < ATTEMPT_GAP_MS) {
+    return NextResponse.json({ skipped: "a sync was attempted recently", lastAttempt }, { status: 202 });
+  }
+  await put(SYNC_STATE_PATHNAME, JSON.stringify({ attemptAt: new Date().toISOString() }), {
+    access: "public",
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: "application/json",
+    cacheControlMaxAge: 60,
+  });
 
   // 1. Replicate listing data. On failure the previous snapshot stays in place untouched.
   let replicated;

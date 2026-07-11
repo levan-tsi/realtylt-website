@@ -131,6 +131,26 @@ bio), reviews/saved/404 = no live equivalent (neutral restyle). Mobile 390 sheet
 captured for home/search/selling/buying/financing/homevalue/connect — selling+home
 verified in detail; no horizontal scroll anywhere (QA suite).
 
+## ROUND 2 REFINEMENT PASS (2026-07-11) — sheets in docs/round2/compare
+
+- **/search — hybrid list+map is now the DEFAULT** (live pins `view=hybrid_view`): 2-col
+  card list left + sticky Leaflet map right at lg; `?view=grid` keeps the grid and is the
+  only view value written to the URL (map = default = clean URL). Mobile: cards stack,
+  map renders below at 55vh — verified at 390, no overflow. Filter bar now fits ONE row
+  at 1280 (input basis-44, gap-x-4, buttons px-4) with SAVE SEARCH inside the bar like live.
+- **/connect hero flipped to live's LIGHT band** — washed photo (opacity-70 + white/50
+  overlay) with dark `text-ink-soft` title on bg-mist (was dark w/ white text).
+- **/buying hero** py-28 md:py-36 (was py-20/24) — live's band is ~1.5-2x taller.
+- **/financing checked, NOT changed**: the sheet again suggested a white Pre-Approval band;
+  getComputedStyle proves section bg rgb(0,0,0) — the Round-1 lesson holds (sheets can lie
+  at scale; computed styles are ground truth).
+- Mobile 390 sheet-checks done for the previously unchecked pages: county page
+  (top-areas/dutchess) + /reviews — clean, no overflow (docs/round2/*-390.png).
+- Similarity after this round (vs fresh live captures @1280): search ~95 (hybrid default
+  closed the biggest structural gap), connect ~94, buying ~93, home/selling/home-value
+  unchanged ~92-93, financing ~90 (remaining gap = live's laptop/phone mockup assets we
+  don't have — recorded deviation).
+
 ## NEXT STEP FOR SUCCESSOR
 
 - Optional remaining polish: live "Why Work With Us" product-screenshot carousel has no

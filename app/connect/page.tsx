@@ -34,8 +34,8 @@ const MEETINGS = [
 export default function ConnectPage() {
   return (
     <>
-      {/* ── Hero — live: thin photo band, centered "Contact Us Anytime" */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="connect-hero">
+      {/* ── Hero — live: thin LIGHT photo band (washed-out image), dark centered title */}
+      <section className="relative isolate overflow-hidden bg-mist" aria-labelledby="connect-hero">
         <div className="absolute inset-0">
           <Image
             src="/images/lifestyle/buying.jpg"
@@ -43,12 +43,12 @@ export default function ConnectPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-60"
+            className="object-cover object-center opacity-70"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-white/50" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 py-14 text-center lg:px-8">
-          <h1 id="connect-hero" className="text-3xl font-light text-paper md:text-4xl">
+          <h1 id="connect-hero" className="text-3xl font-light text-ink-soft md:text-4xl">
             Contact Us <strong className="font-bold">Anytime</strong>
           </h1>
         </div>

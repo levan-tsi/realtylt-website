@@ -61,14 +61,15 @@ function fromParams(sp: URLSearchParams): Filters {
     propertyType: sp.get("propertyType") ?? "",
     sort: sp.get("sort") ?? "newest",
     page: Math.max(1, Number(sp.get("page")) || 1),
-    view: sp.get("view") === "map" ? "map" : "grid",
+    // Live realtylt.com defaults /search to the hybrid list+map view.
+    view: sp.get("view") === "grid" ? "grid" : "map",
   };
 }
 
 function toQuery(f: Filters, forApi: boolean): string {
   const sp = new URLSearchParams();
   for (const [k, v] of Object.entries(f)) {
-    if (k === "view" && forApi) continue;
+    if (k === "view" && (forApi || v === "map")) continue; // hybrid (map) is the default view
     if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "newest" && forApi === false))
       continue;
     sp.set(k, String(v));
@@ -154,9 +155,9 @@ export function SearchClient() {
           e.preventDefault();
           apply({ q: qInput.current?.value ?? "" });
         }}
-        className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
+        className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
       >
-        <div className="min-w-52 grow basis-64">
+        <div className="min-w-40 grow basis-44">
           <label htmlFor="search-q" className="sr-only">
             Location — town, ZIP, or address
           </label>
@@ -214,14 +215,14 @@ export function SearchClient() {
 
         <button
           type="submit"
-          className="rounded-[4px] bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Search
         </button>
         <button
           type="button"
           onClick={onSaveSearch}
-          className="rounded-[4px] bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           ♥ Save Search
         </button>
@@ -337,7 +338,7 @@ export function SearchClient() {
               </li>
             ))}
           </ul>
-          <div className="overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
+          <div className="h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
             <MapView listings={listings} />
           </div>
         </div>

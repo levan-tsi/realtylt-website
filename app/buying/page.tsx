@@ -28,7 +28,7 @@ export default function BuyingPage() {
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-20 text-center md:py-24 lg:px-8">
+        <div className="relative mx-auto max-w-6xl px-4 py-28 text-center md:py-36 lg:px-8">
           <h1 id="buying-hero" className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-paper md:text-4xl">
             Ready to Find Your Dream Home?
           </h1>
