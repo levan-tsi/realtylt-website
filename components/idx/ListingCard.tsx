@@ -25,10 +25,66 @@ export function NoPhoto() {
  * dark bottom gradient with white price / address / beds|baths|sqft, "Listed With
  * <office>" (compliance) and a black View chip. Heart save + status badge on top.
  * Whole card links to the listing. */
-export function ListingCard({ listing, priority = false }: { listing: Listing; priority?: boolean }) {
+export function ListingCard({
+  listing,
+  priority = false,
+  variant = "overlay",
+}: {
+  listing: Listing;
+  priority?: boolean;
+  /** "overlay" = home-page tile (text on photo); "plain" = live search-results card (white body). */
+  variant?: "overlay" | "plain";
+}) {
   const l = listing;
   const badge =
     l.status !== "Active" ? l.status : l.openHouse ? "Open House" : null;
+
+  if (variant === "plain") {
+    return (
+      <article className="lift group relative overflow-hidden border border-[#dddddd] bg-white">
+        <Link
+          href={`/listing/${l.id}`}
+          className="absolute inset-0 z-10"
+          aria-label={`${l.address}, ${l.city} — ${formatPrice(l.price)}`}
+        />
+        <div className="photo-zoom relative aspect-[3/2] overflow-hidden bg-mist">
+          {l.photos[0] ? (
+            <Image
+              src={l.photos[0]}
+              alt={`${l.address}, ${l.city}, NY`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              priority={priority}
+              className="object-cover"
+            />
+          ) : (
+            <NoPhoto />
+          )}
+          {badge && (
+            <span className="absolute left-0 top-3 bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper">
+              {badge}
+            </span>
+          )}
+          <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
+        </div>
+        <div className="p-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-2xl font-bold text-ink">{formatPrice(l.price)}</p>
+            <p className="shrink-0 text-xs text-stone">
+              {l.beds} Bed • {l.baths} Bath • {l.sqft.toLocaleString("en-US")} Sq. Ft.
+            </p>
+          </div>
+          <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
+          <p className="text-sm italic text-ink-soft">
+            {l.city}, {l.state} {l.zip}
+          </p>
+          <p className="mt-2 text-[11px] text-stone">
+            Listed with <span className="font-bold">{l.listOfficeName}</span>
+          </p>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <article className="lift group relative overflow-hidden bg-white">
