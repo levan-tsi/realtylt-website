@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
 export default function FinancingPage() {
   return (
     <>
-      {/* ── Hero */}
+      {/* ── Hero — live: light photo, centered "The Home Loan Process" */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="financing-hero">
         <div className="absolute inset-0">
           <Image
@@ -25,59 +24,74 @@ export default function FinancingPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-30"
+            className="object-cover opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/50" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28 lg:px-8">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-porchlight">Financing</p>
-          <h1 id="financing-hero" className="mt-3 max-w-2xl font-display text-4xl font-semibold leading-[1.08] tracking-tight text-paper md:text-6xl">
-            The home loan process, <span className="text-porchlight">demystified</span>
+        <div className="relative mx-auto max-w-6xl px-4 py-24 text-center md:py-28 lg:px-8">
+          <h1 id="financing-hero" className="text-3xl font-light text-paper md:text-4xl">
+            The Home Loan <strong className="font-bold">Process</strong>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-paper/80">
-            If you haven&rsquo;t experienced it before, a mortgage can feel overwhelming. Our agents
-            keep you informed from pre-approval to closing — and if you don&rsquo;t already have a
-            mortgage specialist, we&rsquo;ll introduce you to some of the best lenders in the
-            business.
-          </p>
         </div>
       </section>
 
-      {/* ── Get pre-approval */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="preapproval-heading">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
+      {/* ── Demystifying intro */}
+      <section className="bg-paper py-16 md:py-20" aria-labelledby="demystify-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Step one" as="h2">
-              <span id="preapproval-heading">Get pre-approval</span>
+            <SectionHeading align="center" as="h2">
+              <span id="demystify-heading">Demystifying Home Loans</span>
             </SectionHeading>
-            <p className="mt-5 max-w-lg leading-relaxed text-stone">
-              Before you start looking for a home, meet with your loan officer and get pre-approved.
-              The lender reviews your income, assets, and debts to determine how much house you can
-              afford — a credit report, W-2 forms, pay stubs, federal tax returns, and recent bank
-              statements.
+            <p className="mx-auto mt-6 max-w-3xl text-center leading-relaxed text-stone">
+              If you haven&rsquo;t experienced it before, the home loan process can feel
+              overwhelming, but our agents will help you stay informed throughout the process, from
+              pre-approval to closing. The first thing to do is consult with a mortgage specialist
+              (or two). If you don&rsquo;t already have someone in mind, we partner with some of
+              the best lenders in the industry, and we&rsquo;d be happy to introduce you, so
+              you&rsquo;ll be taken care of.
             </p>
-            <p className="mt-4 max-w-lg leading-relaxed text-stone">
-              There are a variety of loan programs, so make sure to get pre-qualification for the
-              specific programs that best suit your needs.
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Get pre-approval — live: black section, white letter card */}
+      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="preapproval-heading">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
+          <Reveal>
+            <h2 id="preapproval-heading" className="text-3xl font-light md:text-4xl">
+              Get <strong className="font-bold">Pre-Approval</strong>
+            </h2>
+            <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
+              Before you start looking for a home to buy, it&rsquo;s a good idea to meet with your
+              Loan Officer to get pre-approved for a loan amount. At this stage, the lender gathers
+              information about income, assets and debts of the borrower (you) to determine how
+              much house you may be able to afford. This includes a credit report, W-2 forms, pay
+              stubs, Federal Tax Returns and recent bank statements.
+            </p>
+            <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
+              There are a variety of different loan programs, so make sure to get
+              pre-qualification for the specific programs that best suit your needs.
             </p>
           </Reveal>
           <Reveal delay={140}>
             {/* Pre-approval letter card */}
-            <figure className="mx-auto max-w-sm rounded-[2px] border border-ink/10 bg-white p-8 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.3)]" aria-label="Sample pre-approval letter">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone">Loan pre-approval letter</p>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-stone">Loan amount</p>
-              <p className="font-mono text-3xl font-semibold text-ink">$455,000</p>
-              <div className="mt-4 grid grid-cols-2 gap-4 border-t border-ink/10 pt-4">
+            <figure className="mx-auto max-w-sm bg-white p-8 shadow-2xl" aria-label="Sample pre-approval letter">
+              <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-stone">
+                Loan Pre-Approval Letter
+              </p>
+              <p className="mt-5 text-center text-xs uppercase tracking-[0.14em] text-stone">Loan amount</p>
+              <p className="text-center text-3xl font-bold text-ink">$455,000</p>
+              <div className="mt-5 grid grid-cols-2 gap-4 border-t border-[#dddddd] pt-4 text-center">
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">Monthly payment</p>
-                  <p className="font-mono text-lg text-ink">$3,500</p>
+                  <p className="text-xs uppercase tracking-[0.14em] text-stone">Monthly payment</p>
+                  <p className="text-lg text-ink">$3,500</p>
                 </div>
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">Term</p>
-                  <p className="font-mono text-lg text-ink">30 years</p>
+                  <p className="text-xs uppercase tracking-[0.14em] text-stone">Term</p>
+                  <p className="text-lg text-ink">30 years</p>
                 </div>
               </div>
-              <p className="mt-6 inline-block -rotate-3 rounded-[2px] border-2 border-porchlight-deep px-3 py-1 font-mono text-sm font-bold uppercase tracking-[0.18em] text-porchlight-deep">
+              <p className="mx-auto mt-6 w-fit -rotate-3 border-2 border-red-600 px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] text-red-600">
                 Approved
               </p>
             </figure>
@@ -85,102 +99,97 @@ export default function FinancingPage() {
         </div>
       </section>
 
-      {/* ── Calculator */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="calc-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      {/* ── Calculator — live: black inputs panel + light results panel */}
+      <section className="bg-paper py-16 md:py-20" aria-labelledby="calc-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Do the math" dark as="h2">
-              <span id="calc-heading">Estimate your monthly payment</span>
-            </SectionHeading>
-            <p className="mt-4 max-w-xl text-paper/70">
-              Principal and interest, taxes, HOA, and private mortgage insurance — the whole
-              monthly picture, not just the loan.
-            </p>
-          </Reveal>
-          <Reveal delay={120} className="mt-10">
             <MortgageCalculator />
           </Reveal>
         </div>
       </section>
 
       {/* ── Best loan / lender connect */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="loan-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
+      <section className="bg-paper pb-16 md:pb-24" aria-labelledby="loan-heading">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Start the process" as="h2">
-              <span id="loan-heading">Helping you get the best loan</span>
-            </SectionHeading>
-            <p className="mt-5 max-w-lg leading-relaxed text-stone">
-              We&rsquo;ll help you find the best local loan officer to get you competitive rates and
-              the programs that fit your individual needs. Fill out this form and we&rsquo;ll
-              connect you with a lender today — no cost, no commitment.
+            <h2 id="loan-heading" className="text-3xl font-light text-ink md:text-4xl">
+              Helping You Get The Best <strong className="font-bold">Loan</strong>
+            </h2>
+            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+              Start the process
             </p>
-            <ul className="mt-6 space-y-2 text-sm text-ink">
+            <p className="mt-4 max-w-lg leading-relaxed text-stone">
+              We&rsquo;ll help you find the best local loan officer to get you competitive rates
+              and the programs that best fit your individual needs. Fill out this form and
+              we&rsquo;ll connect you with a lender today!
+            </p>
+            <ul className="mt-6 space-y-2 text-sm text-ink-soft">
               {[
                 "Local lenders who know Hudson Valley closings",
                 "Rate and program comparison, explained plainly",
                 "First-time buyer and renovation programs included",
               ].map((li) => (
                 <li key={li} className="flex items-start gap-2">
-                  <span aria-hidden className="mt-0.5 text-porchlight-deep">✓</span> {li}
+                  <span aria-hidden className="mt-0.5 font-bold">✓</span> {li}
                 </li>
               ))}
             </ul>
           </Reveal>
           <Reveal delay={140}>
-            <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-8">
-              <h3 className="font-display text-2xl text-ink">Let&rsquo;s get started</h3>
-              <p className="mb-5 mt-1 text-sm text-stone">We&rsquo;ll introduce you to a lender within one business day.</p>
-              <LeadForm
-                defaultReason="I'm interested in buying a home"
-                submitLabel="Let's Get Started"
-                successTitle="On it."
-                successBody="We'll reach out shortly to connect you with the right lender."
-              />
-            </div>
+            <LeadForm
+              defaultReason="I'm interested in buying a home"
+              submitLabel="Let's Get Started"
+              successTitle="On it."
+              successBody="We'll reach out shortly to connect you with the right lender."
+            />
           </Reveal>
         </div>
       </section>
 
-      <ValleyDivider />
+      {/* ── Application & processing — live: light gray section */}
+      <section className="bg-mist py-16 md:py-24" aria-labelledby="apply-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <Reveal>
+            <h2 id="apply-heading" className="text-3xl font-light text-ink md:text-4xl">
+              Application &amp; <strong className="font-bold">Processing</strong>
+            </h2>
+            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+              What happens when a loan goes &ldquo;live&rdquo;
+            </p>
+            <p className="mt-4 max-w-2xl leading-relaxed text-stone">
+              When you find a property you&rsquo;re ready to buy, your lender will help you
+              complete a full mortgage loan application, and talk you through the various fees and
+              down payment options. The application is submitted to processing, where the
+              documents are reviewed and appraisals and title examination is ordered. Then, the
+              loan is sent to an underwriter, who reviews and approves the entire loan if it meets
+              compliance.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-      {/* ── Application & processing / closing */}
-      <section className="bg-paper pb-16 pt-10 md:pb-24" aria-labelledby="process-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <h2 id="process-heading" className="sr-only">
-            What happens after you apply
-          </h2>
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Reveal>
-              <article className="h-full rounded-[2px] border border-ink/10 bg-mist p-7 md:p-9">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-river">When a loan goes live</p>
-                <h3 className="mt-2 font-display text-2xl text-ink">Application &amp; processing</h3>
-                <p className="mt-4 leading-relaxed text-stone">
-                  When you find a property you&rsquo;re ready to buy, your lender helps you complete
-                  a full mortgage application and talks you through fees and down-payment options.
-                  The application goes to processing — documents are reviewed, appraisals and title
-                  examination are ordered — then to an underwriter, who reviews and approves the
-                  loan if it meets compliance.
-                </p>
-              </article>
-            </Reveal>
-            <Reveal delay={120}>
-              <article className="h-full rounded-[2px] border border-ink/15 bg-ink p-7 text-paper md:p-9">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-porchlight">Signing &amp; finalizing</p>
-                <h3 className="mt-2 font-display text-2xl">Closing</h3>
-                <p className="mt-4 leading-relaxed text-paper/75">
-                  Don&rsquo;t be surprised if you&rsquo;re asked for additional documentation along
-                  the way — it&rsquo;s normal. Once your loan is approved, set up homeowners
-                  insurance; your documents go to the title company, you sign for the new home and
-                  pay any remaining costs, and the loan is recorded. You get the keys.{" "}
-                  <strong className="text-porchlight">Congratulations, happy homeowner.</strong>
-                </p>
-                <div className="mt-6">
-                  <Button href="/buying" variant="outline-light">See the full buying process</Button>
-                </div>
-              </article>
-            </Reveal>
-          </div>
+      {/* ── Closing — live: black section */}
+      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="closing-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <Reveal>
+            <h2 id="closing-heading" className="text-3xl font-light md:text-4xl">
+              <strong className="font-bold">Closing</strong>
+            </h2>
+            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
+              Signing and finalizing the deal
+            </p>
+            <p className="mt-4 max-w-2xl leading-relaxed text-paper/75">
+              Don&rsquo;t be surprised if you&rsquo;re asked for additional documentation or
+              clarification throughout the process. Once your loan is approved, don&rsquo;t forget
+              to set up homeowners insurance. Your documents will be sent to the title company,
+              where you&rsquo;ll sign for the new home and pay any remaining costs. Then, the loan
+              is recorded and you get the keys.{" "}
+              <strong className="font-bold text-paper">Congratulations, happy homeowner!</strong>
+            </p>
+            <div className="mt-7">
+              <Button href="/buying" variant="outline-light">See The Full Buying Process</Button>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>

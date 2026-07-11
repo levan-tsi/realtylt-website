@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { SITE } from "@/lib/site";
 
@@ -12,85 +12,122 @@ export const metadata: Metadata = {
 
 const MEETINGS = [
   {
-    title: "In-person strategy session",
-    length: "30 min · in person",
-    body: "Sit down together and map out a personalized strategy for your purchase or sale — neighborhoods, numbers, and next steps.",
+    title: "In-Person Real Estate Strategy Session",
+    length: "30 min",
+    kind: "In-person meeting",
+    body: "Let's sit down together to create a personalized strategy for your real estate success — neighborhoods, numbers, and next steps.",
   },
   {
-    title: "Virtual consultation",
-    length: "30 min · video call",
-    body: "The same conversation, face-to-face from anywhere. Perfect if you're relocating to the Hudson Valley from the city or out of state.",
+    title: "Virtual Real Estate Consultation",
+    length: "30 min",
+    kind: "Video conference",
+    body: "Connect face-to-face virtually to achieve your real estate goals. Perfect if you're relocating to the Hudson Valley from the city or out of state.",
   },
   {
-    title: "Introductory discovery call",
-    length: "30 min · phone",
-    body: "The most direct way to get your real estate questions answered. No slides, no pitch — just answers.",
+    title: "Introductory Real Estate Discovery Call",
+    length: "30 min",
+    kind: "Phone call",
+    body: "The most direct way to get your real estate questions answered. This focused 30-minute phone call is all answers, no pitch.",
   },
 ];
 
 export default function ConnectPage() {
   return (
     <>
-      {/* ── Hero */}
-      <section className="bg-ink py-16 text-paper md:py-20" aria-labelledby="connect-hero">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-porchlight">Connect</p>
-          <h1 id="connect-hero" className="mt-3 font-display text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl">
-            Contact us <span className="text-porchlight">anytime</span>
+      {/* ── Hero — live: thin photo band, centered "Contact Us Anytime" */}
+      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="connect-hero">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/lifestyle/buying.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-60"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-14 text-center lg:px-8">
+          <h1 id="connect-hero" className="text-3xl font-light text-paper md:text-4xl">
+            Contact Us <strong className="font-bold">Anytime</strong>
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-paper/80">
-            Seven days a week, evenings included. Call, text, email, or send a message below — we
-            usually reply within the hour.
-          </p>
-          <div className="mt-8 grid gap-6 border-t border-paper/10 pt-8 text-sm sm:grid-cols-3">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Call or text</p>
-              <a href={SITE.phoneHref} className="mt-1 block font-mono text-lg text-paper hover:text-porchlight">
-                {SITE.phone}
-              </a>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Email</p>
-              <a href={`mailto:${SITE.email}`} className="mt-1 block font-mono text-lg text-paper hover:text-porchlight">
-                {SITE.email}
-              </a>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Office</p>
-              <p className="mt-1 text-paper/80">
-                {SITE.address.street}, {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
+        </div>
+      </section>
+
+      {/* ── Agent + appointments — live: portrait left, booking cards right */}
+      <section className="bg-paper py-14 md:py-20" aria-labelledby="appointments-heading">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[300px_1fr] lg:px-8">
+          <Reveal>
+            <Image
+              src="/images/levan-portrait.jpg"
+              alt="Levan Tsiklauri, investor and realtor at RealtyLT"
+              width={300}
+              height={380}
+              className="h-auto w-full max-w-[300px]"
+            />
+            <p className="mt-4 text-2xl font-light text-stone">Levan Tsiklauri</p>
+            <p className="text-sm font-bold uppercase tracking-[0.12em] text-stone">
+              Investor &amp; Realtor
+            </p>
+            <address className="mt-5 space-y-1 text-sm not-italic text-stone">
+              <p>
+                <a href={SITE.phoneHref} className="transition-colors hover:text-ink">{SITE.phone}</a>
               </p>
-            </div>
+              <p>
+                <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ink">{SITE.email}</a>
+              </p>
+              <p>
+                {SITE.address.street}, {SITE.address.locality}, {SITE.address.region}{" "}
+                {SITE.address.postalCode}
+              </p>
+            </address>
+          </Reveal>
+
+          <div>
+            <Reveal className="text-center">
+              <span aria-hidden className="mx-auto block h-14 w-14 overflow-hidden rounded-full">
+                <Image src="/images/levan-portrait.jpg" alt="" width={56} height={56} className="h-full w-full object-cover" />
+              </span>
+              <h2 id="appointments-heading" className="mt-3 text-2xl font-light text-ink-soft">
+                Levan Tsiklauri
+              </h2>
+              <p className="text-sm text-stone">Appointments</p>
+            </Reveal>
+            <ul className="mt-8 grid gap-5 md:grid-cols-2">
+              {MEETINGS.map((m, i) => (
+                <Reveal key={m.title} as="li" delay={i * 100} className={i === 2 ? "md:col-span-2 md:mx-auto md:w-[calc(50%-10px)]" : ""}>
+                  <article className="lift flex h-full flex-col rounded-lg border border-[#dddddd] bg-white p-6">
+                    <h3 className="text-lg leading-snug text-ink-soft">{m.title}</h3>
+                    <p className="mt-3 text-sm text-ink-soft">{m.length}</p>
+                    <p className="mt-1 text-sm text-ink-soft">{m.kind}</p>
+                    <p className="mt-4 grow text-sm leading-relaxed text-stone">{m.body}</p>
+                    <a
+                      href={SITE.phoneHref}
+                      className="mt-5 text-sm font-bold text-ink underline-offset-4 hover:underline"
+                    >
+                      Call to book →
+                    </a>
+                  </article>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* ── Form + agent */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="reach-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1fr_1.2fr] lg:px-8">
+      {/* ── Message form */}
+      <section className="bg-mist py-16 md:py-20" aria-labelledby="reach-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Reach out" as="h2">
-              <span id="reach-heading">Tell us what you&rsquo;re working on</span>
-            </SectionHeading>
-            <div className="mt-8 flex items-center gap-4">
-              <span aria-hidden className="grid h-16 w-16 place-items-center rounded-full bg-ink font-display text-2xl text-porchlight">
-                LT
-              </span>
-              <div>
-                <p className="font-bold text-ink">Levan Tsiklauri</p>
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">
-                  Investor &amp; Realtor · United Real Estate
-                </p>
-              </div>
-            </div>
-            <p className="mt-6 max-w-md leading-relaxed text-stone">
-              Whether you&rsquo;re buying your first place, selling a family home, or weighing a
-              cash offer against a listing — start the conversation. You&rsquo;ll get a straight
-              answer, not a script.
+            <h2 id="reach-heading" className="text-center text-3xl font-light text-ink md:text-4xl">
+              Send Us A <strong className="font-bold">Message</strong>
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-center text-stone">
+              Seven days a week, evenings included — we usually reply within the hour.
             </p>
           </Reveal>
-          <Reveal delay={140}>
-            <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-8">
+          <Reveal delay={120} className="mx-auto mt-8 max-w-2xl">
+            <div className="bg-white p-6 md:p-8">
               <LeadForm
                 submitLabel="Send Us A Message"
                 successTitle="Message sent."
@@ -98,37 +135,6 @@ export default function ConnectPage() {
               />
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── Ways to meet */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="meet-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <Reveal>
-            <SectionHeading eyebrow="Prefer to talk it through?" align="center" as="h2">
-              <span id="meet-heading">Book thirty minutes</span>
-            </SectionHeading>
-            <p className="mx-auto mt-4 max-w-xl text-center text-stone">
-              Pick the format that suits you — call or email and we&rsquo;ll get it on the calendar.
-            </p>
-          </Reveal>
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {MEETINGS.map((m, i) => (
-              <Reveal key={m.title} as="li" delay={i * 120}>
-                <article className="lift flex h-full flex-col rounded-[2px] border border-ink/10 bg-white p-7">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-porchlight-deep">{m.length}</p>
-                  <h3 className="mt-2 font-display text-xl text-ink">{m.title}</h3>
-                  <p className="mt-3 grow text-sm leading-relaxed text-stone">{m.body}</p>
-                  <a
-                    href={SITE.phoneHref}
-                    className="mt-5 text-sm font-bold text-river underline-offset-4 hover:underline"
-                  >
-                    Call to book →
-                  </a>
-                </article>
-              </Reveal>
-            ))}
-          </ul>
         </div>
       </section>
     </>
