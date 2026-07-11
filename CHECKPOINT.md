@@ -1,6 +1,39 @@
 # CHECKPOINT — RealtyLT Website
 
-## ▶ FINAL ROUND COMPLETE (2026-07-11) — SHIP-READY, awaiting owner go-live
+## ▶ ROUND 4 (2026-07-11) — FULL INVENTORY + PHOTOS FLOWING + ZILLOW-STYLE MAP
+
+Three gaps closed, deployed + verified live at https://realtylt-website.vercel.app.
+78/78 tests, build green, 0 console/0 CSP on live /search, /listing, /.
+
+1. **Full six-county inventory: 251 → 5,360 listings** (the complete Active set).
+   `/api/cron/sync-mls` now advances a rolling watermark pass over the whole feed
+   (MLS Grid's documented model: ModificationTimestamp-asc + @odata.nextLink +
+   `gt <watermark>` resume, cursor in Blob `mls/pass-state.json`, ≤25 pages/run,
+   1.1s gaps — zero 429s). Feed window measured: 19,324 Active rows; six-county
+   share 5,360 (westchester 1746 / orange 1276 / dutchess 840 / rockland 730 /
+   ulster 502 / putnam 266). A completed pass REPLACES the snapshot (drops
+   Pending/Closed); mid-pass finds merge in immediately. CountyOrParish is NOT
+   server-filterable (docs verified) — county stays a local filter.
+2. **Photos are FLOWING**: the media budget cleared — 128 photos in Blob after two
+   runs (46+82, no 429), real photo verified rendering on a live listing detail
+   (docs/fixes/live-listing-photo.png). Fetch logic confirmed correct
+   ($expand=Media → MediaURL by Order); published photo sets now re-derived from
+   the Blob cache ground truth each run (photosByListing) so accumulated listings
+   keep their photos; downloads planned only from freshly-scanned rows (live signed
+   URLs). Photo-0-first coverage of ~5.4k listings self-fills at ≤150/run.
+3. **Zillow-style map**: /search map now plots the ENTIRE filtered result set —
+   new `/api/idx/pins` (slim id/price/lat/lng/address/beds/baths/office, CDN-cached
+   300s, ~1MB raw @5.4k) + custom zoom-grid clustering in MapView (no new dep, no
+   new CSP host; black count circles → click zooms to members; viewport-culled
+   price pins; near-centroid merge pass kills circle overlap — found live at 3.8k).
+   Verified live: 10 clusters + singles = all 5,358 located pins covered, grid
+   pagination/filters/sort untouched, "Locations approximate" kept.
+
+Screenshots: docs/fixes/. Details: docs/MLS-INTEGRATION.md ("Rolling full-inventory
+passes" + Status log). Photo depth + status-change staleness (≈1 pass ≈ intraday
+with traffic) documented there too.
+
+## FINAL ROUND COMPLETE (2026-07-11) — SHIP-READY, awaiting owner go-live
 
 **State:** deployed + verified at **https://realtylt-website.vercel.app** (private,
 noindexed). 66/66 tests, build green, main pushed. Real MLS data live (251 listings,

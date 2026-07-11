@@ -2,6 +2,9 @@
 
 Round 1 (2026-07-11) wired the feed; Round 2 (same day) re-architected it to **scheduled
 replication into Vercel Blob** after the Round-1 per-request design failed in production.
+Round 4 (same day) deepened replication to the **FULL six-county Active inventory**
+(5,360 listings from a 19,324-row feed window) via rolling watermark passes — see
+"Rolling full-inventory passes" below.
 
 ## ROUND 2 ROOT CAUSE — why the live site served fixture data
 
@@ -38,16 +41,46 @@ Store: Vercel Blob **realtylt-mls** (store_ODYPytsRSdNGVvlO, public, iad1), link
 
 - **`app/api/cron/sync-mls`** (maxDuration 300, `CRON_SECRET`-gated — Vercel Cron sends
   `Authorization: Bearer $CRON_SECRET` automatically):
-  1. `MlsGridClient.replicate()` — the six-county Active working set (same proven $filter/
-     $select; 2-3 sequential pages, 1.1s gap = strictly < 2 req/sec). **The ONLY place
-     api.mlsgrid.com is ever called.**
+  1. `MlsGridClient.replicateDeep()` advances a **rolling full-inventory pass** (details
+     below): ≤25 sequential pages/run, 1.1s gap = strictly < 2 req/sec, time-boxed 130s.
+     **The ONLY place api.mlsgrid.com is ever called.**
   2. Incremental photo replication to Blob `mls/photos/{listingId}/{idx}.jpg`: budget-
      bounded (default 150/run, `?photoBudget=N` override, env `MLS_PHOTO_BUDGET`), paced
      250ms, time-boxed 240s, **photo 0 of every listing first** (cards get covered before
      galleries deepen), stops cleanly on the media CDN's per-account 429 and resumes next
      run. Budget spent once per photo EVER (MLS Grid's intended replication model).
+     Downloads are planned from THIS run's freshly-scanned rows only (their ~1h-signed
+     URLs are live); rows re-enter the plan each time a pass re-scans them. The published
+     photo set per listing is re-derived every run from the Blob cache ground truth
+     (`photosByListing`), so accumulated listings keep their cached photos.
   3. Publishes `mls/listings.json` `{syncedAt, listings[]}` — photos are permanent public
-     Blob URLs (only cached ones; empty array → branded NoPhoto block in the UI).
+     Blob URLs (only cached ones; empty array → branded NoPhoto block in the UI) — and
+     `mls/pass-state.json` (the pass cursor).
+
+### Rolling full-inventory passes (Round 4)
+
+MLS Grid's documented replication model, encoded in `replicateDeep`:
+- Responses are ordered by **ModificationTimestamp ascending by default** (no `$orderby`
+  sent); pages follow **`@odata.nextLink`** within a run; an interrupted import resumes
+  with **`ModificationTimestamp gt <watermark>`** — all three straight from
+  docs.mlsgrid.com. So a *pass* walks the ENTIRE `Active` window oldest-modified →
+  newest across however many cron runs it takes (~19.3k rows ≈ 39 pages ≈ 2 runs),
+  persisting `{watermark, scanned, listings}` in `mls/pass-state.json` between runs.
+- Mid-pass, newly scanned six-county rows **merge into the live snapshot immediately**
+  (coverage only grows). When a pass **completes** (page without nextLink), its kept-set
+  IS the complete six-county Active inventory: it **replaces the snapshot wholesale** —
+  which is also how listings that went Pending/Closed/off-market get dropped — and the
+  next run starts a new pass from the epoch. Staleness window for status changes ≈ one
+  pass (~2 runs; intraday with traffic thanks to the >4h self-refresh, worst case ~2 days
+  on the daily cron alone).
+- **`CountyOrParish` is NOT server-filterable** (verified against docs.mlsgrid.com:
+  "There are only a few fields you can query the service with… timestamp and status
+  fields" — the queryable set is OriginatingSystemName, MlgCanView, ModificationTimestamp,
+  StandardStatus, PropertyType, ListingId, ListOfficeMlsId). County narrowing stays local
+  over the replicated rows. `$count=true` is not documented either — the pass itself
+  measures the feed (19,324 Active rows on 2026-07-11).
+- Snapshot sanity cap: 8,000 listings (newest-modified kept) — actual six-county Active
+  inventory is ~5.4k.
 - **Schedule**: vercel.json cron daily 06:00 UTC (Hobby-safe) **+** stale self-refresh:
   any request seeing a snapshot >4h old fires ONE background secret-gated call to the cron
   route (waitUntil, 10-min per-instance cool-down) — intraday freshness on any plan.
@@ -102,9 +135,13 @@ are intact; Levan must re-paste them into .env.local for local live-mode dev).
 - `$expand=Media` → MediaURL ordered by Media[].Order, ≤16/listing; URLs are SIGNED with
   ~1h expiry AND `media.mlsgrid.com` has a hard per-ACCOUNT request budget (verified from
   three unrelated networks in Round 1) — hence replication to Blob, never hotlinking.
-- `$orderby=ModificationTimestamp desc`, `$top=500`, `$skip` paging; ≤8 pages/sync, stops
-  at 150+ kept; working set ≈ newest ~250 six-county actives (n8n parity). Fuller depth =
-  raise TARGET_KEPT/MAX_PAGES in lib/idx/mls-grid.ts (photo-budget math scales with it).
+- Cron path (`replicateDeep`): NO `$orderby` (default = ModificationTimestamp asc, the
+  documented replication order), `$top=500`, `@odata.nextLink` paging, `ModificationTimestamp
+  gt <watermark>` cross-run resume, ≤25 pages/run. The legacy direct-live dev path
+  (`sync()`, used only when MLS keys are set without a Blob store) still scans
+  `$orderby=ModificationTimestamp desc` + `$skip`, ≤8 pages, stops at 150+ kept.
+- A standalone `/v2/Media` resource also exists (per-MLS availability) — not used; it
+  draws on the same per-account media budget as `$expand=Media`, so nothing is gained.
 
 ## Compliance
 
@@ -148,5 +185,17 @@ are intact; Levan must re-paste them into .env.local for local live-mode dev).
   self-refresh retry photo-0-first every run and will fill coverage once the media budget
   window clears (likely a longer/daily window than the data API's). To accelerate once
   clear: a few manual `?force=1` calls ≥1h apart, watching `budgetExhausted`.
-- Handoff rule reaffirmed: do NOT loop force calls; each cron run also spends 2-3 DATA
-  requests (replicate runs first), and hammering re-armed the account block twice already.
+- Handoff rule reaffirmed: do NOT loop force calls; each cron run also spends up to 25
+  DATA requests (the pass slice runs first), and hammering re-armed the account block
+  twice already.
+- **2026-07-11 ~11:00 UTC (Round 4)**: rolling-pass replication deployed. First pass
+  completed in exactly 2 cron runs (25 + 14 pages, 1.1s-gapped, zero 429s): **feed window
+  = 19,324 Active Residential/Residential-Income onekey2 rows; complete six-county
+  inventory = 5,360 listings** (westchester 1,746 / orange 1,276 / dutchess 840 /
+  rockland 730 / ulster 502 / putnam 266) — up from the previous 251-listing working set.
+  **The media CDN budget CLEARED**: 128 photos replicated across the two runs
+  (46 + 82, `budgetExhausted:false` throughout) and a real Blob photo verified rendering
+  on a live listing page (docs/fixes/live-listing-photo.png). Photo-0 coverage of all
+  ~5.4k listings fills over subsequent runs at ≤150/run — self-healing, no action needed.
+  Live site at 5,360 listings: /api/idx/search 287ms warm, /api/idx/pins 316ms
+  (~1MB raw / CDN-cached 300s), 0 console errors, 0 CSP violations.
