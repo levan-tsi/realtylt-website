@@ -1,27 +1,64 @@
 # CHECKPOINT — RealtyLT Website
 
-## ▶ ROUND 2 START HERE (exact remaining steps)
+## ▶ ROUND 3 START HERE
 
-1. **Media budget re-check (first thing):** `fetch` ONE
-   `https://realtylt-website.vercel.app/api/media/<id>/0` (get an id from
-   /api/idx/search?pageSize=1). If 200 → the throttle window reset; load live / and
-   /search once in Playwright and confirm photos render (this warms the Vercel CDN);
-   re-run scripts/final-probe.mjs expecting ZERO 502s. If still 502(429) → the
-   account media budget is still exhausted (see docs/MLS-INTEGRATION.md "Media budget
-   status") — do NOT mass-fetch; check again later. NEVER run screenshot loops
-   against live-mode local builds (each photo request hits the MLS CDN — no CDN
-   cache locally); use fixture mode (move .env.local aside + rebuild).
-2. **Launch-grade media (recommended):** replicate photos to owned storage (Vercel
-   Blob) during sync — budget spent once per photo ever; removes the throttle risk
-   entirely. Keep /api/media as the URL shape (route can serve from Blob).
-3. **Design polish leftovers:** see docs/DESIGN-MATCH.md "ROUND 1 REFINEMENT PASS" —
-   optional items only (search hybrid list+map default, Why-Work-With-Us carousel,
-   legal-page font classes). Mobile pass done for the main pages; county pages +
-   /reviews/@390 not individually sheet-checked.
-4. **Working-set depth:** search serves the newest ~250 six-county actives (n8n
-   parity). If fuller inventory is wanted, raise TARGET_KEPT/MAX_PAGES in
-   lib/idx/mls-grid.ts or move to a build-time snapshot.
-5. Blog untouched by design (Google Drive content comes later, per owner).
+**⚠️ FIRST: one QA test lead reached the PRODUCTION CRM** during Round 2 (qa-flows2 was
+mistakenly run against a server loaded with the live CRM_LEAD_WEBHOOK). Row to delete from
+the CRM leads table: name **"QA Footer"**, email **qa-footer@example.com**, phone
+(914) 555-0100, source /buying, ~2026-07-11T07:15Z. Levan/CRM-side deletion only — the
+website agents must not touch the CRM Supabase. Rule now on record: **qa-flows2 only ever
+against a stub server** (`CRM_LEAD_WEBHOOK="" npx next start -p 3778`).
+
+1. **Check replication health** (read-only, safe): `GET /api/idx/search?county=dutchess`
+   on the live site → real addresses + `fixtureMode:false`; run
+   `node scripts/verify-live-mls.mjs` (expects ALL PASS). Snapshot state lives in Vercel
+   Blob store `realtylt-mls` (`mls/listings.json`, `mls/photos/…`, `mls/sync-state.json`).
+2. **Photo coverage top-up**: each sync run replicates ≤150 photos (photo 0 of every
+   listing first). The daily 06:00 UTC cron + >4h stale self-refresh will fill coverage
+   over a few days. To accelerate: a few manual `/api/cron/sync-mls?force=1` calls
+   (Bearer CRON_SECRET), ≥1h apart, watching `budgetExhausted` in the response. NEVER
+   loop force calls (429 herd history in docs/MLS-INTEGRATION.md).
+3. **MLS keys in .env.local are GONE locally** (the blob-store CLI overwrote the file);
+   production copies intact. Levan must re-paste MLS_API_ENDPOINT/KEY/FEED_ID into
+   .env.local for local live-mode dev. Local dev with only BLOB token reads the same
+   prod snapshot (fine, read-only).
+4. **Working-set depth** (optional): newest ~250 six-county actives (n8n parity). Deeper
+   inventory = raise TARGET_KEPT/MAX_PAGES in lib/idx/mls-grid.ts — photo budget math
+   scales with it (see docs/MLS-INTEGRATION.md).
+5. **Design**: remaining known deltas are asset-bound (live's laptop/phone product
+   mockups on buying/financing — recorded deviations). Blog untouched by design (owner
+   content later). Mobile 390 pass complete incl. county pages + /reviews.
+6. Blog untouched by design (Google Drive content comes later, per owner).
+
+## ROUND 2 (2026-07-11) — MLS REPLICATION RE-ARCHITECTURE + design pass 2
+
+**Root cause found & fixed (verified in Vercel runtime logs):** the live site had been
+serving FIXTURE data with `fixtureMode:false` because per-request MLS syncs ran on every
+cold serverless instance; concurrent bursts (7+ instances × 2 req in one second) blew MLS
+Grid's per-ACCOUNT 2 req/sec cap → account blocked (429 "hourly 6.0 rps exceeded") →
+fixture fallback everywhere. Full forensics + the new architecture in
+**docs/MLS-INTEGRATION.md** (read it before touching anything MLS).
+
+**New architecture (deployed):** Vercel Cron (daily 06:00 UTC, vercel.json) + stale
+self-refresh (>4h, waitUntil) → `/api/cron/sync-mls` (CRON_SECRET) replicates the feed
+ONCE into Vercel Blob (`realtylt-mls` store): `mls/listings.json` snapshot + photos
+copied incrementally to `mls/photos/{id}/{idx}.jpg` (budget 150/run, photo-0-first,
+stops on media 429). `ReplicatedIdxClient` serves ALL reads from the snapshot (60s TTL;
+request path NEVER calls api.mlsgrid.com). `/api/media` = 302→Blob or branded SVG
+placeholder (no 502s ever). Fixture = last-resort fallback, now HONESTLY labeled
+(`isSampleData()` — notice shows if the pipeline breaks). Concurrency guards: cluster-
+wide Blob attempt-claim (10 min), no self-trigger without a snapshot / during build.
+New envs: `BLOB_READ_WRITE_TOKEN` (all envs, auto), `CRON_SECRET` (all envs + .env.local).
+65/65 tests (replication helpers covered), build green, CSP+headers intact (blob host
+added to img-src + remotePatterns), 0 CSP violations live (scripts/final-probe.mjs).
+
+**Design round 2** (docs/DESIGN-MATCH.md "ROUND 2 REFINEMENT PASS", sheets in
+docs/round2/): /search now defaults to live's hybrid list+map (URL stays clean; ?view=grid
+preserved; one-row filter bar w/ SAVE SEARCH inside), /connect hero flipped to live's
+light band, /buying hero heightened; financing re-verified black via computed styles;
+mobile 390 checks incl. county + /reviews. qa-search-flows + qa-flows2 suites ALL PASS.
+
+**Sync status at handoff:** see the "Status log" at the bottom of docs/MLS-INTEGRATION.md.
 
 ## ✅ REAL MLS DATA IS LIVE — Round 1, 2026-07-11 (branch `main`)
 
