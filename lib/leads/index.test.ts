@@ -87,6 +87,16 @@ describe("submitLead", () => {
     expect(JSON.parse(line).email).toBe("jane@example.com");
   });
 
+  it("LEAD_TEST_MODE=1 forces stub mode even with a live webhook configured", async () => {
+    vi.stubEnv("CRM_LEAD_WEBHOOK", "https://crm.example/leads");
+    vi.stubEnv("LEAD_TEST_MODE", "1");
+    const fetchMock = vi.fn().mockRejectedValue(new Error("webhook must never be called"));
+    vi.stubGlobal("fetch", fetchMock);
+    const r = await submitLead(lead);
+    expect(r).toEqual({ ok: true, stub: true });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it("stub mode: read-only filesystem (Vercel) → still ok:true, lead logged in full", async () => {
     vi.stubEnv("CRM_LEAD_WEBHOOK", "");
     vi.spyOn(fs, "appendFileSync").mockImplementation(() => {

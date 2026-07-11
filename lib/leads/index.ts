@@ -52,11 +52,14 @@ export function parseLead(body: unknown, source: string): ParsedLead {
   return { kind: "lead", lead };
 }
 
-/** POST the lead to CRM_LEAD_WEBHOOK; without it, log locally (stub mode). Never throws. */
+/** POST the lead to CRM_LEAD_WEBHOOK; without it, log locally (stub mode). Never throws.
+ * LEAD_TEST_MODE=1 forces stub mode even when the live webhook is configured — the safe
+ * switch for QA runs so test submissions can never reach the production CRM leads table. */
 export async function submitLead(lead: LeadPayload): Promise<LeadResult> {
   const webhook = process.env.CRM_LEAD_WEBHOOK;
+  const testMode = process.env.LEAD_TEST_MODE === "1";
 
-  if (!webhook) {
+  if (!webhook || testMode) {
     // Always log the full lead server-side — on Vercel the function logs are the only
     // place stub-mode leads survive (the filesystem is read-only).
     console.log(`[lead:stub] ${JSON.stringify(lead)}`);
