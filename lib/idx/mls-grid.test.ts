@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { mapProperty } from "./mls-grid";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { mapProperty, MlsGridClient } from "./mls-grid";
 
 /** Minimal valid onekey2 row (real field shape — no UnparsedAddress on this feed). */
 const row = {
@@ -92,5 +92,79 @@ describe("mapProperty", () => {
   it("flags the owner's own office listings as featured", () => {
     expect(mapProperty({ ...row, ListOfficeName: "United Real Estate LLC" })!.isFeatured).toBe(true);
     expect(mapProperty(row)!.isFeatured).toBe(false);
+  });
+});
+
+describe("replicateDeep (rolling full-inventory pass)", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const mkRow = (id: string, ts: string, county = "Dutchess") => ({
+    ...row,
+    ListingId: id,
+    ModificationTimestamp: ts,
+    CountyOrParish: county,
+  });
+
+  it("pages via @odata.nextLink, advances the watermark, keeps signed photo URLs", async () => {
+    const page1 = {
+      value: [mkRow("K1", "2026-01-01T00:00:00.000Z"), mkRow("OUT", "2026-01-02T00:00:00.000Z", "Nassau")],
+      "@odata.nextLink": "https://api.example.com/v2/Property?$skip=500",
+    };
+    const page2 = { value: [mkRow("K2", "2026-01-03T00:00:00.000Z")] }; // no nextLink → done
+    const calls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: RequestInfo | URL) => {
+        calls.push(String(url));
+        return new Response(JSON.stringify(calls.length === 1 ? page1 : page2), { status: 200 });
+      }),
+    );
+
+    const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
+    const out = await client.replicateDeep({
+      watermark: "1970-01-01T00:00:00Z",
+      maxPages: 8,
+      deadline: Date.now() + 60_000,
+    });
+
+    expect(out.complete).toBe(true);
+    expect(out.pages).toBe(2);
+    expect(out.scanned).toBe(3); // includes the dropped Nassau row
+    expect(out.listings.map((l) => l.id)).toEqual(["K1", "K2"]);
+    expect(out.watermark).toBe("2026-01-03T00:00:00.000Z");
+    // Photos stay as the ORIGINAL signed source URLs — the cron copies them into Blob.
+    expect(out.listings[0].photos[0]).toMatch(/^https:\/\/media\.example\.com\//);
+    // First request is self-built with the watermark filter (unquoted OData datetime);
+    // the second follows @odata.nextLink verbatim.
+    expect(calls[0]).toContain("ModificationTimestamp%20gt%201970-01-01T00%3A00%3A00Z");
+    expect(calls[0]).not.toContain("%24orderby"); // default order IS ModificationTimestamp asc
+    expect(calls[1]).toBe("https://api.example.com/v2/Property?$skip=500");
+  }, 15_000);
+
+  it("stops at maxPages mid-pass and reports an incomplete pass with progress", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        new Response(
+          JSON.stringify({
+            value: [mkRow("K9", "2026-02-01T00:00:00.000Z")],
+            "@odata.nextLink": "https://api.example.com/v2/Property?$skip=500",
+          }),
+          { status: 200 },
+        ),
+      ),
+    );
+
+    const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
+    const out = await client.replicateDeep({
+      watermark: "1970-01-01T00:00:00Z",
+      maxPages: 1,
+      deadline: Date.now() + 60_000,
+    });
+
+    expect(out.complete).toBe(false); // next run resumes with `gt` the new watermark
+    expect(out.pages).toBe(1);
+    expect(out.watermark).toBe("2026-02-01T00:00:00.000Z");
+    expect(out.listings).toHaveLength(1);
   });
 });

@@ -137,12 +137,62 @@ export class MlsGridClient implements IdxClient {
     return fresh.filter((l) => !featuredIds.has(l.id)).slice(0, limit);
   }
 
-  /** One-shot replication for the sync cron (app/api/cron/sync-mls): runs a fresh sync
-   * and returns the working set with the ORIGINAL signed media URLs (not /api/media
-   * proxy paths) so the cron can copy each photo into durable Blob storage once. */
-  async replicate(): Promise<Listing[]> {
-    await this.sync();
-    return this.cache.map((l) => ({ ...l, photos: this.mediaByListing.get(l.id) ?? [] }));
+  /** Bounded slice of a full-inventory replication pass, for the sync cron
+   * (app/api/cron/sync-mls). MLS Grid's documented replication model: responses are
+   * ordered by ModificationTimestamp (ascending, the default — no $orderby sent), paged
+   * via @odata.nextLink within a run, and resumed across runs with
+   * `ModificationTimestamp gt <watermark>`. Scans up to maxPages sequential pages
+   * (PAGE_GAP_MS apart — strictly < 2 req/sec) or until `deadline`, keeps the six-county
+   * rows WITH their original signed media URLs (so the cron can copy photos into Blob),
+   * and reports the new watermark + whether the feed window is exhausted (pass complete). */
+  async replicateDeep(opts: { watermark: string; maxPages: number; deadline: number }): Promise<{
+    listings: Listing[];
+    watermark: string;
+    complete: boolean;
+    scanned: number;
+    pages: number;
+  }> {
+    const kept: Listing[] = [];
+    let watermark = opts.watermark;
+    let scanned = 0;
+    let pages = 0;
+    let complete = false;
+    let nextLink: string | null = null;
+
+    for (let page = 0; page < opts.maxPages; page++) {
+      if (page > 0) {
+        if (Date.now() >= opts.deadline) break;
+        await new Promise((r) => setTimeout(r, PAGE_GAP_MS));
+      }
+      const result: { rows: ResoProperty[]; nextLink: string | null } = nextLink
+        ? await this.fetchNextLink(nextLink)
+        : await this.fetchRows(() => this.buildDeepQuery(watermark));
+      pages++;
+      scanned += result.rows.length;
+      for (const p of result.rows) {
+        const ts = p.ModificationTimestamp;
+        if (ts && Date.parse(ts) > Date.parse(watermark)) watermark = ts;
+        const mapped = mapProperty(p);
+        if (mapped) kept.push(mapped); // photos stay as SIGNED source URLs on purpose
+      }
+      if (!result.nextLink) {
+        complete = true;
+        break;
+      }
+      nextLink = result.nextLink;
+    }
+    return { listings: kept, watermark, complete, scanned, pages };
+  }
+
+  private buildDeepQuery(watermark: string): string {
+    // OData datetime literals are unquoted (docs: `ModificationTimestamp gt 2020-12-12T…Z`).
+    const filter = `${this.buildFilter()} and ModificationTimestamp gt ${watermark}`;
+    return [
+      `$filter=${encodeURIComponent(filter)}`,
+      `$select=${[...this.select].join(",")}`,
+      "$expand=Media",
+      `$top=${PAGE_SIZE}`,
+    ].join("&");
   }
 
   /** Serve fresh cache; stale cache revalidates in the background; only the very first
@@ -211,11 +261,8 @@ export class MlsGridClient implements IdxClient {
   }
 
   private async fetchPage(skip: number): Promise<ResoProperty[]> {
-    // Retry loop self-heals per-subscription 400s: rejected $select fields are dropped one
-    // by one (the API names them), and the PropertyType `in` clause is dropped if the
-    // error targets the $filter. Everything else throws.
-    for (let attempt = 0; attempt < 8; attempt++) {
-      const query = [
+    const query = () =>
+      [
         `$filter=${encodeURIComponent(this.buildFilter())}`,
         `$select=${[...this.select].join(",")}`,
         "$expand=Media",
@@ -223,16 +270,19 @@ export class MlsGridClient implements IdxClient {
         `$top=${PAGE_SIZE}`,
         `$skip=${skip}`,
       ].join("&");
-      const res = await this.request(`${this.endpoint.replace(/\/$/, "")}/Property?${query}`);
-      if (res.ok) {
-        const data = (await res.json()) as { value?: ResoProperty[] };
-        const rows = data.value ?? [];
-        if (!this.loggedKeys && rows[0]) {
-          this.loggedKeys = true;
-          console.log(`[mls-grid] row fields: ${Object.keys(rows[0]).filter((k) => k !== "Media").join(",")}`);
-        }
-        return rows;
-      }
+    return (await this.fetchRows(query)).rows;
+  }
+
+  /** GET /Property with a self-built query. Retry loop self-heals per-subscription 400s:
+   * rejected $select fields are dropped one by one (the API names them), and the
+   * PropertyType `in` clause is dropped if the error targets the $filter — the query is
+   * rebuilt via `buildQuery` after each heal. Everything else throws. */
+  private async fetchRows(
+    buildQuery: () => string,
+  ): Promise<{ rows: ResoProperty[]; nextLink: string | null }> {
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const res = await this.request(`${this.endpoint.replace(/\/$/, "")}/Property?${buildQuery()}`);
+      if (res.ok) return this.parseRows(res);
       const body = await res.text();
       if (res.status === 400) {
         const badField = /The field '(\w+)'/.exec(body)?.[1];
@@ -250,6 +300,23 @@ export class MlsGridClient implements IdxClient {
       throw new Error(`MLS Grid ${res.status}: ${body.slice(0, 300)}`);
     }
     throw new Error("MLS Grid: request kept failing after removing rejected fields");
+  }
+
+  /** Follow an @odata.nextLink verbatim (it embeds the whole query) — one shot, no heal. */
+  private async fetchNextLink(url: string): Promise<{ rows: ResoProperty[]; nextLink: string | null }> {
+    const res = await this.request(url);
+    if (!res.ok) throw new Error(`MLS Grid ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    return this.parseRows(res);
+  }
+
+  private async parseRows(res: Response): Promise<{ rows: ResoProperty[]; nextLink: string | null }> {
+    const data = (await res.json()) as { value?: ResoProperty[]; "@odata.nextLink"?: string };
+    const rows = data.value ?? [];
+    if (!this.loggedKeys && rows[0]) {
+      this.loggedKeys = true;
+      console.log(`[mls-grid] row fields: ${Object.keys(rows[0]).filter((k) => k !== "Media").join(",")}`);
+    }
+    return { rows, nextLink: data["@odata.nextLink"] ?? null };
   }
 
   /** Single-listing lookup for ids outside the cached window (allowed: ListingId filter). */
