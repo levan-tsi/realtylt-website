@@ -1,26 +1,17 @@
 import type { Metadata } from "next";
-import { Fraunces, Nunito, Spline_Sans_Mono } from "next/font/google";
-import { FairHousingBar } from "@/components/site/FairHousingBar";
+import { Lato } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { COUNTIES, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Live realtylt.com renders Lato everywhere (computed: "Lato, Helvetica, Arial, sans-serif").
+// Weights on live: 300 (light headings/footer), 400 (body), 700 (nav/bold headings).
+const lato = Lato({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["opsz", "SOFT", "WONK"],
-});
-
-const nunito = Nunito({
-  subsets: ["latin"],
-  variable: "--font-nunito",
-});
-
-const splineMono = Spline_Sans_Mono({
-  subsets: ["latin"],
-  variable: "--font-spline-mono",
+  weight: ["300", "400", "700"],
+  variable: "--font-lato",
 });
 
 export const metadata: Metadata = {
@@ -73,10 +64,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${nunito.variable} ${splineMono.variable}`}
-    >
+    <html lang="en" className={lato.variable}>
       <body>
         <script
           type="application/ld+json"
@@ -84,11 +72,10 @@ export default function RootLayout({
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[100] focus:bg-porchlight focus:px-4 focus:py-2 focus:font-bold focus:text-ink"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-bold focus:text-paper"
         >
           Skip to content
         </a>
-        <FairHousingBar />
         <Header />
         <main id="main">{children}</main>
         <Footer />

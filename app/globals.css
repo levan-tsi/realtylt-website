@@ -1,23 +1,22 @@
 @import "tailwindcss";
 
-/* ── RealtyLT design tokens — "Hudson Twilight / Valley Line"
-   See docs/superpowers/specs/2026-07-10-realtylt-website-design.md §4 */
+/* ── RealtyLT design tokens — matched to the LIVE realtylt.com (Brivity) look.
+   Extracted 2026-07-10 via Playwright getComputedStyle — see docs/DESIGN-MATCH.md.
+   Live values: body/nav gray #808080 (we use #767676 for WCAG AA 4.54:1 on white),
+   headings/CTAs black, alt-section bg #f3f5f8, logo navy #102c54 / azure #28a8e0. */
 @theme {
-  --color-ink: #101820;
-  --color-ink-soft: #1b2530;
-  --color-paper: #fafaf8;
-  --color-mist: #edf0ef;
-  /* stone + porchlight-deep tuned for WCAG AA small-text contrast on paper/white/mist
-     (QA 2026-07-10: #6e7681 was 4.40:1 on paper, #c98f2b was 2.70:1 — both below 4.5:1;
-      values below clear 4.5:1 on every light surface incl. mist) */
-  --color-stone: #646c77;
-  --color-river: #2b6cb0;
-  --color-porchlight: #e8b04b;
-  --color-porchlight-deep: #8a5f10;
+  --color-ink: #000000;
+  --color-ink-soft: #222222;
+  --color-paper: #ffffff;
+  --color-mist: #f3f5f8;
+  --color-stone: #767676;
+  --color-river: #102c54;
+  --color-porchlight: #28a8e0;
+  --color-porchlight-deep: #1c729a;
 
-  --font-display: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-nunito), system-ui, sans-serif;
-  --font-mono: var(--font-spline-mono), ui-monospace, monospace;
+  --font-display: var(--font-lato), Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-lato), Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-lato), Helvetica, Arial, sans-serif;
 }
 
 :root {
@@ -36,7 +35,7 @@ body {
 
 ::selection {
   background: var(--color-porchlight);
-  color: var(--color-ink);
+  color: #ffffff;
 }
 
 /* ── Motion: reveal-on-scroll (Reveal component toggles .is-visible) */

@@ -48,12 +48,12 @@ export function StatCounter({
 
   return (
     <div ref={ref}>
-      <p className="font-mono text-3xl font-semibold tracking-tight text-porchlight md:text-4xl">
+      <p className="text-3xl font-light tracking-tight text-ink md:text-4xl">
         {prefix}
         {display.toLocaleString("en-US")}
         {suffix}
       </p>
-      <p className="mt-1 text-sm text-paper/70">{label}</p>
+      <p className="mt-1 text-sm text-stone">{label}</p>
     </div>
   );
 }

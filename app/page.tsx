@@ -6,9 +6,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
-import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { LeadForm } from "@/components/leads/LeadForm";
-import { ListingCarousel } from "@/components/idx/ListingCarousel";
+import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isFixtureMode } from "@/lib/idx";
@@ -52,36 +51,37 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ── Hero */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="home-hero">
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/hero/hudson-twilight.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="hero-zoom object-cover object-center opacity-55"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-ink/25" />
+      {/* ── Hero — live: dark B/W photo, "Let's Find Home" bottom-left, search strip below */}
+      <section className="relative isolate bg-ink" aria-labelledby="home-hero">
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/hero/hudson-twilight.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center opacity-70 grayscale"
+            />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+          <div className="relative mx-auto flex min-h-[420px] max-w-6xl flex-col justify-end px-4 pb-12 pt-24 lg:px-8">
+            <h1
+              id="home-hero"
+              className="text-5xl font-light leading-tight text-paper md:text-[60px]"
+            >
+              Let&rsquo;s Find <span className="font-bold">Home</span>
+            </h1>
+            <p className="mt-3 max-w-xl text-paper/80">
+              Homes for sale across six counties of the mid-Hudson region — and an agent who
+              answers seven days a week.
+            </p>
+          </div>
         </div>
-        <div className="relative mx-auto flex min-h-[82vh] max-w-7xl flex-col justify-end px-4 pb-16 pt-28 lg:px-8">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-porchlight">
-            Hudson Valley · New York
-          </p>
-          <h1
-            id="home-hero"
-            className="mt-3 font-display text-5xl font-semibold leading-[1.04] tracking-tight text-paper md:text-7xl"
-          >
-            Let&rsquo;s find <span className="text-porchlight">home</span>.
-          </h1>
-          <p className="mt-4 max-w-xl text-lg text-paper/80">
-            Homes for sale across six counties of the mid-Hudson region — and an agent who answers
-            seven days a week.
-          </p>
 
-          {/* Search bar → /search */}
-          <form action="/search" role="search" className="mt-9 flex w-full max-w-2xl">
+        {/* Search strip — live: dark bar with search input + white outline CTAs */}
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 lg:flex-row lg:px-8">
+          <form action="/search" role="search" className="flex flex-1">
             <label htmlFor="home-search" className="sr-only">
               Search for homes by town, zip, or address
             </label>
@@ -89,27 +89,28 @@ export default async function HomePage() {
               id="home-search"
               type="search"
               name="q"
-              placeholder="Town, ZIP, or address — try “Beacon”"
-              className="w-full rounded-[2px] border border-paper/25 bg-ink/60 px-5 py-4 text-paper backdrop-blur placeholder:text-paper/50 focus:border-paper/50 focus:outline-none focus:ring-2 focus:ring-porchlight/70"
+              placeholder="Search for Homes"
+              className="w-full border border-paper/30 bg-white/10 px-5 py-4 text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
             />
-            <Button type="submit" size="lg" className="shrink-0">
+            <Button type="submit" variant="outline-light" className="shrink-0">
               Search
             </Button>
           </form>
-
-          <div className="mt-5 flex flex-wrap gap-3">
-            <Button href="/selling" variant="outline-light">Sell your home</Button>
-            <Button href="/home-value" variant="outline-light">See your home&rsquo;s value</Button>
-          </div>
+          <Button href="/selling" variant="outline-light" className="py-4">
+            Sell Your Home
+          </Button>
+          <Button href="/home-value" variant="outline-light" className="py-4">
+            See Home Value
+          </Button>
         </div>
       </section>
 
-      {/* ── Home value split */}
+      {/* ── Home value split — live: "Find Your Home Value" + "Tell Us About Your Home" form */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="value-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Find your home value" as="h2">
-              <span id="value-heading">What is your home really worth?</span>
+            <SectionHeading as="h2">
+              <span id="value-heading">Find Your Home Value</span>
             </SectionHeading>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               If you&rsquo;re thinking about selling, start with a real number. We belong to one of
@@ -120,7 +121,7 @@ export default async function HomePage() {
               Tell us about your home and we&rsquo;ll put our market analysis — and our network of
               local experts — to work on an accurate estimate. No obligation, no pressure.
             </p>
-            <ul className="mt-6 space-y-2 text-sm text-ink">
+            <ul className="mt-6 space-y-2 text-sm text-ink-soft">
               {[
                 "A market analysis built from 15 comparable sales",
                 "Your cash-offer number alongside the list price",
@@ -133,66 +134,75 @@ export default async function HomePage() {
             </ul>
           </Reveal>
           <Reveal delay={140}>
-            <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-8">
-              <h3 className="font-display text-2xl text-ink">Tell us about your home</h3>
-              <p className="mb-5 mt-1 text-sm text-stone">We usually reply within the hour.</p>
-              <LeadForm
-                withAddress
-                defaultReason="I'm interested in selling a home"
-                submitLabel="Send Message"
-                successTitle="Got it — thanks."
-                successBody="We'll start on your home's numbers and reach out shortly."
-              />
-            </div>
+            <h3 className="text-2xl font-light text-ink">Tell Us About Your Home</h3>
+            <p className="mb-5 mt-1 text-sm text-stone">We usually reply within the hour.</p>
+            <LeadForm
+              withAddress
+              defaultReason="I'm interested in selling a home"
+              submitLabel="Send Message"
+              successTitle="Got it — thanks."
+              successBody="We'll start on your home's numbers and reach out shortly."
+            />
           </Reveal>
         </div>
       </section>
 
-      {/* ── Featured listings */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="featured-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <Reveal className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="Hand-picked" as="h2">
-              <span id="featured-heading">Featured listings</span>
+      {/* ── Featured listings — live: centered heading, 4-col grid, centered SEE MORE */}
+      <section className="bg-paper py-16 md:py-20" aria-labelledby="featured-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <Reveal>
+            <SectionHeading align="center" as="h2">
+              <span id="featured-heading">Featured Listings</span>
             </SectionHeading>
-            <Button href="/search" variant="outline">See more listings</Button>
           </Reveal>
-          <div className="mt-8">
-            <ListingCarousel listings={featured} ariaLabel="Featured listings carousel" />
-          </div>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map((l, i) => (
+              <li key={l.id}>
+                <ListingCard listing={l} priority={i < 4} />
+              </li>
+            ))}
+          </ul>
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+          <div className="mt-8 text-center">
+            <Button href="/search" variant="outline">See More Listings</Button>
+          </div>
         </div>
       </section>
 
       {/* ── New listings */}
       <section className="bg-paper py-16 md:py-20" aria-labelledby="new-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <Reveal className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="Fresh on the market" as="h2">
-              <span id="new-heading">New listings</span>
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          <Reveal>
+            <SectionHeading align="center" as="h2">
+              <span id="new-heading">New Listings</span>
             </SectionHeading>
-            <Button href="/search?sort=newest" variant="outline">See more listings</Button>
           </Reveal>
-          <div className="mt-8">
-            <ListingCarousel listings={fresh} ariaLabel="New listings carousel" />
-          </div>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {fresh.map((l) => (
+              <li key={l.id}>
+                <ListingCard listing={l} />
+              </li>
+            ))}
+          </ul>
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+          <div className="mt-8 text-center">
+            <Button href="/search?sort=newest" variant="outline">See More Listings</Button>
+          </div>
         </div>
       </section>
 
-      {/* ── Counties strip (Valley Line tease) */}
+      {/* ── Counties strip */}
       <section className="bg-paper pb-16" aria-labelledby="counties-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <ValleyDivider />
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <h2 id="counties-heading" className="sr-only">
             Counties we serve
           </h2>
-          <ul className="mt-6 flex flex-wrap justify-center gap-x-2 gap-y-3">
+          <ul className="flex flex-wrap justify-center gap-x-2 gap-y-3 border-t border-[#dddddd] pt-10">
             {COUNTIES.map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/top-areas/${c.slug}`}
-                  className="rounded-[2px] border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-porchlight hover:bg-porchlight/10"
+                  className="border border-[#cccccc] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >
                   {c.name}
                 </Link>
@@ -203,11 +213,11 @@ export default async function HomePage() {
       </section>
 
       {/* ── Testimonials */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="home-reviews-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      <section className="bg-paper py-16 md:py-20" aria-labelledby="home-reviews-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="From our clients" align="center" as="h2">
-              <span id="home-reviews-heading">Kind words, real closings</span>
+            <SectionHeading align="center" as="h2">
+              <span id="home-reviews-heading">Kind Words, Real Closings</span>
             </SectionHeading>
           </Reveal>
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
@@ -222,7 +232,7 @@ export default async function HomePage() {
               href={GOOGLE_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-semibold text-river underline-offset-4 hover:underline"
+              className="text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
             >
               See all our Google reviews →
             </a>
@@ -230,32 +240,36 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Why work with us */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="why-heading">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+      {/* ── Why work with us — live: light gray section, centered heading */}
+      <section className="bg-mist py-16 md:py-24" aria-labelledby="why-heading">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Why work with us" dark align="center" as="h2">
-              <span id="why-heading">The tools of a big brokerage, the attention of one agent</span>
+            <SectionHeading align="center" as="h2">
+              <span id="why-heading">Why Work With Us?</span>
             </SectionHeading>
+            <p className="mx-auto mt-4 max-w-2xl text-center text-stone">
+              The tools of a big brokerage, the attention of one agent — from the best tools and
+              technology to transparency throughout the entire process.
+            </p>
           </Reveal>
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {WHY_US.map((w, i) => (
               <Reveal key={w.title} as="li" delay={i * 100}>
-                <div className="h-full rounded-[2px] border border-paper/10 bg-ink-soft p-6">
-                  <p className="font-display text-xl text-paper">{w.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-paper/65">{w.body}</p>
+                <div className="h-full border border-[#dddddd] bg-white p-6">
+                  <p className="text-lg font-bold text-ink">{w.title}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-stone">{w.body}</p>
                 </div>
               </Reveal>
             ))}
           </ul>
-          <div className="mt-14 grid grid-cols-2 gap-8 border-t border-paper/10 pt-10 text-center md:grid-cols-4">
+          <div className="mt-14 grid grid-cols-2 gap-8 border-t border-[#dddddd] pt-10 text-center md:grid-cols-4">
             <StatCounter value={6} label="Counties served" />
             <StatCounter value={24} suffix="h" label="Cash offer turnaround" />
             <StatCounter value={100} suffix="+" label="Sites your listing reaches" />
             <StatCounter value={7} label="Days a week we answer" />
           </div>
           <div className="mt-12 text-center">
-            <Button href="/connect" size="lg">Talk to us</Button>
+            <Button href="/connect">Talk To Us</Button>
           </div>
         </div>
       </section>

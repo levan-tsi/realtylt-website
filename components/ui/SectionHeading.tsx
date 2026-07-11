@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { ValleyUnderline } from "@/components/valley-line/ValleyLine";
 
-/** Eyebrow (mono, tracked) + Fraunces headline + Valley Line flourish. */
+/** Section heading matched to live realtylt.com: Lato 36px light, plain. */
 export function SectionHeading({
   eyebrow,
   children,
@@ -20,21 +19,20 @@ export function SectionHeading({
     <div className={centered ? "text-center" : ""}>
       {eyebrow && (
         <p
-          className={`mb-3 font-mono text-xs uppercase tracking-[0.22em] ${
-            dark ? "text-porchlight" : "text-river"
+          className={`mb-2 text-xs font-bold uppercase tracking-[0.22em] ${
+            dark ? "text-paper/60" : "text-stone"
           }`}
         >
           {eyebrow}
         </p>
       )}
       <Tag
-        className={`font-display text-3xl font-semibold leading-[1.12] tracking-tight md:text-[2.6rem] ${
+        className={`font-sans text-3xl font-light leading-tight md:text-4xl ${
           dark ? "text-paper" : "text-ink"
         }`}
       >
         {children}
       </Tag>
-      <ValleyUnderline className={`mt-4 ${centered ? "mx-auto" : ""}`} />
     </div>
   );
 }

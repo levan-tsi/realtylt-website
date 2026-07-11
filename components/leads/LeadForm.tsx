@@ -66,11 +66,11 @@ export function LeadForm({
     return (
       <div
         role="status"
-        className={`rounded-[2px] border p-6 text-center ${
-          dark ? "border-porchlight/40 bg-ink-soft" : "border-porchlight bg-porchlight/10"
+        className={`border p-6 text-center ${
+          dark ? "border-paper/30 bg-white/5" : "border-[#cccccc] bg-mist"
         }`}
       >
-        <p className={`font-display text-2xl ${dark ? "text-paper" : "text-ink"}`}>{successTitle}</p>
+        <p className={`text-2xl font-light ${dark ? "text-paper" : "text-ink"}`}>{successTitle}</p>
         <p className={`mt-2 text-sm ${dark ? "text-paper/70" : "text-stone"}`}>{successBody}</p>
       </div>
     );
@@ -85,12 +85,13 @@ export function LeadForm({
         <input id="lead-hp" type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" />
       </div>
 
+      {/* Live-site look: placeholder-driven fields; labels stay for screen readers. */}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Input label="Name" name="name" autoComplete="name" required dark={dark} placeholder="Your name" />
-        <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} placeholder="you@email.com" />
+        <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder="Your Name" />
+        <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
       </div>
       <div className={`grid gap-4 ${withAddress ? "sm:grid-cols-2" : ""}`}>
-        <Input label="Phone" name="phone" type="tel" autoComplete="tel" dark={dark} placeholder="(914) 555-0100" />
+        <Input label="Phone" name="phone" type="tel" autoComplete="tel" dark={dark} hideLabel placeholder="Phone Number" />
         {withAddress && (
           <Input
             label="Property address"
@@ -98,11 +99,12 @@ export function LeadForm({
             autoComplete="street-address"
             required
             dark={dark}
-            placeholder="Street, town, NY"
+            hideLabel
+            placeholder="Property Address"
           />
         )}
       </div>
-      <Select label="How can we help?" name="interestReason" dark={dark} defaultValue={defaultReason ?? INTEREST_REASONS[0]}>
+      <Select label="How can we help?" name="interestReason" dark={dark} hideLabel defaultValue={defaultReason ?? INTEREST_REASONS[0]}>
         {INTEREST_REASONS.map((r) => (
           <option key={r} value={r}>
             {r}
@@ -110,7 +112,7 @@ export function LeadForm({
         ))}
       </Select>
       {!compact && (
-        <Textarea label="Message" name="message" dark={dark} placeholder="Tell us a little about what you're looking for…" />
+        <Textarea label="Message" name="message" dark={dark} hideLabel placeholder="Your Message" />
       )}
 
       {status === "error" && (
@@ -119,7 +121,7 @@ export function LeadForm({
         </p>
       )}
 
-      <Button type="submit" size="lg" disabled={status === "submitting"} className="justify-self-start">
+      <Button type="submit" disabled={status === "submitting"} className="justify-self-start">
         {status === "submitting" ? "Sending…" : submitLabel}
       </Button>
     </form>

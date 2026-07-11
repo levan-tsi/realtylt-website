@@ -1,29 +1,29 @@
 import Link from "next/link";
+import Image from "next/image";
 import { LeadForm } from "@/components/leads/LeadForm";
-import { ValleyDivider } from "@/components/valley-line/ValleyLine";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 
-/** Shared footer: nav, contact form (every page — brief §7), REACH OUT block, legal row. */
+/** Shared footer matched to live realtylt.com: white bg, three columns
+ * (stacked nav links / contact form / logo + REACH OUT), legal line,
+ * then a black bottom bar with the legal links. */
 export function Footer() {
   return (
-    <footer className="bg-ink text-paper/80">
-      <ValleyDivider dark className="pt-10" />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 md:grid-cols-[1fr_1.6fr_1fr] lg:px-8">
+    <footer className="border-t border-[#dddddd] bg-paper text-stone">
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 md:grid-cols-[1fr_1.6fr_1fr] md:py-20 lg:px-8">
         <nav aria-label="Footer">
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-paper/50">Explore</p>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2.5 text-sm font-light">
             {FOOTER_NAV.map((item) =>
               "external" in item && item.external ? (
                 // /ai is served by an external rewrite, not an RSC route — a plain anchor
                 // avoids a 404 from Next's link prefetch.
                 <li key={item.href}>
-                  <a href={item.href} className="hover:text-porchlight transition-colors">
+                  <a href={item.href} className="text-ink-soft transition-colors hover:text-stone">
                     {item.label}
                   </a>
                 </li>
               ) : (
                 <li key={item.href}>
-                  <Link href={item.href} className="hover:text-porchlight transition-colors">
+                  <Link href={item.href} className="text-ink-soft transition-colors hover:text-stone">
                     {item.label}
                   </Link>
                 </li>
@@ -33,28 +33,30 @@ export function Footer() {
         </nav>
 
         <section aria-label="Contact form">
-          <p className="mb-4 font-sans text-lg font-bold tracking-widest text-paper">
-            SEND US A MESSAGE
-          </p>
-          <LeadForm dark compact submitLabel="Send Message" />
+          <LeadForm submitLabel="Send Us A Message" />
         </section>
 
         <div>
-          <p className="font-sans text-lg font-bold tracking-widest text-paper">
-            REACH OUT
-          </p>
-          <address className="mt-4 space-y-1 text-sm not-italic">
+          <Image
+            src="/logo-realtylt.png"
+            alt="RealtyLT"
+            width={200}
+            height={41}
+            className="h-auto w-44"
+          />
+          <p className="mt-8 text-sm font-bold uppercase tracking-[0.14em] text-ink">Reach Out</p>
+          <address className="mt-3 space-y-1 text-sm font-light not-italic">
             <p>{SITE.address.street}</p>
             <p>
               {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
             </p>
             <p>
-              <a href={SITE.phoneHref} className="hover:text-porchlight transition-colors">
+              <a href={SITE.phoneHref} className="transition-colors hover:text-ink">
                 {SITE.phone}
               </a>
             </p>
             <p>
-              <a href={`mailto:${SITE.email}`} className="hover:text-porchlight transition-colors">
+              <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ink">
                 {SITE.email}
               </a>
             </p>
@@ -62,24 +64,28 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-paper/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-paper/60 md:flex-row md:items-center md:justify-between lg:px-8">
-          <p>
-            © {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
-          </p>
+      <div className="mx-auto max-w-6xl px-4 pb-10 text-xs lg:px-8">
+        <p>
+          © {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
+        </p>
+      </div>
+
+      <div className="bg-ink text-paper/70">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
+          <p>© {new Date().getFullYear()} {SITE.name}</p>
           <ul className="flex gap-4">
             <li>
-              <Link href="/privacy-policy" className="hover:text-porchlight transition-colors">
+              <Link href="/privacy-policy" className="transition-colors hover:text-paper">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/dmca-terms" className="hover:text-porchlight transition-colors">
+              <Link href="/dmca-terms" className="transition-colors hover:text-paper">
                 DMCA &amp; Terms of Service
               </Link>
             </li>
             <li>
-              <a href="/sitemap.xml" className="hover:text-porchlight transition-colors">
+              <a href="/sitemap.xml" className="transition-colors hover:text-paper">
                 Sitemap
               </a>
             </li>
