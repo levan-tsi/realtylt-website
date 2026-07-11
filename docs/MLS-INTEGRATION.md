@@ -131,7 +131,22 @@ are intact; Levan must re-paste them into .env.local for local live-mode dev).
 
 ## Status log
 
-- 2026-07-11 (Round 2): architecture deployed. First successful sync + photo-budget probe:
-  see CHECKPOINT.md "ROUND 2" section for the latest state, including whether the MLS
-  data-API hourly block (self-inflicted during Rounds 1-2 testing) had lifted and how much
-  photo coverage the budget allowed.
+- **2026-07-11 07:27 UTC (Round 2)**: architecture deployed AND first successful
+  replication. `/api/cron/sync-mls` published `mls/listings.json` = **251 real listings,
+  all six counties** (orange 53, westchester 100, dutchess 33, rockland 33, ulster 19,
+  putnam 13). Live site verified: `/api/idx/search` returns real addresses/offices,
+  `fixtureMode:false`, warm latency 69-125ms; `/search` renders 12 real cards + hybrid map
+  with real geo-spread price pins; a listing detail SSR page renders address + "Listed
+  with" + One Key MLS attribution; 0 console errors, 0 CSP violations
+  (scripts/verify-live-mls.mjs ALL PASS; screenshot docs/round2/live-search-real.png).
+- **The DATA API block lifted** (it had been self-inflicted by Rounds 1-2 testing volume —
+  a trailing-window average, not calendar-hour aligned; it cleared once the account went
+  quiet). **The MEDIA CDN budget is STILL exhausted**: a photoBudget=16 run returned
+  `budgetExhausted:true` on the very first photo (429). So **photos = 0 cached**; every
+  card/detail shows the branded "Photo coming soon" placeholder SVG (200, never a broken
+  tile or 502). This is expected and self-healing: the daily 06:00 UTC cron + >4h stale
+  self-refresh retry photo-0-first every run and will fill coverage once the media budget
+  window clears (likely a longer/daily window than the data API's). To accelerate once
+  clear: a few manual `?force=1` calls ≥1h apart, watching `budgetExhausted`.
+- Handoff rule reaffirmed: do NOT loop force calls; each cron run also spends 2-3 DATA
+  requests (replicate runs first), and hammering re-armed the account block twice already.

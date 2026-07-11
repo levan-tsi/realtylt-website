@@ -58,7 +58,14 @@ preserved; one-row filter bar w/ SAVE SEARCH inside), /connect hero flipped to l
 light band, /buying hero heightened; financing re-verified black via computed styles;
 mobile 390 checks incl. county + /reviews. qa-search-flows + qa-flows2 suites ALL PASS.
 
-**Sync status at handoff:** see the "Status log" at the bottom of docs/MLS-INTEGRATION.md.
+**Sync status at handoff (2026-07-11 07:30 UTC):** ✅ **REAL DATA IS LIVE** — first
+replication succeeded: 251 listings across all six counties in the Blob snapshot; live
+site verified (real addresses/offices, fixtureMode:false, 69-125ms warm, hybrid map with
+real pins, 0 console/CSP errors — scripts/verify-live-mls.mjs ALL PASS). ⏳ **Photos = 0**:
+the MEDIA CDN per-account budget is still exhausted from Rounds 1-2 (data API recovered,
+media has a longer window); every card shows the branded "Photo coming soon" placeholder
+(never a broken tile). Self-heals via the daily cron / >4h self-refresh once media clears.
+Full detail in docs/MLS-INTEGRATION.md "Status log".
 
 ## ✅ REAL MLS DATA IS LIVE — Round 1, 2026-07-11 (branch `main`)
 
