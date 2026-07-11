@@ -75,7 +75,7 @@ const RETRY_MS = 60 * 1000; // cool-down before retrying a failed sync
 const PAGE_SIZE = 500; // MLS Grid max $top
 const MAX_PAGES = 8; // hard bound per sync (≤ 8 requests, ~4000 rows scanned)
 const TARGET_KEPT = 150; // stop paging once the six-county working set is this deep
-const PAGE_GAP_MS = 600; // stay under the 2 req/sec cap
+const PAGE_GAP_MS = 1100; // stay STRICTLY under the 2 req/sec per-ACCOUNT cap
 const MAX_PHOTOS = 16; // bound page weight + image-optimizer cost per listing
 
 export class MlsGridClient implements IdxClient {
@@ -135,6 +135,14 @@ export class MlsGridClient implements IdxClient {
     const featuredIds = new Set((await this.getFeatured()).map((l) => l.id));
     const fresh = await new FixtureIdxClient(this.cache).getNew(limit + featuredIds.size);
     return fresh.filter((l) => !featuredIds.has(l.id)).slice(0, limit);
+  }
+
+  /** One-shot replication for the sync cron (app/api/cron/sync-mls): runs a fresh sync
+   * and returns the working set with the ORIGINAL signed media URLs (not /api/media
+   * proxy paths) so the cron can copy each photo into durable Blob storage once. */
+  async replicate(): Promise<Listing[]> {
+    await this.sync();
+    return this.cache.map((l) => ({ ...l, photos: this.mediaByListing.get(l.id) ?? [] }));
   }
 
   /** Serve fresh cache; stale cache revalidates in the background; only the very first

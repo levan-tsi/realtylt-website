@@ -26,7 +26,7 @@ const CSP = [
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com",
   "font-src 'self' data:",
   "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com",
   "worker-src 'self' blob:",
@@ -60,7 +60,12 @@ const nextConfig: NextConfig = {
     // NOTE: live MLS photos never reach the optimizer anymore — they're served through the
     // CDN-cached /api/media proxy and rendered `unoptimized` (see that route + ListingCard).
     // This allowance stays as belt-and-suspenders for any stray direct mlsgrid URL.
-    remotePatterns: [{ protocol: "https", hostname: "**.mlsgrid.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "**.mlsgrid.com" },
+      // Replicated MLS photos live in Vercel Blob (public store). Rendered `unoptimized`
+      // (isLiveMlsPhoto), so this is belt-and-suspenders like the mlsgrid allowance.
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+    ],
     // Never let the optimizer render SVG (an SVG can carry inline script) — default is
     // false; pinned explicitly so a future edit can't silently enable an XSS vector.
     dangerouslyAllowSVG: false,
