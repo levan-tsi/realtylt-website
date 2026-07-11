@@ -52,16 +52,6 @@ body {
   translate: 0 0;
 }
 
-/* ── Valley Line stroke draw (ValleyLine component toggles .is-visible) */
-.vl-draw path.vl-path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.15s;
-}
-.vl-draw.is-visible path.vl-path {
-  stroke-dashoffset: 0;
-}
-
 /* ── Card hover lift + slow photo scale */
 .lift {
   transition:
@@ -104,8 +94,5 @@ body {
   .reveal {
     opacity: 1;
     translate: 0 0;
-  }
-  .vl-draw path.vl-path {
-    stroke-dashoffset: 0;
   }
 }

@@ -91,7 +91,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             )}
             <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
             {l.status !== "Active" && (
-              <span className="absolute left-4 top-4 rounded-[2px] bg-ink/80 px-2.5 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-porchlight backdrop-blur">
+              <span className="absolute left-4 top-4 bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
                 {l.status}
               </span>
             )}
@@ -110,12 +110,12 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
       <section className="bg-paper py-12 md:py-16">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
-            <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">
-              <Link href="/search" className="hover:text-river">Search</Link>
+            <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">
+              <Link href="/search" className="hover:text-ink">Search</Link>
               {county && (
                 <>
                   {" / "}
-                  <Link href={`/top-areas/${county.slug}`} className="hover:text-river">
+                  <Link href={`/top-areas/${county.slug}`} className="hover:text-ink">
                     {county.name}
                   </Link>
                 </>
@@ -154,8 +154,8 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             <h2 className="mt-8 font-display text-2xl text-ink">Features</h2>
             <ul className="mt-3 grid max-w-2xl gap-2 sm:grid-cols-2">
               {l.features.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-ink">
-                  <span aria-hidden className="mt-0.5 text-porchlight-deep">✓</span> {f}
+                <li key={f} className="flex items-start gap-2 text-sm text-ink-soft">
+                  <span aria-hidden className="mt-0.5 font-bold">✓</span> {f}
                 </li>
               ))}
             </ul>

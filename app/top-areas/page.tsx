@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ValleyMap } from "@/components/valley-line/ValleyMap";
 import { COUNTY_CONTENT } from "@/content/counties";
 import { fmtM } from "@/lib/format";
 
@@ -17,53 +16,43 @@ export const metadata: Metadata = {
 export default function TopAreasPage() {
   return (
     <>
-      {/* ── Hero: the Valley Line */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="areas-hero">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 lg:grid-cols-[1fr_1.1fr] lg:px-8">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-porchlight">Top areas</p>
-            <h1 id="areas-hero" className="mt-3 font-display text-4xl font-semibold leading-[1.08] tracking-tight md:text-6xl">
-              Six counties, <span className="text-porchlight">one river</span>
-            </h1>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-paper/80">
-              Everything we do happens along the Hudson — from Westchester&rsquo;s commuter villages
-              in the south to Ulster&rsquo;s Catskill towns in the north. Each county has its own
-              price band, commute story, and way of life. Pick a marker and start exploring.
-            </p>
-            <ul className="mt-8 space-y-2.5 border-t border-paper/10 pt-6">
-              {COUNTY_CONTENT.map((c) => (
-                <li key={c.slug}>
-                  <Link
-                    href={`/top-areas/${c.slug}`}
-                    className="group flex items-baseline justify-between gap-4 rounded-[2px] px-2 py-1.5 transition-colors hover:bg-paper/5"
-                  >
-                    <span className="font-semibold text-paper group-hover:text-porchlight">{c.name}</span>
-                    <span className="font-mono text-xs text-paper/50">median {fmtM(c.medianPrice)} →</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <Reveal delay={120}>
-            <ValleyMap
-              counties={COUNTY_CONTENT.map(({ slug, short, medianPrice, map }) => ({ slug, short, medianPrice, map }))}
-            />
-          </Reveal>
+      {/* ── Hero — thin photo band, centered light+bold title */}
+      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="areas-hero">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/counties/dutchess.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-16 text-center lg:px-8">
+          <h1 id="areas-hero" className="text-3xl font-light text-paper md:text-4xl">
+            Top <strong className="font-bold">Areas</strong>
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-paper/85">
+            Everything we do happens along the Hudson — from Westchester&rsquo;s commuter villages
+            in the south to Ulster&rsquo;s Catskill towns in the north. Each county has its own
+            price band, commute story, and way of life.
+          </p>
         </div>
       </section>
 
       {/* ── County cards */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="county-cards">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Choose your county" as="h2">
-              <span id="county-cards">Where do you see yourself?</span>
+            <SectionHeading align="center" as="h2">
+              <span id="county-cards">Where Do You See Yourself?</span>
             </SectionHeading>
           </Reveal>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {COUNTY_CONTENT.map((c, i) => (
               <Reveal key={c.slug} as="li" delay={(i % 3) * 110}>
-                <article className="lift group relative h-full overflow-hidden rounded-[2px] border border-ink/10 bg-white">
+                <article className="lift group relative h-full overflow-hidden border border-[#dddddd] bg-white">
                   <Link href={`/top-areas/${c.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${c.name}`} />
                   <div className="photo-zoom relative aspect-[16/9] overflow-hidden">
                     <Image
@@ -73,14 +62,14 @@ export default function TopAreasPage() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover"
                     />
-                    <span className="absolute bottom-3 left-3 rounded-[2px] bg-ink/80 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-porchlight backdrop-blur">
+                    <span className="absolute bottom-3 left-3 bg-ink/85 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper">
                       median {fmtM(c.medianPrice)}
                     </span>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-display text-xl text-ink group-hover:text-porchlight-deep">{c.name}</h3>
+                    <h3 className="text-xl font-bold text-ink">{c.name}</h3>
                     <p className="mt-1 text-sm text-stone">{c.tagline}</p>
-                    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-stone">
+                    <p className="mt-3 text-xs uppercase tracking-[0.12em] text-stone">
                       {c.towns.slice(0, 4).join(" · ")}
                     </p>
                   </div>
@@ -93,13 +82,13 @@ export default function TopAreasPage() {
 
       {/* ── CTA */}
       <section className="bg-mist py-14" aria-label="Get local advice">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 text-center lg:px-8">
-          <p className="max-w-xl font-display text-2xl text-ink">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-4 text-center lg:px-8">
+          <p className="max-w-xl text-2xl font-light text-ink">
             Not sure which county fits? That&rsquo;s literally our job.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button href="/connect" size="lg">Talk it through with us</Button>
-            <Button href="/search" variant="outline" size="lg">Browse all listings</Button>
+            <Button href="/connect">Talk It Through With Us</Button>
+            <Button href="/search" variant="outline">Browse All Listings</Button>
           </div>
         </div>
       </section>

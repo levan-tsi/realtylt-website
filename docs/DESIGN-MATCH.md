@@ -80,26 +80,32 @@ live site (docs/reference/*.png). Small deviations only where clearly better.
 |---|---|---|
 | shell (header/footer/tokens) | DONE | verified home 1280+390 vs reference |
 | Home / | DONE | hero B/W + search strip, value split, 4-col Featured/New grids, centered SEE MORE, Why gray section; shots in docs/design-match/home-*.png |
-| /search | NOT STARTED | next up |
-| /selling | NOT STARTED | |
-| /buying | NOT STARTED | |
-| /financing | NOT STARTED | |
-| /home-value | NOT STARTED | |
-| /connect | NOT STARTED | |
-| /top-areas + 6 county pages | NOT STARTED | uses ValleyMap — restyle/neutralize |
-| /who-we-are | NOT STARTED | |
-| /reviews | NOT STARTED | |
-| /blog (+ posts) | NOT STARTED | |
-| /listing/[id] | NOT STARTED | check after card restyle |
-| /saved, /privacy-policy, /dmca-terms, 404 | NOT STARTED | inherit shell; spot-check |
+| /search | DONE | live filter bar (slim uppercase dropdowns + black SEARCH/SAVE SEARCH), gray chips + meta strip, white-body `plain` card variant, gray pagination |
+| /selling | DONE | light+bold hero + dark form card, numbered 1/2 path cards w/ black bands, black no-pressure band, white CLIENTS SAY, black Pricing/Loop w/ white `light` buttons |
+| /buying | DONE | centered hero (phone + white CTA), black steps 1-2, white Save&See, black Offer&Closing |
+| /financing | DONE | thin hero, Demystifying, black Pre-Approval + letter card (red APPROVED), calculator = black inputs/light results (heading inside), gray App&Processing, black Closing |
+| /home-value | DONE | live minimal page: full photo, centered SERIF headline (live uses serif here), white centered form, serif subline; kept How-it-works below |
+| /connect | DONE | thin photo band, portrait left (live asset public/images/levan-portrait.jpg) + appointment cards right, Send Us A Message section |
+| /top-areas + 6 county pages | DONE | live /top_areas is BLANK (dropdown-only) and county links = pre-filtered /search (which matches); our SEO hub+county pages kept, restyled neutral (ValleyMap removed, plain cards) |
+| /who-we-are | DONE | live match: team-bg band + "Who We Are", circular B/W portrait, CALL/CONTACT stacked; bio + values kept below |
+| /reviews | DONE | no live equivalent — neutral restyle (light/bold hero, gold stars, white light button) |
+| /blog (+ posts) | DONE | live match: laptop band "Stay Up To Date", featured split w/ black READ MORE, centered date/title grid; post page neutralized |
+| /listing/[id] | DONE | badges/checks/breadcrumbs neutralized; heart = red |
+| /saved, 404 | DONE | neutralized (light/bold headings, no porchlight) |
+| /privacy-policy, /dmca-terms | OK AS-IS | plain legal pages; font-display classes now render Lato via tokens |
+
+Also: components/valley-line/* DELETED (fully orphaned by restyle) + .vl-draw CSS
+removed; FavoriteButton saved-state is red (was amber).
 
 ## NEXT STEP FOR SUCCESSOR
 
-1. `/search`: view docs/reference/search-1280.png + search-390.png, restyle
-   components/search/SearchClient.tsx (filter bar, grid, map toggle) to live
-   look (white bg, gray text, black buttons, live-style cards already done).
-2. Then Selling → Buying → Financing → Home Value → Connect → Top Areas(+counties)
-   → Who We Are → Reviews → Blog, committing per page.
+All pages are matched/restyled. Remaining polish candidates (optional):
+- 390px pass page-by-page vs *-390.png references (spot-checked home only).
+- privacy/dmca/legal pages still carry harmless font-display/font-mono classes.
+- scripts/extract-live-tokens*.mjs are one-off extraction tools (kept for reference).
+Deploy after any change: PowerShell Start-Process npx.cmd -ArgumentList
+vercel,deploy,--prod,--yes -Wait; prod alias https://realtylt-website.vercel.app;
+then node scripts/final-probe.mjs against the live URL.
 3. Verify recipe: `npm run build`; kill port 3777 (PowerShell Get-NetTCPConnection);
    `(npx next start -p 3777 &)`; `MSYS_NO_PATHCONV=1 node scripts/shot.mjs
    http://localhost:3777 docs/design-match /search ...` (bare `/` = home, no arg).

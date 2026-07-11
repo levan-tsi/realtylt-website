@@ -15,26 +15,33 @@ export default function BlogIndexPage() {
 
   return (
     <>
-      <header className="bg-ink py-14 text-paper md:py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-porchlight">Blog</p>
-          <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight md:text-5xl">
-            Stay up to <span className="text-porchlight">date</span>
+      {/* ── Hero — live: laptop photo band, centered "Stay Up To Date" */}
+      <header className="relative isolate overflow-hidden bg-ink">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/lifestyle/financing.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-24 text-center md:py-28 lg:px-8">
+          <h1 className="text-3xl font-light text-paper md:text-4xl">
+            Stay <strong className="font-bold">Up To Date</strong>
           </h1>
-          <p className="mt-3 max-w-xl text-paper/75">
-            Buying, selling, moving, and owning in the Hudson Valley — written from the field, not
-            a content farm.
-          </p>
         </div>
       </header>
 
       <section className="bg-paper py-14 md:py-20" aria-label="Articles">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          {/* Featured */}
+        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+          {/* Featured — live: image left, date/title/excerpt/READ MORE right */}
           <Reveal>
-            <article className="lift group relative grid overflow-hidden rounded-[2px] border border-ink/10 bg-white md:grid-cols-2">
+            <article className="group relative grid items-center gap-8 md:grid-cols-2">
               <Link href={`/blog/${featured.slug}`} className="absolute inset-0 z-10" aria-label={featured.title} />
-              <div className="photo-zoom relative aspect-[16/10] overflow-hidden md:aspect-auto">
+              <div className="photo-zoom relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={featured.cover}
                   alt=""
@@ -44,26 +51,28 @@ export default function BlogIndexPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="p-7 md:p-10">
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone">
-                  {fmtDate(featured.date)} · Featured
+              <div>
+                <p className="text-xs uppercase tracking-[0.18em] text-stone">
+                  {fmtDate(featured.date)}
                 </p>
-                <h2 className="mt-3 font-display text-2xl leading-snug text-ink group-hover:text-porchlight-deep md:text-3xl">
+                <h2 className="mt-3 text-2xl font-bold leading-snug text-ink-soft md:text-3xl">
                   {featured.title}
                 </h2>
                 <p className="mt-4 leading-relaxed text-stone">{featured.excerpt}</p>
-                <p className="mt-6 font-bold text-river">Read more →</p>
+                <span className="mt-6 inline-block rounded-[4px] bg-ink px-5 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors group-hover:bg-ink-soft">
+                  Read More
+                </span>
               </div>
             </article>
           </Reveal>
 
-          {/* Grid */}
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Grid — live: photo, centered date, centered bold title */}
+          <ul className="mt-14 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p, i) => (
               <Reveal key={p.slug} as="li" delay={(i % 3) * 100}>
-                <article className="lift group relative h-full overflow-hidden rounded-[2px] border border-ink/10 bg-white">
+                <article className="group relative h-full text-center">
                   <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10" aria-label={p.title} />
-                  <div className="photo-zoom relative aspect-[16/9] overflow-hidden">
+                  <div className="photo-zoom relative aspect-[16/11] overflow-hidden">
                     <Image
                       src={p.cover}
                       alt=""
@@ -72,12 +81,10 @@ export default function BlogIndexPage() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="p-5">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">{fmtDate(p.date)}</p>
-                    <h2 className="mt-2 font-display text-lg leading-snug text-ink group-hover:text-porchlight-deep">
-                      {p.title}
-                    </h2>
-                  </div>
+                  <p className="mt-4 text-xs uppercase tracking-[0.14em] text-stone">{fmtDate(p.date)}</p>
+                  <h2 className="mt-1.5 truncate text-base font-bold leading-snug text-ink-soft group-hover:text-ink">
+                    {p.title}
+                  </h2>
                 </article>
               </Reveal>
             ))}

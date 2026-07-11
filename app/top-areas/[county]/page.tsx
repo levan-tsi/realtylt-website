@@ -49,26 +49,26 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
             fill
             priority
             sizes="100vw"
-            className="hero-zoom object-cover opacity-40"
+            className="object-cover opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/30" />
+          <div className="absolute inset-0 bg-black/45" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28 lg:px-8">
-          <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-paper/60">
-            <Link href="/top-areas" className="hover:text-porchlight">Top areas</Link> / {c.short}
+        <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-24 lg:px-8">
+          <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
+            <Link href="/top-areas" className="hover:text-paper">Top Areas</Link> / {c.short}
           </nav>
-          <h1 id="county-hero" className="mt-3 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-paper md:text-6xl">
-            {c.name}
+          <h1 id="county-hero" className="mt-3 text-4xl font-light leading-tight text-paper md:text-5xl">
+            {c.short} <strong className="font-bold">County</strong>
           </h1>
           <p className="mt-3 max-w-xl text-lg text-paper/85">{c.tagline}</p>
           <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
             <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Median price</dt>
-              <dd className="mt-1 font-mono text-2xl text-porchlight">{fmtM(c.medianPrice)}</dd>
+              <dt className="text-xs font-bold uppercase tracking-[0.18em] text-paper/60">Median price</dt>
+              <dd className="mt-1 text-2xl font-bold text-paper">{fmtM(c.medianPrice)}</dd>
             </div>
             <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-paper/50">Homes on market here</dt>
-              <dd className="mt-1 font-mono text-2xl text-paper">{result.total}</dd>
+              <dt className="text-xs font-bold uppercase tracking-[0.18em] text-paper/60">Homes on market here</dt>
+              <dd className="mt-1 text-2xl font-bold text-paper">{result.total}</dd>
             </div>
           </dl>
         </div>
@@ -78,47 +78,47 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
       <section className="bg-paper py-16 md:py-24" aria-labelledby="local-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
-            <SectionHeading eyebrow="Local knowledge" as="h2">
-              <span id="local-heading">Living in {c.short}</span>
+            <SectionHeading as="h2">
+              <span id="local-heading">Living in <strong className="font-bold">{c.short}</strong></span>
             </SectionHeading>
           </Reveal>
           <div className="mt-10 grid gap-10 lg:grid-cols-3">
             <Reveal>
-              <h3 className="font-mono text-xs uppercase tracking-[0.22em] text-river">The market</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-ink-soft">The market</h3>
               <p className="mt-3 leading-relaxed text-stone">{c.overview}</p>
             </Reveal>
             <Reveal delay={100}>
-              <h3 className="font-mono text-xs uppercase tracking-[0.22em] text-river">The lifestyle</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-ink-soft">The lifestyle</h3>
               <p className="mt-3 leading-relaxed text-stone">{c.lifestyle}</p>
             </Reveal>
             <Reveal delay={200}>
-              <h3 className="font-mono text-xs uppercase tracking-[0.22em] text-river">The commute</h3>
+              <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-ink-soft">The commute</h3>
               <p className="mt-3 leading-relaxed text-stone">{c.commute}</p>
             </Reveal>
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
             <Reveal>
-              <div className="h-full rounded-[2px] border border-ink/10 bg-mist p-7">
-                <h3 className="font-display text-xl text-ink">Why buy here</h3>
+              <div className="h-full bg-mist p-7">
+                <h3 className="text-xl font-bold text-ink">Why buy here</h3>
                 <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                   {c.whyBuy.map((w) => (
-                    <li key={w} className="flex items-start gap-2 text-sm text-ink">
-                      <span aria-hidden className="mt-0.5 text-porchlight-deep">✓</span> {w}
+                    <li key={w} className="flex items-start gap-2 text-sm text-ink-soft">
+                      <span aria-hidden className="mt-0.5 font-bold">✓</span> {w}
                     </li>
                   ))}
                 </ul>
               </div>
             </Reveal>
             <Reveal delay={120}>
-              <div className="h-full rounded-[2px] border border-ink/10 bg-white p-7">
-                <h3 className="font-display text-xl text-ink">Towns we work</h3>
+              <div className="h-full border border-[#dddddd] bg-white p-7">
+                <h3 className="text-xl font-bold text-ink">Towns we work</h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {c.towns.map((t) => (
                     <li key={t}>
                       <Link
                         href={`/search?q=${encodeURIComponent(t)}`}
-                        className="inline-block rounded-[2px] border border-ink/15 px-3 py-1.5 font-mono text-xs text-ink transition-colors hover:border-porchlight-deep hover:text-porchlight-deep"
+                        className="inline-block border border-[#cccccc] px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-ink hover:text-ink"
                       >
                         {t}
                       </Link>
@@ -134,16 +134,13 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
       {/* ── Pre-filtered listings */}
       <section className="bg-mist py-16 md:py-20" aria-labelledby="county-listings">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <Reveal className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="On the market now" as="h2">
-              <span id="county-listings">Homes for sale in {c.short}</span>
+          <Reveal>
+            <SectionHeading align="center" as="h2">
+              <span id="county-listings">Homes for Sale in {c.short}</span>
             </SectionHeading>
-            <Button href={`/search?county=${c.slug}`} variant="outline">
-              See all {result.total} listings
-            </Button>
           </Reveal>
           {result.listings.length === 0 ? (
-            <p className="mt-8 rounded-[2px] border border-dashed border-ink/20 p-10 text-center text-sm text-stone">
+            <p className="mt-8 border border-dashed border-[#cccccc] p-10 text-center text-sm text-stone">
               Nothing on the market right this moment — save a search and we&rsquo;ll flag new
               {" " + c.short} listings for you.
             </p>
@@ -151,11 +148,16 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
             <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {result.listings.map((l) => (
                 <li key={l.id}>
-                  <ListingCard listing={l} />
+                  <ListingCard listing={l} variant="plain" />
                 </li>
               ))}
             </ul>
           )}
+          <div className="mt-8 text-center">
+            <Button href={`/search?county=${c.slug}`} variant="outline">
+              See All {result.total} Listings
+            </Button>
+          </div>
           <MlsAttribution dataLastUpdated={result.dataLastUpdated} fixtureMode={fixture} className="mt-8" />
         </div>
       </section>
@@ -163,13 +165,13 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
       {/* ── Area CTA */}
       <section className="bg-ink py-14 text-paper" aria-label={`Work with us in ${c.name}`}>
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 text-center lg:px-8">
-          <p className="max-w-2xl font-display text-2xl md:text-3xl">
+          <p className="max-w-2xl text-2xl font-light md:text-3xl">
             Buying or selling in {c.short}? We know these roads.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button href="/connect" size="lg">Talk to a local agent</Button>
-            <Button href="/home-value" variant="outline-light" size="lg">
-              What&rsquo;s my {c.short} home worth?
+            <Button href="/connect" variant="light">Talk To A Local Agent</Button>
+            <Button href="/home-value" variant="outline-light">
+              What&rsquo;s My {c.short} Home Worth?
             </Button>
           </div>
         </div>
