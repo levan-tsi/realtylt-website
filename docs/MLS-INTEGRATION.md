@@ -54,18 +54,31 @@ app still gets them). For local dev they live only in `.env.local` (gitignored; 
   10522” $899,000 4bd/2ba (remarks reference Dobbs Ferry — consistent with Greenburgh).
   External spot-check: see “Spot-check” below.
 
-## Photos (the fixed bug)
+## Photos (the fixed bug) — served via /api/media proxy
 
-- Real per-listing photos from `media.mlsgrid.com` — matched by the existing
-  `**.mlsgrid.com` images.remotePattern AND `https://*.mlsgrid.com` in CSP img-src.
-  No config-host change was needed (verify 0 CSP violations stays green).
-- **MediaURLs are SIGNED + SHORT-LIVED** (`?token=…&expires=…`, ~15 h). Handled by:
-  1. sync reuses the previous sync's URLs while `expires` > now+2 h (stable
-     image-optimizer cache keys);
-  2. `images.minimumCacheTTL = 43200` (12 h) in next.config.ts.
-  Without these, `media.mlsgrid.com` 429s under the optimizer's re-fetch bursts
-  (observed locally: 16/16 home photos 429 after repeated cold renders).
-  Tradeoff: newly uploaded MLS photos can lag up to ~13 h on an already-cached listing.
+Real per-listing photos come from `media.mlsgrid.com`, which has TWO hard constraints
+(measured empirically 2026-07-11):
+
+1. **MediaURLs are SIGNED + SHORT-LIVED** — `?token=…&expires=…` with **~1 hour** expiry.
+2. **A per-ACCOUNT media request budget** — their AWS API Gateway usage plan returns
+   429 "Request limit reached". Verified per-account (NOT per-IP): after heavy testing
+   exhausted the window, a completely fresh IP (the n8n Hostinger VPS, via a temp
+   workflow, since archived) got 429 on its FIRST-ever request; Vercel lambdas and the
+   image optimizer got the same. Both hotlinking and next/image against raw URLs are
+   therefore unshippable (the optimizer surfaces it as 502
+   OPTIMIZED_EXTERNAL_IMAGE_REQUEST_INVALID).
+
+**Architecture:** `Listing.photos` carry stable `/api/media/{listingId}/{idx}` paths.
+`app/api/media/[id]/[idx]/route.ts` resolves the CURRENT signed URL from the client's
+in-memory feed cache (never user-supplied — no SSRF) and streams the image with
+`s-maxage=86400, stale-while-revalidate=604800`, so the Vercel CDN absorbs repeat
+traffic and the MLS budget is spent ~once per photo per region per day. Rendered
+`unoptimized` (isLiveMlsPhoto in ListingCard) so the optimizer doesn't multiply
+upstream fetches per srcset width. Errors return 502 with `no-store` (CDN never caches
+a throttled/expired response). CSP untouched: browsers only ever fetch same-origin.
+
+**Long-term (launch)**: replicate media to owned storage (e.g. Vercel Blob) at sync
+time — budget spent once per photo EVER; that is MLS Grid's intended replication model.
 
 ## Coordinates (feed limitation + workaround)
 

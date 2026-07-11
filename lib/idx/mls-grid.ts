@@ -87,6 +87,9 @@ export class MlsGridClient implements IdxClient {
   /** Live view of which SELECT_FIELDS this subscription actually serves. */
   private readonly select = new Set(SELECT_FIELDS);
   private loggedKeys = false;
+  /** listing id → current SIGNED media URLs. Listing.photos carry stable /api/media/…
+   * proxy paths instead — media tokens expire in ~1h, far shorter than page caches. */
+  private readonly mediaByListing = new Map<string, string[]>();
 
   constructor(
     private readonly endpoint = process.env.MLS_API_ENDPOINT ?? "",
@@ -106,6 +109,14 @@ export class MlsGridClient implements IdxClient {
     // Not in the working-set window (older listing, saved favorite) — one direct lookup,
     // ListingId is an allowed $filter field. Result is served under the page's ISR cache.
     return this.fetchById(id);
+  }
+
+  /** Current SIGNED media URL for /api/media/[id]/[idx] (the proxy that hides token churn
+   * from browsers + CDN). Never user-supplied — always resolved from our own feed data. */
+  async getMediaUrl(id: string, idx: number): Promise<string | null> {
+    await this.ensureSynced();
+    if (!this.mediaByListing.has(id)) await this.fetchById(id); // populates the map
+    return this.mediaByListing.get(id)?.[idx] ?? null;
   }
 
   async getFeatured(limit = 8): Promise<Listing[]> {
@@ -165,28 +176,21 @@ export class MlsGridClient implements IdxClient {
       for (const p of rows) {
         const mapped = mapProperty(p);
         if (mapped) {
-          kept.push(mapped);
+          kept.push(this.proxyPhotos(mapped));
           countyTally[mapped.county] = (countyTally[mapped.county] ?? 0) + 1;
-          if (mapped.photos[0]) mediaHosts.add(new URL(mapped.photos[0]).host);
         } else if (!isServedCounty(p.CountyOrParish)) dropped.county++;
         else if (!isServedType(p.PropertyType)) dropped.type++;
         else dropped.invalid++;
       }
+      for (const urls of this.mediaByListing.values())
+        if (urls[0]) mediaHosts.add(new URL(urls[0]).host);
       if (rows.length < PAGE_SIZE) break; // feed window exhausted
     }
 
-    // Media URLs are SIGNED and short-lived (~15h `expires=`), and media.mlsgrid.com
-    // rate-limits origin fetches hard (429s). Keep the previous sync's URLs while they're
-    // still comfortably valid so the image-optimizer cache key stays stable and each photo
-    // is fetched from the CDN roughly once per token lifetime instead of every sync.
-    const prev = new Map(this.cache.map((l) => [l.id, l] as const));
-    const cutoff = Math.floor(Date.now() / 1000) + 2 * 3600;
-    for (const l of kept) {
-      const old = prev.get(l.id);
-      if (!old?.photos[0]) continue;
-      const exp = Number(/[?&]expires=(\d+)/.exec(old.photos[0])?.[1]);
-      if (exp > cutoff) l.photos = old.photos;
-    }
+    // Prune media entries for listings that left the working set (getMediaUrl re-fetches
+    // on demand for saved/older ids) so a long-lived instance doesn't grow unboundedly.
+    const keptIds = new Set(kept.map((l) => l.id));
+    for (const id of this.mediaByListing.keys()) if (!keptIds.has(id)) this.mediaByListing.delete(id);
 
     this.cache = kept;
     this.cachedAt = Date.now();
@@ -249,11 +253,20 @@ export class MlsGridClient implements IdxClient {
       const res = await this.request(`${this.endpoint.replace(/\/$/, "")}/Property?${query}`);
       if (!res.ok) throw new Error(`MLS Grid ${res.status}`);
       const data = (await res.json()) as { value?: ResoProperty[] };
-      return data.value?.[0] ? mapProperty(data.value[0]) : null;
+      const mapped = data.value?.[0] ? mapProperty(data.value[0]) : null;
+      return mapped && this.proxyPhotos(mapped);
     } catch (e) {
       console.error(`[mls-grid] getListing(${id}) lookup failed:`, e);
       return null;
     }
+  }
+
+  /** Stash the signed URLs and hand the UI stable same-origin proxy paths — browsers and
+   * the image optimizer only ever see /api/media/…, which the Vercel CDN caches, so the
+   * ~1h token expiry and media.mlsgrid.com's per-IP rate limits never reach visitors. */
+  private proxyPhotos(l: Listing): Listing {
+    this.mediaByListing.set(l.id, l.photos);
+    return { ...l, photos: l.photos.map((_, i) => `/api/media/${l.id}/${i}`) };
   }
 
   private buildFilter(): string {

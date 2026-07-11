@@ -3,6 +3,14 @@ import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
 import { FavoriteButton } from "./FavoriteButton";
 
+/** Live MLS photos are served via our CDN-cached /api/media/… proxy (the MLS media CDN
+ * enforces a hard per-account request budget — see that route). They render `unoptimized`
+ * so the image optimizer doesn't multiply upstream fetches per width or burn
+ * transformation quota; fixture/local images stay optimized. */
+export function isLiveMlsPhoto(src: string | undefined): boolean {
+  return !!src && (src.startsWith("/api/media/") || src.startsWith("http"));
+}
+
 export function formatPrice(n: number): string {
   return `$${n.toLocaleString("en-US")}`;
 }
@@ -55,6 +63,7 @@ export function ListingCard({
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               priority={priority}
+              unoptimized={isLiveMlsPhoto(l.photos[0])}
               className="object-cover"
             />
           ) : (
@@ -101,6 +110,7 @@ export function ListingCard({
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             priority={priority}
+            unoptimized={isLiveMlsPhoto(l.photos[0])}
             className="object-cover"
           />
         ) : (

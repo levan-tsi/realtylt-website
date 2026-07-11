@@ -14,7 +14,7 @@ import { getIdxClient, isFixtureMode } from "@/lib/idx";
 import { COUNTIES } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
-export const revalidate = 3600;
+export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
 export const metadata: Metadata = {
   title: "RealtyLT | Levan Tsiklauri | United Real Estate — Hudson Valley Homes",

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
-import { formatPrice, NoPhoto } from "@/components/idx/ListingCard";
+import { formatPrice, isLiveMlsPhoto, NoPhoto } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { Reveal } from "@/components/ui/Reveal";
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
   return isFixtureMode() ? FIXTURE_LISTINGS.map((l) => ({ id: l.id })) : [];
 }
 export const dynamicParams = true;
-export const revalidate = 3600; // keep "Data last updated" honest in live mode
+export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
 // generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
 const getListing = cache((id: string) => getIdxClient().getListing(id));
@@ -84,6 +84,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 60vw"
+                unoptimized={isLiveMlsPhoto(l.photos[0])}
                 className="object-cover"
               />
             ) : (
@@ -99,7 +100,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           <div className="hidden grid-rows-3 gap-1.5 md:grid">
             {l.photos.slice(1, 4).map((p, i) => (
               <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
-                <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" className="object-cover" />
+                <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
               </div>
             ))}
           </div>

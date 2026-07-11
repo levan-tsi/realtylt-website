@@ -17,7 +17,7 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 // Re-render hourly in live mode so listing counts + "Data last updated" stay honest.
-export const revalidate = 3600;
+export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
 export async function generateMetadata({ params }: { params: Promise<{ county: string }> }): Promise<Metadata> {
   const { county } = await params;
