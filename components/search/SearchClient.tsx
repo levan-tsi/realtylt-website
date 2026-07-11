@@ -364,19 +364,34 @@ export function SearchClient() {
           >
             «
           </button>
-          {Array.from({ length: result.totalPages }, (_, i) => i + 1).map((p) => (
-            <button
-              key={p}
-              type="button"
-              aria-current={p === result.page ? "page" : undefined}
-              onClick={() => apply({ page: p })}
-              className={`px-3.5 py-2 text-sm transition-colors ${
-                p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
-              }`}
-            >
-              {p}
-            </button>
-          ))}
+          {/* Windowed pages (1 … n-1 n n+1 … last) — real data yields 20+ pages, and a
+              full flex row of buttons overflowed the 390px viewport. */}
+          {Array.from({ length: result.totalPages }, (_, i) => i + 1)
+            .filter(
+              (p) =>
+                p === 1 ||
+                p === result.totalPages ||
+                Math.abs(p - result.page) <= 2,
+            )
+            .map((p, i, shown) => (
+              <span key={p} className="flex items-center">
+                {i > 0 && p - shown[i - 1] > 1 && (
+                  <span aria-hidden className="px-1 text-sm text-stone">
+                    …
+                  </span>
+                )}
+                <button
+                  type="button"
+                  aria-current={p === result.page ? "page" : undefined}
+                  onClick={() => apply({ page: p })}
+                  className={`px-3.5 py-2 text-sm transition-colors ${
+                    p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
+                  }`}
+                >
+                  {p}
+                </button>
+              </span>
+            ))}
           <button
             type="button"
             disabled={filters.page >= result.totalPages}

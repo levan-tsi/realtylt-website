@@ -76,8 +76,18 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
       {/* ── Gallery */}
       <section className="bg-ink" aria-label="Photos">
-        <div className="mx-auto grid max-w-7xl gap-1.5 px-0 md:grid-cols-[2fr_1fr] lg:px-8 lg:py-6">
-          <div className="photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px]">
+        {/* With ≤1 photo there are no thumbnails — let the main tile span the row instead
+            of leaving a black void beside the placeholder. */}
+        <div
+          className={`mx-auto grid max-w-7xl gap-1.5 px-0 lg:px-8 lg:py-6 ${
+            l.photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
+          }`}
+        >
+          <div
+            className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
+              l.photos.length > 1 ? "aspect-[3/2]" : "aspect-[3/2] md:aspect-[21/9]"
+            }`}
+          >
             {l.photos.length > 0 ? (
               <Image
                 src={l.photos[0]}
@@ -98,13 +108,15 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
               </span>
             )}
           </div>
-          <div className="hidden grid-rows-3 gap-1.5 md:grid">
-            {l.photos.slice(1, 4).map((p, i) => (
-              <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
-                <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
-              </div>
-            ))}
-          </div>
+          {l.photos.length > 1 && (
+            <div className="hidden grid-rows-3 gap-1.5 md:grid">
+              {l.photos.slice(1, 4).map((p, i) => (
+                <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
+                  <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
