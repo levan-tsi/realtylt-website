@@ -48,6 +48,11 @@ export default function MapView({ listings }: { listings: Listing[] }) {
   );
 
   return (
+    <div className="relative h-full min-h-96 w-full">
+      {/* The live feed carries no coordinates — pins sit at zip-centroid (approximate). */}
+      <p className="pointer-events-none absolute bottom-1 left-1 z-[500] bg-white/85 px-1.5 py-0.5 text-[10px] text-stone">
+        Locations approximate
+      </p>
     <MapContainer
       center={[41.5, -74.0]}
       zoom={9}
@@ -77,5 +82,6 @@ export default function MapView({ listings }: { listings: Listing[] }) {
         </Marker>
       ))}
     </MapContainer>
+    </div>
   );
 }

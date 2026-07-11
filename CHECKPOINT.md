@@ -1,20 +1,21 @@
 # CHECKPOINT — RealtyLT Website
 
-## ⚠️ OWNER KEYS STILL NEEDED (the one external blocker — everything else proceeds)
+## ✅ REAL MLS DATA IS LIVE — Round 1, 2026-07-11 (branch `main`)
 
-Paste into the secrets store (`.env`, from `.env.example`) when ready:
+The MLS keys arrived as Vercel envs (`MLS_API_ENDPOINT`/`MLS_API_KEY`/`MLS_FEED_ID`,
+Production scope, SENSITIVE — `vercel env pull` returns them EMPTY; local dev needs them
+hand-placed in `.env.local`, which is gitignored; NEVER commit). The site now serves REAL
+OneKey MLS listings with REAL per-listing photos via MLS Grid v2 (`$expand=Media`) —
+full details, verified sync stats, feed quirks (no Latitude/Longitude on this
+subscription → zip-centroid map pins; signed short-lived MediaURLs → URL reuse +
+minimumCacheTTL 12h) in **docs/MLS-INTEGRATION.md**. All six counties have live
+inventory. Fixture remains only as the graceful fallback when the feed errors (console
+note, 60s retry) and for tests/dev without keys.
 
-1. `MLS_API_KEY` — MLS/IDX API key (OneKey MLS via MLS Grid; TEST key first, swap PRODUCTION at launch)
-2. `MLS_API_ENDPOINT` — MLS Grid feed base URL
-3. `MLS_FEED_ID` — board/feed identifier (live site uses mlsId=280)
-4. `CRM_LEAD_WEBHOOK` — app.realtylt.com lead-intake endpoint
-5. `CRM_API_TOKEN` — CRM auth token (if required)
-
-Until supplied: IDX runs on the realistic fixture mock (60 listings, 6 counties, "sample data"
-notice shown); lead forms run in stub mode (logged to `.leads-dev.jsonl`, not delivered). Also
-pending from owner (non-blocking): Who-We-Are final bio + portrait, real blog articles (Drive),
-real social URLs, Google reviews URL confirmation (placeholder is a Maps search link in
-`content/testimonials.ts`).
+Still pending from owner (non-blocking): Who-We-Are final bio + portrait, real blog
+articles (Drive), real social URLs, Google reviews URL confirmation (placeholder is a
+Maps search link in `content/testimonials.ts`). `CRM_API_TOKEN` never needed —
+CRM_LEAD_WEBHOOK is live.
 
 ## Deployment — LIVE (private pre-launch), 2026-07-10, branch `feat/deploy`
 

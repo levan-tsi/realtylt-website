@@ -58,6 +58,10 @@ const nextConfig: NextConfig = {
     // on mlsgrid.com subdomains. TODO: confirm the real feed's media host(s) when owner
     // MLS keys arrive and tighten this to the exact CDN host.
     remotePatterns: [{ protocol: "https", hostname: "**.mlsgrid.com" }],
+    // media.mlsgrid.com rate-limits origin fetches (429s) and its URLs are signed with a
+    // ~15h expiry. Keep optimized derivatives for 12h so each photo hits the origin about
+    // once per token lifetime (MlsGridClient also reuses still-valid URLs across syncs).
+    minimumCacheTTL: 43200,
     // Never let the optimizer render SVG (an SVG can carry inline script) — default is
     // false; pinned explicitly so a future edit can't silently enable an XSS vector.
     dangerouslyAllowSVG: false,
