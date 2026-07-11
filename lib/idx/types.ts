@@ -38,6 +38,23 @@ export interface Listing {
   listedAt: string; // ISO — powers "New Listings" sort
 }
 
+/** Lightweight map-pin projection of a Listing — /api/idx/pins returns the ENTIRE
+ * filtered result set in this shape so the map can plot every match (Zillow-style)
+ * while the grid stays paginated. */
+export interface MapPin {
+  id: string;
+  price: number;
+  lat: number;
+  lng: number;
+  address: string;
+  city: string;
+  zip: string;
+  beds: number;
+  baths: number;
+  /** MLS compliance — popups keep the "Listed with …" line. */
+  office: string;
+}
+
 export type SortKey = "newest" | "price-asc" | "price-desc";
 
 export interface SearchParams {

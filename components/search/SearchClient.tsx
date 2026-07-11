@@ -7,7 +7,7 @@ import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { saveSearch } from "@/lib/saved";
 import { COUNTIES, SITE, type CountySlug } from "@/lib/site";
-import type { Listing } from "@/lib/idx/types";
+import type { Listing, MapPin } from "@/lib/idx/types";
 
 const MapView = dynamic(() => import("@/components/idx/MapView"), {
   ssr: false,
@@ -77,6 +77,29 @@ function toQuery(f: Filters, forApi: boolean): string {
   return sp.toString();
 }
 
+/** Filter fields only (no page/sort/view) — the /api/idx/pins query: the map shows the
+ * ENTIRE filtered result set, independent of grid pagination. */
+const FILTER_KEYS = ["q", "county", "priceMin", "priceMax", "bedsMin", "bathsMin", "sqftMin", "propertyType"] as const;
+function filterQuery(f: Filters): string {
+  const sp = new URLSearchParams();
+  for (const k of FILTER_KEYS) if (f[k]) sp.set(k, f[k]);
+  return sp.toString();
+}
+
+/** Current-page fallback pins while the full pin set loads. */
+const toPin = (l: Listing): MapPin => ({
+  id: l.id,
+  price: l.price,
+  lat: l.lat,
+  lng: l.lng,
+  address: l.address,
+  city: l.city,
+  zip: l.zip,
+  beds: l.beds,
+  baths: l.baths,
+  office: l.listOfficeName,
+});
+
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
   "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
@@ -88,6 +111,8 @@ export function SearchClient() {
   const [result, setResult] = useState<ApiResult | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [savedNote, setSavedNote] = useState("");
+  const [pins, setPins] = useState<MapPin[] | null>(null);
+  const loadedPinsQuery = useRef<string | null>(null);
   const qInput = useRef<HTMLInputElement>(null);
 
   const apply = useCallback(
@@ -127,6 +152,30 @@ export function SearchClient() {
       cancelled = true;
     };
   }, [filters]);
+
+  // Full pin set for the map (all matches, not just this grid page) — refetched only
+  // when the FILTERS change; page/sort don't affect it. Until it arrives (or if it
+  // fails) the map falls back to pins for the current page's cards.
+  const pinsQuery = filterQuery(filters);
+  useEffect(() => {
+    if (filters.view !== "map") return;
+    if (loadedPinsQuery.current === pinsQuery) return;
+    let cancelled = false;
+    fetch(`/api/idx/pins${pinsQuery ? `?${pinsQuery}` : ""}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json() as Promise<{ pins: MapPin[] }>;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        loadedPinsQuery.current = pinsQuery;
+        setPins(data.pins);
+      })
+      .catch(() => {}); // non-fatal — the map keeps its fallback pins
+    return () => {
+      cancelled = true;
+    };
+  }, [filters.view, pinsQuery]);
 
   function onSaveSearch() {
     const parts = [
@@ -339,7 +388,7 @@ export function SearchClient() {
             ))}
           </ul>
           <div className="h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
-            <MapView listings={listings} />
+            <MapView pins={loadedPinsQuery.current === pinsQuery && pins ? pins : listings.map(toPin)} />
           </div>
         </div>
       ) : (
