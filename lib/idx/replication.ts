@@ -15,6 +15,8 @@ import type { Listing } from "./types";
 /** Blob pathnames (stable — `addRandomSuffix: false`). */
 export const SNAPSHOT_PATHNAME = "mls/listings.json";
 export const PHOTO_PREFIX = "mls/photos/";
+/** Cluster-wide sync-attempt claim marker (its Blob uploadedAt = last attempt time). */
+export const SYNC_STATE_PATHNAME = "mls/sync-state.json";
 
 export interface MlsSnapshot {
   /** ISO timestamp of the replication run — drives "Data last updated". */

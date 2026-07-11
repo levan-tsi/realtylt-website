@@ -102,11 +102,19 @@ export class ReplicatedIdxClient implements IdxClient {
   }
 
   /** Fire ONE background sync when the snapshot is stale — plan-agnostic freshness
-   * (Hobby crons only run daily). Never blocks or fails the request. */
+   * (Hobby crons only run daily). Never blocks or fails the request.
+   *
+   * Guards against a thundering herd (learned the hard way in Round 2 — concurrent
+   * triggers made concurrent MLS requests and re-violated the per-account 2 req/sec
+   * cap every hour): never trigger during `next build` (parallel prerender workers),
+   * never trigger when NO snapshot exists yet (cold-bootstrap is the cron's/operator's
+   * job, exactly once), and the cron route itself holds a Blob-side attempt claim. */
   private maybeTriggerSync(): void {
     const secret = process.env.CRON_SECRET;
     if (!secret) return;
-    const age = this.syncedAt ? Date.now() - Date.parse(this.syncedAt) : Infinity;
+    if (process.env.NEXT_PHASE === "phase-production-build") return;
+    if (!this.syncedAt) return; // no snapshot yet — don't stampede the bootstrap
+    const age = Date.now() - Date.parse(this.syncedAt);
     if (age < REFRESH_AFTER_MS) return;
     if (Date.now() - this.lastSelfTrigger < SELF_TRIGGER_COOLDOWN_MS) return;
     this.lastSelfTrigger = Date.now();
