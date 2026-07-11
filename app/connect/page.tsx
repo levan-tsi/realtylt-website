@@ -47,8 +47,9 @@ export default function ConnectPage() {
           />
           <div className="absolute inset-0 bg-white/50" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-14 text-center lg:px-8">
-          <h1 id="connect-hero" className="text-3xl font-light text-ink-soft md:text-4xl">
+        {/* Live: centered title in the light band, pad ~51px */}
+        <div className="relative mx-auto max-w-[1250px] px-4 py-[51px] text-center lg:px-8">
+          <h1 id="connect-hero" className="text-3xl font-light text-ink-soft md:text-[46px]">
             Contact Us <strong className="font-bold">Anytime</strong>
           </h1>
         </div>
@@ -56,7 +57,7 @@ export default function ConnectPage() {
 
       {/* ── Agent + appointments — live: portrait left, booking cards right */}
       <section className="bg-paper py-14 md:py-20" aria-labelledby="appointments-heading">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[300px_1fr] lg:px-8">
+        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-[300px_1fr] lg:px-8">
           <Reveal>
             <Image
               src="/images/levan-portrait.jpg"
@@ -117,7 +118,7 @@ export default function ConnectPage() {
 
       {/* ── Message form */}
       <section className="bg-mist py-16 md:py-20" aria-labelledby="reach-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <h2 id="reach-heading" className="text-center text-3xl font-light text-ink md:text-4xl">
               Send Us A <strong className="font-bold">Message</strong>

@@ -27,7 +27,7 @@ export function Header() {
     <header className="bg-paper">
       {/* Utility bar — live: 41px, bg #f3f5f8, right-aligned account link */}
       <div className="bg-mist">
-        <div className="mx-auto flex h-10 max-w-6xl items-center justify-between px-4 lg:px-8">
+        <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between px-4 lg:px-8">
           <a href={SITE.phoneHref} className="text-sm text-stone transition-colors hover:text-ink">
             {SITE.phone}
           </a>
@@ -47,7 +47,7 @@ export function Header() {
       <FairHousingBar />
 
       {/* Logo row — live: white, RT logo 300x62 left */}
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pb-5 pt-7 lg:px-8">
+      <div className="mx-auto flex max-w-[1250px] items-center justify-between px-4 pb-5 pt-7 lg:px-8">
         <Link href="/" aria-label="RealtyLT home">
           <Image
             src="/logo-realtylt.png"
@@ -72,7 +72,7 @@ export function Header() {
       {/* Nav row — live: 16px bold uppercase #808080, hover #000, boxed CONNECT */}
       <div className="border-b border-[#dddddd]">
         <nav aria-label="Primary" className="hidden xl:block">
-          <ul className="mx-auto flex max-w-6xl items-center gap-6 px-4 pb-5 text-[15px] font-bold uppercase tracking-wide lg:px-8">
+          <ul className="mx-auto flex max-w-[1250px] items-center gap-6 px-4 pb-5 text-[15px] font-bold uppercase tracking-wide lg:px-8">
             {NAV.map((item) => {
               const boxed = item.label === "Connect";
               const active = pathname === item.href;

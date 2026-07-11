@@ -29,7 +29,7 @@ export default function TopAreasPage() {
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-16 text-center lg:px-8">
+        <div className="relative mx-auto max-w-[1250px] px-4 py-16 text-center lg:px-8">
           <h1 id="areas-hero" className="text-3xl font-light text-paper md:text-4xl">
             Top <strong className="font-bold">Areas</strong>
           </h1>
@@ -43,7 +43,7 @@ export default function TopAreasPage() {
 
       {/* ── County cards */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="county-cards">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
               <span id="county-cards">Where Do You See Yourself?</span>
@@ -82,7 +82,7 @@ export default function TopAreasPage() {
 
       {/* ── CTA */}
       <section className="bg-mist py-14" aria-label="Get local advice">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-4 text-center lg:px-8">
+        <div className="mx-auto flex max-w-[1250px] flex-col items-center gap-5 px-4 text-center lg:px-8">
           <p className="max-w-xl text-2xl font-light text-ink">
             Not sure which county fits? That&rsquo;s literally our job.
           </p>

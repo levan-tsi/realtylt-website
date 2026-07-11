@@ -55,18 +55,20 @@ export default async function HomePage() {
       <section className="relative isolate bg-ink" aria-labelledby="home-hero">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
+            {/* Live rotates B&W lifestyle shots at luminance ~79 — valley aerial in
+                grayscale + black/30 measures ~80 (hudson-twilight was too dark, ~45). */}
             <Image
-              src="/images/hero/hudson-twilight.jpg"
+              src="/images/hero/valley-aerial.jpg"
               alt=""
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center opacity-70 grayscale"
+              className="object-cover object-center grayscale"
             />
-            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-black/30" />
           </div>
-          {/* Live: shorter photo band, headline alone bottom-left (no subtitle) */}
-          <div className="relative mx-auto flex min-h-[340px] max-w-6xl flex-col justify-end px-4 pb-10 pt-24 lg:px-8">
+          {/* Live: ~670px photo band, headline alone bottom-left (h1 lands ~y=796 @1280) */}
+          <div className="relative mx-auto flex min-h-[420px] max-w-[1250px] flex-col justify-end px-4 pb-10 pt-24 md:min-h-[655px] lg:px-16">
             <h1
               id="home-hero"
               className="text-5xl font-light leading-tight text-paper md:text-[60px]"
@@ -77,7 +79,7 @@ export default async function HomePage() {
         </div>
 
         {/* Search strip — live: dark bar with search input + white outline CTAs */}
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 lg:flex-row lg:px-8">
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-3 px-4 py-5 lg:flex-row lg:px-8">
           <form action="/search" role="search" className="flex flex-1">
             <label htmlFor="home-search" className="sr-only">
               Search for homes by town, zip, or address
@@ -87,24 +89,24 @@ export default async function HomePage() {
               type="search"
               name="q"
               placeholder="Search for Homes"
-              className="w-full border border-paper/30 bg-white/10 px-5 py-4 text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
+              className="w-full border border-paper/30 bg-white/10 px-5 py-[23px] text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
             />
             <Button type="submit" variant="outline-light" className="shrink-0">
               Search
             </Button>
           </form>
-          <Button href="/selling" variant="outline-light" className="py-4">
+          <Button href="/selling" variant="outline-light" className="py-[23px]">
             Sell Your Home
           </Button>
-          <Button href="/home-value" variant="outline-light" className="py-4">
+          <Button href="/home-value" variant="outline-light" className="py-[23px]">
             See Home Value
           </Button>
         </div>
       </section>
 
       {/* ── Home value split — live: "Find Your Home Value" + "Tell Us About Your Home" form */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="value-heading">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
+      <section className="bg-paper py-[60px]" aria-labelledby="value-heading">
+        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
               <span id="value-heading">Find Your Home Value</span>
@@ -145,10 +147,10 @@ export default async function HomePage() {
       </section>
 
       {/* ── Featured listings — live: centered heading, 4-col grid, centered SEE MORE */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="featured-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+      <section className="bg-paper pt-16 pb-8 md:pt-20" aria-labelledby="featured-heading">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
+            <SectionHeading align="center" as="h2" bold>
               <span id="featured-heading">Featured Listings</span>
             </SectionHeading>
           </Reveal>
@@ -171,10 +173,10 @@ export default async function HomePage() {
       <TestimonialBand items={TESTIMONIALS} />
 
       {/* ── New listings */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="new-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+      <section className="bg-paper pt-16 pb-8 md:pt-20" aria-labelledby="new-heading">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
+            <SectionHeading align="center" as="h2" bold>
               <span id="new-heading">New Listings</span>
             </SectionHeading>
           </Reveal>
@@ -194,7 +196,7 @@ export default async function HomePage() {
 
       {/* ── Counties strip */}
       <section className="bg-paper pb-16" aria-labelledby="counties-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <h2 id="counties-heading" className="sr-only">
             Counties we serve
           </h2>
@@ -215,9 +217,9 @@ export default async function HomePage() {
 
       {/* ── Why work with us — live: light gray section, centered heading */}
       <section className="bg-mist py-16 md:py-24" aria-labelledby="why-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
+            <SectionHeading align="center" as="h2" bold>
               <span id="why-heading">Why Work With Us?</span>
             </SectionHeading>
             <p className="mx-auto mt-4 max-w-2xl text-center text-stone">

@@ -9,7 +9,7 @@ import { FOOTER_NAV, SITE } from "@/lib/site";
 export function Footer() {
   return (
     <footer className="border-t border-[#dddddd] bg-paper text-stone">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 md:grid-cols-[1fr_1.6fr_1fr] md:py-20 lg:px-8">
+      <div className="mx-auto grid max-w-[1250px] gap-12 px-4 py-16 md:grid-cols-[1fr_1.6fr_1fr] md:py-20 lg:px-8">
         <nav aria-label="Footer">
           <ul className="space-y-2.5 text-sm font-light">
             {FOOTER_NAV.map((item) =>
@@ -64,14 +64,14 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl px-4 pb-10 text-xs lg:px-8">
+      <div className="mx-auto max-w-[1250px] px-4 pb-10 text-xs lg:px-8">
         <p>
           © {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
         </p>
       </div>
 
       <div className="bg-ink text-paper/70">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
           <p>© {new Date().getFullYear()} {SITE.name}</p>
           <ul className="flex gap-4">
             <li>

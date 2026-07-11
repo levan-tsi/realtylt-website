@@ -28,8 +28,8 @@ export default function BuyingPage() {
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-28 text-center md:py-36 lg:px-8">
-          <h1 id="buying-hero" className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-paper md:text-4xl">
+        <div className="relative mx-auto max-w-[1250px] px-4 py-28 text-center md:py-[154px] lg:px-8">
+          <h1 id="buying-hero" className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-paper md:text-[45px]">
             Ready to Find Your Dream Home?
           </h1>
           <p className="mt-4 text-base font-bold uppercase tracking-[0.12em] text-paper md:text-lg">
@@ -51,7 +51,7 @@ export default function BuyingPage() {
 
       {/* ── The process intro */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="process-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
               <span id="process-heading">The Home Buying Process</span>
@@ -75,7 +75,7 @@ export default function BuyingPage() {
 
       {/* ── Steps 1–2 — live: black band, light+bold headings, white outline CTAs */}
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="steps-heading">
-        <div className="mx-auto max-w-6xl space-y-20 px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] space-y-20 px-4 lg:px-8">
           <h2 id="steps-heading" className="sr-only">
             From search to keys
           </h2>
@@ -146,7 +146,7 @@ export default function BuyingPage() {
 
       {/* ── Step 3 — live: white section */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="save-heading">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-[1250px] items-center gap-10 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h3 id="save-heading" className="text-3xl font-light text-ink md:text-4xl">
               Save and <strong className="font-bold">See Listings</strong>
@@ -183,7 +183,7 @@ export default function BuyingPage() {
 
       {/* ── Step 4 — live: black section */}
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="close-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
               <div>

@@ -28,8 +28,8 @@ export default function FinancingPage() {
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-24 text-center md:py-28 lg:px-8">
-          <h1 id="financing-hero" className="text-3xl font-light text-paper md:text-4xl">
+        <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-[192px] lg:px-8">
+          <h1 id="financing-hero" className="text-3xl font-light text-paper md:text-[46px]">
             The Home Loan <strong className="font-bold">Process</strong>
           </h1>
         </div>
@@ -37,7 +37,7 @@ export default function FinancingPage() {
 
       {/* ── Demystifying intro */}
       <section className="bg-paper py-16 md:py-20" aria-labelledby="demystify-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
               <span id="demystify-heading">Demystifying Home Loans</span>
@@ -56,7 +56,7 @@ export default function FinancingPage() {
 
       {/* ── Get pre-approval — live: black section, white letter card */}
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="preapproval-heading">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="preapproval-heading" className="text-3xl font-light md:text-4xl">
               Get <strong className="font-bold">Pre-Approval</strong>
@@ -101,7 +101,7 @@ export default function FinancingPage() {
 
       {/* ── Calculator — live: black inputs panel + light results panel */}
       <section className="bg-paper py-16 md:py-20" aria-labelledby="calc-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <MortgageCalculator />
           </Reveal>
@@ -110,7 +110,7 @@ export default function FinancingPage() {
 
       {/* ── Best loan / lender connect */}
       <section className="bg-paper pb-16 md:pb-24" aria-labelledby="loan-heading">
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="loan-heading" className="text-3xl font-light text-ink md:text-4xl">
               Helping You Get The Best <strong className="font-bold">Loan</strong>
@@ -148,7 +148,7 @@ export default function FinancingPage() {
 
       {/* ── Application & processing — live: light gray section */}
       <section className="bg-mist py-16 md:py-24" aria-labelledby="apply-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <h2 id="apply-heading" className="text-3xl font-light text-ink md:text-4xl">
               Application &amp; <strong className="font-bold">Processing</strong>
@@ -170,7 +170,7 @@ export default function FinancingPage() {
 
       {/* ── Closing — live: black section */}
       <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="closing-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <h2 id="closing-heading" className="text-3xl font-light md:text-4xl">
               <strong className="font-bold">Closing</strong>

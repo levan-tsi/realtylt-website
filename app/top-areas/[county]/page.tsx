@@ -53,7 +53,7 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
           />
           <div className="absolute inset-0 bg-black/45" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-24 lg:px-8">
+        <div className="relative mx-auto max-w-[1250px] px-4 py-20 md:py-24 lg:px-8">
           <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
             <Link href="/top-areas" className="hover:text-paper">Top Areas</Link> / {c.short}
           </nav>

@@ -15,11 +15,15 @@ import { ReplicatedIdxClient } from "@/lib/idx/replicated";
  * (never user-supplied — no SSRF) and stream it, CDN-cached.
  */
 
+// Matches components/idx/ListingCard.tsx NoPhoto — logo-navy line house + lit azure
+// "porch light", RealtyLT wordmark, on the site's mist gray. One consistent branded state.
 const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-<rect width="800" height="600" fill="#f4f4f5"/>
-<g fill="none" stroke="#a1a1aa" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-<path d="M290 320 L400 230 L510 320"/><path d="M320 310 V400 H480 V310"/></g>
-<text x="400" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#71717a">Photo coming soon</text>
+<rect width="800" height="600" fill="#f3f5f8"/>
+<g fill="none" stroke="#102c54" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+<path d="M310 268 L400 196 L490 268"/><path d="M337 259 V358 H463 V259"/><path d="M382 358 V304 H418 V358"/></g>
+<circle cx="400" cy="281" r="11" fill="#28a8e0"/>
+<text x="400" y="416" text-anchor="middle" font-family="Lato, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="6" fill="#102c54" fill-opacity="0.7">REALTYLT</text>
+<text x="400" y="452" text-anchor="middle" font-family="Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#767676">Photo coming soon</text>
 </svg>`;
 
 export async function GET(

@@ -15,15 +15,33 @@ export function formatPrice(n: number): string {
   return `$${n.toLocaleString("en-US")}`;
 }
 
-/** Branded fallback when a listing arrives without photos (live feed rows without Media). */
+/** Branded fallback when a listing's photo isn't available yet (feed rows without Media,
+ * or photos still replicating into the Blob store). Quiet and intentional: the line-drawn
+ * house in logo navy with one lit azure "porch light" — the same mark the /api/media
+ * placeholder SVG uses, so the state reads consistently everywhere. */
 export function NoPhoto() {
   return (
-    <div className="absolute inset-0 grid place-items-center bg-mist" aria-hidden>
-      <span className="text-center">
-        <span className="block font-display text-4xl text-stone/50">⌂</span>
-        <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.18em] text-stone/70">
-          RealtyLT · Photo coming soon
+    <div className="absolute inset-0 grid place-items-center bg-mist pb-8" aria-hidden>
+      <span className="flex flex-col items-center">
+        <svg viewBox="0 0 64 64" className="h-12 w-12 sm:h-14 sm:w-14">
+          <g
+            fill="none"
+            stroke="#102c54"
+            strokeOpacity="0.32"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 30 L32 14 L52 30" />
+            <path d="M18 28 V50 H46 V28" />
+            <path d="M28 50 V38 H36 V50" />
+          </g>
+          <circle cx="32" cy="33" r="2.4" fill="#28a8e0" />
+        </svg>
+        <span className="mt-2 block text-[11px] font-bold uppercase tracking-[0.22em] text-river/70">
+          RealtyLT
         </span>
+        <span className="mt-0.5 block text-[11px] text-stone">Photo coming soon</span>
       </span>
     </div>
   );
@@ -102,7 +120,8 @@ export function ListingCard({
         className="absolute inset-0 z-10"
         aria-label={`${l.address}, ${l.city} — ${formatPrice(l.price)}`}
       />
-      <div className="photo-zoom relative aspect-[20/19] overflow-hidden bg-mist">
+      {/* Live home-rail tiles are portrait — measured 283×450 (aspect ≈ 63/100) @1280 */}
+      <div className="photo-zoom relative aspect-[63/100] overflow-hidden bg-mist">
         {l.photos[0] ? (
           <Image
             src={l.photos[0]}
@@ -128,7 +147,7 @@ export function ListingCard({
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
           <p className="text-2xl font-bold leading-tight">{formatPrice(l.price)}</p>
-          <p className="mt-1 text-sm font-medium leading-snug">
+          <p className="mt-1 text-lg font-medium leading-snug">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           <p className="mt-1 text-xs italic">

@@ -71,9 +71,9 @@ export default function SellingPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/40" />
         </div>
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:px-8">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 md:py-[154px] lg:grid-cols-[1.15fr_1fr] lg:px-8">
           <div className="self-center">
-            <h1 id="selling-hero" className="text-4xl font-light leading-[1.15] text-paper md:text-5xl">
+            <h1 id="selling-hero" className="text-4xl font-light leading-[1.15] text-paper md:text-[50px]">
               See Your Home&rsquo;s <strong className="font-bold">Cash Value</strong> vs{" "}
               <strong className="font-bold">Market List Price</strong>
             </h1>

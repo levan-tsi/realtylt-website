@@ -12,7 +12,7 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
 
   return (
     <section aria-label="Client reviews" className="bg-mist">
-      <div className="relative mx-auto max-w-6xl px-14 py-14 text-center md:py-16">
+      <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16">
         <button
           type="button"
           aria-label="Previous review"
@@ -22,7 +22,7 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           ‹
         </button>
         <blockquote>
-          <p className="text-2xl font-bold text-ink md:text-[26px]">&ldquo;{t.quote}&rdquo;</p>
+          <p className="text-2xl font-bold text-ink md:text-[36px] md:leading-tight">&ldquo;{t.quote}&rdquo;</p>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-stone">{t.detail}</p>
         </blockquote>
         <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-ink-soft">{t.name}</p>

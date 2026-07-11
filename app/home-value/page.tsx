@@ -28,7 +28,9 @@ const STEPS = [
 export default function HomeValuePage() {
   return (
     <>
-      {/* ── Hero + form — live: full dusk photo, centered serif headline, white form */}
+      {/* ── Hero + form — live: near-full-viewport BRIGHT dusk photo (luminance ~88, no dark
+          wash), bold sans headline 64px w700 (live loads Montserrat; the "serif" in earlier
+          captures was a headless font-fallback artifact — we use brand Lato bold). */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="hv-hero">
         <div className="absolute inset-0">
           <Image
@@ -37,22 +39,21 @@ export default function HomeValuePage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-60"
+            className="object-cover opacity-95"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/15" />
         </div>
-        {/* Live: tall photo, serif headline centered, ONE horizontal address bar + subline */}
-        <div className="relative mx-auto flex min-h-[520px] max-w-6xl flex-col justify-center px-4 py-20 text-center md:min-h-[640px] lg:px-8">
+        <div className="relative mx-auto flex min-h-[520px] max-w-[1250px] flex-col justify-center px-4 py-20 text-center md:min-h-[850px] lg:px-8">
           <h1
             id="hv-hero"
-            className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-paper [font-family:Georgia,'Times_New_Roman',serif] md:text-5xl"
+            className="mx-auto max-w-4xl text-4xl font-bold leading-tight text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)] md:text-[64px]"
           >
             How Much Is Your Home Really Worth?
           </h1>
           <div className="mt-8">
             <HomeValueForm />
           </div>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-paper [font-family:Georgia,'Times_New_Roman',serif]">
+          <p className="mx-auto mt-6 max-w-xl text-[21px] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
             Join the homeowners across six counties in finding your home&rsquo;s value
           </p>
         </div>

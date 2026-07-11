@@ -44,7 +44,7 @@ export default function WhoWeArePage() {
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-24 text-center md:py-32 lg:px-8">
+        <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-32 lg:px-8">
           <h1 id="wwa-hero" className="text-3xl font-light text-paper md:text-4xl">
             Who <strong className="font-bold">We Are</strong>
           </h1>
@@ -53,7 +53,7 @@ export default function WhoWeArePage() {
 
       {/* ── Agent card — live: circular B/W portrait, name, CALL + CONTACT */}
       <section className="bg-paper py-16 md:py-24" aria-labelledby="agent-heading">
-        <div className="mx-auto max-w-6xl px-4 text-center lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
           <Reveal>
             <span className="mx-auto block h-56 w-56 overflow-hidden rounded-full">
               <Image
@@ -94,7 +94,7 @@ export default function WhoWeArePage() {
 
       {/* ── Values */}
       <section className="bg-mist py-16 md:py-20" aria-labelledby="values-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
               <span id="values-heading">What You Can Hold Us To</span>
@@ -115,7 +115,7 @@ export default function WhoWeArePage() {
 
       {/* ── Where we work */}
       <section className="bg-paper py-14" aria-labelledby="serve-heading">
-        <div className="mx-auto max-w-6xl px-4 text-center lg:px-8">
+        <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
           <h2 id="serve-heading" className="text-2xl font-light text-ink">
             Where We Work
           </h2>
