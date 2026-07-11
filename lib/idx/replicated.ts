@@ -19,7 +19,10 @@ import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
 
 const TTL_MS = 60_000; // per-instance snapshot cache
 const RETRY_MS = 30_000; // cool-down after a failed load
-const REFRESH_AFTER_MS = 4 * 3_600_000; // self-trigger a sync beyond this snapshot age
+const REFRESH_AFTER_MS = 2 * 3_600_000; // self-trigger a sync beyond this snapshot age
+// (2h: Vercel Hobby rejects sub-daily crons — deploy-verified — so alongside the daily
+// 06:00 UTC cron this traffic-driven self-trigger IS the intraday cadence; the cron
+// route's attempt-claim + freshness guards keep concurrent triggers de-duplicated.)
 const SELF_TRIGGER_COOLDOWN_MS = 10 * 60_000;
 
 export class ReplicatedIdxClient implements IdxClient {
