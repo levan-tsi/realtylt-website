@@ -17,6 +17,7 @@ export function LeadForm({
   withAddress = false,
   compact = false,
   defaultReason,
+  defaultAddress,
   submitLabel = "Send Message",
   successTitle = "Message sent.",
   successBody = "Thanks — we usually reply within the hour, seven days a week.",
@@ -26,6 +27,8 @@ export function LeadForm({
   withAddress?: boolean;
   compact?: boolean;
   defaultReason?: (typeof INTEREST_REASONS)[number];
+  /** Prefill for the address field (home-value two-step flow). */
+  defaultAddress?: string;
   submitLabel?: string;
   successTitle?: string;
   successBody?: string;
@@ -101,6 +104,7 @@ export function LeadForm({
             dark={dark}
             hideLabel
             placeholder="Property Address"
+            defaultValue={defaultAddress}
           />
         )}
       </div>

@@ -97,20 +97,51 @@ live site (docs/reference/*.png). Small deviations only where clearly better.
 Also: components/valley-line/* DELETED (fully orphaned by restyle) + .vl-draw CSS
 removed; FavoriteButton saved-state is red (was amber).
 
+## ROUND 1 REFINEMENT PASS (2026-07-11) — LIVE-Playwright side-by-side
+
+New tool: `scripts/compare-live.mjs` — captures the LIVE realtylt.com page and the local
+build fresh (same viewport, full page, scrolled) and composes a side-by-side sheet into
+docs/round1/compare/<slug>-<width>-sxs.png. Run: `node scripts/compare-live.mjs
+http://localhost:3777 docs/round1/compare [slug…]`; `WIDTH=390` env for mobile. Local
+server should run in FIXTURE mode for design shots (move .env.local aside + rebuild) so
+screenshot loops never spend the MLS media budget.
+
+Changes made this round (all verified against fresh LIVE captures, not just the static
+references):
+- **Home**: hero subtitle removed + band shortened (live shows the headline alone);
+  the 3-card "Kind Words" section replaced by `TestimonialBand` (ONE centered quote,
+  prev/next arrows, gray strip) placed between Featured and New — exactly live's flow.
+  Mobile: both listing rails are now swipeable snap carousels (<sm) like live, grid ≥sm
+  (page height 11.5k→6.4k px at 390). TestimonialCard remains for /reviews.
+- **Buying**: hero photo was nearly invisible (opacity-40 + black/50) — now opacity-75 +
+  black/40, matching live's clearly readable interior.
+- **Home Value**: hero rebuilt to live's layout — taller centered photo, serif headline,
+  ONE horizontal bar [address][unit #][black FIND OUT] (`HomeValueForm`, two-step: bar
+  first, contact card revealed on submit so lead capture is preserved), serif subline.
+- **Financing**: sheet suggested the Pre-Approval band was white; computed-style check
+  proved it black (rgb(0,0,0)) — no change (lesson: verify via getComputedStyle when a
+  scaled sheet is ambiguous).
+
+Similarity estimates after this round (vs fresh live captures, 1280): home ~92%,
+search ~90% (live defaults to hybrid list+map; ours grid+map toggle — recorded
+deviation), selling ~92%, buying ~90%, financing ~90%, home-value ~93%, connect ~90%,
+top-areas n/a (live page is dropdown-only/blank — ours intentionally richer),
+who-we-are n/a (live is an agent-search product page — ours is the matched band +
+bio), reviews/saved/404 = no live equivalent (neutral restyle). Mobile 390 sheets
+captured for home/search/selling/buying/financing/homevalue/connect — selling+home
+verified in detail; no horizontal scroll anywhere (QA suite).
+
 ## NEXT STEP FOR SUCCESSOR
 
-All pages are matched/restyled. Remaining polish candidates (optional):
-- 390px pass page-by-page vs *-390.png references (spot-checked home only).
-- privacy/dmca/legal pages still carry harmless font-display/font-mono classes.
-- scripts/extract-live-tokens*.mjs are one-off extraction tools (kept for reference).
-Deploy after any change: PowerShell Start-Process npx.cmd -ArgumentList
-vercel,deploy,--prod,--yes -Wait; prod alias https://realtylt-website.vercel.app;
-then node scripts/final-probe.mjs against the live URL.
-3. Verify recipe: `npm run build`; kill port 3777 (PowerShell Get-NetTCPConnection);
-   `(npx next start -p 3777 &)`; `MSYS_NO_PATHCONV=1 node scripts/shot.mjs
-   http://localhost:3777 docs/design-match /search ...` (bare `/` = home, no arg).
-   Read both shots vs reference. NOTE: after rebuild, RESTART the server (stale
-   chunk hashes → MIME console errors).
-4. Deploy at the end (see brief): Start-Process npx.cmd vercel deploy --prod.
-5. Remaining cleanup candidates: valley-line components once no page uses them;
-   scripts/extract-live-tokens*.mjs are one-offs (kept for reference).
+- Optional remaining polish: live "Why Work With Us" product-screenshot carousel has no
+  equivalent asset (text cards kept — recorded deviation); search hybrid list+map default;
+  privacy/dmca legal pages carry harmless font-display/font-mono classes.
+- Verify recipe: `npm run build`; kill port 3777 (PowerShell Get-NetTCPConnection);
+  `(npx next start -p 3777 &)`; `MSYS_NO_PATHCONV=1 node scripts/shot.mjs
+  http://localhost:3777 docs/design-match /search ...` (bare `/` = home, no arg) — or the
+  live side-by-side via scripts/compare-live.mjs. NOTE: after rebuild, RESTART the server
+  (stale chunk hashes → MIME console errors).
+- Deploy: PowerShell Start-Process npx.cmd -ArgumentList vercel,deploy,--prod,--yes -Wait;
+  prod alias https://realtylt-website.vercel.app; then node scripts/final-probe.mjs.
+- Cleanup candidates: components/idx/ListingCarousel.tsx is now fully orphaned (home
+  rails use inline snap-scroll); scripts/extract-live-tokens*.mjs are one-offs.

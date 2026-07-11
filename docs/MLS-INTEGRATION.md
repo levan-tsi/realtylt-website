@@ -44,15 +44,38 @@ app still gets them). For local dev they live only in `.env.local` (gitignored; 
 
 ## Verified against the live feed (2026-07-11)
 
-- Sync log (build + runtime): `2 page(s), scanned 1000, kept 251 … counties
-  {westchester:100, orange:52, dutchess:35, rockland:33, ulster:20, putnam:11}
+- Sync log (build + runtime): `2 page(s), scanned 1000, kept ~250 … counties
+  {westchester:~100, orange:52, dutchess:35, rockland:33, ulster:20, putnam:11}
   mediaHosts ["media.mlsgrid.com"]`. **All six site counties have live inventory** —
   feed values are bare names ("Dutchess"); normalizer also strips a " County" suffix.
-- Real rows rendering end-to-end (search cards + detail): e.g. KEY1020368 “45 Patricia
-  Avenue, Fishkill 12524” $384,900; KEY1022207 “119 Rombout Avenue, Beacon 12508”
-  $589,900 (Century 21 Alliance Rlty Group); KEY1024486 “86 Maple Street, Greenburgh
-  10522” $899,000 4bd/2ba (remarks reference Dobbs Ferry — consistent with Greenburgh).
-  External spot-check: see “Spot-check” below.
+- Real rows rendering end-to-end (deployed /search shows 12 real cards; detail pages
+  render remarks/features/attribution).
+
+### External spot-check (feed vs Zillow/Redfin/Homes.com, 2026-07-11)
+
+1. **KEY1020368 — 45 Patricia Ave, Fishkill 12524**: feed $384,900 · 3 bd · 1 ba ·
+   1,025 sqft · K. Fortuna Realty · Built 1960 · 0.42 acres. Homes.com/RE-MAX/Redfin:
+   **identical on every field** (price, beds, baths, sqft, office, year, lot). MATCH.
+2. **KEY1024486 — 86 Maple Street, Greenburgh 10522**: feed $899,000 · 4 bd · 2 ba ·
+   1,679 sqft · Built 1880; PublicRemarks mention Gould Park / Old Croton Aqueduct /
+   Dobbs Ferry schools. Trulia/Compass/Redfin list 86 Maple St **Dobbs Ferry** at
+   $899,000 · 4/2 · 1,679 sqft · built 1880 with the same remarks. MATCH — note the
+   RESO convention: `City` is the TOWNSHIP ("Greenburgh"), not the village ("Dobbs
+   Ferry"); expect township names on cards. Aggregators may credit a different
+   cooperating office than ListOfficeName — our display uses the MLS field (compliant).
+3. **KEY1022207 — 119 Rombout Ave, Beacon 12508**: feed $589,900 · 3 bd · 1.5 ba
+   (Century 21 Alliance). Public-records sites show the property (4 bd/1 ba per stale
+   tax data, no live listing shown) — consistent with a fresh listing not yet
+   syndicated; no contradiction.
+
+### Media budget status at handoff
+
+Round-1 testing (optimizer storms against raw URLs before the proxy existed) exhausted
+the account's media budget; `media.mlsgrid.com` still returned 429 at the end of the
+round, so live photos temporarily render as empty tiles (data/cards fine; 502s are
+`no-store`, never cached). **Round 2 first task: re-check one photo URL — expect the
+window to have reset (likely daily), after which the CDN warms permanently.** Do NOT
+mass-fetch media in tests; verify with single requests.
 
 ## Photos (the fixed bug) — served via /api/media proxy
 

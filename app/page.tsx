@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
-import { TestimonialCard } from "@/components/ui/TestimonialCard";
+import { TestimonialBand } from "@/components/ui/TestimonialBand";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
-import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
+import { TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isFixtureMode } from "@/lib/idx";
 import { COUNTIES } from "@/lib/site";
 
@@ -65,17 +65,14 @@ export default async function HomePage() {
             />
             <div className="absolute inset-0 bg-black/50" />
           </div>
-          <div className="relative mx-auto flex min-h-[420px] max-w-6xl flex-col justify-end px-4 pb-12 pt-24 lg:px-8">
+          {/* Live: shorter photo band, headline alone bottom-left (no subtitle) */}
+          <div className="relative mx-auto flex min-h-[340px] max-w-6xl flex-col justify-end px-4 pb-10 pt-24 lg:px-8">
             <h1
               id="home-hero"
               className="text-5xl font-light leading-tight text-paper md:text-[60px]"
             >
               Let&rsquo;s Find <span className="font-bold">Home</span>
             </h1>
-            <p className="mt-3 max-w-xl text-paper/80">
-              Homes for sale across six counties of the mid-Hudson region — and an agent who
-              answers seven days a week.
-            </p>
           </div>
         </div>
 
@@ -155,9 +152,10 @@ export default async function HomePage() {
               <span id="featured-heading">Featured Listings</span>
             </SectionHeading>
           </Reveal>
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Mobile matches live: swipeable card rail; ≥sm the live 4-col grid */}
+          <ul className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {featured.map((l, i) => (
-              <li key={l.id}>
+              <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
                 <ListingCard listing={l} priority={i < 4} />
               </li>
             ))}
@@ -169,6 +167,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Testimonial band — live: ONE centered quote with arrows between the two rails */}
+      <TestimonialBand items={TESTIMONIALS} />
+
       {/* ── New listings */}
       <section className="bg-paper py-16 md:py-20" aria-labelledby="new-heading">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
@@ -177,9 +178,9 @@ export default async function HomePage() {
               <span id="new-heading">New Listings</span>
             </SectionHeading>
           </Reveal>
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
             {fresh.map((l) => (
-              <li key={l.id}>
+              <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
                 <ListingCard listing={l} />
               </li>
             ))}
@@ -209,34 +210,6 @@ export default async function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      {/* ── Testimonials */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="home-reviews-heading">
-        <div className="mx-auto max-w-6xl px-4 lg:px-8">
-          <Reveal>
-            <SectionHeading align="center" as="h2">
-              <span id="home-reviews-heading">Kind Words, Real Closings</span>
-            </SectionHeading>
-          </Reveal>
-          <ul className="mt-10 grid gap-6 md:grid-cols-3">
-            {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} as="li" delay={i * 120}>
-                <TestimonialCard t={t} />
-              </Reveal>
-            ))}
-          </ul>
-          <p className="mt-8 text-center">
-            <a
-              href={GOOGLE_REVIEWS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
-            >
-              See all our Google reviews →
-            </a>
-          </p>
         </div>
       </section>
 

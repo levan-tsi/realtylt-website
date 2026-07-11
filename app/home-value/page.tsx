@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { LeadForm } from "@/components/leads/LeadForm";
+import { HomeValueForm } from "@/components/leads/HomeValueForm";
 
 export const metadata: Metadata = {
   title: "Home Value — How Much Is Your Home Really Worth?",
@@ -41,25 +41,17 @@ export default function HomeValuePage() {
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-4 py-20 text-center md:py-28 lg:px-8">
+        {/* Live: tall photo, serif headline centered, ONE horizontal address bar + subline */}
+        <div className="relative mx-auto flex min-h-[520px] max-w-6xl flex-col justify-center px-4 py-20 text-center md:min-h-[640px] lg:px-8">
           <h1
             id="hv-hero"
             className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-paper [font-family:Georgia,'Times_New_Roman',serif] md:text-5xl"
           >
             How Much Is Your Home Really Worth?
           </h1>
-          <Reveal delay={150} className="mx-auto mt-8 w-full max-w-lg text-left">
-            <div className="bg-white p-6 shadow-2xl md:p-7">
-              <LeadForm
-                compact
-                withAddress
-                defaultReason="I'm interested in selling a home"
-                submitLabel="Find Out"
-                successTitle="Request received."
-                successBody="We're pulling your comps now — expect to hear from us within the day."
-              />
-            </div>
-          </Reveal>
+          <div className="mt-8">
+            <HomeValueForm />
+          </div>
           <p className="mx-auto mt-6 max-w-xl text-lg text-paper [font-family:Georgia,'Times_New_Roman',serif]">
             Join the homeowners across six counties in finding your home&rsquo;s value
           </p>

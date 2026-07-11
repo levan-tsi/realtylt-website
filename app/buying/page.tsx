@@ -17,15 +17,16 @@ export default function BuyingPage() {
       {/* ── Hero — live: dark interior photo, centered white copy, phone + white CTA */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="buying-hero">
         <div className="absolute inset-0">
+          {/* Live shows the interior clearly — keep the photo readable under a light scrim */}
           <Image
             src="/images/lifestyle/buying.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-40"
+            className="object-cover opacity-75"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 py-20 text-center md:py-24 lg:px-8">
           <h1 id="buying-hero" className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-paper md:text-4xl">
