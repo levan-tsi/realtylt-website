@@ -174,12 +174,13 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-ink/10 py-5">
               {(
                 [
-                  ["Beds", l.beds],
-                  ["Baths", l.baths],
-                  ["Sqft", l.sqft.toLocaleString("en-US")],
+                  // Drop beds/baths/sqft the feed left at 0 (multi-family / land rows).
+                  ...(l.beds > 0 ? [["Beds", String(l.beds)]] : []),
+                  ...(l.baths > 0 ? [["Baths", String(l.baths)]] : []),
+                  ...(l.sqft > 0 ? [["Sqft", l.sqft.toLocaleString("en-US")]] : []),
                   ["Type", l.propertyType],
                   ["Status", l.status + (l.openHouse ? " · Open house" : "")],
-                ] as const
+                ] as [string, string][]
               ).map(([k, v]) => (
                 <div key={k}>
                   <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-stone">{k}</dt>

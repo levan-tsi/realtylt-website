@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
+import { specParts } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 
 /** Live MLS photos are served via our CDN-cached /api/media/… proxy (the MLS media CDN
@@ -64,6 +65,9 @@ export function ListingCard({
   const l = listing;
   const badge =
     l.status !== "Active" ? l.status : l.openHouse ? "Open House" : null;
+  // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed".
+  const statsLong = specParts(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft." }).join(" • ");
+  const statsShort = specParts(l, { bed: "bd", bath: "ba", sqft: "sqft" }).join(" | ");
 
   if (variant === "plain") {
     return (
@@ -97,9 +101,7 @@ export function ListingCard({
         <div className="p-4">
           <div className="flex items-baseline justify-between gap-3">
             <p className="text-2xl font-bold text-ink">{formatPrice(l.price)}</p>
-            <p className="shrink-0 text-xs text-stone">
-              {l.beds} Bed • {l.baths} Bath • {l.sqft.toLocaleString("en-US")} Sq. Ft.
-            </p>
+            {statsLong && <p className="shrink-0 text-xs text-stone">{statsLong}</p>}
           </div>
           <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
           <p className="text-sm italic text-ink-soft">
@@ -150,9 +152,7 @@ export function ListingCard({
           <p className="mt-1 text-lg font-medium leading-snug">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
-          <p className="mt-1 text-xs italic">
-            {l.beds} bd | {l.baths} ba | {l.sqft.toLocaleString("en-US")} sqft
-          </p>
+          {statsShort && <p className="mt-1 text-xs italic">{statsShort}</p>}
           <div className="mt-2 flex items-end justify-between gap-2">
             <p className="text-[10px] italic leading-tight text-white/85">
               Listed With {l.listOfficeName}

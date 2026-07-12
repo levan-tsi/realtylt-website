@@ -140,11 +140,15 @@ function PinLayer({ pins }: { pins: MapPin[] }) {
           }}
         />
       ))}
-      {visible.map((p) => (
+      {visible.map((p) => {
+        const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`]
+          .filter(Boolean)
+          .join(" / ");
+        return (
         <Marker key={p.id} position={[p.lat, p.lng]} icon={priceIcon(p.price)}>
           <Popup>
             <div style={{ minWidth: 180 }}>
-              <p style={{ margin: 0, fontWeight: 700 }}>{shortPrice(p.price)} · {p.beds} bd / {p.baths} ba</p>
+              <p style={{ margin: 0, fontWeight: 700 }}>{shortPrice(p.price)}{bb ? ` · ${bb}` : ""}</p>
               <p style={{ margin: "4px 0" }}>
                 {p.address}, {p.city} {p.zip}
               </p>
@@ -155,7 +159,8 @@ function PinLayer({ pins }: { pins: MapPin[] }) {
             </div>
           </Popup>
         </Marker>
-      ))}
+        );
+      })}
     </>
   );
 }
