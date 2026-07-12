@@ -110,3 +110,37 @@ design-excellence — never replaces them or any skill.
 - Run a **watchdog/coach** meta-agent (Opus 4.8) every few cycles: it reads the loop's recent commits +
   reports, checks for regressions / wasted tokens / spec-drift / dishonest gates, and makes ONE
   improvement to THIS playbook (never to product code). Keep it curated and true.
+
+## Phase-1 verification cycle (2026-07-12) — hard-won recipes + gotchas
+- **SAFE local verification recipe (no MLS/media budget impact):** `npm run build` reads the COMMITTED
+  snapshot → real data (`fixtureMode:false`, 5362) WITHOUT MLS keys; media has no keys locally so
+  `/api/media` returns the placeholder with ZERO MLS calls. So run the heavy suites (qa-crawl, qa-a11y-scan,
+  verify-calc-menu, verify-saved-flow, qa-flows2 lead tests) against a LOCAL `next start`:
+  `$env:LEAD_TEST_MODE='1'; $env:CRM_LEAD_WEBHOOK=''; npx next start -p 3777` — double-safe leads, no budget hit.
+  Only probe the DEPLOYED `/api/media` for real photos on 1–2 listings, ONCE.
+- **`qa-search-flows.mjs` is FIXTURE-CALIBRATED → it emits FALSE FAILs against the real 5,362-listing
+  snapshot.** Its price/sort assertions concatenate the adjacent beds count into the price (e.g. "$525,000"+
+  "3 Bed" → parses 5250003), filter state accumulates across its sequential UI steps (so "beds 4+ = 0 cards"
+  is spurious), the town lists are the old 60-row fixture towns, and its home-rail card selector is stale
+  (reports 0 cards though the SSR HTML has 16 `/listing/` links). **Don't trust its FAILs on real data —
+  verify filter correctness at the API layer instead:** `/api/idx/search?priceMin/priceMax/bedsMin/bathsMin/
+  sqftMin/propertyType/county/q/sort=…` then assert the returned set. Done 2026-07-12: ALL filters/sort/text
+  correct (price-range 1075 in-range, bedsMin=4→2332, Multi-Family→427, ulster→506, asc/desc monotonic).
+- **`verify-live-mls.mjs` had a stale Round-2 assertion** ("photos are Blob URLs") that Round 6 broke when
+  photos moved to the `/api/media` proxy → it false-failed all 6 counties. Fixed to assert on-demand proxy
+  paths (`/^\/api\/media\//`). Now ALL PASS. Lesson: when architecture changes, sweep the verify scripts too.
+- **Feed reality — zero specs are NORMAL:** OneKey multi-family / land rows often carry beds/baths/sqft = 0
+  (e.g. 8 Elm St Wawarsing 0/0/0 multi-family; 2930 Gomer 5bd/4ba but LivingArea 0). The UI now DROPS any
+  zero spec (`specParts` in lib/format.ts) so cards/detail/map never render "0 Bed • 0 Bath • 0 Sq. Ft.".
+  The prose description may still mention beds the structured field lacks — that's the feed, not a bug.
+- **Media-CDN budget cooldown observed 2026-07-12** (`X-Media-Status: unavailable`, 740-byte placeholder) —
+  every listing shows the branded "Photo coming soon" SVG. The failure CONTRACT is correct (200 SVG, never a
+  broken tile). Did NOT retry-probe (each probe delays reset). Real photos were verified in Round 6; they
+  self-heal once the trailing window clears. For DESIGN screenshots this is fine — layout is still assessable.
+- **IDX spot-check vs Zillow/Redfin (2026-07-12) all matched:** 490 Peekskill Hollow Rd (3bd/2ba/2030sqft ==
+  Zillow), 2930 Gomer St ($975k, 5bd/4ba, Keller Williams == Redfin), 107 Larchdale (1ba/1440sqft == records),
+  2012 Hawthorn Way (townhouse/2139sqft == external). The site pools the real OneKey feed correctly.
+- **Design vs live realtylt.com:** live Brivity pages frequently fail to render in a capture (search stuck on
+  "Searching…" spinner; top_areas blank) — the deployed rebuild is usually MORE complete. Residual design gap
+  is Brivity's product-mockup screenshots (financing phone/laptop, selling laptops) which we intentionally do
+  not clone, plus live's embedded Google-Calendar booking on /connect (we use "Call to book" CTAs). ~93–95%.

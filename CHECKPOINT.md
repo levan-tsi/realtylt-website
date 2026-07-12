@@ -1,5 +1,55 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ ROUND 7 (2026-07-12) — PHASE-1 VERIFICATION + POLISH (IDX re-verified vs Zillow, "0 Bed" fix)
+
+**Independent re-verification of the DEPLOYED site + real-data IDX audit + one visible
+polish fix. Site remains ship-ready (private/noindex). 101/101 tests, build green.**
+
+**IDX correctness — REAL data confirmed end-to-end (verify-live-mls ALL PASS):**
+- All 6 counties serve real OneKey listings, `fixtureMode:false`: orange 1276 / dutchess 842 /
+  westchester 1744 / putnam 266 / rockland 728 / ulster 506 = **5,362** (snapshot Jul 11, ~20h old).
+- **Spot-checked vs Zillow/Redfin/records (all matched):** 490 Peekskill Hollow Rd (3bd/2ba/2030sqft ==
+  Zillow), 2930 Gomer St ($975k/5bd/4ba/Keller Williams == Redfin), 107 Larchdale (1ba/1440sqft ==
+  records), 2012 Hawthorn Way (townhouse/2139sqft == external).
+- **Every filter/sort verified deterministically at the API** (the UI just sets these params): price-range
+  1075 in-range, bedsMin=4→2332, bathsMin=3→1701, sqftMin=2500→1631, Multi-Family→427, ulster→506,
+  price asc/desc monotonic, q=Beacon→52 all-match.
+- **On-demand confirmed:** `/listing/[id]` builds 0 static pages in live mode (generateStaticParams `[]`,
+  dynamicParams true) — every listing resolves on request; the full gallery + JSON-LD resolve via the
+  on-demand `/api/media` proxy. Sitemap excludes listing URLs in live mode.
+
+**Photos:** the media-CDN budget was in cooldown this cycle (`X-Media-Status: unavailable`) → branded
+"Photo coming soon" placeholder everywhere. The failure CONTRACT is correct (200 SVG, never a broken
+tile). Probed ONE listing (2 photos), did NOT retry. Real photos were verified 40/40 in Round 6; they
+self-heal when the window resets. (No design regression — layout is fully assessable with placeholders.)
+
+**Security / a11y / responsiveness (all clean):** final-probe on /, /search, /ai, /financing, /top-areas →
+**0 console errors, 0 CSP violations**; CSP + noindex headers intact live. qa-a11y-scan CLEAN on 23 pages.
+qa-crawl: 131 internal links resolve, **zero horizontal overflow at 390**, county pages in-county only.
+Calculator ($3,198.20 / $3,677.84 / reset), mobile menu, favorites/save-search/alert-opt-in, and the lead
+flow (footer + alerts, honeypot silent-200, invalid→400) all PASS against a LOCAL stub (LEAD_TEST_MODE=1 +
+empty webhook — no prod CRM rows, no MLS budget hit). **No valid lead was ever sent to prod.**
+
+**Design vs live realtylt.com (~93–95%, per-page):** reviewed home/search/financing/selling/top-areas/
+connect at 1280 side-by-side (docs/phase1/cmp) + all pages at 390. Live Brivity pages frequently fail to
+render in a capture (search stuck "Searching…", top_areas blank) — the rebuild is usually MORE complete.
+Residual gap is Brivity's product-mockup screenshots (financing phone/laptop, selling laptops) we don't
+clone + live's embedded Google-Calendar booking on /connect (we use "Call to book" CTAs). Recorded, not bugs.
+
+**Changed this round (committed):**
+1. **`0 Bed` polish:** OneKey multi-family/land rows carry beds/baths/sqft=0 (e.g. 8 Elm St Wawarsing 0/0/0;
+   2930 Gomer 5/4/0-sqft) → cards showed "0 Bed • 0 Bath • 0 Sq. Ft.". New `specParts` (lib/format.ts) drops
+   any zero spec; applied to ListingCard (both variants), /listing detail facts, and the map popup. Verified
+   rendered: 8 Elm detail now shows only Type/Status; Multi-Family cards show "5 Bed • 4 Bath" (no 0 sqft).
+   +5 unit tests (lib/format.test.ts).
+2. **verify-live-mls.mjs** stale "photos are Blob URLs" assertion (broken since Round 6's `/api/media` proxy)
+   → asserts on-demand proxy paths. Now ALL PASS.
+
+**Known non-blockers (unchanged):** snapshot is manual-refresh (~20h old is fine pre-launch); real photos
+pending media-budget window; Brivity product-mockup assets; owner content (who-we-are bio, blog articles).
+`qa-search-flows.mjs` is fixture-calibrated and emits FALSE FAILs on real data — see AGENT_LEARNINGS;
+filter correctness is verified at the API layer instead. Evidence: docs/phase1/ (cmp, deployed, fix-verify).
+
 ## ▶ ROUND 6 (2026-07-11) — ON-DEMAND PHOTOS LIVE: real IDX-style photo proxy, fetched per view, never stored
 
 **The owner's photo requirement is SHIPPED and verified live:** photos are fetched
