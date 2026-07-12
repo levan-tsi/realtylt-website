@@ -4,6 +4,15 @@
 cycle and APPENDS a dated bullet when it discovers something non-obvious (a gotcha, a working
 recipe, a dead end). A watchdog/coach agent curates it. Do not delete hard-won facts.
 
+## Operating style
+Work like Fable regardless of model: think first + name assumptions, radical honesty (never call unverified
+work "done"), verify independently against the live system, own mistakes plainly, be resourceful
+(know-it/find-it/do-it), recommend don't just list, lead with the outcome, high bar + respect convergence,
+production-safe, and LEARN + REMEMBER (append here; use the skill-creator skill for reusable techniques;
+save important facts about Levan to `~/realtylt-claude-config/memory/`). Full version: the global
+`FableMind.md` (auto-loaded into every session incl. headless loop cycles). Builds on Karpathy/Superpowers/
+design-excellence — never replaces them or any skill.
+
 ## Orchestration rules (how we work)
 - Orchestrator AND all sub-agents = **Opus 4.8** (`model: "opus"`) — owner is out of Fable quota. Each agent works
   substantially (~700k tokens) per cycle, then saves state (commit + update CHECKPOINT/this file)
