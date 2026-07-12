@@ -64,6 +64,16 @@ others' data.
   clone) on a fix branch; deploy previews only; production/merge is owner-gated.
 - NEVER commit secrets (`.env*`, tokens). Small commits; push per phase; keep tests + `next build` green.
 
+## Orchestration shape (how to split the work)
+Split by PROPERTY, not by one all-in agent. Run **three specialized Opus-4.8 loop agents in PARALLEL** —
+one for the Website (Phase 1), one for the AI page (Phase 1B), one for the CRM (Phase 2) — because they are
+different repos/stacks and parallel = faster + deeper (an all-in agent blows its context and goes shallow).
+HARD RULE: never run two agents on the SAME repo/branch/tree at once (they collide) — but across the three
+DIFFERENT repos they run safely in parallel. YOU (Fable orchestrator) hold the FULL PICTURE: you own the
+cross-property connections (AI page → CRM lead, website → CRM lead, shared MLS key, one brand), curate the
+shared `AGENT_LEARNINGS.md`, and verify each agent's work independently. Then Phase 3 is a single combined
+agent that tests the WHOLE suite end-to-end, and Phase 4 watches it.
+
 ## THE WORK — run these phases; loop each until genuinely converged, verifying between cycles
 
 ### Phase 1 — Website: test, polish, verify IDX correctness (loop, Opus 4.8, ~700k/cycle)
