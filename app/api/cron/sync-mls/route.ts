@@ -46,6 +46,13 @@ const TIME_BUDGET_MS = 240_000; // leave headroom under maxDuration for the fina
 const DATA_TIME_BUDGET_MS = 130_000; // data pass stops here so photos still get a window
 const DATA_MAX_PAGES = 25; // ≤25 sequential feed requests per run (~12.5k rows scanned)
 const PRIORITY_PAGES = 2; // newest-modified head refetch (~1k rows) — the priority photo set
+// Hobby Blob stores hard-cap at 1GB and an over-quota store fails EVERY put (even the
+// attempt claim — full pipeline outage). Photos are sharp-compressed on ingest
+// (~960px/q68 ≈ 100KB vs ~500KB source) and downloads stop at this soft cap so the
+// store can never cross the plan limit again. Remaining headroom goes to gallery depth.
+const STORE_BYTE_CAP = 920_000_000;
+const PHOTO_MAX_WIDTH = 960;
+const PHOTO_JPEG_QUALITY = 68;
 const MAX_SNAPSHOT_LISTINGS = 8000; // sanity cap — keep the newest-modified beyond this
 const MIN_SYNC_GAP_MS = 5 * 60_000; // overlapping triggers must not double-hit MLS Grid
 const ATTEMPT_GAP_MS = 10 * 60_000; // global gap between MLS attempts, success OR failure
@@ -94,13 +101,20 @@ export async function GET(req: Request) {
   if (!force && lastAttempt && Date.now() - +new Date(lastAttempt) < ATTEMPT_GAP_MS) {
     return NextResponse.json({ skipped: "a sync was attempted recently", lastAttempt }, { status: 202 });
   }
-  await put(SYNC_STATE_PATHNAME, JSON.stringify({ attemptAt: new Date().toISOString() }), {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: "application/json",
-    cacheControlMaxAge: 60,
-  });
+  try {
+    await put(SYNC_STATE_PATHNAME, JSON.stringify({ attemptAt: new Date().toISOString() }), {
+      access: "public",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      contentType: "application/json",
+      cacheControlMaxAge: 60,
+    });
+  } catch (e) {
+    // Typically "Storage quota exceeded" — nothing this run could publish would stick.
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[sync-mls] cannot write attempt claim — aborting cleanly:", msg);
+    return NextResponse.json({ error: `Blob write failed: ${msg}` }, { status: 507 });
+  }
 
   // 1. Resume (or start) the rolling full-inventory pass and advance it a bounded slice.
   //    On failure the previous snapshot and pass state stay in place untouched.
@@ -173,12 +187,17 @@ export async function GET(req: Request) {
       .slice(0, MAX_SNAPSHOT_LISTINGS);
   }
 
-  // 2. Ground truth of already-cached photos (list is paginated).
+  // 2. Ground truth of already-cached photos (list is paginated) + current store usage
+  //    for the byte-cap guard.
   const cachedUrls = new Map<string, string>();
+  let storeBytes = 0;
   let cursor: string | undefined;
   do {
     const page = await list({ prefix: PHOTO_PREFIX, cursor, limit: 1000 });
-    for (const b of page.blobs) cachedUrls.set(b.pathname, b.url);
+    for (const b of page.blobs) {
+      cachedUrls.set(b.pathname, b.url);
+      storeBytes += b.size;
+    }
     cursor = page.cursor;
   } while (cursor);
 
@@ -194,14 +213,29 @@ export async function GET(req: Request) {
     ),
   );
   const plan = planPhotoFetches(photoSource, new Set(cachedUrls.keys()), photoBudget);
+  // Compress on ingest (Hobby Blob = 1GB hard cap; ~500KB source → ~100KB stored keeps
+  // full photo-0 coverage well under it). Fallback to original bytes if sharp is missing.
+  let compress: ((buf: ArrayBuffer) => Promise<Buffer>) | null = null;
+  try {
+    const sharp = (await import("sharp")).default;
+    compress = (buf) =>
+      sharp(Buffer.from(buf), { failOn: "none" })
+        .rotate()
+        .resize({ width: PHOTO_MAX_WIDTH, withoutEnlargement: true })
+        .jpeg({ quality: PHOTO_JPEG_QUALITY, mozjpeg: true, progressive: true })
+        .toBuffer();
+  } catch {
+    console.warn("[sync-mls] sharp unavailable — storing original photo bytes");
+  }
   let uploaded = 0;
   let failed = 0;
   let budgetExhausted = false;
+  let storeFull = storeBytes >= STORE_BYTE_CAP;
   let planCursor = 0;
   // Small paced worker pool against the media CDN (its limit is a per-window request
   // BUDGET, not the data API's 2 req/s). First 429 stops ALL workers — resume next run.
   const downloadWorker = async () => {
-    while (!budgetExhausted && Date.now() - started < TIME_BUDGET_MS) {
+    while (!budgetExhausted && !storeFull && Date.now() - started < TIME_BUDGET_MS) {
       const next = plan[planCursor++]; // single-threaded event loop — no race
       if (!next) return;
       try {
@@ -213,15 +247,28 @@ export async function GET(req: Request) {
         if (!res.ok) {
           failed++;
         } else {
-          const blob = await put(next.pathname, await res.arrayBuffer(), {
+          const raw = await res.arrayBuffer();
+          let body: ArrayBuffer | Buffer = raw;
+          let contentType = res.headers.get("content-type") ?? "image/jpeg";
+          if (compress) {
+            try {
+              body = await compress(raw);
+              contentType = "image/jpeg";
+            } catch {
+              /* keep original bytes — a stored photo beats a skipped one */
+            }
+          }
+          const blob = await put(next.pathname, body, {
             access: "public",
             addRandomSuffix: false,
             allowOverwrite: true,
-            contentType: res.headers.get("content-type") ?? "image/jpeg",
+            contentType,
             cacheControlMaxAge: 31_536_000, // photos are immutable at their pathname
           });
           cachedUrls.set(next.pathname, blob.url);
           uploaded++;
+          storeBytes += body.byteLength;
+          if (storeBytes >= STORE_BYTE_CAP) storeFull = true; // never cross the plan limit
         }
       } catch (e) {
         failed++;
@@ -273,6 +320,8 @@ export async function GET(req: Request) {
     photosPlanned: plan.length,
     priorityListings: priority.length,
     budgetExhausted,
+    storeFull,
+    storeMB: Math.round(storeBytes / 1e6),
     ms: Date.now() - started,
   };
   console.log("[sync-mls]", JSON.stringify(summary));
