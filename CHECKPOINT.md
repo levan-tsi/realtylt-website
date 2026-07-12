@@ -1,5 +1,51 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ ROUND 6 (2026-07-11) — ON-DEMAND PHOTOS LIVE: real IDX-style photo proxy, fetched per view, never stored
+
+**The owner's photo requirement is SHIPPED and verified live:** photos are fetched
+from MLS Grid ONLY when a listing is actually viewed, cached briefly at the CDN,
+and NEVER stored (no Vercel Blob, no bulk download, no image DB).
+
+**Architecture (lib/idx/media.ts + app/api/media/[id]/[idx]/route.ts):**
+1. `/api/media/{listingId}/{idx}` — on request, resolve the listing's Media from
+   MLS Grid (`ListingId eq '<id>' … $expand=Media&$select=ListingId` — ONE data
+   call gets ALL of a listing's ~1h-signed URLs), pick photo `idx` (Order-sorted,
+   Photo category, cap 40), stream it same-origin. Image responses carry
+   `Cache-Control: public, max-age=300, s-maxage=3000, stale-while-revalidate=86400`
+   (50 min CDN < ~1h signing) → MLS is hit ≈ once per photo per window regardless
+   of viewers.
+2. **Budget discipline** (the account was throttled twice by past bulk work):
+   per-listing lookup cache 20 min TTL (all photos of one listing + repeat views
+   share ONE data call per warm instance); 90s negative cache after ANY MLS
+   failure; a paced FIFO queue keeps data calls ≥600ms apart (< 2 req/s account
+   cap) and fails fast past 12 queued lookups.
+3. **Failure contract:** any MLS/media error or budget 429 → the branded "Photo
+   coming soon" SVG with `no-store` (next view retries) — NEVER a broken tile or
+   502. A listing with genuinely no photo at an index gets the same SVG but
+   CDN-cached (stable fact). `X-Media-Status: ok|empty|unavailable` for debugging.
+4. **Wiring:** snapshot listings (shipped photo-free) get `/api/media/{id}/0` as
+   their primary photo in ReplicatedIdxClient → search/featured/new cards render
+   real photos (lazy next/image, `unoptimized`, same-origin — no CSP change, no
+   optimizer fan-out). `/listing/[id]` resolves the photo COUNT via the same
+   shared lookup (one data call per detail view) and renders the FULL gallery
+   through the proxy (hero + 3 thumbs + lazy strip for the rest).
+
+**Verified on the DEPLOYED site (2026-07-11):** /api/media/KEY1023749/0 → real
+582KB JPEG, `x-vercel-cache: MISS` 1247ms then `HIT` 266ms (same photo served
+twice = ONE MLS touch); /listing/KEY1023749 renders **40/40 real photos** (one
+shared data lookup, screenshots docs/photos-ondemand/); /search cards show 12/12
+real photos, **all 12 `x-vercel-cache: HIT`** (zero MLS touches on that view);
+final-probe on /, /search, /ai, /financing, /top-areas → **0 console errors,
+0 CSP violations**. 96/96 tests (media resolver + proxy failure/cache contracts
+covered), build green. Verification spent ~1 data call + ~53 media fetches total
+(one listing's gallery + one search page) — no loops over listings.
+
+**Still manual (pending owner decision):** the TEXT-data snapshot
+(`data/mls-snapshot.json`) refreshes via `node scripts/export-snapshot.mjs` +
+commit + deploy. A durable auto-refresh store for listing DATA (the on-demand
+search re-architecture vs Supabase/Pro store) remains the open owner decision —
+photos are now fully on-demand either way.
+
 ## ▶ ROUND 5 (2026-07-11) — BLOB-PAUSE REGRESSION FIXED: real data restored, Blob OUT of the read path (TEMPORARY stopgap — see target architecture)
 
 **What broke:** the Round-4/5 photo backfill blew Vercel Blob's free-tier operation

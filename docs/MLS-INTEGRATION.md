@@ -1,20 +1,30 @@
 # MLS Integration — OneKey MLS via MLS Grid v2
 
-> **⚠ CURRENT STATE (Round 5, 2026-07-11): Vercel Blob is PAUSED and OUT of the
-> architecture.** The photo backfill exceeded the free tier's operation limit and
-> Vercel paused the store for 30 days (all reads/writes 403) — the site regressed to
-> fixture data. Fix deployed: listings now ship as a **committed snapshot**
-> (`data/mls-snapshot.json`, 5,362 six-county Active listings, photos stripped)
-> bundled into the deploy; `/api/cron/sync-mls` became a Blob-free paged EXPORT
-> endpoint driven by `scripts/export-snapshot.mjs` (manual refresh: run + commit +
+> **⚠ CURRENT STATE (Round 6, 2026-07-11): photos are ON-DEMAND (live, shipped);
+> listing DATA is still the committed snapshot.**
+>
+> **Photos — the real-IDX model the owner asked for:** `/api/media/{id}/{idx}`
+> (backed by `lib/idx/media.ts`) fetches a listing's Media from MLS Grid ONLY when
+> that listing is viewed — one `ListingId eq '<id>' … $expand=Media` data call per
+> listing (20-min in-memory cache, 600ms-paced queue < 2 req/s, 90s negative cache),
+> then streams each photo same-origin with `s-maxage=3000` (50 min CDN cache, under
+> the ~1h signed-URL validity) + `stale-while-revalidate`. Cost ≈ one media fetch per
+> unique photo per 50-min window regardless of viewers. Any MLS/media failure or
+> budget 429 serves the branded "Photo coming soon" SVG with `no-store` — never a
+> broken tile. Photos are NEVER stored: no Vercel Blob, no bulk download, no image
+> DB. Cards use photo 0 via the proxy; `/listing/[id]` renders the full gallery
+> through it. Verified live: 40/40 real photos on a detail page, `x-vercel-cache`
+> MISS→HIT on repeat requests, 0 console/CSP errors (CHECKPOINT.md Round 6).
+>
+> **Listing DATA (Round 5 stopgap, still current):** listings ship as a **committed
+> snapshot** (`data/mls-snapshot.json`, 5,362 six-county Active listings, photos
+> stripped) bundled into the deploy; `/api/cron/sync-mls` is a Blob-free paged EXPORT
+> endpoint driven by `scripts/export-snapshot.mjs` (**manual refresh**: run + commit +
 > deploy); the vercel.json cron schedule was removed; `@vercel/blob` is uninstalled.
-> Photos render the branded "Photo coming soon" placeholder (no media-CDN hits).
-> **This is a TEMPORARY stopgap by owner direction — the target is ON-DEMAND IDX**
-> (live bounded MLS queries with short-TTL caching; photos fetched per view through
-> a CDN-cached proxy, never stored). See CHECKPOINT.md Round 5 for the target's
-> constraints (MLS Grid's `$filter` cannot express search queries) and pending
-> decisions. Everything below documents the Blob-era pipeline for history/root-cause
-> reference; the Blob sections no longer describe running code.
+> A durable auto-refresh store for the TEXT data (vs a full on-demand search
+> re-architecture — hard because MLS Grid's `$filter` cannot express search queries)
+> is the remaining owner decision. Everything below documents the Blob-era pipeline
+> for history/root-cause reference; the Blob sections no longer describe running code.
 
 Round 1 (2026-07-11) wired the feed; Round 2 (same day) re-architected it to **scheduled
 replication into Vercel Blob** after the Round-1 per-request design failed in production.
