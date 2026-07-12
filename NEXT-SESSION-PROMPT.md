@@ -37,6 +37,7 @@ others' data.
   **Twilio SMS creds** are in **"RealtyLT Twilio SMS"** (`k6s9fbkHv2rVezYB`) — extract from the HTTP node.
 - **Chrome browser MCP** — the owner is logged into **https://app.brivity.com/dashboard**; use it
   READ-ONLY to study Brivity (never click mutating controls, never modify Brivity data).
+- **Gmail MCP** (owner's Gmail) is available for the email-send research/integration.
 - **CRM demo login:** `demo@realtylt.com` / `RealtyLT2026!` (works on the fixed previews).
 
 ## HARD architecture facts (do NOT relearn the hard way)
@@ -81,11 +82,30 @@ Spawn a looping CRM agent that: uses **Chrome (read-only) to study live Brivity*
 the demo login to test our CRM preview**, side-by-side; **brainstorms the highest-value gaps to make it
 100% accurate to Brivity and fully operational to ship**; and fixes them in the isolated clone on
 `fix/brivity-parity`, deploying previews. Top known gap: an **auto-plan EXECUTION engine** (Brivity runs
-a 72-step plan across 1,174 people; ours only builds plans). **Wire Twilio SMS** using the creds from the
-n8n "RealtyLT Twilio SMS" workflow so Messages can actually send (owner wants iMessage/FaceTime later —
-Twilio now). Also flag/fix: the loop machine's stale `E2E_TEST_PASSWORD` makes its phase gates dishonest;
-email provider is a fixture (Resend seam exists); CMA/market comps run on MLS fixtures (use the real MLS
-key). Loop until the CRM is genuinely Brivity-accurate + operational; main verifies each cycle vs Brivity.
+a 72-step plan across 1,174 people; ours only builds plans).
+
+**Build an "Automations" page + a working automation engine (high priority).** Add a CRM page where the
+owner creates workflows/automations — a builder of **trigger → condition → action** rules (and multi-step
+sequences like Brivity Auto Plans) — and an **execution engine that runs them automatically** in the
+background (on the trigger, on schedule, or after a delay). Actions must include: **send SMS**,
+**place/route a call** (Twilio), **send email** (Gmail/email), create/assign a task, update lead
+status/stage, add to a lead pond, wait N days, branch on a condition. This subsumes the auto-plan
+execution engine. Make it genuinely operational (run history/logs, enable/pause, a safe test mode), not a stub.
+
+**RESEARCH FIRST — how to properly connect the send-integrations** (do real research, don't guess): the
+correct production-grade way to wire **Twilio** (SMS + voice/calls, inbound-reply webhooks, status
+callbacks, STOP/opt-out + TCPA compliance, a Messaging Service/number) and **Gmail / email** (Gmail API +
+OAuth vs SMTP vs a provider like Resend — deliverability, SPF/DKIM, reply handling, unsubscribe). Evaluate
+doing it **directly from the CRM** vs **routing through n8n** (n8n already holds the Twilio creds + has
+Gmail nodes and is a real automation backend — using n8n as the execution backend the CRM calls into may
+be the fastest correct path; the CRM's Automations UI could create/trigger n8n workflows). Pick the best
+approach, document the tradeoffs, implement it end-to-end, and TEST a real send safely (sandbox/owner's own
+number/email — never spam real contacts). Twilio creds: n8n "RealtyLT Twilio SMS"; Gmail: MCP / owner's
+account. Owner wants iMessage/FaceTime eventually — Twilio + Gmail now.
+
+Also flag/fix: the loop machine's stale `E2E_TEST_PASSWORD` makes its phase gates dishonest; the email
+provider is currently a fixture; CMA/market comps run on MLS fixtures (use the real MLS key). Loop until the
+CRM is genuinely Brivity-accurate + operational; main verifies each cycle vs Brivity.
 
 ### Phase 3 — Combined website+CRM launch loop (Opus 4.8, until launch-ready)
 Once Phases 1–2 have converged, run a combined agent that works across BOTH the website and CRM: test
@@ -93,6 +113,15 @@ that everything works end-to-end, brainstorm what else needs improving, improve,
 the whole product suite is genuinely ready to launch. Same rules: isolated CRM clone, on-demand IDX,
 private/noindex, never re-exhaust the media budget, verify with Playwright + Zillow/Brivity references,
 never commit secrets.
+
+### Phase 4 — Watch: keep it running smooth & correct (Opus 4.8, ongoing)
+Once the products are built and launch-ready, DON'T stop — run an ongoing **watcher/health-monitor** that
+keeps checking everything works smoothly and correctly: periodically drive the live website + CRM with
+Playwright, hit the key endpoints, and assert real behavior — IDX pools live data (spot-check vs Zillow),
+photos load on-view, the map/search/lead-forms/calculator work, the CRM routes + login + automations run,
+Twilio/Gmail sends succeed (safe test), 0 console/CSP errors, no regressions, no broken tiles, no stale
+data. On any breakage: diagnose, fix (or isolate + report if owner-gated), re-verify. Watch until the owner
+says stop. This is the "make sure everything works smooth and right" guarantee after the build converges.
 
 ## Memory, self-improvement & accumulated experience (carry it forward)
 - **`AGENT_LEARNINGS.md` (in the website repo) is the loop's persistent memory + playbook** — it already
