@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { FixtureIdxClient } from "./fixture";
 import { getIdxClient } from "./index";
-import { MlsGridClient } from "./mls-grid";
+import { ReplicatedIdxClient } from "./replicated";
 import { COUNTIES } from "@/lib/site";
 
 const client = new FixtureIdxClient();
@@ -147,15 +147,15 @@ describe("FixtureIdxClient — single, featured, new", () => {
 describe("getIdxClient factory", () => {
   afterEach(() => vi.unstubAllEnvs());
 
-  it("returns the fixture client when MLS env vars are absent", () => {
+  it("serves the committed snapshot even when MLS env vars are absent", () => {
     vi.stubEnv("MLS_API_KEY", "");
     vi.stubEnv("MLS_API_ENDPOINT", "");
-    expect(getIdxClient()).toBeInstanceOf(FixtureIdxClient);
+    expect(getIdxClient()).toBeInstanceOf(ReplicatedIdxClient);
   });
 
-  it("returns the MLS Grid client when key + endpoint are set", () => {
+  it("serves the committed snapshot even with MLS keys set (requests never hit MLS Grid)", () => {
     vi.stubEnv("MLS_API_KEY", "test-key");
     vi.stubEnv("MLS_API_ENDPOINT", "https://api.mlsgrid.com/v2");
-    expect(getIdxClient()).toBeInstanceOf(MlsGridClient);
+    expect(getIdxClient()).toBeInstanceOf(ReplicatedIdxClient);
   });
 });
