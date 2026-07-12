@@ -13,3 +13,11 @@ out/
 .env*
 
 server.log
+
+# Loop runtime (control + transcripts) — not committed; JOURNAL.md IS tracked
+loop/.lock
+loop/STOP
+loop/WATCHDOG_STOP
+loop/journal/*.log
+o.txt
+e.txt

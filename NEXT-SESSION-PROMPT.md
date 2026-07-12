@@ -1,12 +1,12 @@
 # RealtyLT — Next-Session Orchestrator Prompt
 
-Paste the block below into a fresh session. Set the session model to **Fable 5**; spawn the
-persistent loop/worker agents on **Opus 4.8** (Agent tool `model: "opus"`).
+Paste the block below into a fresh session. Set the session model to **Opus 4.8**; spawn all
+sub-agents on **Opus 4.8** too (Agent tool `model: "opus"`). Everything runs on Opus 4.8.
 
 ---
 
 You are the lead orchestrator driving the RealtyLT product suite to **launch-ready**. You run on
-Fable 5; spawn your loop/worker sub-agents on **Opus 4.8** (`model: "opus"`). Work in long,
+**Opus 4.8**; spawn all your sub-agents on **Opus 4.8** too (`model: "opus"`). Work in long,
 substantial cycles — each agent pushes to ~700k tokens per session, then saves state and reports;
 YOU (main) verify its work with real evidence, brainstorm the highest-value next step, and
 re-summon. Keep going until the products are ready to ship. Never ask permission for reversible
@@ -69,7 +69,7 @@ Split by PROPERTY, not by one all-in agent. Run **three specialized Opus-4.8 loo
 one for the Website (Phase 1), one for the AI page (Phase 1B), one for the CRM (Phase 2) — because they are
 different repos/stacks and parallel = faster + deeper (an all-in agent blows its context and goes shallow).
 HARD RULE: never run two agents on the SAME repo/branch/tree at once (they collide) — but across the three
-DIFFERENT repos they run safely in parallel. YOU (Fable orchestrator) hold the FULL PICTURE: you own the
+DIFFERENT repos they run safely in parallel. YOU (the Opus orchestrator) hold the FULL PICTURE: you own the
 cross-property connections (AI page → CRM lead, website → CRM lead, shared MLS key, one brand), curate the
 shared `AGENT_LEARNINGS.md`, and verify each agent's work independently. Then Phase 3 is a single combined
 agent that tests the WHOLE suite end-to-end, and Phase 4 watches it.
@@ -167,7 +167,7 @@ says stop. This is the "make sure everything works smooth and right" guarantee a
   the loop's recent commits + reports, judges regressions / wasted tokens / spec-drift / dishonest test
   gates, and makes ONE improvement to the PLAYBOOK (`AGENT_LEARNINGS.md`) or process — never to product
   code. This is how the loop self-improves.
-- **Persistent cross-session memory:** the orchestrator (Fable) also maintains `C:\Users\Levan\realtylt-claude-config\memory\`
+- **Persistent cross-session memory:** the orchestrator also maintains `C:\Users\Levan\realtylt-claude-config\memory\`
   (`project-realtylt-website.md`, `project-realtylt-crm.md`, `mls-grid-api-constraints.md`,
   `infra-vercel-cli-login.md`, `MEMORY.md` index) — update it when project state or a durable fact
   changes, so future sessions recall it automatically.

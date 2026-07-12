@@ -18,13 +18,14 @@ for (const county of COUNTIES) {
   const j = await res.json();
   const ls = j.listings ?? [];
   const real = ls.length > 0 && !ls.some(isFixtureListing);
-  const blobPhotos = ls.every((l) => l.photos.length === 0 || l.photos[0].includes("blob.vercel-storage.com"));
+  // Round 6: photos are the ON-DEMAND proxy (/api/media/{id}/{idx}), never stored Blob URLs.
+  const proxyPhotos = ls.every((l) => l.photos.length === 0 || /^\/api\/media\//.test(l.photos[0]));
   t(
     `${county}: real data, no fixture`,
     res.ok && j.fixtureMode === false && real,
     `${ms}ms total=${j.total} first="${ls[0]?.address}, ${ls[0]?.city}" office="${ls[0]?.listOfficeName}"`,
   );
-  t(`${county}: photos are Blob URLs (or none yet)`, blobPhotos, `photo0=${ls[0]?.photos?.[0]?.slice(0, 72) ?? "(none)"}`);
+  t(`${county}: photos are on-demand proxy URLs (or none)`, proxyPhotos, `photo0=${ls[0]?.photos?.[0]?.slice(0, 72) ?? "(none)"}`);
   if (ms > 2000) t(`${county}: warm latency < 2s`, false, `${ms}ms`);
 }
 

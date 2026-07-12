@@ -5,7 +5,7 @@ cycle and APPENDS a dated bullet when it discovers something non-obvious (a gotc
 recipe, a dead end). A watchdog/coach agent curates it. Do not delete hard-won facts.
 
 ## Orchestration rules (how we work)
-- Orchestrator = Fable 5; loop/worker agents = **Opus 4.8** (`model: "opus"`). Each agent works
+- Orchestrator AND all sub-agents = **Opus 4.8** (`model: "opus"`) — owner is out of Fable quota. Each agent works
   substantially (~700k tokens) per cycle, then saves state (commit + update CHECKPOINT/this file)
   and reports. MAIN verifies with INDEPENDENT evidence, brainstorms the highest-value next step,
   re-summons. Loop until genuinely converged — accept real convergence, don't churn mature domains.
