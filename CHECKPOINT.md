@@ -1,5 +1,56 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ ROUND 5 (2026-07-11) — BLOB-PAUSE REGRESSION FIXED: real data restored, Blob OUT of the read path (TEMPORARY stopgap — see target architecture)
+
+**What broke:** the Round-4/5 photo backfill blew Vercel Blob's free-tier operation
+limit (2,000 ops) → **Vercel paused the Blob store for 30 days** → every Blob read
+403'd → the site silently fell back to FIXTURE data (verified: /api/idx/search
+returned the 11-listing "Hudson Gate Realty" sample set).
+
+**The un-break (deployed + verified live):**
+1. `/api/cron/sync-mls` is now a **Blob-free, photo-free, paged EXPORT endpoint**
+   (data API only, ≤20 pages/call, 1.1s gaps, ≤1,200 listings/response to stay under
+   Vercel's 4.5MB body cap, photos stripped — signed URLs never leave the route).
+   vercel.json cron schedule REMOVED (no scheduled MLS churn, zero Blob ops accrue).
+2. `scripts/export-snapshot.mjs` paged it 5× (39 pages, 19,316 feed rows scanned,
+   zero 429s) → **`data/mls-snapshot.json` — 5,362 six-county Active listings, 10.2MB**
+   (westchester 1744 / orange 1276 / dutchess 842 / rockland 728 / ulster 506 /
+   putnam 266), committed to the repo.
+3. **Read path rewired:** ReplicatedIdxClient now loads the COMMITTED snapshot bundled
+   into the deploy (lib/idx/snapshot.ts; snapshot-data.js+.d.ts keep tsc off the 10MB
+   JSON). `@vercel/blob` + `@vercel/functions` UNINSTALLED — zero Blob imports remain;
+   a paused/quota'd store can never take listings down again. Fixture = last resort
+   only if the committed file is unusable. `snapshot.test.ts` guards size/counties/
+   ZERO photo URLs (no signed media in the repo — verified at export AND in CI).
+4. **Photos:** branded "Photo coming soon" placeholder everywhere (photos:[] in the
+   snapshot; /api/media serves the SVG, no Blob, no media-CDN hits, no broken tiles).
+
+**Verified on the DEPLOYED site (2026-07-11):** /api/idx/search → dutchess 842,
+westchester 1744, all-counties **5,362 / 447 pages**, `fixtureMode:false`, real
+addresses/offices (e.g. "2930 Gomer Street, Yorktown — Keller Williams Realty
+Partner"); /api/idx/pins → **5,360 located pins**; /search renders "5362 listings
+found" + clustered map (docs/restore/*.png); 82/82 tests, build green, **0 console
+errors / 0 CSP violations** (final-probe on /, /search, /ai, /financing, /top-areas).
+
+**⚠ TEMPORARY STOPGAP — owner direction (2026-07-11): the target architecture is
+ON-DEMAND, not a stored snapshot.** The owner explicitly does NOT want all listings
+(or photos) pre-stored. Target: query MLS live only for what's needed (current
+search / opened listing) with short-TTL caching so MLS is never re-hit per user and
+the 2 req/s account cap is safe; photos fetched on-demand via a proxy ONLY when a
+listing is viewed (CDN-cached ≤ signed-URL validity, never stored). No Vercel Blob,
+no bulk download, no permanent storage. **Hard constraint to solve in that redesign:**
+MLS Grid is a REPLICATION API — `$filter` allows NO county/city/price/beds fields
+(docs-verified, see docs/MLS-INTEGRATION.md), so "fetch just the result set" cannot
+be expressed server-side; on-demand search needs either a short-lived cached working
+set (what this stopgap approximates) or a different search-capable data product.
+Photos-on-demand IS directly feasible (ListingId IS filterable → /api/media resolves
+signed URLs per view, CDN-cached ~50min). Until that lands: refresh the stopgap with
+`node scripts/export-snapshot.mjs` + commit + deploy (manual; no auto-refresh).
+
+**Pending owner decisions:** (a) the on-demand re-architecture above (vs a durable
+auto-refresh store — Supabase vs Vercel Pro — now superseded by the on-demand
+direction); (b) the photo approach (on-demand proxy per view is the leading option).
+
 ## ▶ ROUND 4 (2026-07-11) — FULL INVENTORY + PHOTOS FLOWING + ZILLOW-STYLE MAP
 
 Three gaps closed, deployed + verified live at https://realtylt-website.vercel.app.

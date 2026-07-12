@@ -1,4 +1,20 @@
-# MLS Integration — OneKey MLS via MLS Grid v2 (REPLICATED)
+# MLS Integration — OneKey MLS via MLS Grid v2
+
+> **⚠ CURRENT STATE (Round 5, 2026-07-11): Vercel Blob is PAUSED and OUT of the
+> architecture.** The photo backfill exceeded the free tier's operation limit and
+> Vercel paused the store for 30 days (all reads/writes 403) — the site regressed to
+> fixture data. Fix deployed: listings now ship as a **committed snapshot**
+> (`data/mls-snapshot.json`, 5,362 six-county Active listings, photos stripped)
+> bundled into the deploy; `/api/cron/sync-mls` became a Blob-free paged EXPORT
+> endpoint driven by `scripts/export-snapshot.mjs` (manual refresh: run + commit +
+> deploy); the vercel.json cron schedule was removed; `@vercel/blob` is uninstalled.
+> Photos render the branded "Photo coming soon" placeholder (no media-CDN hits).
+> **This is a TEMPORARY stopgap by owner direction — the target is ON-DEMAND IDX**
+> (live bounded MLS queries with short-TTL caching; photos fetched per view through
+> a CDN-cached proxy, never stored). See CHECKPOINT.md Round 5 for the target's
+> constraints (MLS Grid's `$filter` cannot express search queries) and pending
+> decisions. Everything below documents the Blob-era pipeline for history/root-cause
+> reference; the Blob sections no longer describe running code.
 
 Round 1 (2026-07-11) wired the feed; Round 2 (same day) re-architected it to **scheduled
 replication into Vercel Blob** after the Round-1 per-request design failed in production.
@@ -45,12 +61,19 @@ Store: Vercel Blob **realtylt-mls** (store_ODYPytsRSdNGVvlO, public, iad1), link
      below): ≤25 sequential pages/run, 1.1s gap = strictly < 2 req/sec, time-boxed 130s.
      **The ONLY place api.mlsgrid.com is ever called.**
   2. Incremental photo replication to Blob `mls/photos/{listingId}/{idx}.jpg`: budget-
-     bounded (default 150/run, `?photoBudget=N` override, env `MLS_PHOTO_BUDGET`), paced
-     250ms, time-boxed 240s, **photo 0 of every listing first** (cards get covered before
-     galleries deepen), stops cleanly on the media CDN's per-account 429 and resumes next
-     run. Budget spent once per photo EVER (MLS Grid's intended replication model).
-     Downloads are planned from THIS run's freshly-scanned rows only (their ~1h-signed
-     URLs are live); rows re-enter the plan each time a pass re-scans them. The published
+     bounded (default **1000/run** since Round 5, clamp 2000; `?photoBudget=N` override,
+     env `MLS_PHOTO_BUDGET`), downloaded by **3 paced workers** (150ms per-worker gap ≈
+     4-5 req/s aggregate — the media CDN's limit is a per-window request BUDGET, not the
+     data API's 2 req/s), time-boxed 240s, **photo 0 of every listing first** (cards get
+     covered before galleries deepen), first 429 stops ALL workers cleanly and resumes
+     next run. Budget spent once per photo EVER (MLS Grid's intended replication model).
+     **Visible-first ordering (Round 5)**: a 2-page `replicateNewest()` head refetch
+     ($orderby=ModificationTimestamp desc — gapped 1.1s incl. BEFORE its first request so
+     the seam with the pass slice stays < 2 req/s) puts the listings users actually see
+     first at the FRONT of the plan (Featured/own-office rows, then newest-listed —
+     the home rails + /search default-sort page 1), then this run's freshly-scanned
+     slice newest-first (only fresh rows carry live ~1h-signed URLs; rows re-enter the
+     plan each time a pass re-scans them; `mergeListings` dedupes by id). The published
      photo set per listing is re-derived every run from the Blob cache ground truth
      (`photosByListing`), so accumulated listings keep their cached photos.
   3. Publishes `mls/listings.json` `{syncedAt, listings[]}` — photos are permanent public
