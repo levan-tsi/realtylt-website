@@ -77,6 +77,30 @@ template, opens whichever is requested, no pre-built pages, no stored pics). Onc
 recovered, confirm real photos render on-view (a couple listings) — do not re-exhaust it. Keep everything
 private/noindex + secure. Report evidence; main verifies on the live URL between cycles.
 
+### Phase 1B — AI recruiter page: MOBILE-first polish + connect to CRM (Opus 4.8, ~700k/cycle)
+The AI page (`C:\Users\Levan\realtylt-ai-page`, branch `windows-main`, CLI-deploy only to
+realtylt-ai-page.vercel.app; the marketing `/ai` proxies it) is largely built but needs real polish —
+**mobile/phone is the priority: most people will use it on their phone.** Read the ai-page repo's own docs
+FIRST (`DESIGN.md`, `AGENT_BRIEF`/`REFERENCE_3D_UI.md`/`IMPROVEMENTS.md` and its render/verify harness) and
+the owner's aipage-archive memories — there is a LOT of hard-won 3D work; do NOT break the camera rig or the
+galaxy→brain journey.
+- **Phone experience must be perfect:** every scroll step, the galaxy, the brain, the "become the light"/
+  services reveal, and all touch interactions must be smooth (60fps on a real mobile GPU), notch/safe-area
+  correct (viewport-fit), portrait-first, no jank, no overflow, no broken taps. Test on REAL phone viewports
+  (390 + mobile emulation, touch, portrait) using Playwright + the repo's render/verify harness, and iterate.
+- **Fix the brain framing (owner-reported):** when the services/neural view is shown, the brain is not fully
+  visible and doesn't clearly read AS a brain — **zoom the camera out a bit so the whole brain shape is
+  recognizable**, especially on phone. Verify it reads as a brain at both desktop and mobile framings.
+- **Connect it to the CRM/everything:** the "Work with me" recruit CTA + the live chat/assistant should feed
+  submissions into the CRM as a lead/recruit (same pipeline as the website leads — Supabase `leads` /
+  the n8n flow), so AI-page interest lands in the CRM. Wire and verify it end-to-end (safe test).
+- **Research-then-apply:** if you don't know how to do proper mobile WebGL/Three.js responsive polish
+  (touch/orbit controls, devicePixelRatio + performance scaling, responsive camera framing, scroll-driven
+  animation on mobile), RESEARCH the correct techniques first, learn them, THEN apply — do not guess.
+- Deploy via CLI (`vercel deploy --prod`, it's NOT git-connected — a stray Mac harness file needs the
+  existing `.vercelignore`); verify the polished version renders at realtylt-ai-page.vercel.app AND via the
+  marketing `/ai` proxy under the strict CSP (0 violations). Append what you learn to `AGENT_LEARNINGS.md`.
+
 ### Phase 2 — CRM: Brivity-parity + operational LOOP (Opus 4.8, ~700k/cycle, ISOLATED)
 Spawn a looping CRM agent that: uses **Chrome (read-only) to study live Brivity** and **Playwright +
 the demo login to test our CRM preview**, side-by-side; **brainstorms the highest-value gaps to make it
@@ -107,20 +131,20 @@ Also flag/fix: the loop machine's stale `E2E_TEST_PASSWORD` makes its phase gate
 provider is currently a fixture; CMA/market comps run on MLS fixtures (use the real MLS key). Loop until the
 CRM is genuinely Brivity-accurate + operational; main verifies each cycle vs Brivity.
 
-### Phase 3 — Combined website+CRM launch loop (Opus 4.8, until launch-ready)
-Once Phases 1–2 have converged, run a combined agent that works across BOTH the website and CRM: test
-that everything works end-to-end, brainstorm what else needs improving, improve, re-test — looping until
-the whole product suite is genuinely ready to launch. Same rules: isolated CRM clone, on-demand IDX,
+### Phase 3 — Combined launch loop across website + AI page + CRM (Opus 4.8, until launch-ready)
+Once Phases 1–1B–2 have converged, run a combined agent that works across ALL THREE properties (website,
+AI page, CRM) and their connections: test that everything works end-to-end (incl. mobile), brainstorm what
+else needs improving, improve, re-test — looping until the whole product suite is genuinely ready to launch. Same rules: isolated CRM clone, on-demand IDX,
 private/noindex, never re-exhaust the media budget, verify with Playwright + Zillow/Brivity references,
 never commit secrets.
 
 ### Phase 4 — Watch: keep it running smooth & correct (Opus 4.8, ongoing)
 Once the products are built and launch-ready, DON'T stop — run an ongoing **watcher/health-monitor** that
-keeps checking everything works smoothly and correctly: periodically drive the live website + CRM with
-Playwright, hit the key endpoints, and assert real behavior — IDX pools live data (spot-check vs Zillow),
-photos load on-view, the map/search/lead-forms/calculator work, the CRM routes + login + automations run,
-Twilio/Gmail sends succeed (safe test), 0 console/CSP errors, no regressions, no broken tiles, no stale
-data. On any breakage: diagnose, fix (or isolate + report if owner-gated), re-verify. Watch until the owner
+keeps checking everything works smoothly and correctly: periodically drive the live website + AI page +
+CRM with Playwright (desktop AND phone viewports), hit the key endpoints, and assert real behavior — IDX
+pools live data (spot-check vs Zillow), photos load on-view, the map/search/lead-forms/calculator work, the
+AI-page journey runs smooth on mobile, the CRM routes + login + automations run, Twilio/Gmail sends succeed
+(safe test), 0 console/CSP errors, no regressions, no broken tiles, no stale data. On any breakage: diagnose, fix (or isolate + report if owner-gated), re-verify. Watch until the owner
 says stop. This is the "make sure everything works smooth and right" guarantee after the build converges.
 
 ## Memory, self-improvement & accumulated experience (carry it forward)
