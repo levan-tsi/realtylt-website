@@ -144,3 +144,22 @@ design-excellence — never replaces them or any skill.
   "Searching…" spinner; top_areas blank) — the deployed rebuild is usually MORE complete. Residual design gap
   is Brivity's product-mockup screenshots (financing phone/laptop, selling laptops) which we intentionally do
   not clone, plus live's embedded Google-Calendar booking on /connect (we use "Call to book" CTAs). ~93–95%.
+
+## 2026-07-12 — Orchestrator (cycle 1 cross-property): chat-on-proxy unblock + coordination
+- **/ai proxy live chat needed a TWO-LAYER fix:** (1) website CSP `connect-src` had to include
+  `https://n8n.srv1017745.hstgr.cloud` (commit a059648); (2) the n8n "RealtyLT Website Chatbot"
+  webhook's CORS lives in TWO places — the Webhook node `options.allowedOrigins` (governs preflight)
+  AND the Respond node's ACAO origin-echo expression (governs the final response) — and the workflow
+  must be re-PUBLISHED for either to take effect. Verified end-to-end from the proxy origin: real AI
+  reply, 0 CSP violations.
+- **Chat payload shapes:** the widget POSTs `{sessionId, message}` to /webhook/realtylt-chat; the RAG
+  demo POSTs `{question}` to /webhook/rag-demo. A wrong payload makes the workflow bail BEFORE the
+  Respond node → empty 200 carrying the Webhook node's static headers (looks like a CORS bug, isn't).
+- **STILL OPEN:** the "RAG Demo" n8n workflow (oko57sV2rGelSE86) allows only the standalone ai-page
+  origin — the RAG demo is dead on the /ai proxy AND will be dead on realtylt.com at launch. It is not
+  MCP-manageable until the owner enables "Available in MCP" in that workflow's settings (or edits
+  Allowed Origins directly in the n8n UI).
+- **One repo = one writer.** This cycle an interactive session committed to main (`git add -A`) while
+  the website agent worked the same tree and swept its in-progress files into an unrelated commit.
+  Reconciled via rebase, but: before starting work, check `git log -3 --format='%ci %s'` for
+  minutes-old commits by someone else; if found, coordinate before touching the tree.
