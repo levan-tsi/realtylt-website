@@ -163,3 +163,17 @@ design-excellence — never replaces them or any skill.
   the website agent worked the same tree and swept its in-progress files into an unrelated commit.
   Reconciled via rebase, but: before starting work, check `git log -3 --format='%ci %s'` for
   minutes-old commits by someone else; if found, coordinate before touching the tree.
+
+## 2026-07-12 — WATCHDOG cycle 1: gate honesty (a "green" suite that never RAN is a FAIL, not a pass)
+- **Exit-0 ≠ verified. A gate only counts if its assertions actually EXECUTED.** Cycle 1 exposed the
+  trap live: the loop machine's stale `E2E_TEST_PASSWORD` makes Playwright `globalSetup` THROW, so
+  `npm run e2e` runs zero specs — yet `npm run test` (unit) stays green and masks it, so a cycle could
+  report "all gates green" while e2e never ran a single case. LOOP_PROMPT's "keep npm test + next build
+  green" is exactly the hole: green can mean "the suite silently didn't run."
+- **Rule, every cycle:** before citing a suite as passing, confirm it EXECUTED — a non-zero, EXPECTED
+  test/spec count in the output. A suite that skipped for any reason (missing/stale secret, throwing
+  `globalSetup`, an empty test filter, `0 passed`) is UNVERIFIED, not passing. Never let one gate's
+  green stand in for a SEPARATE gate that can no-op — name each gate's real executed count
+  (unit N/N, e2e N/N, build ok). If a required gate can't run (e.g. stale secret), say so plainly and
+  record it under OWNER ACTION NEEDED; do NOT report the property "verified" on the strength of the
+  gates that did run.
