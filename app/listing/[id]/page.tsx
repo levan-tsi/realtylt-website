@@ -10,6 +10,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { getIdxClient, isFixtureMode, isSampleData } from "@/lib/idx";
+import { getProxiedPhotoPaths } from "@/lib/idx/media";
 import { COUNTIES, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 
@@ -37,6 +38,13 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
   const { id } = await params;
   const l = await getListing(id);
   if (!l) notFound();
+  // Snapshot listings carry only the primary /api/media proxy path — resolve the
+  // FULL on-demand gallery (ONE short-TTL-cached MLS data lookup per detail view;
+  // photos themselves stream through the CDN-cached proxy). Fixture/local listings
+  // keep their own photo arrays.
+  const photos = l.photos[0]?.startsWith("/api/media/")
+    ? await getProxiedPhotoPaths(l.id)
+    : l.photos;
   const county = COUNTIES.find((c) => c.slug === l.county);
 
   const jsonLd = {
@@ -44,7 +52,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
     "@type": "RealEstateListing",
     name: `${l.address}, ${l.city}, NY ${l.zip}`,
     url: `${SITE.url}/listing/${l.id}`,
-    image: l.photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)),
+    image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)),
     description: l.description,
     datePosted: l.listedAt,
     about: {
@@ -80,22 +88,22 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             of leaving a black void beside the placeholder. */}
         <div
           className={`mx-auto grid max-w-7xl gap-1.5 px-0 lg:px-8 lg:py-6 ${
-            l.photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
+            photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
           }`}
         >
           <div
             className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
-              l.photos.length > 1 ? "aspect-[3/2]" : "aspect-[3/2] md:aspect-[21/9]"
+              photos.length > 1 ? "aspect-[3/2]" : "aspect-[3/2] md:aspect-[21/9]"
             }`}
           >
-            {l.photos.length > 0 ? (
+            {photos.length > 0 ? (
               <Image
-                src={l.photos[0]}
+                src={photos[0]}
                 alt={`${l.address}, ${l.city} — main photo`}
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 60vw"
-                unoptimized={isLiveMlsPhoto(l.photos[0])}
+                unoptimized={isLiveMlsPhoto(photos[0])}
                 className="object-cover"
               />
             ) : (
@@ -108,9 +116,9 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
               </span>
             )}
           </div>
-          {l.photos.length > 1 && (
+          {photos.length > 1 && (
             <div className="hidden grid-rows-3 gap-1.5 md:grid">
-              {l.photos.slice(1, 4).map((p, i) => (
+              {photos.slice(1, 4).map((p, i) => (
                 <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
                   <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
                 </div>
@@ -118,6 +126,24 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             </div>
           )}
         </div>
+        {/* Full gallery — every remaining photo, lazy-loaded through the same proxy
+            (off-screen tiles don't fetch until scrolled; each is CDN-cached). */}
+        {photos.length > 4 && (
+          <div className="mx-auto grid max-w-7xl grid-cols-2 gap-1.5 px-0 pb-1.5 md:grid-cols-3 lg:px-8 lg:pb-6">
+            {photos.slice(4).map((p, i) => (
+              <div key={p + i} className="photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px]">
+                <Image
+                  src={p}
+                  alt={`${l.address} — photo ${i + 5}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  unoptimized={isLiveMlsPhoto(p)}
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ── Facts + contact */}

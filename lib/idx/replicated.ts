@@ -25,7 +25,12 @@ export class ReplicatedIdxClient implements IdxClient {
   constructor() {
     const snap = getCommittedSnapshot();
     if (snap) {
-      this.listings = snap.listings;
+      // The snapshot ships photo-free (no signed URLs in the repo). Every listing gets
+      // its ON-DEMAND primary photo via the CDN-cached /api/media proxy — fetched from
+      // MLS only when the listing is actually viewed, never stored (lib/idx/media).
+      this.listings = snap.listings.map((l) =>
+        l.photos.length ? l : { ...l, photos: [`/api/media/${l.id}/0`] },
+      );
       this.syncedAt = snap.syncedAt;
       this.fixtureFallback = false;
     } else {
