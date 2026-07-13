@@ -1,0 +1,472 @@
+<title>RealtyLT — System Architecture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#f5f8fc; --bg-2:#ffffff; --panel:#ffffff; --ink:#14212f; --ink-soft:#43566a;
+  --line:#d7e0ec; --line-soft:#e8eef5; --navy:#102c54; --azure:#1f7fc0; --azure-bright:#28a8e0;
+  --live:#1f9d6b; --gate:#b5791f; --mono-ink:#274b74;
+  --shadow:0 1px 2px rgba(16,44,84,.06),0 8px 30px rgba(16,44,84,.07);
+  --maxw:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0a1622; --bg-2:#0d1c2c; --panel:#0f2032; --ink:#dce7f3; --ink-soft:#93a8bf;
+    --line:#1d3247; --line-soft:#16283a; --navy:#0b2038;
+    --azure:#3d9fd8; --azure-bright:#4bb8ec; --live:#3fbf8c; --gate:#e0b155; --mono-ink:#8fb6dd;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f5f8fc; --bg-2:#ffffff; --panel:#ffffff; --ink:#14212f; --ink-soft:#43566a;
+  --line:#d7e0ec; --line-soft:#e8eef5; --navy:#102c54; --azure:#1f7fc0; --azure-bright:#28a8e0;
+  --live:#1f9d6b; --gate:#b5791f; --mono-ink:#274b74;
+  --shadow:0 1px 2px rgba(16,44,84,.06),0 8px 30px rgba(16,44,84,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#0a1622; --bg-2:#0d1c2c; --panel:#0f2032; --ink:#dce7f3; --ink-soft:#93a8bf;
+  --line:#1d3247; --line-soft:#16283a; --navy:#0b2038; --azure:#3d9fd8; --azure-bright:#4bb8ec;
+  --live:#3fbf8c; --gate:#e0b155; --mono-ink:#8fb6dd;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px}
+.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,"Liberation Mono",monospace}
+h1,h2,h3{line-height:1.15;text-wrap:balance;font-weight:700;letter-spacing:-.015em;margin:0}
+a{color:var(--azure);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--azure-bright);outline-offset:3px;border-radius:3px}
+
+/* top nav */
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--azure-bright);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--azure-bright) 22%,transparent)}
+.nav-links{display:flex;gap:16px;margin-left:auto;overflow-x:auto}
+.nav-links a{font-size:12.5px;color:var(--ink-soft);letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;font-weight:600}
+.nav-links a:hover{color:var(--azure-bright);text-decoration:none}
+.themebtn{border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);border-radius:8px;
+  padding:6px 10px;cursor:pointer;font-size:12px;font-weight:600}
+.themebtn:hover{border-color:var(--azure)}
+@media (max-width:760px){.nav-links{display:none}}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+section{padding:56px 0;border-bottom:1px solid var(--line-soft)}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--azure);font-weight:700}
+.eyebrow.mono{letter-spacing:.12em}
+h2{font-size:clamp(24px,3.4vw,34px);margin:10px 0 6px}
+.lede{color:var(--ink-soft);font-size:17px;max-width:64ch}
+.sec-head{margin-bottom:30px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#constellation{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero-in{position:relative;max-width:var(--maxw);margin:0 auto;padding:78px 22px 66px}
+.hero h1{font-size:clamp(34px,6vw,62px);letter-spacing:-.03em}
+.hero .grad{background:linear-gradient(96deg,var(--azure-bright),#7cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.thesis{font-size:clamp(17px,2.2vw,21px);color:var(--ink-soft);max-width:60ch;margin:20px 0 0}
+.hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--azure);font-weight:700;margin-bottom:18px}
+.hero .kicker::before{content:"";width:26px;height:1px;background:var(--azure)}
+.statrow{display:flex;flex-wrap:wrap;gap:11px;margin-top:34px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 17px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;letter-spacing:-.02em}
+.stat span{font-size:12px;color:var(--ink-soft);letter-spacing:.02em}
+.stat .u{color:var(--azure-bright)}
+
+/* generic bits */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 20px;box-shadow:var(--shadow)}
+.card h3{font-size:17px;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.card p{margin:0;color:var(--ink-soft);font-size:14.5px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.03em;
+  padding:3px 9px;border-radius:999px;border:1px solid var(--line);text-transform:uppercase;font-family:ui-monospace,Consolas,monospace}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.live{color:var(--live);background:color-mix(in srgb,var(--live) 12%,transparent);border-color:color-mix(in srgb,var(--live) 30%,transparent)}
+.pill.gate{color:var(--gate);background:color-mix(in srgb,var(--gate) 12%,transparent);border-color:color-mix(in srgb,var(--gate) 30%,transparent)}
+.pill.azure{color:var(--azure);background:color-mix(in srgb,var(--azure) 12%,transparent);border-color:color-mix(in srgb,var(--azure) 30%,transparent)}
+
+.callout{border-left:3px solid var(--azure);background:color-mix(in srgb,var(--azure) 7%,var(--panel));
+  padding:15px 18px;border-radius:0 12px 12px 0;margin:20px 0;font-size:14.5px}
+.callout b{color:var(--ink)}
+.callout .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--azure);font-weight:700;display:block;margin-bottom:4px}
+
+figure{margin:26px 0}
+figure svg{width:100%;height:auto;display:block;background:var(--bg-2);border:1px solid var(--line);border-radius:14px}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:9px;text-align:center;font-family:ui-monospace,Consolas,monospace;letter-spacing:.02em}
+.svg-label{font-family:ui-monospace,Consolas,monospace;font-size:12px;fill:var(--ink)}
+.svg-sub{font-family:ui-monospace,Consolas,monospace;font-size:10px;fill:var(--ink-soft)}
+.svg-node{fill:var(--panel);stroke:var(--line);stroke-width:1.5}
+.svg-node.accent{stroke:var(--azure);stroke-width:2}
+.svg-edge{stroke:var(--azure);stroke-width:1.6;fill:none;opacity:.7}
+.svg-edge.dash{stroke-dasharray:5 4;opacity:.55}
+.svg-ehead{fill:var(--azure)}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;background:var(--bg-2)}
+td.mono,th.mono{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--mono-ink)}
+tr:last-child td{border-bottom:none}
+
+ul.clean{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:9px}
+ul.clean li{padding-left:22px;position:relative;color:var(--ink-soft);font-size:14.5px}
+ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:2px;
+  background:var(--azure);transform:rotate(45deg)}
+ul.clean li b{color:var(--ink)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+footer{padding:40px 22px 70px;text-align:center;color:var(--ink-soft);font-size:13px}
+.foot-status{max-width:var(--maxw);margin:0 auto 26px;display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+@media (max-width:820px){.foot-status{grid-template-columns:1fr}}
+.legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px;font-size:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+</style>
+
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="dot"></span> RealtyLT <span class="mono" style="color:var(--ink-soft);font-weight:600;font-size:13px">/ architecture</span></div>
+    <div class="nav-links">
+      <a href="#map">System</a><a href="#idx">IDX Site</a><a href="#crm">CRM</a><a href="#ai">AI Page</a>
+      <a href="#loop">Agent Loop</a><a href="#integrations">Integrations</a><a href="#security">Security</a>
+    </div>
+    <button class="themebtn" id="themebtn" aria-label="Toggle color theme">◐ Theme</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="constellation" aria-hidden="true"></canvas>
+  <div class="hero-in">
+    <div class="kicker">Real-estate technology suite · built &amp; shipped solo</div>
+    <h1>One operator, an <span class="grad">entire product stack</span>.</h1>
+    <p class="thesis">An IDX marketing site, a Brivity-parity CRM with a live automation engine, and a real-time 3D AI recruiter — three production apps wired to one MLS feed, one lead pipeline, and one brand, built with an AI agent loop and documented end to end.</p>
+    <div class="statrow">
+      <div class="stat"><b>3</b><span>production apps</span></div>
+      <div class="stat"><b class="u">5,362</b><span>live MLS listings</span></div>
+      <div class="stat"><b>46+</b><span>CRM pages</span></div>
+      <div class="stat"><b class="u">23</b><span>Supabase tables, RLS on</span></div>
+      <div class="stat"><b>5</b><span>integrated services</span></div>
+      <div class="stat"><b class="u">0</b><span>committed secrets</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- SYSTEM MAP -->
+<section id="map"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">01 — The whole system</div>
+    <h2>Three surfaces, one backbone</h2>
+    <p class="lede">Each app is a different stack chosen for its job, but they converge on a shared data-and-automation backbone. A lead captured anywhere — a listing page, the AI recruiter, the website chat — lands in the same CRM.</p>
+  </div>
+  <figure class="reveal">
+    <svg viewBox="0 0 960 470" role="img" aria-label="System map: three front-end apps over a shared backbone of Supabase, n8n, MLS Grid, Twilio and Gmail.">
+      <!-- front apps -->
+      <g>
+        <rect class="svg-node accent" x="40" y="40" width="250" height="86" rx="12"/>
+        <text class="svg-label" x="60" y="72" font-weight="700">Marketing / IDX site</text>
+        <text class="svg-sub" x="60" y="92">Next.js 15 · Vercel · realtylt.com</text>
+        <text class="svg-sub" x="60" y="108">search · map · listings · leads</text>
+
+        <rect class="svg-node accent" x="355" y="40" width="250" height="86" rx="12"/>
+        <text class="svg-label" x="375" y="72" font-weight="700">CRM</text>
+        <text class="svg-sub" x="375" y="92">Next.js · Supabase · app.realtylt.com</text>
+        <text class="svg-sub" x="375" y="108">people · plans · automations</text>
+
+        <rect class="svg-node accent" x="670" y="40" width="250" height="86" rx="12"/>
+        <text class="svg-label" x="690" y="72" font-weight="700">AI recruiter page</text>
+        <text class="svg-sub" x="690" y="92">Three.js · Vercel · /ai</text>
+        <text class="svg-sub" x="690" y="108">3D journey · chat · recruit</text>
+      </g>
+      <!-- edges to backbone -->
+      <path class="svg-edge" d="M165 126 L165 190"/><path class="svg-edge" d="M480 126 L480 190"/><path class="svg-edge" d="M795 126 L795 190"/>
+      <!-- backbone bus -->
+      <rect x="40" y="190" width="880" height="4" rx="2" fill="var(--azure)" opacity=".5"/>
+      <text class="svg-sub" x="40" y="182" fill="var(--azure)">shared backbone</text>
+      <!-- backbone services -->
+      <g>
+        <rect class="svg-node" x="40" y="230" width="160" height="76" rx="10"/>
+        <text class="svg-label" x="58" y="262">Supabase</text><text class="svg-sub" x="58" y="282">Postgres · Auth · Edge fns</text>
+        <path class="svg-edge" d="M120 194 L120 230"/>
+
+        <rect class="svg-node" x="230" y="230" width="160" height="76" rx="10"/>
+        <text class="svg-label" x="248" y="262">n8n</text><text class="svg-sub" x="248" y="282">automation runtime (VPS)</text>
+        <path class="svg-edge" d="M310 194 L310 230"/>
+
+        <rect class="svg-node" x="420" y="230" width="160" height="76" rx="10"/>
+        <text class="svg-label" x="438" y="262">MLS Grid</text><text class="svg-sub" x="438" y="282">OneKey feed · replication</text>
+        <path class="svg-edge" d="M500 194 L500 230"/>
+
+        <rect class="svg-node" x="610" y="230" width="150" height="76" rx="10"/>
+        <text class="svg-label" x="628" y="262">Twilio</text><text class="svg-sub" x="628" y="282">SMS · voice</text>
+        <path class="svg-edge" d="M685 194 L685 230"/>
+
+        <rect class="svg-node" x="775" y="230" width="145" height="76" rx="10"/>
+        <text class="svg-label" x="793" y="262">Gmail</text><text class="svg-sub" x="793" y="282">email send</text>
+        <path class="svg-edge" d="M847 194 L847 230"/>
+      </g>
+      <!-- data plane note -->
+      <g>
+        <rect x="40" y="356" width="880" height="80" rx="12" fill="var(--bg)" stroke="var(--line-soft)"/>
+        <text class="svg-label" x="60" y="386" fill="var(--azure)">Lead pipeline (one destination)</text>
+        <text class="svg-sub" x="60" y="408">IDX forms · AI-page recruit &amp; chat · website chat  →  /api/lead + n8n  →  Supabase edge fn  →  public.leads  →  CRM</text>
+        <text class="svg-sub" x="60" y="424">MLS Grid photos are fetched on demand per view and never stored. County/price/beds are filtered from a committed snapshot.</text>
+      </g>
+    </svg>
+    <figcaption>Front-ends differ by stack; the backbone and the lead destination are shared.</figcaption>
+  </figure>
+
+  <div class="grid g3" style="margin-top:24px">
+    <div class="card reveal"><h3><span class="pill live">live</span> IDX site</h3><p>251→<b>5,362</b> real OneKey listings across 6 counties, on-demand photos, Zillow-style map, mortgage calculator, lead forms. Private/noindex until go-live.</p></div>
+    <div class="card reveal"><h3><span class="pill live">built</span> CRM</h3><p>Brivity-shaped CRM: people, transactions, reporting, CMA, and a working <b>trigger→condition→action</b> automation engine that sends real SMS &amp; email.</p></div>
+    <div class="card reveal"><h3><span class="pill live">live</span> AI recruiter</h3><p>A scroll-driven Three.js journey (galaxy → neural brain → services) with a live Claude-powered chat and a recruit form that feeds the same CRM.</p></div>
+  </div>
+</div></section>
+
+<!-- IDX -->
+<section id="idx"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">02 — The IDX website</div>
+    <h2>Real MLS data without a search API</h2>
+    <p class="lede">MLS Grid is a <b>replication</b> feed, not a search API — you may only filter on a handful of system fields, never on county, price, or beds. That single constraint shaped the whole data design.</p>
+  </div>
+
+  <div class="callout reveal">
+    <span class="lbl">The constraint that drove the design</span>
+    MLS Grid v2 <code class="mono">$filter</code> is limited to <span class="mono">ListingId</span>, <span class="mono">StandardStatus</span>, <span class="mono">ModificationTimestamp</span>, <span class="mono">PropertyType</span>, <span class="mono">OriginatingSystemName</span>, <span class="mono">MlgCanView</span>. You <b>cannot</b> ask it for "3-bed homes in Dutchess under $600k." So listing <b>data</b> is replicated into a local snapshot and filtered in-app; listing <b>photos</b> are fetched live, per view, and never stored.
+  </div>
+
+  <figure class="reveal">
+    <svg viewBox="0 0 960 430" role="img" aria-label="IDX data flow: a daily replication builds a committed snapshot served to search; photos are proxied on demand from MLS Grid.">
+      <!-- data path -->
+      <text class="svg-sub" x="40" y="34" fill="var(--azure)">DATA PATH — out of band, replication</text>
+      <rect class="svg-node" x="40" y="46" width="150" height="66" rx="10"/><text class="svg-label" x="58" y="76">MLS Grid</text><text class="svg-sub" x="58" y="94">OneKey · 2 req/s</text>
+      <path class="svg-edge" d="M190 79 L250 79"/><polygon class="svg-ehead" points="250,74 262,79 250,84"/>
+      <rect class="svg-node" x="262" y="46" width="170" height="66" rx="10"/><text class="svg-label" x="280" y="72">export-snapshot</text><text class="svg-sub" x="280" y="90">paced, budget-aware</text>
+      <path class="svg-edge" d="M432 79 L492 79"/><polygon class="svg-ehead" points="492,74 504,79 492,84"/>
+      <rect class="svg-node accent" x="504" y="46" width="180" height="66" rx="10"/><text class="svg-label" x="522" y="72">mls-snapshot.json</text><text class="svg-sub" x="522" y="90">5,362 rows · committed</text>
+      <path class="svg-edge" d="M684 79 L744 79"/><polygon class="svg-ehead" points="744,74 756,79 744,84"/>
+      <rect class="svg-node" x="756" y="46" width="164" height="66" rx="10"/><text class="svg-label" x="774" y="72">/api/idx/search</text><text class="svg-sub" x="774" y="90">filter in-memory</text>
+
+      <!-- request path -->
+      <text class="svg-sub" x="40" y="184" fill="var(--azure)">REQUEST PATH — a visitor opens a listing</text>
+      <rect class="svg-node" x="40" y="196" width="150" height="66" rx="10"/><text class="svg-label" x="58" y="226">Visitor</text><text class="svg-sub" x="58" y="244">views listing #</text>
+      <path class="svg-edge" d="M190 229 L250 229"/><polygon class="svg-ehead" points="250,224 262,229 250,234"/>
+      <rect class="svg-node accent" x="262" y="196" width="200" height="66" rx="10"/><text class="svg-label" x="280" y="222">/api/media/[id]/[idx]</text><text class="svg-sub" x="280" y="240">same-origin photo proxy</text>
+      <path class="svg-edge" d="M462 229 L522 229"/><polygon class="svg-ehead" points="522,224 534,229 522,234"/>
+      <rect class="svg-node" x="534" y="196" width="176" height="66" rx="10"/><text class="svg-label" x="552" y="222">Vercel CDN</text><text class="svg-sub" x="552" y="240">cache ~50 min</text>
+      <path class="svg-edge dash" d="M710 229 L770 229"/><polygon class="svg-ehead" points="770,224 782,229 770,234"/>
+      <rect class="svg-node" x="782" y="196" width="138" height="66" rx="10"/><text class="svg-label" x="800" y="222">MLS media</text><text class="svg-sub" x="800" y="240">~1h signed URL</text>
+
+      <!-- guards -->
+      <rect x="40" y="300" width="880" height="96" rx="12" fill="var(--bg)" stroke="var(--line-soft)"/>
+      <text class="svg-label" x="60" y="328" fill="var(--azure)">Budget discipline on the photo proxy</text>
+      <text class="svg-sub" x="60" y="350">• one MLS call resolves ALL of a listing's photos · 20-min lookup cache · 90-sec negative cache after any error</text>
+      <text class="svg-sub" x="60" y="368">• a paced FIFO queue keeps calls ≥600 ms apart (under the 2 req/s cap) and fails fast to a branded placeholder</text>
+      <text class="svg-sub" x="60" y="386">• the account media budget is a trailing-window 429 → the proxy never hammers it; a missing photo is never a broken tile</text>
+    </svg>
+    <figcaption>Data is replicated out-of-band; photos are proxied on demand and CDN-cached under the signed-URL window.</figcaption>
+  </figure>
+
+  <div class="grid g3" style="margin-top:8px">
+    <div class="card reveal"><h3>Search &amp; filters</h3><p>County, price, beds, baths, sqft, property type, text, and sort — all computed in-memory over the snapshot, so a query never touches MLS on the request path.</p></div>
+    <div class="card reveal"><h3>Zillow-style map</h3><p>Leaflet with price pins. The feed carries no lat/long, so pins are zip-centroid approximations with an honest "locations approximate" badge; the payload is coordinate-trimmed.</p></div>
+    <div class="card reveal"><h3>On-demand listing pages</h3><p>One dynamic <span class="mono">/listing/[id]</span> template resolves any listing on request — no pre-built pages, no stored photos, compliant MLS attribution on every surface.</p></div>
+  </div>
+</div></section>
+
+<!-- CRM -->
+<section id="crm"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">03 — The CRM</div>
+    <h2>Brivity parity, plus an engine that actually runs</h2>
+    <p class="lede">A dark-theme CRM shaped after Brivity — people, transactions, reporting, CMA — on Supabase Postgres with row-level security on every table. The headline is the <b>Automations engine</b>: not a plan builder, a plan <i>runner</i>.</p>
+  </div>
+
+  <figure class="reveal">
+    <svg viewBox="0 0 960 400" role="img" aria-label="Automation engine: triggers enroll contacts, a scheduler ticks steps, and a dispatcher sends via n8n to Twilio and Gmail with an opt-out gate.">
+      <rect class="svg-node accent" x="40" y="150" width="150" height="86" rx="12"/><text class="svg-label" x="58" y="184">Trigger</text><text class="svg-sub" x="58" y="204">new lead · stage</text><text class="svg-sub" x="58" y="220">change · tag</text>
+      <path class="svg-edge" d="M190 193 L250 193"/><polygon class="svg-ehead" points="250,188 262,193 250,198"/>
+      <rect class="svg-node" x="262" y="150" width="160" height="86" rx="12"/><text class="svg-label" x="280" y="184">Enroll + schedule</text><text class="svg-sub" x="280" y="204">walk plan steps</text><text class="svg-sub" x="280" y="220">next_run_at, delays</text>
+      <path class="svg-edge" d="M422 193 L482 193"/><polygon class="svg-ehead" points="482,188 494,193 482,198"/>
+      <rect class="svg-node" x="494" y="150" width="150" height="86" rx="12"/><text class="svg-label" x="512" y="180">Tick (cron)</text><text class="svg-sub" x="512" y="200">condition branch</text><text class="svg-sub" x="512" y="216">test-mode default ON</text>
+      <path class="svg-edge" d="M644 193 L704 193"/><polygon class="svg-ehead" points="704,188 716,193 704,198"/>
+      <rect class="svg-node accent" x="716" y="150" width="204" height="86" rx="12"/><text class="svg-label" x="734" y="180">Dispatch → n8n</text><text class="svg-sub" x="734" y="200">Twilio SMS · Gmail email</text><text class="svg-sub" x="734" y="216">opt-out gate + STOP footer</text>
+
+      <!-- actions -->
+      <text class="svg-sub" x="262" y="285" fill="var(--azure)">STEP ACTIONS</text>
+      <text class="svg-sub" x="262" y="308">send SMS · send email · create/assign task · update stage · wait N days · branch on condition</text>
+      <!-- log -->
+      <rect x="40" y="330" width="880" height="46" rx="10" fill="var(--bg)" stroke="var(--line-soft)"/>
+      <text class="svg-sub" x="60" y="358">every step writes an <tspan font-family="ui-monospace,Consolas,monospace" fill="var(--azure)">automation_runs</tspan> row — enrolled / sent / test / skipped / failed — so a run has an auditable history.</text>
+    </svg>
+    <figcaption>Trigger → enroll → tick → dispatch. Test Mode is the default; real sends require explicit env + the owner turning it on.</figcaption>
+  </figure>
+
+  <div class="grid g2">
+    <div class="card reveal"><h3>Data model</h3><p>23 tables — organizations, contacts, tasks, listings, transactions, activities, auto-plans &amp; steps, lead ponds, CMA reports — with <b>row-level security enabled on every one</b>. Access is org-scoped through Supabase SSR sessions.</p></div>
+    <div class="card reveal"><h3>Compliance built in</h3><p>Outbound marketing SMS carries a "Reply STOP to opt out" footer; a suppression list is checked before every send; an in-CRM opt-out control writes to it. Inbound-STOP webhook + A2P registration are the owner's go-live steps.</p></div>
+    <div class="card reveal"><h3>Why route sends through n8n</h3><p>n8n already holds the Twilio and Gmail credentials and is a real automation backend. The CRM calls one dispatch webhook rather than embedding provider SDKs — fewer secrets in the app, one place to observe every send.</p></div>
+    <div class="card reveal"><h3>Safe by default</h3><p>With no dispatch env configured the engine logs test runs and delivers nothing. Turning on real sends is a deliberate, single, owner-gated switch — not an accident waiting to happen.</p></div>
+  </div>
+</div></section>
+
+<!-- AI PAGE -->
+<section id="ai"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">04 — The AI recruiter page</div>
+    <h2>A 3D journey that converts on a phone</h2>
+    <p class="lede">A scroll-driven WebGL story — a galaxy that flies in and reshapes into a neural brain, then opens into the services hub — with a live assistant and a recruit form. Most visitors are on phones, so mobile is the priority, not an afterthought.</p>
+  </div>
+  <figure class="reveal">
+    <svg viewBox="0 0 960 210" role="img" aria-label="The scroll journey: galaxy, fly-in, brain, services hub, with chat and recruit feeding the CRM.">
+      <line x1="60" y1="70" x2="900" y2="70" stroke="var(--azure)" stroke-width="2" opacity=".5"/>
+      <g font-family="ui-monospace,Consolas,monospace">
+        <circle cx="120" cy="70" r="9" class="svg-node accent"/><text class="svg-sub" x="90" y="104">galaxy</text><text class="svg-sub" x="96" y="120">p≈0.08</text>
+        <circle cx="360" cy="70" r="9" class="svg-node accent"/><text class="svg-sub" x="330" y="104">fly-in</text><text class="svg-sub" x="336" y="120">p≈0.45</text>
+        <circle cx="600" cy="70" r="9" class="svg-node accent"/><text class="svg-sub" x="576" y="104">brain</text><text class="svg-sub" x="576" y="120">p≈0.72</text>
+        <circle cx="840" cy="70" r="9" class="svg-node accent"/><text class="svg-sub" x="806" y="104">services hub</text><text class="svg-sub" x="828" y="120">p≈1.0</text>
+      </g>
+      <rect x="60" y="150" width="840" height="42" rx="9" fill="var(--bg)" stroke="var(--line-soft)"/>
+      <text class="svg-sub" x="80" y="176">Live chat (Claude Haiku via n8n) and the "Work with me" recruit form both post to the same <tspan font-family="ui-monospace,Consolas,monospace" fill="var(--azure)">/api/lead</tspan> pipeline as the website.</text>
+    </svg>
+    <figcaption>Deep-linkable stages (#p=), 60fps quality governor, and a boot fallback for older phones.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="card reveal"><h3>Mobile-first WebGL</h3><p>Device-pixel-ratio scaling, a frame-rate governor, portrait camera framing so the brain reads as a brain, safe-area/notch handling, and 16px form inputs so iOS never zoom-jumps the canvas.</p></div>
+    <div class="card reveal"><h3>Boot resilience</h3><p>A watchdog shows a static "here's the offer + Work with me" fallback if the 3D app can't start (an old browser, a failed asset, a lost GL context) — the conversion path survives even when WebGL doesn't.</p></div>
+    <div class="card reveal"><h3>Served under one domain</h3><p>Its own Vercel project, CLI-deployed, proxied at <span class="mono">/ai</span> so it inherits the marketing site's strict CSP and noindex — one brand, one security posture.</p></div>
+  </div>
+</div></section>
+
+<!-- LOOP -->
+<section id="loop"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">05 — The autonomous agent loop</div>
+    <h2>How a solo operator ships three apps</h2>
+    <p class="lede">Much of this was built by a supervised agent loop: an orchestrator scopes work, parallel sub-agents execute per app, every claim is verified against the live system before it's accepted, and a watchdog guards the process itself.</p>
+  </div>
+  <figure class="reveal">
+    <svg viewBox="0 0 960 300" role="img" aria-label="Agent loop: orchestrator dispatches parallel sub-agents per property; results are verified against the live system, committed, and watched.">
+      <rect class="svg-node accent" x="390" y="30" width="180" height="60" rx="12"/><text class="svg-label" x="410" y="58">Orchestrator</text><text class="svg-sub" x="410" y="76">scope · verify · commit</text>
+      <path class="svg-edge" d="M430 90 L250 140"/><path class="svg-edge" d="M480 90 L480 140"/><path class="svg-edge" d="M530 90 L710 140"/>
+      <rect class="svg-node" x="150" y="140" width="200" height="60" rx="10"/><text class="svg-label" x="168" y="168">Website agent</text><text class="svg-sub" x="168" y="186">isolated · own repo</text>
+      <rect class="svg-node" x="380" y="140" width="200" height="60" rx="10"/><text class="svg-label" x="398" y="168">AI-page agent</text><text class="svg-sub" x="398" y="186">isolated · own repo</text>
+      <rect class="svg-node" x="610" y="140" width="200" height="60" rx="10"/><text class="svg-label" x="628" y="168">CRM agent</text><text class="svg-sub" x="628" y="186">isolated clone only</text>
+      <path class="svg-edge" d="M250 200 L470 250"/><path class="svg-edge" d="M480 200 L480 250"/><path class="svg-edge" d="M710 200 L490 250"/>
+      <rect class="svg-node accent" x="370" y="250" width="220" height="44" rx="10"/><text class="svg-label" x="390" y="278">Verify on live → commit</text>
+      <!-- watchdog -->
+      <rect class="svg-node" x="760" y="30" width="160" height="60" rx="10"/><text class="svg-label" x="778" y="56">Watchdog</text><text class="svg-sub" x="778" y="74">safety brake</text>
+      <path class="svg-edge dash" d="M760 60 L570 60"/>
+    </svg>
+    <figcaption>One writer per repo; the CRM is only ever edited in an isolated clone; a "green" suite that never ran counts as a failure.</figcaption>
+  </figure>
+  <ul class="clean reveal">
+    <li><b>Split by property, not one mega-agent.</b> Different stacks run in parallel and stay deep instead of one context going shallow.</li>
+    <li><b>Verify independently.</b> A sub-agent's "done" is never trusted — the orchestrator re-checks it against the deployed URL, the database, or a live probe.</li>
+    <li><b>Safety by construction.</b> One writer per repo, the live CRM loop untouched, a STOP file and rogue-commit triggers, and secrets never committed (verified across full git history).</li>
+  </ul>
+</div></section>
+
+<!-- INTEGRATIONS -->
+<section id="integrations"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">06 — Integrations</div>
+    <h2>Five services, each with one job</h2>
+  </div>
+  <div class="tbl-scroll reveal">
+    <table>
+      <thead><tr><th>Service</th><th>Role</th><th class="mono">Auth / boundary</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><b>Supabase</b></td><td>Postgres data, Auth sessions, and the <span class="mono">website-lead</span> edge function that ingests every lead.</td><td class="mono">RLS on all tables; service-role stays server-side; anon key is public by design.</td><td><span class="pill live">live</span></td></tr>
+        <tr><td><b>n8n</b></td><td>Automation runtime on a VPS — website chat, MLS sub-workflows, and the CRM dispatch (Twilio + Gmail).</td><td class="mono">Webhook + shared secret; CORS allow-listed per origin.</td><td><span class="pill live">live</span></td></tr>
+        <tr><td><b>MLS Grid</b></td><td>OneKey listing feed — replicated to a snapshot for search; photos proxied on demand.</td><td class="mono">Bearer key, server-only; 2 req/s cap; never on the request path.</td><td><span class="pill live">live</span></td></tr>
+        <tr><td><b>Twilio</b></td><td>Outbound SMS (and voice, planned) for CRM automations.</td><td class="mono">Creds held in n8n; opt-out gate + STOP footer.</td><td><span class="pill gate">owner-gated go-live</span></td></tr>
+        <tr><td><b>Gmail</b></td><td>Transactional / automation email send.</td><td class="mono">OAuth via n8n Gmail node.</td><td><span class="pill gate">owner-gated go-live</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+
+<!-- SECURITY -->
+<section id="security"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow mono">07 — Security &amp; deployment</div>
+    <h2>Locked down before it's public</h2>
+    <p class="lede">The whole suite is private and non-indexed until launch, and the money paths are hardened by construction.</p>
+  </div>
+  <div class="grid g2">
+    <div class="card reveal"><h3>Headers &amp; CSP</h3><p>One unified Content-Security-Policy across the site and the proxied 3D app, plus HSTS-preload, nosniff, frame-DENY, Referrer-Policy and Permissions-Policy — verified 0 violations live.</p></div>
+    <div class="card reveal"><h3>The photo proxy can't be abused</h3><p>The listing id is regex-validated and only ever expands into MLS's own signed URLs — no attacker-controlled URL ever reaches a fetch. No SSRF surface.</p></div>
+    <div class="card reveal"><h3>Lead intake is defended</h3><p>Content-type enforced, body size-capped, a honeypot, and a per-IP rate limit that returns 429 — with Vercel WAF as the durable edge layer at launch.</p></div>
+    <div class="card reveal"><h3>Secrets &amp; data</h3><p>Zero secrets in any repo's git history (scanned). All keys live in Vercel/Supabase env. RLS on every CRM table. Automations default to a no-send test mode.</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card reveal"><h3>Website</h3><p><span class="mono">realtylt-website</span> · Vercel, git-connected · private/noindex via a single env flag.</p></div>
+    <div class="card reveal"><h3>AI page</h3><p><span class="mono">realtylt-ai-page</span> · Vercel, CLI-deploy only · proxied at <span class="mono">/ai</span>.</p></div>
+    <div class="card reveal"><h3>CRM</h3><p><span class="mono">realtylt-crm-web</span> · Vercel, git-connected · production promote is owner-gated.</p></div>
+  </div>
+</div></section>
+</main>
+
+<footer>
+  <div class="foot-status">
+    <div class="card"><h3><span class="pill live">shipped</span> Working today</h3><p style="text-align:left">Real IDX data + on-demand photos, the CRM &amp; automation engine, the AI journey with live chat, and one shared lead pipeline — all verified on the live systems.</p></div>
+    <div class="card"><h3><span class="pill gate">owner-gated</span> Go-live steps</h3><p style="text-align:left">Flip the site public, cut DNS, swap the MLS production key, turn on real automation sends (A2P + inbound-STOP), and pick the production database of record.</p></div>
+    <div class="card"><h3><span class="pill azure">next</span> Roadmap</h3><p style="text-align:left">Durable snapshot refresh, live CMA comps, voice/inbound calling, and email deliverability (SPF/DKIM) — all designed for, seams in place.</p></div>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--live)"></i> live / shipped</span>
+    <span><i style="background:var(--gate)"></i> owner-gated go-live</span>
+    <span><i style="background:var(--azure-bright)"></i> planned / roadmap</span>
+  </div>
+  <p style="margin-top:22px">RealtyLT system architecture · built &amp; documented by Levan Tsiklauri · <span class="mono">realtylt.com</span></p>
+</footer>
+
+<script>
+(function(){
+  // theme toggle
+  var root=document.documentElement, btn=document.getElementById('themebtn');
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+  // scroll reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  // ambient constellation (reduced-motion aware)
+  var cv=document.getElementById('constellation'); if(!cv) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ctx=cv.getContext('2d'), W,H,DPR=Math.min(devicePixelRatio||1,2), pts=[];
+  function css(v){return getComputedStyle(root).getPropertyValue(v).trim();}
+  function size(){var r=cv.parentElement.getBoundingClientRect();W=cv.width=r.width*DPR;H=cv.height=r.height*DPR;
+    var n=Math.min(60,Math.round(r.width/22)); pts=[]; for(var i=0;i<n;i++){pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.12*DPR,vy:(Math.random()-.5)*.12*DPR});}}
+  size(); addEventListener('resize',size);
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    var az=css('--azure-bright')||'#28a8e0';
+    for(var i=0;i<pts.length;i++){var p=pts[i];
+      if(!reduce){p.x+=p.vx;p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;}
+      for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);
+        if(d<120*DPR){ctx.globalAlpha=(1-d/(120*DPR))*.28;ctx.strokeStyle=az;ctx.lineWidth=DPR;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
+      ctx.globalAlpha=.9;ctx.fillStyle=az;ctx.beginPath();ctx.arc(p.x,p.y,1.5*DPR,0,7);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>

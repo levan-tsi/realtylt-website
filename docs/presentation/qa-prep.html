@@ -1,0 +1,158 @@
+<title>RealtyLT — Interview &amp; Client Q&amp;A</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#f5f8fc;--bg-2:#ffffff;--panel:#ffffff;--ink:#14212f;--ink-soft:#43566a;--line:#d7e0ec;--line-soft:#e8eef5;
+  --navy:#102c54;--azure:#1f7fc0;--azure-bright:#28a8e0;--live:#1f9d6b;--gate:#b5791f;
+  --shadow:0 1px 2px rgba(16,44,84,.06),0 8px 28px rgba(16,44,84,.07);--maxw:900px;}
+@media (prefers-color-scheme:dark){:root{--bg:#0a1622;--bg-2:#0d1c2c;--panel:#0f2032;--ink:#dce7f3;--ink-soft:#93a8bf;
+  --line:#1d3247;--line-soft:#16283a;--navy:#0b2038;--azure:#3d9fd8;--azure-bright:#4bb8ec;--live:#3fbf8c;--gate:#e0b155;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.38);}}
+:root[data-theme="light"]{--bg:#f5f8fc;--bg-2:#ffffff;--panel:#ffffff;--ink:#14212f;--ink-soft:#43566a;--line:#d7e0ec;--line-soft:#e8eef5;
+  --navy:#102c54;--azure:#1f7fc0;--azure-bright:#28a8e0;--live:#1f9d6b;--gate:#b5791f;--shadow:0 1px 2px rgba(16,44,84,.06),0 8px 28px rgba(16,44,84,.07);}
+:root[data-theme="dark"]{--bg:#0a1622;--bg-2:#0d1c2c;--panel:#0f2032;--ink:#dce7f3;--ink-soft:#93a8bf;--line:#1d3247;--line-soft:#16283a;
+  --navy:#0b2038;--azure:#3d9fd8;--azure-bright:#4bb8ec;--live:#3fbf8c;--gate:#e0b155;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.38);}
+*{box-sizing:border-box}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;line-height:1.62;-webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
+h1,h2{line-height:1.14;text-wrap:balance;font-weight:800;letter-spacing:-.02em;margin:0}
+a{color:var(--azure)}:focus-visible{outline:2px solid var(--azure-bright);outline-offset:3px;border-radius:3px}
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--azure-bright);box-shadow:0 0 0 4px color-mix(in srgb,var(--azure-bright) 22%,transparent)}
+.themebtn{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:600}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.hero{border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+.hero-in{max-width:var(--maxw);margin:0 auto;padding:64px 22px 44px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--azure);font-weight:800;margin-bottom:16px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--azure)}
+.hero h1{font-size:clamp(30px,5vw,50px);letter-spacing:-.03em}
+.hero p{color:var(--ink-soft);font-size:18px;max-width:60ch;margin:16px 0 0}
+.cat{padding:44px 0 8px}
+.cat-h{display:flex;align-items:baseline;gap:12px;margin:0 0 4px}
+.cat-h .n{font-family:ui-monospace,Consolas,monospace;color:var(--azure);font-weight:800;font-size:14px}
+.cat-h h2{font-size:22px}
+.cat-sub{color:var(--ink-soft);font-size:14px;margin:0 0 18px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:10px 0;box-shadow:var(--shadow);overflow:hidden}
+details[open]{border-color:color-mix(in srgb,var(--azure) 40%,var(--line))}
+summary{cursor:pointer;padding:16px 20px;font-weight:700;font-size:16px;list-style:none;display:flex;gap:12px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary .q{flex:0 0 auto;color:var(--azure);font-family:ui-monospace,Consolas,monospace;font-weight:800;font-size:14px;margin-top:1px}
+summary .chev{margin-left:auto;flex:0 0 auto;color:var(--ink-soft);transition:transform .2s ease;font-size:13px}
+details[open] summary .chev{transform:rotate(90deg)}
+.ans{padding:0 20px 18px 52px;color:var(--ink-soft);font-size:14.7px}
+.ans p{margin:0 0 10px}.ans p:last-child{margin-bottom:0}
+.ans b{color:var(--ink)}
+.ans .why{display:block;margin-top:10px;padding:11px 14px;border-left:3px solid var(--azure);background:color-mix(in srgb,var(--azure) 7%,var(--panel));border-radius:0 10px 10px 0;font-size:13.7px}
+.ans .why b{color:var(--azure)}
+.tagline{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gate);font-weight:700}
+footer{padding:40px 22px 64px;text-align:center;color:var(--ink-soft);font-size:13px;border-top:1px solid var(--line-soft);margin-top:30px}
+.legend{max-width:var(--maxw);margin:22px auto 0;color:var(--ink-soft);font-size:13px;text-align:center}
+</style>
+
+<nav class="nav"><div class="nav-in">
+  <div class="brand"><span class="dot"></span> RealtyLT <span class="mono" style="color:var(--ink-soft);font-weight:600;font-size:13px">/ Q&amp;A prep</span></div>
+  <button class="themebtn" id="themebtn">◐ Theme</button>
+</div></nav>
+
+<header class="hero"><div class="hero-in">
+  <div class="kicker">Interview &amp; client Q&amp;A · honest answers, grounded in the build</div>
+  <h1>The questions — and how to answer them well.</h1>
+  <p>Every answer is true to what was actually built, including the trade-offs and the honest gaps. The goal isn't to sound impressive; it's to be right and clear when someone digs in.</p>
+</div></header>
+
+<main class="wrap">
+
+<!-- TECHNICAL -->
+<section class="cat">
+  <div class="cat-h"><span class="n">A</span><h2>Technical</h2></div>
+  <p class="cat-sub">Stack, the MLS/IDX design, the automation engine, security, and the agent loop.</p>
+
+  <details><summary><span class="q">Q</span> What's the stack, end to end?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Three front-ends on <b>Next.js 15 (App Router), TypeScript, and Tailwind</b>, deployed on <b>Vercel</b>. Data and auth are <b>Supabase Postgres</b> with edge functions. Automation runs on <b>n8n</b> (self-hosted), which holds the <b>Twilio</b> (SMS) and <b>Gmail</b> (email) credentials. Listings come from the <b>MLS Grid</b> OneKey feed. The AI page is <b>Three.js/WebGL</b> with a <b>Claude</b>-powered chat.</p></div></details>
+
+  <details><summary><span class="q">Q</span> How do you show real MLS listings if the API can't search?<span class="chev">▸</span></summary>
+  <div class="ans"><p>MLS Grid is a <b>replication feed, not a search API</b> — you can only filter on a few system fields like ListingId and StandardStatus, never on county, price, or beds. So I <b>replicate the active listings into a committed snapshot</b> and do all the real filtering (county/price/beds/sort/text) <b>in-app, in memory</b>. A search query never hits MLS on the request path.</p>
+  <span class="why"><b>Why this, not that:</b> calling MLS per search would blow the rate limit and can't express the filters anyway. A local snapshot makes search instant and keeps the feed usage bounded and compliant.</span></div></details>
+
+  <details><summary><span class="q">Q</span> Why fetch photos on demand instead of storing them?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Photos are fetched <b>live, per view, from MLS</b> and streamed same-origin through a proxy that CDN-caches each image for ~50 minutes — under the ~1-hour signing window — so MLS is hit roughly once per photo per window regardless of traffic. Nothing is ever stored.</p>
+  <span class="why"><b>Why this, not that:</b> bulk-storing photos once paused the account's storage tier and broke the site. On-demand keeps storage at zero, respects the media budget, and is the owner's explicit rule. The proxy is also SSRF-safe — the listing id is validated and only ever expands into MLS's own signed URLs.</span></div></details>
+
+  <details><summary><span class="q">Q</span> How do you respect the MLS rate limit and media budget?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Data replication runs <b>out-of-band</b>, never in the request path. The photo proxy uses a <b>paced FIFO queue</b> (calls spaced under the 2 req/s cap), a <b>20-minute lookup cache</b>, and a <b>90-second negative cache</b> so an error can never turn into hammering. The media budget is a <b>trailing-window 429</b>, so every probe delays its own reset — the proxy fails fast to a branded placeholder instead of retrying.</p>
+  <span class="why"><b>The lesson behind it:</b> this design is scar tissue — the account was throttled twice by naive bulk work early on. The constraints are now designed around, not discovered in production.</span></div></details>
+
+  <details><summary><span class="q">Q</span> The automation engine — is it real, and how does a send actually happen?<span class="chev">▸</span></summary>
+  <div class="ans"><p>It's real. A <b>trigger</b> (new lead, stage change, tag) <b>enrolls</b> a contact and schedules the plan's steps. A <b>cron tick</b> walks due steps, evaluates conditions, and for a send step <b>dispatches to an n8n webhook</b> that calls Twilio or Gmail. Every step writes an <b>audit row</b> (enrolled/sent/test/skipped/failed).</p>
+  <span class="why"><b>Safe by default:</b> with no dispatch env configured, the engine logs <b>test</b> runs and delivers nothing. Turning on real sends is one deliberate, owner-gated switch — plus an opt-out gate and a "Reply STOP" footer on every SMS for TCPA compliance.</span></div></details>
+
+  <details><summary><span class="q">Q</span> Why route sends through n8n instead of calling Twilio/Gmail from the app?<span class="chev">▸</span></summary>
+  <div class="ans"><p>n8n <b>already holds the provider credentials</b> and is a real automation backend with retry and observability. The CRM calls <b>one dispatch webhook</b> rather than embedding provider SDKs and secrets in the app.</p>
+  <span class="why"><b>Why this, not that:</b> fewer secrets in the web app, one place to watch every outbound message, and a clean seam to add channels (voice, inbound replies) without redeploying the CRM. The trade-off — a shared webhook secret — is documented and hardened before go-live.</span></div></details>
+
+  <details><summary><span class="q">Q</span> How is the whole thing secured?<span class="chev">▸</span></summary>
+  <div class="ans"><p>A <b>unified Content-Security-Policy</b> and full security headers (HSTS-preload, nosniff, frame-DENY, Referrer- and Permissions-Policy) across the site and the proxied 3D app, verified with zero violations live. The photo proxy is <b>SSRF-safe by construction</b>. Lead intake enforces content-type, caps body size, uses a honeypot, and is <b>rate-limited</b>. The CRM has <b>row-level security on every table</b>. And there are <b>zero secrets in any repo's git history</b> — scanned across all of it.</p></div></details>
+
+  <details><summary><span class="q">Q</span> Describe the agent-loop architecture.<span class="chev">▸</span></summary>
+  <div class="ans"><p>An <b>orchestrator</b> scopes the work and dispatches <b>parallel sub-agents, one per app</b>, so different stacks progress at once without one context going shallow. Each sub-agent's "done" is <b>never trusted</b> — the orchestrator re-verifies it against the deployed URL, the database, or a live probe before accepting it. A <b>watchdog</b> guards the process with a stop switch and rogue-commit triggers.</p>
+  <span class="why"><b>The core discipline:</b> one writer per repo, the live CRM loop never touched (only isolated clones), and a "green" test suite that didn't actually run counts as a failure, not a pass.</span></div></details>
+</section>
+
+<!-- PRODUCT -->
+<section class="cat">
+  <div class="cat-h"><span class="n">B</span><h2>Product</h2></div>
+  <p class="cat-sub">Features, Brivity parity, and what each surface is for.</p>
+
+  <details><summary><span class="q">Q</span> How does the CRM compare to Brivity?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Page-level parity is essentially there: <b>people with a 3-column detail view, transactions, reporting, CMA, market reports, lead ponds</b>, and a composer for notes/email/text/calls. The differentiator is the <b>working automation engine</b>. The honest remaining gaps are the "engines" behind some features — live MLS comps in CMA, and inbound lead routing — which have their seams in place.</p></div></details>
+
+  <details><summary><span class="q">Q</span> Is the automation engine a real product or a demo?<span class="chev">▸</span></summary>
+  <div class="ans"><p><b>Real.</b> It enrolls contacts, schedules and ticks steps on a cron, branches on conditions, sends SMS and email through n8n, and logs every run. The one thing it deliberately <b>won't</b> do without an explicit switch is deliver real messages — it defaults to a test mode so nothing goes out by accident.</p></div></details>
+
+  <details><summary><span class="q">Q</span> What is the AI recruiter page actually for?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Two jobs: <b>recruiting agents</b> to the brokerage and <b>showcasing the AI-automation capability</b> as a service. It's a memorable 3D journey with a live assistant that answers questions and a "Work with me" form — and both the chat and the form <b>feed the same CRM lead pipeline</b> as the website.</p></div></details>
+</section>
+
+<!-- BUSINESS -->
+<section class="cat">
+  <div class="cat-h"><span class="n">C</span><h2>Business</h2></div>
+  <p class="cat-sub">Value, cost, what it replaces, and honest status.</p>
+
+  <details><summary><span class="q">Q</span> What does this replace, and what's the value?<span class="chev">▸</span></summary>
+  <div class="ans"><p>It stands in for a stack a real-estate team usually rents separately: a <b>CRM subscription</b>, an <b>IDX website vendor</b>, a <b>marketing-automation tool</b>, and custom <b>web/3D development</b> — owned and operated by one person who understands all of it. The value is control (own the data and the pipeline), integration (one lead destination), and speed (an AI front door that never sleeps).</p></div></details>
+
+  <details><summary><span class="q">Q</span> What did it cost to build?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Primarily <b>time plus AI orchestration</b> — no team salaries. The recurring cost is modest hosting and per-use provider fees (Vercel, Supabase, n8n on a VPS, MLS feed, Twilio/Gmail usage). The honest headline is that <b>an AI agent loop let one operator cover the ground of a small team</b>, with the operator's judgment as the quality gate.</p></div></details>
+
+  <details><summary><span class="q">Q</span> Could this work for a business that isn't real estate?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Yes. Real estate is the proof point, not the ceiling. The reusable parts — a <b>CRM with a trigger→action automation engine</b>, an <b>AI chat/voice front door</b>, and <b>lead capture wired into one pipeline</b> — apply to any sales-driven business. The IDX-specific piece is the only part that's real-estate-only.</p></div></details>
+</section>
+
+<!-- THE HARD ONES -->
+<section class="cat">
+  <div class="cat-h"><span class="n">D</span><h2>The skeptical questions</h2></div>
+  <p class="cat-sub tagline">answer these honestly and you've earned the room</p>
+
+  <details><summary><span class="q">Q</span> Isn't this just AI-generated code?<span class="chev">▸</span></summary>
+  <div class="ans"><p>AI wrote a lot of it — that's the point, and it's a skill, not a shortcut. The value I add is <b>the architecture, the constraints, and the verification</b>: deciding replication-vs-search, designing the budget-safe proxy, catching a sub-agent that claimed "done" when the deployed endpoint was still serving fixtures, and refusing to accept a test suite that silently didn't run. <b>The moat is the process and the judgment, not the typing.</b></p></div></details>
+
+  <details><summary><span class="q">Q</span> Is it actually in production?<span class="chev">▸</span></summary>
+  <div class="ans"><p>The systems are <b>live and verified</b> on their deployment URLs — real MLS data, real photos on demand, the CRM and automation engine, the AI journey with live chat. It is deliberately <b>private and non-indexed</b> until launch. Going public is a short, owner-gated checklist: flip the flag, cut DNS, swap the MLS production key, and turn on real sends. I keep that line clear on purpose — "deployed and verified" is not the same as "publicly launched," and I don't blur it.</p></div></details>
+
+  <details><summary><span class="q">Q</span> What are the weak spots — what would you do next?<span class="chev">▸</span></summary>
+  <div class="ans"><p>Honestly: the snapshot refresh is <b>manual</b> today and needs a durable auto-refresh store; CMA comps still run on <b>fixture</b> data pending the live MLS wiring; the automation engine's <b>inbound-STOP</b> path and A2P registration are owner steps before real SMS at scale; and the production database of record needs to be pinned before go-live. None are hidden — they're documented, and each has a designed path forward.</p>
+  <span class="why"><b>Why say this at all:</b> naming the gaps precisely is the strongest signal that the rest is real. A build with no acknowledged edges is a build nobody looked at hard.</span></div></details>
+</section>
+
+<p class="legend">Answer to the person in front of you — an employer wants the reasoning and the trade-offs; a client wants the outcome and the value. Same truth, different emphasis.</p>
+</main>
+
+<footer><p class="mono">RealtyLT · interview &amp; client Q&amp;A · Levan Tsiklauri · levan@realtylt.com</p></footer>
+
+<script>
+(function(){var root=document.documentElement,btn=document.getElementById('themebtn');
+  btn.addEventListener('click',function(){var c=root.getAttribute('data-theme');
+    if(!c)c=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    root.setAttribute('data-theme',c==='dark'?'light':'dark');});})();
+</script>

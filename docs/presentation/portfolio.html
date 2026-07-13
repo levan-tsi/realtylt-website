@@ -1,0 +1,233 @@
+<title>RealtyLT — Capabilities &amp; Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#f5f8fc; --bg-2:#ffffff; --panel:#ffffff; --ink:#14212f; --ink-soft:#43566a;
+  --line:#d7e0ec; --line-soft:#e8eef5; --navy:#102c54; --azure:#1f7fc0; --azure-bright:#28a8e0;
+  --live:#1f9d6b; --gate:#b5791f;
+  --shadow:0 1px 2px rgba(16,44,84,.06),0 10px 34px rgba(16,44,84,.08);
+  --maxw:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0a1622; --bg-2:#0d1c2c; --panel:#0f2032; --ink:#dce7f3; --ink-soft:#93a8bf;
+    --line:#1d3247; --line-soft:#16283a; --navy:#0b2038; --azure:#3d9fd8; --azure-bright:#4bb8ec;
+    --live:#3fbf8c; --gate:#e0b155; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 44px rgba(0,0,0,.4);}
+}
+:root[data-theme="light"]{--bg:#f5f8fc; --bg-2:#ffffff; --panel:#ffffff; --ink:#14212f; --ink-soft:#43566a;
+  --line:#d7e0ec; --line-soft:#e8eef5; --navy:#102c54; --azure:#1f7fc0; --azure-bright:#28a8e0;
+  --live:#1f9d6b; --gate:#b5791f; --shadow:0 1px 2px rgba(16,44,84,.06),0 10px 34px rgba(16,44,84,.08);}
+:root[data-theme="dark"]{--bg:#0a1622; --bg-2:#0d1c2c; --panel:#0f2032; --ink:#dce7f3; --ink-soft:#93a8bf;
+  --line:#1d3247; --line-soft:#16283a; --navy:#0b2038; --azure:#3d9fd8; --azure-bright:#4bb8ec;
+  --live:#3fbf8c; --gate:#e0b155; --shadow:0 1px 2px rgba(0,0,0,.3),0 14px 44px rgba(0,0,0,.4);}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
+h1,h2,h3{line-height:1.12;text-wrap:balance;font-weight:800;letter-spacing:-.02em;margin:0}
+a{color:var(--azure)}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--azure-bright);outline-offset:3px;border-radius:3px}
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:var(--azure-bright);box-shadow:0 0 0 4px color-mix(in srgb,var(--azure-bright) 22%,transparent)}
+.themebtn{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:600}
+.themebtn:hover{border-color:var(--azure)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+section{padding:58px 0;border-bottom:1px solid var(--line-soft)}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--azure);font-weight:800}
+h2{font-size:clamp(25px,3.6vw,36px);margin:10px 0 8px}
+.lede{color:var(--ink-soft);font-size:17px;max-width:64ch}
+.sec-head{margin-bottom:30px}
+/* hero */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(1100px 480px at 78% -8%,color-mix(in srgb,var(--azure-bright) 22%,transparent),transparent 62%),
+  linear-gradient(180deg,var(--bg-2),var(--bg));border-bottom:1px solid var(--line)}
+.hero-in{max-width:var(--maxw);margin:0 auto;padding:84px 22px 60px}
+.hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--azure);font-weight:800;margin-bottom:20px}
+.hero .kicker::before{content:"";width:28px;height:1px;background:var(--azure)}
+.hero h1{font-size:clamp(34px,6.4vw,64px);letter-spacing:-.03em;max-width:16ch}
+.hero .grad{background:linear-gradient(96deg,var(--azure-bright),#7cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{font-size:clamp(17px,2.2vw,21px);color:var(--ink-soft);max-width:62ch;margin:22px 0 0}
+.statrow{display:flex;flex-wrap:wrap;gap:26px;margin-top:38px}
+.statrow .s b{display:block;font-size:clamp(26px,4vw,38px);letter-spacing:-.03em;color:var(--ink)}
+.statrow .s b .u{color:var(--azure-bright)}
+.statrow .s span{font-size:12.5px;color:var(--ink-soft);letter-spacing:.02em;text-transform:uppercase;font-weight:700}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+.card h3{font-size:18px;margin-bottom:8px;display:flex;gap:9px;align-items:center}
+.card p{margin:0;color:var(--ink-soft);font-size:14.5px}
+.card .kpi{font-family:ui-monospace,Consolas,monospace;color:var(--azure);font-weight:700;font-size:13px;margin-top:10px;display:block}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.03em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);text-transform:uppercase;font-family:ui-monospace,Consolas,monospace}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.live{color:var(--live);background:color-mix(in srgb,var(--live) 12%,transparent);border-color:color-mix(in srgb,var(--live) 30%,transparent)}
+.pill.azure{color:var(--azure);background:color-mix(in srgb,var(--azure) 12%,transparent);border-color:color-mix(in srgb,var(--azure) 30%,transparent)}
+.big{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+@media (max-width:820px){.big{grid-template-columns:1fr}}
+.feature{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.feature .tag{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--azure);font-weight:700}
+.feature h3{font-size:22px;margin:8px 0 10px}
+.feature p{color:var(--ink-soft);margin:0 0 14px;font-size:15px}
+.feature ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.feature li{padding-left:20px;position:relative;font-size:14px;color:var(--ink-soft)}
+.feature li::before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:2px;background:var(--azure);transform:rotate(45deg)}
+.feature li b{color:var(--ink)}
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:820px){.skills{grid-template-columns:1fr}}
+.skill{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px 19px;box-shadow:var(--shadow)}
+.skill .mk{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--azure) 14%,transparent);border:1px solid color-mix(in srgb,var(--azure) 34%,transparent);display:grid;place-items:center;color:var(--azure);font-family:ui-monospace,Consolas,monospace;font-weight:800;font-size:15px}
+.skill h4{margin:0 0 3px;font-size:15px}.skill p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+.two-aud{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:820px){.two-aud{grid-template-columns:1fr}}
+.aud{border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow);background:var(--panel)}
+.aud.emph{background:linear-gradient(180deg,color-mix(in srgb,var(--azure) 8%,var(--panel)),var(--panel));border-color:color-mix(in srgb,var(--azure) 34%,var(--line))}
+.aud h3{font-size:20px;margin-bottom:6px}
+.aud .who{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--azure);font-weight:700}
+.aud ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.aud li{padding-left:24px;position:relative;font-size:14.5px;color:var(--ink-soft)}
+.aud li::before{content:"→";position:absolute;left:0;color:var(--azure);font-weight:800}
+.aud li b{color:var(--ink)}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+.cta{text-align:center;padding:64px 22px}
+.cta h2{font-size:clamp(26px,4vw,40px)}
+.cta p{color:var(--ink-soft);max-width:52ch;margin:12px auto 24px;font-size:17px}
+.btn{display:inline-block;background:linear-gradient(100deg,var(--navy),var(--azure));color:#fff;font-weight:700;padding:14px 26px;border-radius:12px;text-decoration:none;box-shadow:var(--shadow)}
+.btn:hover{text-decoration:none;filter:brightness(1.06)}
+footer{padding:30px 22px 60px;text-align:center;color:var(--ink-soft);font-size:13px}
+</style>
+
+<nav class="nav"><div class="nav-in">
+  <div class="brand"><span class="dot"></span> RealtyLT <span class="mono" style="color:var(--ink-soft);font-weight:600;font-size:13px">/ portfolio</span></div>
+  <button class="themebtn" id="themebtn">◐ Theme</button>
+</div></nav>
+
+<header class="hero"><div class="hero-in">
+  <div class="kicker">Capabilities &amp; portfolio · Levan Tsiklauri</div>
+  <h1>A whole real-estate tech company, <span class="grad">built by one operator.</span></h1>
+  <p class="sub">A production IDX website, a Brivity-class CRM with a working automation engine, and a real-time 3D AI recruiter — three shipped apps on real MLS data, wired together and hardened, using an AI agent loop to move like a full team.</p>
+  <div class="statrow">
+    <div class="s"><b>3</b><span>production apps</span></div>
+    <div class="s"><b><span class="u">5,362</span></b><span>live MLS listings</span></div>
+    <div class="s"><b>1</b><span>operator</span></div>
+    <div class="s"><b><span class="u">$0</span></b><span>secrets leaked</span></div>
+  </div>
+</div></header>
+
+<main>
+<!-- what was built -->
+<section><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow">What was built</div>
+    <h2>Three products, not three demos</h2>
+    <p class="lede">Each runs on real data and real integrations — not mockups. This is the surface a buyer, a recruit, or an employer actually touches.</p>
+  </div>
+  <div class="grid g3">
+    <div class="card reveal"><h3><span class="pill live">live</span> IDX website</h3><p>A marketing site pulling real OneKey listings across six counties, with a Zillow-style map, on-demand photos, a mortgage calculator, and lead capture — matched to the brand and hardened.</p><span class="kpi">Next.js 15 · TypeScript · Tailwind · Vercel</span></div>
+    <div class="card reveal"><h3><span class="pill live">built</span> CRM + automations</h3><p>A Brivity-shaped CRM — people, transactions, reporting, CMA — with an automation engine that enrolls contacts and sends real SMS &amp; email on triggers, delays, and conditions.</p><span class="kpi">Next.js · Supabase · n8n · Twilio · Gmail</span></div>
+    <div class="card reveal"><h3><span class="pill live">live</span> AI recruiter page</h3><p>A scroll-driven WebGL journey — galaxy to neural brain to services — with a live Claude-powered assistant and a recruit form that feeds the CRM. Mobile-first.</p><span class="kpi">Three.js · WebGL · n8n · Claude Haiku</span></div>
+  </div>
+</div></section>
+
+<!-- hard problems -->
+<section><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow">Proof of depth</div>
+    <h2>The hard problems, solved</h2>
+    <p class="lede">Anyone can wire a template. These are the decisions that separate a demo from a system that survives contact with a real API budget, a real compliance rule, and a real phone.</p>
+  </div>
+  <div class="big">
+    <div class="feature reveal"><span class="tag">data engineering</span>
+      <h3>Real MLS data without a search API</h3>
+      <p>MLS Grid only lets you filter on a few system fields — never county, price, or beds. The design replicates listings into a snapshot filtered in-app, and proxies photos on demand.</p>
+      <ul>
+        <li><b>Budget-safe photo proxy</b> — one call resolves a listing's photos, CDN-cached under the signed-URL window, paced under the rate cap, never stored.</li>
+        <li><b>Trailing-window rate limits respected</b> — a learned constraint that once paused the account, now designed around.</li>
+      </ul>
+    </div>
+    <div class="feature reveal"><span class="tag">automation</span>
+      <h3>An engine that runs plans, not just builds them</h3>
+      <p>The common gap in a CRM clone is that "auto-plans" never fire. This one enrolls, schedules, ticks on a cron, branches on conditions, and dispatches real sends.</p>
+      <ul>
+        <li><b>TCPA-aware</b> — a STOP footer and an opt-out suppression gate on every SMS.</li>
+        <li><b>Safe by default</b> — a test mode that delivers nothing until deliberately turned on.</li>
+      </ul>
+    </div>
+    <div class="feature reveal"><span class="tag">graphics · mobile</span>
+      <h3>60fps 3D that converts on a phone</h3>
+      <p>A real-time WebGL journey with a frame-rate governor, device-pixel scaling, portrait camera framing, and a boot fallback so the offer survives even when WebGL doesn't.</p>
+      <ul>
+        <li><b>Resilient</b> — a watchdog rescues old browsers and lost GL contexts into a static call-to-action.</li>
+      </ul>
+    </div>
+    <div class="feature reveal"><span class="tag">AI orchestration</span>
+      <h3>Shipping three apps with an agent loop</h3>
+      <p>An orchestrator scopes work, parallel sub-agents build per app, every claim is verified against the live system before it's accepted, and a watchdog guards the process.</p>
+      <ul>
+        <li><b>Force-multiplied</b> — a solo operator moving at team throughput, with honesty gates so "done" means verified.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- skills for employers -->
+<section><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow">Skills demonstrated</div>
+    <h2>Full-stack, security, data, AI — in one build</h2>
+  </div>
+  <div class="skills">
+    <div class="skill reveal"><div class="mk">&lt;/&gt;</div><div><h4>Full-stack web</h4><p>Next.js 15 App Router, React, TypeScript, Tailwind, server actions, SSR/SSG — three real apps.</p></div></div>
+    <div class="skill reveal"><div class="mk">DB</div><div><h4>Data &amp; Postgres</h4><p>Supabase schema design, row-level security on every table, edge functions, replication under a hard API constraint.</p></div></div>
+    <div class="skill reveal"><div class="mk">🔒</div><div><h4>Application security</h4><p>CSP &amp; headers, an SSRF-safe proxy, rate limiting, honeypots, secret hygiene across full git history.</p></div></div>
+    <div class="skill reveal"><div class="mk">⇄</div><div><h4>Integrations</h4><p>Twilio, Gmail, MLS Grid, n8n, and Supabase wired into one lead-and-automation pipeline.</p></div></div>
+    <div class="skill reveal"><div class="mk">◍</div><div><h4>WebGL / graphics</h4><p>Three.js, custom shaders, scroll-driven camera work, and mobile GPU performance tuning.</p></div></div>
+    <div class="skill reveal"><div class="mk">AI</div><div><h4>AI engineering &amp; orchestration</h4><p>LLM chat via Claude, and a multi-agent build loop with verification and safety gates.</p></div></div>
+  </div>
+</div></section>
+
+<!-- two audiences -->
+<section><div class="wrap">
+  <div class="sec-head reveal"><div class="eyebrow">The value</div>
+    <h2>What it means — for two audiences</h2>
+  </div>
+  <div class="two-aud">
+    <div class="aud emph reveal"><div class="who">For a business</div>
+      <h3>One system replacing a stack of subscriptions</h3>
+      <ul>
+        <li>A <b>CRM</b> in the shape of the tools teams already pay monthly for — owned, not rented.</li>
+        <li>An <b>IDX website</b> on your own MLS feed instead of a vendor's hosted template.</li>
+        <li><b>Marketing automation</b> — SMS &amp; email on triggers — built in, not bolted on.</li>
+        <li>An <b>AI front door</b> that answers and captures leads 24/7 and routes them to the CRM.</li>
+        <li>Delivered and operated by one person who understands the whole stack end to end.</li>
+      </ul>
+    </div>
+    <div class="aud reveal"><div class="who">For an employer</div>
+      <h3>An engineer who ships across the whole stack</h3>
+      <ul>
+        <li>Takes a vague goal to a <b>shipped, verified product</b> — front-end, back-end, data, and infra.</li>
+        <li>Makes <b>real engineering trade-offs</b> under real constraints (API limits, budgets, compliance).</li>
+        <li>Treats <b>security and honesty</b> as defaults — hardened surfaces, no fake "done."</li>
+        <li>Uses <b>AI as a force multiplier</b> with the judgment to verify what it produces.</li>
+        <li>Communicates the system clearly enough that anyone can pick it up.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<div class="cta">
+  <h2>Built to ship. Ready to talk.</h2>
+  <p>The full suite is live behind a private link, documented end to end, and ready for a walkthrough.</p>
+  <a class="btn" href="mailto:levan@realtylt.com">levan@realtylt.com</a>
+</div>
+<footer><p class="mono">RealtyLT · a real-estate technology suite · Levan Tsiklauri</p></footer>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn');
+  btn.addEventListener('click',function(){var c=root.getAttribute('data-theme');
+    if(!c)c=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    root.setAttribute('data-theme',c==='dark'?'light':'dark');});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>

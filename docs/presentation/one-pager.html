@@ -1,0 +1,132 @@
+<title>RealtyLT — One-Page Overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#f5f8fc;--bg-2:#ffffff;--panel:#ffffff;--ink:#14212f;--ink-soft:#43566a;--line:#d7e0ec;--line-soft:#e8eef5;
+  --navy:#102c54;--azure:#1f7fc0;--azure-bright:#28a8e0;--live:#1f9d6b;--gate:#b5791f;
+  --shadow:0 1px 2px rgba(16,44,84,.06),0 8px 26px rgba(16,44,84,.07);--maxw:940px;}
+@media (prefers-color-scheme:dark){:root{--bg:#0a1622;--bg-2:#0d1c2c;--panel:#0f2032;--ink:#dce7f3;--ink-soft:#93a8bf;
+  --line:#1d3247;--line-soft:#16283a;--navy:#0b2038;--azure:#3d9fd8;--azure-bright:#4bb8ec;--live:#3fbf8c;--gate:#e0b155;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 38px rgba(0,0,0,.36);}}
+:root[data-theme="light"]{--bg:#f5f8fc;--bg-2:#ffffff;--panel:#ffffff;--ink:#14212f;--ink-soft:#43566a;--line:#d7e0ec;--line-soft:#e8eef5;--navy:#102c54;--azure:#1f7fc0;--azure-bright:#28a8e0;--live:#1f9d6b;--gate:#b5791f;--shadow:0 1px 2px rgba(16,44,84,.06),0 8px 26px rgba(16,44,84,.07);}
+:root[data-theme="dark"]{--bg:#0a1622;--bg-2:#0d1c2c;--panel:#0f2032;--ink:#dce7f3;--ink-soft:#93a8bf;--line:#1d3247;--line-soft:#16283a;--navy:#0b2038;--azure:#3d9fd8;--azure-bright:#4bb8ec;--live:#3fbf8c;--gate:#e0b155;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 38px rgba(0,0,0,.36);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
+h1,h2,h3{margin:0;line-height:1.14;text-wrap:balance;font-weight:800;letter-spacing:-.02em}
+a{color:var(--azure)}:focus-visible{outline:2px solid var(--azure-bright);outline-offset:2px;border-radius:3px}
+.page{max-width:var(--maxw);margin:0 auto;padding:34px 22px 50px}
+.themebtn{position:fixed;top:14px;right:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:600;z-index:5}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;border-bottom:2px solid var(--navy);padding-bottom:18px;margin-bottom:22px}
+.top .dot{width:13px;height:13px;border-radius:50%;background:var(--azure-bright);box-shadow:0 0 0 5px color-mix(in srgb,var(--azure-bright) 20%,transparent);display:inline-block;vertical-align:middle;margin-right:8px}
+.top h1{font-size:clamp(26px,4.4vw,40px);letter-spacing:-.03em}
+.top .tl{color:var(--ink-soft);font-size:15.5px;max-width:56ch;margin-top:8px}
+.top .who{text-align:right;font-size:13px;color:var(--ink-soft)}
+.top .who b{color:var(--ink);display:block;font-size:15px}
+.grad{background:linear-gradient(96deg,var(--azure-bright),#7cc9f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ey{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--azure);font-weight:800;margin:22px 0 10px}
+.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+@media (max-width:760px){.apps{grid-template-columns:1fr}}
+.app{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 17px;box-shadow:var(--shadow)}
+.app h3{font-size:15.5px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.app p{margin:0;color:var(--ink-soft);font-size:13.3px}
+.app .st{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--azure);font-weight:700;margin-top:9px;display:block}
+.pill{font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:800;letter-spacing:.03em;padding:2px 8px;border-radius:999px;text-transform:uppercase;border:1px solid var(--line)}
+.pill.live{color:var(--live);background:color-mix(in srgb,var(--live) 12%,transparent);border-color:color-mix(in srgb,var(--live) 30%,transparent)}
+.cols{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-top:8px}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 18px;box-shadow:var(--shadow)}
+.box h3{font-size:14px;margin-bottom:10px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line-soft);font-size:13.3px}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--ink-soft)}.kv .v{font-family:ui-monospace,Consolas,monospace;color:var(--ink);text-align:right}
+ul.st{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+ul.st li{padding-left:20px;position:relative;font-size:13.3px;color:var(--ink-soft)}
+ul.st li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--azure);transform:rotate(45deg)}
+ul.st li b{color:var(--ink)}
+.stat-band{display:flex;flex-wrap:wrap;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 20px;box-shadow:var(--shadow);margin-top:8px}
+.stat-band .s b{display:block;font-size:22px;letter-spacing:-.02em}
+.stat-band .s b .u{color:var(--azure-bright)}
+.stat-band .s span{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+.status-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:8px}
+@media (max-width:760px){.status-row{grid-template-columns:1fr}}
+.foot{margin-top:24px;padding-top:16px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--ink-soft);font-size:12.5px}
+</style>
+<button class="themebtn" id="themebtn">◐ Theme</button>
+
+<div class="page">
+  <div class="top">
+    <div>
+      <h1><span class="dot"></span>RealtyLT — <span class="grad">a real-estate tech suite</span></h1>
+      <p class="tl">Three production apps — an IDX marketing website, a Brivity-class CRM with a live automation engine, and a real-time 3D AI recruiter — on real MLS data, wired to one lead pipeline, built and shipped solo with an AI agent loop.</p>
+    </div>
+    <div class="who"><b>Levan Tsiklauri</b>United Real Estate · Hudson Valley<br><span class="mono">levan@realtylt.com</span></div>
+  </div>
+
+  <div class="ey">The three apps</div>
+  <div class="apps">
+    <div class="app"><h3><span class="pill live">live</span> IDX website</h3><p>Real OneKey listings across 6 counties, Zillow-style map, on-demand photos, mortgage calculator, lead capture. Matched to brand, hardened, private until launch.</p><span class="st">Next.js · Vercel</span></div>
+    <div class="app"><h3><span class="pill live">built</span> CRM + automations</h3><p>People, transactions, reporting, CMA — plus a trigger→condition→action engine that sends real SMS &amp; email, with a compliance gate and a safe test mode.</p><span class="st">Supabase · n8n · Twilio · Gmail</span></div>
+    <div class="app"><h3><span class="pill live">live</span> AI recruiter</h3><p>A scroll-driven WebGL journey — galaxy → neural brain → services — with a live Claude chat and a recruit form feeding the same CRM. Mobile-first.</p><span class="st">Three.js · Claude</span></div>
+  </div>
+
+  <div class="stat-band">
+    <div class="s"><b><span class="u">5,362</span></b><span>live MLS listings</span></div>
+    <div class="s"><b>6</b><span>counties</span></div>
+    <div class="s"><b>23</b><span>DB tables · RLS on</span></div>
+    <div class="s"><b>46+</b><span>CRM pages</span></div>
+    <div class="s"><b>5</b><span>services integrated</span></div>
+    <div class="s"><b><span class="u">0</span></b><span>secrets in git</span></div>
+  </div>
+
+  <div class="cols">
+    <div class="box"><h3>The stack</h3>
+      <div class="kv"><span class="k">Front-end</span><span class="v">Next.js 15 · TypeScript · Tailwind · Three.js</span></div>
+      <div class="kv"><span class="k">Data &amp; auth</span><span class="v">Supabase Postgres · Auth · Edge fns</span></div>
+      <div class="kv"><span class="k">Automation</span><span class="v">n8n · Twilio (SMS) · Gmail (email)</span></div>
+      <div class="kv"><span class="k">Listings</span><span class="v">MLS Grid · OneKey feed</span></div>
+      <div class="kv"><span class="k">Hosting</span><span class="v">Vercel (3 projects)</span></div>
+      <div class="kv"><span class="k">Built with</span><span class="v">an AI agent loop + human verification</span></div>
+    </div>
+    <div class="box"><h3>What makes it non-trivial</h3>
+      <ul class="st">
+        <li><b>Replication-for-search</b> — real MLS data despite a filter-only API.</li>
+        <li><b>Budget-safe photo proxy</b> — on demand, cached, never stored, SSRF-safe.</li>
+        <li><b>A plan runner</b>, not just a plan builder — automations that actually fire.</li>
+        <li><b>60fps 3D on phones</b>, with a boot fallback for old browsers.</li>
+        <li><b>Hardened</b> — CSP, RLS, rate limits, zero committed secrets.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ey">Status</div>
+  <div class="status-row">
+    <div class="box"><h3 style="color:var(--live)">✓ Shipped &amp; verified</h3>
+      <ul class="st">
+        <li>Real IDX data + on-demand photos, live.</li>
+        <li>CRM + automation engine, built &amp; tested.</li>
+        <li>AI journey + live chat, live.</li>
+        <li>One shared lead pipeline, proven end to end.</li>
+      </ul>
+    </div>
+    <div class="box"><h3 style="color:var(--gate)">◷ Owner-gated go-live</h3>
+      <ul class="st">
+        <li>Flip site public + cut DNS to the domain.</li>
+        <li>Swap MLS test → production key.</li>
+        <li>Turn on real sends (A2P + inbound-STOP).</li>
+        <li>Pin the production database of record.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="mono">RealtyLT · realtylt.com · app.realtylt.com · realtylt.com/ai</span>
+    <span>Private preview available on request — <b style="color:var(--ink)">levan@realtylt.com</b></span>
+  </div>
+</div>
+
+<script>
+(function(){var root=document.documentElement,btn=document.getElementById('themebtn');
+  btn.addEventListener('click',function(){var c=root.getAttribute('data-theme');
+    if(!c)c=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    root.setAttribute('data-theme',c==='dark'?'light':'dark');});})();
+</script>
