@@ -177,3 +177,42 @@ design-excellence — never replaces them or any skill.
   (unit N/N, e2e N/N, build ok). If a required gate can't run (e.g. stale secret), say so plainly and
   record it under OWNER ACTION NEEDED; do NOT report the property "verified" on the strength of the
   gates that did run.
+
+## 2026-07-13 — PHASE 3A (combined website + /ai + connections launch-readiness)
+- **`verify-saved-flow.mjs` was a FLAKY gate (the feature is fine, the SCRIPT wasn't) — hardened to 6/6
+  deterministic.** Three independent races: (1) step-2 read the header saved-count once after a fixed
+  300ms timer, but the header re-renders on the `rlt:saved-change` EVENT → poll with `waitForFunction`
+  instead; (2) step-3 read the save note via `p[role="status"].first()`, but **SearchClient has TWO
+  `role="status"` live regions** — the save note AND the "N listings found" results strip — so `.first()`
+  grabbed "5362 listings found" when the note hadn't rendered yet → read the note by TEXT
+  (`getByText(/to this device/i)`); (3) step-5 filled `input[name]` UNSCOPED (page also has the footer
+  LeadForm) → scope to `section[aria-labelledby="alerts-heading"]`.
+  **GOTCHA that cost real time: `Locator.waitForSelector()` DOES NOT EXIST** (it's a `Page`/`Frame`
+  method only) — `someLocator.waitForSelector(...)` throws a TypeError that a surrounding try/catch
+  silently turns into a "no success status" product-looking FAIL. Use `locator.locator(sel).waitFor()`.
+  The lead forms themselves (footer + alert opt-in, same shared `LeadForm`) verify clean: submit →
+  `/api/lead` 200 → success `div[role="status"]`.
+- **Media-CDN budget RESET (2026-07-13):** deployed `/api/media/KEY1023749/0` and `/1` returned real
+  JPEGs (582KB / 740KB, `X-Media-Status: ok`) — photos self-healed since the 07-12 cooldown exactly as
+  predicted. Probed ONE listing (2 photos) then STOPPED (budget discipline).
+- **/ai proxy LIVE CHAT verified end-to-end from the real UI:** sent one message through the chat widget
+  on `realtylt-website.vercel.app/ai` → REAL assistant reply (chat webhook 200, **no `.demo-tag`**), 0 CSP
+  violations. The chat node is `#hub button.cluster.live` (the only `.live` cluster; reveals `#chatbox`).
+  Real-vs-fallback detector: a fallback reply carries `<i class="demo-tag">`, a real one does not.
+- **RAG demo on the proxy degrades GRACEFULLY (expected):** the `rag-demo` webhook is CORS-blocked from
+  the proxy origin (owner-gated, workflow oko57sV2rGelSE86) → the page shows the badged
+  "DEMO MODE — SAMPLE REPLY" fallback (`.demo-tag` present), NOT a break. That CORS block is a console
+  error but **NOT a CSP violation** — leave the n8n side alone.
+- **AI-page STANDALONE origin lacks its own `x-robots-tag`/noindex + CSP** — the `/ai` proxy adds those.
+  So `realtylt-ai-page.vercel.app` (the origin behind the proxy) is publicly indexable. Left as
+  OWNER-GATED: baking noindex into the origin could later suppress indexing of `realtylt.com/ai` at
+  launch (the proxy may forward origin headers), so it's a launch-SEO decision, not a silent fix.
+- **AI-page real-GPU harness launch (reused):** `chromium.launch({ headless:false, args:['--ignore-gpu-
+  blocklist','--enable-gpu-rasterization'] })`. Journey beats deep-linked via `#p=<frac>` (galaxy 0.08,
+  dive 0.45, brain 0.72, hub 1.0). Both origins x desktop+390 rendered clean (13 nodes, real GPU fps,
+  brain well-framed in portrait, 0 CSP/console, no h-overflow, safe-area supported).
+- **Connection proofs (both paths, then cleaned):** website footer form (id 20) and /ai recruit modal
+  (id 21) both landed in `public.leads` via `/api/lead` → website-lead edge fn; deleted both, verified 0
+  orphans (table back to the single genuine lead id 13). Mark test rows "TEST — phase3A …" + a unique tag
+  so deletion is exact. NOTE: a Postgres data-modifying CTE (`WITH del AS (DELETE … RETURNING) SELECT
+  count(*) FROM leads …`) reads the PRE-delete snapshot — verify deletion with a SEPARATE follow-up query.

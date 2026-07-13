@@ -1,5 +1,50 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ PHASE 3A (2026-07-13) — COMBINED LAUNCH-READINESS: website + /ai + connections, tested like a visitor
+
+**Full visitor-journey re-verification of BOTH properties (desktop 1280 + mobile 390), the /ai proxy,
+the live chat, and the CRM lead connections. Everything re-tests CLEAN — CONVERGED. One test-gate
+defect fixed (flaky `verify-saved-flow.mjs`); no product defects found; AI page untouched (no deploy).**
+
+**WEBSITE — every page + flow (Playwright, real snapshot data via local `next start`, LEAD_TEST_MODE):**
+- **Page matrix: all 17 real routes → HTTP 200, 0 console errors, 0 CSP violations, 0 horizontal overflow
+  at BOTH 1280 and 390** (/, /search, /buying, /selling, /financing, /home-value, /top-areas[+/dutchess],
+  /who-we-are, /reviews, /connect, /blog[+post], /saved, /privacy-policy, /dmca-terms, /ai, /listing/[id]).
+  A nonexistent path 404s correctly (graceful not-found).
+- Search + filters + map at both viewports: Dutchess filter → correct **"842 listings found"**; map
+  container + OSM tiles load (12 desktop / 6 mobile). Listing detail (real id KEY1023749 "2930 Gomer
+  Street"): on-demand `/api/media` img, 2 JSON-LD blocks, **no "0 Bed"**, clean. Calculator
+  $3,198.20 / $3,677.84 / reset. Mobile menu opens. Favorites/save-search/**alert opt-in** → `/api/lead`
+  200 → success. Footer lead form success/honeypot-silent-200/invalid-400 (local stub). a11y CLEAN (23
+  pages), skip-link + keyboard nav + reduced-motion. **Gates: unit 101/101 executed, build green.**
+- Live deployed: IDX real data confirmed (`verify-live-mls` ALL PASS, 6 counties = **5,362**,
+  `fixtureMode:false`, snapshot ~23h). Security headers + `x-robots-tag: noindex,nofollow` + CSP intact on
+  /, /ai, /search.
+- **PHOTOS: media-CDN budget RESET** — deployed `/api/media/KEY1023749/0` + `/1` = real JPEGs (582KB /
+  740KB, `X-Media-Status: ok`). Probed 1 listing then stopped.
+
+**AI PAGE — both origins (standalone + `/ai` proxy) × desktop 1440 + 390 portrait (touch, real GPU):**
+- 13 hub nodes build; real-GPU fps (79–81 desk / 144–145 mob); galaxy→dive→brain→hub beats render
+  (visually confirmed galaxy + well-framed portrait brain through the proxy at 390); chat node opens its
+  panel + reveals `#chatbox`; drag look-around changes pixels; recruit modal open/validate/submit/success;
+  **no h-overflow, safe-area supported, 0 CSP violations + 0 console errors on the proxy.**
+- **LIVE CHAT on the proxy WORKS** — sent one message via the real widget → REAL assistant reply (webhook
+  200, no demo badge). **RAG demo degrades gracefully** to the badged "DEMO MODE — SAMPLE REPLY" fallback
+  (rag-demo CORS block is expected + owner-gated; not a CSP violation, no UI break).
+
+**CONNECTIONS — both lead paths proven then cleaned:** website footer form (leads id 20) and /ai recruit
+modal (leads id 21) both landed in `public.leads` via `/api/lead` → website-lead edge fn; **deleted both,
+verified 0 orphans** (table back to the single genuine lead id 13). No realistic leads ever sent.
+
+**Changed this phase (committed):** `scripts/verify-saved-flow.mjs` — hardened 3 flaky spots (header
+poll, save-note read-by-text to avoid the second `role="status"` results region, alert step scoped to its
+section + correct `locator.waitFor()` API). Now 6/6 deterministic. No product/app code changed.
+
+**OWNER-GATED / noted:** (1) AI-page STANDALONE `realtylt-ai-page.vercel.app` serves no noindex/CSP of its
+own (proxy adds them) → publicly indexable; a launch-SEO decision, not a silent fix. (2) RAG demo dead on
+the proxy until the owner opens the `rag-demo` n8n workflow's Allowed Origins. (3) AI-page beat goldens
+still predate the redesign (owner re-baseline). See AGENT_LEARNINGS.md 2026-07-13 for full detail.
+
 ## ▶ ROUND 7 (2026-07-12) — PHASE-1 VERIFICATION + POLISH (IDX re-verified vs Zillow, "0 Bed" fix)
 
 **Independent re-verification of the DEPLOYED site + real-data IDX audit + one visible
