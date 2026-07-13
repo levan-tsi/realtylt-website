@@ -1,9 +1,13 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { getSupabaseConfig } from "./config";
 import type { Database } from "@/lib/supabase/database.types";
+
+/** Shape of the array @supabase/ssr passes to `setAll`. Annotated explicitly because a fresh
+ * install can resolve the contextual param type to `any` under noImplicitAny (Vercel builds). */
+type CookieToSet = { name: string; value: string; options: CookieOptions };
 
 /** Server Supabase client bound to the request cookies — used by the auth callback route to
  * exchange a code for a session and persist it. Returns null when Supabase is unconfigured. */
@@ -16,7 +20,7 @@ export async function createServerSupabase() {
       getAll() {
         return cookieStore.getAll();
       },
-      setAll(cookiesToSet) {
+      setAll(cookiesToSet: CookieToSet[]) {
         try {
           cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
         } catch {
