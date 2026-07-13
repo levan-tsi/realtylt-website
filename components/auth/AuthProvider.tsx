@@ -70,21 +70,10 @@ function redirectTo(): string {
   return `${window.location.origin}/auth/callback`;
 }
 
-export function AuthProvider({
-  url,
-  anonKey,
-  children,
-}: {
-  url: string | null;
-  anonKey: string | null;
-  children: ReactNode;
-}) {
-  const [supabase] = useState<SupabaseBrowserClient | null>(() =>
-    url && anonKey ? createBrowserSupabase(url, anonKey) : null,
-  );
-  const enabled = supabase !== null;
-
-  const [ready, setReady] = useState(!enabled);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [supabase, setSupabase] = useState<SupabaseBrowserClient | null>(null);
+  const [enabled, setEnabled] = useState(false);
+  const [ready, setReady] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<PortalProfile | null>(null);
 
@@ -92,6 +81,29 @@ export function AuthProvider({
   const [modalMode, setModalMode] = useState<AuthModalMode>("signin");
 
   const user = session?.user ?? null;
+
+  // Fetch the anon Supabase config at RUNTIME (the env vars are runtime-only, not baked into the
+  // static build). On success we create the browser client; the session effect below then runs.
+  useEffect(() => {
+    let active = true;
+    fetch("/api/auth/config")
+      .then((r) => r.json())
+      .then((cfg: { enabled?: boolean; url?: string; anonKey?: string }) => {
+        if (!active) return;
+        if (cfg.enabled && cfg.url && cfg.anonKey) {
+          setSupabase(createBrowserSupabase(cfg.url, cfg.anonKey));
+          setEnabled(true);
+        } else {
+          setReady(true); // accounts disabled — nothing to load
+        }
+      })
+      .catch(() => {
+        if (active) setReady(true);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Initial session + subscribe to auth changes.
   useEffect(() => {

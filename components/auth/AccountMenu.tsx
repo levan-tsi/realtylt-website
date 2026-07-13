@@ -29,10 +29,9 @@ export function AccountMenu() {
     return () => window.removeEventListener("mousedown", onDown);
   }, [open]);
 
-  // Accounts unavailable (Supabase unconfigured): render nothing.
-  if (!enabled) return null;
-  // Avoid a flash of "Sign In" before the session resolves.
-  if (!ready) return <span className="text-sm text-stone/50">·</span>;
+  // Accounts unavailable (Supabase unconfigured) or still resolving the runtime config +
+  // session: render nothing so there's no flash of a stray placeholder or premature "Sign In".
+  if (!enabled || !ready) return null;
 
   if (!user) {
     return (

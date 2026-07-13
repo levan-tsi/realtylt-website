@@ -24,6 +24,9 @@ const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } })
 // Safety net: never let a real lead leave the machine during this test.
 await ctx.route("**/api/lead", (r) => r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true,"stub":true}' }));
 await ctx.route("**/functions/v1/website-lead", (r) => r.fulfill({ status: 200, body: "{}" }));
+// Budget guard: stub MLS photos so a full sweep costs ZERO /api/media calls (esp. against prod).
+const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==", "base64");
+await ctx.route("**/api/media/**", (r) => r.fulfill({ status: 200, contentType: "image/png", body: PNG }));
 const page = await ctx.newPage();
 const consoleErrors = [];
 const cspViolations = [];
@@ -69,6 +72,12 @@ try {
   });
   check(!!listingId, `got a real listing id (${listingId})`);
 
+  // Account control appears after the runtime config + session resolve — wait for it.
+  await page
+    .getByRole("button", { name: "Sign In", exact: true })
+    .first()
+    .waitFor({ timeout: 15000 })
+    .catch(() => {});
   check(
     await page.getByRole("button", { name: "Sign In", exact: true }).first().isVisible(),
     'header shows "Sign In" when logged out',
@@ -154,8 +163,12 @@ try {
   await page.waitForTimeout(800);
   await page.locator('input[name="fullName"]').fill("Portal E2E (edited)");
   await page.getByRole("button", { name: "Save changes" }).click();
-  await page.waitForTimeout(800);
-  check(await page.getByText("Saved.", { exact: true }).isVisible().catch(() => false), "profile save works");
+  const saved = await page
+    .getByText("Saved.", { exact: true })
+    .waitFor({ timeout: 8000 })
+    .then(() => true)
+    .catch(() => false);
+  check(saved, "profile save works");
 
   // ── Mobile 390 portal shot ──
   await page.setViewportSize({ width: 390, height: 844 });
