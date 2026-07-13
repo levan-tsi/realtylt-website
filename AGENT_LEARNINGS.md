@@ -266,6 +266,57 @@ design-excellence — never replaces them or any skill.
   self-contained Artifacts, shared brand system, theme-aware) + `docs/OWNER-GO-LIVE.md` (consolidated
   owner-gated checklist). Committed e429d94.
 
+## 2026-07-13 — PHASE 4 WATCH cycle 1 (website): no product regressions; TWO watch-gate defects fixed
+- **A browser sweep of the DEPLOYED site is a BULK PHOTO TEST in disguise — this is the easiest way to
+  blow the media budget by accident.** Loading `/`, `/search` and `/listing/*` in a real browser fires one
+  `/api/media/{id}/{idx}` request PER CARD PHOTO: a single 8-route × 2-viewport pass = **125 media
+  requests**. `scripts/final-probe.mjs` (hardcoded to the deployed base) has exactly this hazard — do NOT
+  point a browser at prod without stubbing media. New `scripts/watch-live-sweep.mjs` is the safe watch tool:
+  it `page.route('**/api/media/**')`-fulfills a 1×1 PNG, so a full sweep costs **ZERO** MLS media calls,
+  and it checks 8 routes × {1280, 390} for 200 / console errors / CSP violations / horizontal overflow.
+  Verify real photos SEPARATELY on ≤2 listings via plain `fetch` (no browser).
+- **`net::ERR_ABORTED` on OSM tiles is NOT a failure — it is Leaflet cancelling a superseded viewport.**
+  A `requestfailed`-counting probe false-FAILs `/search` forever. Proven: 9 tiles requested → 9× HTTP 200 →
+  9 `leaflet-tile-loaded`, map visible; the 12 aborted tiles were for the pre-fitBounds view and **0 of 12**
+  were ever needed. Rule: ignore `ERR_ABORTED` in request-failure probes, and assert the map with a POSITIVE
+  signal instead (`img.leaflet-tile-loaded` > 0), which is what actually carries meaning.
+- **A gate that can only go red with the passage of time is a DISHONEST gate.** `verify-live-mls.mjs`
+  asserted snapshot freshness `< 24h`, but there is **no refresh cron** (`vercel.json` is bare) — refresh is
+  manual — so the gate turned red every single day with zero regression behind it, training the watcher to
+  ignore red. Now TIERED: `<24h` PASS, `24–72h` **WARN** (aging by design, no action), `>72h` FAIL (refresh).
+  72h matches the standing policy "materially stale (>~3 days) → refresh". Generalize: assert what the system
+  actually GUARANTEES, not what you wish it did.
+- **`export-snapshot.mjs` does NOT need the MLS key locally** — it authenticates with `CRON_SECRET` (already
+  in `.env.local`) and pulls through the DEPLOYED Vercel runtime, so it respects the "never call
+  api.mlsgrid.com directly" boundary. Refresh IS runnable from this machine when genuinely stale.
+- **LEAD SAFETY — clearing `CRM_LEAD_WEBHOOK` in the shell is NOT protection.** `.env.local` CONTAINS a real
+  `CRM_LEAD_WEBHOOK`, and `$env:VAR=''` in PowerShell *removes* the var → Next then loads the real webhook
+  from `.env.local` → a "safe" local test would hit the prod CRM. The ONLY true guard is **`LEAD_TEST_MODE=1`**
+  (`lib/leads/index.ts`: `if (!webhook || testMode)` → stub). Run double-safe: `LEAD_TEST_MODE=1` **plus**
+  `CRM_LEAD_WEBHOOK=http://127.0.0.1:9/blackhole` (non-empty, dead port). **Proof-of-safety before submitting
+  any valid lead: the response must be `{"ok":true,"stub":true}`** — `stub:true` is emitted only on the
+  no-webhook path, so it is positive evidence the CRM was never called.
+- **The honeypot field is `rlt_hp`, not `company`/`website`** (deliberately non-semantic: a `website` field
+  gets filled by Chrome autofill and would silently drop REAL leads). A honeypot probe with the wrong field
+  name is just a normal lead submission — it returns `stub:true` instead of a bare `{"ok":true}`. Tell them
+  apart by that: honeypot = `{"ok":true}` with **no** `stub` key (dropped before `submitLead`).
+- **Watch-cycle evidence (all re-verified live this cycle):** 20/20 deployed routes 200 + 404 correct;
+  `x-robots-tag: noindex, nofollow` + CSP + HSTS + `X-Frame-Options: DENY` intact on /, /search, /ai, /listing,
+  /api; IDX ALL PASS real OneKey data (`fixtureMode:false`, 6 counties = **5,362**); sweep 16/16 PASS (0 console
+  errors, 0 CSP violations, 0 h-overflow at 1280+390); photos real JPEGs (`X-Media-Status: ok`, 2 probes only);
+  qa-crawl ALL PASS (137 links), a11y CLEAN, calc 4/4, saved-flow 6/6; leads local stub 200/`stub:true`,
+  honeypot silent-200, invalid-400, prod reject-paths 405/415/413/400; unit **103/103 executed**, build green.
+- **Zillow/Redfin spot-check (2 listings, both MATCH):** *2930 Gomer St, Yorktown* — ours $975,000 / 5bd / 4ba /
+  Multi-Family / Keller Williams Realty Partner **==** Redfin ($975,000, 5bd, 4ba, "legal 3 family", Keller
+  Williams Realty Partner). Redfin also shows 3,428 sqft where our `LivingArea` is **0** — that is the known
+  OneKey multi-family zero-spec quirk (Redfin's sqft comes from public records, not the MLS field), and the UI
+  correctly DROPS the zero rather than printing "0 Sq. Ft." (`zeroSpec=false` on the live listing page).
+  *490 Peekskill Hollow Rd, Putnam Valley* — ours $789,000 / 3bd / 2ba / 2,030 sqft **==** Redfin ($789,000,
+  for sale, 3bd/2ba/2,030 sqft). **Gotcha: the WebSearch SUMMARY for this address claimed "not currently for
+  sale, est. $582,940" — the live Redfin page says $789,000 FOR SALE.** Search-result summaries serve stale
+  cached facts; always fetch the actual page before believing a "your data is wrong" signal. (Zillow 403s
+  bots — use Redfin/OneKey/homes.com as the second source.)
+
 ## 2026-07-13 — PHASE 4 WATCH (ai-page): green pass, no regression, nothing deployed
 - **A "known advisory FAIL" with no recorded MAGNITUDE is a blind spot.** `agent/verify.mjs` beats-vs-goldens
   has been FAIL for weeks (goldens predate the redesign — re-baseline is OWNER-GATED), but nobody ever wrote
