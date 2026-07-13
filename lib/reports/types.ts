@@ -86,10 +86,9 @@ export interface MarketStats {
   medianPricePerSqft: number;
   medianSqft: number;
   medianBeds: number;
-  priceMin: number;
-  priceMax: number;
-  /** listings first seen in the last 30 days. */
-  freshCount: number;
+  /** 10th / 90th percentile list price — the "typical" band, outliers trimmed. */
+  typicalLow: number;
+  typicalHigh: number;
   priceBands: Bucket[];
   bedsDistribution: Bucket[];
   propertyTypeSplit: Bucket[];

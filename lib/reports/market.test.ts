@@ -43,8 +43,12 @@ describe("computeMarketStats", () => {
     expect(stats.medianSqft).toBe(2000);
     expect(stats.medianBeds).toBe(3);
     expect(stats.medianPricePerSqft).toBe(250);
-    expect(stats.priceMin).toBe(250_000);
-    expect(stats.priceMax).toBe(900_000);
+  });
+
+  it("reports a trimmed (p10–p90) typical range, not raw min/max", () => {
+    // prices [250k, 500k, 900k]: p10 = 300k, p90 = 820k
+    expect(stats.typicalLow).toBe(300_000);
+    expect(stats.typicalHigh).toBe(820_000);
   });
 
   it("bins prices into bands (upper bound exclusive)", () => {

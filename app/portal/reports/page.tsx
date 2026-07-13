@@ -1,44 +1,119 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { ReportGenerator } from "@/components/portal/ReportGenerator";
+import { mapReportRow, PORTAL_REPORT_COLS, type PortalReportRow } from "@/lib/reports/map";
+import type { PortalReport } from "@/lib/reports/types";
 
-/** CMA + market reports, client-facing (owner spec 5b). The agent generates/sends reports
- * from the CRM; a logged-in client will see, run, and recalculate them here, plus "raise their
- * hand" to the agent and open a chat. Report generation is built on the CRM side — this is the
- * client-portal surface, scaffolded until the CRM CMA feature is wired through. */
-export default function ReportsPage() {
+const usdShort = (n: number | null) =>
+  n && n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(2)}M` : n ? `$${Math.round(n / 1000)}K` : null;
+
+function figure(r: PortalReport): string {
+  if (r.kind === "cma") {
+    const lo = usdShort(r.suggestedPriceLow);
+    const hi = usdShort(r.suggestedPriceHigh);
+    return lo && hi ? `${lo} – ${hi}` : "Estimate pending";
+  }
+  const median = Number((r.stats as { medianPrice?: number }).medianPrice) || 0;
+  return median ? `${usdShort(median)} median` : "Market snapshot";
+}
+
+function ReportCard({ r }: { r: PortalReport }) {
+  const date = new Date(r.createdAt).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
   return (
-    <section aria-labelledby="reports-heading">
-      <h2 id="reports-heading" className="font-display text-2xl text-ink">
-        My reports
-      </h2>
-      <p className="mt-1 text-sm text-stone">
-        Your home-value estimates, comparable-market analyses (CMA), and monthly market reports.
-      </p>
+    <Link
+      href={`/portal/reports/${r.id}`}
+      className="group flex flex-col justify-between rounded-[6px] border border-ink/10 bg-white p-5 transition-colors hover:border-ink/30"
+    >
+      <div>
+        <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-stone">
+          {r.kind === "cma" ? "Home value" : "Market report"}
+        </span>
+        <p className="mt-1.5 font-semibold text-ink group-hover:text-river">{r.title}</p>
+      </div>
+      <div className="mt-4 flex items-end justify-between">
+        <p className="text-lg font-light text-ink">{figure(r)}</p>
+        <time className="font-mono text-[11px] uppercase tracking-wide text-stone">{date}</time>
+      </div>
+    </Link>
+  );
+}
 
-      <div className="mt-8 rounded-[4px] border border-dashed border-ink/20 p-10 text-center">
-        <p className="font-display text-xl text-ink">No reports yet.</p>
-        <p className="mx-auto mt-2 max-w-md text-sm text-stone">
-          Request a free home-value report and we&rsquo;ll prepare a comparable-market analysis for
-          your property. New reports your agent shares will show up here, where you can review,
-          recalculate, and reach out directly.
+export default function ReportsPage() {
+  const { supabase, user } = useAuth();
+  const [reports, setReports] = useState<PortalReport[] | null>(null);
+
+  useEffect(() => {
+    if (!supabase || !user) return;
+    let active = true;
+    supabase
+      .from("portal_reports")
+      .select(PORTAL_REPORT_COLS)
+      .eq("client_id", user.id)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (!active) return;
+        setReports((data ?? []).map((r) => mapReportRow(r as unknown as PortalReportRow)));
+      });
+    return () => {
+      active = false;
+    };
+  }, [supabase, user]);
+
+  const agentReports = (reports ?? []).filter((r) => r.source === "agent");
+  const myReports = (reports ?? []).filter((r) => r.source === "client");
+
+  return (
+    <section aria-labelledby="reports-heading" className="space-y-10">
+      <div>
+        <h2 id="reports-heading" className="font-display text-2xl text-ink">
+          My reports
+        </h2>
+        <p className="mt-1 text-sm text-stone">
+          Home-value estimates and Hudson Valley market reports — run your own in seconds, or open
+          the ones your agent prepared for you.
         </p>
-        <div className="mt-6 flex justify-center gap-2">
-          <Button href="/home-value" size="lg">
-            Get my home value
-          </Button>
-          <Button href="/connect" variant="outline" size="lg">
-            Talk to an agent
-          </Button>
-        </div>
       </div>
 
-      <p className="mt-6 text-center text-xs text-stone">
-        Looking for market trends?{" "}
-        <Link href="/top-areas" className="font-bold text-river underline underline-offset-2">
-          Explore Hudson Valley areas
-        </Link>
-        .
-      </p>
+      {agentReports.length > 0 && (
+        <section aria-labelledby="agent-reports">
+          <h3 id="agent-reports" className="text-sm font-bold uppercase tracking-[0.12em] text-stone">
+            Prepared by your agent
+          </h3>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {agentReports.map((r) => (
+              <ReportCard key={r.id} r={r} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section aria-labelledby="my-reports">
+        <h3 id="my-reports" className="text-sm font-bold uppercase tracking-[0.12em] text-stone">
+          Your reports
+        </h3>
+        {reports === null ? (
+          <p className="mt-4 text-sm text-stone">Loading…</p>
+        ) : myReports.length === 0 ? (
+          <p className="mt-4 text-sm text-stone">
+            You haven&rsquo;t run a report yet — start one below.
+          </p>
+        ) : (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {myReports.map((r) => (
+              <ReportCard key={r.id} r={r} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <ReportGenerator />
     </section>
   );
 }

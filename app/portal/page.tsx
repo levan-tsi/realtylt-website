@@ -14,12 +14,17 @@ const ACTIVITY_LABEL: Record<string, string> = {
   remove_search: "Removed a saved search",
   view_search: "Ran a saved search",
   open_photos: "Opened photos",
+  generate_report: "Ran a report",
+  view_report: "Opened a report",
+  recalc_report: "Fine-tuned a report",
+  raise_hand: "Reached out to their agent",
 };
 
 function activityDetail(row: PortalActivityRow): string {
   const addr = typeof row.meta?.address === "string" ? row.meta.address : "";
   const city = typeof row.meta?.city === "string" ? row.meta.city : "";
   if (addr) return city ? `${addr}, ${city}` : addr;
+  if (typeof row.meta?.title === "string") return row.meta.title;
   if (typeof row.meta?.label === "string") return row.meta.label;
   return "";
 }
@@ -40,10 +45,18 @@ export default function PortalOverview() {
   const { supabase, user } = useAuth();
   const { favorites, searches } = useSaved();
   const [activity, setActivity] = useState<PortalActivityRow[] | null>(null);
+  const [reportsCount, setReportsCount] = useState(0);
 
   useEffect(() => {
     if (!supabase || !user) return;
     let active = true;
+    supabase
+      .from("portal_reports")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", user.id)
+      .then(({ count }) => {
+        if (active) setReportsCount(count ?? 0);
+      });
     supabase
       .from("portal_activity")
       .select("id,type,listing_id,meta,created_at")
@@ -72,10 +85,11 @@ export default function PortalOverview() {
   return (
     <div className="space-y-10">
       <section aria-label="Your activity at a glance">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatTile n={favorites.length} label="Saved homes" href="/portal/collections" />
           <StatTile n={searches.length} label="Saved searches" href="/portal/searches" />
           <StatTile n={views} label="Recent views" href="/search" />
+          <StatTile n={reportsCount} label="Reports" href="/portal/reports" />
         </div>
       </section>
 
