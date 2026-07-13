@@ -478,7 +478,9 @@ export function mapProperty(p: ResoProperty): Listing | null {
       p.DaysOnMarket != null
         ? new Date(Date.now() - p.DaysOnMarket * 86_400_000).toISOString()
         : modified,
-    // The owner's own inventory headlines the Featured rail.
-    isFeatured: /united real estate/i.test(p.ListOfficeName ?? ""),
+    // The owner's own inventory headlines the Featured rail. OneKey abbreviates the
+    // office to "United RE Hudson Valley Edge", so match the abbreviated form too —
+    // but not "United Realty …" / "KW … United" (verified vs the snapshot's 609 offices).
+    isFeatured: /united re(al estate)?\b/i.test(p.ListOfficeName ?? ""),
   };
 }

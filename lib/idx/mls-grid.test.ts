@@ -91,6 +91,11 @@ describe("mapProperty", () => {
 
   it("flags the owner's own office listings as featured", () => {
     expect(mapProperty({ ...row, ListOfficeName: "United Real Estate LLC" })!.isFeatured).toBe(true);
+    // OneKey abbreviates the owner's office — the feed's actual string must match.
+    expect(mapProperty({ ...row, ListOfficeName: "United RE Hudson Valley Edge" })!.isFeatured).toBe(true);
+    // Other "united" offices in the feed must NOT ride the owner's rail.
+    expect(mapProperty({ ...row, ListOfficeName: "United Realty NY Inc" })!.isFeatured).toBe(false);
+    expect(mapProperty({ ...row, ListOfficeName: "KW Hudson Valley United" })!.isFeatured).toBe(false);
     expect(mapProperty(row)!.isFeatured).toBe(false);
   });
 });
