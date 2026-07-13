@@ -51,9 +51,11 @@ OUR dark/purple design.
 Brivity has a combined CMA + Market-Reports page that GENERATES reports and SENDS them from the CRM. Build both
 here (CMA + market report) with generate + send-from-CRM. Same function as Brivity, our design.
 
-### 6. Website section in the CRM panel
-Add a "Website" section in the CRM that lets the owner post blogs to the marketing website (and other simple,
-useful things). Keep it SIMPLE — no fragile/complex things that break.
+### 6. Website / blog section in the CRM panel — DEFERRED (do LAST, near the end)
+Owner update 2026-07-13: **leave blogs for now, build at the very end.** The owner has blog content files on
+Google Drive to import later. The marketing-site `/blog` display half already exists (keep it, don't expand).
+Do NOT spend loop budget on the CRM blog-authoring section yet — it's the last thing. Skip this until the CRM
+is otherwise operational.
 
 ### 7. AI Agent page + AI ASSISTANT ("our Gabbi") — match or beat Brivity's Gabbi
 Brivity has an AI assistant called **Gabbi**. Build OUR own CRM AI assistant/agent, LLM-connected (default to the
