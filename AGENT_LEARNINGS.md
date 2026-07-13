@@ -347,3 +347,31 @@ design-excellence — never replaces them or any skill.
 - **The `rag-demo` CORS block stays EXPECTED and owner-gated:** on the proxy the RAG tab degrades to the badged
   "DEMO MODE — SAMPLE REPLY" (`.demo-tag` present) = PASS, not a bug. It logs a console CORS error but **zero CSP
   violations**. Live chat itself returned a REAL assistant reply (webhook 200, no `.demo-tag`) through the proxy.
+
+## 2026-07-13 — Phase-4 watch cycle 1 (orchestrator): the cross-producer trigger trap
+
+- **A mirroring DB trigger must dedup across PRODUCERS, not just against itself.** Migration 0013 added an
+  AFTER INSERT trigger on `public.leads` that mirrors each lead into `public.contacts`. But the live n8n
+  workflow **"RealtyLT Capture Lead"** (`ayoG2IadpWFgfFmH`, the chatbot's `capture_lead` tool) was ALREADY
+  inserting contacts itself (`Save to leads -> Save to contacts`). Result: from 2026-07-13 every chatbot lead
+  would have created **TWO contacts for the same person**. 0013's `[leadid:N]` guard could never catch it — it
+  only dedups the trigger against ITSELF, and the trigger fires **BEFORE** n8n's contact row exists, so
+  looking backward for a duplicate finds nothing. **Fixed in 0014** (trigger = the single producer; dedup
+  across producers on normalized phone/email; repeat leads ATTACH to the existing person) **+ removed the
+  redundant n8n node.** Both halves are required and must stay in sync.
+- **THE GENERAL LESSON: before adding a feeder/mirror/sync into a table, enumerate every EXISTING writer of
+  that table** (n8n workflows, edge functions, app code, other triggers) — do not assume the table has one
+  producer just because your code path has one. Grep the automations, not just the repo. A second producer
+  turns "idempotent" into "duplicated", and an AFTER-INSERT trigger is blind to rows written *after* it runs.
+- **This class of bug is INVISIBLE to tests and to traffic.** It shipped clean, all gates green, and nothing
+  broke — because no chatbot lead happened to arrive in the window. It was only found by *reading the live
+  data* (a contact existed whose `created_at` was 26ms after a lead, with no `[leadid:]` marker → so something
+  else wrote it) and then reading the live n8n workflow. **Watch passes must inspect real production DATA and
+  the live automations, not just probe endpoints and re-run the suite.**
+- **Verify destructive-ish DB behavior with `begin; ... rollback;` through the Supabase MCP.** A single
+  `execute_sql` call accepts multiple statements, so you can insert a probe lead, assert exactly how many
+  contacts the trigger created, and roll it all back — real proof against the live schema, zero rows persisted.
+  (Confirmed leads=1/contacts=8 unchanged before and after.) Far better than reasoning about the SQL.
+- **n8n edit hygiene:** `update_workflow` writes a DRAFT — you must call `publish_workflow` for production to
+  use it, then RE-READ `get_workflow_details` and check **`activeVersion`** (not the top-level `nodes`) to
+  confirm what production actually runs. `setWorkflowMetadata.description` is capped at **255 chars**.

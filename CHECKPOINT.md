@@ -1,5 +1,65 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ PHASE-4 WATCH — CYCLE 1 (2026-07-13): all three GREEN; one REAL bug found + fixed (duplicate contacts)
+
+**Website + AI page re-verified live and clean. The cycle's find is in the DATA layer: migration 0013's
+lead→contact bridge was silently set up to create DUPLICATE contacts for every chatbot lead. Found, fixed
+(0014 + an n8n change), and verified on the live DB. Nothing owner-gated was done.**
+
+**🔴 THE BUG (would have hit the first real chatbot lead after launch):** the live n8n workflow **"RealtyLT
+Capture Lead"** (`ayoG2IadpWFgfFmH`, the chatbot's `capture_lead` tool) was ALREADY writing contacts itself
+(`Save to leads -> Save to contacts`). 0013 then added an AFTER-INSERT trigger on `public.leads` that ALSO
+mirrors a contact → **two contacts per person**. Invisible to tests and to traffic (no chatbot lead arrived
+in the window); 0013's `[leadid:N]` guard structurally *cannot* see it, because the trigger fires BEFORE
+n8n's contact row exists. Found by reading the live data (a contact 26ms newer than a lead, no marker) and
+then the live workflow.
+- **Fix, both halves (must stay in sync):** (1) **CRM migration `0014_lead_contact_dedup.sql`** — the DB
+  trigger is now the SINGLE producer of contacts from leads and dedups ACROSS producers on **normalized
+  phone/email**; a repeat lead **attaches** to the existing person (appends `[leadid:N]`, backfills only
+  blank fields, never overwrites). Applied live. (2) **n8n** — removed the redundant `Save to contacts`
+  node, republished (active version `0b06afc3…`, still active, 6 nodes, only DB write = the `leads` insert).
+- **Verified on the live DB with rolled-back probes** (leads=1 / contacts=8 before AND after, zero residue):
+  new person → exactly **1** contact; repeat lead sent as `+1 917-900-7324` matched the stored `9179007324`
+  → **0 new contacts**, attached to the existing one. Published n8n version re-read and confirmed clean.
+- Also delivers the **cross-lead dedup by email/phone** that 0013 had deferred.
+- CRM clone `fix/brivity-parity`: `76a8fde` (migration) + `c6bb072` (CHECKPOINT). Pushed. Merge = owner-gated.
+
+**WEBSITE — GREEN, no product regressions** (orchestrator re-verified the gates independently: **103/103
+tests, `next build` exit 0**): 20/20 routes 200 + 404 correct; CSP + HSTS + `x-robots-tag: noindex,nofollow`
+intact; Playwright 1280+390 → **0 console errors / 0 CSP violations / 0 h-overflow**; IDX `fixtureMode:false`,
+6 counties = **5,362**, snapshot 36.6h old (under the 3-day bar → not refreshed); photos on-view PASS with
+**exactly 2 probes** (`X-Media-Status: ok`, 582KB + 761KB JPEGs); lead flow local-stub only (**zero valid
+leads to prod**). **Zillow/Redfin spot-check: both listings MATCH** (2930 Gomer $975k/5bd/4ba/KW == Redfin;
+490 Peekskill Hollow $789k/3bd/2ba/2030sqft == Redfin).
+- Two defects fixed **in the watch TOOLING** (no product code touched — commits `4ef3f2b`, `a09a598`):
+  (a) a deployed browser sweep is a **bulk photo test in disguise** (would have fired ~125 `/api/media` calls
+  and re-exhausted the trailing-window budget) → new `scripts/watch-live-sweep.mjs` stubs media at the network
+  layer → full sweep at **0 real media calls**; (b) `verify-live-mls.mjs` asserted freshness `<24h` although
+  **no refresh cron exists** → it went red daily from nothing but time. Now tiered <24h PASS / 24–72h WARN /
+  **>72h still FAILs** (verified it can still go red — not a neutered gate).
+
+**AI PAGE — GREEN, nothing changed, nothing deployed** (a green watch = no deploy): standalone AND `/ai`
+proxy × desktop 1440 + 390 portrait → 13/13 hub nodes, all 4 journey beats drew, **0 console errors / 0 CSP
+violations**, no h-overflow, safe-area OK. **Brain framing HELD** at 390 portrait (fully in frame, reads as a
+brain). **Live chat on the proxy returned a REAL assistant reply** (webhook 200, no demo badge); the RAG-demo
+CORS fallback is expected + owner-gated. Recruit modal exercised with the lead endpoint **stubbed in-browser
++ a hit counter** proving the POST fired and **never left the machine** — zero CRM rows. Golden drift
+magnitudes recorded for the first time (galaxy 7.75% / dive 11.18% / brain 15.47% / hub 12.81%) so the next
+watcher can tell "still red" from "newly worse" — **NOT re-baselined** (owner-gated). Commit `6f117cf`.
+
+### OWNER ACTION NEEDED (loop will not do these)
+- **Stray agent test row in `public.contacts`** — `TEST - page verify agent (ignore)` /
+  `verify-test@realtylt.com` (id `ac3ce3df-6017-4405-b4fb-2740cba6395b`, source `page-demo`, 2026-07-03).
+  Delete before launch. (The loop does not delete data.)
+- **Mirrored leads land Unassigned** (`owner_id` null) — lead routing/assignment is a product decision.
+- **AI-page standalone origin is publicly indexable** (`realtylt-ai-page.vercel.app` sends no noindex/CSP of
+  its own; the proxy adds them). ⚠ **Do NOT "just add noindex" to the standalone** — a Vercel rewrite passes
+  upstream headers through, so it would ALSO flow onto `/ai` and (noindex winning) silently suppress the AI
+  page from Google **at launch**. Genuine launch-SEO decision, not a mechanical fix.
+- Unchanged: PRELAUNCH off + prod MLS key + domain/DNS + promote; CRM prod-Supabase choice + merge
+  `fix/brivity-parity` + app.realtylt.com cutover; automations env + Twilio A2P/inbound-STOP; RAG-demo n8n
+  CORS toggle; AI golden re-baseline; snapshot has no auto-refresh (manual `export-snapshot.mjs`).
+
 ## ▶ FABLE FINAL AUDIT (2026-07-12) — audit → best-version fixes → deployed+verified → presentations
 
 **Full 4-surface audit of the whole suite, high-value fixes applied and re-verified LIVE, and 4 premium

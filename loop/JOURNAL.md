@@ -5,6 +5,48 @@ The watchdog appends its passes here too. Newest at the top.
 
 ---
 
+## 2026-07-13 — CYCLE 1 (Phase-4 watch): all three green; found + fixed a REAL duplicate-contact bug
+
+**Did:** watch pass on all three properties (2 parallel Opus sub-agents on the website + AI-page repos; I took
+the CRM/data layer myself — never two agents in one tree). Website + AI page came back GREEN with no product
+regressions. **The cycle's real find was in the DATA layer, not in either app.**
+
+**The bug (mine to find, not the agents'):** yesterday's migration 0013 mirrors `public.leads` → `public.contacts`
+via an AFTER-INSERT trigger. But the live n8n workflow **"RealtyLT Capture Lead"** (`ayoG2IadpWFgfFmH`) was
+ALREADY inserting contacts itself (`Save to leads -> Save to contacts`). So since 2026-07-13 **every chatbot
+lead would have created TWO contacts for the same person.** It was invisible to tests, to the build, and to
+traffic — no chatbot lead happened to arrive in the window — and 0013's `[leadid:N]` guard *structurally*
+cannot catch it (the trigger fires BEFORE n8n's contact row exists, so looking backward finds nothing).
+Found by reading the LIVE DATA (a contact 26ms newer than a lead, carrying no `[leadid:]` marker → a second
+producer must exist) and then reading the live workflow.
+
+**Fixed, both halves (they must stay in sync):**
+- CRM migration **`0014_lead_contact_dedup.sql`** — the DB trigger becomes the SINGLE producer of contacts from
+  leads and dedups ACROSS producers on normalized phone/email; a repeat lead now ATTACHES to the existing
+  person (appends `[leadid:N]`, backfills only blank fields, never overwrites). Applied to the live DB.
+  Also delivers the "cross-lead dedup by email/phone" 0013 had deferred.
+- **n8n** — removed the redundant `Save to contacts` node, republished (active `0b06afc3…`).
+
+**VERIFIED (independently, on the real systems — did not trust any agent's "done"):**
+- Live DB, rolled-back probes: new person → exactly **1** contact; repeat lead as `+1 917-900-7324` matched the
+  stored `9179007324` → **0 new contacts**, attached. leads=1/contacts=8 before AND after (zero residue).
+- Re-read the **published** n8n active version: 6 nodes, no contacts insert, chain intact, still active.
+- Re-ran the website gates MYSELF: **103/103 tests, `next build` exit 0**. Live: `noindex`+CSP+HSTS intact,
+  IDX `fixtureMode:false` / 5,362 listings, `/ai` + standalone both 200.
+- Read the website agent's gate change (`git show`, not `git diff` — rtk strips deletions on Windows): it
+  loosened a freshness assertion from `<24h` to tiered. Scrutinized it — legitimate (no refresh cron exists, so
+  it went red daily from time alone) and **>72h still FAILs**. Not a neutered gate.
+
+**Commits:** website `4ef3f2b`+`a09a598`+`bb23d88` (watch tooling + learnings; NO product code), ai-page
+`6f117cf` (watch harness), CRM clone `76a8fde`+`c6bb072` (0014 + docs, pushed to `fix/brivity-parity`).
+
+**Next cycle:** the suite is green, but 0014 + the n8n change landed TODAY. Run ONE clean confirmation watch
+(especially the lead→contact path end-to-end) before declaring convergence. **STOP CRITERION: if the next watch
+is fully green with ZERO new findings, write "ALL SHIP-READY — awaiting owner go-live" to CHECKPOINT and
+`touch loop/STOP`.** Did NOT stop this cycle — a watch that just found a real production bug has not yet
+earned a clean bill of health. New OWNER ACTION items are in CHECKPOINT (stray test contact; mirrored leads
+land Unassigned; the AI-page standalone noindex trap — do NOT "just add noindex", it would suppress /ai at launch).
+
 ## 2026-07-13 — HANDOFF from the manual orchestrator session (loop going live)
 The manual multi-cycle orchestration is COMPLETE and the suite is **functionally launch-ready**. Start each
 cycle by ASSESSING, not rebuilding — most of this is done + independently verified. True state:
