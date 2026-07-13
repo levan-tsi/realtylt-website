@@ -77,10 +77,20 @@ LLM backend, or use the Claude API directly — pick the clean path.)
 - Go PAGE BY PAGE: every control clicked, every save verified in the DB, every list/detail shows correct data,
   optimized. This is a huge task — do it step by step, one page perfected at a time.
 
-## WEBSITE (own loop) — data display + design polish
+## WEBSITE (own loop) — data display + design polish + CLIENT ACCOUNTS
 Proper data display everywhere (IDX listings, prices, photos, filters), design polish + color balance (keep our
 dark/purple identity), responsiveness, every page/flow tested by real Playwright clicking. Stays private/noindex +
 secure. The CRM "Website" blog section's marketing half (/blog display) is built — keep it correct.
+
+### CLIENT ACCOUNTS + ACTIVITY → CRM (owner priority — big feature, like Brivity's consumer portal)
+realtylt.com has a **client login/account** (visitors register + sign in). Logged-in clients can **save/favorite
+listings, save searches**, and their **behavior is tracked** (which listings they viewed, what they opened, when,
+what they liked/saved). All of this must flow to the **CRM**: on a contact/lead's page the owner sees **that
+client's saved + liked listings, saved searches, viewed properties, and engagement timeline** — so the owner
+knows what each client actually wants + how active they are. The website client account is **linked to the CRM
+contact** (same person — "the login matches the CRM"). Build BOTH halves: (a) website side — register/login,
+save/favorite/saved-search, activity capture; (b) CRM side — per-contact activity/engagement view. Study how
+Brivity does it (agent-side view = CRM screenshots; consumer side = the realtylt.com logged-in capture).
 
 ## AI PAGE (own loop) — polish + responsiveness + the lead pipeline
 - **FIX THE SCROLL BUG (owner-reported, annoying):** on the AI page, scrolling DOWN sometimes "shoots back to the
