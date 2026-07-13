@@ -6,6 +6,11 @@ it there — connecting all three and keeping them in SYNC — pushing hard unti
 and exiting so the next session continues exactly where you left off.
 
 ## Resume (read FIRST, every session)
+- **`loop/OWNER-REQUIREMENTS.md` — TOP PRIORITY, read before anything else.** Direct owner directives (2026-07-13):
+  CRM email=DIRECT Gmail-in-code (not n8n), Twilio=DIRECT-in-code, phone channel choice, CMA/market-report =
+  Brivity-function with OUR dark/purple design, CRM "Website" blog-post section, AI-Agent page design, and
+  FIX+TEST everything (new-lead creation is broken). It OVERRIDES older phase notes on conflict. Pass each
+  sub-agent the section relevant to its property.
 - `NEXT-SESSION-PROMPT.md` — master brief: full plan, access/tools, hard architecture facts, phases, owner-gated list.
 - `AGENT_LEARNINGS.md` — persistent playbook + every hard-won gotcha. READ it; APPEND a dated bullet whenever
   you learn something non-obvious. Never delete facts.
@@ -21,10 +26,15 @@ This is the hard rule that was missing before: **do SUBSTANTIAL work per session
 2. **ASSESS** all three properties with REAL evidence — probe the live endpoints, drive them with Playwright
    (desktop 1280 + phone 390), read CHECKPOINT/JOURNAL. Build the highest-value work list across the whole suite.
 3. **DISPATCH Opus-4.8 sub-agents with FULL FREEDOM** (Agent tool, `model: "opus"`):
-   - One per property (**website / AI page / CRM**), IN PARALLEL across the three DIFFERENT repos. Within a
-     property you MAY fan out a sub-agent per page/area when that property needs deep polish.
-   - **HARD RULE: never run two agents on the SAME repo/branch/tree at once** (they collide). Across the three
-     DIFFERENT repos, parallel is safe and faster.
+   - **MAX 3 sub-agents at once** (1 main + ≤3 subs) — more may FREEZE the machine. If more than 3 pieces of
+     work exist, run them in BATCHES of ≤3 (finish a batch, spawn the next). This is a HARD cap.
+   - One per property (**website / AI page / CRM**). Since the CRM is the main focus now, a typical batch is:
+     the CRM sub (works its pages STEP BY STEP through its deep session) + a website sub + an AI-page sub.
+   - **HARD RULE: never run two agents on the SAME repo/branch/tree at once** (they collide) — so ≤1 sub per
+     property at a time; a property's sub sequences its pages internally. (Use git worktree isolation ONLY if
+     you truly need parallel same-repo page work, and still stay within the 3-agent cap.)
+   - Sub-agents must **visually study Brivity via Playwright/Chrome (not text-guess)** and keep OUR dark/PURPLE
+     design (polish it — do NOT go black/white). See OWNER-REQUIREMENTS.md.
    - Each sub-agent OWNS its surface END-TO-END — **polish, debug, test, improve, and edit whatever it needs**
      (not one narrow task). It works with real verification (Playwright, TDD where it fits) and **pushes to
      ~700k tokens of substantial work before reporting.** If it nears budget unfinished, it SAVES state
