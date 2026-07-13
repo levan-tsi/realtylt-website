@@ -216,3 +216,52 @@ design-excellence — never replaces them or any skill.
   orphans (table back to the single genuine lead id 13). Mark test rows "TEST — phase3A …" + a unique tag
   so deletion is exact. NOTE: a Postgres data-modifying CTE (`WITH del AS (DELETE … RETURNING) SELECT
   count(*) FROM leads …`) reads the PRE-delete snapshot — verify deletion with a SEPARATE follow-up query.
+
+## 2026-07-12 — FABLE FINAL AUDIT (4-surface audit → best-version fixes → deployed+verified → presentations)
+- **4-surface parallel audit** (website / CRM-isolated-clone / ai-page / loop+infra). **No CRITICALs. Secret
+  hygiene CLEAN across all 3 repos** (`git log --all -p` = 0 secret hits — verified independently). Each
+  finding re-verified against the live system before acceptance.
+- **THE AUTOMATIONS ENGINE IS REAL** (supersedes the old "ours only builds plans" note): the CRM engine
+  enrolls contacts, schedules + ticks steps on a cron, branches on conditions, **dispatches real SMS/email
+  via n8n → Twilio/Gmail**, logs every run, and **defaults to Test Mode ON** (inert without `N8N_DISPATCH_*`
+  env). The risk moved from "it's fake" to **compliance**: `automation_optouts` had a READER (`isOptedOut`)
+  but **no writer**, and SMS had no STOP footer. FIXED on `fix/brivity-parity` (4daebe3): `withOptOutNotice`
+  (sms-only "Reply STOP", no double-stamp), `recordOptOut` writer + `markOptedOut` server action +
+  OptOutButton UI, canonical `optoutAddress` shared by writer AND gate so a recorded opt-out is honored.
+  0005_demo_seed made non-clobbering (9384597). 476 unit tests green. **OWNER-GATED:** inbound Twilio STOP
+  webhook (n8n) + A2P 10DLC + merge/promote. NOTE the "stale-password → dishonest green" worry is real for
+  the loop's e2e globalSetup, but the CRM sign-in specs FAIL RED on a bad password (they don't false-pass).
+- **Website has NO auto-refresh cron** — `vercel.json` is bare `{}`; the "daily cron 6:00 UTC" claim in
+  HANDOFF was stale (corrected, bb6e6e5). Refresh is MANUAL (export→commit→deploy); a durable store is an
+  owner decision (Blob removed, Vercel FS read-only — a cron alone can't persist a snapshot).
+- **Deployed `website-lead` edge fn has NO rate limit + blanket `*.vercel.app` CORS** (read via Supabase
+  `get_edge_function`; honeypot+field-caps only). Added a best-effort per-IP sliding-window limiter IN THE
+  ROUTE (`lib/leads` `leadRateLimited`, 8/60s → 429; 735beaf). Verified live: 11 rapid **honeypot** POSTs →
+  200×8, 429×3, **0 leads created**. Edge-fn hardening (shared `x-rlt-secret` + tighter CORS) + Vercel WAF =
+  owner-gated.
+- **`/api/idx/pins` ships the whole set on the default map view** (~1.08MB). Trimmed via 4-dp coord rounding
+  (91aa3cd → 972KB, −10%). All 10 pin fields ARE consumed by the MapView popup — can't drop fields, only
+  round coords (pins are approximate zip-centroids anyway).
+- **Featured rail was silently "newest"** because OneKey abbreviates the owner's office to **"United RE
+  Hudson Valley Edge"** (6 listings, all in the owner's 6-county footprint). Regex `/united re(al estate)?\b/i`
+  matches ONLY it (not "United Realty NY Inc" / "KW Hudson Valley United"); flipped 6 `isFeatured` flags in
+  the snapshot (7c70bcd). Verified live: the home rail now headlines the 6 owner listings. (Owner: confirm
+  that office is yours — snapshot lacks agent-name to prove it's Levan personally vs brokerage-mates.)
+- **AI page (windows-main, CLI-deploy):** `import brainModel.json with { type: 'json' }` is a HARD
+  SyntaxError below Chrome 123 / Safari 17.2 → the loader spins FOREVER on old phones (owner's #1 audience).
+  Added an ADDITIVE classic-script **boot watchdog** in index.html (`#bootfallback` overlay; reveals if
+  `#loader` persists 12s OR on `webglcontextlost`; self-heals on a late boot; a "Work with me" mailto + a
+  reload). Verified live BOTH paths (healthy=dormant, main.js-blocked→fallback+CTA). **16px lead inputs
+  gotcha:** the `.rc-field input` base rule sits AFTER the `@media` override with EQUAL specificity, so the
+  base wins on mobile — use `#rc-form input` (id specificity) to beat it; `#leadgate input` wins by order.
+  Also `overscroll-behavior:contain` on `#chatlog`, excluded `web/src/*.best.js` from deploy, bumped the
+  `?v=` stamp + versioned `styles.css?v=`. Deployed + verified 0 console errors desktop+390, camera rig
+  untouched.
+- **Standalone ai-page origin** (`realtylt-ai-page.vercel.app`) still serves no noindex/CSP/x-frame-options
+  (the `/ai` proxy adds them) → publicly indexable pre-launch. Left OWNER-GATED (adding noindex to the origin
+  could suppress realtylt.com/ai at launch if the proxy forwards it — can't safely test while PRELAUNCH=1).
+- **Fable credits exhausted mid-session** → per owner, subagents route to **Opus 4.8** (the 4 auditors ran on
+  Fable before the wall; the Phase-C review + later agents on Opus). Main session stayed on Fable.
+- **Deliverables:** `docs/presentation/{architecture,portfolio,qa-prep,one-pager}.html` (4 premium
+  self-contained Artifacts, shared brand system, theme-aware) + `docs/OWNER-GO-LIVE.md` (consolidated
+  owner-gated checklist). Committed e429d94.

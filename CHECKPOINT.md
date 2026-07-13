@@ -1,5 +1,38 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ FABLE FINAL AUDIT (2026-07-12) — audit → best-version fixes → deployed+verified → presentations
+
+**Full 4-surface audit of the whole suite, high-value fixes applied and re-verified LIVE, and 4 premium
+comprehension deliverables built. No CRITICALs; secret hygiene clean across all 3 repos. Site + AI page
+stay private/noindex. CRM fixes are on the isolated `fix/brivity-parity` branch (merge owner-gated).**
+
+**AUDIT (4 parallel auditors, every finding re-verified vs live):** website / CRM-isolated-clone / ai-page /
+loop+infra. Headline: the **CRM Automations engine is REAL** (enroll→schedule→tick→dispatch to n8n→Twilio/
+Gmail, logs runs, Test-Mode-default), not a stub. 0 committed secrets anywhere. Media proxy SSRF-safe +
+budget-disciplined. IDX = real 5,362 OneKey listings (fixtureMode:false, verified live).
+
+**WEBSITE — fixes deployed to main + verified LIVE (103/103 tests, build green, all 20 routes 200):**
+- **Rate-limit `/api/lead`** (best-effort per-IP 8/60s → 429). Verified: 11 rapid honeypot POSTs → 200×8,
+  429×3, **0 leads created**. (Deployed edge fn had NO limit; edge hardening + Vercel WAF = owner-gated.)
+- **Slimmed `/api/idx/pins`** 1.08MB→**972KB** (−10%, 4-dp coord rounding) — all pin fields still consumed.
+- **Featured rail fixed** — matches OneKey's abbreviated owner office "United RE Hudson Valley Edge"; the
+  home rail now headlines the **6 owner listings** (was silently "newest"). Verified live.
+- **HANDOFF corrected** (no auto-refresh cron exists — refresh is manual) + removed stray e.txt/o.txt.
+
+**AI PAGE — fixes deployed (CLI) + verified LIVE (0 console errors desktop+390, camera rig untouched):**
+- **Boot watchdog** (additive) — rescues old-browser SyntaxError / failed-fetch / GL-loss into a static
+  "Work with me" fallback (the infinite-loader bug). Verified dormant on healthy boot AND firing on failure.
+- **16px lead inputs** (recruit + gate) so iOS never zoom-jumps the canvas; `overscroll-behavior:contain`
+  on chat log; excluded dead `*.best.js` from deploy.
+
+**CRM — on isolated `fix/brivity-parity` (476 tests green; merge/deploy OWNER-GATED):**
+- **TCPA opt-out CLOSED (in-CRM side):** `recordOptOut` writer + `markOptedOut` action + OptOutButton UI +
+  "Reply STOP" SMS footer, canonical address shared by writer & send-gate. Inbound-STOP webhook + A2P = owner.
+- `0005_demo_seed` made non-clobbering.
+
+**DELIVERABLES:** `docs/presentation/{architecture,portfolio,qa-prep,one-pager}.html` (premium, self-contained
+Artifacts) + `docs/OWNER-GO-LIVE.md` (consolidated owner-gated go-live checklist). See AGENT_LEARNINGS 2026-07-12.
+
 ## ▶ PHASE 3A (2026-07-13) — COMBINED LAUNCH-READINESS: website + /ai + connections, tested like a visitor
 
 **Full visitor-journey re-verification of BOTH properties (desktop 1280 + mobile 390), the /ai proxy,
