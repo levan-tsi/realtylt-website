@@ -21,6 +21,22 @@ everything proven by real clicking (Playwright), data saved to the DB and displa
 - **TEST EVERYTHING by real interaction** (Playwright clicking every control) and VERIFY the data saves to the
   DB and displays correctly. Fix what's broken before moving on.
 
+## REFERENCE MATERIALS (captured 2026-07-13 — BUILD to match these, then do a FINAL comparison check)
+Real visual + functional references are now on disk. STUDY them before/while building the matching page, and at
+the end compare your result against them to confirm it's the same + right.
+- **Brivity CRM reference** (CRM clone `/root/realtylt-crm-fix/docs/brivity-ref/`):
+  - `crm/` — `crm-visual-functional-reference.pdf`, `crm-functionality.html` (contacts, leads, phone, email
+    timeline, tasks, transactions, automations, Gabbi, reporting, client-activity view).
+  - `cma/` — `brivity-cma-market-reference-complete.htm`, `cma-example-report.pdf`, `market-report-example.pdf`,
+    `brivity-open-and-view-reports.gif` (the CMA + market-report design, example outputs, and the view flow).
+  - `settings/` — `brivity-website-reference.html` (Gmail/Twilio integration + website/content screens).
+  - Plus the existing `BRIVITY_REFERENCE.md`.
+- **realtylt.com reference** (website repo `docs/reference/live-2026-07-13/`): `realtylt-full-reference-part1.pdf`,
+  `realtylt-full-reference-part2.pdf`, `realtylt-functionality.html` (full live-site design + functionality,
+  public + client-account experience).
+Note: these are large PDFs/HTML/GIF — read the FUNCTIONALITY html/md for text, open the PDFs/GIF for the visuals;
+don't dump entire binaries into context.
+
 ## CRM — THE MAIN FOCUS (isolated clone `/root/realtylt-crm-fix`, previews only; NEVER touch `/root/realtylt-crm`)
 
 ### 1. Email — DIRECT Gmail integration IN CODE (NOT n8n)
@@ -43,13 +59,22 @@ FaceTime** (Apple) — owner picks which to use; OR "use iMessage always, and if
 fall back to regular SMS." Show call recordings + call history per contact.
 
 ### 4. CMA report — exactly like Brivity (function + layout), OUR design
-Make the CMA match Brivity's CMA exactly in functionality + layout/sections. We mapped it but have NO pics —
-OPEN CHROME, SEE Brivity's CMA, replicate section-by-section (screenshot each page and build to match). Keep
-OUR dark/purple design.
+Make the CMA match Brivity's CMA exactly in functionality + layout/sections. **Reference pics + example reports
+ARE NOW CAPTURED** — see REFERENCE MATERIALS below (docs/brivity-ref/cma/: the full HTML reference, an example
+CMA report PDF, an example market-report PDF, and a GIF of the open-and-view flow). Build to match them, then do
+a FINAL comparison check against them. Keep OUR dark/purple design.
 
 ### 5. Market report + sending
 Brivity has a combined CMA + Market-Reports page that GENERATES reports and SENDS them from the CRM. Build both
 here (CMA + market report) with generate + send-from-CRM. Same function as Brivity, our design.
+
+### 5b. CMA + Market reports are CLIENT-FACING too (owner update — ties to client accounts)
+CMA and market reports are connected to realtylt.com: **a logged-in CLIENT can see their CMA + market reports,
+generate/run them themselves, RECALCULATE / adjust things inside the report, "RAISE THEIR HAND" (request the
+agent / express interest), and open a DIRECT CHAT.** So the CMA/market-report feature has two sides: the CRM
+(agent generates + sends + sees engagement) AND the website client portal (client views + self-serves +
+recalculates + raises hand + chats). Build both; the client's report activity flows back to the CRM (see the
+client-accounts requirement).
 
 ### 6. Website / blog section in the CRM panel — DEFERRED (do LAST, near the end)
 Owner update 2026-07-13: **leave blogs for now, build at the very end.** The owner has blog content files on

@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RealtyLT.com — Design & Functionality Reference</title>
+<style>
+body{font-family:'Lato',Arial,sans-serif;color:#333;max-width:920px;margin:40px auto;padding:0 24px;line-height:1.55}
+h1{font-size:30px;border-bottom:3px solid #2f88c9;padding-bottom:8px}
+h2{font-size:22px;color:#2f88c9;margin-top:38px;border-bottom:1px solid #ddd;padding-bottom:5px}
+h3{font-size:17px;margin-top:24px}
+code{background:#f3f3f3;padding:1px 5px;border-radius:3px;font-size:13px}
+table{border-collapse:collapse;width:100%;margin:12px 0}
+th,td{border:1px solid #ccc;padding:7px 10px;text-align:left;font-size:14px;vertical-align:top}
+th{background:#f5f7fa}
+.swatch{display:inline-block;width:14px;height:14px;border:1px solid #999;vertical-align:middle;margin-right:5px}
+.note{background:#fff8e1;border-left:4px solid #f5b301;padding:10px 14px;margin:14px 0;font-size:14px}
+ul{margin:6px 0}
+</style></head><body>
+<h1>RealtyLT.com — Design &amp; Functionality Reference</h1>
+<p><em>Rebuild reference document. Site platform: <strong>Brivity IDX</strong>. MLS: <strong>OneKey MLS</strong>. Captured for realtylt.com (redirects to www.realtylt.com).</em></p>
+
+<h2>Global Design System</h2>
+<table>
+<tr><th>Token</th><th>Value</th></tr>
+<tr><td>Primary font</td><td>Lato (sans-serif)</td></tr>
+<tr><td>Body text color</td><td><span class="swatch" style="background:#808080"></span>#808080 (grey)</td></tr>
+<tr><td>Accent / links</td><td><span class="swatch" style="background:#2f88c9"></span>light blue (logo + link accents)</td></tr>
+<tr><td>Primary CTA buttons</td><td>Solid black, white uppercase text; OR transparent with 1.25px border</td></tr>
+<tr><td>Top utility bar</td><td>"FAIR HOUSING NOTICE" grey band above header</td></tr>
+<tr><td>Header</td><td>White, sticky; logo left; nav center/right; CONNECT as bordered button</td></tr>
+<tr><td>Responsive breakpoints</td><td>991px, 967px, 480px; hamburger via .navbar-toggle</td></tr>
+<tr><td>Nav (desktop)</td><td>HOME · SEARCH LISTINGS · BUYING · SELLING · TOP AREAS (dropdown) · FINANCING · HOME VALUE · WHO WE ARE · BLOG · CONNECT</td></tr>
+</table>
+
+<h2>PART A — Public / Logged-out Pages</h2>
+
+<h3>Home (/)</h3>
+<p>Hero: full-bleed dark/black background image with headline "Let's Find <strong>Home</strong>". Hero contains a "Search for Homes" input + SEARCH button, plus SELL YOUR HOME and SEE HOME VALUE CTAs. Below hero: featured/area sections, agent intro, footer. Live chat bubble bottom-right.</p>
+
+<h3>Search Listings (/search)</h3>
+<p>Map + results layout. Filter controls open as <strong>popups</strong>: BEDS (min/max popover), MORE (full filter panel). Clicking a listing card navigates to the listing detail page. Map is interactive (One Key MLS data).</p>
+
+<h3>Listing Detail (/search/&lt;state&gt;/&lt;city&gt;/&lt;type&gt;/&lt;slug&gt;)</h3>
+<p>Sections: photo/overview header with SAVE (heart) control, Overview, Payment Calculator (mortgage), Market Insights. SAVE requires login and adds to a Collection.</p>
+
+<h3>Other public pages</h3>
+<ul>
+<li><strong>Buying</strong> (/buying) — buyer info/landing.</li>
+<li><strong>Selling</strong> (/selling) — seller landing.</li>
+<li><strong>Financing</strong> (/financing) — includes mortgage calculator.</li>
+<li><strong>Home Value</strong> (/home_value) — home valuation lead form.</li>
+<li><strong>Who We Are</strong> (/realestateagent/search) — agent/company info.</li>
+<li><strong>Blog</strong> (/blog).</li>
+<li><strong>Connect</strong> (/connect) — contact form.</li>
+<li><strong>Top Areas</strong> dropdown — Dutchess, Westchester, Putnam, Rockland, Ulster (pre-filtered county searches).</li>
+</ul>
+
+<h2>PART B — Client Account (Logged-in)</h2>
+<table>
+<tr><th>Feature</th><th>URL</th><th>Behavior</th></tr>
+<tr><td>Collections (favorites)</td><td>/myportal/collections</td><td>Where saved/favorited listings live, grouped into collections.</td></tr>
+<tr><td>Saved Searches</td><td>/myportal/searches</td><td>Create/view saved searches with alert options.</td></tr>
+<tr><td>My Reports</td><td>/myportal/reports</td><td>Market/CMA reports for the client.</td></tr>
+<tr><td>Profile / Settings</td><td>/myportal/profile</td><td>Account details; "Member Since" date shown.</td></tr>
+</table>
+<p><strong>Save / Favorite flow (tested &amp; reversed):</strong> Clicking the heart on a listing shows toast "Saved to Favorites! Change Collection". Clicking again removes it: "Property removed from collection". The listing then appears under Collections.</p>
+
+<h2>Authentication Screens (Logged-out UI)</h2>
+<p>Login and registration are a single <strong>Bootstrap modal</strong> (<code>#sign-up-modal</code>) opened via the header "Sign In" / "Sign Up" triggers — <em>not</em> standalone pages (<code>/login</code> returns 410). The modal has two states:</p>
+
+<h3>Register — "Sign Up for Free"</h3>
+<ul>
+<li>Subtext: "Create an account to save properties, receive alerts about new listings, view comparables, and obtain monthly market reports."</li>
+<li>Buttons (stacked, full-width): <strong>CONTINUE WITH GOOGLE</strong> (blue), <strong>CONTINUE WITH FACEBOOK</strong> (blue), <strong>CONTINUE WITH APPLE</strong> (black).</li>
+<li>Field: <strong>Email</strong> (placeholder "Enter email").</li>
+<li>Primary button: <strong>CONTINUE WITH EMAIL</strong> (black).</li>
+<li>Footer link: "Already have an account? <strong>Sign In</strong>".</li>
+<li>Legal: "By continuing you agree to the terms of service and conditions." + Privacy Policy | Terms &amp; Conditions links.</li>
+</ul>
+
+<h3>Login — "Welcome back!"</h3>
+<ul>
+<li>Subtext: "We've missed you! Please enter your details."</li>
+<li>Social buttons: Google (blue), Facebook (blue), Apple (black) — same as register.</li>
+<li>Fields: <strong>Email</strong> ("Enter email"), <strong>Password</strong> (masked).</li>
+<li>Link: <strong>Forgot your password?</strong> (blue).</li>
+<li>Primary button: <strong>SIGN IN</strong> (black, full-width).</li>
+<li>Footer link: "Don't have an account? <strong>Sign Up</strong>".</li>
+<li>Consent text (verbatim, abbreviated): express written consent to receive marketing communications via email/calls from Levan Tsiklauri; SMS consent ("reply STOP to opt out"); links to Terms &amp; Conditions and Privacy Policy.</li>
+</ul>
+
+<div class="note"><strong>Design of both modals:</strong> White card, ~380px wide, centered over dimmed page. Grey heading (Lato), grey body text (#808080). Close "×" top-right. Consistent black primary CTAs; social buttons keep brand colors.</div>
+
+<div class="note"><strong>Screenshots:</strong> High-resolution screenshots of the Register and Login modals (and all Part A/B pages) are delivered alongside this file in the chat. They could not be auto-embedded because session screenshots aren't accessible from the page's JavaScript context.</div>
+
+<p style="margin-top:40px;font-size:12px;color:#999">Generated by browser automation as a rebuild reference. Read-only capture — no forms submitted, no settings changed; the one test favorite was added and then removed to restore account state.</p>
+</body></html>
