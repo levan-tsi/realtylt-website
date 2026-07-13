@@ -1,27 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FairHousingBar } from "@/components/site/FairHousingBar";
+import { AccountMenu } from "@/components/auth/AccountMenu";
+import { useSaved } from "@/components/auth/SavedProvider";
 import { NAV, SITE } from "@/lib/site";
-import { savedCount, SAVED_EVENT } from "@/lib/saved";
 
 /** Site header matched to live realtylt.com (Brivity):
  * utility bar (#f3f5f8) → Fair Housing bar (#d3d6d9) → white logo row →
  * uppercase gray nav row with boxed CONNECT, border-b #ddd, not sticky. */
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [saved, setSaved] = useState(0);
+  const { count: saved } = useSaved();
   const pathname = usePathname();
-
-  useEffect(() => {
-    setSaved(savedCount());
-    const sync = () => setSaved(savedCount());
-    window.addEventListener(SAVED_EVENT, sync);
-    return () => window.removeEventListener(SAVED_EVENT, sync);
-  }, []);
 
   return (
     <header className="bg-paper">
@@ -31,16 +25,19 @@ export function Header() {
           <a href={SITE.phoneHref} className="text-sm text-stone transition-colors hover:text-ink">
             {SITE.phone}
           </a>
-          <Link
-            href="/saved"
-            className="flex items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
-            aria-label={`Saved homes and searches${saved ? ` (${saved})` : ""}`}
-          >
-            <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 fill-transparent stroke-current" strokeWidth="1.8">
-              <path d="M12 20.3 4.7 13a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l.5.5.5-.5a4.8 4.8 0 0 1 6.8 6.8L12 20.3z" />
-            </svg>
-            Saved{saved > 0 ? ` (${saved})` : ""}
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/saved"
+              className="flex items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
+              aria-label={`Saved homes and searches${saved ? ` (${saved})` : ""}`}
+            >
+              <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 fill-transparent stroke-current" strokeWidth="1.8">
+                <path d="M12 20.3 4.7 13a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l.5.5.5-.5a4.8 4.8 0 0 1 6.8 6.8L12 20.3z" />
+              </svg>
+              Saved{saved > 0 ? ` (${saved})` : ""}
+            </Link>
+            <AccountMenu />
+          </div>
         </div>
       </div>
 

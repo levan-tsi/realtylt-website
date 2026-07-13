@@ -31,7 +31,9 @@ const CSP = [
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
   "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co",
   "font-src 'self' data:",
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud",
+  // …plus Supabase (client accounts / auth): sign-in, token refresh, and portal reads/writes
+  // go to our project origin https://<ref>.supabase.co over the anon key (docs/CLIENT-ACCOUNTS.md).
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",

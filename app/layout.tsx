@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { Providers } from "@/components/auth/Providers";
 import { COUNTIES, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
@@ -76,9 +77,11 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

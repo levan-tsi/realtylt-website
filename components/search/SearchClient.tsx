@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
-import { saveSearch } from "@/lib/saved";
+import { useSaved } from "@/components/auth/SavedProvider";
 import { COUNTIES, SITE, type CountySlug } from "@/lib/site";
 import type { Listing, MapPin } from "@/lib/idx/types";
 
@@ -111,6 +111,7 @@ export function SearchClient() {
   const [result, setResult] = useState<ApiResult | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [savedNote, setSavedNote] = useState("");
+  const { saveSearch, signedIn } = useSaved();
   const [pins, setPins] = useState<MapPin[] | null>(null);
   const loadedPinsQuery = useRef<string | null>(null);
   const qInput = useRef<HTMLInputElement>(null);
@@ -187,8 +188,8 @@ export function SearchClient() {
       filters.propertyType,
     ].filter(Boolean);
     const label = parts.length ? parts.join(" · ") : "All Hudson Valley listings";
-    saveSearch(label, toQuery(filters, false));
-    setSavedNote(`Saved “${label}” to this device.`);
+    void saveSearch(label, toQuery(filters, false));
+    setSavedNote(`Saved “${label}” to ${signedIn ? "your account" : "this device"}.`);
     window.setTimeout(() => setSavedNote(""), 4000);
   }
 

@@ -92,3 +92,15 @@ export function removeSearch(id: string) {
 export function savedCount(): number {
   return getFavorites().length + getSavedSearches().length;
 }
+
+/** Wipe device-local favorites + searches. Called once after they've been migrated into a
+ * client account on sign-in, so they aren't re-migrated on the next login. */
+export function clearLocal() {
+  try {
+    window.localStorage.removeItem(FAV_KEY);
+    window.localStorage.removeItem(SEARCH_KEY);
+    window.dispatchEvent(new CustomEvent(SAVED_EVENT));
+  } catch {
+    /* storage unavailable */
+  }
+}

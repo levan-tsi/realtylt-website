@@ -1,18 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { isFavorite, toggleFavorite, SAVED_EVENT } from "@/lib/saved";
+import { useSaved } from "@/components/auth/SavedProvider";
 
-/** Heart toggle — saves to device (localStorage). */
+/** Heart toggle — saves to the client's account when signed in, otherwise to this device.
+ * Device saves migrate into the account automatically on the next sign-in. */
 export function FavoriteButton({ id, className = "" }: { id: string; className?: string }) {
-  const [fav, setFav] = useState(false);
-
-  useEffect(() => {
-    setFav(isFavorite(id));
-    const sync = () => setFav(isFavorite(id));
-    window.addEventListener(SAVED_EVENT, sync);
-    return () => window.removeEventListener(SAVED_EVENT, sync);
-  }, [id]);
+  const { isFavorite, toggleFavorite } = useSaved();
+  const fav = isFavorite(id);
 
   return (
     <button
@@ -23,7 +17,7 @@ export function FavoriteButton({ id, className = "" }: { id: string; className?:
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        setFav(toggleFavorite(id));
+        void toggleFavorite(id);
       }}
       className={`grid h-9 w-9 place-items-center rounded-full bg-ink/55 backdrop-blur transition-all hover:scale-110 hover:bg-ink/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper ${className}`}
     >
