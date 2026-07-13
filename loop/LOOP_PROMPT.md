@@ -40,6 +40,12 @@ This is the hard rule that was missing before: **do SUBSTANTIAL work per session
      ~700k tokens of substantial work before reporting.** If it nears budget unfinished, it SAVES state
      (CHECKPOINT + committed code) and reports EXACTLY what's left, so the next sub-agent resumes cleanly
      instead of the job dying half-done.
+   - **CRITICAL — each sub-agent MUST COMMIT + PUSH its OWN work incrementally (small commits) AND a final
+     commit BEFORE it reports back. Do NOT rely on main to commit at the end — a single headless cycle can
+     run out of budget after the sub-agents return but BEFORE main verifies+commits, which silently loses all
+     their work as uncommitted files. Verified this failure on 2026-07-13 cycle 1. Sub-agents self-commit;
+     main only VERIFIES + integrates + handles cross-repo sync.** Never leave scratch files (`_scratch*.mjs`)
+     in the tree — delete them before committing (path-scoped `git add`, never `git add -A` with scratch present).
    - Give each the relevant phase brief from `NEXT-SESSION-PROMPT.md` (Phase 1 website / 1B AI page / 2 CRM).
 4. **VERIFY every sub-agent's work YOURSELF** with independent evidence (Playwright screenshots, live-endpoint
    probes, side-by-side vs Zillow / live realtylt.com / Brivity, Supabase spot-checks). Never trust a "done."
