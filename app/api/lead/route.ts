@@ -1,12 +1,30 @@
 import { NextResponse } from "next/server";
-import { parseLead, submitLead } from "@/lib/leads";
+import { leadRateLimited, parseLead, submitLead } from "@/lib/leads";
 
 // A lead is a handful of short text fields — cap the accepted body well below any
 // legitimate submission so oversized/garbage payloads are rejected before parsing.
 const MAX_BODY_BYTES = 16 * 1024;
 
+/** Client IP for throttling: first hop of x-forwarded-for (Vercel sets it), then
+ * x-real-ip, else a shared constant — worst case unproxied traffic shares one window. */
+function clientIp(req: Request): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim() || "unknown";
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
 export async function POST(req: Request) {
   try {
+    // Best-effort per-IP throttle (in-memory sliding window — per instance, resets on
+    // cold start; Vercel WAF is the durable layer). Runs first so throttled traffic
+    // costs nothing further.
+    if (leadRateLimited(clientIp(req))) {
+      return NextResponse.json(
+        { ok: false, error: "Too many requests. Please try again shortly." },
+        { status: 429 },
+      );
+    }
+
     // Enforce JSON content-type (the only thing the client sends) — blocks form-encoded
     // and other simple-request shapes that don't belong here.
     const contentType = req.headers.get("content-type") ?? "";

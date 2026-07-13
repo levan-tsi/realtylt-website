@@ -87,3 +87,32 @@ export async function submitLead(lead: LeadPayload): Promise<LeadResult> {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
 }
+
+/** Best-effort per-IP throttle for /api/lead: sliding window, max 8 submissions/60s.
+ * In-memory, so per-serverless-instance and reset on cold start — enough to blunt
+ * casual scripted abuse without ever slowing a human down; Vercel WAF is the durable
+ * layer if real abuse shows up (HANDOFF "Deferred"). */
+const RATE_MAX = 8;
+const RATE_WINDOW_MS = 60_000;
+const rateWindows = new Map<string, number[]>();
+
+/** Record a hit for `ip`; true = over the limit (reject with 429). */
+export function leadRateLimited(ip: string): boolean {
+  const cutoff = Date.now() - RATE_WINDOW_MS;
+  // Bound the map: past any plausible per-instance traffic, sweep fully-stale windows.
+  if (rateWindows.size > 1_000) {
+    for (const [key, times] of rateWindows) {
+      if ((times[times.length - 1] ?? 0) <= cutoff) rateWindows.delete(key);
+    }
+  }
+  const recent = (rateWindows.get(ip) ?? []).filter((t) => t > cutoff);
+  const limited = recent.length >= RATE_MAX;
+  if (!limited) recent.push(Date.now());
+  rateWindows.set(ip, recent);
+  return limited;
+}
+
+/** Test hook — clears the throttle windows (same pattern as resetMediaCacheForTests). */
+export function resetLeadRateLimitForTests(): void {
+  rateWindows.clear();
+}
