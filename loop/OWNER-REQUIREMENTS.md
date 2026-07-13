@@ -55,12 +55,18 @@ here (CMA + market report) with generate + send-from-CRM. Same function as Brivi
 Add a "Website" section in the CRM that lets the owner post blogs to the marketing website (and other simple,
 useful things). Keep it SIMPLE — no fragile/complex things that break.
 
-### 7. AI Agent page (DESIGN QUESTION — brainstorm + propose a design doc, then build v1)
-Owner is deciding HOW it should work: scheduled? prompt-triggered? connect to an LLM and configure what it
-does? RECOMMENDED v1 (loop confirms/refines first): an LLM-connected AI-assistant page where the owner sets
-instructions/goals + picks triggers (manual run / scheduled / on-event e.g. new lead), and it drafts/sends
-messages or takes CRM actions — running in TEST MODE first (drafts only, nothing auto-sent) until the owner
-approves. Write the design to a doc, get it coherent, build v1, report the design + what it does.
+### 7. AI Agent page + AI ASSISTANT ("our Gabbi") — match or beat Brivity's Gabbi
+Brivity has an AI assistant called **Gabbi**. Build OUR own CRM AI assistant/agent, LLM-connected (default to the
+latest Claude), **same or better than Gabbi.** First: study what Gabbi can DO (its abilities — drafting replies,
+lead follow-up, summarizing a contact, suggesting next actions, answering questions about the pipeline, etc.) via
+the Brivity visual study, then design ours to match/exceed. Two related surfaces:
+  (a) **AI assistant** — an in-CRM chat/assistant (like Gabbi) the owner talks to: ask about contacts/pipeline,
+      draft messages, summarize a lead, suggest next steps. LLM-connected.
+  (b) **AI Agent page** — configure autonomous behavior: owner sets instructions/goals + triggers (manual /
+      scheduled / on-event e.g. new lead), it drafts/sends or takes CRM actions — TEST MODE first (drafts only,
+      nothing auto-sent) until approved.
+Write the design to a doc, build v1, report what it does. (The orchestrator/main can be "connected to it" as the
+LLM backend, or use the Claude API directly — pick the clean path.)
 
 ### 8. FIX + TEST the core CRM (highest urgency — it's buggy)
 - **Creating new leads is BROKEN** — fix + verify (Playwright: fill new-lead form → saves → appears in
@@ -69,9 +75,26 @@ approves. Write the design to a doc, get it coherent, build v1, report the desig
 - Go PAGE BY PAGE: every control clicked, every save verified in the DB, every list/detail shows correct data,
   optimized. This is a huge task — do it step by step, one page perfected at a time.
 
-## WEBSITE + AI PAGE (keep converged; watch regressions)
-Website is ship-ready (private/noindex) — blog-from-Drive is separate/owner-gated except the CRM "Website"
-section (#6). AI page: keep the galaxy→brain journey + mobile; don't re-baseline goldens (owner-gated).
+## WEBSITE (own loop) — data display + design polish
+Proper data display everywhere (IDX listings, prices, photos, filters), design polish + color balance (keep our
+dark/purple identity), responsiveness, every page/flow tested by real Playwright clicking. Stays private/noindex +
+secure. The CRM "Website" blog section's marketing half (/blog display) is built — keep it correct.
+
+## AI PAGE (own loop) — polish + responsiveness + the lead pipeline
+- **FIX THE SCROLL BUG (owner-reported, annoying):** on the AI page, scrolling DOWN sometimes "shoots back to the
+  START instead of scrolling down"; after several tries it finally goes down. The scroll-driven journey is
+  hijacking/fighting native scroll. Make scrolling smooth + predictable (down = down, first try) at desktop AND
+  mobile — this is a real UX defect, fix it properly (research mobile/scroll-driven WebGL scroll handling if needed).
+- **Polish design + responsiveness** (mobile-first, 390 portrait, touch, 60fps); keep the galaxy→brain journey +
+  camera rig intact; golden re-baseline is owner-gated.
+- **Lead pipeline (cross-cutting — see below):** the "Work with me" / "Book" CTAs must create a CRM lead + fire a
+  notification.
+
+## CROSS-CUTTING — new lead → CRM + NOTIFICATION (owner priority)
+When a visitor clicks **"Work with me" / "Book"** on the AI page (and any website lead), it must arrive in the CRM
+as a **new lead** (via the lead→contact pipeline — already wired: /api/lead → public.leads → mirror trigger →
+public.contacts) AND the owner must get a **NOTIFICATION that a new lead came in** (in-CRM notification/badge, and/
+or email/SMS to the owner). Build the notification path + verify end-to-end (safe test lead, then delete).
 
 ## OWNER-GATED (surface in CHECKPOINT under OWNER ACTION — do NOT do unattended)
 Google OAuth consent + credentials (owner connects Gmail); Twilio A2P + owner's cell; the app.brivity.com
