@@ -265,3 +265,34 @@ design-excellence — never replaces them or any skill.
 - **Deliverables:** `docs/presentation/{architecture,portfolio,qa-prep,one-pager}.html` (4 premium
   self-contained Artifacts, shared brand system, theme-aware) + `docs/OWNER-GO-LIVE.md` (consolidated
   owner-gated checklist). Committed e429d94.
+
+## 2026-07-13 — PHASE 4 WATCH (ai-page): green pass, no regression, nothing deployed
+- **A "known advisory FAIL" with no recorded MAGNITUDE is a blind spot.** `agent/verify.mjs` beats-vs-goldens
+  has been FAIL for weeks (goldens predate the redesign — re-baseline is OWNER-GATED), but nobody ever wrote
+  DOWN the drift %, so a genuine visual regression could hide inside a gate that is "always red". Recording
+  the numbers now as the comparison baseline for the next watcher — **galaxy within 7.75%, dive over 11.18%,
+  brain over 15.47%, hub over 12.81%** (all `drew=true`; nodes 13/13 PASS, ring 7/7 PASS, js-errors none).
+  Rule: when a gate is knowingly red, log its NUMBER every cycle — "still failing" is not evidence, "failing
+  by the same amount" is.
+- **`verify.mjs` takes `VERIFY_URL`** → point the repo's own gate straight at the LIVE deploy
+  (`VERIFY_URL=https://realtylt-ai-page.vercel.app/ node agent/verify.mjs`). No local server, so **no port to
+  free** — sidesteps the whole 8756-in-use gotcha for a watch pass.
+- **You cannot measure "is the brain clipped?" with a luminance-threshold bbox on this page** — the backdrop
+  is a STARFIELD, so the stars themselves are "lit" and the bbox runs to the frame edge (my detector reported
+  `CLIPPED:true` on beats that are, on inspection, beautifully framed with generous margins). Brightness can't
+  separate subject from background here. Judge framing with EYES on the screenshot; a density histogram only
+  works on the HUB beat (where the node chrome is the dense mass). Framing verdict this cycle: **holds** —
+  brain fully inside frame, reads as a brain, at desktop 1440 AND 390 portrait, on BOTH origins.
+- **Provable lead safety for a watch pass:** `context.route('**/api/lead')` + `('**/functions/v1/website-lead')`
+  → `fulfill()` locally, and keep a **stub HIT COUNTER**. The POST is answered inside the browser and never
+  touches the network, and the counter (`leadStubHits: 1` per run) is positive PROOF the submit path executed
+  AND that nothing reached the CRM. Better evidence than "I chose not to submit".
+- **Playwright `devices['iPhone 14 Pro']` is a 393x659 CSS viewport** (screenshots come out 1179x1980 @DSF3),
+  i.e. noticeably SHORTER than a real iPhone's ~844pt. For a framing check that's conservative in our favour —
+  if the brain fits at 659pt tall it fits on the real device — but don't quote it as "390x844".
+- **Real-GPU fps, live, both origins (headed Chromium, `--ignore-gpu-blocklist`):** desktop hub 70–89 / brain
+  94–97; emulated-mobile hub+brain 144–145. The mobile numbers run on the desktop GPU and are NOT a real-device
+  reading — the owner's real-phone pass is still the only true mobile perf gate.
+- **The `rag-demo` CORS block stays EXPECTED and owner-gated:** on the proxy the RAG tab degrades to the badged
+  "DEMO MODE — SAMPLE REPLY" (`.demo-tag` present) = PASS, not a bug. It logs a console CORS error but **zero CSP
+  violations**. Live chat itself returned a REAL assistant reply (webhook 200, no `.demo-tag`) through the proxy.
