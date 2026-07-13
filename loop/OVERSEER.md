@@ -23,6 +23,14 @@ Owner spec: `loop/OWNER-REQUIREMENTS.md`. Overall state: `loop/JOURNAL.md` + eac
 4. **SAFETY BRAKE:** if a loop is clearly going wrong (repeated regressions, doing an owner-gated action, storing
    photos / Vercel Blob, touching the live CRM loop, committing secrets, or churning with no progress), `touch
    loop/STOP-<that-loop>` and write WHY at the top of `loop/JOURNAL.md`.
+4b. **LOAD MANAGER (freeze protection):** the machine can handle ~3 concurrent agents; more may freeze it. Each
+   pass, check how many loops are actually running (their `.lock-<name>` files + recent journal/commit activity)
+   and whether they're PROGRESSING. If there are signs of overload/freeze — too many loops live at once, loops
+   stalled (lock held but no commit/journal movement for a long time), or the owner reports the machine is
+   struggling — **PAUSE the lowest-priority running loop** by `touch loop/STOP-<name>` (priority order to KEEP:
+   **CRM > website > ai-page** — pause ai-page first, then website; never pause CRM unless it's the one
+   misbehaving). Note the pause + why in JOURNAL. On a LATER pass, once pressure clears (a loop finished, fewer
+   locks), RESUME the paused loop by removing its STOP file. Keep concurrency at ~3 or fewer.
 5. **Make ONE improvement to the PLAYBOOK** (not product code): sharpen a rule in the relevant loop prompt
    (`CRM-LOOP.md` / `WEBSITE-LOOP.md` / `AIPAGE-LOOP.md`), `OWNER-REQUIREMENTS.md`, or `AGENT_LEARNINGS.md`; or
    re-prioritize the next steps in a CHECKPOINT. Commit + push that one change.
