@@ -72,6 +72,46 @@ export interface Database {
         Update: { meta?: Record<string, unknown> };
         Relationships: [];
       };
+      portal_reports: {
+        Row: {
+          id: string;
+          client_id: string;
+          kind: string;
+          source: string;
+          status: string;
+          title: string;
+          subject: Record<string, unknown>;
+          criteria: Record<string, unknown>;
+          stats: Record<string, unknown>;
+          suggested_price_low: number | null;
+          suggested_price_high: number | null;
+          agent_note: string | null;
+          cma_report_id: string | null;
+          created_at: Ts;
+          updated_at: Ts;
+        };
+        Insert: {
+          client_id: string;
+          kind: string;
+          source?: string;
+          status?: string;
+          title: string;
+          subject?: Record<string, unknown>;
+          criteria?: Record<string, unknown>;
+          stats?: Record<string, unknown>;
+          suggested_price_low?: number | null;
+          suggested_price_high?: number | null;
+        };
+        Update: {
+          title?: string;
+          status?: string;
+          criteria?: Record<string, unknown>;
+          stats?: Record<string, unknown>;
+          suggested_price_low?: number | null;
+          suggested_price_high?: number | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

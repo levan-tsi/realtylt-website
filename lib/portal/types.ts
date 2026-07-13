@@ -17,7 +17,11 @@ export type ActivityType =
   | "save_search"
   | "remove_search"
   | "view_search"
-  | "open_photos";
+  | "open_photos"
+  | "generate_report"
+  | "view_report"
+  | "recalc_report"
+  | "raise_hand";
 
 export interface PortalActivityRow {
   id: string;
