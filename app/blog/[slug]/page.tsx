@@ -3,25 +3,48 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { fmtDate, getPost, POSTS } from "@/content/blog/posts";
+import { fmtDate, getArticle, getArticles } from "@/lib/blog";
+import { renderMarkdown } from "@/lib/blog/markdown";
 import { SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 
-export function generateStaticParams() {
-  return POSTS.map((p) => ({ slug: p.slug }));
+// Literal by necessity — Next statically analyses this export and rejects an imported
+// constant. Keep in sync with BLOG_REVALIDATE_SECONDS in lib/blog/db.ts (300).
+export const revalidate = 300;
+
+// Pre-render every article known at build time (static stubs + everything already
+// published from the CRM). dynamicParams stays TRUE so a post published AFTER this build
+// still resolves on first request — an unknown or unpublished slug falls through to
+// notFound() below, so drafts 404 exactly like a typo does.
+export async function generateStaticParams() {
+  const articles = await getArticles();
+  return articles.map((a) => ({ slug: a.slug }));
 }
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getArticle(slug);
   if (!post) return { title: "Post not found" };
-  return { title: post.title, description: post.excerpt };
+  const title = post.seoTitle || post.title;
+  const description = post.seoDescription || post.excerpt;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: post.date,
+      url: `${SITE.url}/blog/${post.slug}`,
+      images: [{ url: post.cover.startsWith("http") ? post.cover : `${SITE.url}${post.cover}` }],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getArticle(slug);
   if (!post) notFound();
 
   const jsonLd = {
@@ -29,11 +52,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     "@type": "BlogPosting",
     headline: post.title,
     datePublished: post.date,
-    image: `${SITE.url}${post.cover}`,
-    author: { "@type": "Person", name: "Levan Tsiklauri" },
+    image: post.cover.startsWith("http") ? post.cover : `${SITE.url}${post.cover}`,
+    author: { "@type": "Person", name: post.author },
     publisher: { "@type": "Organization", name: SITE.legalName },
     mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
-    description: post.excerpt,
+    description: post.seoDescription || post.excerpt,
   };
 
   return (
@@ -48,7 +71,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <h1 className="mt-4 text-3xl font-bold leading-[1.15] md:text-4xl">
             {post.title}
           </h1>
-          <p className="mt-4 text-paper/75">{post.excerpt}</p>
+          {post.excerpt && <p className="mt-4 text-paper/75">{post.excerpt}</p>}
         </div>
       </header>
 
@@ -66,13 +89,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </aside>
         )}
 
-        <div className="prose-custom mt-8 space-y-5 leading-relaxed text-stone">
-          {post.body.map((p, i) => (
-            <p key={i} className={i === 0 && post.placeholder ? "text-sm italic text-stone" : ""}>
-              {p}
-            </p>
-          ))}
-        </div>
+        {post.body.kind === "markdown" ? (
+          // Markdown blocks carry their own vertical rhythm (headings/lists/quotes need
+          // more room than a paragraph) — no space-y here, it would flatten them all to
+          // one gap. First block sits flush against the cover.
+          <div className="prose-custom mt-8 leading-relaxed text-stone [&>*:first-child]:mt-0">
+            {renderMarkdown(post.body.markdown)}
+          </div>
+        ) : (
+          <div className="prose-custom mt-8 space-y-5 leading-relaxed text-stone">
+            {post.body.paragraphs.map((p, i) => (
+              <p key={i} className={i === 0 && post.placeholder ? "text-sm italic text-stone" : ""}>
+                {p}
+              </p>
+            ))}
+          </div>
+        )}
 
         <div className="mt-12 bg-mist p-7 text-center">
           <p className="text-xl font-light text-ink">Have a question this post didn&rsquo;t answer?</p>

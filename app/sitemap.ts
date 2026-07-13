@@ -1,14 +1,15 @@
 import type { MetadataRoute } from "next";
-import { POSTS } from "@/content/blog/posts";
+import { getArticles } from "@/lib/blog";
 import { COUNTY_CONTENT } from "@/content/counties";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
 import { SITE } from "@/lib/site";
 
 // Regenerate hourly — harmless in fixture mode, honest once the live feed rotates.
+// (A CRM publish also revalidates /sitemap.xml through /api/revalidate.)
 export const revalidate = 3600;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url.replace(/\/$/, "");
   const now = new Date();
 
@@ -35,7 +36,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }));
 
-  const posts: MetadataRoute.Sitemap = POSTS.map((p) => ({
+  // Static stubs + everything published from the CRM (docs/BLOG-CMS.md).
+  const posts: MetadataRoute.Sitemap = (await getArticles()).map((p) => ({
     url: `${base}/blog/${p.slug}`,
     priority: 0.5,
     changeFrequency: "monthly",

@@ -26,7 +26,10 @@ const CSP = [
   "form-action 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com",
+  // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
+  // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
+  // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co",
   "font-src 'self' data:",
   "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud",
   "worker-src 'self' blob:",
@@ -65,6 +68,10 @@ const nextConfig: NextConfig = {
       // Replicated MLS photos live in Vercel Blob (public store). Rendered `unoptimized`
       // (isLiveMlsPhoto), so this is belt-and-suspenders like the mlsgrid allowance.
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+      // Blog cover images published from the CRM (Supabase Storage, public bucket).
+      // safeCover() only ever renders URLs on our own project origin under
+      // /storage/v1/object/public/ — this pattern is the optimizer's allowance for them.
+      { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
     ],
     // Never let the optimizer render SVG (an SVG can carry inline script) — default is
     // false; pinned explicitly so a future edit can't silently enable an XSS vector.
