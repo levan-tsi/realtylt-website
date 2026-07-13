@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
+import { TrackView } from "@/components/portal/TrackView";
 import { formatPrice, isLiveMlsPhoto, NoPhoto } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LeadForm } from "@/components/leads/LeadForm";
@@ -81,6 +82,10 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      <TrackView
+        listingId={l.id}
+        meta={{ address: l.address, city: l.city, price: l.price, beds: l.beds }}
+      />
 
       {/* ── Gallery */}
       <section className="bg-ink" aria-label="Photos">

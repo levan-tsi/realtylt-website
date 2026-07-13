@@ -45,6 +45,7 @@ interface AuthContextValue {
   sendMagicLink(email: string): Promise<Result>;
   signInWithGoogle(): Promise<Result>;
   signOut(): Promise<void>;
+  updateProfile(fields: { fullName?: string; phone?: string }): Promise<Result>;
 
   /** Behavioral tracking — fire-and-forget, no-op when signed out. */
   track(type: ActivityType, listingId?: string, meta?: Record<string, unknown>): void;
@@ -204,6 +205,28 @@ export function AuthProvider({
     await supabase.auth.signOut();
   }, [supabase]);
 
+  const updateProfile = useCallback<AuthContextValue["updateProfile"]>(
+    async ({ fullName, phone }) => {
+      if (!supabase || !user) return { ok: false, error: "Not signed in." };
+      const patch: { full_name?: string | null; phone?: string | null } = {};
+      if (fullName !== undefined) patch.full_name = fullName || null;
+      if (phone !== undefined) patch.phone = phone || null;
+      const { error } = await supabase.from("portal_clients").update(patch).eq("id", user.id);
+      if (error) return { ok: false, error: error.message };
+      setProfile((p) =>
+        p
+          ? {
+              ...p,
+              fullName: patch.full_name !== undefined ? (patch.full_name ?? null) : p.fullName,
+              phone: patch.phone !== undefined ? (patch.phone ?? null) : p.phone,
+            }
+          : p,
+      );
+      return { ok: true };
+    },
+    [supabase, user],
+  );
+
   // Track activity — never throws, never blocks the UI.
   const userIdRef = useRef<string | null>(null);
   userIdRef.current = user?.id ?? null;
@@ -236,6 +259,7 @@ export function AuthProvider({
       sendMagicLink,
       signInWithGoogle,
       signOut,
+      updateProfile,
       track,
       modalOpen,
       modalMode,
@@ -254,6 +278,7 @@ export function AuthProvider({
       sendMagicLink,
       signInWithGoogle,
       signOut,
+      updateProfile,
       track,
       modalOpen,
       modalMode,
