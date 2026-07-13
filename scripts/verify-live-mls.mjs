@@ -41,9 +41,23 @@ if (first) {
 }
 
 // Snapshot freshness surfaces as dataLastUpdated.
+// TIERED on purpose: there is NO auto-refresh cron (vercel.json is bare) — the snapshot is refreshed
+// MANUALLY (export-snapshot -> commit -> deploy). A flat "< 24h" assertion therefore goes RED every
+// single day from nothing but time passing, which trains the watcher to ignore a red gate. So:
+//   < 24h  PASS  |  24-72h  WARN (stale by design, no action required)  |  > 72h  FAIL (refresh now)
+// 72h matches the loop's standing policy: "materially stale (>~3 days) -> refresh the snapshot".
+const STALE_WARN_H = 24;
+const STALE_FAIL_H = 72;
 const s = await (await fetch(`${BASE}/api/idx/search?pageSize=1`)).json();
-const ageMin = (Date.now() - Date.parse(s.dataLastUpdated)) / 60000;
-t("dataLastUpdated = recent replication timestamp", ageMin >= 0 && ageMin < 24 * 60, `${ageMin.toFixed(0)} min old`);
+const ageH = (Date.now() - Date.parse(s.dataLastUpdated)) / 3600000;
+const detail = `${ageH.toFixed(1)}h old (${(ageH / 24).toFixed(2)}d)`;
+if (ageH >= 0 && ageH < STALE_WARN_H) {
+  t("dataLastUpdated = fresh replication timestamp", true, detail);
+} else if (ageH >= 0 && ageH < STALE_FAIL_H) {
+  console.log(`WARN  dataLastUpdated is aging — ${detail}; manual-refresh only (no cron), no action yet`);
+} else {
+  t(`dataLastUpdated within ${STALE_FAIL_H}h`, false, `${detail} — REFRESH: node scripts/export-snapshot.mjs -> commit -> deploy`);
+}
 
 console.log(fail ? `\n${fail} FAILURE(S)` : "\nALL PASS");
 process.exit(fail ? 1 : 0);
