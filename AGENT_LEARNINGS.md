@@ -375,3 +375,47 @@ design-excellence — never replaces them or any skill.
 - **n8n edit hygiene:** `update_workflow` writes a DRAFT — you must call `publish_workflow` for production to
   use it, then RE-READ `get_workflow_details` and check **`activeVersion`** (not the top-level `nodes`) to
   confirm what production actually runs. `setWorkflowMetadata.description` is capped at **255 chars**.
+
+## 2026-07-13 — CLIENT ACCOUNTS build (website consumer portal ↔ CRM) — hard-won infra gotchas
+- **Website client auth = Supabase Auth on the SAME project as the CRM** (`wpfmhmnceflfruhssqqb`), so a
+  client's login IS the identity the CRM knows. Tell clients from staff via
+  `raw_user_meta_data->>'account_type'`: signup passes `account_type:'portal'` → a trigger creates a
+  `portal_clients` row + links/creates the CRM contact; a guard in `handle_new_user()` early-returns for
+  portals so clients never pollute the CRM `public.users` staff table. Contract: `docs/CLIENT-ACCOUNTS.md`.
+- **Supabase env is RUNTIME-ONLY on Vercel, NOT available at BUILD.** A Server Component that reads
+  `process.env.SUPABASE_URL` to bake config into a STATIC page renders `null` on the deploy (works locally
+  where `.env.local` is present at build). Fix: read the anon config via a **`force-dynamic` API route**
+  (`/api/auth/config`) that the client fetches at runtime. (The blog reads the same vars at request-time,
+  which is why IT works and the build-time bake didn't.)
+- **…and `SUPABASE_URL`/`SUPABASE_ANON_KEY` are NOT set in the Vercel project at all** (only in local
+  `.env.local`) — so the blog has been silently serving static-only on prod (its "return [] on failure"
+  policy hides it), and client accounts can't work until they're added. **Adding prod env vars is
+  classifier-gated** (production secret-store write) → OWNER action: `vercel env add SUPABASE_URL production`
+  + `SUPABASE_ANON_KEY` (both non-secret) → redeploy. Design the feature to **degrade gracefully** when the
+  config is absent (enabled:false → "accounts unavailable", device-local saves still work) so the deploy is
+  safe pre-enablement.
+- **The project has SIGNUPS DISABLED** → GoTrue returns `"Signups not allowed for this instance"` on
+  `signUp`. Owner toggles Auth → Providers → Email "Allow new users to sign up" + the redirect-URL allowlist.
+- **GoTrue 500 "Database error querying schema" on password login for a SQL-created `auth.users`** = NULL
+  token columns. GoTrue scans `confirmation_token / recovery_token / email_change / email_change_token_new`
+  (etc.) into non-nullable Go strings; a manual INSERT leaves them NULL → scan error. Fix: set them all to
+  `''`. Also insert a matching `auth.identities` row (provider 'email', `identity_data.sub = user id`).
+  Verify creds at the token endpoint (`POST /auth/v1/token?grant_type=password`) BEFORE driving the browser.
+- **`@supabase/ssr` 0.5.2 bundles a supabase-js with a different generic arity than the top-level package**
+  → `createBrowserClient<Database>()` doesn't type `.from()` (rows come back `never`). Fix: cast
+  `as unknown as SupabaseClient<Database>` and define a minimal `Database` type for just the `portal_*`
+  tables. And **`cookies.setAll(cookiesToSet)` needs an EXPLICIT param type** — a fresh Vercel install
+  resolved it to `any` under `noImplicitAny` and FAILED THE BUILD even though local `next build` + `tsc`
+  were green.
+- **Local `next build` green ≠ Vercel build green.** A fresh `npm install` on Vercel resolved contextual
+  types differently → build ERROR. Always confirm the deployment reached **READY** (`list_deployments`
+  state / build logs), not just local green — the live `/route` still 404'd because the build errored.
+- **Windows: rebuilding while a `next start` server holds `.next` corrupts it** (`ENOENT pages-manifest` /
+  "Could not find a production build") → kill the server (PowerShell `Get-NetTCPConnection -LocalPort … |
+  Stop-Process`) BEFORE `npm run build`, or `rm -rf .next` and rebuild clean.
+- **Cleanup for a SQL-created portal test user:** deleting `auth.users` cascades `portal_clients` →
+  favorites/searches/activity + `auth.identities`, but the linked **contact** (source `Website Account`) is
+  `ON DELETE SET NULL`, NOT cascaded → delete it by email too. Verify zero residue (contacts back to 8,
+  leads 1).
+- **E2E budget guard:** driving a browser over the deploy fires one `/api/media` per card photo — stub
+  `**/api/media/**` with a 1×1 PNG (a full sweep = 125 requests → **0** real MLS calls).

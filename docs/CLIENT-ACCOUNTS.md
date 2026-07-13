@@ -75,11 +75,29 @@ and an engagement timeline.
 Env reused (no new vars): `SUPABASE_URL`, `SUPABASE_ANON_KEY` (already power the blog).
 CSP `connect-src` includes `https://*.supabase.co`.
 
-## Owner-gated (auth config the loop can't set)
+## Owner-gated (to turn the feature ON in production)
 
-- **Email confirmations / redirect-URL allowlist** in Supabase Auth (needed for magic-link &
-  email-confirm to land back on the site). The UI handles both "instant session" and
-  "confirm your email" states.
-- **OAuth providers** (Google/Facebook/Apple) — the modal shows a wired "Continue with Google"
-  button, but it needs the provider enabled + credentials in Supabase Auth.
-- **Leaked-password protection** (HaveIBeenPwned) — advisor WARN; a dashboard toggle.
+The feature is fully built + verified working locally against the real Supabase, but the
+DEPLOYED site keeps it **dormant** (graceful "accounts unavailable"; device-local saves still
+work) until these owner actions are taken:
+
+1. **Add the anon Supabase config to Vercel Production** (the deploy blocker). The vars exist
+   only in local `.env.local`, not in Vercel — so the deployed `/api/auth/config` returns
+   `enabled:false` (this also means the blog silently serves static-only on prod). Both are
+   non-secret (URL is public, anon key is publishable/RLS-protected):
+   ```
+   vercel env add SUPABASE_URL production
+   vercel env add SUPABASE_ANON_KEY production   # values are in .env.local
+   ```
+   Then redeploy. (The loop's auto-mode classifier blocks writing production env vars.)
+2. **Enable new-user signups** in Supabase Auth → Providers → Email ("Allow new users to sign
+   up" is currently OFF → GoTrue returns "Signups not allowed for this instance"). Also set the
+   **Site URL / redirect-URL allowlist** to the site origin so magic-link / email-confirm /
+   password-reset land back on `/auth/callback`.
+   - ⚠️ Because `handle_new_user()` still creates a CRM **staff** row for any signup WITHOUT
+     `account_type='portal'`, review that path before opening public signups — the website
+     always sends `account_type='portal'`, but a direct GoTrue call without it would mint a
+     staff user. (CRM-loop coordination item.)
+3. **OAuth providers** (Google/Facebook/Apple) — the modal has a wired "Continue with Google"
+   button; it needs the provider enabled + credentials in Supabase Auth.
+4. **Leaked-password protection** (HaveIBeenPwned) — advisor WARN; a dashboard toggle.

@@ -1,5 +1,48 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ CLIENT ACCOUNTS (2026-07-13) — big new owner feature BUILT + verified; go-live is a 2-var owner step
+
+**The website consumer portal (owner's CLIENT ACCOUNTS feature) is fully built and VERIFIED
+working end-to-end against the real Supabase. The deployed site keeps it gracefully DORMANT
+until the owner adds two non-secret env vars to Vercel (the vars live only in `.env.local`).
+No regressions — the full live sweep is ALL PASS.** Commits `91863cd` `02b1d8f` `e59e278`
+`699f4fc`. Contract + owner steps: `docs/CLIENT-ACCOUNTS.md`.
+
+**WHAT SHIPPED (both halves of the spec):**
+- **DB (Supabase `wpfmhmnceflfruhssqqb`, migrations applied):** `portal_clients` (1:1 with
+  `auth.users`, `contact_id`→CRM contact), `portal_favorites`, `portal_saved_searches`,
+  `portal_activity`, all RLS-locked (a client touches only `client_id = auth.uid()`; anon reads
+  0 rows — verified). A BEFORE-INSERT trigger links/creates the CRM contact by email; a guard in
+  `handle_new_user()` keeps website clients OUT of the CRM staff table. Trigger-fns' EXECUTE
+  revoked from anon/authenticated (advisor clean).
+- **Website:** Supabase anon clients (`@supabase/ssr`), `AuthProvider` (session + signup with
+  `account_type='portal'` + magic-link + Google + activity `track()`), `SavedProvider`
+  (favorites/searches DB-when-signed-in, device-local when out, **migrate device→account on
+  login**), reference-matched **sign-in/register modal**, header **account menu**,
+  `/auth/callback`, and the **`/portal`** hub (overview w/ activity timeline, collections,
+  searches + alert toggles, reports [CMA placeholder — spec 5b], profile). Listing views + saves
+  + saved-searches record `portal_activity`. CSP `connect-src` += `*.supabase.co`. `/portal`
+  noindex.
+- **Config loaded at RUNTIME** (`/api/auth/config`) not build — the Supabase env is runtime-only.
+
+**VERIFIED (local `next start` on the real Supabase; test users created + deleted, zero residue):**
+12/12 Playwright checks PASS, 0 console errors — login → view listing → save → save search →
+portal overview (stat tiles + activity) → collections (card) → searches → profile edit → sign
+out. DB persisted **1 fav + 1 saved search + 3 activity rows (view/save/save_search)**, profile
+edit saved, **linked to CRM contact** (the join key the CRM reads). Anon key → 0 rows every
+table. `npx tsc` clean, 146 unit tests, `next build` green. **Live deploy sweep ALL PASS**
+(8 routes × {1280,390}: 0 console/CSP/overflow, IDX real 5362, /ai intact, 0 real media calls).
+
+**🔴 OWNER ACTION to turn it ON (feature is dormant on prod until then):**
+1. **Add anon Supabase config to Vercel Production** (deploy blocker; also fixes the blog, which
+   currently serves static-only on prod because these are absent): `vercel env add SUPABASE_URL
+   production` + `vercel env add SUPABASE_ANON_KEY production` (values in `.env.local`; both
+   non-secret) → redeploy. (The loop's classifier blocks writing prod env vars.)
+2. **Enable new-user signups** in Supabase Auth (currently OFF → "Signups not allowed") + set the
+   redirect-URL allowlist to the site origin. Review the `handle_new_user()` staff-creation path
+   before opening public signups (CRM-loop coordination — see docs/CLIENT-ACCOUNTS.md).
+3. Optional: Google OAuth provider creds; leaked-password protection toggle.
+
 ## ▶ PHASE-4 WATCH — CYCLE 1 (2026-07-13): all three GREEN; one REAL bug found + fixed (duplicate contacts)
 
 **Website + AI page re-verified live and clean. The cycle's find is in the DATA layer: migration 0013's
