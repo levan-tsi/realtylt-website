@@ -6,7 +6,13 @@ import { parseFilterParams } from "@/lib/idx/query";
 /** Map pins for the ENTIRE filtered result set (not one grid page) — the /search map
  * plots every matching listing, Zillow-style, while the card grid stays at 12/page.
  * Same filter params as /api/idx/search; paging/sort are ignored. Payload is a slim
- * projection (~100 bytes/listing) served from the Blob snapshot — never MLS Grid. */
+ * projection served from the committed snapshot — never MLS Grid. Every field ships
+ * because the popup renders all of them (office = MLS compliance "Listed with" line). */
+
+/** Zip-centroid pins are approximate (the feed has no coordinates) — 4 decimals
+ * (~11 m) is plenty, and trimming float noise cut the full-set payload ~10%
+ * (1,081,085 → 972,484 bytes measured on the 5,360-pin snapshot). */
+const round4 = (n: number) => Math.round(n * 1e4) / 1e4;
 
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams;
@@ -21,8 +27,8 @@ export async function GET(req: Request) {
       .map((l) => ({
         id: l.id,
         price: l.price,
-        lat: l.lat,
-        lng: l.lng,
+        lat: round4(l.lat),
+        lng: round4(l.lng),
         address: l.address,
         city: l.city,
         zip: l.zip,

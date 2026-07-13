@@ -15,6 +15,12 @@ describe("GET /api/idx/pins — full-result map pins", () => {
       ["address", "baths", "beds", "city", "id", "lat", "lng", "office", "price", "zip"],
     );
     expect(pin.lat).not.toBe(0); // Null Island rows never ship
+    // Coordinates ship rounded to 4 decimals (~11 m — zip-centroid pins are approximate
+    // anyway) so the full-set payload doesn't carry float noise.
+    for (const p of json.pins) {
+      expect(p.lat).toBe(Math.round(p.lat * 1e4) / 1e4);
+      expect(p.lng).toBe(Math.round(p.lng * 1e4) / 1e4);
+    }
   });
 
   it("honors the same filter params as /api/idx/search", async () => {
