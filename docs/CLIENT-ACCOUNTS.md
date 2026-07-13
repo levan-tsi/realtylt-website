@@ -70,10 +70,69 @@ and an engagement timeline.
 - `components/auth/SavedProvider.tsx` — account-aware favorites/searches: DB when signed in,
   device `localStorage` (`lib/saved.ts`) when signed out, one-time **migrate device→DB on login**.
 - `app/auth/callback/route.ts` — OAuth / magic-link / email-confirm code exchange.
-- `app/portal/*` — collections, searches, reports (CMA placeholder), profile.
+- `app/portal/*` — collections, searches, reports (see below), profile.
 
 Env reused (no new vars): `SUPABASE_URL`, `SUPABASE_ANON_KEY` (already power the blog).
 CSP `connect-src` includes `https://*.supabase.co`.
+
+## CMA + market reports — client-facing (owner spec §5b)
+
+A logged-in client can **see, run, recalculate** CMA + market reports, **raise their hand**
+(request the agent), and **message** their agent — all in `/portal/reports`. Two report kinds
+(`cma`, `market`) come from two producers, unified in one website-owned table.
+
+### Table `public.portal_reports` (website-owned; migration `portal_reports`)
+
+| column | notes |
+|---|---|
+| `id` uuid pk | |
+| `client_id` uuid | → `auth.users`; **RLS `client_id = auth.uid()`** (policy `portal_reports_rw`, ALL) |
+| `kind` | `'cma'` \| `'market'` |
+| `source` | `'client'` (self-serve) \| `'agent'` (mirrored from the CRM) |
+| `status` | `'draft'` \| `'ready'` \| `'shared'` |
+| `title` | e.g. `Home value — 12 Maple St, Beacon` |
+| `subject` jsonb | CMA → `{address,city,county,propertyType,beds,baths,sqft}`; market → `{county,town}` |
+| `criteria` jsonb | CMA client adjustments → `{conditionPct, includedIds[]}`; market → `{}` |
+| `stats` jsonb | CMA → `{comps:Comp[], estimate:CmaEstimate, dataLastUpdated}`; market → `MarketStats` |
+| `suggested_price_low` / `_high` numeric | CMA estimate band (nullable) |
+| `agent_note` text | shown as the agent's message on a mirrored report |
+| `cma_report_id` uuid | link back to `public.cma_reports.id` when `source='agent'` |
+| `created_at` / `updated_at` | `updated_at` bumped by trigger `set_updated_at` |
+
+Shapes live in `lib/reports/types.ts` (`Comp`, `CmaEstimate`, `MarketStats`).
+
+### Website side (this repo — client self-serve, `source='client'`)
+
+- **Generate** (`components/portal/ReportGenerator`): CMA pulls comparable ACTIVE listings from
+  `/api/reports/comps` (computed from the committed snapshot, **no MLS/photo calls**); market pulls
+  `/api/reports/market`. Both compute with the pure fns in `lib/reports/{cma,market}.ts` and INSERT a
+  `portal_reports` row (RLS-checked, `client_id = auth.uid()`).
+- **Recalculate** (`components/portal/ReportDetail`): the client toggles comps + nudges a condition
+  slider; `estimateCma()` re-runs live in the browser; **Save** updates `criteria`/`stats`/`suggested_*`.
+  Market has a **Refresh** that re-fetches current stats. Estimates are honestly labelled as an
+  ASKING-price analysis of active comps (the snapshot has no solds).
+- **Raise hand / message** (`components/portal/TalkToAgent`): both POST `/api/lead` (→ CRM lead +
+  owner notification, the existing pipeline) prefilled from the client's profile, and write a
+  `raise_hand` activity. New `portal_activity.type` values: `generate_report`, `view_report`,
+  `recalc_report`, `raise_hand`.
+
+### CRM side (CRM loop's job — agent reports, `source='agent'`)
+
+Portal clients **cannot read `public.cma_reports` directly** — its `cma_reports_public_select` policy
+targets the **`anon`** role only, and `cma_reports_all` requires `organization_id = current_org_id()`
+which a portal client (no org) never satisfies. So when an agent **publishes / shares** a CMA (or a
+market report) to a client, the **CRM must mirror a snapshot row into `portal_reports` via the service
+role** (which bypasses RLS):
+
+1. Resolve the client's `client_id` = `portal_clients.id` where `portal_clients.contact_id` = the
+   report's `contacts.id` (skip if the contact has no portal account).
+2. Insert/upsert `portal_reports` with `source='agent'`, `kind`, `title`, `subject`, `stats`
+   (mirror `cma_reports.subject`/`stats` + comps; for market, the computed metrics), `suggested_price_low/high`,
+   `agent_note`, `cma_report_id = cma_reports.id`, `status='shared'`.
+3. Re-publishing updates the same row (dedup on `cma_report_id`).
+
+The client then sees the agent report alongside their own; their view/recalc/raise-hand activity flows
+back through `portal_activity` (read by the CRM via service role, per the linkage section above).
 
 ## Owner-gated (to turn the feature ON in production)
 

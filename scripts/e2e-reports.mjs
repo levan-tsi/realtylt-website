@@ -1,6 +1,23 @@
 // E2E for the client-facing CMA + market reports portal (owner spec §5b).
 // LOGIN mode against a LOCAL `next start` on the real Supabase. Safe: /api/lead + media stubbed.
 //   env: BASE (default http://127.0.0.1:3799), TEST_EMAIL, TEST_PASSWORD
+//
+// Signups are disabled on the project, so the test user must be SQL-created first (Supabase MCP),
+// and DELETED after (zero residue). Recreate recipe:
+//   do $$ declare uid uuid := gen_random_uuid(); begin
+//     insert into auth.users (instance_id,id,aud,role,email,encrypted_password,email_confirmed_at,
+//       created_at,updated_at,raw_app_meta_data,raw_user_meta_data,confirmation_token,recovery_token,
+//       email_change,email_change_token_new)
+//     values ('00000000-0000-0000-0000-000000000000',uid,'authenticated','authenticated',
+//       'portal.reports.e2e@realtylt-test.com',crypt('PortalTest#2026',gen_salt('bf')),now(),now(),now(),
+//       '{"provider":"email","providers":["email"]}',
+//       '{"full_name":"Reports E2E Tester","account_type":"portal"}','','','','');
+//     insert into auth.identities (id,user_id,identity_data,provider,provider_id,created_at,updated_at,last_sign_in_at)
+//     values (gen_random_uuid(),uid,jsonb_build_object('sub',uid::text,'email','portal.reports.e2e@realtylt-test.com'),
+//       'email',uid::text,now(),now(),now()); end $$;
+// Cleanup (contact is SET NULL, not cascaded — delete by email too):
+//   delete from public.contacts where lower(email)='portal.reports.e2e@realtylt-test.com';
+//   delete from auth.users where email='portal.reports.e2e@realtylt-test.com';
 import { chromium } from "playwright";
 import { mkdirSync } from "node:fs";
 
