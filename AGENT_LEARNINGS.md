@@ -419,3 +419,29 @@ design-excellence — never replaces them or any skill.
   leads 1).
 - **E2E budget guard:** driving a browser over the deploy fires one `/api/media` per card photo — stub
   `**/api/media/**` with a 1×1 PNG (a full sweep = 125 requests → **0** real MLS calls).
+
+## 2026-07-13 — CLIENT-FACING CMA + MARKET REPORTS (owner §5b) — cross-app data contract + data-honesty
+- **A logged-in portal client CANNOT read the CRM's `public.cma_reports` — its `cma_reports_public_select`
+  policy targets the `anon` role ONLY, and `cma_reports_all` requires `organization_id = current_org_id()`
+  which a portal client (no org) never satisfies.** RLS permissive policies are OR-combined *per role*; an
+  `authenticated` portal user matches neither → 0 rows. So the client-facing reports live in a website-owned
+  **`portal_reports`** table (RLS `client_id = auth.uid()`), and the CRM MIRRORS published reports into it via
+  the **service role** (resolving `client_id` from `portal_clients.contact_id`). Same pattern as the
+  lead→contact mirror: when two apps share a DB, the privileged side pushes into the RLS-scoped table the
+  unprivileged side owns — don't try to widen the other app's policy from across the repo boundary.
+- **Compute client reports from the committed snapshot, never MLS.** `/api/reports/{comps,market}` read
+  `getCommittedSnapshot()` server-side; the browser does CMA recalculation with the SAME pure fn
+  (`lib/reports/cma.ts` — median $/sqft × sqft × condition), so recalc is instant and zero-budget. The
+  snapshot has NO solds (replication feed = active only) → a client CMA is honestly an ASKING-price analysis;
+  label it so, and keep the agent's sold-comp CRM CMA as the authoritative one.
+- **DON'T display a market number you can't stand behind.** Raw price min/max = `$22K–$65M` (a land parcel
+  and a mega-estate) — replaced with a **p10–p90 "typical range"**. And OneKey **`DaysOnMarket` resets on
+  relisting/price changes**, so a "new this month" count over-reported (~62% of active) — dropped it and
+  surfaced the trustworthy active-count instead. Radical honesty applies to DISPLAYED DATA, not just claims.
+- **React controlled `<input type=range>` in Playwright:** setting `el.value` + dispatching `input` does NOT
+  fire React's onChange (its value-tracker sees the value already matches). Set via the prototype descriptor:
+  `Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(el, v)` then dispatch a
+  bubbling `input` event. (Cost a false FAIL until fixed.)
+- **A "dirty since saved" flag must track a BASELINE STATE, not the immutable prop.** ReportDetail compared
+  live edits against `report.criteria` (a static prop) → after saving, `dirty` stayed true forever so the
+  "Saved" confirmation never showed. Keep a `baseline` in `useState`, update it on save success.

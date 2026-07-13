@@ -2,6 +2,33 @@
 
 Dated handoff notes per cycle. Newest first. Detail lives in CHECKPOINT.md + AGENT_LEARNINGS.md.
 
+## 2026-07-13 (cycle 2) — CLIENT-FACING CMA + MARKET REPORTS (owner §5b) built + verified + deploy READY
+
+Turned the `/portal/reports` placeholder into a real feature. A logged-in client generates a
+home-value CMA (from comparable ACTIVE listings) or a county/town market report, recalculates the
+CMA live (comp toggles + condition slider, persisted), and raises their hand / messages the agent
+(→ `/api/lead` → CRM lead + notification, + `raise_hand` activity).
+
+- **DB:** `portal_reports` table (migration `portal_reports`, RLS client-scoped, advisors clean).
+  It's the SINGLE client surface: `source='client'` self-serve rows + `source='agent'` rows the CRM
+  mirrors in. Discovered the CRM's `cma_reports` public-read policy is **anon-only**, so a logged-in
+  portal client can't read it → the mirror contract (CRM service role) is the coordination item.
+- **Compute:** `lib/reports/{cma,market}.ts` (pure, 15 tests) + `/api/reports/{comps,market}` from the
+  committed snapshot — no MLS/photo calls. Market shows a trimmed p10–p90 "typical range" (raw min/max
+  was $22K–$65M); dropped a "new this month" metric (OneKey DaysOnMarket resets → not trustworthy).
+- **UI:** `ReportGenerator` / `ReportDetail` / `TalkToAgent` + list & `[id]` pages, on-brand.
+- **Verified:** `scripts/e2e-reports.mjs` 17/17 PASS (0 console/CSP, noindex intact, 1280+390 shots);
+  live recalc $930K→$1.042M at +12%; 160/160 unit tests, build green, `tsc` clean. Test user
+  SQL-created then DELETED — zero residue (leads unchanged at 1, contacts back to 8). **Vercel deploy
+  of the UI commit `0e686cf` = READY.** Commits `77fab2a` · `0e686cf` · `44f9857`.
+
+**CRM-loop coordination (surfaced, not done here):** mirror published `cma_reports`/market reports into
+`portal_reports` via service role (client_id via `portal_clients.contact_id`) — full spec in
+`docs/CLIENT-ACCOUNTS.md`. Client self-serve reports need no CRM dependency and work today.
+
+**Next:** design polish + IDX data-display verification on the rest of the portal/site (tasks 2/3),
+where real work remains; owner-gated pieces unchanged (Vercel env + signups).
+
 ## 2026-07-13 — CLIENT ACCOUNTS feature built (consumer portal ↔ CRM)
 
 Built the owner's big new CLIENT ACCOUNTS feature end-to-end and verified it working against

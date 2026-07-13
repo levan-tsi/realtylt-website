@@ -1,5 +1,43 @@
 # CHECKPOINT — RealtyLT Website
 
+## ▶ CLIENT-FACING CMA + MARKET REPORTS (2026-07-13) — owner spec §5b BUILT + verified + deploy READY
+
+**`/portal/reports` is now a real feature (was a placeholder).** A logged-in client can:
+SEE their reports, GENERATE a home-value CMA or a county/town market report, RECALCULATE the
+CMA live (toggle comps + condition slider, saved), RAISE THEIR HAND + send a DIRECT MESSAGE
+(both → `/api/lead` → CRM lead + owner notification, + a `raise_hand` activity). Commits
+`77fab2a` (compute+API+schema), `0e686cf` (UI), `44f9857` (contract docs). **Vercel deploy of
+`0e686cf` = READY** (production build passed).
+
+**WHAT SHIPPED:**
+- **DB:** `portal_reports` table (migration `portal_reports`, Supabase `wpfmhmnceflfruhssqqb`),
+  RLS `portal_reports_rw` (client_id = auth.uid()), advisors clean. It is the SINGLE client-facing
+  reports surface: client self-serve rows (`source='client'`) + agent rows the CRM mirrors in
+  (`source='agent'`). **Why not read the CRM's `cma_reports` directly:** its `public_select` policy
+  is **anon-only**, and `cma_reports_all` needs an org — a logged-in portal client satisfies neither,
+  so it reads 0 rows. Contract + CRM mirror spec in `docs/CLIENT-ACCOUNTS.md`.
+- **Compute (pure, 15 unit tests):** `lib/reports/{cma,market}.ts` — CMA = median $/sqft × subject
+  sqft × condition factor (p25/p75 band); market = medians, **trimmed p10–p90 typical range**,
+  price bands + beds/type distributions. Sourced from the committed snapshot via `/api/reports/comps`
+  + `/api/reports/market` (NO MLS/photo calls — zero budget impact).
+- **UI:** `ReportGenerator` (CMA/market modes), `ReportDetail` (live recalc + market stats),
+  `TalkToAgent` (raise-hand + message + call/text), list page + `/portal/reports/[id]`, overview
+  gains a Reports stat tile + report activity labels. Matches the site's light/ink/navy identity.
+
+**VERIFIED (local `next start` on real Supabase; test user created + DELETED, zero residue —
+reports/activity/contacts back to baseline 8, leads unchanged at 1):** `scripts/e2e-reports.mjs`
+**17/17 PASS**, 0 console errors, 0 CSP violations, `x-robots-tag: noindex` intact, screenshots
+1280+390 (`docs/accounts/reports-*.png`). Live recalc proven: $930K → **$1,042,000** at condition
++12%; dropping a comp lowers the count 24→23; adjustments persisted. Market Dutchess: 842 active,
+median $579K / $285 psf, typical $279K–$1.5M. 160/160 unit tests, `next build` green, `tsc` clean.
+Raise-hand double-stubbed (browser route + LEAD_TEST_MODE) — **zero leads to prod.**
+
+**🔴 OWNER / CRM-LOOP ACTIONS:** (1) same env gate as the rest of accounts — dormant on prod until
+`SUPABASE_URL`/`SUPABASE_ANON_KEY` are added to Vercel + signups enabled. (2) **CRM-loop coordination:**
+to surface AGENT-generated reports to clients, the CRM must mirror published `cma_reports`/market
+reports into `portal_reports` (service role, `client_id` via `portal_clients.contact_id`) — spec in
+`docs/CLIENT-ACCOUNTS.md`. Client SELF-SERVE reports work today with no CRM dependency.
+
 ## ▶ CLIENT ACCOUNTS (2026-07-13) — big new owner feature BUILT + verified; go-live is a 2-var owner step
 
 **The website consumer portal (owner's CLIENT ACCOUNTS feature) is fully built and VERIFIED
