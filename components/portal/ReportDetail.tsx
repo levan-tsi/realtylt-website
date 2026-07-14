@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { TalkToAgent } from "@/components/portal/TalkToAgent";
 import { clampCondition, estimateCma } from "@/lib/reports/cma";
@@ -20,7 +21,9 @@ const asOf = (iso: string) =>
   iso ? new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "";
 
 export function ReportDetail({ report }: { report: PortalReport }) {
-  const { user, track } = useAuth();
+  const { user, supabase, track } = useAuth();
+  const router = useRouter();
+  const [deleting, setDeleting] = useState(false);
 
   // Record the open once.
   const viewed = useRef(false);
@@ -31,12 +34,34 @@ export function ReportDetail({ report }: { report: PortalReport }) {
     }
   }, [user, track, report.title, report.kind]);
 
+  async function remove() {
+    if (!supabase || !user) return;
+    if (!window.confirm("Delete this report? This can't be undone.")) return;
+    setDeleting(true);
+    const { error } = await supabase.from("portal_reports").delete().eq("id", report.id);
+    if (error) {
+      setDeleting(false);
+      return;
+    }
+    router.push("/portal/reports");
+  }
+
   return (
     <div className="space-y-10">
       <header>
-        <Link href="/portal/reports" className="text-sm font-bold text-river hover:underline">
-          &larr; All reports
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/portal/reports" className="text-sm font-bold text-river hover:underline">
+            &larr; All reports
+          </Link>
+          <button
+            type="button"
+            onClick={remove}
+            disabled={deleting}
+            className="text-sm text-stone underline-offset-4 transition-colors hover:text-red-600 hover:underline disabled:opacity-50"
+          >
+            {deleting ? "Deleting…" : "Delete report"}
+          </button>
+        </div>
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <span
             className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${

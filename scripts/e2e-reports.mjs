@@ -52,6 +52,7 @@ const PNG = Buffer.from(
 await ctx.route("**/api/media/**", (r) => r.fulfill({ status: 200, contentType: "image/png", body: PNG }));
 
 const page = await ctx.newPage();
+page.on("dialog", (d) => d.accept()); // auto-accept the delete confirm()
 const consoleErrors = [];
 const cspViolations = [];
 page.on("console", (m) => {
@@ -187,6 +188,18 @@ try {
     "overview activity shows report events",
   );
   await page.screenshot({ path: `${OUT}/reports-overview-1280.png`, fullPage: true });
+
+  // ── Delete a report ──
+  await page.goto(`${BASE}/portal/reports`, { waitUntil: "load" });
+  await page.waitForTimeout(900);
+  const before = await page.locator('a[href^="/portal/reports/"]').count();
+  await page.locator('a[href^="/portal/reports/"]').first().click();
+  await page.waitForURL(/\/portal\/reports\/[0-9a-f-]{36}/, { timeout: 10000 });
+  await page.getByRole("button", { name: /Delete report/i }).click();
+  await page.waitForURL(/\/portal\/reports$/, { timeout: 10000 });
+  await page.waitForTimeout(900);
+  const after = await page.locator('a[href^="/portal/reports/"]').count();
+  check(before > 0 && after === before - 1, `deleted a report (cards ${before} → ${after})`);
 
   check(consoleErrors.length === 0, `zero console errors (saw ${consoleErrors.length})`);
   check(cspViolations.length === 0, `zero CSP violations (saw ${cspViolations.length})`);
