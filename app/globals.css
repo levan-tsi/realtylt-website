@@ -103,6 +103,156 @@ body {
   animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Blog article: on-load hero entrance (Apple-style rise). `both` holds the end state,
+   and the reduced-motion block below collapses the duration so it lands instantly. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.rise {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.rise-2 {
+  animation-delay: 0.08s;
+}
+.rise-3 {
+  animation-delay: 0.16s;
+}
+.rise-4 {
+  animation-delay: 0.24s;
+}
+.rise-5 {
+  animation-delay: 0.32s;
+}
+
+/* ── Blog article: section-by-section scroll reveal. ArticleSection.tsx only adds
+   .will-reveal to sections still below the fold (and never under reduced motion / no JS),
+   so the article text is always present and readable; this just eases those sections in. */
+.prose-custom .will-reveal {
+  opacity: 0;
+  translate: 0 24px;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.prose-custom .will-reveal.is-revealed {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ── Mobile table-of-contents sheet */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.toc-sheet {
+  animation: sheet-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Long-form typography. One system: comfortable measure, generous rhythm, brand-azure
+   list markers, a hairline pull-quote rule. Applied via .prose-custom on the article body. */
+.prose-custom {
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.75;
+}
+@media (min-width: 768px) {
+  .prose-custom {
+    font-size: 1.1875rem; /* 19px */
+  }
+}
+.prose-custom section + section {
+  margin-top: 3.25rem;
+}
+.prose-custom > section:first-child > *:first-child {
+  margin-top: 0;
+}
+/* Lead paragraph — the article's opening line reads a size up, in a darker ink. */
+.prose-custom > section:first-child > p:first-child {
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+}
+@media (min-width: 768px) {
+  .prose-custom > section:first-child > p:first-child {
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+}
+
+/* Bullet list — brand-azure square marker, no default disc. */
+.prose-custom ul.prose-ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose-custom ul.prose-ul > li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+.prose-custom ul.prose-ul > li + li {
+  margin-top: 0.6rem;
+}
+.prose-custom ul.prose-ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.66em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background: var(--color-porchlight);
+}
+/* Numbered list — azure numerals in hairline circles (reads like a step sequence). */
+.prose-custom ol.prose-ol {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: prose-ol;
+}
+.prose-custom ol.prose-ol > li {
+  position: relative;
+  padding-left: 2.6rem;
+}
+.prose-custom ol.prose-ol > li + li {
+  margin-top: 0.75rem;
+}
+.prose-custom ol.prose-ol > li::before {
+  counter-increment: prose-ol;
+  content: counter(prose-ol);
+  position: absolute;
+  left: 0;
+  top: -0.02em;
+  display: grid;
+  height: 1.7rem;
+  width: 1.7rem;
+  place-items: center;
+  border: 1px solid #d9dde3;
+  border-radius: 9999px;
+  background: var(--color-paper);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-river);
+}
+/* Pull quote — a single azure hairline, generous size, no glyph clutter. */
+.prose-custom blockquote.pull-quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-porchlight);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -113,6 +263,10 @@ body {
     scroll-behavior: auto !important;
   }
   .reveal {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .prose-custom .will-reveal {
     opacity: 1;
     translate: 0 0;
   }

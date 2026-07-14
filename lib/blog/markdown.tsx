@@ -15,6 +15,7 @@
  */
 
 import type { ReactNode } from "react";
+import { parseHeadings } from "./toc";
 
 /** http(s), mailto, or a site-relative path. Rejects javascript:, data:, and the
  * protocol-relative `//host` form. */
@@ -68,10 +69,22 @@ function inline(text: string, keyBase: string): ReactNode[] {
   return out;
 }
 
-/** Markdown → React nodes. Never returns HTML strings. */
-export function renderMarkdown(markdown: string): ReactNode[] {
+/** One rendered block, plus heading metadata so the page can group blocks into <section>s
+ * and give each an anchor. `id`/`headingLevel` are set only for headings. */
+interface Block {
+  node: ReactNode;
+  id?: string;
+  headingLevel?: number;
+}
+
+/** Markdown → block records. The single parser behind both `renderMarkdown` (flat nodes)
+ * and `renderMarkdownSections` (grouped). Heading ids come from parseHeadings in document
+ * order, so they match the table of contents exactly. */
+function parseBlocks(markdown: string): Block[] {
   const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
-  const blocks: ReactNode[] = [];
+  const headings = parseHeadings(markdown);
+  let hIdx = 0;
+  const blocks: Block[] = [];
   let i = 0;
   let key = 0;
 
@@ -85,7 +98,7 @@ export function renderMarkdown(markdown: string): ReactNode[] {
 
     // --- / *** horizontal rule
     if (/^\s*([-*_])\1{2,}\s*$/.test(line)) {
-      blocks.push(<hr key={`hr-${key++}`} className="my-10 border-t border-[#e3e6ea]" />);
+      blocks.push({ node: <hr key={`hr-${key++}`} className="my-12 border-t border-[#e3e6ea]" /> });
       i++;
       continue;
     }
@@ -96,44 +109,69 @@ export function renderMarkdown(markdown: string): ReactNode[] {
       const level = heading[1].length;
       const content = inline(heading[2].trim(), `h${key}`);
       const k = `h-${key++}`;
+      // parseHeadings walks the same lines in the same order, so this id belongs to this
+      // heading — the ToC link and this anchor cannot drift apart.
+      const id = headings[hIdx++]?.id;
       if (level <= 2) {
-        blocks.push(
-          <h2 key={k} className="mt-10 text-2xl font-bold leading-snug text-ink-soft md:text-[28px]">
-            {content}
-          </h2>,
-        );
+        blocks.push({
+          id,
+          headingLevel: level,
+          node: (
+            <h2
+              key={k}
+              id={id}
+              className="prose-h scroll-mt-28 text-[26px] font-bold leading-[1.2] tracking-[-0.01em] text-ink md:text-[32px]"
+            >
+              {content}
+            </h2>
+          ),
+        });
       } else if (level === 3) {
-        blocks.push(
-          <h3 key={k} className="mt-8 text-lg font-bold leading-snug text-ink-soft md:text-xl">
-            {content}
-          </h3>,
-        );
+        blocks.push({
+          id,
+          headingLevel: level,
+          node: (
+            <h3
+              key={k}
+              id={id}
+              className="prose-h mt-10 scroll-mt-28 text-lg font-bold leading-snug text-ink-soft md:text-xl"
+            >
+              {content}
+            </h3>
+          ),
+        });
       } else {
-        blocks.push(
-          <h4 key={k} className="mt-6 text-xs font-bold uppercase tracking-[0.14em] text-stone">
-            {content}
-          </h4>,
-        );
+        blocks.push({
+          id,
+          headingLevel: level,
+          node: (
+            <h4 key={k} id={id} className="mt-8 scroll-mt-28 text-xs font-bold uppercase tracking-[0.16em] text-stone">
+              {content}
+            </h4>
+          ),
+        });
       }
       i++;
       continue;
     }
 
-    // > blockquote (consecutive lines)
+    // > blockquote (consecutive lines) — rendered as a pull quote
     if (/^\s*>\s?/.test(line)) {
       const quoted: string[] = [];
       while (i < lines.length && /^\s*>\s?/.test(lines[i])) {
         quoted.push(lines[i].replace(/^\s*>\s?/, ""));
         i++;
       }
-      blocks.push(
-        <blockquote
-          key={`q-${key++}`}
-          className="my-8 border-l-2 border-porchlight pl-5 text-lg font-light italic leading-relaxed text-ink-soft"
-        >
-          {inline(quoted.join(" ").trim(), `q${key}`)}
-        </blockquote>,
-      );
+      blocks.push({
+        node: (
+          <blockquote
+            key={`q-${key++}`}
+            className="pull-quote relative my-12 pl-7 text-xl font-light leading-relaxed text-ink-soft md:text-2xl md:leading-relaxed"
+          >
+            {inline(quoted.join(" ").trim(), `q${key}`)}
+          </blockquote>
+        ),
+      });
       continue;
     }
 
@@ -144,13 +182,17 @@ export function renderMarkdown(markdown: string): ReactNode[] {
         items.push(lines[i].replace(/^\s*[-*]\s+/, ""));
         i++;
       }
-      blocks.push(
-        <ul key={`ul-${key++}`} className="my-6 list-disc space-y-2 pl-6 leading-relaxed text-stone marker:text-porchlight">
-          {items.map((it, n) => (
-            <li key={n}>{inline(it, `ul${key}-${n}`)}</li>
-          ))}
-        </ul>,
-      );
+      blocks.push({
+        node: (
+          // Bare <li> on purpose — bullets and spacing come from `.prose-custom ul li` in
+          // globals.css so the markup stays clean (and the renderer's unit test can match it).
+          <ul key={`ul-${key++}`} className="prose-ul my-7 leading-[1.7] text-stone">
+            {items.map((it, n) => (
+              <li key={n}>{inline(it, `ul${key}-${n}`)}</li>
+            ))}
+          </ul>
+        ),
+      });
       continue;
     }
 
@@ -161,13 +203,15 @@ export function renderMarkdown(markdown: string): ReactNode[] {
         items.push(lines[i].replace(/^\s*\d+[.)]\s+/, ""));
         i++;
       }
-      blocks.push(
-        <ol key={`ol-${key++}`} className="my-6 list-decimal space-y-2 pl-6 leading-relaxed text-stone marker:font-bold marker:text-porchlight">
-          {items.map((it, n) => (
-            <li key={n}>{inline(it, `ol${key}-${n}`)}</li>
-          ))}
-        </ol>,
-      );
+      blocks.push({
+        node: (
+          <ol key={`ol-${key++}`} className="prose-ol my-7 leading-[1.7] text-stone">
+            {items.map((it, n) => (
+              <li key={n}>{inline(it, `ol${key}-${n}`)}</li>
+            ))}
+          </ol>
+        ),
+      });
       continue;
     }
 
@@ -183,13 +227,47 @@ export function renderMarkdown(markdown: string): ReactNode[] {
       i++;
     }
     if (para.length) {
-      blocks.push(
-        <p key={`p-${key++}`} className="mt-5 leading-relaxed text-stone">
-          {inline(para.join(" "), `p${key}`)}
-        </p>,
-      );
+      blocks.push({
+        node: (
+          <p key={`p-${key++}`} className="mt-6 leading-[1.75] text-stone">
+            {inline(para.join(" "), `p${key}`)}
+          </p>
+        ),
+      });
     }
   }
 
   return blocks;
+}
+
+/** Markdown → React nodes. Never returns HTML strings. */
+export function renderMarkdown(markdown: string): ReactNode[] {
+  return parseBlocks(markdown).map((b) => b.node);
+}
+
+/** A run of blocks under one rendered <h2>. The lead run before the first h2 has a null
+ * heading. The page wraps each in a revealed <section> — so the ToC anchors land on real
+ * landmarks and sections rise into view as you scroll. */
+export interface ArticleSection {
+  id: string | null;
+  headingId: string | null;
+  nodes: ReactNode[];
+}
+
+export function renderMarkdownSections(markdown: string): ArticleSection[] {
+  const blocks = parseBlocks(markdown);
+  const sections: ArticleSection[] = [];
+  let current: ArticleSection = { id: "lead", headingId: null, nodes: [] };
+
+  for (const b of blocks) {
+    // A rendered <h2> (markdown level 1 or 2) opens a new section.
+    if (b.headingLevel !== undefined && b.headingLevel <= 2) {
+      if (current.nodes.length) sections.push(current);
+      current = { id: b.id ?? null, headingId: b.id ?? null, nodes: [b.node] };
+    } else {
+      current.nodes.push(b.node);
+    }
+  }
+  if (current.nodes.length) sections.push(current);
+  return sections;
 }

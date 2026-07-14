@@ -24,9 +24,9 @@ export interface BlogPost {
 }
 
 const PLACEHOLDER_BODY = (topic: string): string[] => [
-  `[Placeholder draft — the owner's final article replaces this text.]`,
-  `This post will cover ${topic} for Hudson Valley homeowners and buyers — written from local experience across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties.`,
-  `In the meantime, if this topic is on your mind, call us at (917) 905-7923 or send a message from any page — we're happy to talk it through, seven days a week.`,
+  `[Placeholder draft. The owner's final article replaces this text.]`,
+  `This post will cover ${topic} for Hudson Valley homeowners and buyers, written from local experience across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties.`,
+  `In the meantime, if this topic is on your mind, call us at (917) 905-7923 or send a message from any page, and we're happy to talk it through, seven days a week.`,
 ];
 
 /* NOTE ON ORDER: this array is authored NEWEST-FIRST, and lib/blog's merge relies on the
@@ -64,7 +64,7 @@ export const POSTS: BlogPost[] = [
     title: "The Top 5 Renovations That Actually Increase Your Homes Value in New York",
     date: "2025-10-24",
     excerpt:
-      "You watch the home improvement shows, you see the stunning transformations — but which projects actually pay you back at the closing table in New York?",
+      "You watch the home improvement shows, you see the stunning transformations, but which projects actually pay you back at the closing table in New York?",
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York — and the popular ones that don't pay back"),
     placeholder: true,
@@ -74,7 +74,7 @@ export const POSTS: BlogPost[] = [
     title: "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
     date: "2025-10-24",
     excerpt:
-      "From the first budget conversation to getting the keys — the ten steps every first-time New York buyer walks through, in order, with no jargon.",
+      "From the first budget conversation to getting the keys, the ten steps every first-time New York buyer walks through, in order, with no jargon.",
     cover: "/images/listings/house-03.jpg",
     body: PLACEHOLDER_BODY("a step-by-step checklist for first-time buyers in New York, from pre-approval to closing day"),
     placeholder: true,
@@ -94,7 +94,7 @@ export const POSTS: BlogPost[] = [
     title: "Relocating to the Hudson Valley: What Newcomers Need to Know About Small-Town Charm Meets Big-City Access",
     date: "2025-09-13",
     excerpt:
-      "Metro-North lines, school districts, winters, and the difference between river towns — the honest orientation we give every family relocating from the city.",
+      "Metro-North lines, school districts, winters, and the difference between river towns: the honest orientation we give every family relocating from the city.",
     cover: "/images/counties/dutchess.jpg",
     body: PLACEHOLDER_BODY("what newcomers should know before relocating to the Hudson Valley — commutes, towns, and trade-offs"),
     placeholder: true,
@@ -114,7 +114,7 @@ export const POSTS: BlogPost[] = [
     title: "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move",
     date: "2025-09-12",
     excerpt:
-      "Label systems, box strategy, and the one room you should pack last — practical packing habits that make unpacking almost pleasant.",
+      "Label systems, box strategy, and the one room you should pack last. Practical packing habits that make unpacking almost pleasant.",
     cover: "/images/listings/house-15.jpg",
     body: PLACEHOLDER_BODY("packing strategies that save time and prevent broken-box regrets on moving day"),
     placeholder: true,
@@ -124,7 +124,7 @@ export const POSTS: BlogPost[] = [
     title: "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move",
     date: "2025-09-12",
     excerpt:
-      "Eight weeks out to moving day, week by week — utilities, schools, address changes, and everything people remember too late.",
+      "Eight weeks out to moving day, week by week: utilities, schools, address changes, and everything people remember too late.",
     cover: "/images/listings/house-18.jpg",
     body: PLACEHOLDER_BODY("an eight-week countdown checklist that keeps a move on schedule"),
     placeholder: true,
@@ -134,7 +134,7 @@ export const POSTS: BlogPost[] = [
     title: "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners",
     date: "2025-09-12",
     excerpt:
-      "Hudson Valley winters are no joke. Nine upgrades — from free habits to smart investments — that cut heating and cooling costs in New York homes.",
+      "Hudson Valley winters are no joke. Nine upgrades, from free habits to smart investments, that cut heating and cooling costs in New York homes.",
     cover: "/images/listings/house-07.jpg",
     body: PLACEHOLDER_BODY("nine energy-efficiency moves for New York homeowners, ranked by cost and payback"),
     placeholder: true,
@@ -144,7 +144,7 @@ export const POSTS: BlogPost[] = [
     title: "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs",
     date: "2025-09-12",
     excerpt:
-      "The nine tools that handle ninety percent of first-year homeowner jobs — and none of them are a table saw.",
+      "The nine tools that handle ninety percent of first-year homeowner jobs, and none of them are a table saw.",
     cover: "/images/listings/house-14.jpg",
     body: PLACEHOLDER_BODY("the starter toolkit every new homeowner should own before the first squeaky hinge"),
     placeholder: true,
