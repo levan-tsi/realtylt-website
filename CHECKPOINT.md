@@ -20,13 +20,21 @@ CMA live (toggle comps + condition slider, saved), RAISE THEIR HAND + send a DIR
   sqft × condition factor (p25/p75 band); market = medians, **trimmed p10–p90 typical range**,
   price bands + beds/type distributions. Sourced from the committed snapshot via `/api/reports/comps`
   + `/api/reports/market` (NO MLS/photo calls — zero budget impact).
-- **UI:** `ReportGenerator` (CMA/market modes), `ReportDetail` (live recalc + market stats),
-  `TalkToAgent` (raise-hand + message + call/text), list page + `/portal/reports/[id]`, overview
-  gains a Reports stat tile + report activity labels. Matches the site's light/ink/navy identity.
+- **UI:** `ReportGenerator` (CMA/market modes), `ReportDetail` (live recalc + market stats +
+  **delete-own-report**), `TalkToAgent` (raise-hand + message + call/text), list page +
+  `/portal/reports/[id]`, overview gains a Reports stat tile + report activity labels. Matches the
+  site's light/ink/navy identity.
+- **Also verified the AGENT-mirror render path** (`source='agent'`): a mock published CMA shows the
+  "Prepared by your agent" badge + note banner + estimate recomputed from stored comps (evidence
+  `docs/accounts/reports-agent-*.png`). And a **live regression sweep** of the deploy = ALL PASS
+  (8 routes × {1280,390}: 0 console/CSP/overflow, IDX 5,362 intact, 0 real media calls).
+- **Drive-by bugfix (pre-existing, uncovered by a UTC day-roll):** `lib/blog/db.ts` derived a post's
+  date via `new Date()` which choked on Postgres microseconds + `+00` and fell back to *today* —
+  mis-dating every blog post. Now takes the `YYYY-MM-DD` prefix. (Commit `827ad24`.)
 
-**VERIFIED (local `next start` on real Supabase; test user created + DELETED, zero residue —
-reports/activity/contacts back to baseline 8, leads unchanged at 1):** `scripts/e2e-reports.mjs`
-**17/17 PASS**, 0 console errors, 0 CSP violations, `x-robots-tag: noindex` intact, screenshots
+**VERIFIED (local `next start` on real Supabase; test user created + DELETED each time, zero
+residue — reports/activity/contacts back to baseline 8, leads unchanged at 1):** `scripts/e2e-reports.mjs`
+**18/18 PASS** (incl. delete), 0 console errors, 0 CSP violations, `x-robots-tag: noindex` intact, screenshots
 1280+390 (`docs/accounts/reports-*.png`). Live recalc proven: $930K → **$1,042,000** at condition
 +12%; dropping a comp lowers the count 24→23; adjustments persisted. Market Dutchess: 842 active,
 median $579K / $285 psf, typical $279K–$1.5M. 160/160 unit tests, `next build` green, `tsc` clean.

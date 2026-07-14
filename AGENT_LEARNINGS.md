@@ -445,3 +445,10 @@ design-excellence — never replaces them or any skill.
 - **A "dirty since saved" flag must track a BASELINE STATE, not the immutable prop.** ReportDetail compared
   live edits against `report.criteria` (a static prop) → after saving, `dirty` stayed true forever so the
   "Saved" confirmation never showed. Keep a `baseline` in `useState`, update it on save success.
+- **`new Date()` can't parse a raw Postgres/PostgREST timestamp** like `2026-07-13 15:45:26.798964+00`
+  (6-digit microseconds + a bare `+00` offset, no `:00`) → `Invalid Date`. `lib/blog/db.ts` fell back to
+  `new Date()` = TODAY on failure, so every blog post silently rendered *today's* date, and the unit test
+  only passed on days equal to the hardcoded stamp (found via a mid-session UTC day-roll: `'2026-07-14'`
+  vs `'2026-07-13'`). For a display DATE, take the `YYYY-MM-DD` prefix with a regex — don't round-trip
+  through `Date`. General rule (already logged for the freshness gate): a test/render that flips with the
+  calendar is a latent bug; pin it to the data, not to `now`.

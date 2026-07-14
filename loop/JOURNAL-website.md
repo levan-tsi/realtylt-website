@@ -22,6 +22,14 @@ CMA live (comp toggles + condition slider, persisted), and raises their hand / m
   SQL-created then DELETED — zero residue (leads unchanged at 1, contacts back to 8). **Vercel deploy
   of the UI commit `0e686cf` = READY.** Commits `77fab2a` · `0e686cf` · `44f9857`.
 
+Also this cycle: **delete-own-report** action (E2E now 18/18); **verified the `source='agent'`
+render path** with a mock mirrored CMA (badge + note + estimate from stored comps, `docs/accounts/
+reports-agent-*.png`); **live regression sweep of the deploy = ALL PASS** (0 console/CSP/overflow,
+IDX 5,362 intact, 0 media calls); and a drive-by **blog date bugfix** (`lib/blog/db.ts` — `new Date()`
+choked on Postgres µs + `+00` → fell back to *today*, mis-dating posts; now uses the `YYYY-MM-DD`
+prefix). 161/161 unit tests green. Commits `77fab2a` `0e686cf` `44f9857` `eb3815b` `2727271`
+`827ad24` `9951b15`.
+
 **CRM-loop coordination (surfaced, not done here):** mirror published `cma_reports`/market reports into
 `portal_reports` via service role (client_id via `portal_clients.contact_id`) — full spec in
 `docs/CLIENT-ACCOUNTS.md`. Client self-serve reports need no CRM dependency and work today.
