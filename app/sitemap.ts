@@ -3,6 +3,7 @@ import { getArticles } from "@/lib/blog";
 import { COUNTY_CONTENT } from "@/content/counties";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
+import { getServices } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
 // Regenerate hourly — harmless in fixture mode, honest once the live feed rotates.
@@ -24,6 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/who-we-are`, priority: 0.6, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/reviews`, priority: 0.6, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/blog`, priority: 0.7, changeFrequency: "weekly", lastModified: now },
+    { url: `${base}/services`, priority: 0.9, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/connect`, priority: 0.7, changeFrequency: "yearly", lastModified: now },
     { url: `${base}/privacy-policy`, priority: 0.2, changeFrequency: "yearly", lastModified: now },
     { url: `${base}/dmca-terms`, priority: 0.2, changeFrequency: "yearly", lastModified: now },
@@ -33,6 +35,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${base}/top-areas/${c.slug}`,
     priority: 0.8,
     changeFrequency: "weekly",
+    lastModified: now,
+  }));
+
+  // The per-service SEO/GEO surface. `/ai#voice` is not a URL Google can rank — these are.
+  // Flagship pages carry the deepest content, so they get the higher priority.
+  const services: MetadataRoute.Sitemap = getServices().map((s) => ({
+    url: `${base}/services/${s.slug}`,
+    priority: s.tier === "flagship" ? 0.9 : s.tier === "core" ? 0.7 : 0.6,
+    changeFrequency: "monthly",
     lastModified: now,
   }));
 
@@ -55,5 +66,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     : [];
 
-  return [...staticPages, ...counties, ...posts, ...listings];
+  return [...staticPages, ...counties, ...services, ...posts, ...listings];
 }

@@ -11,11 +11,15 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 /** The one lead form — every conversion surface uses it (brief §5B, §7).
  * Variants: `dark` for ink sections/footer; `withAddress` + `defaultReason` for
- * home-value / cash-offer flows; `compact` hides the message box. */
+ * home-value / cash-offer flows; `compact` hides the message box; `hideReason` drops the
+ * interest dropdown entirely (its options are buy/sell/rent — meaningless on an AI
+ * services page). With no `interestReason` in the body, parseLead files the lead under
+ * "Other reason to contact an agent", which is exactly right. */
 export function LeadForm({
   dark = false,
   withAddress = false,
   compact = false,
+  hideReason = false,
   defaultReason,
   defaultAddress,
   submitLabel = "Send Message",
@@ -26,6 +30,7 @@ export function LeadForm({
   dark?: boolean;
   withAddress?: boolean;
   compact?: boolean;
+  hideReason?: boolean;
   defaultReason?: (typeof INTEREST_REASONS)[number];
   /** Prefill for the address field (home-value two-step flow). */
   defaultAddress?: string;
@@ -108,13 +113,15 @@ export function LeadForm({
           />
         )}
       </div>
-      <Select label="How can we help?" name="interestReason" dark={dark} hideLabel defaultValue={defaultReason ?? INTEREST_REASONS[0]}>
-        {INTEREST_REASONS.map((r) => (
-          <option key={r} value={r}>
-            {r}
-          </option>
-        ))}
-      </Select>
+      {!hideReason && (
+        <Select label="How can we help?" name="interestReason" dark={dark} hideLabel defaultValue={defaultReason ?? INTEREST_REASONS[0]}>
+          {INTEREST_REASONS.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </Select>
+      )}
       {!compact && (
         <Textarea label="Message" name="message" dark={dark} hideLabel placeholder="Your Message" />
       )}
@@ -125,7 +132,14 @@ export function LeadForm({
         </p>
       )}
 
-      <Button type="submit" disabled={status === "submitting"} className="justify-self-start">
+      {/* On an ink section the default `primary` button is black on black — near-invisible,
+          and well under the 3:1 non-text contrast floor. `light` inverts it. */}
+      <Button
+        type="submit"
+        variant={dark ? "light" : "primary"}
+        disabled={status === "submitting"}
+        className="justify-self-start"
+      >
         {status === "submitting" ? "Sending…" : submitLabel}
       </Button>
     </form>

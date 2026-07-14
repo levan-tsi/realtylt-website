@@ -2,14 +2,19 @@
 
 /* ── RealtyLT design tokens — matched to the LIVE realtylt.com (Brivity) look.
    Extracted 2026-07-10 via Playwright getComputedStyle — see docs/DESIGN-MATCH.md.
-   Live values: body/nav gray #808080 (we use #767676 for WCAG AA 4.54:1 on white),
-   headings/CTAs black, alt-section bg #f3f5f8, logo navy #102c54 / azure #28a8e0. */
+   Live values: body/nav gray #808080, headings/CTAs black, alt-section bg #f3f5f8,
+   logo navy #102c54 / azure #28a8e0.
+
+   --color-stone was #767676, picked for 4.54:1 on WHITE. But it is also used on
+   --color-mist (#f3f5f8), our own alt-section background, where it measures 4.16:1 and
+   FAILS AA. #6f6f6f is visually indistinguishable and passes on both: 5.02:1 on paper,
+   4.60:1 on mist. Verified with scripts/contrast.mjs. */
 @theme {
   --color-ink: #000000;
   --color-ink-soft: #222222;
   --color-paper: #ffffff;
   --color-mist: #f3f5f8;
-  --color-stone: #767676;
+  --color-stone: #6f6f6f;
   --color-river: #102c54;
   --color-porchlight: #28a8e0;
   --color-porchlight-deep: #1c729a;
@@ -27,10 +32,26 @@ body {
   @apply bg-paper text-ink font-sans antialiased;
 }
 
-/* Visible keyboard focus everywhere (a11y floor) */
+/* Visible keyboard focus everywhere (a11y floor).
+ *
+ * IMPORTANT, and counter-intuitive: this rule is UNLAYERED, and Tailwind v4 emits its
+ * utilities inside `@layer utilities`. Unlayered CSS beats layered CSS no matter the
+ * specificity, so this rule overrides EVERY `focus-visible:outline-*` utility on the
+ * site. Putting `focus-visible:outline-paper` on a button does nothing. The ring colour
+ * has to be decided here, which is why the dark-surface case below exists.
+ */
 :focus-visible {
   outline: 2px solid var(--color-river);
   outline-offset: 2px;
+}
+
+/* River (#102c54) on ink is 1.5:1 — a focus ring nobody can see, which is a WCAG 1.4.11
+ * failure (3:1 floor for non-text indicators). Inside a dark surface the ring goes white:
+ * 21:1 on ink, and it still reads on ink-soft. Verified by scripts/focus.mjs.
+ * Specificity (0,2,0) beats the rule above, and both are unlayered, so this wins. */
+.bg-ink :focus-visible,
+.bg-ink-soft :focus-visible {
+  outline-color: var(--color-paper);
 }
 
 ::selection {

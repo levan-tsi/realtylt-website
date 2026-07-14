@@ -2,6 +2,8 @@
  * BODIES ARE PLACEHOLDERS: owner supplies final articles from Drive (CHECKPOINT.md).
  * Adding a post = add an entry here; pages generate automatically. */
 
+import { AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
+
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
   new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -14,6 +16,10 @@ export interface BlogPost {
   cover: string;
   /** Paragraphs. Placeholder until owner's Drive copy lands. */
   body: string[];
+  /** Full article in the markdown subset lib/blog/markdown.tsx renders (headings, lists,
+   * quotes, links). When present it REPLACES `body` — a real article needs structure, and
+   * a flat paragraph array cannot carry an H2. Set `body: []` alongside it. */
+  markdown?: string;
   placeholder: boolean;
 }
 
@@ -23,7 +29,36 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
   `In the meantime, if this topic is on your mind, call us at (917) 905-7923 or send a message from any page — we're happy to talk it through, seven days a week.`,
 ];
 
+/* NOTE ON ORDER: this array is authored NEWEST-FIRST, and lib/blog's merge relies on the
+   sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
+   post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  /* ── The two AI exemplars. Real articles, full markdown bodies, not stubs. They are the
+     long form behind /services/ai-chat-assistant and /services/workflow-automation, and
+     those pages link back to them. */
+  {
+    slug: "workflow-automation-real-estate-business",
+    title: "The Busywork Tax: What Workflow Automation Actually Removes",
+    date: "2026-07-13",
+    excerpt:
+      "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps, and what it takes to get them back.",
+    cover: "/images/team-bg.jpg",
+    body: [],
+    placeholder: false,
+    markdown: WORKFLOW_AUTOMATION_POST,
+  },
+  {
+    slug: "ai-chat-assistant-real-estate-website",
+    title: "Your Website Answered That Buyer at 11:40pm. Did You?",
+    date: "2026-07-12",
+    excerpt:
+      "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. Here is what an AI chat assistant actually does in that gap, and what it cannot do.",
+    cover: "/images/lifestyle/buying.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_CHAT_ASSISTANT_POST,
+  },
+
   {
     slug: "top-5-renovations-increase-home-value-ny",
     title: "The Top 5 Renovations That Actually Increase Your Homes Value in New York",
@@ -124,6 +159,7 @@ export const POSTS: BlogPost[] = [
     body: PLACEHOLDER_BODY("what finishing a basement costs in our market and how much value it actually returns"),
     placeholder: true,
   },
+
 ];
 
 export function getPost(slug: string): BlogPost | undefined {

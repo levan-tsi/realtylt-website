@@ -61,6 +61,9 @@ export const FOOTER_NAV = [
   { label: "Who We Are", href: "/who-we-are" },
   { label: "Reviews", href: "/reviews" },
   { label: "Connect", href: "/connect" },
+  // The indexable per-service surface (app/services). Without a crawlable internal link
+  // the twenty service pages are orphans no matter what the sitemap says.
+  { label: "AI Services", href: "/services" },
   { label: "RealtyLT AI", href: "/ai", external: true },
 ] as const;
 
