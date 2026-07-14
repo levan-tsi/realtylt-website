@@ -74,12 +74,11 @@ export function rowToArticle(row: DbRow): Article | null {
   if (!SLUG_RE.test(slug) || !title || !markdown.trim()) return null;
 
   const publishedAt = str(row.published_at);
-  // `2026-07-13 15:45:26.79+00` (PostgREST) → `2026-07-13`; fall back to today so a row
-  // missing the stamp still sorts and renders instead of showing "Invalid Date".
-  const parsed = new Date(publishedAt.replace(" ", "T"));
-  const date = Number.isNaN(parsed.getTime())
-    ? new Date().toISOString().slice(0, 10)
-    : parsed.toISOString().slice(0, 10);
+  // `2026-07-13 15:45:26.798964+00` (PostgREST) → `2026-07-13`. Take the calendar-date PREFIX
+  // directly: `new Date(...)` chokes on Postgres microseconds + the bare `+00` offset and was
+  // silently falling back to TODAY, mis-dating every post after each UTC day-roll. Only truly
+  // absent/malformed stamps fall back now.
+  const date = publishedAt.match(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? new Date().toISOString().slice(0, 10);
 
   const article: Article = {
     slug,
