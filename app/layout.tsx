@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Lato } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -82,6 +83,29 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <Footer />
         </Providers>
+        {/* The SAME chat widget the live site injects via BlueRoof custom code —
+            extracted byte-exact from realtylt.com (self-contained, talks to the n8n
+            agent webhook). Keeping it a static file means updates are a re-extract. */}
+        <Script src="/rlt-chat.js" strategy="afterInteractive" />
+        {/* Google Ads tag — mirrors the live site's custom-code include so conversion
+            tracking survives the migration. gtagSendEvent matches the live helper. */}
+        <Script id="gtag-helper" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-11479042629');
+          function gtagSendEvent(url) {
+            var callback = function () {
+              if (typeof url === 'string') { window.location = url; }
+            };
+            gtag('event', 'conversion_event_submit_lead_form', {
+              'event_callback': callback,
+              'event_timeout': 2000,
+            });
+            return false;
+          }
+        `}</Script>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11479042629" strategy="afterInteractive" />
       </body>
     </html>
   );

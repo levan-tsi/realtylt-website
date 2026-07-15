@@ -9,6 +9,7 @@ import { TestimonialBand } from "@/components/ui/TestimonialBand";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
+import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { COUNTIES, SERVED_AREAS } from "@/lib/site";
@@ -55,10 +56,10 @@ export default async function HomePage() {
       <section className="relative isolate bg-ink" aria-labelledby="home-hero">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
-            {/* Live rotates B&W lifestyle shots at luminance ~79 — valley aerial in
-                grayscale + black/30 measures ~80 (hudson-twilight was too dark, ~45). */}
+            {/* The live hero's OWN uploaded asset (BlueRoof uploads/104674/hom.png),
+                rendered the same way live does: grayscale under a dark scrim. */}
             <Image
-              src="/images/hero/valley-aerial.jpg"
+              src="/images/hero/hom.png"
               alt=""
               fill
               priority
@@ -84,10 +85,9 @@ export default async function HomePage() {
             <label htmlFor="home-search" className="sr-only">
               Search for homes by town, zip, or address
             </label>
-            <input
+            <LocationSuggest
               id="home-search"
-              type="search"
-              name="q"
+              dark
               placeholder="Search for Homes"
               className="w-full border border-paper/30 bg-white/10 px-5 py-[23px] text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
             />

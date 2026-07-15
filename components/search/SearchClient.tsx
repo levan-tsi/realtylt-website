@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
+import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import type { Listing, MapPin } from "@/lib/idx/types";
@@ -117,7 +118,6 @@ export function SearchClient() {
   const { saveSearch, signedIn } = useSaved();
   const [pins, setPins] = useState<MapPin[] | null>(null);
   const loadedPinsQuery = useRef<string | null>(null);
-  const qInput = useRef<HTMLInputElement>(null);
 
   const apply = useCallback(
     (patch: Partial<Filters>) => {
@@ -207,7 +207,8 @@ export function SearchClient() {
         aria-label="Listing filters"
         onSubmit={(e) => {
           e.preventDefault();
-          apply({ q: qInput.current?.value ?? "" });
+          const fd = new FormData(e.currentTarget);
+          apply({ q: String(fd.get("q") ?? "") });
         }}
         className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
       >
@@ -215,13 +216,17 @@ export function SearchClient() {
           <label htmlFor="search-q" className="sr-only">
             Location: town, ZIP, or address
           </label>
-          <input
+          <LocationSuggest
             id="search-q"
-            ref={qInput}
-            type="search"
+            key={filters.q}
             defaultValue={filters.q}
             placeholder="Find a Place"
             className="w-full border-0 bg-transparent px-1 py-2.5 text-sm text-ink-soft placeholder:text-stone focus:outline-none"
+            onPick={(s) =>
+              s.kind === "county" && s.county
+                ? apply({ county: s.county, q: "" })
+                : apply({ q: s.q })
+            }
           />
         </div>
 
