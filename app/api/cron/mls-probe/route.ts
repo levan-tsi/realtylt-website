@@ -51,6 +51,28 @@ export async function GET(req: Request) {
 
   const q = new URL(req.url).searchParams;
 
+  // MEDIA-TEST mode (?mediaUrl=<stored MediaURL>): the feed started signing MediaURLs
+  // (token=…&expires=… path segments, ~1h TTL) — test whether the signature-stripped
+  // permanent form still serves with the API key as User-Agent. Two HEAD-ish fetches.
+  const mediaUrl = q.get("mediaUrl");
+  if (mediaUrl?.startsWith("https://media.mlsgrid.com/")) {
+    const bare = mediaUrl.replace(/token=[^&]+&expires=\d+&/, "");
+    const out: Record<string, unknown> = { asStored: null, bare: null, bareUrl: bare.slice(0, 80) };
+    for (const [label, u] of [["asStored", mediaUrl], ["bare", bare]] as const) {
+      try {
+        const r = await fetch(u, {
+          headers: { "User-Agent": apiKey },
+          signal: AbortSignal.timeout(15_000),
+        });
+        out[label] = { status: r.status, type: r.headers.get("content-type") };
+        r.body?.cancel();
+      } catch (e) {
+        out[label] = { error: e instanceof Error ? e.message : String(e) };
+      }
+    }
+    return NextResponse.json({ ok: true, mode: "mediaTest", ...out });
+  }
+
   const idsParam = q.get("ids");
   if (idsParam) {
     const ids = idsParam
