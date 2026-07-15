@@ -13,7 +13,7 @@ export function VideoBlock({ service }: { service: Service }) {
   if (!v) return null;
 
   return (
-    <section className="bg-mist py-16 md:py-24" aria-labelledby="video-heading">
+    <section id="watch-it" className="scroll-mt-24 bg-mist py-16 md:py-24" aria-labelledby="video-heading">
       <div className="mx-auto max-w-5xl px-4 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="Watch it" align="center" as="h2">

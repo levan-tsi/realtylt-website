@@ -8,7 +8,7 @@ import { aiJourneyHref, type Service } from "@/lib/services";
  * different node on the hub and the band never repeats itself across the site. */
 export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex: number }) {
   return (
-    <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="live-heading">
+    <section id="see-it-live" className="scroll-mt-24 bg-ink py-16 text-paper md:py-24" aria-labelledby="live-heading">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:gap-20 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="See it live" dark as="h2">

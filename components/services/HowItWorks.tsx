@@ -7,7 +7,7 @@ import type { Service } from "@/lib/services";
  * invented. */
 export function HowItWorks({ service }: { service: Service }) {
   return (
-    <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="how-heading">
+    <section id="how-it-works" className="scroll-mt-24 bg-ink py-16 text-paper md:py-24" aria-labelledby="how-heading">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="How it works" dark as="h2">

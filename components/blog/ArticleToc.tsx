@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
 import type { TocItem } from "@/lib/blog/toc";
 
 /** Hovering table of contents with scroll-spy.
@@ -13,66 +14,20 @@ import type { TocItem } from "@/lib/blog/toc";
  * prefers reduced motion, and focus moves into the target section for keyboard users.
  */
 export function ArticleToc({ items }: { items: TocItem[] }) {
-  const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null);
+  const [activeId, setActiveId] = useScrollSpy(items.map((i) => i.id));
   const [open, setOpen] = useState(false);
-  const raf = useRef(0);
 
-  // ── Scroll-spy. Deterministic at any resting position: the active section is the lowest
-  // heading whose top has passed a reading line ~140px below the viewport top. An
-  // IntersectionObserver wakes the recompute when a heading crosses the viewport, and an
-  // rAF-throttled scroll/resize listener covers deep-links, jumps, and mid-section rests.
-  useEffect(() => {
-    const ids = items.map((i) => i.id);
-    const headings = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (!headings.length) return;
-
-    const LINE = 140;
-    const recompute = () => {
-      raf.current = 0;
-      let current = ids[0];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top - LINE <= 0) current = id;
-      }
-      // At the very bottom, the last section wins even if its heading sits above the line.
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
-        current = ids[ids.length - 1];
-      }
-      setActiveId(current);
-    };
-    const schedule = () => {
-      if (!raf.current) raf.current = requestAnimationFrame(recompute);
-    };
-
-    const io = new IntersectionObserver(schedule, { rootMargin: "0px 0px -60% 0px", threshold: 0 });
-    headings.forEach((h) => io.observe(h));
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule, { passive: true });
-    recompute();
-
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      if (raf.current) cancelAnimationFrame(raf.current);
-    };
-  }, [items]);
-
-  const jump = useCallback((e: React.MouseEvent, id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    e.preventDefault();
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-    history.replaceState(null, "", `#${id}`);
-    setActiveId(id);
-    setOpen(false);
-    // Land keyboard focus in the section without a second scroll jump.
-    el.setAttribute("tabindex", "-1");
-    el.focus({ preventScroll: true });
-  }, []);
+  const jump = useCallback(
+    (e: React.MouseEvent, id: string) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      scrollToId(id);
+      setActiveId(id);
+      setOpen(false);
+    },
+    [setActiveId],
+  );
 
   // Close the sheet on Escape.
   useEffect(() => {

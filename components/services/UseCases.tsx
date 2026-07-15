@@ -10,7 +10,7 @@ import type { Service } from "@/lib/services";
  * cases, and an odd count in a two-column gap grid leaves a visible empty cell. */
 export function UseCases({ service }: { service: Service }) {
   return (
-    <section className="bg-paper py-16 md:py-24" aria-labelledby="cases-heading">
+    <section id="use-cases" className="scroll-mt-24 bg-paper py-16 md:py-24" aria-labelledby="cases-heading">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="Use cases" as="h2">

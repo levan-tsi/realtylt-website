@@ -6,7 +6,7 @@ import type { Service } from "@/lib/services";
  * buyer scans for and an assistant quotes when asked "what is it built on". */
 export function WhatItIs({ service }: { service: Service }) {
   return (
-    <section className="bg-paper py-16 md:py-24" aria-labelledby="what-heading">
+    <section id="what-it-is" className="scroll-mt-24 bg-paper py-16 md:py-24" aria-labelledby="what-heading">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.45fr_1fr] lg:gap-20 lg:px-8">
         <Reveal>
           <SectionHeading eyebrow="What it is" as="h2">

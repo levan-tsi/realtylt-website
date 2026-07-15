@@ -8,6 +8,7 @@ import { RelatedPosts } from "@/components/services/RelatedPosts";
 import { SeeItLive } from "@/components/services/SeeItLive";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { ServiceLead } from "@/components/services/ServiceLead";
+import { ServiceToc } from "@/components/services/ServiceToc";
 import { UseCases } from "@/components/services/UseCases";
 import { VideoBlock } from "@/components/services/VideoBlock";
 import { WhatItIs } from "@/components/services/WhatItIs";
@@ -19,6 +20,7 @@ import {
   serviceStructuredData,
   serviceUrl,
 } from "@/lib/services";
+import { serviceTocItems } from "@/lib/services/toc";
 
 /** ONE template for every service. Twenty page.tsx files would be twenty copies of this
  * that drift apart within a month; the content lives in content/services/<slug>.ts and
@@ -70,6 +72,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   const services = getServices();
   const nodeIndex = services.findIndex((s) => s.slug === service.slug);
+  const toc = serviceTocItems(service);
 
   return (
     <>
@@ -94,6 +97,10 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <RelatedPosts service={service} />
       <ServiceLead service={service} />
       <MoreServices services={getOtherServices(service.slug, 6)} />
+
+      {/* Fixed / floating, so it renders last in the DOM: the page reads and tabs in full
+          before a keyboard user reaches the table of contents. */}
+      <ServiceToc items={toc} />
     </>
   );
 }
