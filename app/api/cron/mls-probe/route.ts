@@ -11,6 +11,12 @@ import { mlsGridDataFetch, runInRefreshContext } from "@/lib/idx/mls-fetch";
  * Params: ?pages=N (default 2, max 6) · ?order=desc|asc (default desc = newest-modified
  * window) · ?status=Active|... (default Active) · ?typeFilter=1 (apply the sync's
  * PropertyType filter; default OFF so exclusions become visible).
+ *
+ * RAW-ROW mode: ?ids=KEY1,KEY2 (max 20) — one request returning the exact raw rows with a
+ * WIDER $select than the sync uses (StreetDirPrefix/StreetDirSuffix/UnitNumber, …) plus the
+ * feed's photo COUNT per listing, so stored mappings can be audited against the source and
+ * candidate fields tested before they join SELECT_FIELDS. Unsupported fields self-heal the
+ * same way the sync does (drop the named field, retry) and are reported in the response.
  */
 
 export const dynamic = "force-dynamic";
@@ -44,6 +50,74 @@ export async function GET(req: Request) {
   }
 
   const q = new URL(req.url).searchParams;
+
+  const idsParam = q.get("ids");
+  if (idsParam) {
+    const ids = idsParam
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => /^[A-Za-z0-9_-]{1,40}$/.test(s)) // keeps the $filter uninjectable
+      .slice(0, 20);
+    if (!ids.length) return NextResponse.json({ error: "no valid ids" }, { status: 400 });
+    const select = new Set([
+      "ListingId", "StreetNumber", "StreetDirPrefix", "StreetName", "StreetSuffix",
+      "StreetDirSuffix", "UnitNumber", "City", "PostalCode", "CountyOrParish", "ListPrice",
+      "BedroomsTotal", "BathroomsTotalInteger", "BathroomsHalf", "LivingArea", "LotSizeAcres",
+      "YearBuilt", "PropertyType", "PropertySubType", "StandardStatus", "ListOfficeName",
+      "ModificationTimestamp",
+    ]);
+    const filter =
+      `OriginatingSystemName eq '${feedId}' and MlgCanView eq true and ` +
+      `ListingId in (${ids.map((i) => `'${i}'`).join(",")})`;
+    const dropped: string[] = [];
+    type RawRow = Record<string, unknown> & {
+      Media?: { MediaURL?: string; MediaCategory?: string }[];
+    };
+    try {
+      const rows = await runInRefreshContext(async () => {
+        for (let attempt = 0; attempt < 8; attempt++) {
+          const query = [
+            `$filter=${encodeURIComponent(filter)}`,
+            `$select=${[...select].join(",")}`,
+            "$expand=Media",
+            `$top=${Math.max(ids.length, 1)}`,
+          ].join("&");
+          const res = await mlsGridDataFetch(`${endpoint}/Property?${query}`, {
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+              Accept: "application/json",
+              "Accept-Encoding": "gzip",
+            },
+            signal: AbortSignal.timeout(30_000),
+          });
+          if (res.ok) return ((await res.json()) as { value?: RawRow[] }).value ?? [];
+          const body = await res.text();
+          const badField = res.status === 400 ? /The field '(\w+)'/.exec(body)?.[1] : undefined;
+          if (badField && body.includes("$select") && select.has(badField)) {
+            select.delete(badField);
+            dropped.push(badField);
+            continue;
+          }
+          throw new Error(`MLS Grid ${res.status}: ${body.slice(0, 300)}`);
+        }
+        throw new Error("request kept failing after removing rejected fields");
+      });
+      const out = rows.map(({ Media, ...rest }) => ({
+        ...rest,
+        mediaCount: (Media ?? []).filter(
+          (m) => !!m.MediaURL && (!m.MediaCategory || m.MediaCategory === "Photo"),
+        ).length,
+      }));
+      return NextResponse.json({
+        ok: true, mode: "ids", requested: ids, found: out.length,
+        droppedSelectFields: dropped, rows: out,
+      });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      return NextResponse.json({ error: `probe failed: ${msg}` }, { status: 502 });
+    }
+  }
+
   const pages = Math.min(6, Math.max(1, Number(q.get("pages")) || 2));
   const order = q.get("order") === "asc" ? "asc" : "desc";
   const status = STATUSES.has(q.get("status") ?? "") ? (q.get("status") as string) : "Active";
