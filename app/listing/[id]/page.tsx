@@ -397,7 +397,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 <div className="flex items-center gap-4">
                   <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-ink/10">
                     <Image
-                      src="/levan-portrait.jpg"
+                      src="/images/levan-portrait.jpg"
                       alt="Levan Tsiklauri"
                       fill
                       sizes="56px"
