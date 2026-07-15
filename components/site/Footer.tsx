@@ -73,19 +73,22 @@ export function Footer() {
       <div className="bg-ink text-paper/70">
         <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
           <p>© {new Date().getFullYear()} {SITE.name}</p>
-          <ul className="flex gap-4">
+          {/* inline-flex min-h-[24px]: the legal links are text-xs with no padding, so they were
+              ~13px tall — under the WCAG 2.5.8 (24px) touch-target minimum on mobile. This gives
+              them a real tap height without changing the type size or the desktop row. */}
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
             <li>
-              <Link href="/privacy-policy" className="transition-colors hover:text-paper">
+              <Link href="/privacy-policy" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/dmca-terms" className="transition-colors hover:text-paper">
+              <Link href="/dmca-terms" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
                 DMCA &amp; Terms of Service
               </Link>
             </li>
             <li>
-              <a href="/sitemap.xml" className="transition-colors hover:text-paper">
+              <a href="/sitemap.xml" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
                 Sitemap
               </a>
             </li>
