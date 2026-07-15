@@ -6,9 +6,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Buying — Ready to Find Your Dream Home?",
+  title: "Buying | Ready to Find Your Dream Home?",
   description:
-    "Free buyer consultation with our Hudson Valley specialists — home search, listing alerts, favorites and tours, offers and closing. Buyers pay no cost; we're compensated by sellers.",
+    "Free buyer consultation with our Hudson Valley specialists: home search, listing alerts, favorites and tours, offers and closing. Buyers pay no cost; we're compensated by sellers.",
 };
 
 export default function BuyingPage() {
@@ -37,7 +37,7 @@ export default function BuyingPage() {
           </p>
           <p className="mx-auto mt-4 max-w-xl text-paper/85">
             We&rsquo;ll help you navigate the market, find homes that match your criteria, and
-            negotiate the best deal. No pressure, no obligation — just expert guidance.
+            negotiate the best deal. No pressure, no obligation, just expert guidance.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button href={SITE.phoneHref} variant="outline-light">☎ {SITE.phone}</Button>
@@ -120,7 +120,7 @@ export default function BuyingPage() {
                   <p className="mt-3 text-lg font-bold text-paper">New match: 3 bd in Beacon under $600K</p>
                   <p className="mt-1 text-sm text-paper/85">$585,000 · 24 Verplanck Ave</p>
                   <p className="mt-3 text-sm text-paper/60">
-                    Sent the moment it hit the market — before the portals surface it.
+                    Sent the moment it hit the market, before the portals surface it.
                   </p>
                 </figure>
               </div>
@@ -157,7 +157,7 @@ export default function BuyingPage() {
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
               Click the ♡ icon when you find a house you love to save it in your favorites section,
               and let us know you like it. Reach out to your agent directly to schedule an
-              in-person showing — we&rsquo;ll walk you through the home and answer any questions,
+              in-person showing, and we&rsquo;ll walk you through the home and answer any questions
               so you can make an informed decision.
             </p>
             <div className="mt-6">
