@@ -22,6 +22,7 @@ interface Suggestion {
 
 const INDEX_TTL_MS = 60 * 60 * 1000;
 let indexBuiltAt = 0;
+let indexBuilding: Promise<void> | null = null;
 let cityIndex: { name: string; count: number }[] = [];
 let zipIndex: { zip: string; city: string; count: number }[] = [];
 
@@ -66,15 +67,26 @@ export async function GET(req: Request) {
   const q = new URL(req.url).searchParams.get("q")?.trim().toLowerCase() ?? "";
   if (q.length < 2) return NextResponse.json({ suggestions: [] });
 
-  if (Date.now() - indexBuiltAt > INDEX_TTL_MS) {
-    try {
-      await buildIndex();
-    } catch {
-      // stale (or empty) index still serves; counties below never depend on the DB
-    }
+  // Never block a keystroke on the index build (cold instances took seconds and served
+  // NOTHING). Counties answer instantly; cities/zips join as soon as the build lands —
+  // briefly wait for an in-flight build so the second keystroke usually gets everything.
+  if (Date.now() - indexBuiltAt > INDEX_TTL_MS && !indexBuilding) {
+    indexBuilding = buildIndex()
+      .catch(() => {})
+      .finally(() => {
+        indexBuilding = null;
+      });
+  }
+  if (indexBuilding && cityIndex.length === 0) {
+    await Promise.race([indexBuilding, new Promise((r) => setTimeout(r, 350))]);
   }
 
   const out: Suggestion[] = [];
+  // Borough areas ("The Bronx") and their postal cities ("Bronx") would double up —
+  // the county entry wins, the duplicate city row is skipped.
+  const areaNames = new Set(
+    SERVED_AREAS.flatMap((c) => [c.name.toLowerCase(), c.name.toLowerCase().replace(/^the /, "")]),
+  );
   for (const c of SERVED_AREAS) {
     if (c.name.toLowerCase().includes(q)) {
       out.push({ label: `${c.name}, NY`, q: c.name, kind: "county", href: `/search?county=${c.slug}`, county: c.slug });
@@ -82,7 +94,7 @@ export async function GET(req: Request) {
   }
   for (const c of cityIndex) {
     if (out.length >= 8) break;
-    if (c.name.toLowerCase().startsWith(q)) {
+    if (c.name.toLowerCase().startsWith(q) && !areaNames.has(c.name.toLowerCase())) {
       out.push({ label: `${c.name}, NY`, q: c.name, kind: "city", count: c.count });
     }
   }
