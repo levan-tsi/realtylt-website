@@ -597,7 +597,8 @@ export function mapProperty(p: ResoProperty): Listing | null {
         ? boroughCity
         : (p.City ?? "");
 
-  // "Warwick (Town)" / "Monroe (Village)" are feed-internal municipality tags, not display names.
+  // "Warwick (Town)" / "New York (Manhattan)" / "Hillcrest (Queens)" — the feed suffixes
+  // cities (and PostalCity) with municipality/borough tags; strip any trailing parenthetical.
   const street = [p.StreetNumber, p.StreetDirPrefix, p.StreetName, p.StreetSuffix, p.StreetDirSuffix]
     .filter(Boolean)
     .join(" ");
@@ -607,7 +608,7 @@ export function mapProperty(p: ResoProperty): Listing | null {
     id,
     price: p.ListPrice,
     address: unit ? `${street} #${unit}` : street,
-    city: rawCity.replace(/\s*\((Town|Village|Hamlet)\)\s*$/i, ""),
+    city: rawCity.replace(/\s*\([^)]*\)\s*$/, ""),
     state: p.StateOrProvince ?? "NY",
     zip: p.PostalCode ?? "",
     county: county as CountySlug,

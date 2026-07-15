@@ -96,9 +96,16 @@ describe("mapProperty", () => {
     ).toBe("35 East Street");
   });
 
-  it("strips feed-internal municipality tags from the display city", () => {
+  it("strips feed-internal municipality/borough tags from the display city", () => {
     expect(mapProperty({ ...row, City: "Warwick (Town)" })!.city).toBe("Warwick");
     expect(mapProperty({ ...row, City: "Monroe (Village)" })!.city).toBe("Monroe");
+    // PostalCity carries the tags too (found on live rows post-baseline 2026-07-15).
+    expect(
+      mapProperty({ ...row, CountyOrParish: "New York (Manhattan)", PostalCode: "10128", City: "New York", PostalCity: "New York (Manhattan)" })!.city,
+    ).toBe("New York");
+    expect(
+      mapProperty({ ...row, CountyOrParish: "Queens", PostalCode: "11365", City: "New York", PostalCity: "Hillcrest (Queens)" })!.city,
+    ).toBe("Hillcrest");
   });
 
   it("prefers the feed's PostalCity (the consumer city — audited 100% populated 2026-07-15)", () => {
