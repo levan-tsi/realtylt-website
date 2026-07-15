@@ -29,8 +29,9 @@ const FIELDS: { key: keyof MortgageInput; label: string; step?: number; max?: nu
 const money = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
-export function MortgageCalculator() {
-  const [values, setValues] = useState<MortgageInput>(DEFAULTS);
+export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInput> } = {}) {
+  const seeded = { ...DEFAULTS, ...initial };
+  const [values, setValues] = useState<MortgageInput>(seeded);
   const r = calcMortgage(values);
 
   /* Live: monochrome breakdown — black principal, graduating grays. */
@@ -79,7 +80,7 @@ export function MortgageCalculator() {
         </div>
         <button
           type="button"
-          onClick={() => setValues(DEFAULTS)}
+          onClick={() => setValues(seeded)}
           className="mt-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-paper/80 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
         >
           <span aria-hidden>↺</span> Reset
@@ -120,7 +121,7 @@ export function MortgageCalculator() {
           ))}
         </dl>
         <p className="mt-6 border-t border-[#d9dde2] pt-4 text-xs leading-relaxed text-stone">
-          Estimate only — your lender's numbers will vary with credit, points, and insurance.
+          Estimate only. Your lender's numbers will vary with credit, points, and insurance.
         </p>
       </div>
     </div>

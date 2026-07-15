@@ -72,6 +72,15 @@ body {
   opacity: 1;
   translate: 0 0;
 }
+/* Content must never be scroll-gated for visitors whose browser won't run the observer:
+   no scripting → fully visible; reduced motion → visible immediately, no fade/slide. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}
 
 /* ── Card hover lift + slow photo scale */
 .lift {
