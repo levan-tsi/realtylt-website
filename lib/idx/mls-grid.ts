@@ -483,6 +483,16 @@ const BOROUGH_SLUG_BY_LEGAL_COUNTY: Record<string, string> = {
   richmond: "staten-island",
 };
 
+/** onekey2 sets City="New York" on every NYC row; the POSTAL city is the borough name
+ * for four of the five (Manhattan's postal city genuinely is "New York") — cards saying
+ * "New York, NY 11215" for a Brooklyn home read wrong, so rewrite at map time. */
+const BOROUGH_POSTAL_CITY: Record<string, string> = {
+  brooklyn: "Brooklyn",
+  queens: "Queens",
+  bronx: "Bronx",
+  "staten-island": "Staten Island",
+};
+
 /** "Westchester County" / "DUTCHESS" / " putnam " / "Kings (Brooklyn)" → slug form. */
 function normalizeCounty(raw: string | undefined): string {
   const base = (raw ?? "")
@@ -539,11 +549,13 @@ export function mapProperty(p: ResoProperty): Listing | null {
 
   const modified = p.ModificationTimestamp ?? new Date(0).toISOString();
 
+  const boroughCity = BOROUGH_POSTAL_CITY[county];
+
   return {
     id,
     price: p.ListPrice,
     address: [p.StreetNumber, p.StreetName, p.StreetSuffix].filter(Boolean).join(" "),
-    city: p.City ?? "",
+    city: boroughCity && (!p.City || p.City === "New York") ? boroughCity : (p.City ?? ""),
     state: p.StateOrProvince ?? "NY",
     zip: p.PostalCode ?? "",
     county: county as CountySlug,

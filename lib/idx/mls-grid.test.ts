@@ -66,6 +66,20 @@ describe("mapProperty", () => {
     expect(mapProperty({ ...row, CountyOrParish: "New York County", PostalCode: "10011" })!.county).toBe("manhattan");
   });
 
+  it("rewrites the feed's blanket City='New York' to the borough postal city", () => {
+    const nyc = (county: string) => ({ ...row, CountyOrParish: county, City: "New York", PostalCode: "11215" });
+    expect(mapProperty(nyc("Kings (Brooklyn)"))!.city).toBe("Brooklyn");
+    expect(mapProperty(nyc("Queens"))!.city).toBe("Queens");
+    expect(mapProperty(nyc("Bronx County"))!.city).toBe("Bronx");
+    expect(mapProperty(nyc("Richmond (Staten Island)"))!.city).toBe("Staten Island");
+    // Manhattan's postal city genuinely IS "New York" — leave it.
+    expect(mapProperty(nyc("New York (Manhattan)"))!.city).toBe("New York");
+    // A real neighborhood city, if the feed ever sends one, wins over the rewrite.
+    expect(mapProperty({ ...nyc("Queens"), City: "Flushing" })!.city).toBe("Flushing");
+    // Non-NYC counties are untouched.
+    expect(mapProperty(row)!.city).toBe("Beacon");
+  });
+
   it("pins a coordinate-less borough row at its NYC zip centroid", () => {
     const { Latitude: _lat, Longitude: _lng, ...noCoords } = row;
     const l = mapProperty({ ...noCoords, CountyOrParish: "Kings", PostalCode: "11215" })!;
