@@ -190,7 +190,8 @@ export function SearchClient() {
       filters.bedsMin && `${filters.bedsMin}+ bd`,
       filters.propertyType,
     ].filter(Boolean);
-    const label = parts.length ? parts.join(" · ") : "All Hudson Valley listings";
+    // Coverage spans the Hudson Valley AND the five boroughs now — keep the label neutral.
+    const label = parts.length ? parts.join(" · ") : "All listings";
     void saveSearch(label, toQuery(filters, false));
     setSavedNote(`Saved “${label}” to ${signedIn ? "your account" : "this device"}.`);
     window.setTimeout(() => setSavedNote(""), 4000);
