@@ -55,11 +55,15 @@ describe("mapProperty", () => {
   });
 
   it("maps NYC boroughs from their legal county names to friendly slugs", () => {
+    // The EXACT live feed spellings (probed 2026-07-15): legal name + parenthesized borough.
+    expect(mapProperty({ ...row, CountyOrParish: "Kings (Brooklyn)", PostalCode: "11215" })!.county).toBe("brooklyn");
+    expect(mapProperty({ ...row, CountyOrParish: "New York (Manhattan)", PostalCode: "10011" })!.county).toBe("manhattan");
+    expect(mapProperty({ ...row, CountyOrParish: "Richmond (Staten Island)", PostalCode: "10301" })!.county).toBe("staten-island");
+    expect(mapProperty({ ...row, CountyOrParish: "Bronx County", PostalCode: "10458" })!.county).toBe("bronx");
+    expect(mapProperty({ ...row, CountyOrParish: "QUEENS", PostalCode: "11375" })!.county).toBe("queens");
+    // Plain legal names (no parenthetical) must keep working too.
     expect(mapProperty({ ...row, CountyOrParish: "Kings", PostalCode: "11215" })!.county).toBe("brooklyn");
     expect(mapProperty({ ...row, CountyOrParish: "New York County", PostalCode: "10011" })!.county).toBe("manhattan");
-    expect(mapProperty({ ...row, CountyOrParish: "Richmond", PostalCode: "10301" })!.county).toBe("staten-island");
-    expect(mapProperty({ ...row, CountyOrParish: "Bronx", PostalCode: "10458" })!.county).toBe("bronx");
-    expect(mapProperty({ ...row, CountyOrParish: "QUEENS", PostalCode: "11375" })!.county).toBe("queens");
   });
 
   it("pins a coordinate-less borough row at its NYC zip centroid", () => {

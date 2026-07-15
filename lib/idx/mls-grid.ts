@@ -472,18 +472,25 @@ function isServedType(t: string | undefined): boolean {
   return t === "Residential" || t === "Residential Income";
 }
 
-/** NYC boroughs arrive under their LEGAL county names — map to our friendly slugs.
- * "New York" (Manhattan) is multi-word, so this must run AFTER lowercasing/trim but the
- * alias key keeps the space (no hyphenation happens before the lookup). */
+/** NYC boroughs arrive under their LEGAL county names, usually with the borough in
+ * parentheses — live onekey2 values (probed 2026-07-15 via /api/cron/mls-probe):
+ * "Kings (Brooklyn)", "New York (Manhattan)", "Richmond (Staten Island)",
+ * "Bronx County", bare "Queens". Normalize strips the parenthetical + " County",
+ * then maps the legal names to our friendly slugs. */
 const BOROUGH_SLUG_BY_LEGAL_COUNTY: Record<string, string> = {
   kings: "brooklyn",
   "new york": "manhattan",
   richmond: "staten-island",
 };
 
-/** "Westchester County" / "DUTCHESS" / " putnam " / "Kings" → slug form. */
+/** "Westchester County" / "DUTCHESS" / " putnam " / "Kings (Brooklyn)" → slug form. */
 function normalizeCounty(raw: string | undefined): string {
-  const base = (raw ?? "").trim().toLowerCase().replace(/\s+county$/, "");
+  const base = (raw ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s*\([^)]*\)\s*$/, "")
+    .replace(/\s+county$/, "")
+    .trim();
   return BOROUGH_SLUG_BY_LEGAL_COUNTY[base] ?? base;
 }
 
