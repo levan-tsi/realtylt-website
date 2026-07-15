@@ -239,6 +239,49 @@ function toPin(l: Listing): MapPin | null {
   };
 }
 
+/** Slim projection of a county's whole ACTIVE set — what the reports APIs (comps +
+ * market stats) compute over. Kept lean on purpose: a full-Listing pull for Queens
+ * (4.6k rows with remarks + photo URLs) is megabytes; this is ~150 bytes/row. */
+export interface CountyActiveRow {
+  id: string;
+  address: string;
+  city: string;
+  price: number;
+  beds: number;
+  baths: number;
+  sqft: number;
+  propertyType: Listing["propertyType"];
+  listOfficeName: string;
+}
+
+/** Every active listing in a county (slim rows, PIN_CHUNK-paged). null = DB
+ * unconfigured/not ready/errored — the caller falls back to the committed snapshot. */
+export async function getCountyActiveSlim(
+  county: string,
+): Promise<{ rows: CountyActiveRow[]; dataLastUpdated: string } | null> {
+  if (!restConfig()) return null;
+  try {
+    const state = await rest<SyncState>(
+      "idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at",
+    );
+    if (!state.rows[0]?.baseline_complete) return null;
+    const sel =
+      "select=id,address,city,price,beds,baths,sqft,propertyType:property_type,listOfficeName:listing->>listOfficeName";
+    const rows: CountyActiveRow[] = [];
+    for (let offset = 0; offset < MAX_PINS; offset += PIN_CHUNK) {
+      const page = await rest<CountyActiveRow>(
+        `idx_listings?${sel}&county=eq.${encodeURIComponent(county)}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
+      );
+      rows.push(...page.rows);
+      if (page.rows.length < PIN_CHUNK) break;
+    }
+    return { rows, dataLastUpdated: state.rows[0].last_synced_at ?? "" };
+  } catch (e) {
+    console.error(`[idx-db] county active slim (${county}) failed:`, e);
+    return null;
+  }
+}
+
 /** Ordered PERMANENT MediaURLs for a listing from the DB (RLS: active rows only).
  * null = DB unavailable/unconfigured (caller should fall back); [] = none stored. */
 export async function getDbMediaUrls(id: string): Promise<string[] | null> {

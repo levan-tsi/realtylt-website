@@ -136,6 +136,30 @@ describe("write helpers", () => {
   });
 });
 
+describe("getCountyActiveSlim (reports data)", () => {
+  it("pages the county's slim rows and carries the sync time", async () => {
+    const slim = { id: "K1", address: "1 A St", city: "Brooklyn", price: 500000, beds: 3, baths: 2, sqft: 1200, propertyType: "Residential", listOfficeName: "X" };
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [slim] };
+    });
+    const out = await import("./db").then((m) => m.getCountyActiveSlim("brooklyn"));
+    expect(out).not.toBeNull();
+    expect(out!.rows).toEqual([slim]);
+    expect(out!.dataLastUpdated).toBe("2026-07-15T10:00:00.000Z");
+    const listingCall = calls.find((u) => u.includes("idx_listings"))!;
+    expect(listingCall).toContain("county=eq.brooklyn");
+    expect(listingCall).toContain("propertyType:property_type");
+  });
+
+  it("returns null before the baseline (caller falls back to the snapshot)", async () => {
+    stubFetch((url) =>
+      url.includes("idx_sync_state") ? { body: [{ ...READY_STATE[0], baseline_complete: false }] } : { body: [] },
+    );
+    expect(await import("./db").then((m) => m.getCountyActiveSlim("queens"))).toBeNull();
+  });
+});
+
 describe("getDbMediaUrls", () => {
   it("returns the stored photo array for an active listing", async () => {
     stubFetch((url) =>

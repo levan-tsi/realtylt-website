@@ -15,8 +15,13 @@ const PRICE_BANDS: { label: string; min: number; max: number }[] = [
   { label: "$1M+", min: 1_000_000, max: Infinity },
 ];
 
-/** Compute the headline stats + distributions for a set of active listings. */
-export function computeMarketStats(listings: Listing[], dataLastUpdated: string): MarketStats {
+/** Compute the headline stats + distributions for a set of active listings. Accepts any
+ * structural subset carrying the four fields the math reads — the DB reports path sends
+ * slim rows (lib/idx/db getCountyActiveSlim), the snapshot path sends full Listings. */
+export function computeMarketStats(
+  listings: Pick<Listing, "price" | "sqft" | "beds" | "propertyType">[],
+  dataLastUpdated: string,
+): MarketStats {
   const prices = listings.map((l) => l.price).filter((p) => p > 0);
   const ppsf = listings.filter((l) => l.sqft > 0 && l.price > 0).map((l) => l.price / l.sqft);
   const sqfts = listings.map((l) => l.sqft).filter((s) => s > 0);
