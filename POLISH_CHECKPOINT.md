@@ -95,15 +95,29 @@ Pages — status:
       pages exist), StatCounter server-renders final values (no-JS/reduced-motion users saw
       LITERAL ZEROS — count-up now only when motion allowed), "Counties & boroughs served: 11",
       meta title/description claim the real HV+NYC coverage, em dashes swept from home copy.
-- [ ] **Buying — NEXT**
-- [ ] Selling
-- [ ] Financing (mortgage calc — note MortgageCalculator now takes `initial`; verify unchanged)
-- [ ] Home Value
-- [ ] Top Areas + county pages (borough Top-Areas pages = new editorial content, owner input useful)
-- [ ] Who We Are
+- [x] Buying — 2026-07-15 late PM (723c32b): structure matches live section-for-section, ours
+      has better mocks (designed listing-alert card, saved-home card); copy cleaned; 1440+390 shots.
+- [~] Selling — compared at 1440: FULL parity + better (real Google review cards, 5/5/5 comps
+      visual, 92% stat, loop timeline). Copy/arrow sweep applied + verified (rendered page greps
+      0 em dashes/arrows). Still owed: 390 pass + live form drive.
+- [~] Financing — compared at 1440: parity; calculator still reproduces the live $3,198.20
+      worked example with defaults (the new `initial` prop is regression-free). Owed: 390 pass.
+- [~] Home Value — compared at 1440: solid (address+unit hero, honest 3-step). Coverage claim
+      fixed ("Hudson Valley and NYC"). Owed: 390 pass + drive the valuation form flow.
+- [~] Top Areas — reviewed at 1440: county cards w/ LIVE DB medians look great. Borough presence
+      still missing here (needs editorial content, owner input). County pages not yet compared.
+- [~] Who We Are — reviewed at 1440; "Where We Work" now lists all 11 areas (6a8fb1d). Owed: 390.
 - [x] Blog + article — earlier session
 - [x] Services (20 pages) — earlier session
-- [ ] Connect
+- [~] Connect — reviewed at 1440: appointment cards + form fine, copy cleaned. Owed: 390 + drive
+      the message form live.
+
+## SITE-WIDE SWEEP DONE 2026-07-15 late PM (6a8fb1d, subagent-executed, verified)
+~102 em dashes rewritten out of visitor copy across 33 files (zero remain outside comments/
+placeholders/tests), every arrow-glyph CTA stripped (carousel controls kept), coverage claims
+now say Hudson Valley + all five boroughs (layout/search/home-value/who-we-are metas).
+Remaining known-fine "—" hits: MortgageCalculator + ReportDetail empty-value placeholders,
+comments, tests, one dev-facing error string.
 
 ## KNOWN ISSUES
 1. media.mlsgrid.com intermittent 429 windows (account-level, pre-existing): placeholders
@@ -123,4 +137,6 @@ Pages — status:
 - Push to main auto-deploys the private/noindex Vercel site (allowed); do NOT touch the
   realtylt.com apex.
 
-## NEXT: Home page vs live realtylt.com (then Buying, Selling, …).
+## NEXT: finish the [~] pages' 390/mobile passes + live form drives (Selling first), then the
+## county pages under Top Areas. After that: deferred items (open houses, SEO listing slugs,
+## photo mirroring to own storage).
