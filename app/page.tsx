@@ -11,21 +11,21 @@ import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isSampleData } from "@/lib/idx";
-import { COUNTIES } from "@/lib/site";
+import { COUNTIES, SERVED_AREAS } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
 export const metadata: Metadata = {
-  title: "RealtyLT | Levan Tsiklauri | United Real Estate — Hudson Valley Homes",
+  title: "RealtyLT | Levan Tsiklauri | United Real Estate | Hudson Valley & NYC Homes",
   description:
-    "Let's find home. Search Hudson Valley homes for sale across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties — or get your home's value and a cash offer in 24 hours.",
+    "Let's find home. Search homes for sale across the Hudson Valley and all five NYC boroughs, or get your home's value and a cash offer in 24 hours.",
 };
 
 const WHY_US = [
   {
     title: "Two ways to sell",
-    body: "A guaranteed cash offer in 24 hours, or a full-service listing for maximum profit. We show you both — you decide.",
+    body: "A guaranteed cash offer in 24 hours, or a full-service listing for maximum profit. We show you both. You decide.",
   },
   {
     title: "Tools buyers actually use",
@@ -37,7 +37,7 @@ const WHY_US = [
   },
   {
     title: "Local, seven days a week",
-    body: "Based in Lagrangeville, working the whole mid-Hudson region. Fast answers — evenings and weekends included.",
+    body: "Based in Lagrangeville, working the whole mid-Hudson region. Fast answers, evenings and weekends included.",
   },
 ];
 
@@ -114,11 +114,11 @@ export default async function HomePage() {
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               If you&rsquo;re thinking about selling, start with a real number. We belong to one of
               the strongest real estate brokerages in the area, and we&rsquo;ve built our
-              reputation on straight answers and careful work — from pricing to closing.
+              reputation on straight answers and careful work, from pricing to closing.
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
-              Tell us about your home and we&rsquo;ll put our market analysis — and our network of
-              local experts — to work on an accurate estimate. No obligation, no pressure.
+              Tell us about your home and we&rsquo;ll put our market analysis and our network of
+              local experts to work on an accurate estimate. No obligation, no pressure.
             </p>
             <ul className="mt-6 space-y-2 text-sm text-ink-soft">
               {[
@@ -139,7 +139,7 @@ export default async function HomePage() {
               withAddress
               defaultReason="I'm interested in selling a home"
               submitLabel="Send Message"
-              successTitle="Got it — thanks."
+              successTitle="Got it. Thanks."
               successBody="We'll start on your home's numbers and reach out shortly."
             />
           </Reveal>
@@ -201,10 +201,15 @@ export default async function HomePage() {
             Counties we serve
           </h2>
           <ul className="flex flex-wrap justify-center gap-x-2 gap-y-3 border-t border-[#dddddd] pt-10">
-            {COUNTIES.map((c) => (
+            {SERVED_AREAS.map((c) => (
               <li key={c.slug}>
                 <Link
-                  href={`/top-areas/${c.slug}`}
+                  // Boroughs have no editorial /top-areas page yet — send them to search.
+                  href={
+                    COUNTIES.some((k) => k.slug === c.slug)
+                      ? `/top-areas/${c.slug}`
+                      : `/search?county=${c.slug}`
+                  }
                   className="border border-[#cccccc] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >
                   {c.name}
@@ -223,7 +228,7 @@ export default async function HomePage() {
               <span id="why-heading">Why Work With Us?</span>
             </SectionHeading>
             <p className="mx-auto mt-4 max-w-2xl text-center text-stone">
-              The tools of a big brokerage, the attention of one agent — from the best tools and
+              The tools of a big brokerage, the attention of one agent: from the best tools and
               technology to transparency throughout the entire process.
             </p>
           </Reveal>
@@ -238,7 +243,7 @@ export default async function HomePage() {
             ))}
           </ul>
           <div className="mt-14 grid grid-cols-2 gap-8 border-t border-[#dddddd] pt-10 text-center md:grid-cols-4">
-            <StatCounter value={6} label="Counties served" />
+            <StatCounter value={11} label="Counties & boroughs served" />
             <StatCounter value={24} suffix="h" label="Cash offer turnaround" />
             <StatCounter value={100} suffix="+" label="Sites your listing reaches" />
             <StatCounter value={7} label="Days a week we answer" />

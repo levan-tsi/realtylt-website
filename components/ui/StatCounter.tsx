@@ -17,20 +17,20 @@ export function StatCounter({
   durationMs?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [display, setDisplay] = useState(0);
+  // Server-render the FINAL value — no-JS visitors and crawlers must never see "0".
+  // The effect resets to 0 and counts up only when motion is allowed.
+  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return; // already showing the final value
+    setDisplay(0);
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
-        if (reduced) {
-          setDisplay(value);
-          return;
-        }
         const start = performance.now();
         const tick = (t: number) => {
           const p = Math.min(1, (t - start) / durationMs);
