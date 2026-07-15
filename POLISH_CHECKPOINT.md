@@ -88,9 +88,14 @@ Pages — status:
       /OpenHouse RESO resource, not replicated), tour-date picker, per-listing map (coords are
       zip-centroid approximations — showing an exact pin would be dishonest), SEO address slugs
       in the URL (worth doing before the apex swap).
-- [ ] **Home — NEXT**: hero, rails (getFeatured/getNew now DB-backed + full-shape rows), county
-      links, vs live.
-- [ ] Buying
+- [x] Home — 2026-07-15 late PM (9b151a1): compared vs live at 1440+390. Ours already beats the
+      live page (its Featured/New rails show feed-wide junk: "TEST LISTING $999,999,999",
+      billion-dollar typos; ours = owner-office + real new listings with photos). Fixed: areas
+      strip now lists all 11 served areas (boroughs → /search?county= until editorial top-areas
+      pages exist), StatCounter server-renders final values (no-JS/reduced-motion users saw
+      LITERAL ZEROS — count-up now only when motion allowed), "Counties & boroughs served: 11",
+      meta title/description claim the real HV+NYC coverage, em dashes swept from home copy.
+- [ ] **Buying — NEXT**
 - [ ] Selling
 - [ ] Financing (mortgage calc — note MortgageCalculator now takes `initial`; verify unchanged)
 - [ ] Home Value
