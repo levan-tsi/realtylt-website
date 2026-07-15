@@ -32,6 +32,24 @@ export interface Listing {
   lotAcres?: number;
   propertySubType?: string;
   listAgentName?: string;
+  /** Detail-page facts replicated from the feed 2026-07-15 — absent on older rows. */
+  taxAnnual?: number;
+  hoaFee?: number;
+  garageSpaces?: number;
+  schoolDistrict?: string;
+  elementarySchool?: string;
+  middleSchool?: string;
+  highSchool?: string;
+  appliances?: string[];
+  basement?: string[];
+  interiorFeatures?: string[];
+  exteriorFeatures?: string[];
+  lotFeatures?: string[];
+  heating?: string[];
+  cooling?: string[];
+  sewer?: string[];
+  waterSource?: string[];
+  parkingFeatures?: string[];
   photos: string[]; // paths under /public in fixture mode; feed URLs live
   lat: number;
   lng: number;

@@ -46,6 +46,24 @@ interface ResoProperty {
   LotSizeAcres?: number;
   YearBuilt?: number;
   DaysOnMarket?: number;
+  OnMarketDate?: string;
+  TaxAnnualAmount?: number;
+  AssociationFee?: number;
+  GarageSpaces?: number;
+  HighSchoolDistrict?: string;
+  ElementarySchool?: string;
+  MiddleOrJuniorSchool?: string;
+  HighSchool?: string;
+  Appliances?: string[];
+  Basement?: string[];
+  InteriorFeatures?: string[];
+  ExteriorFeatures?: string[];
+  LotFeatures?: string[];
+  Heating?: string[];
+  Cooling?: string[];
+  Sewer?: string[];
+  WaterSource?: string[];
+  ParkingFeatures?: string[];
   PropertyType?: string;
   PropertySubType?: string;
   StandardStatus?: string;
@@ -69,6 +87,10 @@ const SELECT_FIELDS = [
   "StreetDirSuffix", "UnitNumber", "City", "PostalCity", "StateOrProvince",
   "PostalCode", "CountyOrParish", "ListPrice", "BedroomsTotal", "BathroomsTotalInteger",
   "BathroomsHalf", "LivingArea", "LotSizeAcres", "YearBuilt", "DaysOnMarket",
+  "OnMarketDate", "TaxAnnualAmount", "AssociationFee", "GarageSpaces",
+  "HighSchoolDistrict", "ElementarySchool", "MiddleOrJuniorSchool", "HighSchool",
+  "Appliances", "Basement", "InteriorFeatures", "ExteriorFeatures", "LotFeatures",
+  "Heating", "Cooling", "Sewer", "WaterSource", "ParkingFeatures",
   "StandardStatus", "PropertyType", "PropertySubType", "ListAgentFullName",
   "ListOfficeName", "PublicRemarks", "ModificationTimestamp",
 ];
@@ -527,6 +549,11 @@ function coordsOf(p: ResoProperty, id: string): { lat: number; lng: number } {
   return { lat: c[0] + jitter(id, 1) * 0.008, lng: c[1] + jitter(id, 2) * 0.011 };
 }
 
+/** Feed school fields sometimes hold participant noise instead of a name. */
+function schoolName(v: string | undefined): string | undefined {
+  return v && !/contact|call listing|see remarks|unknown/i.test(v) ? v : undefined;
+}
+
 /** Map a RESO property to our Listing; drop rows we can't display compliantly. */
 export function mapProperty(p: ResoProperty): Listing | null {
   if (p.MlgCanView === false) return null;
@@ -556,17 +583,19 @@ export function mapProperty(p: ResoProperty): Listing | null {
 
   const modified = p.ModificationTimestamp ?? new Date(0).toISOString();
 
-  // Feed rows blanket-set City="New York" across NYC; rewrite to the borough postal city.
-  // Queens is special — its REAL postal city is the neighborhood (Forest Hills, Astoria, …),
-  // which the feed carries in PostalCity when the participant filled it in.
+  // PostalCity is the feed's CONSUMER city and wins when present (audited 2026-07-15,
+  // 100% populated): Queens neighborhoods ("Forest Hills"), "Wappingers Falls" for the
+  // Town-of-Wappinger rows, plain "Warwick". Fallbacks for older/blank rows: the feed
+  // blanket-sets City="New York" across NYC → rewrite to the borough postal city.
   const boroughCity = BOROUGH_POSTAL_CITY[county];
   const postalCity = p.PostalCity?.trim();
+  const blanketNy = /^new york( city)?$/i;
   const rawCity =
-    boroughCity && (!p.City || p.City === "New York")
-      ? county === "queens" && postalCity && !/^new york( city)?$/i.test(postalCity)
-        ? postalCity
-        : boroughCity
-      : (p.City ?? "");
+    postalCity && !(boroughCity && county !== "manhattan" && blanketNy.test(postalCity))
+      ? postalCity
+      : boroughCity && (!p.City || blanketNy.test(p.City))
+        ? boroughCity
+        : (p.City ?? "");
 
   // "Warwick (Town)" / "Monroe (Village)" are feed-internal municipality tags, not display names.
   const street = [p.StreetNumber, p.StreetDirPrefix, p.StreetName, p.StreetSuffix, p.StreetDirSuffix]
@@ -597,13 +626,32 @@ export function mapProperty(p: ResoProperty): Listing | null {
     lotAcres: p.LotSizeAcres,
     propertySubType: p.PropertySubType,
     listAgentName: p.ListAgentFullName,
+    taxAnnual: p.TaxAnnualAmount,
+    hoaFee: p.AssociationFee,
+    garageSpaces: p.GarageSpaces,
+    schoolDistrict: schoolName(p.HighSchoolDistrict),
+    elementarySchool: schoolName(p.ElementarySchool),
+    middleSchool: schoolName(p.MiddleOrJuniorSchool),
+    highSchool: schoolName(p.HighSchool),
+    appliances: p.Appliances,
+    basement: p.Basement,
+    interiorFeatures: p.InteriorFeatures,
+    exteriorFeatures: p.ExteriorFeatures,
+    lotFeatures: p.LotFeatures,
+    heating: p.Heating,
+    cooling: p.Cooling,
+    sewer: p.Sewer,
+    waterSource: p.WaterSource,
+    parkingFeatures: p.ParkingFeatures,
     ...coordsOf(p, id),
     listOfficeName: p.ListOfficeName ?? "",
     originatingSystem: "OneKey MLS",
     modificationTimestamp: modified,
-    // Feed has no OnMarketDate; derive from DaysOnMarket so "New Listings" sorts honestly.
-    listedAt:
-      p.DaysOnMarket != null
+    // The feed serves OnMarketDate again (re-audited 2026-07-15) — use the real date;
+    // DaysOnMarket derivation stays as the fallback for rows without it.
+    listedAt: p.OnMarketDate
+      ? new Date(p.OnMarketDate).toISOString()
+      : p.DaysOnMarket != null
         ? new Date(Date.now() - p.DaysOnMarket * 86_400_000).toISOString()
         : modified,
     // The owner's own inventory headlines the Featured rail. OneKey abbreviates the

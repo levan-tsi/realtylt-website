@@ -101,16 +101,36 @@ describe("mapProperty", () => {
     expect(mapProperty({ ...row, City: "Monroe (Village)" })!.city).toBe("Monroe");
   });
 
-  it("prefers the feed's PostalCity neighborhood for blanket-city Queens rows", () => {
+  it("prefers the feed's PostalCity (the consumer city — audited 100% populated 2026-07-15)", () => {
     const q = { ...row, CountyOrParish: "Queens", City: "New York", PostalCode: "11375" };
     expect(mapProperty({ ...q, PostalCity: "Forest Hills" })!.city).toBe("Forest Hills");
-    // A PostalCity that just repeats the blanket value falls back to the borough.
+    // A PostalCity that just repeats the NYC blanket value falls back to the borough…
     expect(mapProperty({ ...q, PostalCity: "New York" })!.city).toBe("Queens");
     expect(mapProperty(q)!.city).toBe("Queens");
-    // Brooklyn keeps the borough postal city (its real postal city IS "Brooklyn").
+    // …except Manhattan, whose real postal city IS "New York".
     expect(
-      mapProperty({ ...q, CountyOrParish: "Kings (Brooklyn)", PostalCode: "11215", PostalCity: "Park Slope" })!.city,
-    ).toBe("Brooklyn");
+      mapProperty({ ...q, CountyOrParish: "New York (Manhattan)", PostalCode: "10011", PostalCity: "New York" })!.city,
+    ).toBe("New York");
+    // Non-NYC too: the Town-of-Wappinger rows display as their postal "Wappingers Falls".
+    expect(mapProperty({ ...row, City: "Wappinger", PostalCity: "Wappingers Falls" })!.city).toBe("Wappingers Falls");
+  });
+
+  it("uses the feed's real OnMarketDate for listedAt when present", () => {
+    expect(mapProperty({ ...row, OnMarketDate: "2026-06-08" })!.listedAt).toBe(
+      new Date("2026-06-08").toISOString(),
+    );
+  });
+
+  it("filters participant noise out of school names but keeps real ones", () => {
+    const l = mapProperty({
+      ...row,
+      HighSchoolDistrict: "Queens 29",
+      ElementarySchool: "Contact Agent",
+      HighSchool: "Call Listing Agent",
+    })!;
+    expect(l.schoolDistrict).toBe("Queens 29");
+    expect(l.elementarySchool).toBeUndefined();
+    expect(l.highSchool).toBeUndefined();
   });
 
   it("pins a coordinate-less borough row at its NYC zip centroid", () => {
