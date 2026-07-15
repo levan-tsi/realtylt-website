@@ -1,17 +1,16 @@
-/** Photo URL resolver for the /api/media proxy — reads the COMMITTED SNAPSHOT ONLY.
+/** Photo URL resolver for the /api/media proxy — DB first, committed snapshot fallback.
  *
  * Suspension fix (docs/mls-fix/AUDIT.md): this module used to issue a live MLS Grid DATA-API
  * lookup (`ListingId eq '<id>' … $expand=Media`) per listing on the request path, so every
  * card/gallery image on every page view (and every crawler hit) cost a 2-req/s-capped DATA call
- * → account suspension. It no longer touches MLS at all.
- *
- * MediaURLs are PERMANENT (MLS Grid docs: "the media never updates and retains the original Media
- * URL"), so they are captured once at refresh time (scripts/export-snapshot.mjs) into
- * data/mls-snapshot.json and read from there. The proxy streams the image server-side behind an
- * immutable CDN cache, so MLS's media host is hit at most once per photo. A dead/rotated URL is
- * refreshed by the next scheduled export — never re-resolved per view.
+ * → account suspension. It STILL never touches MLS: MediaURLs are PERMANENT (MLS Grid docs:
+ * "the media never updates and retains the original Media URL"), captured at sync time into
+ * Supabase idx_listings (hourly cron) with data/mls-snapshot.json as the fallback store. The
+ * proxy streams the image server-side behind a long CDN cache, so both the DB and MLS's media
+ * host are hit rarely; a dead/rotated URL is refreshed by the next sync — never per view.
  */
 
+import { getDbMediaUrls } from "./db";
 import { getCommittedSnapshot } from "./snapshot";
 
 /** listing id → ordered permanent MediaURLs, built once from the committed snapshot. */
@@ -37,18 +36,41 @@ export function getSnapshotMediaUrls(id: string): string[] {
   return testSeed.get(id) ?? ensureIndex().get(id) ?? [];
 }
 
+/** id → {at, urls} — bounds repeat DB lookups from gallery bursts. The /api/media route
+ * sits behind a long CDN cache, so this stays tiny; still capped as a safety valve. */
+const dbCache = new Map<string, { at: number; urls: string[] }>();
+const DB_CACHE_TTL_MS = 10 * 60 * 1000;
+const DB_CACHE_MAX = 2000;
+
+/** Ordered permanent MediaURLs — Supabase idx_listings first (always current, active rows
+ * only), committed snapshot as the fallback store. ZERO MLS Grid contact either way. */
+export async function getMediaUrls(id: string): Promise<string[]> {
+  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return [];
+  if (testSeed.has(id)) return testSeed.get(id)!;
+  const hit = dbCache.get(id);
+  if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) return hit.urls;
+  const fromDb = await getDbMediaUrls(id); // null = DB unavailable → snapshot fallback
+  if (fromDb?.length) {
+    dbCache.set(id, { at: Date.now(), urls: fromDb });
+    if (dbCache.size > DB_CACHE_MAX) dbCache.delete(dbCache.keys().next().value as string);
+    return fromDb;
+  }
+  return ensureIndex().get(id) ?? [];
+}
+
 /** Proxy paths for the detail-page gallery: /api/media/{id}/{0..n-1}. Falls back to the single
- * primary path when the snapshot has no photos for this listing — the proxy then serves the
- * branded placeholder and a later export heals it. ZERO MLS Grid contact. */
+ * primary path when no store has photos for this listing — the proxy then serves the
+ * branded placeholder and a later sync heals it. ZERO MLS Grid contact. */
 export async function getProxiedPhotoPaths(id: string): Promise<string[]> {
-  const urls = getSnapshotMediaUrls(id);
+  const urls = await getMediaUrls(id);
   return urls.length ? urls.map((_, i) => `/api/media/${id}/${i}`) : [`/api/media/${id}/0`];
 }
 
-/** Test hook — clear the snapshot index + any seeded overrides. */
+/** Test hook — clear the snapshot index, DB cache, + any seeded overrides. */
 export function resetMediaCacheForTests(): void {
   index = null;
   testSeed.clear();
+  dbCache.clear();
 }
 
 /** Test hook — seed permanent MediaURLs for a listing id (stands in for the committed snapshot). */

@@ -1,4 +1,4 @@
-import { getSnapshotMediaUrls } from "@/lib/idx/media";
+import { getMediaUrls } from "@/lib/idx/media";
 
 /** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
  * photos: the raw MediaURL must not appear on the site, and MLS's media host requires the OAuth
@@ -56,8 +56,8 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  // Permanent MediaURLs from the committed snapshot — ZERO MLS Grid DATA-API calls.
-  const url = getSnapshotMediaUrls(id)[n];
+  // Permanent MediaURLs from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.
+  const url = (await getMediaUrls(id))[n];
   // No photo at this index (snapshot has none yet, or a photo-less listing) — stable, cacheable.
   if (!url?.startsWith("https://")) return placeholder(EMPTY_CACHE, "empty");
 

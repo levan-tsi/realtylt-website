@@ -81,9 +81,18 @@ export interface SearchResult {
   dataLastUpdated: string;
 }
 
+/** Whole filtered pin set + the matching listing count (see /api/idx/pins). */
+export interface PinsResult {
+  pins: MapPin[];
+  total: number;
+}
+
 export interface IdxClient {
   search(params: SearchParams): Promise<SearchResult>;
   getListing(id: string): Promise<Listing | null>;
   getFeatured(limit?: number): Promise<Listing[]>;
   getNew(limit?: number): Promise<Listing[]>;
+  /** Optional slim path for the map — a DB-backed client pages the whole filtered set
+   * server-side (PostgREST caps a single response at 1000 rows, so search() can't). */
+  searchPins?(params: SearchParams): Promise<PinsResult>;
 }

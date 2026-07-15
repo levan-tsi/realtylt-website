@@ -17,28 +17,42 @@ const round4 = (n: number) => Math.round(n * 1e4) / 1e4;
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams;
   try {
-    const result = await getIdxClient().search({
-      ...parseFilterParams(q),
-      page: 1,
-      pageSize: Number.MAX_SAFE_INTEGER, // the whole filtered set, unpaged
-    });
-    const pins: MapPin[] = result.listings
-      .filter((l) => l.lat && l.lng) // never ship Null Island rows
-      .map((l) => ({
-        id: l.id,
-        price: l.price,
-        lat: round4(l.lat),
-        lng: round4(l.lng),
-        address: l.address,
-        city: l.city,
-        zip: l.zip,
-        beds: l.beds,
-        baths: l.baths,
-        office: l.listOfficeName,
-      }));
+    const client = getIdxClient();
+    const filters = parseFilterParams(q);
+
+    let pins: MapPin[];
+    let total: number;
+    if (client.searchPins) {
+      // DB-backed slim path — pages the whole filtered set server-side (PostgREST caps
+      // a single response at 1000 rows, so one giant search() can't do this).
+      const result = await client.searchPins(filters);
+      pins = result.pins.map((p) => ({ ...p, lat: round4(p.lat), lng: round4(p.lng) }));
+      total = result.total;
+    } else {
+      const result = await client.search({
+        ...filters,
+        page: 1,
+        pageSize: Number.MAX_SAFE_INTEGER, // the whole filtered set, unpaged
+      });
+      pins = result.listings
+        .filter((l) => l.lat && l.lng) // never ship Null Island rows
+        .map((l) => ({
+          id: l.id,
+          price: l.price,
+          lat: round4(l.lat),
+          lng: round4(l.lng),
+          address: l.address,
+          city: l.city,
+          zip: l.zip,
+          beds: l.beds,
+          baths: l.baths,
+          office: l.listOfficeName,
+        }));
+      total = result.total;
+    }
     return NextResponse.json(
-      { pins, total: result.total },
-      // Snapshot changes at most a few times a day — let the CDN absorb map traffic.
+      { pins, total },
+      // The store changes at most hourly — let the CDN absorb map traffic.
       { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } },
     );
   } catch (e) {
