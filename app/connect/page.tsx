@@ -103,15 +103,25 @@ export default function ConnectPage() {
                     <p className="mt-1 text-sm text-ink-soft">{m.kind}</p>
                     <p className="mt-4 grow text-sm leading-relaxed text-stone">{m.body}</p>
                     <a
-                      href={SITE.phoneHref}
+                      href="#book"
                       className="mt-5 text-sm font-bold text-ink underline-offset-4 hover:underline"
                     >
-                      Call to book
+                      Pick a time below
                     </a>
                   </article>
                 </Reveal>
               ))}
             </ul>
+            {/* The owner's ACTUAL Google Calendar appointment scheduler — the same embed the
+                live site's custom code carries, so visitors book directly (no recreation). */}
+            <div id="book" className="mt-10 overflow-hidden rounded-lg border border-[#dddddd] bg-white">
+              <iframe
+                src="https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=?gv=true"
+                style={{ border: 0, width: "100%", height: 899 }}
+                title="Book an appointment with Levan Tsiklauri"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

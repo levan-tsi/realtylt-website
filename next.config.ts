@@ -24,16 +24,20 @@ const CSP = [
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:",
+  // …googletagmanager = the Ads gtag (live-site custom-code parity); maps.googleapis =
+  // the official Google Maps results map (env-gated).
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com",
   "style-src 'self' 'unsafe-inline'",
+  // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame.
+  "frame-src 'self' https://calendar.google.com https://td.doubleclick.net",
   // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
   // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://www.google.com https://googleads.g.doubleclick.net",
   "font-src 'self' data:",
   // …plus Supabase (client accounts / auth): sign-in, token refresh, and portal reads/writes
   // go to our project origin https://<ref>.supabase.co over the anon key (docs/CLIENT-ACCOUNTS.md).
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co",
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
