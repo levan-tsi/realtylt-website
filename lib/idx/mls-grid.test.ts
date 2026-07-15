@@ -195,6 +195,88 @@ describe("replicateDeep (rolling full-inventory pass)", () => {
   });
 });
 
+describe("replicateDelta (hourly incremental window)", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const mkRow = (id: string, ts: string, county = "Dutchess") => ({
+    ...row,
+    ListingId: id,
+    ModificationTimestamp: ts,
+    CountyOrParish: county,
+  });
+
+  it("splits the UNFILTERED delta into upserts (raw Active only) and removals", async () => {
+    const calls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: RequestInfo | URL) => {
+        calls.push(String(url));
+        return new Response(
+          JSON.stringify({
+            value: [
+              mkRow("UP1", "2026-03-01T00:00:00.000Z"), // Active, served → upsert
+              { ...mkRow("CLOSED1", "2026-03-02T00:00:00.000Z"), StandardStatus: "Closed" }, // → remove
+              { ...mkRow("HIDDEN1", "2026-03-03T00:00:00.000Z"), MlgCanView: false }, // → remove
+              { ...mkRow("PEND1", "2026-03-04T00:00:00.000Z"), StandardStatus: "Pending" }, // → remove
+              mkRow("LI1", "2026-03-05T00:00:00.000Z", "Nassau"), // never served → remove (DB no-ops)
+              { ...mkRow("BK1", "2026-03-06T00:00:00.000Z", "Kings"), PostalCode: "11215" }, // borough → upsert
+            ],
+          }),
+          { status: 200 },
+        );
+      }),
+    );
+
+    const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
+    const out = await runInRefreshContext(() =>
+      client.replicateDelta({
+        watermark: "2026-02-28T00:00:00.000Z",
+        maxPages: 8,
+        deadline: Date.now() + 60_000,
+      }),
+    );
+
+    expect(out.complete).toBe(true);
+    expect(out.scanned).toBe(6);
+    expect(out.upserts.map((l) => l.id)).toEqual(["UP1", "BK1"]);
+    expect(out.removeIds.sort()).toEqual(["CLOSED1", "HIDDEN1", "LI1", "PEND1"]);
+    expect(out.watermark).toBe("2026-03-06T00:00:00.000Z");
+    // The delta FILTER must not constrain status/MlgCanView — that is how removals are
+    // seen (both fields still ride along in $select).
+    expect(calls[0]).toContain(encodeURIComponent("OriginatingSystemName eq 'onekey2'"));
+    expect(calls[0]).toContain(encodeURIComponent("ModificationTimestamp gt 2026-02-28T00:00:00.000Z"));
+    expect(calls[0]).not.toContain(encodeURIComponent("StandardStatus eq"));
+    expect(calls[0]).not.toContain(encodeURIComponent("MlgCanView eq"));
+  });
+
+  it("keeps only the LATEST state for an id seen twice in one window", async () => {
+    const pages = [
+      {
+        value: [mkRow("FLIP", "2026-03-01T00:00:00.000Z")],
+        "@odata.nextLink": "https://api.example.com/v2/Property?$skip=500",
+      },
+      { value: [{ ...mkRow("FLIP", "2026-03-02T00:00:00.000Z"), StandardStatus: "Closed" }] },
+    ];
+    let call = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify(pages[call++]), { status: 200 })),
+    );
+
+    const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
+    const out = await runInRefreshContext(() =>
+      client.replicateDelta({
+        watermark: "2026-02-28T00:00:00.000Z",
+        maxPages: 8,
+        deadline: Date.now() + 60_000,
+      }),
+    );
+
+    expect(out.upserts).toHaveLength(0);
+    expect(out.removeIds).toEqual(["FLIP"]);
+  }, 15_000);
+});
+
 describe("replicateNewest (priority photo set)", () => {
   afterEach(() => vi.unstubAllGlobals());
 

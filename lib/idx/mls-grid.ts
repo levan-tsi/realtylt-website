@@ -196,6 +196,75 @@ export class MlsGridClient implements IdxClient {
     ].join("&");
   }
 
+  /** Incremental sync window for the hourly cron (app/api/cron/idx-sync): everything the
+   * feed modified after `watermark`, DELIBERATELY UNFILTERED by status/MlgCanView/type —
+   * that is how removals are seen. A row we can still show (raw StandardStatus 'Active',
+   * viewable, served county+type) becomes an upsert; any other modified row becomes a
+   * remove id (status flip to Pending/Closed/Withdrawn, MlgCanView false, type change…).
+   * Ids we never stored no-op at the DB (`… and is_active`). Same pacing + resume model
+   * as replicateDeep: ModificationTimestamp-ascending, @odata.nextLink, `gt <watermark>`. */
+  async replicateDelta(opts: { watermark: string; maxPages: number; deadline: number }): Promise<{
+    upserts: Listing[];
+    removeIds: string[];
+    watermark: string;
+    complete: boolean;
+    scanned: number;
+    pages: number;
+  }> {
+    const upserts = new Map<string, Listing>();
+    const removeIds = new Set<string>();
+    let watermark = opts.watermark;
+    let scanned = 0;
+    let pages = 0;
+    let complete = false;
+    let nextLink: string | null = null;
+
+    for (let page = 0; page < opts.maxPages; page++) {
+      if (page > 0) {
+        if (Date.now() >= opts.deadline) break;
+        await new Promise((r) => setTimeout(r, PAGE_GAP_MS));
+      }
+      const result: { rows: ResoProperty[]; nextLink: string | null } = nextLink
+        ? await this.fetchNextLink(nextLink)
+        : await this.fetchRows(() => this.buildDeltaQuery(watermark));
+      pages++;
+      scanned += result.rows.length;
+      for (const p of result.rows) {
+        const ts = p.ModificationTimestamp;
+        if (ts && Date.parse(ts) > Date.parse(watermark)) watermark = ts;
+        const id = p.ListingId ?? p.ListingKey;
+        if (!id) continue;
+        const mapped = mapProperty(p);
+        // Gate on the RAW feed status: mapProperty maps unknown statuses to "Active"
+        // (safe under the baseline's Active-only filter, wrong for an unfiltered delta).
+        if (mapped && p.StandardStatus === "Active") {
+          upserts.set(id, mapped); // photos stay as source MediaURLs for the store
+          removeIds.delete(id);
+        } else {
+          removeIds.add(id);
+          upserts.delete(id);
+        }
+      }
+      if (!result.nextLink) {
+        complete = true;
+        break;
+      }
+      nextLink = result.nextLink;
+    }
+    return { upserts: [...upserts.values()], removeIds: [...removeIds], watermark, complete, scanned, pages };
+  }
+
+  private buildDeltaQuery(watermark: string): string {
+    // No status/MlgCanView/type filter — the delta must SEE delistings to remove them.
+    const filter = `OriginatingSystemName eq '${this.feedId}' and ModificationTimestamp gt ${watermark}`;
+    return [
+      `$filter=${encodeURIComponent(filter)}`,
+      `$select=${[...this.select].join(",")}`,
+      "$expand=Media",
+      `$top=${PAGE_SIZE}`,
+    ].join("&");
+  }
+
   /** Newest-modified six-county rows WITH live signed media URLs — the sync cron's
    * PRIORITY photo set (the default /search sort and the home rails surface these rows
    * first, so their photos should fill before the long tail). Uses the one allowed

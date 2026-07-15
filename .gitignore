@@ -12,6 +12,9 @@ out/
 .vercel
 .env*
 
+# Baseline-pull resume cursor (scripts/baseline-to-db.mjs) — machine-local progress
+scripts/.baseline-watermark.local
+
 server.log
 
 # Loop runtime (control + transcripts) — not committed; JOURNAL.md IS tracked
