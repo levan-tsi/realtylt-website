@@ -40,7 +40,7 @@ describe("GET /api/media/[id]/[idx] — validation", () => {
     const fetchMock = stubImage();
     expect((await call("../secrets", "0")).status).toBe(404);
     expect((await call("L1", "-1")).status).toBe(404);
-    expect((await call("L1", "41")).status).toBe(404);
+    expect((await call("L1", "61")).status).toBe(404); // bound tracks MAX_PHOTOS (50) + headroom
     expect((await call("L1", "1.5")).status).toBe(404);
     expect(fetchMock).not.toHaveBeenCalled();
   });
@@ -65,10 +65,10 @@ describe("GET /api/media/[id]/[idx] — never calls the MLS Grid DATA API", () =
 });
 
 describe("GET /api/media/[id]/[idx] — failure contract (never a broken tile)", () => {
-  it("serves the branded SVG with no-store when the media host rejects (budget 429)", async () => {
+  it("serves the branded SVG as a 503 with no-store when the media host rejects (client retries)", async () => {
     stubImage(429);
     const res = await call("L1", "0");
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(503); // transient → <img onError> fires → MlsImage self-heals
     expect(res.headers.get("Content-Type")).toBe("image/svg+xml");
     expect(res.headers.get("Cache-Control")).toBe("no-store");
     expect(res.headers.get("X-Media-Status")).toBe("unavailable");

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
 import { specParts } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
+import { MlsImage } from "./MlsImage";
 
 /** Live MLS photos are served via our CDN-cached /api/media/… proxy (the MLS media CDN
  * enforces a hard per-account request budget — see that route). They render `unoptimized`
@@ -82,15 +83,23 @@ export function ListingCard({
         />
         <div className="photo-zoom relative aspect-[3/2] overflow-hidden bg-mist">
           {l.photos[0] ? (
-            <Image
-              src={l.photos[0]}
-              alt={`${l.address}, ${l.city}, NY`}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              priority={priority}
-              unoptimized={isLiveMlsPhoto(l.photos[0])}
-              className="object-cover"
-            />
+            isLiveMlsPhoto(l.photos[0]) ? (
+              <MlsImage
+                src={l.photos[0]}
+                alt={`${l.address}, ${l.city}, NY`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                priority={priority}
+              />
+            ) : (
+              <Image
+                src={l.photos[0]}
+                alt={`${l.address}, ${l.city}, NY`}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                priority={priority}
+                className="object-cover"
+              />
+            )
           ) : (
             <NoPhoto />
           )}
@@ -128,15 +137,23 @@ export function ListingCard({
       {/* Live home-rail tiles are portrait — measured 283×450 (aspect ≈ 63/100) @1280 */}
       <div className="photo-zoom relative aspect-[63/100] overflow-hidden bg-mist">
         {l.photos[0] ? (
-          <Image
-            src={l.photos[0]}
-            alt={`${l.address}, ${l.city}, NY`}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            priority={priority}
-            unoptimized={isLiveMlsPhoto(l.photos[0])}
-            className="object-cover"
-          />
+          isLiveMlsPhoto(l.photos[0]) ? (
+            <MlsImage
+              src={l.photos[0]}
+              alt={`${l.address}, ${l.city}, NY`}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              priority={priority}
+            />
+          ) : (
+            <Image
+              src={l.photos[0]}
+              alt={`${l.address}, ${l.city}, NY`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              priority={priority}
+              className="object-cover"
+            />
+          )
         ) : (
           <NoPhoto />
         )}

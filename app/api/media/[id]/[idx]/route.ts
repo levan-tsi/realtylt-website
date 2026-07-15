@@ -38,6 +38,10 @@ const EMPTY_CACHE = "public, max-age=300, s-maxage=3000";
 
 function placeholder(cacheControl: string, status: "empty" | "unavailable"): Response {
   return new Response(PLACEHOLDER_SVG, {
+    // "unavailable" is a TRANSIENT failure → 503 so <img onError> fires and the client
+    // can retry (MlsImage self-heals without a manual reload). "empty" is a stable fact
+    // → 200, render the placeholder and never retry.
+    status: status === "unavailable" ? 503 : 200,
     headers: {
       "Content-Type": "image/svg+xml",
       "Cache-Control": cacheControl,
@@ -52,8 +56,15 @@ export async function GET(
 ) {
   const { id, idx } = await params;
   const n = Number(idx);
-  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !Number.isInteger(n) || n < 0 || n > 40) {
+  // Bound matches MAX_PHOTOS (50) with headroom — galleries store up to 50 URLs now.
+  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id) || !Number.isInteger(n) || n < 0 || n > 60) {
     return new Response("Not found", { status: 404 });
+  }
+
+  // Local dev has no MLS_API_KEY (the media host rejects tokenless fetches) — serve the
+  // photo through the DEPLOYED proxy's CDN cache instead of a wall of placeholders.
+  if (!process.env.MLS_API_KEY && !process.env.VERCEL) {
+    return Response.redirect(`https://realtylt-website.vercel.app/api/media/${id}/${n}`, 302);
   }
 
   // Permanent MediaURLs from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.

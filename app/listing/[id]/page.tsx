@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
 import { TrackView } from "@/components/portal/TrackView";
 import { formatPrice, isLiveMlsPhoto, ListingCard, NoPhoto } from "@/components/idx/ListingCard";
+import { MlsImage } from "@/components/idx/MlsImage";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { ShareButton } from "@/components/idx/ShareButton";
 import { LeadForm } from "@/components/leads/LeadForm";
@@ -198,15 +199,11 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             }`}
           >
             {photos.length > 0 ? (
-              <Image
-                src={photos[0]}
-                alt={`${l.address}, ${l.city}, main photo`}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 60vw"
-                unoptimized={isLiveMlsPhoto(photos[0])}
-                className="object-cover"
-              />
+              isLiveMlsPhoto(photos[0]) ? (
+                <MlsImage src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} priority sizes="(max-width: 768px) 100vw, 60vw" />
+              ) : (
+                <Image src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} fill priority sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
+              )
             ) : (
               <NoPhoto />
             )}
@@ -221,7 +218,11 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             <div className="hidden grid-rows-3 gap-1.5 md:grid">
               {photos.slice(1, 4).map((p, i) => (
                 <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
-                  <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
+                  {isLiveMlsPhoto(p) ? (
+                    <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="30vw" />
+                  ) : (
+                    <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" className="object-cover" />
+                  )}
                 </div>
               ))}
             </div>
@@ -242,14 +243,11 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                   key={p + i}
                   className={`photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px] ${i < 3 ? "md:hidden" : ""}`}
                 >
-                  <Image
-                    src={p}
-                    alt={`${l.address}, photo ${i + 2}`}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    unoptimized={isLiveMlsPhoto(p)}
-                    className="object-cover"
-                  />
+                  {isLiveMlsPhoto(p) ? (
+                    <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="(max-width: 768px) 50vw, 33vw" />
+                  ) : (
+                    <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
+                  )}
                 </div>
               ))}
             </div>
