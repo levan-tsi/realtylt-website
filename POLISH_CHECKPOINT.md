@@ -137,6 +137,32 @@ comments, tests, one dev-facing error string.
 - Push to main auto-deploys the private/noindex Vercel site (allowed); do NOT touch the
   realtylt.com apex.
 
-## NEXT: finish the [~] pages' 390/mobile passes + live form drives (Selling first), then the
-## county pages under Top Areas. After that: deferred items (open houses, SEO listing slugs,
-## photo mirroring to own storage).
+## ROUND 3 (2026-07-15 night, owner-directed "exact parity, 3 pages × 3 passes"): DONE
+Commits c403f42→9908635. Owner logged into the BlueRoof sitebuilder — its Custom Code panel
+is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/custom-code).
+- HOME: the live hero's own asset (public/images/hero/hom.png, grayscale+scrim), the REAL
+  n8n chat widget site-wide (public/rlt-chat.js, byte-exact from live; re-extract to update),
+  the Google Ads gtag AW-11479042629 + gtagSendEvent (conversion parity), and a location
+  AUTOCOMPLETE on the hero + search inputs (/api/idx/suggest from the generated columns,
+  hourly in-instance cache; ARIA combobox). Click-everything pass: 45 links, hero submit,
+  chat panel, rails, form validation — ALL PASS.
+- SEARCH: official Google Maps view (components/idx/GoogleMapView.tsx, OverlayView chips +
+  the shared clustering in map-shared.ts) — activates when NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+  is set (OWNER: mint a key, restrict to realtylt.com + *.vercel.app, add in Vercel env);
+  Leaflet/OSM stays the fallback (verified intact). Photos: transient media failures are
+  now 503 → MlsImage retries 2s/8s then placeholder (self-heals without reload); local dev
+  302s to the deployed CDN (no local MLS key needed); idx bound 40→60 (50-photo galleries).
+  Listing fold capped (gallery 400px @lg) so price/facts show on open — not only pics.
+- CONNECT: the owner's REAL Google Calendar appointments iframe (from live custom code),
+  cards anchor to it. CSP extended: frame-src calendar.google.com + td.doubleclick.net,
+  script/img/connect for gtag + Maps.
+- OWNER DECISIONS PENDING: (1) Google Maps API key (above). (2) Photo MIRRORING to our own
+  storage — the durable fix for "pics don't appear" during media-host 429 windows, but it
+  reverses the standing "photos on-demand, never stored" rule and costs ~40GB storage
+  (Supabase Pro territory). Retry layer shipped meanwhile.
+- Headless caveat: the calendar iframe paints white in headless shots (Google refuses);
+  frame URL + load confirmed. Check visually in a real browser.
+
+## NEXT: owner review of the 3 pages, then remaining pages' 390/mobile passes + live form
+## drives (Selling first), county pages under Top Areas, then deferred items (open houses,
+## SEO listing slugs, rail arrows + why-carousel pixel parity on Home).
