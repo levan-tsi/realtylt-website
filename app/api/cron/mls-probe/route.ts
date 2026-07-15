@@ -66,6 +66,11 @@ export async function GET(req: Request) {
       "YearBuilt", "PropertyType", "PropertySubType", "StandardStatus", "ListOfficeName",
       "ModificationTimestamp",
     ]);
+    // ?fields=A,B extends the audit $select with candidate fields — unsupported ones
+    // self-heal (drop + report) so new candidates never require a code change.
+    for (const f of (q.get("fields") ?? "").split(",")) {
+      if (/^[A-Za-z]{2,60}$/.test(f.trim())) select.add(f.trim());
+    }
     const filter =
       `OriginatingSystemName eq '${feedId}' and MlgCanView eq true and ` +
       `ListingId in (${ids.map((i) => `'${i}'`).join(",")})`;
