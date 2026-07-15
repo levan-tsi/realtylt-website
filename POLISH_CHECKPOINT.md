@@ -1,87 +1,94 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-Updated 2026-07-15. The `/website` command reads this to know where to resume, and overwrites it when it
-stops. Page-by-page: compare each page to LIVE realtylt.com, make ours match-or-beat, test live in Chrome.
+Updated 2026-07-15 (PM). The `/website` command reads this to know where to resume, and overwrites it
+when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours match-or-beat, test live.
 
 ═══════════════════════════════════════════════════════════════════════════════════════════════
-## ⭐ PRIORITY 1 (do this FIRST, before page polish): rebuild MLS listings the "Brivity way"
+## ✅ PRIORITY 1 DONE 2026-07-15: MLS listings rebuilt the "Brivity way" (DB + hourly sync)
 ═══════════════════════════════════════════════════════════════════════════════════════════════
-This is a BIG, well-scoped build the owner explicitly approved. Do it thoroughly (this is the main use of
-the ~700k budget), verify each piece live, commit as you go. Then continue the page-by-page polish below.
+Commits a9e9186 → eba698b, deployed + verified live in prod. The site now serves listings from
+Supabase (project wpfmhmnceflfruhssqqb) instead of the committed JSON, kept fresh by an hourly
+incremental sync. **11,136 active listings** at completion.
 
-### Why (the decision, in full)
-- The MLS Grid DATA API is REPLICATION-only: `$filter` can only match ListingId / ModificationTimestamp /
-  status / type — NOT city/county/price/beds. So you CANNOT live-search it; you must keep a local copy and
-  search THAT. Every IDX including Brivity works this way.
-- The suspension (owner got API-suspended, 8-11 req/s vs the 2 req/s limit) was caused by calling the DATA
-  API on every PAGE VIEW (the photo proxy). That is now FIXED + DEPLOYED (commit d02232a): page views make
-  ZERO DATA-API calls; photos come from stored permanent MediaURLs. **Keep it that way** — the guard
-  `lib/idx/mls-fetch.ts` (`mlsGridDataFetch` throws on any request-path DATA call) must stay. See `docs/mls-fix/`.
-- Current setup is a SIMPLER version than Brivity: listings live in a COMMITTED file `data/mls-snapshot.json`,
-  refreshed MANUALLY (run `scripts/export-snapshot.mjs` → commit → deploy). It goes STALE between refreshes
-  (can show sold listings) and doesn't auto-remove delisted ones. And it won't scale to all of NYC (a huge
-  committed JSON in git + loaded into memory is untenable).
+### The architecture (all verified end-to-end)
+- **Store**: `idx_listings` (listing JSONB + GENERATED filter columns + `is_active`), `idx_sync_state`
+  (watermark), `idx_sync_config` (sha256 of CRON_SECRET; NO RLS policies = invisible). Deliberately
+  SEPARATE from `mls_listings` — that is the CRM's org-scoped CMA table with a different shape/lifecycle.
+- **Writes**: `idx_sync_apply` SECURITY DEFINER RPC gated by CRON_SECRET (hash-checked in-DB).
+  **No service-role key exists anywhere in the website stack** — anon key + secret-gated RPC only.
+- **Reads**: `DbIdxClient` (lib/idx/db.ts) over PostgREST; RLS serves ACTIVE rows only, so a
+  deactivated listing vanishes from every surface instantly (verified with a live removal drill on
+  prod). Falls back internally to the committed snapshot on DB error (snapshot + fallback stay ON
+  PURPOSE). Slim `searchPins` pages the whole filtered map set in 1000-row chunks.
+- **Hourly sync**: Supabase **pg_cron job `idx-hourly-sync` (7 * * * *)** fires
+  `/api/cron/idx-sync` (Vercel Hobby = daily crons only, so the DB schedules it; installed via
+  `node scripts/schedule-idx-sync.mjs`). The delta is DELIBERATELY UNFILTERED by
+  status/MlgCanView — that's how removals are seen: raw-Active served rows upsert, everything else
+  modified deactivates. Watermark advances only after writes land. ≤8 feed pages/run, 1.1s gaps.
+  First real scheduled run verified: scanned 42, 1 page, 691ms, upserted 13, watermark advanced.
+- **Baseline**: `node scripts/baseline-to-db.mjs` (one-time, done — 16,315 rows scanned via the
+  deployed export endpoint, paced <2 req/s, 13 calls). Resumable via scripts/.baseline-watermark.local.
+  Final watermark REWINDS to script start so the first delta catches mid-baseline flips.
+- **ZERO request-path MLS DATA calls** — the `lib/idx/mls-fetch.ts` guard is untouched; only the
+  cron route calls MLS Grid. `/api/media` resolves stored PERMANENT MediaURLs DB-first.
+- Env: SUPABASE_URL + SUPABASE_ANON_KEY added to Vercel **Production+Preview** (they were dev-only;
+  this also fixed prod /blog DB reads). `vercel env pull` gives the DEVELOPMENT env — remember that.
 
-### What to build (the real, always-current, self-healing model — how Brivity does it)
-1. **Listings in a DATABASE, not a committed file.** Use the existing Supabase project `wpfmhmnceflfruhssqqb`
-   (same one the CRM + leads + accounts use). CHECK what's already there first — a `mls_listings` table may
-   already exist (it was in the schema). Reuse/extend it; don't duplicate. Store each listing's fields + its
-   PERMANENT MediaURLs + a status + an `updated_at`/watermark + a soft-delete/inactive flag.
-2. **Hourly incremental sync (a cron).** Vercel Cron hitting an API route, or a scheduled Supabase Edge
-   Function — whichever is simplest and reliable. Each run:
-   - Query MLS Grid with `ModificationTimestamp gt <last-watermark>` (ONLY what changed — tiny, a few calls,
-     paced < 2 req/s). Upsert changed listings.
-   - **Handle removals:** when a listing's status flips (Active → Closed/Pending/Withdrawn/Expired) or its
-     `MlgCanView` goes false, mark it inactive / remove it from the served set. (MLS Grid compliance REQUIRES
-     you stop showing delisted/non-viewable listings promptly.)
-   - Advance the watermark. This is the ONLY thing that calls the DATA API, out-of-band — never a page view.
-   - Incremental runs are small, so this will NOT re-trigger the suspension.
-3. **The initial BASELINE pull** (the big one) — one paced, sanctioned full replication into the DB. This is
-   the only large pull; do it once, carefully, under the rate limit. CRON_SECRET is in `.env.local`
-   (`npx vercel env pull .env.local` to refresh); the endpoint uses `MLS_API_KEY` server-side (prod only).
-4. **Coverage = the owner's full area, INCLUDING ALL 5 NYC BOROUGHS.** Served counties: Dutchess, Westchester,
-   Putnam, Rockland, Ulster (Kingston), Orange, PLUS the 5 boroughs — Bronx, Kings (=Brooklyn),
-   New York (=Manhattan), Queens, Richmond (=Staten Island). The feed labels boroughs by LEGAL COUNTY NAME,
-   and the current matcher (`normalizeCounty` in `lib/idx/mls-grid.ts`, and `COUNTIES` in `lib/site.ts`)
-   assumes single-word Hudson Valley names — so wire the borough mapping carefully (esp. multi-word
-   "New York" county → don't let it collide with the state, and give boroughs friendly display names +
-   URL-safe slugs) or the boroughs get silently dropped. Owner wants ALL active borough listings.
-5. **Switch the site to read from the DB** — search, listings, listing detail, `/api/idx/pins` — all query the
-   DB (fast, always current). Keep the committed JSON working as a fallback until the DB path is proven, so the
-   site never breaks mid-migration. Keep photos served via the same-origin `/api/media` proxy from stored URLs.
+### Counts at baseline (active): queens 4,591 · westchester 1,726 · orange 1,278 · bronx 1,190 ·
+dutchess 846 · rockland 728 · ulster 514 · putnam 262
 
-### Verify (this is production-adjacent — prove it)
-- Baseline pull populated the DB incl. borough listings (check counts per county). Site pages render listings
-  from the DB with photos, ZERO `api.mlsgrid.com` calls on any page view (the guard + a network check).
-- The hourly sync runs, upserts changes, and REMOVES a delisted listing (test with a status flip). Watermark
-  advances. Incremental run makes only a few paced calls.
-- `npm run build` clean, `npm test` green, live-drive search/listing/detail at desktop + 390px, no console errors.
-- Do NOT hammer the live MLS API while testing — use the DB + mocks; the baseline pull is the only big call.
+### KNOWN ISSUES / follow-ups
+1. **Brooklyn, Manhattan, Staten Island = 0 listings — a FEED reality, not a bug.** OneKey MLS has
+   no inventory there (REBNY / Brooklyn MLS / SIBOR territory). The alias mapping
+   (Kings→brooklyn etc.) is unit-tested and live; data appears the moment the feed carries it.
+   **OWNER DECISION**: additional feed memberships if he wants those three boroughs. The three
+   chips currently show 0 results — consider hiding zero-inventory chips if this stays.
+2. **media.mlsgrid.com intermittently 429s** (pre-existing, account-level). Failures serve the
+   branded placeholder with no-store and self-heal per view; successes CDN-pin for a day. Verified
+   BOTH cases live on prod (KEY1026260/0 → 429→placeholder; KEY000036/0 → real jpeg, status ok).
+   Long-term per MLS Grid best practices ("download locally; never hot-link"): mirror photos into
+   Supabase Storage during the sync — good candidate for a future round.
+3. Reports APIs (`/api/reports/comps`, `/api/reports/market`) still read the committed snapshot —
+   unchanged behavior, migrate to the DB in a later pass.
+4. Local dev has no MLS_API_KEY → photos always show the placeholder locally (media host requires
+   the token as User-Agent). Prod is fine.
+5. The Chrome extension died mid-session, so the **visual/mobile (390px) browser pass of /search,
+   listing detail + map perf profiling is still owed** — do it FIRST next round (it overlaps with
+   the Search page polish below anyway). All render paths verified server-side meanwhile.
+6. Committed data/mls-snapshot.json still ships as the fallback (correct for resilience). Once the
+   DB path has run quietly for a while, it can be shrunk/refreshed via the old export flow.
 
 ═══════════════════════════════════════════════════════════════════════════════════════════════
 
-## PRIORITY 2 (after the MLS rebuild): page-by-page polish vs LIVE realtylt.com
-The Next.js rebuild is built + on Vercel (private/noindex), ~71 pages. Design system "Hudson Twilight"
-ink/paper + porchlight azure. Anti-AI-slop rules apply ([[design-anti-ai-slop-palette]]).
+## PRIORITY 2 (NOW): page-by-page polish vs LIVE realtylt.com
+Design system "Hudson Twilight" ink/paper + porchlight azure. Anti-AI-slop rules apply
+([[design-anti-ai-slop-palette]]). Compare at desktop AND 390px, drive real functionality, fix, verify
+live, commit page-scoped.
 
 Pages — status:
-- [ ] Home — compare vs live at desktop + 390px
-- [ ] Search / Listings — will be much better after the MLS DB rebuild
-- [ ] Listing detail
+- [ ] **Search / Listings — START HERE**: finish the browser pass Priority 1 owed (desktop + 390px,
+      map perf with 4.6k-pin counties, county chips wrap on mobile with 11 chips, photo fill), then
+      compare vs live realtylt.com search.
+- [ ] Home — hero, rails (getFeatured/getNew now DB-backed), county links, vs live
+- [ ] Listing detail — gallery, lead form, attribution, vs live
 - [ ] Buying
 - [ ] Selling
 - [ ] Financing (mortgage calc)
 - [ ] Home Value
-- [ ] Top Areas + county pages (now incl. boroughs)
+- [ ] Top Areas + county pages (borough Top-Areas pages = new editorial content, owner input useful)
 - [ ] Who We Are
-- [x] Blog + article — redesigned this session; revisit only if issues
-- [x] Services (20 pages) — built this session
+- [x] Blog + article — redesigned earlier session; prod now reads DB (env fix); revisit only if issues
+- [x] Services (20 pages) — built earlier session
 - [ ] Connect
 
 ## Notes
 - Website repo is PUBLIC on GitHub (owner flipping to private).
-- Do NOT deploy to the realtylt.com apex — a push to `main` auto-deploys the private/noindex Vercel site.
-- The photo/suspension fix (d02232a) is deployed; a JSON re-export for the CURRENT counties may still be
-  pending to restore photos short-term — the DB rebuild supersedes it.
+- Do NOT deploy to the realtylt.com apex — pushes to `main` auto-deploy the private/noindex Vercel site.
+- ONE dev server per repo. Never `next build` while dev runs. Use 127.0.0.1:3000 (NOT localhost —
+  wslrelay squats [::1]:3000 and can swallow IPv6 localhost).
+- Supabase schema changes for idx_* go through MCP `apply_migration` (migrations
+  `idx_listings_replication_store`, `idx_sync_hourly_schedule_rpc`, `idx_listings_decimal_safe_int_columns`).
+- Feed gotcha discovered live: onekey2 sends DECIMAL LivingArea ("2005.06") — int generated columns
+  must round through numeric (already fixed).
 
-## NEXT: build PRIORITY 1 (the MLS DB rebuild). Then Home, then down the Priority-2 list.
+## NEXT: Priority 2, starting with the Search page browser pass (desktop + 390px + map perf).
