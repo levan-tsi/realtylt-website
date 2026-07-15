@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
+import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { EPOCH_TS } from "@/lib/idx/replication";
 import type { Listing } from "@/lib/idx/types";
 
@@ -12,8 +13,10 @@ import type { Listing } from "@/lib/idx/types";
  * (data/mls-snapshot.json) bundled into the deploy; this route exists to rebuild that
  * file: it replicates the six-county Active feed from the MLS Grid DATA API (separate
  * budget from the paused Blob and from the media CDN, which this route never calls) and
- * returns the slice as JSON. Photos are intentionally stripped (signed media URLs expire
- * in ~1h and must never be committed); the UI renders its branded NoPhoto placeholder.
+ * returns the slice as JSON. Each listing carries its PERMANENT MediaURLs (MLS Grid docs: "the
+ * media never updates and retains the original Media URL"), captured once here so the request
+ * path never re-resolves photos live (that per-view DATA call suspended the account — see
+ * docs/mls-fix/AUDIT.md). The /api/media proxy serves those URLs behind an immutable CDN cache.
  *
  * Refresh procedure: `node scripts/export-snapshot.mjs` pages this endpoint with the
  * `watermark` param (MLS Grid's documented resume model: ModificationTimestamp-ascending
@@ -32,7 +35,7 @@ import type { Listing } from "@/lib/idx/types";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-const KEPT_LIMIT = 1200; // per-response listings cap — keeps the JSON body ≲3MB
+const KEPT_LIMIT = 800; // per-response listings cap — keeps the JSON body (now incl. photo URLs) < 4.5MB
 const DEFAULT_MAX_PAGES = 20; // ≤20 sequential feed requests per call (~10k rows scanned)
 const PAGE_GAP_MS = 1100; // stay strictly under MLS Grid's 2 req/sec per-account cap
 const TIME_BUDGET_MS = 240_000; // headroom under maxDuration to serialize the response
@@ -60,26 +63,31 @@ export async function GET(req: Request) {
   let pages = 0;
   let complete = false;
   try {
-    // One feed page per iteration so the kept-count bound can stop between pages —
-    // replicateDeep owns the query/resume mechanics, this loop owns pacing + bounds.
-    while (!complete && byId.size < KEPT_LIMIT && pages < maxPages) {
-      if (Date.now() - started >= TIME_BUDGET_MS) break;
-      if (pages > 0) await new Promise((r) => setTimeout(r, PAGE_GAP_MS));
-      const slice = await mls.replicateDeep({
-        watermark,
-        maxPages: 1,
-        deadline: started + TIME_BUDGET_MS,
-      });
-      pages += slice.pages;
-      scanned += slice.scanned;
-      complete = slice.complete;
-      if (!complete && slice.watermark === watermark) {
-        throw new Error(`watermark stuck at ${watermark} — aborting to avoid a loop`);
+    // runInRefreshContext authorizes the DATA-API calls below (mlsGridDataFetch throws on any
+    // request-path call in production — the suspension guard, lib/idx/mls-fetch.ts).
+    await runInRefreshContext(async () => {
+      // One feed page per iteration so the kept-count bound can stop between pages —
+      // replicateDeep owns the query/resume mechanics, this loop owns pacing + bounds.
+      while (!complete && byId.size < KEPT_LIMIT && pages < maxPages) {
+        if (Date.now() - started >= TIME_BUDGET_MS) break;
+        if (pages > 0) await new Promise((r) => setTimeout(r, PAGE_GAP_MS));
+        const slice = await mls.replicateDeep({
+          watermark,
+          maxPages: 1,
+          deadline: started + TIME_BUDGET_MS,
+        });
+        pages += slice.pages;
+        scanned += slice.scanned;
+        complete = slice.complete;
+        if (!complete && slice.watermark === watermark) {
+          throw new Error(`watermark stuck at ${watermark} — aborting to avoid a loop`);
+        }
+        watermark = slice.watermark;
+        // Keep each listing's PERMANENT MediaURLs so the /api/media proxy serves them without
+        // ever re-resolving photos from the DATA API on a request path.
+        for (const l of slice.listings) byId.set(l.id, l);
       }
-      watermark = slice.watermark;
-      // Photos stripped: signed media URLs expire in ~1h and must never leave this route.
-      for (const l of slice.listings) byId.set(l.id, { ...l, photos: [] });
-    }
+    });
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[sync-mls] export slice failed:", msg);

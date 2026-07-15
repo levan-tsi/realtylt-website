@@ -1,17 +1,19 @@
-import { getListingMedia } from "@/lib/idx/media";
+import { getSnapshotMediaUrls } from "@/lib/idx/media";
 
-/** /api/media/{listingId}/{idx} — the ON-DEMAND photo proxy (real-IDX model).
+/** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
+ * photos: the raw MediaURL must not appear on the site, and MLS's media host requires the OAuth
+ * token as User-Agent, so a browser cannot load it directly).
  *
- * On request: resolve the listing's Media from MLS Grid (ONE data call per listing,
- * short-TTL cached in lib/idx/media), pick photo `idx` (Order-sorted), stream it back
- * same-origin. The Vercel CDN caches the image for 50 min (< the ~1h signed-URL
- * validity), so MLS is hit at most ~once per photo per window regardless of viewers.
- * Photos are NEVER stored (no Blob, no bulk download) — owner requirement.
+ * Suspension fix (docs/mls-fix/AUDIT.md): this route no longer calls the MLS Grid DATA API. It
+ * reads the listing's PERMANENT MediaURLs from the committed snapshot (zero DATA-API calls),
+ * fetches the chosen photo server-side with `User-Agent: <token>`, and streams it back with an
+ * IMMUTABLE long cache, so MLS's media host is hit at most once per photo per edge regardless of
+ * viewers or crawlers. A dead/rotated URL is refreshed by the next scheduled export
+ * (scripts/export-snapshot.mjs) — NEVER re-resolved per view.
  *
- * Failure contract: any MLS/media error, throttle, or budget 429 returns the branded
- * "Photo coming soon" SVG with `no-store` (the next view retries) — NEVER a broken
- * tile or 502. A listing that genuinely lacks a photo at this index gets the same SVG
- * but CDN-cached like an image (a stable fact, no repeat lookups).
+ * Failure contract: any media error/throttle returns the branded "Photo coming soon" SVG with
+ * `no-store` (the next view retries) — never a broken tile or 502. A listing with no photo at
+ * this index gets the same SVG but CDN-cached (a stable fact, no repeat work).
  */
 
 // Matches components/idx/ListingCard.tsx NoPhoto — logo-navy line house + lit azure
@@ -25,8 +27,14 @@ const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80
 <text x="400" y="452" text-anchor="middle" font-family="Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#767676">Photo coming soon</text>
 </svg>`;
 
-// 50 min at the CDN (< ~1h signing), SWR keeps tiles instant while revalidating.
-const IMAGE_CACHE = "public, max-age=300, s-maxage=3000, stale-while-revalidate=86400";
+// Aggressive CDN cache so repeat views never re-hit the media host: fresh at the edge for a day,
+// then served stale for a week while it revalidates in the background → the media host is hit
+// ~once per photo per day per edge, and ZERO DATA-API calls ever. Not `immutable`: the proxy path
+// is stable but a listing's photo can be REPLACED (MLS issues a new MediaURL, captured by the next
+// export), so an immutable year-long pin would freeze a stale cover — SWR self-heals instead.
+const IMAGE_CACHE = "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800";
+// "No photo at this index" is a stable fact too — CDN-cache it like an image (no repeat work).
+const EMPTY_CACHE = "public, max-age=300, s-maxage=3000";
 
 function placeholder(cacheControl: string, status: "empty" | "unavailable"): Response {
   return new Response(PLACEHOLDER_SVG, {
@@ -48,17 +56,23 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  const urls = await getListingMedia(id);
-  // MLS couldn't answer (no creds / throttled / error) — retryable, so never CDN-cache it.
-  if (urls === null) return placeholder("no-store", "unavailable");
-  const url = urls[n];
-  // No photo at this index — a stable fact; cache the branded state like an image.
-  if (!url?.startsWith("https://")) return placeholder("public, max-age=300, s-maxage=3000", "empty");
+  // Permanent MediaURLs from the committed snapshot — ZERO MLS Grid DATA-API calls.
+  const url = getSnapshotMediaUrls(id)[n];
+  // No photo at this index (snapshot has none yet, or a photo-less listing) — stable, cacheable.
+  if (!url?.startsWith("https://")) return placeholder(EMPTY_CACHE, "empty");
 
   try {
-    const upstream = await fetch(url, { signal: AbortSignal.timeout(15_000) });
+    const upstream = await fetch(url, {
+      headers: {
+        // MLS Grid REQUIRES the OAuth token as User-Agent to download media (enforced since
+        // 2026-06-01). Harmless if a given feed's URL is otherwise self-authorizing.
+        "User-Agent": process.env.MLS_API_KEY ?? "",
+      },
+      signal: AbortSignal.timeout(15_000),
+    });
     if (!upstream.ok || !upstream.body) {
-      // Budget 429 / expired token — placeholder, no-store: the next view retries.
+      // Dead/rotated URL or media-host throttle — placeholder, no-store: the next view retries,
+      // and the URL is refreshed by the next scheduled export (never re-resolved here per view).
       console.error(`[media] upstream photo ${id}/${n} failed: ${upstream.status}`);
       return placeholder("no-store", "unavailable");
     }

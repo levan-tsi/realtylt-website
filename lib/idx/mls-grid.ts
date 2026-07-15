@@ -19,6 +19,7 @@
 import { COUNTIES, type CountySlug } from "@/lib/site";
 import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
+import { mlsGridDataFetch } from "./mls-fetch";
 import ZIP_CENTROIDS from "./zip-centroids.json";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
 
@@ -378,7 +379,9 @@ export class MlsGridClient implements IdxClient {
   }
 
   private request(url: string): Promise<Response> {
-    return fetch(url, {
+    // mlsGridDataFetch is the single guarded gateway: it throws if this DATA-API call ever
+    // happens on a request path in production (see lib/idx/mls-fetch.ts) — the suspension guard.
+    return mlsGridDataFetch(url, {
       headers: {
         Authorization: `Bearer ${this.apiKey}`,
         Accept: "application/json",

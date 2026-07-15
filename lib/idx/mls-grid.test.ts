@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mapProperty, MlsGridClient } from "./mls-grid";
+import { runInRefreshContext } from "./mls-fetch";
 
 /** Minimal valid onekey2 row (real field shape — no UnparsedAddress on this feed). */
 const row = {
@@ -126,11 +127,13 @@ describe("replicateDeep (rolling full-inventory pass)", () => {
     );
 
     const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
-    const out = await client.replicateDeep({
-      watermark: "1970-01-01T00:00:00Z",
-      maxPages: 8,
-      deadline: Date.now() + 60_000,
-    });
+    const out = await runInRefreshContext(() =>
+      client.replicateDeep({
+        watermark: "1970-01-01T00:00:00Z",
+        maxPages: 8,
+        deadline: Date.now() + 60_000,
+      }),
+    );
 
     expect(out.complete).toBe(true);
     expect(out.pages).toBe(2);
@@ -161,11 +164,13 @@ describe("replicateDeep (rolling full-inventory pass)", () => {
     );
 
     const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
-    const out = await client.replicateDeep({
-      watermark: "1970-01-01T00:00:00Z",
-      maxPages: 1,
-      deadline: Date.now() + 60_000,
-    });
+    const out = await runInRefreshContext(() =>
+      client.replicateDeep({
+        watermark: "1970-01-01T00:00:00Z",
+        maxPages: 1,
+        deadline: Date.now() + 60_000,
+      }),
+    );
 
     expect(out.complete).toBe(false); // next run resumes with `gt` the new watermark
     expect(out.pages).toBe(1);
@@ -196,7 +201,9 @@ describe("replicateNewest (priority photo set)", () => {
     );
 
     const client = new MlsGridClient("https://api.example.com/v2", "test-key", "onekey2");
-    const out = await client.replicateNewest({ maxPages: 3, deadline: Date.now() + 60_000 });
+    const out = await runInRefreshContext(() =>
+      client.replicateNewest({ maxPages: 3, deadline: Date.now() + 60_000 }),
+    );
 
     expect(calls).toHaveLength(1); // short page (< $top) → head exhausted, no page 2
     expect(calls[0]).toContain("$orderby=ModificationTimestamp%20desc");

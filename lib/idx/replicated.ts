@@ -25,12 +25,12 @@ export class ReplicatedIdxClient implements IdxClient {
   constructor() {
     const snap = getCommittedSnapshot();
     if (snap) {
-      // The snapshot ships photo-free (no signed URLs in the repo). Every listing gets
-      // its ON-DEMAND primary photo via the CDN-cached /api/media proxy — fetched from
-      // MLS only when the listing is actually viewed, never stored (lib/idx/media).
-      this.listings = snap.listings.map((l) =>
-        l.photos.length ? l : { ...l, photos: [`/api/media/${l.id}/0`] },
-      );
+      // The snapshot carries each listing's PERMANENT MediaURLs (captured at refresh time), but
+      // the raw MLS URLs must never appear on the site (MLS Grid: "DO NOT use these URLs on your
+      // website"). Cards render only the cover, so each listing gets the single same-origin
+      // /api/media cover path; the detail page expands the full gallery via getProxiedPhotoPaths
+      // (also snapshot-backed). The request path never calls MLS either way.
+      this.listings = snap.listings.map((l) => ({ ...l, photos: [`/api/media/${l.id}/0`] }));
       this.syncedAt = snap.syncedAt;
       this.fixtureFallback = false;
     } else {

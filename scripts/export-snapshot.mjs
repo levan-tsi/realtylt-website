@@ -1,7 +1,8 @@
 // Rebuild data/mls-snapshot.json from the deployed export endpoint (/api/cron/sync-mls).
 // The endpoint replicates the six-county Active feed from the MLS Grid DATA API in paged,
-// rate-gapped slices (photos stripped — signed URLs must never be committed); this driver
-// merges the slices by listing id and writes the committed snapshot the site serves from.
+// rate-gapped slices, each listing carrying its PERMANENT MediaURLs; this driver merges the
+// slices by listing id and writes the committed snapshot the site serves from. The /api/media
+// proxy serves those URLs (no per-view DATA-API calls — the suspension fix, docs/mls-fix/).
 //
 // Usage: node scripts/export-snapshot.mjs [base-url]   (default: the production deploy)
 // Needs CRON_SECRET in .env.local — refresh it with: npx vercel env pull .env.local
@@ -32,7 +33,7 @@ for (;;) {
   }
   const slice = await res.json();
   scanned += slice.scanned;
-  for (const l of slice.listings) byId.set(l.id, { ...l, photos: [] });
+  for (const l of slice.listings) byId.set(l.id, l); // keep each listing's PERMANENT MediaURLs
   console.log(
     `call ${calls}: pages=${slice.pages} scanned=${slice.scanned} kept=${slice.kept} ` +
       `merged=${byId.size} complete=${slice.complete} watermark=${slice.watermark}`,
@@ -45,15 +46,30 @@ for (;;) {
 
 const listings = [...byId.values()];
 const counties = {};
-for (const l of listings) counties[l.county] = (counties[l.county] ?? 0) + 1;
+let withPhotos = 0;
+let photoUrls = 0;
+for (const l of listings) {
+  counties[l.county] = (counties[l.county] ?? 0) + 1;
+  if (Array.isArray(l.photos) && l.photos.length) {
+    withPhotos++;
+    photoUrls += l.photos.length;
+  }
+}
 const json = JSON.stringify({ syncedAt: new Date().toISOString(), listings });
-if (json.includes("media.mlsgrid.com") || json.includes("X-Amz-")) {
-  throw new Error("signed media URL leaked into the snapshot — refusing to write");
+// Self-validating: PERMANENT MediaURLs are safe to commit, but a PRESIGNED (expiring) URL must
+// NEVER be committed — it would 404 before anyone views it. If this feed ever returns presigned
+// URLs (X-Amz-* signature params), the "store URLs in the snapshot" approach doesn't apply and
+// the photo strategy must be revisited (see docs/mls-fix/RESEARCH.md).
+if (/[?&](X-Amz-Signature|X-Amz-Credential|Expires)=/.test(json)) {
+  throw new Error(
+    "presigned/expiring media URLs detected — these must not be committed. This feed is not on " +
+      "MLS Grid's permanent-MediaURL model; revisit the photo approach (docs/mls-fix/RESEARCH.md).",
+  );
 }
 mkdirSync("data", { recursive: true });
 writeFileSync("data/mls-snapshot.json", json);
 console.log(
   `WROTE data/mls-snapshot.json — ${listings.length} listings, ` +
     `${(json.length / 1e6).toFixed(1)} MB, scanned ${scanned} feed rows, ` +
-    `counties ${JSON.stringify(counties)}`,
+    `${withPhotos} with photos (${photoUrls} URLs), counties ${JSON.stringify(counties)}`,
 );

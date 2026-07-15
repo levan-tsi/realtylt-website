@@ -8,8 +8,10 @@
  *
  * Refresh: `node scripts/export-snapshot.mjs` (pages /api/cron/sync-mls), then commit +
  * deploy — manual/periodic for now; a durable auto-refresh store (e.g. Supabase) is a
- * pending owner decision. Photos are intentionally absent (photos: []) — the UI renders
- * its branded NoPhoto placeholder until a photo approach is chosen with the owner.
+ * pending owner decision. Each listing carries its PERMANENT MediaURLs (captured at refresh
+ * time); the /api/media proxy serves them behind an immutable CDN cache, so the request path
+ * never calls the MLS Grid DATA API (the suspension fix — see docs/mls-fix/). A listing with
+ * no stored photos falls back to the branded NoPhoto placeholder.
  */
 
 import { parseSnapshot, type MlsSnapshot } from "./replication";
