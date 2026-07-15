@@ -61,7 +61,7 @@ export async function GET(req: Request) {
     if (!ids.length) return NextResponse.json({ error: "no valid ids" }, { status: 400 });
     const select = new Set([
       "ListingId", "StreetNumber", "StreetDirPrefix", "StreetName", "StreetSuffix",
-      "StreetDirSuffix", "UnitNumber", "City", "PostalCode", "CountyOrParish", "ListPrice",
+      "StreetDirSuffix", "UnitNumber", "City", "PostalCity", "PostalCode", "CountyOrParish", "ListPrice",
       "BedroomsTotal", "BathroomsTotalInteger", "BathroomsHalf", "LivingArea", "LotSizeAcres",
       "YearBuilt", "PropertyType", "PropertySubType", "StandardStatus", "ListOfficeName",
       "ModificationTimestamp",

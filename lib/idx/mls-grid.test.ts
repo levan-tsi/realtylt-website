@@ -80,6 +80,39 @@ describe("mapProperty", () => {
     expect(mapProperty(row)!.city).toBe("Beacon");
   });
 
+  it("builds addresses with directionals and unit numbers (audited vs raw feed 2026-07-15)", () => {
+    expect(
+      mapProperty({ ...row, StreetNumber: "937", StreetDirPrefix: "E", StreetName: "225th", StreetSuffix: "Street" })!.address,
+    ).toBe("937 E 225th Street");
+    expect(
+      mapProperty({ ...row, StreetNumber: "102-30", StreetName: "66th", StreetSuffix: "Road", UnitNumber: "10E" })!.address,
+    ).toBe("102-30 66th Road #10E");
+    // Feed unit values that already carry a prefix don't double up.
+    expect(mapProperty({ ...row, UnitNumber: "Unit 50" })!.address).toBe("12 Main Street #50");
+    expect(mapProperty({ ...row, UnitNumber: "#6M" })!.address).toBe("12 Main Street #6M");
+    // "East" as the street NAME (StreetDirPrefix absent) is not a directional — unchanged.
+    expect(
+      mapProperty({ ...row, StreetNumber: "35", StreetName: "East", StreetSuffix: "Street" })!.address,
+    ).toBe("35 East Street");
+  });
+
+  it("strips feed-internal municipality tags from the display city", () => {
+    expect(mapProperty({ ...row, City: "Warwick (Town)" })!.city).toBe("Warwick");
+    expect(mapProperty({ ...row, City: "Monroe (Village)" })!.city).toBe("Monroe");
+  });
+
+  it("prefers the feed's PostalCity neighborhood for blanket-city Queens rows", () => {
+    const q = { ...row, CountyOrParish: "Queens", City: "New York", PostalCode: "11375" };
+    expect(mapProperty({ ...q, PostalCity: "Forest Hills" })!.city).toBe("Forest Hills");
+    // A PostalCity that just repeats the blanket value falls back to the borough.
+    expect(mapProperty({ ...q, PostalCity: "New York" })!.city).toBe("Queens");
+    expect(mapProperty(q)!.city).toBe("Queens");
+    // Brooklyn keeps the borough postal city (its real postal city IS "Brooklyn").
+    expect(
+      mapProperty({ ...q, CountyOrParish: "Kings (Brooklyn)", PostalCode: "11215", PostalCity: "Park Slope" })!.city,
+    ).toBe("Brooklyn");
+  });
+
   it("pins a coordinate-less borough row at its NYC zip centroid", () => {
     const { Latitude: _lat, Longitude: _lng, ...noCoords } = row;
     const l = mapProperty({ ...noCoords, CountyOrParish: "Kings", PostalCode: "11215" })!;

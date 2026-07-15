@@ -27,6 +27,11 @@ export interface Listing {
   openHouse?: boolean;
   description: string;
   features: string[];
+  /** Structured facts (rows stored before 2026-07-15 fall back to the `features` strings). */
+  yearBuilt?: number;
+  lotAcres?: number;
+  propertySubType?: string;
+  listAgentName?: string;
   photos: string[]; // paths under /public in fixture mode; feed URLs live
   lat: number;
   lng: number;

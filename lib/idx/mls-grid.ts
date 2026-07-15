@@ -29,9 +29,13 @@ interface ResoProperty {
   ListingKey?: string;
   ListPrice?: number;
   StreetNumber?: string;
+  StreetDirPrefix?: string;
   StreetName?: string;
   StreetSuffix?: string;
+  StreetDirSuffix?: string;
+  UnitNumber?: string;
   City?: string;
+  PostalCity?: string;
   StateOrProvince?: string;
   PostalCode?: string;
   CountyOrParish?: string;
@@ -61,7 +65,8 @@ interface ResoProperty {
  * from zip centroids instead). fetchPage still self-heals if the subscription changes:
  * any $select field the API 400s on is dropped exactly as named and logged. */
 const SELECT_FIELDS = [
-  "ListingId", "StreetNumber", "StreetName", "StreetSuffix", "City", "StateOrProvince",
+  "ListingId", "StreetNumber", "StreetDirPrefix", "StreetName", "StreetSuffix",
+  "StreetDirSuffix", "UnitNumber", "City", "PostalCity", "StateOrProvince",
   "PostalCode", "CountyOrParish", "ListPrice", "BedroomsTotal", "BathroomsTotalInteger",
   "BathroomsHalf", "LivingArea", "LotSizeAcres", "YearBuilt", "DaysOnMarket",
   "StandardStatus", "PropertyType", "PropertySubType", "ListAgentFullName",
@@ -77,7 +82,9 @@ const PAGE_SIZE = 500; // MLS Grid max $top
 const MAX_PAGES = 8; // hard bound per sync (≤ 8 requests, ~4000 rows scanned)
 const TARGET_KEPT = 150; // stop paging once the six-county working set is this deep
 const PAGE_GAP_MS = 1100; // stay STRICTLY under the 2 req/sec per-ACCOUNT cap
-const MAX_PHOTOS = 16; // bound page weight + image-optimizer cost per listing
+// Full galleries (feed carries up to ~50/listing; audited 2026-07-15). Off-screen tiles
+// lazy-load through the CDN-cached proxy, so stored count ≠ per-view fetch count.
+const MAX_PHOTOS = 50;
 
 export class MlsGridClient implements IdxClient {
   private cache: Listing[] = [];
@@ -549,13 +556,29 @@ export function mapProperty(p: ResoProperty): Listing | null {
 
   const modified = p.ModificationTimestamp ?? new Date(0).toISOString();
 
+  // Feed rows blanket-set City="New York" across NYC; rewrite to the borough postal city.
+  // Queens is special — its REAL postal city is the neighborhood (Forest Hills, Astoria, …),
+  // which the feed carries in PostalCity when the participant filled it in.
   const boroughCity = BOROUGH_POSTAL_CITY[county];
+  const postalCity = p.PostalCity?.trim();
+  const rawCity =
+    boroughCity && (!p.City || p.City === "New York")
+      ? county === "queens" && postalCity && !/^new york( city)?$/i.test(postalCity)
+        ? postalCity
+        : boroughCity
+      : (p.City ?? "");
+
+  // "Warwick (Town)" / "Monroe (Village)" are feed-internal municipality tags, not display names.
+  const street = [p.StreetNumber, p.StreetDirPrefix, p.StreetName, p.StreetSuffix, p.StreetDirSuffix]
+    .filter(Boolean)
+    .join(" ");
+  const unit = p.UnitNumber?.trim().replace(/^#?\s*(unit\s+)?/i, "");
 
   return {
     id,
     price: p.ListPrice,
-    address: [p.StreetNumber, p.StreetName, p.StreetSuffix].filter(Boolean).join(" "),
-    city: boroughCity && (!p.City || p.City === "New York") ? boroughCity : (p.City ?? ""),
+    address: unit ? `${street} #${unit}` : street,
+    city: rawCity.replace(/\s*\((Town|Village|Hamlet)\)\s*$/i, ""),
     state: p.StateOrProvince ?? "NY",
     zip: p.PostalCode ?? "",
     county: county as CountySlug,
@@ -570,6 +593,10 @@ export function mapProperty(p: ResoProperty): Listing | null {
     description: p.PublicRemarks ?? "",
     features,
     photos,
+    yearBuilt: p.YearBuilt,
+    lotAcres: p.LotSizeAcres,
+    propertySubType: p.PropertySubType,
+    listAgentName: p.ListAgentFullName,
     ...coordsOf(p, id),
     listOfficeName: p.ListOfficeName ?? "",
     originatingSystem: "OneKey MLS",
