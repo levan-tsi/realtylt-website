@@ -10,7 +10,14 @@ import { useSaved } from "@/components/auth/SavedProvider";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import type { Listing, MapPin } from "@/lib/idx/types";
 
-const MapView = dynamic(() => import("@/components/idx/MapView"), {
+// Official Google Maps when the key is configured (live-site parity); Leaflet/OSM
+// fallback otherwise. NEXT_PUBLIC_ vars are inlined at build, so only one chunk loads.
+const MapView = dynamic(
+  () =>
+    process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+      ? import("@/components/idx/GoogleMapView")
+      : import("@/components/idx/MapView"),
+  {
   ssr: false,
   loading: () => (
     <div className="grid h-full min-h-96 w-full place-items-center bg-mist text-sm text-stone">

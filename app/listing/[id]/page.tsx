@@ -193,9 +193,11 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
           }`}
         >
+          {/* Cap the band on desktop so price/facts sit inside the first viewport (live
+              parity — "opening a listing" must show the home AND its numbers, not only pics). */}
           <div
             className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
-              photos.length > 1 ? "aspect-[3/2]" : "aspect-[3/2] md:aspect-[21/9]"
+              photos.length > 1 ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]" : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
             }`}
           >
             {photos.length > 0 ? (
@@ -256,7 +258,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* ── Facts + contact */}
-      <section className="bg-paper py-12 md:py-16">
+      <section className="bg-paper py-8 md:pb-16 md:pt-10">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3">
