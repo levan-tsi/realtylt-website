@@ -25,12 +25,12 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description:
-    "Hudson Valley real estate with RealtyLT — search homes across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange counties, get your home value, or a cash offer in 24 hours.",
+    "Hudson Valley and NYC real estate with RealtyLT. Search homes across six mid-Hudson counties and all five boroughs, get your home value, or a cash offer in 24 hours.",
   openGraph: {
     siteName: SITE.name,
     type: "website",
     locale: "en_US",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "RealtyLT — Let's find home. Hudson Valley real estate." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "RealtyLT. Let's find home. Hudson Valley real estate." }],
   },
   twitter: {
     card: "summary_large_image",

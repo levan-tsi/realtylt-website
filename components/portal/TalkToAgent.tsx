@@ -37,7 +37,7 @@ export function TalkToAgent({
       address,
       message:
         kind === "send" && message.trim()
-          ? `${message.trim()}\n\n— re: ${reportTitle}`
+          ? `${message.trim()}\n\nRe: ${reportTitle}`
           : `Raised their hand from their portal report: ${reportTitle}`,
       source: "/portal/reports",
     };
@@ -84,7 +84,7 @@ export function TalkToAgent({
             role="status"
             className="mt-6 rounded-[4px] border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
           >
-            Got it — your agent has been notified and will reach out shortly. Talk soon.
+            Got it. Your agent has been notified and will reach out shortly. Talk soon.
           </p>
         ) : (
           <div className="mt-6 flex flex-wrap gap-3">
@@ -121,7 +121,7 @@ export function TalkToAgent({
               role="status"
               className="mt-2 rounded-[4px] border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
             >
-              Message sent — you&rsquo;ll usually hear back within the hour.
+              Message sent. You&rsquo;ll usually hear back within the hour.
             </p>
           ) : (
             <div className="mt-2 flex flex-col gap-3 sm:flex-row">

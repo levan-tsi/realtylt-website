@@ -24,7 +24,7 @@ export function LeadForm({
   defaultAddress,
   submitLabel = "Send Message",
   successTitle = "Message sent.",
-  successBody = "Thanks — we usually reply within the hour, seven days a week.",
+  successBody = "Thanks. We usually reply within the hour, seven days a week.",
   source,
 }: {
   dark?: boolean;

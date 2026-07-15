@@ -16,7 +16,7 @@ export function HomeValueForm() {
     return (
       <div className="mx-auto w-full max-w-lg bg-white p-6 text-left shadow-2xl md:p-7">
         <p className="text-sm leading-relaxed text-stone">
-          Almost there — tell us where to send the numbers for{" "}
+          Almost there. Tell us where to send the numbers for{" "}
           <strong className="text-ink">{address}</strong>.
         </p>
         <div className="mt-4">
@@ -27,7 +27,7 @@ export function HomeValueForm() {
             defaultReason="I'm interested in selling a home"
             submitLabel="Find Out"
             successTitle="Request received."
-            successBody="We're pulling your comps now — expect to hear from us within the day."
+            successBody="We're pulling your comps now. Expect to hear from us within the day."
           />
         </div>
       </div>

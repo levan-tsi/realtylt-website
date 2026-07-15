@@ -104,8 +104,7 @@ export default function PortalOverview() {
             Nothing yet. Start{" "}
             <Link href="/search" className="font-bold text-river underline underline-offset-2">
               browsing homes
-            </Link>{" "}
-            — your saves and views show up here.
+            </Link>. Your saves and views show up here.
           </p>
         ) : (
           <ul className="mt-4 divide-y divide-ink/10 border-y border-ink/10">
@@ -124,7 +123,7 @@ export default function PortalOverview() {
                     <span className="font-semibold">{label}</span>
                     {detail && (
                       <>
-                        {" — "}
+                        {": "}
                         {a.listingId ? (
                           <Link
                             href={`/listing/${a.listingId}`}

@@ -63,8 +63,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         {!enabled ? (
           <p className="py-16 text-center text-sm text-stone">
-            Accounts aren&rsquo;t available right now. Your saved homes are kept on this device —
-            visit <Link href="/saved" className="font-bold text-river underline">Saved</Link>.
+            Accounts aren&rsquo;t available right now. Your saved homes are kept on this device.
+            Visit <Link href="/saved" className="font-bold text-river underline">Saved</Link>.
           </p>
         ) : !ready ? (
           <p className="py-16 text-center text-sm text-stone">Loading your portal…</p>
@@ -72,7 +72,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           <div className="mx-auto max-w-md rounded-[4px] border border-ink/10 bg-mist p-10 text-center">
             <p className="font-display text-2xl text-ink">Sign in to your portal</p>
             <p className="mt-2 text-sm text-stone">
-              Save homes, save searches, and get new-listing alerts — synced across your devices.
+              Save homes, save searches, and get new-listing alerts, synced across your devices.
             </p>
             <div className="mt-6 flex justify-center gap-2">
               <Button onClick={() => openSignIn("signin")}>Sign in</Button>

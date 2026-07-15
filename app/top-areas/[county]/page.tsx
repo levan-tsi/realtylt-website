@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ county: s
   const c = getCounty(county);
   if (!c) return { title: "Area not found" };
   return {
-    title: `${c.name} Homes for Sale — ${c.tagline}`,
+    title: `${c.name} Homes for Sale | ${c.tagline}`,
     description: `${c.overview.slice(0, 155)}…`,
     alternates: { canonical: `${SITE.url}/top-areas/${c.slug}` },
   };
@@ -141,7 +141,7 @@ export default async function CountyPage({ params }: { params: Promise<{ county:
           </Reveal>
           {result.listings.length === 0 ? (
             <p className="mt-8 border border-dashed border-[#cccccc] p-10 text-center text-sm text-stone">
-              Nothing on the market right this moment — save a search and we&rsquo;ll flag new
+              Nothing on the market right this moment. Save a search and we&rsquo;ll flag new
               {" " + c.short} listings for you.
             </p>
           ) : (

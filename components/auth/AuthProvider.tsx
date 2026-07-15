@@ -208,7 +208,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
     // On success the browser redirects; an error means the provider isn't enabled yet.
     return error
-      ? { ok: false, error: "Google sign-in isn't enabled yet — use email instead." }
+      ? { ok: false, error: "Google sign-in isn't enabled yet. Use email instead." }
       : { ok: true };
   }, [supabase]);
 

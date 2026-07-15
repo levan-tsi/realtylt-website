@@ -5,22 +5,22 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { COUNTY_CONTENT } from "@/content/counties";
-import { SITE } from "@/lib/site";
+import { SERVED_AREAS, SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Who We Are — Levan Tsiklauri | United Real Estate",
+  title: "Who We Are | Levan Tsiklauri, United Real Estate",
   description:
-    "Meet RealtyLT: Levan Tsiklauri, investor and Realtor with United Real Estate, serving six Hudson Valley counties from Lagrangeville, NY.",
+    "Meet RealtyLT: Levan Tsiklauri, investor and Realtor with United Real Estate, serving the Hudson Valley and New York City from Lagrangeville, NY.",
 };
 
 const VALUES = [
   {
     title: "Straight answers",
-    body: "You'll always hear the honest number and the honest trade-off — even when it's not what sells easiest.",
+    body: "You'll always hear the honest number and the honest trade-off, even when it's not what sells easiest.",
   },
   {
     title: "Investor's eye",
-    body: "We buy and hold property ourselves. That lens — cash flow, condition, resale — comes free with every showing.",
+    body: "We buy and hold property ourselves. That lens (cash flow, condition, resale) comes free with every showing.",
   },
   {
     title: "Seven-day service",
@@ -76,15 +76,15 @@ export default function WhoWeArePage() {
           <Reveal delay={120}>
             <div className="mx-auto mt-12 max-w-2xl space-y-4 text-left leading-relaxed text-stone">
               <p>
-                RealtyLT is Levan Tsiklauri — an investor and Realtor with United Real Estate,
+                RealtyLT is Levan Tsiklauri, an investor and Realtor with United Real Estate,
                 working the mid-Hudson region from Lagrangeville. Levan came to real estate the
                 practical way: buying, renovating, and managing property himself before ever
-                representing a client. That experience shapes how RealtyLT works today — numbers
+                representing a client. That experience shapes how RealtyLT works today: numbers
                 first, honest advice always, and no pressure at any step.
               </p>
               <p>
-                United Real Estate backs that work with the reach of a national brokerage — MLS
-                syndication, marketing tools, and a referral network — while every client still
+                United Real Estate backs that work with the reach of a national brokerage (MLS
+                syndication, marketing tools, and a referral network) while every client still
                 talks to the same person from first call to closing. {SITE.disclaimer}
               </p>
             </div>
@@ -120,10 +120,15 @@ export default function WhoWeArePage() {
             Where We Work
           </h2>
           <ul className="mt-6 flex flex-wrap justify-center gap-2">
-            {COUNTY_CONTENT.map((c) => (
+            {SERVED_AREAS.map((c) => (
               <li key={c.slug}>
                 <Link
-                  href={`/top-areas/${c.slug}`}
+                  // Boroughs have no editorial /top-areas page yet — send them to search.
+                  href={
+                    COUNTY_CONTENT.some((k) => k.slug === c.slug)
+                      ? `/top-areas/${c.slug}`
+                      : `/search?county=${c.slug}`
+                  }
                   className="inline-block border border-[#cccccc] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >
                   {c.name}

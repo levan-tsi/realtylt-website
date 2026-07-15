@@ -50,9 +50,9 @@ export function FavoriteListings({ fixtureMode }: { fixtureMode: boolean }) {
   if (favorites.length === 0) {
     return (
       <p className="mt-4 text-sm text-stone">
-        No homes saved yet —{" "}
+        No homes saved yet.{" "}
         <Link href="/search" className="font-bold text-river underline underline-offset-2">
-          browse listings
+          Browse listings
         </Link>{" "}
         and tap the heart.
       </p>

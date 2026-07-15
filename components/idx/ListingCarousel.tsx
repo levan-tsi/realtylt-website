@@ -39,7 +39,7 @@ export function ListingCarousel({ listings, ariaLabel }: { listings: Listing[]; 
   if (listings.length === 0) {
     return (
       <p className="rounded-[2px] border border-dashed border-ink/20 p-8 text-center text-sm text-stone">
-        No listings to show right now — check back soon or{" "}
+        No listings to show right now. Check back soon or{" "}
         <a href="/search" className="text-river underline underline-offset-2">
           browse all homes
         </a>

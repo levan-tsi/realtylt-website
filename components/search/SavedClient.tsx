@@ -115,8 +115,8 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
                 Want new matches by email?
               </h2>
               <p className="mt-2 max-w-lg text-sm text-stone">
-                Leave your details and we&rsquo;ll set up listing alerts for your saved searches —
-                you&rsquo;ll hear about new homes before the portals do.
+                Leave your details and we&rsquo;ll set up listing alerts for your saved searches.
+                You&rsquo;ll hear about new homes before the portals do.
               </p>
               <div className="mt-6 max-w-xl">
                 <LeadForm

@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const l = await getListing(id);
   if (!l) return { title: "Listing not found" };
   return {
-    title: `${l.address}, ${l.city} NY ${l.zip} — ${formatPrice(l.price)}`,
+    title: `${l.address}, ${l.city} NY ${l.zip} | ${formatPrice(l.price)}`,
     description: l.description.slice(0, 160),
   };
 }
@@ -200,7 +200,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             {photos.length > 0 ? (
               <Image
                 src={photos[0]}
-                alt={`${l.address}, ${l.city} — main photo`}
+                alt={`${l.address}, ${l.city}, main photo`}
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 60vw"
@@ -221,7 +221,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
             <div className="hidden grid-rows-3 gap-1.5 md:grid">
               {photos.slice(1, 4).map((p, i) => (
                 <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
-                  <Image src={p} alt={`${l.address} — photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
+                  <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" unoptimized={isLiveMlsPhoto(p)} className="object-cover" />
                 </div>
               ))}
             </div>
@@ -244,7 +244,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                 >
                   <Image
                     src={p}
-                    alt={`${l.address} — photo ${i + 2}`}
+                    alt={`${l.address}, photo ${i + 2}`}
                     fill
                     sizes="(max-width: 768px) 50vw, 33vw"
                     unoptimized={isLiveMlsPhoto(p)}
@@ -273,7 +273,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                   </>
                 )}
               </nav>
-              <ShareButton title={`${l.address}, ${l.city} NY — ${formatPrice(l.price)}`} />
+              <ShareButton title={`${l.address}, ${l.city} NY | ${formatPrice(l.price)}`} />
             </div>
             <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
               <h1 className="font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl">

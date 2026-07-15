@@ -78,7 +78,7 @@ export function ListingCard({
         <Link
           href={`/listing/${l.id}`}
           className="absolute inset-0 z-10"
-          aria-label={`${l.address}, ${l.city} — ${formatPrice(l.price)}`}
+          aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
         />
         <div className="photo-zoom relative aspect-[3/2] overflow-hidden bg-mist">
           {l.photos[0] ? (
@@ -123,7 +123,7 @@ export function ListingCard({
       <Link
         href={`/listing/${l.id}`}
         className="absolute inset-0 z-10"
-        aria-label={`${l.address}, ${l.city} — ${formatPrice(l.price)}`}
+        aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
       />
       {/* Live home-rail tiles are portrait — measured 283×450 (aspect ≈ 63/100) @1280 */}
       <div className="photo-zoom relative aspect-[63/100] overflow-hidden bg-mist">

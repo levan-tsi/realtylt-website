@@ -30,14 +30,14 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     medianPrice: 920_000,
     map: { left: 69, top: 86, side: "east" },
     commute:
-      "Three Metro-North lines — Hudson, Harlem, and New Haven — put most of the county 30 to 55 minutes from Grand Central. Express trains from White Plains run under 40 minutes.",
+      "Three Metro-North lines (Hudson, Harlem, and New Haven) put most of the county 30 to 55 minutes from Grand Central. Express trains from White Plains run under 40 minutes.",
     overview:
-      "Westchester is the most established market we cover: strong school districts, walkable downtowns, and housing stock that runs from Yonkers lofts to Scarsdale Tudors. Inventory moves fast and pricing is competitive — homes that show well still draw multiple offers in most villages.",
+      "Westchester is the most established market we cover: strong school districts, walkable downtowns, and housing stock that runs from Yonkers lofts to Scarsdale Tudors. Inventory moves fast and pricing is competitive. Homes that show well still draw multiple offers in most villages.",
     lifestyle:
-      "Weekends here look like farmers markets in Tarrytown, the Rockefeller State Park trails, Long Island Sound beaches in Rye, and a restaurant scene that no longer needs the city. Every town has its own personality — part of the fun is finding yours.",
+      "Weekends here look like farmers markets in Tarrytown, the Rockefeller State Park trails, Long Island Sound beaches in Rye, and a restaurant scene that no longer needs the city. Every town has its own personality. Part of the fun is finding yours.",
     whyBuy: [
       "The widest choice of school districts in the region",
-      "True commuter towns — leave your car at the station",
+      "True commuter towns: leave your car at the station",
       "Deep, liquid market: easier to sell when life changes",
       "Villages with real downtowns, not just strip malls",
     ],
@@ -53,7 +53,7 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     commute:
       "About 45–70 minutes to Manhattan: NJ Transit trains from Suffern, Nanuet and Pearl River into Penn Station (via Secaucus), express buses over the George Washington Bridge, and the Mario Cuomo Bridge to the Metro-North Hudson line.",
     overview:
-      "Rockland is the smallest county in New York outside the boroughs — and it packs river villages, mountain parks, and solid family suburbs into that footprint. Buyers who want Westchester convenience at a friendlier price point land here.",
+      "Rockland is the smallest county in New York outside the boroughs, and it packs river villages, mountain parks, and solid family suburbs into that footprint. Buyers who want Westchester convenience at a friendlier price point land here.",
     lifestyle:
       "Life happens outdoors: Harriman State Park's lakes and trails, the Nyack riverfront and its Main Street, Piermont's pier and bike culture. Add strong downtowns in Nyack and Pearl River, and diverse communities that make good neighbors.",
     whyBuy: [
@@ -72,16 +72,16 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     medianPrice: 610_000,
     map: { left: 66, top: 56, side: "east" },
     commute:
-      "Metro-North's Hudson line serves Cold Spring and Garrison; the Harlem line serves Brewster and Southeast. Plan on 60–80 minutes to Grand Central — with some of the prettiest train views in America.",
+      "Metro-North's Hudson line serves Cold Spring and Garrison; the Harlem line serves Brewster and Southeast. Plan on 60–80 minutes to Grand Central, with some of the prettiest train views in America.",
     overview:
       "Putnam sits between Westchester's polish and Dutchess's countryside: lake communities, Highlands hiking, and villages like Cold Spring that draw weekenders from the city. Prices are gentler than its southern neighbor, and the pace is too.",
     lifestyle:
-      "This is lake-and-trail living — Mahopac and Oscawana for boating, Breakneck Ridge and Bull Hill for hiking, Cold Spring's antique row for slow Saturdays. Homes range from vintage lake cottages to substantial colonials on wooded acres.",
+      "This is lake-and-trail living: Mahopac and Oscawana for boating, Breakneck Ridge and Bull Hill for hiking, Cold Spring's antique row for slow Saturdays. Homes range from vintage lake cottages to substantial colonials on wooded acres.",
     whyBuy: [
       "Lakes and Highlands trails without leaving the county",
       "Cold Spring and Garrison: river villages with direct trains",
       "A meaningful price step down from Westchester",
-      "Small-town scale — you'll know your neighbors",
+      "Small-town scale: you'll know your neighbors",
     ],
     towns: ["Carmel", "Mahopac", "Brewster", "Cold Spring", "Garrison", "Putnam Valley", "Patterson", "Kent"],
   },
@@ -97,10 +97,10 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     overview:
       "Orange County is where Hudson Valley value lives: first-time buyers, growing families, and investors all find room here. Newburgh's historic architecture is being restored block by block, Warwick anchors a genuine farm-and-winery belt, and new construction actually exists.",
     lifestyle:
-      "Storm King Art Center, West Point football Saturdays, pick-your-own orchards in Warwick, the Heritage Trail by bike. Towns here still feel like towns — diners, main streets, and school pride included.",
+      "Storm King Art Center, West Point football Saturdays, pick-your-own orchards in Warwick, the Heritage Trail by bike. Towns here still feel like towns: diners, main streets, and school pride included.",
     whyBuy: [
-      "The most attainable prices in our six counties",
-      "Newburgh's restoration story — equity with upside",
+      "The most attainable prices in our Hudson Valley counties",
+      "Newburgh's restoration story: equity with upside",
       "Warwick and Goshen: storybook villages with land",
       "New-build inventory that's rare east of the river",
     ],
@@ -109,7 +109,7 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
   {
     slug: "dutchess",
     short: "Dutchess",
-    tagline: "Our home county — river towns to horse country",
+    tagline: "Our home county: river towns to horse country",
     heroImage: "/images/counties/dutchess.jpg",
     medianPrice: 520_000,
     map: { left: 68, top: 27, side: "east" },
@@ -123,7 +123,7 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
       "Anchor towns with direct trains: Beacon and Poughkeepsie",
       "Prices that still leave room for equity growth",
       "Vassar, Marist, and the CIA steady the local economy",
-      "Your agent lives here — street-level knowledge included",
+      "Your agent lives here, street-level knowledge included",
     ],
     towns: ["Poughkeepsie", "Beacon", "Fishkill", "Wappingers Falls", "Hyde Park", "Rhinebeck", "Red Hook", "Pawling", "Millbrook", "Lagrangeville"],
   },
@@ -135,7 +135,7 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     medianPrice: 470_000,
     map: { left: 22, top: 20, side: "west" },
     commute:
-      "No commuter rail west of the river — most Ulster buyers drive, take Trailways from Kingston or New Paltz (about 2 hours to Port Authority), or cross the bridge to Poughkeepsie's Metro-North. Remote-friendly is the honest label.",
+      "No commuter rail west of the river. Most Ulster buyers drive, take Trailways from Kingston or New Paltz (about 2 hours to Port Authority), or cross the bridge to Poughkeepsie's Metro-North. Remote-friendly is the honest label.",
     overview:
       "Ulster is the Hudson Valley at its most independent: Kingston's historic districts and food scene, New Paltz under the Shawangunk cliffs, Woodstock's arts legacy, and Catskills hamlets where the money goes further than anywhere else we work.",
     lifestyle:
@@ -143,7 +143,7 @@ const COUNTY_DATA: Omit<CountyContent, "name">[] = [
     whyBuy: [
       "The best value per acre in our territory",
       "Kingston: a small city with big-city food and culture",
-      "Remote-work paradise — space, views, fiber in the towns",
+      "Remote-work paradise: space, views, fiber in the towns",
       "Four-season recreation from the Gunks to Belleayre",
     ],
     towns: ["Kingston", "New Paltz", "Woodstock", "Saugerties", "Highland", "Stone Ridge", "Marlboro", "Gardiner", "Phoenicia"],

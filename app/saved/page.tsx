@@ -3,7 +3,7 @@ import { SavedClient } from "@/components/search/SavedClient";
 import { isFixtureMode } from "@/lib/idx";
 
 export const metadata: Metadata = {
-  title: "Saved — Your Homes & Searches",
+  title: "Saved | Your Homes & Searches",
   description:
     "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
 };
@@ -18,7 +18,7 @@ export default function SavedPage() {
             Your <strong className="font-bold">Homes &amp; Searches</strong>
           </h1>
           <p className="mt-2 max-w-xl text-sm text-paper/70">
-            Saved on this device — no account needed. Turn on email alerts below and we&rsquo;ll
+            Saved on this device, no account needed. Turn on email alerts below and we&rsquo;ll
             watch the market for you.
           </p>
         </div>

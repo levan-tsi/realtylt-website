@@ -76,7 +76,7 @@ export default function ReportsPage() {
           My reports
         </h2>
         <p className="mt-1 text-sm text-stone">
-          Home-value estimates and Hudson Valley market reports — run your own in seconds, or open
+          Home-value estimates and Hudson Valley market reports. Run your own in seconds, or open
           the ones your agent prepared for you.
         </p>
       </div>
@@ -102,7 +102,7 @@ export default function ReportsPage() {
           <p className="mt-4 text-sm text-stone">Loading…</p>
         ) : myReports.length === 0 ? (
           <p className="mt-4 text-sm text-stone">
-            You haven&rsquo;t run a report yet — start one below.
+            You haven&rsquo;t run a report yet. Start one below.
           </p>
         ) : (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

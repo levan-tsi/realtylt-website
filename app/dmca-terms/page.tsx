@@ -70,7 +70,7 @@ export default function DmcaTermsPage() {
           Act (17 U.S.C. § 512) to our designated agent:
         </p>
         <p className="rounded-[2px] bg-mist px-4 py-3 font-mono text-sm text-ink">
-          DMCA Agent — {SITE.legalName}
+          DMCA Agent: {SITE.legalName}
           <br />
           {SITE.address.street}, {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
           <br />

@@ -25,7 +25,7 @@ export function MlsAttribution({
     <div className={`text-[11px] leading-relaxed ${dark ? "text-paper/50" : "text-stone"} ${className}`}>
       {fixtureMode && (
         <p className={`mb-1 font-mono text-[10px] uppercase tracking-[0.14em] ${dark ? "text-porchlight/80" : "text-porchlight-deep"}`}>
-          Sample data shown — live MLS listings appear when the feed is connected.
+          Sample data shown. Live MLS listings appear when the feed is connected.
         </p>
       )}
       <p>

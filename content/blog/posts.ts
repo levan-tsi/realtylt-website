@@ -66,7 +66,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "You watch the home improvement shows, you see the stunning transformations, but which projects actually pay you back at the closing table in New York?",
     cover: "/images/listings/house-16.jpg",
-    body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York — and the popular ones that don't pay back"),
+    body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
   },
   {
@@ -96,7 +96,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Metro-North lines, school districts, winters, and the difference between river towns: the honest orientation we give every family relocating from the city.",
     cover: "/images/counties/dutchess.jpg",
-    body: PLACEHOLDER_BODY("what newcomers should know before relocating to the Hudson Valley — commutes, towns, and trade-offs"),
+    body: PLACEHOLDER_BODY("what newcomers should know before relocating to the Hudson Valley: commutes, towns, and trade-offs"),
     placeholder: true,
   },
   {

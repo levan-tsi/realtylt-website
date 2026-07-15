@@ -8,9 +8,9 @@ import { COUNTY_CONTENT } from "@/content/counties";
 import { fmtM } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Top Areas — Six Counties Along the Hudson",
+  title: "Top Areas | Six Counties Along the Hudson",
   description:
-    "Explore the six Hudson Valley counties we serve — Westchester, Rockland, Putnam, Orange, Dutchess and Ulster — with local market notes, commute times, and homes for sale in each.",
+    "Explore the six Hudson Valley counties we serve (Westchester, Rockland, Putnam, Orange, Dutchess and Ulster) with local market notes, commute times, and homes for sale in each.",
 };
 
 export default function TopAreasPage() {
@@ -34,7 +34,7 @@ export default function TopAreasPage() {
             Top <strong className="font-bold">Areas</strong>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-paper/85">
-            Everything we do happens along the Hudson — from Westchester&rsquo;s commuter villages
+            Everything we do happens along the Hudson, from Westchester&rsquo;s commuter villages
             in the south to Ulster&rsquo;s Catskill towns in the north. Each county has its own
             price band, commute story, and way of life.
           </p>

@@ -76,7 +76,7 @@ export function ReportDetail({ report }: { report: PortalReport }) {
         </div>
         {report.agentNote && (
           <p className="mt-3 max-w-2xl rounded-[4px] border-l-2 border-porchlight bg-mist px-4 py-3 text-sm italic text-ink-soft">
-            &ldquo;{report.agentNote}&rdquo; — your agent
+            &ldquo;{report.agentNote}&rdquo; from your agent
           </p>
         )}
       </header>
@@ -197,7 +197,7 @@ function CmaBody({ report }: { report: PortalReport }) {
       <section aria-labelledby="recalc-heading" className="rounded-[6px] border border-ink/10 bg-mist p-6 md:p-8">
         <h2 id="recalc-heading" className="font-display text-xl text-ink">Fine-tune your estimate</h2>
         <p className="mt-1 text-sm text-stone">
-          Include the comps that best match your home and nudge for condition — the value updates live.
+          Include the comps that best match your home and nudge for condition. The value updates live.
         </p>
 
         <div className="mt-5 max-w-md">
@@ -298,7 +298,7 @@ function CmaBody({ report }: { report: PortalReport }) {
         </div>
 
         <p className="mt-6 text-xs leading-relaxed text-stone">
-          This is an automated estimate from comparable homes <strong>currently for sale</strong> — not a
+          This is an automated estimate from comparable homes <strong>currently for sale</strong>, not a
           formal appraisal. For a precise analysis using recently <strong>sold</strong> comps, raise your
           hand and Levan will prepare a full CMA.
           {stats.dataLastUpdated && ` Listing data as of ${asOf(stats.dataLastUpdated)}.`}

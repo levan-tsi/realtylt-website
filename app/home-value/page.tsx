@@ -5,19 +5,19 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HomeValueForm } from "@/components/leads/HomeValueForm";
 
 export const metadata: Metadata = {
-  title: "Home Value — How Much Is Your Home Really Worth?",
+  title: "Home Value | How Much Is Your Home Really Worth?",
   description:
-    "Get an accurate, human-prepared valuation of your Hudson Valley home — a 15-comp market analysis plus your cash-offer number, free and with no obligation.",
+    "Get an accurate, human-prepared valuation of your Hudson Valley home: a 15-comp market analysis plus your cash-offer number, free and with no obligation.",
 };
 
 const STEPS = [
   {
     title: "Tell us about your home",
-    body: "Address, condition, and anything a drive-by can't see — a new roof, a finished basement, the things that change the number.",
+    body: "Address, condition, and anything a drive-by can't see: a new roof, a finished basement, the things that change the number.",
   },
   {
     title: "We run the comps",
-    body: "Fifteen comparable properties — five active, five pending, five sold — analyzed against current market conditions. Not an algorithm's guess.",
+    body: "Fifteen comparable properties (five active, five pending, five sold) analyzed against current market conditions. Not an algorithm's guess.",
   },
   {
     title: "You get both numbers",
@@ -54,7 +54,7 @@ export default function HomeValuePage() {
             <HomeValueForm />
           </div>
           <p className="mx-auto mt-6 max-w-xl text-[21px] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
-            Join the homeowners across six counties in finding your home&rsquo;s value
+            Join the homeowners across the Hudson Valley and NYC in finding your home&rsquo;s value
           </p>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default function HomeValuePage() {
               <p className="text-xl font-light text-ink">
                 Thinking cash offer instead?{" "}
                 <a href="/selling" className="font-bold underline underline-offset-4 hover:text-stone">
-                  Compare both paths on the selling page →
+                  Compare both paths on the selling page
                 </a>
               </p>
             </aside>

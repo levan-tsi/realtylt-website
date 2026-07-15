@@ -213,7 +213,7 @@ export function SearchClient() {
       >
         <div className="min-w-40 grow basis-44">
           <label htmlFor="search-q" className="sr-only">
-            Location — town, ZIP, or address
+            Location: town, ZIP, or address
           </label>
           <input
             id="search-q"
@@ -283,7 +283,7 @@ export function SearchClient() {
       </form>
       {savedNote && (
         <p role="status" className="mt-3 bg-mist px-3 py-2 text-sm text-ink-soft">
-          {savedNote} <a href="/saved" className="font-bold text-ink underline underline-offset-2">View saved →</a>
+          {savedNote} <a href="/saved" className="font-bold text-ink underline underline-offset-2">View saved</a>
         </p>
       )}
 
@@ -326,8 +326,8 @@ export function SearchClient() {
           </label>
           <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={selectCls}>
             <option value="newest">Newest</option>
-            <option value="price-asc">Price: low → high</option>
-            <option value="price-desc">Price: high → low</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
           </select>
           <div role="group" aria-label="View" className="flex overflow-hidden border border-[#cccccc]">
             {(["grid", "map"] as const).map((v) => (
@@ -353,7 +353,7 @@ export function SearchClient() {
           <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
           <p className="mt-2 text-sm text-stone">
             Try again in a moment, or call us at{" "}
-            <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> — we&rsquo;ll run it for you.
+            <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run it for you.
           </p>
         </div>
       ) : state === "loading" && !result ? (

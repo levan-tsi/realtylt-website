@@ -154,7 +154,7 @@ function PinLayer({ pins }: { pins: MapPin[] }) {
               </p>
               <p style={{ margin: "4px 0", fontSize: 11, color: "#6E7681" }}>Listed with {p.office}</p>
               <Link href={`/listing/${p.id}`} style={{ color: "#102c54", fontWeight: 700 }}>
-                View listing →
+                View listing
               </Link>
             </div>
           </Popup>

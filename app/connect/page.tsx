@@ -5,9 +5,9 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Connect — Contact Us Anytime",
+  title: "Connect | Contact Us Anytime",
   description:
-    "Reach RealtyLT seven days a week — call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
+    "Reach RealtyLT seven days a week: call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
 };
 
 const MEETINGS = [
@@ -15,7 +15,7 @@ const MEETINGS = [
     title: "In-Person Real Estate Strategy Session",
     length: "30 min",
     kind: "In-person meeting",
-    body: "Let's sit down together to create a personalized strategy for your real estate success — neighborhoods, numbers, and next steps.",
+    body: "Let's sit down together to create a personalized strategy for your real estate success: neighborhoods, numbers, and next steps.",
   },
   {
     title: "Virtual Real Estate Consultation",
@@ -106,7 +106,7 @@ export default function ConnectPage() {
                       href={SITE.phoneHref}
                       className="mt-5 text-sm font-bold text-ink underline-offset-4 hover:underline"
                     >
-                      Call to book →
+                      Call to book
                     </a>
                   </article>
                 </Reveal>
@@ -124,7 +124,7 @@ export default function ConnectPage() {
               Send Us A <strong className="font-bold">Message</strong>
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-center text-stone">
-              Seven days a week, evenings included — we usually reply within the hour.
+              Seven days a week, evenings included. We usually reply within the hour.
             </p>
           </Reveal>
           <Reveal delay={120} className="mx-auto mt-8 max-w-2xl">
@@ -132,7 +132,7 @@ export default function ConnectPage() {
               <LeadForm
                 submitLabel="Send Us A Message"
                 successTitle="Message sent."
-                successBody="Thanks — we usually reply within the hour, seven days a week."
+                successBody="Thanks. We usually reply within the hour, seven days a week."
               />
             </div>
           </Reveal>

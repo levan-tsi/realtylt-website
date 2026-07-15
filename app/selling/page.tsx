@@ -10,13 +10,13 @@ import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Sell Your Home — Cash Offer in 24 Hours or Full-Service Listing",
+  title: "Sell Your Home | Cash Offer in 24 Hours or Full-Service Listing",
   description:
     "See your home's cash value vs market list price. Get a guaranteed fair cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
 };
 
 const CASH_POINTS = [
-  "Sell AS-IS — zero repairs",
+  "Sell AS-IS, zero repairs",
   "No agent fees",
   "Choose your closing date",
   "Guaranteed closing",
@@ -110,9 +110,9 @@ export default function SellingPage() {
                 compact
                 withAddress
                 defaultReason="I'm interested in selling a home"
-                submitLabel="Get My Free Offer & Analysis →"
+                submitLabel="Get My Free Offer & Analysis"
                 successTitle="Request received."
-                successBody="We'll get to work on your numbers and reach out within the day — usually much sooner."
+                successBody="We'll get to work on your numbers and reach out within the day, usually much sooner."
               />
             </div>
           </Reveal>
@@ -141,7 +141,7 @@ export default function SellingPage() {
                 </span>
                 <h3 className="mt-4 text-xl font-bold uppercase tracking-wide text-ink">Fast Cash Offer</h3>
                 <p className="mt-2 text-sm text-stone">
-                  Get cash in 15–30 days — perfect for homes that need work or sellers who need
+                  Get cash in 15–30 days. Perfect for homes that need work or sellers who need
                   speed.
                 </p>
                 <p className="-mx-7 mt-5 bg-ink px-4 py-2.5 text-sm font-bold text-paper md:-mx-8">
@@ -159,7 +159,7 @@ export default function SellingPage() {
                   <p className="mt-2 text-sm leading-relaxed text-stone">{CASH_FITS.join(" • ")}</p>
                 </div>
                 <div className="mt-auto pt-7">
-                  <Button href="#offer-form" variant="outline">Get Your Free Cash Offer →</Button>
+                  <Button href="#offer-form" variant="outline">Get Your Free Cash Offer</Button>
                 </div>
               </article>
             </Reveal>
@@ -172,7 +172,7 @@ export default function SellingPage() {
                 </span>
                 <h3 className="mt-4 text-xl font-bold uppercase tracking-wide text-ink">Traditional Listing</h3>
                 <p className="mt-2 text-sm text-stone">
-                  Get maximum value — perfect for move-in-ready homes and sellers who have time.
+                  Get maximum value. Perfect for move-in-ready homes and sellers who have time.
                 </p>
                 <p className="-mx-7 mt-5 bg-ink px-4 py-2.5 text-sm font-bold text-paper md:-mx-8">
                   Get top market value
@@ -189,7 +189,7 @@ export default function SellingPage() {
                   <p className="mt-2 text-sm leading-relaxed text-stone">{LIST_FITS.join(" • ")}</p>
                 </div>
                 <div className="mt-auto pt-7">
-                  <Button href="#offer-form" variant="outline">Get Free Consultation →</Button>
+                  <Button href="#offer-form" variant="outline">Get Free Consultation</Button>
                 </div>
               </article>
             </Reveal>
@@ -199,7 +199,7 @@ export default function SellingPage() {
           <Reveal className="mt-12">
             <aside className="bg-ink px-6 py-8 text-center text-paper md:px-12">
               <p className="text-lg font-bold uppercase tracking-wide">
-                Not sure which option is best? We&rsquo;ll show you both — no pressure.
+                Not sure which option is best? We&rsquo;ll show you both, no pressure.
               </p>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-paper/70">
                 Tell us about your property and we&rsquo;ll give you honest advice on which path
@@ -232,7 +232,7 @@ export default function SellingPage() {
               rel="noopener noreferrer"
               className="text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
             >
-              See all our Google reviews →
+              See all our Google reviews
             </a>
           </p>
         </div>
@@ -250,8 +250,8 @@ export default function SellingPage() {
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               The right price for your property is determined by current market conditions. We
-              analyze <strong className="text-paper">15 comparable properties</strong> — five
-              active, five pending, five sold — so your home hits the market at the number that
+              analyze <strong className="text-paper">15 comparable properties</strong> (five
+              active, five pending, five sold) so your home hits the market at the number that
               sells, and you get the price you deserve.
             </p>
             <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
@@ -295,7 +295,7 @@ export default function SellingPage() {
                 ))}
               </div>
               <p className="mt-6 border-t border-paper/10 pt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/50">
-                → Suggested list price: where the three columns agree
+                Suggested list price: where the three columns agree
               </p>
             </figure>
           </Reveal>
@@ -324,7 +324,7 @@ export default function SellingPage() {
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               Today&rsquo;s buyers are armed with more information than ever. They tell their agents
-              which homes they want to see — and skip listings with too few or poor-quality photos.
+              which homes they want to see, and skip listings with too few or poor-quality photos.
               High-impact photography makes a lasting first impression and creates a desire to see
               more.
             </p>
@@ -351,7 +351,7 @@ export default function SellingPage() {
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
               We target our marketing strategy and resources to match where buyers are finding homes
-              right now. The more places your property is marketed, the more buyers see it — and the
+              right now. The more places your property is marketed, the more buyers see it, and the
               faster it sells. Your listing goes out with high-converting content across our
               website, home-search portals, search engines, and social media.
             </p>
@@ -381,14 +381,14 @@ export default function SellingPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
-              <span id="loop-heading">Stay in the Loop — <strong className="font-bold">Every Step of the Way</strong></span>
+              <span id="loop-heading">Stay in the Loop, <strong className="font-bold">Every Step of the Way</strong></span>
             </SectionHeading>
             <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
               Real-time updates until your home is sold
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               Most agents leave you in the dark. We believe in complete transparency: instant
-              updates on showings, offers, and buyer feedback through our online portal — you know
+              updates on showings, offers, and buyer feedback through our online portal, so you know
               exactly what&rsquo;s happening with your sale, 24/7. No more wondering
               &ldquo;what&rsquo;s going on?&rdquo;
             </p>

@@ -7,9 +7,9 @@ import { TestimonialCard } from "@/components/ui/TestimonialCard";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 
 export const metadata: Metadata = {
-  title: "Reviews — What Our Clients Say",
+  title: "Reviews | What Our Clients Say",
   description:
-    "Read Google reviews from RealtyLT clients across the Hudson Valley — 5.0-rated service for buyers and sellers, seven days a week.",
+    "Read Google reviews from RealtyLT clients across the Hudson Valley: 5.0-rated service for buyers and sellers, seven days a week.",
 };
 
 export default function ReviewsPage() {
@@ -32,7 +32,7 @@ export default function ReviewsPage() {
           </p>
           <div className="mt-7">
             <Button href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" variant="light">
-              Read All Reviews On Google →
+              Read All Reviews On Google
             </Button>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function ReviewsPage() {
             <aside className="bg-mist px-6 py-10 text-center md:px-12">
               <p className="text-2xl font-light text-ink">Worked with us? Tell the next family.</p>
               <p className="mx-auto mt-2 max-w-md text-sm text-stone">
-                A two-minute Google review is the biggest compliment we can get — and the most
+                A two-minute Google review is the biggest compliment we can get, and the most
                 useful thing a future buyer or seller can read.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">

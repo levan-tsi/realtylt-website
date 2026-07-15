@@ -58,7 +58,7 @@ export function ReportGenerator() {
       return;
     }
     if (sqftNum <= 0) {
-      setError("Enter your home's approximate square footage — the estimate is built on $/sq ft.");
+      setError("Enter your home's approximate square footage. The estimate is built on $/sq ft.");
       return;
     }
     setBusy(true);
@@ -84,7 +84,7 @@ export function ReportGenerator() {
         baths: Number(baths) || 0,
         sqft: sqftNum,
       };
-      const title = `Home value — ${subject.address}, ${subject.city}`;
+      const title = `Home value: ${subject.address}, ${subject.city}`;
       const { data, error: dbErr } = await supabase
         .from("portal_reports")
         .insert({
@@ -120,8 +120,8 @@ export function ReportGenerator() {
       const { stats } = (await res.json()) as { stats: Record<string, unknown> };
       if (!stats) throw new Error("Market data is unavailable right now.");
       const title = town
-        ? `Market report — ${town}, ${countyName(mCounty).replace(" County", "")}`
-        : `Market report — ${countyName(mCounty)}`;
+        ? `Market report: ${town}, ${countyName(mCounty).replace(" County", "")}`
+        : `Market report: ${countyName(mCounty)}`;
       const { data, error: dbErr } = await supabase
         .from("portal_reports")
         .insert({
@@ -149,7 +149,7 @@ export function ReportGenerator() {
     <div className="rounded-[6px] border border-ink/10 bg-mist p-6 md:p-8">
       <h3 className="font-display text-xl text-ink">Run a new report</h3>
       <p className="mt-1 text-sm text-stone">
-        Instant, from live Hudson Valley listings — then fine-tune it or hand it to your agent.
+        Instant, from live Hudson Valley listings. Then fine-tune it or hand it to your agent.
       </p>
 
       {/* Mode toggle */}

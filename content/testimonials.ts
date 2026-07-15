@@ -23,7 +23,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Grace Nyambura",
     quote: "I was very impressed with the entire team.",
     detail:
-      "Every question got a fast, straight answer — evenings and weekends included. The whole process felt organized from the first call to the closing table.",
+      "Every question got a fast, straight answer, evenings and weekends included. The whole process felt organized from the first call to the closing table.",
     context: "Sold a home in Orange County",
   },
   {
