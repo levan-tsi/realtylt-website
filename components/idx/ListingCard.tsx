@@ -102,9 +102,9 @@ export function ListingCard({
           <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         </div>
         <div className="p-4">
-          <div className="flex items-baseline justify-between gap-3">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
             <p className="text-2xl font-bold text-ink">{formatPrice(l.price)}</p>
-            {statsLong && <p className="shrink-0 text-xs text-stone">{statsLong}</p>}
+            {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
           <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
           <p className="text-sm italic text-ink-soft">

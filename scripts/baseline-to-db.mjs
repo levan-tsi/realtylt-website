@@ -20,7 +20,9 @@ import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 
 const RESUME_FILE = "scripts/.baseline-watermark.local";
 const EPOCH = "1970-01-01T00:00:00Z";
-const UPSERT_BATCH = 200;
+// 50, not 200: full-gallery rows are ~3x heavier (50 MediaURLs + detail arrays) and a
+// 200-row upsert statement hit the DB statement timeout (57014) on 2026-07-15.
+const UPSERT_BATCH = 50;
 
 const env = readFileSync(".env.local", "utf8");
 const grab = (k) => new RegExp(`^${k}="?([^"\\r\\n]+?)"?$`, "m").exec(env)?.[1];
