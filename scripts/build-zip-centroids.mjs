@@ -9,10 +9,13 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 
-// Generous bounding box around the six served counties (Dutchess, Westchester,
-// Putnam, Rockland, Ulster, Orange) — SW of Yonkers to N of Saugerties.
-const LAT = [40.82, 42.2];
-const LNG = [-74.85, -73.35];
+// Generous bounding boxes around the served region: the six Hudson Valley counties
+// (SW of Yonkers to N of Saugerties) plus the five NYC boroughs (Staten Island's
+// south shore to the Bronx's north edge).
+const BOXES = [
+  { lat: [40.82, 42.2], lng: [-74.85, -73.35] }, // Hudson Valley
+  { lat: [40.49, 40.94], lng: [-74.27, -73.68] }, // NYC boroughs
+];
 
 const csv = readFileSync(process.argv[2], "utf8").trim().split(/\r?\n/).slice(1);
 const out = {};
@@ -20,7 +23,7 @@ for (const line of csv) {
   const [zip, lat, lng] = line.split(",").map((s) => s.trim());
   const la = Number(lat);
   const ln = Number(lng);
-  if (la >= LAT[0] && la <= LAT[1] && ln >= LNG[0] && ln <= LNG[1]) {
+  if (BOXES.some((b) => la >= b.lat[0] && la <= b.lat[1] && ln >= b.lng[0] && ln <= b.lng[1])) {
     out[zip] = [Math.round(la * 1e4) / 1e4, Math.round(ln * 1e4) / 1e4];
   }
 }

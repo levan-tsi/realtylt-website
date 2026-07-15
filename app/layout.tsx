@@ -3,7 +3,7 @@ import { Lato } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
-import { COUNTIES, SITE } from "@/lib/site";
+import { SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
 
@@ -56,7 +56,7 @@ const AGENT_JSON_LD = {
     postalCode: SITE.address.postalCode,
     addressCountry: "US",
   },
-  areaServed: COUNTIES.map((c) => `${c.name}, NY`),
+  areaServed: SERVED_AREAS.map((c) => `${c.name}, NY`),
   founder: { "@type": "Person", name: "Levan Tsiklauri" },
   slogan: "Let's Find Home",
 };

@@ -4,14 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input, Select } from "@/components/ui/Field";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { COUNTIES, type CountySlug } from "@/lib/site";
+import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import { estimateCma } from "@/lib/reports/cma";
 import type { CmaAdjustments, Comp } from "@/lib/reports/types";
 import type { PropertyType } from "@/lib/idx";
 
 type Mode = "cma" | "market";
 
-const countyName = (slug: string) => COUNTIES.find((c) => c.slug === slug)?.name ?? slug;
+const countyName = (slug: string) => SERVED_AREAS.find((c) => c.slug === slug)?.name ?? slug;
 
 export function ReportGenerator() {
   const { supabase, user, track } = useAuth();
@@ -189,7 +189,7 @@ export function ReportGenerator() {
           </div>
           <Input label="Town / city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Beacon" autoComplete="off" />
           <Select label="County" value={county} onChange={(e) => setCounty(e.target.value as CountySlug)}>
-            {COUNTIES.map((c) => (
+            {SERVED_AREAS.map((c) => (
               <option key={c.slug} value={c.slug}>{c.name}</option>
             ))}
           </Select>
@@ -204,7 +204,7 @@ export function ReportGenerator() {
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <Select label="County" value={mCounty} onChange={(e) => setMCounty(e.target.value as CountySlug)}>
-            {COUNTIES.map((c) => (
+            {SERVED_AREAS.map((c) => (
               <option key={c.slug} value={c.slug}>{c.name}</option>
             ))}
           </Select>

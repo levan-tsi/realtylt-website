@@ -16,7 +16,7 @@
  *   `modificationTimestamp` + `listOfficeName` carried on every mapped listing.
  */
 
-import { COUNTIES, type CountySlug } from "@/lib/site";
+import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { mlsGridDataFetch } from "./mls-fetch";
@@ -69,7 +69,7 @@ const SELECT_FIELDS = [
 ];
 
 /** Lowercased county slugs we serve — feed values like "Westchester County" normalize to these. */
-const COUNTY_SLUGS = new Set<string>(COUNTIES.map((c) => c.slug));
+const COUNTY_SLUGS = new Set<string>(SERVED_AREAS.map((c) => c.slug));
 
 const SYNC_TTL_MS = 15 * 60 * 1000; // refresh replicated working set every 15 min
 const RETRY_MS = 60 * 1000; // cool-down before retrying a failed sync
@@ -403,9 +403,19 @@ function isServedType(t: string | undefined): boolean {
   return t === "Residential" || t === "Residential Income";
 }
 
-/** "Westchester County" / "DUTCHESS" / " putnam " → slug form. */
+/** NYC boroughs arrive under their LEGAL county names — map to our friendly slugs.
+ * "New York" (Manhattan) is multi-word, so this must run AFTER lowercasing/trim but the
+ * alias key keeps the space (no hyphenation happens before the lookup). */
+const BOROUGH_SLUG_BY_LEGAL_COUNTY: Record<string, string> = {
+  kings: "brooklyn",
+  "new york": "manhattan",
+  richmond: "staten-island",
+};
+
+/** "Westchester County" / "DUTCHESS" / " putnam " / "Kings" → slug form. */
 function normalizeCounty(raw: string | undefined): string {
-  return (raw ?? "").trim().toLowerCase().replace(/\s+county$/, "");
+  const base = (raw ?? "").trim().toLowerCase().replace(/\s+county$/, "");
+  return BOROUGH_SLUG_BY_LEGAL_COUNTY[base] ?? base;
 }
 
 /** Deterministic per-listing offset in [-1, 1] (FNV-1a) — spreads same-zip pins so the

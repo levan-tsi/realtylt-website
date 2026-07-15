@@ -29,7 +29,23 @@ export const COUNTIES = [
   { slug: "orange", name: "Orange County" },
 ] as const;
 
-export type CountySlug = (typeof COUNTIES)[number]["slug"];
+/** The five NYC boroughs — also served (owner sells in the city too). The feed labels them
+ * by LEGAL county name (Kings/New York/Richmond — see normalizeCounty in lib/idx/mls-grid);
+ * these slugs are the friendly URL-safe forms. Kept separate from COUNTIES because the
+ * editorial Top Areas pages (content/counties, NAV) cover the six Hudson Valley counties
+ * only — boroughs are searchable areas, not (yet) Top Areas pages. */
+export const BOROUGHS = [
+  { slug: "bronx", name: "The Bronx" },
+  { slug: "brooklyn", name: "Brooklyn" },
+  { slug: "manhattan", name: "Manhattan" },
+  { slug: "queens", name: "Queens" },
+  { slug: "staten-island", name: "Staten Island" },
+] as const;
+
+/** Every area the IDX layer serves — drives the feed keep-set, search filters, and CountySlug. */
+export const SERVED_AREAS = [...COUNTIES, ...BOROUGHS] as const;
+
+export type CountySlug = (typeof SERVED_AREAS)[number]["slug"];
 
 export const NAV = [
   { label: "Home", href: "/" },

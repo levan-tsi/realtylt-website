@@ -12,7 +12,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { getIdxClient, isFixtureMode, isSampleData } from "@/lib/idx";
 import { getProxiedPhotoPaths } from "@/lib/idx/media";
-import { COUNTIES, SITE } from "@/lib/site";
+import { SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 
 export async function generateStaticParams() {
@@ -46,7 +46,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
   const photos = l.photos[0]?.startsWith("/api/media/")
     ? await getProxiedPhotoPaths(l.id)
     : l.photos;
-  const county = COUNTIES.find((c) => c.slug === l.county);
+  const county = SERVED_AREAS.find((c) => c.slug === l.county);
 
   const jsonLd = {
     "@context": "https://schema.org",

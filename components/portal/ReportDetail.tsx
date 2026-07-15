@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { TalkToAgent } from "@/components/portal/TalkToAgent";
 import { clampCondition, estimateCma } from "@/lib/reports/cma";
-import { COUNTIES } from "@/lib/site";
+import { SERVED_AREAS } from "@/lib/site";
 import type {
   CmaAdjustments,
   CmaSubject,
@@ -16,7 +16,7 @@ import type {
 } from "@/lib/reports/types";
 
 const usd = (n: number) => (n > 0 ? `$${Math.round(n).toLocaleString("en-US")}` : "—");
-const countyLabel = (slug: string) => COUNTIES.find((c) => c.slug === slug)?.name ?? slug;
+const countyLabel = (slug: string) => SERVED_AREAS.find((c) => c.slug === slug)?.name ?? slug;
 const asOf = (iso: string) =>
   iso ? new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "";
 

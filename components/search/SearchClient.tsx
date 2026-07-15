@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { useSaved } from "@/components/auth/SavedProvider";
-import { COUNTIES, SITE, type CountySlug } from "@/lib/site";
+import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import type { Listing, MapPin } from "@/lib/idx/types";
 
 const MapView = dynamic(() => import("@/components/idx/MapView"), {
@@ -18,8 +18,11 @@ const MapView = dynamic(() => import("@/components/idx/MapView"), {
   ),
 });
 
-/** Chip order matches the live site (Orange first). */
-const CHIP_ORDER: CountySlug[] = ["orange", "dutchess", "westchester", "putnam", "rockland", "ulster"];
+/** Chip order matches the live site (Orange first); the five boroughs follow the Valley. */
+const CHIP_ORDER: CountySlug[] = [
+  "orange", "dutchess", "westchester", "putnam", "rockland", "ulster",
+  "bronx", "brooklyn", "manhattan", "queens", "staten-island",
+];
 
 interface ApiResult {
   listings: Listing[];
@@ -181,7 +184,7 @@ export function SearchClient() {
   function onSaveSearch() {
     const parts = [
       filters.q && `“${filters.q}”`,
-      filters.county && COUNTIES.find((c) => c.slug === filters.county)?.name,
+      filters.county && SERVED_AREAS.find((c) => c.slug === filters.county)?.name,
       filters.priceMin && `${fmtK(+filters.priceMin)}+`,
       filters.priceMax && `under ${fmtK(+filters.priceMax)}`,
       filters.bedsMin && `${filters.bedsMin}+ bd`,
@@ -286,7 +289,7 @@ export function SearchClient() {
       {/* ── County chips */}
       <ul className="mt-4 flex flex-wrap gap-2" aria-label="Filter by county">
         {CHIP_ORDER.map((slug) => {
-          const county = COUNTIES.find((c) => c.slug === slug)!;
+          const county = SERVED_AREAS.find((c) => c.slug === slug)!;
           const active = filters.county === slug;
           return (
             <li key={slug}>

@@ -54,8 +54,24 @@ describe("mapProperty", () => {
     expect(mapProperty({ ...row, BathroomsHalf: 0 })!.baths).toBe(3);
   });
 
-  it("drops rows outside the six served counties", () => {
+  it("maps NYC boroughs from their legal county names to friendly slugs", () => {
+    expect(mapProperty({ ...row, CountyOrParish: "Kings", PostalCode: "11215" })!.county).toBe("brooklyn");
+    expect(mapProperty({ ...row, CountyOrParish: "New York County", PostalCode: "10011" })!.county).toBe("manhattan");
+    expect(mapProperty({ ...row, CountyOrParish: "Richmond", PostalCode: "10301" })!.county).toBe("staten-island");
+    expect(mapProperty({ ...row, CountyOrParish: "Bronx", PostalCode: "10458" })!.county).toBe("bronx");
+    expect(mapProperty({ ...row, CountyOrParish: "QUEENS", PostalCode: "11375" })!.county).toBe("queens");
+  });
+
+  it("pins a coordinate-less borough row at its NYC zip centroid", () => {
+    const { Latitude: _lat, Longitude: _lng, ...noCoords } = row;
+    const l = mapProperty({ ...noCoords, CountyOrParish: "Kings", PostalCode: "11215" })!;
+    expect(Math.abs(l.lat - 40.6627)).toBeLessThan(0.01); // Park Slope centroid ± jitter
+    expect(Math.abs(l.lng - -73.9867)).toBeLessThan(0.015);
+  });
+
+  it("drops rows outside the served counties (Long Island is not served)", () => {
     expect(mapProperty({ ...row, CountyOrParish: "Nassau" })).toBeNull();
+    expect(mapProperty({ ...row, CountyOrParish: "Suffolk" })).toBeNull();
     expect(mapProperty({ ...row, CountyOrParish: undefined })).toBeNull();
   });
 
