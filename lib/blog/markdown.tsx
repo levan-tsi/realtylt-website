@@ -40,7 +40,7 @@ function inline(text: string, keyBase: string): ReactNode[] {
       out.push(<em key={key}>{m[2]}</em>);
     } else if (m[3] !== undefined) {
       out.push(
-        <code key={key} className="rounded-[3px] bg-mist px-1.5 py-0.5 text-[0.92em] text-ink-soft">
+        <code key={key} className="rounded-[4px] bg-mist px-1.5 py-0.5 text-[0.92em] text-ink-soft">
           {m[3]}
         </code>,
       );

@@ -114,7 +114,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
               href={`#${it.id}`}
               onClick={(e) => jump(e, it.id)}
               aria-current={active ? "location" : undefined}
-              className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors ${
+              className={`flex items-center gap-3 rounded-[10px] px-3 py-3 text-sm transition-colors ${
                 it.depth === 3 ? "pl-9" : ""
               } ${active ? "bg-mist font-bold text-ink" : "text-stone hover:bg-mist hover:text-ink"}`}
             >

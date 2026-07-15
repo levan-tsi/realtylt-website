@@ -76,6 +76,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const related = (await getArticles()).filter((a) => a.slug !== post.slug).slice(0, 3);
 
+  // Shared across the two body layouts so the cover and end cap render identically in both.
+  // `lg:col-span-2` is inert outside a grid, so the same cover node works full-width in the
+  // no-ToC branch and as the band spanning the reading cluster when the ToC is present.
+  const cover = (
+    <div className="rise rise-3 relative aspect-[16/9] overflow-hidden rounded-[14px] bg-mist lg:col-span-2">
+      <Image
+        src={post.cover}
+        alt=""
+        fill
+        priority
+        sizes="(max-width: 1152px) 100vw, 1152px"
+        className="object-cover"
+      />
+    </div>
+  );
+
+  const endCap = (
+    <div className="mt-16 border-t border-[#e3e6ea] pt-7">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-stone">
+          Found this useful? Send it to someone who is buying, selling, or moving.
+        </p>
+        <ShareRow url={url} title={post.title} tone="dark" />
+      </div>
+    </div>
+  );
+
   return (
     <>
       {/* BlogPosting + BreadcrumbList (+ FAQPage when the body has a Q&A section). One
@@ -146,71 +173,63 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* ── Body */}
         <div className="mx-auto max-w-6xl px-4 py-11 md:py-14 lg:px-8">
-          {/* Cover — wide editorial band above the reading column. */}
-          <div className="rise rise-3 relative aspect-[16/9] overflow-hidden rounded-sm bg-mist">
-            <Image
-              src={post.cover}
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 1152px) 100vw, 1152px"
-              className="object-cover"
-            />
-          </div>
-
-          {post.placeholder && (
-            <aside
-              className="mt-8 flex items-start gap-3 border-l-2 border-porchlight bg-mist px-5 py-4 text-sm text-ink-soft"
-              role="note"
-            >
-              <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Draft stub</span>
-              <span>The full article is being migrated from our archive and will replace this placeholder.</span>
-            </aside>
-          )}
-
           {hasToc ? (
-            <div className="mt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-14 xl:gap-20">
-              <div className="min-w-0 max-w-[44rem]">
+            // Reading cluster: a sticky ToC rail on the LEFT, the ~66ch article to its right,
+            // the cover spanning both. justify-center keeps the pair balanced under the wide
+            // container instead of hugging an edge.
+            <div className="lg:grid lg:grid-cols-[12.5rem_minmax(0,44rem)] lg:justify-center lg:gap-x-8 lg:gap-y-12 xl:gap-x-14">
+              {cover}
+              {/* Article is first in the DOM (reading order) and placed into the RIGHT column;
+                  the ToC nav follows in source but is placed LEFT via col-start. */}
+              <div className="mt-10 min-w-0 lg:col-start-2 lg:row-start-2 lg:mt-0">
                 {post.body.kind === "markdown" && <ArticleBody markdown={post.body.markdown} />}
+                {endCap}
               </div>
-              {/* One wrapper = one grid cell; ArticleToc renders its own desktop rail
-                  (sticky) and mobile sheet, each responsibly hidden at the other breakpoint. */}
-              <div className="lg:relative">
+              {/* One wrapper = one grid cell; ArticleToc renders its own desktop rail (sticky)
+                  and mobile sheet, each responsibly hidden at the other breakpoint. */}
+              <div className="lg:col-start-1 lg:row-start-2">
                 <ArticleToc items={toc} />
               </div>
             </div>
           ) : (
-            <div className="mx-auto mt-10 max-w-[44rem]">
-              {post.body.kind === "markdown" ? (
-                <ArticleBody markdown={post.body.markdown} />
-              ) : (
-                <div className="prose-custom">
-                  <section>
-                    {post.body.paragraphs.map((p, i) => (
-                      <p
-                        key={i}
-                        className={
-                          i === 0 ? "leading-[1.75] text-stone" : "mt-6 leading-[1.75] text-stone"
-                        }
-                      >
-                        {p}
-                      </p>
-                    ))}
-                  </section>
-                </div>
-              )}
-            </div>
-          )}
+            <>
+              {/* No ToC: contain the cover to a modest editorial breakout above the reading
+                  column so it relates to the text instead of spanning the full container. */}
+              <div className="mx-auto max-w-[52rem]">{cover}</div>
 
-          {/* ── End cap: share + related + ask */}
-          <div className="mx-auto mt-16 max-w-[44rem]">
-            <div className="flex flex-col gap-4 border-t border-[#e3e6ea] pt-7 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-stone">
-                Found this useful? Send it to someone who is buying, selling, or moving.
-              </p>
-              <ShareRow url={url} title={post.title} tone="dark" />
-            </div>
-          </div>
+              {post.placeholder && (
+                <aside
+                  className="mx-auto mt-8 flex max-w-[44rem] items-start gap-3 rounded-[12px] border-l-2 border-porchlight bg-mist px-5 py-4 text-sm text-ink-soft"
+                  role="note"
+                >
+                  <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Draft stub</span>
+                  <span>The full article is being migrated from our archive and will replace this placeholder.</span>
+                </aside>
+              )}
+
+              <div className="mx-auto mt-10 max-w-[44rem]">
+                {post.body.kind === "markdown" ? (
+                  <ArticleBody markdown={post.body.markdown} />
+                ) : (
+                  <div className="prose-custom">
+                    <section>
+                      {post.body.paragraphs.map((p, i) => (
+                        <p
+                          key={i}
+                          className={
+                            i === 0 ? "leading-[1.75] text-stone" : "mt-6 leading-[1.75] text-stone"
+                          }
+                        >
+                          {p}
+                        </p>
+                      ))}
+                    </section>
+                  </div>
+                )}
+                {endCap}
+              </div>
+            </>
+          )}
         </div>
 
         {/* ── Related */}
@@ -228,7 +247,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <li key={r.slug} className="min-w-0">
                     <article className="group relative h-full">
                       <Link href={`/blog/${r.slug}`} className="absolute inset-0 z-10" aria-label={r.title} />
-                      <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-sm bg-paper">
+                      <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-[12px] bg-paper">
                         <Image
                           src={r.cover}
                           alt=""

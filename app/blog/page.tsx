@@ -71,7 +71,7 @@ export default async function BlogIndexPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone">Latest</p>
                 <article className="group relative mt-6 grid items-center gap-8 md:grid-cols-2 md:gap-12">
                   <Link href={`/blog/${featured.slug}`} className="absolute inset-0 z-10" aria-label={featured.title} />
-                  <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-sm bg-mist">
+                  <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-[14px] bg-mist">
                     <Image
                       src={featured.cover}
                       alt=""
@@ -107,7 +107,7 @@ export default async function BlogIndexPage() {
                     <Reveal key={p.slug} as="li" delay={(i % 3) * 90} className="min-w-0">
                       <article className="group relative h-full">
                         <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10" aria-label={p.title} />
-                        <div className="photo-zoom relative aspect-[16/11] overflow-hidden rounded-sm bg-mist">
+                        <div className="photo-zoom relative aspect-[16/11] overflow-hidden rounded-[12px] bg-mist">
                           <Image
                             src={p.cover}
                             alt=""
