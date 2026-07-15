@@ -156,10 +156,17 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 - CONNECT: the owner's REAL Google Calendar appointments iframe (from live custom code),
   cards anchor to it. CSP extended: frame-src calendar.google.com + td.doubleclick.net,
   script/img/connect for gtag + Maps.
-- OWNER DECISIONS PENDING: (1) Google Maps API key (above). (2) Photo MIRRORING to our own
-  storage — the durable fix for "pics don't appear" during media-host 429 windows, but it
-  reverses the standing "photos on-demand, never stored" rule and costs ~40GB storage
-  (Supabase Pro territory). Retry layer shipped meanwhile.
+- OWNER DECISIONS PENDING: (1) Google Maps API key (above). (2) Photo MIRRORING — now
+  REQUIRED, not optional. PROVEN 2026-07-15 late night (probe mediaTest mode): MLS Grid
+  MediaURLs are now SIGNED with ~1h expiry (token=…&expires=… in the path); expired → 400,
+  signature-stripped + UA token → 403. There is NO permanent URL form anymore. Per-view
+  proxying is structurally dead: photos render only while CDN-cached (≤24h after a fetch
+  that happened within 1h of a sync). The "photos on-demand, never stored" rule was based
+  on the (then-true, now-false) permanent-URL docs. FIX: download photos AT SYNC TIME while
+  signatures are fresh → Supabase Storage bucket → media route serves storage-first.
+  Sizing: covers-only ≈ 1.8GB; first-12 ≈ 22GB; full ≈ 40GB (Supabase Pro tier). Needs the
+  owner's go (reverses his explicit rule + storage cost), then: bucket + sync-time uploads
+  + resumable backfill (fetch fresh URLs feed-page-wise, download in the same hour).
 - Headless caveat: the calendar iframe paints white in headless shots (Google refuses);
   frame URL + load confirmed. Check visually in a real browser.
 
