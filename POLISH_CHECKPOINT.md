@@ -34,15 +34,20 @@ incremental sync. **11,136 active listings** at completion.
 - Env: SUPABASE_URL + SUPABASE_ANON_KEY added to Vercel **Production+Preview** (they were dev-only;
   this also fixed prod /blog DB reads). `vercel env pull` gives the DEVELOPMENT env — remember that.
 
-### Counts at baseline (active): queens 4,591 · westchester 1,726 · orange 1,278 · bronx 1,190 ·
-dutchess 846 · rockland 728 · ulster 514 · putnam 262
+### Counts after re-baseline 2026-07-15 PM (active, ~12.3k total): queens 4,599 · westchester 1,729 ·
+orange 1,273 · bronx 1,191 · dutchess 849 · brooklyn 777 · rockland 732 · ulster 513 · manhattan 324 ·
+putnam 264 · staten-island 92 — **ALL 11 areas populated.**
 
 ### KNOWN ISSUES / follow-ups
-1. **Brooklyn, Manhattan, Staten Island = 0 listings — a FEED reality, not a bug.** OneKey MLS has
-   no inventory there (REBNY / Brooklyn MLS / SIBOR territory). The alias mapping
-   (Kings→brooklyn etc.) is unit-tested and live; data appears the moment the feed carries it.
-   **OWNER DECISION**: additional feed memberships if he wants those three boroughs. The three
-   chips currently show 0 results — consider hiding zero-inventory chips if this stays.
+1. ~~Brooklyn/Manhattan/SI = 0~~ **RESOLVED (owner corrected the wrong "feed has none" call):** the
+   feed sends PARENTHESIZED legal county names — "Kings (Brooklyn)", "New York (Manhattan)",
+   "Richmond (Staten Island)". normalizeCounty now strips the parenthetical (990d0c7), fresh
+   re-baseline captured all three, verified live on prod (search/detail/photo/pins). A secret-gated
+   feed diagnostic exists at `GET /api/cron/mls-probe` (tallies raw CountyOrParish/PropertyType —
+   use it before assuming feed contents). Also: the feed sets City="New York" on every NYC row —
+   map-time rewrite to the borough postal city (4d87c16) + one-time SQL backfill (Manhattan
+   correctly stays "New York"). Feed also carries Sullivan/Columbia/Greene counties + rentals
+   (Residential Lease) if the owner ever wants them.
 2. **media.mlsgrid.com intermittently 429s** (pre-existing, account-level). Failures serve the
    branded placeholder with no-store and self-heal per view; successes CDN-pin for a day. Verified
    BOTH cases live on prod (KEY1026260/0 → 429→placeholder; KEY000036/0 → real jpeg, status ok).
@@ -68,7 +73,9 @@ live, commit page-scoped.
 Pages — status:
 - [ ] **Search / Listings — START HERE**: finish the browser pass Priority 1 owed (desktop + 390px,
       map perf with 4.6k-pin counties, county chips wrap on mobile with 11 chips, photo fill), then
-      compare vs live realtylt.com search.
+      compare vs live realtylt.com search. Note: the Chrome extension was extremely flaky this
+      session (screenshots time out; service worker flaps) — if it persists, ask the owner to check
+      the extension. "All Hudson Valley listings" saved-search copy now undersells NYC coverage.
 - [ ] Home — hero, rails (getFeatured/getNew now DB-backed), county links, vs live
 - [ ] Listing detail — gallery, lead form, attribution, vs live
 - [ ] Buying
