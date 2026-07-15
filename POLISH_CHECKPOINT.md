@@ -53,8 +53,10 @@ putnam 264 · staten-island 92 — **ALL 11 areas populated.**
    BOTH cases live on prod (KEY1026260/0 → 429→placeholder; KEY000036/0 → real jpeg, status ok).
    Long-term per MLS Grid best practices ("download locally; never hot-link"): mirror photos into
    Supabase Storage during the sync — good candidate for a future round.
-3. Reports APIs (`/api/reports/comps`, `/api/reports/market`) still read the committed snapshot —
-   unchanged behavior, migrate to the DB in a later pass.
+3. ~~Reports APIs still on the snapshot~~ **DONE (3bae3dd):** comps + market stats now read the DB
+   first via `getCountyActiveSlim` (slim ~150B rows, county-paged; snapshot fallback kept) and
+   accept the boroughs (they 400'd borough slugs the portal generator already offered). Verified on
+   prod: Brooklyn market report (777 active, $950k median), Staten Island comps.
 4. Local dev has no MLS_API_KEY → photos always show the placeholder locally (media host requires
    the token as User-Agent). Prod is fine.
 5. The Chrome extension died mid-session, so the **visual/mobile (390px) browser pass of /search,
