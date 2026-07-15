@@ -63,8 +63,11 @@ export function ListingCard({
   variant?: "overlay" | "plain";
 }) {
   const l = listing;
+  // Badge priority mirrors live realtylt.com tiles: status first, then Open House,
+  // then "New" for listings on market ≤7 days.
+  const isNew = Date.now() - Date.parse(l.listedAt) < 7 * 86_400_000;
   const badge =
-    l.status !== "Active" ? l.status : l.openHouse ? "Open House" : null;
+    l.status !== "Active" ? l.status : l.openHouse ? "Open House" : isNew ? "New" : null;
   // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed".
   const statsLong = specParts(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft." }).join(" • ");
   const statsShort = specParts(l, { bed: "bd", bath: "ba", sqft: "sqft" }).join(" | ");
