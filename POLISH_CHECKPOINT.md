@@ -156,7 +156,17 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 - CONNECT: the owner's REAL Google Calendar appointments iframe (from live custom code),
   cards anchor to it. CSP extended: frame-src calendar.google.com + td.doubleclick.net,
   script/img/connect for gtag + Maps.
-- OWNER DECISIONS PENDING: (1) Google Maps API key (above). (2) Photo MIRRORING — now
+- ~~Google Maps API key~~ DONE 2026-07-16 AM: key minted in the owner's GCP console
+  (project realtylt-crm, "Maps Platform API Key", billing already active), added to Vercel
+  env ×3 + .env.local, Google map VERIFIED LIVE on prod /search. STILL OWED (owner, 60s):
+  website referrer restriction on the key (GCP → Keys & Credentials → Maps Platform API
+  Key → Application restrictions → Websites: realtylt.com/*, *.realtylt.com/*,
+  realtylt-website*.vercel.app/*, localhost:3000/*, 127.0.0.1:3000/*). A read_page on the
+  credentials screen was permission-denied mid-flow — hand the restriction step to the owner.
+- OWNER DECISIONS PENDING: (1) PayloadCMS pilot (owner's friend recommends; it's a
+  per-Next.js-repo package, NOT install-once — if piloted, website repo only, on a BRANCH,
+  Postgres adapter on existing Supabase; CRM is already a custom backend, aipage has no
+  CMS-shaped content). (2) Photo MIRRORING — now
   REQUIRED, not optional. PROVEN 2026-07-15 late night (probe mediaTest mode): MLS Grid
   MediaURLs are now SIGNED with ~1h expiry (token=…&expires=… in the path); expired → 400,
   signature-stripped + UA token → 403. There is NO permanent URL form anymore. Per-view
