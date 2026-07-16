@@ -163,10 +163,21 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
   Key → Application restrictions → Websites: realtylt.com/*, *.realtylt.com/*,
   realtylt-website*.vercel.app/*, localhost:3000/*, 127.0.0.1:3000/*). A read_page on the
   credentials screen was permission-denied mid-flow — hand the restriction step to the owner.
-- OWNER DECISIONS PENDING: (1) PayloadCMS pilot (owner's friend recommends; it's a
-  per-Next.js-repo package, NOT install-once — if piloted, website repo only, on a BRANCH,
-  Postgres adapter on existing Supabase; CRM is already a custom backend, aipage has no
-  CMS-shaped content). (2) Photo MIRRORING — now
+- PAYLOAD PILOT BUILT + VERIFIED 2026-07-16 (subagent, branch `payload-build`, worktree
+  C:\Users\Levan\realtylt-website-payload, 3 local commits NOT pushed): payload@3.86 +
+  SQLite (no credentials), admin at 127.0.0.1:3100/admin (run `npx next dev -p 3100` in
+  the worktree; login levan@realtylt.com / RLT-pilot-01PAQOoLru33), testimonials + 6
+  counties seeded from content/*.ts and editable in the UI; site pages moved to
+  app/(site)/ (URLs unchanged), Payload REST at /payload-api (NOT /api — the IDX media
+  proxy would shadow it); tsc/221 tests/build all green in the worktree. Known nit:
+  unmatched-URL 404s show Next's default page on this branch. VERDICT: not better than
+  content/*.ts while Claude sessions are the editor; genuinely valuable IF the owner wants
+  self-service copy editing or the blog moves into it (drafts/versions/richtext).
+  Adoption path: Postgres swap (isolated role `payload_cms` + schema `payload` ALREADY
+  provisioned — migration payload_cms_pilot_schema_and_role; password minting was
+  classifier-blocked from disk, owner must say "wire the DB string"), media → Blob/
+  Supabase storage, pages read from Payload + revalidate hook, blog decision (don't run
+  two CMSes). Do NOT install on CRM (it IS a backend) or aipage (no CMS content). (2) Photo MIRRORING — now
   REQUIRED, not optional. PROVEN 2026-07-15 late night (probe mediaTest mode): MLS Grid
   MediaURLs are now SIGNED with ~1h expiry (token=…&expires=… in the path); expired → 400,
   signature-stripped + UA token → 403. There is NO permanent URL form anymore. Per-view
