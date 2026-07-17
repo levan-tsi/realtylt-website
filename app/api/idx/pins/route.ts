@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
-import { getIdxClient } from "@/lib/idx";
+import { getIdxClient, PIN_CAP } from "@/lib/idx";
 import type { MapPin } from "@/lib/idx";
-import { parseFilterParams } from "@/lib/idx/query";
+import { inBounds, parseBounds, parseFilterParams } from "@/lib/idx/query";
 
-/** Map pins for the ENTIRE filtered result set (not one grid page) — the /search map
- * plots every matching listing, Zillow-style, while the card grid stays at 12/page.
- * Same filter params as /api/idx/search; paging/sort are ignored. Payload is a slim
- * projection served from the committed snapshot — never MLS Grid. Every field ships
- * because the popup renders all of them (office = MLS compliance "Listed with" line). */
+/** Map pins for the /search map. The SearchClient sends the current viewport box
+ * (north/south/east/west) and gets back only the listings inside it, capped at PIN_CAP —
+ * so a dense borough loads a small, fast payload instead of every match. `total` is the
+ * true in-bounds count so the map can say "showing N of M — zoom in to see all". Without
+ * a bbox the whole filtered set ships (backward-compatible). Same filter params as
+ * /api/idx/search; paging/sort are ignored. Slim projection, never MLS Grid — every field
+ * ships because the popup renders all of them (office = MLS "Listed with" line). */
 
 /** Zip-centroid pins are approximate (the feed has no coordinates) — 4 decimals
  * (~11 m) is plenty, and trimming float noise cut the full-set payload ~10%
@@ -19,22 +21,25 @@ export async function GET(req: Request) {
   try {
     const client = getIdxClient();
     const filters = parseFilterParams(q);
+    const bounds = parseBounds(q);
 
     let pins: MapPin[];
     let total: number;
     if (client.searchPins) {
-      // DB-backed slim path — pages the whole filtered set server-side (PostgREST caps
-      // a single response at 1000 rows, so one giant search() can't do this).
-      const result = await client.searchPins(filters);
+      // DB-backed slim path — one bbox-scoped query (capped) when bounds are sent, else
+      // the whole filtered set paged server-side (PostgREST caps a response at 1000 rows).
+      const result = await client.searchPins(filters, bounds);
       pins = result.pins.map((p) => ({ ...p, lat: round4(p.lat), lng: round4(p.lng) }));
       total = result.total;
     } else {
+      // Snapshot/fixture path (no DB): fetch the whole filtered set, then clip to the
+      // viewport box and cap in-memory so the bounded contract matches the DB path.
       const result = await client.search({
         ...filters,
         page: 1,
         pageSize: Number.MAX_SAFE_INTEGER, // the whole filtered set, unpaged
       });
-      pins = result.listings
+      let located: MapPin[] = result.listings
         .filter((l) => l.lat && l.lng) // never ship Null Island rows
         .map((l) => ({
           id: l.id,
@@ -48,7 +53,14 @@ export async function GET(req: Request) {
           baths: l.baths,
           office: l.listOfficeName,
         }));
-      total = result.total;
+      if (bounds) {
+        located = located.filter((p) => inBounds(p, bounds));
+        total = located.length; // true in-bounds count
+        located = located.slice(0, PIN_CAP);
+      } else {
+        total = result.total;
+      }
+      pins = located;
     }
     return NextResponse.json(
       { pins, total },
