@@ -68,7 +68,7 @@ export default function WhoWeArePage() {
               Levan Tsiklauri
             </h2>
             <p className="mt-1 text-stone">Investor &amp; Realtor</p>
-            <div className="mx-auto mt-7 flex w-fit flex-col gap-3">
+            <div className="mx-auto mt-7 flex w-fit flex-wrap justify-center gap-3">
               <Button href={SITE.phoneHref}>Call</Button>
               <Button href="/connect">Contact</Button>
             </div>
