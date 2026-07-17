@@ -81,9 +81,23 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
         <button
           type="button"
           onClick={() => setValues(seeded)}
-          className="mt-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-paper/80 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          className="mt-6 inline-flex min-h-6 items-center gap-2 py-1 text-xs font-bold uppercase tracking-[0.14em] text-paper/80 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
         >
-          <span aria-hidden>↺</span> Reset
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+          Reset
         </button>
       </div>
 

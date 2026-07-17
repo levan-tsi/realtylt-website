@@ -92,3 +92,67 @@ describe("calcMortgage", () => {
     expect(r.monthlyTotal).toBeCloseTo(1000, 2);
   });
 });
+
+/** Garbage/edge inputs — the calculator UI feeds whatever the user types (including empty
+ * fields → NaN, negatives, and absurd magnitudes) straight into calcMortgage. It must never
+ * throw or leak an Infinity into arithmetic; the component renders any non-finite result as
+ * an em dash, so we assert exactly what the guards guarantee here. */
+describe("calcMortgage — garbage & edge inputs degrade sanely", () => {
+  const base = {
+    price: 500_000,
+    annualTax: 6_000,
+    termYears: 30,
+    downPct: 20,
+    ratePct: 6,
+    monthlyHoa: 100,
+    monthlyInsurance: 200,
+  } as const;
+
+  it("negative price clamps principal & interest to 0 (loan <= 0), total stays finite", () => {
+    const r = calcMortgage({ ...base, price: -500_000 });
+    expect(r.principalInterest).toBe(0);
+    expect(Number.isFinite(r.monthlyTotal)).toBe(true);
+  });
+
+  it("down payment over 100% leaves no loan and no NaN", () => {
+    const r = calcMortgage({ ...base, downPct: 150, annualTax: 0, monthlyHoa: 0, monthlyInsurance: 0 });
+    expect(r.principalInterest).toBe(0);
+    expect(Number.isFinite(r.monthlyTotal)).toBe(true);
+  });
+
+  it("zero term clamps principal & interest to 0 (n <= 0) — only the fixed costs remain", () => {
+    const r = calcMortgage({ ...base, termYears: 0 });
+    expect(r.principalInterest).toBe(0);
+    // 6000/12 tax + 100 HOA + 200 insurance
+    expect(r.monthlyTotal).toBeCloseTo(800, 5);
+  });
+
+  it("an empty field (NaN input) never throws — total is NaN, which the UI renders as '—'", () => {
+    expect(() => calcMortgage({ ...base, price: NaN })).not.toThrow();
+    const r = calcMortgage({ ...base, price: NaN });
+    expect(Number.isFinite(r.monthlyTotal)).toBe(false);
+    // all-NaN body must also survive without throwing
+    expect(() =>
+      calcMortgage({
+        price: NaN,
+        annualTax: NaN,
+        termYears: NaN,
+        downPct: NaN,
+        ratePct: NaN,
+        monthlyHoa: NaN,
+        monthlyInsurance: NaN,
+      }),
+    ).not.toThrow();
+  });
+
+  it("absurdly large price stays finite (no overflow to Infinity at realistic magnitudes)", () => {
+    const r = calcMortgage({ ...base, price: 1e9, annualTax: 1e6 });
+    expect(Number.isFinite(r.monthlyTotal)).toBe(true);
+  });
+
+  it("negative interest rate degrades to a finite total (never NaN/Infinity)", () => {
+    const r = calcMortgage({ ...base, ratePct: -3 });
+    expect(Number.isFinite(r.principalInterest)).toBe(true);
+    expect(Number.isFinite(r.monthlyTotal)).toBe(true);
+  });
+});
