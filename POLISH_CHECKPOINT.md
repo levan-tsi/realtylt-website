@@ -126,8 +126,22 @@ Pages — status:
       /buying isolation, /selling regression, listing seed); fresh 1440 shot matches live
       anatomy; 390 verified (one "height 0" map run was a dev recompile race — retry 7102px,
       known dev-only flake). Evidence docs/_audit/financing-parity/.
-- [~] Home Value — compared at 1440: solid (address+unit hero, honest 3-step). Coverage claim
-      fixed ("Hudson Valley and NYC"). Owed: 390 pass + drive the valuation form flow.
+- [x] Home Value — DONE 2026-07-17 (orchestrator-verified, 3rd orchestrator-mode page; ours
+      already BEAT live structurally — live is a bare hero+form, ours adds the honest 3-step
+      section + truthful coverage). Opus agent commits faf7585/011f238 per
+      docs/parity/PARITY-home-value.md: wizard extended to /home-value (WIZARD_PATHS now
+      selling+financing+home-value; both the revealed valuation card AND footer form open it;
+      seller-appropriate confirm copy even if the visitor picks "Buying"; source:/home-value),
+      valuation flow driven end-to-end (address bar → reveal card prefilled → submit → wizard;
+      ?address= deep-link from /selling seeds the card; empty/whitespace guarded; reveal CTA
+      relabeled "Get My Home Value"), hero scrim strengthened. MY VERIFY: tsc + 256/256 tests;
+      12/12 adversarial probe; I INDEPENDENTLY re-measured the H1 contrast from rendered pixels
+      (text+white-UI hidden): 6.73:1 @1440 / 5.31:1 @390 — matches the agent, clears 4.5:1.
+      Evidence docs/_audit/homevalue-parity/. ORCHESTRATOR ALSO FIXED (agent flagged, I did it):
+      site-wide footer nav + phone/email links were ~17px tall → now inline-flex min-h-[24px]
+      (WCAG 2.5.8), 0 footer links under 24px, no 390 overflow (commit footer fix). Deferred
+      global call: the 3-step card body 14px / eyebrow 12px small-print matches selling+financing
+      convention — leave for a cross-page typography decision, not a per-page change.
 - [~] Top Areas — reviewed at 1440: county cards w/ LIVE DB medians look great. Borough presence
       still missing here (needs editorial content, owner input). County pages not yet compared.
 - [~] Who We Are — reviewed at 1440; "Where We Work" now lists all 11 areas (6a8fb1d). Owed: 390.
@@ -228,7 +242,10 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## (scripts/_scratch-verify-mirror.mjs pattern), add key to Vercel env, and on owner-go run
 ## the FULL backfill (runbook: docs/mls-fix/PHOTO-MIRRORING.md; ~40GB, Pro purchased).
 ## Sync-time mirroring rides along as a safe no-op until the key is in Vercel.
-## Chatbot-personalization agent QUEUED next (plan in memory [[project-n8n-chatbot]]).
+## NEXT PAGE to map for orchestrator-mode: Who We Are (390 owed) · then Connect (390 + drive
+## message form) · Top Areas county pages · deferred items. Wizard now on selling/financing/
+## home-value; decide per-page whether Connect/other lead forms should join WIZARD_PATHS.
+## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
 ## rail arrows + why-carousel pixel parity on Home).
