@@ -260,10 +260,30 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## ORCHESTRATOR-MODE PROGRESS 2026-07-17: Selling, Financing, Home Value (Opus-agent-built +
 ## verified), Who We Are + Connect (orchestrator-verified/fixed directly), photo mirroring
 ## (merged), site-wide footer tap-targets. Wizard on selling/financing/home-value only.
-## NEXT PAGE to map: Top Areas COUNTY PAGES (/top-areas/* — 6 counties, DB medians; borough
-## presence still owed per editorial) · then re-check Home/Search/Blog/Services deferred nits
-## (Home rail arrows + why-carousel pixel parity; Search sort parity; SEO listing slugs before
-## apex). Then deferred: open houses, per-listing exact map pins.
+## Top Areas COUNTY PAGES verified good (all 6: real distinct medians $470K-$920K, real
+## listing grids, mobile clean, CTAs) — only gap is the site-wide PHOTO PLACEHOLDERS.
+##
+## OWNER FEEDBACK 2026-07-17 (frustrated — see memory [[feedback-dont-stop-use-keys]]):
+## (1) SEARCH IS TOO SLOW — measured: /api/idx/pins loads the WHOLE filtered set, Queens =
+##     4,604 pins / 832KB / **11.6s COLD**, no-filter = 12,421 pins / 2.2MB. Fix = viewport-
+##     bounds loading (load only what's in the map, lazy-load on pan/zoom). OPUS AGENT A
+##     dispatched → worktree ../realtylt-website-perf, branch perf/search-viewport, port 3200.
+##     Target: <1s / <250KB cold. Verify + merge when it lands.
+## (2) DESIGN "very far from the target" + CONNECT booking should go DIRECTLY to Google
+##     Calendar (not scroll to an embedded iframe showing the same cards). OPUS AGENT B →
+##     worktree ../realtylt-website-design, branch polish/connect-design, port 3300: fix
+##     Connect direct-booking + design-parity deep-dive across the 7 marketing pages.
+## (3) PHOTOS: correctly SEQUENCED AFTER the search-perf fix (activating now would make search
+##     SLOWER — the owner's exact worry). Mirror pipeline is BUILT + MERGED; needs the
+##     SUPABASE_SERVICE_ROLE_KEY (NOT on this Windows machine — not in .env.local, WSL CRM env,
+##     or Vercel; it lives in the Mac's SECRETS.local.md / Supabase dashboard). Do NOT ask the
+##     owner — get it from the Mac next session or via a Supabase Edge Function (service role
+##     auto-injected). Activate photos ONLY after search loads fast.
+## PERF NOTE: homepage + county pages already have revalidate=600 ISR (cached in prod); the
+## dev-mode multi-second "cold" times are first-compile only, NOT a prod problem. Only /search
+## pins is a real prod perf issue (client API route, not ISR-cached per filter).
+## NEXT after the 2 agents merge: verify both adversarially, then re-check /listing detail,
+## /blog, and the Home deferred nits; then activate photos.
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
