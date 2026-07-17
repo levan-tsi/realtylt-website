@@ -144,7 +144,14 @@ Pages — status:
       convention — leave for a cross-page typography decision, not a per-page change.
 - [~] Top Areas — reviewed at 1440: county cards w/ LIVE DB medians look great. Borough presence
       still missing here (needs editorial content, owner input). County pages not yet compared.
-- [~] Who We Are — reviewed at 1440; "Where We Work" now lists all 11 areas (6a8fb1d). Owed: 390.
+- [x] Who We Are — DONE 2026-07-17 (orchestrator-verified directly; no rebuild — ours already
+      BEATS live, which is just hero + agent card + form). Ours adds a real bio, a "What You Can
+      Hold Us To" 3-value section, and "Where We Work" (all 11 areas). VERIFIED by me: 390 no
+      h-overflow (4003px), CALL→tel:+19179057923, CONTACT→/connect, 0 em dashes / 0 arrows, all
+      11 area chips are REAL links (6 counties→/top-areas/*, 5 boroughs→/search?county=* — all
+      return 200, 0 dead spans), CALL/CONTACT focus ring 3px. Inherited the site-wide footer
+      tap-target fix. Deliberately NO qualifying wizard here (about page, not a seller/buyer
+      conversion surface — wizard stays on selling/financing/home-value).
 - [x] Blog + article — earlier session
 - [x] Services (20 pages) — earlier session
 - [~] Connect — reviewed at 1440: appointment cards + form fine, copy cleaned. Owed: 390 + drive
