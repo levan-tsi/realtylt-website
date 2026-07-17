@@ -4,7 +4,7 @@
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import type { MapBounds, PropertyType, SearchParams, SortKey } from "./types";
 
-export const SORTS: SortKey[] = ["newest", "price-asc", "price-desc"];
+export const SORTS: SortKey[] = ["newest", "oldest", "featured", "price-asc", "price-desc"];
 export const TYPES: PropertyType[] = ["Residential", "Multi-Family"];
 
 export function num(v: string | null): number | undefined {

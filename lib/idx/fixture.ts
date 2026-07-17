@@ -51,6 +51,14 @@ export class FixtureIdxClient implements IdxClient {
           return a.price - b.price;
         case "price-desc":
           return b.price - a.price;
+        case "oldest":
+          return +new Date(a.listedAt) - +new Date(b.listedAt);
+        case "featured":
+          // Own-office listings first, then freshest — mirrors the DB `featured` order.
+          return (
+            (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0) ||
+            +new Date(b.listedAt) - +new Date(a.listedAt)
+          );
         default:
           return +new Date(b.listedAt) - +new Date(a.listedAt);
       }

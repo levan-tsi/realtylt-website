@@ -87,7 +87,7 @@ export interface MapPin {
   office: string;
 }
 
-export type SortKey = "newest" | "price-asc" | "price-desc";
+export type SortKey = "newest" | "oldest" | "featured" | "price-asc" | "price-desc";
 
 export interface SearchParams {
   q?: string; // free-text location: town, zip, address fragment

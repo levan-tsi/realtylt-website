@@ -99,6 +99,20 @@ describe("FixtureIdxClient — sort + pagination", () => {
     expect(times).toEqual([...times].sort((a, b) => b - a));
   });
 
+  it("sorts by oldest (listedAt asc)", async () => {
+    const r = await client.search({ sort: "oldest", pageSize: 100 });
+    const times = r.listings.map((l) => +new Date(l.listedAt));
+    expect(times).toEqual([...times].sort((a, b) => a - b));
+  });
+
+  it("featured sort surfaces own-office listings before the rest", async () => {
+    const r = await client.search({ sort: "featured", pageSize: 100 });
+    const firstNonFeatured = r.listings.findIndex((l) => !l.isFeatured);
+    // Every featured listing precedes the first non-featured one.
+    expect(r.listings.slice(0, firstNonFeatured).every((l) => l.isFeatured)).toBe(true);
+    expect(r.listings.slice(firstNonFeatured).some((l) => l.isFeatured)).toBe(false);
+  });
+
   it("paginates with default pageSize 12 and consistent totals", async () => {
     const p1 = await client.search({ page: 1 });
     const p2 = await client.search({ page: 2 });

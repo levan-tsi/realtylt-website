@@ -76,6 +76,9 @@ function searchFilters(p: SearchParams): string {
 
 const ORDER: Record<SortKey, string> = {
   newest: "listed_at.desc,id.asc",
+  oldest: "listed_at.asc,id.asc",
+  // Own-office ("United Real Estate") listings first, then freshest — mirrors the home rails.
+  featured: "is_featured.desc,listed_at.desc,id.asc",
   "price-asc": "price.asc,id.asc",
   "price-desc": "price.desc,id.asc",
 };
