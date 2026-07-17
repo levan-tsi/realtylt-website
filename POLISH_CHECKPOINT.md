@@ -163,30 +163,15 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
   Key → Application restrictions → Websites: realtylt.com/*, *.realtylt.com/*,
   realtylt-website*.vercel.app/*, localhost:3000/*, 127.0.0.1:3000/*). A read_page on the
   credentials screen was permission-denied mid-flow — hand the restriction step to the owner.
-- PAYLOAD PILOT BUILT + VERIFIED 2026-07-16 (subagent, branch `payload-build`, worktree
-  C:\Users\Levan\realtylt-website-payload, 3 local commits NOT pushed): payload@3.86 +
-  SQLite (no credentials), admin at 127.0.0.1:3100/admin (run `npx next dev -p 3100` in
-  the worktree; login levan@realtylt.com / RLT-pilot-01PAQOoLru33), testimonials + 6
-  counties seeded from content/*.ts and editable in the UI; site pages moved to
-  app/(site)/ (URLs unchanged), Payload REST at /payload-api (NOT /api — the IDX media
-  proxy would shadow it); tsc/221 tests/build all green in the worktree. Known nit:
-  unmatched-URL 404s show Next's default page on this branch. VERDICT: not better than
-  content/*.ts while Claude sessions are the editor; genuinely valuable IF the owner wants
-  self-service copy editing or the blog moves into it (drafts/versions/richtext).
-  Adoption path: Postgres swap (isolated role `payload_cms` + schema `payload` ALREADY
-  provisioned — migration payload_cms_pilot_schema_and_role; password minting was
-  classifier-blocked from disk, owner must say "wire the DB string"), media → Blob/
-  Supabase storage, pages read from Payload + revalidate hook, blog decision (don't run
-  two CMSes). Do NOT install on CRM (it IS a backend) or aipage (no CMS content).
-  2026-07-16 PM RE-VERIFIED RUNNING for owner testing: dev server up on :3100 from the
-  worktree (admin 200 "Dashboard - Payload", REST login OK, 3 testimonials + 6 counties
-  readable, site home 200). Start it with `npx next dev -p 3100` inside
-  C:\Users\Levan\realtylt-website-payload (NODE_OPTIONS=--use-system-ca). NOTE for owner:
-  admin edits only write the local payload.db — site pages do NOT read from Payload yet
-  (that wiring is step 3 of the adoption path), so editing a testimonial won't change the
-  rendered page. Decision owed: adopt (self-service editing / blog) or drop (keep
-  content/*.ts). rtk gotcha: rtk-filtered dev logs hide startup errors — use `rtk proxy`
-  to see raw next output. (2) Photo MIRRORING — now
+- PAYLOAD: pilot built + verified 2026-07-16 AM, re-verified running for the owner same
+  day PM, then OWNER DECIDED TO DROP IT ("delete payload") — content keeps flowing through
+  Claude sessions editing content/*.ts. DELETED 2026-07-16 PM: :3100 server killed,
+  worktree realtylt-website-payload + branch payload-build removed (the 3 pilot commits
+  are reflog-recoverable for ~2 weeks if regretted), Supabase leftovers dropped (schema
+  `payload` + role `payload_cms`; needed GRANT payload_cms TO postgres before DROP OWNED
+  BY; verified 0 remain). If a CMS is ever wanted again, rebuild fresh — Payload 3
+  coexisting inside this Next app is PROVEN to work. rtk gotcha kept: rtk-filtered dev
+  logs hide next startup errors — use `rtk proxy` for raw output. (2) Photo MIRRORING — now
   REQUIRED, not optional. PROVEN 2026-07-15 late night (probe mediaTest mode): MLS Grid
   MediaURLs are now SIGNED with ~1h expiry (token=…&expires=… in the path); expired → 400,
   signature-stripped + UA token → 403. There is NO permanent URL form anymore. Per-view
