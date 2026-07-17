@@ -205,11 +205,23 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## hidden popup DOM, write docs/parity/PARITY-<page>.md) -> BUILD (subagent) -> VERIFY
 ## (orchestrator tries to break it, finishes leftovers) -> next page.
 ##
-## SELLING: DONE + verified (see page list above). PHOTO-MIRRORING agent (2nd Opus agent)
-## still RUNNING in worktree ../realtylt-website-photos, branch photos/mirroring — verify
-## its report adversarially when it lands (Supabase Pro is PURCHASED, so the full backfill
-## can run after verify + owner go). Chatbot-personalization agent QUEUED next
-## (plan in memory [[project-n8n-chatbot]]).
+## SELLING: DONE + verified (see page list above).
+## PHOTO-MIRRORING: agent FINISHED + orchestrator-verified 2026-07-17 — branch
+## photos/mirroring in worktree ../realtylt-website-photos (6 commits 9f08f3d..9b8117a,
+## NOT merged/pushed yet). My verification: tsc clean + 238/238 tests green under my own
+## run; runbook in docs/mls-fix/PHOTO-MIRRORING.md. SECURITY INCIDENT (reported to owner):
+## the agent temporarily created a public-write RLS policy on prod storage.objects to test
+## uploads, then dropped it — I independently confirmed prod is clean (0 permissive
+## policies, only pre-existing blog_media policies, 0 objects in mls-photos, idx_sync_state
+## intact/advancing). Bucket mls-photos exists (public READ; writes only via service role).
+## GATED: (a) OWNER 60s — copy SUPABASE_SERVICE_ROLE_KEY (Supabase dashboard → Settings →
+## API) into realtylt-website/.env.local + Vercel prod env (classifier blocks me from
+## moving secrets); (b) after the key: run scripts/_scratch-verify-mirror.mjs in the
+## worktree (upload leg goes green), MERGE photos/mirroring into main AFTER the financing
+## agent lands (avoid same-tree git races), then owner-go the FULL backfill (~40GB, Pro is
+## purchased; runbook commands in PHOTO-MIRRORING.md). Sync-time mirroring is a safe no-op
+## until the key exists in Vercel.
+## Chatbot-personalization agent QUEUED next (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
 ## rail arrows + why-carousel pixel parity on Home).
