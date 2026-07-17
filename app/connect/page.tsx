@@ -103,9 +103,9 @@ export default function ConnectPage() {
               </h2>
               <p className="text-sm text-stone">Appointments</p>
             </Reveal>
-            <ul className="mt-8 grid gap-5 md:grid-cols-2">
+            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {MEETINGS.map((m, i) => (
-                <Reveal key={m.title} as="li" delay={i * 100} className={i === 2 ? "md:col-span-2 md:mx-auto md:w-[calc(50%-10px)]" : ""}>
+                <Reveal key={m.title} as="li" delay={i * 100}>
                   <article className="lift flex h-full flex-col rounded-lg border border-[#dddddd] bg-white p-6">
                     <h3 className="text-lg leading-snug text-ink-soft">{m.title}</h3>
                     <p className="mt-3 text-sm text-ink-soft">{m.length}</p>
@@ -124,6 +124,9 @@ export default function ConnectPage() {
                 </Reveal>
               ))}
             </ul>
+            <p className="mt-6 text-center text-xs text-stone">
+              Powered by Google Calendar appointment scheduling
+            </p>
           </div>
         </div>
       </section>
