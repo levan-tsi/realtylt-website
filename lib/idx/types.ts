@@ -113,7 +113,22 @@ export interface SearchResult {
   dataLastUpdated: string;
 }
 
-/** Whole filtered pin set + the matching listing count (see /api/idx/pins). */
+/** Lat/lng bounding box for viewport-scoped map loading (north/south/east/west degrees). */
+export interface MapBounds {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+}
+
+/** Max pins returned for a bounded (viewport) map fetch. A dense borough holds 4k+
+ * listings; loading them all is the /search slowness this cap kills. When a viewport
+ * truncates, `total` still reports the true in-bounds count so the UI can say
+ * "showing N of M — zoom in to see all". Unbounded callers are never capped. */
+export const PIN_CAP = 800;
+
+/** Pin set for the map + the matching listing count. With a viewport bbox, `pins` is
+ * capped at PIN_CAP while `total` is the true count inside the box (see /api/idx/pins). */
 export interface PinsResult {
   pins: MapPin[];
   total: number;
@@ -124,7 +139,9 @@ export interface IdxClient {
   getListing(id: string): Promise<Listing | null>;
   getFeatured(limit?: number): Promise<Listing[]>;
   getNew(limit?: number): Promise<Listing[]>;
-  /** Optional slim path for the map — a DB-backed client pages the whole filtered set
-   * server-side (PostgREST caps a single response at 1000 rows, so search() can't). */
-  searchPins?(params: SearchParams): Promise<PinsResult>;
+  /** Optional slim path for the map. With `bounds`, returns only listings inside the
+   * viewport box (capped at PIN_CAP) in a single query — the fast /search path. Without
+   * bounds, pages the whole filtered set server-side (PostgREST caps one response at
+   * 1000 rows, so search() can't) — kept for callers that need every match. */
+  searchPins?(params: SearchParams, bounds?: MapBounds): Promise<PinsResult>;
 }

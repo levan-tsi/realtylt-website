@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { applyIdxSync, DbIdxClient, getDbMediaUrls, normalizeForDb } from "./db";
-import type { Listing } from "./types";
+import { PIN_CAP, type Listing } from "./types";
 
 const LISTING: Listing = {
   id: "KEY777", price: 650_000, address: "9 Harbor Lane", city: "Nyack", state: "NY",
@@ -103,6 +103,38 @@ describe("DbIdxClient.searchPins", () => {
     expect(total).toBe(1001);
     expect(pins).toHaveLength(1000); // 1001 rows minus the coordinate-less one
     expect(listingCalls).toBe(2);
+  });
+
+  it("bounded viewport: ONE capped bbox query (never the 15k chunk loop), drops Null Island", async () => {
+    const pin = (id: string, lat = 40.7, lng = -73.85) => ({
+      id, price: 1, lat, lng, address: "x", city: "y", zip: "z", beds: 1, baths: 1, office: "o",
+    });
+    const rows = Array.from({ length: PIN_CAP }, (_, i) => pin(`P${i}`));
+    rows[2] = pin("NULLISH", 0, 0); // no coords → dropped
+    let listingCalls = 0;
+    let lastUrl = "";
+    stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      listingCalls++;
+      lastUrl = url;
+      return { body: rows, total: 4602 }; // content-range total = true in-bounds count
+    });
+
+    const { pins, total } = await new DbIdxClient().searchPins(
+      { county: "queens" },
+      { north: 40.7943, south: 40.5705, east: -73.6697, west: -73.9633 },
+    );
+
+    expect(listingCalls).toBe(1); // single query — the whole point
+    expect(lastUrl).toContain("county=eq.queens");
+    expect(lastUrl).toContain("lat=gte.40.5705");
+    expect(lastUrl).toContain("lat=lte.40.7943");
+    expect(lastUrl).toContain("lng=gte.-73.9633");
+    expect(lastUrl).toContain("lng=lte.-73.6697");
+    expect(lastUrl).toContain(`limit=${PIN_CAP}`);
+    expect(lastUrl).toContain("order=listed_at.desc");
+    expect(total).toBe(4602); // in-bounds count, so the UI can flag truncation
+    expect(pins).toHaveLength(PIN_CAP - 1); // the coordinate-less row is dropped
   });
 });
 

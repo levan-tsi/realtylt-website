@@ -16,7 +16,8 @@
  * CRON_SECRET (sha256 checked in-database) — no service-role key exists in this stack.
  */
 
-import { DEFAULT_PAGE_SIZE, type IdxClient, type Listing, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
+import { DEFAULT_PAGE_SIZE, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
+import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
 
 interface SyncState {
@@ -203,19 +204,45 @@ export class DbIdxClient implements IdxClient {
       .map(toCard);
   }
 
-  /** Whole filtered pin set for the /search map, paged in slim PIN_CHUNK slices —
-   * PostgREST caps responses at 1000 rows, so one giant search() can't do this. */
-  async searchPins(params: SearchParams): Promise<PinsResult> {
+  /** Map pins for the /search map. With `bounds` (the fast path the SearchClient always
+   * uses), a SINGLE query returns only listings inside the viewport box, capped at
+   * PIN_CAP and ordered newest-first so a truncated dense view keeps the freshest
+   * listings; `total` is the true in-bounds count so the UI can flag truncation. Without
+   * bounds, pages the whole filtered set in PIN_CHUNK slices (PostgREST caps a response
+   * at 1000 rows) — the pre-viewport behavior, kept for any caller that needs every match. */
+  async searchPins(params: SearchParams, bounds?: MapBounds): Promise<PinsResult> {
     if (!(await this.ready())) {
       const result = await this.fallbackClient().search({
         ...params,
         page: 1,
         pageSize: Number.MAX_SAFE_INTEGER,
       });
-      return { pins: result.listings.map(toPin).filter((p): p is MapPin => !!p), total: result.total };
+      let pins = result.listings.map(toPin).filter((p): p is MapPin => !!p);
+      let total = result.total;
+      if (bounds) {
+        pins = pins.filter((p) => inBounds(p, bounds));
+        total = pins.length; // true in-bounds count
+        pins = pins.slice(0, PIN_CAP);
+      }
+      return { pins, total };
     }
     const filters = searchFilters(params);
     const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName";
+
+    if (bounds) {
+      const bbox =
+        `lat=gte.${bounds.south}&lat=lte.${bounds.north}` +
+        `&lng=gte.${bounds.west}&lng=lte.${bounds.east}`;
+      // count=exact reports the FULL in-bounds match count (ignoring limit), so `total`
+      // stays truthful even when the viewport is capped. Rows with a 0 coordinate are
+      // excluded automatically (a valid NY box never spans lat/lng 0).
+      const { rows, total } = await rest<MapPin>(
+        `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc&limit=${PIN_CAP}`,
+        { count: true },
+      );
+      return { pins: rows.filter((r) => r.lat && r.lng), total };
+    }
+
     const base = `idx_listings?${sel}&${filters ? `${filters}&` : ""}order=id.asc`;
     const pins: MapPin[] = [];
     let total = 0;
