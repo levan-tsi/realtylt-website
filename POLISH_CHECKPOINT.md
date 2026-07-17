@@ -269,10 +269,21 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ##     bounds loading (load only what's in the map, lazy-load on pan/zoom). OPUS AGENT A
 ##     dispatched → worktree ../realtylt-website-perf, branch perf/search-viewport, port 3200.
 ##     Target: <1s / <250KB cold. Verify + merge when it lands.
-## (2) DESIGN "very far from the target" + CONNECT booking should go DIRECTLY to Google
-##     Calendar (not scroll to an embedded iframe showing the same cards). OPUS AGENT B →
-##     worktree ../realtylt-website-design, branch polish/connect-design, port 3300: fix
-##     Connect direct-booking + design-parity deep-dive across the 7 marketing pages.
+## (2) DESIGN + CONNECT: OPUS AGENT B DONE + verified + MERGED to main 2026-07-17 (worktree
+##     removed). CONNECT: appointment cards now link STRAIGHT to the owner's Google Calendar
+##     booking page (https://calendar.google.com/calendar/appointments/AcZssZ...=) in a new
+##     tab with per-card CTAs ("Book the in-person session" etc.); the redundant embedded
+##     iframe + #book anchor REMOVED (that was the click-then-same-thing the owner disliked);
+##     3-up card grid + "Powered by Google Calendar" caption. MY VERIFY: DOM shows exactly 3
+##     visible booking cards, all target=_blank rel=noopener, 0 iframes, 1 (footer) message
+##     form, Google URL returns 200, 390 no overflow. DESIGN pass (buying/selling/who-we-are/
+##     connect, page-scoped, NO shared components): buying hero phone glyph → SVG icon
+##     (verified ☎ gone); who-we-are Call/Contact inline + hero kept COLOUR+scrim (agent first
+##     grayscaled then reverted after full-res-checking live's hero is muted colour, not
+##     grayscale — good self-correction); selling path-card banner white-on-black in header.
+##     tsc + 256/256 tests green on merged tree. Agent's honest finding: pages were already at
+##     HIGH parity (prior design-match work held up), NOT "very far" structurally — the biggest
+##     first-impression gap the owner feels is the PLACEHOLDER PHOTOS (see (3)), not layout.
 ## (3) PHOTOS: correctly SEQUENCED AFTER the search-perf fix (activating now would make search
 ##     SLOWER — the owner's exact worry). Mirror pipeline is BUILT + MERGED; needs the
 ##     SUPABASE_SERVICE_ROLE_KEY (NOT on this Windows machine — not in .env.local, WSL CRM env,
