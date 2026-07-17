@@ -352,9 +352,17 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## Noted leftovers: pre-existing intermittent hydration warning on listing detail
 ## (FavoriteButton localStorage vs SSR, once, not reproducible); Google-map InfoWindow not
 ## drivable headless (markers render fine).
-## NEXT: HOME agent dispatched (docs/parity/PARITY-home.md — rail pagination arrows = the
-## owner's "missing signs", scroll cue, owner-gated why-carousel). After it: resume backfill
-## chunks (cooldown passed), final verify, push.
+## HOME: DONE + orchestrator-verified (agent commit c34280e): both rails now page live-style —
+## RailPager client component, pool 24/rail (3 pages of 8, zero ragged pages), inline-SVG
+## chevron buttons + "N / M" indicator, wrap-around, aria-live page announcements, mobile keeps
+## the peek-swipe rail, hero ScrollCue → #value (no-JS anchor fallback). MY VERIFY: 10/10 probe
+## (both rails 1/3, Next changes cards + 2/3, Prev wraps to 3/3, 16 real photos on paged cards,
+## cue scrolls 0→1064, no overflow 390/320), tsc + 268/268 mine. ListingCard untouched (no
+## /search regression possible). HM3 why-carousel correctly NOT built (owner-gated). Flagged
+## dead code (not deleted, surgical rule): components/idx/ListingCarousel.tsx (unused, has
+## text-glyph arrows) — delete when convenient; TestimonialBand's ‹ › chevrons pre-existing.
+## BACKFILL: resumed post-cooldown at concurrency 3, running in background (watermark
+## 2026-05-20 → chain chunks to FEED COMPLETE; if 429s persist, wait longer between chunks).
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
