@@ -282,20 +282,59 @@ export async function getCountyActiveSlim(
   }
 }
 
-/** Ordered PERMANENT MediaURLs for a listing from the DB (RLS: active rows only).
- * null = DB unavailable/unconfigured (caller should fall back); [] = none stored. */
-export async function getDbMediaUrls(id: string): Promise<string[] | null> {
+/** A listing's source MediaURLs + how many leading photos are mirrored to storage (RLS: active
+ * rows only). null = DB unavailable/unconfigured (caller should fall back). */
+export async function getDbListingMedia(id: string): Promise<{ photos: string[]; mirrored: number } | null> {
   if (!restConfig()) return null;
   try {
-    const { rows } = await rest<{ photos: unknown }>(
-      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos`,
+    const { rows } = await rest<{ photos: unknown; mirrored: unknown }>(
+      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos,mirrored:listing->photosMirrored`,
     );
     const photos = rows[0]?.photos;
-    return Array.isArray(photos) ? (photos as string[]) : [];
+    const mirrored = rows[0]?.mirrored;
+    return {
+      photos: Array.isArray(photos) ? (photos as string[]) : [],
+      mirrored: typeof mirrored === "number" && mirrored > 0 ? mirrored : 0,
+    };
   } catch (e) {
     console.error(`[idx-db] media lookup (${id}) failed:`, e);
     return null;
   }
+}
+
+/** Ordered PERMANENT MediaURLs for a listing from the DB (RLS: active rows only).
+ * null = DB unavailable/unconfigured (caller should fall back); [] = none stored. */
+export async function getDbMediaUrls(id: string): Promise<string[] | null> {
+  const media = await getDbListingMedia(id);
+  return media ? media.photos : null;
+}
+
+/** Prior mirror state (contiguous count + the modificationTimestamp it was built for) for a set
+ * of listing ids — the sync uses it to resume/skip already-mirrored prefixes. Chunked so the
+ * `id=in.()` URL stays short; missing/never-mirrored ids simply do not appear in the result. */
+export async function getMirrorState(
+  ids: readonly string[],
+): Promise<Map<string, { mirrored: number; ts?: string }>> {
+  const out = new Map<string, { mirrored: number; ts?: string }>();
+  if (!restConfig() || !ids.length) return out;
+  const CHUNK = 150;
+  for (let i = 0; i < ids.length; i += CHUNK) {
+    const slice = ids.slice(i, i + CHUNK).map((id) => encodeURIComponent(id));
+    try {
+      const { rows } = await rest<{ id: string; mirrored: unknown; ts: unknown }>(
+        `idx_listings?id=in.(${slice.join(",")})&select=id,mirrored:listing->photosMirrored,ts:listing->photosMirroredTs`,
+      );
+      for (const r of rows) {
+        out.set(r.id, {
+          mirrored: typeof r.mirrored === "number" ? r.mirrored : 0,
+          ts: typeof r.ts === "string" ? r.ts : undefined,
+        });
+      }
+    } catch (e) {
+      console.error("[idx-db] mirror-state lookup failed (continuing):", e);
+    }
+  }
+  return out;
 }
 
 // ── Write path (sync cron + baseline script) ────────────────────────────────────────────

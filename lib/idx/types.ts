@@ -51,6 +51,15 @@ export interface Listing {
   waterSource?: string[];
   parkingFeatures?: string[];
   photos: string[]; // paths under /public in fixture mode; feed URLs live
+  /** Photo mirroring (docs/mls-fix/PHOTO-MIRRORING.md): count of leading `photos` whose bytes
+   * are copied into Supabase Storage at mls-photos/<id>/<idx>.jpg. MLS Grid MediaURLs are SIGNED
+   * and expire ~1h after the sync captures them, so the /api/media route serves the first
+   * `photosMirrored` photos from storage (permanent) and only falls back to the source URL for
+   * the rest. Absent/0 = nothing mirrored yet (route uses the existing proxy/placeholder path). */
+  photosMirrored?: number;
+  /** The `modificationTimestamp` the current mirror corresponds to. A newer value means the
+   * photo set may have changed, so the sync re-mirrors that listing from index 0. */
+  photosMirroredTs?: string;
   lat: number;
   lng: number;
   /** MLS compliance — always rendered ("Listed with …"). */
