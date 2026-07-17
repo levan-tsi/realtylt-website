@@ -185,6 +185,19 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 - Headless caveat: the calendar iframe paints white in headless shots (Google refuses);
   frame URL + load confirmed. Check visually in a real browser.
 
-## NEXT: owner review of the 3 pages, then remaining pages' 390/mobile passes + live form
-## drives (Selling first), county pages under Top Areas, then deferred items (open houses,
-## SEO listing slugs, rail arrows + why-carousel pixel parity on Home).
+## ORCHESTRATOR MODE ACTIVE (2026-07-16 PM, owner-directed; /website command rewritten +
+## synced to the config repo): main session = Fable 5 orchestrator (map + adversarial
+## verify), ONE Opus 4.8 subagent per page builds to ~99% live parity working ~700k tokens,
+## no early stops. Per page: MAP (Playwright deep-map both sites, probe clicks, extract
+## hidden popup DOM, write docs/parity/PARITY-<page>.md) -> BUILD (subagent) -> VERIFY
+## (orchestrator tries to break it, finishes leftovers) -> next page.
+##
+## IN PROGRESS: SELLING — map committed (docs/parity/PARITY-selling.md; evidence in
+## docs/_audit/selling-parity/). Key finds: live's post-submit 8-step qualifying wizard
+## (full spec extracted read-only from hidden .popupCTA DOM — never submit live forms!),
+## all live CTAs scroll-to-form, gaps G1-G8. Opus 4.8 subagent DISPATCHED with the map.
+## When it returns: adversarially verify (break the wizard, both forms, 1440+390,
+## keyboard/Esc/focus, npm test + tsc), finish leftovers, mark done, push.
+## NEXT PAGES after Selling: Financing (390) · Home Value (390 + form drive) · Who We Are
+## (390) · Connect (390 + form drive) · Top Areas county pages · then deferred items
+## (open houses, SEO listing slugs, rail arrows + why-carousel pixel parity on Home).
