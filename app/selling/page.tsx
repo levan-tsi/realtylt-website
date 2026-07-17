@@ -458,15 +458,14 @@ function PathCard({
       >
         {number}
       </span>
-      {/* black header block */}
+      {/* black header block — live: title, subtitle, divider, then the banner all on black */}
       <div className="rounded-t-[2px] bg-ink px-6 pb-6 pt-9 text-center">
         <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
         <p className="mx-auto mt-2 max-w-xs text-sm text-paper/70">{subtitle}</p>
+        <p className="mt-5 border-t border-white/15 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
+          {banner}
+        </p>
       </div>
-      {/* highlight banner */}
-      <p className="border-b border-[#e5e7eb] bg-mist py-2.5 text-center text-sm font-bold uppercase tracking-wide text-ink">
-        {banner}
-      </p>
       <div className="flex flex-1 flex-col p-7 md:p-8">
         <ul className="mx-auto grid w-full gap-2.5 text-left sm:grid-cols-2">
           {points.map((p) => (
