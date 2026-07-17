@@ -177,7 +177,16 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
   provisioned — migration payload_cms_pilot_schema_and_role; password minting was
   classifier-blocked from disk, owner must say "wire the DB string"), media → Blob/
   Supabase storage, pages read from Payload + revalidate hook, blog decision (don't run
-  two CMSes). Do NOT install on CRM (it IS a backend) or aipage (no CMS content). (2) Photo MIRRORING — now
+  two CMSes). Do NOT install on CRM (it IS a backend) or aipage (no CMS content).
+  2026-07-16 PM RE-VERIFIED RUNNING for owner testing: dev server up on :3100 from the
+  worktree (admin 200 "Dashboard - Payload", REST login OK, 3 testimonials + 6 counties
+  readable, site home 200). Start it with `npx next dev -p 3100` inside
+  C:\Users\Levan\realtylt-website-payload (NODE_OPTIONS=--use-system-ca). NOTE for owner:
+  admin edits only write the local payload.db — site pages do NOT read from Payload yet
+  (that wiring is step 3 of the adoption path), so editing a testimonial won't change the
+  rendered page. Decision owed: adopt (self-service editing / blog) or drop (keep
+  content/*.ts). rtk gotcha: rtk-filtered dev logs hide startup errors — use `rtk proxy`
+  to see raw next output. (2) Photo MIRRORING — now
   REQUIRED, not optional. PROVEN 2026-07-15 late night (probe mediaTest mode): MLS Grid
   MediaURLs are now SIGNED with ~1h expiry (token=…&expires=… in the path); expired → 400,
   signature-stripped + UA token → 403. There is NO permanent URL form anymore. Per-view
