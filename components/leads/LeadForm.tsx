@@ -100,7 +100,8 @@ export function LeadForm({
     return (
       <div
         role="status"
-        className={`border p-6 text-center ${
+        tabIndex={-1}
+        className={`border p-6 text-center outline-none ${
           dark ? "border-paper/30 bg-white/5" : "border-[#cccccc] bg-mist"
         }`}
       >

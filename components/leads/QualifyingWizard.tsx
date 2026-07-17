@@ -263,7 +263,16 @@ function QualifyingWizard({
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prevOverflow;
-      restoreFocusRef.current?.focus?.();
+      // The trigger (a submit button) is usually replaced by the form's success message by
+      // the time we close, so it's detached. Fall back to that live region so the outcome
+      // is announced, then the body.
+      const trigger = restoreFocusRef.current;
+      if (trigger?.isConnected) {
+        trigger.focus();
+      } else {
+        const status = document.querySelector<HTMLElement>('[role="status"]');
+        (status ?? document.body).focus?.();
+      }
     };
   }, []);
 
@@ -307,7 +316,7 @@ function QualifyingWizard({
 
   return (
     <div
-      className="rlt-fade-in fixed inset-0 z-[90] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
+      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
