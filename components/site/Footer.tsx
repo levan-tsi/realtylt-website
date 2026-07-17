@@ -33,7 +33,8 @@ export function Footer() {
         </nav>
 
         <section aria-label="Contact form">
-          <LeadForm submitLabel="Send Us A Message" />
+          {/* First/Last split matches the live realtylt.com footer form. */}
+          <LeadForm splitName submitLabel="Send Us A Message" />
         </section>
 
         <div>
