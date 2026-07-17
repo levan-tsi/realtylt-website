@@ -6,8 +6,9 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { TestimonialBand } from "@/components/ui/TestimonialBand";
+import { ScrollCue } from "@/components/ui/ScrollCue";
 import { LeadForm } from "@/components/leads/LeadForm";
-import { ListingCard } from "@/components/idx/ListingCard";
+import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { TESTIMONIALS } from "@/content/testimonials";
@@ -44,7 +45,8 @@ const WHY_US = [
 
 export default async function HomePage() {
   const idx = getIdxClient();
-  const [featured, fresh] = await Promise.all([idx.getFeatured(8), idx.getNew(8)]);
+  // Pull a 24-deep pool per rail (exactly 3 pages of 8) so the rails page like live's.
+  const [featured, fresh] = await Promise.all([idx.getFeatured(24), idx.getNew(24)]);
   const fixture = isSampleData(); // after the awaits — reflects what was actually served
   const dataLastUpdated =
     [...featured, ...fresh].map((l) => l.modificationTimestamp).sort().pop() ??
@@ -102,10 +104,15 @@ export default async function HomePage() {
             See Home Value
           </Button>
         </div>
+
+        {/* Scroll cue — subtle "more below" chevron, like live's */}
+        <div className="flex justify-center pb-6">
+          <ScrollCue targetId="value" label="Scroll to home value" />
+        </div>
       </section>
 
       {/* ── Home value split — live: "Find Your Home Value" + "Tell Us About Your Home" form */}
-      <section className="bg-paper py-[60px]" aria-labelledby="value-heading">
+      <section id="value" className="bg-paper py-[60px]" aria-labelledby="value-heading">
         <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
@@ -154,14 +161,8 @@ export default async function HomePage() {
               <span id="featured-heading">Featured Listings</span>
             </SectionHeading>
           </Reveal>
-          {/* Mobile matches live: swipeable card rail; ≥sm the live 4-col grid */}
-          <ul className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
-            {featured.map((l, i) => (
-              <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
-                <ListingCard listing={l} priority={i < 4} />
-              </li>
-            ))}
-          </ul>
+          {/* Mobile: swipeable card rail; ≥sm the live 4-col grid — paged 8 at a time */}
+          <RailPager listings={featured} ariaLabel="Featured listings" eager />
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
           <div className="mt-8 text-center">
             <Button href="/search" variant="outline">See More Listings</Button>
@@ -180,13 +181,7 @@ export default async function HomePage() {
               <span id="new-heading">New Listings</span>
             </SectionHeading>
           </Reveal>
-          <ul className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4">
-            {fresh.map((l) => (
-              <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
-                <ListingCard listing={l} />
-              </li>
-            ))}
-          </ul>
+          <RailPager listings={fresh} ariaLabel="New listings" />
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
           <div className="mt-8 text-center">
             <Button href="/search?sort=newest" variant="outline">See More Listings</Button>
