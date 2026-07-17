@@ -293,12 +293,26 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ##     tsc + 256/256 tests green on merged tree. Agent's honest finding: pages were already at
 ##     HIGH parity (prior design-match work held up), NOT "very far" structurally — the biggest
 ##     first-impression gap the owner feels is the PLACEHOLDER PHOTOS (see (3)), not layout.
-## (3) PHOTOS: correctly SEQUENCED AFTER the search-perf fix (activating now would make search
-##     SLOWER — the owner's exact worry). Mirror pipeline is BUILT + MERGED; needs the
-##     SUPABASE_SERVICE_ROLE_KEY (NOT on this Windows machine — not in .env.local, WSL CRM env,
-##     or Vercel; it lives in the Mac's SECRETS.local.md / Supabase dashboard). Do NOT ask the
-##     owner — get it from the Mac next session or via a Supabase Edge Function (service role
-##     auto-injected). Activate photos ONLY after search loads fast.
+## (3) PHOTOS: the #1 remaining "design and value" gap (every listing card = "Photo coming
+##     soon" placeholder because MLS MediaURLs expire ~1h). Search is now fast, so photos no
+##     longer risk re-slowing it — this is the next big win. Mirror pipeline BUILT + MERGED,
+##     but GENUINELY GATED ON THIS WINDOWS MACHINE (all avenues exhausted 2026-07-17):
+##       - service_role key NOT here: not in website .env.local / WSL CRM (root or apps/web) /
+##         no chatbot dir / no Vercel CLI / Vercel MCP returns no env values / Supabase MCP
+##         get_publishable_keys = anon+publishable only.
+##       - Supabase Edge Function deploy via MCP (would inject the service role, no stored key
+##         needed) is CLASSIFIER-BLOCKED in this env (confirmed by trying; photo agent hit the
+##         same). verify_jwt path irrelevant — the deploy itself is blocked.
+##     ACTIVATION (do on the MAC next session, where SECRETS.local.md has the key):
+##       1. put SUPABASE_SERVICE_ROLE_KEY in realtylt-website/.env.local (+ Vercel prod env),
+##       2. `node scripts/create-photo-bucket.mjs` (idempotent; bucket already exists),
+##       3. covers-first backfill `node scripts/backfill-photos.mjs --covers-only ...` (~1.8GB),
+##          then full (~40GB) — OWNER-GATE the full run (re-fetches ALL ~12k fresh MLS URLs =
+##          real MLS Grid load; we're rate-limited/suspension-risk — pace + monitor),
+##       4. runbook: docs/mls-fix/PHOTO-MIRRORING.md. Ongoing delta mirroring then runs in the
+##          hourly cron automatically once the key is in Vercel.
+##     Alt if the classifier ever allows it: an Edge Function upload leg needs no key on any
+##     machine (service role auto-injected) — but MCP deploy is currently blocked here.
 ## PERF NOTE: homepage + county pages already have revalidate=600 ISR (cached in prod); the
 ## dev-mode multi-second "cold" times are first-compile only, NOT a prod problem. Only /search
 ## pins is a real prod perf issue (client API route, not ISR-cached per filter).
