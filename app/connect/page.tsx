@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
-import { LeadForm } from "@/components/leads/LeadForm";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -123,29 +122,6 @@ export default function ConnectPage() {
               />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Message form */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="reach-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            <h2 id="reach-heading" className="text-center text-3xl font-light text-ink md:text-4xl">
-              Send Us A <strong className="font-bold">Message</strong>
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-center text-stone">
-              Seven days a week, evenings included. We usually reply within the hour.
-            </p>
-          </Reveal>
-          <Reveal delay={120} className="mx-auto mt-8 max-w-2xl">
-            <div className="bg-white p-6 md:p-8">
-              <LeadForm
-                submitLabel="Send Us A Message"
-                successTitle="Message sent."
-                successBody="Thanks. We usually reply within the hour, seven days a week."
-              />
-            </div>
-          </Reveal>
         </div>
       </section>
     </>
