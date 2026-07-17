@@ -40,7 +40,7 @@ export default function WhoWeArePage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-70 grayscale"
+            className="object-cover opacity-70"
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
