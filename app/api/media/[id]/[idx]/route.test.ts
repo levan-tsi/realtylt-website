@@ -1,5 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { __seedSnapshotMediaForTests, resetMediaCacheForTests } from "@/lib/idx/media";
+import {
+  __seedMirroredForTests,
+  __seedSnapshotMediaForTests,
+  resetMediaCacheForTests,
+} from "@/lib/idx/media";
 import { __resetMlsGridDataCallCount, mlsGridDataCallCount } from "@/lib/idx/mls-fetch";
 import { GET } from "./route";
 
@@ -90,6 +94,47 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a broken tile)",
     resetMediaCacheForTests(); // clears the seed → snapshot has nothing for L1
     const res = await call("L1", "0");
     expect(res.headers.get("X-Media-Status")).toBe("empty");
+  });
+});
+
+describe("GET /api/media/[id]/[idx] — STORAGE-FIRST (mirrored photos)", () => {
+  beforeEach(() => {
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    __seedMirroredForTests("L1", 1); // photo 0 is mirrored, photo 1 is not
+  });
+
+  it("redirects a mirrored photo to the permanent public bucket object — no MLS fetch", async () => {
+    const fetchMock = stubImage();
+    const res = await call("L1", "0");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe(
+      "https://proj.supabase.co/storage/v1/object/public/mls-photos/L1/0.jpg",
+    );
+    expect(res.headers.get("X-Media-Status")).toBe("storage");
+    expect(res.headers.get("Cache-Control")).toContain("stale-while-revalidate");
+    expect(fetchMock).not.toHaveBeenCalled(); // storage is served without touching the media host
+    expect(mlsGridDataCallCount()).toBe(0);
+  });
+
+  it("still serves storage after the source URL would have expired (storage never expires)", async () => {
+    // No source URL seeded at index 0 here would matter — the route never looks at it once
+    // mirrored. Prove it by seeding a junk (expired-style) source and confirming storage wins.
+    __seedSnapshotMediaForTests("L1", ["https://media.mlsgrid.com/a/0.jpg?expires=1&token=dead"]);
+    __seedMirroredForTests("L1", 1);
+    const fetchMock = stubImage(403); // source URL is dead — would 403 if the route used it
+    const res = await call("L1", "0");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("X-Media-Status")).toBe("storage");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("falls back to the proxy for an index beyond the mirrored prefix", async () => {
+    const fetchMock = stubImage();
+    const res = await call("L1", "1"); // index 1 not mirrored → proxy the (fresh) source URL
+    expect(res.status).toBe(200);
+    expect(res.headers.get("X-Media-Status")).toBe("ok");
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(String(fetchMock.mock.calls[0][0])).toContain("media.mlsgrid.com");
   });
 });
 
