@@ -27,7 +27,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
             withAddress
             defaultAddress={address}
             defaultReason="I'm interested in selling a home"
-            submitLabel="Find Out"
+            submitLabel="Get My Home Value"
             successTitle="Request received."
             successBody="We're pulling your comps now. Expect to hear from us within the day."
           />

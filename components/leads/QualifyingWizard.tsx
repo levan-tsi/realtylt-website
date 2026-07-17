@@ -42,7 +42,7 @@ export function useQualifyingWizard() {
 /** Pages where a successful lead submit opens the qualifying wizard. Live realtylt.com
  * attaches this popup to every lead form site-wide; we enable it deliberately, page by
  * page, so the copy stays appropriate. Any page not listed here gets the plain form. */
-const WIZARD_PATHS = new Set(["/selling", "/financing"]);
+const WIZARD_PATHS = new Set(["/selling", "/financing", "/home-value"]);
 
 /** Mounted once in the root layout (wraps <main> and <Footer> so both the hero form and
  * the footer form can trigger it). The modal only opens on the allow-listed pages. */
@@ -319,8 +319,13 @@ function QualifyingWizard({
   const canGoBack = history.length > 0 && current !== "confirm";
   const scheduled = Boolean(answers.callTimes);
   // Sellers (and both-track) get the comps/cash-offer promise; a pure buyer — the common
-  // case on /financing — gets lender-focused wording instead of seller jargon.
-  const isSeller = answers.intent === "Selling" || answers.intent === "Both";
+  // case on /financing — gets lender-focused wording instead of seller jargon. A visitor who
+  // came through /home-value already asked for their comps/cash-offer numbers, so keep the
+  // seller promise no matter which intent they pick in the wizard.
+  const isSeller =
+    prefill.source === "/home-value" ||
+    answers.intent === "Selling" ||
+    answers.intent === "Both";
   const confirmBody = scheduled
     ? isSeller
       ? "We'll call you at the times you shared. In the meantime, expect your comps and cash-offer numbers within the day."
