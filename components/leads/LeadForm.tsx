@@ -35,6 +35,8 @@ export function LeadForm({
   successTitle = "Message sent.",
   successBody = "Thanks. We usually reply within the hour, seven days a week.",
   source,
+  namePlaceholder = "Your Name",
+  addressPlaceholder = "Property Address",
 }: {
   dark?: boolean;
   withAddress?: boolean;
@@ -53,6 +55,8 @@ export function LeadForm({
   successBody?: string;
   /** Override the source page path sent to the CRM (defaults to current pathname). */
   source?: string;
+  namePlaceholder?: string;
+  addressPlaceholder?: string;
 }) {
   const pathname = usePathname();
   const { openWizard } = useQualifyingWizard();
@@ -137,7 +141,7 @@ export function LeadForm({
         </>
       ) : (
         <div className={`grid gap-4 ${nameCols}`}>
-          <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder="Your Name" />
+          <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder={namePlaceholder} />
           <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
         </div>
       )}
@@ -151,7 +155,7 @@ export function LeadForm({
             required
             dark={dark}
             hideLabel
-            placeholder="Property Address"
+            placeholder={addressPlaceholder}
             defaultValue={defaultAddress}
           />
         )}

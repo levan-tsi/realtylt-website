@@ -131,6 +131,8 @@ export default function SellingPage() {
                 requirePhone
                 hideReason
                 defaultReason="I'm interested in selling a home"
+                namePlaceholder="Full Name"
+                addressPlaceholder="Full Property Address"
                 submitLabel="Get My Free Offer & Analysis"
                 footnote="Takes less than 60 seconds"
                 successTitle="Request received."
