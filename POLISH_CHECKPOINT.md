@@ -154,8 +154,16 @@ Pages — status:
       conversion surface — wizard stays on selling/financing/home-value).
 - [x] Blog + article — earlier session
 - [x] Services (20 pages) — earlier session
-- [~] Connect — reviewed at 1440: appointment cards + form fine, copy cleaned. Owed: 390 + drive
-      the message form live.
+- [x] Connect — DONE 2026-07-17 (orchestrator-verified directly). Structure matches/beats live:
+      "Contact Us Anytime" hero, agent card, 3 appointment cards (In-Person/Virtual/Discovery,
+      "Pick a time below"→#book), the owner's REAL Google Calendar embed. VERIFIED: calendar
+      iframe LOADS (calendar.google.com + calendar-pa.clients6.google.com both 200 — it only
+      paints blank in HEADLESS shots, fine in a real browser), Pick-a-time anchors to #book,
+      390 no h-overflow, footer message form submits. FIXED (orchestrator): ours had a
+      DUPLICATE in-body "Send Us A Message" section stacked directly above the identical global
+      footer form — removed the in-body one (matches live, Simplicity First; dropped the now-
+      unused LeadForm import). Now exactly 1 message form. No qualifying wizard here (general
+      contact page, same call as Who We Are).
 
 ## SITE-WIDE SWEEP DONE 2026-07-15 late PM (6a8fb1d, subagent-executed, verified)
 ~102 em dashes rewritten out of visitor copy across 33 files (zero remain outside comments/
@@ -249,9 +257,13 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## (scripts/_scratch-verify-mirror.mjs pattern), add key to Vercel env, and on owner-go run
 ## the FULL backfill (runbook: docs/mls-fix/PHOTO-MIRRORING.md; ~40GB, Pro purchased).
 ## Sync-time mirroring rides along as a safe no-op until the key is in Vercel.
-## NEXT PAGE to map for orchestrator-mode: Who We Are (390 owed) · then Connect (390 + drive
-## message form) · Top Areas county pages · deferred items. Wizard now on selling/financing/
-## home-value; decide per-page whether Connect/other lead forms should join WIZARD_PATHS.
+## ORCHESTRATOR-MODE PROGRESS 2026-07-17: Selling, Financing, Home Value (Opus-agent-built +
+## verified), Who We Are + Connect (orchestrator-verified/fixed directly), photo mirroring
+## (merged), site-wide footer tap-targets. Wizard on selling/financing/home-value only.
+## NEXT PAGE to map: Top Areas COUNTY PAGES (/top-areas/* — 6 counties, DB medians; borough
+## presence still owed per editorial) · then re-check Home/Search/Blog/Services deferred nits
+## (Home rail arrows + why-carousel pixel parity; Search sort parity; SEO listing slugs before
+## apex). Then deferred: open houses, per-listing exact map pins.
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
