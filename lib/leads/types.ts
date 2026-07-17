@@ -14,6 +14,9 @@ export interface LeadPayload {
   timestamp: string;
   /** Optional property address (home-value / cash-offer forms). */
   address?: string;
+  /** Optional qualifying-wizard answers (the /selling post-submit popup). Free-form
+   * short strings — also folded into `message` so they show in any plain CRM view. */
+  qualifier?: Record<string, string>;
 }
 
 export interface LeadResult {

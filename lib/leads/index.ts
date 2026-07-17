@@ -22,7 +22,8 @@ export function parseLead(body: unknown, source: string): ParsedLead {
 
   if (str(b.rlt_hp) !== "") return { kind: "spam" };
 
-  const name = str(b.name);
+  // Name may arrive whole (`name`) or split (`firstName`/`lastName`, the footer/contact form).
+  const name = str(b.name) || [str(b.firstName), str(b.lastName)].filter(Boolean).join(" ");
   const email = str(b.email);
   if (!name) return { kind: "invalid", error: "Name is required." };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
@@ -38,18 +39,44 @@ export function parseLead(body: unknown, source: string): ParsedLead {
     return { kind: "invalid", error: "Unknown interest reason." };
   }
 
+  const qualifier = parseQualifier(b.qualifier);
+  let message = str(b.message);
+  // Fold the wizard answers into the message so they survive into any plain CRM view,
+  // even one that ignores the structured `qualifier` field.
+  if (qualifier) {
+    const summary = Object.entries(qualifier)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(" | ");
+    message = message ? `${message}\n\n[Qualifier] ${summary}` : `[Qualifier] ${summary}`;
+  }
+
   const lead: LeadPayload = {
     name,
     email,
     phone: str(b.phone),
-    message: str(b.message),
+    message,
     interestReason,
     source,
     timestamp: new Date().toISOString(),
   };
   const address = str(b.address);
   if (address) lead.address = address;
+  if (qualifier) lead.qualifier = qualifier;
   return { kind: "lead", lead };
+}
+
+/** Normalize the optional qualifying-wizard answers: a flat object of short strings.
+ * Anything else (arrays, nested objects, oversized values) is dropped defensively so a
+ * crafted body can't smuggle junk into the lead. Returns undefined when empty. */
+function parseQualifier(raw: unknown): Record<string, string> | undefined {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return undefined;
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (typeof value !== "string") continue;
+    const v = value.trim().slice(0, 200);
+    if (v) out[key.slice(0, 40)] = v;
+  }
+  return Object.keys(out).length ? out : undefined;
 }
 
 /** POST the lead to CRM_LEAD_WEBHOOK; without it, log locally (stub mode). Never throws.

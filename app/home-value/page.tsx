@@ -25,7 +25,13 @@ const STEPS = [
   },
 ];
 
-export default function HomeValuePage() {
+export default async function HomeValuePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ address?: string }>;
+}) {
+  // The /selling qualifying wizard's "My Home Value" branch lands here with ?address=…
+  const { address } = await searchParams;
   return (
     <>
       {/* ── Hero + form — live: near-full-viewport BRIGHT dusk photo (luminance ~88, no dark
@@ -51,7 +57,7 @@ export default function HomeValuePage() {
             How Much Is Your Home Really Worth?
           </h1>
           <div className="mt-8">
-            <HomeValueForm />
+            <HomeValueForm defaultAddress={address} />
           </div>
           <p className="mx-auto mt-6 max-w-xl text-[21px] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
             Join the homeowners across the Hudson Valley and NYC in finding your home&rsquo;s value

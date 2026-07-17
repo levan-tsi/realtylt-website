@@ -4,6 +4,7 @@ import { Lato } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
+import { QualifyingWizardProvider } from "@/components/leads/QualifyingWizard";
 import { SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
@@ -80,8 +81,12 @@ export default function RootLayout({
         </a>
         <Providers>
           <Header />
-          <main id="main">{children}</main>
-          <Footer />
+          {/* Wraps main + footer so a successful lead submit from either the hero form or the
+              footer form can open the qualifying wizard. The wizard only ever shows on /selling. */}
+          <QualifyingWizardProvider>
+            <main id="main">{children}</main>
+            <Footer />
+          </QualifyingWizardProvider>
         </Providers>
         {/* The SAME chat widget the live site injects via BlueRoof custom code —
             extracted byte-exact from realtylt.com (self-contained, talks to the n8n

@@ -9,8 +9,10 @@ import { LeadForm } from "./LeadForm";
  * (address + unit + black FIND OUT) sitting on the photo. Submitting the bar reveals the
  * contact card (we have no instant AVM — a human prepares the numbers, so we need a way
  * to send them), which reuses the shared LeadForm with the address prefilled. */
-export function HomeValueForm() {
-  const [address, setAddress] = useState<string | null>(null);
+export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = {}) {
+  // A non-empty defaultAddress (e.g. handed over from the /selling wizard) jumps straight
+  // to the contact card with the address already captured.
+  const [address, setAddress] = useState<string | null>(defaultAddress?.trim() || null);
 
   if (address !== null) {
     return (
