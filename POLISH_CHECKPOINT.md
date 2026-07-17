@@ -264,11 +264,20 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## listing grids, mobile clean, CTAs) — only gap is the site-wide PHOTO PLACEHOLDERS.
 ##
 ## OWNER FEEDBACK 2026-07-17 (frustrated — see memory [[feedback-dont-stop-use-keys]]):
-## (1) SEARCH IS TOO SLOW — measured: /api/idx/pins loads the WHOLE filtered set, Queens =
-##     4,604 pins / 832KB / **11.6s COLD**, no-filter = 12,421 pins / 2.2MB. Fix = viewport-
-##     bounds loading (load only what's in the map, lazy-load on pan/zoom). OPUS AGENT A
-##     dispatched → worktree ../realtylt-website-perf, branch perf/search-viewport, port 3200.
-##     Target: <1s / <250KB cold. Verify + merge when it lands.
+## (1) SEARCH SPEED: FIXED + verified + MERGED to main 2026-07-17 (Opus Agent A, worktree
+##     removed). /api/idx/pins now takes an optional N/S/E/W bbox → ONE capped PostgREST query
+##     (PIN_CAP=800, ordered newest-first, true in-bounds `total` still returned). SearchClient
+##     + MapView/GoogleMapView emit the viewport box on load + debounced (350ms, AbortController)
+##     on pan/zoom; per-area frames measured from real centroids (components/idx/county-bounds.ts);
+##     grid stays 12/page. MEASURED on merged main: Queens viewport 145KB / 800 pins / 198ms warm
+##     (was 832KB / 1.3s warm / 11.6s cold) — 83% payload cut, no more multi-second load. MY
+##     VERIFY (Leaflet path, local): 1 bbox request on load, honest note "Showing 800 of 4,604
+##     homes here. Zoom in to see all.", pan = 1 debounced request, clustering + popups + 12-grid
+##     intact, ocean box empty/fast, NaN bounds fall back, backward-compat no-bbox path kept for
+##     reports. tsc + 266/266 tests (+10). CAVEAT (documented, prod-only): the Google-Maps pan
+##     refetch relies on the map `idle` event, which does NOT fire on localhost (referrer-
+##     restricted key + CSP) — Leaflet proves the client logic; Google is healthy in prod. Verify
+##     the Google pan on the deployed Vercel site once.
 ## (2) DESIGN + CONNECT: OPUS AGENT B DONE + verified + MERGED to main 2026-07-17 (worktree
 ##     removed). CONNECT: appointment cards now link STRAIGHT to the owner's Google Calendar
 ##     booking page (https://calendar.google.com/calendar/appointments/AcZssZ...=) in a new
