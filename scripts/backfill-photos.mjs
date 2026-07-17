@@ -16,8 +16,10 @@
 // plan for the ~40GB of storage (free tier is 1GB). Do NOT run the FULL pass without the owner.
 //
 // Usage:
-//   node scripts/backfill-photos.mjs [--dry-run] [--covers-only] [--max-pages N]
+//   node scripts/backfill-photos.mjs [--dry-run] [--covers-only] [--cap N] [--max-pages N]
 //                                    [--max-listings N] [--concurrency N] [--fresh] [base-url]
+// --covers-only mirrors photo #0 only; --cap N mirrors the first N photos per listing
+// (default MAX_PHOTOS=50). --covers-only wins if both are passed.
 // Defaults are the SAFE VERIFY SLICE (2 feed pages, 50 listings). The full run passes large bounds
 // explicitly, e.g. --max-pages 999 --max-listings 999999 (owner-gated).
 
@@ -36,7 +38,7 @@ const opt = (name, def) => {
 const DRY = flag("--dry-run");
 // Separate resume files so a dry run can never make a later LIVE run skip un-mirrored listings.
 const RESUME_FILE = DRY ? "scripts/.photo-backfill-watermark.dry.local" : "scripts/.photo-backfill-watermark.local";
-const CAP = flag("--covers-only") ? 1 : MAX_PHOTOS;
+const CAP = flag("--covers-only") ? 1 : Math.max(1, Math.min(MAX_PHOTOS, Number(opt("--cap", MAX_PHOTOS)) || MAX_PHOTOS));
 const MAX_PAGES = Number(opt("--max-pages", "2"));
 const MAX_LISTINGS = Number(opt("--max-listings", "50"));
 const CONCURRENCY = Math.max(1, Math.min(6, Number(opt("--concurrency", "4"))));
