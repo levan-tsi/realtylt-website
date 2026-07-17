@@ -97,9 +97,22 @@ Pages — status:
       meta title/description claim the real HV+NYC coverage, em dashes swept from home copy.
 - [x] Buying — 2026-07-15 late PM (723c32b): structure matches live section-for-section, ours
       has better mocks (designed listing-alert card, saved-home card); copy cleaned; 1440+390 shots.
-- [~] Selling — compared at 1440: FULL parity + better (real Google review cards, 5/5/5 comps
-      visual, 92% stat, loop timeline). Copy/arrow sweep applied + verified (rendered page greps
-      0 em dashes/arrows). Still owed: 390 pass + live form drive.
+- [x] Selling — DONE 2026-07-16 PM (orchestrator-verified, first orchestrator-mode page).
+      Opus agent commits a9889f4/627a250/bff1316/6fc536c + orchestrator 0e0? placeholder fix.
+      Shipped: the post-submit 8-step QUALIFYING WIZARD (components/leads/QualifyingWizard.tsx,
+      pure state machine lib/selling-wizard.ts, fires from hero + footer forms on /selling only,
+      answers reach /api/lead as a structured `qualifier` follow-up POST), hero parity (photo
+      visible, 4 stacked fields with live's exact placeholders, microcopy under button), black-
+      header path cards + live's 6+6 checklists, white Comparable Property Statistics card w/
+      suggested range (labeled illustrative), laptop/device showcase mockups, footer First/Last
+      split (site-wide, matches live, /buying + /connect regression-checked). VERIFY: my own
+      18/18 adversarial Playwright checks (both wizard branches E2E, focus trap, Esc + focus
+      restore to role=status, double-submit=1 POST, abandoned wizard=no qualifier POST, /buying
+      no-wizard, 390 bottom sheet, My Home Value redirect w/ address prefill); tsc + 233/233
+      tests run by me; 390+320 no h-overflow; console errors all third-party gtag noise (0 ours).
+      Evidence: docs/_audit/selling-parity/ (verify-*). Known accepted: wizard completion creates
+      base lead + qualifier enrichment as 2 POSTs (CRM should dedupe by email); tour laptop is a
+      static play-frame stand-in until the owner provides a real clip.
 - [~] Financing — compared at 1440: parity; calculator still reproduces the live $3,198.20
       worked example with defaults (the new `initial` prop is regression-free). Owed: 390 pass.
 - [~] Home Value — compared at 1440: solid (address+unit hero, honest 3-step). Coverage claim
@@ -192,12 +205,14 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## hidden popup DOM, write docs/parity/PARITY-<page>.md) -> BUILD (subagent) -> VERIFY
 ## (orchestrator tries to break it, finishes leftovers) -> next page.
 ##
-## IN PROGRESS: SELLING — map committed (docs/parity/PARITY-selling.md; evidence in
-## docs/_audit/selling-parity/). Key finds: live's post-submit 8-step qualifying wizard
-## (full spec extracted read-only from hidden .popupCTA DOM — never submit live forms!),
-## all live CTAs scroll-to-form, gaps G1-G8. Opus 4.8 subagent DISPATCHED with the map.
-## When it returns: adversarially verify (break the wizard, both forms, 1440+390,
-## keyboard/Esc/focus, npm test + tsc), finish leftovers, mark done, push.
-## NEXT PAGES after Selling: Financing (390) · Home Value (390 + form drive) · Who We Are
-## (390) · Connect (390 + form drive) · Top Areas county pages · then deferred items
-## (open houses, SEO listing slugs, rail arrows + why-carousel pixel parity on Home).
+## SELLING: DONE + verified (see page list above). PHOTO-MIRRORING agent (2nd Opus agent)
+## still RUNNING in worktree ../realtylt-website-photos, branch photos/mirroring — verify
+## its report adversarially when it lands (Supabase Pro is PURCHASED, so the full backfill
+## can run after verify + owner go). Chatbot-personalization agent QUEUED next
+## (plan in memory [[project-n8n-chatbot]]).
+## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
+## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
+## rail arrows + why-carousel pixel parity on Home).
+## Orchestrator gotchas learned: honeypot rlt_hp matches :visible Playwright selectors
+## (target placeholders instead); wizard schedule CTA = "Request My Call"; bottom-left "N"
+## bubble in dev shots = Next dev-tools badge, not the chat widget.
