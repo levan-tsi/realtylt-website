@@ -333,20 +333,28 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## PERF NOTE: homepage + county pages already have revalidate=600 ISR (cached in prod); the
 ## dev-mode multi-second "cold" times are first-compile only, NOT a prod problem. Only /search
 ## pins is a real prod perf issue (client API route, not ISR-cached per filter).
-## ROUND 2026-07-17 PM (owner: search should lead with the 6 top-area counties not boroughs;
-## galleries only load first image; still design deltas): SEARCH-AND-PHOTOS Opus agent working
-## in MAIN repo — Mission A committed 01ea0fa (6 county chips primary, "NYC Boroughs" expander
-## w/ aria + deep-link auto-open, default map = Hudson Valley frame), Mission C committed
-## e12d7cd (Oldest+Featured sorts, filters/pagination/empty/fav/share driven), Mission B
-## committed 49c1156 (--cap flag) + cap-12 backfill RESUMED mid-feed (watermark ~May 20 when
-## it checkpointed; I resumed the agent with orders to chain chunks to FEED COMPLETE + harden
-## + final report). MY INTERIM VERIFY: 6 chips/no boroughs/expander+aria/all 5 borough buttons
-## on expand/HV frame south=40.82 — all confirmed; full probe suite re-run owed when the agent
-## lands (dev-server contention makes probes flaky while its chunks run). tsc + 268/268 per
-## agent (re-run myself at final verify).
-## NEXT: final verify of this agent → then dispatch the HOME agent (map READY:
-## docs/parity/PARITY-home.md — rail pagination arrows = the owner's "missing signs", scroll
-## cue, owner-gated why-carousel) + fold in whatever the verify finds missing.
+## ROUND 2026-07-17 PM DONE + orchestrator-verified (search/photos agent, commits 49c1156/
+## e12d7cd/01ea0fa/5071bcd on main): (A) /search leads with the 6 top-area county chips; the
+## 5 NYC boroughs behind an aria-correct "NYC Boroughs" expander (deep links auto-expand;
+## 5 source pages link ?county=<borough> — all work); default map frames the HUDSON VALLEY
+## (in-frame homes 12,410 → ~7,000; NYC out of first paint). (C) Oldest + Featured sorts added
+## (all 5 sorts verified round-trip); 320px overflow fixed; focus rings on chips. MY VERIFY:
+## 11/11 probe suite on a quiet server (chips/expander/deep-links/HV frame/pan=1 debounced
+## req/sorts change results/390), tsc + 268/268 run by me, DB metrics independently confirmed.
+##
+## (B) GALLERY DEPTH: cap-12 backfill PARTIAL — NOT feed-complete. media.mlsgrid.com hard
+## 429'd this IP after ~16k downloads (10-min cooldown insufficient; agent CORRECTLY stopped —
+## pushing through = the account-suspension pattern). State: 11,943 covers / 1,599 beyond-cover
+## / 1,063 at depth-12 / ~28.8k objects. RESUME after a 30-60+ min cooldown, ONE at a time:
+## `node scripts/backfill-photos.mjs --cap 12 --max-pages 8 --max-listings 4000 --concurrency 3`
+## (LOWER concurrency; watermark file at 2026-05-20; repeat chunks to "FEED COMPLETE"; kill by
+## node PID if needed — Bash timeouts orphan the child). Galleries degrade gracefully meanwhile.
+## Noted leftovers: pre-existing intermittent hydration warning on listing detail
+## (FavoriteButton localStorage vs SSR, once, not reproducible); Google-map InfoWindow not
+## drivable headless (markers render fine).
+## NEXT: HOME agent dispatched (docs/parity/PARITY-home.md — rail pagination arrows = the
+## owner's "missing signs", scroll cue, owner-gated why-carousel). After it: resume backfill
+## chunks (cooldown passed), final verify, push.
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
