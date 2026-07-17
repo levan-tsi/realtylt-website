@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { MapPin } from "@/lib/idx/types";
-import { clusterize, MAP_FONT, popupHtml, shortPrice } from "./map-shared";
+import { clusterize, MAP_FONT, popupHtml, shortPrice, type MapViewProps } from "./map-shared";
 
 /** Official Google Maps results map (live-site parity — Brivity renders Google Maps).
  * Loads only when NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set; SearchClient falls back to the
@@ -31,10 +30,18 @@ function loadMaps(key: string): Promise<void> {
   return loader;
 }
 
-export default function GoogleMapView({ pins }: { pins: MapPin[] }) {
+export default function GoogleMapView({ pins, fitBounds, onBoundsChange }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
   pinsRef.current = pins;
+  const onBoundsRef = useRef(onBoundsChange);
+  onBoundsRef.current = onBoundsChange;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mapRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const overlayRef = useRef<any>(null);
+  // Last frame we fit to — a new one (county chip) refits; pin updates never do.
+  const fitRef = useRef(fitBounds);
 
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -55,19 +62,22 @@ export default function GoogleMapView({ pins }: { pins: MapPin[] }) {
         clickableIcons: false,
         gestureHandling: "cooperative",
       });
+      mapRef.current = map;
       const info = new google.maps.InfoWindow();
 
       const located = () => pinsRef.current.filter((p) => p.lat && p.lng);
 
-      // Fit all pins once per pin-set.
-      const fit = () => {
-        const pts = located();
-        if (!pts.length) return;
-        const b = new google.maps.LatLngBounds();
-        for (const p of pts) b.extend({ lat: p.lat, lng: p.lng });
-        map.fitBounds(b, 36);
+      // Frame the county/region box. Emit that box straight away so pins load immediately
+      // instead of waiting only for `idle` (a degraded map may never fire it); `idle` then
+      // refines to the true padded viewport on every settle.
+      const frame = (b: MapViewProps["fitBounds"]) => {
+        map.fitBounds(
+          new google.maps.LatLngBounds({ lat: b.south, lng: b.west }, { lat: b.north, lng: b.east }),
+          24,
+        );
+        onBoundsRef.current({ north: b.north, south: b.south, east: b.east, west: b.west });
       };
-      fit();
+      frame(fitRef.current);
 
       // HTML chip overlay — same visuals as the Leaflet view.
       overlay = new google.maps.OverlayView();
@@ -122,19 +132,52 @@ export default function GoogleMapView({ pins }: { pins: MapPin[] }) {
         }
       };
       overlay.setMap(map);
-      map.addListener("idle", () => overlay.draw());
+      overlayRef.current = overlay;
+      // On every settle: report the padded viewport so pins load for what's in view (emit
+      // FIRST so a draw error can never suppress the fetch), then redraw chips. A too-tight
+      // or empty box simply returns nothing — fast and cheap.
+      map.addListener("idle", () => {
+        const b = map.getBounds();
+        if (b) {
+          const ne = b.getNorthEast();
+          const sw = b.getSouthWest();
+          onBoundsRef.current({ north: ne.lat(), south: sw.lat(), east: ne.lng(), west: sw.lng() });
+        }
+        overlay.draw();
+      });
     }).catch((e: unknown) => console.error("[maps]", e));
 
     return () => {
       disposed = true;
       overlay?.setMap(null);
+      mapRef.current = null;
+      overlayRef.current = null;
     };
   }, []);
 
-  // Redraw + refit when the filtered pin set changes.
+  // New pins arrive AFTER the map has settled (the fetch is triggered by the last move),
+  // so redraw the chip overlay explicitly — an idle won't fire again until the next move.
   useEffect(() => {
-    // the idle listener redraws; nothing needed here beyond keeping pinsRef fresh
+    overlayRef.current?.draw?.();
   }, [pins]);
+
+  // Refit only when the county frame changes (a chip) — never on pin updates, so panning
+  // is never fought. Emit the new frame straight away (don't depend only on idle); idle
+  // refines to the true viewport after the move settles.
+  useEffect(() => {
+    if (fitRef.current === fitBounds) return;
+    fitRef.current = fitBounds;
+    const map = mapRef.current;
+    if (!map || typeof google === "undefined") return;
+    map.fitBounds(
+      new google.maps.LatLngBounds(
+        { lat: fitBounds.south, lng: fitBounds.west },
+        { lat: fitBounds.north, lng: fitBounds.east },
+      ),
+      24,
+    );
+    onBoundsRef.current({ north: fitBounds.north, south: fitBounds.south, east: fitBounds.east, west: fitBounds.west });
+  }, [fitBounds]);
 
   return (
     <div className="relative h-full min-h-96 w-full">

@@ -1,14 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { useSaved } from "@/components/auth/SavedProvider";
+import { boundsForCounty } from "@/components/idx/county-bounds";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
-import type { Listing, MapPin } from "@/lib/idx/types";
+import type { Listing, MapBounds, MapPin } from "@/lib/idx/types";
 
 // Official Google Maps when the key is configured (live-site parity); Leaflet/OSM
 // fallback otherwise. NEXT_PUBLIC_ vars are inlined at build, so only one chunk loads.
@@ -124,13 +125,18 @@ export function SearchClient() {
   const [savedNote, setSavedNote] = useState("");
   const { saveSearch, signedIn } = useSaved();
   const [pins, setPins] = useState<MapPin[] | null>(null);
-  const loadedPinsQuery = useRef<string | null>(null);
+  const [pinsTotal, setPinsTotal] = useState(0);
+  // Current map viewport, reported by the map on load and every pan/zoom-end.
+  const [bounds, setBounds] = useState<MapBounds | null>(null);
 
   const apply = useCallback(
     (patch: Partial<Filters>) => {
       setFilters((prev) => {
         const next = { ...prev, ...patch, page: patch.page ?? 1 };
-        router.replace(`/search${toQuery(next, false) ? `?${toQuery(next, false)}` : ""}`, { scroll: false });
+        // Sync the URL AFTER commit — calling router.replace inside the reducer updates the
+        // Router while SearchClient is rendering (a React setState-in-render error).
+        const qs = toQuery(next, false);
+        setTimeout(() => router.replace(`/search${qs ? `?${qs}` : ""}`, { scroll: false }), 0);
         return next;
       });
     },
@@ -164,29 +170,39 @@ export function SearchClient() {
     };
   }, [filters]);
 
-  // Full pin set for the map (all matches, not just this grid page) — refetched only
-  // when the FILTERS change; page/sort don't affect it. Until it arrives (or if it
-  // fails) the map falls back to pins for the current page's cards.
+  // Viewport-scoped pins for the map: only the listings inside the current map box
+  // (capped server-side), so a dense borough loads a small, fast payload instead of every
+  // match. Re-fetched — debounced — whenever the filters change OR the map pans/zooms.
+  // AbortController drops superseded requests, so a fast pan never leaves stale pins.
+  // Until the first fetch lands (or if it fails) the map falls back to the current page's
+  // card pins. The county frame (fitBounds) drives the initial box.
   const pinsQuery = filterQuery(filters);
+  const fitBounds = useMemo(() => boundsForCounty(filters.county), [filters.county]);
   useEffect(() => {
-    if (filters.view !== "map") return;
-    if (loadedPinsQuery.current === pinsQuery) return;
-    let cancelled = false;
-    fetch(`/api/idx/pins${pinsQuery ? `?${pinsQuery}` : ""}`)
-      .then((r) => {
-        if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<{ pins: MapPin[] }>;
-      })
-      .then((data) => {
-        if (cancelled) return;
-        loadedPinsQuery.current = pinsQuery;
-        setPins(data.pins);
-      })
-      .catch(() => {}); // non-fatal — the map keeps its fallback pins
+    if (filters.view !== "map" || !bounds) return;
+    const sp = new URLSearchParams(pinsQuery);
+    sp.set("north", bounds.north.toFixed(5));
+    sp.set("south", bounds.south.toFixed(5));
+    sp.set("east", bounds.east.toFixed(5));
+    sp.set("west", bounds.west.toFixed(5));
+    const ctrl = new AbortController();
+    const t = window.setTimeout(() => {
+      fetch(`/api/idx/pins?${sp.toString()}`, { signal: ctrl.signal })
+        .then((r) => {
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json() as Promise<{ pins: MapPin[]; total: number }>;
+        })
+        .then((data) => {
+          setPins(data.pins);
+          setPinsTotal(data.total);
+        })
+        .catch(() => {}); // abort or error — keep prior pins
+    }, 350);
     return () => {
-      cancelled = true;
+      window.clearTimeout(t);
+      ctrl.abort();
     };
-  }, [filters.view, pinsQuery]);
+  }, [filters.view, pinsQuery, bounds]);
 
   function onSaveSearch() {
     const parts = [
@@ -404,8 +420,20 @@ export function SearchClient() {
               </li>
             ))}
           </ul>
-          <div className="h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
-            <MapView pins={loadedPinsQuery.current === pinsQuery && pins ? pins : listings.map(toPin)} />
+          <div className="relative h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
+            <MapView
+              pins={pins ?? listings.map(toPin)}
+              fitBounds={fitBounds}
+              onBoundsChange={setBounds}
+            />
+            {pins && pinsTotal > pins.length && (
+              <p
+                role="status"
+                className="pointer-events-none absolute left-1/2 top-2 z-[500] max-w-[calc(100%-1rem)] -translate-x-1/2 border border-[#dddddd] bg-white/95 px-2.5 py-1.5 text-center text-[11px] font-medium text-ink-soft"
+              >
+                Showing {pins.length.toLocaleString()} of {pinsTotal.toLocaleString()} homes here. Zoom in to see all.
+              </p>
+            )}
           </div>
         </div>
       ) : (

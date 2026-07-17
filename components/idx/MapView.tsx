@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { divIcon, type LatLngBounds } from "leaflet";
 import Link from "next/link";
 import type { MapPin } from "@/lib/idx/types";
+import type { MapViewProps } from "./map-shared";
 import "leaflet/dist/leaflet.css";
 
 /** Leaflet/OSM results map. Receives the ENTIRE filtered result set as slim pins
@@ -32,20 +33,34 @@ const clusterIcon = (count: number) => {
   });
 };
 
-function FitBounds({ pins }: { pins: MapPin[] }) {
+/** Frames the county/region box and reports the viewport up to the SearchClient so it can
+ * load only the pins in view. Fits on mount and whenever the frame changes (county chip);
+ * emits the current box on every pan/zoom-end. Panning never refits (that would fight the
+ * user) — only a new `fitBounds` frame moves the map. */
+function ViewportSync({ fitBounds, onBoundsChange }: Pick<MapViewProps, "fitBounds" | "onBoundsChange">) {
   const map = useMap();
+  const emit = useCallback(() => {
+    const b = map.getBounds();
+    onBoundsChange({ north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() });
+  }, [map, onBoundsChange]);
+  useMapEvents({ moveend: emit });
   useEffect(() => {
-    if (!pins.length) return;
-    const lats = pins.map((p) => p.lat);
-    const lngs = pins.map((p) => p.lng);
-    map.fitBounds(
-      [
-        [Math.min(...lats), Math.min(...lngs)],
-        [Math.max(...lats), Math.max(...lngs)],
-      ],
-      { padding: [36, 36], maxZoom: 13 },
-    );
-  }, [pins, map]);
+    // Defer the fit: fitBounds(animate:false) fires `moveend` synchronously, and doing that
+    // inside the effect would run sibling setState (PinLayer, the parent) mid-commit — a
+    // React error. A macrotask hop lands the move (and the emit it triggers) safely after
+    // commit. animate:false keeps it motion-free (prefers-reduced-motion friendly).
+    const id = setTimeout(() => {
+      map.fitBounds(
+        [
+          [fitBounds.south, fitBounds.west],
+          [fitBounds.north, fitBounds.east],
+        ],
+        { padding: [24, 24], maxZoom: 14, animate: false },
+      );
+      emit();
+    }, 0);
+    return () => clearTimeout(id);
+  }, [fitBounds, map, emit]);
   return null;
 }
 
@@ -113,7 +128,7 @@ function PinLayer({ pins }: { pins: MapPin[] }) {
   );
 }
 
-export default function MapView({ pins }: { pins: MapPin[] }) {
+export default function MapView({ pins, fitBounds, onBoundsChange }: MapViewProps) {
   // Rows without coordinates come through as lat/lng 0 — never pin (or fit) Null Island.
   const located = useMemo(() => pins.filter((p) => p.lat && p.lng), [pins]);
 
@@ -134,7 +149,7 @@ export default function MapView({ pins }: { pins: MapPin[] }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitBounds pins={located} />
+      <ViewportSync fitBounds={fitBounds} onBoundsChange={onBoundsChange} />
       <PinLayer pins={located} />
     </MapContainer>
     </div>

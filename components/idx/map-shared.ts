@@ -1,6 +1,14 @@
-import type { MapPin } from "@/lib/idx/types";
+import type { MapBounds, MapPin } from "@/lib/idx/types";
 
 /** Shared map math — used by both the Leaflet fallback and the Google Maps view. */
+
+/** Props both map engines accept — pins to plot, the frame to fit when the county
+ * changes, and a callback fired with the current viewport box on load + every settle. */
+export interface MapViewProps {
+  pins: MapPin[];
+  fitBounds: MapBounds;
+  onBoundsChange: (b: MapBounds) => void;
+}
 
 export const MAP_FONT = "Lato,Helvetica,Arial,sans-serif";
 /** Stop clustering at street-ish zoom — pins are individually readable there. */
