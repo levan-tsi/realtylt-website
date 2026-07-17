@@ -9,24 +9,34 @@ export const metadata: Metadata = {
     "Reach RealtyLT seven days a week: call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
 };
 
+// The owner's Google Calendar appointment-scheduling page (public booking UI). One page
+// serves all three appointment types — the visitor picks the type, then a time, on Google.
+// (This new-format schedule has no reliable per-service deep link, so every card opens the
+// same booking page in a new tab with its own clear call to action.)
+const BOOKING_URL =
+  "https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=";
+
 const MEETINGS = [
   {
     title: "In-Person Real Estate Strategy Session",
     length: "30 min",
     kind: "In-person meeting",
     body: "Let's sit down together to create a personalized strategy for your real estate success: neighborhoods, numbers, and next steps.",
+    cta: "Book the in-person session",
   },
   {
     title: "Virtual Real Estate Consultation",
     length: "30 min",
     kind: "Video conference",
     body: "Connect face-to-face virtually to achieve your real estate goals. Perfect if you're relocating to the Hudson Valley from the city or out of state.",
+    cta: "Book the virtual consultation",
   },
   {
     title: "Introductory Real Estate Discovery Call",
     length: "30 min",
     kind: "Phone call",
     body: "The most direct way to get your real estate questions answered. This focused 30-minute phone call is all answers, no pitch.",
+    cta: "Book the discovery call",
   },
 ];
 
@@ -102,25 +112,18 @@ export default function ConnectPage() {
                     <p className="mt-1 text-sm text-ink-soft">{m.kind}</p>
                     <p className="mt-4 grow text-sm leading-relaxed text-stone">{m.body}</p>
                     <a
-                      href="#book"
-                      className="mt-5 text-sm font-bold text-ink underline-offset-4 hover:underline"
+                      href={BOOKING_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex min-h-[44px] items-center text-sm font-bold text-ink underline-offset-4 hover:underline"
                     >
-                      Pick a time below
+                      {m.cta}
+                      <span className="sr-only"> (opens Google Calendar in a new tab)</span>
                     </a>
                   </article>
                 </Reveal>
               ))}
             </ul>
-            {/* The owner's ACTUAL Google Calendar appointment scheduler — the same embed the
-                live site's custom code carries, so visitors book directly (no recreation). */}
-            <div id="book" className="mt-10 overflow-hidden rounded-lg border border-[#dddddd] bg-white">
-              <iframe
-                src="https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=?gv=true"
-                style={{ border: 0, width: "100%", height: 899 }}
-                title="Book an appointment with Levan Tsiklauri"
-                loading="lazy"
-              />
-            </div>
           </div>
         </div>
       </section>
