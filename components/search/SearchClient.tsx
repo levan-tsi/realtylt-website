@@ -388,7 +388,7 @@ export function SearchClient() {
             </>
           )}
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
           <label htmlFor="f-sort" className="text-xs font-bold uppercase tracking-[0.12em] text-stone">
             Sort By
           </label>
