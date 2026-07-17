@@ -47,7 +47,12 @@ export default async function HomeValuePage({
             sizes="100vw"
             className="object-cover opacity-95"
           />
-          <div className="absolute inset-0 bg-black/15" />
+          {/* Scrim: the bright daytime photo is far lighter than live's dusk house, so a flat
+              15% wash left the white H1 at ~1.6:1 over the brightest foliage. This vertical
+              gradient is darkest through the center band where the headline, form, and coverage
+              line sit (lifting them past 4.5:1) while keeping the photo bright at the top and
+              bottom edges — a scrim, not a black box. */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.32)_0%,rgba(0,0,0,0.70)_40%,rgba(0,0,0,0.70)_70%,rgba(0,0,0,0.34)_100%)]" />
         </div>
         <div className="relative mx-auto flex min-h-[520px] max-w-[1250px] flex-col justify-center px-4 py-20 text-center md:min-h-[850px] lg:px-8">
           <h1
