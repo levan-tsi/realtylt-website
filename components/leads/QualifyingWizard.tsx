@@ -33,21 +33,26 @@ const WizardContext = createContext<{ openWizard: (p: WizardPrefill) => void }>(
   openWizard: () => {},
 });
 
-/** Any LeadForm calls this on a successful submit. Off /selling it is a no-op, so the
- * form behaves exactly as before everywhere else. */
+/** Any LeadForm calls this on a successful submit. Off the allow-listed pages it is a
+ * no-op, so the form behaves exactly as before everywhere else. */
 export function useQualifyingWizard() {
   return useContext(WizardContext);
 }
 
+/** Pages where a successful lead submit opens the qualifying wizard. Live realtylt.com
+ * attaches this popup to every lead form site-wide; we enable it deliberately, page by
+ * page, so the copy stays appropriate. Any page not listed here gets the plain form. */
+const WIZARD_PATHS = new Set(["/selling", "/financing"]);
+
 /** Mounted once in the root layout (wraps <main> and <Footer> so both the hero form and
- * the footer form can trigger it). The modal only ever opens on /selling. */
+ * the footer form can trigger it). The modal only opens on the allow-listed pages. */
 export function QualifyingWizardProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [prefill, setPrefill] = useState<WizardPrefill | null>(null);
 
   const openWizard = useCallback(
     (p: WizardPrefill) => {
-      if (pathname === "/selling") setPrefill(p);
+      if (WIZARD_PATHS.has(pathname)) setPrefill(p);
     },
     [pathname],
   );
@@ -313,6 +318,16 @@ function QualifyingWizard({
   const ui = STEP_UI[current];
   const canGoBack = history.length > 0 && current !== "confirm";
   const scheduled = Boolean(answers.callTimes);
+  // Sellers (and both-track) get the comps/cash-offer promise; a pure buyer — the common
+  // case on /financing — gets lender-focused wording instead of seller jargon.
+  const isSeller = answers.intent === "Selling" || answers.intent === "Both";
+  const confirmBody = scheduled
+    ? isSeller
+      ? "We'll call you at the times you shared. In the meantime, expect your comps and cash-offer numbers within the day."
+      : "We'll call you at the times you shared. In the meantime, we'll line up the right lender and your next steps."
+    : isSeller
+      ? "We've got your details and we'll be in touch shortly with your comps and cash-offer numbers, usually within the day."
+      : "We've got your details and we'll be in touch shortly to connect you with the right lender, usually within the day.";
 
   return (
     <div
@@ -371,11 +386,7 @@ function QualifyingWizard({
               >
                 Thank you{prefill.name ? `, ${prefill.name.split(" ")[0]}` : ""}.
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-stone">
-                {scheduled
-                  ? "We'll call you at the times you shared. In the meantime, expect your comps and cash-offer numbers within the day."
-                  : "We've got your details and we'll be in touch shortly with your comps and cash-offer numbers, usually within the day."}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed text-stone">{confirmBody}</p>
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
