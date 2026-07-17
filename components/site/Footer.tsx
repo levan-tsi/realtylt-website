@@ -11,19 +11,21 @@ export function Footer() {
     <footer className="border-t border-[#dddddd] bg-paper text-stone">
       <div className="mx-auto grid max-w-[1250px] gap-12 px-4 py-16 md:grid-cols-[1fr_1.6fr_1fr] md:py-20 lg:px-8">
         <nav aria-label="Footer">
-          <ul className="space-y-2.5 text-sm font-light">
+          {/* inline-flex min-h-[24px]: text-sm links with no padding were ~17px tall — under
+              the WCAG 2.5.8 (24px) touch-target minimum. Height only; type/desktop unchanged. */}
+          <ul className="space-y-1 text-sm font-light">
             {FOOTER_NAV.map((item) =>
               "external" in item && item.external ? (
                 // /ai is served by an external rewrite, not an RSC route — a plain anchor
                 // avoids a 404 from Next's link prefetch.
                 <li key={item.href}>
-                  <a href={item.href} className="text-ink-soft transition-colors hover:text-stone">
+                  <a href={item.href} className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone">
                     {item.label}
                   </a>
                 </li>
               ) : (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-ink-soft transition-colors hover:text-stone">
+                  <Link href={item.href} className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone">
                     {item.label}
                   </Link>
                 </li>
@@ -52,12 +54,12 @@ export function Footer() {
               {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
             </p>
             <p>
-              <a href={SITE.phoneHref} className="transition-colors hover:text-ink">
+              <a href={SITE.phoneHref} className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink">
                 {SITE.phone}
               </a>
             </p>
             <p>
-              <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ink">
+              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink">
                 {SITE.email}
               </a>
             </p>
