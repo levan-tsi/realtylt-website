@@ -27,11 +27,12 @@ const MapView = dynamic(
   ),
 });
 
-/** Chip order matches the live site (Orange first); the five boroughs follow the Valley. */
-const CHIP_ORDER: CountySlug[] = [
-  "orange", "dutchess", "westchester", "putnam", "rockland", "ulster",
-  "bronx", "brooklyn", "manhattan", "queens", "staten-island",
-];
+/** Primary chips = the six Top-Areas counties (the areas we publish pages for), Orange first
+ * to match the live site. The five NYC boroughs live behind the "NYC boroughs" expander below,
+ * so the default /search stays scoped to the Hudson Valley — boroughs are still fully
+ * searchable and deep-linkable (?county=brooklyn), just not front-and-center. */
+const COUNTY_CHIPS: CountySlug[] = ["orange", "dutchess", "westchester", "putnam", "rockland", "ulster"];
+const BOROUGH_CHIPS: CountySlug[] = ["bronx", "brooklyn", "manhattan", "queens", "staten-island"];
 
 interface ApiResult {
   listings: Listing[];
@@ -128,6 +129,12 @@ export function SearchClient() {
   const [pinsTotal, setPinsTotal] = useState(0);
   // Current map viewport, reported by the map on load and every pan/zoom-end.
   const [bounds, setBounds] = useState<MapBounds | null>(null);
+  // NYC boroughs sit behind a secondary expander so the default view stays scoped to the six
+  // Hudson Valley counties. Force it open when a borough is the active filter (e.g. a
+  // ?county=brooklyn deep link from /who-we-are) so the active chip is always visible.
+  const [boroughsOpen, setBoroughsOpen] = useState(false);
+  const boroughActive = (BOROUGH_CHIPS as string[]).includes(filters.county);
+  const showBoroughs = boroughsOpen || boroughActive;
 
   const apply = useCallback(
     (patch: Partial<Filters>) => {
@@ -222,6 +229,25 @@ export function SearchClient() {
 
   const listings = result?.listings ?? [];
 
+  const renderChip = (slug: CountySlug) => {
+    const area = SERVED_AREAS.find((c) => c.slug === slug)!;
+    const active = filters.county === slug;
+    return (
+      <li key={slug}>
+        <button
+          type="button"
+          aria-pressed={active}
+          onClick={() => apply({ county: active ? "" : slug })}
+          className={`px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+            active ? "bg-ink text-paper" : "bg-mist text-[#555555] hover:bg-[#e2e6ea] hover:text-ink"
+          }`}
+        >
+          {area.name}, NY
+        </button>
+      </li>
+    );
+  };
+
   return (
     <div className="mx-auto max-w-[1400px] px-4 pb-16 lg:px-8">
       {/* ── Filter bar */}
@@ -315,29 +341,43 @@ export function SearchClient() {
         </p>
       )}
 
-      {/* ── County chips */}
-      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Filter by county">
-        {CHIP_ORDER.map((slug) => {
-          const county = SERVED_AREAS.find((c) => c.slug === slug)!;
-          const active = filters.county === slug;
-          return (
-            <li key={slug}>
-              <button
-                type="button"
-                aria-pressed={active}
-                onClick={() => apply({ county: active ? "" : slug })}
-                className={`px-3.5 py-2 text-[13px] transition-colors ${
-                  active
-                    ? "bg-ink text-paper"
-                    : "bg-mist text-[#555555] hover:bg-[#e2e6ea] hover:text-ink"
-                }`}
+      {/* ── Area chips: the six Top-Areas counties up front; the NYC boroughs sit behind a
+          secondary expander so the default view stays scoped to the Hudson Valley. */}
+      <div className="mt-4">
+        <ul className="flex flex-wrap items-center gap-2" aria-label="Filter by county">
+          {COUNTY_CHIPS.map(renderChip)}
+          <li>
+            <button
+              type="button"
+              aria-expanded={showBoroughs}
+              aria-controls="borough-chips"
+              onClick={() => setBoroughsOpen((o) => !o)}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                boroughActive
+                  ? "bg-ink text-paper"
+                  : "border border-[#cccccc] bg-white text-stone hover:border-ink hover:text-ink"
+              }`}
+            >
+              NYC Boroughs
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 12 12"
+                className={`h-2.5 w-2.5 transition-transform duration-200 ${showBoroughs ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                {county.name}, NY
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+                <path d="M2.5 4.5 L6 8 L9.5 4.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </li>
+        </ul>
+        {showBoroughs && (
+          <ul id="borough-chips" className="mt-2 flex flex-wrap gap-2" aria-label="Filter by NYC borough">
+            {BOROUGH_CHIPS.map(renderChip)}
+          </ul>
+        )}
+      </div>
 
       {/* ── Result meta row — live: light gray strip, "N listings found" left, Sort By right */}
       <div className="mt-5 flex flex-wrap items-center justify-between gap-4 bg-mist px-4 py-2.5">
@@ -354,6 +394,8 @@ export function SearchClient() {
           </label>
           <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={selectCls}>
             <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="featured">Featured</option>
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
