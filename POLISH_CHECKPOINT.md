@@ -333,8 +333,20 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## PERF NOTE: homepage + county pages already have revalidate=600 ISR (cached in prod); the
 ## dev-mode multi-second "cold" times are first-compile only, NOT a prod problem. Only /search
 ## pins is a real prod perf issue (client API route, not ISR-cached per filter).
-## NEXT after the 2 agents merge: verify both adversarially, then re-check /listing detail,
-## /blog, and the Home deferred nits; then activate photos.
+## ROUND 2026-07-17 PM (owner: search should lead with the 6 top-area counties not boroughs;
+## galleries only load first image; still design deltas): SEARCH-AND-PHOTOS Opus agent working
+## in MAIN repo — Mission A committed 01ea0fa (6 county chips primary, "NYC Boroughs" expander
+## w/ aria + deep-link auto-open, default map = Hudson Valley frame), Mission C committed
+## e12d7cd (Oldest+Featured sorts, filters/pagination/empty/fav/share driven), Mission B
+## committed 49c1156 (--cap flag) + cap-12 backfill RESUMED mid-feed (watermark ~May 20 when
+## it checkpointed; I resumed the agent with orders to chain chunks to FEED COMPLETE + harden
+## + final report). MY INTERIM VERIFY: 6 chips/no boroughs/expander+aria/all 5 borough buttons
+## on expand/HV frame south=40.82 — all confirmed; full probe suite re-run owed when the agent
+## lands (dev-server contention makes probes flaky while its chunks run). tsc + 268/268 per
+## agent (re-run myself at final verify).
+## NEXT: final verify of this agent → then dispatch the HOME agent (map READY:
+## docs/parity/PARITY-home.md — rail pagination arrows = the owner's "missing signs", scroll
+## cue, owner-gated why-carousel) + fold in whatever the verify finds missing.
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
