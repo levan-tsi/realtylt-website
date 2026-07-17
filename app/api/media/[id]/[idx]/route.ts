@@ -1,15 +1,19 @@
-import { getMediaUrls } from "@/lib/idx/media";
+import { getListingMedia } from "@/lib/idx/media";
+import { publicPhotoUrl } from "@/lib/idx/storage";
 
 /** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
  * photos: the raw MediaURL must not appear on the site, and MLS's media host requires the OAuth
  * token as User-Agent, so a browser cannot load it directly).
  *
- * Suspension fix (docs/mls-fix/AUDIT.md): this route no longer calls the MLS Grid DATA API. It
- * reads the listing's PERMANENT MediaURLs from the committed snapshot (zero DATA-API calls),
- * fetches the chosen photo server-side with `User-Agent: <token>`, and streams it back with an
- * IMMUTABLE long cache, so MLS's media host is hit at most once per photo per edge regardless of
- * viewers or crawlers. A dead/rotated URL is refreshed by the next scheduled export
- * (scripts/export-snapshot.mjs) — NEVER re-resolved per view.
+ * Suspension fix (docs/mls-fix/AUDIT.md): this route no longer calls the MLS Grid DATA API.
+ *
+ * STORAGE-FIRST (docs/mls-fix/PHOTO-MIRRORING.md): MLS Grid MediaURLs are SIGNED and expire ~1h
+ * after the sync captures them, so they cannot be served per view. The sync mirrors each photo's
+ * bytes into Supabase Storage while the URL is fresh; this route redirects the first
+ * `photosMirrored` photos to the permanent public bucket object (zero MLS contact, never expires).
+ * Photos not yet mirrored fall back to the legacy proxy: fetch the (still-fresh, just-synced)
+ * source URL server-side with `User-Agent: <token>` behind a long CDN cache, else the branded
+ * placeholder that self-heals on the next sync.
  *
  * Failure contract: any media error/throttle returns the branded "Photo coming soon" SVG with
  * `no-store` (the next view retries) — never a broken tile or 502. A listing with no photo at
@@ -61,14 +65,31 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  // Local dev has no MLS_API_KEY (the media host rejects tokenless fetches) — serve the
-  // photo through the DEPLOYED proxy's CDN cache instead of a wall of placeholders.
+  // Photos + mirror state from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.
+  const { photos, mirrored } = await getListingMedia(id);
+
+  // STORAGE-FIRST: the first `mirrored` photos live PERMANENTLY in Supabase Storage. MLS Grid
+  // MediaURLs are signed and expire ~1h after the sync captures them, so this is the only stable
+  // source. Redirect to the public bucket object — works in prod AND local dev, never touches
+  // MLS, and keeps serving long after the source URL has died. (The bucket is OUR copy, so no
+  // MLS "don't put MediaURLs on your site" concern applies.)
+  if (n < mirrored) {
+    const storageUrl = publicPhotoUrl(id, n);
+    if (storageUrl) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: storageUrl, "Cache-Control": IMAGE_CACHE, "X-Media-Status": "storage" },
+      });
+    }
+  }
+
+  // Local dev has no MLS_API_KEY (the media host rejects tokenless fetches) — serve unmirrored
+  // photos through the DEPLOYED proxy's CDN cache instead of a wall of placeholders.
   if (!process.env.MLS_API_KEY && !process.env.VERCEL) {
     return Response.redirect(`https://realtylt-website.vercel.app/api/media/${id}/${n}`, 302);
   }
 
-  // Permanent MediaURLs from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.
-  const url = (await getMediaUrls(id))[n];
+  const url = photos[n];
   // No photo at this index (snapshot has none yet, or a photo-less listing) — stable, cacheable.
   if (!url?.startsWith("https://")) return placeholder(EMPTY_CACHE, "empty");
 
