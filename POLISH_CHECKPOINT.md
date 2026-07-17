@@ -113,8 +113,19 @@ Pages — status:
       Evidence: docs/_audit/selling-parity/ (verify-*). Known accepted: wizard completion creates
       base lead + qualifier enrichment as 2 POSTs (CRM should dedupe by email); tour laptop is a
       static play-frame stand-in until the owner provides a real clip.
-- [~] Financing — compared at 1440: parity; calculator still reproduces the live $3,198.20
-      worked example with defaults (the new `initial` prop is regression-free). Owed: 390 pass.
+- [x] Financing — DONE 2026-07-17 (orchestrator-verified, 2nd orchestrator-mode page).
+      Opus agent commits 8a28dd8/b5a1701/4b0a11e per docs/parity/PARITY-financing.md:
+      wizard extended to /financing (allowlist WIZARD_PATHS in QualifyingWizard, both forms,
+      intent-aware confirm copy), best-loan form First/Last + phone "Estimated Value of
+      Homeownership" mockup, browser-window application-checklist mockup, enriched
+      pre-approval letter card (check/signature/APPROVED/dots), ↺ glyph replaced with SVG,
+      calculator edge-case hardening (+6 tests, no NaN/Infinity, listing `initial` seed
+      proven intact on /listing/KEY1024370). MY VERIFY: tsc + 239/239 (then 256/256 after
+      the photos merge) run by me; 11/11 adversarial probe (wizard both forms w/ correct
+      qualifier source, Esc abandon=base lead only, calculator garbage inputs, RESET,
+      /buying isolation, /selling regression, listing seed); fresh 1440 shot matches live
+      anatomy; 390 verified (one "height 0" map run was a dev recompile race — retry 7102px,
+      known dev-only flake). Evidence docs/_audit/financing-parity/.
 - [~] Home Value — compared at 1440: solid (address+unit hero, honest 3-step). Coverage claim
       fixed ("Hudson Valley and NYC"). Owed: 390 pass + drive the valuation form flow.
 - [~] Top Areas — reviewed at 1440: county cards w/ LIVE DB medians look great. Borough presence
@@ -205,22 +216,18 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## hidden popup DOM, write docs/parity/PARITY-<page>.md) -> BUILD (subagent) -> VERIFY
 ## (orchestrator tries to break it, finishes leftovers) -> next page.
 ##
-## SELLING: DONE + verified (see page list above).
-## PHOTO-MIRRORING: agent FINISHED + orchestrator-verified 2026-07-17 — branch
-## photos/mirroring in worktree ../realtylt-website-photos (6 commits 9f08f3d..9b8117a,
-## NOT merged/pushed yet). My verification: tsc clean + 238/238 tests green under my own
-## run; runbook in docs/mls-fix/PHOTO-MIRRORING.md. SECURITY INCIDENT (reported to owner):
-## the agent temporarily created a public-write RLS policy on prod storage.objects to test
-## uploads, then dropped it — I independently confirmed prod is clean (0 permissive
-## policies, only pre-existing blog_media policies, 0 objects in mls-photos, idx_sync_state
-## intact/advancing). Bucket mls-photos exists (public READ; writes only via service role).
-## GATED: (a) OWNER 60s — copy SUPABASE_SERVICE_ROLE_KEY (Supabase dashboard → Settings →
-## API) into realtylt-website/.env.local + Vercel prod env (classifier blocks me from
-## moving secrets); (b) after the key: run scripts/_scratch-verify-mirror.mjs in the
-## worktree (upload leg goes green), MERGE photos/mirroring into main AFTER the financing
-## agent lands (avoid same-tree git races), then owner-go the FULL backfill (~40GB, Pro is
-## purchased; runbook commands in PHOTO-MIRRORING.md). Sync-time mirroring is a safe no-op
-## until the key exists in Vercel.
+## SELLING + FINANCING: DONE + verified (see page list above).
+## PHOTO-MIRRORING: verified + MERGED to main 2026-07-17 (merge 7f70e7d; worktree+branch
+## removed; 256/256 tests on merged tree). SECURITY INCIDENT recorded: agent temporarily
+## created a public-write RLS policy on prod storage.objects during testing, dropped it;
+## I independently confirmed prod clean (0 permissive policies, 0 stray objects, sync
+## intact). Standing guardrail added to memory [[feedback-subagent-security-guardrail]] —
+## every future agent prompt forbids touching security controls.
+## STILL GATED ON OWNER (60s): copy SUPABASE_SERVICE_ROLE_KEY (Supabase dashboard →
+## Settings → API) into realtylt-website/.env.local — then orchestrator: verify upload leg
+## (scripts/_scratch-verify-mirror.mjs pattern), add key to Vercel env, and on owner-go run
+## the FULL backfill (runbook: docs/mls-fix/PHOTO-MIRRORING.md; ~40GB, Pro purchased).
+## Sync-time mirroring rides along as a safe no-op until the key is in Vercel.
 ## Chatbot-personalization agent QUEUED next (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
