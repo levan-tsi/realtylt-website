@@ -1,7 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { FixtureIdxClient } from "./fixture";
+import { FIXTURE_LISTINGS } from "./fixture-data";
 import { getIdxClient } from "./index";
 import { ReplicatedIdxClient } from "./replicated";
+import type { Listing } from "./types";
 import { COUNTIES } from "@/lib/site";
 
 const client = new FixtureIdxClient();
@@ -51,6 +53,15 @@ describe("FixtureIdxClient — filters", () => {
     const r = await client.search({ county: "putnam", pageSize: 100 });
     expect(r.total).toBeGreaterThan(0);
     expect(r.listings.every((l) => l.county === "putnam")).toBe(true);
+  });
+
+  it("defaults to the six Hudson Valley counties, excluding NYC boroughs until one is picked", async () => {
+    const borough: Listing = { ...FIXTURE_LISTINGS[0], id: "BK-TEST", county: "brooklyn" };
+    const seeded = new FixtureIdxClient([...FIXTURE_LISTINGS, borough]);
+    const def = await seeded.search({ pageSize: 500 });
+    expect(def.listings.some((l) => l.id === "BK-TEST")).toBe(false); // NYC hidden by default
+    const picked = await seeded.search({ county: "brooklyn", pageSize: 500 });
+    expect(picked.listings.some((l) => l.id === "BK-TEST")).toBe(true); // opt-in shows it
   });
 
   it("filters by price range", async () => {

@@ -383,9 +383,10 @@ export function SearchClient() {
       <div className="mt-5 flex flex-wrap items-center justify-between gap-4 bg-mist px-4 py-2.5">
         <p className="text-sm text-stone" role="status">
           {state === "loading" ? "Searching…" : state === "error" ? "" : (
-            <>
-              <strong className="font-bold text-ink">{result?.total ?? 0} listings found</strong>
-            </>
+            <strong className="font-bold text-ink">
+              {(result?.total ?? 0).toLocaleString()} listings
+              {filters.county ? " found" : " across the Hudson Valley"}
+            </strong>
           )}
         </p>
         <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">

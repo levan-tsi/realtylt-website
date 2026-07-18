@@ -71,6 +71,19 @@ describe("DbIdxClient.search", () => {
     expect(result.listings[0].photos).toEqual(["/api/media/KEY777/0"]);
   });
 
+  it("defaults to the six Hudson Valley counties when no area is picked (NYC opt-in)", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 5402 };
+    });
+
+    const result = await new DbIdxClient().search({});
+    const listingCall = calls.find((u) => u.includes("idx_listings") && !u.includes("idx_sync_state"))!;
+    expect(listingCall).toContain("county=in.(dutchess,westchester,putnam,rockland,ulster,orange)");
+    expect(listingCall).not.toContain("county=eq.");
+    expect(result.total).toBe(5402);
+  });
+
   it("serves the snapshot fallback until the baseline completes", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state"))

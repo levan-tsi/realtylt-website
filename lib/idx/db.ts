@@ -19,6 +19,7 @@
 import { DEFAULT_PAGE_SIZE, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
 import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
+import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 
 interface SyncState {
   watermark: string;
@@ -60,7 +61,10 @@ async function rest<T>(path: string, opts: { count?: boolean } = {}): Promise<{ 
 /** SearchParams → PostgREST filter string over the generated columns. */
 function searchFilters(p: SearchParams): string {
   const parts: string[] = [];
+  // No explicit area picked → scope the whole /search experience (grid, count, map pins) to the
+  // six Hudson Valley counties the map frame shows; NYC boroughs stay opt-in via ?county=slug.
   if (p.county) parts.push(`county=eq.${encodeURIComponent(p.county)}`);
+  else parts.push(`county=in.(${DEFAULT_COUNTY_SLUGS.join(",")})`);
   if (p.priceMin != null) parts.push(`price=gte.${p.priceMin}`);
   if (p.priceMax != null) parts.push(`price=lte.${p.priceMax}`);
   if (p.bedsMin != null) parts.push(`beds=gte.${p.bedsMin}`);

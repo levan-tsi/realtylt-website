@@ -4,6 +4,7 @@
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { DEFAULT_PAGE_SIZE } from "./types";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
+import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 
 export class FixtureIdxClient implements IdxClient {
   private readonly listings: Listing[];
@@ -28,7 +29,12 @@ export class FixtureIdxClient implements IdxClient {
     } = params;
 
     let out = this.listings.filter((l) => {
-      if (county && l.county !== county) return false;
+      if (county) {
+        if (l.county !== county) return false;
+      } else if (!(DEFAULT_COUNTY_SLUGS as readonly string[]).includes(l.county)) {
+        // No area picked → default to the six Hudson Valley counties (NYC boroughs are opt-in).
+        return false;
+      }
       if (priceMin != null && l.price < priceMin) return false;
       if (priceMax != null && l.price > priceMax) return false;
       if (bedsMin != null && l.beds < bedsMin) return false;
