@@ -68,7 +68,13 @@ The mirror state lives **inside the existing `listing` jsonb** (flows through th
 1. Read `{ photos, mirrored }` from the DB (zero MLS DATA-API calls, same guard as before).
 2. If `n < mirrored` → **302 to the public bucket object**, `X-Media-Status: storage`, long SWR cache.
    Works in prod **and** local dev (public read needs no key), and outlives the source URL.
-3. Else fall back to the existing behavior: local-dev bounce to the deployed proxy, or (prod) proxy the
+3. **Wiped-marker self-heal** — if the marker says nothing is mirrored (`mirrored == 0`) but `n` is a
+   low index, **probe the permanent public object directly** (a cheap, cached HEAD against public
+   Storage — never MLS) before falling back. If it exists → **302 to the bucket**,
+   `X-Media-Status: storage-probe`. This recovers photos whose marker was dropped by a JSONB-replace
+   upsert (see "Marker preservation" below) without waiting for a re-mirror. Bounded to the first 50
+   indices; both hit and miss are cached (`storageObjectExists` in `lib/idx/storage.ts`).
+4. Else fall back to the existing behavior: local-dev bounce to the deployed proxy, or (prod) proxy the
    just-synced source URL behind the CDN cache, or the branded self-healing placeholder.
 
 `MlsImage`'s retry/self-heal and the local-dev 302-to-deployed-CDN trick are untouched.
@@ -109,6 +115,16 @@ The mirror state lives **inside the existing `listing` jsonb** (flows through th
 - **Storage disabled (no service-role key)** → mirroring is a **safe no-op**: the cron logs nothing new,
   `fully` stays true, the watermark advances normally, and the media route keeps proxying. Data sync is
   entirely unaffected. The feature activates the moment the key is configured.
+- **Marker preservation (no service-role key)** → the `idx_sync_apply` RPC upserts with
+  `set listing = excluded.listing` (a **full JSONB replace**). A sync run that cannot mirror (no key)
+  would otherwise upsert a re-synced listing **without** `photosMirrored`, wiping the marker to null —
+  and since the signed source URL is dead by then, the already-mirrored photos would blank on the next
+  view (the reported *"first photos disappear on refresh"* bug). Fix: when mirroring is unavailable the
+  cron **carries the prior mirror prefix + ts forward** on upsert (`preservedMarker`, clamped to the
+  current photo count), so an already-mirrored gallery keeps serving from Storage even while a run
+  cannot re-mirror. Belt-and-suspenders: the media route's **wiped-marker self-heal probe** (above)
+  recovers a marker that was dropped by an older deploy. Proven on `KEY1014296` (33 photos, Storage
+  objects 0–30 present, marker `null`): before, every index → 503 placeholder; after, 0–30 → 302 Storage.
 - **Memory** → the pool holds only `concurrency` photos in flight (~4 × ~300KB); bytes are discarded
   after upload. A 50-photo listing never materializes fully in memory.
 - **Request path** → the media route makes **zero** MLS calls and (for mirrored photos) zero DB byte
@@ -118,6 +134,43 @@ The mirror state lives **inside the existing `listing` jsonb** (flows through th
   objects (harmless; RLS hides the rows so the route never serves them). A future sweep could delete
   `mls-photos/<id>/*` for ids absent from the active set. Storage is cheap relative to the risk of
   deleting a re-listed property's photos, so this is left manual/documented.
+
+## Hourly automation — what runs by itself
+
+The site keeps itself current with **zero manual steps** via a Supabase `pg_cron` job that pokes the
+deployed sync endpoint once an hour.
+
+| Piece | Value |
+|---|---|
+| Job | `cron.job` name `idx-hourly-sync`, `active = true` |
+| Schedule | `7 * * * *` — every hour at **:07** |
+| Action | `net.http_get` → `https://realtylt-website.vercel.app/api/cron/idx-sync` with the `CRON_SECRET` bearer, 10s timeout (fire-and-forget; the Vercel function runs to completion server-side) |
+| Observed cadence | **24 / 24 consecutive hourly runs `succeeded`** (measured 2026-07-18, every run exactly at HH:07:00 across the prior 24h) |
+| State | each run stamps `idx_sync_state.last_run` / `last_synced_at` (the "Data last updated" line) |
+
+**Each run is an incremental delta** — MLS Grid is asked for everything modified after the stored
+watermark, **deliberately unfiltered by status** (that is how removals are seen —
+`MlsGridClient.replicateDelta`). Per changed listing:
+
+| Change an agent / MLS makes | What the sync does | Result on the site |
+|---|---|---|
+| **New listing** appears | row is `Active` → **upsert** | shows up within the hour |
+| **Delisting** (Pending/Closed/Withdrawn, `MlgCanView=false`, or type change) | → **deactivate** (`is_active=false`) | vanishes from every surface at once (RLS serves active rows only) |
+| **Text edit** (price, remarks, beds…) | row still `Active` → **upsert** (whole `listing` JSONB) | edit is live within the hour |
+| **Photo-list change** | `modificationTimestamp` bumps → **upsert**; *with* the key, re-mirror from 0; *without*, marker preserved | photos update once the key is present; existing photos never blank meanwhile |
+
+Watermark advances **only after all writes land**, so a failed or timed-out run simply re-processes
+next tick (no gaps, no double-charges). A burst bigger than one run's page/photo budget resumes at the
+next tick via the held watermark.
+
+### Automatic **now** vs. gated on the owner key
+
+- **Automatic today (no key needed):** new listings, delistings, and text edits all flow hourly; the
+  media route serves already-mirrored photos from permanent Storage, and — with the marker-preservation
+  fix — a text/photo edit **no longer blanks existing photos** when the cron cannot mirror.
+- **Activates when `SUPABASE_SERVICE_ROLE_KEY` is added to Vercel (the one owner step):** sync-time
+  mirroring of *new/changed* photos into Storage. Until then those specific new photos fall back to the
+  (short-lived) proxy, but the absence of the key **no longer breaks** previously-mirrored photos.
 
 ## Write path & the service-role key
 
@@ -176,10 +229,13 @@ sync-mls endpoint for `< 2 req/sec` DATA pacing.
 
 ## Verification (this branch)
 
-- `lib/idx/photo-mirror.test.ts` — 24 tests: covers-first, contiguous prefix, resume/skip, change
-  detection, 429 backoff, budget bound, upload failure, no-op.
+- `lib/idx/photo-mirror.test.ts` — covers-first, contiguous prefix, resume/skip, change detection, 429
+  backoff, budget bound, upload failure, no-op, **+ `preservedMarker` (carry-forward / clamp / no-op)**.
 - `app/api/media/[id]/[idx]/route.test.ts` — storage-first 302, `X-Media-Status: storage`, persistence
-  past source-URL expiry, beyond-prefix fallback.
+  past source-URL expiry, beyond-prefix fallback, **+ wiped-marker self-heal probe (302 `storage-probe`,
+  proxy fallback on miss, no probe when the marker is present)**.
+- Full suite: **277 passed**. Live regression: `KEY1014296` indices 0/1/4/10 now `302 → storage-probe`
+  (were `503` placeholders).
 - Live (`scripts/_scratch-verify-mirror.mjs`, not committed) — against the running dev server: the media
   route 302s a mirrored index to the exact public bucket object with the storage header + SWR cache, and
   a beyond-prefix index falls back. The **byte upload + serve** leg is skipped without the service-role
