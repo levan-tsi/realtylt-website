@@ -378,3 +378,11 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## Orchestrator gotchas learned: honeypot rlt_hp matches :visible Playwright selectors
 ## (target placeholders instead); wizard schedule CTA = "Request My Call"; bottom-left "N"
 ## bubble in dev shots = Next dev-tools badge, not the chat widget.
+
+## ROUND 2026-07-18 (owner: "Show all photos" still half placeholders on >12-photo listings):
+## FULL-DEPTH-AND-POLISH Opus agent DISPATCHED — (1) make backfill skip already-mirrored
+## prefixes (anon REST read of photosMirrored), then chain bounded --cap 50 chunks to FEED
+## COMPLETE (full galleries, stop+wait on any 429 wave); (2) multi-round test-everything +
+## polish: speed probes, full-res parity vs live on all 9 pages, drive every shipped feature
+## (wizard/connect-booking/search-scoping/rails), a11y+edge rounds, until ~700k. May delete
+## dead ListingCarousel.tsx after verifying unused. Orchestrator verifies + pushes after.
