@@ -386,3 +386,19 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## polish: speed probes, full-res parity vs live on all 9 pages, drive every shipped feature
 ## (wizard/connect-booking/search-scoping/rails), a11y+edge rounds, until ~700k. May delete
 ## dead ListingCarousel.tsx after verifying unused. Orchestrator verifies + pushes after.
+
+## ROUND 2026-07-18 VERIFIED (full-depth + polish agent, commits aaa709e/de03f1e/2ac6252):
+## (1) DEFAULT SEARCH SCOPED — no-county /search now counts/lists/pins the SIX HV counties:
+## 5,402 (verified live via API + UI copy "across the Hudson Valley"); boroughs opt-in
+## unchanged (queens 4,616). (2) FULL-DEPTH galleries: skip-prefix backfill committed;
+## 1,221 listings at depth>=13 (was 0), 587 at >=25, 153,745 objects — SQL-verified; 3
+## big galleries (40/28/25 photos) zero placeholders at 1440+390. Backfill PARTIAL
+## (watermark 2026-05-29, media-host throttling waves) — orchestrator chaining chunks
+## (--cap 50 --max-pages 8 --max-listings 4000 --concurrency 3, NO --fresh) to FEED
+## COMPLETE. (3) Deep rounds: vitals CLS~0/LCP preloaded, wizard 19/19, all surfaces
+## drive clean; dead ListingCarousel deleted. tsc + 270/270 verified by orchestrator.
+## *** URGENT OWNER STEP (regressing daily): 629 fresh listings have NO photos because the
+## deployed hourly cron cannot mirror without SUPABASE_SERVICE_ROLE_KEY in the VERCEL env
+## (cron cap defaults to 50 once the key lands — full galleries automatic). 1-minute paste:
+## Vercel -> realtylt-website -> Settings -> Environment Variables. Until then: periodic
+## bounded cap-50 backfill runs cover the gap.
