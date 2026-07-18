@@ -361,8 +361,16 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## /search regression possible). HM3 why-carousel correctly NOT built (owner-gated). Flagged
 ## dead code (not deleted, surgical rule): components/idx/ListingCarousel.tsx (unused, has
 ## text-glyph arrows) — delete when convenient; TestimonialBand's ‹ › chevrons pre-existing.
-## BACKFILL: resumed post-cooldown at concurrency 3, running in background (watermark
-## 2026-05-20 → chain chunks to FEED COMPLETE; if 429s persist, wait longer between chunks).
+## BACKFILL: **FEED COMPLETE 2026-07-18** — chained 4 more chunks at concurrency 3 post-
+## cooldown (no further 429s) until the script printed FEED COMPLETE and removed the watermark
+## file. FINAL DB STATE (verified by SQL): 12,974 active listings · 12,531 covers (97%) ·
+## 11,993 beyond-cover · 12,439 full galleries (96%) · **133,944 photos in storage** (Pro
+## 100GB plan; well within). Spot-check: KEY1024370 (was covers-only) now renders 13 real
+## gallery images, first 6 confirmed 302→storage, 0 placeholders. Ongoing: the hourly cron
+## re-mirrors changed listings automatically once SUPABASE_SERVICE_ROLE_KEY is in Vercel env
+## (still the ONE remaining owner/Mac step — until then, re-run a bounded backfill chunk
+## every week or two to catch new listings: node scripts/backfill-photos.mjs --cap 12
+## --max-pages 8 --max-listings 4000 --concurrency 3).
 ## Chatbot-personalization agent QUEUED (plan in memory [[project-n8n-chatbot]]).
 ## NEXT PAGE to map for orchestrator-mode: Financing · then Home Value · Who We Are ·
 ## Connect · Top Areas county pages · deferred items (open houses, SEO listing slugs,
