@@ -402,3 +402,16 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## (cron cap defaults to 50 once the key lands — full galleries automatic). 1-minute paste:
 ## Vercel -> realtylt-website -> Settings -> Environment Variables. Until then: periodic
 ## bounded cap-50 backfill runs cover the gap.
+
+## ROUND 2026-07-18 PM (owner: listing detail must match his real page — make offer / share /
+## schedule tour / photo POP-UP; pics sometimes disappear on refresh (first 5 gone); everything
+## must auto-update hourly): LISTING-DETAIL Opus agent DISPATCHED — Mission A: click the real
+## live listing page + ours, map every clickable/modal/lightbox, close the gaps (lightbox,
+## Schedule a Tour, Make an Offer via /api/lead intents). Mission B: the disappearing-photos
+## BUG — hypothesis: prod hourly sync (no service key in Vercel) UPSERTS changed listings and
+## WIPES photosMirrored while storage objects still exist -> media route regresses to
+## placeholders; fix = preserve mirror state on upsert + storage-probe fallback in the route.
+## Mission C: verify the hourly pg_cron chain (adds/removes/edits) via idx_sync_state.last_run
+## history; fix what's broken; document what activates when the owner adds the Vercel key.
+## Orchestrator then adversarially TESTS all of it and maps leftovers for the next agent
+## (owner's standing instruction). Full-depth backfill final chunk running concurrently.
