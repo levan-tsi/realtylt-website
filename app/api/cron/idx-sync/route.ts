@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { applyIdxSync, getMirrorState, getSyncWatermark } from "@/lib/idx/db";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
-import { mirrorPhotos, type MirrorDeps } from "@/lib/idx/photo-mirror";
+import { mirrorPhotos, preservedMarker, type MirrorDeps } from "@/lib/idx/photo-mirror";
 import { storageWriteConfig, uploadPhoto, type StorageWriteConfig } from "@/lib/idx/storage";
 
 /** Hourly INCREMENTAL MLS sync into Supabase idx_listings (secret-gated).
@@ -115,8 +115,14 @@ export async function GET(req: Request) {
     let mirrorFully = true;
     let mirroredPhotos = 0;
     const cfg = storageWriteConfig();
+    // Prior mirror markers for every upserted id — needed in BOTH paths. The idx_sync_apply RPC
+    // upserts with `set listing = excluded.listing` (a full JSONB REPLACE), so any upsert that
+    // omits photosMirrored wipes the marker; we must carry it forward regardless of whether we can
+    // mirror this run.
+    const prior = delta.upserts.length
+      ? await getMirrorState(delta.upserts.map((l) => l.id))
+      : new Map<string, { mirrored: number; ts?: string }>();
     if (cfg && delta.upserts.length) {
-      const prior = await getMirrorState(delta.upserts.map((l) => l.id));
       const outcomes = await mirrorPhotos(
         delta.upserts.map((l) => ({
           id: l.id,
@@ -141,6 +147,17 @@ export async function GET(req: Request) {
         l.photosMirroredTs = o.photosMirroredTs;
         mirroredPhotos += o.uploaded;
         if (!o.fully) mirrorFully = false;
+      }
+    } else {
+      // MIRRORING UNAVAILABLE (no SUPABASE_SERVICE_ROLE_KEY server-side). Do NOT regress existing
+      // mirror markers to null: the storage objects a prior run mirrored are PERMANENT and outlive
+      // the ~1h signed-URL expiry, so preserving the marker keeps those photos serving from storage
+      // instead of blanking on the next view. See preservedMarker (photo-mirror.ts).
+      for (const l of delta.upserts) {
+        const kept = preservedMarker(l.photos.length, prior.get(l.id));
+        if (!kept) continue;
+        l.photosMirrored = kept.photosMirrored;
+        if (kept.photosMirroredTs) l.photosMirroredTs = kept.photosMirroredTs;
       }
     }
 

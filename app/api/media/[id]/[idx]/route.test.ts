@@ -5,6 +5,7 @@ import {
   resetMediaCacheForTests,
 } from "@/lib/idx/media";
 import { __resetMlsGridDataCallCount, mlsGridDataCallCount } from "@/lib/idx/mls-fetch";
+import { __resetStorageProbeCacheForTests } from "@/lib/idx/storage";
 import { GET } from "./route";
 
 const call = (id: string, idx: string) =>
@@ -26,6 +27,7 @@ function stubImage(status = 200) {
 
 beforeEach(() => {
   resetMediaCacheForTests();
+  __resetStorageProbeCacheForTests();
   __resetMlsGridDataCallCount();
   vi.stubEnv("MLS_API_KEY", "test-token");
   __seedSnapshotMediaForTests("L1", [
@@ -135,6 +137,60 @@ describe("GET /api/media/[id]/[idx] — STORAGE-FIRST (mirrored photos)", () => 
     expect(res.headers.get("X-Media-Status")).toBe("ok");
     expect(fetchMock).toHaveBeenCalledOnce();
     expect(String(fetchMock.mock.calls[0][0])).toContain("media.mlsgrid.com");
+  });
+});
+
+describe("GET /api/media/[id]/[idx] — wiped-marker self-heal (storage probe)", () => {
+  // Reproduces the reported bug: the hourly sync upserts with a full-JSONB replace, so a run without
+  // a storage-write key wipes photosMirrored (mirror marker → 0) even though the storage objects
+  // still exist and the signed source URL is long dead. The route must still serve the photo.
+  function stubHeadAndImage(headStatus: number, imageStatus = 200) {
+    const fetchMock = vi.fn(async (_url: string | URL, init?: RequestInit) => {
+      if (init?.method === "HEAD") return new Response(null, { status: headStatus });
+      if (imageStatus !== 200) return new Response("busy", { status: imageStatus });
+      return new Response(new Uint8Array([0xff, 0xd8, 0xff]), { headers: { "Content-Type": "image/jpeg" } });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    return fetchMock;
+  }
+
+  beforeEach(() => {
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    // NOTE: no __seedMirroredForTests → mirror marker is 0 (wiped), but the source URLs seeded at
+    // the top level are the (now-dead) signed URLs the proxy would otherwise fall back to.
+  });
+
+  it("probes the permanent object and redirects to storage — no media-host GET, no MLS", async () => {
+    const fetchMock = stubHeadAndImage(200); // storage object still exists
+    const res = await call("L1", "0");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe(
+      "https://proj.supabase.co/storage/v1/object/public/mls-photos/L1/0.jpg",
+    );
+    expect(res.headers.get("X-Media-Status")).toBe("storage-probe");
+    expect(res.headers.get("Cache-Control")).toContain("stale-while-revalidate");
+    // ONLY a HEAD probe — the dead source URL is never fetched, and MLS is never touched.
+    expect(fetchMock.mock.calls.every(([, init]) => (init as RequestInit)?.method === "HEAD")).toBe(true);
+    expect(mlsGridDataCallCount()).toBe(0);
+  });
+
+  it("falls back to the proxy when the storage probe misses (object truly absent)", async () => {
+    const fetchMock = stubHeadAndImage(404, 200); // no storage object, source URL still fetches
+    const res = await call("L1", "0");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("X-Media-Status")).toBe("ok");
+    const methods = fetchMock.mock.calls.map(([, init]) => (init as RequestInit)?.method ?? "GET");
+    expect(methods).toContain("HEAD"); // probed first
+    expect(fetchMock.mock.calls.some(([u]) => String(u).includes("media.mlsgrid.com"))).toBe(true);
+  });
+
+  it("does not probe when the marker is present (mirrored>0 already serves storage directly)", async () => {
+    __seedMirroredForTests("L1", 1);
+    const fetchMock = stubHeadAndImage(200);
+    const res = await call("L1", "0"); // index 0 < mirrored → direct storage, no probe needed
+    expect(res.status).toBe(302);
+    expect(res.headers.get("X-Media-Status")).toBe("storage");
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
 

@@ -41,6 +41,41 @@ export function storageWriteConfig(): StorageWriteConfig | null {
   return { base: `${url.replace(/\/+$/, "")}/storage/v1`, key };
 }
 
+// Cached existence check for a mirrored storage object (public HEAD — no key, never MLS). Lets the
+// media route heal a listing whose mirror marker was WIPED by the JSONB-replace upsert while the
+// storage objects still exist. Bounded by the caller (low indices of marker-absent listings only)
+// and by this cache (both hit AND miss are cached, so repeat views never re-HEAD).
+const objectExistsCache = new Map<string, { at: number; exists: boolean }>();
+const OBJECT_EXISTS_TTL_MS = 30 * 60 * 1000;
+const OBJECT_EXISTS_MAX = 5000;
+
+/** True when mls-photos/<id>/<idx>.jpg exists in the public bucket. Cached; false when SUPABASE_URL
+ * is unset or the object is missing. A cheap HEAD against public Storage — zero MLS Grid contact. */
+export async function storageObjectExists(id: string, idx: number): Promise<boolean> {
+  const url = publicPhotoUrl(id, idx);
+  if (!url) return false;
+  const cacheKey = `${id}/${idx}`;
+  const hit = objectExistsCache.get(cacheKey);
+  if (hit && Date.now() - hit.at < OBJECT_EXISTS_TTL_MS) return hit.exists;
+  let exists = false;
+  try {
+    const r = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(6000) });
+    exists = r.ok;
+  } catch {
+    exists = false;
+  }
+  objectExistsCache.set(cacheKey, { at: Date.now(), exists });
+  if (objectExistsCache.size > OBJECT_EXISTS_MAX) {
+    objectExistsCache.delete(objectExistsCache.keys().next().value as string);
+  }
+  return exists;
+}
+
+/** Test hook — clear the storage-existence probe cache. */
+export function __resetStorageProbeCacheForTests(): void {
+  objectExistsCache.clear();
+}
+
 /** Upload (upsert) one photo's bytes to the deterministic path. Returns true on success.
  * Uses the Storage REST API directly (same call @supabase/supabase-js makes) so it stays
  * dependency-light and easy to unit-test with an injected fetch. */

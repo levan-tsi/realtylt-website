@@ -1,5 +1,5 @@
 import { getListingMedia } from "@/lib/idx/media";
-import { publicPhotoUrl } from "@/lib/idx/storage";
+import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
 
 /** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
  * photos: the raw MediaURL must not appear on the site, and MLS's media host requires the OAuth
@@ -40,6 +40,11 @@ const IMAGE_CACHE = "public, max-age=3600, s-maxage=86400, stale-while-revalidat
 // "No photo at this index" is a stable fact too — CDN-cache it like an image (no repeat work).
 const EMPTY_CACHE = "public, max-age=300, s-maxage=3000";
 
+// How many leading indices to storage-probe when the mirror marker is absent (the wiped-marker
+// self-heal above). Matches MAX_PHOTOS (50) so a fully-wiped gallery heals end to end; each probe
+// is a cheap cached HEAD against public Storage.
+const STORAGE_PROBE_MAX = 50;
+
 function placeholder(cacheControl: string, status: "empty" | "unavailable"): Response {
   return new Response(PLACEHOLDER_SVG, {
     // "unavailable" is a TRANSIENT failure → 503 so <img onError> fires and the client
@@ -79,6 +84,25 @@ export async function GET(
       return new Response(null, {
         status: 302,
         headers: { Location: storageUrl, "Cache-Control": IMAGE_CACHE, "X-Media-Status": "storage" },
+      });
+    }
+  }
+
+  // ROUTE-SIDE RESILIENCE (docs/mls-fix/PHOTO-MIRRORING.md): the mirror marker can be WIPED even though
+  // the storage objects still exist — the hourly sync upserts with a full-JSONB replace (idx_sync_apply
+  // `set listing = excluded.listing`), so a run without a storage-write key (prod until
+  // SUPABASE_SERVICE_ROLE_KEY is added) drops photosMirrored on every re-synced listing. The signed
+  // source URL is long dead by then, so the tile would blank ("first photos disappear on refresh").
+  // When the marker says nothing is mirrored, probe the permanent public object directly for a low
+  // index (cheap, cached HEAD; never MLS) and serve it if present. Self-heals a wiped marker without
+  // waiting for a re-mirror. Bounded to STORAGE_PROBE_MAX so an unmirrored listing costs at most that
+  // many cached HEADs.
+  if (mirrored === 0 && n < STORAGE_PROBE_MAX && (await storageObjectExists(id, n))) {
+    const storageUrl = publicPhotoUrl(id, n);
+    if (storageUrl) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: storageUrl, "Cache-Control": IMAGE_CACHE, "X-Media-Status": "storage-probe" },
       });
     }
   }

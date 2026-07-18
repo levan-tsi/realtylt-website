@@ -3,6 +3,7 @@ import {
   buildQueue,
   mirrorPhotos,
   planRange,
+  preservedMarker,
   type MirrorDeps,
   type MirrorTarget,
 } from "./photo-mirror";
@@ -55,6 +56,31 @@ describe("planRange — where a listing (re)starts mirroring", () => {
   });
   it("caps end at the configured cap (covers-only mode)", () => {
     expect(planRange(target("A", 40), 1)).toEqual({ start: 0, end: 1 });
+  });
+});
+
+describe("preservedMarker — never regress an existing mirror prefix when mirroring is unavailable", () => {
+  it("carries the prior prefix + ts forward (the JSONB-replace upsert would otherwise wipe it)", () => {
+    expect(preservedMarker(33, { mirrored: 32, ts: "T1" })).toEqual({
+      photosMirrored: 32,
+      photosMirroredTs: "T1",
+    });
+  });
+  it("clamps the preserved prefix to the current photo count when the set shrank", () => {
+    expect(preservedMarker(10, { mirrored: 32, ts: "T1" })).toEqual({
+      photosMirrored: 10,
+      photosMirroredTs: "T1",
+    });
+  });
+  it("returns undefined when nothing was mirrored (leave the marker unset)", () => {
+    expect(preservedMarker(20, { mirrored: 0, ts: "T1" })).toBeUndefined();
+    expect(preservedMarker(20, undefined)).toBeUndefined();
+  });
+  it("preserves the prefix even without a prior ts (a future mirror re-checks from 0)", () => {
+    expect(preservedMarker(5, { mirrored: 3 })).toEqual({
+      photosMirrored: 3,
+      photosMirroredTs: undefined,
+    });
   });
 });
 

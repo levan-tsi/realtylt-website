@@ -86,6 +86,23 @@ export function planRange(t: MirrorTarget, cap: number): { start: number; end: n
   return { start, end };
 }
 
+/** Marker to WRITE for an upserted listing when mirroring is UNAVAILABLE this run (no storage
+ * write config, i.e. no SUPABASE_SERVICE_ROLE_KEY server-side). The sync's upsert REPLACES the
+ * whole `listing` JSONB, so omitting the mirror marker regresses it to null and the media route
+ * stops serving the permanent storage objects — blanking photos that physically still exist (the
+ * "first photos disappear on refresh" bug). The objects outlive the ~1h signed-URL expiry, so we
+ * carry the prior contiguous prefix forward, clamped to the current photo count. The prior
+ * timestamp is kept so a future mirror run (once the key is configured) re-checks change detection
+ * via planRange and re-mirrors from 0 if the photos actually changed. Returns undefined when there
+ * is nothing to preserve (never mirrored). */
+export function preservedMarker(
+  photoCount: number,
+  prior?: { mirrored: number; ts?: string },
+): { photosMirrored: number; photosMirroredTs?: string } | undefined {
+  if (!prior || prior.mirrored <= 0) return undefined;
+  return { photosMirrored: Math.min(prior.mirrored, Math.max(0, photoCount)), photosMirroredTs: prior.ts };
+}
+
 interface WorkItem {
   id: string;
   idx: number;
