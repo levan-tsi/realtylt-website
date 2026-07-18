@@ -86,12 +86,46 @@ async function downloadPhoto(url) {
   return null;
 }
 
+// Prior mirror state (contiguous count + the modificationTimestamp it was built for), anon-read
+// straight from the publicly-readable idx_listings (same projection as lib/idx/db.ts getMirrorState).
+// Chunked so the id=in.() URL stays short; unmirrored/missing ids simply do not appear in the map.
+async function fetchMirrorState(ids) {
+  const out = new Map();
+  if (!SB_URL || !SB_ANON || !ids.length) return out;
+  const CHUNK = 150;
+  for (let i = 0; i < ids.length; i += CHUNK) {
+    const chunk = ids.slice(i, i + CHUNK).map((id) => encodeURIComponent(id));
+    try {
+      const res = await fetch(
+        `${SB_URL}/rest/v1/idx_listings?id=in.(${chunk.join(",")})&select=id,mirrored:listing->photosMirrored,ts:listing->photosMirroredTs`,
+        { headers: { apikey: SB_ANON, Authorization: `Bearer ${SB_ANON}` } },
+      );
+      if (!res.ok) continue;
+      for (const r of await res.json()) {
+        out.set(r.id, { mirrored: typeof r.mirrored === "number" ? r.mirrored : 0, ts: typeof r.ts === "string" ? r.ts : undefined });
+      }
+    } catch { /* a lookup miss only costs a re-mirror from 0 — never wrong, just slower */ }
+  }
+  return out;
+}
+
 // Covers-first queue across a slice's listings, then mirror with a small worker pool.
+// Skips each listing's already-mirrored contiguous prefix when its photo list is unchanged (the
+// stored photosMirroredTs still matches the live modificationTimestamp) — otherwise re-mirrors from
+// 0. Same change-detection lib/idx/photo-mirror.ts planRange() uses for the hourly sync; the stored
+// ts is normalized through iso() so the match holds regardless of which writer last stamped the row.
 async function mirrorSlice(listings) {
-  const ranges = listings.map((l) => ({ id: l.id, end: Math.min((l.photos ?? []).length, CAP), photos: l.photos ?? [] }));
+  const prior = await fetchMirrorState(listings.map((l) => l.id));
+  const ranges = listings.map((l) => {
+    const photos = l.photos ?? [];
+    const end = Math.min(photos.length, CAP);
+    const p = prior.get(l.id);
+    const start = p && p.ts && iso(p.ts) === l.modificationTimestamp ? Math.min(p.mirrored, end) : 0;
+    return { id: l.id, start, end, photos };
+  });
   const maxEnd = ranges.reduce((m, r) => Math.max(m, r.end), 0);
   const queue = [];
-  for (let d = 0; d < maxEnd; d++) for (const r of ranges) if (d < r.end) queue.push({ id: r.id, idx: d, url: r.photos[d] });
+  for (let d = 0; d < maxEnd; d++) for (const r of ranges) if (d >= r.start && d < r.end) queue.push({ id: r.id, idx: d, url: r.photos[d] });
   const ok = new Set();
   let cursor = 0;
   let downloaded = 0;
@@ -108,12 +142,14 @@ async function mirrorSlice(listings) {
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-  // Contiguous prefix per listing.
-  return ranges.map((r) => {
-    let n = 0;
+  // Contiguous prefix per listing — starts at the skipped prefix (already confirmed in storage).
+  const outcomes = ranges.map((r) => {
+    let n = r.start;
     while (n < r.end && ok.has(`${r.id}:${n}`)) n++;
     return { id: r.id, photosMirrored: n };
   });
+  const skipped = ranges.reduce((s, r) => s + r.start, 0);
+  return { outcomes, fetched: queue.length, skipped, downloaded };
 }
 
 async function rpc(body) {
@@ -147,7 +183,7 @@ for (;;) {
   if (listingsSeen + listings.length > MAX_LISTINGS) listings = listings.slice(0, MAX_LISTINGS - listingsSeen);
   listingsSeen += listings.length;
 
-  const outcomes = await mirrorSlice(listings);
+  const { outcomes, fetched, skipped, downloaded } = await mirrorSlice(listings);
   const byId = new Map(outcomes.map((o) => [o.id, o]));
   for (const l of listings) {
     const o = byId.get(l.id);
@@ -160,7 +196,7 @@ for (;;) {
     for (let i = 0; i < listings.length; i += 50) await rpc({ _upserts: listings.slice(i, i + 50) });
   }
 
-  console.log(`slice: kept ${slice.kept}, took ${listings.length}, mirrored ${listings.reduce((s, l) => s + l.photosMirrored, 0)} photos, watermark ${slice.watermark}${slice.complete ? " — FEED COMPLETE" : ""}`);
+  console.log(`slice: kept ${slice.kept}, took ${listings.length}, mirrored ${listings.reduce((s, l) => s + l.photosMirrored, 0)} photos (skipped ${skipped} already-mirrored, fetched ${fetched}, downloaded ${downloaded}), watermark ${slice.watermark}${slice.complete ? " — FEED COMPLETE" : ""}`);
 
   if (slice.complete) { console.log("feed complete — full inventory scanned."); rmSync(RESUME_FILE, { force: true }); break; }
   if (slice.watermark === watermark) throw new Error("watermark did not advance — aborting");
