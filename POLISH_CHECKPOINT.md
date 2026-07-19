@@ -403,6 +403,25 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## Vercel -> realtylt-website -> Settings -> Environment Variables. Until then: periodic
 ## bounded cap-50 backfill runs cover the gap.
 
+## ROUND 2026-07-19 (owner: search page must behave like live — ~35/page with the MAP showing
+## THAT page's listings, page 2 swaps both; card design gaps; photos flaky): ORCHESTRATOR
+## MAPPED LIVE with Playwright (docs/_audit/search-parity/): live = 4,770 found · 35-36
+## cards/page · 2-col grid · bootpag « 1..6 » windowed · map shows the LOADED PAGES' listings
+## as floored PRICE CHIPS ($875K/$1.30m — accumulates across pages) · "All Listings" quick
+## filter (All/Open Houses/New Listings/Price Reduced) · card = photo + white body (price+stats
+## one line, italic address, "Listed with <agent> of <office>" + OneKey logo, heart bottom-right,
+## black status chips; no-photo fallback = map thumbnail, which we deliberately DON'T copy —
+## zip-centroid coords). Ours before: 12/page × 449 pages, viewport-cluster map (near-empty at
+## HV frame), 8× media 503s on first paint (fresh-listing mirror gap). Work order committed:
+## docs/parity/PARITY-search.md (36/page scoped to search; page-coupled REPLACE-mode price
+## chips both Leaflet+Google; chip→card highlight; card polish; quick filter minus
+## Price-Reduced (fields not replicated); lightbox/tour/offer Mission A on listing detail —
+## still owed from 2026-07-18 PM, agent then only shipped Missions B+C).
+## STATE: Opus BUILD AGENT DISPATCHED (full ~700k, no early stop, MLS/security/push forbidden,
+## backfill running concurrently — cap-50 chunk resumed from 2026-07-18 13:29 watermark).
+## NEXT: orchestrator adversarial VERIFY (re-map vs live shots, break modals/pagination/map,
+## tsc+tests foreground), fix/re-dispatch as needed, update this file, push.
+
 ## ROUND 2026-07-18 PM (owner: listing detail must match his real page — make offer / share /
 ## schedule tour / photo POP-UP; pics sometimes disappear on refresh (first 5 gone); everything
 ## must auto-update hourly): LISTING-DETAIL Opus agent DISPATCHED — Mission A: click the real
