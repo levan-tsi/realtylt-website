@@ -9,7 +9,9 @@ import { formatPrice, isLiveMlsPhoto, ListingCard, NoPhoto } from "@/components/
 import { MlsImage } from "@/components/idx/MlsImage";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { ShareButton } from "@/components/idx/ShareButton";
+import { ListingGallery } from "@/components/idx/ListingGallery";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 import { Reveal } from "@/components/ui/Reveal";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
@@ -184,77 +186,100 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         meta={{ address: l.address, city: l.city, price: l.price, beds: l.beds }}
       />
 
-      {/* ── Gallery */}
+      {/* ── Gallery (photos open a full-screen lightbox; the <details> below keeps the no-JS
+          "show all photos" fallback working). */}
       <section className="bg-ink" aria-label="Photos">
-        {/* With ≤1 photo there are no thumbnails — let the main tile span the row instead
-            of leaving a black void beside the placeholder. */}
-        <div
-          className={`mx-auto grid max-w-7xl gap-1.5 px-0 lg:px-8 lg:py-6 ${
-            photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
-          }`}
-        >
-          {/* Cap the band on desktop so price/facts sit inside the first viewport (live
-              parity — "opening a listing" must show the home AND its numbers, not only pics). */}
+        <ListingGallery photos={photos} address={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}>
+          {/* With ≤1 photo there are no thumbnails — let the main tile span the row instead
+              of leaving a black void beside the placeholder. */}
           <div
-            className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
-              photos.length > 1 ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]" : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
+            className={`mx-auto grid max-w-7xl gap-1.5 px-0 lg:px-8 lg:py-6 ${
+              photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
             }`}
           >
-            {photos.length > 0 ? (
-              isLiveMlsPhoto(photos[0]) ? (
-                <MlsImage src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} priority sizes="(max-width: 768px) 100vw, 60vw" />
+            {/* Cap the band on desktop so price/facts sit inside the first viewport (live
+                parity — "opening a listing" must show the home AND its numbers, not only pics). */}
+            <div
+              className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
+                photos.length > 1 ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]" : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
+              }`}
+            >
+              {photos.length > 0 ? (
+                isLiveMlsPhoto(photos[0]) ? (
+                  <MlsImage src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} priority sizes="(max-width: 768px) 100vw, 60vw" />
+                ) : (
+                  <Image src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} fill priority sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
+                )
               ) : (
-                <Image src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} fill priority sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
-              )
-            ) : (
-              <NoPhoto />
-            )}
-            <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
-            {l.status !== "Active" && (
-              <span className="absolute left-4 top-4 bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
-                {l.status}
-              </span>
+                <NoPhoto />
+              )}
+              <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
+              {l.status !== "Active" && (
+                <span className="absolute left-4 top-4 z-[6] bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+                  {l.status}
+                </span>
+              )}
+              {/* Transparent trigger — keyboard + mouse open the lightbox (delegated). */}
+              {photos.length > 0 && (
+                <button
+                  type="button"
+                  data-lightbox-index={0}
+                  aria-label={`View all ${photos.length} photo${photos.length === 1 ? "" : "s"} full screen`}
+                  className="absolute inset-0 z-[5] cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper"
+                />
+              )}
+            </div>
+            {photos.length > 1 && (
+              <div className="hidden grid-rows-3 gap-1.5 md:grid">
+                {photos.slice(1, 4).map((p, i) => (
+                  <div
+                    key={p + i}
+                    data-lightbox-index={i + 1}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View photo ${i + 2} full screen`}
+                    className="photo-zoom relative cursor-zoom-in overflow-hidden rounded-[2px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper"
+                  >
+                    {isLiveMlsPhoto(p) ? (
+                      <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="30vw" />
+                    ) : (
+                      <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" className="object-cover" />
+                    )}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
+          {/* Full gallery — native <details> so it works without JS. Desktop already shows
+              photos 1–4 above, so its grid hides the first three tiles; mobile shows every
+              photo from #2 on. Off-screen tiles lazy-load through the CDN-cached proxy. */}
           {photos.length > 1 && (
-            <div className="hidden grid-rows-3 gap-1.5 md:grid">
-              {photos.slice(1, 4).map((p, i) => (
-                <div key={p + i} className="photo-zoom relative overflow-hidden rounded-[2px]">
-                  {isLiveMlsPhoto(p) ? (
-                    <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="30vw" />
-                  ) : (
-                    <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" className="object-cover" />
-                  )}
-                </div>
-              ))}
-            </div>
+            <details className="group mx-auto max-w-7xl px-0 pb-3 lg:px-8 lg:pb-6">
+              <summary className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden">
+                <span className="group-open:hidden">Show all {photos.length} photos</span>
+                <span className="hidden group-open:inline">Hide photos</span>
+              </summary>
+              <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
+                {photos.slice(1).map((p, i) => (
+                  <div
+                    key={p + i}
+                    data-lightbox-index={i + 1}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View photo ${i + 2} full screen`}
+                    className={`photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px] ${i < 3 ? "md:hidden" : ""}`}
+                  >
+                    {isLiveMlsPhoto(p) ? (
+                      <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="(max-width: 768px) 50vw, 33vw" />
+                    ) : (
+                      <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </details>
           )}
-        </div>
-        {/* Full gallery — native <details> so it works without JS. Desktop already shows
-            photos 1–4 above, so its grid hides the first three tiles; mobile shows every
-            photo from #2 on. Off-screen tiles lazy-load through the CDN-cached proxy. */}
-        {photos.length > 1 && (
-          <details className="group mx-auto max-w-7xl px-0 pb-3 lg:px-8 lg:pb-6">
-            <summary className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden">
-              <span className="group-open:hidden">Show all {photos.length} photos</span>
-              <span className="hidden group-open:inline">Hide photos</span>
-            </summary>
-            <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
-              {photos.slice(1).map((p, i) => (
-                <div
-                  key={p + i}
-                  className={`photo-zoom relative aspect-[3/2] overflow-hidden md:rounded-[2px] ${i < 3 ? "md:hidden" : ""}`}
-                >
-                  {isLiveMlsPhoto(p) ? (
-                    <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="(max-width: 768px) 50vw, 33vw" />
-                  ) : (
-                    <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </details>
-        )}
+        </ListingGallery>
       </section>
 
       {/* ── Facts + contact */}
@@ -394,7 +419,19 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           <Reveal delay={100}>
             <aside className="lg:sticky lg:top-24">
               <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-7">
-                <div className="flex items-center gap-4">
+                {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
+                <ListingLeadCTAs
+                  listing={{
+                    id: l.id,
+                    address: l.address,
+                    city: l.city,
+                    state: l.state,
+                    zip: l.zip,
+                    price: l.price,
+                    mlsNumber,
+                  }}
+                />
+                <div className="mt-6 flex items-center gap-4">
                   <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-ink/10">
                     <Image
                       src="/images/levan-portrait.jpg"
