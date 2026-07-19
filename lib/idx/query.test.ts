@@ -1,7 +1,22 @@
 import { describe, expect, it } from "vitest";
-import { inBounds, parseBounds } from "./query";
+import { inBounds, parseBounds, parseFilterParams } from "./query";
 
 const q = (s: string) => new URLSearchParams(s);
+
+describe("parseFilterParams — newDays (New Listings quick filter)", () => {
+  it("parses a positive window", () => {
+    expect(parseFilterParams(q("newDays=7")).newWithinDays).toBe(7);
+  });
+  it("clamps an absurd window to 90 days", () => {
+    expect(parseFilterParams(q("newDays=99999")).newWithinDays).toBe(90);
+  });
+  it("ignores absent / zero / negative / non-numeric values", () => {
+    expect(parseFilterParams(q("")).newWithinDays).toBeUndefined();
+    expect(parseFilterParams(q("newDays=0")).newWithinDays).toBeUndefined();
+    expect(parseFilterParams(q("newDays=-5")).newWithinDays).toBeUndefined();
+    expect(parseFilterParams(q("newDays=abc")).newWithinDays).toBeUndefined();
+  });
+});
 
 describe("parseBounds", () => {
   it("parses a full valid box", () => {

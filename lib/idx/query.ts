@@ -26,6 +26,12 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     bathsMin: num(q.get("bathsMin")),
     sqftMin: num(q.get("sqftMin")),
     propertyType: type && TYPES.includes(type) ? type : undefined,
+    // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
+    // for an absurd range.
+    newWithinDays: (() => {
+      const d = num(q.get("newDays"));
+      return d && d > 0 ? Math.min(d, 90) : undefined;
+    })(),
   };
 }
 

@@ -23,10 +23,12 @@ export class FixtureIdxClient implements IdxClient {
       bathsMin,
       sqftMin,
       propertyType,
+      newWithinDays,
       sort = "newest",
       page = 1,
       pageSize = DEFAULT_PAGE_SIZE,
     } = params;
+    const newSince = newWithinDays ? Date.now() - newWithinDays * 86_400_000 : null;
 
     let out = this.listings.filter((l) => {
       if (county) {
@@ -41,6 +43,7 @@ export class FixtureIdxClient implements IdxClient {
       if (bathsMin != null && l.baths < bathsMin) return false;
       if (sqftMin != null && l.sqft < sqftMin) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
+      if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       if (q) {
         const needle = q.trim().toLowerCase();
         if (needle) {

@@ -9,6 +9,6 @@ export default defineConfig({
   // lib/blog/markdown.tsx itself, so tell esbuild to emit the automatic runtime.
   esbuild: { jsx: "automatic" },
   test: {
-    include: ["lib/**/*.test.ts", "app/**/*.test.ts"],
+    include: ["lib/**/*.test.ts", "app/**/*.test.ts", "components/**/*.test.ts"],
   },
 });

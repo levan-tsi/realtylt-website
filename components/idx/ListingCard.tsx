@@ -69,6 +69,12 @@ export function ListingCard({
   const isNew = Date.now() - Date.parse(l.listedAt) < 7 * 86_400_000;
   const badge =
     l.status !== "Active" ? l.status : l.openHouse ? "Open House" : isNew ? "New" : null;
+  // Live search cards can stack up to two status chips side by side (e.g. "Coming Soon" + "New").
+  const chips = (
+    [l.status !== "Active" ? l.status : null, l.openHouse ? "Open House" : null, isNew ? "New" : null].filter(
+      Boolean,
+    ) as string[]
+  ).slice(0, 2);
   // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed".
   const statsLong = specParts(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft." }).join(" • ");
   const statsShort = specParts(l, { bed: "bd", bath: "ba", sqft: "sqft" }).join(" | ");
@@ -103,12 +109,18 @@ export function ListingCard({
           ) : (
             <NoPhoto />
           )}
-          {badge && (
-            <span className="absolute left-0 top-3 bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper">
-              {badge}
-            </span>
+          {chips.length > 0 && (
+            <div className="absolute left-0 top-3 flex gap-px">
+              {chips.map((c) => (
+                <span
+                  key={c}
+                  className="bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           )}
-          <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         </div>
         <div className="p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
@@ -119,9 +131,20 @@ export function ListingCard({
           <p className="text-sm italic text-ink-soft">
             {l.city}, {l.state} {l.zip}
           </p>
-          <p className="mt-2 text-[11px] text-stone">
-            Listed with <span className="font-bold">{l.listOfficeName}</span>
-          </p>
+          {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
+          <div className="mt-2 flex items-end justify-between gap-2">
+            <p className="text-[11px] leading-snug text-stone">
+              Listed with{" "}
+              {l.listAgentName ? (
+                <>
+                  <span className="font-bold text-ink-soft">{l.listAgentName}</span> of {l.listOfficeName}
+                </>
+              ) : (
+                <span className="font-bold text-ink-soft">{l.listOfficeName}</span>
+              )}
+            </p>
+            <FavoriteButton id={l.id} tone="onLight" className="group relative z-20 -mb-1 -mr-1 shrink-0" />
+          </div>
         </div>
       </article>
     );

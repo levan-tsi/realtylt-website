@@ -7,9 +7,9 @@ import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { useSaved } from "@/components/auth/SavedProvider";
-import { boundsForCounty } from "@/components/idx/county-bounds";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
-import type { Listing, MapBounds, MapPin } from "@/lib/idx/types";
+import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
+import type { Listing, MapPin } from "@/lib/idx/types";
 
 // Official Google Maps when the key is configured (live-site parity); Leaflet/OSM
 // fallback otherwise. NEXT_PUBLIC_ vars are inlined at build, so only one chunk loads.
@@ -52,10 +52,15 @@ interface Filters {
   bathsMin: string;
   sqftMin: string;
   propertyType: string;
+  /** Count-line quick filter (live realtylt.com): "all" or "new" (listed ≤7 days). */
+  quick: "all" | "new";
   sort: string;
   page: number;
   view: "grid" | "map";
 }
+
+/** "New Listings" quick filter window — matches the card's "New" badge (≤7 days). */
+const NEW_LISTING_DAYS = 7;
 
 const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 3000].map(
   (k) => k * 1000,
@@ -72,6 +77,7 @@ function fromParams(sp: URLSearchParams): Filters {
     bathsMin: sp.get("bathsMin") ?? "",
     sqftMin: sp.get("sqftMin") ?? "",
     propertyType: sp.get("propertyType") ?? "",
+    quick: sp.get("quick") === "new" ? "new" : "all",
     sort: sp.get("sort") ?? "newest",
     page: Math.max(1, Number(sp.get("page")) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
@@ -83,6 +89,9 @@ function toQuery(f: Filters, forApi: boolean): string {
   const sp = new URLSearchParams();
   for (const [k, v] of Object.entries(f)) {
     if (k === "view" && (forApi || v === "map")) continue; // hybrid (map) is the default view
+    // `quick` never goes to the API verbatim (it's translated to newDays in the fetch), and
+    // stays out of the URL when it's the default "all".
+    if (k === "quick" && (forApi || v === "all")) continue;
     if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "newest" && forApi === false))
       continue;
     sp.set(k, String(v));
@@ -90,16 +99,8 @@ function toQuery(f: Filters, forApi: boolean): string {
   return sp.toString();
 }
 
-/** Filter fields only (no page/sort/view) — the /api/idx/pins query: the map shows the
- * ENTIRE filtered result set, independent of grid pagination. */
-const FILTER_KEYS = ["q", "county", "priceMin", "priceMax", "bedsMin", "bathsMin", "sqftMin", "propertyType"] as const;
-function filterQuery(f: Filters): string {
-  const sp = new URLSearchParams();
-  for (const k of FILTER_KEYS) if (f[k]) sp.set(k, f[k]);
-  return sp.toString();
-}
-
-/** Current-page fallback pins while the full pin set loads. */
+/** Project the current page's listings to slim map pins — the results map is PAGE-COUPLED
+ * (owner's ask): it plots exactly these homes as price chips, swapping when the page does. */
 const toPin = (l: Listing): MapPin => ({
   id: l.id,
   price: l.price,
@@ -125,10 +126,12 @@ export function SearchClient() {
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [savedNote, setSavedNote] = useState("");
   const { saveSearch, signedIn } = useSaved();
-  const [pins, setPins] = useState<MapPin[] | null>(null);
-  const [pinsTotal, setPinsTotal] = useState(0);
-  // Current map viewport, reported by the map on load and every pan/zoom-end.
-  const [bounds, setBounds] = useState<MapBounds | null>(null);
+  // Chip ↔ card highlight: clicking a map price chip scrolls to and highlights its card;
+  // hovering/focusing a card highlights its chip. Shared so panel and map stay in sync.
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const cardRefs = useRef<Map<string, HTMLLIElement | null>>(new Map());
+  const panelRef = useRef<HTMLUListElement>(null); // the scrollable results column (map view)
+  const resultsTopRef = useRef<HTMLDivElement>(null); // sentinel above the results
   // NYC boroughs sit behind a secondary expander so the default view stays scoped to the six
   // Hudson Valley counties. Force it open when a borough is the active filter (e.g. a
   // ?county=brooklyn deep link from /who-we-are) so the active chip is always visible.
@@ -136,19 +139,10 @@ export function SearchClient() {
   const boroughActive = (BOROUGH_CHIPS as string[]).includes(filters.county);
   const showBoroughs = boroughsOpen || boroughActive;
 
-  const apply = useCallback(
-    (patch: Partial<Filters>) => {
-      setFilters((prev) => {
-        const next = { ...prev, ...patch, page: patch.page ?? 1 };
-        // Sync the URL AFTER commit — calling router.replace inside the reducer updates the
-        // Router while SearchClient is rendering (a React setState-in-render error).
-        const qs = toQuery(next, false);
-        setTimeout(() => router.replace(`/search${qs ? `?${qs}` : ""}`, { scroll: false }), 0);
-        return next;
-      });
-    },
-    [router],
-  );
+  const apply = useCallback((patch: Partial<Filters>) => {
+    // Any filter change resets to page 1 unless the patch names a page (view toggle keeps it).
+    setFilters((prev) => ({ ...prev, ...patch, page: patch.page ?? 1 }));
+  }, []);
 
   // Re-sync when the URL changes underneath us (header "Search Listings" click,
   // browser Back/Forward) — state only seeds from the URL once on mount otherwise.
@@ -158,10 +152,26 @@ export function SearchClient() {
     setFilters((prev) => (toQuery(prev, false) === toQuery(next, false) ? prev : next));
   }, [searchParams]);
 
+  // Reflect the committed filters into the URL — a post-commit effect (never updates the
+  // Router mid-render) keyed on the serialized query, so it writes exactly once per real
+  // change and can't loop with the re-sync effect above. Reads window.location directly to
+  // avoid comparing against a stale searchParams closure.
+  const filtersQs = toQuery(filters, false);
+  useEffect(() => {
+    const urlQs = toQuery(fromParams(new URLSearchParams(window.location.search)), false);
+    if (filtersQs !== urlQs) router.replace(`/search${filtersQs ? `?${filtersQs}` : ""}`, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtersQs]);
+
   useEffect(() => {
     let cancelled = false;
     setState("loading");
-    fetch(`/api/idx/search?${toQuery(filters, true)}`)
+    // Search page shows a fuller 36-per-page grid (live parity); the "New Listings" quick
+    // filter maps to a server-side listed-within-N-days filter.
+    const api = new URLSearchParams(toQuery(filters, true));
+    api.set("pageSize", String(SEARCH_PAGE_SIZE));
+    if (filters.quick === "new") api.set("newDays", String(NEW_LISTING_DAYS));
+    fetch(`/api/idx/search?${api.toString()}`)
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
         return r.json() as Promise<ApiResult>;
@@ -177,39 +187,21 @@ export function SearchClient() {
     };
   }, [filters]);
 
-  // Viewport-scoped pins for the map: only the listings inside the current map box
-  // (capped server-side), so a dense borough loads a small, fast payload instead of every
-  // match. Re-fetched — debounced — whenever the filters change OR the map pans/zooms.
-  // AbortController drops superseded requests, so a fast pan never leaves stale pins.
-  // Until the first fetch lands (or if it fails) the map falls back to the current page's
-  // card pins. The county frame (fitBounds) drives the initial box.
-  const pinsQuery = filterQuery(filters);
-  const fitBounds = useMemo(() => boundsForCounty(filters.county), [filters.county]);
+  // Chip → card: scroll the card into view and flag it active.
+  const focusCard = useCallback((id: string) => {
+    setActiveId(id);
+    cardRefs.current.get(id)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, []);
+
+  // Page change scrolls the results back to the top (live parity — paging never opens a page
+  // mid-list). In map view the results column is its own scroll container; in grid view the
+  // window scrolls, so bring the results region into view.
   useEffect(() => {
-    if (filters.view !== "map" || !bounds) return;
-    const sp = new URLSearchParams(pinsQuery);
-    sp.set("north", bounds.north.toFixed(5));
-    sp.set("south", bounds.south.toFixed(5));
-    sp.set("east", bounds.east.toFixed(5));
-    sp.set("west", bounds.west.toFixed(5));
-    const ctrl = new AbortController();
-    const t = window.setTimeout(() => {
-      fetch(`/api/idx/pins?${sp.toString()}`, { signal: ctrl.signal })
-        .then((r) => {
-          if (!r.ok) throw new Error(String(r.status));
-          return r.json() as Promise<{ pins: MapPin[]; total: number }>;
-        })
-        .then((data) => {
-          setPins(data.pins);
-          setPinsTotal(data.total);
-        })
-        .catch(() => {}); // abort or error — keep prior pins
-    }, 350);
-    return () => {
-      window.clearTimeout(t);
-      ctrl.abort();
-    };
-  }, [filters.view, pinsQuery, bounds]);
+    if (!result) return;
+    if (panelRef.current) panelRef.current.scrollTop = 0;
+    resultsTopRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result?.page]);
 
   function onSaveSearch() {
     const parts = [
@@ -228,6 +220,27 @@ export function SearchClient() {
   }
 
   const listings = result?.listings ?? [];
+  // Page-coupled map pins — exactly this page's located listings (owner's core ask).
+  const mapPins = useMemo(() => listings.map(toPin).filter((p) => p.lat && p.lng), [listings]);
+
+  // One card renderer for both branches — carries the ref (chip→card scroll) and the
+  // hover/focus↔chip highlight. In grid view the highlight is harmless (no map).
+  const renderCard = (l: Listing) => (
+    <li
+      key={l.id}
+      ref={(el) => {
+        cardRefs.current.set(l.id, el);
+      }}
+      onMouseEnter={() => setActiveId(l.id)}
+      onMouseLeave={() => setActiveId((cur) => (cur === l.id ? null : cur))}
+      onFocus={() => setActiveId(l.id)}
+      className={`scroll-mt-4 rounded-[2px] transition-shadow ${
+        activeId === l.id ? "ring-2 ring-porchlight-deep ring-offset-2" : ""
+      }`}
+    >
+      <ListingCard listing={l} variant="plain" />
+    </li>
+  );
 
   const renderChip = (slug: CountySlug) => {
     const area = SERVED_AREAS.find((c) => c.slug === slug)!;
@@ -379,16 +392,38 @@ export function SearchClient() {
         )}
       </div>
 
-      {/* ── Result meta row — live: light gray strip, "N listings found" left, Sort By right */}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-4 bg-mist px-4 py-2.5">
-        <p className="text-sm text-stone" role="status">
-          {state === "loading" ? "Searching…" : state === "error" ? "" : (
-            <strong className="font-bold text-ink">
-              {(result?.total ?? 0).toLocaleString()} listings
-              {filters.county ? " found" : " across the Hudson Valley"}
-            </strong>
-          )}
-        </p>
+      {/* ── Result meta row — live: light gray strip, "N listings found" + quick filter left,
+          Sort By + view toggle right */}
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 bg-mist px-4 py-2.5">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <p className="text-sm text-stone" role="status">
+            {state === "loading" ? "Searching…" : state === "error" ? "" : (
+              <strong className="font-bold text-ink">
+                {(result?.total ?? 0).toLocaleString()} listings
+                {filters.county || filters.quick === "new" ? " found" : " across the Hudson Valley"}
+              </strong>
+            )}
+          </p>
+          {/* Quick filter (live: "All Listings ˅"). Open Houses + Price Reduced are omitted —
+              our OneKey feed doesn't replicate the OpenHouse resource or a price-drop field. */}
+          <div role="group" aria-label="Quick filter" className="flex items-center gap-1">
+            {([["all", "All Listings"], ["new", "New Listings"]] as const).map(([val, label]) => (
+              <button
+                key={val}
+                type="button"
+                aria-pressed={filters.quick === val}
+                onClick={() => apply({ quick: val })}
+                className={`px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                  filters.quick === val
+                    ? "text-ink underline decoration-2 underline-offset-4"
+                    : "text-stone hover:text-ink"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
           <label htmlFor="f-sort" className="text-xs font-bold uppercase tracking-[0.12em] text-stone">
             Sort By
@@ -417,6 +452,9 @@ export function SearchClient() {
           </div>
         </div>
       </div>
+
+      {/* Scroll anchor — paging brings this back into view (see the page-change effect). */}
+      <div ref={resultsTopRef} className="scroll-mt-4" aria-hidden />
 
       {/* ── Results */}
       {state === "error" ? (
@@ -456,36 +494,21 @@ export function SearchClient() {
         </div>
       ) : filters.view === "map" ? (
         <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <ul className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}>
-            {listings.map((l) => (
-              <li key={l.id}>
-                <ListingCard listing={l} variant="plain" />
-              </li>
-            ))}
+          <ul
+            ref={panelRef}
+            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
+          >
+            {listings.map(renderCard)}
           </ul>
-          <div className="relative h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
-            <MapView
-              pins={pins ?? listings.map(toPin)}
-              fitBounds={fitBounds}
-              onBoundsChange={setBounds}
-            />
-            {pins && pinsTotal > pins.length && (
-              <p
-                role="status"
-                className="pointer-events-none absolute left-1/2 top-2 z-[500] max-w-[calc(100%-1rem)] -translate-x-1/2 border border-[#dddddd] bg-white/95 px-2.5 py-1.5 text-center text-[11px] font-medium text-ink-soft"
-              >
-                Showing {pins.length.toLocaleString()} of {pinsTotal.toLocaleString()} homes here. Zoom in to see all.
-              </p>
-            )}
+          {/* On mobile the map leads (order-first) so it's visible without scrolling past a
+              long 36-card list; on desktop it sticks beside the results column. */}
+          <div className="relative order-first h-[55vh] overflow-hidden border border-[#dddddd] lg:order-none lg:sticky lg:top-4 lg:h-[75vh]">
+            <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
           </div>
         </div>
       ) : (
         <ul className={`mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}>
-          {listings.map((l) => (
-            <li key={l.id}>
-              <ListingCard listing={l} variant="plain" />
-            </li>
-          ))}
+          {listings.map(renderCard)}
         </ul>
       )}
 

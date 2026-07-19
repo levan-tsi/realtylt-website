@@ -8,6 +8,11 @@ export type PropertyType = "Residential" | "Multi-Family";
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
 export const MAX_PAGE_SIZE = 100;
+/** The /search results grid paints a fuller page than the portal/home rails — live
+ * realtylt.com shows 35-36 per page (a clean 2-column grid) with the map coupled to that
+ * page. Scoped to the search surface via an explicit pageSize param so the 12-per-rail
+ * default is never inflated elsewhere. */
+export const SEARCH_PAGE_SIZE = 36;
 
 export type ListingStatus = "Active" | "Coming Soon" | "Pending";
 
@@ -98,6 +103,8 @@ export interface SearchParams {
   bathsMin?: number;
   sqftMin?: number;
   propertyType?: PropertyType;
+  /** "New Listings" quick filter — keep only rows listed within the last N days. */
+  newWithinDays?: number;
   sort?: SortKey;
   page?: number; // 1-based
   pageSize?: number; // default 12

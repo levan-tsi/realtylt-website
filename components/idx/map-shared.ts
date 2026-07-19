@@ -1,75 +1,95 @@
 import type { MapBounds, MapPin } from "@/lib/idx/types";
 
-/** Shared map math — used by both the Leaflet fallback and the Google Maps view. */
+/** Shared map math — used by both the Leaflet fallback and the Google Maps view.
+ * The results map is PAGE-COUPLED: it plots exactly the current page's listings as black
+ * price chips (owner's ask — "the map shows that page's homes; page 2 swaps both"), so no
+ * clustering or viewport refetch. Same-zip listings share a centroid, so `spreadPins` fans
+ * them out deterministically and the chip labels are FLOORED like live ($875K / $1.3M). */
 
-/** Props both map engines accept — pins to plot, the frame to fit when the county
- * changes, and a callback fired with the current viewport box on load + every settle. */
+/** Props both map engines accept. `pins` is the current page's listings; clicking a chip
+ * calls `onSelect(id)` so the results panel can scroll to and highlight that card;
+ * `selectedId` highlights the matching chip when a card is hovered/focused. */
 export interface MapViewProps {
   pins: MapPin[];
-  fitBounds: MapBounds;
-  onBoundsChange: (b: MapBounds) => void;
+  selectedId?: string | null;
+  onSelect?: (id: string) => void;
 }
 
 export const MAP_FONT = "Lato,Helvetica,Arial,sans-serif";
-/** Stop clustering at street-ish zoom — pins are individually readable there. */
-export const SINGLES_ZOOM = 15;
 
-export function shortPrice(n: number): string {
-  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(n % 1_000_000 >= 50_000 ? 2 : 1).replace(/\.0+$/, "")}M`;
-  return `$${Math.round(n / 1000)}K`;
+/** Chip price label — FLOORED like live realtylt.com (never rounds up): `$875K` under $1M,
+ * `$1.3M` / `$4.79M` over (up to 3 significant figures, trailing zeros trimmed). */
+export function chipPrice(n: number): string {
+  if (!Number.isFinite(n) || n <= 0) return "$0";
+  if (n >= 1_000_000) {
+    const m = Math.floor(n / 10_000) / 100; // floor to 2 decimals of millions (3 sig figs)
+    return `$${m.toFixed(2).replace(/\.?0+$/, "")}M`;
+  }
+  return `$${Math.floor(n / 1000)}K`;
 }
 
-export interface Cluster {
-  lat: number;
-  lng: number;
-  count: number;
-  members: MapPin[];
-}
+/** Deterministic golden-angle spiral so listings sharing a zip-centroid don't stack into
+ * one unclickable chip. Coordinates are approximate (zip-centroid) already, so a small fan
+ * out is honest; the "Locations approximate" badge stays. Single-occupant coordinates are
+ * returned untouched. Offsets are seeded by stable id order, so they never jitter between
+ * renders. */
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5)); // ≈ 2.39996 rad
+const SPIRAL_STEP_DEG = 0.0016; // ≈ 175m per √ring at NY latitude — inside a zip's footprint
 
-/** Grid-bin pins at ~84px cells for the zoom (256·2^z px world → 84·360/(256·2^z) deg),
- * then greedily merge groups whose centroids land within ~a cell of a bigger one —
- * grid edges otherwise put two centroids arbitrarily close and the count circles
- * overlap (seen live at 3.8k pins: one cluster's circle intercepted another's clicks). */
-export function clusterize(pins: MapPin[], zoom: number): { clusters: Cluster[]; singles: MapPin[] } {
-  if (zoom >= SINGLES_ZOOM) return { clusters: [], singles: pins };
-  const cell = 84 / 2 ** zoom;
-  const bins = new Map<string, MapPin[]>();
+export function spreadPins(pins: MapPin[]): MapPin[] {
+  const groups = new Map<string, MapPin[]>();
   for (const p of pins) {
-    const key = `${Math.floor(p.lat / cell)}:${Math.floor(p.lng / cell)}`;
-    const bin = bins.get(key);
+    const key = `${p.lat.toFixed(5)}:${p.lng.toFixed(5)}`;
+    const bin = groups.get(key);
     if (bin) bin.push(p);
-    else bins.set(key, [p]);
+    else groups.set(key, [p]);
   }
-  const centroid = (members: MapPin[]) => ({
-    lat: members.reduce((s, p) => s + p.lat, 0) / members.length,
-    lng: members.reduce((s, p) => s + p.lng, 0) / members.length,
-  });
-  const groups = [...bins.values()]
-    .map((members) => ({ ...centroid(members), count: members.length, members }))
-    .sort((a, b) => b.count - a.count);
-  const merged: Cluster[] = [];
-  const gap = cell * 0.8; // ≈ icon diameter + breathing room, in map degrees
-  for (const g of groups) {
-    const host = merged.find((m) => Math.abs(m.lat - g.lat) < gap && Math.abs(m.lng - g.lng) < gap);
-    if (host) {
-      host.members = host.members.concat(g.members);
-      host.count = host.members.length;
-      Object.assign(host, centroid(host.members));
-    } else {
-      merged.push({ ...g, members: [...g.members] });
+  const out: MapPin[] = [];
+  for (const members of groups.values()) {
+    if (members.length === 1) {
+      out.push(members[0]);
+      continue;
     }
+    const ordered = [...members].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    ordered.forEach((p, i) => {
+      if (i === 0) {
+        out.push(p);
+        return;
+      }
+      const angle = i * GOLDEN_ANGLE;
+      const radius = SPIRAL_STEP_DEG * Math.sqrt(i);
+      const lat = p.lat + radius * Math.cos(angle);
+      // Longitude degrees shrink with latitude — divide so the visual spread stays circular.
+      const lng = p.lng + (radius * Math.sin(angle)) / Math.cos((p.lat * Math.PI) / 180);
+      out.push({ ...p, lat, lng });
+    });
   }
-  return {
-    clusters: merged.filter((m) => m.count > 1),
-    singles: merged.filter((m) => m.count === 1).map((m) => m.members[0]),
-  };
+  return out;
+}
+
+/** Bounding box that contains every located pin — the frame the map fits on each page/
+ * filter/sort change. Returns null when there's nothing to frame. */
+export function boundsOfPins(pins: MapPin[]): MapBounds | null {
+  const located = pins.filter((p) => p.lat && p.lng);
+  if (located.length === 0) return null;
+  let north = -90,
+    south = 90,
+    east = -180,
+    west = 180;
+  for (const p of located) {
+    if (p.lat > north) north = p.lat;
+    if (p.lat < south) south = p.lat;
+    if (p.lng > east) east = p.lng;
+    if (p.lng < west) west = p.lng;
+  }
+  return { north, south, east, west };
 }
 
 /** Popup mini-card markup shared by both map engines (Google gets it as an HTML string). */
 export function popupHtml(p: MapPin): string {
   const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`].filter(Boolean).join(" / ");
   return `<div style="min-width:180px;font-family:${MAP_FONT}">
-<p style="margin:0;font-weight:700">${shortPrice(p.price)}${bb ? ` · ${bb}` : ""}</p>
+<p style="margin:0;font-weight:700">${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}</p>
 <p style="margin:4px 0">${p.address}, ${p.city} ${p.zip}</p>
 <p style="margin:4px 0;font-size:11px;color:#6E7681">Listed with ${p.office}</p>
 <a href="/listing/${p.id}" style="color:#102c54;font-weight:700">View listing</a>

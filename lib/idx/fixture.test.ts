@@ -3,6 +3,7 @@ import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { getIdxClient } from "./index";
 import { ReplicatedIdxClient } from "./replicated";
+import { SEARCH_PAGE_SIZE } from "./types";
 import type { Listing } from "./types";
 import { COUNTIES } from "@/lib/site";
 
@@ -82,6 +83,28 @@ describe("FixtureIdxClient — filters", () => {
     expect(r.listings.every((l) => l.propertyType === "Multi-Family")).toBe(true);
   });
 
+  it("New Listings quick filter keeps only rows listed within N days", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const fresh: Listing = {
+      ...base,
+      id: "FRESH",
+      county: "orange",
+      listedAt: new Date(Date.now() - 2 * 86_400_000).toISOString(),
+    };
+    const stale: Listing = {
+      ...base,
+      id: "STALE",
+      county: "orange",
+      listedAt: new Date(Date.now() - 40 * 86_400_000).toISOString(),
+    };
+    const c = new FixtureIdxClient([fresh, stale]);
+    const r = await c.search({ newWithinDays: 7, pageSize: 100 });
+    expect(r.listings.map((l) => l.id)).toEqual(["FRESH"]);
+    // Without the filter both rows are returned.
+    const all = await c.search({ pageSize: 100 });
+    expect(all.total).toBe(2);
+  });
+
   it("matches free-text location against town / zip / address", async () => {
     const byTown = await client.search({ q: "beacon", pageSize: 100 });
     expect(byTown.total).toBeGreaterThan(0);
@@ -132,6 +155,16 @@ describe("FixtureIdxClient — sort + pagination", () => {
     expect(p1.totalPages).toBe(Math.ceil(p1.total / 12));
     expect(p2.page).toBe(2);
     expect(p1.listings[0].id).not.toBe(p2.listings[0].id);
+  });
+
+  it("honours the scoped 36-per-page search size without changing the 12 rail default", async () => {
+    expect(SEARCH_PAGE_SIZE).toBe(36);
+    const search = await client.search({ pageSize: SEARCH_PAGE_SIZE });
+    expect(search.pageSize).toBe(36);
+    expect(search.listings.length).toBe(36); // dataset holds ≥36 across the default counties
+    expect(search.totalPages).toBe(Math.ceil(search.total / 36));
+    // The unscoped default (rails/portal) stays at 12.
+    expect((await client.search({})).pageSize).toBe(12);
   });
 
   it("reports dataLastUpdated as the max modificationTimestamp", async () => {

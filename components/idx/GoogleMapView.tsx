@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { clusterize, MAP_FONT, popupHtml, shortPrice, type MapViewProps } from "./map-shared";
+import { boundsOfPins, chipPrice, MAP_FONT, popupHtml, spreadPins, type MapViewProps } from "./map-shared";
 
 /** Official Google Maps results map (live-site parity — Brivity renders Google Maps).
  * Loads only when NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set; SearchClient falls back to the
- * Leaflet/OSM view without it. Same clustering, chips, and popups as the fallback —
- * rendered as an OverlayView so no mapId/AdvancedMarker requirement. No new deps. */
+ * Leaflet/OSM view without it. PAGE-COUPLED: plots exactly the current page's listings as
+ * black price chips (floored, live-style), auto-fits them on page/filter/sort change, and a
+ * chip click scrolls to + highlights its card via onSelect. Same-zip listings are fanned out
+ * (spreadPins). Rendered as an OverlayView so no mapId/AdvancedMarker requirement. No new deps. */
 
 declare global {
   // Minimal surface of the Maps JS API we touch — avoids @types/google.maps as a dep.
@@ -30,18 +32,38 @@ function loadMaps(key: string): Promise<void> {
   return loader;
 }
 
-export default function GoogleMapView({ pins, fitBounds, onBoundsChange }: MapViewProps) {
+export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
   pinsRef.current = pins;
-  const onBoundsRef = useRef(onBoundsChange);
-  onBoundsRef.current = onBoundsChange;
+  const selectedRef = useRef(selectedId);
+  selectedRef.current = selectedId;
+  const onSelectRef = useRef(onSelect);
+  onSelectRef.current = onSelect;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const overlayRef = useRef<any>(null);
-  // Last frame we fit to — a new one (county chip) refits; pin updates never do.
-  const fitRef = useRef(fitBounds);
+
+  // Fit the map to the current page's pins. Degenerate/tiny boxes (a single listing, or many
+  // sharing a zip) get a zoom clamp so the map doesn't slam to street level.
+  const fitToPins = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    map: any,
+    located: MapViewProps["pins"],
+  ) => {
+    const b = boundsOfPins(located);
+    if (!b) return;
+    map.fitBounds(
+      new google.maps.LatLngBounds({ lat: b.south, lng: b.west }, { lat: b.north, lng: b.east }),
+      48,
+    );
+    if (b.north - b.south < 0.02 && b.east - b.west < 0.02) {
+      google.maps.event.addListenerOnce(map, "idle", () => {
+        if ((map.getZoom() ?? 0) > 14) map.setZoom(14);
+      });
+    }
+  };
 
   useEffect(() => {
     const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
@@ -51,101 +73,69 @@ export default function GoogleMapView({ pins, fitBounds, onBoundsChange }: MapVi
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let overlay: any;
 
-    loadMaps(key).then(() => {
-      if (disposed) return;
-      const map = new google.maps.Map(el, {
-        center: { lat: 41.5, lng: -74.0 },
-        zoom: 9,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true,
-        clickableIcons: false,
-        gestureHandling: "cooperative",
-      });
-      mapRef.current = map;
-      const info = new google.maps.InfoWindow();
+    loadMaps(key)
+      .then(() => {
+        if (disposed) return;
+        const map = new google.maps.Map(el, {
+          center: { lat: 41.5, lng: -74.0 },
+          zoom: 9,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+          clickableIcons: false,
+          gestureHandling: "cooperative",
+        });
+        mapRef.current = map;
+        const info = new google.maps.InfoWindow();
 
-      const located = () => pinsRef.current.filter((p) => p.lat && p.lng);
+        const located = () => spreadPins(pinsRef.current.filter((p) => p.lat && p.lng));
 
-      // Frame the county/region box. Emit that box straight away so pins load immediately
-      // instead of waiting only for `idle` (a degraded map may never fire it); `idle` then
-      // refines to the true padded viewport on every settle.
-      const frame = (b: MapViewProps["fitBounds"]) => {
-        map.fitBounds(
-          new google.maps.LatLngBounds({ lat: b.south, lng: b.west }, { lat: b.north, lng: b.east }),
-          24,
-        );
-        onBoundsRef.current({ north: b.north, south: b.south, east: b.east, west: b.west });
-      };
-      frame(fitRef.current);
+        fitToPins(map, located());
 
-      // HTML chip overlay — same visuals as the Leaflet view.
-      overlay = new google.maps.OverlayView();
-      overlay.onAdd = function () {
-        this.container = document.createElement("div");
-        this.getPanes().overlayMouseTarget.appendChild(this.container);
-      };
-      overlay.onRemove = function () {
-        this.container?.remove();
-      };
-      overlay.draw = function () {
-        const container: HTMLDivElement = this.container;
-        if (!container) return;
-        container.innerHTML = "";
-        const proj = this.getProjection();
-        if (!proj) return;
-        const zoom = map.getZoom() ?? 9;
-        const mapBounds = map.getBounds();
-        const { clusters, singles } = clusterize(located(), zoom);
-
-        for (const c of clusters) {
-          const d = c.count >= 100 ? 46 : c.count >= 10 ? 40 : 34;
-          const pt = proj.fromLatLngToDivPixel(new google.maps.LatLng(c.lat, c.lng));
-          const chip = document.createElement("button");
-          chip.type = "button";
-          chip.setAttribute("aria-label", `${c.count} listings — zoom in`);
-          chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-50%);display:grid;place-items:center;width:${d}px;height:${d}px;border-radius:9999px;background:#000;color:#fff;font:700 12px/1 ${MAP_FONT};border:2px solid rgb(255 255 255/.85);box-shadow:0 2px 10px rgb(0 0 0/.35);cursor:pointer`;
-          chip.textContent = String(c.count);
-          chip.addEventListener("click", () => {
-            const b = new google.maps.LatLngBounds();
-            for (const m of c.members) b.extend({ lat: m.lat, lng: m.lng });
-            map.fitBounds(b, 48);
-          });
-          container.appendChild(chip);
-        }
-
-        for (const p of singles) {
-          const pos = new google.maps.LatLng(p.lat, p.lng);
-          if (mapBounds && !mapBounds.contains(pos)) continue;
-          const pt = proj.fromLatLngToDivPixel(pos);
-          const chip = document.createElement("button");
-          chip.type = "button";
-          chip.setAttribute("aria-label", `${shortPrice(p.price)} — ${p.address}`);
-          chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);background:#000;color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;box-shadow:0 2px 8px rgb(0 0 0/.3);border:0;cursor:pointer`;
-          chip.textContent = shortPrice(p.price);
-          chip.addEventListener("click", () => {
-            info.setContent(popupHtml(p));
-            info.setPosition(pos);
-            info.open({ map });
-          });
-          container.appendChild(chip);
-        }
-      };
-      overlay.setMap(map);
-      overlayRef.current = overlay;
-      // On every settle: report the padded viewport so pins load for what's in view (emit
-      // FIRST so a draw error can never suppress the fetch), then redraw chips. A too-tight
-      // or empty box simply returns nothing — fast and cheap.
-      map.addListener("idle", () => {
-        const b = map.getBounds();
-        if (b) {
-          const ne = b.getNorthEast();
-          const sw = b.getSouthWest();
-          onBoundsRef.current({ north: ne.lat(), south: sw.lat(), east: ne.lng(), west: sw.lng() });
-        }
-        overlay.draw();
-      });
-    }).catch((e: unknown) => console.error("[maps]", e));
+        // HTML chip overlay — one floored price chip per listing on the page.
+        overlay = new google.maps.OverlayView();
+        overlay.onAdd = function () {
+          this.container = document.createElement("div");
+          this.getPanes().overlayMouseTarget.appendChild(this.container);
+        };
+        overlay.onRemove = function () {
+          this.container?.remove();
+        };
+        overlay.draw = function () {
+          const container: HTMLDivElement = this.container;
+          if (!container) return;
+          container.innerHTML = "";
+          const proj = this.getProjection();
+          if (!proj) return;
+          const sel = selectedRef.current;
+          for (const p of located()) {
+            const pos = new google.maps.LatLng(p.lat, p.lng);
+            const pt = proj.fromLatLngToDivPixel(pos);
+            const active = p.id === sel;
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address}`);
+            chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);${
+              active
+                ? "background:#1c729a;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
+                : "background:#000;box-shadow:0 2px 8px rgb(0 0 0/.3)"
+            };color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:3px`;
+            chip.textContent = chipPrice(p.price);
+            chip.addEventListener("click", () => {
+              onSelectRef.current?.(p.id);
+              info.setContent(popupHtml(p));
+              info.setPosition(pos);
+              info.open({ map });
+            });
+            container.appendChild(chip);
+          }
+        };
+        overlay.setMap(map);
+        overlayRef.current = overlay;
+        // Redraw chips on every settle (pan/zoom) so their pixel positions stay correct.
+        map.addListener("idle", () => overlay.draw());
+      })
+      .catch((e: unknown) => console.error("[maps]", e));
 
     return () => {
       disposed = true;
@@ -155,29 +145,20 @@ export default function GoogleMapView({ pins, fitBounds, onBoundsChange }: MapVi
     };
   }, []);
 
-  // New pins arrive AFTER the map has settled (the fetch is triggered by the last move),
-  // so redraw the chip overlay explicitly — an idle won't fire again until the next move.
+  // New page/filter/sort: refit the frame to the new pins and redraw the chips (an idle
+  // won't fire on its own without a user move).
   useEffect(() => {
-    overlayRef.current?.draw?.();
-  }, [pins]);
-
-  // Refit only when the county frame changes (a chip) — never on pin updates, so panning
-  // is never fought. Emit the new frame straight away (don't depend only on idle); idle
-  // refines to the true viewport after the move settles.
-  useEffect(() => {
-    if (fitRef.current === fitBounds) return;
-    fitRef.current = fitBounds;
     const map = mapRef.current;
     if (!map || typeof google === "undefined") return;
-    map.fitBounds(
-      new google.maps.LatLngBounds(
-        { lat: fitBounds.south, lng: fitBounds.west },
-        { lat: fitBounds.north, lng: fitBounds.east },
-      ),
-      24,
-    );
-    onBoundsRef.current({ north: fitBounds.north, south: fitBounds.south, east: fitBounds.east, west: fitBounds.west });
-  }, [fitBounds]);
+    fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)));
+    overlayRef.current?.draw?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pins]);
+
+  // A card hover/focus highlights the matching chip — redraw with the new active id.
+  useEffect(() => {
+    overlayRef.current?.draw?.();
+  }, [selectedId]);
 
   return (
     <div className="relative h-full min-h-96 w-full">

@@ -71,6 +71,11 @@ function searchFilters(p: SearchParams): string {
   if (p.bathsMin != null) parts.push(`baths=gte.${p.bathsMin}`);
   if (p.sqftMin != null) parts.push(`sqft=gte.${p.sqftMin}`);
   if (p.propertyType) parts.push(`property_type=eq.${encodeURIComponent(p.propertyType)}`);
+  // "New Listings" quick filter — keep only rows listed within the last N days.
+  if (p.newWithinDays != null && p.newWithinDays > 0) {
+    const since = new Date(Date.now() - p.newWithinDays * 86_400_000).toISOString();
+    parts.push(`listed_at=gte.${encodeURIComponent(since)}`);
+  }
   // search_hay = lower(address city zip county). Strip LIKE wildcards from user input;
   // PostgREST's * wildcard wraps the needle for the same substring semantics as fixture.
   const needle = p.q?.trim().toLowerCase().replace(/[%_]/g, " ").trim();
