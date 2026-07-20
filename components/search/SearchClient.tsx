@@ -665,6 +665,18 @@ export function SearchClient() {
       {/* Scroll anchor — paging brings this back into view (see the page-change effect). */}
       <div ref={resultsTopRef} className="scroll-mt-4" aria-hidden />
 
+      {/* 36 cards carry ~72 tab stops before the pager. Give keyboard and screen-reader
+          visitors the standard way past a repeated block (WCAG 2.4.1); hidden until focused,
+          same treatment as the layout's "Skip to content". */}
+      {result && result.totalPages > 1 && listings.length > 0 && (
+        <a
+          href="#results-pages"
+          className="sr-only focus:not-sr-only focus:mt-4 focus:inline-block focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+        >
+          Skip results, go to pagination
+        </a>
+      )}
+
       {/* ── Results */}
       {state === "error" ? (
         <div className="mt-10 border border-red-500/40 bg-red-500/5 p-10 text-center">
@@ -730,8 +742,10 @@ export function SearchClient() {
       {/* ── Pagination */}
       {result && result.totalPages > 1 && (
         <nav
+          id="results-pages"
+          tabIndex={-1}
           aria-label="Results pages"
-          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 bg-mist px-4 py-3"
+          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 bg-mist px-4 py-3 scroll-mt-4"
         >
           <button
             type="button"
