@@ -6,7 +6,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
+import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
 import { useSaved } from "@/components/auth/SavedProvider";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
 import type { Listing, MapPin } from "@/lib/idx/types";
@@ -137,6 +139,30 @@ function toQuery(f: Filters, forApi: boolean): string {
   return sp.toString();
 }
 
+/** Readable summary of the active filters — the save-search default name + its chip list.
+ * A convenience name, so it favors the common (min-side) direction and stays terse. */
+function describeFilters(f: Filters): { name: string; parts: string[] } {
+  const county = SERVED_AREAS.find((c) => c.slug === f.county)?.name;
+  const parts = [
+    f.q && `“${f.q}”`,
+    county && `${county}, NY`,
+    f.propertyType,
+    f.bedsMin && `${f.bedsMin}+ bd`,
+    f.bathsMin && `${f.bathsMin}+ ba`,
+    f.priceMin && `${fmtK(+f.priceMin)}+`,
+    f.priceMax && `under ${fmtK(+f.priceMax)}`,
+    f.sqftMin && `${(+f.sqftMin).toLocaleString()}+ sqft`,
+    f.sqftMax && `under ${(+f.sqftMax).toLocaleString()} sqft`,
+    f.garageMin && `${f.garageMin}+ garage`,
+    f.lotMin && `${f.lotMin}+ ac`,
+    f.yearMin && `built ${f.yearMin}+`,
+    f.taxMax && `tax under $${(+f.taxMax).toLocaleString()}`,
+    f.quick === "new" && "new listings",
+    f.withPhotos && "with photos",
+  ].filter(Boolean) as string[];
+  return { name: parts.length ? parts.join(" · ") : "All listings", parts };
+}
+
 /** Project the current page's listings to slim map pins — the results map is PAGE-COUPLED
  * (owner's ask): it plots exactly these homes as price chips, swapping when the page does. */
 const toPin = (l: Listing): MapPin => ({
@@ -166,8 +192,9 @@ export function SearchClient() {
   const [filters, setFilters] = useState<Filters>(() => fromParams(new URLSearchParams(searchParams)));
   const [result, setResult] = useState<ApiResult | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
-  const [savedNote, setSavedNote] = useState("");
+  const [saveOpen, setSaveOpen] = useState(false);
   const { saveSearch, signedIn } = useSaved();
+  const { openSignIn, enabled: accountsEnabled } = useAuth();
   // Chip ↔ card highlight: clicking a map price chip scrolls to and highlights its card;
   // hovering/focusing a card highlights its chip. Shared so panel and map stay in sync.
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -253,22 +280,6 @@ export function SearchClient() {
     resultsTopRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result?.page]);
-
-  function onSaveSearch() {
-    const parts = [
-      filters.q && `“${filters.q}”`,
-      filters.county && SERVED_AREAS.find((c) => c.slug === filters.county)?.name,
-      filters.priceMin && `${fmtK(+filters.priceMin)}+`,
-      filters.priceMax && `under ${fmtK(+filters.priceMax)}`,
-      filters.bedsMin && `${filters.bedsMin}+ bd`,
-      filters.propertyType,
-    ].filter(Boolean);
-    // Coverage spans the Hudson Valley AND the five boroughs now — keep the label neutral.
-    const label = parts.length ? parts.join(" · ") : "All listings";
-    void saveSearch(label, toQuery(filters, false));
-    setSavedNote(`Saved “${label}” to ${signedIn ? "your account" : "this device"}.`);
-    window.setTimeout(() => setSavedNote(""), 4000);
-  }
 
   const listings = result?.listings ?? [];
   // Page-coupled map pins — exactly this page's located listings (owner's core ask).
@@ -452,7 +463,7 @@ export function SearchClient() {
         </button>
         <button
           type="button"
-          onClick={onSaveSearch}
+          onClick={() => setSaveOpen(true)}
           className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           ♥ Save Search
@@ -514,12 +525,6 @@ export function SearchClient() {
             </button>
           </div>
         </div>
-      )}
-
-      {savedNote && (
-        <p role="status" className="mt-3 bg-mist px-3 py-2 text-sm text-ink-soft">
-          {savedNote} <a href="/saved" className="font-bold text-ink underline underline-offset-2">View saved</a>
-        </p>
       )}
 
       {/* ── Area chips: the six Top-Areas counties up front; the NYC boroughs sit behind a
@@ -741,6 +746,23 @@ export function SearchClient() {
           fixtureMode={result.fixtureMode}
           className="mt-10 border-t border-[#dddddd] pt-6"
         />
+      )}
+
+      {saveOpen && (
+        (() => {
+          const { name, parts } = describeFilters(filters);
+          return (
+            <SaveSearchDialog
+              defaultName={name}
+              summary={parts}
+              signedIn={signedIn}
+              accountsEnabled={accountsEnabled}
+              onSave={(finalName) => void saveSearch(finalName, toQuery(filters, false))}
+              onSignIn={() => openSignIn("signup")}
+              onClose={() => setSaveOpen(false)}
+            />
+          );
+        })()
       )}
     </div>
   );
