@@ -96,3 +96,44 @@ live-390-p1, ours-1440, ours-390, live-card.html).
   code or any security control (RLS, policies, headers); never push; ONE dev server on
   127.0.0.1:3000; foreground verification only; tsc + npm test green before every commit;
   commits page-scoped.
+
+════════════════════════════════════════════════════════════════════════════════════════════
+# ROUND 2 (2026-07-19 late, owner-directed "check + fix + polish again, full budget")
+
+Round 1 shipped + prod-verified (36/page, page-coupled chips 34/34 + swap 30/30, lightbox/
+tour/offer E2E). Round-2 mapping evidence: live-more-panel.png, live-save-search.png,
+ours-save-search.png in docs/_audit/search-parity/.
+
+## Gap list (priority order)
+
+1. **MORE filters panel** (live has it, we don't). Live fields measured: Garage min/max,
+   Square Footage min/max, Lot Size min/max, Year Built min/max, Stories, "Include
+   Properties Without Photos". We replicate garageSpaces, lotAcres, yearBuilt, sqft as
+   structured data (2026-07-15 pipeline) — build a MORE panel with those + sqft MAX (we
+   only expose min today) + the without-photos toggle (exclude listings with no mirrored
+   cover). SKIP Stories (field not replicated — document). Wire through /api/idx/search +
+   lib/idx query + URL round-trip; counts stay honest; empty-result state clean. Watch
+   query perf (JSONB path filters are fine at ~13k rows, but measure).
+2. **Save Search v2.** Live: sign-up modal (Google/FB/Apple/Email) then saved search +
+   alerts. Ours today: instant unnamed device-save toast. Upgrade: name-the-search flow
+   prefilled from active filters ("Queens · 4+ bd · under $800K"), saved searches listed
+   on the saved page with re-run links, keep the no-account device path (we BEAT live
+   there). INVESTIGATE components/auth (SignInModal/SavedProvider): if real account
+   plumbing exists, offer sign-in to sync; if it's device-only, do NOT build auth — polish
+   the device story and document.
+3. **Chip interaction polish**: hover/focus raises a chip above overlapping neighbors
+   (z-index + subtle scale, reduced-motion safe); the active (clicked) chip stays raised;
+   keyboard focus can reach chips. Look must stay live-parity black bubbles.
+4. **A11y/harden pass** across round-1 surfaces: aria-live count updates, pagination
+   aria-current, quick-filter aria-pressed, chips->cards keyboard round-trip, lightbox/
+   tour/offer focus-order + labels, no-JS, slow network, 320px.
+5. **Visual polish passes** vs the live reference shots at 1440+390 — count-line/quick-
+   filter row spacing, card paddings, pagination hit areas, map corners. Multiple passes;
+   screenshot-compare each.
+6. **Photo first-paint**: no gray flash before skeleton/photo (fade-in on load; skeleton
+   from the first frame).
+
+## Already better than live — KEEP, do not "fix" toward live
+Sort options (5 vs their buried select), view-toggle aria-pressed (their icons have NO
+labels), device-save without account, honest placeholder (no fake map thumbs), chip→card
+highlight.
