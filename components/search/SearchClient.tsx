@@ -385,7 +385,12 @@ export function SearchClient() {
         }}
         className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
       >
-        <div className="min-w-40 grow basis-44">
+        <div className="flex min-w-40 grow basis-44 items-center gap-2">
+          {/* Live prefixes the place field with a map pin. */}
+          <svg aria-hidden viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0 text-stone" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
+            <path d="M10 17.5s5.5-4.9 5.5-9a5.5 5.5 0 1 0-11 0c0 4.1 5.5 9 5.5 9Z" />
+            <circle cx="10" cy="8.4" r="2.1" />
+          </svg>
           <label htmlFor="search-q" className="sr-only">
             Location: town, ZIP, or address
           </label>
@@ -477,9 +482,16 @@ export function SearchClient() {
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="inline-flex items-center gap-2 rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
-          ♥ Save Search
+          {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
+              for new matches, which is what a bell reads as (the heart means "favorite"
+              and is already the card action). */}
+          <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
+            <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
+          </svg>
+          Save Search
         </button>
       </form>
 
