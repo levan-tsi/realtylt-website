@@ -137,3 +137,47 @@ ours-save-search.png in docs/_audit/search-parity/.
 Sort options (5 vs their buried select), view-toggle aria-pressed (their icons have NO
 labels), device-save without account, honest placeholder (no fake map thumbs), chip→card
 highlight.
+
+────────────────────────────────────────────────────────────────────────────────────────────
+## ROUND 2 — SHIPPED (2026-07-19, all local-verified; commits on `main`)
+
+1. **MORE panel** — 0cd43af (query layer) + bff5634 (UI). Garage / Square Footage / Lot Size /
+   Year Built min→max, **Max Annual Tax** (added — taxAnnual is replicated, 76% coverage; closes a
+   visible live field beyond the measured list), and a photos toggle. Verified end-to-end against
+   SQL ground truth (garage≥2→583, lot≥1→434, year≥2000→369, sqft≤2000→671, withPhotos→1247).
+   - Filter mechanism: garage/lot/year/tax are NOT generated columns, so they filter through the
+     `listing` jsonb via the **single arrow** `listing->field=gte./lte.N` (jsonb → NUMERIC compare;
+     verified `->` gives 583 while text `->>` mis-sorts "10"<"2"). sqft-max uses the `sqft` generated
+     column; without-photos uses `listing->photosMirrored=gt.0`. No schema migration. Warm perf
+     120–800ms over ~13k rows (dev→remote Supabase; prod faster).
+   - **Divergences (intentional):** panel is IN-FLOW (expands under the bar) not live's overlay —
+     keyboard/overflow-safe at 320/390/1440, and filters apply LIVE (no "apply" step; we beat live's
+     required VIEW RESULTS click, but the button is kept and shows the live count). Property Type stays
+     in the main bar (live duplicates it in MORE) — not re-added, no dupe. **STORIES skipped** (field
+     not replicated in the feed). Without-photos is phrased "Only show homes with photos" (single
+     negative, clearer than live's "Include Properties Without Photos"); default OFF = include all
+     (incl. the ~570 placeholder rows).
+2. **Save Search v2** — e248a41. Investigation: REAL account plumbing exists (AuthProvider + Supabase
+   `portal_saved_searches` + device→account migrate; /saved already listed searches w/ Run+Remove).
+   Built a name-the-search dialog prefilled from the active filters (incl. MORE), saves to account when
+   signed in else to device, and offers "Sign in to sync + get alerts" (device saves migrate on later
+   sign-in). Keeps the no-account path AND beats live's sign-up wall. Focus trap / Esc / restore /
+   bottom-sheet on mobile.
+3. **Chip interaction** — 0a878e6 + ab33b82. Hover/keyboard-focus lifts a chip above overlapping
+   neighbours (scale 1.12 + z-index + high-contrast ring), active stays raised, 36 chips keyboard-
+   reachable; look stays a live-parity black bubble now with a **teardrop pointer tail** (`--chip-bg`
+   drives tail colour, black/azure). Both Google + Leaflet. Reduced-motion neutralises the raise.
+4. **A11y / harden** — 53d3a7f. Chip→card now MOVES keyboard focus into the matching card (round-trip
+   complete); count line reads "N found" whenever any filter narrows (honest) in its role=status live
+   region; `<noscript>` fallback on /search (no-JS gets a message + phone, returns 200). Lightbox +
+   tour/offer already had focus trap + labels (round 1) — verified, no change. Verified 320/390 no
+   horizontal overflow; empty-result + Clear-All resets MORE too.
+5. **Visual polish** — teardrop chips (above). Screenshot-compared 1440/390 vs live refs; card/count/
+   pagination spacing already at parity from round 1.
+6. **Photo first-paint** — no change needed: MlsImage (round 1) already paints the mist skeleton from
+   the first frame with images opacity-0→fade-in; verified under throttled /api/media (36 skeletons,
+   all imgs hidden until load) — no gray/broken flash.
+
+Regression-checked after shared-code edits (query layer + globals.css + map engines): home rails,
+/top-areas/[county], /search round-1 (page-2 chip swap 36/36, New-Listings quick filter, view toggle),
+listing lightbox + tour + offer — all green, 306 tests + tsc clean, zero non-third-party console errors.
