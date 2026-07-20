@@ -445,9 +445,11 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ##   ctx sandbox lacks repo node_modules (playwright scripts must live in scripts/).
 ## PUSHED to main (private Vercel auto-deploy) incl. 5ed973b — prod stops wiping mirror
 ## markers, directly improving the owner's "pictures disappear on refresh".
-## STILL OWED: prod visual check of Google-map chips after deploy (localhost Google is
-## degraded); backfill chunks to FEED COMPLETE; the Vercel SUPABASE_SERVICE_ROLE_KEY owner
-## step (unchanged, still the root fix for fresh-listing photos).
+## PROD VERIFIED 2026-07-19 PM (deploy faecb66 READY): 6/6 on realtylt-website.vercel.app —
+## 36 cards, REAL Google Maps engine, 34/34 chips == page-1 prices, page-2 swap 30/30,
+## ZERO console errors. Visual shot verify-prod-1440-p1.png: chips read exactly like live.
+## STILL OWED: backfill chunks to FEED COMPLETE (running; watermark reached 2026-07-19);
+## the Vercel SUPABASE_SERVICE_ROLE_KEY owner step (unchanged, root fix for fresh photos).
 
 ## ROUND 2026-07-18 PM (owner: listing detail must match his real page — make offer / share /
 ## schedule tour / photo POP-UP; pics sometimes disappear on refresh (first 5 gone); everything
