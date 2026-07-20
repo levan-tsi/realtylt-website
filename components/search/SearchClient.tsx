@@ -52,12 +52,26 @@ interface Filters {
   bathsMin: string;
   sqftMin: string;
   propertyType: string;
+  // ── "MORE" panel fields (live parity). Stored as strings like the other selects; empty = off.
+  sqftMax: string;
+  garageMin: string;
+  garageMax: string;
+  lotMin: string;
+  lotMax: string;
+  yearMin: string;
+  yearMax: string;
+  taxMax: string;
+  /** true = only listings with a mirrored cover photo (default off = include everything). */
+  withPhotos: boolean;
   /** Count-line quick filter (live realtylt.com): "all" or "new" (listed ≤7 days). */
   quick: "all" | "new";
   sort: string;
   page: number;
   view: "grid" | "map";
 }
+
+/** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
+const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax"] as const;
 
 /** "New Listings" quick filter window — matches the card's "New" badge (≤7 days). */
 const NEW_LISTING_DAYS = 7;
@@ -66,6 +80,16 @@ const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 15
   (k) => k * 1000,
 );
 const fmtK = (n: number) => (n >= 1_000_000 ? `$${n / 1_000_000}M` : `$${n / 1000}K`);
+
+// ── "MORE" panel option steps (structured facts replicated from the feed).
+const GARAGE_OPTS = [1, 2, 3, 4, 5];
+const SQFT_OPTS = [750, 1000, 1250, 1500, 2000, 2500, 3000, 4000, 5000];
+const LOT_OPTS = [0.25, 0.5, 1, 2, 5, 10, 25, 50, 100]; // acres
+const YEAR_OPTS = [1900, 1950, 1970, 1980, 1990, 2000, 2010, 2015, 2020, 2024];
+const TAX_OPTS = [2500, 5000, 7500, 10000, 15000, 20000, 30000, 50000];
+const fmtLot = (n: number) => (n < 1 ? `${n} ac` : `${n} ac`);
+
+const TRUE_FLAGS = new Set(["1", "true", "on", "yes"]);
 
 function fromParams(sp: URLSearchParams): Filters {
   return {
@@ -77,6 +101,15 @@ function fromParams(sp: URLSearchParams): Filters {
     bathsMin: sp.get("bathsMin") ?? "",
     sqftMin: sp.get("sqftMin") ?? "",
     propertyType: sp.get("propertyType") ?? "",
+    sqftMax: sp.get("sqftMax") ?? "",
+    garageMin: sp.get("garageMin") ?? "",
+    garageMax: sp.get("garageMax") ?? "",
+    lotMin: sp.get("lotMin") ?? "",
+    lotMax: sp.get("lotMax") ?? "",
+    yearMin: sp.get("yearMin") ?? "",
+    yearMax: sp.get("yearMax") ?? "",
+    taxMax: sp.get("taxMax") ?? "",
+    withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     quick: sp.get("quick") === "new" ? "new" : "all",
     sort: sp.get("sort") ?? "newest",
     page: Math.max(1, Number(sp.get("page")) || 1),
@@ -92,6 +125,11 @@ function toQuery(f: Filters, forApi: boolean): string {
     // `quick` never goes to the API verbatim (it's translated to newDays in the fetch), and
     // stays out of the URL when it's the default "all".
     if (k === "quick" && (forApi || v === "all")) continue;
+    // withPhotos is a boolean flag — emit `withPhotos=1` when on, drop it entirely when off.
+    if (k === "withPhotos") {
+      if (v) sp.set("withPhotos", "1");
+      continue;
+    }
     if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "newest" && forApi === false))
       continue;
     sp.set(k, String(v));
@@ -118,6 +156,10 @@ const toPin = (l: Listing): MapPin => ({
 const selectCls =
   "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
 
+/* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
+const panelSelectCls =
+  "min-w-0 flex-1 cursor-pointer rounded-[3px] border border-[#cccccc] bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
+
 export function SearchClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -138,6 +180,11 @@ export function SearchClient() {
   const [boroughsOpen, setBoroughsOpen] = useState(false);
   const boroughActive = (BOROUGH_CHIPS as string[]).includes(filters.county);
   const showBoroughs = boroughsOpen || boroughActive;
+
+  // "MORE" filters panel (garage / sqft / lot / year / tax + without-photos). Collapsed by
+  // default; the button carries a count of the active advanced filters.
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreCount = MORE_KEYS.filter((k) => filters[k] !== "").length + (filters.withPhotos ? 1 : 0);
 
   const apply = useCallback((patch: Partial<Filters>) => {
     // Any filter change resets to page 1 unless the patch names a page (view toggle keeps it).
@@ -265,6 +312,42 @@ export function SearchClient() {
     );
   };
 
+  // Clear every MORE-panel field (the bar's quick filters are left untouched).
+  const clearMore = () =>
+    apply({
+      sqftMin: "", sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "",
+      yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
+    });
+
+  // One labelled min→max row for the MORE panel.
+  type NumKey = "sqftMin" | "sqftMax" | "garageMin" | "garageMax" | "lotMin" | "lotMax" | "yearMin" | "yearMax" | "taxMax";
+  const rangeRow = (label: string, minKey: NumKey, maxKey: NumKey, opts: number[], fmt: (n: number) => string) => (
+    <div>
+      <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
+      <div className="flex items-center gap-2">
+        <select
+          aria-label={`Minimum ${label.toLowerCase()}`}
+          value={filters[minKey]}
+          onChange={(e) => apply({ [minKey]: e.target.value } as Partial<Filters>)}
+          className={panelSelectCls}
+        >
+          <option value="">No min</option>
+          {opts.map((n) => (<option key={n} value={n}>{fmt(n)}</option>))}
+        </select>
+        <span aria-hidden className="shrink-0 text-[11px] uppercase tracking-wide text-stone">to</span>
+        <select
+          aria-label={`Maximum ${label.toLowerCase()}`}
+          value={filters[maxKey]}
+          onChange={(e) => apply({ [maxKey]: e.target.value } as Partial<Filters>)}
+          className={panelSelectCls}
+        >
+          <option value="">No max</option>
+          {opts.map((n) => (<option key={n} value={n}>{fmt(n)}</option>))}
+        </select>
+      </div>
+    </div>
+  );
+
   return (
     <div className="mx-auto max-w-[1400px] px-4 pb-16 lg:px-8">
       {/* ── Filter bar */}
@@ -338,6 +421,29 @@ export function SearchClient() {
           <option value="Multi-Family">Multi-Family</option>
         </select>
 
+        {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}
+        <button
+          type="button"
+          aria-expanded={moreOpen}
+          aria-controls="more-panel"
+          onClick={() => setMoreOpen((o) => !o)}
+          className={`inline-flex items-center gap-1.5 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+            moreOpen || moreCount > 0 ? "text-ink" : "text-stone hover:text-ink"
+          }`}
+        >
+          <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            <path d="M3 6.5h4M11 6.5h6M3 13.5h8M15 13.5h2" />
+            <circle cx="9" cy="6.5" r="1.7" fill="currentColor" stroke="none" />
+            <circle cx="13" cy="13.5" r="1.7" fill="currentColor" stroke="none" />
+          </svg>
+          More
+          {moreCount > 0 && (
+            <span className="grid h-4 min-w-4 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold leading-none text-paper">
+              {moreCount}
+            </span>
+          )}
+        </button>
+
         <button
           type="submit"
           className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
@@ -352,6 +458,64 @@ export function SearchClient() {
           ♥ Save Search
         </button>
       </form>
+
+      {/* ── MORE panel: advanced filters. In-flow (pushes results down) so it stays keyboard-
+          friendly and overflow-safe at every width — cleaner than live's overlay; filters
+          apply live (no "apply" step), a divergence noted in the parity file. */}
+      {moreOpen && (
+        <div id="more-panel" className="border border-t-0 border-[#dddddd] bg-white px-4 py-5 sm:px-6">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <label className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
+              <input
+                type="checkbox"
+                checked={filters.withPhotos}
+                onChange={(e) => apply({ withPhotos: e.target.checked })}
+                className="h-4 w-4 shrink-0 accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              />
+              Only show homes with photos
+            </label>
+            {moreCount > 0 && (
+              <button
+                type="button"
+                onClick={clearMore}
+                className="text-xs font-bold uppercase tracking-[0.12em] text-stone underline underline-offset-4 transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              >
+                Reset advanced
+              </button>
+            )}
+          </div>
+
+          <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {rangeRow("Garage", "garageMin", "garageMax", GARAGE_OPTS, (n) => `${n}`)}
+            {rangeRow("Square footage", "sqftMin", "sqftMax", SQFT_OPTS, (n) => n.toLocaleString())}
+            {rangeRow("Lot size", "lotMin", "lotMax", LOT_OPTS, fmtLot)}
+            {rangeRow("Year built", "yearMin", "yearMax", YEAR_OPTS, (n) => `${n}`)}
+            <div>
+              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Max annual tax</p>
+              <select
+                aria-label="Maximum annual property tax"
+                value={filters.taxMax}
+                onChange={(e) => apply({ taxMax: e.target.value })}
+                className={panelSelectCls}
+              >
+                <option value="">No max</option>
+                {TAX_OPTS.map((n) => (<option key={n} value={n}>${n.toLocaleString()}</option>))}
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-6 flex justify-end border-t border-[#eeeeee] pt-4">
+            <button
+              type="button"
+              onClick={() => setMoreOpen(false)}
+              className="rounded-[4px] bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            >
+              {state === "ready" && result ? `View ${result.total.toLocaleString()} results` : "View results"}
+            </button>
+          </div>
+        </div>
+      )}
+
       {savedNote && (
         <p role="status" className="mt-3 bg-mist px-3 py-2 text-sm text-ink-soft">
           {savedNote} <a href="/saved" className="font-bold text-ink underline underline-offset-2">View saved</a>
@@ -489,7 +653,10 @@ export function SearchClient() {
           <button
             type="button"
             onClick={() =>
-              apply({ q: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "" })
+              apply({
+                q: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
+                sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
+              })
             }
             className="mt-5 border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
