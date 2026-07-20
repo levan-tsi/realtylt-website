@@ -9,6 +9,7 @@ import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { pageWindow } from "@/lib/pagination";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
 import type { Listing, MapPin } from "@/lib/idx/types";
@@ -699,7 +700,10 @@ export function SearchClient() {
 
       {/* ── Pagination */}
       {result && result.totalPages > 1 && (
-        <nav aria-label="Results pages" className="mt-10 flex items-center justify-center gap-1.5 bg-mist px-4 py-3">
+        <nav
+          aria-label="Results pages"
+          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 bg-mist px-4 py-3"
+        >
           <button
             type="button"
             disabled={filters.page <= 1}
@@ -709,34 +713,23 @@ export function SearchClient() {
           >
             «
           </button>
-          {/* Windowed pages (1 … n-1 n n+1 … last) — real data yields 20+ pages, and a
-              full flex row of buttons overflowed the 390px viewport. */}
-          {Array.from({ length: result.totalPages }, (_, i) => i + 1)
-            .filter(
-              (p) =>
-                p === 1 ||
-                p === result.totalPages ||
-                Math.abs(p - result.page) <= 2,
-            )
-            .map((p, i, shown) => (
-              <span key={p} className="flex items-center">
-                {i > 0 && p - shown[i - 1] > 1 && (
-                  <span aria-hidden className="px-1 text-sm text-stone">
-                    …
-                  </span>
-                )}
-                <button
-                  type="button"
-                  aria-current={p === result.page ? "page" : undefined}
-                  onClick={() => apply({ page: p })}
-                  className={`px-3.5 py-2 text-sm transition-colors ${
-                    p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
-                  }`}
-                >
-                  {p}
-                </button>
-              </span>
-            ))}
+          {/* Live realtylt.com pages in a run of six consecutive numbers with chevrons on
+              either side — no "1 … 150" ellipsis. pageWindow() clamps the run inside the
+              set; the row wraps rather than overflowing a 390px viewport on 3-digit pages. */}
+          {pageWindow(result.page, result.totalPages).map((p) => (
+            <button
+              key={p}
+              type="button"
+              aria-current={p === result.page ? "page" : undefined}
+              aria-label={`Page ${p}`}
+              onClick={() => apply({ page: p })}
+              className={`min-w-9 px-2.5 py-2 text-sm transition-colors sm:px-3.5 ${
+                p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
+              }`}
+            >
+              {p}
+            </button>
+          ))}
           <button
             type="button"
             disabled={filters.page >= result.totalPages}
