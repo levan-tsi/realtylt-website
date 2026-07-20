@@ -448,8 +448,13 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## PROD VERIFIED 2026-07-19 PM (deploy faecb66 READY): 6/6 on realtylt-website.vercel.app —
 ## 36 cards, REAL Google Maps engine, 34/34 chips == page-1 prices, page-2 swap 30/30,
 ## ZERO console errors. Visual shot verify-prod-1440-p1.png: chips read exactly like live.
-## STILL OWED: backfill chunks to FEED COMPLETE (running; watermark reached 2026-07-19);
-## the Vercel SUPABASE_SERVICE_ROLE_KEY owner step (unchanged, root fix for fresh photos).
+## BACKFILL 2026-07-19 PM: chunk DONE at bound — 2,272 listings / 57,177 photos mirrored,
+## zero 429s, watermark advanced 2026-07-16 -> 2026-07-19T18:10 (within ~3h of live). The
+## chained final chunk was externally stopped; NOT restarted (respecting the stop). Resume
+## anytime: node scripts/backfill-photos.mjs --cap 50 --max-pages 8 --max-listings 4000
+## --concurrency 3 (no --fresh; watermark file intact) until it prints FEED COMPLETE.
+## STILL OWED: that last backfill stretch; the Vercel SUPABASE_SERVICE_ROLE_KEY owner step
+## (unchanged, root fix for fresh photos). Dev server also stopped — start ONE on next round.
 
 ## ROUND 2026-07-18 PM (owner: listing detail must match his real page — make offer / share /
 ## schedule tour / photo POP-UP; pics sometimes disappear on refresh (first 5 gone); everything
