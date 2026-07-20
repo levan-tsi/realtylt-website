@@ -679,7 +679,9 @@ export function SearchClient() {
 
       {/* ── Results */}
       {state === "error" ? (
-        <div className="mt-10 border border-red-500/40 bg-red-500/5 p-10 text-center">
+        // role=alert so the failure is announced; the status strip above stays blank rather
+        // than repeating the message to screen readers twice.
+        <div role="alert" className="mt-10 border border-red-500/40 bg-red-500/5 p-10 text-center">
           <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
           <p className="mt-2 text-sm text-stone">
             Try again in a moment, or call us at{" "}
@@ -723,6 +725,8 @@ export function SearchClient() {
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.38fr_1fr]">
           <ul
             ref={panelRef}
+            aria-label="Search results"
+            aria-busy={state === "loading"}
             className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:gap-x-2.5 lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {listings.map(renderCard)}
@@ -734,7 +738,11 @@ export function SearchClient() {
           </div>
         </div>
       ) : (
-        <ul className={`mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}>
+        <ul
+          aria-label="Search results"
+          aria-busy={state === "loading"}
+          className={`mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}
+        >
           {listings.map(renderCard)}
         </ul>
       )}
