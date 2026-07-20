@@ -105,6 +105,18 @@ export interface SearchParams {
   propertyType?: PropertyType;
   /** "New Listings" quick filter — keep only rows listed within the last N days. */
   newWithinDays?: number;
+  // ── "MORE" panel filters (structured facts replicated 2026-07-15). Older rows missing a
+  // fact are excluded by that fact's range filter — honest (we can't claim an unknown value).
+  sqftMax?: number;
+  garageMin?: number;
+  garageMax?: number;
+  lotMin?: number; // acres
+  lotMax?: number; // acres
+  yearMin?: number;
+  yearMax?: number;
+  taxMax?: number; // annual property tax, USD
+  /** Exclude listings without a mirrored cover photo (the branded-placeholder rows). */
+  withPhotosOnly?: boolean;
   sort?: SortKey;
   page?: number; // 1-based
   pageSize?: number; // default 12

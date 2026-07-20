@@ -70,6 +70,21 @@ function searchFilters(p: SearchParams): string {
   if (p.bedsMin != null) parts.push(`beds=gte.${p.bedsMin}`);
   if (p.bathsMin != null) parts.push(`baths=gte.${p.bathsMin}`);
   if (p.sqftMin != null) parts.push(`sqft=gte.${p.sqftMin}`);
+  if (p.sqftMax != null) parts.push(`sqft=lte.${p.sqftMax}`);
+  // "MORE" panel filters. garageSpaces/lotAcres/yearBuilt/taxAnnual aren't generated columns,
+  // so they filter through the `listing` jsonb. The SINGLE arrow `->` keeps the value as jsonb
+  // so PostgREST compares it NUMERICALLY (verified: `->garageSpaces=gte.2` == 583, while the
+  // text `->>` form mis-sorts "10" < "2"). A null/absent value never satisfies gte/lte, so
+  // rows missing the fact drop out — honest. Unindexed jsonb extraction, but a seq scan over
+  // the ~13k active rows measures in single-digit ms.
+  if (p.garageMin != null) parts.push(`listing->garageSpaces=gte.${p.garageMin}`);
+  if (p.garageMax != null) parts.push(`listing->garageSpaces=lte.${p.garageMax}`);
+  if (p.lotMin != null) parts.push(`listing->lotAcres=gte.${p.lotMin}`);
+  if (p.lotMax != null) parts.push(`listing->lotAcres=lte.${p.lotMax}`);
+  if (p.yearMin != null) parts.push(`listing->yearBuilt=gte.${p.yearMin}`);
+  if (p.yearMax != null) parts.push(`listing->yearBuilt=lte.${p.yearMax}`);
+  if (p.taxMax != null) parts.push(`listing->taxAnnual=lte.${p.taxMax}`);
+  if (p.withPhotosOnly) parts.push(`listing->photosMirrored=gt.0`);
   if (p.propertyType) parts.push(`property_type=eq.${encodeURIComponent(p.propertyType)}`);
   // "New Listings" quick filter — keep only rows listed within the last N days.
   if (p.newWithinDays != null && p.newWithinDays > 0) {

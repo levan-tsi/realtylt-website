@@ -71,6 +71,32 @@ describe("DbIdxClient.search", () => {
     expect(result.listings[0].photos).toEqual(["/api/media/KEY777/0"]);
   });
 
+  it("emits jsonb NUMERIC filters for the MORE panel (single arrow -> so 10 sorts above 2)", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 1 };
+    });
+
+    await new DbIdxClient().search({
+      county: "orange", sqftMax: 3000, garageMin: 2, garageMax: 4,
+      lotMin: 1, lotMax: 10, yearMin: 1990, yearMax: 2020, taxMax: 15000, withPhotosOnly: true,
+    });
+
+    const listingCall = calls.find((u) => u.includes("idx_listings") && !u.includes("idx_sync_state"))!;
+    // sqft is a generated column (max direction added this round); the rest ride the jsonb blob.
+    expect(listingCall).toContain("sqft=lte.3000");
+    expect(listingCall).toContain("listing->garageSpaces=gte.2");
+    expect(listingCall).toContain("listing->garageSpaces=lte.4");
+    expect(listingCall).toContain("listing->lotAcres=gte.1");
+    expect(listingCall).toContain("listing->lotAcres=lte.10");
+    expect(listingCall).toContain("listing->yearBuilt=gte.1990");
+    expect(listingCall).toContain("listing->yearBuilt=lte.2020");
+    expect(listingCall).toContain("listing->taxAnnual=lte.15000");
+    expect(listingCall).toContain("listing->photosMirrored=gt.0");
+    // The text-extraction form (which mis-sorts multi-digit values) must NOT be used.
+    expect(listingCall).not.toContain("listing->>garageSpaces");
+  });
+
   it("defaults to the six Hudson Valley counties when no area is picked (NYC opt-in)", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };

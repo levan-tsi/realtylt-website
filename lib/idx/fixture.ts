@@ -22,6 +22,15 @@ export class FixtureIdxClient implements IdxClient {
       bedsMin,
       bathsMin,
       sqftMin,
+      sqftMax,
+      garageMin,
+      garageMax,
+      lotMin,
+      lotMax,
+      yearMin,
+      yearMax,
+      taxMax,
+      withPhotosOnly,
       propertyType,
       newWithinDays,
       sort = "newest",
@@ -42,6 +51,18 @@ export class FixtureIdxClient implements IdxClient {
       if (bedsMin != null && l.beds < bedsMin) return false;
       if (bathsMin != null && l.baths < bathsMin) return false;
       if (sqftMin != null && l.sqft < sqftMin) return false;
+      if (sqftMax != null && l.sqft > sqftMax) return false;
+      // MORE-panel range filters. A missing structured fact fails its range (honest: an
+      // unknown garage/lot/year/tax can't satisfy a user's bound) — mirrors the DB, where a
+      // null jsonb value never passes a gte/lte comparison.
+      if (garageMin != null && !((l.garageSpaces ?? -1) >= garageMin)) return false;
+      if (garageMax != null && !((l.garageSpaces ?? Infinity) <= garageMax)) return false;
+      if (lotMin != null && !((l.lotAcres ?? -1) >= lotMin)) return false;
+      if (lotMax != null && !((l.lotAcres ?? Infinity) <= lotMax)) return false;
+      if (yearMin != null && !((l.yearBuilt ?? -1) >= yearMin)) return false;
+      if (yearMax != null && !((l.yearBuilt ?? Infinity) <= yearMax)) return false;
+      if (taxMax != null && !((l.taxAnnual ?? Infinity) <= taxMax)) return false;
+      if (withPhotosOnly && !((l.photosMirrored ?? 0) > 0)) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       if (q) {

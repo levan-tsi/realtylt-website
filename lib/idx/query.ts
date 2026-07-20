@@ -13,6 +13,11 @@ export function num(v: string | null): number | undefined {
   return Number.isFinite(n) && n >= 0 ? n : undefined;
 }
 
+/** Truthy URL flags: "1"/"true"/"on"/"yes" → true; anything else → undefined. */
+export function flag(v: string | null): boolean | undefined {
+  return v === "1" || v === "true" || v === "on" || v === "yes" ? true : undefined;
+}
+
 /** The filter fields only — paging/sort are the caller's business. */
 export function parseFilterParams(q: URLSearchParams): SearchParams {
   const county = q.get("county") as CountySlug | null;
@@ -26,6 +31,16 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     bathsMin: num(q.get("bathsMin")),
     sqftMin: num(q.get("sqftMin")),
     propertyType: type && TYPES.includes(type) ? type : undefined,
+    // "MORE" panel range filters (jsonb/generated-column numeric filters, honest ≥/≤).
+    sqftMax: num(q.get("sqftMax")),
+    garageMin: num(q.get("garageMin")),
+    garageMax: num(q.get("garageMax")),
+    lotMin: num(q.get("lotMin")),
+    lotMax: num(q.get("lotMax")),
+    yearMin: num(q.get("yearMin")),
+    yearMax: num(q.get("yearMax")),
+    taxMax: num(q.get("taxMax")),
+    withPhotosOnly: flag(q.get("withPhotos")),
     // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
     // for an absurd range.
     newWithinDays: (() => {

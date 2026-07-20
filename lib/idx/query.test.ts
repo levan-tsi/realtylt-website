@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { inBounds, parseBounds, parseFilterParams } from "./query";
+import { flag, inBounds, parseBounds, parseFilterParams } from "./query";
 
 const q = (s: string) => new URLSearchParams(s);
 
@@ -15,6 +15,37 @@ describe("parseFilterParams — newDays (New Listings quick filter)", () => {
     expect(parseFilterParams(q("newDays=0")).newWithinDays).toBeUndefined();
     expect(parseFilterParams(q("newDays=-5")).newWithinDays).toBeUndefined();
     expect(parseFilterParams(q("newDays=abc")).newWithinDays).toBeUndefined();
+  });
+});
+
+describe("parseFilterParams — MORE panel filters", () => {
+  it("parses every MORE range field + the without-photos toggle", () => {
+    const p = parseFilterParams(
+      q("garageMin=2&garageMax=4&sqftMax=3000&lotMin=1&lotMax=10&yearMin=1990&yearMax=2020&taxMax=15000&withPhotos=1"),
+    );
+    expect(p).toMatchObject({
+      garageMin: 2, garageMax: 4, sqftMax: 3000,
+      lotMin: 1, lotMax: 10, yearMin: 1990, yearMax: 2020,
+      taxMax: 15000, withPhotosOnly: true,
+    });
+  });
+
+  it("decimals survive (lot acres)", () => {
+    expect(parseFilterParams(q("lotMin=0.25")).lotMin).toBe(0.25);
+  });
+
+  it("omits absent / blank MORE fields (so a bare /search carries none)", () => {
+    const p = parseFilterParams(q("county=orange"));
+    for (const k of ["garageMin", "garageMax", "sqftMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "withPhotosOnly"] as const) {
+      expect(p[k]).toBeUndefined();
+    }
+  });
+
+  it("flag(): truthy tokens → true, everything else → undefined", () => {
+    for (const v of ["1", "true", "on", "yes"]) expect(flag(v)).toBe(true);
+    for (const v of ["0", "false", "", "no", null]) expect(flag(v)).toBeUndefined();
+    // A falsey withPhotos value never sets the toggle (default = include all).
+    expect(parseFilterParams(q("withPhotos=0")).withPhotosOnly).toBeUndefined();
   });
 });
 
