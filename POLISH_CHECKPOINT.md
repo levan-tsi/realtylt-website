@@ -448,6 +448,13 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## PROD VERIFIED 2026-07-19 PM (deploy faecb66 READY): 6/6 on realtylt-website.vercel.app —
 ## 36 cards, REAL Google Maps engine, 34/34 chips == page-1 prices, page-2 swap 30/30,
 ## ZERO console errors. Visual shot verify-prod-1440-p1.png: chips read exactly like live.
+## ROUND 2 PROD-VERIFIED CLOSED 2026-07-20 (deploy af059bd READY): new build serving; MORE
+## badge/save-dialog-prefill/36 chips pass on prod; the cold-filter "0 listings" bug is FIXED
+## ON PROD — cold-lambda first calls with novel combos all correct (garageMin=5&lotMin=2 -> 51
+## @6.4s retry fingerprint; yearMin+taxMax -> 771 @376ms; garage+year -> 755 @284ms). Fix =
+## expression-index migration + one-shot retry in db.ts (commit af059bd, test-covered, 307
+## tests). Round 2 fully closed.
+##
 ## ROUND 2 VERIFIED + SHIPPED 2026-07-20 (owner: "check + fix + polish again"): agent commits
 ## 0cd43af..5cb35c8 (MORE filters panel garage/sqft-max/lot/year/tax + photos toggle; Save
 ## Search v2 name-dialog prefilled from filters + /saved Run links + sign-in-to-sync; chip
