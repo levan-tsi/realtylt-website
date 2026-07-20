@@ -113,6 +113,18 @@ function toCard(l: Listing): Listing {
   return { ...l, photos: [`/api/media/${l.id}/0`] };
 }
 
+/** Cold serverless instances routinely drop their FIRST PostgREST request; without a retry
+ * that single blip degrades search to the shape-stale committed snapshot, which renders as
+ * "0 listings found" for MORE-panel filters the snapshot predates. One immediate retry
+ * turns that into a beat of extra latency instead (proven on prod: 0@4.6s then 755@1s). */
+async function onceRetried<T>(op: () => Promise<T>): Promise<T> {
+  try {
+    return await op();
+  } catch {
+    return await op();
+  }
+}
+
 export class DbIdxClient implements IdxClient {
   private stateCache?: { at: number; state: SyncState | null };
   private fb?: ReplicatedIdxClient;
@@ -130,8 +142,8 @@ export class DbIdxClient implements IdxClient {
     if (this.stateCache && Date.now() - this.stateCache.at < STATE_TTL_MS) return this.stateCache.state;
     let state: SyncState | null = null;
     try {
-      const { rows } = await rest<SyncState>(
-        "idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at",
+      const { rows } = await onceRetried(() =>
+        rest<SyncState>("idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at"),
       );
       state = rows[0] ?? null;
     } catch (e) {
@@ -158,7 +170,7 @@ export class DbIdxClient implements IdxClient {
       const fetchPage = (p: number) =>
         rest<{ listing: Listing }>(`${base}&limit=${size}&offset=${(p - 1) * size}`, { count: true });
 
-      let { rows, total } = await fetchPage(Math.max(1, page));
+      let { rows, total } = await onceRetried(() => fetchPage(Math.max(1, page)));
       const totalPages = Math.max(1, Math.ceil(total / size));
       const safePage = Math.min(Math.max(1, page), totalPages);
       // Past-the-end page (stale link) — clamp like the fixture client and refetch.

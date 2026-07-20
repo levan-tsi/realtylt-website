@@ -44,6 +44,28 @@ afterEach(() => {
 });
 
 describe("DbIdxClient.search", () => {
+  it("retries a dropped first query instead of serving the snapshot (cold-start resilience)", async () => {
+    let listingCalls = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes("idx_sync_state")) return new Response(JSON.stringify(READY_STATE), { status: 200 });
+        listingCalls += 1;
+        if (listingCalls === 1) throw new TypeError("fetch failed"); // cold connection drop
+        return new Response(JSON.stringify([{ listing: LISTING }]), {
+          status: 200,
+          headers: { "content-range": "0-0/755" },
+        });
+      }),
+    );
+
+    const result = await new DbIdxClient().search({ garageMin: 2 });
+
+    expect(listingCalls).toBe(2);
+    expect(result.total).toBe(755); // real data, not the snapshot fallback
+  });
+
   it("filters over the generated columns, maps rows to cover-proxy cards", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
