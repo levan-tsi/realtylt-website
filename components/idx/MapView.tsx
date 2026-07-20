@@ -17,9 +17,9 @@ import "leaflet/dist/leaflet.css";
 const priceIcon = (price: number, active: boolean) =>
   divIcon({
     className: "",
-    html: `<span style="display:inline-block;transform:translate(-50%,-100%);${
+    html: `<span class="rlt-price-chip" style="display:inline-block;transform:translate(-50%,-100%);${
       active
-        ? "background:#1c729a;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45)"
+        ? "background:#1c729a;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
         : "background:#000;box-shadow:0 2px 8px rgb(0 0 0/.3)"
     };color:#fff;font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:3px">${chipPrice(price)}</span>`,
     iconSize: [0, 0],
@@ -60,6 +60,7 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
             key={p.id}
             position={[p.lat, p.lng]}
             icon={priceIcon(p.price, active)}
+            title={`${chipPrice(p.price)} — ${p.address}, ${p.city}`}
             zIndexOffset={active ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(p.id) }}
           >

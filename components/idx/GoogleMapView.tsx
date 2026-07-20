@@ -114,6 +114,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
             const active = p.id === sel;
             const chip = document.createElement("button");
             chip.type = "button";
+            chip.className = "rlt-price-chip";
             chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address}`);
             chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);${
               active

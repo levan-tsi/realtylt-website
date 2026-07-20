@@ -195,6 +195,37 @@ body {
   animation: rlt-pop-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Results-map price chips (the Leaflet fallback and the Google view share this class).
+   Hover/focus lifts a chip above any overlapping neighbours so its price stays readable, and
+   a keyboard-focused chip shows a high-contrast ring. The look stays a live-parity black
+   bubble; the raise collapses to instant under the global reduced-motion rule below.
+   `!important` on transform is required because each chip carries an inline positioning
+   transform (translate(-50%,-100%)) that a plain class rule can't override. */
+.rlt-price-chip {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.rlt-price-chip:hover,
+.rlt-price-chip:focus-visible {
+  transform: translate(-50%, -100%) scale(1.12) !important;
+  z-index: 1200 !important;
+  /* !important: each chip carries an inline box-shadow that a plain class rule can't beat. */
+  box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
+}
+.rlt-price-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a !important;
+}
+/* Leaflet wraps the chip in a zero-size focusable marker element — surface the focus ring on
+   the visible chip inside it when the marker takes keyboard focus. */
+.leaflet-marker-icon:focus-visible {
+  outline: none;
+}
+.leaflet-marker-icon:focus-visible .rlt-price-chip {
+  transform: translate(-50%, -100%) scale(1.12) !important;
+  z-index: 1200 !important;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a !important;
+}
+
 /* ── Long-form typography. One system: comfortable measure, generous rhythm, brand-azure
    list markers, a hairline pull-quote rule. Applied via .prose-custom on the article body. */
 .prose-custom {
