@@ -202,7 +202,20 @@ body {
    `!important` on transform is required because each chip carries an inline positioning
    transform (translate(-50%,-100%)) that a plain class rule can't override. */
 .rlt-price-chip {
+  position: relative;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+/* Downward pointer tail → a live-parity teardrop pin whose tip sits on the listing's spot.
+   Colour follows the chip via --chip-bg (black normally, azure when active), set inline by
+   each map engine. */
+.rlt-price-chip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -4px;
+  border: 4px solid transparent;
+  border-top-color: var(--chip-bg, #000);
 }
 .rlt-price-chip:hover,
 .rlt-price-chip:focus-visible {

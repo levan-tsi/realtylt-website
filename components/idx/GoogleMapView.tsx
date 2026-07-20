@@ -118,8 +118,8 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
             chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address}`);
             chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);${
               active
-                ? "background:#1c729a;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-                : "background:#000;box-shadow:0 2px 8px rgb(0 0 0/.3)"
+                ? "--chip-bg:#1c729a;background:var(--chip-bg);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
+                : "--chip-bg:#000;background:var(--chip-bg);box-shadow:0 2px 8px rgb(0 0 0/.3)"
             };color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:3px`;
             chip.textContent = chipPrice(p.price);
             chip.addEventListener("click", () => {
