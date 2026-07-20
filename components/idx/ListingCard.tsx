@@ -87,7 +87,8 @@ export function ListingCard({
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
         />
-        <div className="photo-zoom relative aspect-[3/2] overflow-hidden bg-mist">
+        {/* Live search tiles measure 395x250 — a touch wider than 3:2. */}
+        <div className="photo-zoom relative aspect-[79/50] overflow-hidden bg-mist">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
               <MlsImage

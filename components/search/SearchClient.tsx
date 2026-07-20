@@ -369,8 +369,11 @@ export function SearchClient() {
     </div>
   );
 
+  // Live's search page runs edge-to-edge on a ~20px gutter (results start at x=20, the map
+  // reaches the right edge) — far wider than the site's 1250px chrome. Match that gutter and
+  // let the split breathe, capped at 1600px so ultrawide screens don't stretch the cards.
   return (
-    <div className="mx-auto max-w-[1400px] px-4 pb-16 lg:px-8">
+    <div className="mx-auto max-w-[1600px] px-4 pb-16 lg:px-5">
       {/* ── Filter bar */}
       <form
         role="search"
@@ -679,10 +682,13 @@ export function SearchClient() {
           </button>
         </div>
       ) : filters.view === "map" ? (
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+        // Split measured off live @1440: results ~800px (two 395px cards on a 10px gutter),
+        // 20px between the panel and a ~580px map. Fractional columns so it degrades from
+        // 1024 up instead of squeezing the cards at a fixed map width.
+        <div className="mt-8 grid gap-5 lg:grid-cols-[1.38fr_1fr]">
           <ul
             ref={panelRef}
-            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
+            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:gap-x-2.5 lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {listings.map(renderCard)}
           </ul>
