@@ -448,6 +448,24 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## PROD VERIFIED 2026-07-19 PM (deploy faecb66 READY): 6/6 on realtylt-website.vercel.app —
 ## 36 cards, REAL Google Maps engine, 34/34 chips == page-1 prices, page-2 swap 30/30,
 ## ZERO console errors. Visual shot verify-prod-1440-p1.png: chips read exactly like live.
+## ROUND 2 VERIFIED + SHIPPED 2026-07-20 (owner: "check + fix + polish again"): agent commits
+## 0cd43af..5cb35c8 (MORE filters panel garage/sqft-max/lot/year/tax + photos toggle; Save
+## Search v2 name-dialog prefilled from filters + /saved Run links + sign-in-to-sync; chip
+## hover/focus raise + teardrop tails; chip->card keyboard focus move; honest "N found" live
+## region; noscript fallback; photo first-paint verified). ORCHESTRATOR VERIFY: tsc + 306/306
+## mine; 15/20 adversarial UI checks first pass — the 5 "fails" decomposed into 2 probe
+## artifacts (React-select native setter; count-regex) + 1 data drift (754->755, sync landed
+## mid-probe) + 1 REAL BUG root-caused: first COLD jsonb-filter query seq-scans the fat JSONB
+## and hits the anon statement timeout -> db.ts snapshot fallback -> "0 listings found" (the
+## snapshot predates the structured fields). FIXED by migration
+## idx_listings_more_filter_expression_indexes (5 btree expression indexes via Supabase MCP);
+## re-verified: all novel cold filters answer correctly first-call (415ms app API). API counts
+## == SQL ground truth EXACTLY (garage>=2 2174, +year>=2000 754, year 1178, all 5383).
+## Save Search full loop verified (prefill "Queens, NY · 4+ bd · 1+ garage" -> /saved -> Run
+## restores every param). LEAFLET fallback runtime-verified (agent's caveat closed): keyless
+## server, 35/35 chips == prices, 31/31 page-2 swap. Backfill: **FEED COMPLETE 2026-07-20**
+## (full inventory scanned; last chunk 584 listings / 7,763 photos).
+##
 ## BACKFILL 2026-07-19 PM: chunk DONE at bound — 2,272 listings / 57,177 photos mirrored,
 ## zero 429s, watermark advanced 2026-07-16 -> 2026-07-19T18:10 (within ~3h of live). The
 ## chained final chunk was externally stopped; NOT restarted (respecting the stop). Resume
