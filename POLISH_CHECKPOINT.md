@@ -417,10 +417,37 @@ is the site's DNA (read it again anytime at sitebuilder.brivity.com/sites/20240/
 ## chips both Leaflet+Google; chip→card highlight; card polish; quick filter minus
 ## Price-Reduced (fields not replicated); lightbox/tour/offer Mission A on listing detail —
 ## still owed from 2026-07-18 PM, agent then only shipped Missions B+C).
-## STATE: Opus BUILD AGENT DISPATCHED (full ~700k, no early stop, MLS/security/push forbidden,
-## backfill running concurrently — cap-50 chunk resumed from 2026-07-18 13:29 watermark).
-## NEXT: orchestrator adversarial VERIFY (re-map vs live shots, break modals/pagination/map,
-## tsc+tests foreground), fix/re-dispatch as needed, update this file, push.
+## ROUND VERIFIED + SHIPPED 2026-07-19 PM (agent commits 19a0775 + 9d15627 + orchestrator
+## polish commit; ORCHESTRATOR-VERIFIED after the agent's continuation died to 4x API
+## 500/529s — verification was done by the orchestrator directly):
+## - SEARCH: 36/page (150 pages), « 1 2 3 … 150 » windowed, page change scrolls top +
+##   ?page= round-trips, PAGE-COUPLED price-chip map (chipPrice floors to 3 sig figs =
+##   live's format; chips swap on page change 28/30 measured; golden-angle spread for
+##   same-zip), quick filter All/New (?quick=new all-New-badges 36/36, garbage ignored;
+##   Open Houses/Price Reduced skipped — feed replicates neither), card polish (agent+office,
+##   heart in body, price+stats one line), photo skeleton->retry->302 self-heal (12/12 cards
+##   LOADED after settle; first-hit 503s recover in ~2s). 22/23 probe checks pass (the 1
+##   "fail" was the probe's own price-format converter, implementation matches live).
+## - LISTING (Mission A finally shipped): lightbox hero "View all N" 1/25 + tile deep-open
+##   3/25 + arrows/Esc/focus-restore; Schedule a Tour E2E (exactly 1 POST double-guarded,
+##   qualifier intent/MLS#/tourType/date/time, success copy verified); Make an Offer E2E
+##   (1 POST, qualifier offer+listPrice+MLS#, success copy); Esc abandon = no POST; scrim
+##   cleanup + body scroll unlock + fresh-form reopen; garbage amount blocked; 390 bottom
+##   sheets both, no h-overflow. All /api/lead probes INTERCEPTED (no real leads).
+## - REGRESSION 10/10: home rails 16/16 photos + pager + overlay variant, favorite toggle,
+##   county pages. tsc + 299/299 tests run by orchestrator.
+## - Verify scripts: scripts/_scratch-verify-{search,listing6}.mjs patterns; evidence in
+##   docs/_audit/search-parity/. GOTCHAS this round: dev server can silently corrupt into
+##   all-routes-500 (fix: kill tree, rm -rf .next node_modules/.cache, restart — page=99999
+##   "bug" was only this); listing pages with failing photos re-render on MlsImage retries
+##   making Playwright real-clicks time out (use JS clicks / retry); lightbox trigger is
+##   button[aria-label^='View all'], tiles are role=button "View photo N full screen";
+##   ctx sandbox lacks repo node_modules (playwright scripts must live in scripts/).
+## PUSHED to main (private Vercel auto-deploy) incl. 5ed973b — prod stops wiping mirror
+## markers, directly improving the owner's "pictures disappear on refresh".
+## STILL OWED: prod visual check of Google-map chips after deploy (localhost Google is
+## degraded); backfill chunks to FEED COMPLETE; the Vercel SUPABASE_SERVICE_ROLE_KEY owner
+## step (unchanged, still the root fix for fresh-listing photos).
 
 ## ROUND 2026-07-18 PM (owner: listing detail must match his real page — make offer / share /
 ## schedule tour / photo POP-UP; pics sometimes disappear on refresh (first 5 gone); everything
