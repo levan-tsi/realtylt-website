@@ -284,12 +284,23 @@ export function SearchClient() {
   // Page change scrolls the results back to the top (live parity — paging never opens a page
   // mid-list). In map view the results column is its own scroll container; in grid view the
   // window scrolls, so bring the results region into view.
+  const shownPageRef = useRef<number | null>(null);
   useEffect(() => {
     if (!result) return;
+    // Fresh results always restart the column at the top, even when the page number didn't
+    // change (a filter edit swaps the whole list under a scrolled panel).
     if (panelRef.current) panelRef.current.scrollTop = 0;
-    resultsTopRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+    const prev = shownPageRef.current;
+    shownPageRef.current = result.page;
+    // Only PAGING may move the viewport. The first results render must not: landing on
+    // /search (or a ?page=3 deep link) should show the header and filter bar, not jump the
+    // visitor past them — and a programmatic scroll also drags the keyboard tab sequence
+    // into the middle of the card list.
+    if (prev !== null && prev !== result.page) {
+      resultsTopRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result?.page]);
+  }, [result]);
 
   const listings = result?.listings ?? [];
   // Page-coupled map pins — exactly this page's located listings (owner's core ask).
