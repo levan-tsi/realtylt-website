@@ -663,7 +663,7 @@ export function SearchClient() {
       ) : listings.length === 0 ? (
         <div className="mt-10 border border-dashed border-[#cccccc] p-12 text-center">
           <p className="text-xl font-light text-ink">No homes match those filters.</p>
-          <p className="mt-2 text-sm text-stone">Try widening the price range or clearing a county.</p>
+          <p className="mt-2 text-sm text-stone">Try widening a range or clearing a filter.</p>
           <button
             type="button"
             onClick={() =>
