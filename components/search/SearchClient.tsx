@@ -187,10 +187,14 @@ export function SearchClient() {
     };
   }, [filters]);
 
+  // Respect reduced-motion for programmatic scrolls (design rule).
+  const scrollBehavior = (): ScrollBehavior =>
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
   // Chip → card: scroll the card into view and flag it active.
   const focusCard = useCallback((id: string) => {
     setActiveId(id);
-    cardRefs.current.get(id)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    cardRefs.current.get(id)?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
   }, []);
 
   // Page change scrolls the results back to the top (live parity — paging never opens a page
@@ -199,7 +203,7 @@ export function SearchClient() {
   useEffect(() => {
     if (!result) return;
     if (panelRef.current) panelRef.current.scrollTop = 0;
-    resultsTopRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    resultsTopRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result?.page]);
 
@@ -493,7 +497,7 @@ export function SearchClient() {
           </button>
         </div>
       ) : filters.view === "map" ? (
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
           <ul
             ref={panelRef}
             className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
