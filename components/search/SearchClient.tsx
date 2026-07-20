@@ -759,7 +759,7 @@ export function SearchClient() {
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30"
+            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Previous page"
           >
             «
@@ -774,7 +774,7 @@ export function SearchClient() {
               aria-current={p === result.page ? "page" : undefined}
               aria-label={`Page ${p}`}
               onClick={() => apply({ page: p })}
-              className={`min-w-9 px-2.5 py-2 text-sm transition-colors sm:px-3.5 ${
+              className={`min-w-9 px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
               }`}
             >
@@ -785,7 +785,7 @@ export function SearchClient() {
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30"
+            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Next page"
           >
             »
