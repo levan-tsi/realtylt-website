@@ -212,6 +212,11 @@ export function SearchClient() {
   // default; the button carries a count of the active advanced filters.
   const [moreOpen, setMoreOpen] = useState(false);
   const moreCount = MORE_KEYS.filter((k) => filters[k] !== "").length + (filters.withPhotos ? 1 : 0);
+  // Any filter that narrows the default six-county set — so the count line reads "N found"
+  // instead of "across the Hudson Valley" the moment a real filter is on (honest count).
+  const hasActiveFilters =
+    !!filters.q || !!filters.county || filters.quick === "new" || !!filters.priceMin || !!filters.priceMax ||
+    !!filters.bedsMin || !!filters.bathsMin || !!filters.propertyType || moreCount > 0;
 
   const apply = useCallback((patch: Partial<Filters>) => {
     // Any filter change resets to page 1 unless the patch names a page (view toggle keeps it).
@@ -265,10 +270,14 @@ export function SearchClient() {
   const scrollBehavior = (): ScrollBehavior =>
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
-  // Chip → card: scroll the card into view and flag it active.
+  // Chip → card: flag it active, MOVE KEYBOARD FOCUS into the matching card (so a keyboard user
+  // who activates a chip lands on that listing), then scroll it into view honoring reduced
+  // motion. Focusing the card's link also scrolls it (preventScroll lets our own scroll win).
   const focusCard = useCallback((id: string) => {
     setActiveId(id);
-    cardRefs.current.get(id)?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+    const li = cardRefs.current.get(id);
+    li?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
+    li?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
   }, []);
 
   // Page change scrolls the results back to the top (live parity — paging never opens a page
@@ -573,7 +582,7 @@ export function SearchClient() {
             {state === "loading" ? "Searching…" : state === "error" ? "" : (
               <strong className="font-bold text-ink">
                 {(result?.total ?? 0).toLocaleString()} listings
-                {filters.county || filters.quick === "new" ? " found" : " across the Hudson Valley"}
+                {hasActiveFilters ? " found" : " across the Hudson Valley"}
               </strong>
             )}
           </p>
