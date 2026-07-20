@@ -38,7 +38,7 @@ export function AccountMenu() {
       <button
         type="button"
         onClick={() => openSignIn("signin")}
-        className="text-sm font-semibold text-stone transition-colors hover:text-ink"
+        className="inline-flex min-h-[24px] items-center text-sm font-semibold text-stone transition-colors hover:text-ink"
       >
         Sign In
       </button>
@@ -54,7 +54,7 @@ export function AccountMenu() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="menu"
-        className="flex items-center gap-1.5 text-sm font-semibold text-stone transition-colors hover:text-ink"
+        className="inline-flex min-h-[24px] items-center gap-1.5 text-sm font-semibold text-stone transition-colors hover:text-ink"
       >
         <span className="grid h-6 w-6 place-items-center rounded-full bg-ink text-[11px] font-bold text-paper">
           {name.charAt(0).toUpperCase()}

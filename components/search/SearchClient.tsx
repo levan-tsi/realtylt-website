@@ -731,9 +731,11 @@ export function SearchClient() {
           >
             {listings.map(renderCard)}
           </ul>
-          {/* On mobile the map leads (order-first) so it's visible without scrolling past a
-              long 36-card list; on desktop it sticks beside the results column. */}
-          <div className="relative order-first h-[55vh] overflow-hidden border border-[#dddddd] lg:order-none lg:sticky lg:top-4 lg:h-[75vh]">
+          {/* Phone order matches live: the LISTINGS lead and the map follows them (live puts its
+              map below the results too), so the first thing a phone visitor sees is homes rather
+              than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
+              the map sticks beside the results column. */}
+          <div className="relative h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
             <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
           </div>
         </div>

@@ -22,13 +22,18 @@ export function Header() {
       {/* Utility bar — live: 41px, bg #f3f5f8, right-aligned account link */}
       <div className="bg-mist">
         <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between px-4 lg:px-8">
-          <a href={SITE.phoneHref} className="text-sm text-stone transition-colors hover:text-ink">
+          {/* min-h + inline-flex give these three utility links a >=24px pointer target
+              (WCAG 2.2 SC 2.5.8); they were 20px tall. The bar's own height is unchanged. */}
+          <a
+            href={SITE.phoneHref}
+            className="inline-flex min-h-[24px] items-center text-sm text-stone transition-colors hover:text-ink"
+          >
             {SITE.phone}
           </a>
           <div className="flex items-center gap-4">
             <Link
               href="/saved"
-              className="flex items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
+              className="inline-flex min-h-[24px] items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
               aria-label={`Saved homes and searches${saved ? ` (${saved})` : ""}`}
             >
               <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 fill-transparent stroke-current" strokeWidth="1.8">
