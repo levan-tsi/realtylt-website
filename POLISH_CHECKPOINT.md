@@ -92,9 +92,14 @@
 ## chips since 2026-07-19 intentionally don't refetch on pan; engine+39 chips verified).
 ## Blog ARTICLE template compared: ours BEATS live (TOC/callouts/keep-reading) — no rebuild.
 ## Agent leftover (documented, surgical-scope): who-we-are borough chips still ->
-## /search?county= (work order scoped the home strip only). Backfill tail RUNNING healthy
-## (watermark 2026-07-21T16:25, 15k+ photos, 0 429s) — borough/county newest-6 photo gaps
-## self-heal as it finishes. Top Areas is now [x] — ALL nav pages at or above live parity.
+## /search?county= (work order scoped the home strip only). Top Areas is now [x] — ALL nav
+## pages at or above live parity.
+## BACKFILL: **FEED COMPLETE 2026-07-22 ~21:40** (watermark at head; final chunks 31,195 +
+## 26,702 photos, 0 429s at concurrency 2, upload-retry held). VERIFIED after completion:
+## home rails 8/8 + 8/8, queens/the-bronx/brooklyn newest-6 grids 6/6 loaded, 0 "coming
+## soon" anywhere probed. Photos are CURRENT for the whole inventory. Fresh listings from
+## tomorrow onward still need either a periodic bounded chunk (cap 50, concurrency 2-3) or
+## the owner's SUPABASE_SERVICE_ROLE_KEY-into-Vercel step (root fix, makes it automatic).
 
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
