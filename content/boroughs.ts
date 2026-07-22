@@ -26,7 +26,7 @@ const BOROUGH_DATA: Omit<BoroughContent, "name">[] = [
   { slug: "manhattan", countySlug: "manhattan", short: "Manhattan", tagline: "New York City's densest borough and the transit hub of the region." },
   { slug: "brooklyn", countySlug: "brooklyn", short: "Brooklyn", tagline: "New York City's most populous borough." },
   { slug: "queens", countySlug: "queens", short: "Queens", tagline: "New York City's largest borough by area." },
-  { slug: "the-bronx", countySlug: "bronx", short: "The Bronx", tagline: "New York City's northernmost borough — the only one on the U.S. mainland." },
+  { slug: "the-bronx", countySlug: "bronx", short: "The Bronx", tagline: "New York City's northernmost borough, and the only one on the U.S. mainland." },
   { slug: "staten-island", countySlug: "staten-island", short: "Staten Island", tagline: "New York City's most suburban borough." },
 ];
 

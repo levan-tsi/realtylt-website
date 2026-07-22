@@ -69,8 +69,8 @@ export function MarketInsights({
                 </>
               ) : (
                 <>
-                  Fewer than {MIN_CITY_ACTIVES} active listings in {city}, NY right now — showing{" "}
-                  {countyName} ({insights.activeCount.toLocaleString("en-US")} active) instead.
+                  Fewer than {MIN_CITY_ACTIVES} active listings in {city}, NY right now, so these
+                  figures cover {countyName} ({insights.activeCount.toLocaleString("en-US")} active) instead.
                 </>
               )}
             </p>
@@ -79,7 +79,7 @@ export function MarketInsights({
           <p className="mt-6 border border-dashed border-ink/15 bg-white px-5 py-8 text-center text-sm text-stone">
             {fixtureMode
               ? "Market insights use live OneKey MLS data, which isn't loaded in this preview."
-              : "Market insight data is unavailable right now — please check back shortly."}
+              : "Market insight data is unavailable right now. Please check back shortly."}
           </p>
         )}
       </div>

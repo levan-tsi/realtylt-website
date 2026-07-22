@@ -192,7 +192,7 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
             })}
           </ul>
           <p className="mt-3 text-xs leading-relaxed text-stone">
-            Representative rates only — indicative for comparison. Edit the interest rate for your own
+            Representative rates only, indicative for comparison. Edit the interest rate for your own
             quote; your lender&rsquo;s numbers vary with credit, points, and insurance.
           </p>
         </div>
