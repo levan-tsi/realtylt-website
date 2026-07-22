@@ -71,6 +71,30 @@
 ## STILL OPEN: (1) that last thin backfill tail (above); (2) Google-map pan idle-refetch
 ## on prod (untested this round, needs a real-browser pan on the deployed /search);
 ## (3) owner 60s Vercel-env step.
+##
+## ROUND 5 CLOSED 2026-07-22 PM (push 08acadb..3eba660, prod-verified):
+## Agent commits e3ae8c1 (listing: sub-nav anchor bar, payment donut + representative-rates
+## strip, never-miss band -> ?saveSearch=1, REAL market-insights cards w/ city->county
+## fallback) / a218ded (5 borough Top Areas pages off the county template, real medians:
+## queens $775K/4,632 · the-bronx $599K · brooklyn $950K · manhattan $749K · staten-island
+## $799K) / 19ce455 (home-value hero Montserrat 700 — live's REAL font at /home_value; my
+## "serif" premise came from the 410 page at /home-value, agent correctly self-corrected) /
+## c0f7b5e (parity scorer reads /homes-for-sale slugs) / 18c401c / 2725059 (sitemap).
+## ORCHESTRATOR VERIFY: tsc + 345/345 mine; scorer 97.7 PASS mine; non-Bronx listing
+## (KEY1024220 East Elmhurst) sub-nav/donut/insights(82 actives: 17 new, $1,058,847,
+## 131 DOM)/tour-card/offer-modal all verified; financing 390 clean; Queens page eyeballed.
+## FOUND + FIXED MYSELF (3eba660): saveSearch dialog REOPENED on Back/refresh (remount
+## resets the agent's ref while the URL kept the param) -> param now stripped via
+## router.replace on first open; verified opens-once/Back-clean/refresh-clean. 3 of my 4
+## other probe "fails" were probe artifacts (eyebrow <p> not h2; 800ms too short; dev-cold).
+## PROD-VERIFIED: borough pages 200, listing sections live w/ real insights, HV H1
+## computes Montserrat. Google-map-pan open item CLOSED as obsolete-by-design (page-coupled
+## chips since 2026-07-19 intentionally don't refetch on pan; engine+39 chips verified).
+## Blog ARTICLE template compared: ours BEATS live (TOC/callouts/keep-reading) — no rebuild.
+## Agent leftover (documented, surgical-scope): who-we-are borough chips still ->
+## /search?county= (work order scoped the home strip only). Backfill tail RUNNING healthy
+## (watermark 2026-07-21T16:25, 15k+ photos, 0 429s) — borough/county newest-6 photo gaps
+## self-heal as it finishes. Top Areas is now [x] — ALL nav pages at or above live parity.
 
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
