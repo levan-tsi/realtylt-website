@@ -18,15 +18,18 @@ export default function FinancingPage() {
       {/* ── Hero — live: light photo, centered "The Home Loan Process" */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="financing-hero">
         <div className="absolute inset-0">
+          {/* Live financing hero's OWN asset (uploads/104674/blogmanpaperwork.jpg —
+              signing paperwork). Scrim tuned so the centered white title clears the
+              bright window behind the subject. */}
           <Image
-            src="/images/lifestyle/financing.jpg"
+            src="/images/hero/financing-paperwork.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-60"
+            className="object-cover object-center opacity-70"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-[192px] lg:px-8">
           <h1 id="financing-hero" className="text-3xl font-light text-paper md:text-[46px]">

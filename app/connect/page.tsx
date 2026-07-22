@@ -46,8 +46,10 @@ export default function ConnectPage() {
       {/* ── Hero — live: thin LIGHT photo band (washed-out image), dark centered title */}
       <section className="relative isolate overflow-hidden bg-mist" aria-labelledby="connect-hero">
         <div className="absolute inset-0">
+          {/* Live connect hero's OWN asset (uploads/219/int-33.jpg — woman with coffee),
+              kept as a washed light band behind the dark centered title. */}
           <Image
-            src="/images/lifestyle/buying.jpg"
+            src="/images/hero/connect-int33.jpg"
             alt=""
             fill
             priority
