@@ -32,6 +32,29 @@
 ## wedged during a network dip (killed by PID), chunk 7 RUNNING. Home New-Listings
 ## placeholders persist until the chain prints FEED COMPLETE — re-verify the rail after.
 ## Search scorer re-run this round: 97.7 PASS (no drift).
+##
+## ROUND 4B VERIFIED + PUSHED 2026-07-22 (push d11cc23..26f55a0, private Vercel auto-deploy):
+## agent commits c551eee hero event-gate / 2a8d243 buying flip / 58246cf inline tour card /
+## 26f55a0 SEO slugs. ORCHESTRATOR-VERIFIED INDEPENDENTLY: tsc + 334/334 mine; REAL-CHROME
+## hero = instant video-first-frame poster, ZERO black at 0s/8s (Vimeo never plays in the
+## owner's Chrome profile — LIVE shows solid black there; poster-mode is our win);
+## /listing/KEY1024370 308 -> /homes-for-sale/NY/bronx/10462/1332-metropolitan-avenue-6a/
+## bid-38-KEY1024370 200, garbage slug 404, home-rail links canonical (sitemap excludes live
+## listings BY pre-existing design — fixture path uses listingPath); buying-alerts probe 4/4
+## + listing-tour probe ALL PASS re-run by me (leads intercepted). Agent deviations accepted:
+## 308 not 301 (RSC permanentRedirect; SEO-equivalent), bid-38-<FULL KEY> not bare numeric
+## (only exact-KEY lookup exists; documented in lib/idx/listing-url.ts).
+## BACKFILL: upload-retry fix committed 1b407d9 (Cloudflare closes keep-alive sockets at
+## ~125MB -> UND_ERR_SOCKET crashed 2 chunks; uploads now retry w/ backoff + 30s timeout).
+## Chain resumed from 2026-07-20T17:21, RUNNING toward FEED COMPLETE.
+## KNOWN HISTORY BLEMISH: orchestrator commit 1b407d9 accidentally swept the 4b agent's
+## staged in-progress ListingDetail.tsx (agent's final 26f55a0 superseded it; harmless).
+## RULE: while a builder owns the tree, orchestrator commits use explicit pathspec
+## (git commit -- <file>).
+## STILL OPEN AFTER THIS ROUND: (1) backfill chain to FEED COMPLETE + re-verify home
+## New-Listings rail; (2) prod spot-check after deploy (hero poster, mockup tiles instant,
+## buying/selling ISR, Google-map pan idle-refetch); (3) owner 60s step unchanged:
+## SUPABASE_SERVICE_ROLE_KEY into Vercel env (root fix for fresh photos + hourly mirror).
 
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
