@@ -16,6 +16,7 @@ import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { COUNTIES, SERVED_AREAS } from "@/lib/site";
+import { boroughPath } from "@/content/boroughs";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -199,11 +200,12 @@ export default async function HomePage() {
             {SERVED_AREAS.map((c) => (
               <li key={c.slug}>
                 <Link
-                  // Boroughs have no editorial /top-areas page yet — send them to search.
+                  // Both counties and boroughs now have Top Areas pages; boroughs map their
+                  // internal slug to the readable URL (bronx → /top-areas/the-bronx).
                   href={
                     COUNTIES.some((k) => k.slug === c.slug)
                       ? `/top-areas/${c.slug}`
-                      : `/search?county=${c.slug}`
+                      : (boroughPath(c.slug) ?? `/search?county=${c.slug}`)
                   }
                   className="border border-[#cccccc] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >

@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { COUNTY_CONTENT } from "@/content/counties";
+import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { fmtM } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Top Areas | Six Counties Along the Hudson",
+  title: "Top Areas | Hudson Valley Counties & NYC Boroughs",
   description:
-    "Explore the six Hudson Valley counties we serve (Westchester, Rockland, Putnam, Orange, Dutchess and Ulster) with local market notes, commute times, and homes for sale in each.",
+    "Explore the six Hudson Valley counties (Westchester, Rockland, Putnam, Orange, Dutchess, Ulster) and all five NYC boroughs we serve, with local market notes and homes for sale in each.",
 };
 
 export default function TopAreasPage() {
@@ -71,6 +72,39 @@ export default function TopAreasPage() {
                     <p className="mt-1 text-sm text-stone">{c.tagline}</p>
                     <p className="mt-3 text-xs uppercase tracking-[0.12em] text-stone">
                       {c.towns.slice(0, 4).join(" · ")}
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── NYC boroughs */}
+      <section className="border-t border-[#eeeeee] bg-paper pb-16 md:pb-24" aria-labelledby="borough-cards">
+        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+          <Reveal>
+            <SectionHeading align="center" as="h2">
+              <span id="borough-cards">The Five Boroughs</span>
+            </SectionHeading>
+          </Reveal>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-stone">
+            We list and sell across New York City too. Browse current homes for sale in each borough.
+          </p>
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {BOROUGH_CONTENT.map((b, i) => (
+              <Reveal key={b.slug} as="li" delay={(i % 3) * 110}>
+                <article className="lift group relative h-full overflow-hidden border border-[#dddddd] bg-white">
+                  <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${b.name}`} />
+                  <div className="flex items-center justify-between bg-ink px-5 py-4">
+                    <h3 className="text-lg font-bold text-paper">{b.name}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-paper/60">New York City</span>
+                  </div>
+                  <div className="p-5">
+                    <p className="text-sm leading-relaxed text-stone">{b.tagline}</p>
+                    <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-ink underline decoration-ink/20 underline-offset-4 transition-colors group-hover:decoration-ink">
+                      See homes for sale
                     </p>
                   </div>
                 </article>
