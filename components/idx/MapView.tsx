@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { divIcon } from "leaflet";
 import Link from "next/link";
 import type { MapPin } from "@/lib/idx/types";
+import { listingPath } from "@/lib/idx/listing-url";
 import { boundsOfPins, chipPrice, MAP_FONT as FONT, spreadPins, type MapViewProps } from "./map-shared";
 import "leaflet/dist/leaflet.css";
 
@@ -74,7 +75,7 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
                   {p.address}, {p.city} {p.zip}
                 </p>
                 <p style={{ margin: "4px 0", fontSize: 11, color: "#6E7681" }}>Listed with {p.office}</p>
-                <Link href={`/listing/${p.id}`} style={{ color: "#102c54", fontWeight: 700 }}>
+                <Link href={listingPath(p)} style={{ color: "#102c54", fontWeight: 700 }}>
                   View listing
                 </Link>
               </div>

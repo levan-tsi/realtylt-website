@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
+import { listingPath } from "@/lib/idx/listing-url";
 import { specParts } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 import { MlsImage } from "./MlsImage";
@@ -83,7 +84,7 @@ export function ListingCard({
     return (
       <article className="lift group relative overflow-hidden border border-[#dddddd] bg-white">
         <Link
-          href={`/listing/${l.id}`}
+          href={listingPath(l)}
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
         />
@@ -154,7 +155,7 @@ export function ListingCard({
   return (
     <article className="lift group relative overflow-hidden bg-white">
       <Link
-        href={`/listing/${l.id}`}
+        href={listingPath(l)}
         className="absolute inset-0 z-10"
         aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
       />

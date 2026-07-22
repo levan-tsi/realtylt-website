@@ -1,4 +1,5 @@
 import type { MapBounds, MapPin } from "@/lib/idx/types";
+import { listingPath } from "@/lib/idx/listing-url";
 
 /** Shared map math — used by both the Leaflet fallback and the Google Maps view.
  * The results map is PAGE-COUPLED: it plots exactly the current page's listings as black
@@ -92,6 +93,6 @@ export function popupHtml(p: MapPin): string {
 <p style="margin:0;font-weight:700">${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}</p>
 <p style="margin:4px 0">${p.address}, ${p.city} ${p.zip}</p>
 <p style="margin:4px 0;font-size:11px;color:#6E7681">Listed with ${p.office}</p>
-<a href="/listing/${p.id}" style="color:#102c54;font-weight:700">View listing</a>
+<a href="${listingPath(p)}" style="color:#102c54;font-weight:700">View listing</a>
 </div>`;
 }

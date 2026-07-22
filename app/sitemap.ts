@@ -3,6 +3,7 @@ import { getArticles } from "@/lib/blog";
 import { COUNTY_CONTENT } from "@/content/counties";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
+import { listingPath } from "@/lib/idx/listing-url";
 import { getServices } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
@@ -59,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // rotates, so keep the sitemap to evergreen pages when the real MLS is connected.
   const listings: MetadataRoute.Sitemap = isFixtureMode()
     ? FIXTURE_LISTINGS.map((l) => ({
-        url: `${base}/listing/${l.id}`,
+        url: `${base}${listingPath(l)}`,
         priority: 0.4,
         changeFrequency: "weekly" as const,
         lastModified: new Date(l.modificationTimestamp),

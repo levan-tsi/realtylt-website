@@ -14,31 +14,30 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 import { Reveal } from "@/components/ui/Reveal";
-import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
-import { getIdxClient, isFixtureMode, isSampleData } from "@/lib/idx";
+import { getIdxClient, isSampleData } from "@/lib/idx";
 import type { Listing } from "@/lib/idx/types";
 import { getProxiedPhotoPaths } from "@/lib/idx/media";
+import { listingPath } from "@/lib/idx/listing-url";
 import { calcMortgage } from "@/lib/mortgage";
 import { SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 
-export async function generateStaticParams() {
-  // Fixture ids pre-render; live-feed ids resolve on demand (dynamicParams).
-  return isFixtureMode() ? FIXTURE_LISTINGS.map((l) => ({ id: l.id })) : [];
-}
-export const dynamicParams = true;
-export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
-
 // generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
-const getListing = cache((id: string) => getIdxClient().getListing(id));
+// Exported so the /listing/[id] redirect stub and the /homes-for-sale slug route share it.
+export const getListingCached = cache((id: string) => getIdxClient().getListing(id));
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const l = await getListing(id);
+/** Shared listing metadata — canonical + OG point at the SEO slug URL for both routes. */
+export async function listingMetadata(id: string): Promise<Metadata> {
+  const l = await getListingCached(id);
   if (!l) return { title: "Listing not found" };
+  const canonical = `${SITE.url}${listingPath(l)}`;
+  const title = `${l.address}, ${l.city} NY ${l.zip} | ${formatPrice(l.price)}`;
+  const description = l.description.slice(0, 160);
   return {
-    title: `${l.address}, ${l.city} NY ${l.zip} | ${formatPrice(l.price)}`,
-    description: l.description.slice(0, 160),
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical, type: "website" },
   };
 }
 
@@ -54,9 +53,8 @@ function factFromFeatures(l: Listing, re: RegExp): string | undefined {
 
 const fmtMoney = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
-export default async function ListingPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const l = await getListing(id);
+export async function ListingDetail({ id }: { id: string }) {
+  const l = await getListingCached(id);
   if (!l) notFound();
   // Snapshot listings carry only the primary /api/media proxy path — resolve the
   // FULL on-demand gallery (ONE short-TTL-cached MLS data lookup per detail view;
@@ -150,7 +148,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
     name: `${l.address}, ${l.city}, NY ${l.zip}`,
-    url: `${SITE.url}/listing/${l.id}`,
+    url: `${SITE.url}${listingPath(l)}`,
     image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)),
     description: l.description,
     datePosted: l.listedAt,
