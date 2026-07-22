@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Montserrat } from "next/font/google";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HomeValueForm } from "@/components/leads/HomeValueForm";
+
+// Live realtylt.com's Home Value hero (the real page is /home_value — the /home-value hyphen
+// URL is 410 Gone, and its browser error page renders in Times New Roman, which is where the
+// "serif" impression came from). The live headline computes to Montserrat 700 / 64px, so we
+// match it exactly (one weight, self-hosted by next/font — no runtime webfont fetch).
+const montserrat = Montserrat({ subsets: ["latin"], weight: ["700"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "Home Value | How Much Is Your Home Really Worth?",
@@ -35,8 +42,7 @@ export default async function HomeValuePage({
   return (
     <>
       {/* ── Hero + form — live: near-full-viewport BRIGHT dusk photo (luminance ~88, no dark
-          wash), bold sans headline 64px w700 (live loads Montserrat; the "serif" in earlier
-          captures was a headless font-fallback artifact — we use brand Lato bold). */}
+          wash), bold headline 64px w700 in Montserrat (matched exactly, see the font import). */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="hv-hero">
         <div className="absolute inset-0">
           <Image
@@ -57,7 +63,7 @@ export default async function HomeValuePage({
         <div className="relative mx-auto flex min-h-[520px] max-w-[1250px] flex-col justify-center px-4 py-20 text-center md:min-h-[850px] lg:px-8">
           <h1
             id="hv-hero"
-            className="mx-auto max-w-4xl text-4xl font-bold leading-tight text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)] md:text-[64px]"
+            className={`${montserrat.className} mx-auto max-w-4xl text-4xl font-bold leading-tight text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)] md:text-[64px]`}
           >
             How Much Is Your Home Really Worth?
           </h1>
