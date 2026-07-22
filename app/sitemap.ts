@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getArticles } from "@/lib/blog";
 import { COUNTY_CONTENT } from "@/content/counties";
+import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { FIXTURE_LISTINGS } from "@/lib/idx/fixture-data";
 import { isFixtureMode } from "@/lib/idx";
 import { listingPath } from "@/lib/idx/listing-url";
@@ -32,8 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/dmca-terms`, priority: 0.2, changeFrequency: "yearly", lastModified: now },
   ];
 
-  const counties: MetadataRoute.Sitemap = COUNTY_CONTENT.map((c) => ({
-    url: `${base}/top-areas/${c.slug}`,
+  const counties: MetadataRoute.Sitemap = [...COUNTY_CONTENT, ...BOROUGH_CONTENT].map((a) => ({
+    url: `${base}/top-areas/${a.slug}`,
     priority: 0.8,
     changeFrequency: "weekly",
     lastModified: now,
