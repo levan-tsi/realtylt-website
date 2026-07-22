@@ -240,8 +240,13 @@ export function SearchClient() {
     if (searchParams.get("saveSearch") === "1") {
       saveSearchTriggered.current = true;
       setSaveOpen(true);
+      // Strip the trigger from the URL: Back/refresh remounts reset the ref, and a URL
+      // still carrying saveSearch=1 would re-open the dialog on every return visit.
+      const qs = new URLSearchParams(window.location.search);
+      qs.delete("saveSearch");
+      router.replace(`${window.location.pathname}${qs.size ? `?${qs}` : ""}`, { scroll: false });
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   // Reflect the committed filters into the URL — a post-commit effect (never updates the
   // Router mid-render) keyed on the serialized query, so it writes exactly once per real
