@@ -135,13 +135,10 @@ export default async function BuyingPage() {
             </div>
           </Reveal>
 
-          {/* 2 — Alerts: phone + save-a-search mockup left, copy right */}
+          {/* 2 — Alerts: copy LEFT, phone + save-a-search mockup RIGHT (matches live) */}
           <Reveal>
             <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div className="order-2 lg:order-1">
-                <AlertsMock listings={listings} />
-              </div>
-              <div className="order-1 lg:order-2">
+              <div>
                 <h3 className="text-3xl font-light md:text-4xl">
                   Get <strong className="font-bold">Listing Alerts</strong>
                 </h3>
@@ -155,6 +152,9 @@ export default async function BuyingPage() {
                 <div className="mt-6">
                   <Button href="/search" variant="outline-light">Save a Search</Button>
                 </div>
+              </div>
+              <div>
+                <AlertsMock listings={listings} />
               </div>
             </div>
           </Reveal>
