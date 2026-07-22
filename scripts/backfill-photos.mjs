@@ -63,13 +63,24 @@ const iso = (s) => { const t = Date.parse(s); return Number.isNaN(t) ? s : new D
 
 // ── storage upload (Storage REST API, service role) ─────────────────────────────────────────────
 async function uploadPhoto(path, bytes, contentType) {
-  const res = await fetch(`${SB_URL}/storage/v1/object/mls-photos/${path}`, {
-    method: "POST",
-    headers: { apikey: SB_SERVICE, Authorization: `Bearer ${SB_SERVICE}`, "Content-Type": contentType, "x-upsert": "true" },
-    body: bytes,
-  });
-  if (!res.ok && res.status !== 409) return false;
-  return true;
+  // Cloudflare closes keep-alive sockets after ~125MB; a reused dead socket throws
+  // UND_ERR_SOCKET mid-run — retry with backoff instead of crashing the whole chunk.
+  for (let attempt = 0; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch(`${SB_URL}/storage/v1/object/mls-photos/${path}`, {
+        method: "POST",
+        headers: { apikey: SB_SERVICE, Authorization: `Bearer ${SB_SERVICE}`, "Content-Type": contentType, "x-upsert": "true" },
+        body: bytes,
+        signal: AbortSignal.timeout(30000),
+      });
+      if (res.ok || res.status === 409) return true;
+      if (res.status === 429) { await sleep(Math.min(8000, 500 * 2 ** attempt)); continue; }
+      return false;
+    } catch {
+      await sleep(500 * 2 ** attempt);
+    }
+  }
+  return false;
 }
 
 async function downloadPhoto(url) {
