@@ -11,6 +11,27 @@
 ## Work order: docs/parity/PARITY-round4-homepage-buying.md (commit c819545). ONE Opus agent
 ## dispatched (owner: one subagent at a time) on Home -> Buying -> selling/connect touch-ups.
 ## Orchestrator: backfill chaining + verify after the agent returns. Dev server RUNNING :3000.
+##
+## ROUND 4 BUILD LANDED + ORCHESTRATOR-VERIFIED 2026-07-22 AM (agent commits b517b46 home /
+## afebdee buying / b3a6423 selling / 614465e heroes; tsc + 319/319 re-run by me; buying
+## mockups + selling hero/collage + stacked home form verified in fresh shots
+## docs/_audit/round4/). Agent stopped at 322k (under budget); resume via SendMessage FAILED
+## ("No transcript found" — Agent-tool subagents are NOT resumable here after completion;
+## spawn-fresh is the pattern). ROUND 4B Opus agent DISPATCHED with the verified gap list:
+## (1) CRITICAL home hero paints BLACK in real Chrome (Vimeo player buffers black over the
+## poster; live has the same failure — we must beat it): event-gate reveal on Vimeo
+## play/timeupdate postMessage + poster = video's own first frame (oEmbed thumbnail);
+## (2) buying alerts section mirrored vs live (copy left, phone right); (3) listing-detail
+## INLINE Request-a-Tour right-rail card (live parity, same /api/lead flow); (4) SEO listing
+## slugs /homes-for-sale/NY/<city>/<zip>/<addr>/bid-38-<id> + 301 from /listing/<KEY>;
+## (5) harden to ~700k. NOTE real-Chrome test: LIVE's hero is ALSO black in the owner's
+## Chrome profile (Vimeo never starts there) — poster-mode is our win, not a regression.
+## Chrome-extension hydration warning on dev (data-scribe-recorder/data-gptw attrs) = owner's
+## extensions, NOT ours. Backfill: chunks 1-4 done (watermark 2026-07-19T22:06, ~5.8k photos
+## downloaded incl. the 499-photo fresh zone), chunk 5 crashed on a transient socket, chunk 6
+## wedged during a network dip (killed by PID), chunk 7 RUNNING. Home New-Listings
+## placeholders persist until the chain prints FEED COMPLETE — re-verify the rail after.
+## Search scorer re-run this round: 97.7 PASS (no drift).
 
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
