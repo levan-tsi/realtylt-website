@@ -51,10 +51,26 @@
 ## staged in-progress ListingDetail.tsx (agent's final 26f55a0 superseded it; harmless).
 ## RULE: while a builder owns the tree, orchestrator commits use explicit pathspec
 ## (git commit -- <file>).
-## STILL OPEN AFTER THIS ROUND: (1) backfill chain to FEED COMPLETE + re-verify home
-## New-Listings rail; (2) prod spot-check after deploy (hero poster, mockup tiles instant,
-## buying/selling ISR, Google-map pan idle-refetch); (3) owner 60s step unchanged:
-## SUPABASE_SERVICE_ROLE_KEY into Vercel env (root fix for fresh photos + hourly mirror).
+## ROUND 4 CLOSED 2026-07-22 PM:
+## - PROD VERIFIED on the new build: hero poster instant/no-black in real Chrome;
+##   /listing 308 -> slug 200; buying mockups present (20 media refs). HOME RAILS HEALED ON
+##   PROD: Featured 8/8 + New Listings 8/8 real photos loaded, 0 placeholders (probe
+##   scripts/_scratch-rail-check.mjs) — the owner's placeholder complaint is FIXED.
+## - BACKFILL: PAUSED DELIBERATELY on a fresh media-CDN 429 wave (dev-server tail showed
+##   400s turning into 429s; the wedge/crash pattern returned). Watermark
+##   2026-07-20T17:21 — only listings modified after that remain unmirrored (thin tail).
+##   RESUME after a 30-60+ min cooldown with ONE bounded chunk:
+##   node scripts/backfill-photos.mjs --cap 50 --max-pages 8 --max-listings 4000
+##   --concurrency 3 (uploads now retry, commit 1b407d9). Root fix stays the owner's 60s
+##   Vercel-env step (SUPABASE_SERVICE_ROLE_KEY) — then the hourly cron mirrors deltas
+##   automatically and manual chunks become unnecessary.
+## - Dev server restarted (ONE on :3000). Vimeo-in-real-Chrome note: the video does not
+##   autoplay in the owner's Chrome profile AT ALL (live's hero = solid black there; ours =
+##   first-frame poster). If the owner reports "no video", that's his browser profile, not
+##   a regression — check chrome://settings/content/sound + extensions before touching code.
+## STILL OPEN: (1) that last thin backfill tail (above); (2) Google-map pan idle-refetch
+## on prod (untested this round, needs a real-browser pan on the deployed /search);
+## (3) owner 60s Vercel-env step.
 
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
