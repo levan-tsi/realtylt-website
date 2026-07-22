@@ -11,6 +11,8 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
+import { HomeHeroVideo } from "@/components/home/HomeHeroVideo";
+import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { COUNTIES, SERVED_AREAS } from "@/lib/site";
@@ -23,25 +25,6 @@ export const metadata: Metadata = {
   description:
     "Let's find home. Search homes for sale across the Hudson Valley and all five NYC boroughs, or get your home's value and a cash offer in 24 hours.",
 };
-
-const WHY_US = [
-  {
-    title: "Two ways to sell",
-    body: "A guaranteed cash offer in 24 hours, or a full-service listing for maximum profit. We show you both. You decide.",
-  },
-  {
-    title: "Tools buyers actually use",
-    body: "Pro photography, 3D walkthroughs, and listings syndicated to the MLS plus 100+ search sites.",
-  },
-  {
-    title: "Transparency, start to finish",
-    body: "Real-time updates on showings, feedback, and offers. You always know what's happening with your sale.",
-  },
-  {
-    title: "Local, seven days a week",
-    body: "Based in Lagrangeville, working the whole mid-Hudson region. Fast answers, evenings and weekends included.",
-  },
-];
 
 export default async function HomePage() {
   const idx = getIdxClient();
@@ -58,8 +41,10 @@ export default async function HomePage() {
       <section className="relative isolate bg-ink" aria-labelledby="home-hero">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
-            {/* The live hero's OWN uploaded asset (BlueRoof uploads/104674/hom.png),
-                rendered the same way live does: grayscale under a dark scrim. */}
+            {/* Static poster — the live hero's OWN uploaded asset (BlueRoof
+                uploads/104674/hom.png). Always rendered underneath so mobile,
+                reduced-motion and no-JS visitors get a real image and the desktop video
+                never flashes black while it loads. */}
             <Image
               src="/images/hero/hom.png"
               alt=""
@@ -68,7 +53,15 @@ export default async function HomePage() {
               sizes="100vw"
               className="object-cover object-center grayscale"
             />
-            <div className="absolute inset-0 bg-black/30" />
+            {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
+            <HomeHeroVideo />
+            {/* Scrim: a light overall wash + a stronger bottom gradient so the white
+                headline clears contrast over either the poster or the video. */}
+            <div className="absolute inset-0 bg-black/25" />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+            />
           </div>
           {/* Live: ~670px photo band, headline alone bottom-left (h1 lands ~y=796 @1280) */}
           <div className="relative mx-auto flex min-h-[420px] max-w-[1250px] flex-col justify-end px-4 pb-10 pt-24 md:min-h-[655px] lg:px-16">
@@ -142,8 +135,14 @@ export default async function HomePage() {
           <Reveal delay={140}>
             <h3 className="text-2xl font-light text-ink">Tell Us About Your Home</h3>
             <p className="mb-5 mt-1 text-sm text-stone">We usually reply within the hour.</p>
+            {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
+                Message stacked single-column (no interest dropdown). Wiring/validation/
+                honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
             <LeadForm
+              splitName
               withAddress
+              stackAddressRow
+              hideReason
               defaultReason="I'm interested in selling a home"
               submitLabel="Send Message"
               successTitle="Got it. Thanks."
@@ -227,17 +226,11 @@ export default async function HomePage() {
               technology to transparency throughout the entire process.
             </p>
           </Reveal>
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {WHY_US.map((w, i) => (
-              <Reveal key={w.title} as="li" delay={i * 100}>
-                <div className="h-full border border-[#dddddd] bg-white p-6">
-                  <p className="text-lg font-bold text-ink">{w.title}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone">{w.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-          <div className="mt-14 grid grid-cols-2 gap-8 border-t border-[#dddddd] pt-10 text-center md:grid-cols-4">
+          {/* Live's laptop CAROUSEL of device screenshots (replaces our 4 static cards). */}
+          <Reveal>
+            <WhyCarousel />
+          </Reveal>
+          <div className="mt-16 grid grid-cols-2 gap-8 border-t border-[#dddddd] pt-10 text-center md:grid-cols-4">
             <StatCounter value={11} label="Counties & boroughs served" />
             <StatCounter value={24} suffix="h" label="Cash offer turnaround" />
             <StatCounter value={100} suffix="+" label="Sites your listing reaches" />

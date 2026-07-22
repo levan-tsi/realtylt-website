@@ -27,6 +27,7 @@ export function LeadForm({
   hideReason = false,
   stack = false,
   splitName = false,
+  stackAddressRow = false,
   requirePhone = false,
   defaultReason,
   defaultAddress,
@@ -44,6 +45,9 @@ export function LeadForm({
   hideReason?: boolean;
   stack?: boolean;
   splitName?: boolean;
+  /** Force the phone/address pair onto their own rows (single column) while leaving the
+   * First/Last name pair 2-up — matches the live home-page form's stacking. */
+  stackAddressRow?: boolean;
   requirePhone?: boolean;
   defaultReason?: (typeof INTEREST_REASONS)[number];
   /** Prefill for the address field (home-value two-step flow). */
@@ -145,7 +149,7 @@ export function LeadForm({
           <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
         </div>
       )}
-      <div className={`grid gap-4 ${withAddress && !stack ? "sm:grid-cols-2" : ""}`}>
+      <div className={`grid gap-4 ${withAddress && !stack && !stackAddressRow ? "sm:grid-cols-2" : ""}`}>
         <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
         {withAddress && (
           <Input

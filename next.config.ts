@@ -28,8 +28,9 @@ const CSP = [
   // the official Google Maps results map (env-gated).
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com",
   "style-src 'self' 'unsafe-inline'",
-  // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame.
-  "frame-src 'self' https://calendar.google.com https://td.doubleclick.net",
+  // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame,
+  // plus the ambient Vimeo hero background video on the home page (player.vimeo.com iframe).
+  "frame-src 'self' https://calendar.google.com https://td.doubleclick.net https://player.vimeo.com",
   // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
   // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
