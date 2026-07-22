@@ -1,5 +1,17 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ROUND 4 IN PROGRESS 2026-07-22 (owner: "a lot of things are still not the same"):
+## Orchestrator re-swept ALL pages vs live (docs/_audit/sweep-0722/ + live-nav.txt). Key finds:
+## live SELLING was redesigned by the owner in the sitebuilder and ours ALREADY matches it
+## (built 07-16); live /who-we-are is 410 GONE (nav -> /realestateagent/search bare agent card;
+## ours beats it); live HOME hero is a VIMEO BACKGROUND VIDEO 398379426 (ours = static hom.png);
+## live's Why-Work-With-Us is a 5-slide laptop carousel (slides extracted, see parity doc);
+## BUYING needs live's 3 device mockups; 6/8 New-Listings cards = placeholders (fresh-listing
+## mirror gap, backfill chunk chaining now); search parity scorer re-run = 97.7 PASS (no drift).
+## Work order: docs/parity/PARITY-round4-homepage-buying.md (commit c819545). ONE Opus agent
+## dispatched (owner: one subagent at a time) on Home -> Buying -> selling/connect touch-ups.
+## Orchestrator: backfill chaining + verify after the agent returns. Dev server RUNNING :3000.
+
 Updated 2026-07-15 (late PM). The `/website` command reads this to know where to resume, and
 overwrites it when it stops. Page-by-page: compare each page to LIVE realtylt.com, make ours
 match-or-beat, test live.
