@@ -46,14 +46,29 @@ function nextSevenDays() {
   return out;
 }
 
-export function ListingLeadCTAs(props: { listing: ListingIntent }) {
+export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: string }) {
   const [modal, setModal] = useState<null | "tour" | "offer">(null);
+  const [seedDate, setSeedDate] = useState<string | undefined>(undefined);
+
+  const openTour = (dateKey?: string) => {
+    setSeedDate(dateKey);
+    setModal("tour");
+  };
+  // "Request Info" reuses the rail's existing message form (no new lead path) — jump to it.
+  const requestInfo = () => {
+    if (!props.infoTargetId) return;
+    const el = document.getElementById(props.infoTargetId);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.querySelector<HTMLElement>("input,select,textarea")?.focus({ preventScroll: true });
+  };
+
   return (
     <>
-      <div className="grid grid-cols-2 gap-2.5">
+      {/* Mobile / small: live's tap-to-open bottom sheets (unchanged). */}
+      <div className="grid grid-cols-2 gap-2.5 lg:hidden">
         <button
           type="button"
-          onClick={() => setModal("tour")}
+          onClick={() => openTour()}
           className="rounded-[3px] bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Schedule a Tour
@@ -66,9 +81,129 @@ export function ListingLeadCTAs(props: { listing: ListingIntent }) {
           Make an Offer
         </button>
       </div>
-      {modal === "tour" && <TourModal listing={props.listing} onClose={() => setModal(null)} />}
+
+      {/* Desktop: live's inline Request-a-Tour card (tabs + date strip + In Person Tour). */}
+      <div className="hidden lg:block">
+        <InlineTourCard onOpenTour={openTour} onRequestInfo={requestInfo} />
+        <button
+          type="button"
+          onClick={() => setModal("offer")}
+          className="mt-3 w-full rounded-[3px] border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+        >
+          Make an Offer
+        </button>
+      </div>
+
+      {modal === "tour" && (
+        <TourModal listing={props.listing} initialDate={seedDate} onClose={() => setModal(null)} />
+      )}
       {modal === "offer" && <OfferModal listing={props.listing} onClose={() => setModal(null)} />}
     </>
+  );
+}
+
+/** Live's inline right-rail card: [Request a Tour | Request Info] with a 3-day strip and an
+ * IN PERSON TOUR button. The button opens the same TourModal flow seeded with the chosen day;
+ * Request Info jumps to the rail's existing message form. Desktop-only (mobile keeps sheets). */
+function InlineTourCard({
+  onOpenTour,
+  onRequestInfo,
+}: {
+  onOpenTour: (dateKey: string) => void;
+  onRequestInfo: () => void;
+}) {
+  const days = useRef(nextSevenDays()).current;
+  const [tab, setTab] = useState<"tour" | "info">("tour");
+  const [offset, setOffset] = useState(0);
+  const [date, setDate] = useState(days[0].key);
+  const WINDOW = 3;
+  const maxOffset = Math.max(0, days.length - WINDOW);
+  const visible = days.slice(offset, offset + WINDOW);
+
+  const tabCls = (active: boolean) =>
+    `min-h-11 flex-1 px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+      active ? "border-b-2 border-ink text-ink" : "border-b-2 border-transparent text-stone hover:text-ink"
+    }`;
+  const arrowCls =
+    "grid h-11 w-8 shrink-0 place-items-center rounded-[3px] text-ink transition-colors hover:bg-mist disabled:cursor-not-allowed disabled:text-stone/40 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
+
+  return (
+    <div>
+      <div className="flex" aria-label="Contact options">
+        <button type="button" aria-pressed={tab === "tour"} onClick={() => setTab("tour")} className={tabCls(tab === "tour")}>
+          Request a Tour
+        </button>
+        <button type="button" aria-pressed={tab === "info"} onClick={() => setTab("info")} className={tabCls(tab === "info")}>
+          Request Info
+        </button>
+      </div>
+
+      {tab === "tour" ? (
+        <div className="pt-4">
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              aria-label="Show earlier days"
+              disabled={offset === 0}
+              onClick={() => setOffset((o) => Math.max(0, o - WINDOW))}
+              className={arrowCls}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <div role="group" aria-label="Choose a day" className="grid flex-1 grid-cols-3 gap-2">
+              {visible.map((d) => (
+                <button
+                  key={d.key}
+                  type="button"
+                  aria-pressed={date === d.key}
+                  onClick={() => setDate(d.key)}
+                  className={`flex min-h-11 flex-col items-center rounded-[4px] border px-1 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                    date === d.key ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
+                  }`}
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{d.weekday}</span>
+                  <span className="text-lg font-semibold leading-tight">{d.day}</span>
+                  <span className="text-[10px] uppercase tracking-[0.1em] opacity-80">{d.month}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label="Show later days"
+              disabled={offset >= maxOffset}
+              onClick={() => setOffset((o) => Math.min(maxOffset, o + WINDOW))}
+              className={arrowCls}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => onOpenTour(date)}
+            className="mt-4 w-full rounded-[3px] bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            In Person Tour
+          </button>
+        </div>
+      ) : (
+        <div className="pt-4">
+          <p className="text-sm leading-relaxed text-stone">
+            Have a question about this home? Send a note and we&rsquo;ll get back to you shortly.
+          </p>
+          <button
+            type="button"
+            onClick={onRequestInfo}
+            className="mt-3 w-full rounded-[3px] border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            Request Info
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -200,10 +335,20 @@ function Honeypot({ value, onChange }: { value: string; onChange: (v: string) =>
   );
 }
 
-function TourModal({ listing, onClose }: { listing: ListingIntent; onClose: () => void }) {
+function TourModal({
+  listing,
+  onClose,
+  initialDate,
+}: {
+  listing: ListingIntent;
+  onClose: () => void;
+  initialDate?: string;
+}) {
   const titleId = useId();
   const days = useRef(nextSevenDays()).current;
-  const [date, setDate] = useState(days[0].key);
+  const [date, setDate] = useState(() =>
+    initialDate && days.some((d) => d.key === initialDate) ? initialDate : days[0].key,
+  );
   const [tourType, setTourType] = useState<"In person" | "Video chat">("In person");
   const [time, setTime] = useState("Morning");
   const [hp, setHp] = useState("");

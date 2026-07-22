@@ -421,6 +421,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
               <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-7">
                 {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
                 <ListingLeadCTAs
+                  infoTargetId="listing-info-form"
                   listing={{
                     id: l.id,
                     address: l.address,
@@ -453,13 +454,15 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
                   </a>{" "}
                   or send a note.
                 </p>
-                <LeadForm
-                  compact
-                  defaultReason="I'm interested in buying a home"
-                  submitLabel="Request Info / Tour"
-                  successTitle="Request sent."
-                  successBody={`We'll get back to you about ${l.address} shortly.`}
-                />
+                <div id="listing-info-form">
+                  <LeadForm
+                    compact
+                    defaultReason="I'm interested in buying a home"
+                    submitLabel="Request Info / Tour"
+                    successTitle="Request sent."
+                    successBody={`We'll get back to you about ${l.address} shortly.`}
+                  />
+                </div>
               </div>
             </aside>
           </Reveal>
