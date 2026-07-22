@@ -41,12 +41,13 @@ export default async function HomePage() {
       <section className="relative isolate bg-ink" aria-labelledby="home-hero">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
-            {/* Static poster — the live hero's OWN uploaded asset (BlueRoof
-                uploads/104674/hom.png). Always rendered underneath so mobile,
-                reduced-motion and no-JS visitors get a real image and the desktop video
-                never flashes black while it loads. */}
+            {/* Static poster — the ambient Vimeo clip's OWN first frame (fetched via its
+                oEmbed thumbnail, 1920w, public/images/hero/hero-vimeo-frame.jpg). Using the
+                video's own frame means poster-mode looks identical to the video's opening, so
+                mobile, reduced-motion and no-JS visitors see the same image and the desktop
+                video never flashes black while it loads. (Old dark asset hom.png kept in repo.) */}
             <Image
-              src="/images/hero/hom.png"
+              src="/images/hero/hero-vimeo-frame.jpg"
               alt=""
               fill
               priority
@@ -60,7 +61,7 @@ export default async function HomePage() {
             <div className="absolute inset-0 bg-black/25" />
             <div
               aria-hidden
-              className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+              className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/35 to-transparent"
             />
           </div>
           {/* Live: ~670px photo band, headline alone bottom-left (h1 lands ~y=796 @1280) */}
