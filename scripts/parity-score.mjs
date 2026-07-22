@@ -27,7 +27,9 @@ const ratio = (a, b) => (!a || !b ? 0 : Math.min(a, b) / Math.max(a, b));
 async function readSearch(page, isLive) {
   return page.evaluate((live) => {
     const txt = document.body.innerText;
-    const cardSel = live ? "a[href*='-bid-']" : "ul a[href^='/listing/']";
+    // Our cards link to the canonical SEO slug (/homes-for-sale/…) since the round-4b slug
+    // migration; the old /listing/ selector matched nothing after that (kept in sync here).
+    const cardSel = live ? "a[href*='-bid-']" : "article a[href^='/homes-for-sale/']";
     const cards = [...new Set([...document.querySelectorAll(cardSel)].map((a) => (live ? a.querySelector("div") : a.closest("article"))).filter(Boolean))];
     const first = cards[0];
     const rect = (el) => (el ? el.getBoundingClientRect() : null);
