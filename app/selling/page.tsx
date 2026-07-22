@@ -6,8 +6,16 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { MlsImage } from "@/components/idx/MlsImage";
+import { isLiveMlsPhoto, formatPrice } from "@/components/idx/ListingCard";
+import { getIdxClient } from "@/lib/idx";
+import type { Listing } from "@/lib/idx/types";
+import { specParts } from "@/lib/format";
 import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 import { SITE } from "@/lib/site";
+
+// Keep the marketing-collage listing tiles fresh in live mode.
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: "Sell Your Home | Cash Offer in 24 Hours or Full-Service Listing",
@@ -62,16 +70,10 @@ const LOOP_STEPS = [
   { label: "Sale progress", note: "Inspection to closing, tracked 24/7" },
 ];
 
-const MARKETING_THUMBS = [
-  "/images/listings/house-01.jpg",
-  "/images/listings/house-07.jpg",
-  "/images/listings/house-11.jpg",
-  "/images/listings/house-05.jpg",
-  "/images/listings/house-17.jpg",
-  "/images/listings/house-09.jpg",
-];
-
-export default function SellingPage() {
+export default async function SellingPage() {
+  // Real listings power the "Innovative Internet Marketing" mockup (photos + prices),
+  // so it reads like our actual search portal rather than empty device screens.
+  const marketingListings = await getIdxClient().getFeatured(6);
   return (
     <>
       {/* ── Hero: headline + 60-second form card */}
@@ -83,11 +85,12 @@ export default function SellingPage() {
             fill
             priority
             sizes="100vw"
-            className="hero-zoom object-cover opacity-80"
+            className="hero-zoom object-cover opacity-95"
           />
-          {/* Scrim: dark under the headline (left), clearing toward the twilight sky (right). */}
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-ink/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/40" />
+          {/* Scrim: dark under the headline (left), clearing toward the twilight sky/mansion
+              (right) so the house reads while the white headline still clears contrast. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-ink/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-ink/25" />
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 md:py-28 lg:min-h-[780px] lg:grid-cols-[1.15fr_1fr] lg:px-8">
           <div className="self-center">
@@ -365,7 +368,7 @@ export default function SellingPage() {
             </ul>
           </Reveal>
           <Reveal delay={140}>
-            <DeviceCollage />
+            <DeviceCollage listings={marketingListings} />
           </Reveal>
         </div>
       </section>
@@ -504,11 +507,28 @@ function LaptopFrame({ children, tone = "light" }: { children: React.ReactNode; 
   );
 }
 
+/** One small photo cell — MLS photo (self-healing) or fixture image. */
+function CollageImg({ listing, sizes }: { listing: Listing; sizes: string }) {
+  const src = listing.photos[0];
+  if (!src) return null;
+  return isLiveMlsPhoto(src) ? (
+    <MlsImage src={src} alt="" sizes={sizes} />
+  ) : (
+    <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
+  );
+}
+
 /** Laptop browser mockup (a mini /search results grid) with a phone overlapping it —
- * "your listing marketed across every device and portal". Built from our own photos. */
-function DeviceCollage() {
+ * "your listing marketed across every device and portal". Built from our real listings so
+ * it reads like the actual RealtyLT search portal. */
+function DeviceCollage({ listings }: { listings: Listing[] }) {
+  const tiles = listings.slice(0, 6);
+  const phone = listings[0] ?? null;
+  const phoneStats = phone
+    ? specParts(phone, { bed: "bd", bath: "ba", sqft: "sqft" }).slice(0, 2).join(" · ")
+    : "";
   return (
-    <div className="relative mx-auto max-w-xl pb-10 pr-6 sm:pb-6 sm:pr-10">
+    <figure className="relative mx-auto max-w-xl pb-10 pr-6 sm:pb-6 sm:pr-10" aria-label="Your listing marketed across every device and portal">
       <LaptopFrame>
         <div className="flex h-full w-full flex-col bg-white">
           {/* browser chrome */}
@@ -524,12 +544,12 @@ function DeviceCollage() {
           </div>
           {/* results grid */}
           <div className="grid flex-1 grid-cols-3 gap-2 p-2.5">
-            {MARKETING_THUMBS.map((src, i) => (
-              <div key={src} className="overflow-hidden rounded-[3px] border border-[#eceff2]">
+            {tiles.map((l) => (
+              <div key={l.id} className="overflow-hidden rounded-[3px] border border-[#eceff2] bg-mist">
                 <div className="relative aspect-[4/3]">
-                  <Image src={src} alt="" fill sizes="120px" className="object-cover" />
+                  <CollageImg listing={l} sizes="120px" />
                   <span className="absolute bottom-1 left-1 rounded-sm bg-ink/75 px-1.5 py-0.5 text-[8px] font-bold text-paper">
-                    ${["465", "512", "389", "624", "441", "578"][i]}K
+                    {formatPrice(l.price)}
                   </span>
                 </div>
               </div>
@@ -538,20 +558,26 @@ function DeviceCollage() {
         </div>
       </LaptopFrame>
       {/* phone */}
-      <div className="absolute bottom-0 right-0 w-[116px] rounded-[20px] border-[6px] border-[#20262e] bg-[#20262e] shadow-2xl sm:w-[132px]">
-        <div className="overflow-hidden rounded-[14px] bg-white">
-          <div className="relative aspect-[3/4]">
-            <Image src="/images/listings/house-03.jpg" alt="" fill sizes="132px" className="object-cover" />
-          </div>
-          <div className="p-2">
-            <p className="text-[10px] font-bold text-ink">$624,000</p>
-            <p className="text-[8px] text-stone">4 bd · 3 ba · Poughkeepsie</p>
-            <p className="mt-1.5 rounded-sm bg-ink py-1 text-center text-[8px] font-bold uppercase tracking-wide text-paper">
-              View listing
-            </p>
+      {phone && (
+        <div className="absolute bottom-0 right-0 w-[116px] rounded-[20px] border-[6px] border-[#20262e] bg-[#20262e] shadow-2xl sm:w-[132px]">
+          <div className="overflow-hidden rounded-[14px] bg-white">
+            <div className="relative aspect-[3/4] bg-mist">
+              <CollageImg listing={phone} sizes="132px" />
+            </div>
+            <div className="p-2">
+              <p className="text-[10px] font-bold text-ink">{formatPrice(phone.price)}</p>
+              <p className="text-[8px] text-stone">
+                {phoneStats}
+                {phoneStats && " · "}
+                {phone.city}
+              </p>
+              <p className="mt-1.5 rounded-sm bg-ink py-1 text-center text-[8px] font-bold uppercase tracking-wide text-paper">
+                View listing
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </figure>
   );
 }
