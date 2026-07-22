@@ -16,10 +16,12 @@
  * CRON_SECRET (sha256 checked in-database) — no service-role key exists in this stack.
  */
 
+import { unstable_cache } from "next/cache";
 import { DEFAULT_PAGE_SIZE, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
 import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
+import { MIN_CITY_ACTIVES, pickAreaInsights, type AreaInsights, type InsightRow } from "@/lib/reports/insights";
 
 interface SyncState {
   watermark: string;
@@ -347,6 +349,50 @@ export async function getCountyActiveSlim(
     return null;
   }
 }
+
+/** Slim {price, listed_at} rows for an area filter (active rows via RLS), PIN_CHUNK-paged.
+ * The listing detail page's Market Insights aggregates over these — a lean projection so a
+ * dense city/borough pull stays cheap. */
+async function getInsightRows(filter: string): Promise<InsightRow[]> {
+  const rows: InsightRow[] = [];
+  for (let offset = 0; offset < MAX_PINS; offset += PIN_CHUNK) {
+    const page = await rest<{ price: number; listedAt: string }>(
+      `idx_listings?select=price,listedAt:listed_at&${filter}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
+    );
+    rows.push(...page.rows);
+    if (page.rows.length < PIN_CHUNK) break;
+  }
+  return rows;
+}
+
+/** Real market insights for a listing's city (BEAT live's N/A cards). Aggregates active
+ * idx_listings for the city; if the city carries fewer than MIN_CITY_ACTIVES it falls back
+ * to the whole county set (labeled). Cached for an hour (the numbers move slowly and the
+ * page is already ISR). null = DB unconfigured/not ready/errored → caller shows a soft note. */
+export const getAreaInsights = unstable_cache(
+  async (city: string, county: string, countyName: string): Promise<AreaInsights | null> => {
+    if (!restConfig()) return null;
+    try {
+      const state = await rest<SyncState>(
+        "idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at",
+      );
+      if (!state.rows[0]?.baseline_complete) return null;
+      const dataLastUpdated = state.rows[0].last_synced_at ?? "";
+      const countyFilter = `county=eq.${encodeURIComponent(county)}`;
+      const cityRows = await getInsightRows(
+        `city=eq.${encodeURIComponent(city)}&${countyFilter}`,
+      );
+      // Only pay for the county pull when the city can't stand on its own.
+      const countyRows = cityRows.length >= MIN_CITY_ACTIVES ? [] : await getInsightRows(countyFilter);
+      return pickAreaInsights({ city, countyName, cityRows, countyRows, dataLastUpdated });
+    } catch (e) {
+      console.error(`[idx-db] area insights (${city}/${county}) failed:`, e);
+      return null;
+    }
+  },
+  ["listing-area-insights-v1"],
+  { revalidate: 3600 },
+);
 
 /** A listing's source MediaURLs + how many leading photos are mirrored to storage (RLS: active
  * rows only). null = DB unavailable/unconfigured (caller should fall back). */

@@ -12,7 +12,10 @@ import { ShareButton } from "@/components/idx/ShareButton";
 import { ListingGallery } from "@/components/idx/ListingGallery";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
+import { ListingSubNav } from "@/components/listing/ListingSubNav";
+import { MarketInsights } from "@/components/listing/MarketInsights";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
+import { getAreaInsights } from "@/lib/idx/db";
 import { Reveal } from "@/components/ui/Reveal";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import type { Listing } from "@/lib/idx/types";
@@ -100,6 +103,10 @@ export async function ListingDetail({ id }: { id: string }) {
   const similarTotal = Math.max(0, (similarSearch?.total ?? 0) - 1);
   const similarHref = `/search?county=${l.county}&priceMin=${Math.round(l.price * 0.7)}&priceMax=${Math.round(l.price * 1.3)}`;
 
+  // Real market insights for this listing's city (DB aggregates; falls back to the county set
+  // when the city has too few actives). null = DB unavailable → the section renders a soft note.
+  const insights = await getAreaInsights(l.city, l.county, county?.name ?? l.county).catch(() => null);
+
   const highlights: [string, string][] = (
     [
       ["Type", subType ?? l.propertyType],
@@ -182,6 +189,14 @@ export async function ListingDetail({ id }: { id: string }) {
       <TrackView
         listingId={l.id}
         meta={{ address: l.address, city: l.city, price: l.price, beds: l.beds }}
+      />
+
+      {/* ── Sticky sub-nav (live parity): in-page anchors + Make an Offer / Share / Save. */}
+      <ListingSubNav
+        countySlug={l.county}
+        hasSchools={schools.length > 0}
+        shareTitle={`${l.address}, ${l.city} NY | ${formatPrice(l.price)}`}
+        favoriteId={l.id}
       />
 
       {/* ── Gallery (photos open a full-screen lightbox; the <details> below keeps the no-JS
@@ -281,7 +296,7 @@ export async function ListingDetail({ id }: { id: string }) {
       </section>
 
       {/* ── Facts + contact */}
-      <section className="bg-paper py-8 md:pb-16 md:pt-10">
+      <section id="overview" className="scroll-mt-16 bg-paper py-8 md:pb-16 md:pt-10">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -379,7 +394,7 @@ export async function ListingDetail({ id }: { id: string }) {
 
             {schools.length > 0 && (
               <>
-                <h2 className="mt-10 font-display text-2xl text-ink">Schools</h2>
+                <h2 id="schools" className="mt-10 scroll-mt-16 font-display text-2xl text-ink">Schools</h2>
                 <p className="mt-1 text-xs text-stone">As reported by the listing office; verify enrollment with the district.</p>
                 <dl className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                   {schools.map(([k, v]) => (
@@ -468,7 +483,7 @@ export async function ListingDetail({ id }: { id: string }) {
       </section>
 
       {/* ── Payment */}
-      <section id="payment" aria-labelledby="calc-heading" className="bg-paper pb-12 md:pb-16">
+      <section id="payment" aria-labelledby="calc-heading" className="scroll-mt-16 bg-paper pb-12 md:pb-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <MortgageCalculator initial={mortgageSeed} />
           {!l.taxAnnual && (
@@ -478,6 +493,34 @@ export async function ListingDetail({ id }: { id: string }) {
           )}
         </div>
       </section>
+
+      {/* ── Never miss a property (live parity): black band → the existing save-search flow,
+          prefilled from this listing's county. */}
+      <section className="bg-ink py-12 text-paper md:py-16" aria-labelledby="never-miss-heading">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 md:flex-row md:items-center md:justify-between lg:px-8">
+          <div>
+            <h2 id="never-miss-heading" className="font-display text-3xl font-semibold tracking-tight text-paper md:text-4xl">
+              Never miss a property
+            </h2>
+            <p className="mt-2 text-paper/75">
+              Be the first to know when a {county?.name ?? "local"} home hits the market.
+            </p>
+          </div>
+          <Link
+            href={`/search?county=${l.county}&saveSearch=1`}
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-[3px] bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-paper/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          >
+            <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
+              <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
+            </svg>
+            Sign Up
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Market insights (BEAT live's N/A): real DB aggregates for this city. */}
+      <MarketInsights insights={insights} city={l.city} countyName={county?.name ?? l.county} fixtureMode={isSampleData()} />
 
       {/* ── Similar homes */}
       {similar.length > 0 && (

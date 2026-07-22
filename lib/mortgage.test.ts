@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcMortgage } from "./mortgage";
+import { calcMortgage, donutArcs, representativeRate } from "./mortgage";
 
 describe("calcMortgage", () => {
   it("matches the live-site worked example ($3,198.20 total)", () => {
@@ -154,5 +154,52 @@ describe("calcMortgage — garbage & edge inputs degrade sanely", () => {
     const r = calcMortgage({ ...base, ratePct: -3 });
     expect(Number.isFinite(r.principalInterest)).toBe(true);
     expect(Number.isFinite(r.monthlyTotal)).toBe(true);
+  });
+});
+
+/** The payment donut is driven by the SAME breakdown percentages the rows list — donutArcs
+ * turns those pcts into ring arcs, so proving the arcs track the pcts proves donut == rows. */
+describe("donutArcs (payment donut == breakdown rows)", () => {
+  const C = 2 * Math.PI * 54;
+
+  it("each arc's dash is its pct share of the circumference, offsets accumulate", () => {
+    const arcs = donutArcs([40, 60], 100);
+    expect(arcs[0]).toEqual({ dash: 40, offset: -0 });
+    expect(arcs[1]).toEqual({ dash: 60, offset: -40 });
+  });
+
+  it("uses the exact calcMortgage breakdown percentages", () => {
+    const r = calcMortgage({
+      price: 400_000, annualTax: 6_000, termYears: 30, downPct: 10, ratePct: 6.5, monthlyHoa: 100, monthlyInsurance: 90,
+    });
+    const pcts = [r.breakdownPct.principalInterest, r.breakdownPct.tax, r.breakdownPct.hoa, r.breakdownPct.insurance];
+    const arcs = donutArcs(pcts, C);
+    // Dash length of each arc reflects its exact share of the ring.
+    arcs.forEach((a, i) => expect(a.dash).toBeCloseTo((pcts[i] / 100) * C, 6));
+    // Full breakdown (~100%) fills the whole ring.
+    const total = arcs.reduce((s, a) => s + a.dash, 0);
+    expect(total).toBeCloseTo(C, 4);
+  });
+
+  it("ignores non-positive / non-finite pcts (no negative dash, no NaN)", () => {
+    const arcs = donutArcs([0, NaN, 25], 100);
+    expect(arcs[0].dash).toBe(0);
+    expect(arcs[1].dash).toBe(0);
+    expect(arcs[2].dash).toBe(25);
+  });
+});
+
+/** Clicking a rate-strip term seeds the calculator with {termYears, representativeRate}. */
+describe("representativeRate (term-seeding)", () => {
+  it("30-year term uses the calculator's rate verbatim (source of truth)", () => {
+    expect(representativeRate(6.5, 30)).toBe(6.5);
+  });
+  it("shorter terms carry the usual small discount", () => {
+    expect(representativeRate(6.5, 20)).toBe(6.25);
+    expect(representativeRate(6.5, 15)).toBe(6.0);
+  });
+  it("falls back to a sane base and never goes negative", () => {
+    expect(representativeRate(NaN, 30)).toBe(6);
+    expect(representativeRate(0.1, 15)).toBe(0);
   });
 });

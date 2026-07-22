@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { calcMortgage, type MortgageInput } from "@/lib/mortgage";
+import {
+  calcMortgage,
+  donutArcs,
+  representativeRate,
+  REP_RATE_TERMS,
+  type MortgageInput,
+} from "@/lib/mortgage";
+
+const DONUT_R = 54;
+const DONUT_C = 2 * Math.PI * DONUT_R;
 
 /** Mortgage calculator UI (brief §5C) — live math via lib/mortgage, Reset button.
  * Defaults reproduce the live site's worked example: $3,198.20. */
@@ -34,13 +43,16 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
   const [values, setValues] = useState<MortgageInput>(seeded);
   const r = calcMortgage(values);
 
-  /* Live: monochrome breakdown — black principal, graduating grays. */
+  /* Live: monochrome breakdown — black principal, graduating grays. `color` styles the legend
+     dots; `stroke` is the same value as a hex for the SVG donut. */
   const rows = [
-    { label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, color: "bg-ink" },
-    { label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, color: "bg-[#555555]" },
-    { label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, color: "bg-[#999999]" },
-    { label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, color: "bg-[#cccccc]" },
+    { label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, color: "bg-ink", stroke: "#000000" },
+    { label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, color: "bg-[#555555]", stroke: "#555555" },
+    { label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, color: "bg-[#999999]", stroke: "#999999" },
+    { label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, color: "bg-[#cccccc]", stroke: "#cccccc" },
   ];
+  // Donut arcs are built from the exact same breakdown percentages the rows show.
+  const arcs = donutArcs(rows.map((row) => row.pct), DONUT_C);
 
   return (
     <div className="grid gap-0 overflow-hidden lg:grid-cols-[1.1fr_1fr]">
@@ -101,22 +113,39 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
         </button>
       </div>
 
-      {/* Output — live: light panel, centered total, dark bar, monochrome rows */}
+      {/* Output — live: light panel, donut total, monochrome breakdown rows */}
       <div className="flex flex-col justify-center bg-mist p-6 md:p-10" aria-live="polite">
-        <p className="text-center text-4xl font-light tracking-tight text-ink md:text-5xl">
-          {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
-        </p>
-        <p className="mt-2 text-center text-sm text-stone">Estimated Monthly Payment</p>
-
-        {/* Stacked breakdown bar */}
-        <div className="mt-7 flex h-3 overflow-hidden rounded-full bg-[#d9dde2]" aria-hidden>
-          {rows.map(
-            (row) =>
-              row.pct > 0 && (
-                <div key={row.label} className={`${row.color} h-full`} style={{ width: `${row.pct}%` }} />
-              ),
-          )}
+        {/* Donut: the ring segments are the SAME breakdown percentages the rows list below
+            (donutArcs is pure, so they can never drift). Total sits in the middle, live-style. */}
+        <div className="mx-auto flex items-center justify-center">
+          <div className="relative h-44 w-44">
+            <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90" role="img" aria-label="Monthly payment breakdown">
+              <circle cx="70" cy="70" r={DONUT_R} fill="none" stroke="#d9dde2" strokeWidth="18" />
+              {arcs.map((arc, i) =>
+                arc.dash > 0 ? (
+                  <circle
+                    key={rows[i].label}
+                    cx="70"
+                    cy="70"
+                    r={DONUT_R}
+                    fill="none"
+                    stroke={rows[i].stroke}
+                    strokeWidth="18"
+                    strokeDasharray={`${arc.dash} ${DONUT_C - arc.dash}`}
+                    strokeDashoffset={arc.offset}
+                  />
+                ) : null,
+              )}
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-2 text-center">
+              <span className="font-mono text-xl font-semibold tracking-tight text-ink">
+                {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
+              </span>
+              <span className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-stone">Total / mo</span>
+            </div>
+          </div>
         </div>
+        <p className="mt-4 text-center text-sm text-stone">Estimated Monthly Payment</p>
 
         <dl className="mt-6 space-y-3">
           {rows.map((row) => (
@@ -134,9 +163,39 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
             </div>
           ))}
         </dl>
-        <p className="mt-6 border-t border-[#d9dde2] pt-4 text-xs leading-relaxed text-stone">
-          Estimate only. Your lender's numbers will vary with credit, points, and insurance.
-        </p>
+
+        {/* Representative rates strip — clicking a term seeds the calculator's term + rate.
+            Honest: derived from the editable rate above, not a live "today's rate" feed. */}
+        <div className="mt-6 border-t border-[#d9dde2] pt-5">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Representative rates</p>
+          <ul className="mt-2 divide-y divide-[#d9dde2]">
+            {REP_RATE_TERMS.map((term) => {
+              const rate = representativeRate(values.ratePct, term);
+              const active = values.termYears === term;
+              return (
+                <li key={term}>
+                  <button
+                    type="button"
+                    onClick={() => setValues((v) => ({ ...v, termYears: term, ratePct: rate }))}
+                    aria-pressed={active}
+                    className={`flex min-h-11 w-full items-center justify-between gap-3 py-1 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                      active ? "font-semibold text-ink" : "text-ink-soft hover:text-ink"
+                    }`}
+                  >
+                    <span>
+                      {term} year{active && <span className="ml-2 text-[10px] font-bold uppercase tracking-[0.14em] text-porchlight-deep">Selected</span>}
+                    </span>
+                    <span className="font-mono tabular-nums">{rate.toFixed(2)}%</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mt-3 text-xs leading-relaxed text-stone">
+            Representative rates only — indicative for comparison. Edit the interest rate for your own
+            quote; your lender&rsquo;s numbers vary with credit, points, and insurance.
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -232,6 +232,17 @@ export function SearchClient() {
     setFilters((prev) => (toQuery(prev, false) === toQuery(next, false) ? prev : next));
   }, [searchParams]);
 
+  // Deep link from the listing "Never miss a property" band: /search?county=…&saveSearch=1
+  // opens the Save Search dialog once, prefilled from the (already-applied) county filter.
+  const saveSearchTriggered = useRef(false);
+  useEffect(() => {
+    if (saveSearchTriggered.current) return;
+    if (searchParams.get("saveSearch") === "1") {
+      saveSearchTriggered.current = true;
+      setSaveOpen(true);
+    }
+  }, [searchParams]);
+
   // Reflect the committed filters into the URL — a post-commit effect (never updates the
   // Router mid-render) keyed on the serialized query, so it writes exactly once per real
   // change and can't loop with the re-sync effect above. Reads window.location directly to

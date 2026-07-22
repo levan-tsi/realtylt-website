@@ -25,6 +25,39 @@ export interface MortgageResult {
   };
 }
 
+/** ── Donut chart geometry ──────────────────────────────────────────────────────────────
+ * Turn a list of breakdown percentages into stroke-dash arcs for the payment donut. Each
+ * arc's `dash` is its share of the ring circumference and `offset` advances the start point
+ * clockwise. Pure so the donut is provably driven by the SAME breakdown the rows show. */
+export interface DonutArc {
+  dash: number;
+  offset: number;
+}
+
+export function donutArcs(pcts: number[], circumference: number): DonutArc[] {
+  let acc = 0;
+  return pcts.map((pct) => {
+    const p = Number.isFinite(pct) && pct > 0 ? pct : 0;
+    const dash = (p / 100) * circumference;
+    const arc = { dash, offset: -acc };
+    acc += dash;
+    return arc;
+  });
+}
+
+/** ── Representative term rates ──────────────────────────────────────────────────────────
+ * We have no live rate feed, so the "Representative rates" strip is derived from the
+ * calculator's own editable rate (the source of truth = the 30-year term). Shorter terms
+ * carry the usual small discount. Clicking a term seeds the calculator with {termYears, rate}. */
+export const REP_RATE_SPREADS: Record<number, number> = { 30: 0, 20: -0.25, 15: -0.5 };
+export const REP_RATE_TERMS = [30, 20, 15] as const;
+
+export function representativeRate(baseRate: number, termYears: number): number {
+  const spread = REP_RATE_SPREADS[termYears] ?? 0;
+  const base = Number.isFinite(baseRate) ? baseRate : 6;
+  return Math.max(0, Math.round((base + spread) * 100) / 100);
+}
+
 export function calcMortgage(input: MortgageInput): MortgageResult {
   const { price, annualTax, termYears, downPct, ratePct, monthlyHoa, monthlyInsurance } = input;
 
