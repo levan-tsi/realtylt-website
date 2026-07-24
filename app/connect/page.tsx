@@ -9,36 +9,14 @@ export const metadata: Metadata = {
     "Reach RealtyLT seven days a week: call, email, send a message, or book a 30-minute strategy session, virtual consultation, or discovery call.",
 };
 
-// The owner's Google Calendar appointment-scheduling page (public booking UI). One page
-// serves all three appointment types — the visitor picks the type, then a time, on Google.
-// (This new-format schedule has no reliable per-service deep link, so every card opens the
-// same booking page in a new tab with its own clear call to action.)
+// The owner's Google Calendar appointment-scheduling embed (owner-directed 2026-07-24:
+// embed the booking UI inline exactly like the live page's custom code — the visitor sees
+// the three appointment types and books right here, no link-out). `?gv=true` is Google's
+// embeddable view; the 899px height comes from the owner's own live markup.
+const BOOKING_EMBED_URL =
+  "https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=?gv=true";
 const BOOKING_URL =
   "https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=";
-
-const MEETINGS = [
-  {
-    title: "In-Person Real Estate Strategy Session",
-    length: "30 min",
-    kind: "In-person meeting",
-    body: "Let's sit down together to create a personalized strategy for your real estate success: neighborhoods, numbers, and next steps.",
-    cta: "Book the in-person session",
-  },
-  {
-    title: "Virtual Real Estate Consultation",
-    length: "30 min",
-    kind: "Video conference",
-    body: "Connect face-to-face virtually to achieve your real estate goals. Perfect if you're relocating to the Hudson Valley from the city or out of state.",
-    cta: "Book the virtual consultation",
-  },
-  {
-    title: "Introductory Real Estate Discovery Call",
-    length: "30 min",
-    kind: "Phone call",
-    body: "The most direct way to get your real estate questions answered. This focused 30-minute phone call is all answers, no pitch.",
-    cta: "Book the discovery call",
-  },
-];
 
 export default function ConnectPage() {
   return (
@@ -96,38 +74,27 @@ export default function ConnectPage() {
           </Reveal>
 
           <div>
-            <Reveal className="text-center">
-              <span aria-hidden className="mx-auto block h-14 w-14 overflow-hidden rounded-full">
-                <Image src="/images/levan-portrait.jpg" alt="" width={56} height={56} className="h-full w-full object-cover" />
-              </span>
-              <h2 id="appointments-heading" className="mt-3 text-2xl font-light text-ink-soft">
-                Levan Tsiklauri
-              </h2>
-              <p className="text-sm text-stone">Appointments</p>
-            </Reveal>
-            <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {MEETINGS.map((m, i) => (
-                <Reveal key={m.title} as="li" delay={i * 100}>
-                  <article className="lift flex h-full flex-col rounded-lg border border-[#dddddd] bg-white p-6">
-                    <h3 className="text-lg leading-snug text-ink-soft">{m.title}</h3>
-                    <p className="mt-3 text-sm text-ink-soft">{m.length}</p>
-                    <p className="mt-1 text-sm text-ink-soft">{m.kind}</p>
-                    <p className="mt-4 grow text-sm leading-relaxed text-stone">{m.body}</p>
-                    <a
-                      href={BOOKING_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-5 inline-flex min-h-[44px] items-center text-sm font-bold text-ink underline-offset-4 hover:underline"
-                    >
-                      {m.cta}
-                      <span className="sr-only"> (opens Google Calendar in a new tab)</span>
-                    </a>
-                  </article>
-                </Reveal>
-              ))}
-            </ul>
-            <p className="mt-6 text-center text-xs text-stone">
-              Powered by Google Calendar appointment scheduling
+            <h2 id="appointments-heading" className="sr-only">
+              Book an appointment
+            </h2>
+            <iframe
+              src={BOOKING_EMBED_URL}
+              title="Book an appointment with Levan Tsiklauri (Google Calendar)"
+              className="w-full border-0"
+              style={{ height: 899 }}
+              loading="lazy"
+            />
+            <p className="mt-3 text-xs text-stone">
+              Trouble with the calendar?{" "}
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-ink underline-offset-4 hover:underline"
+              >
+                Open the booking page directly
+              </a>
+              .
             </p>
           </div>
         </div>
