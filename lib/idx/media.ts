@@ -10,7 +10,7 @@
  * host are hit rarely; a dead/rotated URL is refreshed by the next sync — never per view.
  */
 
-import { getDbListingMedia } from "./db";
+import { getDbListingMedia, isDbConfigured } from "./db";
 import { getCommittedSnapshot } from "./snapshot";
 
 /** listing id → ordered permanent MediaURLs, built once from the committed snapshot. */
@@ -49,23 +49,31 @@ export interface ListingMedia {
   photos: string[];
   /** How many leading photos are permanently mirrored to Supabase Storage. */
   mirrored: number;
+  /** False when the DB never answered (transient failure) — mirrored/photos are then only the
+   * snapshot's guess, NOT authoritative. The route must not cache verdicts built on this. */
+  dbOk: boolean;
 }
 
 /** A listing's photos + mirrored count — Supabase idx_listings first (always current, active
  * rows only), committed snapshot as the fallback store. ZERO MLS Grid contact either way. The
  * snapshot fallback carries no mirror info (mirrored:0) — the route then proxies as before. */
 export async function getListingMedia(id: string): Promise<ListingMedia> {
-  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0 };
-  if (testSeed.has(id)) return { photos: testSeed.get(id)!, mirrored: testMirroredSeed.get(id) ?? 0 };
+  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0, dbOk: true };
+  if (testSeed.has(id)) return { photos: testSeed.get(id)!, mirrored: testMirroredSeed.get(id) ?? 0, dbOk: true };
   const hit = dbCache.get(id);
-  if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) return { photos: hit.urls, mirrored: hit.mirrored };
-  const fromDb = await getDbListingMedia(id); // null = DB unavailable → snapshot fallback
+  if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) return { photos: hit.urls, mirrored: hit.mirrored, dbOk: true };
+  // A 36-tile page bursts this route; a fraction of PostgREST reads drop under contention.
+  // One retry recovers most of those instead of demoting the tile to the mirror-less snapshot.
+  let fromDb = await getDbListingMedia(id); // null = DB unavailable
+  if (fromDb === null && isDbConfigured()) fromDb = await getDbListingMedia(id);
   if (fromDb && (fromDb.photos.length || fromDb.mirrored)) {
     dbCache.set(id, { at: Date.now(), urls: fromDb.photos, mirrored: fromDb.mirrored });
     if (dbCache.size > DB_CACHE_MAX) dbCache.delete(dbCache.keys().next().value as string);
-    return fromDb;
+    return { ...fromDb, dbOk: true };
   }
-  return { photos: ensureIndex().get(id) ?? [], mirrored: 0 };
+  // No DB configured at all = fixture/snapshot mode: the snapshot IS the authority (dbOk true).
+  // DB configured but unreachable = transient: dbOk false, verdicts must not be cached.
+  return { photos: ensureIndex().get(id) ?? [], mirrored: 0, dbOk: fromDb !== null || !isDbConfigured() };
 }
 
 /** Ordered permanent MediaURLs only (compat shim for getProxiedPhotoPaths). */

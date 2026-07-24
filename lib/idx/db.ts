@@ -40,6 +40,12 @@ function restConfig(): { base: string; key: string } | null {
   return { base: `${url.replace(/\/+$/, "")}/rest/v1`, key };
 }
 
+/** True when Supabase REST is configured — lets callers tell "DB failed" (retry-worthy) apart
+ * from "no DB at all" (fixture/snapshot mode, where the snapshot is authoritative). */
+export function isDbConfigured(): boolean {
+  return restConfig() !== null;
+}
+
 /** GET a PostgREST path. With `count`, total comes from the content-range header. */
 async function rest<T>(path: string, opts: { count?: boolean } = {}): Promise<{ rows: T[]; total: number }> {
   const cfg = restConfig();

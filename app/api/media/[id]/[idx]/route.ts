@@ -71,7 +71,7 @@ export async function GET(
   }
 
   // Photos + mirror state from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.
-  const { photos, mirrored } = await getListingMedia(id);
+  const { photos, mirrored, dbOk } = await getListingMedia(id);
 
   // STORAGE-FIRST: the first `mirrored` photos live PERMANENTLY in Supabase Storage. MLS Grid
   // MediaURLs are signed and expire ~1h after the sync captures them, so this is the only stable
@@ -97,7 +97,9 @@ export async function GET(
   // index (cheap, cached HEAD; never MLS) and serve it if present. Self-heals a wiped marker without
   // waiting for a re-mirror. Bounded to STORAGE_PROBE_MAX so an unmirrored listing costs at most that
   // many cached HEADs.
-  if (mirrored === 0 && n < STORAGE_PROBE_MAX && (await storageObjectExists(id, n))) {
+  // Also probe when the DB read failed (dbOk=false): mirrored is then only the snapshot's
+  // mirror-less guess, but the permanent object very likely exists — serving it beats a 503.
+  if ((mirrored === 0 || !dbOk) && n < STORAGE_PROBE_MAX && (await storageObjectExists(id, n))) {
     const storageUrl = publicPhotoUrl(id, n);
     if (storageUrl) {
       return new Response(null, {
@@ -114,8 +116,13 @@ export async function GET(
   }
 
   const url = photos[n];
-  // No photo at this index (snapshot has none yet, or a photo-less listing) — stable, cacheable.
-  if (!url?.startsWith("https://")) return placeholder(EMPTY_CACHE, "empty");
+  // No photo at this index — a stable, cacheable fact ONLY when the DB actually answered.
+  // On a failed DB read the photo list is just the snapshot's guess: caching "empty" at the
+  // CDN would pin a gray tile for real photos for EMPTY_CACHE's lifetime. 503 no-store instead
+  // so the next view retries against a healthy DB.
+  if (!url?.startsWith("https://")) {
+    return dbOk ? placeholder(EMPTY_CACHE, "empty") : placeholder("no-store", "unavailable");
+  }
 
   try {
     const upstream = await fetch(url, {

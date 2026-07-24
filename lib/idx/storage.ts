@@ -57,18 +57,24 @@ export async function storageObjectExists(id: string, idx: number): Promise<bool
   const cacheKey = `${id}/${idx}`;
   const hit = objectExistsCache.get(cacheKey);
   if (hit && Date.now() - hit.at < OBJECT_EXISTS_TTL_MS) return hit.exists;
-  let exists = false;
-  try {
-    const r = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(6000) });
-    exists = r.ok;
-  } catch {
-    exists = false;
+  // Only an actual HTTP response is an authoritative verdict. A timeout/network drop under a
+  // gallery burst is NOT "missing" — caching that false negative made mirrored tiles 503 for
+  // the whole cache TTL (the gray-card bug). Retry once; if both attempts fail transport-level,
+  // report false WITHOUT caching so the next view re-probes.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const r = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(6000) });
+      const exists = r.ok;
+      objectExistsCache.set(cacheKey, { at: Date.now(), exists });
+      if (objectExistsCache.size > OBJECT_EXISTS_MAX) {
+        objectExistsCache.delete(objectExistsCache.keys().next().value as string);
+      }
+      return exists;
+    } catch {
+      // transient — retry once, then fall through uncached
+    }
   }
-  objectExistsCache.set(cacheKey, { at: Date.now(), exists });
-  if (objectExistsCache.size > OBJECT_EXISTS_MAX) {
-    objectExistsCache.delete(objectExistsCache.keys().next().value as string);
-  }
-  return exists;
+  return false;
 }
 
 /** Test hook — clear the storage-existence probe cache. */

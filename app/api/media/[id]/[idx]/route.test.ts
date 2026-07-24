@@ -99,6 +99,43 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a broken tile)",
   });
 });
 
+describe("GET /api/media/[id]/[idx] — transient DB failure (the gray-card bug)", () => {
+  it("storage rescues the tile when the DB drops; a true miss is no-store 503, never cacheable 'empty'", async () => {
+    resetMediaCacheForTests(); // no snapshot data for LX
+    __resetStorageProbeCacheForTests();
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    vi.stubEnv("SUPABASE_ANON_KEY", "anon-key");
+    // Every PostgREST read drops (burst contention); the storage HEAD probe finds the
+    // permanent object → the route must serve the mirrored copy, not a 503/empty.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string | URL) => {
+        if (String(url).includes("/rest/v1/")) throw new Error("socket dropped");
+        return new Response(null, { status: 200 }); // storage HEAD → object exists
+      }),
+    );
+    const rescued = await call("LX", "0");
+    expect(rescued.status).toBe(302);
+    expect(rescued.headers.get("X-Media-Status")).toBe("storage-probe");
+
+    // And when storage really has nothing either, the failure must be no-store 503
+    // (retryable), never the CDN-cacheable "empty" that pins a gray tile for real photos.
+    __resetStorageProbeCacheForTests();
+    resetMediaCacheForTests();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string | URL) => {
+        if (String(url).includes("/rest/v1/")) throw new Error("socket dropped");
+        return new Response(null, { status: 404 }); // storage HEAD → missing
+      }),
+    );
+    const failed = await call("LX", "0");
+    expect(failed.status).toBe(503);
+    expect(failed.headers.get("Cache-Control")).toBe("no-store");
+    expect(failed.headers.get("X-Media-Status")).toBe("unavailable");
+  });
+});
+
 describe("GET /api/media/[id]/[idx] — STORAGE-FIRST (mirrored photos)", () => {
   beforeEach(() => {
     vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
