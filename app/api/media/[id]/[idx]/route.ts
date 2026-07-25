@@ -1,4 +1,5 @@
 import { getListingMedia } from "@/lib/idx/media";
+import { PLACEHOLDER_SVG } from "@/lib/idx/placeholder";
 import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
 
 /** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
@@ -20,16 +21,8 @@ import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
  * this index gets the same SVG but CDN-cached (a stable fact, no repeat work).
  */
 
-// Matches components/idx/ListingCard.tsx NoPhoto — logo-navy line house + lit azure
-// "porch light", RealtyLT wordmark, on the site's mist gray. One consistent branded state.
-const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-<rect width="800" height="600" fill="#f3f5f8"/>
-<g fill="none" stroke="#102c54" stroke-opacity="0.32" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-<path d="M310 268 L400 196 L490 268"/><path d="M337 259 V358 H463 V259"/><path d="M382 358 V304 H418 V358"/></g>
-<circle cx="400" cy="281" r="11" fill="#28a8e0"/>
-<text x="400" y="416" text-anchor="middle" font-family="Lato, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="6" fill="#102c54" fill-opacity="0.7">REALTYLT</text>
-<text x="400" y="452" text-anchor="middle" font-family="Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#767676">Photo coming soon</text>
-</svg>`;
+// The branded "photo coming soon" artwork is shared with components/idx/ListingCard.tsx NoPhoto
+// via lib/idx/placeholder.ts so both surfaces render the identical scene (see that file).
 
 // Aggressive CDN cache so repeat views never re-hit the media host: fresh at the edge for a day,
 // then served stale for a week while it revalidates in the background → the media host is hit
@@ -44,6 +37,12 @@ const EMPTY_CACHE = "public, max-age=300, s-maxage=3000";
 // self-heal above). Matches MAX_PHOTOS (50) so a fully-wiped gallery heals end to end; each probe
 // is a cheap cached HEAD against public Storage.
 const STORAGE_PROBE_MAX = 50;
+
+// Cover-substitute probe depth (round-7 cover-photo bug): when a card's cover (idx 0) object is
+// missing but LATER photos mirrored, look this many indices ahead for a real photo to stand in as
+// the cover. Measured 2026-07-25: every affected listing's first present index was 1 or 2, so 3
+// covers them all with headroom. A tiny bounded, cached set of HEADs.
+const COVER_SUBSTITUTE_MAX = 3;
 
 function placeholder(cacheControl: string, status: "empty" | "unavailable"): Response {
   return new Response(PLACEHOLDER_SVG, {
@@ -106,6 +105,28 @@ export async function GET(
         status: 302,
         headers: { Location: storageUrl, "Cache-Control": IMAGE_CACHE, "X-Media-Status": "storage-probe" },
       });
+    }
+  }
+
+  // COVER SUBSTITUTE (round-7 cover-photo bug): `photosMirrored` is a CONTIGUOUS prefix from
+  // index 0, so a listing whose cover (idx 0) download failed while later photos uploaded ends up
+  // with photosMirrored=0 and NO 0.jpg object — the DETAIL gallery still renders idx 1..n via the
+  // storage-probe above, but the CARD (which always asks idx 0) would 503 → gray placeholder. When
+  // idx 0 is the missing cover and the listing DOES have photos, probe the next few indices and
+  // 302 to the first real one: a genuine photo beats a placeholder, and the swap self-corrects once
+  // a covers-repair re-mirrors 0.jpg (photosMirrored bumps → the n<mirrored branch serves 0.jpg).
+  // Bounded + cached exactly like the probe above; skipped for genuinely photo-less rows.
+  if (n === 0 && (photos.length > 0 || !dbOk)) {
+    for (let sub = 1; sub <= COVER_SUBSTITUTE_MAX; sub++) {
+      if (await storageObjectExists(id, sub)) {
+        const storageUrl = publicPhotoUrl(id, sub);
+        if (storageUrl) {
+          return new Response(null, {
+            status: 302,
+            headers: { Location: storageUrl, "Cache-Control": IMAGE_CACHE, "X-Media-Status": "storage-cover-sub" },
+          });
+        }
+      }
     }
   }
 

@@ -231,6 +231,60 @@ describe("GET /api/media/[id]/[idx] — wiped-marker self-heal (storage probe)",
   });
 });
 
+describe("GET /api/media/[id]/[idx] — cover substitute (round-7 cover-photo bug)", () => {
+  // A listing whose cover (idx 0) failed to mirror while later photos uploaded ends up with
+  // photosMirrored=0 and NO 0.jpg object. The detail gallery still renders idx 1..n via the
+  // storage probe, but the CARD asks idx 0 and would 503 → gray placeholder. The route must 302
+  // idx 0 to the first real photo it finds (a genuine cover beats a placeholder). Measured on prod
+  // 2026-07-25: 95 active listings, every one's first present index was 1 or 2.
+  function stubHeadByIndex(present: (idx: number) => boolean) {
+    const fetchMock = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      if (init?.method === "HEAD") {
+        const m = /\/(\d+)\.jpg$/.exec(String(url));
+        return new Response(null, { status: present(m ? Number(m[1]) : -1) ? 200 : 404 });
+      }
+      return new Response("dead", { status: 403 }); // any source-URL GET is the dead signed URL
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    return fetchMock;
+  }
+
+  beforeEach(() => {
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    // L1 is seeded with 2 photos (top-level beforeEach); its mirror marker is 0 (not seeded).
+  });
+
+  it("302s idx 0 to the first present later photo when the cover object is missing", async () => {
+    const fetchMock = stubHeadByIndex((idx) => idx >= 1); // 0.jpg missing, 1.jpg present
+    const res = await call("L1", "0");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe(
+      "https://proj.supabase.co/storage/v1/object/public/mls-photos/L1/1.jpg",
+    );
+    expect(res.headers.get("X-Media-Status")).toBe("storage-cover-sub");
+    expect(res.headers.get("Cache-Control")).toContain("stale-while-revalidate");
+    // Only HEAD probes — the dead source URL is never GET-fetched, MLS never touched.
+    expect(fetchMock.mock.calls.every(([, init]) => (init as RequestInit)?.method === "HEAD")).toBe(true);
+    expect(mlsGridDataCallCount()).toBe(0);
+  });
+
+  it("only substitutes the COVER (idx 0) — a gallery slot never borrows another index", async () => {
+    stubHeadByIndex((idx) => idx === 2); // 2.jpg present, but idx 1 is being requested
+    const res = await call("L1", "1");
+    expect(res.headers.get("X-Media-Status")).not.toBe("storage-cover-sub");
+    expect(res.status).toBe(503); // its own object missing + dead source URL → transient placeholder
+  });
+
+  it("skips the substitute for a genuinely photo-less listing (cacheable empty SVG, not a probe fan-out)", async () => {
+    resetMediaCacheForTests(); // L1 no longer seeded → photos.length 0, dbOk true
+    __resetStorageProbeCacheForTests();
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    stubHeadByIndex(() => false); // nothing in storage
+    const res = await call("L1", "0");
+    expect(res.headers.get("X-Media-Status")).toBe("empty"); // stable fact, not storage-cover-sub
+  });
+});
+
 describe("GET /api/media/[id]/[idx] — success + aggressive caching", () => {
   it("streams the photo with a long SWR CDN cache (repeat views never re-hit the media host)", async () => {
     stubImage();

@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
 import { listingPath } from "@/lib/idx/listing-url";
-import { specParts } from "@/lib/format";
+import { listingStats } from "@/lib/format";
+import { PLACEHOLDER_INNER } from "@/lib/idx/placeholder";
 import { FavoriteButton } from "./FavoriteButton";
 import { MlsImage } from "./MlsImage";
 
@@ -18,34 +19,22 @@ export function formatPrice(n: number): string {
   return `$${n.toLocaleString("en-US")}`;
 }
 
-/** Branded fallback when a listing's photo isn't available yet (feed rows without Media,
- * or photos still replicating into the Blob store). Quiet and intentional: the line-drawn
- * house in logo navy with one lit azure "porch light" — the same mark the /api/media
- * placeholder SVG uses, so the state reads consistently everywhere. */
+/** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
+ * still replicating into Storage). A quiet, intentional Hudson Valley dusk illustration — soft
+ * hills, a gabled house, one lit azure "porch-light" window — the SAME artwork the /api/media route
+ * serves (lib/idx/placeholder.ts), so the state reads identically whether the tile falls back here
+ * or to the route's SVG. `slice` fills the tile like object-cover at any card/gallery size. */
 export function NoPhoto() {
   return (
-    <div className="absolute inset-0 grid place-items-center bg-mist pb-8" aria-hidden>
-      <span className="flex flex-col items-center">
-        <svg viewBox="0 0 64 64" className="h-12 w-12 sm:h-14 sm:w-14">
-          <g
-            fill="none"
-            stroke="#102c54"
-            strokeOpacity="0.32"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 30 L32 14 L52 30" />
-            <path d="M18 28 V50 H46 V28" />
-            <path d="M28 50 V38 H36 V50" />
-          </g>
-          <circle cx="32" cy="33" r="2.4" fill="#28a8e0" />
-        </svg>
-        <span className="mt-2 block text-[11px] font-bold uppercase tracking-[0.22em] text-river/70">
-          RealtyLT
-        </span>
-        <span className="mt-0.5 block text-[11px] text-stone">Photo coming soon</span>
-      </span>
+    <div className="absolute inset-0 bg-mist" aria-hidden>
+      <svg
+        viewBox="0 0 800 600"
+        preserveAspectRatio="xMidYMid slice"
+        className="h-full w-full"
+        // Static, self-authored artwork string (no user input) shared with the media route.
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: PLACEHOLDER_INNER }}
+      />
     </div>
   );
 }
@@ -76,9 +65,10 @@ export function ListingCard({
       Boolean,
     ) as string[]
   ).slice(0, 2);
-  // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed".
-  const statsLong = specParts(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft." }).join(" • ");
-  const statsShort = specParts(l, { bed: "bd", bath: "ba", sqft: "sqft" }).join(" | ");
+  // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed";
+  // Land/lots surface acreage instead so the stat line isn't blank.
+  const statsLong = listingStats(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft.", acre: "Acres", acreOne: "Acre" }).join(" • ");
+  const statsShort = listingStats(l, { bed: "bd", bath: "ba", sqft: "sqft", acre: "ac", acreOne: "ac" }).join(" | ");
 
   if (variant === "plain") {
     return (
