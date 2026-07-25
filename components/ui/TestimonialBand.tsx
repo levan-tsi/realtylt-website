@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Stars } from "@/components/ui/Stars";
+import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import type { Testimonial } from "@/content/testimonials";
 
 /** Live-home-page style testimonial band: light gray strip between the listing rails with
@@ -22,8 +24,13 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           ‹
         </button>
         <blockquote>
-          <p className="text-2xl font-bold text-ink md:text-[36px] md:leading-tight">&ldquo;{t.quote}&rdquo;</p>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-stone">{t.detail}</p>
+          <div className="mb-5 flex items-center justify-center gap-2.5">
+            <GoogleLogo height={18} />
+            <Stars />
+          </div>
+          <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-ink md:text-2xl">
+            &ldquo;{t.quote}&rdquo;
+          </p>
         </blockquote>
         <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-ink-soft">{t.name}</p>
         <button

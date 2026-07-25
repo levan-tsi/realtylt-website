@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
+import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { TrackedButton } from "@/components/leads/TrackedButton";
+import { ScrollToFormButton } from "@/components/leads/ScrollToFormButton";
 import { MlsImage } from "@/components/idx/MlsImage";
 import { isLiveMlsPhoto, formatPrice } from "@/components/idx/ListingCard";
 import { getIdxClient } from "@/lib/idx";
@@ -23,34 +25,35 @@ export const metadata: Metadata = {
     "See your home's cash value vs market list price. Get a guaranteed fair cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
 };
 
-// Live's exact 6-item checklists, in live's order.
+// Live's exact 6-item checklists + "perfect if" lists, in live's order (source verbatim).
 const CASH_POINTS = [
   "Sell as-is, zero repairs",
-  "Guaranteed closing",
   "No agent fees",
-  "No showings",
   "Choose your closing date",
+  "Guaranteed closing",
+  "No showings",
   "Skip the hassle",
 ];
 const CASH_FITS = [
   "Inherited property",
   "Major repairs needed",
   "Behind on payments",
-  "Facing foreclosure",
+  "Foreclosure",
   "Divorce",
   "Quick relocation",
   "Tired of landlording",
 ];
 const LIST_POINTS = [
   "Pro photos & tours",
-  "Staging consult",
   "MLS + 100+ sites",
-  "Full marketing",
   "Expert pricing",
+  "Staging consult",
+  "Full marketing",
   "Max exposure",
 ];
 const LIST_FITS = [
-  "Move-in-ready home",
+  "Top market value",
+  "Home in good condition",
   "No rush to sell",
   "Maximum exposure",
   "Professional service",
@@ -102,9 +105,12 @@ export default async function SellingPage() {
               Get a guaranteed fair cash offer in 24 hours, or list with us for maximum profit. You
               compare, you decide.
             </p>
+            {/* Trust bar: the Google wordmark image (self-hosted) + gold 5.0 stars, then
+                Fast Response / Free Consultation behind faint dividers (live parity). */}
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-paper/85">
               <span className="flex items-center gap-2">
-                Google <Stars /> <strong className="text-paper">5.0</strong>
+                <GoogleLogo height={20} className="translate-y-px" /> <Stars />{" "}
+                <strong className="text-paper">5.0</strong>
               </span>
               <span className="border-l border-paper/25 pl-8">Fast Response</span>
               <span className="border-l border-paper/25 pl-8">Free Consultation</span>
@@ -112,12 +118,20 @@ export default async function SellingPage() {
             <p className="mt-4 text-xs tracking-wide text-paper/60">
               No obligation • Zero pressure • Honest advice
             </p>
-            <a
+            {/* Ghost phone pill with the accent-blue phone icon; fires a gtag Phone click and
+                gently pulses on mobile (motion-safe) where calling is the primary action. */}
+            <TrackedButton
               href={SITE.phoneHref}
-              className="mt-6 inline-block border border-paper/40 px-5 py-2.5 text-sm font-bold text-paper transition-colors hover:bg-paper hover:text-ink"
+              variant="outline-light"
+              gaCategory="Phone"
+              gaLabel="selling-hero"
+              className="phone-pulse mt-6"
             >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
+              </svg>
               {SITE.phone}
-            </a>
+            </TrackedButton>
           </div>
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
@@ -129,7 +143,8 @@ export default async function SellingPage() {
               <LeadForm
                 dark
                 compact
-                stack
+                emailPhone2up
+                fullWidthSubmit
                 withAddress
                 requirePhone
                 hideReason
@@ -249,7 +264,7 @@ export default async function SellingPage() {
               Want to know what your home is worth?
             </p>
             <div className="mt-7">
-              <Button href="#offer-form" variant="light">Get My Home Value &amp; Cash Offer</Button>
+              <ScrollToFormButton variant="light">Get My Home Value &amp; Cash Offer</ScrollToFormButton>
             </div>
           </Reveal>
 
@@ -295,8 +310,16 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Making your listing shine — text left, laptop tour right */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="shine-heading">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
+      <section className="relative isolate overflow-hidden bg-paper py-16 md:py-24" aria-labelledby="shine-heading">
+        {/* Parallax backdrop — live's sell-img-4.jpg at 0.25, fixed on desktop, static on
+            mobile and under reduced motion. Self-hosted from
+            images.brivityidx.com/assets/images/uploads/219/sell-img-4.jpg. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-25 motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/hero/sell-img-4.jpg')" }}
+        />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
               <span id="shine-heading">Making Your Listing <strong className="font-bold">Shine</strong></span>
@@ -390,7 +413,7 @@ export default async function SellingPage() {
               &ldquo;what&rsquo;s going on?&rdquo;
             </p>
             <div className="mt-7">
-              <Button href="#offer-form" variant="light">Get Your Free Cash Offer &amp; Analysis</Button>
+              <ScrollToFormButton variant="light">Get Your Free Cash Offer &amp; Analysis</ScrollToFormButton>
             </div>
             <p className="mt-3 text-xs tracking-wide text-paper/60">
               Takes less than 60 seconds · No obligation
@@ -453,19 +476,20 @@ function PathCard({
   cta: string;
 }) {
   return (
-    <article className="relative mt-5 flex h-full flex-col border border-[#dddddd] bg-white">
-      {/* floating number */}
+    <article className="relative mt-8 flex h-full flex-col border-2 border-ink bg-white">
+      {/* floating number — live: 60px black circle, white numeral, ~30px above the card top */}
       <span
         aria-hidden
-        className="absolute -top-5 left-1/2 z-10 grid h-10 w-10 -translate-x-1/2 place-items-center rounded-full border-2 border-porchlight bg-white text-sm font-bold text-ink shadow-sm"
+        className="absolute -top-[30px] left-1/2 z-10 grid h-[60px] w-[60px] -translate-x-1/2 place-items-center rounded-full bg-ink text-xl font-bold text-paper shadow-md"
       >
         {number}
       </span>
-      {/* black header block — live: title, subtitle, divider, then the banner all on black */}
-      <div className="rounded-t-[2px] bg-ink px-6 pb-6 pt-9 text-center">
+      {/* black header block — live: title, subtitle, then the key-benefit banner over a
+          translucent top border, all on black */}
+      <div className="rounded-t-[2px] bg-ink px-6 pb-6 pt-11 text-center">
         <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
         <p className="mx-auto mt-2 max-w-xs text-sm text-paper/70">{subtitle}</p>
-        <p className="mt-5 border-t border-white/15 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
+        <p className="mt-5 border-t border-white/30 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
           {banner}
         </p>
       </div>
@@ -473,7 +497,7 @@ function PathCard({
         <ul className="mx-auto grid w-full gap-2.5 text-left sm:grid-cols-2">
           {points.map((p) => (
             <li key={p} className="flex items-start gap-2 text-sm text-ink-soft">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-porchlight-deep" aria-hidden>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-px shrink-0 text-porchlight-deep" aria-hidden>
                 <path d="m5 12.5 4.5 4.5L19 7" />
               </svg>
               {p}
@@ -485,7 +509,7 @@ function PathCard({
           <p className="mt-2 text-sm leading-relaxed text-stone">{fits.join(" • ")}</p>
         </div>
         <div className="mt-auto pt-7">
-          <Button href="#offer-form" variant="outline">{cta}</Button>
+          <ScrollToFormButton variant="outline">{cta}</ScrollToFormButton>
         </div>
       </div>
     </article>

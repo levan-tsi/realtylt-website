@@ -14,7 +14,9 @@ type Status = "idle" | "submitting" | "success" | "error";
  * Variants: `dark` for ink sections/footer; `withAddress` + `defaultReason` for
  * home-value / cash-offer flows; `compact` hides the message box; `hideReason` drops the
  * interest dropdown entirely (its options are buy/sell/rent — meaningless on an AI
- * services page). `stack` forces one field per row (the /selling hero's 4 stacked fields);
+ * services page). `stack` forces one field per row; `emailPhone2up` is the /selling hero
+ * layout — a single "Full Name", then Email + Phone 2-up, then a full-width address (parsed
+ * server-side into first/last + street/city/state/zip); `fullWidthSubmit` stretches the CTA;
  * `splitName` swaps the single name field for First/Last (the footer/contact form);
  * `requirePhone` makes phone mandatory; `footnote` prints small print under the button.
  * With no `interestReason` in the body, parseLead files the lead under "Other reason to
@@ -26,6 +28,8 @@ export function LeadForm({
   compact = false,
   hideReason = false,
   stack = false,
+  emailPhone2up = false,
+  fullWidthSubmit = false,
   splitName = false,
   stackAddressRow = false,
   requirePhone = false,
@@ -44,6 +48,10 @@ export function LeadForm({
   compact?: boolean;
   hideReason?: boolean;
   stack?: boolean;
+  /** /selling hero layout: single Full Name, Email + Phone 2-up, full-width address. */
+  emailPhone2up?: boolean;
+  /** Stretch the submit button to the form's full width (the /selling hero card). */
+  fullWidthSubmit?: boolean;
   splitName?: boolean;
   /** Force the phone/address pair onto their own rows (single column) while leaving the
    * First/Last name pair 2-up — matches the live home-page form's stacking. */
@@ -135,35 +143,52 @@ export function LeadForm({
       )}
 
       {/* Live-site look: placeholder-driven fields; labels stay for screen readers. */}
-      {splitName ? (
+      {emailPhone2up ? (
+        // /selling hero: single Full Name, then Email + Phone 2-up, then a full-width
+        // address. Name is parsed into first/last and the address into parts server-side.
         <>
-          <div className={`grid gap-4 ${nameCols}`}>
-            <Input label="First name" name="firstName" autoComplete="given-name" required dark={dark} hideLabel placeholder="First Name" />
-            <Input label="Last name" name="lastName" autoComplete="family-name" required dark={dark} hideLabel placeholder="Last Name" />
+          <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder={namePlaceholder} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
+            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
           </div>
-          <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
+          {withAddress && (
+            <Input label="Property address" name="address" autoComplete="street-address" required dark={dark} hideLabel placeholder={addressPlaceholder} defaultValue={defaultAddress} />
+          )}
         </>
       ) : (
-        <div className={`grid gap-4 ${nameCols}`}>
-          <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder={namePlaceholder} />
-          <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
-        </div>
+        <>
+          {splitName ? (
+            <>
+              <div className={`grid gap-4 ${nameCols}`}>
+                <Input label="First name" name="firstName" autoComplete="given-name" required dark={dark} hideLabel placeholder="First Name" />
+                <Input label="Last name" name="lastName" autoComplete="family-name" required dark={dark} hideLabel placeholder="Last Name" />
+              </div>
+              <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
+            </>
+          ) : (
+            <div className={`grid gap-4 ${nameCols}`}>
+              <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder={namePlaceholder} />
+              <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
+            </div>
+          )}
+          <div className={`grid gap-4 ${withAddress && !stack && !stackAddressRow ? "sm:grid-cols-2" : ""}`}>
+            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
+            {withAddress && (
+              <Input
+                label="Property address"
+                name="address"
+                autoComplete="street-address"
+                required
+                dark={dark}
+                hideLabel
+                placeholder={addressPlaceholder}
+                defaultValue={defaultAddress}
+              />
+            )}
+          </div>
+        </>
       )}
-      <div className={`grid gap-4 ${withAddress && !stack && !stackAddressRow ? "sm:grid-cols-2" : ""}`}>
-        <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
-        {withAddress && (
-          <Input
-            label="Property address"
-            name="address"
-            autoComplete="street-address"
-            required
-            dark={dark}
-            hideLabel
-            placeholder={addressPlaceholder}
-            defaultValue={defaultAddress}
-          />
-        )}
-      </div>
       {!hideReason && (
         <Select label="How can we help?" name="interestReason" dark={dark} hideLabel defaultValue={defaultReason ?? INTEREST_REASONS[0]}>
           {INTEREST_REASONS.map((r) => (
@@ -189,7 +214,7 @@ export function LeadForm({
         type="submit"
         variant={dark ? "light" : "primary"}
         disabled={status === "submitting"}
-        className="justify-self-start"
+        className={fullWidthSubmit ? "w-full justify-center" : "justify-self-start"}
       >
         {status === "submitting" ? "Sending…" : submitLabel}
       </Button>

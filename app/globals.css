@@ -112,6 +112,24 @@ body {
   animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Selling hero phone pill: a gentle attention pulse on MOBILE only, where calling is the
+   primary action (live parity). Disabled ≥640px and — via the global reduced-motion block
+   at the bottom of this file — for reduced-motion visitors. */
+@keyframes phone-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgb(255 255 255 / 0.1);
+  }
+}
+@media (max-width: 639px) {
+  .phone-pulse {
+    animation: phone-pulse 2.6s ease-in-out infinite;
+  }
+}
+
 /* ── Blog article: on-load hero entrance (Apple-style rise). `both` holds the end state,
    and the reduced-motion block below collapses the duration so it lands instantly. */
 @keyframes rise-in {
