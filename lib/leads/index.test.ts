@@ -56,6 +56,54 @@ describe("parseLead", () => {
     if (r.kind !== "lead") throw new Error("expected lead");
     expect(r.lead.address).toBe("12 Main St, Beacon NY");
   });
+
+  it("enriches the payload with parsed address parts (never mutating `address`)", () => {
+    const r = parseLead(
+      { ...validBody, address: "123 Main St, Hyde Park, NY 12044" },
+      "/",
+    );
+    if (r.kind !== "lead") throw new Error("expected lead");
+    expect(r.lead.address).toBe("123 Main St, Hyde Park, NY 12044"); // full string untouched
+    expect(r.lead.street).toBe("123 Main St");
+    expect(r.lead.city).toBe("Hyde Park");
+    expect(r.lead.state).toBe("NY");
+    expect(r.lead.postalCode).toBe("12044");
+  });
+
+  it("omits address parts that can't be determined", () => {
+    const r = parseLead({ ...validBody, address: "123 Main St" }, "/");
+    if (r.kind !== "lead") throw new Error("expected lead");
+    expect(r.lead.street).toBe("123 Main St");
+    expect(r.lead.city).toBeUndefined();
+    expect(r.lead.state).toBeUndefined();
+    expect(r.lead.postalCode).toBeUndefined();
+  });
+
+  it("splits a single Full Name into first/last on the payload (selling hero)", () => {
+    const { name: _n, ...rest } = validBody;
+    const r = parseLead({ ...rest, name: "Mariam Anna Kereselidze" }, "/selling");
+    if (r.kind !== "lead") throw new Error("expected lead");
+    expect(r.lead.name).toBe("Mariam Anna Kereselidze");
+    expect(r.lead.firstName).toBe("Mariam");
+    expect(r.lead.lastName).toBe("Anna Kereselidze");
+  });
+
+  it("uses split-name inputs directly when present (contact/footer forms)", () => {
+    const { name: _n, ...rest } = validBody;
+    const r = parseLead({ ...rest, firstName: "Ada", lastName: "Lovelace" }, "/");
+    if (r.kind !== "lead") throw new Error("expected lead");
+    expect(r.lead.name).toBe("Ada Lovelace");
+    expect(r.lead.firstName).toBe("Ada");
+    expect(r.lead.lastName).toBe("Lovelace");
+  });
+
+  it("a one-word name yields firstName only (no empty lastName key)", () => {
+    const { name: _n, ...rest } = validBody;
+    const r = parseLead({ ...rest, name: "Cher" }, "/");
+    if (r.kind !== "lead") throw new Error("expected lead");
+    expect(r.lead.firstName).toBe("Cher");
+    expect(r.lead.lastName).toBeUndefined();
+  });
 });
 
 describe("submitLead", () => {

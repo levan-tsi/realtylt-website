@@ -3,6 +3,7 @@
 
 import fs from "node:fs";
 import { INTEREST_REASONS, type InterestReason } from "@/lib/site";
+import { parseAddress, parseFullName } from "./field-parsers";
 import type { LeadPayload, LeadResult } from "./types";
 
 const OTHER: InterestReason = "Other reason to contact an agent";
@@ -23,7 +24,17 @@ export function parseLead(body: unknown, source: string): ParsedLead {
   if (str(b.rlt_hp) !== "") return { kind: "spam" };
 
   // Name may arrive whole (`name`) or split (`firstName`/`lastName`, the footer/contact form).
-  const name = str(b.name) || [str(b.firstName), str(b.lastName)].filter(Boolean).join(" ");
+  // Derive structured first/last either way: split forms send them directly; a single
+  // "Full Name" field (the /selling hero) is parsed here (1 word -> first only; 2 -> f/l;
+  // 3+ -> first + rest as last).
+  const firstNameIn = str(b.firstName);
+  const lastNameIn = str(b.lastName);
+  const whole = str(b.name);
+  const nameParts =
+    firstNameIn || lastNameIn
+      ? { firstName: firstNameIn, lastName: lastNameIn }
+      : parseFullName(whole);
+  const name = whole || [firstNameIn, lastNameIn].filter(Boolean).join(" ");
   const email = str(b.email);
   if (!name) return { kind: "invalid", error: "Name is required." };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
@@ -59,8 +70,21 @@ export function parseLead(body: unknown, source: string): ParsedLead {
     source,
     timestamp: new Date().toISOString(),
   };
+  // Structured name parts (CRM enrichment) — only attach non-empty values.
+  if (nameParts.firstName) lead.firstName = nameParts.firstName;
+  if (nameParts.lastName) lead.lastName = nameParts.lastName;
+
   const address = str(b.address);
-  if (address) lead.address = address;
+  if (address) {
+    lead.address = address;
+    // Parse the free-text address into parts alongside the full string (never mutating the
+    // visible field). Attach each part only when it could be determined.
+    const parts = parseAddress(address);
+    if (parts.street) lead.street = parts.street;
+    if (parts.city) lead.city = parts.city;
+    if (parts.state) lead.state = parts.state;
+    if (parts.postalCode) lead.postalCode = parts.postalCode;
+  }
   if (qualifier) lead.qualifier = qualifier;
   return { kind: "lead", lead };
 }

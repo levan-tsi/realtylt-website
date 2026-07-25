@@ -14,6 +14,16 @@ export interface LeadPayload {
   timestamp: string;
   /** Optional property address (home-value / cash-offer forms). */
   address?: string;
+  /** Structured name parts. Derived server-side: sent directly by the split-name forms, or
+   * parsed from a single "Full Name" field (the /selling hero). Present only when known. */
+  firstName?: string;
+  lastName?: string;
+  /** Structured address parts parsed server-side from `address` (home contact-3 + /selling
+   * hero behavior spec). Each is best-effort and omitted when it can't be determined. */
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
   /** Optional qualifying-wizard answers (the /selling post-submit popup). Free-form
    * short strings — also folded into `message` so they show in any plain CRM view. */
   qualifier?: Record<string, string>;
