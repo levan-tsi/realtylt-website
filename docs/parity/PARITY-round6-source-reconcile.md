@@ -75,6 +75,55 @@ S7. Confirm our de-Brivited replacements stay: pricing stats card (theirs: stats
 Source custom code is just a map placeholder image — Brivity injects their native app.
 Nothing to copy; ours already surpasses. NO work.
 
+## ADDENDUM 2026-07-24 PM (owner pasted more pages): FINANCING + FOOTER + SEO METAS
+
+### FINANCING (docs/live-source/financing.html)
+F1. CALCULATOR MATH vs source (the big one): reimplement + unit-test the source's exact
+    behaviors in our shared MortgageCalculator WITHOUT breaking the listing-page seed/donut:
+    (a) PMI: down% < 20 -> $55 per $100k financed per month, appears as its own breakdown
+    row + bar segment; hidden at >= 20. (b) Empty annual tax -> NY-style fallback: assessed
+    = 85% of price, $9 per $1,000 yearly. (c) HOA/insurance rows hide when 0. (d) Input
+    constraints: rate max 10 step .125, down 1-99 step .125, term 1-30.
+F2. FINANCING page results layout = source's ROUNDED SEGMENTED BAR (40px tall, radius-200
+    pill, single hue at opacities 1/.85/.7/.55/.4 — use our ink/azure tokens) + color-dot
+    breakdown rows + 48px total. The round-5 donut STAYS on the LISTING page; financing
+    shows the source's bar layout. Reset control with a refresh SVG (no fa glyphs).
+F3. Parallax photo backdrops the source has and we may lack: lending-stats.jpg at 0.45
+    behind Get Pre-Approval; Financing-closing-the-deal.jpg at 0.45 behind Closing.
+    Download live's assets to public/images/financing/, static under reduced-motion.
+F4. Best-loan form: verify tags/fields match (First/Last/Email/Phone/Message, honeypot,
+    "Let's Get Started"); the right phone mockup hides on mobile in the source — match.
+F5. Keep our de-branded mockups where the source uses Brivity product shots
+    (Brivity-Mortgage-Calculator-app2.png, processing-img.png).
+
+### FOOTER (docs/live-source/footer.html) — site-wide
+FT1. Lead-type select must offer ALL SIX source options (buyer / seller / seller+buyer /
+     tenant / recruit "real estate career" / other) — check ours; wire values through
+     /api/lead unchanged.
+FT2. Do NOT copy the social row: live's icons all link to Brivity's own accounts
+     (uncustomized template). No social row until the owner supplies his real URLs.
+FT3. Keep our correct tel/mailto (live's template has Brivity's 866 number + a broken
+     mailto). Verify legal row matches (year (c) Levan Tsiklauri | United Real Estate,
+     Equal Housing logo, independently owned line) — ours has this; confirm wording.
+
+### SEO/GEO METADATA PASS (owner ask: "proper title and meta description ... for seo geo")
+META1. Audit EVERY page's <title> + meta description (home, search, buying, selling,
+     financing, home-value, who-we-are, connect, blog + articles, top-areas + 6 counties +
+     5 boroughs, services, listing template): unique title <= 60 chars in one consistent
+     pattern ("<Page intent> | RealtyLT <geo>"), description 140-160 chars, geo terms
+     (Hudson Valley, the county/borough names, NY) written naturally, no keyword stuffing,
+     no em dashes. Listing + area pages: dynamic geo titles from data (verify slug pages
+     emit address + city titles and canonical). Confirm OG/twitter mirrors, and that
+     app/robots + sitemap still cover everything indexable.
+META2. Verify JSON-LD still valid where present (services, listings) and add
+     RealEstateAgent org schema site-wide if missing (name, url, logo, address, phone,
+     areaServed) — honest fields only.
+
+### NO-CODE PAGES (owner confirmed)
+Top Areas source = nav template stub only; county pages have no custom code -> our
+editorial pages stay (beat live). Home Value + Who We Are show no custom code (Brivity-
+native) -> already at/above parity from rounds 4-5. Connect: DONE (owner confirmed).
+
 ## After the fixes: POLISH LOOP (the owner's ask)
 Re-shoot every reconciled section at 1440+390 side-by-side with live (screenshot pairs into
 docs/_audit/round6/), fix visual deltas (spacing, sizes, weights per the source's rem values —

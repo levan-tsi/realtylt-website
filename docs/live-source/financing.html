@@ -1,0 +1,51 @@
+<!-- FINANCING page custom code, owner-pasted 2026-07-24. -->
+
+<!-- F-HERO: black, 15% v-padding, centered h2 "The Home Loan [b]Process[/b]",
+     overlay blogmanpaperwork.jpg at opacity 0.60 (we host a copy already). -->
+
+<!-- F-DEMYSTIFY: white heading-block, h2 "Demystifying Home Loans" + h4 paragraph
+     (pre-approval to closing / mortgage specialist / we partner with some of the best
+     lenders...). Copy matches what we shipped. -->
+
+<!-- F-PREAPPROVAL: black, copy left (credit report, W-2 forms, pay stubs, Federal Tax
+     Returns, recent bank statements...), right preapproval-img.png ($455,000 / $3,500 /
+     30-year / APPROVED letter — we keep OUR de-branded letter card).
+     PARALLAX overlay lending-stats.jpg at opacity 0.45 behind the section (check ours). -->
+
+<!-- F-CALCULATOR "flex-mort-calc": left half bg-prmry (BLACK on this site) with the form,
+     right half WHITE with results. EXACT SPEC:
+     Fields (2-up rows): Price=500000 · Annual Tax=6000 · Loan Term years max30 min1=30 ·
+     Down Payment % step .125 max99 min1=20 · Interest Rate % step .125 max10 min1=6 ·
+     Monthly HOA min0=100 · Monthly Insurance min0=200. Reset link with refresh icon.
+     RESULTS: total 48px "$3,198.20" + "Estimated Monthly Payment" caption; a 40px-tall
+     ROUNDED SEGMENTED BAR (border 2px #eee, radius 200px, overflow hidden) whose segments
+     are the SAME hue at opacities 1.0/0.85/0.70/0.55/0.40 (principal/taxes/PMI/HOA/
+     insurance), widths animate (transition width 1s); breakdown rows with 15px round color
+     dots + amount + "(xx.x%)" in #aaa.
+     MATH (their calculatePayment, reimplement + unit-test):
+     - monthly principal+interest = financed / interestFactor where financed = price *
+       (1 - down%/100) and interestFactor = sum over months of 1/(1+r/12)^k (their loop).
+     - PMI: if down% < 20 -> PMI = $55 * (financed / 100000) per month, row+segment appear;
+       hidden otherwise.  [WE LIKELY LACK PMI — functional delta]
+     - Taxes: annual_tax/12; if annual tax EMPTY -> assessed = price*0.85, yearly tax =
+       (assessed/1000)*9, monthly = /12 (NY-style fallback).
+     - HOA/Insurance rows hide when 0.
+     - Total = P&I + monthly tax + PMI + HOA + insurance.
+     NOTE their --principal-color tokens are #F2714D (BlueRoof default orange) but the
+     rendered site theme overrides via bg-prmry = site primary (black/near-black). Use OUR
+     ink/azure tokens, opacities like the source. -->
+
+<!-- F-BEST-LOAN: white 6%/10%, copy left "[b]Helping You Get The Best Loan[/b]" / "Start
+     The Process" + paragraph; FORM tags=financing_signup: First/Last 2-up, Email/Phone
+     2-up, Message textarea, honeypot, submit "Let's Get Started" (outline-dark squared).
+     Right: Brivity-Mortgage-Calculator-app2.png (BRIVITY product shot — keep OUR
+     de-branded phone mockup), hidden on xs/sm (mobile hides the mockup — check ours). -->
+
+<!-- F-PROCESSING: #f9f8f7, copy left (Application & Processing / loan goes "live"),
+     right processing-img.png (generic checklist app shot — ours has a de-branded
+     browser mockup; keep ours). -->
+
+<!-- F-CLOSING: black, copy left (Closing / Signing and Finalizing the deal / homeowners
+     insurance / title company / keys. Congratulations, happy homeowner!).
+     PARALLAX overlay Financing-closing-the-deal.jpg at opacity 0.45 (check ours has the
+     photo backdrop; download live's asset). -->
