@@ -1,5 +1,30 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ROUND 6 CLOSED 2026-07-24 (SOURCE-RECONCILIATION phase; push d1b551c..f7a2deb, prod-verified):
+## The owner pasted his BlueRoof sitebuilder Custom Code for home/buying/selling/financing/
+## footer/theme/global (SAVED in docs/live-source/ — THE source of truth for parity; top-areas/
+## home-value/who-we-are have NO custom code; connect done per owner). Opus agent (494k) shipped
+## 8 commits e8ec0d8..f7a2deb: lead full-name+address parsers (lib/leads/field-parsers.ts, wired
+## into parseLead), home H1-H5 (art-directed posters: mobile/reduced=hom.jpg 90KB, desktop=vimeo
+## frame; live's 3 verbatim paragraphs; carousel closing line below), buying B1-B4 (#3b82f6
+## phone icon, gtag Phone/Booking events via lib/analytics.ts + TrackedButton), selling S1-S7
+## (REAL Google reviews + Maps URL, Google-logo trust bar, scrollToForm w/ focus, sell-img-4
+## parallax), financing F1-F5 (PMI $55/$100k <20% down + NY tax fallback + constraints,
+## segmented-bar layout on financing while the donut STAYS on listing, 2 parallax backdrops,
+## 24 mortgage tests), META pass (all titles <=~47 nested / descriptions 140-160 / borough
+## double-brand fixed / RealEstateAgent JSON-LD site-wide), theme T1-T5 (chat widget = pasted
+## source no drift, body 16px/1.72222, fair-housing #d3d6d9, gtag intact).
+## ORCHESTRATOR VERIFIED: tsc + 372/372 mine; financing/selling probes re-run (PMI toggle,
+## reviews, scrollToForm); leading-change risk pages (services/blog-article/who-we-are/reviews)
+## 0 overflow @390+320; titles + widget config spot-checked; PROD verified (real reviews +
+## 3-paragraph copy + PMI live). Agent leftovers (documented): hero geometry not force-matched
+## (form 64% vs 75%, buttons 76px vs 72px — risk of CTA wrap; owner-approved hero), footer
+## Equal-Housing LOGO graphic absent (need the owner's asset; the Fair Housing bar covers the
+## notice), listing titles 69 chars (intentional, price aids CTR). Social row SKIPPED — live's
+## links point at Brivity's own accounts; waiting on the owner's real profile URLs.
+## Reusable patterns for future source work are listed at the end of the agent's report
+## (parsers/analytics/scroll/parallax/asset-hosting/meta-template gotcha + _scratch-r6-* probes).
+
 ## ROUND 4 IN PROGRESS 2026-07-22 (owner: "a lot of things are still not the same"):
 ## Orchestrator re-swept ALL pages vs live (docs/_audit/sweep-0722/ + live-nav.txt). Key finds:
 ## live SELLING was redesigned by the owner in the sitebuilder and ours ALREADY matches it
