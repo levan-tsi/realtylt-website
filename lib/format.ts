@@ -16,3 +16,19 @@ export function specParts(
   if (l.sqft > 0) parts.push(`${l.sqft.toLocaleString("en-US")} ${units.sqft}`);
   return parts;
 }
+
+/** Card/detail stat pieces with a Land fallback: Land and other lot-only rows carry no
+ * beds/baths/sqft, so surface the lot ACREAGE instead of rendering a blank stat line.
+ * `units.acre` is the label (e.g. "acres" / "ac"); the singular is handled for exactly 1. */
+export function listingStats(
+  l: { beds: number; baths: number; sqft: number; lotAcres?: number; propertyType?: string },
+  units: { bed: string; bath: string; sqft: string; acre: string; acreOne: string },
+): string[] {
+  const parts = specParts(l, units);
+  // Only fall back to acreage when there is nothing else to show (Land, raw lots) — a home that
+  // already lists beds/baths/sqft keeps its normal stat line.
+  if (parts.length === 0 && l.lotAcres && l.lotAcres > 0) {
+    parts.push(`${l.lotAcres} ${l.lotAcres === 1 ? units.acreOne : units.acre}`);
+  }
+  return parts;
+}

@@ -21,7 +21,7 @@ import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { mlsGridDataFetch } from "./mls-fetch";
 import ZIP_CENTROIDS from "./zip-centroids.json";
-import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
+import type { IdxClient, Listing, ListingStatus, PropertyType, SearchParams, SearchResult } from "./types";
 
 /** RESO Web API property payload (subset we map). */
 interface ResoProperty {
@@ -107,6 +107,30 @@ const PAGE_GAP_MS = 1100; // stay STRICTLY under the 2 req/sec per-ACCOUNT cap
 // Full galleries (feed carries up to ~50/listing; audited 2026-07-15). Off-screen tiles
 // lazy-load through the CDN-cached proxy, so stored count ≠ per-view fetch count.
 const MAX_PHOTOS = 50;
+
+/** RESO StandardStatus values that count as a "home for sale" — the set OneKey's own consumer
+ * portal (onekeymls.com) presents under "homes for sale" (round-7 evidence 2026-07-25: their
+ * Orange-county page showed Active + Coming Soon + Pending listings and totalled 2,472 vs our
+ * Active-only 1,277 — the ~2x inventory gap the owner reported was almost entirely non-Active
+ * on-market status, NOT PropertyType). Displaying these via IDX is compliant: OneKey publishes
+ * them itself, and MlgCanView still gates each listing. Closed/Withdrawn/Expired/Canceled stay
+ * OUT (sold data has stricter rules) so a delisting still deactivates. Revert to ['Active'] for a
+ * strict active-only site. MLS Grid normalizes StandardStatus to the RESO enum. */
+const SALE_STATUSES = ["Active", "Active Under Contract", "Coming Soon", "Pending"] as const;
+const SALE_STATUS_SET = new Set<string>(SALE_STATUSES);
+
+/** RESO PropertyType values we DISPLAY (all for-SALE product). Condos/co-ops/townhomes are
+ * PropertySubType WITHIN 'Residential' (verified via the feed probe), so they are already covered.
+ * Rentals ('Residential Lease' / 'Commercial Lease') are deliberately EXCLUDED — this is a
+ * for-sale site and OneKey's "homes for sale" excludes them too (their rentals are a separate
+ * section). Land / Commercial Sale / Business Opportunity are real sale inventory added round-7. */
+const SERVED_PROPERTY_TYPES = new Set<string>([
+  "Residential",
+  "Residential Income",
+  "Land",
+  "Commercial Sale",
+  "Business Opportunity",
+]);
 
 export class MlsGridClient implements IdxClient {
   private cache: Listing[] = [];
@@ -227,11 +251,12 @@ export class MlsGridClient implements IdxClient {
 
   /** Incremental sync window for the hourly cron (app/api/cron/idx-sync): everything the
    * feed modified after `watermark`, DELIBERATELY UNFILTERED by status/MlgCanView/type —
-   * that is how removals are seen. A row we can still show (raw StandardStatus 'Active',
-   * viewable, served county+type) becomes an upsert; any other modified row becomes a
-   * remove id (status flip to Pending/Closed/Withdrawn, MlgCanView false, type change…).
-   * Ids we never stored no-op at the DB (`… and is_active`). Same pacing + resume model
-   * as replicateDeep: ModificationTimestamp-ascending, @odata.nextLink, `gt <watermark>`. */
+   * that is how removals are seen. A row we can still show for sale (raw StandardStatus in
+   * SALE_STATUS_SET, viewable, served county+type) becomes an upsert; any other modified row
+   * becomes a remove id (status flip to Closed/Withdrawn/Expired/Canceled, MlgCanView false,
+   * type change…). Ids we never stored no-op at the DB (`… and is_active`). Same pacing +
+   * resume model as replicateDeep: ModificationTimestamp-ascending, @odata.nextLink,
+   * `gt <watermark>`. */
   async replicateDelta(opts: { watermark: string; maxPages: number; deadline: number }): Promise<{
     upserts: Listing[];
     removeIds: string[];
@@ -264,9 +289,12 @@ export class MlsGridClient implements IdxClient {
         const id = p.ListingId ?? p.ListingKey;
         if (!id) continue;
         const mapped = mapProperty(p);
-        // Gate on the RAW feed status: mapProperty maps unknown statuses to "Active"
-        // (safe under the baseline's Active-only filter, wrong for an unfiltered delta).
-        if (mapped && p.StandardStatus === "Active") {
+        // Gate on the RAW feed status: a row we can still show as "for sale" (SALE_STATUS_SET:
+        // Active / Active Under Contract / Coming Soon / Pending, viewable, served county+type)
+        // upserts; any OTHER modified row (Closed/Withdrawn/Expired/Canceled, MlgCanView false,
+        // type change) becomes a remove id so the delisting is seen. mapProperty maps any
+        // unexpected status to "Active", so the raw-status gate — not the mapped label — decides.
+        if (mapped && SALE_STATUS_SET.has(p.StandardStatus ?? "")) {
           upserts.set(id, mapped); // photos stay as source MediaURLs for the store
           removeIds.delete(id);
         } else {
@@ -468,10 +496,10 @@ export class MlsGridClient implements IdxClient {
     const parts = [
       `OriginatingSystemName eq '${this.feedId}'`,
       "MlgCanView eq true",
-      "StandardStatus eq 'Active'",
+      `StandardStatus in (${SALE_STATUSES.map((s) => `'${s}'`).join(",")})`,
     ];
     if (this.typeFilterSupported) {
-      parts.push("PropertyType in ('Residential','Residential Income')");
+      parts.push(`PropertyType in (${[...SERVED_PROPERTY_TYPES].map((t) => `'${t}'`).join(",")})`);
     }
     return parts.join(" and ");
   }
@@ -498,7 +526,39 @@ function isServedCounty(raw: string | undefined): boolean {
 }
 
 function isServedType(t: string | undefined): boolean {
-  return t === "Residential" || t === "Residential Income";
+  return SERVED_PROPERTY_TYPES.has(t ?? "");
+}
+
+/** Raw RESO PropertyType → our UI PropertyType union. Condos/co-ops/townhomes ride inside
+ * 'Residential' (they are PropertySubType), so they map to "Residential". */
+function mapPropertyType(raw: string | undefined): PropertyType {
+  switch (raw) {
+    case "Residential Income":
+      return "Multi-Family";
+    case "Land":
+      return "Land";
+    case "Commercial Sale":
+    case "Business Opportunity":
+      return "Commercial";
+    default:
+      return "Residential";
+  }
+}
+
+/** Raw RESO StandardStatus → our UI ListingStatus. Only sale statuses reach here (the sync gates
+ * on SALE_STATUS_SET); anything unexpected falls back to "Active" so a badge never shows a raw
+ * enum. */
+function mapStatus(raw: string | undefined): ListingStatus {
+  switch (raw) {
+    case "Pending":
+      return "Pending";
+    case "Active Under Contract":
+      return "Under Contract";
+    case "Coming Soon":
+      return "Coming Soon";
+    default:
+      return "Active";
+  }
 }
 
 /** NYC boroughs arrive under their LEGAL county names, usually with the borough in
@@ -557,7 +617,8 @@ function schoolName(v: string | undefined): string | undefined {
 /** Map a RESO property to our Listing; drop rows we can't display compliantly. */
 export function mapProperty(p: ResoProperty): Listing | null {
   if (p.MlgCanView === false) return null;
-  // Only the two types the site presents — Land/Commercial/Lease are dropped, not mislabeled.
+  // Only the for-SALE property types (SERVED_PROPERTY_TYPES) — Lease/rental rows are dropped, not
+  // mislabeled. Land / Commercial Sale / Business Opportunity are served (round-7).
   if (!isServedType(p.PropertyType)) return null;
   const county = normalizeCounty(p.CountyOrParish);
   const id = p.ListingId ?? p.ListingKey;
@@ -615,11 +676,8 @@ export function mapProperty(p: ResoProperty): Listing | null {
     beds: p.BedroomsTotal ?? 0,
     baths,
     sqft: p.LivingArea ?? 0,
-    propertyType: p.PropertyType === "Residential Income" ? "Multi-Family" : "Residential",
-    status:
-      p.StandardStatus === "Pending" ? "Pending"
-      : p.StandardStatus === "Coming Soon" ? "Coming Soon"
-      : "Active",
+    propertyType: mapPropertyType(p.PropertyType),
+    status: mapStatus(p.StandardStatus),
     description: p.PublicRemarks ?? "",
     features,
     photos,

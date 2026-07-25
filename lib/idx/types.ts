@@ -3,7 +3,7 @@
 
 import type { CountySlug } from "@/lib/site";
 
-export type PropertyType = "Residential" | "Multi-Family";
+export type PropertyType = "Residential" | "Multi-Family" | "Land" | "Commercial";
 
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
@@ -14,7 +14,7 @@ export const MAX_PAGE_SIZE = 100;
  * default is never inflated elsewhere. */
 export const SEARCH_PAGE_SIZE = 36;
 
-export type ListingStatus = "Active" | "Coming Soon" | "Pending";
+export type ListingStatus = "Active" | "Coming Soon" | "Pending" | "Under Contract";
 
 export interface Listing {
   id: string;

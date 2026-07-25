@@ -24,7 +24,7 @@ export const maxDuration = 60;
 
 const PAGE_SIZE = 500;
 const PAGE_GAP_MS = 1100; // strictly under MLS Grid's 2 req/sec per-account cap
-const STATUSES = new Set(["Active", "Pending", "Coming Soon", "Closed", "Withdrawn", "Expired"]);
+const STATUSES = new Set(["Active", "Active Under Contract", "Pending", "Coming Soon", "Closed", "Withdrawn", "Expired"]);
 const NYC = new Set(["kings", "new york", "richmond", "bronx", "queens", "brooklyn", "manhattan", "staten island"]);
 
 interface Row {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fmtM, specParts } from "./format";
+import { fmtM, listingStats, specParts } from "./format";
 
 describe("fmtM", () => {
   it("renders median price shorthand", () => {
@@ -32,6 +32,36 @@ describe("specParts — drops feed zeros so a listing never shows '0 Bed'", () =
       "2 bd",
       "1 ba",
       "1,440 sqft",
+    ]);
+  });
+});
+
+describe("listingStats — Land/lot fallback to acreage", () => {
+  const units = { bed: "Bed", bath: "Bath", sqft: "Sq. Ft.", acre: "Acres", acreOne: "Acre" };
+
+  it("keeps beds/baths/sqft when the home has them (no acreage clutter)", () => {
+    expect(listingStats({ beds: 3, baths: 2, sqft: 2030, lotAcres: 0.5, propertyType: "Residential" }, units)).toEqual([
+      "3 Bed",
+      "2 Bath",
+      "2,030 Sq. Ft.",
+    ]);
+  });
+
+  it("shows acreage for a Land row with no beds/baths/sqft", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 4.2, propertyType: "Land" }, units)).toEqual(["4.2 Acres"]);
+  });
+
+  it("uses the singular label for exactly one acre", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 1, propertyType: "Land" }, units)).toEqual(["1 Acre"]);
+  });
+
+  it("shows nothing when a lot-only row has no acreage either (never a blank clutter)", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, propertyType: "Land" }, units)).toEqual([]);
+  });
+
+  it("keeps a commercial building's sqft (no acreage fallback needed)", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 6000, lotAcres: 1.5, propertyType: "Commercial" }, units)).toEqual([
+      "6,000 Sq. Ft.",
     ]);
   });
 });

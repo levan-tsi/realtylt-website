@@ -475,6 +475,8 @@ export function SearchClient() {
           <option value="">Type</option>
           <option value="Residential">Residential</option>
           <option value="Multi-Family">Multi-Family</option>
+          <option value="Land">Land</option>
+          <option value="Commercial">Commercial</option>
         </select>
 
         {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}

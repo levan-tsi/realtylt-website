@@ -153,14 +153,29 @@ describe("mapProperty", () => {
     expect(mapProperty({ ...row, CountyOrParish: undefined })).toBeNull();
   });
 
-  it("drops non-residential types and unviewable/priceless rows", () => {
-    expect(mapProperty({ ...row, PropertyType: "Land" })).toBeNull();
+  it("drops rental/lease types and unviewable/priceless rows", () => {
+    // Rentals are a separate product on a for-sale site — dropped, not mislabeled. (OneKey's
+    // "homes for sale" excludes them too; their rentals are a separate section.)
+    expect(mapProperty({ ...row, PropertyType: "Residential Lease" })).toBeNull();
+    expect(mapProperty({ ...row, PropertyType: "Commercial Lease" })).toBeNull();
     expect(mapProperty({ ...row, MlgCanView: false })).toBeNull();
     expect(mapProperty({ ...row, ListPrice: undefined })).toBeNull();
   });
 
-  it("maps Residential Income to Multi-Family", () => {
+  it("maps every served for-sale PropertyType to its UI union value", () => {
+    // Condos/co-ops/townhomes ride inside 'Residential' as PropertySubType — already covered.
+    expect(mapProperty({ ...row, PropertyType: "Residential" })!.propertyType).toBe("Residential");
     expect(mapProperty({ ...row, PropertyType: "Residential Income" })!.propertyType).toBe("Multi-Family");
+    expect(mapProperty({ ...row, PropertyType: "Land" })!.propertyType).toBe("Land");
+    expect(mapProperty({ ...row, PropertyType: "Commercial Sale" })!.propertyType).toBe("Commercial");
+    expect(mapProperty({ ...row, PropertyType: "Business Opportunity" })!.propertyType).toBe("Commercial");
+  });
+
+  it("maps for-sale StandardStatus values (Active Under Contract → Under Contract)", () => {
+    expect(mapProperty({ ...row, StandardStatus: "Active" })!.status).toBe("Active");
+    expect(mapProperty({ ...row, StandardStatus: "Pending" })!.status).toBe("Pending");
+    expect(mapProperty({ ...row, StandardStatus: "Coming Soon" })!.status).toBe("Coming Soon");
+    expect(mapProperty({ ...row, StandardStatus: "Active Under Contract" })!.status).toBe("Under Contract");
   });
 
   it("derives listedAt from DaysOnMarket when present", () => {
@@ -283,7 +298,7 @@ describe("replicateDelta (hourly incremental window)", () => {
     CountyOrParish: county,
   });
 
-  it("splits the UNFILTERED delta into upserts (raw Active only) and removals", async () => {
+  it("splits the UNFILTERED delta into upserts (for-sale statuses) and removals", async () => {
     const calls: string[] = [];
     vi.stubGlobal(
       "fetch",
@@ -295,9 +310,11 @@ describe("replicateDelta (hourly incremental window)", () => {
               mkRow("UP1", "2026-03-01T00:00:00.000Z"), // Active, served → upsert
               { ...mkRow("CLOSED1", "2026-03-02T00:00:00.000Z"), StandardStatus: "Closed" }, // → remove
               { ...mkRow("HIDDEN1", "2026-03-03T00:00:00.000Z"), MlgCanView: false }, // → remove
-              { ...mkRow("PEND1", "2026-03-04T00:00:00.000Z"), StandardStatus: "Pending" }, // → remove
-              mkRow("LI1", "2026-03-05T00:00:00.000Z", "Nassau"), // never served → remove (DB no-ops)
-              { ...mkRow("BK1", "2026-03-06T00:00:00.000Z", "Kings"), PostalCode: "11215" }, // borough → upsert
+              { ...mkRow("PEND1", "2026-03-04T00:00:00.000Z"), StandardStatus: "Pending" }, // for-sale → upsert
+              { ...mkRow("AUC1", "2026-03-05T00:00:00.000Z"), StandardStatus: "Active Under Contract" }, // → upsert
+              { ...mkRow("WD1", "2026-03-06T00:00:00.000Z"), StandardStatus: "Withdrawn" }, // → remove
+              mkRow("LI1", "2026-03-07T00:00:00.000Z", "Nassau"), // never served → remove (DB no-ops)
+              { ...mkRow("BK1", "2026-03-08T00:00:00.000Z", "Kings"), PostalCode: "11215" }, // borough → upsert
             ],
           }),
           { status: 200 },
@@ -315,10 +332,12 @@ describe("replicateDelta (hourly incremental window)", () => {
     );
 
     expect(out.complete).toBe(true);
-    expect(out.scanned).toBe(6);
-    expect(out.upserts.map((l) => l.id)).toEqual(["UP1", "BK1"]);
-    expect(out.removeIds.sort()).toEqual(["CLOSED1", "HIDDEN1", "LI1", "PEND1"]);
-    expect(out.watermark).toBe("2026-03-06T00:00:00.000Z");
+    expect(out.scanned).toBe(8);
+    // Active / Pending / Active Under Contract in served areas upsert (for-sale statuses);
+    // Closed / Withdrawn / MlgCanView-false / unserved-county become removals.
+    expect(out.upserts.map((l) => l.id)).toEqual(["UP1", "PEND1", "AUC1", "BK1"]);
+    expect(out.removeIds.sort()).toEqual(["CLOSED1", "HIDDEN1", "LI1", "WD1"]);
+    expect(out.watermark).toBe("2026-03-08T00:00:00.000Z");
     // The delta FILTER must not constrain status/MlgCanView — that is how removals are
     // seen (both fields still ride along in $select).
     expect(calls[0]).toContain(encodeURIComponent("OriginatingSystemName eq 'onekey2'"));
