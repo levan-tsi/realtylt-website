@@ -9,9 +9,9 @@ import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { fmtM } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Top Areas | Hudson Valley Counties & NYC Boroughs",
+  title: "Top Areas | Hudson Valley & NYC Boroughs",
   description:
-    "Explore the six Hudson Valley counties (Westchester, Rockland, Putnam, Orange, Dutchess, Ulster) and all five NYC boroughs we serve, with local market notes and homes for sale in each.",
+    "Explore the six Hudson Valley counties (Westchester to Ulster) and all five NYC boroughs we serve, with local market notes and homes for sale in each.",
 };
 
 export default function TopAreasPage() {

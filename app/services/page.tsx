@@ -9,9 +9,9 @@ import { getServices, type Service } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "AI Services: Assistants, Voice Agents, and Automation",
+  title: "AI Services | Assistants, Voice & Automation",
   description:
-    "Twenty things that used to need a person. AI chat assistants, voice agents, skip tracing, lead qualification, and workflow automation, built on the tools you already run.",
+    "Twenty things that used to need a person: AI chat assistants, voice agents, skip tracing, lead qualification, and workflow automation on the tools you run.",
   alternates: { canonical: `${SITE.url}/services` },
   openGraph: {
     type: "website",

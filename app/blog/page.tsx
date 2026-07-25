@@ -9,7 +9,7 @@ import { readingTime } from "@/lib/blog/toc";
 export const metadata: Metadata = {
   title: "Blog | Stay Up To Date",
   description:
-    "Hudson Valley real estate advice from RealtyLT: buying, selling, moving, and homeownership guides written for New York.",
+    "Hudson Valley real estate advice from RealtyLT: buying, selling, moving, and homeownership guides written for New York buyers and sellers, updated regularly.",
 };
 
 // Articles come from the static collection PLUS anything published from the CRM

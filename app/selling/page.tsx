@@ -20,9 +20,9 @@ import { SITE } from "@/lib/site";
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Sell Your Home | Cash Offer in 24 Hours or Full-Service Listing",
+  title: "Sell Your Home | 24-Hour Cash Offer or Listing",
   description:
-    "See your home's cash value vs market list price. Get a guaranteed fair cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
+    "See your home's cash value vs market list price. Get a guaranteed cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
 };
 
 // Live's exact 6-item checklists + "perfect if" lists, in live's order (source verbatim).

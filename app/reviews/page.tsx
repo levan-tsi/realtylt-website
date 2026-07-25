@@ -9,7 +9,7 @@ import { GOOGLE_REVIEWS_URL, TESTIMONIALS } from "@/content/testimonials";
 export const metadata: Metadata = {
   title: "Reviews | What Our Clients Say",
   description:
-    "Read Google reviews from RealtyLT clients across the Hudson Valley: 5.0-rated service for buyers and sellers, seven days a week.",
+    "Read real Google reviews from RealtyLT clients across the Hudson Valley and NYC: 5.0-rated service for buyers and sellers, seven days a week.",
 };
 
 export default function ReviewsPage() {

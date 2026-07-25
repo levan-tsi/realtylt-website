@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description:
-    "Hudson Valley and NYC real estate with RealtyLT. Search homes across six mid-Hudson counties and all five boroughs, get your home value, or a cash offer in 24 hours.",
+    "Hudson Valley and NYC real estate with RealtyLT. Search homes across six counties and all five boroughs, get your home value, or a cash offer in 24 hours.",
   openGraph: {
     siteName: SITE.name,
     type: "website",

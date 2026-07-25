@@ -16,7 +16,7 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: "Buying | Ready to Find Your Dream Home?",
   description:
-    "Free buyer consultation with our Hudson Valley specialists: home search, listing alerts, favorites and tours, offers and closing. Buyers pay no cost; we're compensated by sellers.",
+    "Free buyer consultation with our Hudson Valley specialists: home search, listing alerts, tours, offers, and closing. Buyers never pay a cent to work with us.",
 };
 
 export default async function BuyingPage() {

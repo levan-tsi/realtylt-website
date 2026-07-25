@@ -21,7 +21,7 @@ import { boroughPath } from "@/content/boroughs";
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
 export const metadata: Metadata = {
-  title: "RealtyLT | Levan Tsiklauri | United Real Estate | Hudson Valley & NYC Homes",
+  title: "RealtyLT | Hudson Valley & NYC Homes for Sale",
   description:
     "Let's find home. Search homes for sale across the Hudson Valley and all five NYC boroughs, or get your home's value and a cash offer in 24 hours.",
 };

@@ -9,7 +9,7 @@ import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 export const metadata: Metadata = {
   title: "Financing | The Home Loan Process, Demystified",
   description:
-    "Understand the home loan process from pre-approval to closing, estimate your monthly payment with our mortgage calculator, and get connected with trusted local lenders.",
+    "Understand the home loan process from pre-approval to closing, estimate your monthly payment with our calculator, and connect with trusted local lenders.",
 };
 
 export default function FinancingPage() {

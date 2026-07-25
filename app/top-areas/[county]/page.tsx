@@ -29,17 +29,21 @@ export async function generateMetadata({ params }: { params: Promise<{ county: s
   const { county } = await params;
   const c = getCounty(county);
   if (c) {
+    // Title stays short (the layout template appends " | RealtyLT"); the tagline moves to
+    // the description so the title clears ~60 chars.
     return {
-      title: `${c.name} Homes for Sale | ${c.tagline}`,
+      title: `${c.name} Homes for Sale`,
       description: `${c.overview.slice(0, 155)}…`,
       alternates: { canonical: `${SITE.url}/top-areas/${c.slug}` },
     };
   }
   const b = getBorough(county);
   if (b) {
+    // Bare title — the layout template adds " | RealtyLT" (no manual suffix, no double brand).
+    const desc = `${b.name} homes for sale: ${b.tagline} Live OneKey MLS listings with prices and photos.`;
     return {
-      title: `${b.name} Homes for Sale | RealtyLT`,
-      description: `${b.name} homes for sale: ${b.tagline} Browse current OneKey MLS listings with live prices and photos.`,
+      title: `${b.name} Homes for Sale`,
+      description: desc.length > 158 ? desc.slice(0, 157).trimEnd() + "…" : desc,
       alternates: { canonical: `${SITE.url}/top-areas/${b.slug}` },
     };
   }

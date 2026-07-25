@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Search Listings | Hudson Valley Homes for Sale",
   description:
-    "Search homes for sale across the Hudson Valley and all five NYC boroughs. Filter by price, beds, baths and more, in grid or map view.",
+    "Search homes for sale across the Hudson Valley and all five NYC boroughs. Filter by price, beds, baths, and more, and browse in grid or map view.",
 };
 
 export default function SearchPage() {
