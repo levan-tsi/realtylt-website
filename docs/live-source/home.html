@@ -1,0 +1,122 @@
+<!-- HOME page custom code, owner-pasted 2026-07-24. Part 1: hero -->
+<section id="premium-3" style="outline-offset: -3px;" data-selector="section, .section">
+    <div class="premium-3-content">
+        <h1 class="margin-bottom-40 editContent" data-selector=".editContent">Let's Find <strong>Home</strong></h1>
+        <form class="form-inline quick-search-form">
+            <div id="custom-search-1">
+                <div class="input-group col-xs-12">
+                    <input id="multi_cat" value="no_cat" type="hidden">
+                    <input id="multi_search" autocomplete="off" class="form-control input-lg ui-autocomplete-input" placeholder="Search for Homes" type="text">
+                    <span class="input-group-btn">
+                        <button id="doSearch" class="btn btn-info btn-lg" type="button">
+                            <i class="fa fa-search visible-xs visible-sm"></i>
+                            <span class="hidden-xs hidden-sm">Search</span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div id="honeypot-div">
+                <input name="age_required" id="age_required" value="" type="text" style="display: none;">
+            </div>
+        </form>
+        <!-- UPDATED: Now links directly to /selling page -->
+        <a id="cta-btn-sell" class="btn btn-outline custom-btn outline-light squared" href="https://www.realtylt.com/selling">Sell Your Home</a>
+        <a id="cta-btn-home-value" class="btn btn-outline custom-btn outline-light squared" href="/homevalue">See Home Value</a>
+    </div>
+    <a class="anchor-scroll" href="#scroll-stop">
+        <i class="fa fa-chevron-down"></i>
+    </a>
+    <!-- video background -->
+    <div class="video-background hidden-sm hidden-xs">
+        <div class="video-foreground">
+            <iframe src="https://player.vimeo.com/video/398379426?autoplay=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;background=1" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" frameborder="0"></iframe>
+        </div>
+    </div>
+    <!-- MOBILE gets the static hom.png image, NOT the video -->
+    <div class="img-overlay visible-sm visible-xs" style="background-image: url('https://images.brivityidx.com/assets/images/uploads/104674/hom.png');"></div>
+</section>
+
+<!-- Part 2: Contact 3 — "Find Your Home Value" + "Tell Us About Your Home" seller form -->
+<section class="contact-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <h2>Find Your Home Value</h2>
+                <div>
+                    <p>So, you're ready to sell your home! Congratulations, you've come to the right place. We belong to one of the strongest real estate brokerages in the area, We have great confidence in our brand and you can, too. We demand excellence throughout the home-selling process.</p>
+                    <p>We have established a solid reputation for impeccable customer service and marketing strategies. When you entrust the sale of your home to us, you are putting your faith in our entire network of experts in Real estate sales, Real estate purchases, Loan processing and Marketing.</p>
+                    <p>Enter your information on this page to discover what your home is worth. We have experts in every area that have access to the resources needed to provide an accurate estimate.</p>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1 col-sm-12">
+                <h2>Tell Us About Your Home</h2>
+                <form id="form-contact3" action="" class="form-contact">
+                    <input type="hidden" name="lead_type" value="seller">
+                    <!-- Hidden fields for parsed address parts -->
+                    <input type="hidden" name="city" id="hidden_city3" value="">
+                    <input type="hidden" name="locality" id="hidden_locality3" value="">
+                    <input type="hidden" name="postal_code" id="hidden_postal_code3" value="">
+                    <input type="hidden" name="country" id="hidden_country3" value="USA">
+                    <div class="row">
+                        <div class="col-sm-6"><input placeholder="First Name" name="contact3_fname" type="text" required=""></div>
+                        <div class="col-sm-6"><input placeholder="Last Name" name="contact3_lname" type="text" required=""></div>
+                        <div class="col-sm-12"><input placeholder="Email Address" name="contact3_email" type="email" required=""></div>
+                        <div class="col-sm-12"><input placeholder="Phone Number" name="contact3_phone" type="text" required=""></div>
+                        <div class="col-sm-12"><input placeholder="Property Address" name="street_address" id="street_address3" type="text" autocomplete="off"></div>
+                        <div class="col-sm-12"><textarea name="contact3_message" rows="3" placeholder="Your Message" required=""></textarea></div>
+                        <input type="text" id="contact3_robot_field" name="contact3_robot_field" style="display: none;">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- BEHAVIOR SPEC (their inline script): on submit, parse "123 Main St, Hyde Park, NY 12044"
+         into hidden city/state(locality)/zip fields; street_address keeps only the street part.
+         ZIP = /\b(\d{5}(?:-\d{4})?)\b/; state = trailing 2-letter code; city = remainder. -->
+</section>
+
+<!-- Part 3: Featured Listings heading (the listings rail itself is Brivity-native, no code shown) -->
+<section class="content-1n" style="padding: 80px 0px 20px; background-color: rgb(255, 255, 255);">
+    <div class="container">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <h2 class="prmry-color margin-bottom-20 font-w700">Featured Listings</h2>
+        </div>
+    </div>
+</section>
+
+<!-- Part 4: Why Work With Us carousel — 5 active slides (one commented out on live), indicators,
+     chevron controls, closing paragraph BELOW the carousel inside the container -->
+<div class="promo-slider-1 carousel slide text-center" id="promo-slider-1" style="background-color: #F3F5F8;">
+    <div class="container">
+        <h2 class="font-w700">Why Work With Us?</h2>
+        <div class="carousel-inner">
+            <div class="item"><div class="caption">
+                <img src="https://images.brivityidx.com/assets/images/uploads/219/promo-slide-1.png" alt="Modern luxury living room with large floor-to-ceiling windows, stylish seating, indoor plants, and scenic outdoor view">
+                <h3>We make listings shine with stunning photos, virtual tours, 3D walkthroughs and videos</h3>
+            </div></div>
+            <div class="item active"><div class="caption">
+                <img src="https://images.brivityidx.com/assets/images/uploads/219/promo-slide-3.png" alt="Online real estate marketplace showing various homes for sale">
+                <h3>Search all available homes for sale</h3>
+            </div></div>
+            <div class="item"><div class="caption">
+                <img src="https://images.brivityidx.com/assets/images/uploads/219/promo-slide-4.png" alt="Real estate property listing detail with team members, viewership data, and activity timeline">
+                <h3>See everything your agent does to get your property sold</h3>
+            </div></div>
+            <div class="item"><div class="caption">
+                <img src="http://cdn1.brivityidx.com/assets/images/uploads/219/promo-slide-5v2.png?v=1" alt="Interactive map showing real estate property prices with color-coded markers">
+                <h3>Stay up-to-date, receive reports on your neighborhood</h3>
+            </div></div>
+            <div class="item"><div class="caption">
+                <img src="https://images.brivityidx.com/assets/images/uploads/219/save_a_search.png" alt="Recent listings on a phone and a save-search page">
+                <h3>We have a list of buyers that receive listing alerts every day</h3>
+            </div></div>
+        </div>
+        <ol class="carousel-indicators"><!-- 5 dots (one commented out on live) --></ol>
+        <a class="left carousel-control" data-slide="prev"><span class="fa fa-chevron-left"></span></a>
+        <a class="right carousel-control" data-slide="next"><span class="fa fa-chevron-right"></span></a>
+        <div class="row"><div class="col-md-8 col-md-offset-2">
+            <p>From the best tools and technology to transparency throughout the entire process, we're the top choice for buyers and sellers.</p>
+        </div></div>
+    </div>
+</div>
