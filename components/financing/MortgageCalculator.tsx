@@ -25,32 +25,40 @@ const DEFAULTS: MortgageInput = {
   monthlyInsurance: 200,
 };
 
-const FIELDS: { key: keyof MortgageInput; label: string; step?: number; max?: number }[] = [
-  { key: "price", label: "Price ($)" },
-  { key: "annualTax", label: "Annual tax ($)" },
-  { key: "termYears", label: "Loan term (years)", max: 50 },
-  { key: "downPct", label: "Down payment (%)", step: 0.5, max: 100 },
-  { key: "ratePct", label: "Interest rate (%)", step: 0.125, max: 25 },
-  { key: "monthlyHoa", label: "Monthly HOA ($)" },
-  { key: "monthlyInsurance", label: "Monthly insurance ($)" },
+// Input constraints match the live financing calculator: term 1-30, down 1-99% (step .125),
+// rate 1-10% (step .125), HOA/insurance/price/tax >= 0.
+const FIELDS: { key: keyof MortgageInput; label: string; step?: number; min?: number; max?: number }[] = [
+  { key: "price", label: "Price ($)", min: 0 },
+  { key: "annualTax", label: "Annual tax ($)", min: 0 },
+  { key: "termYears", label: "Loan term (years)", min: 1, max: 30 },
+  { key: "downPct", label: "Down payment (%)", step: 0.125, min: 1, max: 99 },
+  { key: "ratePct", label: "Interest rate (%)", step: 0.125, min: 1, max: 10 },
+  { key: "monthlyHoa", label: "Monthly HOA ($)", min: 0 },
+  { key: "monthlyInsurance", label: "Monthly insurance ($)", min: 0 },
 ];
 
 const money = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
-export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInput> } = {}) {
+export function MortgageCalculator({
+  initial,
+  variant = "donut",
+}: { initial?: Partial<MortgageInput>; variant?: "donut" | "bar" } = {}) {
   const seeded = { ...DEFAULTS, ...initial };
   const [values, setValues] = useState<MortgageInput>(seeded);
   const r = calcMortgage(values);
 
-  /* Live: monochrome breakdown — black principal, graduating grays. `color` styles the legend
-     dots; `stroke` is the same value as a hex for the SVG donut. */
+  /* Live: monochrome breakdown — one hue (black) at graduating opacity. `stroke` draws the
+     donut arc / legend dot; `op` shades the financing segmented bar (same hue, 1.0..0.40). */
   const rows = [
-    { label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, color: "bg-ink", stroke: "#000000" },
-    { label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, color: "bg-[#555555]", stroke: "#555555" },
-    { label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, color: "bg-[#999999]", stroke: "#999999" },
-    { label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, color: "bg-[#cccccc]", stroke: "#cccccc" },
+    { key: "pi", label: "Principal & interest", amount: r.principalInterest, pct: r.breakdownPct.principalInterest, stroke: "#000000", op: 1, always: true },
+    { key: "tax", label: "Taxes", amount: r.monthlyTax, pct: r.breakdownPct.tax, stroke: "#4d4d4d", op: 0.85, always: true },
+    { key: "pmi", label: "PMI", amount: r.pmi, pct: r.breakdownPct.pmi, stroke: "#808080", op: 0.7 },
+    { key: "hoa", label: "HOA", amount: r.hoa, pct: r.breakdownPct.hoa, stroke: "#b3b3b3", op: 0.55 },
+    { key: "ins", label: "Insurance", amount: r.insurance, pct: r.breakdownPct.insurance, stroke: "#d9d9d9", op: 0.4 },
   ];
+  // Zero-value rows hide (HOA/Insurance/PMI); Principal & Taxes always show.
+  const visibleRows = rows.filter((row) => row.always || (Number.isFinite(row.amount) && row.amount > 0));
   // Donut arcs are built from the exact same breakdown percentages the rows show.
   const arcs = donutArcs(rows.map((row) => row.pct), DONUT_C);
 
@@ -78,7 +86,7 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
                 id={`calc-${f.key}`}
                 type="number"
                 inputMode="decimal"
-                min={0}
+                min={f.min ?? 0}
                 max={f.max}
                 step={f.step ?? 1}
                 value={Number.isNaN(values[f.key]) ? "" : values[f.key]}
@@ -113,45 +121,77 @@ export function MortgageCalculator({ initial }: { initial?: Partial<MortgageInpu
         </button>
       </div>
 
-      {/* Output — live: light panel, donut total, monochrome breakdown rows */}
+      {/* Output — live: light panel, monochrome breakdown. Financing (`bar`) uses the source's
+          big total + rounded segmented bar; the listing page keeps the round-5 donut. */}
       <div className="flex flex-col justify-center bg-mist p-6 md:p-10" aria-live="polite">
-        {/* Donut: the ring segments are the SAME breakdown percentages the rows list below
-            (donutArcs is pure, so they can never drift). Total sits in the middle, live-style. */}
-        <div className="mx-auto flex items-center justify-center">
-          <div className="relative h-44 w-44">
-            <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90" role="img" aria-label="Monthly payment breakdown">
-              <circle cx="70" cy="70" r={DONUT_R} fill="none" stroke="#d9dde2" strokeWidth="18" />
-              {arcs.map((arc, i) =>
-                arc.dash > 0 ? (
-                  <circle
-                    key={rows[i].label}
-                    cx="70"
-                    cy="70"
-                    r={DONUT_R}
-                    fill="none"
-                    stroke={rows[i].stroke}
-                    strokeWidth="18"
-                    strokeDasharray={`${arc.dash} ${DONUT_C - arc.dash}`}
-                    strokeDashoffset={arc.offset}
+        {variant === "bar" ? (
+          <>
+            {/* Big total + a 40px rounded segmented bar (segments = the SAME breakdown pcts). */}
+            <p className="text-center font-mono text-[40px] font-semibold leading-none tracking-tight text-ink md:text-5xl">
+              {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
+            </p>
+            <p className="mt-3 text-center text-sm text-stone">Estimated Monthly Payment</p>
+            <div
+              className="mt-6 flex h-10 w-full overflow-hidden rounded-full border-2 border-[#eeeeee]"
+              role="img"
+              aria-label="Monthly payment breakdown"
+            >
+              {rows.map((row) => {
+                const w = Number.isFinite(row.pct) && row.pct > 0 ? row.pct : 0;
+                return w > 0 ? (
+                  <div
+                    key={row.key}
+                    style={{ width: `${w}%`, backgroundColor: `rgb(0 0 0 / ${row.op})`, transition: "width 1s ease" }}
                   />
-                ) : null,
-              )}
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-2 text-center">
-              <span className="font-mono text-xl font-semibold tracking-tight text-ink">
-                {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
-              </span>
-              <span className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-stone">Total / mo</span>
+                ) : null;
+              })}
             </div>
-          </div>
-        </div>
-        <p className="mt-4 text-center text-sm text-stone">Estimated Monthly Payment</p>
+          </>
+        ) : (
+          <>
+            {/* Donut: the ring segments are the SAME breakdown percentages the rows list below
+                (donutArcs is pure, so they can never drift). Total sits in the middle. */}
+            <div className="mx-auto flex items-center justify-center">
+              <div className="relative h-44 w-44">
+                <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90" role="img" aria-label="Monthly payment breakdown">
+                  <circle cx="70" cy="70" r={DONUT_R} fill="none" stroke="#d9dde2" strokeWidth="18" />
+                  {arcs.map((arc, i) =>
+                    arc.dash > 0 ? (
+                      <circle
+                        key={rows[i].key}
+                        cx="70"
+                        cy="70"
+                        r={DONUT_R}
+                        fill="none"
+                        stroke={rows[i].stroke}
+                        strokeWidth="18"
+                        strokeDasharray={`${arc.dash} ${DONUT_C - arc.dash}`}
+                        strokeDashoffset={arc.offset}
+                      />
+                    ) : null,
+                  )}
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-2 text-center">
+                  <span className="font-mono text-xl font-semibold tracking-tight text-ink">
+                    {Number.isFinite(r.monthlyTotal) ? money(r.monthlyTotal) : "—"}
+                  </span>
+                  <span className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-stone">Total / mo</span>
+                </div>
+              </div>
+            </div>
+            <p className="mt-4 text-center text-sm text-stone">Estimated Monthly Payment</p>
+          </>
+        )}
 
         <dl className="mt-6 space-y-3">
-          {rows.map((row) => (
-            <div key={row.label} className="flex items-center justify-between gap-3 text-sm">
+          {visibleRows.map((row) => (
+            <div key={row.key} className="flex items-center justify-between gap-3 text-sm">
               <dt className="flex items-center gap-2 text-stone">
-                <span aria-hidden className={`h-2.5 w-2.5 rounded-full ${row.color}`} />
+                <span
+                  aria-hidden
+                  className="h-3 w-3 rounded-full"
+                  style={{ backgroundColor: variant === "bar" ? `rgb(0 0 0 / ${row.op})` : row.stroke }}
+                />
                 {row.label}
               </dt>
               <dd className="text-ink">

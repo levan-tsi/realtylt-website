@@ -14,16 +14,25 @@ export interface MortgageResult {
   monthlyTotal: number;
   principalInterest: number;
   monthlyTax: number;
+  /** Private mortgage insurance — only non-zero when the down payment is under 20%. */
+  pmi: number;
   hoa: number;
   insurance: number;
   /** Share of the monthly total, in percent; all zeros when total is 0. */
   breakdownPct: {
     principalInterest: number;
     tax: number;
+    pmi: number;
     hoa: number;
     insurance: number;
   };
 }
+
+// PMI: $55 per $100k financed, per month, while the down payment is under 20% (live spec).
+const PMI_PER_100K = 55;
+// NY-style tax estimate when the tax field is left empty: 85% assessed, $9 per $1,000/yr.
+const NY_ASSESSED_RATIO = 0.85;
+const NY_TAX_PER_1000 = 9;
 
 /** ── Donut chart geometry ──────────────────────────────────────────────────────────────
  * Turn a list of breakdown percentages into stroke-dash arcs for the payment donut. Each
@@ -68,8 +77,21 @@ export function calcMortgage(input: MortgageInput): MortgageResult {
   // P&I = L·r / (1 − (1+r)^−n); straight-line when rate is zero
   const principalInterest = n <= 0 || loan <= 0 ? 0 : r === 0 ? loan / n : (loan * r) / (1 - (1 + r) ** -n);
 
-  const monthlyTax = annualTax / 12;
-  const monthlyTotal = principalInterest + monthlyTax + monthlyHoa + monthlyInsurance;
+  // Taxes: annual/12. When the tax field is EMPTY (NaN) fall back to a NY-style estimate
+  // (85% assessed value, $9 per $1,000 assessed, per year). An explicit 0 stays 0.
+  const monthlyTax = Number.isFinite(annualTax)
+    ? annualTax / 12
+    : Number.isFinite(price)
+      ? ((price * NY_ASSESSED_RATIO) / 1000) * NY_TAX_PER_1000 / 12
+      : NaN;
+
+  // PMI only applies while the down payment is under 20%, at $55 per $100k financed.
+  const pmi =
+    Number.isFinite(loan) && loan > 0 && Number.isFinite(downPct) && downPct < 20
+      ? PMI_PER_100K * (loan / 100_000)
+      : 0;
+
+  const monthlyTotal = principalInterest + monthlyTax + pmi + monthlyHoa + monthlyInsurance;
 
   const pct = (part: number) => (monthlyTotal === 0 ? 0 : (part / monthlyTotal) * 100);
 
@@ -77,11 +99,13 @@ export function calcMortgage(input: MortgageInput): MortgageResult {
     monthlyTotal,
     principalInterest,
     monthlyTax,
+    pmi,
     hoa: monthlyHoa,
     insurance: monthlyInsurance,
     breakdownPct: {
       principalInterest: pct(principalInterest),
       tax: pct(monthlyTax),
+      pmi: pct(pmi),
       hoa: pct(monthlyHoa),
       insurance: pct(monthlyInsurance),
     },

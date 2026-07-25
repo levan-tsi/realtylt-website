@@ -45,7 +45,9 @@ describe("calcMortgage", () => {
     });
     // 360,000 / 360 months
     expect(r.principalInterest).toBeCloseTo(1000, 2);
-    expect(r.monthlyTotal).toBeCloseTo(1000, 2);
+    // 0% down -> PMI applies: 55 * (360000 / 100000) = 198
+    expect(r.pmi).toBeCloseTo(198, 2);
+    expect(r.monthlyTotal).toBeCloseTo(1198, 2);
   });
 
   it("returns a percentage breakdown that sums to ~100", () => {
@@ -58,8 +60,8 @@ describe("calcMortgage", () => {
       monthlyHoa: 100,
       monthlyInsurance: 90,
     });
-    const { principalInterest, tax, hoa, insurance } = r.breakdownPct;
-    expect(principalInterest + tax + hoa + insurance).toBeCloseTo(100, 5);
+    const { principalInterest, tax, pmi, hoa, insurance } = r.breakdownPct;
+    expect(principalInterest + tax + pmi + hoa + insurance).toBeCloseTo(100, 5);
     expect(principalInterest).toBeGreaterThan(tax);
   });
 
@@ -157,6 +159,47 @@ describe("calcMortgage — garbage & edge inputs degrade sanely", () => {
   });
 });
 
+/** PMI + NY-style empty-tax fallback (round-6 financing reconcile — live behavior spec). */
+describe("calcMortgage — PMI (down payment under 20%)", () => {
+  const base = { price: 500_000, annualTax: 6_000, termYears: 30, downPct: 10, ratePct: 6, monthlyHoa: 0, monthlyInsurance: 0 } as const;
+
+  it("charges $55 per $100k financed per month when down < 20%", () => {
+    // 10% down on $500k -> $450k financed -> 55 * 4.5 = $247.50
+    const r = calcMortgage(base);
+    expect(r.pmi).toBeCloseTo(247.5, 2);
+    expect(r.monthlyTotal).toBeCloseTo(r.principalInterest + r.monthlyTax + r.pmi, 2);
+  });
+
+  it("is exactly 0 at 20% down (row/segment hidden)", () => {
+    expect(calcMortgage({ ...base, downPct: 20 }).pmi).toBe(0);
+  });
+
+  it("is 0 for 20%+ down and never negative for huge down payments", () => {
+    expect(calcMortgage({ ...base, downPct: 35 }).pmi).toBe(0);
+    expect(calcMortgage({ ...base, downPct: 150 }).pmi).toBe(0);
+  });
+});
+
+describe("calcMortgage — NY-style empty-tax fallback", () => {
+  const base = { price: 500_000, termYears: 30, downPct: 20, ratePct: 6, monthlyHoa: 0, monthlyInsurance: 0 } as const;
+
+  it("estimates tax when the field is EMPTY (NaN): 85% assessed, $9 per $1,000/yr", () => {
+    // (500000 * 0.85 / 1000 * 9) / 12 = 3825 / 12 = 318.75
+    const r = calcMortgage({ ...base, annualTax: NaN });
+    expect(r.monthlyTax).toBeCloseTo(318.75, 2);
+  });
+
+  it("uses an explicit annual tax verbatim (no fallback), and 0 stays 0", () => {
+    expect(calcMortgage({ ...base, annualTax: 9_600 }).monthlyTax).toBeCloseTo(800, 2);
+    expect(calcMortgage({ ...base, annualTax: 0 }).monthlyTax).toBe(0);
+  });
+
+  it("does not throw and yields NaN tax when BOTH price and tax are empty", () => {
+    const r = calcMortgage({ ...base, price: NaN, annualTax: NaN });
+    expect(Number.isFinite(r.monthlyTax)).toBe(false);
+  });
+});
+
 /** The payment donut is driven by the SAME breakdown percentages the rows list — donutArcs
  * turns those pcts into ring arcs, so proving the arcs track the pcts proves donut == rows. */
 describe("donutArcs (payment donut == breakdown rows)", () => {
@@ -172,7 +215,7 @@ describe("donutArcs (payment donut == breakdown rows)", () => {
     const r = calcMortgage({
       price: 400_000, annualTax: 6_000, termYears: 30, downPct: 10, ratePct: 6.5, monthlyHoa: 100, monthlyInsurance: 90,
     });
-    const pcts = [r.breakdownPct.principalInterest, r.breakdownPct.tax, r.breakdownPct.hoa, r.breakdownPct.insurance];
+    const pcts = [r.breakdownPct.principalInterest, r.breakdownPct.tax, r.breakdownPct.pmi, r.breakdownPct.hoa, r.breakdownPct.insurance];
     const arcs = donutArcs(pcts, C);
     // Dash length of each arc reflects its exact share of the ring.
     arcs.forEach((a, i) => expect(a.dash).toBeCloseTo((pcts[i] / 100) * C, 6));

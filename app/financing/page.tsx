@@ -58,8 +58,15 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Get pre-approval — live: black section, white letter card */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="preapproval-heading">
-        <div className="mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
+      <section className="relative isolate overflow-hidden bg-ink py-16 text-paper md:py-24" aria-labelledby="preapproval-heading">
+        {/* Parallax backdrop — live's lending-stats.jpg at 0.45 (fixed desktop, static mobile /
+            reduced-motion). Self-hosted from images.brivityidx.com/.../uploads/219/lending-stats.jpg. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/financing/lending-stats.jpg')" }}
+        />
+        <div className="relative mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="preapproval-heading" className="text-3xl font-light md:text-4xl">
               Get <strong className="font-bold">Pre-Approval</strong>
@@ -128,7 +135,8 @@ export default function FinancingPage() {
       <section className="bg-paper py-16 md:py-20" aria-labelledby="calc-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <MortgageCalculator />
+            {/* Financing uses the source's segmented-bar layout; the donut stays on listings. */}
+            <MortgageCalculator variant="bar" />
           </Reveal>
         </div>
       </section>
@@ -173,7 +181,8 @@ export default function FinancingPage() {
               />
             </div>
           </Reveal>
-          <Reveal delay={140} className="lg:pt-2">
+          {/* Source hides the phone mockup on xs/sm — match (form-only on mobile). */}
+          <Reveal delay={140} className="hidden lg:block lg:pt-2">
             <HomeownershipPhoneMock />
           </Reveal>
         </div>
@@ -205,8 +214,15 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Closing — live: black section */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="closing-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+      <section className="relative isolate overflow-hidden bg-ink py-16 text-paper md:py-24" aria-labelledby="closing-heading">
+        {/* Parallax backdrop — live's Financing-closing-the-deal.jpg at 0.45 (fixed desktop,
+            static mobile / reduced-motion). Self-hosted from uploads/4595/. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/financing/closing-the-deal.jpg')" }}
+        />
+        <div className="relative mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <h2 id="closing-heading" className="text-3xl font-light md:text-4xl">
               <strong className="font-bold">Closing</strong>
