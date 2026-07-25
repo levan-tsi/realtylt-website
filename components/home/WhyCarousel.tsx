@@ -32,9 +32,12 @@ const SLIDES = [
 
 const N = SLIDES.length;
 const AUTO_ADVANCE_MS = 6000;
+// Live's Bootstrap carousel opens on the SECOND slide ("Search all available homes for
+// sale" — the `item active` in the source markup); match that as the starting frame.
+const INITIAL_INDEX = 1;
 
 export function WhyCarousel() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(INITIAL_INDEX);
   const [paused, setPaused] = useState(false);
   const [motionOk, setMotionOk] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -109,7 +112,7 @@ export function WhyCarousel() {
                 alt={s.caption}
                 fill
                 sizes="(max-width: 768px) 100vw, 768px"
-                priority={i === 0}
+                priority={i === INITIAL_INDEX}
                 className="object-contain"
               />
             </div>

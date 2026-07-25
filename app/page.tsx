@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -42,19 +41,25 @@ export default async function HomePage() {
       <section className="relative isolate bg-ink" aria-labelledby="home-hero">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
-            {/* Static poster — the ambient Vimeo clip's OWN first frame (fetched via its
-                oEmbed thumbnail, 1920w, public/images/hero/hero-vimeo-frame.jpg). Using the
-                video's own frame means poster-mode looks identical to the video's opening, so
-                mobile, reduced-motion and no-JS visitors see the same image and the desktop
-                video never flashes black while it loads. (Old dark asset hom.png kept in repo.) */}
-            <Image
-              src="/images/hero/hero-vimeo-frame.jpg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center grayscale"
-            />
+            {/* Poster — matches live's art direction: mobile (and any reduced-motion visitor)
+                gets live's own hom.png; desktop gets the ambient Vimeo clip's OWN first frame
+                so the video fades in over an identical still and never flashes a black boot.
+                <source media> so the browser fetches exactly ONE image per visitor.
+                  hom.jpg  = optimized from live's images.brivityidx.com/.../hom.png (2.2MB PNG
+                             -> 90KB JPEG, same picture);
+                  hero-vimeo-frame.jpg = the video's oEmbed first frame. */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- art-directed <picture>, single fetch */}
+            <picture>
+              <source media="(prefers-reduced-motion: reduce)" srcSet="/images/hero/hom.jpg" />
+              <source media="(min-width: 1024px)" srcSet="/images/hero/hero-vimeo-frame.jpg" />
+              <img
+                src="/images/hero/hom.jpg"
+                alt=""
+                fetchPriority="high"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover object-center grayscale"
+              />
+            </picture>
             {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
             <HomeHeroVideo />
             {/* Scrim: a light overall wash + a stronger bottom gradient so the white
@@ -113,30 +118,19 @@ export default async function HomePage() {
             <SectionHeading as="h2">
               <span id="value-heading">Find Your Home Value</span>
             </SectionHeading>
-            <p className="mt-5 max-w-lg leading-relaxed text-stone">
-              If you&rsquo;re thinking about selling, start with a real number. We belong to one of
-              the strongest real estate brokerages in the area, and we&rsquo;ve built our
-              reputation on straight answers and careful work, from pricing to closing.
-            </p>
-            <p className="mt-4 max-w-lg leading-relaxed text-stone">
-              Tell us about your home and we&rsquo;ll put our market analysis and our network of
-              local experts to work on an accurate estimate. No obligation, no pressure.
-            </p>
-            <ul className="mt-6 space-y-2 text-sm text-ink-soft">
-              {[
-                "A market analysis built from 15 comparable sales",
-                "Your cash-offer number alongside the list price",
-                "Honest advice on timing, prep, and what to skip",
-              ].map((li) => (
-                <li key={li} className="flex items-start gap-2">
-                  <span aria-hidden className="mt-0.5 text-porchlight-deep">✓</span> {li}
-                </li>
-              ))}
-            </ul>
+            {/* Live's own home-page copy, verbatim (the owner's words). */}
+            {[
+              "So, you're ready to sell your home! Congratulations, you've come to the right place. We belong to one of the strongest real estate brokerages in the area. We have great confidence in our brand and you can, too. We demand excellence throughout the home-selling process.",
+              "We have established a solid reputation for impeccable customer service and marketing strategies. When you entrust the sale of your home to us, you are putting your faith in our entire network of experts in Real estate sales, Real estate purchases, Loan processing and Marketing.",
+              "Enter your information on this page to discover what your home is worth. We have experts in every area that have access to the resources needed to provide an accurate estimate.",
+            ].map((p, i) => (
+              <p key={i} className={`${i === 0 ? "mt-5" : "mt-4"} max-w-lg leading-relaxed text-stone`}>
+                {p}
+              </p>
+            ))}
           </Reveal>
           <Reveal delay={140}>
-            <h3 className="text-2xl font-light text-ink">Tell Us About Your Home</h3>
-            <p className="mb-5 mt-1 text-sm text-stone">We usually reply within the hour.</p>
+            <h3 className="mb-5 text-2xl font-light text-ink">Tell Us About Your Home</h3>
             {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
                 Message stacked single-column (no interest dropdown). Wiring/validation/
                 honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
@@ -157,10 +151,14 @@ export default async function HomePage() {
       {/* ── Featured listings — live: centered heading, 4-col grid, centered SEE MORE */}
       <section className="bg-paper pt-16 pb-8 md:pt-20" aria-labelledby="featured-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+          {/* Live: h2 in the primary (ink) colour, weight 700, LEFT-aligned inside a
+              col-md-10 offset-1 block (source section.content-1n) — not centered. */}
           <Reveal>
-            <SectionHeading align="center" as="h2" bold>
-              <span id="featured-heading">Featured Listings</span>
-            </SectionHeading>
+            <div className="lg:pl-[8.333%]">
+              <SectionHeading as="h2" bold>
+                <span id="featured-heading">Featured Listings</span>
+              </SectionHeading>
+            </div>
           </Reveal>
           {/* Mobile: swipeable card rail; ≥sm the live 4-col grid — paged 8 at a time */}
           <RailPager listings={featured} ariaLabel="Featured listings" eager />
@@ -224,14 +222,17 @@ export default async function HomePage() {
             <SectionHeading align="center" as="h2" bold>
               <span id="why-heading">Why Work With Us?</span>
             </SectionHeading>
-            <p className="mx-auto mt-4 max-w-2xl text-center text-stone">
-              The tools of a big brokerage, the attention of one agent: from the best tools and
-              technology to transparency throughout the entire process.
-            </p>
           </Reveal>
           {/* Live's laptop CAROUSEL of device screenshots (replaces our 4 static cards). */}
           <Reveal>
             <WhyCarousel />
+          </Reveal>
+          {/* Live's closing line, BELOW the carousel inside the band (verbatim). */}
+          <Reveal>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-stone">
+              From the best tools and technology to transparency throughout the entire process,
+              we&rsquo;re the top choice for buyers and sellers.
+            </p>
           </Reveal>
           <div className="mt-16 grid grid-cols-2 gap-8 border-t border-[#dddddd] pt-10 text-center md:grid-cols-4">
             <StatCounter value={11} label="Counties & boroughs served" />
