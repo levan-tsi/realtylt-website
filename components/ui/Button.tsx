@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type Variant = "primary" | "outline" | "outline-light" | "light" | "ghost";
+export type Variant = "primary" | "outline" | "outline-light" | "light" | "ghost";
 type Size = "md" | "lg";
 
 /* Matched to live realtylt.com buttons: black CTAs (14px/600 uppercase, ls 1.4px,
