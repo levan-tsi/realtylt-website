@@ -1,6 +1,28 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ROUND 7 IN PROGRESS 2026-07-25 (owner: county counts ~half of onekeymls.com + cover-photo
+## ROUND 7 + 7b DONE 2026-07-25 (owner: full inventory + rentals + cover bug + placeholder):
+## RE-BASELINE RAN (owner granted Bash(node scripts/baseline-to-db.mjs:*)): full paced pull,
+## 28 endpoint calls, 0 429s, 25,396 listings. COUNTS NOW MATCH ONEKEY (ours vs onekeymls.com):
+## orange 2488/2469 +0.8% · dutchess 1731/1709 · westchester 4379/4356 · putnam 620/612 ·
+## rockland 1621/1604 · ulster 971/974 · bronx 2262/2245 · staten-island 165/167 — the 6 HV
+## counties within ~1.3% (combined +0.7%). OUTLIERS to investigate later (NOT core market):
+## brooklyn 1599/1829 (-13%), manhattan 508/933 (-46%) — likely REBNY/RLS inventory the
+## onekey2 replication feed doesn't carry; needs a probe (deferred, rate-sensitive).
+## ROUND 7b RENTALS (owner: include rentals as separate sorting): 7b agent DIED on the ACCOUNT
+## SESSION LIMIT mid-toggle; ORCHESTRATOR (Opus 4.8) FINISHED it — the agent had done all
+## backend/listing-detail/URL plumbing (compiled clean), orchestrator added the For-Sale/
+## For-Rent toggle (monthly price ladder, sale-type dropdown hidden in rent mode) + fixed the
+## inverted mapper test. Residential Lease -> property_type "Rental", EXCLUDED from every
+## for-sale count/median/rail/insight/parity total (lib/idx/db.ts EXCLUDE_RENTALS); listing
+## detail hides mortgage + $/sqft for rentals; $10k SALE price floor added (default, clearable,
+## rentals exempt). Commit 21ffb23, tsc + 381/381 mine, toggle verified (For Rent -> $/mo
+## ladder, ?rental=1 round-trip, 390 no overflow), PUSHED + deploy live (rental filter active).
+## SECOND BASELINE RUNNING NOW (--fresh, lease-inclusive) to populate the rental back-catalog;
+## after it: verify rental counts per area, covers for rentals (cron/backfill), re-check.
+## Commercial Lease still dropped (home-renter product only). Cover-substitute + branded
+## placeholder from round 7 verified live.
+##
+## [superseded log] ROUND 7 IN PROGRESS 2026-07-25 (owner: county counts ~half of onekeymls.com + cover-photo
 ## bug + better placeholder): Opus agent (393k) DONE, orchestrator-verified (tsc + 381/381
 ## mine, cover-sub 302 verified), PUSHED b73a3b2, deploy READY.
 ## KEY REFRAME (evidence in docs/_audit/round7/REBASELINE-RUNBOOK.md): the onekey gap is
