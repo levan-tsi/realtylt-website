@@ -81,8 +81,9 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Search strip — live: dark bar with search input + white outline CTAs */}
-        <div className="mx-auto flex max-w-[1250px] flex-col gap-3 px-4 py-5 lg:flex-row lg:px-8">
+        {/* Search strip — live: dark bar with search input + white outline CTAs. Live spaces
+            the CTAs 20px from the search field (its "sell button margin-left: 20px"). */}
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-5 px-4 py-5 lg:flex-row lg:px-8">
           <form action="/search" role="search" className="flex flex-1">
             <label htmlFor="home-search" className="sr-only">
               Search for homes by town, zip, or address

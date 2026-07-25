@@ -30,6 +30,11 @@
 
 body {
   @apply bg-paper text-ink font-sans antialiased;
+  /* Match live realtylt.com's body typography: Lato 16px / line-height 1.72222 (its custom
+     CSS sets this on `html body`). Designed text overrides via `leading-*` utilities, so this
+     only relaxes un-classed body copy toward live's spacing. */
+  font-size: 16px;
+  line-height: 1.72222;
 }
 
 /* Visible keyboard focus everywhere (a11y floor).
