@@ -152,14 +152,12 @@ export default async function HomePage() {
       {/* ── Featured listings — live: centered heading, 4-col grid, centered SEE MORE */}
       <section className="bg-paper pt-16 pb-8 md:pt-20" aria-labelledby="featured-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          {/* Live: h2 in the primary (ink) colour, weight 700, LEFT-aligned inside a
-              col-md-10 offset-1 block (source section.content-1n) — not centered. */}
+          {/* Live: h2 in the primary (ink) colour, weight 700, CENTERED — the BlueRoof theme
+              centers .content-1n headings even though the source markup uses col offset-1. */}
           <Reveal>
-            <div className="lg:pl-[8.333%]">
-              <SectionHeading as="h2" bold>
-                <span id="featured-heading">Featured Listings</span>
-              </SectionHeading>
-            </div>
+            <SectionHeading align="center" as="h2" bold>
+              <span id="featured-heading">Featured Listings</span>
+            </SectionHeading>
           </Reveal>
           {/* Mobile: swipeable card rail; ≥sm the live 4-col grid — paged 8 at a time */}
           <RailPager listings={featured} ariaLabel="Featured listings" eager />
