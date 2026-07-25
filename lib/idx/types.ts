@@ -3,7 +3,7 @@
 
 import type { CountySlug } from "@/lib/site";
 
-export type PropertyType = "Residential" | "Multi-Family" | "Land" | "Commercial";
+export type PropertyType = "Residential" | "Multi-Family" | "Land" | "Commercial" | "Rental";
 
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
@@ -103,6 +103,10 @@ export interface SearchParams {
   bathsMin?: number;
   sqftMin?: number;
   propertyType?: PropertyType;
+  /** "For Rent" mode: true → rentals only (property_type "Rental"), and the SALE $10k price
+   * floor is not applied. Default/false → the for-sale experience, which EXCLUDES rentals from
+   * every count, median, rail, and total. Rentals are a deliberately separate surface. */
+  rental?: boolean;
   /** "New Listings" quick filter — keep only rows listed within the last N days. */
   newWithinDays?: number;
   // ── "MORE" panel filters (structured facts replicated 2026-07-15). Older rows missing a

@@ -22,15 +22,22 @@ const ANCHORS = [
 export function ListingSubNav({
   countySlug,
   hasSchools,
+  hidePayment = false,
   shareTitle,
   favoriteId,
 }: {
   countySlug: string;
   hasSchools: boolean;
+  /** Rentals hide the Payment + Market Insights sections, so drop their anchors too. */
+  hidePayment?: boolean;
   shareTitle: string;
   favoriteId: string;
 }) {
-  const anchors = ANCHORS.filter((a) => a.id !== "schools" || hasSchools);
+  const anchors = ANCHORS.filter(
+    (a) =>
+      (a.id !== "schools" || hasSchools) &&
+      (!hidePayment || (a.id !== "payment" && a.id !== "market-insights")),
+  );
   const [searchHref, setSearchHref] = useState(`/search?county=${countySlug}`);
   const [active, setActive] = useState<string>(anchors[0]?.id ?? "overview");
 

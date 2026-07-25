@@ -119,17 +119,22 @@ const MAX_PHOTOS = 50;
 const SALE_STATUSES = ["Active", "Active Under Contract", "Coming Soon", "Pending"] as const;
 const SALE_STATUS_SET = new Set<string>(SALE_STATUSES);
 
-/** RESO PropertyType values we DISPLAY (all for-SALE product). Condos/co-ops/townhomes are
- * PropertySubType WITHIN 'Residential' (verified via the feed probe), so they are already covered.
- * Rentals ('Residential Lease' / 'Commercial Lease') are deliberately EXCLUDED — this is a
- * for-sale site and OneKey's "homes for sale" excludes them too (their rentals are a separate
- * section). Land / Commercial Sale / Business Opportunity are real sale inventory added round-7. */
+/** RESO PropertyType values we REPLICATE + DISPLAY. Condos/co-ops/townhomes are PropertySubType
+ * WITHIN 'Residential' (verified via the feed probe), so they are already covered. Land /
+ * Commercial Sale / Business Opportunity are for-sale inventory added round-7. 'Residential Lease'
+ * (rentals) is served as a SEPARATE, clearly-labeled "For Rent" experience (round-7b): it maps to
+ * our "Rental" type and is excluded from every for-sale count/median/rail/total downstream (see
+ * lib/idx/db.ts). Compliance verified 2026-07-25 via the deployed probe — Residential Lease rows
+ * carry MlgCanView=true (241 in the newest 2,000 Active window) so display is per-listing OK.
+ * 'Commercial Lease' stays EXCLUDED: commercial rents ($1.4k–$5.5k/mo) read like residential rents
+ * and would mislead a home renter — residential rentals only, per owner default. */
 const SERVED_PROPERTY_TYPES = new Set<string>([
   "Residential",
   "Residential Income",
   "Land",
   "Commercial Sale",
   "Business Opportunity",
+  "Residential Lease",
 ]);
 
 export class MlsGridClient implements IdxClient {
@@ -289,8 +294,9 @@ export class MlsGridClient implements IdxClient {
         const id = p.ListingId ?? p.ListingKey;
         if (!id) continue;
         const mapped = mapProperty(p);
-        // Gate on the RAW feed status: a row we can still show as "for sale" (SALE_STATUS_SET:
-        // Active / Active Under Contract / Coming Soon / Pending, viewable, served county+type)
+        // Gate on the RAW feed status: a row we can still show as on-market (SALE_STATUS_SET:
+        // Active / Active Under Contract / Coming Soon / Pending, viewable, served county+type —
+        // an active lease is StandardStatus "Active", so rentals flow through the same gate)
         // upserts; any OTHER modified row (Closed/Withdrawn/Expired/Canceled, MlgCanView false,
         // type change) becomes a remove id so the delisting is seen. mapProperty maps any
         // unexpected status to "Active", so the raw-status gate — not the mapped label — decides.
@@ -530,7 +536,8 @@ function isServedType(t: string | undefined): boolean {
 }
 
 /** Raw RESO PropertyType → our UI PropertyType union. Condos/co-ops/townhomes ride inside
- * 'Residential' (they are PropertySubType), so they map to "Residential". */
+ * 'Residential' (they are PropertySubType), so they map to "Residential". 'Residential Lease'
+ * → "Rental" (the separate For-Rent surface); its ListPrice is the monthly rent. */
 function mapPropertyType(raw: string | undefined): PropertyType {
   switch (raw) {
     case "Residential Income":
@@ -540,6 +547,8 @@ function mapPropertyType(raw: string | undefined): PropertyType {
     case "Commercial Sale":
     case "Business Opportunity":
       return "Commercial";
+    case "Residential Lease":
+      return "Rental";
     default:
       return "Residential";
   }
@@ -617,8 +626,9 @@ function schoolName(v: string | undefined): string | undefined {
 /** Map a RESO property to our Listing; drop rows we can't display compliantly. */
 export function mapProperty(p: ResoProperty): Listing | null {
   if (p.MlgCanView === false) return null;
-  // Only the for-SALE property types (SERVED_PROPERTY_TYPES) — Lease/rental rows are dropped, not
-  // mislabeled. Land / Commercial Sale / Business Opportunity are served (round-7).
+  // Only SERVED_PROPERTY_TYPES survive: for-sale product (Residential / Income / Land /
+  // Commercial Sale / Business Opp) PLUS 'Residential Lease' → "Rental" (the separate For-Rent
+  // surface). 'Commercial Lease' and anything else is dropped, not mislabeled.
   if (!isServedType(p.PropertyType)) return null;
   const county = normalizeCounty(p.CountyOrParish);
   const id = p.ListingId ?? p.ListingKey;

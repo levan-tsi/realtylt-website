@@ -66,6 +66,9 @@ interface Filters {
   taxMax: string;
   /** true = only listings with a mirrored cover photo (default off = include everything). */
   withPhotos: boolean;
+  /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
+   * the for-sale experience (rentals are excluded from it entirely). */
+  rental: boolean;
   /** Count-line quick filter (live realtylt.com): "all" or "new" (listed ≤7 days). */
   quick: "all" | "new";
   sort: string;
@@ -83,6 +86,9 @@ const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 15
   (k) => k * 1000,
 );
 const fmtK = (n: number) => (n >= 1_000_000 ? `$${n / 1_000_000}M` : `$${n / 1000}K`);
+// For-rent price ladder (monthly rent) + label — the sale ladder ($100K+) is useless for rentals.
+const RENT_PRICE_STEPS = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000];
+const fmtRent = (n: number) => `$${n.toLocaleString("en-US")}/mo`;
 
 // ── "MORE" panel option steps (structured facts replicated from the feed).
 const GARAGE_OPTS = [1, 2, 3, 4, 5];
@@ -113,6 +119,7 @@ function fromParams(sp: URLSearchParams): Filters {
     yearMax: sp.get("yearMax") ?? "",
     taxMax: sp.get("taxMax") ?? "",
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
+    rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     quick: sp.get("quick") === "new" ? "new" : "all",
     sort: sp.get("sort") ?? "newest",
     page: Math.max(1, Number(sp.get("page")) || 1),
@@ -131,6 +138,11 @@ function toQuery(f: Filters, forApi: boolean): string {
     // withPhotos is a boolean flag — emit `withPhotos=1` when on, drop it entirely when off.
     if (k === "withPhotos") {
       if (v) sp.set("withPhotos", "1");
+      continue;
+    }
+    // rental (For Rent mode) — same flag treatment so it round-trips in the URL + saved searches.
+    if (k === "rental") {
+      if (v) sp.set("rental", "1");
       continue;
     }
     if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "newest" && forApi === false))
@@ -412,6 +424,31 @@ export function SearchClient() {
         }}
         className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
       >
+        {/* For Sale / For Rent — the two are separate universes (rentals never mix into for-sale
+            counts). Switching clears the price + sale-type filters since their ladders differ. */}
+        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded border border-[#dddddd]">
+          {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
+            const active = filters.rental === isRent;
+            return (
+              <button
+                key={label}
+                type="button"
+                aria-pressed={active}
+                onClick={() =>
+                  filters.rental === isRent
+                    ? undefined
+                    : apply({ rental: isRent, priceMin: "", priceMax: "", propertyType: "" })
+                }
+                className={`min-h-6 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
+                  active ? "bg-ink text-white" : "bg-white text-stone hover:text-ink"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
         <div className="flex min-w-40 grow basis-44 items-center gap-2">
           {/* Live prefixes the place field with a map pin. */}
           <svg aria-hidden viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0 text-stone" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
@@ -452,15 +489,15 @@ export function SearchClient() {
         <label htmlFor="f-priceMin" className="sr-only">Minimum price</label>
         <select id="f-priceMin" value={filters.priceMin} onChange={(e) => apply({ priceMin: e.target.value })} className={selectCls}>
           <option value="">Min Price</option>
-          {PRICE_STEPS.map((p) => (
-            <option key={p} value={p}>{fmtK(p)}+</option>
+          {(filters.rental ? RENT_PRICE_STEPS : PRICE_STEPS).map((p) => (
+            <option key={p} value={p}>{filters.rental ? fmtRent(p) : `${fmtK(p)}+`}</option>
           ))}
         </select>
         <label htmlFor="f-priceMax" className="sr-only">Maximum price</label>
         <select id="f-priceMax" value={filters.priceMax} onChange={(e) => apply({ priceMax: e.target.value })} className={selectCls}>
           <option value="">Max Price</option>
-          {PRICE_STEPS.map((p) => (
-            <option key={p} value={p}>Under {fmtK(p)}</option>
+          {(filters.rental ? RENT_PRICE_STEPS : PRICE_STEPS).map((p) => (
+            <option key={p} value={p}>{filters.rental ? `Under ${fmtRent(p)}` : `Under ${fmtK(p)}`}</option>
           ))}
         </select>
         <label htmlFor="f-sqft" className="sr-only">Minimum square feet</label>
@@ -470,14 +507,19 @@ export function SearchClient() {
             <option key={n} value={n}>{n.toLocaleString()}+ sqft</option>
           ))}
         </select>
-        <label htmlFor="f-type" className="sr-only">Property type</label>
-        <select id="f-type" value={filters.propertyType} onChange={(e) => apply({ propertyType: e.target.value })} className={selectCls}>
-          <option value="">Type</option>
-          <option value="Residential">Residential</option>
-          <option value="Multi-Family">Multi-Family</option>
-          <option value="Land">Land</option>
-          <option value="Commercial">Commercial</option>
-        </select>
+        {/* Sale-type filter is meaningless in For-Rent mode (property_type is forced to Rental). */}
+        {!filters.rental && (
+          <>
+            <label htmlFor="f-type" className="sr-only">Property type</label>
+            <select id="f-type" value={filters.propertyType} onChange={(e) => apply({ propertyType: e.target.value })} className={selectCls}>
+              <option value="">Type</option>
+              <option value="Residential">Residential</option>
+              <option value="Multi-Family">Multi-Family</option>
+              <option value="Land">Land</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </>
+        )}
 
         {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}
         <button

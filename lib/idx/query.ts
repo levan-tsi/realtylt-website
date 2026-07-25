@@ -5,7 +5,10 @@ import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import type { MapBounds, PropertyType, SearchParams, SortKey } from "./types";
 
 export const SORTS: SortKey[] = ["newest", "oldest", "featured", "price-asc", "price-desc"];
-export const TYPES: PropertyType[] = ["Residential", "Multi-Family"];
+/** The sale property types the /search Type dropdown offers (validation whitelist). "Rental"
+ * is intentionally NOT here — the For-Rent surface is selected via the `rental` flag, not this
+ * dropdown, so a sale search can never be tricked into `propertyType=Rental`. */
+export const TYPES: PropertyType[] = ["Residential", "Multi-Family", "Land", "Commercial"];
 
 export function num(v: string | null): number | undefined {
   if (v == null || v === "") return undefined;
@@ -31,6 +34,8 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     bathsMin: num(q.get("bathsMin")),
     sqftMin: num(q.get("sqftMin")),
     propertyType: type && TYPES.includes(type) ? type : undefined,
+    // "For Rent" mode — rentals only, sale $10k floor exempt (see db.searchFilters).
+    rental: flag(q.get("rental")),
     // "MORE" panel range filters (jsonb/generated-column numeric filters, honest ≥/≤).
     sqftMax: num(q.get("sqftMax")),
     garageMin: num(q.get("garageMin")),

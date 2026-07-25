@@ -19,6 +19,12 @@ export function formatPrice(n: number): string {
   return `$${n.toLocaleString("en-US")}`;
 }
 
+/** Price label that reads correctly for rentals: a lease's feed price is the MONTHLY rent, so
+ * rentals render "$X,XXX/mo"; everything for sale stays a plain total. */
+export function priceLabel(l: { price: number; propertyType?: string }): string {
+  return l.propertyType === "Rental" ? `${formatPrice(l.price)}/mo` : formatPrice(l.price);
+}
+
 /** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
  * still replicating into Storage). A quiet, intentional Hudson Valley dusk illustration — soft
  * hills, a gabled house, one lit azure "porch-light" window — the SAME artwork the /api/media route
@@ -76,7 +82,7 @@ export function ListingCard({
         <Link
           href={listingPath(l)}
           className="absolute inset-0 z-10"
-          aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
+          aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
         />
         {/* Live search tiles measure 395x250 — a touch wider than 3:2. */}
         <div className="photo-zoom relative aspect-[79/50] overflow-hidden bg-mist">
@@ -116,7 +122,7 @@ export function ListingCard({
         </div>
         <div className="p-4">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <p className="text-2xl font-bold text-ink">{formatPrice(l.price)}</p>
+            <p className="text-2xl font-bold text-ink">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
           <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
@@ -183,7 +189,7 @@ export function ListingCard({
         )}
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-          <p className="text-2xl font-bold leading-tight">{formatPrice(l.price)}</p>
+          <p className="text-2xl font-bold leading-tight">{priceLabel(l)}</p>
           <p className="mt-1 text-lg font-medium leading-snug">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
 import { TrackView } from "@/components/portal/TrackView";
-import { formatPrice, isLiveMlsPhoto, ListingCard, NoPhoto } from "@/components/idx/ListingCard";
+import { formatPrice, isLiveMlsPhoto, ListingCard, NoPhoto, priceLabel } from "@/components/idx/ListingCard";
 import { MlsImage } from "@/components/idx/MlsImage";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { ShareButton } from "@/components/idx/ShareButton";
@@ -34,7 +34,7 @@ export async function listingMetadata(id: string): Promise<Metadata> {
   const l = await getListingCached(id);
   if (!l) return { title: "Listing not found" };
   const canonical = `${SITE.url}${listingPath(l)}`;
-  const title = `${l.address}, ${l.city} NY ${l.zip} | ${formatPrice(l.price)}`;
+  const title = `${l.address}, ${l.city} NY ${l.zip} | ${priceLabel(l)}`;
   const description = l.description.slice(0, 160);
   return {
     title,
@@ -59,6 +59,9 @@ const fmtMoney = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 export async function ListingDetail({ id }: { id: string }) {
   const l = await getListingCached(id);
   if (!l) notFound();
+  // Rentals render as a "For Rent" listing: price is the monthly rent, and the sale-only
+  // sections (mortgage/payment, price-per-sqft, for-sale market insights) are hidden.
+  const isRental = l.propertyType === "Rental";
   // Snapshot listings carry only the primary /api/media proxy path — resolve the
   // FULL on-demand gallery (ONE short-TTL-cached MLS data lookup per detail view;
   // photos themselves stream through the CDN-cached proxy). Fixture/local listings
@@ -89,23 +92,26 @@ export async function ListingDetail({ id }: { id: string }) {
   };
   const estMonthly = calcMortgage(mortgageSeed).monthlyTotal;
 
-  // ── Similar active homes nearby (same county, ±30% price), excluding this one.
+  // ── Similar active listings nearby (same county, ±30% price), excluding this one. A rental
+  // matches other rentals (rental: true keeps the two universes apart and skips the sale floor).
   const similarSearch = await getIdxClient()
     .search({
       county: l.county,
       priceMin: Math.round(l.price * 0.7),
       priceMax: Math.round(l.price * 1.3),
+      rental: isRental,
       sort: "newest",
       pageSize: 4,
     })
     .catch(() => null);
   const similar = (similarSearch?.listings ?? []).filter((s) => s.id !== l.id).slice(0, 3);
   const similarTotal = Math.max(0, (similarSearch?.total ?? 0) - 1);
-  const similarHref = `/search?county=${l.county}&priceMin=${Math.round(l.price * 0.7)}&priceMax=${Math.round(l.price * 1.3)}`;
+  const similarHref = `/search?county=${l.county}${isRental ? "&rental=1" : ""}&priceMin=${Math.round(l.price * 0.7)}&priceMax=${Math.round(l.price * 1.3)}`;
 
   // Real market insights for this listing's city (DB aggregates; falls back to the county set
-  // when the city has too few actives). null = DB unavailable → the section renders a soft note.
-  const insights = await getAreaInsights(l.city, l.county, county?.name ?? l.county).catch(() => null);
+  // when the city has too few actives). Skipped for rentals — those numbers describe the local
+  // for-SALE market and would misread on a rental page. null = section renders a soft note.
+  const insights = isRental ? null : await getAreaInsights(l.city, l.county, county?.name ?? l.county).catch(() => null);
 
   const highlights: [string, string][] = (
     [
@@ -113,7 +119,8 @@ export async function ListingDetail({ id }: { id: string }) {
       yearBuilt ? ["Year built", String(yearBuilt)] : null,
       lotAcres ? ["Lot size", `${lotAcres} acre${lotAcres === 1 ? "" : "s"}`] : null,
       l.garageSpaces ? ["Garage", `${l.garageSpaces} space${l.garageSpaces === 1 ? "" : "s"}`] : null,
-      l.sqft > 0 ? ["Price / sqft", fmtMoney(l.price / l.sqft)] : null,
+      // Price-per-sqft is a for-SALE metric; on a rental it would read rent÷sqft as a sale $/sqft.
+      !isRental && l.sqft > 0 ? ["Price / sqft", fmtMoney(l.price / l.sqft)] : null,
       l.taxAnnual ? ["Annual taxes", fmtMoney(l.taxAnnual)] : null,
       l.hoaFee ? ["HOA", `${fmtMoney(l.hoaFee)}/mo`] : null,
       county ? ["County", county.name] : null,
@@ -195,7 +202,8 @@ export async function ListingDetail({ id }: { id: string }) {
       <ListingSubNav
         countySlug={l.county}
         hasSchools={schools.length > 0}
-        shareTitle={`${l.address}, ${l.city} NY | ${formatPrice(l.price)}`}
+        hidePayment={isRental}
+        shareTitle={`${l.address}, ${l.city} NY | ${priceLabel(l)}`}
         favoriteId={l.id}
       />
 
@@ -311,15 +319,17 @@ export async function ListingDetail({ id }: { id: string }) {
                   </>
                 )}
               </nav>
-              <ShareButton title={`${l.address}, ${l.city} NY | ${formatPrice(l.price)}`} />
+              <ShareButton title={`${l.address}, ${l.city} NY | ${priceLabel(l)}`} />
             </div>
             <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
               <h1 className="font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl">
                 {l.address}
               </h1>
               <div className="text-right">
-                <p className="font-mono text-3xl font-semibold tracking-tight text-ink">{formatPrice(l.price)}</p>
-                {Number.isFinite(estMonthly) && estMonthly > 0 && (
+                <p className="font-mono text-3xl font-semibold tracking-tight text-ink">{priceLabel(l)}</p>
+                {/* The "Est. $/mo" seed is a mortgage estimate — meaningless for a rental (whose
+                    price already IS the monthly rent), so it's hidden alongside the payment section. */}
+                {!isRental && Number.isFinite(estMonthly) && estMonthly > 0 && (
                   <a
                     href="#payment"
                     className="font-mono text-sm text-stone underline decoration-ink/20 underline-offset-4 hover:text-ink"
@@ -482,17 +492,19 @@ export async function ListingDetail({ id }: { id: string }) {
         </div>
       </section>
 
-      {/* ── Payment */}
-      <section id="payment" aria-labelledby="calc-heading" className="scroll-mt-16 bg-paper pb-12 md:pb-16">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <MortgageCalculator initial={mortgageSeed} />
-          {!l.taxAnnual && (
-            <p className="mt-3 text-xs text-stone">
-              Taxes are estimated; the listing office didn't report an annual tax figure.
-            </p>
-          )}
-        </div>
-      </section>
+      {/* ── Payment (for-sale only — a rental has no mortgage; the section + its seed are hidden) */}
+      {!isRental && (
+        <section id="payment" aria-labelledby="calc-heading" className="scroll-mt-16 bg-paper pb-12 md:pb-16">
+          <div className="mx-auto max-w-7xl px-4 lg:px-8">
+            <MortgageCalculator initial={mortgageSeed} />
+            {!l.taxAnnual && (
+              <p className="mt-3 text-xs text-stone">
+                Taxes are estimated; the listing office didn't report an annual tax figure.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ── Never miss a property (live parity): black band → the existing save-search flow,
           prefilled from this listing's county. */}
@@ -503,11 +515,11 @@ export async function ListingDetail({ id }: { id: string }) {
               Never miss a property
             </h2>
             <p className="mt-2 text-paper/75">
-              Be the first to know when a {county?.name ?? "local"} home hits the market.
+              Be the first to know when a {county?.name ?? "local"} {isRental ? "rental" : "home"} hits the market.
             </p>
           </div>
           <Link
-            href={`/search?county=${l.county}&saveSearch=1`}
+            href={`/search?county=${l.county}${isRental ? "&rental=1" : ""}&saveSearch=1`}
             className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-[3px] bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-paper/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
           >
             <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -519,8 +531,11 @@ export async function ListingDetail({ id }: { id: string }) {
         </div>
       </section>
 
-      {/* ── Market insights (BEAT live's N/A): real DB aggregates for this city. */}
-      <MarketInsights insights={insights} city={l.city} countyName={county?.name ?? l.county} fixtureMode={isSampleData()} />
+      {/* ── Market insights (BEAT live's N/A): real DB aggregates for this city. Hidden for
+          rentals — the figures describe the for-SALE market and would misread on a rental. */}
+      {!isRental && (
+        <MarketInsights insights={insights} city={l.city} countyName={county?.name ?? l.county} fixtureMode={isSampleData()} />
+      )}
 
       {/* ── Similar homes */}
       {similar.length > 0 && (

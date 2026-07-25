@@ -33,6 +33,16 @@ const STATE_TTL_MS = 60_000; // re-check DB readiness / "Data last updated" once
 const PIN_CHUNK = 1000; // PostgREST max-rows — page the full pin set in these chunks
 const MAX_PINS = 15_000; // hard bound on map payload work
 
+/** Rentals (property_type "Rental") are a SEPARATE For-Rent experience — they must NEVER pollute
+ * for-sale counts, medians, home rails, area insights, county/borough aggregates, or the OneKey
+ * parity totals. This PostgREST predicate excludes them; it is appended to every for-sale query
+ * (search default, featured/newest rails, county-slim reports, area-insight rows). The For-Rent
+ * search flips to `property_type=eq.Rental` instead (see searchFilters). */
+const EXCLUDE_RENTALS = "property_type=neq.Rental";
+/** Live realtylt.com floors SALE searches at $10k to drop placeholder/junk rows ($1 lots, $0
+ * comps). Applied as the DEFAULT min only when the user set no priceMin, and never to rentals. */
+const SALE_PRICE_FLOOR = 10_000;
+
 function restConfig(): { base: string; key: string } | null {
   const url = process.env.SUPABASE_URL?.trim();
   const key = process.env.SUPABASE_ANON_KEY?.trim();
@@ -73,7 +83,13 @@ function searchFilters(p: SearchParams): string {
   // six Hudson Valley counties the map frame shows; NYC boroughs stay opt-in via ?county=slug.
   if (p.county) parts.push(`county=eq.${encodeURIComponent(p.county)}`);
   else parts.push(`county=in.(${DEFAULT_COUNTY_SLUGS.join(",")})`);
+  // Sale/rent scope. For-rent shows ONLY rentals; the default for-sale search EXCLUDES rentals
+  // (an explicit sale propertyType already excludes them, so it only needs its own eq. filter).
+  if (p.rental) parts.push("property_type=eq.Rental");
+  // The $10k SALE floor is a DEFAULT: any explicit priceMin (incl. below it) overrides it, and
+  // rentals are exempt (a $2,000/mo lease must not be floored out).
   if (p.priceMin != null) parts.push(`price=gte.${p.priceMin}`);
+  else if (!p.rental) parts.push(`price=gte.${SALE_PRICE_FLOOR}`);
   if (p.priceMax != null) parts.push(`price=lte.${p.priceMax}`);
   if (p.bedsMin != null) parts.push(`beds=gte.${p.bedsMin}`);
   if (p.bathsMin != null) parts.push(`baths=gte.${p.bathsMin}`);
@@ -93,7 +109,13 @@ function searchFilters(p: SearchParams): string {
   if (p.yearMax != null) parts.push(`listing->yearBuilt=lte.${p.yearMax}`);
   if (p.taxMax != null) parts.push(`listing->taxAnnual=lte.${p.taxMax}`);
   if (p.withPhotosOnly) parts.push(`listing->photosMirrored=gt.0`);
-  if (p.propertyType) parts.push(`property_type=eq.${encodeURIComponent(p.propertyType)}`);
+  // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
+  // property_type; otherwise an explicit sale type filters to it, and no sale type at all
+  // still excludes rentals so the for-sale grid/count never carries a rental.
+  if (!p.rental) {
+    if (p.propertyType) parts.push(`property_type=eq.${encodeURIComponent(p.propertyType)}`);
+    else parts.push(EXCLUDE_RENTALS);
+  }
   // "New Listings" quick filter — keep only rows listed within the last N days.
   if (p.newWithinDays != null && p.newWithinDays > 0) {
     const since = new Date(Date.now() - p.newWithinDays * 86_400_000).toISOString();
@@ -215,7 +237,7 @@ export class DbIdxClient implements IdxClient {
     if (!(await this.ready())) return this.fallbackClient().getFeatured(limit);
     try {
       const own = await rest<{ listing: Listing }>(
-        `idx_listings?is_featured=eq.true&select=listing&order=${ORDER.newest}&limit=${limit}`,
+        `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&select=listing&order=${ORDER.newest}&limit=${limit}`,
       );
       const listings = own.rows.map((r) => toCard(r.listing));
       if (listings.length >= limit) return listings;
@@ -242,7 +264,7 @@ export class DbIdxClient implements IdxClient {
 
   private async newestNonFeatured(limit: number, exclude: ReadonlySet<string>): Promise<Listing[]> {
     const { rows } = await rest<{ listing: Listing }>(
-      `idx_listings?is_featured=eq.false&select=listing&order=${ORDER.newest}&limit=${limit + exclude.size}`,
+      `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&select=listing&order=${ORDER.newest}&limit=${limit + exclude.size}`,
     );
     return rows
       .map((r) => r.listing)
@@ -344,7 +366,7 @@ export async function getCountyActiveSlim(
     const rows: CountyActiveRow[] = [];
     for (let offset = 0; offset < MAX_PINS; offset += PIN_CHUNK) {
       const page = await rest<CountyActiveRow>(
-        `idx_listings?${sel}&county=eq.${encodeURIComponent(county)}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
+        `idx_listings?${sel}&county=eq.${encodeURIComponent(county)}&${EXCLUDE_RENTALS}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
       );
       rows.push(...page.rows);
       if (page.rows.length < PIN_CHUNK) break;
@@ -358,12 +380,13 @@ export async function getCountyActiveSlim(
 
 /** Slim {price, listed_at} rows for an area filter (active rows via RLS), PIN_CHUNK-paged.
  * The listing detail page's Market Insights aggregates over these — a lean projection so a
- * dense city/borough pull stays cheap. */
+ * dense city/borough pull stays cheap. Rentals are excluded so the area's for-sale numbers
+ * (avg price / days on market) never mix in monthly rents. */
 async function getInsightRows(filter: string): Promise<InsightRow[]> {
   const rows: InsightRow[] = [];
   for (let offset = 0; offset < MAX_PINS; offset += PIN_CHUNK) {
     const page = await rest<{ price: number; listedAt: string }>(
-      `idx_listings?select=price,listedAt:listed_at&${filter}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
+      `idx_listings?select=price,listedAt:listed_at&${filter}&${EXCLUDE_RENTALS}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
     );
     rows.push(...page.rows);
     if (page.rows.length < PIN_CHUNK) break;

@@ -153,10 +153,11 @@ describe("mapProperty", () => {
     expect(mapProperty({ ...row, CountyOrParish: undefined })).toBeNull();
   });
 
-  it("drops rental/lease types and unviewable/priceless rows", () => {
-    // Rentals are a separate product on a for-sale site — dropped, not mislabeled. (OneKey's
-    // "homes for sale" excludes them too; their rentals are a separate section.)
-    expect(mapProperty({ ...row, PropertyType: "Residential Lease" })).toBeNull();
+  it("keeps residential rentals as a separate 'Rental' type; drops commercial leases + unviewable/priceless rows", () => {
+    // Round-7b (owner decision): residential rentals ARE served, as a separate clearly-labeled
+    // "For Rent" experience → mapped to the "Rental" type (never mixed into for-sale counts).
+    expect(mapProperty({ ...row, PropertyType: "Residential Lease" })!.propertyType).toBe("Rental");
+    // Commercial leases stay out (not a home-renter product); MlgCanView + price gates unchanged.
     expect(mapProperty({ ...row, PropertyType: "Commercial Lease" })).toBeNull();
     expect(mapProperty({ ...row, MlgCanView: false })).toBeNull();
     expect(mapProperty({ ...row, ListPrice: undefined })).toBeNull();
