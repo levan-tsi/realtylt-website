@@ -29,7 +29,7 @@ export function WhatItIs({ service }: { service: Service }) {
             <ul className="mt-5 divide-y divide-[#e3e6ea] border-y border-[#e3e6ea]">
               {service.specs.map((s) => (
                 <li key={s} className="flex items-center gap-3 py-3.5">
-                  <span aria-hidden className="h-1.5 w-1.5 shrink-0 bg-porchlight" />
+                  <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-porchlight" />
                   <span className="text-sm text-ink-soft">{s}</span>
                 </li>
               ))}

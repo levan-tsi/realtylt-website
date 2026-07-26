@@ -37,7 +37,7 @@ export function Faq({ service }: { service: Service }) {
                   </h3>
                   <span
                     aria-hidden
-                    className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center text-2xl font-light leading-none text-ink-soft transition-transform duration-300 group-open:rotate-45"
+                    className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center text-2xl font-light leading-none text-ink-soft transition-all duration-300 group-open:rotate-45 group-open:text-porchlight"
                   >
                     +
                   </span>
