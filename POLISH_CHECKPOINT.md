@@ -23,6 +23,16 @@
 ##     zone's galleries. Objects already present are skipped; only missing gallery photos download.
 ##     Re-run the census after to confirm partial->full. The 7 brand-new (mir=0) self-heal on the next
 ##     hourly cron (cap-50). tsc + 382/382 mine throughout.
+##     BACKFILL RESULT: full-gallery re-mirror ran 07-18 -> 07-23T18:36 (~140k photos, 0 429s at
+##     concurrency 2), then EXTERNALLY STOPPED (respected, NOT restarted). VERIFIED the completed zone
+##     (listed 07-19..07-22): 37/40 FULL galleries (was mostly partial), 0 photoless — the fix works.
+##     REMAINING: the 07-23T18:36 -> head (~2.5 days) tail. RESUME anytime (watermark preserved at
+##     scripts/.photo-backfill-watermark.local = 2026-07-23T18:36): `node scripts/backfill-photos.mjs
+##     --cap 50 --max-pages 8 --max-listings 4000 --concurrency 2` (chain to FEED COMPLETE, stop on 429).
+##     Going forward the hourly cron (cap 50, budget 600) keeps NEW listings' full galleries mirrored
+##     automatically; the one-time gap was my round-7/8 covers-only runs capping recent listings at 1.
+##     The 3 residual partial = a few genuinely CDN-403 photos (normal). Dev server + backfill both
+##     externally stopped at session end; start ONE dev server next round if needed.
 ##
 ## ROUND 8 DONE 2026-07-25 PM (owner: gallery popup parity + placeholder + loading-pic bug;
 ## done SOLO in the main session, no subagents, on Opus 4.8). All pushed + prod-verified.
