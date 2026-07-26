@@ -29,7 +29,7 @@ export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex:
                 Generation node" is a button two-thirds the width of the column. */}
             <a
               href={aiJourneyHref(service)}
-              className="inline-flex items-center justify-center rounded-[4px] bg-paper px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist"
+              className="inline-flex items-center justify-center rounded-xl bg-paper px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist"
             >
               Open it on the AI page
             </a>
@@ -43,7 +43,7 @@ export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex:
         </Reveal>
 
         <Reveal delay={140}>
-          <figure className="border border-paper/15 bg-ink-soft p-5 md:p-6">
+          <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-5 md:p-6">
             <Constellation
               count={12}
               lit={nodeIndex}

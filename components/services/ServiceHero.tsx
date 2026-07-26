@@ -8,7 +8,14 @@ import { aiJourneyHref, type Service } from "@/lib/services";
  * to be information. The figure carries the picture weight instead, and it says something. */
 export function ServiceHero({ service }: { service: Service }) {
   return (
-    <section className="bg-ink" aria-labelledby="service-title">
+    <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="service-title">
+      {/* Signal glow — a low-alpha porchlight core echoing the /ai page's luminous hub, so the
+          ink hero reads as "one bright point in the dark" rather than a flat black slab. Purely
+          decorative, behind content (-z-10 within the section's isolate stacking context). */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-[62%] -z-10 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(40,168,224,0.16),transparent_68%)]"
+      />
       {/* Breadcrumb sits at the top of the section, not inside the vertically-centred
           column — otherwise it floats level with the middle of the figure. */}
       <div className="mx-auto max-w-7xl px-4 pt-8 lg:px-8">
@@ -42,7 +49,7 @@ export function ServiceHero({ service }: { service: Service }) {
             {service.specs.map((s) => (
               <li
                 key={s}
-                className="border border-paper/25 px-3 py-1.5 text-xs uppercase tracking-[0.08em] text-paper/85"
+                className="rounded-full border border-paper/25 px-3.5 py-1.5 text-xs uppercase tracking-[0.08em] text-paper/85 transition-colors hover:border-paper/50 hover:text-paper"
               >
                 {s}
               </li>

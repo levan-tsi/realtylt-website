@@ -24,7 +24,7 @@ function Shell({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="border border-paper/15 bg-ink-soft p-6 md:p-7">
+    <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.8)] md:p-7">
       <figcaption className="flex items-baseline justify-between gap-4 border-b border-paper/10 pb-4">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-paper/55">
           {caption}
@@ -44,7 +44,7 @@ function Shell({
 }
 
 const CHIP =
-  "border border-paper/20 px-2 py-1 text-[11px] leading-none text-paper/85";
+  "rounded-full border border-paper/20 px-2.5 py-1 text-[11px] leading-none text-paper/85";
 
 export function ServiceFigure({ figure }: { figure: Figure }) {
   if (figure.kind === "transcript") {
@@ -56,8 +56,8 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
               key={i}
               className={
                 t.who === "ai"
-                  ? "mr-auto max-w-[92%] border-l-2 border-porchlight bg-white/[0.06] px-4 py-3"
-                  : "ml-auto max-w-[88%] border border-paper/15 px-4 py-3"
+                  ? "mr-auto max-w-[92%] rounded-2xl rounded-tl-md border-l-2 border-porchlight bg-white/[0.06] px-4 py-3"
+                  : "ml-auto max-w-[88%] rounded-2xl rounded-tr-md border border-paper/15 px-4 py-3"
               }
             >
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/45">
@@ -113,7 +113,7 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
             <li key={i} className="border-t border-paper/10 py-4">
               <div className="flex items-baseline justify-between gap-4">
                 <p className="text-sm leading-snug text-paper/60">{r.before}</p>
-                <span className="shrink-0 border border-porchlight/45 px-2 py-1 text-[10px] font-bold uppercase leading-none tracking-[0.1em] text-porchlight">
+                <span className="shrink-0 rounded-full border border-porchlight/45 px-2.5 py-1 text-[10px] font-bold uppercase leading-none tracking-[0.1em] text-porchlight">
                   {r.tag}
                 </span>
               </div>
@@ -133,7 +133,7 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
 
   return (
     <Shell caption={figure.caption} footnote={figure.footnote}>
-      <p className="inline-block border border-paper/25 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper">
+      <p className="inline-block rounded-full border border-paper/25 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper">
         {figure.trigger}
       </p>
       <ol className="mt-5 space-y-4">
@@ -148,7 +148,7 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
             )}
             <span
               aria-hidden
-              className="relative z-10 grid h-[27px] w-[27px] shrink-0 place-items-center border border-paper/25 bg-ink-soft text-[11px] font-bold text-paper/70"
+              className="relative z-10 grid h-[27px] w-[27px] shrink-0 place-items-center rounded-full border border-paper/25 bg-ink-soft text-[11px] font-bold text-paper/70"
             >
               {i + 1}
             </span>

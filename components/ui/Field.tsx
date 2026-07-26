@@ -6,7 +6,7 @@ import type { ComponentPropsWithoutRef } from "react";
 /** Labeled form controls with shared error/focus treatment. `dark` = for ink sections. */
 
 const controlBase =
-  "w-full border bg-transparent px-3.5 py-3 text-sm transition-colors placeholder:text-stone focus:outline-none focus:ring-1 focus:ring-ink/40 disabled:opacity-50";
+  "w-full rounded-xl border bg-transparent px-3.5 py-3 text-sm transition-colors placeholder:text-stone focus:outline-none focus:ring-1 focus:ring-ink/40 disabled:opacity-50";
 
 function tone(dark: boolean, error?: string) {
   if (error) return "border-red-500/80";

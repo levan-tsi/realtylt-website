@@ -50,7 +50,7 @@ export function ServiceLead({ service }: { service: Service }) {
         </Reveal>
 
         <Reveal delay={130}>
-          <div className="border border-paper/20 bg-white/[0.04] p-6 md:p-8">
+          <div className="rounded-3xl border border-paper/20 bg-white/[0.04] p-6 md:p-8">
             <LeadForm
               dark
               hideReason
