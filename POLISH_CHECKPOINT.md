@@ -1,5 +1,17 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## >>> NEXT /website RUN (owner 2026-07-26): go PAGE BY PAGE vs LIVE realtylt.com — click EVERYTHING
+## on both (boxes, sizes, symmetry, popups, searches, sorts, filters, lightbox, tour/offer/save),
+## fix ONE page fully match-or-beat, then the next. See the rewritten /website command for the loop.
+## TOP KNOWN BUG to fix (owner-dictated, listing pages): the "Photo coming soon" placeholder still
+## shows in the WRONG cases. RULE: if a listing has ANY real photo, show ONLY real photos — NEVER a
+## coming-soon tile mixed in (drop tiles whose media 503s; don't pad fixed slots). Only a 0-photo
+## listing shows the placeholder. This is a UI RENDER fix in ListingDetail hero + ListingGallery
+## thumbnails/lightbox + ListingCard NoPhoto (the media route + backfill already serve real photos;
+## the UI must stop rendering placeholders alongside real ones). Test 0/1/partial/full listings.
+## Also finish the full-gallery backfill tail (watermark ~2026-07-23T18:36; resume cmd in round-8b
+## notes below). Kill any zombie dev server (e.g. :3100) before starting one.
+
 ## ROUND 8B 2026-07-25 PM (owner: enable maps yourself + tour-in-popup + photo variety):
 ## (A) GEOCODING API ENABLED by me via Chrome (owner logged into GCP, authuser=2, project
 ##     realtylt-crm): GCP -> that project -> Geocoding API -> Enable. The Maps key already listed
