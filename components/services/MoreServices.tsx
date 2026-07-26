@@ -27,14 +27,14 @@ export function MoreServices({ services }: { services: Service[] }) {
           </div>
         </Reveal>
 
-        <ul className="mt-10 grid gap-px border border-[#e3e6ea] bg-[#e3e6ea] sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-[#e3e6ea] bg-[#e3e6ea] sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.slug} as="li" delay={(i % 3) * 90} className="min-w-0 bg-white">
               <Link
                 href={`/services/${s.slug}`}
                 className="group flex h-full flex-col p-6 transition-colors hover:bg-mist"
               >
-                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone transition-colors group-hover:text-porchlight-deep">
                   {s.eyebrow}
                 </p>
                 <h3 className="mt-2.5 text-base font-bold leading-snug text-ink-soft group-hover:text-ink">

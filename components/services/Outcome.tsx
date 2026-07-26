@@ -18,10 +18,11 @@ export function Outcome({ service }: { service: Service }) {
       >
         {stat && (
           <Reveal className="lg:border-r lg:border-ink/10 lg:pr-16">
-            <p className="text-6xl font-semibold leading-none tracking-tight text-ink md:text-7xl">
+            <p className="text-7xl font-semibold leading-none tracking-tight text-ink md:text-8xl">
               {stat.value}
             </p>
-            <p className="mt-3 max-w-[16rem] text-sm leading-snug text-stone">{stat.label}</p>
+            <span aria-hidden className="mt-5 block h-[3px] w-12 rounded-full bg-porchlight" />
+            <p className="mt-4 max-w-[16rem] text-sm leading-snug text-stone">{stat.label}</p>
           </Reveal>
         )}
 
