@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { FourMoves } from "./FourMoves";
+import { Funnel } from "./Funnel";
 import { LeadsCalculator } from "./LeadsCalculator";
 import { PullQuote } from "./PullQuote";
 import { ResponseGap } from "./ResponseGap";
@@ -20,6 +21,7 @@ const SCENES: Record<string, () => ReactNode> = {
   "four-moves": FourMoves,
   "pull-quote": PullQuote,
   teardown: Teardown,
+  funnel: Funnel,
 };
 
 export function renderScene(key: string): ReactNode {

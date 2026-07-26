@@ -308,7 +308,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </section>
         )}
 
-        {/* ── Ask us */}
+        {/* ── Ask us. Suppressed on the flagship, where scene 9 IS the close: two dark
+            call-to-action bands in a row cancel each other out. */}
+        {!flagship && (
         <section className="bg-ink py-16 text-center text-paper md:py-20">
           <div className="mx-auto max-w-2xl px-4">
             <p className="text-2xl font-light leading-snug md:text-3xl">
@@ -327,6 +329,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
         </section>
+        )}
       </article>
     </>
   );

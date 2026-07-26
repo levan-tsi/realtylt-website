@@ -73,7 +73,7 @@ If you would rather see one working than read about it, ours is live on [the Rea
 
 The full breakdown of how it is built, what it connects to, and what it does with the leads it captures is on the [AI chat assistant page](/services/ai-chat-assistant).
 
-The buyer at 11:40pm is not coming back tomorrow to check whether you replied. They are going to be at somebody's open house on Saturday. The only real question is whose.`;
+[[scene:funnel]]`;
 
 export const WORKFLOW_AUTOMATION_POST = `Ask an agent what they do all day and they will tell you they sell houses.
 
