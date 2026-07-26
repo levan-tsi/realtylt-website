@@ -1,5 +1,66 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## STATUS / PROGRESS (updated 2026-07-26, session 2)
+
+**Live and verified on production** (`realtylt-website.vercel.app/blog/ai-chat-assistant-real-estate-website`),
+read by eye at 1440 and 390 DPR3, zero page errors, no horizontal overflow, 0 em dashes, 0 arrow
+glyphs, 1 H1 / 9 H2 / 3 JSON-LD blocks intact:
+
+| # | scene | key | state |
+|---|---|---|---|
+| 1 | Cold open (11:40pm as a lit clock) | hero, `ColdOpen` | DONE |
+| 2 | Response gap (two stamps, the cooling line) | `response-gap` | DONE |
+| 3 | Leads calculator (interactive) | `leads-calculator` | DONE |
+| 4 | Four moves | `four-moves` | DONE |
+| 5 | The teardown / watch it handle a real lead | `teardown` | **NEXT — the centerpiece** |
+| 6 | What it does NOT do | (unbuilt) | see note below |
+| 7 | Animated flow diagram | (unbuilt) | TODO |
+| 8 | The pull quote | `pull-quote` | DONE |
+| 9 | The funnel | (unbuilt) | TODO |
+
+**THE ARCHITECTURE IS BUILT — read this before adding a scene.**
+- `lib/blog/markdown.tsx` treats a standalone `[[scene:key]]` line as a scene slot. Every
+  non-flagship render path DROPS the marker, so it can never leak as literal text.
+  `hasScenes()` IS the flagship flag (no extra field to keep in sync); `renderFlagshipBands()`
+  splits a body into alternating prose / scene bands.
+- `components/blog/scenes/registry.tsx` maps key -> component. Unknown key renders nothing.
+- Scene COPY lives in `content/blog/ai-chat-scenes.ts`, not in the components. That is the
+  shape the other ~19 topics clone.
+- Adding a scene = component + one registry line + one marker in the markdown. That is all.
+
+**Two rules learned the hard way (do not relearn these):**
+1. **Scenes REPLACE the markdown they stage, they do not decorate it.** Scenes 4 and 8 lifted
+   their text out of the body; leaving the markdown in place makes the reader read the same
+   sentences twice. The scene probe asserts each staged sentence appears exactly once.
+2. **Resting style must BE the final state**; only attach animation under
+   `.reveal.is-visible`. Never pair a delay with `animation-fill-mode: both` — it paints the
+   `from` state during the delay, so no-JS readers, reduced-motion readers and every static
+   screenshot catch an empty frame. That bug ate a pass.
+
+**HARNESS CORRECTION (the previous session's note was wrong, verified on this machine).**
+`:3000` is **`wslrelay.exe`** (the WSL CRM port forward), NOT this repo. The realtylt-website
+dev server runs on **:3100** and that is correct here, not a mistake. Test via `127.0.0.1:3100`.
+Do not "fix" this back to :3000.
+
+**KNOWN ISSUE — local dev server is wedged.** The shared :3100 server (PID owned by the
+concurrent session, up since 05:39) started returning HTTP 500 on **every** route mid-session,
+after a watched file was deleted. `tsc` and `vitest` are clean, so it is a wedged dev compiler,
+not a code fault. I could not restart another session's process. Everything since is verified
+against the **Vercel production build** instead, which is authoritative and cannot interfere.
+To restore the local loop: `npx kill-port 3100 && npm run dev -- -p 3100`.
+
+**Verification harness** (all gitignored under `scripts/_scratch-*`):
+- `scripts/_scratch-scenes.mjs [baseUrl]` — frames EVERY scene at 1440 + 390 DPR3 and probes
+  H1/H2/JSON-LD, marker leak, em dashes, arrow glyphs, overflow and duplicate staged text.
+- `scripts/_scratch-calc.mjs [baseUrl]` — drives the calculator's controls and asserts the
+  result changes (default 16/month, next-day 27, within-minutes correctly 0).
+- Both default to production. Pass `http://127.0.0.1:3100` once the local server is back.
+
+**Note on scene 6 ("what it does NOT do"):** the prose section already IS that content and it
+is strong. A scene there would duplicate it unless it REPLACES the section (rule 1). Decide
+deliberately rather than adding a decorative band.
+
+
 Written 2026-07-26 by the previous session (Fable→Opus 4.8). This is the complete, self-contained
 brief for building the RealtyLT flagship content piece. A fresh agent should be able to execute the
 whole thing from this file. Read it fully before touching code.
@@ -97,12 +158,14 @@ glyphs, no `///`-style tech garnish (the owner had me strip a `///` this session
 AI-generated). Restraint = luxury; the owner rejects anything that looks vibe-coded/AI-generic.
 
 ## RENDER + VERIFY HARNESS (gotchas that cost real time — don't relearn them)
-- **SAME repo as `/website` → SAME dev-server discipline: ONE Next process per repo, on :3000.**
-  `netstat -ano | grep -E ':300[0-9]|:3100'` FIRST and KILL any leftover next process — a stale
-  SECOND server (e.g. the :3100 the previous session wrongly started) serves broken JS chunks and
-  corrupts `.next`. Reuse the :3000 server if one is up; else `npm run dev`. Test via
-  **127.0.0.1:3000** (wslrelay squats [::1]:3000). Never run two. (Correction: the previous session
-  used :3100 — do NOT; that's the documented corruption trap in the /website command.)
+- **SAME repo as `/website` → SAME dev-server discipline: ONE Next process per repo.** Two
+  servers share one `.next` and serve broken JS chunks, so never run a second.
+  `netstat -ano | grep -E ':300[0-9]|:3100'` FIRST and REUSE whatever is already up.
+  **The port is :3100, and that is correct** — `:3000` on this machine is `wslrelay.exe` (the
+  WSL CRM forward), not this repo, so a Next server cannot have it. Test via
+  **127.0.0.1:3100**. (An earlier note in this file claimed :3100 was a mistake and told the
+  next agent to move to :3000. That was wrong, verified by process inspection; it has been
+  corrected here so nobody burns time on it again.)
 - **Playwright IS in realtylt-website** — use `scripts/_scratch-shot.mjs <url> <outbase> [width]`
   (quick shot) and `scripts/_scratch-map.mjs <url> <outbase>` (deep map, 1440+390 + inventory); write
   scratch probes as `scripts/_scratch-*.mjs` (gitignored). Prefix node with
