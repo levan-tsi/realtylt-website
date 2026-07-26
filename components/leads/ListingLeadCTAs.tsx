@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { SITE } from "@/lib/site";
 import { formatOffer, fullAddress, offerQualifier, tourQualifier, type ListingIntent } from "@/lib/leads/listing-intents";
 
@@ -269,9 +270,13 @@ function Sheet({
     [onClose],
   );
 
-  return (
+  // Portal to <body> so the sheet escapes the sticky right-rail's stacking context — otherwise its
+  // z-index can't beat the photo lightbox (which is why "In Person Tour" from the gallery appeared
+  // BEHIND the photos). At <body> level, z-[1000001] correctly sits above the gallery's z-[1000000].
+  if (typeof document === "undefined") return null;
+  return createPortal(
     <div
-      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
+      className="rlt-fade-in fixed inset-0 z-[1000001] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -296,7 +301,8 @@ function Sheet({
         </button>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

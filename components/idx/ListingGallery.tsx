@@ -142,9 +142,10 @@ function Lightbox({
   }, [index, tab]);
 
   const openTour = () => {
-    onClose();
-    // Defer so the lightbox unmounts before the tour sheet mounts + focuses.
-    setTimeout(() => window.dispatchEvent(new CustomEvent("listing:request-tour")), 0);
+    // Live parity: keep the gallery OPEN and let the tour sheet render one layer above it, so the
+    // visitor fills it right over the photos and returns to the gallery on close (no jump to a box
+    // below the pics). ListingLeadCTAs listens for this on window; its sheet sits at a higher z.
+    window.dispatchEvent(new CustomEvent("listing:request-tour"));
   };
 
   const onKeyDown = useCallback(
