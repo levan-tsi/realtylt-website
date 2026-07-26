@@ -92,13 +92,18 @@ export async function GET(
   // `set listing = excluded.listing`), so a run without a storage-write key (prod until
   // SUPABASE_SERVICE_ROLE_KEY is added) drops photosMirrored on every re-synced listing. The signed
   // source URL is long dead by then, so the tile would blank ("first photos disappear on refresh").
-  // When the marker says nothing is mirrored, probe the permanent public object directly for a low
-  // index (cheap, cached HEAD; never MLS) and serve it if present. Self-heals a wiped marker without
-  // waiting for a re-mirror. Bounded to STORAGE_PROBE_MAX so an unmirrored listing costs at most that
-  // many cached HEADs.
-  // Also probe when the DB read failed (dbOk=false): mirrored is then only the snapshot's
-  // mirror-less guess, but the permanent object very likely exists — serving it beats a 503.
-  if ((mirrored === 0 || !dbOk) && n < STORAGE_PROBE_MAX && (await storageObjectExists(id, n))) {
+  // When the marker under-counts what's actually in Storage, probe the permanent public object
+  // directly (cheap, cached HEAD; never MLS) and serve it if present. Self-heals without a re-mirror.
+  // Fires for any index BEYOND the mirrored prefix (n >= mirrored, already handled above when
+  // n < mirrored) in three cases:
+  //  • mirrored === 0 — the classic wiped-marker case;
+  //  • !dbOk — the DB read failed, so `mirrored` is only the snapshot's mirror-less guess;
+  //  • n < photos.length — the listing CLAIMS a photo here but the marker stops short. This is the
+  //    round-7 regression: the re-baseline's full-JSONB upsert reset photosMirrored to the cover
+  //    count (often 1) even though the FULL gallery objects survive in Storage from earlier mirroring.
+  //    Without this, gallery photos 1..N 503'd into placeholders even though 1.jpg..N.jpg exist.
+  // Bounded to STORAGE_PROBE_MAX; a genuinely-unmirrored index just gets a cached 404 HEAD and falls through.
+  if (n >= mirrored && n < STORAGE_PROBE_MAX && (mirrored === 0 || !dbOk || n < photos.length) && (await storageObjectExists(id, n))) {
     const storageUrl = publicPhotoUrl(id, n);
     if (storageUrl) {
       return new Response(null, {

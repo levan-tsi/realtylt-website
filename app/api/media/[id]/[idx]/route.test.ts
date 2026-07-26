@@ -136,6 +136,35 @@ describe("GET /api/media/[id]/[idx] — transient DB failure (the gray-card bug)
   });
 });
 
+describe("GET /api/media/[id]/[idx] — marker under-counts surviving gallery (round-7 regression)", () => {
+  it("serves gallery photos beyond the mirrored prefix when their Storage objects survive", async () => {
+    // The re-baseline reset photosMirrored to the cover count (1) but the full gallery objects
+    // 1.jpg..N.jpg still live in Storage. photos.length claims 3 → the route must probe + serve
+    // idx 1 and 2 from Storage, not 503 them into placeholders.
+    resetMediaCacheForTests();
+    __resetStorageProbeCacheForTests();
+    vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
+    vi.stubEnv("SUPABASE_ANON_KEY", "anon-key");
+    __seedSnapshotMediaForTests("L3", [
+      "https://media.mlsgrid.com/a/0.jpg",
+      "https://media.mlsgrid.com/a/1.jpg",
+      "https://media.mlsgrid.com/a/2.jpg",
+    ]);
+    __seedMirroredForTests("L3", 1); // marker says only the cover is mirrored…
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: string | URL) => new Response(null, { status: 200 })), // …but every Storage HEAD finds the object
+    );
+    const p1 = await call("L3", "1");
+    expect(p1.status).toBe(302);
+    expect(p1.headers.get("X-Media-Status")).toBe("storage-probe");
+    expect(p1.headers.get("Location")).toBe("https://proj.supabase.co/storage/v1/object/public/mls-photos/L3/1.jpg");
+    const p2 = await call("L3", "2");
+    expect(p2.status).toBe(302);
+    expect(p2.headers.get("Location")).toBe("https://proj.supabase.co/storage/v1/object/public/mls-photos/L3/2.jpg");
+  });
+});
+
 describe("GET /api/media/[id]/[idx] — STORAGE-FIRST (mirrored photos)", () => {
   beforeEach(() => {
     vi.stubEnv("SUPABASE_URL", "https://proj.supabase.co");
@@ -167,13 +196,19 @@ describe("GET /api/media/[id]/[idx] — STORAGE-FIRST (mirrored photos)", () => 
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("falls back to the proxy for an index beyond the mirrored prefix", async () => {
-    const fetchMock = stubImage();
-    const res = await call("L1", "1"); // index 1 not mirrored → proxy the (fresh) source URL
+  it("falls back to the proxy for an index beyond the mirrored prefix with no Storage object", async () => {
+    // idx 1 is beyond the mirrored prefix AND absent from Storage (HEAD 404) → the route probes
+    // Storage, misses, and proxies the (fresh) source URL. (When the object DOES survive, the
+    // marker-under-count test above proves it serves Storage instead — the better path.)
+    const fetchMock = vi.fn(async (_url: string | URL, init?: RequestInit) => {
+      if (init?.method === "HEAD") return new Response(null, { status: 404 }); // no Storage object
+      return new Response(new Uint8Array([0xff, 0xd8, 0xff]), { headers: { "Content-Type": "image/jpeg" } });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const res = await call("L1", "1");
     expect(res.status).toBe(200);
     expect(res.headers.get("X-Media-Status")).toBe("ok");
-    expect(fetchMock).toHaveBeenCalledOnce();
-    expect(String(fetchMock.mock.calls[0][0])).toContain("media.mlsgrid.com");
+    expect(fetchMock.mock.calls.some(([u]) => String(u).includes("media.mlsgrid.com"))).toBe(true);
   });
 });
 
