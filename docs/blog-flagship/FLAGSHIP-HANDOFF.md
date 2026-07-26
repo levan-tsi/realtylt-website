@@ -134,6 +134,27 @@ photos. All of it funnels to `/services/*`, `/ai#chat` (the live assistant), and
 lead-gen loop — give enormous value everywhere → remind them RealtyLT built it → they reach out — is
 the actual goal. Build the flagship so every scene is a ready content asset.
 
+## VIDEO / AVATAR / VISUAL-GENERATION (owner ideas 2026-07-26 — the content-production layer)
+The blog scenes above ARE the video storyboard. To produce the actual video + platform content:
+- **Talking-avatar presenter (HeyGen / "HyperFrames by HeyGen" MCP).** Owner's idea: a talking
+  avatar narrates the piece. Script = the blog's own words (they're already tight). Needs the HeyGen
+  MCP authenticated (`mcp__claude_ai_HyperFrames_by_HeyGen__authenticate`) + a chosen avatar/voice.
+- **Reuse the LIVE 3D brain as premium B-roll.** `realtylt.com/ai` (repo `realtylt-ai-page`) is a
+  real-time Three.js galaxy→brain journey. Screen-record it (the render harness + deep-link stages
+  `#p=` / `galaxy|solar|brain|paths` exist in that repo) → instant high-end B-roll for the videos, no
+  new production. This ties every video back to the flagship /ai experience.
+- **Higgsfield MCP (image/video/animation) — BLOCKED ON CREDITS.** Checked 2026-07-26: account is
+  free plan, **0 credits**, so it can't generate anything yet. It IS connected. Owner: top up /
+  subscribe, then it can produce the cold-open image, animated graphics, and short video clips. Models
+  worth trying once funded: `nano_banana_pro` (4K/text/diagrams — good for the design graphs),
+  `soul_2` (editorial/portrait), plus `generate_video` for the animated scene clips.
+- **Recipe for one high-end explainer video:** avatar intro → blog scene cards (screen-record the
+  scroll) → live 3D brain B-roll → the real chat teardown → CTA. Then chop the scene cards into
+  IG/LinkedIn carousels and stills. Every asset does double duty (page + video + carousel).
+- **First cheap proof (no credits needed):** screen-record the finished blog scenes + the live 3D
+  brain, and cut a 30-60s silent motion reel — proves the "high-end Apple-minimalist content" bar
+  before spending on avatar/generation.
+
 ## STATUS AT HANDOFF
 Service-page design (the prior task) is DONE + deployed (prod, all ~20 /services pages elevated;
 the `///` garnish removed). This flagship blog is NET-NEW and barely started: only the plan (this
