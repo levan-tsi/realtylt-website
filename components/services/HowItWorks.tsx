@@ -20,7 +20,9 @@ export function HowItWorks({ service }: { service: Service }) {
         <ol className="mt-12 grid gap-x-10 gap-y-10 md:grid-cols-2 lg:mt-16 lg:gap-x-16">
           {service.howItWorks.map((step, i) => (
             <Reveal key={step.title} as="li" delay={(i % 2) * 110}>
-              <div className="flex gap-6 border-t border-paper/15 pt-6">
+              <div className="relative flex gap-6 border-t border-paper/15 pt-6">
+                {/* porchlight signal lead on the step's top rule — the page's connective accent */}
+                <span aria-hidden className="absolute -top-px left-0 h-px w-10 bg-porchlight" />
                 <span
                   aria-hidden
                   className="shrink-0 text-3xl font-light leading-none tabular-nums text-porchlight"
