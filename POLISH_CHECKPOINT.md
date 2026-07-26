@@ -1,5 +1,37 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ROUND 8 DONE 2026-07-25 PM (owner: gallery popup parity + placeholder + loading-pic bug;
+## done SOLO in the main session, no subagents, on Opus 4.8). All pushed + prod-verified.
+## (1) GALLERY-PHOTOS REGRESSION FIXED (commit media route): the round-7 re-baseline's full-JSONB
+##     upsert reset photosMirrored to the cover count (often 1) while the FULL gallery objects
+##     survive in Storage — so detail galleries 503'd photos 1..N into placeholders ("loading pic
+##     when we have pics"). Root-caused via storage HEAD (KEY1024370: 0-6 all 200, marker=1). Route
+##     now probes Storage for any index beyond the mirrored prefix the listing claims (n<photos.length)
+##     -> serves the surviving object. ZERO re-download. Verified prod KEY1024370 now 7/7 (was 1/7).
+##     +regression test. This restored galleries SITE-WIDE.
+## (2) NEW PLACEHOLDER (lib/idx/placeholder.ts): replaced the flat house-icon with a warm moonlit
+##     Hudson-twilight scene (indigo->amber sky, crescent moon+stars, ridgelines+pines, cozy house w/
+##     amber windows + azure porch-light door, wordmark on ground band). Self-made ~2.5KB vector,
+##     unmistakably generic, slice-safe. Verified rendered 4 sizes + deployed (rlt-ph-moon marker on prod).
+## (3) LISTING GALLERY LIGHTBOX -> live parity (components/idx/ListingGallery.tsx rewrite): big main
+##     photo + scrollable THUMBNAIL RAIL (click to choose), Photos/Street View/Map View TABS, and an
+##     "In Person Tour" CTA that closes the gallery + opens the existing tour sheet (window event
+##     listing:request-tour -> ListingLeadCTAs; no new lead path; verified: gallery closes, tour sheet
+##     opens, 0 lead posts until submit). Shared Maps loader extracted to lib/idx/maps-loader.ts; CSP
+##     img-src += streetviewpixels host. STREET VIEW + MAP tabs geocode the REAL address client-side
+##     and appear ONLY when the geocode resolves (no dead tab).
+## *** OWNER 1-MIN ACTION for Street View + Map tabs: the geocode returns REQUEST_DENIED on prod —
+##     the Maps key's GCP project has Maps JavaScript API enabled (search map works) but NOT the
+##     GEOCODING API. Enable it: GCP Console -> project realtylt-crm -> APIs & Services -> Enable APIs
+##     -> "Geocoding API" -> Enable; ensure the Maps key's API restrictions (if any) include Geocoding
+##     API. Then Street View + Map tabs light up automatically (no code change). Until then the gallery
+##     shows Photos-only (clean, matches live's core). Street View also uses only Maps JS (no extra API).
+## tsc + 382/382 mine. Dev-cache corrupted mid-round (ENOENT _document.js, listing-only 500) -> killed
+## tree + rm -rf .next node_modules/.cache + restart fixed it (code was always clean; classic).
+## STILL OPEN (from round 7, unchanged): Manhattan/Brooklyn feed-source gap; the full-gallery
+## re-mirror is now UNNECESSARY (route probe serves surviving objects) but the hourly cron will also
+## re-bump markers over time. Commercial leases still excluded (owner-optional).
+
 ## ROUND 7 + 7b DONE 2026-07-25 (owner: full inventory + rentals + cover bug + placeholder):
 ## RE-BASELINE RAN (owner granted Bash(node scripts/baseline-to-db.mjs:*)): full paced pull,
 ## 28 endpoint calls, 0 429s, 25,396 listings. COUNTS NOW MATCH ONEKEY (ours vs onekeymls.com):
