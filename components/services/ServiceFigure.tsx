@@ -24,7 +24,7 @@ function Shell({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.8)] md:p-7">
+    <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.07)] md:p-7">
       <figcaption className="flex items-baseline justify-between gap-4 border-b border-paper/10 pb-4">
         <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-paper/55">
           {caption}
