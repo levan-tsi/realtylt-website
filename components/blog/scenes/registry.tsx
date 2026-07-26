@@ -3,6 +3,7 @@ import { FourMoves } from "./FourMoves";
 import { LeadsCalculator } from "./LeadsCalculator";
 import { PullQuote } from "./PullQuote";
 import { ResponseGap } from "./ResponseGap";
+import { Teardown } from "./Teardown";
 
 /** The flagship scene registry.
  *
@@ -18,6 +19,7 @@ const SCENES: Record<string, () => ReactNode> = {
   "leads-calculator": LeadsCalculator,
   "four-moves": FourMoves,
   "pull-quote": PullQuote,
+  teardown: Teardown,
 };
 
 export function renderScene(key: string): ReactNode {

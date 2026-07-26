@@ -49,6 +49,8 @@ And it does not pretend to be a person. Ours introduces itself as an assistant. 
 
 [[scene:pull-quote]]
 
+[[scene:teardown]]
+
 ## The honest objections
 
 **"It will annoy my visitors."** A bad one will. A pop-up that fires two seconds after landing and demands a phone number before it has been useful is an ad wearing a chat widget's clothes. The one worth running answers a question first and asks for a number once it has earned it.
