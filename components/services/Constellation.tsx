@@ -51,6 +51,18 @@ export function Constellation({
       {nodes.map((n) =>
         n.i === active ? (
           <g key={`n-${n.i}`}>
+            {/* live signal — a sonar ping emanating from the lit node, echoing the /ai hub's
+                "answers in seconds". CSS-animated so the global reduced-motion rule collapses it. */}
+            <circle
+              className="svc-ping"
+              cx={n.x}
+              cy={n.y}
+              r={6}
+              fill="none"
+              stroke="#28a8e0"
+              strokeWidth={1.2}
+              style={{ transformBox: "fill-box", transformOrigin: "center" }}
+            />
             <circle cx={n.x} cy={n.y} r={11} fill="#28a8e0" fillOpacity={0.16} />
             <circle cx={n.x} cy={n.y} r={4.5} fill="#28a8e0" />
           </g>

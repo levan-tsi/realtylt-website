@@ -87,6 +87,39 @@ body {
   }
 }
 
+/* ── Service constellation "live signal" — a sonar ping on the lit hub node. The global
+   reduced-motion block at the bottom of this file collapses it to a still. */
+@keyframes svc-ping {
+  0% {
+    opacity: 0.55;
+    scale: 0.5;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    scale: 2.8;
+  }
+}
+.svc-ping {
+  animation: svc-ping 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* ── "Live in production" eyebrow dot — a slow porchlight breath + halo. */
+@keyframes live-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgb(40 168 224 / 0.5);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 4px rgb(40 168 224 / 0);
+  }
+}
+.live-dot {
+  animation: live-dot 2.6s ease-in-out infinite;
+}
+
 /* ── Card hover lift + slow photo scale */
 .lift {
   transition:

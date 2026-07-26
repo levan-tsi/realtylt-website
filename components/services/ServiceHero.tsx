@@ -34,12 +34,13 @@ export function ServiceHero({ service }: { service: Service }) {
 
       <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-14 pt-6 md:pb-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:px-8">
         <div className="self-center">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-paper/60">
+          <p className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.22em] text-paper/60">
+            <span aria-hidden className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-porchlight" />
             {service.eyebrow}
           </p>
           <h1
             id="service-title"
-            className="mt-3 max-w-xl text-4xl font-light leading-[1.12] text-paper md:text-[46px]"
+            className="mt-3 max-w-xl text-4xl font-light leading-[1.12] tracking-[-0.01em] text-paper md:text-[46px]"
           >
             {service.title}
           </h1>
