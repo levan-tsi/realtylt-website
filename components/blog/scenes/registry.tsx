@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { LeadsCalculator } from "./LeadsCalculator";
 import { ResponseGap } from "./ResponseGap";
 
 /** The flagship scene registry.
@@ -12,6 +13,7 @@ import { ResponseGap } from "./ResponseGap";
  */
 const SCENES: Record<string, () => ReactNode> = {
   "response-gap": ResponseGap,
+  "leads-calculator": LeadsCalculator,
 };
 
 export function renderScene(key: string): ReactNode {
