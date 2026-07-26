@@ -12,11 +12,23 @@ glyphs, 1 H1 / 9 H2 / 3 JSON-LD blocks intact:
 | 2 | Response gap (two stamps, the cooling line) | `response-gap` | DONE |
 | 3 | Leads calculator (interactive) | `leads-calculator` | DONE |
 | 4 | Four moves | `four-moves` | DONE |
-| 5 | The teardown / watch it handle a real lead | `teardown` | **NEXT — the centerpiece** |
-| 6 | What it does NOT do | (unbuilt) | see note below |
-| 7 | Animated flow diagram | (unbuilt) | TODO |
+| 5 | The teardown / watch it handle a real lead | `teardown` | DONE |
+| 6 | What it does NOT do | (unbuilt) | **NEXT** — see note below |
+| 7 | Animated flow diagram | (unbuilt) | **NEXT** |
 | 8 | The pull quote | `pull-quote` | DONE |
-| 9 | The funnel | (unbuilt) | TODO |
+| 9 | The funnel | `funnel` | DONE |
+
+**7 of 9 scenes built.** Scene 9 also suppresses the template's generic "Ask us" band on the
+flagship, so the piece has one ending rather than two.
+
+**WHERE 6 AND 7 GO.** The page's band rhythm is verified clean (no two adjacent bands share a
+background), and there is exactly one long gap left: a **1350px unbroken prose run** covering
+"The honest objections" + "Where it goes wrong" + "What to do about it", sitting between the
+teardown and the funnel. That run is where scenes 6 and 7 belong. Measure it yourself with
+`scripts/_scratch-rhythm.mjs`, which prints every band's height and background in order.
+
+Current verified order: cold open (black) / prose / gap (black) / calc (mist) / prose /
+four moves (black) / prose / quote (navy) / teardown (mist) / prose 1350px / funnel (black).
 
 **THE ARCHITECTURE IS BUILT — read this before adding a scene.**
 - `lib/blog/markdown.tsx` treats a standalone `[[scene:key]]` line as a scene slot. Every
@@ -54,7 +66,15 @@ To restore the local loop: `npx kill-port 3100 && npm run dev -- -p 3100`.
   H1/H2/JSON-LD, marker leak, em dashes, arrow glyphs, overflow and duplicate staged text.
 - `scripts/_scratch-calc.mjs [baseUrl]` — drives the calculator's controls and asserts the
   result changes (default 16/month, next-day 27, within-minutes correctly 0).
-- Both default to production. Pass `http://127.0.0.1:3100` once the local server is back.
+- `scripts/_scratch-rhythm.mjs` — prints every band's height and background colour in order, so
+  you can see the light/dark alternation and find the gaps that still need a scene.
+- All default to production. Pass `http://127.0.0.1:3100` once the local server is back.
+
+**CONCURRENT EDITOR — confirmed active this session.** The other session is building the IDX
+photo band (`components/idx/MlsImage.tsx`, `lib/idx/photo-band.ts` + its 12 new tests) in this
+same working tree. Their work was left unstaged and untouched throughout; every commit here was
+staged file-by-file. Run `git status --short` before every `git add` and never `git add -A`.
+`npx vitest run` covers both of us, so a green 394/394 also confirms nothing of theirs broke.
 
 **Note on scene 6 ("what it does NOT do"):** the prose section already IS that content and it
 is strong. A scene there would duplicate it unless it REPLACES the section (rule 1). Decide
