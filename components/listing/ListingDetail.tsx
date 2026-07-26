@@ -210,7 +210,11 @@ export async function ListingDetail({ id }: { id: string }) {
       {/* ── Gallery (photos open a full-screen lightbox; the <details> below keeps the no-JS
           "show all photos" fallback working). */}
       <section className="bg-ink" aria-label="Photos">
-        <ListingGallery photos={photos} address={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}>
+        <ListingGallery
+          photos={photos}
+          address={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}
+          mapQuery={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}
+        >
           {/* With ≤1 photo there are no thumbnails — let the main tile span the row instead
               of leaving a black void beside the placeholder. */}
           <div

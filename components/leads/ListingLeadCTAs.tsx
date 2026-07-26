@@ -50,12 +50,17 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
   const [modal, setModal] = useState<null | "tour" | "offer">(null);
   const [seedDate, setSeedDate] = useState<string | undefined>(undefined);
 
-  // The sticky sub-nav's "Make an Offer" button opens this same offer sheet (no duplicate
-  // lead path) by dispatching a window event.
+  // The sticky sub-nav's "Make an Offer" button and the photo lightbox's "In Person Tour" /
+  // "Make an Offer" CTAs open these same sheets (no duplicate lead path) via window events.
   useEffect(() => {
-    const open = () => setModal("offer");
-    window.addEventListener("listing:make-offer", open);
-    return () => window.removeEventListener("listing:make-offer", open);
+    const openOffer = () => setModal("offer");
+    const openTourEv = () => setModal("tour");
+    window.addEventListener("listing:make-offer", openOffer);
+    window.addEventListener("listing:request-tour", openTourEv);
+    return () => {
+      window.removeEventListener("listing:make-offer", openOffer);
+      window.removeEventListener("listing:request-tour", openTourEv);
+    };
   }, []);
 
   const openTour = (dateKey?: string) => {

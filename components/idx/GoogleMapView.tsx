@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { boundsOfPins, chipPrice, MAP_FONT, popupHtml, spreadPins, type MapViewProps } from "./map-shared";
+import { loadMaps } from "@/lib/idx/maps-loader";
 
 /** Official Google Maps results map (live-site parity — Brivity renders Google Maps).
  * Loads only when NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set; SearchClient falls back to the
@@ -16,21 +17,6 @@ declare global {
   var google: any;
 }
 
-let loader: Promise<void> | null = null;
-function loadMaps(key: string): Promise<void> {
-  if (typeof google !== "undefined" && google?.maps?.Map) return Promise.resolve();
-  if (loader) return loader;
-  loader = new Promise((resolve, reject) => {
-    const s = document.createElement("script");
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&loading=async&callback=__rltMapsReady`;
-    s.async = true;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).__rltMapsReady = () => resolve();
-    s.onerror = () => reject(new Error("Google Maps failed to load"));
-    document.head.appendChild(s);
-  });
-  return loader;
-}
 
 export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);

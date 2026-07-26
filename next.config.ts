@@ -34,7 +34,7 @@ const CSP = [
   // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
   // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://www.google.com https://googleads.g.doubleclick.net",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://streetviewpixels-pa.googleapis.com https://www.google.com https://googleads.g.doubleclick.net",
   "font-src 'self' data:",
   // …plus Supabase (client accounts / auth): sign-in, token refresh, and portal reads/writes
   // go to our project origin https://<ref>.supabase.co over the anon key (docs/CLIENT-ACCOUNTS.md).
