@@ -1,5 +1,29 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ROUND 8B 2026-07-25 PM (owner: enable maps yourself + tour-in-popup + photo variety):
+## (A) GEOCODING API ENABLED by me via Chrome (owner logged into GCP, authuser=2, project
+##     realtylt-crm): GCP -> that project -> Geocoding API -> Enable. The Maps key already listed
+##     Geocoding in its 35-API allowlist. VERIFIED: prod geocode now returns OK (was REQUEST_DENIED)
+##     -> Street View + Map View tabs LIVE + rendering real imagery on the listing gallery. No code
+##     change needed. (Street View uses only Maps JS; Map + Street View both need Geocoding, now on.)
+## (B) TOUR-IN-POPUP FIX (commit): the gallery "In Person Tour" used to CLOSE the lightbox + jump to
+##     the box below the pics. Owner wants live behavior: the form pops up OVER the pics, fillable
+##     there. Root cause of first attempt failing: the tour Sheet lived inside the sticky right-rail's
+##     stacking context, so z-index couldn't beat the fullscreen gallery -> it rendered BEHIND the
+##     photos. FIX: Sheet now portals to document.body (createPortal) at z-[1000001] over the gallery's
+##     z-[1000000], and the gallery stays open. VERIFIED: both dialogs open, "Schedule a tour" centered
+##     over dimmed photos, 0 lead posts until submit, returns to gallery on close.
+## (C) PHOTO-VARIETY ("random coming soon logo") — CENSUS of 60 newest active listings:
+##     11 full / 36 partial(cover+some) / 7 photos-in-feed-but-0-serve(mir=0, brand-new) / 6 photoless.
+##     ROOT CAUSE: my round-7/8 --covers-only backfills capped recent listings' mirror at 1 photo, and
+##     they don't re-enter the hourly delta to get completed (cron does full cap-50 but only for CHANGED
+##     listings). OLD listings (pre-2026-07-20 FEED COMPLETE) still have full-gallery objects in Storage
+##     (my route probe serves them). FIX RUNNING: watermark reset to 2026-07-18 + full-gallery backfill
+##     (--cap 50 --max-pages 4 --concurrency 2, bounded, chain + stop-on-429) to COMPLETE the recent
+##     zone's galleries. Objects already present are skipped; only missing gallery photos download.
+##     Re-run the census after to confirm partial->full. The 7 brand-new (mir=0) self-heal on the next
+##     hourly cron (cap-50). tsc + 382/382 mine throughout.
+##
 ## ROUND 8 DONE 2026-07-25 PM (owner: gallery popup parity + placeholder + loading-pic bug;
 ## done SOLO in the main session, no subagents, on Opus 4.8). All pushed + prod-verified.
 ## (1) GALLERY-PHOTOS REGRESSION FIXED (commit media route): the round-7 re-baseline's full-JSONB
