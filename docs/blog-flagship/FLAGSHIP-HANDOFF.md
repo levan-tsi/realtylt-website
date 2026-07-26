@@ -97,19 +97,22 @@ glyphs, no `///`-style tech garnish (the owner had me strip a `///` this session
 AI-generated). Restraint = luxury; the owner rejects anything that looks vibe-coded/AI-generic.
 
 ## RENDER + VERIFY HARNESS (gotchas that cost real time — don't relearn them)
-- Website dev server is NOT the thing on :3000 (that's another project). Run its own:
-  `npx next dev -p 3100` from `C:\Users\Levan\realtylt-website`; view at
-  `http://localhost:3100/blog/ai-chat-assistant-real-estate-website`.
-- Playwright lives in `realtylt-website-design` (and `realtylt-ai-page`), NOT in realtylt-website or
-  the scratchpad — run shoot scripts from a repo that has it.
-- git-bash mangles a leading-slash URL arg into `C:/Program Files/Git/...` → prefix node calls with
-  `MSYS_NO_PATHCONV=1`. Node fs can't write a `/c/Users/...` path → use `C:/Users/...` in scripts.
+- **SAME repo as `/website` → SAME dev-server discipline: ONE Next process per repo, on :3000.**
+  `netstat -ano | grep -E ':300[0-9]|:3100'` FIRST and KILL any leftover next process — a stale
+  SECOND server (e.g. the :3100 the previous session wrongly started) serves broken JS chunks and
+  corrupts `.next`. Reuse the :3000 server if one is up; else `npm run dev`. Test via
+  **127.0.0.1:3000** (wslrelay squats [::1]:3000). Never run two. (Correction: the previous session
+  used :3100 — do NOT; that's the documented corruption trap in the /website command.)
+- **Playwright IS in realtylt-website** — use `scripts/_scratch-shot.mjs <url> <outbase> [width]`
+  (quick shot) and `scripts/_scratch-map.mjs <url> <outbase>` (deep map, 1440+390 + inventory); write
+  scratch probes as `scripts/_scratch-*.mjs` (gitignored). Prefix node with
+  `export NODE_OPTIONS='--use-system-ca'` (AVG MITM). `MSYS_NO_PATHCONV=1` if a leading-slash URL arg
+  gets mangled to `C:/Program Files/Git/...`.
 - Full-page captures show sections BLACK/empty because `.reveal` sits at opacity:0 until the scroll
   observer fires → capture with Playwright `reducedMotion: 'reduce'` (the CSS forces reveal content
   visible under reduced-motion). READ every PNG with your own eyes.
 - Next dev "Fast Refresh had to perform a full reload" can make `generateStaticParams` routes 404
   until a clean dev-server restart — NOT a code bug (it compiles clean); restart to confirm.
-- The previous session left a dev server running on :3100; a fresh session should restart it clean.
 
 ## DEPLOY
 Vercel git-linked: push to `main` auto-deploys **production** (`realtylt-website.vercel.app` — the
