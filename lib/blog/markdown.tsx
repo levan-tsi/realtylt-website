@@ -69,12 +69,19 @@ function inline(text: string, keyBase: string): ReactNode[] {
   return out;
 }
 
+/** A standalone `[[scene:key]]` line. The flagship rendering path swaps these for full-bleed
+ * scene components; every other path drops them, so a marker can never leak onto the page as
+ * literal text (including in a body published from the CRM). */
+const SCENE_MARKER = /^\s*\[\[scene:([a-z0-9-]+)\]\]\s*$/;
+
 /** One rendered block, plus heading metadata so the page can group blocks into <section>s
- * and give each an anchor. `id`/`headingLevel` are set only for headings. */
+ * and give each an anchor. `id`/`headingLevel` are set only for headings; `scene` only for
+ * a scene marker (whose `node` is null — it renders nothing on its own). */
 interface Block {
   node: ReactNode;
   id?: string;
   headingLevel?: number;
+  scene?: string;
 }
 
 /** Markdown → block records. The single parser behind both `renderMarkdown` (flat nodes)
@@ -92,6 +99,15 @@ function parseBlocks(markdown: string): Block[] {
     const line = lines[i];
 
     if (line.trim() === "") {
+      i++;
+      continue;
+    }
+
+    // [[scene:key]] — a flagship scene slot. Checked before every other block so the
+    // marker is never mistaken for a paragraph.
+    const scene = SCENE_MARKER.exec(line);
+    if (scene) {
+      blocks.push({ scene: scene[1], node: null });
       i++;
       continue;
     }
@@ -242,7 +258,9 @@ function parseBlocks(markdown: string): Block[] {
 
 /** Markdown → React nodes. Never returns HTML strings. */
 export function renderMarkdown(markdown: string): ReactNode[] {
-  return parseBlocks(markdown).map((b) => b.node);
+  return parseBlocks(markdown)
+    .filter((b) => b.scene === undefined)
+    .map((b) => b.node);
 }
 
 /** A run of blocks under one rendered <h2>. The lead run before the first h2 has a null
@@ -260,6 +278,8 @@ export function renderMarkdownSections(markdown: string): ArticleSection[] {
   let current: ArticleSection = { id: "lead", headingId: null, nodes: [] };
 
   for (const b of blocks) {
+    // Scene markers belong to the flagship layout only — the standard template drops them.
+    if (b.scene !== undefined) continue;
     // A rendered <h2> (markdown level 1 or 2) opens a new section.
     if (b.headingLevel !== undefined && b.headingLevel <= 2) {
       if (current.nodes.length) sections.push(current);
@@ -270,4 +290,46 @@ export function renderMarkdownSections(markdown: string): ArticleSection[] {
   }
   if (current.nodes.length) sections.push(current);
   return sections;
+}
+
+/** One band of the flagship layout: either a run of prose (rendered in the measured reading
+ * column) or a full-bleed scene that breaks out of it. */
+export type FlagshipBand =
+  | { kind: "prose"; nodes: ReactNode[] }
+  | { kind: "scene"; scene: string };
+
+/** True when a body opts into the flagship layout, i.e. it places at least one scene. The
+ * marker IS the flag: no separate field to keep in sync, and a CRM-published body can opt in
+ * the same way a static one does. */
+export function hasScenes(markdown: string): boolean {
+  return markdown
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .some((l) => SCENE_MARKER.test(l));
+}
+
+/** Markdown → alternating prose / scene bands. Prose keeps its ordinary rendering (and its
+ * heading anchors), so the crawlable article is unchanged in the DOM; only the scenes are
+ * lifted out to render full-bleed between the prose bands. */
+export function renderFlagshipBands(markdown: string): FlagshipBand[] {
+  const bands: FlagshipBand[] = [];
+  let run: ReactNode[] = [];
+
+  const flushProse = () => {
+    if (run.length) {
+      bands.push({ kind: "prose", nodes: run });
+      run = [];
+    }
+  };
+
+  for (const b of parseBlocks(markdown)) {
+    if (b.scene !== undefined) {
+      flushProse();
+      bands.push({ kind: "scene", scene: b.scene });
+    } else {
+      run.push(b.node);
+    }
+  }
+  flushProse();
+  return bands;
 }

@@ -23,6 +23,8 @@ What it means in practice is smaller and more brutal than it sounds. It does not
 
 So the question is not whether you are a better agent than the one who answered at 11:41pm. You probably are. The question is whether you were in the room.
 
+[[scene:response-gap]]
+
 ## What an AI chat assistant actually does
 
 Strip away the marketing and it is a text conversation on your own website, answered by a language model, connected to the systems that make the answer true.

@@ -7,7 +7,10 @@ import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleToc } from "@/components/blog/ArticleToc";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareRow } from "@/components/blog/ShareRow";
+import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
+import { renderScene } from "@/components/blog/scenes/registry";
 import { fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
+import { hasScenes, renderFlagshipBands } from "@/lib/blog/markdown";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
 import { extractToc, readingTime } from "@/lib/blog/toc";
 import { SITE } from "@/lib/site";
@@ -72,7 +75,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const url = articleUrl(post);
   const minutes = readingTime(bodyText(post));
   const toc = post.body.kind === "markdown" ? extractToc(post.body.markdown) : [];
-  const hasToc = toc.length >= 3;
+  // Flagship: a body that places at least one [[scene:…]] renders as full-bleed scenes
+  // interleaved with the reading column, and opens on a bespoke cold open instead of the
+  // standard hero. The sticky ToC rail is deliberately dropped there — a floating rail
+  // alongside edge-to-edge scenes reads as a layout bug, not a feature.
+  const flagship = post.body.kind === "markdown" && hasScenes(post.body.markdown);
+  const hasToc = !flagship && toc.length >= 3;
+  const bands = post.body.kind === "markdown" && flagship ? renderFlagshipBands(post.body.markdown) : [];
 
   const related = (await getArticles()).filter((a) => a.slug !== post.slug).slice(0, 3);
 
@@ -114,7 +123,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <ReadingProgress targetId="article-root" />
 
       <article id="article-root">
-        {/* ── Hero */}
+        {/* ── Hero. The flagship opens on scene 1 (the cold open) instead. */}
+        {flagship ? (
+          <ColdOpen
+            title={post.title}
+            excerpt={post.excerpt}
+            author={post.author}
+            dateLabel={fmtDate(post.date)}
+            dateTime={post.date}
+            minutes={minutes}
+            url={url}
+          />
+        ) : (
         <header className="relative isolate overflow-hidden bg-ink text-paper">
           <div
             aria-hidden
@@ -170,8 +190,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
           <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
         </header>
+        )}
 
-        {/* ── Body */}
+        {/* ── Body. Flagship: full-bleed scenes alternating with the reading column. The
+            prose is rendered exactly as it is everywhere else, so the crawlable article and
+            its heading anchors are unchanged; only the scenes break the measure. */}
+        {flagship ? (
+          <div>
+            {bands.map((band, i) =>
+              band.kind === "scene" ? (
+                <div key={`scene-${i}`}>{renderScene(band.scene)}</div>
+              ) : (
+                <div key={`prose-${i}`} className="mx-auto max-w-6xl px-4 py-16 md:py-24 lg:px-8">
+                  <div className="prose-custom mx-auto max-w-[44rem]">{band.nodes}</div>
+                </div>
+              ),
+            )}
+            <div className="mx-auto max-w-6xl px-4 pb-20 lg:px-8">
+              <div className="mx-auto max-w-[44rem]">{endCap}</div>
+            </div>
+          </div>
+        ) : (
         <div className="mx-auto max-w-6xl px-4 py-11 md:py-14 lg:px-8">
           {hasToc ? (
             // Reading cluster: a sticky ToC rail on the LEFT, the ~66ch article to its right,
@@ -231,6 +270,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </>
           )}
         </div>
+        )}
 
         {/* ── Related */}
         {related.length > 0 && (
