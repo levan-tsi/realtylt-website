@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import { FourMoves } from "./FourMoves";
 import { LeadsCalculator } from "./LeadsCalculator";
+import { PullQuote } from "./PullQuote";
 import { ResponseGap } from "./ResponseGap";
 
 /** The flagship scene registry.
@@ -14,6 +16,8 @@ import { ResponseGap } from "./ResponseGap";
 const SCENES: Record<string, () => ReactNode> = {
   "response-gap": ResponseGap,
   "leads-calculator": LeadsCalculator,
+  "four-moves": FourMoves,
+  "pull-quote": PullQuote,
 };
 
 export function renderScene(key: string): ReactNode {

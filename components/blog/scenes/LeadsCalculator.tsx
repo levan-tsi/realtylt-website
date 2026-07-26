@@ -67,7 +67,9 @@ export function LeadsCalculator() {
               Form fills, chat starts, is-this-still-available texts.
             </p>
             <div className="mt-5 flex items-baseline gap-5">
-              <span className="w-[4.5rem] shrink-0 text-4xl font-light tabular-nums tracking-[-0.02em] text-ink md:text-5xl">
+              {/* Fixed width so the slider never shifts as the number grows, sized for the
+                  widest value the range can produce (200 / $30,000), not the default. */}
+              <span className="w-[5.5rem] shrink-0 text-4xl font-light tabular-nums tracking-[-0.02em] text-ink md:text-5xl">
                 {inquiries}
               </span>
               <input
@@ -113,7 +115,7 @@ export function LeadsCalculator() {
               Your average commission per closed deal
             </label>
             <div className="mt-5 flex items-baseline gap-5">
-              <span className="w-[4.5rem] shrink-0 text-2xl font-light tabular-nums tracking-[-0.02em] text-ink md:text-3xl">
+              <span className="w-[7.5rem] shrink-0 text-2xl font-light tabular-nums tracking-[-0.02em] text-ink md:text-3xl">
                 {money(commission)}
               </span>
               <input

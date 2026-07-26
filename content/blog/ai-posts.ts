@@ -33,10 +33,7 @@ Strip away the marketing and it is a text conversation on your own website, answ
 
 The version we run does four things:
 
-1. **It answers immediately, at any hour.** Not a canned reply. An actual answer to the actual question.
-2. **It searches the live MLS.** Ask it for three bedrooms under $600k in Beacon and it queries the MLS Grid feed and tells you what is genuinely active right now, not what was active when somebody last exported a spreadsheet.
-3. **It moves to a channel people open.** Matching listings go out by text. People read texts. People do not read the fourth email from an agent they have never met.
-4. **It captures what it learns.** Name, number, price band, area, timeline, and the transcript, all written to the CRM so your callback starts from what they said rather than from a blank record.
+[[scene:four-moves]]
 
 The last one is the one people underrate. A lead that arrives with a transcript attached is a completely different object from a lead that arrives as a name and an email address. You already know what they want before you dial.
 
@@ -50,7 +47,7 @@ It does not know things it cannot verify. If a buyer asks whether the seller wil
 
 And it does not pretend to be a person. Ours introduces itself as an assistant. In practice, nobody minds. What people mind is waiting.
 
-> The measure of an AI assistant is not how human it sounds. It is whether the answer was correct, whether it was immediate, and whether a real person showed up when it mattered.
+[[scene:pull-quote]]
 
 ## The honest objections
 
