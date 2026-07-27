@@ -592,8 +592,14 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           <h2 id={titleId} className="text-2xl font-light text-ink">
             Make an offer
           </h2>
+          {/* A feed row can arrive without a usable ListPrice. This used to be
+              listing.price.toLocaleString(), which throws on one, taking the whole offer
+              modal down on the flagship conversion path. Drop the clause instead. */}
           <p className="mt-1 text-sm text-stone">
-            {listing.address} · listed at ${listing.price.toLocaleString("en-US")}
+            {listing.address}
+            {Number.isFinite(listing.price) && listing.price > 0
+              ? ` · listed at $${listing.price.toLocaleString("en-US")}`
+              : ""}
           </p>
 
           <label htmlFor="offer-amt" className="mt-5 block text-xs font-bold uppercase tracking-[0.14em] text-stone">

@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { formatPrice, priceLabel } from "./ListingCard";
 
@@ -44,5 +46,33 @@ describe("priceLabel", () => {
     expect(priceLabel({ price: null, propertyType: "Rental" })).toBe("Price on request");
     expect(priceLabel({ price: undefined, propertyType: "Rental" })).toBe("Price on request");
     expect(priceLabel({ price: 0, propertyType: "Rental" })).toBe("Price on request");
+  });
+});
+
+describe("no listing surface calls .toLocaleString on a raw feed price", () => {
+  // `price.toLocaleString(...)` throws on the null the feed is allowed to send, and these
+  // are all client components, so the throw takes the surrounding page down rather than
+  // degrading one number. Either go through formatPrice/priceLabel or guard at the call.
+  const SURFACES = [
+    "components/idx/ListingCard.tsx",
+    "components/listing/ListingDetail.tsx",
+    "components/leads/ListingLeadCTAs.tsx",
+    "components/search/SearchClient.tsx",
+  ];
+
+  it.each(SURFACES)("%s", (file) => {
+    const src = fs
+      .readFileSync(path.join(process.cwd(), file), "utf8")
+      // Drop comments so the explanations of this very rule do not trip it.
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    const lines = src.split("\n");
+    const unguarded = lines
+      .map((line, i) => [i, line] as const)
+      .filter(([, line]) => /\bprice\.toLocaleString\(/.test(line))
+      // A raw call is fine when a finite/positive check guards it within the same expression
+      // (the offer modal puts the ternary test on the line above).
+      .filter(([i]) => !/Number\.isFinite\(/.test(lines.slice(Math.max(0, i - 3), i + 1).join("\n")));
+    expect(unguarded.map(([i, l]) => `${i + 1}: ${l.trim()}`)).toEqual([]);
   });
 });
