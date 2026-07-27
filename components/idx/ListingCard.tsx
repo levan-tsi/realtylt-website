@@ -112,7 +112,7 @@ export function ListingCard({
               {chips.map((c) => (
                 <span
                   key={c}
-                  className="bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper"
+                  className="rounded-lg bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper"
                 >
                   {c}
                 </span>
