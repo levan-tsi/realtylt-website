@@ -8,7 +8,9 @@ import { ArticleToc } from "@/components/blog/ArticleToc";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareRow } from "@/components/blog/ShareRow";
 import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
-import { renderScene } from "@/components/blog/scenes/registry";
+import { FlagshipToc } from "@/components/blog/FlagshipToc";
+import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
+import { FLAGSHIP_TOC } from "@/content/blog/ai-chat-scenes";
 import { fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
 import { hasScenes, renderFlagshipBands } from "@/lib/blog/markdown";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
@@ -121,6 +123,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       ))}
 
       <ReadingProgress targetId="article-root" />
+      {flagship && <FlagshipToc items={FLAGSHIP_TOC} />}
 
       <article id="article-root">
         {/* ── Hero. The flagship opens on scene 1 (the cold open) instead. */}
@@ -197,16 +200,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             its heading anchors are unchanged; only the scenes break the measure. */}
         {flagship ? (
           <div>
+            {/* Each band is tagged data-band so the floating ToC can flip its own contrast as
+                it passes over black, navy, mist and white. Scenes also carry an anchor id so
+                a visual is a real navigation destination, not just prose between pictures. */}
             {bands.map((band, i) =>
               band.kind === "scene" ? (
-                <div key={`scene-${i}`}>{renderScene(band.scene)}</div>
+                <div key={`scene-${i}`} id={`scene-${band.scene}`} data-band={sceneBand(band.scene)}>
+                  {renderScene(band.scene)}
+                </div>
               ) : (
-                <div key={`prose-${i}`} className="mx-auto max-w-6xl px-4 py-16 md:py-24 lg:px-8">
+                <div
+                  key={`prose-${i}`}
+                  data-band="light"
+                  className="mx-auto max-w-6xl px-4 py-16 md:py-24 lg:px-8"
+                >
                   <div className="prose-custom mx-auto max-w-[44rem]">{band.nodes}</div>
                 </div>
               ),
             )}
-            <div className="mx-auto max-w-6xl px-4 pb-20 lg:px-8">
+            <div data-band="light" className="mx-auto max-w-6xl px-4 pb-20 lg:px-8">
               <div className="mx-auto max-w-[44rem]">{endCap}</div>
             </div>
           </div>

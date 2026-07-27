@@ -29,7 +29,10 @@ export function ColdOpen({
   url: string;
 }) {
   return (
-    <header className="cold-open relative isolate flex min-h-[82vh] items-center overflow-hidden bg-ink text-paper md:min-h-[88vh]">
+    <header
+      data-band="dark"
+      className="cold-open relative isolate flex min-h-[82vh] items-center overflow-hidden bg-ink text-paper md:min-h-[88vh]"
+    >
       <style>{`
         @keyframes cold-open-breath {
           0%, 100% { opacity: 0.62; }

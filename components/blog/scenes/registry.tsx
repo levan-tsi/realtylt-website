@@ -14,17 +14,34 @@ import { Teardown } from "./Teardown";
  *
  * Every scene is full-bleed and self-contained: it owns its own layout, background and CSS,
  * and must read as a finished still (carousel slide) as well as a scroll moment.
+ *
+ * `band` declares whether the scene paints a dark or light field. The floating table of
+ * contents reads it to flip its own contrast as it passes over each band, which is the one
+ * problem the service-page rail never had to solve (components/blog/FlagshipToc.tsx).
  */
-const SCENES: Record<string, () => ReactNode> = {
-  "response-gap": ResponseGap,
-  "leads-calculator": LeadsCalculator,
-  "four-moves": FourMoves,
-  "pull-quote": PullQuote,
-  teardown: Teardown,
-  funnel: Funnel,
+interface SceneDef {
+  Component: () => ReactNode;
+  band: "dark" | "light";
+}
+
+const SCENES: Record<string, SceneDef> = {
+  "response-gap": { Component: ResponseGap, band: "dark" },
+  "leads-calculator": { Component: LeadsCalculator, band: "light" },
+  "four-moves": { Component: FourMoves, band: "dark" },
+  "pull-quote": { Component: PullQuote, band: "dark" },
+  teardown: { Component: Teardown, band: "light" },
+  funnel: { Component: Funnel, band: "dark" },
 };
 
 export function renderScene(key: string): ReactNode {
-  const Scene = SCENES[key];
-  return Scene ? <Scene /> : null;
+  const def = SCENES[key];
+  if (!def) return null;
+  const Scene = def.Component;
+  return <Scene />;
+}
+
+/** Dark or light field, for the floating ToC's contrast. An unknown key renders nothing, so
+ * "light" is the harmless default. */
+export function sceneBand(key: string): "dark" | "light" {
+  return SCENES[key]?.band ?? "light";
 }

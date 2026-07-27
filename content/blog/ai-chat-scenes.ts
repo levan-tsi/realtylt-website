@@ -17,6 +17,33 @@ export interface Move {
   body: string;
 }
 
+/** The flagship's on-page table of contents, in document order.
+ *
+ * Curated rather than derived, for the same reason the service pages curate theirs: the rail
+ * shows one short line per row, and a full H2 like "The number everyone quotes, and what it
+ * really means" does not fit. Prose ids are the slugified headings from lib/blog/toc.ts;
+ * scene ids are `scene-<key>`, applied by the flagship layout in app/blog/[slug]/page.tsx.
+ *
+ * `scene: true` marks a visual destination so the rail can tick it differently: the reader
+ * can see there is something to LOOK at there, not just more prose.
+ *
+ * Deliberately omits the pull quote and the closing scene. A quote is not somewhere you
+ * navigate back to, and the close is where the page ends anyway. Keep the ids in sync with
+ * the markdown headings and the scene markers; scripts/_scratch-toc.mjs asserts every row
+ * resolves to a real element. */
+export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
+  { id: "the-number-everyone-quotes-and-what-it-really-means", label: "The number" },
+  { id: "scene-response-gap", label: "The gap", scene: true },
+  { id: "scene-leads-calculator", label: "Your numbers", scene: true },
+  { id: "what-an-ai-chat-assistant-actually-does", label: "What it does" },
+  { id: "scene-four-moves", label: "Four moves", scene: true },
+  { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+  { id: "scene-teardown", label: "The teardown", scene: true },
+  { id: "the-honest-objections", label: "Honest objections" },
+  { id: "where-it-goes-wrong", label: "Where it goes wrong" },
+  { id: "what-to-do-about-it", label: "What to do" },
+];
+
 /** One turn of the teardown conversation. */
 export interface Turn {
   who: "visitor" | "assistant";
