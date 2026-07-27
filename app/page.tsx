@@ -13,7 +13,7 @@ import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { HomeHeroVideo } from "@/components/home/HomeHeroVideo";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
-import { getIdxClient, isSampleData } from "@/lib/idx";
+import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { COUNTIES, SERVED_AREAS } from "@/lib/site";
 import { boroughPath } from "@/content/boroughs";
 
@@ -31,9 +31,11 @@ export default async function HomePage() {
   // Pull a 24-deep pool per rail (exactly 3 pages of 8) so the rails page like live's.
   const [featured, fresh] = await Promise.all([idx.getFeatured(24), idx.getNew(24)]);
   const fixture = isSampleData(); // after the awaits — reflects what was actually served
-  const dataLastUpdated =
-    [...featured, ...fresh].map((l) => l.modificationTimestamp).sort().pop() ??
-    new Date().toISOString();
+  // The feed's refresh time, NOT the newest edit among whatever happens to be in these two rails.
+  // "Data last updated" is a claim about how current the SITE is, so deriving it from a handful of
+  // rail listings understates it: home read 5:01 AM while /search and the listing pages read
+  // 12:08 PM off the same feed. Same accessor every other surface uses.
+  const dataLastUpdated = await getDataLastUpdated(new Date().toISOString());
 
   return (
     <>
