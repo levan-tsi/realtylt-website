@@ -232,11 +232,11 @@ export async function ListingDetail({ id }: { id: string }) {
           <div>
             {/* Share lives in the sticky sub-nav only — one Share control on the page, like live. */}
             <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">
-              <Link href="/search" className="hover:text-ink">Search</Link>
+              <Link href="/search" className="inline-flex min-h-6 items-center hover:text-ink">Search</Link>
               {county && (
                 <>
                   {" / "}
-                  <Link href={`/top-areas/${county.slug}`} className="hover:text-ink">
+                  <Link href={`/top-areas/${county.slug}`} className="inline-flex min-h-6 items-center hover:text-ink">
                     {county.name}
                   </Link>
                 </>
@@ -253,7 +253,7 @@ export async function ListingDetail({ id }: { id: string }) {
                 {!isRental && Number.isFinite(estMonthly) && estMonthly > 0 && (
                   <a
                     href="#payment"
-                    className="font-mono text-sm text-stone underline decoration-ink/20 underline-offset-4 hover:text-ink"
+                    className="inline-flex min-h-6 items-center font-mono text-sm text-stone underline decoration-ink/20 underline-offset-4 hover:text-ink"
                   >
                     Est. {fmtMoney(estMonthly)}/mo
                   </a>
@@ -288,7 +288,7 @@ export async function ListingDetail({ id }: { id: string }) {
                 Know your budget before you tour.{" "}
                 <Link
                   href="/financing"
-                  className="font-medium text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
+                  className="inline-flex min-h-6 items-center font-medium text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
                 >
                   Get pre-qualified
                 </Link>
@@ -409,7 +409,7 @@ export async function ListingDetail({ id }: { id: string }) {
                 </div>
                 <p className="mb-5 mt-4 text-sm text-stone">
                   Tours, questions, offers: call{" "}
-                  <a href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`} className="font-medium text-ink underline decoration-ink/20 underline-offset-4 hover:decoration-ink">
+                  <a href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`} className="inline-flex min-h-6 items-center font-medium text-ink underline decoration-ink/20 underline-offset-4 hover:decoration-ink">
                     {SITE.phone}
                   </a>{" "}
                   or send a note.
@@ -485,7 +485,7 @@ export async function ListingDetail({ id }: { id: string }) {
               {similarTotal > similar.length && (
                 <Link
                   href={similarHref}
-                  className="text-xs font-bold uppercase tracking-[0.14em] text-ink underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
+                  className="inline-flex min-h-6 items-center text-xs font-bold uppercase tracking-[0.14em] text-ink underline decoration-ink/20 underline-offset-4 hover:decoration-ink"
                 >
                   See all {similarTotal.toLocaleString("en-US")}
                 </Link>
