@@ -100,7 +100,12 @@ export function LeadForm({
       });
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !json.ok) {
-        setError(json.error ?? `Something went wrong on our end. Call or text ${SITE.phone} instead.`);
+        // A 4xx is about what the visitor typed ("A valid email is required.") — show it.
+        // A 5xx is about us, so say it in our own words WITH the number to call, whatever
+        // came back. Nobody should read "CRM webhook responded 500" on this page.
+        const ours = `Something went wrong on our end. Call or text ${SITE.phone} instead.`;
+        const theirs = res.status >= 400 && res.status < 500 ? json.error : undefined;
+        setError(theirs ?? ours);
         setStatus("error");
         return;
       }

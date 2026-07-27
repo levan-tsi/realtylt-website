@@ -66,7 +66,17 @@ export async function POST(req: Request) {
     }
 
     const result = await submitLead(parsed.lead);
-    return NextResponse.json(result, { status: result.ok ? 200 : 502 });
+    if (!result.ok) {
+      // submitLead's `error` is an INTERNAL reason ("CRM webhook responded 500", a fetch
+      // failure string). It means nothing to a visitor, tells them nothing they can do, and
+      // describes our plumbing. Keep it in the log; hand back the same line as the catch.
+      console.error("[api/lead] submit failed:", result.error);
+      return NextResponse.json(
+        { ok: false, error: "Something went wrong on our end. Please call or text instead." },
+        { status: 502 },
+      );
+    }
+    return NextResponse.json(result, { status: 200 });
   } catch (e) {
     // Never return a non-JSON 500 — the client always calls res.json().
     console.error("[api/lead]", e);
