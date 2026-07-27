@@ -185,3 +185,69 @@ Deliberately NOT changed: device-mockup bezels (`rounded-[30px]`, `rounded-[34px
 
 Also unify **the media corners with their container**: a `rounded-2xl` card holding a `0px` image
 reads as a mistake, which is part of what makes the current grids look unfinished.
+
+---
+
+### 4b. DONE — what the scale actually collapsed to
+
+Applied in `589256c` (search / listing / financing), `cb04648` (card grids, marketing pages,
+portal) and `8509eaf` (surfaces a rendered sweep can't see). Re-measured with
+`scripts/_scratch-radius-inventory.mjs` on the same 23 routes at 1440.
+
+**RAW — every element the selector matches, before → after** (same script logic both runs):
+
+```
+BUTTON  before  16px:66  4px:49  0px:47  50%:44  12px:32  2px:10  full:6  3px:4
+        after    8px:82 16px:69 12px:58  50%:47  0px:41  full:6   2px:1
+INPUT   before  12px:161 0px:53 20px:22
+        after   12px:163 0px:51 full:23
+CARD    before   0px:78  16px:6
+        after   16px:105 0px:15
+```
+
+Every hand-rolled `rounded-[2px]/[3px]/[4px]/[6px]` is gone from the app (`2px:1` is Google
+Maps' own fullscreen control, which we do not own). Cards inverted: 78 square / 6 round became
+105 round / 15 raw-square.
+
+**RAW over-counts.** It counts elements that have no corner to see, and those can never reach
+zero:
+
+* the header "Sign In" / "More" / "All Listings" text buttons — no background, no border;
+* the `#lead-hp` honeypot input, parked at `-9999px` on every page;
+* segmented-control children (FOR SALE/FOR RENT, GRID/MAP) — 0px each, but the group around
+  them is `overflow-hidden rounded-xl`, so they render round;
+* an `<img>` inside a rounded `overflow-hidden` card keeps `border-radius: 0` in computed style
+  while rendering with rounded corners, so the IMAGE row measures nothing useful.
+
+So the inventory also reports a **VISIBLE-BOX** tally: on screen, actually paints a box
+(background / border / shadow), and not already clipped round by an ancestor.
+
+```
+BUTTON  12px:48  8px:36  50%:24  full:6  ||  0px:2  2px:1
+INPUT   12px:163                         ||  0px:15
+CARD    16px:105                         ||  0px:0
+```
+
+Everything right of the `||` is deliberate and enumerated:
+
+| left square | why |
+|---|---|
+| `/financing` + `/listing` calculator fields (14) | underline fields (`border-b` only). They have no box; a radius would bend the underline. |
+| `/home-value` unit field + "Find Out" (2) | middle and right cap of one joined control. Only the group's outer corners round — `rounded-l-xl` on the address field, `rounded-l-none rounded-r-xl` on the button. |
+| `/listing` "Request a Tour" tab (1) | `border-b-2` underline tab, not a box. |
+| `gm-fullscreen-control` (1) | Google Maps' own UI. |
+
+Also left alone on purpose: device-mockup bezels **and their miniature internals** on
+`/buying` and `/selling` (a 3px corner inside a 200px-wide mock phone is at mockup scale — the
+real-scale mock listing card and its date chips on `/buying` were rounded); chat-bubble tails
+(`ServiceFigure`, the chat widget's 4px `border-bottom-left-radius`); inline `<code>` in
+`lib/blog/markdown.tsx`; full-bleed hero photographs, the RealtyLT logo and partner logos.
+
+`components/blog/**` needed no change — its article page measures 12px inputs, 12px buttons,
+no square cards, and its only square painted boxes are full-bleed sections.
+
+Two size-proportional sub-rules were used inside the scale, and are worth keeping:
+media ≥ ~120px gets `rounded-2xl`, thumbnails/strips get `rounded-lg`; and an inner block
+flush to a bordered card's edge takes the outer radius minus the border width
+(`rounded-2xl` card with `border-2` → `rounded-t-[14px]` header, which is why the /selling
+option cards have no white slivers at the top corners).
