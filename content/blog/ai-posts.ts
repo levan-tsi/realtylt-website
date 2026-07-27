@@ -15,6 +15,8 @@ You saw it at 8am. You called at 9. By then they had asked the same question on 
 
 That gap, the one between when people actually look and when we actually answer, is the most expensive thing in this business, and almost nobody measures it.
 
+[[scene:in-short]]
+
 ## The number everyone quotes, and what it really means
 
 Roughly 78% of leads close with whoever responds first. It gets repeated so often that it has stopped landing.
@@ -63,9 +65,7 @@ And it does not pretend to be a person. Ours introduces itself as an assistant. 
 
 Three failure modes, all avoidable, all common:
 
-- **It is not connected to anything.** An assistant with no MLS access can only talk in generalities, and a visitor works that out in about one question.
-- **The handoff is a dead end.** It qualifies a hot lead beautifully and then drops them into an inbox nobody watches. The value was never the captured email. It was the booked appointment.
-- **Nobody reads the transcripts.** They are the most useful sales material you will ever own, because they are a record of the exact questions your market is asking, in their own words. Most people never open them.
+[[scene:failure-modes]]
 
 ## What to do about it
 

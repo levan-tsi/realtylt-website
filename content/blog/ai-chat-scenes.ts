@@ -44,6 +44,40 @@ export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
   { id: "what-to-do-about-it", label: "What to do" },
 ];
 
+/** SCENE copy — "In short".
+ *
+ * Three lines that carry the whole argument, for the reader who is skimming and for the AI
+ * assistants that increasingly answer questions ON someone's behalf. Deliberately NOT a
+ * restatement of the hero excerpt (which sets up the problem): these are the answers.
+ *
+ * Every line is already argued somewhere in the body. A summary that claims something the
+ * article does not support is how a summary box becomes a liability. */
+export const IN_SHORT: string[] = [
+  "Being first buys the conversation. Roughly 78% of leads close with whoever responds first.",
+  "A good assistant answers at any hour, searches the live MLS, moves to text, and writes what it learns to the CRM.",
+  "It does not close, and it should say so rather than invent an answer it cannot verify.",
+];
+
+/** SCENE copy — the three failure modes.
+ *
+ * Lifted VERBATIM from the bullet list that used to sit under "Where it goes wrong" in
+ * AI_CHAT_ASSISTANT_POST. Same rule as the four moves: the scene REPLACES the list rather
+ * than repeating it. */
+export const FAILURE_MODES: Move[] = [
+  {
+    lead: "It is not connected to anything.",
+    body: "An assistant with no MLS access can only talk in generalities, and a visitor works that out in about one question.",
+  },
+  {
+    lead: "The handoff is a dead end.",
+    body: "It qualifies a hot lead beautifully and then drops them into an inbox nobody watches. The value was never the captured email. It was the booked appointment.",
+  },
+  {
+    lead: "Nobody reads the transcripts.",
+    body: "They are the most useful sales material you will ever own, because they are a record of the exact questions your market is asking, in their own words. Most people never open them.",
+  },
+];
+
 /** One turn of the teardown conversation. */
 export interface Turn {
   who: "visitor" | "assistant";

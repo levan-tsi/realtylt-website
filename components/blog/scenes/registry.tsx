@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
+import { FailureModes } from "./FailureModes";
 import { FourMoves } from "./FourMoves";
 import { Funnel } from "./Funnel";
+import { InShort } from "./InShort";
 import { LeadsCalculator } from "./LeadsCalculator";
 import { PullQuote } from "./PullQuote";
 import { ResponseGap } from "./ResponseGap";
@@ -25,11 +27,13 @@ interface SceneDef {
 }
 
 const SCENES: Record<string, SceneDef> = {
+  "in-short": { Component: InShort, band: "light" },
   "response-gap": { Component: ResponseGap, band: "dark" },
   "leads-calculator": { Component: LeadsCalculator, band: "light" },
   "four-moves": { Component: FourMoves, band: "dark" },
   "pull-quote": { Component: PullQuote, band: "dark" },
   teardown: { Component: Teardown, band: "light" },
+  "failure-modes": { Component: FailureModes, band: "light" },
   funnel: { Component: Funnel, band: "dark" },
 };
 
