@@ -12,10 +12,15 @@ import { describe, expect, it } from "vitest";
  * test in lib/blog/index.test.ts uses) because the behaviour lives in effects that need a
  * real browser to exercise; the browser proof is scripts/_scratch-focus.mjs.
  *
- * components/blog/** is owned by another workstream and is deliberately out of scope here.
+ * The two blog ToCs were first left out as another workstream's files. They carried the SAME
+ * defect, that workstream was idle with a clean tree, and the fix was already proven in
+ * ServiceToc — so they were fixed and pulled into scope rather than left as a known hole on a
+ * launch asset.
  */
 const OWNED_MODALS = [
   "components/auth/SignInModal.tsx",
+  "components/blog/ArticleToc.tsx",
+  "components/blog/FlagshipToc.tsx",
   "components/idx/ListingGallery.tsx",
   "components/leads/ListingLeadCTAs.tsx",
   "components/leads/QualifyingWizard.tsx",

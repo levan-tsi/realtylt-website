@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
 
 export interface FlagshipTocItem {
@@ -67,6 +67,7 @@ function useBandTone(): "dark" | "light" {
 export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
   const [activeId, setActiveId] = useScrollSpy(items.map((i) => i.id));
   const [open, setOpen] = useState(false);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const tone = useBandTone();
   const dark = tone === "dark";
 
@@ -88,6 +89,41 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  // The sheet says aria-modal, so it has to behave like one: focus lands inside it, the page
+  // behind neither scrolls nor takes Tab, and closing hands focus back to the trigger.
+  // Restoring by SELECTOR rather than by remembering document.activeElement is deliberate —
+  // the trigger unmounts as the sheet opens, so by the time this effect runs the active element
+  // is already <body> and the remembered node would be a dead end. (Same trap, same fix, as
+  // components/services/ServiceToc.tsx.)
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    sheetRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.querySelector<HTMLElement>("[data-toc-trigger]")?.focus();
+    };
+  }, [open]);
+
+  // Tab is trapped inside the sheet.
+  const onSheetKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== "Tab") return;
+    const f = sheetRef.current?.querySelectorAll<HTMLElement>(
+      'a[href],button:not([disabled]),textarea,input:not([disabled]),select,[tabindex]:not([tabindex="-1"])',
+    );
+    if (!f || f.length === 0) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }, []);
 
   const activeIndex = items.findIndex((i) => i.id === activeId);
   const activeLabel = items[activeIndex]?.label ?? items[0]?.label ?? "";
@@ -203,7 +239,14 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
         )}
 
         {open && (
-          <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label="On this page">
+          <div
+            ref={sheetRef}
+            onKeyDown={onSheetKeyDown}
+            className="fixed inset-0 z-[70]"
+            role="dialog"
+            aria-modal="true"
+            aria-label="On this page"
+          >
             <button
               type="button"
               aria-label="Close contents"
