@@ -5,6 +5,7 @@ import { Funnel } from "./Funnel";
 import { InShort } from "./InShort";
 import { LeadsCalculator } from "./LeadsCalculator";
 import { PullQuote } from "./PullQuote";
+import { ResponseCurve } from "./ResponseCurve";
 import { ResponseGap } from "./ResponseGap";
 import { Teardown } from "./Teardown";
 
@@ -28,6 +29,7 @@ interface SceneDef {
 
 const SCENES: Record<string, SceneDef> = {
   "in-short": { Component: InShort, band: "light" },
+  "response-curve": { Component: ResponseCurve, band: "light" },
   "response-gap": { Component: ResponseGap, band: "dark" },
   "leads-calculator": { Component: LeadsCalculator, band: "light" },
   "four-moves": { Component: FourMoves, band: "dark" },

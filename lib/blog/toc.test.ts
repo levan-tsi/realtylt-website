@@ -48,7 +48,12 @@ describe("extractToc", () => {
   });
 
   it("finds the six sections in each real article", () => {
-    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(6);
+    // The AI post now carries three ### questions inside its "Common questions" section, so
+    // its outline is 6 top-level sections + 3 questions. Assert the SECTION count directly
+    // rather than relaxing the number, so a heading going missing still fails this test.
+    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(6);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(3);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(9);
     expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(6);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
@@ -67,9 +72,21 @@ describe("readingTime", () => {
 });
 
 describe("extractFaqs", () => {
-  it("returns [] for the real posts (no FAQ section — never fabricated)", () => {
-    expect(extractFaqs(AI_CHAT_ASSISTANT_POST)).toEqual([]);
+  it("never fabricates: a post with no FAQ section still yields []", () => {
     expect(extractFaqs(WORKFLOW_AUTOMATION_POST)).toEqual([]);
+  });
+
+  it("pairs the AI post's real questions with their answers (drives FAQPage JSON-LD)", () => {
+    // The objections section was reshaped into "Common questions, answered honestly" with three
+    // ### questions, which is what makes the page emit FAQPage schema. These are the article's
+    // own words restructured, not invented Q&A, so assert the real questions are the ones found.
+    const faqs = extractFaqs(AI_CHAT_ASSISTANT_POST);
+    expect(faqs.map((f) => f.q)).toEqual([
+      "Will it annoy my visitors?",
+      "My leads want a human, not a bot",
+      "I already have a chatbot",
+    ]);
+    expect(faqs.every((f) => f.a.length > 40)).toBe(true);
   });
 
   it("parses ### questions inside a Frequently-asked section", () => {

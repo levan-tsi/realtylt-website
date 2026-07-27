@@ -21,6 +21,8 @@ That gap, the one between when people actually look and when we actually answer,
 
 Roughly 78% of leads close with whoever responds first. It gets repeated so often that it has stopped landing.
 
+[[scene:response-curve]]
+
 What it means in practice is smaller and more brutal than it sounds. It does not mean the fastest agent is the best agent. It means that being first buys you the conversation, and the conversation is the only thing that has ever sold a house. Everything you are good at happens after somebody picks up.
 
 So the question is not whether you are a better agent than the one who answered at 11:41pm. You probably are. The question is whether you were in the room.
@@ -53,13 +55,19 @@ And it does not pretend to be a person. Ours introduces itself as an assistant. 
 
 [[scene:teardown]]
 
-## The honest objections
+## Common questions, answered honestly
 
-**"It will annoy my visitors."** A bad one will. A pop-up that fires two seconds after landing and demands a phone number before it has been useful is an ad wearing a chat widget's clothes. The one worth running answers a question first and asks for a number once it has earned it.
+### Will it annoy my visitors?
 
-**"My leads want a human."** They do, eventually. What they want right now, at 11:40pm, is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client.
+A bad one will. A pop-up that fires two seconds after landing and demands a phone number before it has been useful is an ad wearing a chat widget's clothes. The one worth running answers a question first and asks for a number once it has earned it.
 
-**"I already have a chatbot."** If it is a decision tree with four buttons, you have a menu, not an assistant. The difference is whether it can answer a question nobody scripted in advance.
+### My leads want a human, not a bot
+
+They do, eventually. What they want right now, at 11:40pm, is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client.
+
+### I already have a chatbot
+
+If it is a decision tree with four buttons, you have a menu, not an assistant. The difference is whether it can answer a question nobody scripted in advance.
 
 ## Where it goes wrong
 

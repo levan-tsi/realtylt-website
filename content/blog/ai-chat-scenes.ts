@@ -39,10 +39,38 @@ export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
   { id: "scene-four-moves", label: "Four moves", scene: true },
   { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
   { id: "scene-teardown", label: "The teardown", scene: true },
-  { id: "the-honest-objections", label: "Honest objections" },
+  { id: "common-questions-answered-honestly", label: "Common questions" },
   { id: "where-it-goes-wrong", label: "Where it goes wrong" },
   { id: "what-to-do-about-it", label: "What to do" },
 ];
+
+/** SCENE 2b copy — the response curve.
+ *
+ * REAL third-party data, cited. The article leaned on "roughly 78% of leads close with whoever
+ * responds first" three times without ever sourcing it, which is a bad look on a page whose
+ * whole argument is honesty.
+ *
+ * These figures are from Harvard Business Review, "The Short Life of Online Sales Leads"
+ * (2011), reporting Dr James Oldroyd's Lead Response Management study of ~1.25 million leads
+ * across 29 companies: firms that tried to contact a lead within an hour were nearly 7 times
+ * likelier to qualify it than those that waited one more hour, and more than 60 times likelier
+ * than those that waited 24 hours or more.
+ *
+ * So the bars are RELATIVE odds indexed to the 24-hour case: 60x, 60/7 = 8.6x, 1x. The scene
+ * states the source and the sample on screen, and says plainly that it is cross-industry lead
+ * response research rather than a real-estate-specific study. */
+export const RESPONSE_CURVE = {
+  caption: "Relative odds of qualifying a lead, by how fast you respond",
+  bars: [
+    { label: "Within 1 hour", value: 60, display: "60x" },
+    { label: "One hour later", value: 8.6, display: "8.6x" },
+    { label: "After 24 hours", value: 1, display: "1x" },
+  ],
+  sourceText:
+    "Harvard Business Review, The Short Life of Online Sales Leads (2011), reporting Dr James Oldroyd's study of about 1.25 million leads across 29 companies.",
+  sourceHref: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+  note: "Cross-industry lead response research, not a real estate study. The pattern is what carries over.",
+};
 
 /** SCENE copy — "In short".
  *

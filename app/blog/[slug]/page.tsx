@@ -7,6 +7,7 @@ import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleToc } from "@/components/blog/ArticleToc";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareRow } from "@/components/blog/ShareRow";
+import { AuthorCard } from "@/components/blog/AuthorCard";
 import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
 import { FlagshipToc } from "@/components/blog/FlagshipToc";
 import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
@@ -219,7 +220,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               ),
             )}
             <div data-band="light" className="mx-auto max-w-6xl px-4 pb-20 lg:px-8">
-              <div className="mx-auto max-w-[44rem]">{endCap}</div>
+              <div className="mx-auto max-w-[44rem]">
+                <AuthorCard author={post.author} />
+                {endCap}
+              </div>
             </div>
           </div>
         ) : (
