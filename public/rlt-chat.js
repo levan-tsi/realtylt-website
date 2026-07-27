@@ -2,7 +2,7 @@
   'use strict';
 
   // ============================================================
-  // CONFIG â€” edit these
+  // CONFIG - edit these
   // ============================================================
   const CONFIG = {
     WEBHOOK_URL: 'https://n8n.srv1017745.hstgr.cloud/webhook/realtylt-chat',
@@ -19,13 +19,13 @@
   };
 
   // ============================================================
-  // GUARD â€” don't double-inject
+  // GUARD - don't double-inject
   // ============================================================
   if (window.__realtyltChatLoaded) return;
   window.__realtyltChatLoaded = true;
 
   // ============================================================
-  // SESSION ID â€” persist across page loads
+  // SESSION ID - persist across page loads
   // ============================================================
   function uuid() {
     // RFC4122-ish v4
@@ -73,7 +73,7 @@
   }
 
   // ============================================================
-  // STYLES â€” injected once
+  // STYLES - injected once
   // ============================================================
   const styleId = 'rlt-chat-styles';
   if (!document.getElementById(styleId)) {
@@ -315,7 +315,7 @@
   }
 
   // ============================================================
-  // DOM â€” build widget elements
+  // DOM - build widget elements
   // ============================================================
   const bubble = document.createElement('button');
   bubble.className = 'rlt-bubble';
@@ -336,12 +336,12 @@
         <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">LT</div>
         <div>
           <div class="rlt-header-title">${CONFIG.BRAND_NAME}</div>
-          <div class="rlt-header-sub">RealtyLT Â· RealtorÂ® in NY Â· Live MLS</div>
+          <div class="rlt-header-sub">RealtyLT · Realtor® in NY · Live MLS</div>
         </div>
       </div>
       <div class="rlt-header-actions">
         <button class="rlt-header-btn rlt-reset-btn" title="Start a new conversation">Reset</button>
-        <button class="rlt-header-btn rlt-close-btn" title="Close" aria-label="Close chat">âœ•</button>
+        <button class="rlt-header-btn rlt-close-btn" title="Close" aria-label="Close chat">✕</button>
       </div>
     </div>
     <div class="rlt-msgs" id="rlt-msgs"></div>
@@ -352,7 +352,7 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
-    <div class="rlt-footer">RealtyLT Â· Levan Tsiklauri, RealtorÂ®</div>
+    <div class="rlt-footer">RealtyLT · Levan Tsiklauri, Realtor®</div>
   `;
   document.body.appendChild(panel);
 
@@ -378,7 +378,7 @@
   function linkify(text) {
     // Match either an existing href="..." (to skip) or a bare URL (to linkify).
     return text.replace(/href="[^"]*"|(https?:\/\/[^\s<"]+)/g, function(match, rawUrl) {
-      if (!rawUrl) return match; // was an href="..." â€” leave it alone
+      if (!rawUrl) return match; // was an href="..." - leave it alone
       const trimmed = rawUrl.replace(/[.,;:!?)\]>]+$/, '');
       const trailing = rawUrl.substring(trimmed.length);
       return `<a href="${trimmed}" target="_blank" rel="noopener noreferrer">${trimmed}</a>${trailing}`;
@@ -391,7 +391,7 @@
     s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
-    // Markdown links [text](url) â€” strip XSS, then insert <a>
+    // Markdown links [text](url) - strip XSS, then insert <a>
     s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(_, txt, url) {
       const safeUrl = url.replace(/&amp;/g, '&').replace(/^javascript:/i, '');
       return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${txt}</a>`;
@@ -550,7 +550,7 @@
     try {
       const data = await callAgent(text);
       hideTyping();
-      const reply = (data && data.reply) ? data.reply : "Hmm, I didn't catch that â€” try again?";
+      const reply = (data && data.reply) ? data.reply : "Hmm, I didn't catch that. Try again?";
       addMessage('bot', reply);
       recordTurn('bot', reply);
       renderChips(data && Array.isArray(data.suggestions) ? data.suggestions : []);
@@ -574,7 +574,7 @@
   bubble.addEventListener('click', function() {
     panel.classList.add('rlt-open');
     bubble.style.display = 'none';
-    // Don't auto-focus on touch devices â€” it triggers the keyboard immediately, which is jarring
+    // Don't auto-focus on touch devices - it triggers the keyboard immediately, which is jarring
     if (!window.matchMedia('(pointer: coarse)').matches) {
       setTimeout(function() { inputEl.focus(); }, 350);
     }
