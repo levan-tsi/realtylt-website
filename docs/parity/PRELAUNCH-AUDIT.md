@@ -274,6 +274,35 @@ Lesson for the next design sweep: **an inventory keyed on element type will miss
 Measure by what a shape *looks* like (has a fill, has a box, is small) as well as by what tag it
 is.
 
+### 5. HARDENING PASS — real defects found by driving the states nobody looks at
+
+Commits `19f0d3c`, `78e1cc6`, `7089a45`, `2e20f00`, `d93bd74`, `23fcab1`, `bf285da`.
+Sweeps went wider than the audit's named items in every case (47 route/width combinations for
+tap targets, all 60 routes for meta), which is why several of these were not in section 3.
+
+| defect | why it mattered |
+|---|---|
+| **Every text control was 14px** | iOS Safari zooms in on focus below 16px and never zooms back, so *any* form on an iPhone stranded the visitor on a horizontally-scrolling page. Controls now floor at 16px below `md`; the `/search` filter strip opts out deliberately. |
+| **`/api/lead` leaked its plumbing** | On a CRM failure the visitor's error banner read *"CRM webhook responded 500"*. The route now logs the internal reason and returns a human line; the form shows server text for 4xx (real validation) and its own wording plus the phone number for 5xx. |
+| **One priceless feed row blanked the whole search grid** | `undefined.toLocaleString()` inside a card unmounts the entire list. Degrades to "Price on request" now. Honest scope: 1,200 live rows sampled, zero null prices — this is a guard against data we do not control, where the blast radius is a whole page. |
+| **Sign-in modal and the `/services/*` ToC sheet were not really modal** | Tab reached the page behind (12 and 8 presses), the page scrolled underneath, and Esc left focus on `<body>`. Worth knowing for next time: capturing `document.activeElement` inside the modal's own effect does **not** work — `autoFocus` has already moved focus, or the trigger has unmounted. The capture has to happen in the click handler. |
+| **`/saved` was a dead end without JS** | Showed "Loading your saved items…" forever, no explanation, no way out. |
+| **No print stylesheet** | The chat launcher printed on top of every page; sticky sub-nav and ToC rails floated over the content. |
+| Long addresses / 24px targets on the 404 and `/portal` | A 75-char address rendered a 530px card in a 390px viewport. |
+
+Tests went 447 → **459**. The agent's own browser probes finished at 472 assertions, 0 failures.
+
+Two disclosures from that pass worth keeping, both to its credit: it nearly filed a "pagination is
+broken" bug that was only dev-server compile latency, and an "XSS in listing data" bug that was its
+own probe substring-matching `innerHTML` — which still contains `onerror=alert` precisely *because*
+React escaped it. Both probes were corrected rather than the findings shipped.
+
+**Left for others, deliberately:** `components/blog/ArticleToc.tsx` and `FlagshipToc.tsx` have the
+same `aria-modal` gap that was fixed in `ServiceToc` (blog session owns those files); 10 service and
+11 blog titles exceed 65 chars once ` | RealtyLT` is appended (descriptions were the brief, titles
+are a separate call); `/portal/reports/<unknown-uuid>` stays HTTP 200 on purpose, because a 404
+would tell an anonymous caller which report ids exist.
+
 ### 4d. Unrelated defect found during this pass — the chat widget shipped mojibake
 
 `public/rlt-chat.js` had been double-encoded at some point (UTF-8 bytes read as Latin-1 and
