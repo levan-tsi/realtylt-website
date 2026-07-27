@@ -442,3 +442,39 @@ body {
     translate: 0 0;
   }
 }
+
+/* ── Print. Real-estate visitors print listing sheets and legal pages, and the site had no
+   print rules at all: the chat launcher sat on top of every printed page, and the sticky
+   listing sub-nav / ToC rails floated over the content. Nothing here changes the screen. */
+@media print {
+  /* Interactive-only chrome that means nothing on paper. */
+  .rlt-bubble,
+  .rlt-panel,
+  [data-toc],
+  [data-toc-trigger],
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* A stuck element either repeats on every sheet or covers the text under it. Matched by
+     token so the responsive variants are caught too, without escaping the colon. */
+  [class~="sticky"],
+  [class~="fixed"],
+  [class~="md:sticky"],
+  [class~="lg:sticky"],
+  [class~="xl:sticky"] {
+    position: static !important;
+  }
+
+  /* Keep a page break out of the middle of a heading or a card. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid-page;
+  }
+  article,
+  figure,
+  table {
+    break-inside: avoid-page;
+  }
+}

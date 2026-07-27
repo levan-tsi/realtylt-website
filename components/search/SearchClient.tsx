@@ -347,7 +347,12 @@ export function SearchClient() {
       onMouseEnter={() => setActiveId(l.id)}
       onMouseLeave={() => setActiveId((cur) => (cur === l.id ? null : cur))}
       onFocus={() => setActiveId(l.id)}
-      className={`scroll-mt-4 rounded-2xl transition-shadow ${
+      // min-w-0: a grid item defaults to min-width:auto, so the card's `truncate` address
+      // (white-space:nowrap) sets the track's min-content width to the FULL string and the
+      // whole grid grows past the viewport instead of the text ellipsing. Current feed data
+      // tops out at a 42-char address so nothing overflows today, but one longer row would
+      // break the page sideways on a phone.
+      className={`min-w-0 scroll-mt-4 rounded-2xl transition-shadow ${
         activeId === l.id ? "ring-2 ring-porchlight-deep ring-offset-2" : ""
       }`}
     >

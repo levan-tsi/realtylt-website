@@ -15,14 +15,25 @@ export function isLiveMlsPhoto(src: string | undefined): boolean {
   return !!src && (src.startsWith("/api/media/") || src.startsWith("http"));
 }
 
-export function formatPrice(n: number): string {
-  return `$${n.toLocaleString("en-US")}`;
+/** True only for a price we can actually print. */
+function hasPrice(n: unknown): n is number {
+  return typeof n === "number" && Number.isFinite(n) && n > 0;
+}
+
+/** A feed row can arrive without a usable ListPrice (auction, "call for price", a Coming Soon
+ * row that synced before pricing). `undefined.toLocaleString()` threw inside the card, and
+ * because every card renders inside one list, ONE such row blanked the entire search grid
+ * with a React error. It degrades to a label now. */
+export function formatPrice(n: number | null | undefined): string {
+  return hasPrice(n) ? `$${n.toLocaleString("en-US")}` : "Price on request";
 }
 
 /** Price label that reads correctly for rentals: a lease's feed price is the MONTHLY rent, so
  * rentals render "$X,XXX/mo"; everything for sale stays a plain total. */
-export function priceLabel(l: { price: number; propertyType?: string }): string {
-  return l.propertyType === "Rental" ? `${formatPrice(l.price)}/mo` : formatPrice(l.price);
+export function priceLabel(l: { price: number | null | undefined; propertyType?: string }): string {
+  const label = formatPrice(l.price);
+  if (!hasPrice(l.price)) return label; // never "Price on request/mo"
+  return l.propertyType === "Rental" ? `${label}/mo` : label;
 }
 
 /** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
@@ -131,7 +142,9 @@ export function ListingCard({
           </p>
           {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
           <div className="mt-2 flex items-end justify-between gap-2">
-            <p className="text-[11px] leading-snug text-stone">
+            {/* min-w-0 + break-words: a flex item is min-width:auto, so a long office name
+                would push this row wider than the card instead of wrapping inside it. */}
+            <p className="min-w-0 break-words text-[11px] leading-snug text-stone">
               Listed with{" "}
               {l.listAgentName ? (
                 <>
@@ -195,7 +208,7 @@ export function ListingCard({
           </p>
           {statsShort && <p className="mt-1 text-xs italic">{statsShort}</p>}
           <div className="mt-2 flex items-end justify-between gap-2">
-            <p className="text-[10px] italic leading-tight text-white/85">
+            <p className="min-w-0 break-words text-[10px] italic leading-tight text-white/85">
               Listed With {l.listOfficeName}
             </p>
             <span className="shrink-0 rounded-lg bg-ink px-4 py-1 text-sm text-paper transition-colors group-hover:bg-ink-soft">
