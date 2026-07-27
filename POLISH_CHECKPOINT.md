@@ -1,5 +1,55 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 10 — 2026-07-27: PRE-LAUNCH AUDIT (owner: "test everything, how secure is it,
+## what did we miss, and fix the corners"). FULL WRITE-UP: docs/parity/PRELAUNCH-AUDIT.md.
+##
+## >>> READ THAT DOC FIRST NEXT RUN. Section 0 is the launch checklist and the order matters.
+##
+## THE ONE THING THAT MUST HAPPEN BEFORE GOING LIVE: clear `NEXT_PUBLIC_SITE_URL` in the Vercel
+## env BEFORE removing `PRELAUNCH=1`. Every canonical, og:url, JSON-LD url and all 58 sitemap
+## entries currently emit realtylt-website.vercel.app. Harmless while noindex; an SEO own-goal the
+## moment indexing is on. lib/site.ts already defaults to realtylt.com when the var is UNSET.
+##
+## DESIGN (the owner's complaint: "some CTAs are rounded, some still have rough 90 degree angles"):
+## measured 8 different button radii shipping, 48 square buttons / 53 square inputs / 114 square
+## cards. Root cause: the shared system was ALREADY round (ui/Button + ui/Field = rounded-xl) but
+## older pages hand-rolled rounded-[2px]/[3px]/[4px]/[6px] instead of using it. Now one scale:
+## 8 badges · 12 buttons+inputs · 16 cards/panels · 24 feature panels · full pills. Visible-box
+## after: BUTTON 12px:48 8px:36 50%:24 · INPUT 12px:163 · CARD 16px:105, square 0.
+## I CAUGHT ONE CLASS THE SWEEP MISSED: status badges are <span>s, so a selector keyed on
+## button/input/card never saw them — 61 square badges were still shipping, incl. the New/Coming
+## Soon chips on every search card (the SAME chip was already 8px on the home rail). Now 3, all
+## mockup internals. LESSON: measure by what a shape LOOKS like (has a fill, has a box, is small),
+## not only by its tag.
+##
+## SECURITY (probed as an anonymous visitor, not just linted):
+## GOOD — no secrets in the browser bundle, all headers present, cron routes 401, RLS blocks leads /
+## contacts / chat_logs / n8n_chat_histories / market_reports / api_keys / chatbot_transcript_* ,
+## blog drafts not exposed, /api/lead well defended (per-IP throttle, content-type, 16KB cap,
+## honeypot), IDX endpoints bounded (pageSize clamp, PIN_CAP 800, county allowlist).
+## TWO OPEN, both needing a decision rather than a patch — see the doc:
+##   (1) cma_reports is ENUMERABLE by anon (published rows incl. the client name it was prepared
+##       for). Same class as the market_reports leak already fixed. NOT patched here because the
+##       CRM's public CMA page reads that table directly — the fix must ship across both repos.
+##   (2) raw MLS MediaURLs are readable from idx_listings via the anon key, which our own media
+##       route calls prohibited. Mitigated by ~1h expiry. Options in the doc; recommendation is to
+##       store proxy paths and keep raw URLs in transit only, scheduled as its own work.
+## FIXED: lead_phone_digits search_path pinned (behaviour-verified). Owner action left: enable
+## Supabase leaked-password protection (one dashboard toggle).
+##
+## ALSO FIXED THIS ROUND: CSP was silently killing Google Ads conversion tracking site-wide
+## (7 violations/page, then a second pass for the Maps font pair + the gtag conversion pixel host —
+## now 0 across 6 routes); the chat widget shipped literal mojibake to every visitor
+## ("RealtyLT Â· RealtorÂ®", "âœ•") because the file had been double-encoded; every text control
+## was 14px, which makes iOS Safari zoom in on focus and never zoom back on EVERY form;
+## /api/lead leaked "CRM webhook responded 500" to visitors; one priceless feed row could blank
+## the whole search grid; two dialogs claimed aria-modal but let Tab reach the page behind.
+##
+## VERIFIED BY ME (foreground): tsc clean · tests 411 → 459 · all routes 200 · 0 dead links across
+## 155 targets · 0 overflow at 1440/390/320 · tap targets <24px 11 → 0 · every meta description in
+## the 80-170 band · every page exactly one h1.
+
+
 ## ═══ ROUND 9 — 2026-07-26 (page: LISTING DETAIL). Orchestrator = Fable 5, ONE Opus build agent.
 ## Work order: docs/parity/PARITY-listing-detail.md (commit 031eb58) — live-vs-ours click-compare
 ## with measured box geometry, live's Start-an-Offer modal contents, and the mobile accordion gap.
