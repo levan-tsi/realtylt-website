@@ -121,7 +121,39 @@ Same rubric, same script, nothing moved. Deltas measured on the live page:
 **48.5 → 74/100.** Trust and GEO structure are now close to maxed. **Visual media is still the
 whole gap: 9 of 25.**
 
-## WHAT IT TAKES TO REACH 90-95
+## FINAL — 90.5 / 100 (2026-07-27, after the second fix round)
+
+Same rubric, same script, third run. Measured on the live page:
+
+`video: 1` · `imagesInBody: 2` · `inlineSvg: 10` (two of them real data graphics) ·
+`hasFaqSchema: true` · `authorPageLink: true` · `visibleUpdated: true` ·
+`dateModified: 2026-07-27` (was 2026-07-12) · `words: 1889` · webm serves 200 at 4.2MB.
+
+| Cat | Start | Round 1 | Final |
+|---|---|---|---|
+| A Substance | 17.5/25 | 19.5/25 | **19.5/25** |
+| B Trust | 7/20 | 18.5/20 | **18.5/20** |
+| C Visual media | 3/25 | 9/25 | **23/25** |
+| D Search/GEO | 11.5/20 | 17.5/20 | **20/20** |
+| E Experience | 9.5/10 | 9.5/10 | **9.5/10** |
+| | **48.5** | **74** | **90.5** |
+
+C went 3 → 23 on the strength of two real embeddable SVG graphics (the cited response curve and
+the system diagram), a 38s silent reel served from our own origin, and photography in the cold
+open and the author block. D is maxed.
+
+**What the remaining 9.5 is, honestly:**
+- **A1, 7/10 (-3): still no ORIGINAL data.** Deferred by decision, not oversight (see below).
+  This is the single biggest remaining item and the only one nobody else could copy.
+- **A2, 3.5/5 (-1.5):** silent on cost, setup time and privacy/compliance.
+- **C1, 6/8 (-2):** two body images is thin for a 1,900-word piece; the middle third has none.
+- **A3/B3/E2 (-1):** rounding on judgement criteria that are already strong.
+
+Note: a transient duplicate `RealEstateAgent` block appeared in one DOM measurement. The served
+HTML carries exactly 4 blocks (RealEstateAgent, BlogPosting, BreadcrumbList, FAQPage), so it is
+a hydration artifact rather than a crawlable duplicate.
+
+## WHAT IT TOOK TO REACH 90-95
 
 Ordered by points per unit of effort. Total available: +48, landing at ~96.
 
