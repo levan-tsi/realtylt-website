@@ -65,7 +65,7 @@ export function AccountMenu() {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-full z-50 mt-1 min-w-48 border border-[#dddddd] bg-paper py-1 shadow-lg"
+          className="absolute right-0 top-full z-50 mt-1 min-w-48 overflow-hidden rounded-xl border border-[#dddddd] bg-paper py-1 shadow-lg"
         >
           {MENU.map((m) => (
             <Link

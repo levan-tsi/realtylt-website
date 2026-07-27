@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
@@ -74,6 +74,17 @@ export function LeadForm({
   const { openWizard } = useQualifyingWizard();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
+  const successRef = useRef<HTMLDivElement>(null);
+
+  // Submitting destroys the button that had focus, which drops focus to <body> — a keyboard
+  // visitor's next Tab restarts at the top of the document and they never hear the outcome.
+  // The success panel is already tabIndex={-1} for exactly this; put focus on it.
+  // On /selling, /financing and /home-value the qualifying wizard mounts in the same commit
+  // and its own effect runs later (it is rendered after {children} in the provider), so the
+  // dialog still wins the focus, which is what should happen.
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -115,9 +126,10 @@ export function LeadForm({
   if (status === "success") {
     return (
       <div
+        ref={successRef}
         role="status"
         tabIndex={-1}
-        className={`border p-6 text-center outline-none ${
+        className={`rounded-2xl border p-6 text-center outline-none ${
           dark ? "border-paper/30 bg-white/5" : "border-[#cccccc] bg-mist"
         }`}
       >

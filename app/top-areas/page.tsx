@@ -63,7 +63,7 @@ export default function TopAreasPage() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover"
                     />
-                    <span className="absolute bottom-3 left-3 bg-ink/85 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper">
+                    <span className="absolute bottom-3 left-3 rounded-lg bg-ink/85 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper">
                       median {fmtM(c.medianPrice)}
                     </span>
                   </div>

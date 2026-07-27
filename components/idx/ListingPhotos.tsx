@@ -208,7 +208,7 @@ export function ListingPhotos({
 
           <FavoriteButton id={favoriteId} className="absolute right-4 top-4 z-[8]" />
           {status !== "Active" && (
-            <span className="absolute left-4 top-4 z-[6] bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+            <span className="absolute left-4 top-4 z-[6] rounded-lg bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
               {status}
             </span>
           )}
