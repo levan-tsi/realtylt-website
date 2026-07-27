@@ -67,15 +67,19 @@ for (const id of IDS) {
       // outlast MlsImage's 2s + 8s retry ladder
       await page.waitForTimeout(14000);
 
-      verdict = await page.evaluate(() => {
+      verdict = await page.evaluate((listingId) => {
         const ld = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
           .map((s) => { try { return JSON.parse(s.textContent || "{}"); } catch { return {}; } })
           .find((o) => Array.isArray(o.image));
         const claimed = ld ? ld.image.length : null;
 
+        // Scope to THIS listing's own photos. The similar-homes rail carries OTHER listings'
+        // cards, and a card for a genuinely photo-less listing is *supposed* to show the branded
+        // placeholder — counting those made R1 report a violation that wasn't one (2026-07-26).
+        const ofThisListing = (el) => ((el.currentSrc || el.src || "").match(/\/api\/media\/([^/]+)\//) || [])[1] === listingId;
         const tiles = Array.from(document.querySelectorAll("img")).filter((i) => {
           const r = i.getBoundingClientRect();
-          return (i.currentSrc || i.src || "").includes("/api/media/") && r.width > 30 && r.height > 30;
+          return (i.currentSrc || i.src || "").includes("/api/media/") && r.width > 30 && r.height > 30 && ofThisListing(i);
         });
         const isPlaceholder = (i) => {
           const s = i.currentSrc || i.src || "";
@@ -90,6 +94,7 @@ for (const id of IDS) {
         // which is what any visitor-facing "N photos" label must agree with.
         const offered = new Set();
         for (const i of document.querySelectorAll("img")) {
+          if (!ofThisListing(i)) continue;
           const k = idxOf(i);
           if (k != null) offered.add(k);
         }
@@ -107,8 +112,10 @@ for (const id of IDS) {
         const broken = brokenIdx.size;
         const pending = tiles.filter((i) => !i.complete).length;
 
-        // NoPhoto rendered as markup (not an <img>)
-        const noPhotoBlocks = Array.from(document.querySelectorAll("*")).filter(
+        // NoPhoto rendered as markup (not an <img>) — again only inside THIS listing's photo
+        // section, never the similar-homes rail below it.
+        const photoSection = document.querySelector("section[aria-label='Photos']") || document.body;
+        const noPhotoBlocks = Array.from(photoSection.querySelectorAll("*")).filter(
           (e) => e.children.length === 0 && /photo coming soon/i.test(e.textContent || ""),
         ).length;
 
@@ -118,7 +125,7 @@ for (const id of IDS) {
           if (m) { label = Number(m[1]); break; }
         }
         return { claimed, tiles: tiles.length, offered: offered.size, real, placeholders: placeholderTiles.length + noPhotoBlocks, broken, pending, label };
-      });
+      }, id);
       await page.screenshot({ path: `${OUT}/${TAG}-${id}-${width}.png`, fullPage: false });
     } catch (e) {
       verdict = { error: String(e).split("\n")[0].slice(0, 110) };
@@ -133,6 +140,9 @@ for (const id of IDS) {
         fails.push(`R3 label ${verdict.label} vs ${verdict.offered} offered`);
       if (verdict.broken > 0) fails.push(`R4 ${verdict.broken} broken frames`);
       if (ph > 1) fails.push(`R5 ${ph} placeholders (max 1)`);
+      // R6 guards the metric itself: a page that rendered no photo surface AND no JSON-LD is a
+      // failed render (e.g. Next's dev "clientReferenceManifest" invariant), not a clean pass.
+      if (verdict.claimed == null && verdict.tiles === 0 && ph === 0) fails.push("R6 page rendered no photo surface at all (failed render?)");
     }
     const ok = fails.length === 0 && !verdict.error;
     results.push({ id, width, ...verdict, peakInFlight, mediaFailures: upstream429, fails });

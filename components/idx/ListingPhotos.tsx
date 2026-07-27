@@ -112,6 +112,16 @@ export function ListingPhotos({
   }, [pool, sideCandidates]);
   const hero = Math.max(0, available.indexOf(heroSrc ?? ""));
 
+  // The band's chrome — arrows, view-mode buttons, the "view all" pill, the whole-tile lightbox
+  // trigger — are controls for a photo. Until one has actually ARRIVED they are controls for
+  // nothing. Measured 2026-07-26 on a listing whose photos had all expired: for ~20s at 390 (and
+  // 5-8s at 1440) the band showed an empty frame carrying 11 live controls, because a merely
+  // CANDIDATE hero is enough to render them. That reads more broken than the placeholder does.
+  // So the chrome waits for the hero to load; a still-loading band shows MlsImage's quiet skeleton
+  // and nothing else, and if nothing ever arrives it settles into the branded placeholder.
+  // Non-MLS photos (fixtures, local paths) never report through onLoaded, so they count as ready.
+  const heroReady = !!heroSrc && (!isLiveMlsPhoto(heroSrc) || proven.includes(heroSrc));
+
   // Remember every photo the band has put on screen, so the give-up budget can freeze the band on
   // tiles already in flight instead of cancelling them.
   useEffect(() => {
@@ -204,7 +214,7 @@ export function ListingPhotos({
           )}
 
           {/* Whole-tile trigger: mouse + keyboard open the lightbox at the hero (delegated). */}
-          {heroSrc && (
+          {heroReady && (
             <button
               type="button"
               data-lightbox-index={hero}
@@ -215,7 +225,7 @@ export function ListingPhotos({
 
           {/* Carousel arrows — page the band in place, like live. Never over the placeholder:
               there is nothing to page to. */}
-          {heroSrc && count > 1 && (
+          {heroReady && count > 1 && (
             <>
               <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -231,7 +241,7 @@ export function ListingPhotos({
           )}
 
           {/* Bottom-left view modes; bottom-right the single "show all photos" control. */}
-          {heroSrc && (
+          {heroReady && (
             <>
               <div className="absolute bottom-3 left-3 z-[7] flex items-center gap-1.5">
                 <button type="button" data-lightbox-index={hero} data-lightbox-tab="photos" aria-label="Open the photo viewer" title="Photos" className={overlayBtn}>
