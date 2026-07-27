@@ -118,7 +118,7 @@ export const aiChatAssistant: Service = {
     },
     {
       q: "Can I add an AI chat assistant to my existing website?",
-      a: "Yes. It is a widget that drops into any site, including Brivity, kvCORE, WordPress, Squarespace, and a custom build. It does not require rebuilding your website, and it connects to whatever CRM you already run.",
+      a: "Yes. It is a widget that drops into any site, including kvCORE, WordPress, Squarespace, and a custom build. It does not require rebuilding your website, and it connects to whatever CRM you already run.",
     },
     {
       q: "What does it do with the leads it captures?",

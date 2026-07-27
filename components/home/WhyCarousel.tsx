@@ -5,28 +5,36 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { wrapIndex } from "@/lib/carousel";
 
 // Live realtylt.com "Why Work With Us?" is a Bootstrap carousel (#promo-slider-1) of five
-// device screenshots + captions. These are the site's OWN uploaded assets, mirrored into
-// /public/images/why/ (source: https://images.brivityidx.com/assets/images/uploads/219/).
+// device screenshots + captions. The live slides are the IDX vendor's stock product mockups
+// (a Seattle search page, a seller transaction dashboard, "Your Agent / 555-1212" placeholder
+// contacts) — a competitor's demo of markets we do not serve, in branding that is not ours.
+//
+// These five are OUR OWN product instead: real screenshots of this site running against the
+// live One Key feed, composited into a CSS-drawn laptop shell by scripts/build-why-slides.mjs
+// (re-run it when these surfaces change). Every caption describes a surface we actually ship
+// — the seller-transaction-dashboard slide has no equivalent here and was replaced with
+// /home-value rather than staged, and the live captions' "virtual tours, 3D walkthroughs and
+// videos" went with it because our listing pages carry photos, not tours.
 const SLIDES = [
   {
-    src: "/images/why/promo-slide-1.png",
-    caption: "We make listings shine with stunning photos, virtual tours, 3D walkthroughs and videos",
+    src: "/images/why/our-listing-gallery.webp",
+    caption: "Every photo, the map, the schools and the monthly payment on one page",
   },
   {
-    src: "/images/why/promo-slide-3.png",
+    src: "/images/why/our-search.webp",
     caption: "Search all available homes for sale",
   },
   {
-    src: "/images/why/promo-slide-4.png",
-    caption: "See everything your agent does to get your property sold",
+    src: "/images/why/our-home-value.webp",
+    caption: "Find out what your home is worth, from fifteen real comps",
   },
   {
-    src: "/images/why/promo-slide-5v2.png",
-    caption: "Stay up-to-date, receive reports on your neighborhood",
+    src: "/images/why/our-market-insights.webp",
+    caption: "Market insights for the neighborhood around every listing",
   },
   {
-    src: "/images/why/save_a_search.png",
-    caption: "We have a list of buyers that receive listing alerts every day",
+    src: "/images/why/our-save-search.webp",
+    caption: "Save any search and turn on alerts for new matches",
   },
 ];
 
