@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
@@ -27,6 +27,7 @@ export function SignInModal() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
   const isSignup = modalMode === "signup";
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Reset transient state each time the modal opens or switches mode.
   useEffect(() => {
@@ -45,6 +46,36 @@ export function SignInModal() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [modalOpen, closeSignIn]);
+
+  // aria-modal is a promise: while this is open the page behind must not scroll and must not
+  // be reachable by Tab. (Restoring focus to the trigger is AuthProvider's job — it has to
+  // capture the element in the click handler, before this modal's autoFocus input takes it.)
+  useEffect(() => {
+    if (!modalOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [modalOpen]);
+
+  // Tab is trapped inside the panel.
+  const onPanelKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== "Tab") return;
+    const f = panelRef.current?.querySelectorAll<HTMLElement>(
+      'a[href],button:not([disabled]),textarea,input:not([disabled]),select,[tabindex]:not([tabindex="-1"])',
+    );
+    if (!f || f.length === 0) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }, []);
 
   if (!modalOpen) return null;
 
@@ -125,9 +156,11 @@ export function SignInModal() {
       }}
     >
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="auth-modal-title"
+        onKeyDown={onPanelKeyDown}
         className="relative w-full max-w-[400px] rounded-2xl bg-white p-7 shadow-2xl"
       >
         <button

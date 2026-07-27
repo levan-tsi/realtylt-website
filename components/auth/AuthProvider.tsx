@@ -79,6 +79,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<AuthModalMode>("signin");
+  // The element that opened the modal, so closing can hand focus back to it. It has to be
+  // read HERE, inside the click handler — the modal's autoFocus input takes focus during the
+  // same commit, so by the time any effect inside the modal runs, the trigger is gone.
+  const modalTriggerRef = useRef<HTMLElement | null>(null);
+  const modalOpenRef = useRef(false);
 
   const user = session?.user ?? null;
 
@@ -152,10 +157,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [supabase, user]);
 
   const openSignIn = useCallback((mode: AuthModalMode = "signin") => {
+    // Switching between sign-in and sign-up re-enters this from inside the modal; keep the
+    // ORIGINAL trigger in that case.
+    if (!modalOpenRef.current) modalTriggerRef.current = document.activeElement as HTMLElement | null;
+    modalOpenRef.current = true;
     setModalMode(mode);
     setModalOpen(true);
   }, []);
-  const closeSignIn = useCallback(() => setModalOpen(false), []);
+  const closeSignIn = useCallback(() => {
+    modalOpenRef.current = false;
+    setModalOpen(false);
+    const trigger = modalTriggerRef.current;
+    modalTriggerRef.current = null;
+    if (trigger?.isConnected) trigger.focus?.();
+  }, []);
 
   const signInWithPassword = useCallback<AuthContextValue["signInWithPassword"]>(
     async (email, password) => {
