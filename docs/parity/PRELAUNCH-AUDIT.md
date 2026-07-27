@@ -251,3 +251,42 @@ media ≥ ~120px gets `rounded-2xl`, thumbnails/strips get `rounded-lg`; and an 
 flush to a bordered card's edge takes the outer radius minus the border width
 (`rounded-2xl` card with `border-2` → `rounded-t-[14px]` header, which is why the /selling
 option cards have no white slivers at the top corners).
+
+### 4c. ORCHESTRATOR VERIFICATION — and one class the sweep missed
+
+Re-checked independently: `npx tsc --noEmit` clean and `npm test` **447/447**, both run in the
+foreground by me; home at 390 and `/search` at 1440 eyeballed (cards, controls, inputs, area
+chips and in-card photos all read as one system now).
+
+**Found a gap the radius pass missed, because the inventory keyed on button/input/card selectors
+and status badges are `<span>`s.** A separate probe over filled small shapes
+(`scripts/_scratch-badge-radius.mjs`) found **61 square badges**, including the `New` and
+`Coming Soon` chips on every `/search` card. `ListingCard` renders those chips **twice** — the
+default variant had been given `rounded-lg`, the `plain` variant used by the search grid had
+not. So the identical chip was 8px on the home rail and 0px on the search grid, which is
+precisely the inconsistency the owner reported.
+
+Fixed in `476f1b4`. Re-measured across 10 routes: **square badges 61 → 3**, and the 3 survivors
+are placeholder tiles inside the `/buying` device mockups, i.e. mockup internals, correctly left
+alone. The `4px` price chips on `/selling` are likewise inside a `LaptopFrame`.
+
+Lesson for the next design sweep: **an inventory keyed on element type will miss whole classes.**
+Measure by what a shape *looks* like (has a fill, has a box, is small) as well as by what tag it
+is.
+
+### 4d. Unrelated defect found during this pass — the chat widget shipped mojibake
+
+`public/rlt-chat.js` had been double-encoded at some point (UTF-8 bytes read as Latin-1 and
+re-encoded), so the widget served literal mojibake to every visitor on every page:
+
+```
+header : RealtyLT Â· RealtorÂ® in NY Â· Live MLS
+footer : RealtyLT Â· Levan Tsiklauri, RealtorÂ®
+close  : âœ•                (instead of ✕)
+reply  : "Hmm, I didn't catch that â€” try again?"
+```
+
+Fixed in `665fc9e` and verified in the browser. Note this is **deliberate drift** from the pasted
+BlueRoof source: live ships the same broken glyphs, and the standing rule is that we do not copy
+live's bugs. The chat fallback reply was rewritten without an em dash rather than having one
+restored, since it is visitor copy.
