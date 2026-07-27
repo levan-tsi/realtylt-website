@@ -24,9 +24,10 @@ import { MlsImage } from "./MlsImage";
  *
  * It is also deliberately CHEAP. Side slots are positional in the claimed array (see sideSources),
  * so a dead tile empties its slot instead of dragging another photo in behind it, and the band
- * costs at most four photo loads however broken the listing is. The no-JS <details> grid stays in
- * the server HTML but its tiles unmount at hydration and only remount, six at a time through the
- * media queue, if the disclosure is actually opened. */
+ * costs at most four photo loads however broken the listing is. Every other surviving photo stays
+ * mounted in the collapsed <details> grid — that is what makes the pill's count a fact rather than
+ * a claim, and it is the no-JS gallery — but held behind `display:none`, so it fetches nothing
+ * until the disclosure opens and then only six at a time through the media queue. */
 export function ListingPhotos({
   photos,
   guaranteed = 0,
@@ -145,21 +146,27 @@ export function ListingPhotos({
 
   // key={src} is load-bearing: when the hero promotes past a dead photo React would otherwise reuse
   // the same MlsImage instance, and its `failed` state would keep the new photo rendering nothing.
-  const tile = (src: string, alt: string, sizes: string, priority = false, throttle = false) =>
+  const tile = (
+    src: string,
+    alt: string,
+    sizes: string,
+    opts: { priority?: boolean; throttle?: boolean; paused?: boolean } = {},
+  ) =>
     isLiveMlsPhoto(src) ? (
       <MlsImage
         key={src}
         src={src}
         alt={alt}
         sizes={sizes}
-        priority={priority}
-        throttle={throttle}
+        priority={opts.priority}
+        throttle={opts.throttle}
+        paused={opts.paused}
         maxRetries={dead.length === 0 ? 2 : 1}
         onLoaded={() => keep(src)}
         onUnavailable={() => drop(src)}
       />
     ) : (
-      <Image key={src} src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+      <Image key={src} src={src} alt={alt} fill sizes={sizes} priority={opts.priority} className="object-cover" />
     );
 
   const overlayBtn =
@@ -184,7 +191,7 @@ export function ListingPhotos({
           }`}
         >
           {heroSrc ? (
-            tile(heroSrc, `${addressShort}, ${city}, photo ${hero + 1}`, "(max-width: 768px) 100vw, 60vw", true)
+            tile(heroSrc, `${addressShort}, ${city}, photo ${hero + 1}`, "(max-width: 768px) 100vw, 60vw", { priority: true })
           ) : (
             <NoPhoto />
           )}
@@ -290,10 +297,13 @@ export function ListingPhotos({
         )}
       </div>
 
-      {/* No-JS route to photos 2..N. It ships in the server HTML (a closed <details> is display:none
-          so its tiles never fetch), then unmounts at hydration and only comes back — six requests at
-          a time through the media queue — if the disclosure is really opened. With JS the in-photo
-          pill is the ONE "show all photos" control, so the summary hides. */}
+      {/* Every surviving photo, always in the DOM. That is what makes the page's photo count
+          honest — the figure on the pill is the number of photos actually here, not a claim from
+          the feed — and it is the no-JS route to photos 2..N. It costs nothing while collapsed: a
+          closed <details> is display:none, so lazy tiles never fetch (measured: 4 requests on a
+          15-photo listing). The moment it opens they switch to the media queue and load six at a
+          time, which is what stopped the 48-request burst that used to 429 the media host. With JS
+          the in-photo pill is the ONE "show all photos" control, so the summary hides. */}
       {count > 1 && (
         <details
           className="group mx-auto max-w-7xl px-0 pb-3 lg:px-8 lg:pb-6"
@@ -306,22 +316,20 @@ export function ListingPhotos({
             <span className="group-open:hidden">{label}</span>
             <span className="hidden group-open:inline">Hide photos</span>
           </summary>
-          {(!hydrated || gridOpen) && (
-            <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
-              {available.slice(1).map((p, i) => (
-                <div
-                  key={p}
-                  data-lightbox-index={i + 1}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`View photo ${i + 2} full screen`}
-                  className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px]"
-                >
-                  {tile(p, `${addressShort}, photo ${i + 2}`, "(max-width: 768px) 50vw, 33vw", false, hydrated)}
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
+            {available.slice(1).map((p, i) => (
+              <div
+                key={p}
+                data-lightbox-index={i + 1}
+                role="button"
+                tabIndex={0}
+                aria-label={`View photo ${i + 2} of ${count} full screen`}
+                className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px]"
+              >
+                {tile(p, `${addressShort}, photo ${i + 2}`, "(max-width: 768px) 50vw, 33vw", { throttle: hydrated, paused: hydrated && !gridOpen })}
+              </div>
+            ))}
+          </div>
         </details>
       )}
     </ListingGallery>

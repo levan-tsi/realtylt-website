@@ -34,6 +34,7 @@ export function MlsImage({
   className = "object-cover",
   fallbackSrcs,
   throttle = false,
+  paused = false,
   maxRetries = RETRY_DELAYS_MS.length,
   onLoaded,
   onUnavailable,
@@ -49,6 +50,12 @@ export function MlsImage({
    * after hydration (the opened photo grid, the lightbox rail) — the handful of tiles rendered in
    * the server HTML must not be gated, or the page would ship with no photo at all without JS. */
   throttle?: boolean;
+  /** Do not fetch at all yet, but STAY IN THE DOM. The collapsed photo grid uses this: its tiles
+   * have to be real <img> elements (they are what makes the page's photo count a fact rather than
+   * a claim, and they are the no-JS gallery), yet a `display:none` lazy image never fetches. The
+   * flag has to be set BEFORE the disclosure opens: `onToggle` fires after the browser has already
+   * revealed the content, so waiting for it lets ~30 requests onto the wire before React can react. */
+  paused?: boolean;
   /** How many times to retry before giving up. The full ladder is for a transient throttle; once
    * the page has already watched a photo die for good, further failures are almost certainly real
    * and a shorter ladder settles the gallery in seconds instead of half a minute. */
@@ -73,10 +80,15 @@ export function MlsImage({
   // back the moment the attempt settles (or the tile unmounts). Every RETRY is queued even on an
   // unthrottled tile — that is what stops a wall of failed tiles re-bursting together.
   const needsSlot = throttle || attempt > 0 || candidate > 0;
-  const [admitted, setAdmitted] = useState(!throttle);
+  const [admitted, setAdmitted] = useState(!throttle && !paused);
   const releaseRef = useRef<() => void>(() => {});
   useEffect(() => {
     if (failed) return;
+    if (paused) {
+      releaseRef.current = () => {};
+      setAdmitted(false);
+      return;
+    }
     if (!needsSlot) {
       releaseRef.current = () => {};
       setAdmitted(true);
@@ -87,7 +99,7 @@ export function MlsImage({
     const release = requestMediaSlot(() => setAdmitted(true), priority);
     releaseRef.current = release;
     return release;
-  }, [bustedSrc, needsSlot, failed, priority]);
+  }, [bustedSrc, needsSlot, failed, priority, paused]);
 
   if (failed) return onUnavailable ? null : <NoPhoto />;
 
@@ -96,7 +108,9 @@ export function MlsImage({
       {/* Skeleton shimmer while queued and until the first byte lands (and between silent
           retries) — never a flash of the placeholder. Static block for reduced-motion users. */}
       {!loaded && <div className="absolute inset-0 animate-pulse bg-mist motion-reduce:animate-none" aria-hidden />}
-      {admitted && (
+      {/* Held tiles stay mounted behind `display:none` rather than unmounting: the element (and so
+          the page's photo count) is real, but a lazy image that is never displayed never fetches. */}
+      <div className={admitted ? "absolute inset-0" : "hidden"}>
         <Image
           key={bustedSrc}
           src={bustedSrc}
@@ -131,7 +145,7 @@ export function MlsImage({
             }
           }}
         />
-      )}
+      </div>
     </>
   );
 }
