@@ -14,6 +14,10 @@ export interface BlogPost {
   date: string; // ISO
   excerpt: string;
   cover: string;
+  /** Meta description override. The excerpt is VISIBLE copy (index card, article hero) and
+   * is allowed to run long; this is what search engines get. Mirrors the DB path's
+   * `seo_description`. Omit and the excerpt is used. */
+  seoDescription?: string;
   /** Paragraphs. Placeholder until owner's Drive copy lands. */
   body: string[];
   /** Full article in the markdown subset lib/blog/markdown.tsx renders (headings, lists,
@@ -42,6 +46,8 @@ export const POSTS: BlogPost[] = [
     date: "2026-07-13",
     excerpt:
       "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps, and what it takes to get them back.",
+    seoDescription:
+      "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps.",
     cover: "/images/team-bg.jpg",
     body: [],
     placeholder: false,
@@ -53,6 +59,8 @@ export const POSTS: BlogPost[] = [
     date: "2026-07-12",
     excerpt:
       "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. Here is what an AI chat assistant actually does in that gap, and what it cannot do.",
+    seoDescription:
+      "Most home searching happens at night, on a phone, and most real estate sites answer the next morning. What an AI chat assistant does in that gap, and what it cannot do.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,

@@ -23,7 +23,7 @@ export const aiVoiceAgents: Service = {
   seo: {
     title: "AI Voice Agents for Real Estate: Inbound and Outbound Calls",
     description:
-      "AI phone agents that answer every inbound call 24/7 and call new leads back within seconds, qualify them in a natural conversation, book the appointment, and log the outcome.",
+      "AI phone agents that answer every call 24/7 and call new leads back in seconds, qualify them in a natural conversation, book the appointment, and log the outcome.",
   },
 
   figure: {

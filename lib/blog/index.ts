@@ -26,6 +26,7 @@ export function staticToArticle(post: BlogPost): Article {
     author: "Levan Tsiklauri",
     source: "static",
     placeholder: post.placeholder,
+    seoDescription: post.seoDescription,
     // A hand-authored post can carry a full markdown body (headings, lists, quotes); the
     // seeded stubs carry a flat paragraph array. Same renderer as the CRM-published posts.
     body: post.markdown

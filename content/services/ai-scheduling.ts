@@ -23,7 +23,7 @@ export const aiScheduling: Service = {
   seo: {
     title: "AI Scheduling: Showings and Consults That Book Themselves",
     description:
-      "Live availability from Google or Outlook, offered inside the conversation, booked without conflicts, confirmed and reminded automatically, and rescheduled without a human touching it.",
+      "Live availability from Google or Outlook, offered inside the conversation, booked without conflicts, confirmed and reminded, and rescheduled without a human touching it.",
   },
 
   figure: {

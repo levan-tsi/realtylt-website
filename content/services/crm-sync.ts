@@ -23,7 +23,7 @@ export const crmSync: Service = {
   seo: {
     title: "Two-Way CRM Sync for Follow Up Boss, kvCORE, and HubSpot",
     description:
-      "Every call, text, booking, and enriched contact writes back to your CRM automatically, and updates flow the other way, so the record you are looking at is the record that is true.",
+      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is the record that is true.",
   },
 
   figure: {

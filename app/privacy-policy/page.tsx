@@ -3,7 +3,8 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How RealtyLT collects, uses, and protects your information.",
+  description:
+    "What RealtyLT collects when you contact us or search homes on this site, how we use it, the cookies we set, and how to have your information removed.",
 };
 
 const UPDATED = "July 10, 2026";

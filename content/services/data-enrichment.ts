@@ -23,7 +23,7 @@ export const dataEnrichment: Service = {
   seo: {
     title: "Real Estate Data Enrichment: Append and Verify Contacts",
     description:
-      "Thin records become callable profiles. Phone and email appended and verified, property detail added, duplicates collapsed, and unreachable rows flagged rather than sold to you as leads.",
+      "Thin records become callable profiles. Phone and email appended and verified, duplicates collapsed, and unreachable rows flagged rather than sold to you as leads.",
   },
 
   figure: {

@@ -23,7 +23,7 @@ export const leadQualification: Service = {
   seo: {
     title: "AI Lead Qualification and Scoring for Real Estate",
     description:
-      "Every inbound lead scored on intent, budget, and timeline from what they actually said, then routed to the right agent or nurture track, with the ready-to-move ones surfaced first.",
+      "Every lead scored on intent, budget, and timeline from what they said, then routed to the right agent or nurture track, with the ready-to-move ones surfaced first.",
   },
 
   figure: {

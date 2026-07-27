@@ -3,7 +3,8 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "DMCA & Terms of Service",
-  description: "Terms of use and DMCA copyright policy for realtylt.com.",
+  description:
+    "Terms of use for realtylt.com, our DMCA copyright takedown process, how MLS listing data is handled, and our fair housing commitment.",
 };
 
 const UPDATED = "July 10, 2026";

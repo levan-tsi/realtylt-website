@@ -23,7 +23,7 @@ export const documentProcessing: Service = {
   seo: {
     title: "AI Document Processing for Real Estate Contracts",
     description:
-      "Purchase agreements, disclosures, and leases parsed in seconds. Terms, key dates, and parties extracted, missing fields flagged, and the structured data filed into your CRM.",
+      "Purchase agreements, disclosures, and leases parsed in seconds. Terms, key dates, and parties extracted, missing fields flagged, and the result filed into your CRM.",
   },
 
   figure: {

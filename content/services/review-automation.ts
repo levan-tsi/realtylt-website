@@ -23,7 +23,7 @@ export const reviewAutomation: Service = {
   seo: {
     title: "Automated Google Review Requests by Text",
     description:
-      "Every happy customer gets asked at the right moment, one tap from your Google review page. The best reviews land on your site, and unhappy feedback is caught privately first.",
+      "Every happy customer is asked at the right moment, one tap from your Google review page. The best reviews land on your site, and unhappy feedback is caught privately.",
   },
 
   stat: {

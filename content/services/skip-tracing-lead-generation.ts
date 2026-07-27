@@ -23,7 +23,7 @@ export const skipTracingLeadGeneration: Service = {
   seo: {
     title: "Real Estate Skip Tracing and Lead Generation, Automated",
     description:
-      "Turn a map of addresses into a callable list. Automated skip tracing enriches each property into a verified owner name, phone, and email, built fresh on demand instead of bought stale.",
+      "Turn a map of addresses into a callable list. Skip tracing turns each property into a verified owner name, phone, and email, built fresh on demand, not bought stale.",
   },
 
   figure: {

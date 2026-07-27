@@ -124,8 +124,23 @@ describe("content quality gates", () => {
   it("keeps meta descriptions inside the length Google will render", () => {
     for (const s of SERVICES) {
       expect(s.seo.title.length, s.slug).toBeLessThanOrEqual(65);
-      expect(s.seo.description.length, s.slug).toBeGreaterThan(70);
-      expect(s.seo.description.length, s.slug).toBeLessThanOrEqual(185);
+      // 80-170 is the band the pre-launch audit measured every route against.
+      expect(s.seo.description.length, s.slug).toBeGreaterThanOrEqual(80);
+      expect(s.seo.description.length, s.slug).toBeLessThanOrEqual(170);
+    }
+  });
+
+  it("keeps em dashes out of the copy that ships to visitors", () => {
+    for (const s of SERVICES) {
+      for (const [field, value] of [
+        ["seo.title", s.seo.title],
+        ["seo.description", s.seo.description],
+        ["name", s.name],
+        ["title", s.title],
+        ["lede", s.lede],
+      ] as const) {
+        expect(value.includes("—"), `${s.slug}.${field}`).toBe(false);
+      }
     }
   });
 });

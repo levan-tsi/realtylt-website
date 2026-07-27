@@ -23,7 +23,7 @@ export const aiAgentWorkforce: Service = {
   seo: {
     title: "AI Agent Workforce: Personal AI Assistants for Realtors",
     description:
-      "Run a staff of task-tuned AI assistants in parallel. One drafts emails, one preps CMAs, one chases paperwork, one watches the inbox. Always on, plugged into the tools you already use.",
+      "Run a staff of task-tuned AI assistants in parallel. One drafts emails, one preps CMAs, one chases paperwork. Always on, plugged into the tools you already use.",
   },
 
   figure: {

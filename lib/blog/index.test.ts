@@ -85,6 +85,32 @@ describe("ISR window", () => {
   );
 });
 
+describe("meta description of the static posts", () => {
+  // What /blog/[slug] actually puts in <meta name="description">.
+  const metaDescription = (a: Article) => a.seoDescription || a.excerpt;
+
+  it("stays inside the 80-170 band the pre-launch audit measures", () => {
+    for (const p of POSTS) {
+      const d = metaDescription(staticToArticle(p));
+      expect(d.length, `${p.slug}: "${d}"`).toBeGreaterThanOrEqual(80);
+      expect(d.length, `${p.slug}: "${d}"`).toBeLessThanOrEqual(170);
+    }
+  });
+
+  it("carries a seoDescription through to the Article, and falls back to the excerpt", () => {
+    const withOverride = POSTS.find((p) => p.seoDescription)!;
+    expect(staticToArticle(withOverride).seoDescription).toBe(withOverride.seoDescription);
+    const without = POSTS.find((p) => !p.seoDescription)!;
+    expect(staticToArticle(without).seoDescription).toBeUndefined();
+    expect(metaDescription(staticToArticle(without))).toBe(without.excerpt);
+  });
+
+  it("is unique per post", () => {
+    const seen = POSTS.map((p) => metaDescription(staticToArticle(p)));
+    expect(new Set(seen).size).toBe(seen.length);
+  });
+});
+
 describe("getArticles / getArticle against a stubbed Supabase", () => {
   it("merges the published DB post in front of the static stubs", async () => {
     stubSupabase([dbRow()]);

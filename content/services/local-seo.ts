@@ -23,7 +23,7 @@ export const localSeo: Service = {
   seo: {
     title: "Local SEO for Real Estate Agents",
     description:
-      "Rank in the map pack and in local search for the terms your market actually types. Google Business Profile, citations, and city pages kept current so you are found before the ads are.",
+      "Rank in the map pack and local search for terms your market types. Google Business Profile, citations, and city pages kept current so you are found before the ads are.",
   },
 
   figure: {
