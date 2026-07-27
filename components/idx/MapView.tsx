@@ -22,7 +22,7 @@ const priceIcon = (price: number, active: boolean) =>
       active
         ? "--chip-bg:#1c729a;background:var(--chip-bg);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
         : "--chip-bg:#000;background:var(--chip-bg);box-shadow:0 2px 8px rgb(0 0 0/.3)"
-    };color:#fff;font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:3px">${chipPrice(price)}</span>`,
+    };color:#fff;font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:8px">${chipPrice(price)}</span>`,
     iconSize: [0, 0],
   });
 
@@ -95,7 +95,7 @@ export default function MapView({ pins, selectedId, onSelect }: MapViewProps) {
   return (
     <div className="relative h-full min-h-96 w-full">
       {/* The live feed carries no coordinates — pins sit at zip-centroid (approximate). */}
-      <p className="pointer-events-none absolute bottom-2 left-2 z-[500] border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+      <p className="pointer-events-none absolute bottom-2 left-2 z-[500] rounded-lg border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
         Locations approximate
       </p>
       <MapContainer

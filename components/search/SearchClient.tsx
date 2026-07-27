@@ -756,9 +756,9 @@ export function SearchClient() {
             <li key={i} className="animate-pulse overflow-hidden rounded-2xl border border-[#dddddd]">
               <div className="aspect-[3/2] bg-mist" />
               <div className="space-y-2 p-4">
-                <div className="h-5 w-28 rounded bg-mist" />
-                <div className="h-4 w-40 rounded bg-mist" />
-                <div className="h-3 w-32 rounded bg-mist" />
+                <div className="h-5 w-28 rounded-full bg-mist" />
+                <div className="h-4 w-40 rounded-full bg-mist" />
+                <div className="h-3 w-32 rounded-full bg-mist" />
               </div>
             </li>
           ))}

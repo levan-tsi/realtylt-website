@@ -103,7 +103,7 @@ export default function WhoWeArePage() {
           <ul className="mt-10 grid gap-6 md:grid-cols-3">
             {VALUES.map((v, i) => (
               <Reveal key={v.title} as="li" delay={i * 110}>
-                <div className="h-full border border-[#dddddd] bg-white p-7">
+                <div className="h-full rounded-2xl border border-[#dddddd] bg-white p-7">
                   <h3 className="text-xl font-bold text-ink">{v.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-stone">{v.body}</p>
                 </div>
@@ -129,7 +129,7 @@ export default function WhoWeArePage() {
                       ? `/top-areas/${c.slug}`
                       : `/search?county=${c.slug}`
                   }
-                  className="inline-block border border-[#cccccc] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
+                  className="inline-block rounded-xl border border-[#cccccc] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >
                   {c.name}
                 </Link>

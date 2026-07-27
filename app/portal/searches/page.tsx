@@ -19,7 +19,7 @@ export default function SearchesPage() {
       {!ready ? (
         <p className="mt-8 text-sm text-stone">Loading…</p>
       ) : searches.length === 0 ? (
-        <div className="mt-8 rounded-[4px] border border-dashed border-ink/20 p-10 text-center">
+        <div className="mt-8 rounded-2xl border border-dashed border-ink/20 p-10 text-center">
           <p className="font-display text-xl text-ink">No saved searches yet.</p>
           <p className="mx-auto mt-2 max-w-sm text-sm text-stone">
             Run a search, tune the filters, and hit <strong>Save search</strong> to keep it here.
@@ -33,7 +33,7 @@ export default function SearchesPage() {
           {searches.map((s) => (
             <li
               key={s.id}
-              className="flex flex-wrap items-center justify-between gap-4 rounded-[4px] border border-ink/10 bg-white px-5 py-4"
+              className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-white px-5 py-4"
             >
               <div className="min-w-0">
                 <p className="truncate font-semibold text-ink">{s.label}</p>
@@ -58,14 +58,14 @@ export default function SearchesPage() {
                 </label>
                 <Link
                   href={`/search${s.query ? `?${s.query}` : ""}`}
-                  className="rounded-[2px] border border-ink px-4 py-2 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-paper"
+                  className="rounded-xl border border-ink px-4 py-2 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-paper"
                 >
                   Run search
                 </Link>
                 <button
                   type="button"
                   onClick={() => void removeSearch(s.id)}
-                  className="rounded-[2px] border border-ink/20 px-4 py-2 text-sm text-stone transition-colors hover:border-red-500 hover:text-red-600"
+                  className="rounded-xl border border-ink/20 px-4 py-2 text-sm text-stone transition-colors hover:border-red-500 hover:text-red-600"
                   aria-label={`Remove saved search: ${s.label}`}
                 >
                   Remove

@@ -347,7 +347,7 @@ function QualifyingWizard({
         aria-modal="true"
         aria-labelledby="rlt-wizard-title"
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative w-full max-w-md overflow-hidden rounded-[6px] bg-paper text-ink shadow-2xl"
+        className="rlt-pop-in relative w-full max-w-md overflow-hidden rounded-2xl bg-paper text-ink shadow-2xl"
       >
         {/* progress rail */}
         <div className="h-1 w-full bg-mist" aria-hidden>
@@ -396,7 +396,7 @@ function QualifyingWizard({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
+                  className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
                 >
                   Done
                 </button>
@@ -426,7 +426,7 @@ function QualifyingWizard({
                   key={opt}
                   type="button"
                   onClick={() => advance(current, opt)}
-                  className="group flex min-h-12 w-full items-center justify-between rounded-[4px] border border-[#d7dbe0] px-4 py-3 text-left text-[15px] font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper focus-visible:border-ink"
+                  className="group flex min-h-12 w-full items-center justify-between rounded-xl border border-[#d7dbe0] px-4 py-3 text-left text-[15px] font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper focus-visible:border-ink"
                 >
                   <span>{opt}</span>
                   <svg
@@ -465,11 +465,11 @@ function QualifyingWizard({
                 onChange={(e) => setCallTimes(e.target.value)}
                 rows={3}
                 placeholder="e.g. weekday evenings, or Saturday morning"
-                className="min-h-24 w-full resize-y rounded-[4px] border border-[#cccccc] bg-white px-3.5 py-3 text-sm text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
+                className="min-h-24 w-full resize-y rounded-xl border border-[#cccccc] bg-white px-3.5 py-3 text-sm text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
               />
               <button
                 type="submit"
-                className="mt-4 rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
+                className="mt-4 rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
               >
                 Request My Call
               </button>

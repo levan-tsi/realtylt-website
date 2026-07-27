@@ -75,7 +75,7 @@ export function ReportDetail({ report }: { report: PortalReport }) {
           <h1 className="font-display text-2xl text-ink md:text-3xl">{report.title}</h1>
         </div>
         {report.agentNote && (
-          <p className="mt-3 max-w-2xl rounded-[4px] border-l-2 border-porchlight bg-mist px-4 py-3 text-sm italic text-ink-soft">
+          <p className="mt-3 max-w-2xl rounded-r-xl border-l-2 border-porchlight bg-mist px-4 py-3 text-sm italic text-ink-soft">
             &ldquo;{report.agentNote}&rdquo; from your agent
           </p>
         )}
@@ -155,7 +155,7 @@ function CmaBody({ report }: { report: PortalReport }) {
     <>
       {/* Subject + estimate hero */}
       <section className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <div className="rounded-[6px] border border-ink/10 bg-white p-6 md:p-8">
+        <div className="rounded-2xl border border-ink/10 bg-white p-6 md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-stone">Your home</p>
           <p className="mt-2 text-xl font-bold text-ink">{subject.address}</p>
           <p className="text-sm text-stone">
@@ -168,7 +168,7 @@ function CmaBody({ report }: { report: PortalReport }) {
           </dl>
         </div>
 
-        <div className="flex flex-col justify-center rounded-[6px] bg-ink p-6 text-paper md:p-8">
+        <div className="flex flex-col justify-center rounded-2xl bg-ink p-6 text-paper md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-porchlight">Estimated market value</p>
           {estimate.insufficient ? (
             <p className="mt-3 text-lg font-light text-paper/80">
@@ -194,7 +194,7 @@ function CmaBody({ report }: { report: PortalReport }) {
       </section>
 
       {/* Recalculate */}
-      <section aria-labelledby="recalc-heading" className="rounded-[6px] border border-ink/10 bg-mist p-6 md:p-8">
+      <section aria-labelledby="recalc-heading" className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
         <h2 id="recalc-heading" className="font-display text-xl text-ink">Fine-tune your estimate</h2>
         <p className="mt-1 text-sm text-stone">
           Include the comps that best match your home and nudge for condition. The value updates live.
@@ -288,7 +288,7 @@ function CmaBody({ report }: { report: PortalReport }) {
             type="button"
             onClick={save}
             disabled={!dirty || saveState === "saving"}
-            className="rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-40"
+            className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-40"
           >
             {saveState === "saving" ? "Saving…" : "Save adjustments"}
           </button>
@@ -363,7 +363,7 @@ function MarketBody({ report }: { report: PortalReport }) {
           type="button"
           onClick={refresh}
           disabled={refreshing}
-          className="rounded-[4px] border border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-50"
+          className="rounded-xl border border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-50"
         >
           {refreshing ? "Refreshing…" : "Refresh"}
         </button>
@@ -378,7 +378,7 @@ function MarketBody({ report }: { report: PortalReport }) {
         <Metric label="Typical range" value={`${usdShort(stats.typicalLow)}–${usdShort(stats.typicalHigh)}`} />
       </section>
 
-      <section aria-labelledby="bands-heading" className="rounded-[6px] border border-ink/10 bg-white p-6 md:p-8">
+      <section aria-labelledby="bands-heading" className="rounded-2xl border border-ink/10 bg-white p-6 md:p-8">
         <h2 id="bands-heading" className="font-display text-xl text-ink">Where prices land</h2>
         <ul className="mt-5 space-y-3">
           {stats.priceBands.map((b) => (
@@ -397,7 +397,7 @@ function MarketBody({ report }: { report: PortalReport }) {
       </section>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-[6px] border border-ink/10 bg-white p-6">
+        <div className="rounded-2xl border border-ink/10 bg-white p-6">
           <h2 className="font-display text-lg text-ink">By bedrooms</h2>
           <ul className="mt-4 space-y-2.5">
             {stats.bedsDistribution.map((b) => (
@@ -411,7 +411,7 @@ function MarketBody({ report }: { report: PortalReport }) {
             ))}
           </ul>
         </div>
-        <div className="rounded-[6px] border border-ink/10 bg-white p-6">
+        <div className="rounded-2xl border border-ink/10 bg-white p-6">
           <h2 className="font-display text-lg text-ink">Property type</h2>
           <ul className="mt-4 space-y-2.5">
             {stats.propertyTypeSplit.map((b) => (
@@ -442,7 +442,7 @@ function Spec({ label, value }: { label: string; value: string | number }) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[6px] border border-ink/10 bg-white p-5">
+    <div className="rounded-2xl border border-ink/10 bg-white p-5">
       <p className="text-2xl font-light text-ink md:text-3xl">{value}</p>
       <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-stone">{label}</p>
     </div>

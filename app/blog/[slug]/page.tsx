@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // `lg:col-span-2` is inert outside a grid, so the same cover node works full-width in the
   // no-ToC branch and as the band spanning the reading cluster when the ToC is present.
   const cover = (
-    <div className="rise rise-3 relative aspect-[16/9] overflow-hidden rounded-[14px] bg-mist lg:col-span-2">
+    <div className="rise rise-3 relative aspect-[16/9] overflow-hidden rounded-2xl bg-mist lg:col-span-2">
       <Image
         src={post.cover}
         alt=""
@@ -254,7 +254,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
               {post.placeholder && (
                 <aside
-                  className="mx-auto mt-8 flex max-w-[44rem] items-start gap-3 rounded-[12px] border-l-2 border-porchlight bg-mist px-5 py-4 text-sm text-ink-soft"
+                  className="mx-auto mt-8 flex max-w-[44rem] items-start gap-3 rounded-r-2xl border-l-2 border-porchlight bg-mist px-5 py-4 text-sm text-ink-soft"
                   role="note"
                 >
                   <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Draft stub</span>
@@ -303,7 +303,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <li key={r.slug} className="min-w-0">
                     <article className="group relative h-full">
                       <Link href={`/blog/${r.slug}`} className="absolute inset-0 z-10" aria-label={r.title} />
-                      <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-[12px] bg-paper">
+                      <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-2xl bg-paper">
                         <Image
                           src={r.cover}
                           alt=""

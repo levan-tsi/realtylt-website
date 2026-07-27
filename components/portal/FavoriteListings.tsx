@@ -62,13 +62,13 @@ export function FavoriteListings({ fixtureMode }: { fixtureMode: boolean }) {
   return (
     <>
       {missingIds.length > 0 && (
-        <p className="mt-4 flex flex-wrap items-center gap-3 rounded-[2px] border border-ink/10 bg-mist px-4 py-3 text-sm text-stone">
+        <p className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-ink/10 bg-mist px-4 py-3 text-sm text-stone">
           {missingIds.length} saved {missingIds.length === 1 ? "home is" : "homes are"} no longer
           available.
           <button
             type="button"
             onClick={() => missingIds.forEach((id) => void toggleFavorite(id))}
-            className="rounded-[2px] border border-ink/20 px-3 py-1.5 text-sm font-bold text-ink transition-colors hover:border-red-500 hover:text-red-600"
+            className="rounded-xl border border-ink/20 px-3 py-1.5 text-sm font-bold text-ink transition-colors hover:border-red-500 hover:text-red-600"
           >
             Remove them
           </button>

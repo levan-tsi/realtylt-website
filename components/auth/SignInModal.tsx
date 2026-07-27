@@ -128,7 +128,7 @@ export function SignInModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="auth-modal-title"
-        className="relative w-full max-w-[400px] rounded-[6px] bg-white p-7 shadow-2xl"
+        className="relative w-full max-w-[400px] rounded-2xl bg-white p-7 shadow-2xl"
       >
         <button
           type="button"
@@ -155,7 +155,7 @@ export function SignInModal() {
           type="button"
           onClick={onGoogle}
           disabled={busy}
-          className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-[4px] border border-[#cccccc] bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+          className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl border border-[#cccccc] bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
         >
           <svg aria-hidden viewBox="0 0 48 48" className="h-[18px] w-[18px]">
             <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.3 13.3 17.6 9.5 24 9.5z" />
@@ -230,7 +230,7 @@ export function SignInModal() {
           {notice && (
             <p
               role={notice.kind === "error" ? "alert" : "status"}
-              className={`rounded-[4px] px-3 py-2 text-sm ${
+              className={`rounded-xl px-3 py-2 text-sm ${
                 notice.kind === "error"
                   ? "bg-red-50 text-red-700"
                   : "bg-mist text-ink-soft"

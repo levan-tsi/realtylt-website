@@ -92,7 +92,7 @@ export default async function HomePage() {
               id="home-search"
               dark
               placeholder="Search for Homes"
-              className="w-full border border-paper/30 bg-white/10 px-5 py-[23px] text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
+              className="w-full rounded-xl border border-paper/30 bg-white/10 px-5 py-[23px] text-paper placeholder:text-paper/60 focus:border-paper/60 focus:outline-none"
             />
             <Button type="submit" variant="outline-light" className="shrink-0">
               Search
@@ -204,7 +204,7 @@ export default async function HomePage() {
                       ? `/top-areas/${c.slug}`
                       : (boroughPath(c.slug) ?? `/search?county=${c.slug}`)
                   }
-                  className="border border-[#cccccc] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
+                  className="rounded-xl border border-[#cccccc] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
                 >
                   {c.name}
                 </Link>

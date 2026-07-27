@@ -29,7 +29,7 @@ function ReportCard({ r }: { r: PortalReport }) {
   return (
     <Link
       href={`/portal/reports/${r.id}`}
-      className="group flex flex-col justify-between rounded-[6px] border border-ink/10 bg-white p-5 transition-colors hover:border-ink/30"
+      className="group flex flex-col justify-between rounded-2xl border border-ink/10 bg-white p-5 transition-colors hover:border-ink/30"
     >
       <div>
         <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-stone">

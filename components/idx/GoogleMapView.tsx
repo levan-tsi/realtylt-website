@@ -106,7 +106,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
               active
                 ? "--chip-bg:#1c729a;background:var(--chip-bg);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
                 : "--chip-bg:#000;background:var(--chip-bg);box-shadow:0 2px 8px rgb(0 0 0/.3)"
-            };color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:3px`;
+            };color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
             chip.textContent = chipPrice(p.price);
             chip.addEventListener("click", () => {
               onSelectRef.current?.(p.id);
@@ -149,7 +149,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
 
   return (
     <div className="relative h-full min-h-96 w-full">
-      <p className="pointer-events-none absolute bottom-2 left-2 z-[5] border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+      <p className="pointer-events-none absolute bottom-2 left-2 z-[5] rounded-lg border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
         Locations approximate
       </p>
       <div ref={divRef} className="h-full min-h-96 w-full" />

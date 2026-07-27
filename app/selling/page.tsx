@@ -135,7 +135,7 @@ export default async function SellingPage() {
           </div>
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
-            <div id="offer-form" className="scroll-mt-28 border border-paper/20 bg-black/55 p-6 shadow-2xl backdrop-blur md:p-8">
+            <div id="offer-form" className="scroll-mt-28 rounded-2xl border border-paper/20 bg-black/55 p-6 shadow-2xl backdrop-blur md:p-8">
               <h2 className="text-xl font-bold text-paper">Get Your Cash Offer &amp; Home Value</h2>
               <p className="mb-5 mt-1 text-sm text-paper/70">
                 Four quick details and we&rsquo;ll get to work on your numbers.
@@ -271,7 +271,7 @@ export default async function SellingPage() {
           {/* Comparable Property Statistics — live: WHITE card w/ blue bars + suggested range */}
           <Reveal delay={150}>
             <figure
-              className="rounded-[4px] bg-white p-6 text-ink shadow-2xl md:p-8"
+              className="rounded-2xl bg-white p-6 text-ink shadow-2xl md:p-8"
               aria-label="Comparable property statistics: 5 active, 5 pending, 5 sold, with a suggested list-price range"
             >
               <figcaption className="flex items-baseline justify-between border-b border-[#e5e7eb] pb-4">
@@ -335,7 +335,7 @@ export default async function SellingPage() {
             </p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {["Pro photography", "3D walkthrough", "Cinematic video", "Drone aerials", "Staging consult"].map((c) => (
-                <li key={c} className="rounded-[2px] border border-ink/15 px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-ink">
+                <li key={c} className="rounded-lg border border-ink/15 px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-ink">
                   {c}
                 </li>
               ))}
@@ -357,7 +357,7 @@ export default async function SellingPage() {
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </span>
-                <span className="absolute bottom-3 left-3 rounded bg-ink/70 px-2.5 py-1 text-xs font-medium text-paper">
+                <span className="absolute bottom-3 left-3 rounded-lg bg-ink/70 px-2.5 py-1 text-xs font-medium text-paper">
                   3D Walkthrough
                 </span>
               </div>
@@ -430,7 +430,7 @@ export default async function SellingPage() {
                 </div>
                 <ul className="flex-1 space-y-2 p-3 sm:p-4">
                   {LOOP_STEPS.map((s, i) => (
-                    <li key={s.label} className="flex items-center gap-3 rounded-[4px] bg-white/[0.06] px-3 py-2">
+                    <li key={s.label} className="flex items-center gap-3 rounded-lg bg-white/[0.06] px-3 py-2">
                       <span
                         aria-hidden
                         className={`h-2 w-2 shrink-0 rounded-full ${i === 0 ? "bg-porchlight" : "bg-paper/30"}`}
@@ -476,7 +476,7 @@ function PathCard({
   cta: string;
 }) {
   return (
-    <article className="relative mt-8 flex h-full flex-col border-2 border-ink bg-white">
+    <article className="relative mt-8 flex h-full flex-col rounded-2xl border-2 border-ink bg-white">
       {/* floating number — live: 60px black circle, white numeral, ~30px above the card top */}
       <span
         aria-hidden
@@ -486,7 +486,7 @@ function PathCard({
       </span>
       {/* black header block — live: title, subtitle, then the key-benefit banner over a
           translucent top border, all on black */}
-      <div className="rounded-t-[2px] bg-ink px-6 pb-6 pt-11 text-center">
+      <div className="rounded-t-[14px] bg-ink px-6 pb-6 pt-11 text-center">
         <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
         <p className="mx-auto mt-2 max-w-xs text-sm text-paper/70">{subtitle}</p>
         <p className="mt-5 border-t border-white/30 pt-4 text-sm font-bold uppercase tracking-wide text-paper">

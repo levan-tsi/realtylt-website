@@ -53,7 +53,7 @@ export default function ConnectPage() {
               alt="Levan Tsiklauri, investor and realtor at RealtyLT"
               width={300}
               height={380}
-              className="h-auto w-full max-w-[300px]"
+              className="h-auto w-full max-w-[300px] rounded-2xl"
             />
             <p className="mt-4 text-2xl font-light text-stone">Levan Tsiklauri</p>
             <p className="text-sm font-bold uppercase tracking-[0.12em] text-stone">

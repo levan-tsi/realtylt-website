@@ -146,7 +146,7 @@ export function ReportGenerator() {
   }, [supabase, user, mCounty, town, track, router]);
 
   return (
-    <div className="rounded-[6px] border border-ink/10 bg-mist p-6 md:p-8">
+    <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
       <h3 className="font-display text-xl text-ink">Run a new report</h3>
       <p className="mt-1 text-sm text-stone">
         Instant, from live Hudson Valley listings. Then fine-tune it or hand it to your agent.
@@ -156,7 +156,7 @@ export function ReportGenerator() {
       <div
         role="tablist"
         aria-label="Report type"
-        className="mt-5 inline-flex rounded-[4px] border border-ink/15 bg-white p-1"
+        className="mt-5 inline-flex rounded-xl border border-ink/15 bg-white p-1"
       >
         {(
           [
@@ -173,7 +173,7 @@ export function ReportGenerator() {
               setMode(m);
               setError("");
             }}
-            className={`rounded-[3px] px-4 py-2 text-sm font-bold transition-colors ${
+            className={`rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
               mode === m ? "bg-ink text-paper" : "text-stone hover:text-ink"
             }`}
           >
@@ -218,7 +218,7 @@ export function ReportGenerator() {
       )}
 
       {error && (
-        <p role="alert" className="mt-4 rounded-[4px] border border-red-500/40 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="mt-4 rounded-xl border border-red-500/40 bg-red-50 px-3 py-2 text-sm text-red-700">
           {error}
         </p>
       )}
@@ -228,7 +228,7 @@ export function ReportGenerator() {
           type="button"
           onClick={mode === "cma" ? generateCma : generateMarket}
           disabled={busy}
-          className="rounded-[4px] bg-ink px-8 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
+          className="rounded-xl bg-ink px-8 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
         >
           {busy ? "Running…" : mode === "cma" ? "Generate my estimate" : "Run market report"}
         </button>

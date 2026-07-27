@@ -73,7 +73,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         ) : !ready ? (
           <p className="py-16 text-center text-sm text-stone">Loading your portal…</p>
         ) : !user ? (
-          <div className="mx-auto max-w-md rounded-[4px] border border-ink/10 bg-mist p-10 text-center">
+          <div className="mx-auto max-w-md rounded-2xl border border-ink/10 bg-mist p-10 text-center">
             <p className="font-display text-2xl text-ink">Sign in to your portal</p>
             <p className="mt-2 text-sm text-stone">
               Save homes, save searches, and get new-listing alerts, synced across your devices.

@@ -370,7 +370,7 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
       {/* Overlapping "Save a Search" panel (decorative) */}
       <div
         aria-hidden
-        className="absolute bottom-0 right-0 w-[230px] rounded-[6px] border border-[#e5e7eb] bg-white p-4 text-ink shadow-[0_24px_50px_-20px_rgba(0,0,0,0.5)] sm:w-[260px]"
+        className="absolute bottom-0 right-0 w-[230px] rounded-2xl border border-[#e5e7eb] bg-white p-4 text-ink shadow-[0_24px_50px_-20px_rgba(0,0,0,0.5)] sm:w-[260px]"
       >
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-ink">Save a Search</p>
         <div className="mt-3 flex gap-1 border-b border-[#e5e7eb] pb-2 text-[10px] font-bold uppercase tracking-wide">
@@ -378,20 +378,20 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
           <span className="pb-1 text-stone">References</span>
         </div>
         <p className="mt-3 text-[10px] uppercase tracking-[0.12em] text-stone">Search name</p>
-        <div className="mt-1 h-7 rounded-[3px] border border-[#dddddd] bg-mist px-2 text-[11px] leading-7 text-stone">
+        <div className="mt-1 h-7 rounded-lg border border-[#dddddd] bg-mist px-2 text-[11px] leading-7 text-stone">
           Beacon · 3+ bd · under $600K
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
           <div>
             <p className="uppercase tracking-[0.12em] text-stone">Price</p>
-            <div className="mt-1 h-6 rounded-[3px] border border-[#dddddd] bg-mist" />
+            <div className="mt-1 h-6 rounded-lg border border-[#dddddd] bg-mist" />
           </div>
           <div>
             <p className="uppercase tracking-[0.12em] text-stone">Beds</p>
-            <div className="mt-1 h-6 rounded-[3px] border border-[#dddddd] bg-mist" />
+            <div className="mt-1 h-6 rounded-lg border border-[#dddddd] bg-mist" />
           </div>
         </div>
-        <div className="mt-4 rounded-[3px] bg-ink py-2 text-center text-[11px] font-bold uppercase tracking-wide text-paper">
+        <div className="mt-4 rounded-lg bg-ink py-2 text-center text-[11px] font-bold uppercase tracking-wide text-paper">
           Save the Search
         </div>
       </div>
@@ -418,7 +418,7 @@ function TourSchedulerCard({
 
   return (
     <figure
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-[4px] border border-[#dddddd] bg-white shadow-2xl"
+      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[#dddddd] bg-white shadow-2xl"
       aria-label="Example home with tour-scheduling options"
     >
       <div className="relative aspect-[3/2] bg-mist">
@@ -451,7 +451,7 @@ function TourSchedulerCard({
           {dates.map((d, i) => (
             <div
               key={d.day}
-              className={`rounded-[3px] border py-2 text-center ${
+              className={`rounded-xl border py-2 text-center ${
                 i === 0 ? "border-ink bg-mist" : "border-[#e5e7eb]"
               }`}
             >
@@ -460,7 +460,7 @@ function TourSchedulerCard({
             </div>
           ))}
         </div>
-        <div aria-hidden className="mt-4 rounded-[3px] bg-ink py-2.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-paper">
+        <div aria-hidden className="mt-4 rounded-xl bg-ink py-2.5 text-center text-xs font-bold uppercase tracking-[0.14em] text-paper">
           In Person Tour
         </div>
       </div>

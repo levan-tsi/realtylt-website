@@ -33,7 +33,7 @@ function StatTile({ n, label, href }: { n: number; label: string; href: string }
   return (
     <Link
       href={href}
-      className="rounded-[4px] border border-ink/10 bg-white p-6 transition-colors hover:border-ink/30"
+      className="rounded-2xl border border-ink/10 bg-white p-6 transition-colors hover:border-ink/30"
     >
       <p className="text-4xl font-light text-ink">{n}</p>
       <p className="mt-1 text-sm font-bold uppercase tracking-wide text-stone">{label}</p>

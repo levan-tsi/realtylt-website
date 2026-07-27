@@ -16,7 +16,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
 
   if (address !== null) {
     return (
-      <div className="mx-auto w-full max-w-lg bg-white p-6 text-left shadow-2xl md:p-7">
+      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-2xl md:p-7">
         <p className="text-sm leading-relaxed text-stone">
           Almost there. Tell us where to send the numbers for{" "}
           <strong className="text-ink">{address}</strong>.
@@ -55,7 +55,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
         autoComplete="street-address"
         required
         placeholder="Enter Home Address"
-        className="min-w-0 flex-1 border border-white bg-white px-4 py-3.5 text-sm text-ink placeholder:text-stone focus:outline-none"
+        className="min-w-0 flex-1 rounded-l-xl border border-white bg-white px-4 py-3.5 text-sm text-ink placeholder:text-stone focus:outline-none"
       />
       <label htmlFor="hv-unit" className="sr-only">
         Unit number (optional)
@@ -66,7 +66,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
         placeholder="Unit # (optional)"
         className="hidden w-36 border-y border-r-0 border-l border-white border-l-[#dddddd] bg-white px-4 py-3.5 text-sm text-ink placeholder:text-stone focus:outline-none sm:block"
       />
-      <Button type="submit" className="shrink-0">
+      <Button type="submit" className="shrink-0 rounded-l-none rounded-r-xl">
         Find Out
       </Button>
     </form>

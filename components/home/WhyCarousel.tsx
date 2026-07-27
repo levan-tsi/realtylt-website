@@ -98,7 +98,7 @@ export function WhyCarousel() {
       >
         {/* Viewport — device screenshots keep their own aspect via object-contain on the
             section's light background, so no mockup is cropped or stretched. */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[4px]">
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
           {SLIDES.map((s, i) => (
             <div
               key={s.src}

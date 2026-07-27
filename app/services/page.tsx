@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 function ServiceCard({ service, large = false }: { service: Service; large?: boolean }) {
   return (
     <article
-      className={`group relative flex h-full flex-col border border-[#dddddd] bg-white transition-colors hover:border-ink/35 ${
+      className={`group relative flex h-full flex-col rounded-2xl border border-[#dddddd] bg-white transition-colors hover:border-ink/35 ${
         large ? "p-7 md:p-8" : "p-6"
       }`}
     >
@@ -51,7 +51,7 @@ function ServiceCard({ service, large = false }: { service: Service; large?: boo
           {service.specs.slice(0, 3).map((s) => (
             <li
               key={s}
-              className="border border-[#dddddd] px-2 py-1 text-[11px] leading-none text-ink-soft"
+              className="rounded-lg border border-[#dddddd] px-2 py-1 text-[11px] leading-none text-ink-soft"
             >
               {s}
             </li>
@@ -150,7 +150,7 @@ export default function ServicesIndexPage() {
           </div>
 
           <Reveal delay={120} className="lg:self-center">
-            <figure className="border border-paper/15 bg-ink-soft p-5 md:p-6">
+            <figure className="rounded-2xl border border-paper/15 bg-ink-soft p-5 md:p-6">
               <Constellation count={20} lit={null} label="The RealtyLT AI hub: twenty service nodes around one core" />
               <figcaption className="mt-4 border-t border-paper/10 pt-4 text-xs uppercase tracking-[0.18em] text-paper/60">
                 Twenty nodes

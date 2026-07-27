@@ -7,7 +7,7 @@ import type { Testimonial } from "@/content/testimonials";
 export function TestimonialCard({ t, dark = false }: { t: Testimonial; dark?: boolean }) {
   return (
     <figure
-      className={`lift flex h-full flex-col rounded-[2px] border p-6 ${
+      className={`lift flex h-full flex-col rounded-2xl border p-6 ${
         dark ? "border-paper/10 bg-ink-soft" : "border-ink/10 bg-white"
       }`}
     >

@@ -65,7 +65,7 @@ export function TalkToAgent({
   return (
     <section
       aria-labelledby="talk-heading"
-      className="overflow-hidden rounded-[6px] bg-ink text-paper"
+      className="overflow-hidden rounded-2xl bg-ink text-paper"
     >
       <div className="p-6 md:p-8">
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-porchlight">
@@ -82,7 +82,7 @@ export function TalkToAgent({
         {done === "raise" ? (
           <p
             role="status"
-            className="mt-6 rounded-[4px] border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
+            className="mt-6 rounded-xl border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
           >
             Got it. Your agent has been notified and will reach out shortly. Talk soon.
           </p>
@@ -92,19 +92,19 @@ export function TalkToAgent({
               type="button"
               onClick={() => submit("raise")}
               disabled={busy !== null}
-              className="rounded-[4px] bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist disabled:opacity-60"
+              className="rounded-xl bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist disabled:opacity-60"
             >
               {busy === "raise" ? "Sending…" : "Raise my hand"}
             </button>
             <a
               href={SITE.phoneHref}
-              className="rounded-[4px] border border-paper/40 px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-white/10"
+              className="rounded-xl border border-paper/40 px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-white/10"
             >
               Call {SITE.phone}
             </a>
             <a
               href={`sms:${SITE.phoneE164}`}
-              className="rounded-[4px] border border-paper/40 px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-white/10"
+              className="rounded-xl border border-paper/40 px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-white/10"
             >
               Text
             </a>
@@ -119,7 +119,7 @@ export function TalkToAgent({
           {done === "send" ? (
             <p
               role="status"
-              className="mt-2 rounded-[4px] border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
+              className="mt-2 rounded-xl border border-porchlight/40 bg-porchlight/10 px-4 py-3 text-sm text-paper"
             >
               Message sent. You&rsquo;ll usually hear back within the hour.
             </p>
@@ -131,13 +131,13 @@ export function TalkToAgent({
                 onChange={(e) => setMessage(e.target.value)}
                 rows={2}
                 placeholder="Ask about this report, a comp, or next steps…"
-                className="min-h-12 flex-1 resize-y rounded-[4px] border border-paper/30 bg-white/5 px-3.5 py-3 text-sm text-paper placeholder:text-paper/50 focus:border-paper/70 focus:outline-none"
+                className="min-h-12 flex-1 resize-y rounded-xl border border-paper/30 bg-white/5 px-3.5 py-3 text-sm text-paper placeholder:text-paper/50 focus:border-paper/70 focus:outline-none"
               />
               <button
                 type="button"
                 onClick={() => submit("send")}
                 disabled={busy !== null || !message.trim()}
-                className="h-fit shrink-0 rounded-[4px] bg-porchlight px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-porchlight-deep hover:text-paper disabled:opacity-50"
+                className="h-fit shrink-0 rounded-xl bg-porchlight px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-porchlight-deep hover:text-paper disabled:opacity-50"
               >
                 {busy === "send" ? "Sending…" : "Send"}
               </button>
@@ -146,7 +146,7 @@ export function TalkToAgent({
         </div>
 
         {error && (
-          <p role="alert" className="mt-4 rounded-[4px] border border-red-400/50 bg-red-500/10 px-3 py-2 text-sm text-red-200">
+          <p role="alert" className="mt-4 rounded-xl border border-red-400/50 bg-red-500/10 px-3 py-2 text-sm text-red-200">
             {error}
           </p>
         )}
