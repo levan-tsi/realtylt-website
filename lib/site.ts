@@ -31,9 +31,9 @@ export const COUNTIES = [
 
 /** The five NYC boroughs — also served (owner sells in the city too). The feed labels them
  * by LEGAL county name (Kings/New York/Richmond — see normalizeCounty in lib/idx/mls-grid);
- * these slugs are the friendly URL-safe forms. Kept separate from COUNTIES because the
- * editorial Top Areas pages (content/counties, NAV) cover the six Hudson Valley counties
- * only — boroughs are searchable areas, not (yet) Top Areas pages. */
+ * these slugs are the friendly URL-safe forms. Kept separate from COUNTIES because the two
+ * groups are presented separately (Top Areas flyout, home areas strip) and because the
+ * editorial depth differs — both DO have real /top-areas pages (see content/boroughs). */
 export const BOROUGHS = [
   { slug: "bronx", name: "The Bronx" },
   { slug: "brooklyn", name: "Brooklyn" },
@@ -52,6 +52,33 @@ export type CountySlug = (typeof SERVED_AREAS)[number]["slug"];
  * ?county=slug), so the count, grid, and map pins don't get swamped by the ~7k borough listings. */
 export const DEFAULT_COUNTY_SLUGS: readonly CountySlug[] = COUNTIES.map((c) => c.slug);
 
+/** The Bronx is the one area whose readable page slug differs from its internal area slug
+ * (/top-areas/the-bronx vs the DB/search value "bronx"). content/boroughs owns that mapping;
+ * content/boroughs.test.ts asserts the two never drift apart. */
+const BOROUGH_PAGE_SLUG: Record<string, string> = { bronx: "the-bronx" };
+
+/** Top Areas, in the two groups we actually sell in. Both groups have real pages; the
+ * boroughs are the secondary group, so the UI keeps them behind their own expander on
+ * small screens rather than dumping eleven links into the menu. */
+export const TOP_AREA_GROUPS = [
+  {
+    id: "hudson-valley",
+    label: "Hudson Valley",
+    items: COUNTIES.map((c) => ({
+      label: c.name.replace(" County", "").toUpperCase(),
+      href: `/top-areas/${c.slug}`,
+    })),
+  },
+  {
+    id: "nyc",
+    label: "New York City",
+    items: BOROUGHS.map((b) => ({
+      label: b.name.toUpperCase(),
+      href: `/top-areas/${BOROUGH_PAGE_SLUG[b.slug] ?? b.slug}`,
+    })),
+  },
+] as const;
+
 export const NAV = [
   { label: "Home", href: "/" },
   { label: "Search Listings", href: "/search" },
@@ -60,10 +87,7 @@ export const NAV = [
   {
     label: "Top Areas",
     href: "/top-areas",
-    children: COUNTIES.map((c) => ({
-      label: c.name.replace(" County", "").toUpperCase(),
-      href: `/top-areas/${c.slug}`,
-    })),
+    groups: TOP_AREA_GROUPS,
   },
   { label: "Financing", href: "/financing" },
   { label: "Home Value", href: "/home-value" },

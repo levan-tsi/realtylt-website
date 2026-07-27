@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { BOROUGH_CONTENT, getBorough, boroughPath } from "./boroughs";
-import { BOROUGHS } from "@/lib/site";
+import { BOROUGHS, COUNTIES, TOP_AREA_GROUPS } from "@/lib/site";
 
 describe("borough Top Areas content + slug mapping", () => {
   it("covers all five NYC boroughs", () => {
@@ -33,5 +33,40 @@ describe("borough Top Areas content + slug mapping", () => {
 
   it("getBorough returns undefined for an unknown slug", () => {
     expect(getBorough("nassau")).toBeUndefined();
+  });
+});
+
+/** The header flyout hard-codes the readable borough slug (lib/site BOROUGH_PAGE_SLUG) because
+ * lib/site cannot import content/boroughs without a cycle. That copy is the drift risk these
+ * tests exist to kill: a nav link pointing at a slug generateStaticParams never emits is a 404
+ * the type checker cannot see. */
+describe("the Top Areas menu only links to pages that exist", () => {
+  const [hudson, nyc] = TOP_AREA_GROUPS;
+
+  it("groups the six counties and the five boroughs, and nothing else", () => {
+    expect(TOP_AREA_GROUPS).toHaveLength(2);
+    expect(hudson.items).toHaveLength(6);
+    expect(nyc.items).toHaveLength(5);
+  });
+
+  it("every borough link uses the readable page slug from BOROUGH_CONTENT", () => {
+    expect([...nyc.items].map((i) => i.href).sort()).toEqual(
+      BOROUGH_CONTENT.map((b) => `/top-areas/${b.slug}`).sort(),
+    );
+    // The one that would break silently.
+    expect([...nyc.items].map((i) => i.href)).toContain("/top-areas/the-bronx");
+    expect([...nyc.items].map((i) => i.href)).not.toContain("/top-areas/bronx");
+  });
+
+  it("every county link uses its COUNTIES slug", () => {
+    expect([...hudson.items].map((i) => i.href).sort()).toEqual(
+      [...COUNTIES].map((c) => `/top-areas/${c.slug}`).sort(),
+    );
+  });
+
+  it("labels the boroughs as their own group so they read as distinct from the counties", () => {
+    expect(nyc.label).toBe("New York City");
+    expect(hudson.label).toBe("Hudson Valley");
+    expect([...nyc.items].map((i) => i.label)).toContain("THE BRONX");
   });
 });

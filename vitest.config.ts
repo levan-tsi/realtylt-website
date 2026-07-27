@@ -9,6 +9,14 @@ export default defineConfig({
   // lib/blog/markdown.tsx itself, so tell esbuild to emit the automatic runtime.
   esbuild: { jsx: "automatic" },
   test: {
-    include: ["lib/**/*.test.ts", "app/**/*.test.ts", "components/**/*.test.ts"],
+    // content/** was missing from this list, so content/boroughs.test.ts had never actually
+    // run — the file was dead weight. It passes, and the Top Areas nav-link guards it now
+    // carries only mean something if the file is live.
+    include: [
+      "lib/**/*.test.ts",
+      "app/**/*.test.ts",
+      "components/**/*.test.ts",
+      "content/**/*.test.ts",
+    ],
   },
 });
