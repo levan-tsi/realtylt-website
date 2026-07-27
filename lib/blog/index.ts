@@ -21,6 +21,7 @@ export function staticToArticle(post: BlogPost): Article {
     slug: post.slug,
     title: post.title,
     date: post.date,
+    updated: post.updated,
     excerpt: post.excerpt,
     cover: post.cover,
     author: "Levan Tsiklauri",

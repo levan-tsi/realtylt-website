@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
       type: "article",
       publishedTime: post.date,
-      modifiedTime: post.date,
+      modifiedTime: post.updated || post.date,
       authors: [post.author],
       url,
       images: [{ url: image, width: 1200, height: 630, alt: post.title }],
@@ -137,6 +137,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             dateTime={post.date}
             minutes={minutes}
             url={url}
+            updatedLabel={post.updated ? fmtDate(post.updated) : undefined}
+            updatedTime={post.updated}
           />
         ) : (
         <header className="relative isolate overflow-hidden bg-ink text-paper">

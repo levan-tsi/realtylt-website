@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ShareRow } from "@/components/blog/ShareRow";
 
@@ -19,6 +20,8 @@ export function ColdOpen({
   dateTime,
   minutes,
   url,
+  updatedLabel,
+  updatedTime,
 }: {
   title: string;
   excerpt: string;
@@ -27,6 +30,8 @@ export function ColdOpen({
   dateTime: string;
   minutes: number;
   url: string;
+  updatedLabel?: string;
+  updatedTime?: string;
 }) {
   return (
     <header
@@ -39,7 +44,35 @@ export function ColdOpen({
           50%      { opacity: 1; }
         }
         .cold-open-glow { animation: cold-open-breath 9s ease-in-out infinite; }
+
+        /* The photograph is atmosphere, not a picture to look at, so it is masked away from
+           the type rather than sat behind it. On a phone it fades downward out of the top;
+           on desktop it fills the right half the composition was leaving empty and fades
+           leftward before it reaches the numerals. */
+        .cold-open-photo {
+          -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 62%);
+                  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 62%);
+        }
+        @media (min-width: 768px) {
+          .cold-open-photo {
+            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.95), transparent 58%);
+                    mask-image: linear-gradient(to left, rgba(0,0,0,0.95), transparent 58%);
+          }
+        }
       `}</style>
+
+      {/* Twilight over the Hudson. Already licensed and logged in
+          public/images/ATTRIBUTIONS.md (CC BY 2.0), so no new asset obligation. */}
+      <div aria-hidden className="cold-open-photo pointer-events-none absolute inset-0 -z-20 opacity-45">
+        <Image
+          src="/images/hero/hudson-twilight.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
 
       {/* A wide ambient wash so the black is lit rather than flat. The porch light proper is
           anchored to the numerals below, not to the viewport — centring it on the section put
@@ -108,6 +141,18 @@ export function ColdOpen({
             /
           </span>
           <span>{minutes} min read</span>
+          {updatedLabel && updatedTime && (
+            <>
+              <span aria-hidden className="text-paper/25">
+                /
+              </span>
+              {/* Freshness is a ranking and citation signal, but only an honest one counts:
+                  this renders solely when the post actually carries a revision date. */}
+              <span className="text-paper/80">
+                Updated <time dateTime={updatedTime}>{updatedLabel}</time>
+              </span>
+            </>
+          )}
         </div>
 
         <div className="rise rise-5 mt-6">

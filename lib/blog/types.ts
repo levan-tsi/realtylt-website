@@ -13,6 +13,10 @@ export interface Article {
   title: string;
   /** ISO date (YYYY-MM-DD) — display date and JSON-LD datePublished. */
   date: string;
+  /** ISO date (YYYY-MM-DD) of the last substantive edit, when there has been one.
+   * Drives JSON-LD dateModified and the visible "Updated" line. Absent means never
+   * revised, in which case the publish date IS the honest modified date. */
+  updated?: string;
   excerpt: string;
   /** Always a renderable image (site-relative path or an allowed https URL). */
   cover: string;

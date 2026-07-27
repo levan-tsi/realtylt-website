@@ -36,8 +36,9 @@ export function articleJsonLd(article: Article) {
     description: article.seoDescription || article.excerpt,
     image: [absoluteCover(article)],
     datePublished: article.date,
-    // No separate edited timestamp is tracked yet; publish date is the honest dateModified.
-    dateModified: article.date,
+    // A post that has been revised reports the revision; one that has not reports its
+    // publish date, which is the honest dateModified rather than a freshness fiction.
+    dateModified: article.updated || article.date,
     inLanguage: "en-US",
     wordCount,
     author: {

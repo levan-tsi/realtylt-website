@@ -75,6 +75,8 @@ Three failure modes, all avoidable, all common:
 
 [[scene:failure-modes]]
 
+[[scene:system-diagram]]
+
 ## What to do about it
 
 If you would rather see one working than read about it, ours is live on [the RealtyLT AI page](/ai#chat), and you can talk to it right now. Ask it something hard. It will either answer, or tell you it cannot and offer to book a call, and both of those are the correct behaviour.

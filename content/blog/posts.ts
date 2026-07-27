@@ -12,6 +12,10 @@ export interface BlogPost {
   slug: string;
   title: string;
   date: string; // ISO
+  /** ISO date of the last substantive revision, when there has been one. Drives JSON-LD
+   * dateModified and the visible "Updated" line. Omit on a post that has never been revised:
+   * an invented modified date is a freshness fiction, not a freshness signal. */
+  updated?: string;
   excerpt: string;
   cover: string;
   /** Meta description override. The excerpt is VISIBLE copy (index card, article hero) and
@@ -57,6 +61,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-chat-assistant-real-estate-website",
     title: "Your Website Answered That Buyer at 11:40pm. Did You?",
     date: "2026-07-12",
+    updated: "2026-07-27",
     excerpt:
       "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. Here is what an AI chat assistant actually does in that gap, and what it cannot do.",
     seoDescription:

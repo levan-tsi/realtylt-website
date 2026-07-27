@@ -41,7 +41,22 @@ export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
   { id: "scene-teardown", label: "The teardown", scene: true },
   { id: "common-questions-answered-honestly", label: "Common questions" },
   { id: "where-it-goes-wrong", label: "Where it goes wrong" },
+  { id: "scene-system-diagram", label: "What it connects to", scene: true },
   { id: "what-to-do-about-it", label: "What to do" },
+];
+
+/** SCENE 7 copy — the system diagram.
+ *
+ * The compact abstraction of the chain, not a re-telling of the teardown: each hop names what
+ * it actually CONNECTS TO, which is the part the conversation view cannot show. Every
+ * connection here is one the site already claims elsewhere (MLS Grid feed, text, the CRM). */
+export const SYSTEM_STEPS: { label: string; connects: string; at?: string }[] = [
+  { label: "The question", connects: "Your own website, any hour", at: "11:40 pm" },
+  { label: "The assistant", connects: "A language model, given limits" },
+  { label: "Live inventory", connects: "The MLS Grid feed" },
+  { label: "The reply", connects: "Sent by text" },
+  { label: "The record", connects: "CRM, with the transcript" },
+  { label: "The handoff", connects: "A booked call with a person", at: "9:15 am" },
 ];
 
 /** SCENE 2b copy — the response curve.

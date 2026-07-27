@@ -7,6 +7,7 @@ import { LeadsCalculator } from "./LeadsCalculator";
 import { PullQuote } from "./PullQuote";
 import { ResponseCurve } from "./ResponseCurve";
 import { ResponseGap } from "./ResponseGap";
+import { SystemDiagram } from "./SystemDiagram";
 import { Teardown } from "./Teardown";
 
 /** The flagship scene registry.
@@ -36,6 +37,7 @@ const SCENES: Record<string, SceneDef> = {
   "pull-quote": { Component: PullQuote, band: "dark" },
   teardown: { Component: Teardown, band: "light" },
   "failure-modes": { Component: FailureModes, band: "light" },
+  "system-diagram": { Component: SystemDiagram, band: "dark" },
   funnel: { Component: Funnel, band: "dark" },
 };
 
