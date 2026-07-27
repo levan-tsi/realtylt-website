@@ -98,6 +98,29 @@ On **everything that makes a page earn organic traffic and get cited, it is unde
 The owner's instinct was right: a flagship with no pictures, no graphs and no explainers is not
 a flagship, however good the typography is.
 
+## RE-MEASURED — 74 / 100 (2026-07-27, after the first fix round)
+
+Same rubric, same script, nothing moved. Deltas measured on the live page:
+
+| Was | Now | Item |
+|---|---|---|
+| no FAQ schema | **`FAQPage` emitted** | Needed no new code. The repo already emitted FAQPage for an FAQ-shaped body; renaming "The honest objections" to "Common questions, answered honestly" matched `FAQ_SECTION_RE` and promoting the three objections to `###` let `extractFaqs` pair them. |
+| `authorPageLink: false` | **`true`** | Author block with portrait, first-hand claim, links to /who-we-are and the live assistant. |
+| 0 real citations | **1, with study, sample and year** | HBR 2011 / Oldroyd, ~1.25M leads, 29 companies, plus an on-screen note that it is cross-industry not real-estate. |
+| 0 charts | **1 real SVG data graphic** | Relative odds of qualifying by response speed (60x / 8.6x / 1x), `role="img"` with the numbers also in the DOM. |
+| 0 body images | **1** | The author portrait. |
+
+| Cat | Was | Now |
+|---|---|---|
+| A Substance | 17.5/25 | **19.5/25** (A4 2.5 → 4.5, the load-bearing stat is sourced) |
+| B Trust | 7/20 | **18.5/20** (B1 2 → 8, B2 0.5 → 6) |
+| C Visual media | 3/25 | **9/25** (C1 0 → 3, C2 3 → 6, C3 still 0) |
+| D Search/GEO | 11.5/20 | **17.5/20** (D1 0 → 6) |
+| E Experience | 9.5/10 | 9.5/10 |
+
+**48.5 → 74/100.** Trust and GEO structure are now close to maxed. **Visual media is still the
+whole gap: 9 of 25.**
+
 ## WHAT IT TAKES TO REACH 90-95
 
 Ordered by points per unit of effort. Total available: +48, landing at ~96.
@@ -117,6 +140,28 @@ Ordered by points per unit of effort. Total available: +48, landing at ~96.
 Items 1-4, 8 and 9 need no assets and no permission: **+22.5, which alone moves 48.5 to 71.**
 Items 5-7 are the ones that need the owner: they are worth **+19** and are the difference
 between 71 and 90+.
+
+## REMAINING PLAN FROM 74 TO ~94 (owner decisions taken 2026-07-27)
+
+| # | Fix | Pts | Status |
+|---|---|---|---|
+| 1 | **Video: screen-recorded scene reel.** Owner chose this over the HeyGen avatar. Record the finished scenes scrolling plus the live 3D brain at /ai as B-roll, 30-60s. No credits, no auth. | +8 | approved, not built |
+| 2 | **Photography through the body.** Owner: reuse repo images, generate, or free stock without watermark, whichever is cheapest. `public/images/` already holds lifestyle, hero, counties and listings sets, and `ATTRIBUTIONS.md` is the existing licence ledger to append to. | +5 | approved, not built |
+| 3 | **A second original diagram**: the labelled system diagram (visitor, assistant, MLS, text, CRM, booked) as real SVG. Earlier judged duplicative of the teardown as a TEXT list, but as an embeddable GRAPHIC it is the asset other sites credit, which the text list can never be. | +3 | not built |
+| 4 | **Freshness**: real `dateModified` plus a visible "Updated" line. `Article` currently carries only `date`, so this needs an optional `updated` field threaded through the type, both producers and the JSON-LD. | +2.5 | not built |
+| 5 | Broaden coverage: cost, setup time, privacy. | +1.5 | not built |
+
+74 + 20 = **~94**.
+
+**Original data from our own transcripts is DEFERRED, not skipped.** Measured 2026-07-27 in
+Supabase (`wpfmhmnceflfruhssqqb`): **33 distinct chat sessions**, 64 chat_log rows, 128 messages,
+3 leads, spanning 2026-06-15 to 2026-07-22 — and most of those are the owner's own testing during
+the build. Publishing "based on 33 conversations" on a page whose argument is honesty would cost
+credibility rather than build it. Revisit at a few hundred genuine public conversations, at which
+point it becomes the single best link-earning asset available, because nobody else can publish it.
+For reference, anonymous chats ARE retained: `n8n_chat_histories` keyed by a random `session_id`
+(the bot's context memory) and a `chat_logs` row per exchange, with no `leads` row unless contact
+details are given.
 
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
