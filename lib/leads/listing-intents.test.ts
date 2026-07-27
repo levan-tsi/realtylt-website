@@ -55,6 +55,31 @@ describe("offerQualifier", () => {
   it("falls back to 'Not specified' when no amount was entered", () => {
     expect(offerQualifier({ mlsNumber: "123", offerDisplay: "", listPrice: 950_000 }).offer).toBe("Not specified");
   });
+
+  it("carries live's two qualifying answers in the SAME payload (no second lead post)", () => {
+    expect(
+      offerQualifier({
+        mlsNumber: "123",
+        offerDisplay: "$725,000",
+        listPrice: 950_000,
+        preApproved: "I'm buying with cash",
+        seenInPerson: "I would like to go see it",
+      }),
+    ).toEqual({
+      intent: "Make an offer",
+      listing: "MLS# 123",
+      offer: "$725,000",
+      listPrice: "$950,000",
+      preApproved: "I'm buying with cash",
+      seenHomeInPerson: "I would like to go see it",
+    });
+  });
+
+  it("omits an unanswered question rather than sending a guess to the CRM", () => {
+    const q = offerQualifier({ mlsNumber: "123", offerDisplay: "$1", listPrice: 1, preApproved: "" });
+    expect(q).not.toHaveProperty("preApproved");
+    expect(q).not.toHaveProperty("seenHomeInPerson");
+  });
 });
 
 describe("wrapIndex — lightbox next/prev", () => {

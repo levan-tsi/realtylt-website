@@ -39,17 +39,29 @@ export function tourQualifier(o: {
   };
 }
 
+/** The two questions live realtylt.com asks before it will start an offer. They are the first
+ * things an agent needs in order to judge how strong an offer is, so the answers ride along in the
+ * SAME lead payload rather than a second submission. */
+export const PRE_APPROVED_ANSWERS = ["Yes", "No", "I'm buying with cash"] as const;
+export const SEEN_HOME_ANSWERS = ["Yes", "No", "I would like to go see it"] as const;
+
 /** `qualifier` for an offer — `offerDisplay` already formatted ("$725,000"). */
 export function offerQualifier(o: {
   mlsNumber: string;
   offerDisplay: string;
   listPrice: number;
+  /** "Are you pre-approved with a lender?" */
+  preApproved?: string;
+  /** "Have you seen this home in person?" */
+  seenInPerson?: string;
 }): Record<string, string> {
   return {
     intent: "Make an offer",
     listing: `MLS# ${o.mlsNumber}`,
     offer: o.offerDisplay || "Not specified",
     listPrice: `$${o.listPrice.toLocaleString("en-US")}`,
+    ...(o.preApproved ? { preApproved: o.preApproved } : {}),
+    ...(o.seenInPerson ? { seenHomeInPerson: o.seenInPerson } : {}),
   };
 }
 

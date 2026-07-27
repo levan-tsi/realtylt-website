@@ -11,6 +11,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
 import { ListingSubNav } from "@/components/listing/ListingSubNav";
 import { MarketInsights } from "@/components/listing/MarketInsights";
+import { ClampedDescription, SpecDisclosure } from "@/components/listing/SpecDisclosure";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 import { getAreaInsights } from "@/lib/idx/db";
 import { Reveal } from "@/components/ui/Reveal";
@@ -294,22 +295,25 @@ export async function ListingDetail({ id }: { id: string }) {
               </p>
             )}
 
+            {/* Body sections collapse at 390 only (pure CSS, no JS) so a phone visitor reaches the
+                payment calculator without scrolling thousands of pixels of spec lists. Desktop is
+                unchanged: everything open, no controls. */}
             <h2 className="mt-8 font-display text-2xl text-ink">About this home</h2>
-            <p className="mt-3 max-w-2xl leading-relaxed text-stone">{l.description}</p>
+            <ClampedDescription text={l.description} />
 
-            <h2 className="mt-10 font-display text-2xl text-ink">Highlights</h2>
-            <dl className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2">
-              {highlights.map(([k, v]) => (
-                <div key={k} className="flex items-baseline justify-between gap-4 border-b border-ink/10 pb-2">
-                  <dt className="text-sm text-stone">{k}</dt>
-                  <dd className="text-right text-sm font-medium text-ink">{v}</dd>
-                </div>
-              ))}
-            </dl>
+            <SpecDisclosure title="Highlights">
+              <dl className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {highlights.map(([k, v]) => (
+                  <div key={k} className="flex items-baseline justify-between gap-4 border-b border-ink/10 pb-2">
+                    <dt className="text-sm text-stone">{k}</dt>
+                    <dd className="text-right text-sm font-medium text-ink">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </SpecDisclosure>
 
             {interior.length > 0 && (
-              <>
-                <h2 className="mt-10 font-display text-2xl text-ink">Inside</h2>
+              <SpecDisclosure title="Inside">
                 <dl className="mt-3 space-y-3">
                   {interior.map(([k, vals]) => (
                     <div key={k} className="grid gap-1 sm:grid-cols-[130px_1fr]">
@@ -318,12 +322,11 @@ export async function ListingDetail({ id }: { id: string }) {
                     </div>
                   ))}
                 </dl>
-              </>
+              </SpecDisclosure>
             )}
 
             {exterior.length > 0 && (
-              <>
-                <h2 className="mt-10 font-display text-2xl text-ink">Outside & utilities</h2>
+              <SpecDisclosure title="Outside & utilities">
                 <dl className="mt-3 space-y-3">
                   {exterior.map(([k, vals]) => (
                     <div key={k} className="grid gap-1 sm:grid-cols-[130px_1fr]">
@@ -332,13 +335,15 @@ export async function ListingDetail({ id }: { id: string }) {
                     </div>
                   ))}
                 </dl>
-              </>
+              </SpecDisclosure>
             )}
 
             {schools.length > 0 && (
-              <>
-                <h2 id="schools" className="mt-10 scroll-mt-16 font-display text-2xl text-ink">Schools</h2>
-                <p className="mt-1 text-xs text-stone">As reported by the listing office; verify enrollment with the district.</p>
+              <SpecDisclosure
+                id="schools"
+                title="Schools"
+                note="As reported by the listing office; verify enrollment with the district."
+              >
                 <dl className="mt-3 grid gap-x-8 gap-y-3 sm:grid-cols-2">
                   {schools.map(([k, v]) => (
                     <div key={k} className="flex items-baseline justify-between gap-4 border-b border-ink/10 pb-2">
@@ -347,13 +352,12 @@ export async function ListingDetail({ id }: { id: string }) {
                     </div>
                   ))}
                 </dl>
-              </>
+              </SpecDisclosure>
             )}
 
             {/* Legacy rows (pre-structured sync) keep their flat feature list. */}
             {interior.length === 0 && exterior.length === 0 && l.features.length > 0 && (
-              <>
-                <h2 className="mt-10 font-display text-2xl text-ink">Features</h2>
+              <SpecDisclosure title="Features">
                 <ul className="mt-3 grid max-w-2xl gap-2 sm:grid-cols-2">
                   {l.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-ink-soft">
@@ -361,7 +365,7 @@ export async function ListingDetail({ id }: { id: string }) {
                     </li>
                   ))}
                 </ul>
-              </>
+              </SpecDisclosure>
             )}
 
             <p className="mt-10 rounded-[2px] bg-mist px-4 py-3 text-sm text-stone">

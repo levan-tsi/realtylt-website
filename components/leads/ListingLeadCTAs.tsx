@@ -3,7 +3,15 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { SITE } from "@/lib/site";
-import { formatOffer, fullAddress, offerQualifier, tourQualifier, type ListingIntent } from "@/lib/leads/listing-intents";
+import {
+  formatOffer,
+  fullAddress,
+  offerQualifier,
+  PRE_APPROVED_ANSWERS,
+  SEEN_HOME_ANSWERS,
+  tourQualifier,
+  type ListingIntent,
+} from "@/lib/leads/listing-intents";
 
 /** The listing-detail conversion CTAs: "Schedule a tour" and "Make an offer" (live-site
  * parity). Each opens a 390-friendly bottom sheet (centered on desktop) that POSTs to
@@ -225,10 +233,13 @@ function InlineTourCard({
 function Sheet({
   titleId,
   onClose,
+  wide = false,
   children,
 }: {
   titleId: string;
   onClose: () => void;
+  /** Roomier panel for the offer sheet, whose two qualifying questions sit side by side. */
+  wide?: boolean;
   children: React.ReactNode;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -287,7 +298,9 @@ function Sheet({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-[6px] bg-paper text-ink shadow-2xl"
+        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-[6px] bg-paper text-ink shadow-2xl ${
+          wide ? "max-w-xl" : "max-w-md"
+        }`}
       >
         <button
           type="button"
@@ -484,9 +497,50 @@ function TourModal({
   );
 }
 
+/** One of live's two qualifying questions. Real radios (not styled buttons) so arrow keys move
+ * within the group, Tab skips past it, and a screen reader announces "1 of 3" — the behaviour a
+ * visitor already expects from this control. */
+function QualifyingRadios({
+  legend,
+  name,
+  options,
+  value,
+  onChange,
+}: {
+  legend: string;
+  name: string;
+  options: readonly string[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <fieldset className="min-w-0">
+      <legend className="text-sm font-medium text-ink">{legend}</legend>
+      <div className="mt-2 space-y-1.5">
+        {options.map((o) => (
+          <label key={o} className="flex min-h-8 cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
+            <input
+              type="radio"
+              name={name}
+              value={o}
+              checked={value === o}
+              onChange={() => onChange(o)}
+              className="h-4 w-4 shrink-0 accent-porchlight-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            />
+            {o}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
 function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () => void }) {
   const titleId = useId();
+  const groupId = useId();
   const [offer, setOffer] = useState(String(listing.price));
+  const [preApproved, setPreApproved] = useState<string>(PRE_APPROVED_ANSWERS[0]);
+  const [seenInPerson, setSeenInPerson] = useState<string>(SEEN_HOME_ANSWERS[0]);
   const [hp, setHp] = useState("");
   const [state, setState] = useState<LeadState>("idle");
   const submitted = useRef(false);
@@ -509,7 +563,13 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
       source: `/listing/${listing.id}`,
       interestReason: REASON_BUYING,
       rlt_hp: hp,
-      qualifier: offerQualifier({ mlsNumber: listing.mlsNumber, offerDisplay, listPrice: listing.price }),
+      qualifier: offerQualifier({
+        mlsNumber: listing.mlsNumber,
+        offerDisplay,
+        listPrice: listing.price,
+        preApproved,
+        seenInPerson,
+      }),
     });
     if (ok) setState("success");
     else {
@@ -519,7 +579,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
   }
 
   return (
-    <Sheet titleId={titleId} onClose={onClose}>
+    <Sheet titleId={titleId} onClose={onClose} wide>
       {state === "success" ? (
         <SuccessBody
           title="Offer started."
@@ -545,7 +605,9 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
               id="offer-amt"
               inputMode="numeric"
               value={offerNum ? offerNum.toLocaleString("en-US") : ""}
-              onChange={(e) => setOffer(e.target.value.replace(/[^\d]/g, ""))}
+              // Digits only, and capped: 20 pasted digits used to overflow Number's safe range and
+              // render a nonsense figure like "$100,000,000,000,000,020,000".
+              onChange={(e) => setOffer(e.target.value.replace(/[^\d]/g, "").slice(0, 12))}
               placeholder="Enter an amount"
               aria-label="Your offer amount in dollars"
               className={`${fieldCls} pl-7 font-semibold`}
@@ -556,6 +618,28 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
             <input className={fieldCls} name="name" required autoComplete="name" placeholder="Your name" aria-label="Your name" />
             <input className={fieldCls} name="email" type="email" required autoComplete="email" placeholder="Email address" aria-label="Email address" />
             <input className={fieldCls} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
+          </div>
+
+          {/* Live parity: the two questions that tell us how strong an offer is. They travel in the
+              existing qualifier payload, so this is still ONE lead post. */}
+          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+            <QualifyingRadios
+              legend="Are you pre-approved with a lender?"
+              name={`${groupId}-approved`}
+              options={PRE_APPROVED_ANSWERS}
+              value={preApproved}
+              onChange={setPreApproved}
+            />
+            <QualifyingRadios
+              legend="Have you seen this home in person?"
+              name={`${groupId}-seen`}
+              options={SEEN_HOME_ANSWERS}
+              value={seenInPerson}
+              onChange={setSeenInPerson}
+            />
+          </div>
+
+          <div className="mt-5">
             <textarea className={`${fieldCls} min-h-20 resize-y`} name="message" placeholder="Anything we should know? (optional)" aria-label="Message" />
           </div>
 
