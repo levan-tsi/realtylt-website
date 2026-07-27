@@ -195,6 +195,34 @@ For reference, anonymous chats ARE retained: `n8n_chat_histories` keyed by a ran
 (the bot's context memory) and a `chat_logs` row per exchange, with no `leads` row unless contact
 details are given.
 
+
+## THE FILM (2026-07-27, replacing the scroll reel)
+
+The first video scored the C3 points but was, honestly, a screen recording of the page
+scrolling. Replaced with a cut of three takes that demonstrates the product:
+
+1. The galaxy flight into the neural brain, live from the AI page (real Three.js, flown by its
+   own scroll-driven journey in 130 eased steps).
+2. The brain with the "AI chat assistant" node lit, beside the REAL assistant answering a
+   question typed on camera.
+3. The 11:40pm demonstration, purpose-built: message lands, the reply refuses to invent an
+   answer, the machinery fires behind it.
+
+**The blocker, and the fix, for anyone re-cutting this.** The AI page CANNOT be recorded
+headless: headless Chromium has no real GPU, the page detects no acceleration and drops into
+reduced mode, and the galaxy and brain are never drawn. The first capture was UI text over an
+empty void with a visible GPU warning banner. Launch headed against installed Chrome and the
+canvas goes 640x360 to 2560x1440 and the scene renders. Playwright recordVideo works headed.
+
+Two more traps: Playwright only finalises a recording on context.close(), so a tool timeout that
+kills the process mid-run leaves a truncated unplayable file (record long takes in the
+background). And do not test "did WebGL render" by drawing the canvas into a 2D canvas and
+measuring pixel variance: without preserveDrawingBuffer that always reads blank and will lie.
+
+Assembly: ffmpeg-static installed with --no-save so package.json is untouched. Shipped mp4 only,
+because the VP9 encode came out LARGER than H.264 at matched quality. Stage file for segment 3 is
+scripts/_scratch-stage/phone.html; recorders are scripts/_scratch-film-a.mjs and -film-b.mjs.
+
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
   A and B; the expertise questions explicitly name author background and links to an author page)
