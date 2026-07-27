@@ -405,6 +405,13 @@ export async function ListingDetail({ id }: { id: string }) {
                   <div>
                     <p className="font-display text-lg leading-tight text-ink">Levan Tsiklauri</p>
                     <p className="text-xs uppercase tracking-[0.14em] text-stone">United Real Estate</p>
+                    {/* Live pairs the agent card with a profile link; ours points at the real page. */}
+                    <Link
+                      href="/who-we-are"
+                      className="mt-0.5 inline-flex min-h-6 items-center text-xs text-stone underline decoration-ink/20 underline-offset-4 hover:text-ink hover:decoration-ink"
+                    >
+                      View agent profile
+                    </Link>
                   </div>
                 </div>
                 <p className="mb-5 mt-4 text-sm text-stone">
