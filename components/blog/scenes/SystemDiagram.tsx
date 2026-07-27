@@ -48,11 +48,14 @@ export function SystemDiagram() {
                 The chain from question to booked call: {SYSTEM_STEPS.map((s) => s.label).join(", ")}
               </title>
 
-              {/* The spine. Porchlight at the question, cooling toward the handoff. */}
+              {/* The spine BUILDS toward the handoff rather than fading to it. The response-gap
+                  scene uses a cooling line because there the meaning is a lead going cold; here
+                  the chain gathers toward a booked call, so a fade would say the opposite of
+                  what the diagram is for. */}
               <defs>
                 <linearGradient id="sd-line" x1="0" x2="1" y1="0" y2="0">
-                  <stop offset="0%" stopColor="#28a8e0" />
-                  <stop offset="100%" stopColor="#28a8e0" stopOpacity="0.18" />
+                  <stop offset="0%" stopColor="#28a8e0" stopOpacity="0.22" />
+                  <stop offset="100%" stopColor="#28a8e0" />
                 </linearGradient>
               </defs>
               <rect x={gap / 2} y={70} width={W - gap} height={2} rx={1} fill="url(#sd-line)" />

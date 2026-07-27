@@ -32,6 +32,7 @@ export interface Move {
  * the markdown headings and the scene markers; scripts/_scratch-toc.mjs asserts every row
  * resolves to a real element. */
 export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
+  { id: "scene-reel", label: "Watch it", scene: true },
   { id: "the-number-everyone-quotes-and-what-it-really-means", label: "The number" },
   { id: "scene-response-gap", label: "The gap", scene: true },
   { id: "scene-leads-calculator", label: "Your numbers", scene: true },

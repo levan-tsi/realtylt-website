@@ -17,6 +17,8 @@ That gap, the one between when people actually look and when we actually answer,
 
 [[scene:in-short]]
 
+[[scene:reel]]
+
 ## The number everyone quotes, and what it really means
 
 Roughly 78% of leads close with whoever responds first. It gets repeated so often that it has stopped landing.
