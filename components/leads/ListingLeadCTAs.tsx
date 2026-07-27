@@ -91,14 +91,14 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
         <button
           type="button"
           onClick={() => openTour()}
-          className="rounded-[3px] bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="rounded-xl bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Schedule a Tour
         </button>
         <button
           type="button"
           onClick={() => setModal("offer")}
-          className="rounded-[3px] border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Make an Offer
         </button>
@@ -110,7 +110,7 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
         <button
           type="button"
           onClick={() => setModal("offer")}
-          className="mt-3 w-full rounded-[3px] border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="mt-3 w-full rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Make an Offer
         </button>
@@ -147,7 +147,7 @@ function InlineTourCard({
       active ? "border-b-2 border-ink text-ink" : "border-b-2 border-transparent text-stone hover:text-ink"
     }`;
   const arrowCls =
-    "grid h-11 w-8 shrink-0 place-items-center rounded-[3px] text-ink transition-colors hover:bg-mist disabled:cursor-not-allowed disabled:text-stone/40 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
+    "grid h-11 w-8 shrink-0 place-items-center rounded-xl text-ink transition-colors hover:bg-mist disabled:cursor-not-allowed disabled:text-stone/40 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
 
   return (
     <div>
@@ -181,7 +181,7 @@ function InlineTourCard({
                   type="button"
                   aria-pressed={date === d.key}
                   onClick={() => setDate(d.key)}
-                  className={`flex min-h-11 flex-col items-center rounded-[4px] border px-1 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                  className={`flex min-h-11 flex-col items-center rounded-xl border px-1 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                     date === d.key ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
                   }`}
                 >
@@ -206,7 +206,7 @@ function InlineTourCard({
           <button
             type="button"
             onClick={() => onOpenTour(date)}
-            className="mt-4 w-full rounded-[3px] bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="mt-4 w-full rounded-xl bg-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
           >
             In Person Tour
           </button>
@@ -219,7 +219,7 @@ function InlineTourCard({
           <button
             type="button"
             onClick={onRequestInfo}
-            className="mt-3 w-full rounded-[3px] border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="mt-3 w-full rounded-xl border border-ink px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
           >
             Request Info
           </button>
@@ -298,7 +298,7 @@ function Sheet({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-[6px] bg-paper text-ink shadow-2xl ${
+        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-2xl bg-paper text-ink shadow-2xl ${
           wide ? "max-w-xl" : "max-w-md"
         }`}
       >
@@ -320,7 +320,7 @@ function Sheet({
 }
 
 const fieldCls =
-  "w-full rounded-[4px] border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
+  "w-full rounded-xl border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
 
 function SuccessBody({ title, body, onClose }: { title: string; body: string; onClose: () => void }) {
   return (
@@ -336,7 +336,7 @@ function SuccessBody({ title, body, onClose }: { title: string; body: string; on
         <button
           type="button"
           onClick={onClose}
-          className="rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
+          className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
         >
           Done
         </button>
@@ -351,7 +351,7 @@ function SuccessBody({ title, body, onClose }: { title: string; body: string; on
 function ErrorNote({ show }: { show: boolean }) {
   if (!show) return null;
   return (
-    <p role="alert" className="mt-3 rounded-[2px] border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
+    <p role="alert" className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
       We couldn&rsquo;t send that. Try again, or call {SITE.phone}.
     </p>
   );
@@ -440,7 +440,7 @@ function TourModal({
                 type="button"
                 aria-pressed={tourType === t}
                 onClick={() => setTourType(t)}
-                className={`min-h-11 rounded-[4px] border px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`min-h-11 rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors ${
                   tourType === t ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
                 }`}
               >
@@ -457,7 +457,7 @@ function TourModal({
                 type="button"
                 aria-pressed={date === d.key}
                 onClick={() => setDate(d.key)}
-                className={`flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-[4px] border px-2 py-2 transition-colors ${
+                className={`flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-xl border px-2 py-2 transition-colors ${
                   date === d.key ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
                 }`}
               >
@@ -487,7 +487,7 @@ function TourModal({
           <button
             type="submit"
             disabled={state === "submitting"}
-            className="mt-5 w-full rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
+            className="mt-5 w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
           >
             {state === "submitting" ? "Sending…" : "Request Tour"}
           </button>
@@ -647,7 +647,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           <button
             type="submit"
             disabled={state === "submitting"}
-            className="mt-5 w-full rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
+            className="mt-5 w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft disabled:opacity-60"
           >
             {state === "submitting" ? "Sending…" : "Submit Offer"}
           </button>

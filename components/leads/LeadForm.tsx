@@ -203,7 +203,7 @@ export function LeadForm({
       )}
 
       {status === "error" && (
-        <p role="alert" className="rounded-[2px] border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
+        <p role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
           {error}
         </p>
       )}

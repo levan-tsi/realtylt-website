@@ -78,7 +78,7 @@ export function ListingCard({
 
   if (variant === "plain") {
     return (
-      <article className="lift group relative overflow-hidden border border-[#dddddd] bg-white">
+      <article className="lift group relative overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
         <Link
           href={listingPath(l)}
           className="absolute inset-0 z-10"
@@ -149,7 +149,7 @@ export function ListingCard({
   }
 
   return (
-    <article className="lift group relative overflow-hidden bg-white">
+    <article className="lift group relative overflow-hidden rounded-2xl bg-white">
       <Link
         href={listingPath(l)}
         className="absolute inset-0 z-10"
@@ -183,7 +183,7 @@ export function ListingCard({
           className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-black/90 via-black/45 to-transparent"
         />
         {badge && (
-          <span className="absolute left-3 top-3 bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
             {badge}
           </span>
         )}
@@ -198,7 +198,7 @@ export function ListingCard({
             <p className="text-[10px] italic leading-tight text-white/85">
               Listed With {l.listOfficeName}
             </p>
-            <span className="shrink-0 bg-ink px-4 py-1 text-sm text-paper transition-colors group-hover:bg-ink-soft">
+            <span className="shrink-0 rounded-lg bg-ink px-4 py-1 text-sm text-paper transition-colors group-hover:bg-ink-soft">
               View
             </span>
           </div>

@@ -35,7 +35,7 @@ export function FavoriteButton({
         void toggleFavorite(id);
       }}
       className={`${
-        showLabel ? "inline-flex h-9 items-center gap-1.5 rounded-[3px] px-3" : "grid h-9 w-9 place-items-center rounded-full"
+        showLabel ? "inline-flex h-9 items-center gap-1.5 rounded-xl px-3" : "grid h-9 w-9 place-items-center rounded-full"
       } transition-all focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
         onLight
           ? "text-stone hover:bg-mist hover:text-ink focus-visible:outline-river"

@@ -116,7 +116,7 @@ export function LocationSuggest({
           id={listId}
           role="listbox"
           aria-label="Location suggestions"
-          className={`absolute inset-x-0 top-full z-30 mt-1 overflow-hidden border shadow-lg ${
+          className={`absolute inset-x-0 top-full z-30 mt-1 overflow-hidden rounded-xl border shadow-lg ${
             dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
           }`}
         >

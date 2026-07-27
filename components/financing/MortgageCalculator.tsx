@@ -63,7 +63,7 @@ export function MortgageCalculator({
   const arcs = donutArcs(rows.map((row) => row.pct), DONUT_C);
 
   return (
-    <div className="grid gap-0 overflow-hidden lg:grid-cols-[1.1fr_1fr]">
+    <div className="grid gap-0 overflow-hidden rounded-2xl lg:grid-cols-[1.1fr_1fr]">
       {/* Inputs — live: black panel, underline inputs */}
       <div className="bg-ink p-6 text-paper md:p-10">
         <h2 id="calc-heading" className="text-2xl font-bold uppercase tracking-wide">

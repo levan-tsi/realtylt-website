@@ -288,7 +288,7 @@ function Lightbox({
                 src={photos[index]}
                 alt={`${address}, photo ${index + 1}`}
                 front
-                className="max-h-full max-w-full select-none rounded-lg object-contain"
+                className="max-h-full max-w-full select-none rounded-2xl object-contain"
                 onUnavailable={onUnavailable}
               />
               <button
@@ -318,7 +318,7 @@ function Lightbox({
                   aria-current={i === index}
                   // bg-white/10 gives a thumbnail that is queued, loading or retrying a quiet
                   // surface to sit on, so the rail reads as "loading" rather than broken.
-                  className={`relative h-16 w-24 shrink-0 overflow-hidden rounded bg-white/10 lg:h-24 lg:w-full ${
+                  className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-lg bg-white/10 lg:h-24 lg:w-full ${
                     i === index ? "ring-2 ring-paper" : "opacity-70 hover:opacity-100"
                   } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
                 >
@@ -338,7 +338,7 @@ function Lightbox({
         <button
           type="button"
           onClick={openTour}
-          className="inline-flex min-h-11 items-center gap-2 rounded bg-paper px-5 text-sm font-bold text-ink transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-paper px-5 text-sm font-bold text-ink transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
@@ -477,7 +477,7 @@ function MapPane({ tab, coords }: { tab: "street" | "map"; coords: { lat: number
   }, [tab, coords]);
 
   return (
-    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg bg-ink-soft">
+    <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-ink-soft">
       <div ref={ref} className="h-full w-full" />
     </div>
   );

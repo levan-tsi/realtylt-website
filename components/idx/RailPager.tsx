@@ -37,7 +37,7 @@ export function RailPager({
 
   if (listings.length === 0) {
     return (
-      <p className="mt-10 border border-dashed border-ink/20 p-8 text-center text-sm text-stone">
+      <p className="mt-10 rounded-2xl border border-dashed border-ink/20 p-8 text-center text-sm text-stone">
         No listings to show right now.{" "}
         <a href="/search" className="text-river underline underline-offset-2">
           Browse all homes

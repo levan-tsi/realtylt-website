@@ -180,7 +180,7 @@ export function ListingPhotos({
     );
 
   const overlayBtn =
-    "grid h-9 min-w-10 place-items-center rounded-[4px] bg-ink/70 px-2.5 text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
+    "grid h-9 min-w-10 place-items-center rounded-xl bg-ink/70 px-2.5 text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
   const arrowBtn =
     "absolute top-1/2 z-[7] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-paper backdrop-blur transition-colors hover:bg-ink/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
 
@@ -194,7 +194,7 @@ export function ListingPhotos({
         {/* Hero. Height is pinned so the price and facts stay in the first viewport (live parity)
             and so a tile dropping later re-flows inside the band instead of moving the page. */}
         <div
-          className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
+          className={`photo-zoom relative overflow-hidden md:rounded-2xl ${
             sides.length > 0
               ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]"
               : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
@@ -270,7 +270,7 @@ export function ListingPhotos({
               <button
                 type="button"
                 data-lightbox-index={hero}
-                className="absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-[4px] bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+                className="absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-xl bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
@@ -290,7 +290,7 @@ export function ListingPhotos({
                 type="button"
                 data-lightbox-index={available.indexOf(src)}
                 aria-label={`View photo ${available.indexOf(src) + 1} full screen`}
-                className={`photo-zoom relative cursor-zoom-in overflow-hidden rounded-[2px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper ${
+                className={`photo-zoom relative cursor-zoom-in overflow-hidden rounded-2xl focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper ${
                   shape === "one-side" || sides.length === 1
                     ? "col-span-2 row-span-2"
                     : sides.length === 2
@@ -321,7 +321,7 @@ export function ListingPhotos({
         >
           <summary
             hidden={hydrated}
-            className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden"
+            className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 rounded-xl border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden"
           >
             <span className="group-open:hidden">{label}</span>
             <span className="hidden group-open:inline">Hide photos</span>
@@ -334,7 +334,7 @@ export function ListingPhotos({
                 role="button"
                 tabIndex={0}
                 aria-label={`View photo ${i + 2} of ${count} full screen`}
-                className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px]"
+                className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-xl"
               >
                 {tile(p, `${addressShort}, photo ${i + 2}`, "(max-width: 768px) 50vw, 33vw", { throttle: hydrated, paused: hydrated && !gridOpen })}
               </div>

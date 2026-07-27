@@ -85,7 +85,7 @@ export default function FinancingPage() {
           </Reveal>
           <Reveal delay={140}>
             {/* Pre-approval letter card — circled check, accented amount, signature, stamp, dots */}
-            <figure className="mx-auto max-w-sm bg-white p-6 shadow-2xl sm:p-8" aria-label="Illustrative pre-approval letter">
+            <figure className="mx-auto max-w-sm rounded-2xl bg-white p-6 shadow-2xl sm:p-8" aria-label="Illustrative pre-approval letter">
               <span className="mx-auto grid h-11 w-11 place-items-center rounded-full border-2 border-porchlight text-porchlight-deep" aria-hidden>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m5 12.5 4.5 4.5L19 7" />
@@ -281,7 +281,7 @@ function HomeownershipPhoneMock() {
                 </div>
               ))}
             </dl>
-            <div className="mt-5 rounded-[6px] bg-ink px-4 py-3 text-center">
+            <div className="mt-5 rounded-xl bg-ink px-4 py-3 text-center">
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/70">5-year total</p>
               <p className="text-2xl font-bold text-paper">+$33,078</p>
             </div>
@@ -311,14 +311,14 @@ function ApplicationBrowserMock() {
       className="mx-auto w-full max-w-xl"
       aria-label="Illustration of a loan application moving through processing"
     >
-      <div className="overflow-hidden rounded-[10px] border border-[#d8dce1] bg-white shadow-[0_30px_60px_-28px_rgba(0,0,0,0.4)]">
+      <div className="overflow-hidden rounded-xl border border-[#d8dce1] bg-white shadow-[0_30px_60px_-28px_rgba(0,0,0,0.4)]">
         <div className="flex items-center gap-2 border-b border-[#e5e7eb] bg-mist px-3 py-2.5">
           <span className="flex gap-1.5" aria-hidden>
             <span className="h-2.5 w-2.5 rounded-full bg-[#e0533d]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#4caf67]" />
           </span>
-          <span className="ml-1 flex h-5 flex-1 items-center rounded bg-white px-2 text-[10px] text-stone">
+          <span className="ml-1 flex h-5 flex-1 items-center rounded-full bg-white px-2 text-[10px] text-stone">
             realtylt.com/loan-status
           </span>
         </div>
@@ -329,7 +329,7 @@ function ApplicationBrowserMock() {
           </div>
           <ol className="mt-5 space-y-2.5">
             {steps.map((s) => (
-              <li key={s.label} className="flex items-center gap-3 rounded-[4px] border border-[#eceff2] px-3.5 py-2.5">
+              <li key={s.label} className="flex items-center gap-3 rounded-lg border border-[#eceff2] px-3.5 py-2.5">
                 <span
                   aria-hidden
                   className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${

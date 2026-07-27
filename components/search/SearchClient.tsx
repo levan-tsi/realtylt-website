@@ -197,7 +197,7 @@ const selectCls =
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
-  "min-w-0 flex-1 cursor-pointer rounded-[3px] border border-[#cccccc] bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
+  "min-w-0 flex-1 cursor-pointer rounded-xl border border-[#cccccc] bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
 
 export function SearchClient() {
   const router = useRouter();
@@ -345,7 +345,7 @@ export function SearchClient() {
       onMouseEnter={() => setActiveId(l.id)}
       onMouseLeave={() => setActiveId((cur) => (cur === l.id ? null : cur))}
       onFocus={() => setActiveId(l.id)}
-      className={`scroll-mt-4 rounded-[2px] transition-shadow ${
+      className={`scroll-mt-4 rounded-2xl transition-shadow ${
         activeId === l.id ? "ring-2 ring-porchlight-deep ring-offset-2" : ""
       }`}
     >
@@ -362,7 +362,7 @@ export function SearchClient() {
           type="button"
           aria-pressed={active}
           onClick={() => apply({ county: active ? "" : slug })}
-          className={`px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`rounded-xl px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             active ? "bg-ink text-paper" : "bg-mist text-[#555555] hover:bg-[#e2e6ea] hover:text-ink"
           }`}
         >
@@ -422,11 +422,13 @@ export function SearchClient() {
           const fd = new FormData(e.currentTarget);
           apply({ q: String(fd.get("q") ?? "") });
         }}
-        className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2"
+        className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2 ${
+          moreOpen ? "rounded-t-2xl" : "rounded-2xl"
+        }`}
       >
         {/* For Sale / For Rent — the two are separate universes (rentals never mix into for-sale
             counts). Switching clears the price + sale-type filters since their ladders differ. */}
-        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded border border-[#dddddd]">
+        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded-xl border border-[#dddddd]">
           {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
             const active = filters.rental === isRent;
             return (
@@ -546,14 +548,14 @@ export function SearchClient() {
 
         <button
           type="submit"
-          className="rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="rounded-xl bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           Search
         </button>
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className="inline-flex items-center gap-2 rounded-[4px] bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="inline-flex items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
               for new matches, which is what a bell reads as (the heart means "favorite"
@@ -570,7 +572,7 @@ export function SearchClient() {
           friendly and overflow-safe at every width — cleaner than live's overlay; filters
           apply live (no "apply" step), a divergence noted in the parity file. */}
       {moreOpen && (
-        <div id="more-panel" className="border border-t-0 border-[#dddddd] bg-white px-4 py-5 sm:px-6">
+        <div id="more-panel" className="rounded-b-2xl border border-t-0 border-[#dddddd] bg-white px-4 py-5 sm:px-6">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <label className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
               <input
@@ -615,7 +617,7 @@ export function SearchClient() {
             <button
               type="button"
               onClick={() => setMoreOpen(false)}
-              className="rounded-[4px] bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              className="rounded-xl bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             >
               {state === "ready" && result ? `View ${result.total.toLocaleString()} results` : "View results"}
             </button>
@@ -634,7 +636,7 @@ export function SearchClient() {
               aria-expanded={showBoroughs}
               aria-controls="borough-chips"
               onClick={() => setBoroughsOpen((o) => !o)}
-              className={`inline-flex items-center gap-1.5 px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                 boroughActive
                   ? "bg-ink text-paper"
                   : "border border-[#cccccc] bg-white text-stone hover:border-ink hover:text-ink"
@@ -663,7 +665,7 @@ export function SearchClient() {
 
       {/* ── Result meta row — live: light gray strip, "N listings found" + quick filter left,
           Sort By + view toggle right */}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 bg-mist px-4 py-2.5">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <p className="text-sm text-stone" role="status">
             {state === "loading" ? "Searching…" : state === "error" ? "" : (
@@ -704,7 +706,7 @@ export function SearchClient() {
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
-          <div role="group" aria-label="View" className="flex overflow-hidden border border-[#cccccc]">
+          <div role="group" aria-label="View" className="flex overflow-hidden rounded-xl border border-[#cccccc]">
             {(["grid", "map"] as const).map((v) => (
               <button
                 key={v}
@@ -741,7 +743,7 @@ export function SearchClient() {
       {state === "error" ? (
         // role=alert so the failure is announced; the status strip above stays blank rather
         // than repeating the message to screen readers twice.
-        <div role="alert" className="mt-10 border border-red-500/40 bg-red-500/5 p-10 text-center">
+        <div role="alert" className="mt-10 rounded-2xl border border-red-500/40 bg-red-500/5 p-10 text-center">
           <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
           <p className="mt-2 text-sm text-stone">
             Try again in a moment, or call us at{" "}
@@ -751,18 +753,18 @@ export function SearchClient() {
       ) : state === "loading" && !result ? (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
           {Array.from({ length: 6 }).map((_, i) => (
-            <li key={i} className="animate-pulse border border-[#dddddd]">
+            <li key={i} className="animate-pulse overflow-hidden rounded-2xl border border-[#dddddd]">
               <div className="aspect-[3/2] bg-mist" />
               <div className="space-y-2 p-4">
-                <div className="h-5 w-28 bg-mist" />
-                <div className="h-4 w-40 bg-mist" />
-                <div className="h-3 w-32 bg-mist" />
+                <div className="h-5 w-28 rounded bg-mist" />
+                <div className="h-4 w-40 rounded bg-mist" />
+                <div className="h-3 w-32 rounded bg-mist" />
               </div>
             </li>
           ))}
         </ul>
       ) : listings.length === 0 ? (
-        <div className="mt-10 border border-dashed border-[#cccccc] p-12 text-center">
+        <div className="mt-10 rounded-2xl border border-dashed border-[#cccccc] p-12 text-center">
           <p className="text-xl font-light text-ink">No homes match those filters.</p>
           <p className="mt-2 text-sm text-stone">Try widening a range or clearing a filter.</p>
           <button
@@ -773,7 +775,7 @@ export function SearchClient() {
                 sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
               })
             }
-            className="mt-5 border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
+            className="mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             Clear All Filters
           </button>
@@ -795,7 +797,7 @@ export function SearchClient() {
               map below the results too), so the first thing a phone visitor sees is homes rather
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
-          <div className="relative h-[55vh] overflow-hidden border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
+          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
             <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
           </div>
         </div>
@@ -815,7 +817,7 @@ export function SearchClient() {
           id="results-pages"
           tabIndex={-1}
           aria-label="Results pages"
-          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 bg-mist px-4 py-3 scroll-mt-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl bg-mist px-4 py-3 scroll-mt-4"
         >
           <button
             type="button"
@@ -836,7 +838,7 @@ export function SearchClient() {
               aria-current={p === result.page ? "page" : undefined}
               aria-label={`Page ${p}`}
               onClick={() => apply({ page: p })}
-              className={`min-w-9 px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
+              className={`min-w-9 rounded-lg px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
               }`}
             >

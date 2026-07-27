@@ -92,7 +92,7 @@ export function SaveSearchDialog({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-[6px] bg-paper text-ink shadow-2xl"
+        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-paper text-ink shadow-2xl"
       >
         <button
           type="button"
@@ -126,7 +126,7 @@ export function SaveSearchDialog({
                     onClose();
                     onSignIn();
                   }}
-                  className="w-full rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:w-auto"
+                  className="w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:w-auto"
                 >
                   Sign in to sync + get alerts
                 </button>
@@ -168,7 +168,7 @@ export function SaveSearchDialog({
               onChange={(e) => setName(e.target.value)}
               maxLength={80}
               placeholder="Name this search"
-              className="mt-1.5 w-full rounded-[4px] border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
+              className="mt-1.5 w-full rounded-xl border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
             />
 
             {accountsEnabled && !signedIn && (
@@ -192,13 +192,13 @@ export function SaveSearchDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-[4px] px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-[4px] bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Save search
               </button>

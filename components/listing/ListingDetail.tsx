@@ -368,7 +368,7 @@ export async function ListingDetail({ id }: { id: string }) {
               </SpecDisclosure>
             )}
 
-            <p className="mt-10 rounded-[2px] bg-mist px-4 py-3 text-sm text-stone">
+            <p className="mt-10 rounded-2xl bg-mist px-4 py-3 text-sm text-stone">
               Listed with <strong className="text-ink">{l.listOfficeName}</strong>
               {agentName ? <> · {agentName}</> : null} · Source: {l.originatingSystem}
             </p>
@@ -378,7 +378,7 @@ export async function ListingDetail({ id }: { id: string }) {
           {/* Contact CTA */}
           <Reveal delay={100}>
             <aside className="lg:sticky lg:top-24">
-              <div className="rounded-[2px] border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-7">
+              <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-7">
                 {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
                 <ListingLeadCTAs
                   infoTargetId="listing-info-form"
@@ -464,7 +464,7 @@ export async function ListingDetail({ id }: { id: string }) {
           </div>
           <Link
             href={`/search?county=${l.county}${isRental ? "&rental=1" : ""}&saveSearch=1`}
-            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-[3px] bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-paper/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-paper/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
           >
             <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />

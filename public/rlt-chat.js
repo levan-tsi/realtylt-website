@@ -159,7 +159,7 @@
         color: #fff;
         cursor: pointer;
         padding: 10px;
-        border-radius: 4px;
+        border-radius: 8px;
         opacity: 0.85;
         font-size: 11px;
         min-height: 44px;
@@ -181,7 +181,7 @@
       .rlt-msg {
         max-width: 80%;
         padding: 10px 14px;
-        border-radius: 14px;
+        border-radius: 16px;
         font-size: 14px;
         line-height: 1.45;
         word-wrap: break-word;
@@ -218,7 +218,7 @@
         gap: 4px;
         padding: 12px 14px;
         background: #f1f3f4;
-        border-radius: 14px;
+        border-radius: 16px;
         align-self: flex-start;
         border-bottom-left-radius: 4px;
       }
@@ -245,7 +245,7 @@
       .rlt-input {
         flex: 1;
         border: 1px solid #d1d5db;
-        border-radius: 20px;
+        border-radius: 9999px;
         padding: 10px 14px;
         font-size: 14px;
         resize: none;
@@ -282,7 +282,7 @@
         background: #fef2f2;
         color: #991b1b;
         padding: 10px 14px;
-        border-radius: 10px;
+        border-radius: 8px;
         font-size: 13px;
         align-self: stretch;
       }

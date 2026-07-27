@@ -84,14 +84,14 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={`transition-colors hover:text-ink ${active ? "text-ink" : "text-stone"} ${
-                      boxed ? "border border-stone px-5 py-2.5 hover:border-ink" : "py-2"
+                      boxed ? "rounded-xl border border-stone px-5 py-2.5 hover:border-ink" : "py-2"
                     }`}
                   >
                     {item.label}
                     {"children" in item && item.children ? <span aria-hidden> ▾</span> : null}
                   </Link>
                   {"children" in item && item.children && (
-                    <ul className="invisible absolute left-0 top-full z-50 min-w-48 border border-[#dddddd] bg-paper opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <ul className="invisible absolute left-0 top-full z-50 min-w-48 overflow-hidden rounded-xl border border-[#dddddd] bg-paper opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                       {item.children.map((c) => (
                         <li key={c.href}>
                           <Link

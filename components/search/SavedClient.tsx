@@ -17,7 +17,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
     <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
       {/* Signed-out nudge: your saves live on this device — make an account to sync + get alerts */}
       {enabled && ready && !signedIn && !empty && (
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-[4px] border border-ink/10 bg-mist px-5 py-4">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-mist px-5 py-4">
           <p className="text-sm text-ink-soft">
             These saves are on <strong>this device</strong>. Create a free account to sync them
             everywhere and get new-listing alerts.
@@ -36,7 +36,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
       {!ready ? (
         <p className="py-16 text-center text-sm text-stone">Loading your saved items…</p>
       ) : empty ? (
-        <div className="rounded-[2px] border border-dashed border-ink/20 p-14 text-center">
+        <div className="rounded-2xl border border-dashed border-ink/20 p-14 text-center">
           <p className="font-display text-2xl text-ink">Nothing saved yet.</p>
           <p className="mx-auto mt-2 max-w-md text-sm text-stone">
             Tap the heart on any listing to keep it here, or save a search and come back to it
@@ -74,7 +74,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
                 {searches.map((s) => (
                   <li
                     key={s.id}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-[2px] border border-ink/10 bg-white px-5 py-4"
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-white px-5 py-4"
                   >
                     <div>
                       <p className="font-semibold text-ink">{s.label}</p>
@@ -89,14 +89,14 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
                     <div className="flex gap-2">
                       <Link
                         href={`/search${s.query ? `?${s.query}` : ""}`}
-                        className="rounded-[2px] border border-ink px-4 py-2 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-paper"
+                        className="rounded-xl border border-ink px-4 py-2 text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-paper"
                       >
                         Run search
                       </Link>
                       <button
                         type="button"
                         onClick={() => void removeSearch(s.id)}
-                        className="rounded-[2px] border border-ink/20 px-4 py-2 text-sm text-stone transition-colors hover:border-red-500 hover:text-red-600"
+                        className="rounded-xl border border-ink/20 px-4 py-2 text-sm text-stone transition-colors hover:border-red-500 hover:text-red-600"
                         aria-label={`Remove saved search: ${s.label}`}
                       >
                         Remove
@@ -110,7 +110,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
 
           {/* Alert opt-in → lead */}
           <section aria-labelledby="alerts-heading" className="mt-14">
-            <div className="rounded-[2px] border border-ink/10 bg-mist p-6 md:p-8">
+            <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
               <h2 id="alerts-heading" className="font-display text-2xl text-ink">
                 Want new matches by email?
               </h2>

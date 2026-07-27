@@ -53,7 +53,7 @@ export function MarketInsights({
           <>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {cards.map((c) => (
-                <div key={c.title} className="flex flex-col items-center border border-ink/12 bg-white px-5 py-8 text-center">
+                <div key={c.title} className="flex flex-col items-center rounded-2xl border border-ink/12 bg-white px-5 py-8 text-center">
                   <p className="text-sm font-bold text-ink">{c.title}</p>
                   <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-stone">{c.sub}</p>
                   <p className="mt-5 font-mono text-3xl font-semibold tracking-tight text-ink md:text-4xl">{c.value}</p>
@@ -76,7 +76,7 @@ export function MarketInsights({
             </p>
           </>
         ) : (
-          <p className="mt-6 border border-dashed border-ink/15 bg-white px-5 py-8 text-center text-sm text-stone">
+          <p className="mt-6 rounded-2xl border border-dashed border-ink/15 bg-white px-5 py-8 text-center text-sm text-stone">
             {fixtureMode
               ? "Market insights use live OneKey MLS data, which isn't loaded in this preview."
               : "Market insight data is unavailable right now. Please check back shortly."}
