@@ -302,6 +302,11 @@
         .rlt-input-wrap {
           padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
         }
+        /* iOS zooms the page in when a sub-16px field takes focus and never zooms back out —
+           in a full-screen chat panel that leaves the composer half off-screen. */
+        .rlt-input {
+          font-size: 16px;
+        }
         .rlt-footer {
           padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
         }

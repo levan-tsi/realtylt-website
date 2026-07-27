@@ -28,7 +28,9 @@ export default function SearchPage() {
       </noscript>
       <Suspense
         fallback={
-          <div className="mx-auto max-w-[1400px] px-4 py-16 text-sm text-stone lg:px-8">Loading search…</div>
+          <div data-js-only className="mx-auto max-w-[1400px] px-4 py-16 text-sm text-stone lg:px-8">
+            Loading search…
+          </div>
         }
       >
         <SearchClient />

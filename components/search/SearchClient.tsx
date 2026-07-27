@@ -193,7 +193,9 @@ const toPin = (l: Listing): MapPin => ({
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
-  "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
+  // rlt-compact-control: keep the slim 12px size on a phone. The global mobile 16px floor
+  // (globals.css, iOS focus-zoom) would turn this scrolling strip into a wall.
+  "rlt-compact-control cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =

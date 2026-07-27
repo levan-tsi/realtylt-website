@@ -77,6 +77,10 @@ export default function ConnectPage() {
             <h2 id="appointments-heading" className="sr-only">
               Book an appointment
             </h2>
+            {/* An iframe is a tab stop with no ring of its own, and it cannot be given one:
+                focusing it hands focus to the EMBEDDED document, so :focus-visible never
+                matches out here and we cannot style across the origin. The titled frame plus
+                the "Open the booking page directly" link below it are the way out. */}
             <iframe
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"

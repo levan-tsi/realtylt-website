@@ -34,7 +34,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
       )}
 
       {!ready ? (
-        <p className="py-16 text-center text-sm text-stone">Loading your saved items…</p>
+        <p data-js-only className="py-16 text-center text-sm text-stone">Loading your saved items…</p>
       ) : empty ? (
         <div className="rounded-2xl border border-dashed border-ink/20 p-14 text-center">
           <p className="font-display text-2xl text-ink">Nothing saved yet.</p>

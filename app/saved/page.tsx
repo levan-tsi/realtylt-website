@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SavedClient } from "@/components/search/SavedClient";
 import { isFixtureMode } from "@/lib/idx";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Saved | Your Homes & Searches",
@@ -23,6 +24,23 @@ export default function SavedPage() {
           </p>
         </div>
       </header>
+      {/* Saved homes live in this device's storage, so there is nothing to render without
+          JavaScript. Say so and give a way forward instead of a permanent "Loading…" — the
+          same treatment /search already gets. */}
+      <noscript>
+        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+          <p className="text-xl font-light text-ink">
+            Your saved homes are kept in this browser, which needs JavaScript turned on.
+          </p>
+          <p className="mt-2 text-sm text-stone">
+            Turn it on to see them again, or call us at{" "}
+            <a href={SITE.phoneHref} className="font-bold text-ink underline underline-offset-2">
+              {SITE.phone}
+            </a>{" "}
+            and we&rsquo;ll pull the homes you were looking at.
+          </p>
+        </div>
+      </noscript>
       <SavedClient fixtureMode={isFixtureMode()} />
     </>
   );

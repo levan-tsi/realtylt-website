@@ -87,6 +87,41 @@ body {
   }
 }
 
+/* A placeholder that only ever resolves once React hydrates. With scripting off it would sit
+   there saying "Loading…" forever, under the <noscript> block that already explained the
+   situation, so hide it. Mark any such placeholder with data-js-only. */
+@media (scripting: none) {
+  [data-js-only] {
+    display: none !important;
+  }
+}
+
+/* ── iOS Safari zooms the whole page in when a form control under 16px takes focus, and it
+   does NOT zoom back out afterwards: the visitor is left on a horizontally-scrolling page in
+   the middle of filling a form. Every control on this site is text-sm (14px) or smaller, so
+   this hit every lead form, the search keyword box, the mortgage calculator, the home-value
+   bar and the chat composer. Floor them at 16px below the md breakpoint; desktop keeps its
+   14px exactly. Selects are included so a form's dropdown does not end up visibly smaller
+   than the inputs beside it.
+
+   Opt a control out with .rlt-compact-control when its size is load-bearing — the /search
+   filter row is a scrolling strip of slim uppercase dropdowns and 16px would blow it out.
+
+   These rules are deliberately unlayered: Tailwind utilities live in @layer utilities, and
+   unlayered styles win over layered ones, so `text-sm` on the element does not fight this.
+   The opt-out then uses revert-layer to hand the control back to whatever Tailwind class it
+   carries, rather than hard-coding a size here that would drift. */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="range"]),
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  .rlt-compact-control {
+    font-size: revert-layer;
+  }
+}
+
 /* ── Service constellation "live signal" — a sonar ping on the lit hub node. The global
    reduced-motion block at the bottom of this file collapses it to a still. */
 @keyframes svc-ping {
