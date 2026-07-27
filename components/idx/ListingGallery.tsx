@@ -203,7 +203,10 @@ function Lightbox({
     [go, onClose, tab],
   );
 
-  const neighbors = [(index + 1) % count, (index - 1 + count) % count];
+  // Warm the next/previous frame. Deduped, and empty for a one-photo gallery — otherwise both
+  // "neighbours" are the photo already on screen, which double-keys the same element and spends
+  // two media slots warming nothing.
+  const neighbors = count > 1 ? [...new Set([(index + 1) % count, (index - 1 + count) % count])].filter((n) => n !== index) : [];
   const tabBtn = (t: Tab, label: string) =>
     (t === "photos" || hasPlace) && (
       <button
@@ -313,7 +316,9 @@ function Lightbox({
                   onClick={() => setIndex(i)}
                   aria-label={`View photo ${i + 1}`}
                   aria-current={i === index}
-                  className={`relative h-16 w-24 shrink-0 overflow-hidden rounded lg:h-24 lg:w-full ${
+                  // bg-white/10 gives a thumbnail that is queued, loading or retrying a quiet
+                  // surface to sit on, so the rail reads as "loading" rather than broken.
+                  className={`relative h-16 w-24 shrink-0 overflow-hidden rounded bg-white/10 lg:h-24 lg:w-full ${
                     i === index ? "ring-2 ring-paper" : "opacity-70 hover:opacity-100"
                   } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
                 >
