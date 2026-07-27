@@ -132,7 +132,9 @@ export interface SearchResult {
   page: number;
   pageSize: number;
   totalPages: number;
-  /** Max modificationTimestamp in the result set — attribution "Data last updated". */
+  /** Attribution "Data last updated": when our copy of the feed was last refreshed. DB path
+   * = idx_sync_state.last_synced_at; the snapshot/fixture paths have no sync clock and
+   * report the max modificationTimestamp in the set instead. */
   dataLastUpdated: string;
 }
 

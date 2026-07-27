@@ -7,7 +7,13 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useSaved } from "@/components/auth/SavedProvider";
 
-export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
+export function SavedClient({
+  fixtureMode,
+  dataLastUpdated,
+}: {
+  fixtureMode: boolean;
+  dataLastUpdated: string;
+}) {
   const { favorites, searches, removeSearch, ready, signedIn } = useSaved();
   const { enabled, openSignIn } = useAuth();
 
@@ -53,7 +59,7 @@ export function SavedClient({ fixtureMode }: { fixtureMode: boolean }) {
             <h2 id="fav-heading" className="font-display text-2xl text-ink">
               Saved homes <span className="font-mono text-lg text-stone">({favorites.length})</span>
             </h2>
-            <FavoriteListings fixtureMode={fixtureMode} />
+            <FavoriteListings fixtureMode={fixtureMode} dataLastUpdated={dataLastUpdated} />
           </section>
 
           {/* Saved searches */}

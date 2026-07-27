@@ -188,6 +188,14 @@ export class DbIdxClient implements IdxClient {
     return state?.baseline_complete ? state : null;
   }
 
+  /** When OUR COPY of the feed was last refreshed — the one "Data last updated" fact the
+   * MLS attribution prints, read off the same 60s-cached state row the search path uses.
+   * null while the DB is not yet the source (baseline pull unfinished, or a DB error), in
+   * which case the caller keeps whatever the snapshot/fixture path knows. */
+  async feedLastUpdated(): Promise<string | null> {
+    return (await this.ready())?.last_synced_at ?? null;
+  }
+
   async search(params: SearchParams): Promise<SearchResult> {
     const state = await this.ready();
     if (!state) return this.fallbackClient().search(params);

@@ -47,6 +47,17 @@ export function getIdxClient(): IdxClient {
   return (fixtureClient ??= new FixtureIdxClient());
 }
 
+/** The single "Data last updated" fact the MLS attribution prints: when our copy of the
+ * One Key feed was last refreshed. A listing's own `modificationTimestamp` is a DIFFERENT
+ * fact, and printing it under this label is what made a listing page read "Jul 22" while
+ * /search read "Jul 27" off the same feed. `fallback` (usually that modificationTimestamp)
+ * covers the snapshot/fixture paths, which have no sync clock of their own. */
+export async function getDataLastUpdated(fallback: string): Promise<string> {
+  const client = getIdxClient();
+  if (client instanceof DbIdxClient) return (await client.feedLastUpdated()) ?? fallback;
+  return fallback;
+}
+
 /** True when the data being SERVED is sample data — env-level fixture mode OR a
  * client's last-resort fixture fallback (unusable snapshot). Drives the on-page
  * "sample data" notice honestly in every case. */

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SavedClient } from "@/components/search/SavedClient";
-import { isFixtureMode } from "@/lib/idx";
+import { getDataLastUpdated, isFixtureMode } from "@/lib/idx";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
 };
 
-export default function SavedPage() {
+export default async function SavedPage() {
+  // The saved grid is client-rendered from device/account ids, so the feed refresh time the
+  // MLS attribution prints has to be resolved here rather than guessed from the saved set.
+  const dataLastUpdated = await getDataLastUpdated(new Date().toISOString());
   return (
     <>
       <header className="bg-ink py-10 text-paper">
@@ -41,7 +44,7 @@ export default function SavedPage() {
           </p>
         </div>
       </noscript>
-      <SavedClient fixtureMode={isFixtureMode()} />
+      <SavedClient fixtureMode={isFixtureMode()} dataLastUpdated={dataLastUpdated} />
     </>
   );
 }

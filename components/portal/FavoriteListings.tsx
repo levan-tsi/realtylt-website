@@ -10,7 +10,14 @@ import type { Listing } from "@/lib/idx/types";
 /** Resolves the client's favorited listing ids into full listings and renders the grid.
  * Account-aware via useSaved (DB when signed in, device when out). Shared by /saved and
  * /portal/collections. */
-export function FavoriteListings({ fixtureMode }: { fixtureMode: boolean }) {
+export function FavoriteListings({
+  fixtureMode,
+  dataLastUpdated,
+}: {
+  fixtureMode: boolean;
+  /** Feed refresh time, resolved on the server (getDataLastUpdated). */
+  dataLastUpdated: string;
+}) {
   const { favorites, toggleFavorite, ready } = useSaved();
   const [listings, setListings] = useState<Listing[]>([]);
   const [missingIds, setMissingIds] = useState<string[]>([]);
@@ -83,7 +90,7 @@ export function FavoriteListings({ fixtureMode }: { fixtureMode: boolean }) {
       </ul>
       {listings.length > 0 && (
         <MlsAttribution
-          dataLastUpdated={listings.map((l) => l.modificationTimestamp).sort().pop()!}
+          dataLastUpdated={dataLastUpdated}
           fixtureMode={fixtureMode}
           className="mt-6"
         />

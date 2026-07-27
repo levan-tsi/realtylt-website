@@ -15,7 +15,7 @@ import { ClampedDescription, SpecDisclosure } from "@/components/listing/SpecDis
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 import { getAreaInsights } from "@/lib/idx/db";
 import { Reveal } from "@/components/ui/Reveal";
-import { getIdxClient, isSampleData } from "@/lib/idx";
+import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import type { Listing } from "@/lib/idx/types";
 import { getProxiedPhotoPaths } from "@/lib/idx/media";
 import { listingPath } from "@/lib/idx/listing-url";
@@ -372,7 +372,14 @@ export async function ListingDetail({ id }: { id: string }) {
               Listed with <strong className="text-ink">{l.listOfficeName}</strong>
               {agentName ? <> · {agentName}</> : null} · Source: {l.originatingSystem}
             </p>
-            <MlsAttribution dataLastUpdated={l.modificationTimestamp} fixtureMode={isSampleData()} className="mt-4" />
+            {/* Feed refresh time, NOT this listing's modificationTimestamp — the label says
+                "Data last updated" and must mean the same thing it means on /search. */}
+            <MlsAttribution
+              dataLastUpdated={await getDataLastUpdated(l.modificationTimestamp)}
+              fixtureMode={isSampleData()}
+              logoSize="lg"
+              className="mt-4"
+            />
           </div>
 
           {/* Contact CTA */}
