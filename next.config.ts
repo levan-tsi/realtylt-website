@@ -25,8 +25,11 @@ const CSP = [
   "frame-ancestors 'none'",
   "form-action 'self'",
   // …googletagmanager = the Ads gtag (live-site custom-code parity); maps.googleapis =
-  // the official Google Maps results map (env-gated).
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com",
+  // the official Google Maps results map (env-gated). googleads.g.doubleclick.net serves the
+  // Ads conversion script (/pagead/viewthroughconversion/<AW id>) that gtag injects — without
+  // it the owner's Google Ads conversions never fire (measured 2026-07-26: script-src-elem
+  // violation on every page).
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net",
   "style-src 'self' 'unsafe-inline'",
   // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame,
   // plus the ambient Vimeo hero background video on the home page (player.vimeo.com iframe).
@@ -38,7 +41,12 @@ const CSP = [
   "font-src 'self' data:",
   // …plus Supabase (client accounts / auth): sign-in, token refresh, and portal reads/writes
   // go to our project origin https://<ref>.supabase.co over the anon key (docs/CLIENT-ACCOUNTS.md).
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net",
+  // …and the beacon endpoints gtag actually posts conversions/measurements to. Measured
+  // 2026-07-26 on prod: 7 CSP violations on EVERY page (ad.doubleclick.net, analytics.google.com,
+  // stats.g.doubleclick.net, www.google.com/ccm) — i.e. the owner's Google Ads conversion
+  // tracking and part of GA4 were being dropped site-wide. Every scratch probe had been
+  // filtering these out as third-party "noise", which is why it went unnoticed.
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
