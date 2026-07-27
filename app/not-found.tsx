@@ -19,7 +19,10 @@ export default function NotFound() {
           <Button href="/" variant="outline-light">Back To Home</Button>
         </div>
         <p className="mt-8 text-sm text-paper/50">
-          Or just call us: <Link href={SITE.phoneHref} className="text-paper hover:underline">{SITE.phone}</Link>
+          Or just call us:{" "}
+          <Link href={SITE.phoneHref} className="inline-flex min-h-6 items-center text-paper hover:underline">
+            {SITE.phone}
+          </Link>
         </p>
       </div>
     </section>

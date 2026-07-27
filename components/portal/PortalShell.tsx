@@ -64,7 +64,11 @@ export function PortalShell({ children }: { children: ReactNode }) {
         {!enabled ? (
           <p className="py-16 text-center text-sm text-stone">
             Accounts aren&rsquo;t available right now. Your saved homes are kept on this device.
-            Visit <Link href="/saved" className="font-bold text-river underline">Saved</Link>.
+            Visit{" "}
+            <Link href="/saved" className="inline-flex min-h-6 items-center font-bold text-river underline">
+              Saved
+            </Link>
+            .
           </p>
         ) : !ready ? (
           <p className="py-16 text-center text-sm text-stone">Loading your portal…</p>

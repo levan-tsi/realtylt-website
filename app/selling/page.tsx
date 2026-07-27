@@ -236,7 +236,7 @@ export default async function SellingPage() {
               href={GOOGLE_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
+              className="inline-flex min-h-6 items-center text-sm font-bold text-ink-soft underline-offset-4 hover:underline"
             >
               See all our Google reviews
             </a>

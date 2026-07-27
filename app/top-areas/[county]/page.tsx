@@ -86,7 +86,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
         )}
         <div className="relative mx-auto max-w-[1250px] px-4 py-20 md:py-24 lg:px-8">
           <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
-            <Link href="/top-areas" className="hover:text-paper">Top Areas</Link> / {short}
+            <Link href="/top-areas" className="inline-flex min-h-6 items-center hover:text-paper">Top Areas</Link> / {short}
           </nav>
           <h1 id="county-hero" className="mt-3 text-4xl font-light leading-tight text-paper md:text-5xl">
             {c ? (

@@ -61,10 +61,10 @@ export default function ConnectPage() {
             </p>
             <address className="mt-5 space-y-1 text-sm not-italic text-stone">
               <p>
-                <a href={SITE.phoneHref} className="transition-colors hover:text-ink">{SITE.phone}</a>
+                <a href={SITE.phoneHref} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.phone}</a>
               </p>
               <p>
-                <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ink">{SITE.email}</a>
+                <a href={`mailto:${SITE.email}`} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.email}</a>
               </p>
               <p>
                 {SITE.address.street}, {SITE.address.locality}, {SITE.address.region}{" "}
@@ -90,7 +90,7 @@ export default function ConnectPage() {
                 href={BOOKING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold text-ink underline-offset-4 hover:underline"
+                className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline"
               >
                 Open the booking page directly
               </a>
