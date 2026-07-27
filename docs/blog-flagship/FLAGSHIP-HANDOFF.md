@@ -13,22 +13,48 @@ glyphs, 1 H1 / 9 H2 / 3 JSON-LD blocks intact:
 | 3 | Leads calculator (interactive) | `leads-calculator` | DONE |
 | 4 | Four moves | `four-moves` | DONE |
 | 5 | The teardown / watch it handle a real lead | `teardown` | DONE |
-| 6 | What it does NOT do | (unbuilt) | **NEXT** — see note below |
-| 7 | Animated flow diagram | (unbuilt) | **NEXT** |
+| 6 | Where it goes wrong (three failure modes) | `failure-modes` | DONE |
+| 7 | Animated flow diagram | — | **DELIBERATELY NOT BUILT** (see below) |
 | 8 | The pull quote | `pull-quote` | DONE |
 | 9 | The funnel | `funnel` | DONE |
+| + | "In short" (skimmable summary) | `in-short` | DONE (added from research) |
+| + | Floating table of contents | `FlagshipToc` | DONE |
 
-**7 of 9 scenes built.** Scene 9 also suppresses the template's generic "Ask us" band on the
-flagship, so the piece has one ending rather than two.
+**The storyboard is complete.** Scene 9 also suppresses the template's generic "Ask us" band on
+the flagship, so the piece has one ending rather than two.
 
-**WHERE 6 AND 7 GO.** The page's band rhythm is verified clean (no two adjacent bands share a
-background), and there is exactly one long gap left: a **1350px unbroken prose run** covering
-"The honest objections" + "Where it goes wrong" + "What to do about it", sitting between the
-teardown and the funnel. That run is where scenes 6 and 7 belong. Measure it yourself with
-`scripts/_scratch-rhythm.mjs`, which prints every band's height and background in order.
+**SCENE 7 WAS CUT ON PURPOSE.** The storyboard called for an animated flow diagram
+(visitor / chat / MLS / text / CRM / booked). That is exactly the chain the teardown's "what
+happened behind it" column already shows. Building it would have been the same content twice
+with different graphics. The stretch it was meant to fill is now broken by scene 6 instead.
 
-Current verified order: cold open (black) / prose / gap (black) / calc (mist) / prose /
-four moves (black) / prose / quote (navy) / teardown (mist) / prose 1350px / funnel (black).
+Verified band order (no two adjacent bands share a background, longest band ~1128px):
+cold open (black) / prose / in-short / prose / gap (black) / calc (mist) / prose /
+four moves (black) / prose / quote (navy) / teardown (mist) / prose / failure modes (mist) /
+prose / funnel (black). Re-measure with `scripts/_scratch-rhythm.mjs`.
+
+## THE FLOATING ToC (owner asked for it, 2026-07-26 session 3)
+
+`components/blog/FlagshipToc.tsx`, rows curated in `content/blog/ai-chat-scenes.ts`
+(`FLAGSHIP_TOC`). Ports the service-page rail (tick spine in the left gutter, expands on hover
+or focus, pill + bottom sheet below 1360px) and shares scroll-spy / jumps / reduced-motion via
+`lib/toc/scroll-spy`. Three things it does that the services rail does not:
+
+1. **It flips contrast with the band underneath it.** The flagship alternates BLACK, NAVY,
+   MIST and WHITE full-bleed bands and the rail sits over all of them. Every band is tagged
+   `data-band`; scenes get theirs from the scene registry. `useBandTone` finds whichever band
+   owns the rail's own vertical position (geometry, not hit-testing, so it is cheap on scroll).
+2. **Scenes are real destinations** (`scene-<key>` anchors), ticked slightly heavier so the
+   reader can see there is something to LOOK at before jumping.
+3. **Rows above the active one are mid-toned**, so the spine shows progress, not just position.
+
+**THE FOCUS-RING TRAP (cost two attempts).** `globals.css` says it outright: its
+`:focus-visible` rule is UNLAYERED and Tailwind v4 emits utilities inside `@layer utilities`,
+so the global rule beats EVERY `focus-visible:outline-*` utility regardless of specificity.
+globals.css handles dark SURFACES with `.bg-ink :focus-visible`, but this rail is
+`position:fixed` outside `<article>`, so it is never a descendant and never inherits that fix.
+The only thing that wins is an **inline `outlineColor`**, which overrides just the colour and
+leaves width/offset to the site-wide rule. River navy is 1.5:1 on ink; white is 21:1.
 
 **THE ARCHITECTURE IS BUILT — read this before adding a scene.**
 - `lib/blog/markdown.tsx` treats a standalone `[[scene:key]]` line as a scene slot. Every
@@ -68,6 +94,13 @@ To restore the local loop: `npx kill-port 3100 && npm run dev -- -p 3100`.
   result changes (default 16/month, next-day 27, within-minutes correctly 0).
 - `scripts/_scratch-rhythm.mjs` — prints every band's height and background colour in order, so
   you can see the light/dark alternation and find the gaps that still need a scene.
+- `scripts/_scratch-toc.mjs` — asserts every curated ToC row resolves to a real element (a
+  curated list rots silently), that the rail flips contrast over dark vs light bands, that a
+  jump lands and sets `aria-current`, and that the mobile pill + sheet work.
+- `scripts/_scratch-audit.mjs` — the polish audit: display-type scale across every scene (catches
+  a heading that has drifted out of its role), focus-ring colour over dark AND light bands,
+  every internal link's status code, mobile tap targets, and whether the ToC pill collides with
+  the site chat launcher.
 - All default to production. Pass `http://127.0.0.1:3100` once the local server is back.
 
 **CONCURRENT EDITOR — confirmed active this session.** The other session is building the IDX
