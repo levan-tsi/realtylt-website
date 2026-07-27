@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Terms of use for realtylt.com, our DMCA copyright takedown process, how MLS listing data is handled, and our fair housing commitment.",
 };
 
-const UPDATED = "July 10, 2026";
+const UPDATED = "July 27, 2026";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -42,6 +42,35 @@ export default function DmcaTermsPage() {
           purchasing or renting. You agree not to scrape, harvest, republish, or resell Site
           content; not to use the Site for any unlawful purpose; and not to interfere with its
           operation.
+        </p>
+      </Section>
+
+      <Section title="Your account">
+        <p>
+          You can use most of this Site without an account. If you create one to save homes and
+          searches, you are responsible for keeping your sign-in details to yourself and for what
+          happens under your account. Tell us at {SITE.email} if you think someone else has access.
+          You can ask us to delete your account at any time, and we may suspend or remove an account
+          that is being used to break these terms.
+        </p>
+      </Section>
+
+      <Section title="Contacting you">
+        <p>
+          When you submit a form, use the chat assistant, or otherwise give us your phone number or
+          email, you are asking us to respond, and you agree we may reply by phone, text, or email
+          about that inquiry. Message and data rates may apply and message frequency varies. Reply
+          STOP to any text to stop receiving them. Agreeing to marketing messages is never a
+          condition of buying or selling a home with us. How we handle that information is set out
+          in our Privacy Policy.
+        </p>
+      </Section>
+
+      <Section title="The chat assistant">
+        <p>
+          The chat assistant on this Site is automated. It can be wrong, it does not give legal,
+          tax, financial, or appraisal advice, and nothing it says is an offer or a binding
+          commitment by us. Please confirm anything that matters with a person before acting on it.
         </p>
       </Section>
 
