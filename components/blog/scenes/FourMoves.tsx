@@ -23,7 +23,11 @@ export function FourMoves() {
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">What it actually does</p>
-          <h2 className="mt-6 text-3xl font-light leading-[1.15] tracking-[-0.02em] md:text-5xl">
+          {/* 34px, the scene SECTION-heading role shared with the calculator, the teardown
+              and the failure modes. It was 48px, which read as sloppiness next to three
+              identical siblings rather than as hierarchy. The held STATEMENT scenes (the pull
+              quote and the close) are the louder 38px role. */}
+          <h2 className="mt-6 text-2xl font-light leading-[1.2] tracking-[-0.015em] md:text-[34px]">
             Four moves.
           </h2>
         </Reveal>

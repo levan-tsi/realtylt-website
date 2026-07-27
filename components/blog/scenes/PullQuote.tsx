@@ -17,7 +17,8 @@ export function PullQuote() {
         <Reveal>
           <figure>
             <span aria-hidden className="block h-[2px] w-12 rounded-full bg-porchlight" />
-            <blockquote className="mt-10 text-2xl font-light leading-[1.35] tracking-[-0.015em] md:text-[40px] md:leading-[1.28]">
+            {/* 38px: the held-STATEMENT role, shared with the closing scene. */}
+            <blockquote className="mt-10 text-2xl font-light leading-[1.35] tracking-[-0.015em] md:text-[38px] md:leading-[1.28]">
               The measure of an AI assistant is not how human it sounds. It is whether the answer was
               correct, whether it was immediate, and whether a real person showed up when it mattered.
             </blockquote>

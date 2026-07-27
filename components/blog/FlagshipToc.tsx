@@ -119,7 +119,11 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                   href={`#${it.id}`}
                   onClick={(e) => jump(e, it.id)}
                   aria-current={active ? "location" : undefined}
-                  className="flex items-center rounded-md outline-offset-4"
+                  // The site's river-navy focus ring is ~8.5:1 on white and near invisible on
+                  // black, so the ring has to follow the band like everything else here.
+                  className={`flex items-center rounded-md outline-offset-4 ${
+                    dark ? "focus-visible:outline-2 focus-visible:outline-porchlight" : ""
+                  }`}
                 >
                   {/* 24px hit cell keeps the resting target accessible; the tick lives inside. */}
                   <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center">
@@ -162,13 +166,17 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
       {/* ── Mobile / narrow: floating trigger + bottom sheet, matching the rest of the site. */}
       <div className="min-[1360px]:hidden">
         {!open && (
+          // Centred inside the space that EXCLUDES the site's chat launcher rather than in the
+          // viewport. Centred on the viewport, this pill lands 1px from the launcher at 390 and
+          // overlaps it outright once the active label is a long one.
+          <div className="fixed inset-x-4 bottom-5 right-[5.25rem] z-50 flex justify-center">
           <button
             type="button"
             data-toc-trigger
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-ink px-5 py-3 text-sm text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+            className="flex max-w-full items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-ink px-5 py-3 text-sm text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
           >
             <svg
               aria-hidden
@@ -184,6 +192,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
               <span className="font-bold">{activeLabel}</span>
             </span>
           </button>
+          </div>
         )}
 
         {open && (
