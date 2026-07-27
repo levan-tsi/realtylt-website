@@ -119,11 +119,18 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                   href={`#${it.id}`}
                   onClick={(e) => jump(e, it.id)}
                   aria-current={active ? "location" : undefined}
-                  // The site's river-navy focus ring is ~8.5:1 on white and near invisible on
-                  // black, so the ring has to follow the band like everything else here.
-                  className={`flex items-center rounded-md outline-offset-4 ${
-                    dark ? "focus-visible:outline-2 focus-visible:outline-porchlight" : ""
-                  }`}
+                  // The river-navy focus ring is ~8.5:1 on white and 1.5:1 on ink, so over the
+                  // dark bands it is a ring nobody can see (WCAG 1.4.11 wants 3:1).
+                  // globals.css already solves this for dark SURFACES via `.bg-ink
+                  // :focus-visible`, but this rail is position:fixed outside <article>, so it
+                  // is never a descendant of an ink section and never inherits that fix.
+                  // It cannot be solved with a utility either: that same file warns the global
+                  // `:focus-visible` rule is UNLAYERED and therefore beats every Tailwind
+                  // `focus-visible:outline-*`. An inline outline-color is the one thing that
+                  // wins, and it only overrides the colour, so the width and offset still come
+                  // from the site-wide rule.
+                  style={dark ? { outlineColor: "var(--color-paper)" } : undefined}
+                  className="flex items-center rounded-md outline-offset-4"
                 >
                   {/* 24px hit cell keeps the resting target accessible; the tick lives inside. */}
                   <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center">
