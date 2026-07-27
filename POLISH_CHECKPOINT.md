@@ -88,23 +88,34 @@
 ##     On an account already at suspension risk this is a SAFETY rule: never mount a gallery's tiles
 ##     at once, throttle the in-flight window, stagger retries. Verification scripts must not be load
 ##     generators either (scripts/verify-photo-rule.mjs deliberately never force-opens the gallery).
-## (3) THE DATA HALF IS MUCH WORSE THAN ROUND 8 CLAIMED. Supabase-only census over 14,000 active
-##     listings (scripts/_scratch-photo-db-census.mjs, zero MLS calls):
-##       mirroredFull 2,804 · coversOnly 9,142 · unmirrored 2,035 · photoless 19
-##       mirror coverage 20.9% of claimed photos · 79.8% AT RISK of a cover-only gallery
-##       and it worsens with age: 2026-07 70% · 2026-06 83% · 2026-05 89%
-##     Round 8's "restored galleries SITE-WIDE" could not have been true — the storage-probe fix only
-##     helps listings whose objects ALREADY exist in Storage. Card surfaces measured 19-33% placeholder
-##     tiles before this round's fix (home/search/county), 11-13% after.
+## (3) THE DATA HALF — AND A CORRECTION TO MY OWN FIRST NUMBER. My initial census counted the
+##     `photosMirrored` marker and reported "20.9% mirror coverage / 79.8% at risk". **That figure
+##     was WRONG and overstated the problem.** `photosMirrored` is a CONTIGUOUS PREFIX from index 0
+##     (see mirrorSlice in scripts/backfill-photos.mjs), so a single dead cover records 0 for a
+##     listing whose entire gallery is sitting in Storage. Proven: 9 of 12 sampled marker-0 listings
+##     DO have objects in Storage, several with every probed index present.
+##     MEASURED FROM STORAGE INSTEAD (scripts/_scratch-true-coverage.mjs, probes 6 spread indices
+##     per listing, Supabase reads only):
+##       newest 40 listings      -> 87% can show a REAL GALLERY · 5% cover-only · 8% nothing stored
+##       listed before 2026-06-01 -> 55% real gallery · 45% cover-only · 0% nothing stored
+##       listed before 2026-04-01 -> 50% real gallery · 50% cover-only · 0% nothing stored
+##     So: listings with NOTHING stored are rare (0-8%), the newest inventory is healthy, and the
+##     real remaining gap is **older listings stuck at cover-only, roughly 45-50% of them**.
+##     LESSON: never measure coverage from a derived marker — probe the artifact. Card surfaces
+##     measured 19-33% placeholder tiles before this round's fix (home/search/county), 11-13% after.
 ##
-## ── OWNER DECISION NEEDED: the photo back-catalogue ───────────────────────────────────────────
-## The UI fix stops the ugly mixing, but ~80% of active listings can still only show their COVER while
-## live shows the full gallery. Closing that means mirroring ~261,000 more photos (330,709 claimed vs
-## 69,213 mirrored in the 14k scanned). That is hours of paced runtime and tens of GB of Supabase
-## storage, and scripts/backfill-photos.mjs gates the full pass on the owner by design. NOT started
-## unilaterally. Two options:
-##   (a) accept cover-only galleries for older listings (cheap, but visibly thinner than live), or
-##   (b) authorise a full-gallery back-catalogue pass, paced --concurrency 2, stop-on-429, resumable.
+## ── OWNER DECISION: the photo back-catalogue (SMALLER than I first said — see the correction) ──
+## The UI fix stops the ugly mixing. What remains is that **roughly half of listings older than ~2
+## months show only their cover** where live shows the full gallery; the newest inventory (what most
+## visitors see) is already at 87%. Closing the old zone means a full-gallery pass over listings
+## whose ModificationTimestamp predates the current watermark — hours of paced runtime and tens of GB
+## of Supabase storage. scripts/backfill-photos.mjs gates the full pass on the owner by design, so it
+## was NOT started unilaterally. Two options:
+##   (a) accept cover-only galleries on older listings (they are the least-viewed inventory), or
+##   (b) authorise a back-catalogue pass, paced --concurrency 2, stop-on-429, resumable, run in
+##       bounded chunks and re-measure with scripts/_scratch-true-coverage.mjs between them.
+## RECOMMENDATION: (b) but in bounded chunks and in no hurry — the newest zone is healthy, the UI no
+## longer lies about what it has, and the account is rate-limit sensitive.
 ## The SANCTIONED tail (listings modified since the 2026-07-23T18:36 watermark) is safe to run any
 ## time: node scripts/backfill-photos.mjs --cap 50 --max-pages 8 --max-listings 4000 --concurrency 2
 ## STATUS: I STARTED that tail at the end of this round (2026-07-26 ~22:50). It was still running at
