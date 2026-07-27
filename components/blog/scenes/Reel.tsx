@@ -1,31 +1,35 @@
 import { Reveal } from "@/components/ui/Reveal";
 
-/** SCENE — the motion reel.
+/** SCENE — the film.
  *
- * The cheap proof from the brief: the finished scenes recorded as a silent 30-60s reel, no
- * credits and no avatar. Research is blunt that pages carrying video perform very differently
- * in search, and the page had none.
+ * Replaces the first attempt, which was honestly just a screen recording of this page
+ * scrolling. This one is cut from three takes and actually demonstrates the product:
  *
- * It is a real <video>, not a YouTube embed, on purpose: no third-party script, no cookie, no
- * layout shift, and the file ships from our own origin so it cannot be pulled or re-branded.
+ *   1. The galaxy flight into the neural brain, captured live from realtylt.com/ai. That is a
+ *      real Three.js scene being flown by its own scroll-driven journey, not a mock-up.
+ *   2. The brain with the "AI chat assistant" node lit, beside the real assistant answering a
+ *      real question typed on camera. Nothing staged: it is the assistant that runs on the page.
+ *   3. The 11:40pm demonstration, purpose-built for the film: the message arrives, the reply
+ *      declines to invent an answer, and the machinery behind it fires in sequence.
  *
- * Autoplay rules: muted + playsInline + loop is the only combination browsers will start
- * without a gesture, and `controls` stays on so a reader can stop it. `preload="none"` with a
- * poster means the 4MB never loads for someone who scrolls past, which matters far more than
- * the autoplay does.
+ * PRODUCTION NOTE for whoever re-cuts this: segment 1 and 2 MUST be recorded headed against
+ * installed Chrome. Headless Chromium has no real GPU, so the AI page detects no acceleration
+ * and drops into "reduced mode" where the galaxy and brain are never drawn at all.
  *
- * Reduced motion: `autoPlay` is NOT set. The video starts only if the reader asks, which is
- * the honest reading of prefers-reduced-motion for a decorative loop, and it keeps the page
- * from spending bandwidth on someone who never watches.
+ * mp4 only: the VP9 encode came out LARGER than the H.264 at matched quality, so a second
+ * <source> would have been weight for nothing. H.264 is universally supported.
+ *
+ * `preload="none"` with a poster means the 5MB never loads for a reader who scrolls past, and
+ * `autoPlay` is deliberately not set, which is the honest reading of prefers-reduced-motion.
  */
 export function Reel() {
   return (
-    <section className="bg-ink py-24 text-paper md:py-32" aria-label="Watch the piece">
+    <section className="bg-ink py-24 text-paper md:py-32" aria-label="Watch it work">
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">In motion</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">Watch it work</p>
           <h2 className="mt-6 max-w-2xl text-2xl font-light leading-[1.25] tracking-[-0.015em] md:text-[34px]">
-            The same story, in half a minute.
+            The galaxy, the brain, and a real answer at 11:40pm.
           </h2>
         </Reveal>
 
@@ -38,18 +42,26 @@ export function Reel() {
               playsInline
               loop
               preload="none"
-              poster="/video/flagship-reel-poster.jpg"
-              width={1440}
-              height={810}
+              poster="/video/flagship-film-poster.jpg"
+              width={1280}
+              height={720}
             >
-              <source src="/video/flagship-reel.webm" type="video/webm" />
-              Your browser cannot play this clip. Everything in it is on this page as text and
-              graphics.
+              <source src="/video/flagship-film.mp4" type="video/mp4" />
+              Your browser cannot play this clip. Everything it shows is on this page as text and
+              graphics, and the assistant itself is at /ai.
             </video>
           </div>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-paper/55">
-            Silent, 36 seconds. Every frame is this page, so nothing in the clip is a claim the
-            article does not already make.
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-paper/55">
+            Silent, 50 seconds. The flight and the chat are captured live from the assistant
+            running at{" "}
+            <a
+              href="/ai#chat"
+              className="text-paper/80 underline underline-offset-4 transition-colors hover:text-porchlight"
+            >
+              realtylt.com/ai
+            </a>
+            , with a real question typed on camera. Nothing in it is a claim this page does not
+            already make.
           </p>
         </Reveal>
       </div>
