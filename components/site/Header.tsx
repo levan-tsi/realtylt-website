@@ -246,6 +246,27 @@ export function Header() {
         </div>
       </div>
 
+      {/* Without JavaScript the hamburger cannot open and the flyout cannot expand — below xl
+          that used to leave the header with no navigation at all. Serve the same destinations
+          as a plain, always-open list instead. Plain <a> rather than <Link>: prefetch is
+          meaningless here and it keeps hydration away from the noscript subtree. */}
+      <noscript>
+        <nav aria-label="Site links" className="border-b border-[#dddddd] bg-paper">
+          <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] lg:px-8">
+            {[
+              ...NAV.map((i) => ({ label: i.label, href: i.href })),
+              ...TOP_AREA_GROUPS.flatMap((g) => g.items),
+            ].map((i) => (
+              <li key={`ns-${i.href}`}>
+                <a href={i.href} className="block py-1 text-stone hover:text-ink">
+                  {i.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </noscript>
+
       {open && (
         <nav aria-label="Mobile" className="border-b border-[#dddddd] bg-paper xl:hidden">
           <ul className="px-4 py-2">
