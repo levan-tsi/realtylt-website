@@ -30,15 +30,22 @@ const CSP = [
   // it the owner's Google Ads conversions never fire (measured 2026-07-26: script-src-elem
   // violation on every page).
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net",
-  "style-src 'self' 'unsafe-inline'",
+  // …fonts.googleapis.com: the Google Maps JS API injects its own font stylesheet on any page
+  // with a map. Blocking it threw 3 style-src-elem violations per /search view (cosmetic only —
+  // the map and its controls render — but it is our CSP producing console noise on our own
+  // highest-traffic page).
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame,
   // plus the ambient Vimeo hero background video on the home page (player.vimeo.com iframe).
   "frame-src 'self' https://calendar.google.com https://td.doubleclick.net https://player.vimeo.com",
   // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
   // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://streetviewpixels-pa.googleapis.com https://www.google.com https://googleads.g.doubleclick.net",
-  "font-src 'self' data:",
+  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://*.public.blob.vercel-storage.com https://*.supabase.co https://maps.googleapis.com https://maps.gstatic.com https://streetviewpixels-pa.googleapis.com https://www.google.com https://googleads.g.doubleclick.net https://www.googletagmanager.com",
+  // …fonts.gstatic.com is the other half of the Maps font pair: allowing only the stylesheet
+  // let it load and then request font files, which turned 3 violations into 191. Allow both or
+  // neither.
+  "font-src 'self' data: https://fonts.gstatic.com",
   // …plus Supabase (client accounts / auth): sign-in, token refresh, and portal reads/writes
   // go to our project origin https://<ref>.supabase.co over the anon key (docs/CLIENT-ACCOUNTS.md).
   // …and the beacon endpoints gtag actually posts conversions/measurements to. Measured
