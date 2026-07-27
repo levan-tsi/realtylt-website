@@ -16,9 +16,17 @@ import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
  * source URL server-side with `User-Agent: <token>` behind a long CDN cache, else the branded
  * placeholder that self-heals on the next sync.
  *
- * Failure contract: any media error/throttle returns the branded "Photo coming soon" SVG with
- * `no-store` (the next view retries) — never a broken tile or 502. A listing with no photo at
- * this index gets the same SVG but CDN-cached (a stable fact, no repeat work).
+ * Failure contract — CHANGED 2026-07-26, this was the #1 owner-reported bug:
+ *  • TRANSIENT failure (media host 429/timeout, dead signed URL) → `503` with a tiny `text/plain`
+ *    body and `no-store`. It must NOT be a decodable image. Measured in Chromium: a 503 whose body
+ *    is a valid SVG is DECODED AND DISPLAYED — `<img>` fires `load`, not `error` (naturalWidth 200,
+ *    naturalHeight 150, the placeholder's intrinsic size). So while this route answered failures
+ *    with the branded SVG, every throttled tile silently painted "Photo coming soon" as though it
+ *    were a photo of the house, MlsImage's self-healing retry ladder never ran, and the client had
+ *    no way to tell a real photo from a placeholder. Now the browser errors, the tile retries, and
+ *    if it never recovers the gallery DROPS it (components/idx/ListingPhotos.tsx).
+ *  • STABLE "this listing has no photo at this index" → the branded SVG at `200`, CDN-cached. That
+ *    is the one legitimate placeholder: nothing real can ever appear in that slot.
  */
 
 // The branded "photo coming soon" artwork is shared with components/idx/ListingCard.tsx NoPhoto
@@ -45,11 +53,24 @@ const STORAGE_PROBE_MAX = 50;
 const COVER_SUBSTITUTE_MAX = 3;
 
 function placeholder(cacheControl: string, status: "empty" | "unavailable"): Response {
+  // "unavailable" is a TRANSIENT failure. The body must be UNDECODABLE so <img onError> actually
+  // fires: Chromium happily renders an SVG body served with 503, which is exactly how a throttled
+  // tile used to masquerade as a "Photo coming soon" photo (see the header note). text/plain makes
+  // the failure legible to the client, which retries and then drops the tile.
+  if (status === "unavailable") {
+    return new Response("photo unavailable", {
+      status: 503,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": cacheControl,
+        "X-Media-Status": status,
+      },
+    });
+  }
+  // "empty" is a stable fact — there is no photo at this index and never will be for this sync.
+  // The branded artwork is the honest answer and can be cached like an image.
   return new Response(PLACEHOLDER_SVG, {
-    // "unavailable" is a TRANSIENT failure → 503 so <img onError> fires and the client
-    // can retry (MlsImage self-heals without a manual reload). "empty" is a stable fact
-    // → 200, render the placeholder and never retry.
-    status: status === "unavailable" ? 503 : 200,
+    status: 200,
     headers: {
       "Content-Type": "image/svg+xml",
       "Cache-Control": cacheControl,
@@ -150,6 +171,34 @@ export async function GET(
     return dbOk ? placeholder(EMPTY_CACHE, "empty") : placeholder("no-store", "unavailable");
   }
 
+  const primary = await proxyUpstream(url, id, n);
+  if (primary) return primary;
+
+  // UPSTREAM COVER SUBSTITUTE: the storage probe above only rescues a dead cover when a LATER
+  // photo was mirrored. When nothing is mirrored yet (a brand-new listing) but the signed URLs are
+  // still fresh, a card asking for idx 0 would fall back to the placeholder even though photos 1..3
+  // download fine. Try them — a genuine photo always beats "coming soon", and the winner is
+  // CDN-cached for a day so the extra reach happens once, not per view. Media host only; bounded;
+  // never the DATA API.
+  if (n === 0) {
+    for (let sub = 1; sub <= COVER_SUBSTITUTE_MAX && sub < photos.length; sub++) {
+      const alt = photos[sub];
+      if (!alt?.startsWith("https://")) continue;
+      const res = await proxyUpstream(alt, id, sub, "ok-cover-sub");
+      if (res) return res;
+    }
+  }
+  return placeholder("no-store", "unavailable");
+}
+
+/** Stream one MediaURL through the proxy. Returns null on any failure so the caller can decide
+ * whether to substitute — the media host is rate-limited, so every call here is deliberate. */
+async function proxyUpstream(
+  url: string,
+  id: string,
+  n: number,
+  status = "ok",
+): Promise<Response | null> {
   try {
     const upstream = await fetch(url, {
       headers: {
@@ -160,20 +209,20 @@ export async function GET(
       signal: AbortSignal.timeout(15_000),
     });
     if (!upstream.ok || !upstream.body) {
-      // Dead/rotated URL or media-host throttle — placeholder, no-store: the next view retries,
-      // and the URL is refreshed by the next scheduled export (never re-resolved here per view).
+      // Dead/rotated URL or media-host throttle. The URL is refreshed by the next scheduled
+      // export — never re-resolved here per view.
       console.error(`[media] upstream photo ${id}/${n} failed: ${upstream.status}`);
-      return placeholder("no-store", "unavailable");
+      return null;
     }
     return new Response(upstream.body, {
       headers: {
         "Content-Type": upstream.headers.get("content-type") ?? "image/jpeg",
         "Cache-Control": IMAGE_CACHE,
-        "X-Media-Status": "ok",
+        "X-Media-Status": status,
       },
     });
   } catch (e) {
     console.error(`[media] upstream photo ${id}/${n} errored:`, e);
-    return placeholder("no-store", "unavailable");
+    return null;
   }
 }

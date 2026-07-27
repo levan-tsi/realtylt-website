@@ -3,59 +3,77 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { wrapIndex } from "@/lib/leads/listing-intents";
 import { loadMaps } from "@/lib/idx/maps-loader";
+import { requestMediaSlot } from "@/lib/idx/media-queue";
 
 /** Photo lightbox for the listing detail gallery, matching the live site's viewer: a big main
  * photo with a scrollable rail of every other photo (click to select), plus Photos / Street View /
- * Map View tabs and an "In Person Tour" CTA. The server renders the gallery grid as-is (keeping its
- * no-JS <details> "Show all photos" fallback); this client wrapper delegates clicks/Enter on any
- * `[data-lightbox-index]` tile to open the overlay at that photo. Street View + Map geocode the REAL
- * address client-side via the existing Maps key (honest — the listing's own location, not the
+ * Map View tabs and an "In Person Tour" CTA. The band above it (ListingPhotos) owns which photos
+ * exist, so `photos` here is already the SURVIVING set and "i / N" can never over-count; a tile
+ * that dies inside the viewer reports up through `onUnavailable` and leaves the set too. Any
+ * `[data-lightbox-index]` element in `children` opens the overlay at that photo (delegated), and
+ * `data-lightbox-tab` opens it straight onto Street View / Map View. Street View + Map geocode the
+ * REAL address client-side via the existing Maps key (honest — the listing's own location, not the
  * zip-centroid used for privacy on the search map); the tabs hide when no key/geocode is available. */
 export function ListingGallery({
   photos,
   address,
   mapQuery,
+  onUnavailable,
   children,
 }: {
   photos: string[];
   address: string;
   /** Full "street, city, state zip" for geocoding Street View + Map. Omit to show Photos only. */
   mapQuery?: string;
+  /** Called with a photo whose bytes never arrive — the owner drops it from the surviving set. */
+  onUnavailable?: (src: string) => void;
   children: React.ReactNode;
 }) {
   const [index, setIndex] = useState<number | null>(null);
+  const [tab, setTab] = useState<Tab>("photos");
   const open = index !== null;
-
-  const openAt = useCallback(
-    (i: number) => {
-      if (i >= 0 && i < photos.length) setIndex(i);
-    },
-    [photos.length],
-  );
 
   const onActivate = useCallback(
     (e: React.MouseEvent | React.KeyboardEvent) => {
       const el = (e.target as HTMLElement).closest<HTMLElement>("[data-lightbox-index]");
       if (!el) return;
-      if ("key" in e && e.key !== "Enter" && e.key !== " ") return;
+      // Native buttons already synthesise a click from Enter/Space — handling the keydown too
+      // would open the same photo twice.
+      if ("key" in e) {
+        if (el.tagName === "BUTTON") return;
+        if (e.key !== "Enter" && e.key !== " ") return;
+      }
       e.preventDefault();
-      openAt(Number(el.dataset.lightboxIndex));
+      const i = Number(el.dataset.lightboxIndex);
+      if (!Number.isInteger(i) || i < 0 || i >= photos.length) return;
+      setTab((el.dataset.lightboxTab as Tab) || "photos");
+      setIndex(i);
     },
-    [openAt],
+    [photos.length],
   );
+
+  // The surviving set can shrink while the viewer is open (a photo 503s in the rail): keep the
+  // index inside it, and close when nothing is left rather than showing an empty frame.
+  useEffect(() => {
+    if (index === null) return;
+    if (photos.length === 0) setIndex(null);
+    else if (index >= photos.length) setIndex(photos.length - 1);
+  }, [photos.length, index]);
 
   return (
     <>
       <div onClick={onActivate} onKeyDown={onActivate} className="contents">
         {children}
       </div>
-      {open && (
+      {open && index < photos.length && (
         <Lightbox
           photos={photos}
           address={address}
           mapQuery={mapQuery}
           index={index}
           setIndex={setIndex}
+          initialTab={tab}
+          onUnavailable={onUnavailable}
           onClose={() => setIndex(null)}
         />
       )}
@@ -71,6 +89,8 @@ function Lightbox({
   mapQuery,
   index,
   setIndex,
+  initialTab,
+  onUnavailable,
   onClose,
 }: {
   photos: string[];
@@ -78,6 +98,8 @@ function Lightbox({
   mapQuery?: string;
   index: number;
   setIndex: (i: number) => void;
+  initialTab: Tab;
+  onUnavailable?: (src: string) => void;
   onClose: () => void;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -85,7 +107,7 @@ function Lightbox({
   const restoreRef = useRef<HTMLElement | null>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const touchX = useRef<number | null>(null);
-  const [tab, setTab] = useState<Tab>("photos");
+  const [tab, setTab] = useState<Tab>(initialTab);
 
   const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   // Geocode the real address ONCE on open. Street View / Map tabs appear only if it resolves, so a
@@ -119,6 +141,11 @@ function Lightbox({
     };
   }, [mapsKey, mapQuery]);
   const hasPlace = Boolean(coords);
+  // Opened straight onto Street View / Map but the address will not geocode (key without the
+  // Geocoding API, blocked referrer, rural address): fall back to Photos rather than a dead panel.
+  useEffect(() => {
+    if (coords === null && tab !== "photos") setTab("photos");
+  }, [coords, tab]);
 
   const count = photos.length;
   const go = useCallback((delta: number) => setIndex(wrapIndex(index, delta, count)), [index, count, setIndex]);
@@ -253,13 +280,13 @@ function Lightbox({
                   <path d="m15 6-6 6 6 6" />
                 </svg>
               </button>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <GalleryImg
                 key={photos[index]}
                 src={photos[index]}
                 alt={`${address}, photo ${index + 1}`}
+                front
                 className="max-h-full max-w-full select-none rounded-lg object-contain"
-                draggable={false}
+                onUnavailable={onUnavailable}
               />
               <button
                 type="button"
@@ -290,8 +317,7 @@ function Lightbox({
                     i === index ? "ring-2 ring-paper" : "opacity-70 hover:opacity-100"
                   } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" draggable={false} />
+                  <GalleryImg src={src} alt="" lazy className="h-full w-full object-cover" onUnavailable={onUnavailable} />
                 </button>
               ))}
             </div>
@@ -316,16 +342,101 @@ function Lightbox({
         </button>
       </div>
 
-      {/* Warm the neighbours so paging is instant. */}
+      {/* Warm the neighbours so paging is instant — through the queue like everything else, and
+          behind the visible frame + the nearby thumbnails in line. */}
       <div className="pointer-events-none absolute h-0 w-0 overflow-hidden" aria-hidden>
         {neighbors.map((n) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={n} src={photos[n]} alt="" />
+          <GalleryImg key={photos[n]} src={photos[n]} alt="" className="h-px w-px" />
         ))}
       </div>
     </div>
   );
 }
+
+/** A viewer photo that follows the same contract as MlsImage: the media proxy answers 503 while
+ * the host throttles, so retry quietly at 2s and 8s, and only then declare the photo gone. It then
+ * renders NOTHING and tells the owner, which removes it from the surviving set — the placeholder
+ * SVG must never appear inside the viewer pretending to be a photo of this house. */
+function GalleryImg({
+  src,
+  alt,
+  className,
+  lazy = false,
+  front = false,
+  onUnavailable,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+  lazy?: boolean;
+  /** The frame the visitor is looking at — jumps ahead of the thumbnail rail in the queue. */
+  front?: boolean;
+  onUnavailable?: (src: string) => void;
+}) {
+  const [attempt, setAttempt] = useState(0);
+  const [gone, setGone] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  // Two gates, both required. VISIBILITY: a thumbnail 40 rows down the rail must not fetch at all
+  // (native loading="lazy" cannot be combined with the queue — an off-screen tile would sit on its
+  // slot). CONCURRENCY: of the thumbnails that ARE near the viewport, at most six fetch at once.
+  // Opening a 48-photo viewer used to put 48 requests on the wire and 429 the media host.
+  const [near, setNear] = useState(!lazy);
+  const [admitted, setAdmitted] = useState(false);
+  const releaseRef = useRef<() => void>(() => {});
+  const busted = attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}r=${attempt}`;
+
+  useEffect(() => {
+    if (near || gone) return;
+    const el = imgRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near, gone]);
+
+  useEffect(() => {
+    if (gone || !near) return;
+    setAdmitted(false);
+    const release = requestMediaSlot(() => setAdmitted(true), front);
+    releaseRef.current = release;
+    return release;
+  }, [busted, gone, near, front]);
+
+  if (gone) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      ref={imgRef}
+      src={near && admitted ? busted : undefined}
+      alt={alt}
+      className={className}
+      draggable={false}
+      onLoad={() => releaseRef.current()}
+      onError={() => {
+        releaseRef.current();
+        setAdmitted(false); // never leave a broken frame in the DOM between retries
+        if (attempt < GALLERY_RETRY_MS.length) {
+          setTimeout(() => setAttempt((a) => a + 1), GALLERY_RETRY_MS[attempt] + Math.random() * 1200);
+        } else {
+          setGone(true);
+          onUnavailable?.(src);
+        }
+      }}
+    />
+  );
+}
+const GALLERY_RETRY_MS = [1500, 4000];
 
 /** Street View / Map tab body. Maps JS + the address geocode are already resolved by the Lightbox
  * (this tab only renders when coords exist), so this just paints a google.maps.StreetViewPanorama or

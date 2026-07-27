@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  __seedMirroredForTests,
   __seedSnapshotMediaForTests,
   getProxiedPhotoPaths,
   getSnapshotMediaUrls,
@@ -53,10 +54,33 @@ describe("getProxiedPhotoPaths", () => {
       "https://media.mlsgrid.com/a/0.jpg",
       "https://media.mlsgrid.com/a/1.jpg",
     ]);
-    expect(await getProxiedPhotoPaths("L1")).toEqual(["/api/media/L1/0", "/api/media/L1/1"]);
+    expect(await getProxiedPhotoPaths("L1")).toEqual({
+      paths: ["/api/media/L1/0", "/api/media/L1/1"],
+      mirrored: 0,
+    });
   });
 
-  it("falls back to the single primary path when the snapshot has no photos", async () => {
-    expect(await getProxiedPhotoPaths("L1")).toEqual(["/api/media/L1/0"]);
+  it("reports how many photos are mirrored, so the page knows when a count is a FACT", async () => {
+    __seedSnapshotMediaForTests("L1", [
+      "https://media.mlsgrid.com/a/0.jpg",
+      "https://media.mlsgrid.com/a/1.jpg",
+    ]);
+    __seedMirroredForTests("L1", 2);
+    expect(await getProxiedPhotoPaths("L1")).toEqual({
+      paths: ["/api/media/L1/0", "/api/media/L1/1"],
+      mirrored: 2,
+    });
+  });
+
+  it("never reports more mirrored photos than the listing claims", async () => {
+    __seedSnapshotMediaForTests("L1", ["https://media.mlsgrid.com/a/0.jpg"]);
+    __seedMirroredForTests("L1", 9); // stale marker from a wiped/re-baselined sync
+    expect((await getProxiedPhotoPaths("L1")).mirrored).toBe(1);
+  });
+
+  it("returns NO paths for a genuinely photo-less listing (the page shows branded markup)", async () => {
+    // Claiming /api/media/L1/0 here put an <img> on the page whose only possible content is the
+    // "photo coming soon" artwork, and listed it in the page's JSON-LD as a photo of the home.
+    expect(await getProxiedPhotoPaths("L1")).toEqual({ paths: [], mirrored: 0 });
   });
 });

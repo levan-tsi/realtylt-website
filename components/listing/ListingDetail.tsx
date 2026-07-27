@@ -3,13 +3,10 @@ import { cache } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FavoriteButton } from "@/components/idx/FavoriteButton";
 import { TrackView } from "@/components/portal/TrackView";
-import { formatPrice, isLiveMlsPhoto, ListingCard, NoPhoto, priceLabel } from "@/components/idx/ListingCard";
-import { MlsImage } from "@/components/idx/MlsImage";
+import { ListingCard, priceLabel } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
-import { ShareButton } from "@/components/idx/ShareButton";
-import { ListingGallery } from "@/components/idx/ListingGallery";
+import { ListingPhotos } from "@/components/idx/ListingPhotos";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
 import { ListingSubNav } from "@/components/listing/ListingSubNav";
@@ -66,9 +63,12 @@ export async function ListingDetail({ id }: { id: string }) {
   // FULL on-demand gallery (ONE short-TTL-cached MLS data lookup per detail view;
   // photos themselves stream through the CDN-cached proxy). Fixture/local listings
   // keep their own photo arrays.
-  const photos = l.photos[0]?.startsWith("/api/media/")
+  // `mirrored` = how many of these are permanently in our Storage bucket, so the page knows
+  // whether the photo count is a FACT it may print or only the feed's claim (see GalleryPhotos).
+  const gallery = l.photos[0]?.startsWith("/api/media/")
     ? await getProxiedPhotoPaths(l.id)
-    : l.photos;
+    : { paths: l.photos, mirrored: l.photos.length };
+  const photos = gallery.paths;
   const county = SERVED_AREAS.find((c) => c.slug === l.county);
 
   // ── Facts (structured fields, with legacy-row fallbacks parsed from `features`)
@@ -163,7 +163,8 @@ export async function ListingDetail({ id }: { id: string }) {
     "@type": "RealEstateListing",
     name: `${l.address}, ${l.city}, NY ${l.zip}`,
     url: `${SITE.url}${listingPath(l)}`,
-    image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)),
+    // Only claim images we actually have; a photo-less listing must not list the placeholder.
+    ...(photos.length ? { image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)) } : {}),
     description: l.description,
     datePosted: l.listedAt,
     about: {
@@ -207,124 +208,39 @@ export async function ListingDetail({ id }: { id: string }) {
         favoriteId={l.id}
       />
 
-      {/* ── Gallery (photos open a full-screen lightbox; the <details> below keeps the no-JS
-          "show all photos" fallback working). */}
+      {/* ── Gallery. ListingPhotos owns which photos actually exist (a tile whose media never
+          arrives is dropped, never swapped for the "coming soon" artwork beside real photos) and
+          keeps the no-JS <details> fallback for scripting-off visitors. */}
       <section className="bg-ink" aria-label="Photos">
-        <ListingGallery
+        <ListingPhotos
           photos={photos}
+          guaranteed={gallery.mirrored}
           address={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}
+          addressShort={l.address}
+          city={l.city}
           mapQuery={`${l.address}, ${l.city}, ${l.state} ${l.zip}`}
-        >
-          {/* With ≤1 photo there are no thumbnails — let the main tile span the row instead
-              of leaving a black void beside the placeholder. */}
-          <div
-            className={`mx-auto grid max-w-7xl gap-1.5 px-0 lg:px-8 lg:py-6 ${
-              photos.length > 1 ? "md:grid-cols-[2fr_1fr]" : ""
-            }`}
-          >
-            {/* Cap the band on desktop so price/facts sit inside the first viewport (live
-                parity — "opening a listing" must show the home AND its numbers, not only pics). */}
-            <div
-              className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
-                photos.length > 1 ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]" : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
-              }`}
-            >
-              {photos.length > 0 ? (
-                isLiveMlsPhoto(photos[0]) ? (
-                  <MlsImage src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} priority sizes="(max-width: 768px) 100vw, 60vw" />
-                ) : (
-                  <Image src={photos[0]} alt={`${l.address}, ${l.city}, main photo`} fill priority sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
-                )
-              ) : (
-                <NoPhoto />
-              )}
-              <FavoriteButton id={l.id} className="absolute right-4 top-4 z-10" />
-              {l.status !== "Active" && (
-                <span className="absolute left-4 top-4 z-[6] bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
-                  {l.status}
-                </span>
-              )}
-              {/* Transparent trigger — keyboard + mouse open the lightbox (delegated). */}
-              {photos.length > 0 && (
-                <button
-                  type="button"
-                  data-lightbox-index={0}
-                  aria-label={`View all ${photos.length} photo${photos.length === 1 ? "" : "s"} full screen`}
-                  className="absolute inset-0 z-[5] cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper"
-                />
-              )}
-            </div>
-            {photos.length > 1 && (
-              <div className="hidden grid-rows-3 gap-1.5 md:grid">
-                {photos.slice(1, 4).map((p, i) => (
-                  <div
-                    key={p + i}
-                    data-lightbox-index={i + 1}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View photo ${i + 2} full screen`}
-                    className="photo-zoom relative cursor-zoom-in overflow-hidden rounded-[2px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper"
-                  >
-                    {isLiveMlsPhoto(p) ? (
-                      <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="30vw" />
-                    ) : (
-                      <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="30vw" className="object-cover" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {/* Full gallery — native <details> so it works without JS. Desktop already shows
-              photos 1–4 above, so its grid hides the first three tiles; mobile shows every
-              photo from #2 on. Off-screen tiles lazy-load through the CDN-cached proxy. */}
-          {photos.length > 1 && (
-            <details className="group mx-auto max-w-7xl px-0 pb-3 lg:px-8 lg:pb-6">
-              <summary className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden">
-                <span className="group-open:hidden">Show all {photos.length} photos</span>
-                <span className="hidden group-open:inline">Hide photos</span>
-              </summary>
-              <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
-                {photos.slice(1).map((p, i) => (
-                  <div
-                    key={p + i}
-                    data-lightbox-index={i + 1}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View photo ${i + 2} full screen`}
-                    className={`photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px] ${i < 3 ? "md:hidden" : ""}`}
-                  >
-                    {isLiveMlsPhoto(p) ? (
-                      <MlsImage src={p} alt={`${l.address}, photo ${i + 2}`} sizes="(max-width: 768px) 50vw, 33vw" />
-                    ) : (
-                      <Image src={p} alt={`${l.address}, photo ${i + 2}`} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </details>
-          )}
-        </ListingGallery>
+          status={l.status}
+          favoriteId={l.id}
+        />
       </section>
+
 
       {/* ── Facts + contact */}
       <section id="overview" className="scroll-mt-16 bg-paper py-8 md:pb-16 md:pt-10">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">
-                <Link href="/search" className="hover:text-ink">Search</Link>
-                {county && (
-                  <>
-                    {" / "}
-                    <Link href={`/top-areas/${county.slug}`} className="hover:text-ink">
-                      {county.name}
-                    </Link>
-                  </>
-                )}
-              </nav>
-              <ShareButton title={`${l.address}, ${l.city} NY | ${priceLabel(l)}`} />
-            </div>
+            {/* Share lives in the sticky sub-nav only — one Share control on the page, like live. */}
+            <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">
+              <Link href="/search" className="hover:text-ink">Search</Link>
+              {county && (
+                <>
+                  {" / "}
+                  <Link href={`/top-areas/${county.slug}`} className="hover:text-ink">
+                    {county.name}
+                  </Link>
+                </>
+              )}
+            </nav>
             <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
               <h1 className="font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl">
                 {l.address}
@@ -364,6 +280,19 @@ export async function ListingDetail({ id }: { id: string }) {
                 </div>
               ))}
             </dl>
+
+            {/* Live pairs the status row with a financing link; ours points at the real page. */}
+            {!isRental && (
+              <p className="mt-4 text-sm text-stone">
+                Know your budget before you tour.{" "}
+                <Link
+                  href="/financing"
+                  className="font-medium text-ink underline decoration-ink/25 underline-offset-4 hover:decoration-ink"
+                >
+                  Get pre-qualified
+                </Link>
+              </p>
+            )}
 
             <h2 className="mt-8 font-display text-2xl text-ink">About this home</h2>
             <p className="mt-3 max-w-2xl leading-relaxed text-stone">{l.description}</p>

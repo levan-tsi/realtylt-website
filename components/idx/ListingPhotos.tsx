@@ -1,0 +1,329 @@
+"use client";
+
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { bandShape, sideSources, survivingPhotos, viewAllLabel } from "@/lib/idx/photo-band";
+import { FavoriteButton } from "./FavoriteButton";
+import { isLiveMlsPhoto, NoPhoto } from "./ListingCard";
+import { ListingGallery } from "./ListingGallery";
+import { MlsImage } from "./MlsImage";
+
+/** The listing-detail photo band, and the CLIENT OWNER of which photos actually exist.
+ *
+ * No server can answer that question. For a listing whose storage mirror holds two of its
+ * forty-eight claimed photos, index 0 may fail while 1..N stream fine, or the reverse, and it
+ * changes hour to hour as signed URLs expire. Truth only arrives when the browser tries. So this
+ * component holds the surviving set: a tile whose media never arrives tells us, we drop it, and the
+ * page re-derives from what is left. Consequences, all owner-dictated:
+ *   • a dead cover promotes the next real photo into the hero instead of painting "coming soon"
+ *     in the biggest tile while the thumbnails show the house;
+ *   • the branded placeholder appears ONLY when nothing survives;
+ *   • the band re-shapes (1 / 2 / 3 / 4+) rather than leaving holes in a fixed 3-tile column;
+ *   • the band's height is pinned, so tiles dropping after first paint re-flow inside it and never
+ *     shove the page under the reader.
+ *
+ * It is also deliberately CHEAP. Side slots are positional in the claimed array (see sideSources),
+ * so a dead tile empties its slot instead of dragging another photo in behind it, and the band
+ * costs at most four photo loads however broken the listing is. The no-JS <details> grid stays in
+ * the server HTML but its tiles unmount at hydration and only remount, six at a time through the
+ * media queue, if the disclosure is actually opened. */
+export function ListingPhotos({
+  photos,
+  guaranteed = 0,
+  address,
+  addressShort,
+  city,
+  mapQuery,
+  status,
+  favoriteId,
+}: {
+  /** Claimed photo paths, in feed order. */
+  photos: string[];
+  /** How many of them are permanently mirrored to our own Storage, and therefore servable without
+   * touching the rate-limited MLS media host. When every claimed photo is mirrored the count is a
+   * fact the pill may print without first loading all of them. */
+  guaranteed?: number;
+  /** Full "street, city, state zip" — lightbox label. */
+  address: string;
+  /** Street line only, for tile alt text. */
+  addressShort: string;
+  city: string;
+  /** Enables the Street View / Map View overlay buttons. */
+  mapQuery?: string;
+  status: string;
+  favoriteId: string;
+}) {
+  const [dead, setDead] = useState<string[]>([]);
+  const [proven, setProven] = useState<string[]>([]);
+  const [attempted, setAttempted] = useState<string[]>([]);
+  /** Claimed-array position the band is parked at; only the arrows move it. */
+  const [anchor, setAnchor] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
+  const [gridOpen, setGridOpen] = useState(false);
+  useEffect(() => setHydrated(true), []);
+
+  const drop = useCallback((src: string) => {
+    setDead((d) => (d.includes(src) ? d : [...d, src]));
+  }, []);
+  const keep = useCallback((src: string) => {
+    setProven((p) => (p.includes(src) ? p : [...p, src]));
+  }, []);
+
+  const available = useMemo(() => survivingPhotos(photos, dead), [photos, dead]);
+  const count = available.length;
+
+  // GIVE-UP BUDGET. The hero must promote past a dead cover — that is the headline bug — but on a
+  // listing whose mirror has expired entirely, an unbounded promotion walks all 48 claimed photos
+  // at three requests each and re-creates the burst we just eliminated. After this many dead
+  // photos the band stops reaching for new ones and shows only what it already started; if that is
+  // nothing, the listing genuinely cannot serve a photo right now and the branded placeholder is
+  // the honest answer. One full wave of the four-tile band.
+  const GIVE_UP_AFTER = 4;
+  const exhausted = dead.length >= GIVE_UP_AFTER;
+  const pool = useMemo(
+    () => (exhausted ? available.filter((p) => attempted.includes(p)) : available),
+    [exhausted, available, attempted],
+  );
+
+  // The band is ANCHORED at a claimed-array position that only the carousel arrows move. The hero
+  // is the first surviving photo at or after that anchor, so a dead cover promotes without
+  // disturbing anything else. Anchoring matters: if the side slots followed the promoting hero,
+  // every dead cover would drag three fresh photos into the band and multiply the request cost on
+  // exactly the listings that are already failing.
+  const sideCandidates = useMemo(() => {
+    const anchorSrc = photos[Math.min(Math.max(anchor, 0), photos.length - 1)];
+    if (!anchorSrc) return [];
+    const next = sideSources(photos, anchorSrc, dead);
+    return exhausted ? next.filter((s) => attempted.includes(s)) : next;
+  }, [photos, anchor, dead, exhausted, attempted]);
+
+  // Hero and side slots PARTITION the photos: the hero promotes past a dead cover into a photo the
+  // column is not already showing, so no photo is ever loaded twice (a side being pulled into the
+  // hero would restart its retry ladder from scratch and double the request cost of a broken
+  // gallery). Only when nothing else survives does the hero take the column's first tile.
+  const { heroSrc, sides } = useMemo(() => {
+    const outside = pool.find((p) => !sideCandidates.includes(p));
+    if (outside) return { heroSrc: outside, sides: sideCandidates };
+    const first = sideCandidates.find((s) => pool.includes(s));
+    return first
+      ? { heroSrc: first, sides: sideCandidates.filter((s) => s !== first) }
+      : { heroSrc: undefined as string | undefined, sides: [] as string[] };
+  }, [pool, sideCandidates]);
+  const hero = Math.max(0, available.indexOf(heroSrc ?? ""));
+
+  // Remember every photo the band has put on screen, so the give-up budget can freeze the band on
+  // tiles already in flight instead of cancelling them.
+  useEffect(() => {
+    const shown = [heroSrc, ...sides].filter(Boolean) as string[];
+    setAttempted((a) => {
+      const add = shown.filter((s) => !a.includes(s));
+      return add.length ? [...a, ...add] : a;
+    });
+  }, [heroSrc, sides]);
+  const shape = bandShape(count);
+  // A number may be printed on two grounds: every claimed photo is mirrored into our own Storage
+  // (so it is servable by construction), or the gallery has actually accounted for every one of
+  // them. Anything else is the feed's claim, and 72% of active listings over-claim.
+  // …and the mirror guarantee is VOID the moment one of those photos actually fails: if a
+  // "guaranteed" photo can 503, the rest of the guarantee is worth nothing and a figure derived
+  // from it would be the same lie in a new costume.
+  const accountedFor =
+    (guaranteed >= photos.length && photos.length > 0 && dead.length === 0) ||
+    photos.length === proven.length + dead.length;
+  const label = viewAllLabel(count, accountedFor);
+  // The arrows move the whole band: the anchor walks the claimed array, so hero AND column advance
+  // together like live's carousel.
+  const go = useCallback(
+    (delta: number) => {
+      if (available.length === 0) return;
+      const cur = available.indexOf(heroSrc ?? available[0]);
+      const next = available[(cur + delta + available.length) % available.length];
+      setAnchor(Math.max(0, photos.indexOf(next)));
+    },
+    [available, heroSrc, photos],
+  );
+
+  // key={src} is load-bearing: when the hero promotes past a dead photo React would otherwise reuse
+  // the same MlsImage instance, and its `failed` state would keep the new photo rendering nothing.
+  const tile = (src: string, alt: string, sizes: string, priority = false, throttle = false) =>
+    isLiveMlsPhoto(src) ? (
+      <MlsImage
+        key={src}
+        src={src}
+        alt={alt}
+        sizes={sizes}
+        priority={priority}
+        throttle={throttle}
+        maxRetries={dead.length === 0 ? 2 : 1}
+        onLoaded={() => keep(src)}
+        onUnavailable={() => drop(src)}
+      />
+    ) : (
+      <Image key={src} src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+    );
+
+  const overlayBtn =
+    "grid h-9 min-w-10 place-items-center rounded-[4px] bg-ink/70 px-2.5 text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
+  const arrowBtn =
+    "absolute top-1/2 z-[7] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-paper backdrop-blur transition-colors hover:bg-ink/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
+
+  return (
+    <ListingGallery photos={available} address={address} mapQuery={mapQuery} onUnavailable={drop}>
+      <div
+        className={`mx-auto grid max-w-7xl gap-1 px-0 md:gap-4 lg:px-8 lg:py-6 ${
+          sides.length > 0 ? "md:grid-cols-[2fr_1fr]" : ""
+        }`}
+      >
+        {/* Hero. Height is pinned so the price and facts stay in the first viewport (live parity)
+            and so a tile dropping later re-flows inside the band instead of moving the page. */}
+        <div
+          className={`photo-zoom relative overflow-hidden md:rounded-[2px] ${
+            sides.length > 0
+              ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]"
+              : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
+          }`}
+        >
+          {heroSrc ? (
+            tile(heroSrc, `${addressShort}, ${city}, photo ${hero + 1}`, "(max-width: 768px) 100vw, 60vw", true)
+          ) : (
+            <NoPhoto />
+          )}
+
+          <FavoriteButton id={favoriteId} className="absolute right-4 top-4 z-[8]" />
+          {status !== "Active" && (
+            <span className="absolute left-4 top-4 z-[6] bg-ink/85 px-2.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+              {status}
+            </span>
+          )}
+
+          {/* Whole-tile trigger: mouse + keyboard open the lightbox at the hero (delegated). */}
+          {heroSrc && (
+            <button
+              type="button"
+              data-lightbox-index={hero}
+              aria-label={`Open the photo viewer for ${addressShort}`}
+              className="absolute inset-0 z-[5] cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper"
+            />
+          )}
+
+          {/* Carousel arrows — page the band in place, like live. Never over the placeholder:
+              there is nothing to page to. */}
+          {heroSrc && count > 1 && (
+            <>
+              <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="m15 6-6 6 6 6" />
+                </svg>
+              </button>
+              <button type="button" onClick={() => go(1)} aria-label="Next photo" className={`${arrowBtn} right-4`}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="m9 6 6 6-6 6" />
+                </svg>
+              </button>
+            </>
+          )}
+
+          {/* Bottom-left view modes; bottom-right the single "show all photos" control. */}
+          {heroSrc && (
+            <>
+              <div className="absolute bottom-3 left-3 z-[7] flex items-center gap-1.5">
+                <button type="button" data-lightbox-index={hero} data-lightbox-tab="photos" aria-label="Open the photo viewer" title="Photos" className={overlayBtn}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2L8 5h8l1.5 2h2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5Z" />
+                    <circle cx="12" cy="13" r="3.2" />
+                  </svg>
+                </button>
+                {mapQuery && (
+                  <>
+                    <button type="button" data-lightbox-index={hero} data-lightbox-tab="street" aria-label="Open street view" title="Street View" className={overlayBtn}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" />
+                        <circle cx="12" cy="10" r="2.6" />
+                      </svg>
+                    </button>
+                    <button type="button" data-lightbox-index={hero} data-lightbox-tab="map" aria-label="Open map view" title="Map View" className={overlayBtn}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                        <path d="m9 4-6 2.4v13.2L9 17.2l6 2.4 6-2.4V4l-6 2.4Z" />
+                        <path d="M9 4v13.2M15 6.4v13.2" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+              </div>
+              <button
+                type="button"
+                data-lightbox-index={hero}
+                className="absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-[4px] bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                </svg>
+                {label}
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Side column — live's 1 wide + 2 half at 4+, shrinking cleanly at 3 and 2. */}
+        {sides.length > 0 && (
+          <div className="hidden h-full grid-cols-2 grid-rows-2 gap-4 md:grid">
+            {sides.map((src, slot) => (
+              <button
+                key={src}
+                type="button"
+                data-lightbox-index={available.indexOf(src)}
+                aria-label={`View photo ${available.indexOf(src) + 1} full screen`}
+                className={`photo-zoom relative cursor-zoom-in overflow-hidden rounded-[2px] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper ${
+                  shape === "one-side" || sides.length === 1
+                    ? "col-span-2 row-span-2"
+                    : sides.length === 2
+                      ? "col-span-2"
+                      : slot === 0
+                        ? "col-span-2"
+                        : ""
+                }`}
+              >
+                {tile(src, `${addressShort}, photo ${available.indexOf(src) + 1}`, "30vw")}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* No-JS route to photos 2..N. It ships in the server HTML (a closed <details> is display:none
+          so its tiles never fetch), then unmounts at hydration and only comes back — six requests at
+          a time through the media queue — if the disclosure is really opened. With JS the in-photo
+          pill is the ONE "show all photos" control, so the summary hides. */}
+      {count > 1 && (
+        <details
+          className="group mx-auto max-w-7xl px-0 pb-3 lg:px-8 lg:pb-6"
+          onToggle={(e) => setGridOpen((e.currentTarget as HTMLDetailsElement).open)}
+        >
+          <summary
+            hidden={hydrated}
+            className="mx-4 my-2 inline-flex min-h-6 cursor-pointer list-none items-center gap-2 border border-paper/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper lg:mx-0 [&::-webkit-details-marker]:hidden"
+          >
+            <span className="group-open:hidden">{label}</span>
+            <span className="hidden group-open:inline">Hide photos</span>
+          </summary>
+          {(!hydrated || gridOpen) && (
+            <div className="grid grid-cols-2 gap-1.5 pt-1.5 md:grid-cols-3">
+              {available.slice(1).map((p, i) => (
+                <div
+                  key={p}
+                  data-lightbox-index={i + 1}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View photo ${i + 2} full screen`}
+                  className="photo-zoom relative aspect-[3/2] cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper md:rounded-[2px]"
+                >
+                  {tile(p, `${addressShort}, photo ${i + 2}`, "(max-width: 768px) 50vw, 33vw", false, hydrated)}
+                </div>
+              ))}
+            </div>
+          )}
+        </details>
+      )}
+    </ListingGallery>
+  );
+}

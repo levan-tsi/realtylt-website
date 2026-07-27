@@ -81,12 +81,30 @@ export async function getMediaUrls(id: string): Promise<string[]> {
   return (await getListingMedia(id)).photos;
 }
 
-/** Proxy paths for the detail-page gallery: /api/media/{id}/{0..n-1}. Falls back to the single
- * primary path when no store has photos for this listing — the proxy then serves the
- * branded placeholder and a later sync heals it. ZERO MLS Grid contact. */
-export async function getProxiedPhotoPaths(id: string): Promise<string[]> {
-  const urls = await getMediaUrls(id);
-  return urls.length ? urls.map((_, i) => `/api/media/${id}/${i}`) : [`/api/media/${id}/0`];
+export interface GalleryPhotos {
+  /** /api/media proxy paths in feed order. EMPTY when the listing genuinely has no photos — the
+   * page then renders the branded placeholder as MARKUP instead of claiming an image URL that can
+   * only ever serve that placeholder (and instead of listing it among the page's JSON-LD images). */
+  paths: string[];
+  /** How many leading paths are permanently mirrored into Supabase Storage, i.e. servable without
+   * touching the rate-limited MLS media host. When this equals `paths.length` the photo count is a
+   * FACT the page may print; below it the feed's count is only a claim (a 2026-07-26 census found
+   * 72% of active listings claim more photos than the mirror can serve). */
+  mirrored: number;
+}
+
+/** Photos for the detail-page gallery: /api/media/{id}/{0..n-1}. ZERO MLS Grid contact. */
+export async function getProxiedPhotoPaths(id: string): Promise<GalleryPhotos> {
+  const { photos, mirrored, dbOk } = await getListingMedia(id);
+  if (photos.length) {
+    return {
+      paths: photos.map((_, i) => `/api/media/${id}/${i}`),
+      mirrored: Math.max(0, Math.min(mirrored, photos.length)),
+    };
+  }
+  // No photos in any store. If the DB actually answered, that is a fact. If the read failed it is
+  // only the snapshot's guess, so keep the single primary path and let the browser find out.
+  return { paths: dbOk ? [] : [`/api/media/${id}/0`], mirrored: 0 };
 }
 
 /** Test hook — clear the snapshot index, DB cache, + any seeded overrides. */

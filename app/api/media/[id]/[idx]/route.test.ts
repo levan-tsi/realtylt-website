@@ -70,15 +70,22 @@ describe("GET /api/media/[id]/[idx] — never calls the MLS Grid DATA API", () =
   });
 });
 
-describe("GET /api/media/[id]/[idx] — failure contract (never a broken tile)", () => {
-  it("serves the branded SVG as a 503 with no-store when the media host rejects (client retries)", async () => {
+describe("GET /api/media/[id]/[idx] — failure contract (never a FAKE photo)", () => {
+  it("answers a transient failure with an UNDECODABLE 503 so <img onError> actually fires", async () => {
+    // THE 2026-07-26 BUG. This used to return the branded SVG alongside the 503. Chromium decodes
+    // and DISPLAYS an image body regardless of the error status (measured: naturalWidth 200 /
+    // naturalHeight 150, the placeholder's intrinsic size), so `load` fired instead of `error`.
+    // Every throttled tile silently painted "Photo coming soon" as if it were a photo of the
+    // house, and MlsImage's retry/drop ladder never ran. The failure body must not be an image.
     stubImage(429);
     const res = await call("L1", "0");
-    expect(res.status).toBe(503); // transient → <img onError> fires → MlsImage self-heals
-    expect(res.headers.get("Content-Type")).toBe("image/svg+xml");
+    expect(res.status).toBe(503);
+    expect(res.headers.get("Content-Type")).not.toContain("image/");
     expect(res.headers.get("Cache-Control")).toBe("no-store");
     expect(res.headers.get("X-Media-Status")).toBe("unavailable");
-    expect(await res.text()).toContain("Photo coming soon");
+    const body = await res.text();
+    expect(body).not.toContain("<svg");
+    expect(body).not.toContain("Photo coming soon");
   });
 
   it("serves a CDN-cacheable SVG when the listing has no photo at that index", async () => {
@@ -96,6 +103,14 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a broken tile)",
     resetMediaCacheForTests(); // clears the seed → snapshot has nothing for L1
     const res = await call("L1", "0");
     expect(res.headers.get("X-Media-Status")).toBe("empty");
+  });
+
+  it("keeps the branded artwork ONLY for the stable 'no photo here' case", async () => {
+    // The placeholder is legitimate in exactly one situation: this index has no photo and never
+    // will for this sync. Anything transient must stay undecodable so the client can drop the tile.
+    const res = await call("L1", "5");
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("Photo coming soon");
   });
 });
 
@@ -308,6 +323,37 @@ describe("GET /api/media/[id]/[idx] — cover substitute (round-7 cover-photo bu
     const res = await call("L1", "1");
     expect(res.headers.get("X-Media-Status")).not.toBe("storage-cover-sub");
     expect(res.status).toBe(503); // its own object missing + dead source URL → transient placeholder
+  });
+
+  it("falls back to the UPSTREAM cover substitute when nothing is mirrored yet", async () => {
+    // Brand-new listing: no storage objects at all, but the signed URLs are still fresh. idx 0's
+    // download fails while photo 1 downloads fine — serve photo 1 as the cover rather than the
+    // placeholder. Bounded to COVER_SUBSTITUTE_MAX, media host only, never the DATA API.
+    const fetchMock = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      if (init?.method === "HEAD") return new Response(null, { status: 404 }); // nothing mirrored
+      if (String(url).endsWith("/0.jpg")) return new Response("dead", { status: 403 });
+      return new Response(new Uint8Array([0xff, 0xd8, 0xff]), { headers: { "Content-Type": "image/jpeg" } });
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const res = await call("L1", "0");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("X-Media-Status")).toBe("ok-cover-sub");
+    expect(res.headers.get("Cache-Control")).toContain("stale-while-revalidate");
+    expect(mlsGridDataCallCount()).toBe(0);
+  });
+
+  it("does not substitute upstream for a gallery slot — only the cover borrows", async () => {
+    const fetchMock = vi.fn(async (url: string | URL, init?: RequestInit) => {
+      if (init?.method === "HEAD") return new Response(null, { status: 404 });
+      return new Response("dead", { status: 403 }); // every source URL is dead
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const res = await call("L1", "1");
+    expect(res.status).toBe(503);
+    expect(res.headers.get("X-Media-Status")).toBe("unavailable");
+    // idx 1 tried exactly its own URL — no fan-out across the gallery.
+    const gets = fetchMock.mock.calls.filter(([, init]) => (init as RequestInit)?.method !== "HEAD");
+    expect(gets).toHaveLength(1);
   });
 
   it("skips the substitute for a genuinely photo-less listing (cacheable empty SVG, not a probe fan-out)", async () => {

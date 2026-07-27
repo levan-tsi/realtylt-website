@@ -10,10 +10,14 @@ export function FavoriteButton({
   id,
   className = "",
   tone = "onPhoto",
+  showLabel = false,
 }: {
   id: string;
   className?: string;
   tone?: "onPhoto" | "onLight";
+  /** Render the visible "Save" / "Saved" word beside the heart (the listing sub-nav does — a bare
+   * heart there reads as decoration next to two labelled buttons). */
+  showLabel?: boolean;
 }) {
   const { isFavorite, toggleFavorite } = useSaved();
   const fav = isFavorite(id);
@@ -30,7 +34,9 @@ export function FavoriteButton({
         e.stopPropagation();
         void toggleFavorite(id);
       }}
-      className={`grid h-9 w-9 place-items-center rounded-full transition-all hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-2 ${
+      className={`${
+        showLabel ? "inline-flex h-9 items-center gap-1.5 rounded-[3px] px-3" : "grid h-9 w-9 place-items-center rounded-full"
+      } transition-all focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
         onLight
           ? "text-stone hover:bg-mist hover:text-ink focus-visible:outline-river"
           : "bg-ink/55 backdrop-blur hover:bg-ink/75 focus-visible:outline-paper"
@@ -50,6 +56,9 @@ export function FavoriteButton({
       >
         <path d="M12 20.3 4.7 13a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l.5.5.5-.5a4.8 4.8 0 0 1 6.8 6.8L12 20.3z" />
       </svg>
+      {showLabel && (
+        <span className="text-xs font-bold uppercase tracking-[0.1em]">{fav ? "Saved" : "Save"}</span>
+      )}
     </button>
   );
 }

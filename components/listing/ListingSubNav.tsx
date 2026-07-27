@@ -133,7 +133,7 @@ export function ListingSubNav({
             <span className="hidden sm:inline">Make an </span>Offer
           </button>
           <ShareButton title={shareTitle} />
-          <FavoriteButton id={favoriteId} tone="onLight" className="border border-ink/15" />
+          <FavoriteButton id={favoriteId} tone="onLight" showLabel className="border border-ink/15" />
         </div>
       </div>
     </nav>
