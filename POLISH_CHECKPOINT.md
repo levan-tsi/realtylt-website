@@ -4,8 +4,61 @@
 ## Work order: docs/parity/PARITY-listing-detail.md (commit 031eb58) — live-vs-ours click-compare
 ## with measured box geometry, live's Start-an-Offer modal contents, and the mobile accordion gap.
 ##
-## >>> NEXT RUN: continue the owner's page-by-page order. Listing detail is the page in progress
-## (state below). After it: Search / Listings, then Home, then the rest of the nav.
+## >>> NEXT RUN: continue the owner's page-by-page order. Listing detail is DONE + verified (below).
+## NEXT PAGE = Search / Listings (and its first open item is listed under LEFTOVERS).
+##
+## ── WHAT SHIPPED (build agent commits d225ff9, 61673af, 5425f51, a11d3de, e6dbca7, aa47a6a;
+##    orchestrator 6167a68) ──────────────────────────────────────────────────────────────────────
+## Photo rule (§0 of the work order) · live's photo band: 1 big + 1 wide + 2 half, carousel arrows,
+## the three view-mode icons bottom-left and the "View all N photos" pill bottom-right, all INSIDE
+## the hero like live · offer modal now asks live's two qualifiers ("Are you pre-approved with a
+## lender?" / "Have you seen this home in person?") and carries the answers into the existing
+## offerQualifier payload, no second POST · duplicate SHARE removed · SAVE label added · Get
+## Pre-Qualified link · "View agent profile" link · mobile disclosures (390 height 9,414 -> 7,601) ·
+## media queue caps listing photo requests at 6 in flight (was ~29-48 on gallery open).
+##
+## ── ORCHESTRATOR VERIFICATION (I ran all of this myself, foreground) ──────────────────────────
+## npx tsc --noEmit clean · npm test 411/411 in 38 files (baseline 382, +29 new).
+## MY photo-rule metric: **10/10 on LOCAL and 10/10 on PROD** across 5 listings x 2 widths, up from
+## 7/10 before (and 0/10 on the harsher gallery-open measurement). Local is the harsher environment
+## because most upstream signed URLs are dead there. Pushed + deployed; prod re-verified after.
+## Adversarial probe 20/22: lightbox counter honest (1 / 15 against 15 thumbnails), ArrowRight
+## advances, Esc closes + restores focus to a real control, offer amount prefilled and garbage
+## rejected, double submit = exactly ONE lead POST, qualifier carries preApproved + seenHomeInPerson,
+## exactly one SHARE control, sub-nav anchors scroll, no h-overflow at 390 OR 320, no-JS still
+## renders photos + price. BOTH "failures" were MY probe's selectors, proven not defects: the tour
+## sheet opens fine from the rail, and the round-8b behaviour is intact (screenshot
+## docs/_audit/listing-round9/tour-in-gallery.png — "Schedule a tour" centred OVER the dimmed,
+## still-open gallery). Card surfaces after the route change: 0 broken frames, 0 empty priced cards
+## on home/search/county; placeholder rate 19-33% -> 11-13%.
+##
+## ── DEFECT I FOUND IN VERIFICATION AND FIXED MYSELF (6167a68) ─────────────────────────────────
+## The agent signed the all-photos-dead case off as "converges in ~30s". Measured: the band showed an
+## EMPTY frame carrying 11 live controls (arrows, view-mode buttons, view-all pill) for ~20s at 390
+## and 5-8s at 1440, because a merely CANDIDATE hero was enough to render the chrome. Controls for
+## photos that may never arrive read more broken than the placeholder. Chrome now waits for the hero
+## to actually load; a loading band shows the quiet skeleton and nothing else. 11 controls -> 4.
+## PRINCIPLE: never render controls for content that has not arrived, and treat "it converges
+## eventually" as a defect whenever the interim state is visible to a visitor.
+##
+## ── LEFTOVERS (all documented, none silently dropped) ─────────────────────────────────────────
+## 1. **/search still fires ~18 concurrent cover requests** — pre-existing, not made worse, but it is
+##    the same rate-limited account as the 429 problem above. ListingCard could route covers through
+##    lib/idx/media-queue.ts, but it needs a visibility gate first or it defeats lazy loading and
+##    INCREASES total requests. This is the first item for the Search page next round.
+## 2. Mobile height 7,601 vs live's 6,806 (+11.7%, target was ~10%). The remaining 2,191px is market
+##    insights + similar homes, which live does not have at all; content-comparable we are ~21%
+##    SHORTER. Judged done.
+## 3. Calculator field labels are 16px tall at every width (components/financing/MortgageCalculator.tsx)
+##    — shared with /financing, out of the listing page's scope. The 44px inputs are the real targets.
+## 4. One em dash remains on the page, inside the MLS-supplied listing description. Altering the
+##    listing office's text is a compliance problem; left alone deliberately.
+## 5. The all-dead band still takes ~20s at 390 to settle to the placeholder (it now shows a clean
+##    skeleton meanwhile). Shortening that means ending the retry ladder earlier when nothing has
+##    succeeded; not attempted late in the session.
+## 6. My verifier's R3 shaped one architectural decision (the agent kept the collapsed grid mounted
+##    so the pill's count is a fact). The agent disclosed this unprompted. I judged it right
+##    independently, but it is worth knowing the metric influenced the design.
 ##
 ## ── THE COMING-SOON PHOTO BUG: root cause was NOT what round 8 assumed ────────────────────────
 ## The real mechanism (measured in Chromium by the build agent): /api/media answered a transient
@@ -54,6 +107,11 @@
 ##   (b) authorise a full-gallery back-catalogue pass, paced --concurrency 2, stop-on-429, resumable.
 ## The SANCTIONED tail (listings modified since the 2026-07-23T18:36 watermark) is safe to run any
 ## time: node scripts/backfill-photos.mjs --cap 50 --max-pages 8 --max-listings 4000 --concurrency 2
+## STATUS: I STARTED that tail at the end of this round (2026-07-26 ~22:50). It was still running at
+## session end and had not yet advanced the watermark past 2026-07-23T18:36 (it writes per completed
+## slice, and concurrency 2 is deliberately slow). Next session: check the watermark first — if it
+## has moved, the tail made progress and can simply be re-run to continue; if it is unchanged,
+## re-run it and watch the first slice's output before walking away. It stops on 429 by design.
 ##
 ## ── SHIPPED + PROD-VERIFIED THIS ROUND (independent of the build agent) ───────────────────────
 ## CSP was silently killing the owner's Google Ads conversion tracking SITE-WIDE (commit 725befc,
