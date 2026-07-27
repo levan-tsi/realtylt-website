@@ -9,6 +9,31 @@ Everything below was **measured**, not assumed. Evidence: `docs/_audit/launch/au
 
 ---
 
+## 0. LAUNCH CHECKLIST — the switches that must flip, in this order
+
+These are configuration, not code. Doing them out of order is the main way this launch can go wrong.
+
+1. **Fix `NEXT_PUBLIC_SITE_URL` in the Vercel environment BEFORE removing the noindex.**
+   Measured on prod today: every canonical, every JSON-LD `url`, `og:url`, and all **58 sitemap
+   entries** emit `https://realtylt-website.vercel.app/...`, because that value is set in Vercel.
+   ```
+   canonical: https://realtylt-website.vercel.app/selling
+   sitemap  : 58/58 entries on realtylt-website.vercel.app
+   ```
+   It is harmless right now because the whole site is `noindex`. The moment indexing is enabled
+   with this value still set, the real domain will be telling Google its canonical lives on a
+   different host — the worst possible first impression for a new site. `lib/site.ts` already
+   falls back to `https://realtylt.com` when the variable is UNSET, so the fix is to remove or
+   correct it in Vercel, then redeploy, then re-check a canonical.
+2. **Point the realtylt.com apex at this deployment.** The `/ai` page's links into `/services/*`
+   only resolve after the apex migration.
+3. **Remove `PRELAUNCH=1`** from the Vercel environment. That single flag drives both
+   `X-Robots-Tag: noindex, nofollow` and `robots.txt: Disallow: /`. Verify after deploy:
+   `robots.txt` should switch to `Allow: /` with a `Disallow: /api/` and a sitemap line.
+4. **Re-verify** (in this order): a canonical on the apex, `robots.txt`, `sitemap.xml` hosts, then
+   submit the sitemap in Google Search Console.
+5. **Enable Supabase Auth leaked-password protection** (dashboard toggle, see 2.3).
+
 ## 1. WHAT IS ALREADY GOOD (verified, not assumed)
 
 - **All 23 sampled routes return 200.** The only two 404s in the sweep were slugs I guessed wrong;
@@ -79,10 +104,22 @@ This is a compliance and hygiene problem more than a live-data one.
 - (c) accept it, documented, on the grounds that the URLs are expired.
 Recommendation: (a), scheduled deliberately as its own piece of work, not bolted on before launch.
 
+### 2.4 The public API surface holds up (reviewed, not just scanned)
+- `POST /api/lead` is genuinely defended: per-IP sliding-window throttle runs FIRST, JSON
+  content-type enforced (blocks simple-request/form-encoded shapes), body capped at 16KB by both
+  declared and actual length, honeypot hits return a silent success, validation errors are 400, and
+  failures never leak internals.
+- `/api/idx/search` clamps `pageSize` to a maximum, `/api/idx/pins` caps at `PIN_CAP` (800), and
+  `/api/reports/market` validates `county` against the `SERVED_AREAS` allowlist. No unbounded
+  scrape of the 28k-row catalogue through our own endpoints.
+
 ### 2.3 LOW / housekeeping
 - **Leaked-password protection is disabled** in Supabase Auth (HaveIBeenPwned check). One toggle in
   the dashboard; worth enabling before real accounts exist.
-- `public.lead_phone_digits` has a mutable `search_path` (advisory 0011).
+- ~~`public.lead_phone_digits` has a mutable `search_path` (advisory 0011).~~ **FIXED 2026-07-27**
+  (migration `pin_lead_phone_digits_search_path`). Pinned to `pg_catalog, pg_temp`; the function is
+  IMMUTABLE and only calls built-ins, so it is behaviour-preserving — verified after the change:
+  `+1 (917) 905-7923` → `9179057923`, plain 10-digit unchanged, empty and null → null.
 - `pg_net` is installed in the `public` schema (advisory 0014).
 - Several SECURITY DEFINER functions are anon-executable. The website's own
   (`idx_sync_apply`, `idx_sync_schedule`) are **secret-gated inside the function body**, so this is
