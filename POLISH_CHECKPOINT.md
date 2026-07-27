@@ -1,16 +1,81 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## >>> NEXT /website RUN (owner 2026-07-26): go PAGE BY PAGE vs LIVE realtylt.com — click EVERYTHING
-## on both (boxes, sizes, symmetry, popups, searches, sorts, filters, lightbox, tour/offer/save),
-## fix ONE page fully match-or-beat, then the next. See the rewritten /website command for the loop.
-## TOP KNOWN BUG to fix (owner-dictated, listing pages): the "Photo coming soon" placeholder still
-## shows in the WRONG cases. RULE: if a listing has ANY real photo, show ONLY real photos — NEVER a
-## coming-soon tile mixed in (drop tiles whose media 503s; don't pad fixed slots). Only a 0-photo
-## listing shows the placeholder. This is a UI RENDER fix in ListingDetail hero + ListingGallery
-## thumbnails/lightbox + ListingCard NoPhoto (the media route + backfill already serve real photos;
-## the UI must stop rendering placeholders alongside real ones). Test 0/1/partial/full listings.
-## Also finish the full-gallery backfill tail (watermark ~2026-07-23T18:36; resume cmd in round-8b
-## notes below). Kill any zombie dev server (e.g. :3100) before starting one.
+## ═══ ROUND 9 — 2026-07-26 (page: LISTING DETAIL). Orchestrator = Fable 5, ONE Opus build agent.
+## Work order: docs/parity/PARITY-listing-detail.md (commit 031eb58) — live-vs-ours click-compare
+## with measured box geometry, live's Start-an-Offer modal contents, and the mobile accordion gap.
+##
+## >>> NEXT RUN: continue the owner's page-by-page order. Listing detail is the page in progress
+## (state below). After it: Search / Listings, then Home, then the rest of the nav.
+##
+## ── THE COMING-SOON PHOTO BUG: root cause was NOT what round 8 assumed ────────────────────────
+## The real mechanism (measured in Chromium by the build agent): /api/media answered a transient
+## failure with **HTTP 503 whose BODY was the branded placeholder SVG**. Browsers decode an image
+## body regardless of status, so <img> fired `load`, NOT `error` — naturalWidth 200x150, the
+## placeholder's intrinsic size. So every throttled tile rendered "Photo coming soon" as if it were
+## a photo of the house, MlsImage's 2s/8s retry ladder never ran, and no client code could tell a
+## real photo from a placeholder. That is why previous rounds' UI fixes never held.
+## FIX (commit d225ff9): transient failure is now 503 **text/plain** (undecodable -> onError fires);
+## the branded artwork survives only for the stable "no photo at this index" case. The route's cover
+## substitute now also reaches UPSTREAM, not just Storage. Client-side, components/idx/ListingPhotos.tsx
+## owns the surviving photo set: a tile that exhausts its retries is dropped, the hero promotes past
+## a dead cover, the band re-shapes for 1/2/3/4+ instead of leaving holes, and the placeholder renders
+## only when nothing survives. Counts never lie: the pill reads "View all photos" unless every claimed
+## photo is actually accounted for.
+##
+## ── MEASURED, and it changes the picture ──────────────────────────────────────────────────────
+## (1) STORAGE EXISTENCE != PHOTO AVAILABILITY. KEY1030151 had storage 400 on EVERY index yet served
+##     47 real photos through the still-fresh signed-URL proxy. Any "probe storage then render" design
+##     is wrong; resolution has to happen at load time in the client.
+## (2) WE MANUFACTURE OUR OWN MLS 429s. Vercel runtime logs while opening a 48-photo gallery:
+##       /api/media/KEY1030151/30..46  503  ... failed: 429   (17 in one second)
+##       /api/media/KEY1029409/0       503  ... failed: 429   <-- a DIFFERENT listing
+##       /api/media/KEY1030149/0       503  ... failed: 429   <-- a DIFFERENT listing
+##     Mounting ~48 <img> at once rate-limits us AND 429s other listings' covers as collateral. So a
+##     chunk of the owner's "random coming soon logos" was self-inflicted, not upstream flakiness.
+##     On an account already at suspension risk this is a SAFETY rule: never mount a gallery's tiles
+##     at once, throttle the in-flight window, stagger retries. Verification scripts must not be load
+##     generators either (scripts/verify-photo-rule.mjs deliberately never force-opens the gallery).
+## (3) THE DATA HALF IS MUCH WORSE THAN ROUND 8 CLAIMED. Supabase-only census over 14,000 active
+##     listings (scripts/_scratch-photo-db-census.mjs, zero MLS calls):
+##       mirroredFull 2,804 · coversOnly 9,142 · unmirrored 2,035 · photoless 19
+##       mirror coverage 20.9% of claimed photos · 79.8% AT RISK of a cover-only gallery
+##       and it worsens with age: 2026-07 70% · 2026-06 83% · 2026-05 89%
+##     Round 8's "restored galleries SITE-WIDE" could not have been true — the storage-probe fix only
+##     helps listings whose objects ALREADY exist in Storage. Card surfaces measured 19-33% placeholder
+##     tiles before this round's fix (home/search/county), 11-13% after.
+##
+## ── OWNER DECISION NEEDED: the photo back-catalogue ───────────────────────────────────────────
+## The UI fix stops the ugly mixing, but ~80% of active listings can still only show their COVER while
+## live shows the full gallery. Closing that means mirroring ~261,000 more photos (330,709 claimed vs
+## 69,213 mirrored in the 14k scanned). That is hours of paced runtime and tens of GB of Supabase
+## storage, and scripts/backfill-photos.mjs gates the full pass on the owner by design. NOT started
+## unilaterally. Two options:
+##   (a) accept cover-only galleries for older listings (cheap, but visibly thinner than live), or
+##   (b) authorise a full-gallery back-catalogue pass, paced --concurrency 2, stop-on-429, resumable.
+## The SANCTIONED tail (listings modified since the 2026-07-23T18:36 watermark) is safe to run any
+## time: node scripts/backfill-photos.mjs --cap 50 --max-pages 8 --max-listings 4000 --concurrency 2
+##
+## ── SHIPPED + PROD-VERIFIED THIS ROUND (independent of the build agent) ───────────────────────
+## CSP was silently killing the owner's Google Ads conversion tracking SITE-WIDE (commit 725befc,
+## pushed + deployed). Every page threw 7 violations: script-src-elem on googleads.g.doubleclick.net
+## (the conversion script gtag injects for AW-11479042629) and connect-src on ad.doubleclick.net,
+## analytics.google.com, stats.g.doubleclick.net, www.google.com/ccm. Verified on prod: 7 -> 0.
+## WHY IT HID FOR MONTHS: every scratch probe in this repo filters `doubleclick|googleads|Content
+## Security` console errors as third-party noise. Audit that filter periodically.
+##
+## ── THE METRIC (committed, re-runnable) ───────────────────────────────────────────────────────
+## scripts/verify-photo-rule.mjs encodes the owner's rule as R1-R5 and was written BEFORE the build
+## so the builder could not shape it: R1 no placeholder beside a real photo · R2 zero-photo listings
+## must show one · R3 visitor-facing counts must equal photos actually offered · R4 no broken frames ·
+## R5 at most ONE placeholder, never a padded grid. Specimens per shape:
+## scripts/_scratch-find-specimens.mjs. BEFORE this round: 7/10 on the landing view, and opening
+## "Show all 48 photos" produced 47 placeholder tiles.
+##
+## ── HARNESS NOTES ─────────────────────────────────────────────────────────────────────────────
+## A concurrent /blog session shares this repo and the ONE dev server on :3100 (:3000 is wslrelay).
+## Never `git add -A`; commit with explicit pathspec. Live realtylt.com renders listing content in
+## CLOSED shadow roots — `document.querySelectorAll` inside page.evaluate sees nothing; Playwright
+## LOCATORS pierce it. Use MSYS_NO_PATHCONV=1 in git-bash or a leading "/" path arg gets mangled.
 
 ## ROUND 8B 2026-07-25 PM (owner: enable maps yourself + tour-in-popup + photo variety):
 ## (A) GEOCODING API ENABLED by me via Chrome (owner logged into GCP, authuser=2, project
