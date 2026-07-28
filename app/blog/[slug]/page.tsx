@@ -167,7 +167,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </Link>
               </nav>
 
-              <h1 className="rise rise-2 mt-6 text-3xl font-light leading-[1.14] tracking-[-0.01em] md:text-[46px]">
+              <h1 className="t-h1 rise rise-2 mt-6">
                 {post.title}
               </h1>
 

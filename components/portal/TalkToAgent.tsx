@@ -71,7 +71,7 @@ export function TalkToAgent({
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-porchlight">
           Your agent, on call
         </p>
-        <h3 id="talk-heading" className="mt-2 text-2xl font-light md:text-3xl">
+        <h3 id="talk-heading" className="t-h3 mt-2">
           Have a question, or ready to make a move?
         </h3>
         <p className="mt-2 max-w-xl text-sm text-paper/70">

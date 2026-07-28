@@ -31,8 +31,8 @@ export default function TopAreasPage() {
           <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-16 text-center lg:px-8">
-          <h1 id="areas-hero" className="text-3xl font-light text-paper md:text-4xl">
-            Top <strong className="font-bold">Areas</strong>
+          <h1 id="areas-hero" className="t-h1 text-paper">
+            Top <strong>Areas</strong>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-paper/85">
             Everything we do happens along the Hudson, from Westchester&rsquo;s commuter villages

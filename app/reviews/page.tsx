@@ -18,8 +18,8 @@ export default function ReviewsPage() {
       {/* ── Hero */}
       <section className="bg-ink py-16 text-paper md:py-20" aria-labelledby="reviews-hero">
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
-          <h1 id="reviews-hero" className="mx-auto max-w-2xl text-3xl font-light leading-tight md:text-4xl">
-            What Our <strong className="font-bold">Clients Say</strong>
+          <h1 id="reviews-hero" className="t-h1 mx-auto max-w-2xl">
+            What Our <strong>Clients Say</strong>
           </h1>
           <div className="mt-6 flex items-center justify-center gap-3">
             <Stars />

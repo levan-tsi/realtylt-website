@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Montserrat } from "next/font/google";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { HomeValueForm } from "@/components/leads/HomeValueForm";
 
-// Live realtylt.com's Home Value hero (the real page is /home_value — the /home-value hyphen
-// URL is 410 Gone, and its browser error page renders in Times New Roman, which is where the
-// "serif" impression came from). The live headline computes to Montserrat 700 / 64px, so we
-// match it exactly (one weight, self-hosted by next/font — no runtime webfont fetch).
-const montserrat = Montserrat({ subsets: ["latin"], weight: ["700"], display: "swap" });
+// This page used to import Montserrat 700 to match the live site's Home Value headline
+// exactly. Parity is finished, and a third typeface loading on one page out of twenty was the
+// clearest example of the incoherence round 11 is removing — it also cost a font download that
+// no other page shared. The headline now uses the site's own display scale.
 
 export const metadata: Metadata = {
   title: "Home Value | How Much Is Your Home Really Worth?",
@@ -63,7 +61,7 @@ export default async function HomeValuePage({
         <div className="relative mx-auto flex min-h-[520px] max-w-[1250px] flex-col justify-center px-4 py-20 text-center md:min-h-[850px] lg:px-8">
           <h1
             id="hv-hero"
-            className={`${montserrat.className} mx-auto max-w-4xl text-4xl font-bold leading-tight text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)] md:text-[64px]`}
+            className="t-h1 mx-auto max-w-4xl text-paper [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]"
           >
             How Much Is Your Home Really Worth?
           </h1>

@@ -18,8 +18,8 @@ export default async function SavedPage() {
       <header className="bg-ink py-10 text-paper">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">Saved</p>
-          <h1 className="mt-2 text-3xl font-light md:text-4xl">
-            Your <strong className="font-bold">Homes &amp; Searches</strong>
+          <h1 className="t-h1 mt-2">
+            Your <strong>Homes &amp; Searches</strong>
           </h1>
           <p className="mt-2 max-w-xl text-sm text-paper/70">
             Saved on this device, no account needed. Turn on email alerts below and we&rsquo;ll

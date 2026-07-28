@@ -55,7 +55,7 @@ export default async function BuyingPage() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-28 text-center md:py-[154px] lg:px-8">
-          <h1 id="buying-hero" className="mx-auto max-w-3xl text-3xl font-bold leading-tight text-paper md:text-[45px]">
+          <h1 id="buying-hero" className="t-h1 mx-auto max-w-3xl text-paper">
             Ready to Find Your Dream Home?
           </h1>
           <p className="mt-4 text-base font-bold uppercase tracking-[0.12em] text-paper md:text-lg">

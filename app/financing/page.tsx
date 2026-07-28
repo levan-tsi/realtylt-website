@@ -32,8 +32,8 @@ export default function FinancingPage() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-[192px] lg:px-8">
-          <h1 id="financing-hero" className="text-3xl font-light text-paper md:text-[46px]">
-            The Home Loan <strong className="font-bold">Process</strong>
+          <h1 id="financing-hero" className="t-h1 text-paper">
+            The Home Loan <strong>Process</strong>
           </h1>
         </div>
       </section>

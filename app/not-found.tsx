@@ -7,8 +7,8 @@ export default function NotFound() {
     <section className="bg-ink py-24 text-paper md:py-36">
       <div className="mx-auto max-w-2xl px-4 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/60">404</p>
-        <h1 className="mt-3 text-4xl font-light md:text-5xl">
-          This address isn&rsquo;t <strong className="font-bold">on the map.</strong>
+        <h1 className="t-h1 mt-3">
+          This address isn&rsquo;t <strong>on the map.</strong>
         </h1>
         <p className="mx-auto mt-4 max-w-md text-paper/70">
           The page you&rsquo;re looking for moved, sold, or never existed. The homes, however, are

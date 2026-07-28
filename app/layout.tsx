@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Lato } from "next/font/google";
+import { Lato, Newsreader } from "next/font/google";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
@@ -9,12 +9,26 @@ import { SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
 
-// Live realtylt.com renders Lato everywhere (computed: "Lato, Helvetica, Arial, sans-serif").
-// Weights on live: 300 (light headings/footer), 400 (body), 700 (nav/bold headings).
+// Lato carries every body paragraph, form control, nav item, button and table on the site.
+// Weights: 300 (light), 400 (body), 700 (nav/bold). Unchanged — the product surfaces should
+// not shift under anyone's muscle memory.
 const lato = Lato({
   subsets: ["latin"],
   weight: ["300", "400", "700"],
   variable: "--font-lato",
+});
+
+// Display face, headlines only (see docs/parity/DESIGN-ROUND11.md §"which face, and why").
+// A site whose display and body face are the same face has no typographic point of view;
+// Lato was inherited from the old vendor theme rather than chosen. Newsreader is
+// modern-classical rather than fashion-classical, holds a 200 beautifully at hero sizes, and
+// keeps a 600 so the site's existing signature — light next to bold inside one headline —
+// survives and gets more expressive. Variable font, so the weight range is a single file.
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
 });
 
 export const metadata: Metadata = {
@@ -67,7 +81,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={lato.variable}>
+    <html lang="en" className={`${lato.variable} ${newsreader.variable}`}>
       <body>
         <script
           type="application/ld+json"

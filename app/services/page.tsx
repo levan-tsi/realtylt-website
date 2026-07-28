@@ -125,9 +125,9 @@ export default function ServicesIndexPage() {
             </p>
             <h1
               id="services-title"
-              className="mt-3 max-w-2xl text-4xl font-light leading-[1.12] text-paper md:text-[50px]"
+              className="t-h1 mt-3 max-w-2xl text-paper"
             >
-              Twenty things that used to <strong className="font-bold">need a person</strong>
+              Twenty things that used to <strong>need a person</strong>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">
               Assistants that answer in seconds, voice agents that never miss a call, pipelines that
@@ -259,7 +259,7 @@ export default function ServicesIndexPage() {
       <section className="bg-ink py-16 text-paper md:py-20" aria-labelledby="close-heading">
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center lg:px-8">
           <Reveal>
-            <h2 id="close-heading" className="text-3xl font-light leading-tight md:text-4xl">
+            <h2 id="close-heading" className="t-h2">
               Not sure which one you <strong className="font-bold">need first?</strong>
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-relaxed text-paper/75">

@@ -88,13 +88,13 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
           <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-paper/60">
             <Link href="/top-areas" className="inline-flex min-h-6 items-center hover:text-paper">Top Areas</Link> / {short}
           </nav>
-          <h1 id="county-hero" className="mt-3 text-4xl font-light leading-tight text-paper md:text-5xl">
+          <h1 id="county-hero" className="t-h1 mt-3 text-paper">
             {c ? (
               <>
-                {short} <strong className="font-bold">County</strong>
+                {short} <strong>County</strong>
               </>
             ) : (
-              <strong className="font-bold">{name}</strong>
+              <strong>{name}</strong>
             )}
           </h1>
           <p className="mt-3 max-w-xl text-lg text-paper/85">{tagline}</p>

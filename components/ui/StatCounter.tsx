@@ -48,12 +48,16 @@ export function StatCounter({
 
   return (
     <div ref={ref}>
-      <p className="text-3xl font-light tracking-tight text-ink md:text-4xl">
+      {/* The number carries the display face at its lightest weight and the label drops to the
+          eyebrow style. Four bold numerals over four grey captions is the most templated block
+          on the web; the facts are true and worth keeping, so what round 11 changed is the
+          setting, not the content. */}
+      <p className="t-h1 text-ink">
         {prefix}
         {display.toLocaleString("en-US")}
         {suffix}
       </p>
-      <p className="mt-1 text-sm text-stone">{label}</p>
+      <p className="t-eyebrow mt-3 text-stone">{label}</p>
     </div>
   );
 }

@@ -136,7 +136,7 @@ function parseBlocks(markdown: string): Block[] {
             <h2
               key={k}
               id={id}
-              className="prose-h scroll-mt-28 text-[26px] font-bold leading-[1.2] tracking-[-0.01em] text-ink md:text-[32px]"
+              className="prose-h scroll-mt-28 font-display text-[26px] font-semibold leading-[1.2] tracking-[-0.012em] text-ink md:text-[32px]"
             >
               {content}
             </h2>

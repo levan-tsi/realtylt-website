@@ -40,7 +40,7 @@ export function ServiceHero({ service }: { service: Service }) {
           </p>
           <h1
             id="service-title"
-            className="mt-3 max-w-xl text-4xl font-light leading-[1.12] tracking-[-0.01em] text-paper md:text-[46px]"
+            className="t-h1 mt-3 max-w-xl text-paper"
           >
             {service.title}
           </h1>

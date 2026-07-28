@@ -387,7 +387,7 @@ function QualifyingWizard({
                 id="rlt-wizard-title"
                 ref={titleRef}
                 tabIndex={-1}
-                className="mt-2 text-2xl font-light leading-snug text-ink outline-none"
+                className="t-h3 mt-2 text-ink outline-none"
               >
                 Thank you{prefill.name ? `, ${prefill.name.split(" ")[0]}` : ""}.
               </h2>
@@ -413,7 +413,7 @@ function QualifyingWizard({
               id="rlt-wizard-title"
               ref={titleRef}
               tabIndex={-1}
-              className="mt-2 text-2xl font-light leading-snug text-ink outline-none"
+              className="t-h3 mt-2 text-ink outline-none"
             >
               {ui.question}
             </h2>

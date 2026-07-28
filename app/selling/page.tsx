@@ -97,9 +97,9 @@ export default async function SellingPage() {
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 md:py-28 lg:min-h-[780px] lg:grid-cols-[1.15fr_1fr] lg:px-8">
           <div className="self-center">
-            <h1 id="selling-hero" className="text-4xl font-light leading-[1.12] text-paper md:text-[52px]">
-              See Your Home&rsquo;s <strong className="font-bold">Cash Value</strong> vs{" "}
-              <strong className="font-bold">Market List Price</strong>
+            <h1 id="selling-hero" className="t-h1 text-paper">
+              See Your Home&rsquo;s <strong>Cash Value</strong> vs{" "}
+              <strong>Market List Price</strong>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-paper/85">
               Get a guaranteed fair cash offer in 24 hours, or list with us for maximum profit. You

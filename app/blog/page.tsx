@@ -51,7 +51,7 @@ export default async function BlogIndexPage() {
         />
         <div className="relative mx-auto max-w-6xl px-4 py-20 md:py-24 lg:px-8">
           <p className="rise text-xs font-bold uppercase tracking-[0.22em] text-paper/55">The RealtyLT journal</p>
-          <h1 className="rise rise-2 mt-4 max-w-2xl text-4xl font-light leading-[1.1] tracking-[-0.01em] md:text-[52px]">
+          <h1 className="t-h1 rise rise-2 mt-4 max-w-2xl">
             Stay <strong className="font-bold">up to date</strong>
           </h1>
           <p className="rise rise-3 mt-5 max-w-xl text-lg leading-relaxed text-paper/75">

@@ -330,7 +330,7 @@ function SuccessBody({ title, body, onClose }: { title: string; body: string; on
           <path d="m5 12.5 4.5 4.5L19 7" />
         </svg>
       </span>
-      <h2 className="mt-4 text-2xl font-light text-ink">{title}</h2>
+      <h2 className="t-h3 mt-4 text-ink">{title}</h2>
       <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-stone">{body}</p>
       <div className="mt-6 flex items-center justify-center gap-3">
         <button
@@ -427,7 +427,7 @@ function TourModal({
       ) : (
         <form onSubmit={onSubmit} className="px-6 pb-7 pt-7 sm:px-8">
           <Honeypot value={hp} onChange={setHp} />
-          <h2 id={titleId} className="text-2xl font-light text-ink">
+          <h2 id={titleId} className="t-h3 text-ink">
             Schedule a tour
           </h2>
           <p className="mt-1 text-sm text-stone">{listing.address}</p>
@@ -589,7 +589,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
       ) : (
         <form onSubmit={onSubmit} className="px-6 pb-7 pt-7 sm:px-8">
           <Honeypot value={hp} onChange={setHp} />
-          <h2 id={titleId} className="text-2xl font-light text-ink">
+          <h2 id={titleId} className="t-h3 text-ink">
             Make an offer
           </h2>
           {/* A feed row can arrive without a usable ListPrice. This used to be

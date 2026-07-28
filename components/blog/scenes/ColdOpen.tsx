@@ -123,7 +123,7 @@ export function ColdOpen({
 
         <div aria-hidden className="rise rise-3 mt-10 h-px w-full max-w-3xl bg-white/12 md:mt-12" />
 
-        <h1 className="rise rise-3 mt-9 max-w-3xl text-3xl font-light leading-[1.14] tracking-[-0.01em] md:mt-10 md:text-[42px]">
+        <h1 className="t-h1 rise rise-3 mt-9 max-w-3xl md:mt-10">
           {title}
         </h1>
 
