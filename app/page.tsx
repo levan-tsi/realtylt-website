@@ -45,16 +45,21 @@ export default async function HomePage() {
           it; the owner named that as the thing that made the page look unfinished. */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="home-hero">
         <div className="absolute inset-0">
-          {/* Poster — art-directed: mobile (and any reduced-motion visitor) gets the still;
-              desktop gets the ambient Vimeo clip's OWN first frame so the video fades in over
-              an identical picture and never flashes a black boot. <source media> so the
-              browser fetches exactly ONE image per visitor. */}
+          {/* Poster — art-directed, and ONE fetch per visitor via <source media>.
+              Desktop with motion gets the ambient Vimeo clip's own first frame, so the video
+              fades in over an identical picture and never flashes a black boot; that file
+              stands or falls with the clip and is the one hero asset still carrying no licence
+              record (see ATTRIBUTIONS.md — it needs an owner decision, not a patch).
+              Everyone else — every phone, and every reduced-motion visitor at any width — gets
+              the Hudson Highlands above Breakneck Ridge, which we do hold a licence for. It
+              replaced the vendor's unlicensed kitchen shot, and it says where this business
+              works, which a kitchen never did. */}
           {/* eslint-disable-next-line @next/next/no-img-element -- art-directed <picture>, single fetch */}
           <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcSet="/images/hero/hom.jpg" />
+            <source media="(prefers-reduced-motion: reduce)" srcSet="/images/hero/valley-aerial.jpg" />
             <source media="(min-width: 1024px)" srcSet="/images/hero/hero-vimeo-frame.jpg" />
             <img
-              src="/images/hero/hom.jpg"
+              src="/images/hero/valley-aerial.jpg"
               alt=""
               fetchPriority="high"
               decoding="async"

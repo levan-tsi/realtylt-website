@@ -49,7 +49,7 @@ export default async function HomeValuePage({
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-95"
+            className="object-cover opacity-95 grayscale"
           />
           {/* Scrim: the bright daytime photo is far lighter than live's dusk house, so a flat
               15% wash left the white H1 at ~1.6:1 over the brightest foliage. This vertical

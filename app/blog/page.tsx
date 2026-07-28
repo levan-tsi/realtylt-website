@@ -31,16 +31,16 @@ export default async function BlogIndexPage() {
     <>
       {/* ── Hero — ink editorial band, cohesive with the article pages. */}
       <header className="relative isolate overflow-hidden bg-ink text-paper">
-        {/* Live blog hero's OWN asset (uploads/9087/woman-on-social-media-website.jpg)
-            behind a dark scrim so our existing copy stays readable. */}
+        {/* Cold Spring, looking up the Hudson. The old vendor's stock photograph of a woman
+            at a laptop had no licence record and said nothing about this place. */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <Image
-            src="/images/hero/blog-social.jpg"
+            src="/images/counties/orange.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-40"
+            className="object-cover object-center opacity-40 grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/55" />
         </div>

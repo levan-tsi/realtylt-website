@@ -39,18 +39,18 @@ export default async function BuyingPage() {
 
   return (
     <>
-      {/* ── Hero — live: interior-with-staircase photo (bg5.jpg), centered white copy */}
+      {/* ── Hero. A house among trees, under the same monochrome grade every other hero on
+          the site now carries. The vendor's interior-with-staircase shot had no licence
+          record. */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="buying-hero">
         <div className="absolute inset-0">
-          {/* Live realtylt.com's OWN hero asset (images.brivityidx.com/assets/images/bg5.jpg),
-              mirrored to /public/images/hero/. Kept readable under a dark scrim. */}
           <Image
-            src="/images/hero/buying-bg5.jpg"
+            src="/images/lifestyle/buying.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center grayscale"
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>

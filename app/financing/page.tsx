@@ -18,16 +18,15 @@ export default function FinancingPage() {
       {/* ── Hero — live: light photo, centered "The Home Loan Process" */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="financing-hero">
         <div className="absolute inset-0">
-          {/* Live financing hero's OWN asset (uploads/104674/blogmanpaperwork.jpg —
-              signing paperwork). Scrim tuned so the centered white title clears the
-              bright window behind the subject. */}
+          {/* A desk mid-paperwork (CC0). Same subject as the vendor's unlicensed shot, and
+              it was already sitting in the licensed library unused. */}
           <Image
-            src="/images/hero/financing-paperwork.jpg"
+            src="/images/lifestyle/financing.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-70"
+            className="object-cover object-center opacity-70 grayscale"
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
@@ -63,8 +62,8 @@ export default function FinancingPage() {
             reduced-motion). Self-hosted from images.brivityidx.com/.../uploads/219/lending-stats.jpg. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 motion-safe:md:bg-fixed"
-          style={{ backgroundImage: "url('/images/financing/lending-stats.jpg')" }}
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 grayscale motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/counties/rockland.jpg')" }}
         />
         <div className="relative mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
@@ -219,8 +218,8 @@ export default function FinancingPage() {
             static mobile / reduced-motion). Self-hosted from uploads/4595/. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 motion-safe:md:bg-fixed"
-          style={{ backgroundImage: "url('/images/financing/closing-the-deal.jpg')" }}
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-45 grayscale motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/counties/ulster.jpg')" }}
         />
         <div className="relative mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>

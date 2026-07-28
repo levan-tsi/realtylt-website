@@ -88,7 +88,7 @@ export default async function SellingPage() {
             fill
             priority
             sizes="100vw"
-            className="hero-zoom object-cover opacity-95"
+            className="hero-zoom object-cover opacity-95 grayscale"
           />
           {/* Scrim: dark under the headline (left), clearing toward the twilight sky/mansion
               (right) so the house reads while the white headline still clears contrast. */}
@@ -311,13 +311,14 @@ export default async function SellingPage() {
 
       {/* ── Making your listing shine — text left, laptop tour right */}
       <section className="relative isolate overflow-hidden bg-paper py-16 md:py-24" aria-labelledby="shine-heading">
-        {/* Parallax backdrop — live's sell-img-4.jpg at 0.25, fixed on desktop, static on
-            mobile and under reduced motion. Self-hosted from
-            images.brivityidx.com/assets/images/uploads/219/sell-img-4.jpg. */}
+        {/* Parallax backdrop at 0.25 — fixed on desktop, static on mobile and under reduced
+            motion. The vendor's sell-img-4.jpg had no licence record; this is a house we
+            already hold a licence for, which is also a better subject for a section about
+            photographing a listing. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-25 motion-safe:md:bg-fixed"
-          style={{ backgroundImage: "url('/images/hero/sell-img-4.jpg')" }}
+          className="pointer-events-none absolute inset-0 bg-scroll bg-cover bg-center opacity-25 grayscale motion-safe:md:bg-fixed"
+          style={{ backgroundImage: "url('/images/lifestyle/selling.jpg')" }}
         />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>

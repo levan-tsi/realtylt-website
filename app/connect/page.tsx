@@ -21,44 +21,50 @@ const BOOKING_URL =
 export default function ConnectPage() {
   return (
     <>
-      {/* ── Hero — live: thin LIGHT photo band (washed-out image), dark centered title */}
-      <section className="relative isolate overflow-hidden bg-mist" aria-labelledby="connect-hero">
+      {/* ── Hero. Millerton after dark: a real Dutchess County main street, CC0. What was
+          here before was an unlicensed stock photograph of a woman with a coffee, washed out
+          to about 30% contrast — the weakest hero on the site and the least like this
+          business. Now a dark band like every other hero, so /connect stops being the one
+          page in a different world. */}
+      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="connect-hero">
         <div className="absolute inset-0">
-          {/* Live connect hero's OWN asset (uploads/219/int-33.jpg — woman with coffee),
-              kept as a washed light band behind the dark centered title. */}
           <Image
-            src="/images/hero/connect-int33.jpg"
+            src="/images/hero/millerton-night.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-70"
+            className="object-cover object-center grayscale"
           />
-          <div className="absolute inset-0 bg-white/50" />
+          <div className="absolute inset-0 bg-black/55" />
         </div>
-        {/* Live: centered title in the light band, pad ~51px */}
-        <div className="relative mx-auto max-w-[1250px] px-4 py-[51px] text-center lg:px-8">
-          <h1 id="connect-hero" className="t-h1 text-ink-soft">
+        {/* The band carries a photograph now, so it gets the height to be one — and the title
+            goes white. It was text-ink-soft over a washed-out light band; against a dark hero
+            that is dark-on-dark and unreadable. */}
+        <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-28 lg:px-8">
+          <p className="t-eyebrow text-paper/70">Seven days a week</p>
+          <h1 id="connect-hero" className="t-h1 mt-5 text-paper">
             Contact Us <strong>Anytime</strong>
           </h1>
         </div>
       </section>
 
-      {/* ── Agent + appointments — live: portrait left, booking cards right */}
-      <section className="bg-paper py-14 md:py-20" aria-labelledby="appointments-heading">
-        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-[300px_1fr] lg:px-8">
-          <Reveal>
+      {/* ── Agent + appointments: portrait left, booking embed right. The left column is
+          sticky above lg because the calendar is 899px tall and the column is about half
+          that — it used to leave a 400px hole beside the embed, and it now keeps the phone
+          number and email in view for the whole length of the booking flow instead. */}
+      <section className="sec bg-paper" aria-labelledby="appointments-heading">
+        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-[300px_1fr] lg:gap-16 lg:px-8">
+          <Reveal className="lg:sticky lg:top-8 lg:self-start">
             <Image
               src="/images/levan-portrait.jpg"
-              alt="Levan Tsiklauri, investor and realtor at RealtyLT"
+              alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
               width={300}
               height={380}
               className="h-auto w-full max-w-[300px] rounded-2xl"
             />
-            <p className="mt-4 text-2xl font-light text-stone">Levan Tsiklauri</p>
-            <p className="text-sm font-bold uppercase tracking-[0.12em] text-stone">
-              Investor &amp; REALTOR&reg;
-            </p>
+            <p className="t-h3 mt-5 text-ink">Levan Tsiklauri</p>
+            <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
             <address className="mt-5 space-y-1 text-sm not-italic text-stone">
               <p>
                 <a href={SITE.phoneHref} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.phone}</a>
@@ -71,6 +77,10 @@ export default function ConnectPage() {
                 {SITE.address.postalCode}
               </p>
             </address>
+            <p className="mt-6 max-w-[300px] border-t border-[#e6e6e6] pt-6 text-sm leading-relaxed text-stone">
+              Would rather not pick a slot? Call or text and we&rsquo;ll find a time. Evenings and
+              weekends included.
+            </p>
           </Reveal>
 
           <div>

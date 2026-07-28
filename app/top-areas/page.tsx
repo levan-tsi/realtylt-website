@@ -26,7 +26,7 @@ export default function TopAreasPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-60"
+            className="object-cover opacity-60 grayscale"
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>

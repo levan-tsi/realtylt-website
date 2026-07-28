@@ -31,16 +31,18 @@ const VALUES = [
 export default function WhoWeArePage() {
   return (
     <>
-      {/* ── Hero — live: office/team photo band, centered "Who We Are" */}
+      {/* ── Hero. The New Croton Dam, under the same monochrome grade as every other hero.
+          What was here was an unlicensed stock photograph of an eight-person office, on the
+          page that then explains RealtyLT is one person. */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="wwa-hero">
         <div className="absolute inset-0">
           <Image
-            src="/images/team-bg.jpg"
+            src="/images/counties/westchester.jpg"
             alt=""
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-70"
+            className="object-cover opacity-70 grayscale"
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
