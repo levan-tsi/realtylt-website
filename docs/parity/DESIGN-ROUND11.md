@@ -190,3 +190,54 @@ falls with that video and is tracked separately.
 
 Replacements are graded to move 9 above: one treatment for all heroes, so the licence fix and the
 art-direction fix land together instead of fighting each other later.
+
+---
+
+## Part 5 — What actually shipped, and what did not
+
+Written at the end of the round, against the ranked list in Part 2.
+
+### Shipped
+
+| # | Move | Where it landed |
+|---|---|---|
+| 1 | Hero photograph carries the search strip | `app/page.tsx` — background layer now spans the section |
+| 2 | Search control rhythm, one clear primary | 620px control, real gap, solid-white SEARCH, two outlined paths |
+| 3 | Footer regrouped | Form first, then identity + contact + links as one block, at every width |
+| 4 | Display typeface | Newsreader on headlines only; Lato keeps all body, UI, nav and forms |
+| 5 | Type scale with hierarchy | `t-display` / `t-h1` / `t-h2` / `t-h3` / `t-eyebrow` |
+| 6 | Utility bars merged | One `#f3f5f8` rule instead of two greys; 42px back on every page |
+| 7 | Vertical rhythm scale | `.sec-sm` / `.sec` / `.sec-lg` replacing five ad-hoc paddings |
+| 8 | Body copy un-centred | `/buying` and `/financing` intros are heading-left, passage-right at 62ch |
+| 9 | One photographic grade | Every hero monochrome; listing photography stays colour |
+| 11 | `/selling` numbering, `/connect` hole | Badges say "Fastest" / "Highest price"; the contact column is sticky |
+| 12 | Motion timing | Reveal 26px/0.7s → 16px/0.5s |
+
+Plus three things not on the list, found by looking: the third typeface (Montserrat on
+`/home-value`), Chromium's blue clear button in every search field, and `/connect`'s h1 going
+dark-on-dark the moment its band went dark.
+
+### Move 10 — the bracket signature — NOT built, on purpose
+
+The plan was to derive a hairline corner-bracket from the logo's squared `[R]`/`[T]` and use it
+once per page as the site's signature device. It is not in the build.
+
+By the time moves 1–9 landed, the site had a signature: a light serif headline over a
+monochrome Hudson photograph with a contained search under it, in a palette with one accent.
+That is specific, it is memorable, and it is theirs. Adding a bracket motif on top of it would
+have been a second idea competing with the first — decoration, arriving exactly when the round
+had finished earning restraint. Chanel's rule: take one accessory off before leaving.
+
+It stays on the shelf, written down, and a later round can take it up when there is a reason to
+rather than a slot to fill.
+
+### Deliberately left for the owner
+
+- **The ambient Vimeo clip on the desktop home hero.** It is the old vendor's, it has no licence
+  record, its frames are a bland CGI interior, and it puts a third-party iframe on the LCP path.
+  Every other visitor — phone, reduced-motion — now gets a licensed Hudson Highlands photograph
+  that is plainly stronger. The owner named the video as acceptable, so it stays; the
+  recommendation is to drop it. See `public/images/ATTRIBUTIONS.md`.
+- **County card photography stays in colour.** The monochrome grade is for HERO photography.
+  The county cards on `/top-areas` are showing you six specific places, and the colour is doing
+  the work there — the same reason listing photos stay colour.

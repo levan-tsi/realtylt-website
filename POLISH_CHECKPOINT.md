@@ -1,8 +1,90 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 11 BRIEF — 2026-07-28. SINGLE AGENT, ~700k tokens, NO SUBAGENTS. DESIGN IS THE JOB.
-## The /website command has been rewritten for this; it starts you here. Parity with the old
-## realtylt.com is DONE and is no longer the goal.
+## ═══ ROUND 11 DONE — 2026-07-28. DESIGN. Full reasoning: docs/parity/DESIGN-ROUND11.md
+## (written BEFORE any code, updated at the end with what shipped and what I refused to build).
+##
+## ── THE THREE DEFECTS THE OWNER NAMED — all closed ────────────────────────────────────────
+## (a) The hero search field and SEARCH button were butted together. Real gap now, and the
+##     control is contained at 620px instead of running the full 1250px: a full-width bar reads
+##     as chrome, a contained control under the headline reads as composition. SEARCH is solid
+##     white; Sell Your Home and See Home Value are outlined underneath, so one of the three is
+##     obviously the point.
+## (b) The hero sat on flat black below the photo. The background layer was scoped to an inner
+##     div wrapping only the h1, so the search, the CTAs and the scroll cue were on a black
+##     shelf. The photograph now spans the whole section.
+## (c) MOBILE FOOTER regrouped: form first (it is the action), then logo + REACH OUT + page
+##     links as one contiguous reference block. Applied at EVERY width, not just mobile —
+##     desktop had the same problem left-to-right, and one order everywhere means the visual
+##     order and the DOM/focus order never disagree. Before/after at 390:
+##     docs/design-r11/footer-390-{BEFORE,AFTER}.png
+##
+## ── THE BIG ONE: THE SITE HAS A TYPEFACE NOW ──────────────────────────────────────────────
+## --font-display, --font-sans and --font-mono all pointed at Lato, inherited from the old
+## vendor theme. Headlines are Newsreader (chosen against a brief — see the doc for why not
+## Playfair / Instrument / Fraunces / Cormorant, and why not a second grotesque). Lato keeps
+## every body paragraph, control, nav item, button and table, so nothing anyone uses moved.
+## Four scale steps replace one: t-display / t-h1 / t-h2 / t-h3 (+ t-eyebrow). Montserrat, which
+## only /home-value loaded, is gone — three typefaces on twenty pages was the incoherence.
+## IF THE OWNER DISLIKES THE SERIF it reverts in ONE line: --font-display in app/globals.css.
+##
+## ── PHOTOGRAPHY: NINE UNLICENSED IMAGES, NOT SIX ──────────────────────────────────────────
+## The brief named six vendor images with no licence record. Diffing ATTRIBUTIONS.md against
+## what was actually on disk found three more (team-bg.jpg on /who-we-are + the two /financing
+## parallax backdrops). All nine gone, plus hom.png (2.2MB, referenced by nothing). Five slots
+## refilled from photography we ALREADY had a licence for and were not using; one new CC0
+## download (Millerton main street at night, 1627KB -> 228KB).
+## Openverse now 401s/429s anonymous API traffic behind Cloudflare — the old fetch-images.mjs
+## route is dead. Wikimedia Commons needs no key; the candidate script filters out the
+## 19th-century book plates its place searches otherwise return.
+## ONE GRADE: every hero is monochrome under a scrim now (listing + county-card photography
+## stays colour — that is the product and the places). Five heroes in five worlds was the
+## single loudest "assembled, not designed" signal on the site.
+## lib/images/attributions.test.ts now FAILS the build if any image lacks a licence record, if
+## the table names a deleted file, or if anything CC BY-SA appears.
+##
+## ── LISTING ALERTS: A REAL HAND-OFF ───────────────────────────────────────────────────────
+## Full contract in docs/LISTING-ALERTS.md. portal_saved_searches gained `criteria jsonb`
+## (written from lib/idx/criteria, which runs the SAME parser /api/idx/search runs, so a saved
+## search can never describe a search the site would not perform) and `last_alerted_at` (the
+## CRM's column, we never write it). The hand-off is the view `listing_alert_subscriptions` —
+## security_invoker, so the CRM's existing portal_* org policies decide visibility; anon is
+## REVOKED and measured at 42501 permission denied. Anonymous visitors (most of them) keep
+## saved searches in localStorage where the CRM can never see them, so those now travel WITH
+## the lead. Marketing claim restored, worded to be true today: "Save a search and get new
+## matches by email" — deliberately NOT "the moment it hits the MLS", which the automation has
+## to earn. What the CRM still owes is listed at the bottom of that doc.
+##
+## ── OWNER DECISIONS WAITING ───────────────────────────────────────────────────────────────
+## 1. THE HOME HERO VIDEO. The ambient Vimeo clip (398379426) is the old vendor's, has no
+##    licence record, its frames are a bland CGI interior, and it puts a third-party iframe on
+##    the LCP path. Phones and reduced-motion visitors already get a licensed Hudson Highlands
+##    photograph that is plainly better. He named the video as acceptable so it stays;
+##    recommendation is to drop it and let everyone get the still.
+## 2. REALTOR® = a claim of current NAR membership. If it ever lapses the marks come off the
+##    site. Also: NAR's block-R ARTWORK was deliberately not recreated by hand — if he wants
+##    that logo he supplies the official file from NAR's brand centre.
+##
+## ── VERIFIED BY ME, IN THE FOREGROUND ─────────────────────────────────────────────────────
+## tsc clean · tests 476 -> 506 passing · 23 routes all 200 · ZERO horizontal overflow at
+## 320/390/1440 · 0 dead links across 154 targets · 26 focus stops on home, every one with a
+## visible ring, none under 24px · mobile menu opens/flips aria-label/closes on Escape ·
+## merged utility bar fits 320 · reduced-motion serves the licensed still and mounts no iframe ·
+## JS-off keeps the h1, the search form, every reveal section, the footer links and the EHO mark.
+## HERO CONTRAST measured properly (third probe — the first two were wrong in opposite
+## directions, see the commit): worst 4.81:1, median 13.77:1, against a 3.0 large-text floor.
+##
+## ── NEXT ROUND ────────────────────────────────────────────────────────────────────────────
+## Read docs/parity/DESIGN-ROUND11.md Part 5 first: it lists what shipped, and the ONE ranked
+## move I refused to build (the bracket signature) with the reason. Then the remaining opens in
+## docs/parity/PRELAUNCH-AUDIT.md §2 — the two security items still need owner decisions and a
+## paired CRM change. Everything else in that audit is closed.
+## Beware: a SECOND SESSION was editing the blog (lib/blog/*, components/blog/scenes/*,
+## content/blog/*) throughout this round. Their in-flight TS errors are not yours — attribute
+## before you fix.
+##
+##
+## ═══ ROUND 11 BRIEF (the instructions this round ran against) ─────────────────────────────
+## Parity with the old realtylt.com is DONE and is no longer the goal.
 ##
 ## FIRST: invoke the `frontend-design` skill. The owner asked for it by description ("a scale/taste
 ## skill that gives really good results") and it is installed. It is the lens for this whole round.
