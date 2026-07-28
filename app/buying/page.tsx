@@ -52,7 +52,10 @@ export default async function BuyingPage() {
             sizes="100vw"
             className="object-cover object-center grayscale"
           />
-          <div className="absolute inset-0 bg-black/50" />
+          {/* 50% flat measured 4.35:1 on the worst 2% of the composited background behind
+              the headline — over the 3.0 large-text floor but under the 4.5 body one, with the
+              sky through the trees sitting directly behind centred type. 56% clears both. */}
+          <div className="absolute inset-0 bg-black/56" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-28 text-center md:py-[154px] lg:px-8">
           <h1 id="buying-hero" className="t-h1 mx-auto max-w-3xl text-paper">
