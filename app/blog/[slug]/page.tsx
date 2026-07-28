@@ -11,9 +11,9 @@ import { AuthorCard } from "@/components/blog/AuthorCard";
 import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
 import { FlagshipToc } from "@/components/blog/FlagshipToc";
 import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
-import { FLAGSHIP_TOC } from "@/content/blog/ai-chat-scenes";
 import { fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
-import { hasScenes, renderFlagshipBands } from "@/lib/blog/markdown";
+import { flagshipToc } from "@/lib/blog/flagship";
+import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
 import { extractToc, readingTime } from "@/lib/blog/toc";
 import { SITE } from "@/lib/site";
@@ -85,6 +85,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const flagship = post.body.kind === "markdown" && hasScenes(post.body.markdown);
   const hasToc = !flagship && toc.length >= 3;
   const bands = post.body.kind === "markdown" && flagship ? renderFlagshipBands(post.body.markdown) : [];
+  // The scene payloads for THIS post. Scenes resolve against it rather than against a global
+  // table, which is what lets a second topic reuse the same scene keys with its own content.
+  const scenes = post.flagship;
+  // Derived from the document's own outline, never hand-curated: a renamed heading or a moved
+  // scene cannot leave the rail pointing at an element that is not on the page.
+  const railRows =
+    flagship && post.body.kind === "markdown"
+      ? flagshipToc(parseOutline(post.body.markdown), scenes)
+      : [];
 
   const related = (await getArticles()).filter((a) => a.slug !== post.slug).slice(0, 3);
 
@@ -124,7 +133,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       ))}
 
       <ReadingProgress targetId="article-root" />
-      {flagship && <FlagshipToc items={FLAGSHIP_TOC} />}
+      {flagship && railRows.length >= 3 && <FlagshipToc items={railRows} />}
 
       <article id="article-root">
         {/* ── Hero. The flagship opens on scene 1 (the cold open) instead. */}
@@ -208,8 +217,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 a visual is a real navigation destination, not just prose between pictures. */}
             {bands.map((band, i) =>
               band.kind === "scene" ? (
-                <div key={`scene-${i}`} id={`scene-${band.scene}`} data-band={sceneBand(band.scene)}>
-                  {renderScene(band.scene)}
+                <div
+                  key={`scene-${i}`}
+                  id={`scene-${band.scene}`}
+                  data-band={sceneBand(band.scene, scenes)}
+                >
+                  {renderScene(band.scene, scenes)}
                 </div>
               ) : (
                 <div

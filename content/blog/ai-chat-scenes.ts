@@ -10,6 +10,8 @@
  *
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
+import type { FlagshipContent } from "@/lib/blog/flagship";
+
 /** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD,
  * so the two can never disagree about length, dimensions or what the clip actually shows.
  * Regenerating it is fully scripted: see docs/blog-flagship/FLAGSHIP-HANDOFF.md. */
@@ -32,35 +34,6 @@ export interface Move {
   /** What it means in practice. */
   body: string;
 }
-
-/** The flagship's on-page table of contents, in document order.
- *
- * Curated rather than derived, for the same reason the service pages curate theirs: the rail
- * shows one short line per row, and a full H2 like "The number everyone quotes, and what it
- * really means" does not fit. Prose ids are the slugified headings from lib/blog/toc.ts;
- * scene ids are `scene-<key>`, applied by the flagship layout in app/blog/[slug]/page.tsx.
- *
- * `scene: true` marks a visual destination so the rail can tick it differently: the reader
- * can see there is something to LOOK at there, not just more prose.
- *
- * Deliberately omits the pull quote and the closing scene. A quote is not somewhere you
- * navigate back to, and the close is where the page ends anyway. Keep the ids in sync with
- * the markdown headings and the scene markers; scripts/_scratch-toc.mjs asserts every row
- * resolves to a real element. */
-export const FLAGSHIP_TOC: { id: string; label: string; scene?: boolean }[] = [
-  { id: "scene-reel", label: "Watch it", scene: true },
-  { id: "the-number-everyone-quotes-and-what-it-really-means", label: "The number" },
-  { id: "scene-response-gap", label: "The gap", scene: true },
-  { id: "scene-leads-calculator", label: "Your numbers", scene: true },
-  { id: "what-an-ai-chat-assistant-actually-does", label: "What it does" },
-  { id: "scene-four-moves", label: "Four moves", scene: true },
-  { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
-  { id: "scene-teardown", label: "The teardown", scene: true },
-  { id: "common-questions-answered-honestly", label: "Common questions" },
-  { id: "where-it-goes-wrong", label: "Where it goes wrong" },
-  { id: "scene-system-diagram", label: "What it connects to", scene: true },
-  { id: "what-to-do-about-it", label: "What to do" },
-];
 
 /** SCENE 7 copy — the system diagram.
  *
@@ -210,3 +183,73 @@ export const FOUR_MOVES: Move[] = [
     body: "Name, number, price band, area, timeline, and the transcript, all written to the CRM so your callback starts from what they said rather than from a blank record.",
   },
 ];
+
+/** ─────────────────────────────────────────────────────────────────────────────────────────
+ * THE TOPIC'S FLAGSHIP CONTENT.
+ *
+ * This object is the whole contract between a topic and the flagship rendering path. Every
+ * `[[scene:key]]` in AI_CHAT_ASSISTANT_POST resolves against `scenes` here; a key with no
+ * entry renders nothing rather than breaking the page. A new service topic writes a file in
+ * this shape, drops the markers into its markdown, and touches no component.
+ *
+ * `band` is declared per scene, so a topic owns its own light/dark rhythm (no two adjacent
+ * bands should share a background). `label` decides the rail: a scene with one is a
+ * navigation destination, a scene without one is not. The pull quote and the close carry no
+ * label deliberately — a quote is not somewhere you jump back to, and the close is where the
+ * page ends anyway.
+ *
+ * `kind: "component"` still names a bespoke component. Those are the scenes not yet reduced to
+ * primitives; the plan and the order are in docs/blog-flagship/FLAGSHIP-HANDOFF.md. */
+export const AI_CHAT_FLAGSHIP: FlagshipContent = {
+  film: FILM,
+  scenes: {
+    "in-short": { kind: "component", id: "in-short", band: "light" },
+    reel: { kind: "component", id: "reel", band: "dark", label: "Watch it" },
+    "response-curve": { kind: "component", id: "response-curve", band: "light" },
+    "response-gap": { kind: "component", id: "response-gap", band: "dark", label: "The gap" },
+    "leads-calculator": {
+      kind: "component",
+      id: "cold-open-calculator",
+      band: "light",
+      label: "Your numbers",
+    },
+    "four-moves": {
+      kind: "grid",
+      band: "dark",
+      label: "Four moves",
+      eyebrow: "What it actually does",
+      heading: "Four moves.",
+      columns: 2,
+      glow: true,
+      items: FOUR_MOVES,
+    },
+    "pull-quote": { kind: "component", id: "pull-quote", band: "dark" },
+    teardown: { kind: "component", id: "teardown", band: "light", label: "The teardown" },
+    "failure-modes": {
+      kind: "grid",
+      band: "light",
+      eyebrow: "Three ways it fails",
+      heading: "All avoidable, all common.",
+      columns: 3,
+      items: FAILURE_MODES,
+    },
+    "system-diagram": {
+      kind: "component",
+      id: "system-diagram",
+      band: "dark",
+      label: "What it connects to",
+    },
+    funnel: { kind: "component", id: "funnel", band: "dark" },
+  },
+
+  /** Short rail labels for the prose headings. The ids and the ORDER are derived from the
+   * document, so a heading renamed here degrades to its full text instead of leaving a dead
+   * row, and _scratch-toc.mjs fails on a key that matches no heading. */
+  headingLabels: {
+    "the-number-everyone-quotes-and-what-it-really-means": "The number",
+    "what-an-ai-chat-assistant-actually-does": "What it does",
+    "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
+    "common-questions-answered-honestly": "Common questions",
+    "what-to-do-about-it": "What to do",
+  },
+};

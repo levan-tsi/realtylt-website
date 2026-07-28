@@ -15,7 +15,7 @@
  */
 
 import type { ReactNode } from "react";
-import { parseHeadings } from "./toc";
+import { parseHeadings, stripInline } from "./toc";
 
 /** http(s), mailto, or a site-relative path. Rejects javascript:, data:, and the
  * protocol-relative `//host` form. */
@@ -81,6 +81,9 @@ interface Block {
   node: ReactNode;
   id?: string;
   headingLevel?: number;
+  /** Heading text with inline markdown stripped. Carried so the flagship table of contents
+   * can be DERIVED from the same parse the page renders, rather than hand-curated beside it. */
+  headingText?: string;
   scene?: string;
 }
 
@@ -132,6 +135,7 @@ function parseBlocks(markdown: string): Block[] {
         blocks.push({
           id,
           headingLevel: level,
+          headingText: stripInline(heading[2].trim()),
           node: (
             <h2
               key={k}
@@ -297,6 +301,29 @@ export function renderMarkdownSections(markdown: string): ArticleSection[] {
 export type FlagshipBand =
   | { kind: "prose"; nodes: ReactNode[] }
   | { kind: "scene"; scene: string };
+
+/** A heading or a scene, in document order. */
+export type OutlineEntry =
+  | { kind: "heading"; id: string; level: number; text: string }
+  | { kind: "scene"; key: string };
+
+/** The document's spine: every top-level heading and every scene marker, interleaved in the
+ * order they appear.
+ *
+ * This exists so the flagship table of contents can be DERIVED. The previous version was a
+ * hand-curated array of ids kept in sync with the markdown by hand, which rots silently: a
+ * renamed heading or a moved scene leaves a row pointing at nothing. Reading the outline off
+ * the SAME parse that renders the page means an id in the rail always belongs to something on
+ * the page, because it came from the page. */
+export function parseOutline(markdown: string): OutlineEntry[] {
+  const out: OutlineEntry[] = [];
+  for (const b of parseBlocks(markdown)) {
+    if (b.scene !== undefined) out.push({ kind: "scene", key: b.scene });
+    else if (b.id && b.headingLevel !== undefined && b.headingText !== undefined)
+      out.push({ kind: "heading", id: b.id, level: b.headingLevel, text: b.headingText });
+  }
+  return out;
+}
 
 /** True when a body opts into the flagship layout, i.e. it places at least one scene. The
  * marker IS the flag: no separate field to keep in sync, and a CRM-published body can opt in

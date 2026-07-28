@@ -8,6 +8,8 @@
  * Everything downstream (index, detail, sitemap, JSON-LD) works off this one shape, so a
  * DB post and a static post are visually and structurally indistinguishable.
  */
+import type { FlagshipContent } from "./flagship";
+
 /** A film that belongs to an article. Present only on posts that actually have one; its
  * presence is what makes the page emit `VideoObject`, so an article can never advertise a
  * video it does not serve. */
@@ -42,6 +44,9 @@ export interface Article {
   seoDescription?: string;
   /** Set only by posts that ship a film. Drives the VideoObject block. */
   film?: ArticleFilm;
+  /** Scene payloads for a body that places [[scene:...]] markers. The whole contract between
+   * a topic and the flagship rendering path; see lib/blog/flagship.ts. */
+  flagship?: FlagshipContent;
   body:
     | { kind: "paragraphs"; paragraphs: string[] }
     | { kind: "markdown"; markdown: string };

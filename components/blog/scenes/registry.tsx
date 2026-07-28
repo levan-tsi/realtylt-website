@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { FailureModes } from "./FailureModes";
-import { FourMoves } from "./FourMoves";
+import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
+import { Grid } from "./primitives/Grid";
 import { Funnel } from "./Funnel";
 import { InShort } from "./InShort";
 import { LeadsCalculator } from "./LeadsCalculator";
@@ -14,44 +14,54 @@ import { Teardown } from "./Teardown";
 /** The flagship scene registry.
  *
  * A body opts a scene in by placing a `[[scene:key]]` line in its markdown (see
- * lib/blog/markdown.tsx). Keys are matched here; an unknown key renders nothing, so a typo
- * in a CRM-published body degrades to a missing scene rather than a broken page.
+ * lib/blog/markdown.tsx). The key is resolved against the CURRENT POST's content object rather
+ * than a global table, which is what makes this a template instead of one page: two topics can
+ * both place `[[scene:four-moves]]` and get their own words, their own column count and their
+ * own band.
  *
- * Every scene is full-bleed and self-contained: it owns its own layout, background and CSS,
- * and must read as a finished still (carousel slide) as well as a scroll moment.
+ * A key with no entry renders nothing, so a typo in a CRM-published body degrades to a missing
+ * scene rather than a broken page.
  *
- * `band` declares whether the scene paints a dark or light field. The floating table of
- * contents reads it to flip its own contrast as it passes over each band, which is the one
- * problem the service-page rail never had to solve (components/blog/FlagshipToc.tsx).
+ * Every scene is full-bleed and self-contained: it owns its own layout, background and CSS, and
+ * must read as a finished still (a carousel slide) as well as a scroll moment.
  */
-interface SceneDef {
-  Component: () => ReactNode;
-  band: "dark" | "light";
-}
 
-const SCENES: Record<string, SceneDef> = {
-  "in-short": { Component: InShort, band: "light" },
-  reel: { Component: Reel, band: "dark" },
-  "response-curve": { Component: ResponseCurve, band: "light" },
-  "response-gap": { Component: ResponseGap, band: "dark" },
-  "leads-calculator": { Component: LeadsCalculator, band: "light" },
-  "four-moves": { Component: FourMoves, band: "dark" },
-  "pull-quote": { Component: PullQuote, band: "dark" },
-  teardown: { Component: Teardown, band: "light" },
-  "failure-modes": { Component: FailureModes, band: "light" },
-  "system-diagram": { Component: SystemDiagram, band: "dark" },
-  funnel: { Component: Funnel, band: "dark" },
+/** Bespoke components: the scenes not yet reduced to primitives, plus the calculator, whose
+ * model is genuinely per-topic and cannot be expressed as data. */
+const COMPONENTS: Record<ComponentId, () => ReactNode> = {
+  "in-short": InShort,
+  reel: Reel,
+  "response-curve": ResponseCurve,
+  "response-gap": ResponseGap,
+  "cold-open-calculator": LeadsCalculator,
+  "pull-quote": PullQuote,
+  teardown: Teardown,
+  "system-diagram": SystemDiagram,
+  funnel: Funnel,
 };
 
-export function renderScene(key: string): ReactNode {
-  const def = SCENES[key];
-  if (!def) return null;
-  const Scene = def.Component;
-  return <Scene />;
+/** ARIA labels for grid instances. The primitive cannot invent one, and a full-bleed landmark
+ * with no accessible name is a landmark a screen-reader user cannot navigate to. */
+const GRID_LABELS: Record<string, string> = {
+  "four-moves": "The four moves",
+  "failure-modes": "Where it goes wrong",
+};
+
+export function renderScene(key: string, content?: FlagshipContent): ReactNode {
+  const scene = content?.scenes[key];
+  if (!scene) return null;
+
+  if (scene.kind === "grid") {
+    return <Grid {...scene} ariaLabel={GRID_LABELS[key] ?? scene.heading} />;
+  }
+
+  const Component = COMPONENTS[scene.id];
+  return Component ? <Component /> : null;
 }
 
-/** Dark or light field, for the floating ToC's contrast. An unknown key renders nothing, so
- * "light" is the harmless default. */
-export function sceneBand(key: string): "dark" | "light" {
-  return SCENES[key]?.band ?? "light";
+/** Dark or light field, for the floating ToC's contrast. Declared per scene by the topic, so a
+ * post controls its own band rhythm. An unknown key renders nothing, so "light" is the
+ * harmless default. */
+export function sceneBand(key: string, content?: FlagshipContent): "dark" | "light" {
+  return content?.scenes[key]?.band ?? "light";
 }
