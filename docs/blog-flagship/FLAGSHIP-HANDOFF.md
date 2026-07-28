@@ -118,6 +118,67 @@ Written 2026-07-26 by the previous session (Fable→Opus 4.8). This is the compl
 brief for building the RealtyLT flagship content piece. A fresh agent should be able to execute the
 whole thing from this file. Read it fully before touching code.
 
+
+## TEMPLATE PLAN — turning one great post into ~19 (owner direction 2026-07-28)
+
+The flagship works, but almost every scene still hardcodes THIS topic. Cloning it today means
+copy-pasting components and editing strings, which is how a template rots. The goal is: a new
+topic = **one content file + a markdown body with markers**, no new components.
+
+### The gap, concretely
+- `ResponseGap` has "11:40 pm" / "9:00 am" inline. `Teardown` imports this post's turns.
+  `FourMoves`, `FailureModes`, `SystemDiagram`, `ResponseCurve`, `InShort`, `PullQuote`, `Funnel`
+  all import `content/blog/ai-chat-scenes.ts` **by name**.
+- `FLAGSHIP_TOC` is a hand-curated array whose ids must be kept in sync by hand.
+- The scorecard script is hardcoded to one URL.
+
+### Step 1 — collapse 10 bespoke scenes into ~8 reusable PRIMITIVES
+Every scene on the page is really an instance of one of these:
+
+| primitive | today's instances | shape |
+|---|---|---|
+| `Summary` | In short | eyebrow + n one-line claims |
+| `StatBars` | Response curve | caption + n bars + source + caveat |
+| `Timeline` | Response gap | two stamps + a cooling/building line + duration |
+| `Grid` | Four moves, Failure modes | n items (lead + body), 2 or 3 col, dark or light |
+| `Conversation` | Teardown | turns + a parallel event track |
+| `Diagram` | System diagram | n labelled nodes on a spine, each with what it connects to |
+| `Statement` | Pull quote, Funnel close | one held line, optional actions |
+| `Film` | Reel | video + poster + caption |
+| `Calculator` | Leads calculator | the ONE genuinely per-topic component |
+
+Each takes its content as **props**, not imports. Eight primitives cover every topic.
+
+### Step 2 — one typed content file per topic
+`content/blog/flagship/<slug>.ts` exporting a `FlagshipContent` object: the scene payloads, the
+ToC labels, the cited source, the film. `registry.tsx` resolves `[[scene:key]]` against the
+content for the CURRENT post (pass it down from the page, or a small server context keyed by
+slug). Adding a topic touches no component.
+
+### Step 3 — derive the ToC instead of curating it
+Build it from the bands in document order plus a `label` on each scene payload, so a renamed
+heading or a moved scene cannot leave a dead row. Keep `_scratch-toc.mjs` as the guard.
+
+### Step 4 — make the scorecard a gate, not a one-off
+`scripts/score.mjs <slug>` scoring ANY post against the SCORECARD rubric, so every new topic has
+to clear a bar (say 85) before it ships. This is the thing that stops topics 2 to 19 being
+worse than topic 1.
+
+### Step 5 — the per-topic content checklist (what a topic must supply to score)
+A cited third-party stat with study/sample/year · a real demonstration (transcript or teardown) ·
+one data graphic · one diagram · an interactive · the shared author block · an FAQ-shaped section
+(heading must match `FAQ_SECTION_RE` with `###` questions, which is what emits FAQPage) · a
+revision date · at least two body images · a film.
+
+### Step 6 — the film as a repeatable recipe
+Parameterise the recorders by topic: segment A is always the /ai journey (shared across all
+topics, cut once, reused), segment B is the topic's own demonstration stage. Only B is new per
+topic, which makes a film per topic cheap.
+
+### Sequencing
+Do Step 1 and 2 together on ONE existing scene first (Grid is the easiest: it already backs two
+scenes), prove a topic can be swapped by editing only a content file, then convert the rest.
+
 ## THE MISSION (owner's words, distilled)
 Turn the **AI Chat Assistant blog post** into the single most valuable, memorable, high-end piece of
 content on the site — so generous it builds real trust, so well-designed it can be **chopped into a
