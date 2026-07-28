@@ -21,6 +21,12 @@ export function SystemDiagram() {
   const W = 1080;
   const H = 208;
   const gap = W / SYSTEM_STEPS.length;
+  // ONE string, not `text {expression}`. React treats <title> as document metadata and does not
+  // reconcile several text children inside it the way it does anywhere else, so the two-child
+  // version hydrated differently from the server render. That threw away and re-rendered the
+  // whole page tree on every load of this post, and re-inserted the layout's RealEstateAgent
+  // JSON-LD a second time as it went. Keep this a single child.
+  const alt = `The chain from question to booked call: ${SYSTEM_STEPS.map((s) => s.label).join(", ")}`;
 
   return (
     <section className="bg-ink py-24 text-paper md:py-32" aria-label="How the assistant is wired">
@@ -44,9 +50,7 @@ export function SystemDiagram() {
               role="img"
               aria-labelledby="sd-title"
             >
-              <title id="sd-title">
-                The chain from question to booked call: {SYSTEM_STEPS.map((s) => s.label).join(", ")}
-              </title>
+              <title id="sd-title">{alt}</title>
 
               {/* The spine BUILDS toward the handoff rather than fading to it. The response-gap
                   scene uses a cooling line because there the meaning is a lead going cold; here
