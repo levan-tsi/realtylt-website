@@ -462,7 +462,7 @@ export async function ListingDetail({ id }: { id: string }) {
       <section className="bg-ink py-12 text-paper md:py-16" aria-labelledby="never-miss-heading">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
-            <h2 id="never-miss-heading" className="font-display text-3xl font-semibold tracking-tight text-paper md:text-4xl">
+            <h2 id="never-miss-heading" className="t-h2 text-paper">
               Never miss a property
             </h2>
             <p className="mt-2 text-paper/75">

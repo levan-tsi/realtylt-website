@@ -101,14 +101,17 @@ export default async function BuyingPage() {
         </div>
       </section>
 
-      {/* ── The process intro */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="process-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+      {/* ── The process intro. Heading left, passage right — matching the alternating bands
+          below it, and un-centring two paragraphs of body copy. */}
+      <section className="sec-sm bg-paper" aria-labelledby="process-heading">
+        <div className="mx-auto grid max-w-[1250px] gap-8 px-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
+            <SectionHeading as="h2">
               <span id="process-heading">The Home Buying Process</span>
             </SectionHeading>
-            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-center leading-relaxed text-stone">
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="max-w-[62ch] space-y-5 text-[17px] leading-[1.75] text-stone">
               <p>
                 Buying a home is a big step! Whether you&rsquo;re buying your first home, your
                 dream home, or your tenth investment property, yours will be a big investment. We

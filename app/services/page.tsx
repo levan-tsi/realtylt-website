@@ -260,7 +260,7 @@ export default function ServicesIndexPage() {
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center lg:px-8">
           <Reveal>
             <h2 id="close-heading" className="t-h2">
-              Not sure which one you <strong className="font-bold">need first?</strong>
+              Not sure which one you <strong>need first?</strong>
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-relaxed text-paper/75">
               That is the normal place to be. The audit exists for exactly this: we map how your

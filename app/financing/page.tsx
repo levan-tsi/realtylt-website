@@ -37,14 +37,18 @@ export default function FinancingPage() {
         </div>
       </section>
 
-      {/* ── Demystifying intro */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="demystify-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+      {/* ── Demystifying intro. Heading left, passage right — the same two-column rhythm
+          every other section on this page uses, and it un-centres a 768px-wide block of body
+          copy: a centred paragraph loses the reader's left edge on every single line. */}
+      <section className="sec-sm bg-paper" aria-labelledby="demystify-heading">
+        <div className="mx-auto grid max-w-[1250px] gap-8 px-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
+            <SectionHeading as="h2">
               <span id="demystify-heading">Demystifying Home Loans</span>
             </SectionHeading>
-            <p className="mx-auto mt-6 max-w-3xl text-center leading-relaxed text-stone">
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="max-w-[62ch] text-[17px] leading-[1.75] text-stone">
               If you haven&rsquo;t experienced it before, the home loan process can feel
               overwhelming, but our agents will help you stay informed throughout the process, from
               pre-approval to closing. The first thing to do is consult with a mortgage specialist
@@ -67,8 +71,8 @@ export default function FinancingPage() {
         />
         <div className="relative mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <h2 id="preapproval-heading" className="text-3xl font-light md:text-4xl">
-              Get <strong className="font-bold">Pre-Approval</strong>
+            <h2 id="preapproval-heading" className="t-h2">
+              Get <strong>Pre-Approval</strong>
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
               Before you start looking for a home to buy, it&rsquo;s a good idea to meet with your
@@ -144,8 +148,8 @@ export default function FinancingPage() {
       <section className="bg-paper pb-16 md:pb-24" aria-labelledby="loan-heading">
         <div className="mx-auto grid max-w-[1250px] items-start gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <h2 id="loan-heading" className="text-3xl font-light text-ink md:text-4xl">
-              Helping You Get The Best <strong className="font-bold">Loan</strong>
+            <h2 id="loan-heading" className="t-h2 text-ink">
+              Helping You Get The Best <strong>Loan</strong>
             </h2>
             <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
               Start the process
@@ -191,8 +195,8 @@ export default function FinancingPage() {
       <section className="bg-mist py-16 md:py-24" aria-labelledby="apply-heading">
         <div className="mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
-            <h2 id="apply-heading" className="text-3xl font-light text-ink md:text-4xl">
-              Application &amp; <strong className="font-bold">Processing</strong>
+            <h2 id="apply-heading" className="t-h2 text-ink">
+              Application &amp; <strong>Processing</strong>
             </h2>
             <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
               What happens when a loan goes &ldquo;live&rdquo;
@@ -223,8 +227,8 @@ export default function FinancingPage() {
         />
         <div className="relative mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <h2 id="closing-heading" className="text-3xl font-light md:text-4xl">
-              <strong className="font-bold">Closing</strong>
+            <h2 id="closing-heading" className="t-h2">
+              <strong>Closing</strong>
             </h2>
             <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
               Signing and finalizing the deal

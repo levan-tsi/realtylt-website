@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FairHousingBar } from "@/components/site/FairHousingBar";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { NAV, SITE, TOP_AREA_GROUPS } from "@/lib/site";
@@ -45,10 +44,11 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/** Site header: utility bar (#f3f5f8) → Fair Housing bar (#d3d6d9) → ONE row carrying the
- * logo on the left and the primary nav on the right (the owner wants the logo beside the
- * links, not stacked above them — that stack cost 241px of every viewport). Below xl the
- * nav folds into the hamburger menu, exactly as before. */
+/** Site header: ONE utility bar (#f3f5f8) → ONE row carrying the logo on the left and the
+ * primary nav on the right (the owner wants the logo beside the links, not stacked above
+ * them — that stack cost 241px of every viewport). Below xl the nav folds into the hamburger
+ * menu. Round 11 merged the separate Fair Housing strip into the utility bar; see the comment
+ * on that bar for why. */
 export function Header() {
   const [open, setOpen] = useState(false);
   const [areasOpen, setAreasOpen] = useState(false);
@@ -101,18 +101,31 @@ export function Header() {
 
   return (
     <header className="bg-paper">
-      {/* Utility bar — live: 41px, bg #f3f5f8, right-aligned account link */}
+      {/* ONE utility bar. This used to be two stacked strips — phone/Saved/Sign-in on #f3f5f8,
+          then the Fair Housing Notice on #d3d6d9 — so every page opened with two greys close
+          enough to read as an accident, and pushed the logo 42px further down. Merged: same
+          links, one quiet rule, one background.
+          Below sm the phone number drops out, because it is the one item here that is already
+          in the mobile menu, in the footer and on every CTA on the page; the Fair Housing
+          Notice is a legal link and stays at every width.
+          min-h + inline-flex give each link a >=24px pointer target (WCAG 2.5.8). */}
       <div className="bg-mist">
-        <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between px-4 lg:px-8">
-          {/* min-h + inline-flex give these three utility links a >=24px pointer target
-              (WCAG 2.2 SC 2.5.8); they were 20px tall. The bar's own height is unchanged. */}
+        <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between gap-4 px-4 lg:px-8">
           <a
             href={SITE.phoneHref}
-            className="inline-flex min-h-[24px] items-center text-sm text-stone transition-colors hover:text-ink"
+            className="hidden min-h-[24px] items-center text-sm text-stone transition-colors hover:text-ink sm:inline-flex"
           >
             {SITE.phone}
           </a>
-          <div className="flex items-center gap-4">
+          <div className="flex min-w-0 items-center gap-4">
+            <a
+              href={SITE.fairHousingPdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[24px] items-center whitespace-nowrap text-sm text-stone transition-colors hover:text-ink"
+            >
+              Fair Housing Notice
+            </a>
             <Link
               href="/saved"
               className="inline-flex min-h-[24px] items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
@@ -127,8 +140,6 @@ export function Header() {
           </div>
         </div>
       </div>
-
-      <FairHousingBar />
 
       {/* Logo + primary nav, one row, vertically centred. */}
       <div className="border-b border-[#dddddd]">
@@ -152,7 +163,22 @@ export function Header() {
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => (open ? closeMobile() : setOpen(true))}
           >
-            <span aria-hidden className="text-2xl leading-none">{open ? "✕" : "☰"}</span>
+            {/* Drawn, not typed. The glyphs that were here rendered at whatever weight and
+                width the fallback font decided, next to a nav that is otherwise exact. */}
+            <svg aria-hidden viewBox="0 0 22 22" className="h-6 w-6 stroke-current" strokeWidth="1.7" strokeLinecap="round" fill="none">
+              {open ? (
+                <>
+                  <line x1="5" y1="5" x2="17" y2="17" />
+                  <line x1="17" y1="5" x2="5" y2="17" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6.5" x2="19" y2="6.5" />
+                  <line x1="3" y1="11" x2="19" y2="11" />
+                  <line x1="3" y1="15.5" x2="19" y2="15.5" />
+                </>
+              )}
+            </svg>
           </button>
 
           {/* Nav — live: bold uppercase #808080, hover #000, boxed CONNECT. Sized down from

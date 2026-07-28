@@ -177,7 +177,7 @@ export default async function SellingPage() {
           <div className="mx-auto mt-16 grid max-w-4xl gap-8 lg:grid-cols-2">
             <Reveal>
               <PathCard
-                number={1}
+                badge="Fastest"
                 title="Fast Cash Offer"
                 subtitle="Get cash in 15-30 days. Perfect for homes that need work or sellers who need speed."
                 banner="Free cash offer in 24-48 hours"
@@ -189,7 +189,7 @@ export default async function SellingPage() {
             </Reveal>
             <Reveal delay={120}>
               <PathCard
-                number={2}
+                badge="Highest price"
                 title="Traditional Listing"
                 subtitle="Get maximum value. Perfect for move-in-ready homes and sellers who have time."
                 banner="Get top market value"
@@ -455,10 +455,15 @@ export default async function SellingPage() {
   );
 }
 
-/** One "path" card — floating number, black header block, highlight banner, checklist,
- * qualifier list, CTA. Matches the live realtylt.com selling-page cards. */
+/** One "path" card — floating badge, black header block, highlight banner, checklist,
+ * qualifier list, CTA.
+ *
+ * The badge used to be a numeral, 1 and 2. Numbering encodes SEQUENCE, and this content is a
+ * choice between two paths a seller takes instead of each other — the numerals were decoration
+ * pretending to be structure, and they implied step one then step two. The badge now says what
+ * the path actually optimises for, which is the thing a seller is choosing between. */
 function PathCard({
-  number,
+  badge,
   title,
   subtitle,
   banner,
@@ -467,7 +472,7 @@ function PathCard({
   fits,
   cta,
 }: {
-  number: number;
+  badge: string;
   title: string;
   subtitle: string;
   banner: string;
@@ -478,12 +483,10 @@ function PathCard({
 }) {
   return (
     <article className="relative mt-8 flex h-full flex-col rounded-2xl border-2 border-ink bg-white">
-      {/* floating number — live: 60px black circle, white numeral, ~30px above the card top */}
-      <span
-        aria-hidden
-        className="absolute -top-[30px] left-1/2 z-10 grid h-[60px] w-[60px] -translate-x-1/2 place-items-center rounded-full bg-ink text-xl font-bold text-paper shadow-md"
-      >
-        {number}
+      {/* Floating badge, centred on the card's top edge. Not aria-hidden any more: it carries
+          the one word that distinguishes the two paths, so a screen reader needs it. */}
+      <span className="absolute -top-[18px] left-1/2 z-10 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-paper shadow-md">
+        {badge}
       </span>
       {/* black header block — live: title, subtitle, then the key-benefit banner over a
           translucent top border, all on black */}
