@@ -1,6 +1,97 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS / PROGRESS (updated 2026-07-26, session 2)
+## STATUS (updated 2026-07-28, session 5: the film re-cut and the template)
+
+**The page is live and green.** `node scripts/score-flagship.mjs ai-chat-assistant-real-estate-website`
+passes 19/19 mechanical checks. The same gate scores the untreated workflow post 9/19 and exits 1,
+which is how you know it is a gate and not a rubber stamp.
+
+### What this session changed
+
+**1. The film was re-cut.** 50s to 31s, and rebuilt from scratch rather than re-encoded.
+- The old cut opened on 18 seconds of near-static galaxy with the /ai page's nav, hero copy and
+  "Work with me" button in shot. It read as a screen recording of a website.
+- **The quality fix was the capture method, not the bitrate.** Playwright's `recordVideo` is a
+  fixed low-bitrate VP8 encoder with no quality knob (881 kb/s), and a moving starfield is the
+  worst case there is for it. Every frame is now a LOSSLESS PNG screenshot. Result: shorter film,
+  higher bitrate, SMALLER file (4.7MB / 1267 kb/s, was 5.3MB / 881 kb/s).
+- Structure: the hook is a question landing at 11:40pm in the first two seconds; the flight is
+  3.6s of travel plus a held brain; it ends on `/ai#chat` instead of trailing off.
+- 30fps, not 60. The flight cannot be captured at 60 (each frame costs ~230ms of real time, so
+  60fps would double both the capture time and the ambient drift baked into it).
+
+**2. A real hydration bug, found and fixed.** The post threw React #418 on every load and the
+hydrated DOM carried TWO `RealEstateAgent` JSON-LD blocks. A previous session saw the duplicate,
+called it "a transient hydration artifact" and moved on. It reproduced on every load. Cause: the
+system diagram's `<title>` had two text children, and React treats `<title>` as document metadata
+and does not reconcile several children inside it. React threw away and regenerated the whole page
+tree on the client every time. See the commit for the diagnosis path (control post, unminified dev
+error, component stack).
+
+**3. The template landed.** See TEMPLATE PLAN below for what is done and what is left.
+
+### The film: how to rebuild or re-cut it
+
+Everything is scripted. `npm i ffmpeg-static --no-save` gives ffmpeg without touching package.json.
+
+| step | script | note |
+|---|---|---|
+| 1 | `scripts/_scratch-stage/film.html` | The stage. ONE film clock, with a deliberate 6.0s to 12.0s hole for the flight, so both sources share a timeline and the fades line up. `__seek(t)` freezes and seeks it. |
+| 2 | `node scripts/_scratch-film-stage.mjs` | Renders the stage beats to lossless PNGs at 1920x1080, numbered on the film clock. |
+| 3 | `node scripts/_scratch-film-flight.mjs` | Records the galaxy-to-brain flight, **headed**, into the same numbered sequence. ~5 min. |
+| 4 | ffmpeg | See the encode command in the commit; master is crf 16 at 1920x1080, web is crf 20 at 1280x720. |
+
+Traps, each of which cost real time:
+
+- **The /ai page cannot be captured headless.** No real GPU, so the page detects no acceleration
+  and drops into reduced mode: the galaxy and brain are never drawn. Launch
+  `chromium.launch({headless:false, channel:"chrome"})`.
+- **Do not try to pin the page's clock.** Virtualising `requestAnimationFrame` and
+  `performance.now` to make the scene advance one frame per captured frame trips the /ai page's
+  own boot health check, and it falls back to "the real-time 3D experience couldn't start on this
+  device". `scripts/_scratch-film-pin.mjs` is the evidence. Capture in real time and keyframe the
+  ramp instead.
+- **The journey is not linear in `p`.** `scripts/_scratch-film-calib.mjs` measures the settled
+  mapping: 0.05 to 0.28 grows the galaxy, 0.28 to 0.40 is the collapse, the brain only resolves
+  its labels past 0.55. An even ramp spends four of six seconds on a brain that has stopped
+  changing, which is exactly what the old cut did.
+- **Strip the /ai furniture with `opacity`, never `display:none`.** `#chapters` is what gives that
+  document its scroll height, and scroll is what drives the journey. Hide it and the flight dies.
+  The strip list is `#topbar, #totop, #chapters, #brainhint`. Keep the brain's node labels: they
+  are drawn on the canvas, and "AI chat assistant" lit on the brain is the whole point of the shot.
+- **ffmpeg's `fade` filter blacks out everything OUTSIDE its window.** `fade=t=in:st=6` makes the
+  first six seconds black. Use a per-frame brightness expression for fades at interior cut points.
+- **The 1080p master is NOT committed.** A 13MB binary three scripts can regenerate does not belong
+  in git. Rebuild it for a YouTube upload.
+
+### Hosting: decided, with evidence
+
+**The film stays first-party in `/public`.** The owner asked to consider Vercel Blob first.
+Checked: the only Blob store on this project (`realtylt-mls`, 135MB, 281 files) is **SUSPENDED**,
+so Blob is not currently a working host and moving the film there would put it behind a disabled
+store. Beyond that, the page is not slower today: `preload="none"` with a poster means zero bytes
+load until someone presses play, so 4.7MB in `/public` costs a reader nothing and is served by the
+same CDN as every other asset, with no third-party script and no cookies. `VideoObject` JSON-LD is
+emitted either way, driven by the article's own `film` field so the page cannot advertise a video
+it does not serve.
+
+**Revisit when films multiply, not before.** Nineteen topics at ~5MB each is ~95MB of binaries in
+git, and THAT is the real argument for moving off-repo. The template already reduces the pressure:
+the /ai flight is a shared segment cut once, so only a topic's own demonstration is new footage.
+
+**YouTube is a separate job, and worth doing.** Rebuild the 1080p master and upload it to the
+owner's channel for reach. Keep the on-page player first-party regardless, so the page carries no
+third-party cookies.
+
+### The one thing the film still needs
+
+A **9:16 cut** for Reels, Shorts and TikTok. At 390px the 16:9 film's body text is ~4px and
+unreadable inline; a viewer has to go fullscreen. The stage is authored at a fixed 1920x1080, so a
+vertical version means a second layout in `film.html` at 1080x1920 (phone centred, event track
+below it instead of beside it) and a second render pass. The recorder and the encode need no
+changes.
+
+## EARLIER STATUS (2026-07-26, session 2)
 
 **Live and verified on production** (`realtylt-website.vercel.app/blog/ai-chat-assistant-real-estate-website`),
 read by eye at 1440 and 390 DPR3, zero page errors, no horizontal overflow, 0 em dashes, 0 arrow
@@ -119,20 +210,50 @@ brief for building the RealtyLT flagship content piece. A fresh agent should be 
 whole thing from this file. Read it fully before touching code.
 
 
-## TEMPLATE PLAN — turning one great post into ~19 (owner direction 2026-07-28)
+## TEMPLATE PLAN — turning one great post into ~19
 
-The flagship works, but almost every scene still hardcodes THIS topic. Cloning it today means
-copy-pasting components and editing strings, which is how a template rots. The goal is: a new
-topic = **one content file + a markdown body with markers**, no new components.
+**Goal: a new topic = one content file + a markdown body with markers, and NO new components.**
 
-### The gap, concretely
-- `ResponseGap` has "11:40 pm" / "9:00 am" inline. `Teardown` imports this post's turns.
-  `FourMoves`, `FailureModes`, `SystemDiagram`, `ResponseCurve`, `InShort`, `PullQuote`, `Funnel`
-  all import `content/blog/ai-chat-scenes.ts` **by name**.
-- `FLAGSHIP_TOC` is a hand-curated array whose ids must be kept in sync by hand.
-- The scorecard script is hardcoded to one URL.
+### Where it stands (2026-07-28)
 
-### Step 1 — collapse 10 bespoke scenes into ~8 reusable PRIMITIVES
+| step | state |
+|---|---|
+| 1. Collapse bespoke scenes into primitives | **4 of 9 done.** `Grid`, `Statement`, `Summary`, `Film` exist and cover 6 scenes. 5 bespoke scenes remain. |
+| 2. One typed content file per topic | **DONE.** `lib/blog/flagship.ts` holds the shape; `content/blog/ai-chat-scenes.ts` holds this topic's words and exports `AI_CHAT_FLAGSHIP`. |
+| 3. Derive the ToC instead of curating it | **DONE.** `parseOutline` + `flagshipToc`. The curated array is deleted. |
+| 4. Make the scorecard a gate | **DONE.** `scripts/score-flagship.mjs <slug>`. |
+| 5. The per-topic content checklist | **DONE**, and it is executable: it IS the gate's output. |
+| 6. The film as a repeatable recipe | **DONE.** See the film section above. Segment A (the /ai flight) is shared across topics; only a topic's own demonstration is new. |
+
+**How it works now.** A `[[scene:key]]` marker resolves against the CURRENT POST's content object
+(`Article.flagship`), not a global table. So two topics can both place `[[scene:four-moves]]` and
+get their own words, their own column count and their own band. A key with no payload renders
+nothing, so a typo in a CRM-published body degrades to a missing scene rather than a broken page.
+
+`kind: "component"` is the honest escape hatch: it names a scene that is not yet a primitive, and
+the calculator, whose model is genuinely per-topic and cannot be data. That is what lets the rest
+migrate one at a time.
+
+**How to verify a conversion changed nothing.** `node scripts/_scratch-shots.mjs before`, do the
+work, `node scripts/_scratch-shots.mjs after`, then `--diff`. It frames all 12 scenes at 1440 and
+390 DPR3 and prints SSIM. The harness's own noise floor is about 0.0007 (scenes you did not touch
+move by that much), so anything at 0.999+ is unchanged and anything below it is real.
+
+### What is left, in order
+
+1. **`Timeline`** from `ResponseGap` (two stamps, a cooling line, a duration).
+2. **`Conversation`** from `Teardown` (turns plus a parallel event track). The film's stage is the
+   same idea, so the two should agree on shape.
+3. **`Diagram`** from `SystemDiagram` (n labelled nodes on a spine, each with what it connects to).
+   Watch the `<title>` trap: ONE text child, or the page throws away its hydrated tree.
+4. **`StatBars`** from `ResponseCurve` (caption, n bars, a source, a caveat).
+5. **`Calculator` stays bespoke.** Its model is per-topic and is not expressible as data. Give it
+   props rather than imports and leave it as a `component`.
+6. Then write topic 2 and see what the shape actually gets wrong. Do not build primitives 5 through
+   8 speculatively for topics that do not exist yet.
+
+### The original analysis (kept for reference)
+
 Every scene on the page is really an instance of one of these:
 
 | primitive | today's instances | shape |
@@ -149,35 +270,33 @@ Every scene on the page is really an instance of one of these:
 
 Each takes its content as **props**, not imports. Eight primitives cover every topic.
 
-### Step 2 — one typed content file per topic
-`content/blog/flagship/<slug>.ts` exporting a `FlagshipContent` object: the scene payloads, the
-ToC labels, the cited source, the film. `registry.tsx` resolves `[[scene:key]]` against the
-content for the CURRENT post (pass it down from the page, or a small server context keyed by
-slug). Adding a topic touches no component.
+### Adding a topic, concretely
 
-### Step 3 — derive the ToC instead of curating it
-Build it from the bands in document order plus a `label` on each scene payload, so a renamed
-heading or a moved scene cannot leave a dead row. Keep `_scratch-toc.mjs` as the guard.
+1. Write the markdown body with `[[scene:key]]` markers where the scenes go. An FAQ-shaped
+   section is required for `FAQPage`: its heading must match `FAQ_SECTION_RE` and the questions
+   must be `###`.
+2. Write the content file next to `content/blog/ai-chat-scenes.ts`, exporting a
+   `FlagshipContent`: a payload per marker, a `band` on each, a `label` on the ones that are
+   navigation destinations, short `headingLabels` for the prose rows, and the `film`.
+3. Set `markdown`, `film` and `flagship` on the post in `content/blog/posts.ts`.
+4. Run the gate: `node scripts/score-flagship.mjs <slug> http://127.0.0.1:3100`.
 
-### Step 4 — make the scorecard a gate, not a one-off
-`scripts/score.mjs <slug>` scoring ANY post against the SCORECARD rubric, so every new topic has
-to clear a bar (say 85) before it ships. This is the thing that stops topics 2 to 19 being
-worse than topic 1.
+`lib/blog/flagship.test.ts` is the wiring guard: every marker has a payload, every payload is
+placed, no short label points at a heading that no longer exists, every scene declares a band.
+Copy that describe block for a new topic.
 
-### Step 5 — the per-topic content checklist (what a topic must supply to score)
-A cited third-party stat with study/sample/year · a real demonstration (transcript or teardown) ·
-one data graphic · one diagram · an interactive · the shared author block · an FAQ-shaped section
-(heading must match `FAQ_SECTION_RE` with `###` questions, which is what emits FAQPage) · a
-revision date · at least two body images · a film.
+### What a topic must SUPPLY to pass the gate
 
-### Step 6 — the film as a repeatable recipe
-Parameterise the recorders by topic: segment A is always the /ai journey (shared across all
-topics, cut once, reused), segment B is the topic's own demonstration stage. Only B is new per
-topic, which makes a film per topic cheap.
+The gate prints this list and fails on any of it: a cited third-party source · imagery through
+the body (2+, all with alt) · an original data graphic or diagram as a real `role="img"` asset ·
+a film · FAQPage + BlogPosting + BreadcrumbList + VideoObject schema · a direct-answer summary ·
+3+ cluster links · a real freshness signal (visible "Updated" AND `dateModified` later than
+`datePublished`) · 1200+ words · 5+ scene anchors · no overflow, no page errors, no em dashes,
+no arrow glyphs, no leaked markers.
 
-### Sequencing
-Do Step 1 and 2 together on ONE existing scene first (Grid is the easiest: it already backs two
-scenes), prove a topic can be swapped by editing only a content file, then convert the rest.
+It deliberately does NOT score A1, A2, A3, B3 or the qualitative half of E2. Those are judgement,
+a script cannot judge them, and a script that pretended to would be the build grading its own
+homework. A human reads for those.
 
 ## THE MISSION (owner's words, distilled)
 Turn the **AI Chat Assistant blog post** into the single most valuable, memorable, high-end piece of

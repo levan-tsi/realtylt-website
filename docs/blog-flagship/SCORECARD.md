@@ -223,6 +223,35 @@ Assembly: ffmpeg-static installed with --no-save so package.json is untouched. S
 because the VP9 encode came out LARGER than H.264 at matched quality. Stage file for segment 3 is
 scripts/_scratch-stage/phone.html; recorders are scripts/_scratch-film-a.mjs and -film-b.mjs.
 
+## RE-MEASURED 2026-07-28 — still 90.5 / 100, and why that is the honest number
+
+This session re-cut the film, fixed a hydration fault, and turned the page into a template. The
+measured score did not move, and it should not have:
+
+- **The film re-cut is a QUALITY change, not a rubric change.** C3 was already satisfied by having
+  a video at all. Going from a 50s screen-recording-ish cut at 881 kb/s to a 31s cut built from
+  lossless frames at 1267 kb/s makes the asset worth uploading. It does not add points.
+- **`VideoObject` schema is new**, but the rubric's D1/D2 name FAQPage, BlogPosting and
+  BreadcrumbList specifically, and D was already 20/20. Adding a correct block to a maxed category
+  scores nothing. It is still worth having.
+- **The hydration fix** arguably touches E2 (5.5/6). Nudging my own score by half a point for a bug
+  I both found and fixed is exactly the self-grading this file exists to avoid. Left at 5.5.
+- **The template work changes the ARCHITECTURE, not the page.** All 12 scenes were framed at 1440
+  and 390 DPR3 before and after: worst deviation 0.072%, which is the capture harness's own noise.
+  A refactor that changed the score would have been a refactor that changed the design.
+
+The remaining 9.5 is unchanged and still ordered the same way: **A1 (-3) no original data** is the
+single biggest item and the only one nobody else could copy; **A2 (-1.5)** silent on cost, setup
+and privacy; **C1 (-2)** two body images is thin for a 1,900-word piece and the middle third has
+none; **A3/B3/E2 (-1)** rounding on judgement criteria that are already strong.
+
+**What IS now automated.** `scripts/score-flagship.mjs <slug>` checks the mechanical subset of this
+rubric and exits non-zero on any failure. The flagship passes 19/19. The untreated workflow post
+scores 9/19 and fails, which is both the proof the gate discriminates and the work order for
+topic 2. It deliberately refuses to score A1, A2, A3, B3 and the qualitative half of E2, and says
+so in its own output: a script cannot judge originality or craft, and one that pretended to would
+turn this rubric back into a self-graded number.
+
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
   A and B; the expertise questions explicitly name author background and links to an author page)
