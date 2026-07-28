@@ -4,7 +4,7 @@
 import fs from "node:fs";
 import { INTEREST_REASONS, type InterestReason } from "@/lib/site";
 import { parseAddress, parseFullName } from "./field-parsers";
-import type { LeadPayload, LeadResult } from "./types";
+import type { LeadPayload, LeadResult, SavedSearchRequest } from "./types";
 
 const OTHER: InterestReason = "Other reason to contact an agent";
 const STUB_FILE = ".leads-dev.jsonl";
@@ -86,7 +86,46 @@ export function parseLead(body: unknown, source: string): ParsedLead {
     if (parts.postalCode) lead.postalCode = parts.postalCode;
   }
   if (qualifier) lead.qualifier = qualifier;
+
+  const savedSearches = parseSavedSearches(b.savedSearches);
+  if (savedSearches) {
+    lead.savedSearches = savedSearches;
+    // Fold a readable summary into the message too, exactly as the qualifier does, so the
+    // request is actionable in a plain CRM view that only shows the note field.
+    const summary = savedSearches
+      .map((s) => `${s.label} (/search?${s.query})`)
+      .join("\n");
+    message = message
+      ? `${message}\n\n[Listing alerts requested]\n${summary}`
+      : `[Listing alerts requested]\n${summary}`;
+    lead.message = message;
+  }
   return { kind: "lead", lead };
+}
+
+/** Normalize the saved searches attached to a listing-alert request. Same defensive shape as
+ * parseQualifier: bounded count, bounded string lengths, scalar criteria values only, so a
+ * crafted body can't smuggle a payload into the CRM through this field. */
+const MAX_SAVED_SEARCHES = 20;
+function parseSavedSearches(raw: unknown): SavedSearchRequest[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const out: SavedSearchRequest[] = [];
+  for (const item of raw.slice(0, MAX_SAVED_SEARCHES)) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+    const s = item as Record<string, unknown>;
+    const label = typeof s.label === "string" ? s.label.trim().slice(0, 120) : "";
+    const query = typeof s.query === "string" ? s.query.trim().slice(0, 600) : "";
+    if (!label && !query) continue;
+    const criteria: Record<string, string | number | boolean> = {};
+    if (s.criteria && typeof s.criteria === "object" && !Array.isArray(s.criteria)) {
+      for (const [k, v] of Object.entries(s.criteria as Record<string, unknown>)) {
+        if (typeof v === "number" || typeof v === "boolean") criteria[k.slice(0, 40)] = v;
+        else if (typeof v === "string" && v.trim()) criteria[k.slice(0, 40)] = v.trim().slice(0, 120);
+      }
+    }
+    out.push({ label: label || "Saved search", query, criteria });
+  }
+  return out.length ? out : undefined;
 }
 
 /** Normalize the optional qualifying-wizard answers: a flat object of short strings.

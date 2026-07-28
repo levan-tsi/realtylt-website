@@ -48,10 +48,26 @@ export interface Database {
           label: string;
           query: string;
           alerts: boolean;
+          /** Structured filters, written from lib/idx/criteria so the CRM never has to
+           * re-implement our query-string grammar. Null on rows saved before 2026-07-28. */
+          criteria: Record<string, string | number | boolean> | null;
+          /** Written by the CRM when it sends an alert for this search. Never by us. */
+          last_alerted_at: Ts | null;
           created_at: Ts;
         };
-        Insert: { client_id: string; label: string; query: string; alerts?: boolean };
-        Update: { label?: string; query?: string; alerts?: boolean };
+        Insert: {
+          client_id: string;
+          label: string;
+          query: string;
+          alerts?: boolean;
+          criteria?: Record<string, string | number | boolean> | null;
+        };
+        Update: {
+          label?: string;
+          query?: string;
+          alerts?: boolean;
+          criteria?: Record<string, string | number | boolean> | null;
+        };
         Relationships: [];
       };
       portal_activity: {

@@ -6,6 +6,7 @@ import { FavoriteListings } from "@/components/portal/FavoriteListings";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useSaved } from "@/components/auth/SavedProvider";
+import { searchCriteria } from "@/lib/idx/criteria";
 
 export function SavedClient({
   fixtureMode,
@@ -18,6 +19,15 @@ export function SavedClient({
   const { enabled, openSignIn } = useAuth();
 
   const empty = ready && favorites.length === 0 && searches.length === 0;
+
+  // Without an account these searches live only in this browser, so the CRM has no way to see
+  // what to watch. Attaching them to the alert request is what makes the ask honest: the
+  // person gets alerts for THESE searches, not for a wish we never passed on.
+  const alertPayload = searches.map((s) => ({
+    label: s.label,
+    query: s.query,
+    criteria: searchCriteria(s.query),
+  }));
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
@@ -114,15 +124,18 @@ export function SavedClient({
             )}
           </section>
 
-          {/* Alert opt-in → lead */}
+          {/* Alert opt-in -> lead. Only shown when there is actually something to alert on:
+              offering to watch "the 0 searches above" is worse than not offering. */}
+          {searches.length > 0 && (
           <section aria-labelledby="alerts-heading" className="mt-14">
             <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
-              <h2 id="alerts-heading" className="font-display text-2xl text-ink">
+              <h2 id="alerts-heading" className="t-h3 text-ink">
                 Want new matches by email?
               </h2>
               <p className="mt-2 max-w-lg text-sm text-stone">
-                Leave your details and we&rsquo;ll set up listing alerts for your saved searches.
-                You&rsquo;ll hear about new homes before the portals do.
+                Leave your details and we&rsquo;ll set up listing alerts for the{" "}
+                {searches.length === 1 ? "search" : `${searches.length} searches`} above, and email
+                you when new homes match.
               </p>
               <div className="mt-6 max-w-xl">
                 <LeadForm
@@ -130,11 +143,13 @@ export function SavedClient({
                   defaultReason="I'm interested in buying a home"
                   submitLabel="Turn On Alerts"
                   successTitle="Alerts requested."
-                  successBody="We'll confirm your saved-search alerts by email shortly."
+                  successBody="We have your searches. We'll confirm your alerts by email shortly."
+                  savedSearches={alertPayload}
                 />
               </div>
             </div>
           </section>
+          )}
         </>
       )}
     </div>

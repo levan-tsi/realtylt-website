@@ -19,6 +19,7 @@ import {
   saveSearch as saveSearchLocal,
   toggleFavorite as toggleFavoriteLocal,
 } from "@/lib/saved";
+import { searchCriteria } from "@/lib/idx/criteria";
 
 export interface PortalSearch {
   id: string;
@@ -114,7 +115,14 @@ export function SavedProvider({ children }: { children: ReactNode }) {
         if (toAdd.length) {
           await supabase
             .from("portal_saved_searches")
-            .insert(toAdd.map((s) => ({ client_id: uid, label: s.label, query: s.query })));
+            .insert(
+              toAdd.map((s) => ({
+                client_id: uid,
+                label: s.label,
+                query: s.query,
+                criteria: searchCriteria(s.query),
+              })),
+            );
         }
       }
       clearLocal();
@@ -195,7 +203,7 @@ export function SavedProvider({ children }: { children: ReactNode }) {
       if (signedIn && user && supabase) {
         const { data } = await supabase
           .from("portal_saved_searches")
-          .insert({ client_id: user.id, label, query })
+          .insert({ client_id: user.id, label, query, criteria: searchCriteria(query) })
           .select(SEARCH_COLS)
           .single();
         if (data) {
@@ -246,16 +254,20 @@ export function SavedProvider({ children }: { children: ReactNode }) {
       if (!(signedIn && user && supabase)) return; // alert toggles need an account
       setSearches((prev) => prev.map((s) => (s.id === id ? { ...s, alerts } : s)));
       try {
+        // Write the structured criteria alongside the flag. Rows saved by an older build
+        // have criteria = null, and switching alerts on is exactly the moment the CRM starts
+        // needing to read them, so top the row up here rather than leaving it half-filled.
+        const row = searches.find((s) => s.id === id);
         await supabase
           .from("portal_saved_searches")
-          .update({ alerts })
+          .update(row ? { alerts, criteria: searchCriteria(row.query) } : { alerts })
           .eq("id", id)
           .eq("client_id", user.id);
       } catch {
         await loadFromDb(user.id);
       }
     },
-    [signedIn, user, supabase, loadFromDb],
+    [signedIn, user, supabase, loadFromDb, searches],
   );
 
   const value = useMemo<SavedContextValue>(

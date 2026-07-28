@@ -27,6 +27,23 @@ export interface LeadPayload {
   /** Optional qualifying-wizard answers (the /selling post-submit popup). Free-form
    * short strings — also folded into `message` so they show in any plain CRM view. */
   qualifier?: Record<string, string>;
+  /** Saved searches this person wants listing alerts for.
+   *
+   * A visitor with an account gets a real row in `portal_saved_searches` and the CRM picks it
+   * up from the `listing_alert_subscriptions` view. A visitor WITHOUT an account keeps their
+   * saved searches in localStorage, where the CRM can never see them — so when they ask for
+   * alerts, the searches travel with the lead. Without this the site would be asking for an
+   * email address to power something it had given the CRM no way to act on. */
+  savedSearches?: SavedSearchRequest[];
+}
+
+export interface SavedSearchRequest {
+  /** What the visitor named it. */
+  label: string;
+  /** The raw /search query string, so the CRM can link straight to the results. */
+  query: string;
+  /** The same structured criteria stored on an account's saved search (lib/idx/criteria). */
+  criteria: Record<string, string | number | boolean>;
 }
 
 export interface LeadResult {

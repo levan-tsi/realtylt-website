@@ -34,7 +34,11 @@ const SLIDES = [
   },
   {
     src: "/images/why/our-save-search.webp",
-    caption: "Save any search and turn on alerts for new matches",
+    // Round 10 weakened this to "Save any search and turn on alerts for new matches" because
+    // switching the flag on did nothing the CRM could act on. Round 11 made the hand-off real
+    // (portal_saved_searches.criteria + the listing_alert_subscriptions view, and the searches
+    // now travel with an anonymous visitor's alert request), so the claim can stand again.
+    caption: "Save a search and get new matches by email",
   },
 ];
 

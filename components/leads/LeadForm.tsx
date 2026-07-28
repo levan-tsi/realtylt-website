@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
 import { useQualifyingWizard } from "@/components/leads/QualifyingWizard";
 import { INTEREST_REASONS, SITE } from "@/lib/site";
+import type { SavedSearchRequest } from "@/lib/leads/types";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -42,6 +43,7 @@ export function LeadForm({
   source,
   namePlaceholder = "Your Name",
   addressPlaceholder = "Property Address",
+  savedSearches,
 }: {
   dark?: boolean;
   withAddress?: boolean;
@@ -69,6 +71,10 @@ export function LeadForm({
   source?: string;
   namePlaceholder?: string;
   addressPlaceholder?: string;
+  /** Saved searches to attach to this submission (the /saved listing-alert opt-in). A visitor
+   * without an account keeps their searches in localStorage, so the only way the CRM ever sees
+   * what to watch is if they travel with the lead. */
+  savedSearches?: SavedSearchRequest[];
 }) {
   const pathname = usePathname();
   const { openWizard } = useQualifyingWizard();
@@ -96,7 +102,11 @@ export function LeadForm({
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: source ?? pathname }),
+        body: JSON.stringify({
+          ...data,
+          source: source ?? pathname,
+          ...(savedSearches?.length ? { savedSearches } : {}),
+        }),
       });
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !json.ok) {
