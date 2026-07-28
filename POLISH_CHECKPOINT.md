@@ -1,5 +1,67 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 11 BRIEF — 2026-07-28. SINGLE AGENT, ~700k tokens, NO SUBAGENTS. DESIGN IS THE JOB.
+## The /website command has been rewritten for this; it starts you here. Parity with the old
+## realtylt.com is DONE and is no longer the goal.
+##
+## FIRST: invoke the `frontend-design` skill. The owner asked for it by description ("a scale/taste
+## skill that gives really good results") and it is installed. It is the lens for this whole round.
+## His bar, in his words: "I like what we have and it's great but I think we could do it better."
+## Target = high-end luxury, considered, CALM. Restraint is the luxury signal, not more effects.
+##
+## ── 1. NAMED DESIGN DEFECTS (owner-reported, not optional) ────────────────────────────────────
+## (a) Home hero "Let's Find Home": the search input and the SEARCH button are STUCK TOGETHER with
+##     no breathing room. Give the control real spacing and rhythm.
+## (b) That same hero section sits on FLAT BLACK. It should sit on the hero photo or the video we
+##     already have. Find out what is actually rendering and why it falls back to black. Careful:
+##     an earlier round deliberately made the poster the video's own first frame because Vimeo does
+##     not autoplay in the owner's Chrome profile, and LIVE shows solid black there. Check the
+##     reduced-motion and no-JS paths too.
+## (c) MOBILE FOOTER ORDER: today it is page links -> message form -> REACH OUT details. He wants
+##     the contact DETAILS and the page LINKS grouped together, with the form as its own deliberate
+##     block. His phrasing on the exact order was ambiguous; make the designer's call (one obvious
+##     reading: form first as the action, then links + details together as the reference block),
+##     say why in the commit, and screenshot before/after at 390 so he can judge it at a glance.
+##
+## ── 2. BRAINSTORM BEFORE BUILDING ─────────────────────────────────────────────────────────────
+## Write docs/parity/DESIGN-ROUND11.md FIRST and commit it: what already reads luxury, what reads
+## generic, and the 8-12 highest-leverage moves ranked by impact (type scale + pairing, vertical
+## rhythm and whitespace, each hero's job, photography treatment, colour restraint, micro-interaction
+## quality, section-to-section transitions). Then build the ranked list.
+##
+## ── 3. CARRIED WORK LIST (owner-approved this session) ────────────────────────────────────────
+## (a) LISTING ALERTS — BRING THE CAPABILITY BACK. Saved searches already store an `alerts` flag in
+##     Supabase but nothing sends. The CRM being built separately will do the sending. So: make the
+##     website side complete and honest (capture the intent, make the saved search + criteria
+##     readable by the CRM), then restore the marketing claim. The home-carousel caption was
+##     deliberately weakened to "Save any search and turn on alerts for new matches" precisely
+##     because nothing sent. Do NOT build an email sender here, and do not restore a claim the
+##     system cannot honour end to end.
+## (b) EQUAL HOUSING OPPORTUNITY + REALTOR® MARKS — owner wants them added. RESEARCH THE USAGE
+##     REQUIREMENTS FIRST (who may display the REALTOR® mark and how it must be written, the Equal
+##     Housing logo's rules, NY / brokerage requirements), write the findings into the design doc,
+##     then add them with correct artwork, placement (footer is conventional) and alt text.
+##     SELF-HOST clean artwork; do not hotlink the old vendor's CDN.
+## (c) PHOTOGRAPHY — six images on buying/selling/financing/connect/home came from the old IDX
+##     vendor's CDN with NO licence record (listed in public/images/ATTRIBUTIONS.md). Owner's
+##     direction: use FREE NO-WATERMARK photography, or GENERATE some. Replace them, record source +
+##     licence for every new asset in ATTRIBUTIONS.md, delete the unlicensed ones. Also delete
+##     public/images/hero/hom.png (2.2 MB, unreferenced).
+##
+## ── 4. THEN THE DETAIL SWEEP, THEN POLISH THREE TIMES ─────────────────────────────────────────
+## Close what is still open in docs/parity/PRELAUNCH-AUDIT.md §2-3, then hunt the "very local"
+## details by driving real pages in a real browser. The last two rounds each found a real bug that
+## way (chat widget serving mojibake on every page; a status badge square on one surface and round
+## on another). Then THREE polish passes: correctness -> refinement with fresh eyes -> a front-to-back
+## visitor walkthrough on phone and laptop. Anything that makes you hesitate is a defect.
+##
+## ── GATES ─────────────────────────────────────────────────────────────────────────────────────
+## tsc + npm test green in the FOREGROUND. Baseline **476 passing** — never go below. Corners follow
+## the scale (8/12/16/24/full). Body >=16px on mobile (controls are floored at 16px because iOS
+## zooms in on focus below that). No overflow at 390 or 320. Works with JS disabled. Push only after
+## verifying yourself. Do NOT remove the noindex — launch is gated on the owner's env steps.
+
+
 ## ═══ ROUND 10 — 2026-07-27: PRE-LAUNCH AUDIT (owner: "test everything, how secure is it,
 ## what did we miss, and fix the corners"). FULL WRITE-UP: docs/parity/PRELAUNCH-AUDIT.md.
 ##
