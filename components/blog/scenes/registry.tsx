@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
+import { Film } from "./primitives/Film";
 import { Grid } from "./primitives/Grid";
-import { Funnel } from "./Funnel";
-import { InShort } from "./InShort";
+import { Statement } from "./primitives/Statement";
+import { Summary } from "./primitives/Summary";
 import { LeadsCalculator } from "./LeadsCalculator";
-import { PullQuote } from "./PullQuote";
-import { Reel } from "./Reel";
 import { ResponseCurve } from "./ResponseCurve";
 import { ResponseGap } from "./ResponseGap";
 import { SystemDiagram } from "./SystemDiagram";
@@ -29,15 +28,11 @@ import { Teardown } from "./Teardown";
 /** Bespoke components: the scenes not yet reduced to primitives, plus the calculator, whose
  * model is genuinely per-topic and cannot be expressed as data. */
 const COMPONENTS: Record<ComponentId, () => ReactNode> = {
-  "in-short": InShort,
-  reel: Reel,
   "response-curve": ResponseCurve,
   "response-gap": ResponseGap,
   "cold-open-calculator": LeadsCalculator,
-  "pull-quote": PullQuote,
   teardown: Teardown,
   "system-diagram": SystemDiagram,
-  funnel: Funnel,
 };
 
 /** ARIA labels for grid instances. The primitive cannot invent one, and a full-bleed landmark
@@ -51,12 +46,21 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
   const scene = content?.scenes[key];
   if (!scene) return null;
 
-  if (scene.kind === "grid") {
-    return <Grid {...scene} ariaLabel={GRID_LABELS[key] ?? scene.heading} />;
+  switch (scene.kind) {
+    case "grid":
+      return <Grid {...scene} ariaLabel={GRID_LABELS[key] ?? scene.heading} />;
+    case "summary":
+      return <Summary {...scene} />;
+    case "statement":
+      return <Statement {...scene} />;
+    case "film":
+      // A film scene without a film is a content error, not a render error.
+      return content.film ? <Film {...scene} film={content.film} /> : null;
+    case "component": {
+      const Component = COMPONENTS[scene.id];
+      return Component ? <Component /> : null;
+    }
   }
-
-  const Component = COMPONENTS[scene.id];
-  return Component ? <Component /> : null;
 }
 
 /** Dark or light field, for the floating ToC's contrast. Declared per scene by the topic, so a

@@ -203,8 +203,26 @@ export const FOUR_MOVES: Move[] = [
 export const AI_CHAT_FLAGSHIP: FlagshipContent = {
   film: FILM,
   scenes: {
-    "in-short": { kind: "component", id: "in-short", band: "light" },
-    reel: { kind: "component", id: "reel", band: "dark", label: "Watch it" },
+    "in-short": {
+      kind: "summary",
+      band: "light",
+      ariaLabel: "In short",
+      eyebrow: "In short",
+      claims: IN_SHORT,
+    },
+    reel: {
+      kind: "film",
+      band: "dark",
+      label: "Watch it",
+      ariaLabel: "Watch it work",
+      eyebrow: "Watch it work",
+      heading: "A question at 11:40pm, and everything that fires behind the answer.",
+      caption: [
+        `Silent, ${FILM.seconds} seconds. The flight through the galaxy into the neural map is live footage of the system running at `,
+        { href: "/ai#chat", label: "realtylt.com/ai" },
+        ". The 11:40pm exchange is staged for the film, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
+      ],
+    },
     "response-curve": { kind: "component", id: "response-curve", band: "light" },
     "response-gap": { kind: "component", id: "response-gap", band: "dark", label: "The gap" },
     "leads-calculator": {
@@ -223,7 +241,13 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       glow: true,
       items: FOUR_MOVES,
     },
-    "pull-quote": { kind: "component", id: "pull-quote", band: "dark" },
+    "pull-quote": {
+      kind: "statement",
+      band: "dark",
+      field: "river",
+      tone: "quote",
+      text: "The measure of an AI assistant is not how human it sounds. It is whether the answer was correct, whether it was immediate, and whether a real person showed up when it mattered.",
+    },
     teardown: { kind: "component", id: "teardown", band: "light", label: "The teardown" },
     "failure-modes": {
       kind: "grid",
@@ -239,7 +263,25 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       band: "dark",
       label: "What it connects to",
     },
-    funnel: { kind: "component", id: "funnel", band: "dark" },
+    /** The primary action is deliberately the LIVE assistant rather than a contact form. The
+     * whole post argues that being answered immediately is the thing that matters, so the
+     * close has to offer exactly that, not a form that replies tomorrow. This scene also
+     * suppresses the template's generic "Ask us" band, so the reader gets one ending, not two. */
+    funnel: {
+      kind: "statement",
+      band: "dark",
+      field: "ink",
+      tone: "close",
+      glow: true,
+      ariaLabel: "What to do next",
+      text: "The buyer at 11:40pm is not coming back tomorrow to check whether you replied. They are going to be at somebody's open house on Saturday. The only real question is whose.",
+      actions: [
+        { label: "Talk to it right now", href: "/ai#chat", variant: "light" },
+        { label: "See how it is built", href: "/services/ai-chat-assistant", variant: "outline-light" },
+      ],
+      footnote:
+        "Ask it something hard. It will either answer, or tell you it cannot and offer to book a call.",
+    },
   },
 
   /** Short rail labels for the prose headings. The ids and the ORDER are derived from the

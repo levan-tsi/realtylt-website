@@ -17,6 +17,9 @@
 import type { OutlineEntry } from "./markdown";
 import type { ArticleFilm } from "./types";
 
+/** Re-exported so a scene primitive has ONE import for everything it is handed. */
+export type { ArticleFilm } from "./types";
+
 /** Common to every scene. */
 interface SceneBase {
   /** Dark or light field. The floating rail reads it to flip its own contrast as it passes
@@ -38,14 +41,20 @@ export interface GridItem {
  * admission that a scene is one-off. */
 export type ComponentId =
   | "cold-open-calculator"
-  | "in-short"
-  | "reel"
   | "response-curve"
   | "response-gap"
   | "teardown"
-  | "system-diagram"
-  | "pull-quote"
-  | "funnel";
+  | "system-diagram";
+
+/** A caption that needs one link in the middle of it. A list of parts rather than markup:
+ * typed, tiny to render, and it keeps a parser out of the content layer. */
+export type RichText = (string | { href: string; label: string })[];
+
+export interface SceneAction {
+  label: string;
+  href: string;
+  variant: "light" | "outline-light";
+}
 
 export type Scene =
   /** n items, each a lead and a body, on a 2 or 3 column grid under an eyebrow and a heading.
@@ -59,6 +68,33 @@ export type Scene =
       /** The porchlight signal-glow. Dark bands only; on a light field it is invisible. */
       glow?: boolean;
       items: GridItem[];
+    })
+  /** The skimmable answer, on the reading measure rather than full-bleed: a summary belongs to
+   * the article. Hairlines and one accent tick per line, no card and no icon, which is what
+   * keeps it from reading as a templated "key takeaways" box. */
+  | (SceneBase & { kind: "summary"; eyebrow: string; claims: string[]; ariaLabel: string })
+  /** One line held on a field, with nothing competing with it. `tone` picks a whole preset
+   * rather than exposing six knobs: "quote" is the quote card (a rule, a blockquote, the
+   * tighter measure) and "close" is the ending (actions under it, the wider measure). */
+  | (SceneBase & {
+      kind: "statement";
+      /** river reads as its own chapter next to the near-black scenes either side of it. */
+      field: "ink" | "river";
+      tone: "quote" | "close";
+      text: string;
+      glow?: boolean;
+      actions?: SceneAction[];
+      footnote?: string;
+      ariaLabel?: string;
+    })
+  /** The film. `preload="none"` with a poster means zero bytes load for a reader who scrolls
+   * past, and autoplay is deliberately absent, which is the honest reading of reduced motion. */
+  | (SceneBase & {
+      kind: "film";
+      eyebrow: string;
+      heading: string;
+      caption: RichText;
+      ariaLabel: string;
     })
   | (SceneBase & { kind: "component"; id: ComponentId });
 
