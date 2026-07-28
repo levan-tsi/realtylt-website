@@ -156,12 +156,16 @@ body {
 }
 
 /* ── Motion: reveal-on-scroll (Reveal component toggles .is-visible) */
+/* A shorter, quicker rise. 26px over 0.7s is a visible SLIDE — the eye follows the movement
+   instead of the content, and on a page with a dozen revealed blocks it reads heavy. 16px over
+   0.5s registers as the content settling into place, which is what a reveal is for. The
+   staggered delays do the rest of the work. */
 .reveal {
   opacity: 0;
-  translate: 0 26px;
+  translate: 0 16px;
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0s);
 }
 .reveal.is-visible {
@@ -211,6 +215,33 @@ body {
   .rlt-compact-control {
     font-size: revert-layer;
   }
+}
+
+/* ── The clear button inside every <input type="search">.
+   Chromium draws its own, and with color-scheme:light it renders a blue glyph that ignores the
+   field it sits in — on the home hero's dark search box it was the only blue thing above the
+   fold, on a site whose whole colour discipline is one accent. Masked to a plain cross that
+   takes the input's own colour, so it reads white on the hero and grey on /search without
+   either surface knowing about the other. Unlayered on purpose: a utility class on the input
+   must not be able to put the blue back. */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  width: 15px;
+  margin-inline-start: 8px;
+  cursor: pointer;
+  opacity: 0.55;
+  background-color: currentColor;
+  transition: opacity 0.15s ease;
+  -webkit-mask: var(--rlt-clear-glyph) center / contain no-repeat;
+  mask: var(--rlt-clear-glyph) center / contain no-repeat;
+}
+input[type="search"]::-webkit-search-cancel-button:hover {
+  opacity: 1;
+}
+:root {
+  --rlt-clear-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 3.5l9 9M12.5 3.5l-9 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
 }
 
 /* ── Service constellation "live signal" — a sonar ping on the lit hub node. The global
