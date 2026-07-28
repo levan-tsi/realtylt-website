@@ -1,42 +1,39 @@
 import Link from "next/link";
 import Image from "next/image";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { EqualHousingMark } from "@/components/site/EqualHousingMark";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 
-/** Shared footer matched to live realtylt.com: white bg, three columns
- * (stacked nav links / contact form / logo + REACH OUT), legal line,
- * then a black bottom bar with the legal links. */
+/** Site footer.
+ *
+ * Round 11 regrouped it. It used to run page links, then the message form, then the REACH OUT
+ * details — so on a phone the two reference blocks sat at opposite ends with a six-field form
+ * wedged between them, and on desktop the same three columns had the same problem left to
+ * right. The owner asked for the contact details and the page links to be grouped, with the
+ * form treated as its own block.
+ *
+ * The designer's call, applied at EVERY width rather than only on mobile: the form is the
+ * action, so it leads; everything you look something up in — who we are, how to reach us,
+ * where to go next — is one contiguous reference block after it. Keeping one order at every
+ * size also means the visual order and the DOM order never disagree, so keyboard focus and a
+ * screen reader walk the footer in exactly the order the eye does.
+ */
 export function Footer() {
   return (
     <footer className="border-t border-[#dddddd] bg-paper text-stone">
-      <div className="mx-auto grid max-w-[1250px] gap-12 px-4 py-16 md:grid-cols-[1fr_1.6fr_1fr] md:py-20 lg:px-8">
-        <nav aria-label="Footer">
-          {/* inline-flex min-h-[24px]: text-sm links with no padding were ~17px tall — under
-              the WCAG 2.5.8 (24px) touch-target minimum. Height only; type/desktop unchanged. */}
-          <ul className="space-y-1 text-sm font-light">
-            {FOOTER_NAV.map((item) =>
-              "external" in item && item.external ? (
-                // /ai is served by an external rewrite, not an RSC route — a plain anchor
-                // avoids a 404 from Next's link prefetch.
-                <li key={item.href}>
-                  <a href={item.href} className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone">
-                    {item.label}
-                  </a>
-                </li>
-              ) : (
-                <li key={item.href}>
-                  <Link href={item.href} className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone">
-                    {item.label}
-                  </Link>
-                </li>
-              )
-            )}
-          </ul>
-        </nav>
-
-        <section aria-label="Contact form">
-          {/* First/Last split matches the live realtylt.com footer form. */}
-          <LeadForm splitName submitLabel="Send Us A Message" />
+      <div className="mx-auto grid max-w-[1250px] gap-14 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
+        <section aria-labelledby="footer-form-heading">
+          <h2 id="footer-form-heading" className="t-h3 text-ink">
+            Tell us what you&rsquo;re looking for
+          </h2>
+          <p className="mt-3 max-w-md text-sm leading-relaxed">
+            A house, a neighborhood, a number you need to hit. We read every message and answer
+            seven days a week.
+          </p>
+          {/* First/Last split matches the rest of the site's lead forms. */}
+          <div className="mt-7">
+            <LeadForm splitName submitLabel="Send Us A Message" />
+          </div>
         </section>
 
         <div>
@@ -47,51 +44,111 @@ export function Footer() {
             height={41}
             className="h-auto w-44"
           />
-          <p className="mt-8 text-sm font-bold uppercase tracking-[0.14em] text-ink">Reach Out</p>
-          <address className="mt-3 space-y-1 text-sm font-light not-italic">
+
+          <p className="t-eyebrow mt-9 text-ink">Reach Out</p>
+          <address className="mt-4 space-y-1 text-sm font-light not-italic">
             <p>{SITE.address.street}</p>
             <p>
               {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
             </p>
             <p>
-              <a href={SITE.phoneHref} className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink">
+              <a
+                href={SITE.phoneHref}
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink"
+              >
                 {SITE.phone}
               </a>
             </p>
             <p>
-              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink">
+              <a
+                href={`mailto:${SITE.email}`}
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-ink"
+              >
                 {SITE.email}
               </a>
             </p>
           </address>
+
+          <nav aria-label="Footer" className="mt-10 border-t border-[#e6e6e6] pt-8">
+            {/* inline-flex min-h-[24px]: text-sm links with no padding measured ~17px tall,
+                under the WCAG 2.5.8 (24px) pointer-target minimum. Height only. */}
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm font-light">
+              {FOOTER_NAV.map((item) =>
+                "external" in item && item.external ? (
+                  // /ai is served by an external rewrite, not an RSC route — a plain anchor
+                  // avoids a 404 from Next's link prefetch.
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ),
+              )}
+            </ul>
+          </nav>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1250px] px-4 pb-10 text-xs lg:px-8">
-        <p>
-          © {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
-        </p>
+      {/* Legal marks + disclaimer. The Equal Housing Opportunity logo appears on every page
+          because a real estate website is advertising, which is where HUD asks for it. The
+          REALTOR® mark is set as a word mark in our own type — the form NAR states as
+          preferred — and it is followed by the membership reference NAR's contextual-use rule
+          requires. See docs/parity/DESIGN-ROUND11.md §3 for the rules these follow. */}
+      <div className="mx-auto max-w-[1250px] px-4 pb-10 lg:px-8">
+        <div className="flex flex-col gap-5 border-t border-[#e6e6e6] pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+          <div className="flex items-center gap-5">
+            <EqualHousingMark className="h-8 w-auto shrink-0 text-stone" />
+            <p className="text-xs leading-relaxed">
+              Equal Housing Opportunity. Member of the National Association of REALTORS&reg;.
+            </p>
+          </div>
+          <p className="text-xs leading-relaxed sm:max-w-md sm:text-right">
+            &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
+          </p>
+        </div>
       </div>
 
       <div className="bg-ink text-paper/70">
         <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
-          <p>© {new Date().getFullYear()} {SITE.name}</p>
-          {/* inline-flex min-h-[24px]: the legal links are text-xs with no padding, so they were
-              ~13px tall — under the WCAG 2.5.8 (24px) touch-target minimum on mobile. This gives
-              them a real tap height without changing the type size or the desktop row. */}
+          <p>
+            &copy; {new Date().getFullYear()} {SITE.name}
+          </p>
+          {/* inline-flex min-h-[24px]: text-xs links with no padding were ~13px tall, under the
+              WCAG 2.5.8 (24px) pointer-target minimum on mobile. */}
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             <li>
-              <Link href="/privacy-policy" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
+              <Link
+                href="/privacy-policy"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/dmca-terms" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
+              <Link
+                href="/dmca-terms"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+              >
                 DMCA &amp; Terms of Service
               </Link>
             </li>
             <li>
-              <a href="/sitemap.xml" className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper">
+              <a
+                href="/sitemap.xml"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+              >
                 Sitemap
               </a>
             </li>

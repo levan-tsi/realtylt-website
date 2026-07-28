@@ -341,7 +341,7 @@
         <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">LT</div>
         <div>
           <div class="rlt-header-title">${CONFIG.BRAND_NAME}</div>
-          <div class="rlt-header-sub">RealtyLT · Realtor® in NY · Live MLS</div>
+          <div class="rlt-header-sub">RealtyLT · REALTOR® in NY · Live MLS</div>
         </div>
       </div>
       <div class="rlt-header-actions">
@@ -357,7 +357,7 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
     </div>
-    <div class="rlt-footer">RealtyLT · Levan Tsiklauri, Realtor®</div>
+    <div class="rlt-footer">RealtyLT · Levan Tsiklauri, REALTOR®</div>
   `;
   document.body.appendChild(panel);
 

@@ -10,7 +10,7 @@ import { SERVED_AREAS, SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Who We Are | Levan Tsiklauri, United Real Estate",
   description:
-    "Meet RealtyLT: Levan Tsiklauri, investor and Realtor with United Real Estate, serving the Hudson Valley and New York City from Lagrangeville, NY.",
+    "Meet RealtyLT: Levan Tsiklauri, investor and REALTOR® with United Real Estate, serving the Hudson Valley and New York City from Lagrangeville, NY.",
 };
 
 const VALUES = [
@@ -45,8 +45,8 @@ export default function WhoWeArePage() {
           <div className="absolute inset-0 bg-black/30" />
         </div>
         <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-32 lg:px-8">
-          <h1 id="wwa-hero" className="text-3xl font-light text-paper md:text-4xl">
-            Who <strong className="font-bold">We Are</strong>
+          <h1 id="wwa-hero" className="t-h1 text-paper">
+            Who <strong>We Are</strong>
           </h1>
         </div>
       </section>
@@ -64,10 +64,10 @@ export default function WhoWeArePage() {
                 className="h-full w-full object-cover grayscale"
               />
             </span>
-            <h2 id="agent-heading" className="mt-6 text-2xl text-ink-soft">
+            <h2 id="agent-heading" className="t-h3 mt-7 text-ink-soft">
               Levan Tsiklauri
             </h2>
-            <p className="mt-1 text-stone">Investor &amp; Realtor</p>
+            <p className="mt-1 text-stone">Investor &amp; REALTOR&reg;</p>
             <div className="mx-auto mt-7 flex w-fit flex-wrap justify-center gap-3">
               <Button href={SITE.phoneHref}>Call</Button>
               <Button href="/connect">Contact</Button>
@@ -76,7 +76,7 @@ export default function WhoWeArePage() {
           <Reveal delay={120}>
             <div className="mx-auto mt-12 max-w-2xl space-y-4 text-left leading-relaxed text-stone">
               <p>
-                RealtyLT is Levan Tsiklauri, an investor and Realtor with United Real Estate,
+                RealtyLT is Levan Tsiklauri, an investor and REALTOR&reg; with United Real Estate,
                 working the mid-Hudson region from Lagrangeville. Levan came to real estate the
                 practical way: buying, renovating, and managing property himself before ever
                 representing a client. That experience shapes how RealtyLT works today: numbers
@@ -116,7 +116,7 @@ export default function WhoWeArePage() {
       {/* ── Where we work */}
       <section className="bg-paper py-14" aria-labelledby="serve-heading">
         <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
-          <h2 id="serve-heading" className="text-2xl font-light text-ink">
+          <h2 id="serve-heading" className="t-h3 text-ink">
             Where We Work
           </h2>
           <ul className="mt-6 flex flex-wrap justify-center gap-2">

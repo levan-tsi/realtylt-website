@@ -38,8 +38,8 @@ export default function ConnectPage() {
         </div>
         {/* Live: centered title in the light band, pad ~51px */}
         <div className="relative mx-auto max-w-[1250px] px-4 py-[51px] text-center lg:px-8">
-          <h1 id="connect-hero" className="text-3xl font-light text-ink-soft md:text-[46px]">
-            Contact Us <strong className="font-bold">Anytime</strong>
+          <h1 id="connect-hero" className="t-h1 text-ink-soft">
+            Contact Us <strong>Anytime</strong>
           </h1>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default function ConnectPage() {
             />
             <p className="mt-4 text-2xl font-light text-stone">Levan Tsiklauri</p>
             <p className="text-sm font-bold uppercase tracking-[0.12em] text-stone">
-              Investor &amp; Realtor
+              Investor &amp; REALTOR&reg;
             </p>
             <address className="mt-5 space-y-1 text-sm not-italic text-stone">
               <p>
