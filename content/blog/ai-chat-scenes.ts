@@ -10,6 +10,22 @@
  *
  * House rules apply: no em dashes, no arrow glyphs, no claims not already made on the site. */
 
+/** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD,
+ * so the two can never disagree about length, dimensions or what the clip actually shows.
+ * Regenerating it is fully scripted: see docs/blog-flagship/FLAGSHIP-HANDOFF.md. */
+export const FILM = {
+  src: "/video/film-1140pm.mp4",
+  poster: "/video/film-1140pm-poster.jpg",
+  width: 1280,
+  height: 720,
+  seconds: 31,
+  /** ISO 8601, which is the only duration format VideoObject accepts. */
+  duration: "PT31S",
+  name: "11:40pm: what an AI chat assistant actually does in the gap",
+  description:
+    "A buyer asks a real estate website about a contingent offer at 11:40pm. The assistant answers, declines to invent what it does not know, searches the live MLS, texts the matches, writes the lead to the CRM, and books the call. Cut with live footage of the RealtyLT AI system at realtylt.com/ai.",
+} as const;
+
 export interface Move {
   /** The move itself, in the article's words. */
   lead: string;

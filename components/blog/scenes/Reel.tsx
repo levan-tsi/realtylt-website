@@ -1,25 +1,27 @@
+import { FILM } from "@/content/blog/ai-chat-scenes";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** SCENE — the film.
  *
- * Replaces the first attempt, which was honestly just a screen recording of this page
- * scrolling. This one is cut from three takes and actually demonstrates the product:
+ * Cut from two sources on ONE shared timeline (scripts/_scratch-stage/film.html carries the
+ * film clock and leaves a hole at 6s to 12s for the flight to drop into):
  *
- *   1. The galaxy flight into the neural brain, captured live from realtylt.com/ai. That is a
- *      real Three.js scene being flown by its own scroll-driven journey, not a mock-up.
- *   2. The brain with the "AI chat assistant" node lit, beside the real assistant answering a
- *      real question typed on camera. Nothing staged: it is the assistant that runs on the page.
- *   3. The 11:40pm demonstration, purpose-built for the film: the message arrives, the reply
- *      declines to invent an answer, and the machinery behind it fires in sequence.
+ *   1. A staged demonstration at 1920x1080: the question lands at 11:40pm, the reply declines
+ *      to invent what nobody knows, and the machinery behind it fires in sequence.
+ *   2. The galaxy reshaping into the neural map, live from realtylt.com/ai. Real Three.js,
+ *      flown by the page's own scroll-driven journey.
  *
- * PRODUCTION NOTE for whoever re-cuts this: segment 1 and 2 MUST be recorded headed against
- * installed Chrome. Headless Chromium has no real GPU, so the AI page detects no acceleration
- * and drops into "reduced mode" where the galaxy and brain are never drawn at all.
+ * PRODUCTION NOTES for whoever re-cuts this, both of which cost a pass to learn:
  *
- * mp4 only: the VP9 encode came out LARGER than the H.264 at matched quality, so a second
- * <source> would have been weight for nothing. H.264 is universally supported.
+ * - Segment 2 MUST be recorded headed against installed Chrome. Headless Chromium has no real
+ *   GPU, the page detects no acceleration and drops into reduced mode, and the galaxy and brain
+ *   are never drawn at all.
+ * - Do NOT record with Playwright's recordVideo. It is a fixed low-bitrate VP8 encoder (~880
+ *   kb/s in the first cut) and a moving starfield is the worst case there is for it. Every
+ *   frame here is a lossless PNG screenshot instead, which is why this cut is SHORTER than the
+ *   old one, at a higher bitrate, in a smaller file.
  *
- * `preload="none"` with a poster means the 5MB never loads for a reader who scrolls past, and
+ * `preload="none"` with a poster means zero bytes load for a reader who scrolls past, and
  * `autoPlay` is deliberately not set, which is the honest reading of prefers-reduced-motion.
  */
 export function Reel() {
@@ -29,7 +31,7 @@ export function Reel() {
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">Watch it work</p>
           <h2 className="mt-6 max-w-2xl text-2xl font-light leading-[1.25] tracking-[-0.015em] md:text-[34px]">
-            The galaxy, the brain, and a real answer at 11:40pm.
+            A question at 11:40pm, and everything that fires behind the answer.
           </h2>
         </Reveal>
 
@@ -42,26 +44,26 @@ export function Reel() {
               playsInline
               loop
               preload="none"
-              poster="/video/flagship-film-poster.jpg"
-              width={1280}
-              height={720}
+              poster={FILM.poster}
+              width={FILM.width}
+              height={FILM.height}
             >
-              <source src="/video/flagship-film.mp4" type="video/mp4" />
+              <source src={FILM.src} type="video/mp4" />
               Your browser cannot play this clip. Everything it shows is on this page as text and
               graphics, and the assistant itself is at /ai.
             </video>
           </div>
           <p className="mt-5 max-w-2xl text-sm leading-relaxed text-paper/55">
-            Silent, 50 seconds. The flight and the chat are captured live from the assistant
-            running at{" "}
+            Silent, {FILM.seconds} seconds. The flight through the galaxy into the neural map is
+            live footage of the system running at{" "}
             <a
               href="/ai#chat"
               className="text-paper/80 underline underline-offset-4 transition-colors hover:text-porchlight"
             >
               realtylt.com/ai
             </a>
-            , with a real question typed on camera. Nothing in it is a claim this page does not
-            already make.
+            . The 11:40pm exchange is staged for the film, and every line in it is something this
+            page already says the assistant does. For the unstaged version, go and ask it yourself.
           </p>
         </Reveal>
       </div>

@@ -2,7 +2,9 @@
  * BODIES ARE PLACEHOLDERS: owner supplies final articles from Drive (CHECKPOINT.md).
  * Adding a post = add an entry here; pages generate automatically. */
 
+import type { ArticleFilm } from "@/lib/blog/types";
 import { AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
+import { FILM } from "./ai-chat-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -28,6 +30,8 @@ export interface BlogPost {
    * quotes, links). When present it REPLACES `body` — a real article needs structure, and
    * a flat paragraph array cannot carry an H2. Set `body: []` alongside it. */
   markdown?: string;
+  /** A film that belongs to this post. Its presence is what emits VideoObject. */
+  film?: ArticleFilm;
   placeholder: boolean;
 }
 
@@ -70,6 +74,7 @@ export const POSTS: BlogPost[] = [
     body: [],
     placeholder: false,
     markdown: AI_CHAT_ASSISTANT_POST,
+    film: FILM,
   },
 
   {

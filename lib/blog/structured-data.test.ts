@@ -61,4 +61,33 @@ describe("articleStructuredData", () => {
     expect(faq).toHaveLength(2);
     expect(faq[0].name).toBe("Is it free?");
   });
+
+  it("adds VideoObject only when the article actually serves a film", () => {
+    const plain = md("## Section\n\nText.");
+    expect(articleStructuredData(plain).map((b) => (b as Record<string, unknown>)["@type"])).not.toContain(
+      "VideoObject",
+    );
+
+    const withFilm: Article = {
+      ...plain,
+      updated: "2026-07-28",
+      film: {
+        src: "/video/film-1140pm.mp4",
+        poster: "/video/film-1140pm-poster.jpg",
+        width: 1280,
+        height: 720,
+        duration: "PT31S",
+        name: "A film",
+        description: "What it shows.",
+      },
+    };
+    const blocks = articleStructuredData(withFilm) as Array<Record<string, unknown>>;
+    const video = blocks.find((b) => b["@type"] === "VideoObject")!;
+    expect(video).toBeDefined();
+    // Absolute URLs, or Google reads them as relative to schema.org.
+    expect(video.contentUrl).toBe(`${SITE.url}/video/film-1140pm.mp4`);
+    expect(video.thumbnailUrl).toEqual([`${SITE.url}/video/film-1140pm-poster.jpg`]);
+    expect(video.uploadDate).toBe("2026-07-28");
+    expect(video.duration).toBe("PT31S");
+  });
 });
