@@ -118,24 +118,26 @@ export default async function HomePage() {
                   container carry the focus state. */}
               <button
                 type="submit"
-                className="shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist"
               >
                 Search
               </button>
             </form>
-            {/* The same utility voice as the eyebrow above the headline — not a new style.
-                The hairline keeps the row reading as one instrument at widths where the
-                links sit beside the bar; when they wrap under it, it disappears. */}
+            {/* The site's utility-ACTION voice — 11px/700/0.14em, exactly what the county
+                chips speak (the eyebrow is the same size but wider-tracked at 0.22em; a
+                near-match to either would read as a mistake). The hairline keeps the row
+                reading as one instrument at widths where the links sit beside the bar;
+                when they wrap under it, it disappears. */}
             <div className="flex items-center gap-x-6 lg:border-l lg:border-paper/25 lg:pl-6">
               <Link
                 href="/selling"
-                className="py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+                className="py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline"
               >
                 Sell Your Home
               </Link>
               <Link
                 href="/home-value"
-                className="py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+                className="py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline"
               >
                 See Home Value
               </Link>
