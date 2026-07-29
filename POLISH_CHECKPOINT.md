@@ -18,14 +18,13 @@
 ##     79:50, 3:4, 16:5, 4:3 via .r12tmp/ph-render.mjs AND in the live rail with media
 ##     blocked. Same exports, pure vector 4.2KB. tsc clean, 506/506 both commits.
 ##
-## ── IN FLIGHT: FREE LOCAL IMAGE GEN (owner asked via YouTube link) ────────────────────────
-## Tool = Microsoft Mage-Flow (4B, MIT, released 2026-07-22; the video's "free image
-## generator"). microsoft/* HF repos now 401 anonymously — using the Comfy-Org/Mage-Flow
-## repack instead (official ComfyUI org). Setup at C:/Users/Levan/ComfyUI (v0.29.0, native
-## mage support): mage_flow_turbo_int8_convrot (4.16GB, fits the RTX 2060's 6GB) +
-## qwen3vl_4b_bf16 text encoder + mage VAE; venv torch cu126. Driver: ComfyUI/_mage_t2i.py
-## (4 steps, cfg 1.0). Machine reality: RTX 2060 6GB Turing -> no flash-attn, int8 + Comfy
-## offload; Python 3.14 venv. Verdict for the owner pending first generations.
+## ── DONE SAME DAY: FREE LOCAL IMAGE GEN (Mage-Flow) + two more owner refinements ─────────
+## Mage-Flow Turbo int8 via ComfyUI WORKS on this machine: 15-20s/image at 768-1024, 3.7GB
+## VRAM peak, clean FOR SALE sign text. Full setup + gotchas in memory
+## [[infra-mageflow-comfyui-local]]; launcher = C:/Users/Levan/ComfyUI/Start-MageFlow.bat.
+## Owner also redirected the hero CTAs a second time (pills -> the search bar's OWN 12px
+## box shape, see-through fill — "one family: solid bar, two ghosts") and caught the
+## placeholder chimney towering 45px over its own ridge (lowered 28px). Both committed.
 ##
 ## ═══ ROUND 12 DONE — 2026-07-29. THE HERO INSTRUMENT. Reasoning: docs/parity/DESIGN-ROUND12.md
 ## (Part 1 decodes the owner's voice-to-text brief; Part 4 is what shipped, verified.)
