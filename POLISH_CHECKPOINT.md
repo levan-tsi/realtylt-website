@@ -1,5 +1,32 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 13 DONE — 2026-07-29 (same day as 12). Owner feedback on 12, all three closed.
+##
+## (a) "Headline/search could be a little lower" — content pb 24/32 -> 12/16, cue block pb
+##     24 -> 16; the group hangs ~25px closer to the photograph's bottom edge.
+## (b) "Sell Your Home / See Home Value is just text — give it a box or recognizable CTA" —
+##     they are county-chip PILLS now (36px rounded-full, 11px/700/0.14em, border-paper/60),
+##     the site's compact action idiom; NOT the big rounded-xl boxes 12 removed. The text-
+##     link hairline divider went with them. CONTRAST PROBE LESSON: a bordered control puts
+##     its own white ring inside the element box and the 2nd-percentile lands on ring pixels
+##     -> false FAIL at 2.5:1. The r12 probe gained a per-target insetPx (interior-only for
+##     bordered targets); pills measure 15.1-17.4:1 on a 4.5 floor.
+## (c) "The coming-soon photo needs work, polish it a few rounds" — lib/idx/placeholder.ts
+##     rebuilt over three passes (real two-arc crescent instead of the smudge-disc fake, a
+##     moonlit Hudson river pool + glint behind the house's right shoulder, curved conifers,
+##     roof overhang / chimney cap / smoke wisps / lantern dot, calmer sky). Verified at
+##     79:50, 3:4, 16:5, 4:3 via .r12tmp/ph-render.mjs AND in the live rail with media
+##     blocked. Same exports, pure vector 4.2KB. tsc clean, 506/506 both commits.
+##
+## ── IN FLIGHT: FREE LOCAL IMAGE GEN (owner asked via YouTube link) ────────────────────────
+## Tool = Microsoft Mage-Flow (4B, MIT, released 2026-07-22; the video's "free image
+## generator"). microsoft/* HF repos now 401 anonymously — using the Comfy-Org/Mage-Flow
+## repack instead (official ComfyUI org). Setup at C:/Users/Levan/ComfyUI (v0.29.0, native
+## mage support): mage_flow_turbo_int8_convrot (4.16GB, fits the RTX 2060's 6GB) +
+## qwen3vl_4b_bf16 text encoder + mage VAE; venv torch cu126. Driver: ComfyUI/_mage_t2i.py
+## (4 steps, cfg 1.0). Machine reality: RTX 2060 6GB Turing -> no flash-attn, int8 + Comfy
+## offload; Python 3.14 venv. Verdict for the owner pending first generations.
+##
 ## ═══ ROUND 12 DONE — 2026-07-29. THE HERO INSTRUMENT. Reasoning: docs/parity/DESIGN-ROUND12.md
 ## (Part 1 decodes the owner's voice-to-text brief; Part 4 is what shipped, verified.)
 ##
