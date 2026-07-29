@@ -47,10 +47,10 @@ export const PLACEHOLDER_INNER = `<defs>
 <path d="M0 410 Q260 372 520 402 T800 398 V600 H0 Z" fill="#20374f"/>
 <g fill="#152736"><path d="M118 432 C123 406 127 396 137 378 C147 396 151 406 156 432 Z"/><path d="M150 442 C156 412 161 400 172 380 C183 400 188 412 194 442 Z"/><path d="M648 438 C653 412 657 402 666 384 C675 402 679 412 684 438 Z"/><path d="M680 446 C685 424 688 415 696 398 C704 415 707 424 712 446 Z"/></g>
 <circle cx="396" cy="336" r="58" fill="url(#rlt-ph-win)"/>
-<path d="M428 196 C433 186 424 178 429 166" fill="none" stroke="#cfd9e6" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
-<path d="M434 182 C438 175 432 170 435 162" fill="none" stroke="#cfd9e6" stroke-width="2.2" stroke-linecap="round" opacity="0.2"/>
+<path d="M428 224 C433 214 424 206 429 194" fill="none" stroke="#cfd9e6" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+<path d="M434 210 C438 203 432 198 435 190" fill="none" stroke="#cfd9e6" stroke-width="2.2" stroke-linecap="round" opacity="0.2"/>
 <g fill="#12233a">
-<rect x="420" y="204" width="17" height="44"/><rect x="416" y="199" width="25" height="7" rx="1.5"/>
+<rect x="420" y="232" width="17" height="40"/><rect x="416" y="227" width="25" height="7" rx="1.5"/>
 <path d="M308 330 L400 244 L492 330 L479 330 L400 256 L321 330 Z"/>
 <path d="M400 252 L474 322 L474 412 L326 412 L326 322 Z"/>
 </g>
