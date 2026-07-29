@@ -125,22 +125,21 @@ export default async function HomePage() {
                 Search
               </button>
             </form>
-            {/* The owner's call on the plain text links: "it's just text — give it a box or
-                proper recognizable CTA." These are the county-chip pills (36px, 11px/700/
-                0.14em uppercase, rounded-full), the compact action idiom the site already
-                speaks — recognizable as buttons without returning to the big rounded-xl
-                boxes that covered the video. Boxes delimit themselves, so the hairline
-                divider the text links needed is gone. */}
+            {/* Owner-directed, two refinements in one day: first "give it a box or proper
+                recognizable CTA" (pills), then "similar box shape type as search but see
+                through background" — so they share the search instrument's geometry now:
+                12px corners, outlined, transparent fill with the photo showing through.
+                Compact (40px) so they never re-become the big boxes that covered the video. */}
             <div className="flex items-center gap-x-3">
               <Link
                 href="/selling"
-                className="inline-flex min-h-[36px] items-center rounded-full border border-paper/60 px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                className="inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
                 Sell Your Home
               </Link>
               <Link
                 href="/home-value"
-                className="inline-flex min-h-[36px] items-center rounded-full border border-paper/60 px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                className="inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
                 See Home Value
               </Link>
