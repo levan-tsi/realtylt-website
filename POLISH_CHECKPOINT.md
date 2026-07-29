@@ -1,5 +1,61 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 12 DONE — 2026-07-29. THE HERO INSTRUMENT. Reasoning: docs/parity/DESIGN-ROUND12.md
+## (Part 1 decodes the owner's voice-to-text brief; Part 4 is what shipped, verified.)
+##
+## ── THE OWNER'S BRIEF, DECODED AND CLOSED ─────────────────────────────────────────────────
+## He rejected BOTH prior states of the hero search: butted together (pre-11) AND separated
+## by a gap (11). What he wanted was the third reading — properly CONNECTED: input + Search
+## share ONE glass container (12px shell, 8px nested button, 4px inset, concentric on the
+## site scale). Sell Your Home / See Home Value lost their outlined boxes and sit BESIDE the
+## bar as 11px uppercase text links (the county-chip action voice, exactly), behind a 24px
+## hairline that disappears when they wrap under. Four floating rectangles became one
+## instrument + one line of text; the photo/video the owner paid for carries the section.
+##
+## ── WHAT THAT FORCED, AND WHAT ELSE SHIPPED ───────────────────────────────────────────────
+## (a) The site's UNLAYERED global :focus-visible ring (see globals.css ~line 139 — beats
+##     every utility BY DESIGN) drew a hard rectangle inside the pill. New unlayered rule:
+##     .search-instrument:has(input:focus-visible) carries the same 2px paper ring on the
+##     container; the input's own ring is suppressed. Utilities CANNOT do this — do not try.
+## (b) LocationSuggest gained anchor="form" (dropdown spans the composed bar, mt-2). The
+##     default "input" path is untouched — verified live on /search.
+## (c) Scrim eased 85%/92/58 -> 80%/88/50, bar fill black/45, mobile hero min-h
+##     max(540px,82svh) — the mountain owns the first phone viewport.
+## (d) CONTRAST IS MEASURED: scripts/_scratch-r12-contrast.mjs (untracked, like all _scratch
+##     probes). The r11 probe SHREDS Tailwind v4 oklab() colors into billion:1 garbage — the
+##     r12 one resolves any color via dual-canvas compositing and rates /85 text per
+##     background pixel. h1 13.39/11.03, links 10.5-12.3, eyebrow 6.54/4.90 (390 is the
+##     thin one — re-measure if the scrim moves again), input 4.61. Floors 3.0/4.5.
+## (e) The five Why-carousel slides were STALE (round 11 changed every headline + merged the
+##     utility strips; the slides still advertised the old grotesque UI). Re-captured via
+##     scripts/build-why-slides.mjs; its scrollY fixed 84 -> 40 (was slicing the logo). If a
+##     capture comes back as a pure white frame, it is the unpainted-page race — re-run that
+##     slide, and check the sheet by EYE before committing.
+##
+## ── VERIFIED BY ME, IN THE FOREGROUND ─────────────────────────────────────────────────────
+## tsc clean · 506/506 tests · key routes 200 (/homes-for-sale bare 404 = catch-all by
+## design) · 0 overflow at 390/320 · input 16px · tap targets >=36px · JS-off keeps form +
+## both links · ArrowDown+Enter pick -> /search?q=Newburgh · plain Enter -> /search?q=Beacon
+## · dropdown/focus/hover states screenshotted and LOOKED AT (docs/design-r12/) · dev
+## overlay "2 Issues" = pre-existing media 503s + Next-16 localPatterns warning, NOT mine.
+##
+## ── OWNER DECISIONS STILL WAITING (unchanged from round 11) ───────────────────────────────
+## 1. The ambient Vimeo hero clip: vendor's, no licence record, third-party iframe on the
+##    LCP path. Recommendation stands: drop it, everyone gets the licensed still.
+## 2. REALTOR(R) marks = claim of current NAR membership; official block-R artwork must come
+##    from NAR's brand centre if he wants it.
+## 3. The two security items in PRELAUNCH-AUDIT.md par.2 (published-CMA enumeration, raw MLS
+##    MediaURLs) — owner decision + paired CRM change, not a patch from here.
+##
+## ── NEXT ROUND ────────────────────────────────────────────────────────────────────────────
+## Candidates, none urgent: extend the instrument pattern to /home-value's white address bar
+## IF the owner wants the rhyme (deliberately not done — he named the home page); the Next 16
+## images.localPatterns warning on /api/media?r= retry URLs (config change, measure first);
+## the media 503s for unsynced photo keys are the known storage-vs-availability gap.
+## A SECOND SESSION owns the blog surfaces (lib/blog/*, components/blog/*, content/blog/*,
+## docs/services/*.png churn) — attribute before you fix anything there.
+##
+##
 ## ═══ ROUND 11 DONE — 2026-07-28. DESIGN. Full reasoning: docs/parity/DESIGN-ROUND11.md
 ## (written BEFORE any code, updated at the end with what shipped and what I refused to build).
 ##

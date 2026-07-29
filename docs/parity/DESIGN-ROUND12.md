@@ -84,4 +84,32 @@ Rejected alternatives, so the next round doesn't relitigate:
 
 ## Part 4 — what shipped (updated at close)
 
-- (filled in at the end of the round)
+1. **The hero instrument** (Part 2, built as designed): one 12px glass container, Search
+   nested at 8px + 4px inset, the two paths as 11px uppercase text links behind a 24px
+   hairline that only exists at widths where they share the row. Suggestion dropdown spans
+   the instrument (`anchor="form"` on LocationSuggest; default unchanged elsewhere —
+   verified live on /search). The unlayered global focus ring drew a hard rectangle inside
+   the pill, so `.search-instrument:has(input:focus-visible)` moves the same 2px paper ring
+   to the container's true boundary.
+2. **Scrim eased** 85%/92/58 → 80%/88/50 and the **mobile hero is 82svh** (floor 540px) —
+   the photograph owns the first phone viewport. Bar fill deepened to black/45 to hold the
+   input's contrast footing.
+3. **Every floor measured, not eyeballed** — scripts/_scratch-r12-contrast.mjs: h1 13.39/
+   11.03, links 10.5-12.3, eyebrow 6.54/4.90, input 4.61, floors 3.0/4.5. The r11 probe
+   was shredding Tailwind v4's oklab() serialization into billion:1 garbage; the r12 probe
+   resolves colors via dual-canvas compositing and rates /85 text per background pixel.
+4. **The Why carousel advertises today's product.** All five slides re-captured after the
+   round-11 typeface/strip changes made them stale; builder's scrollY corrected 84 → 40
+   (the merged utility bar) which had been slicing the logo in half in the marketing art.
+5. Link voice corrected to the county-chip action voice exactly (11px/700/0.14em) and the
+   inert focus-visible utilities removed — the unlayered ring owns that job.
+
+Verified at close: tsc clean · 506/506 tests · route sweep 200 (the /homes-for-sale
+catch-all 404s bare by design) · zero overflow 390/320 · input 16px · tap targets ≥36px ·
+JS-off keeps form, input, both links · keyboard pick → /search?q=Newburgh · plain submit →
+/search?q=Beacon · dev-overlay "2 Issues" attributed to pre-existing media 503s + a Next 16
+localPatterns deprecation warning, not this round's changes.
+
+Not built, deliberately: extending the instrument pattern to /home-value's white address
+bar (different surface, owner named the HOME page; its bar is opaque white and reads fine),
+and any new signature element — round 11's refusal note stands.
