@@ -189,6 +189,9 @@ const toPin = (l: Listing): MapPin => ({
   beds: l.beds,
   baths: l.baths,
   office: l.listOfficeName,
+  // The pager's bound: what /api/media can actually serve (mirror marker), not the slim
+  // card's single cover URL.
+  photoCount: Math.max(l.photosMirrored ?? 0, l.photos.length ? 1 : 0),
 });
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
@@ -352,8 +355,13 @@ export function SearchClient() {
       // whole grid grows past the viewport instead of the text ellipsing. Current feed data
       // tops out at a 42-char address so nothing overflows today, but one longer row would
       // break the page sideways on a phone.
+      // The active highlight hugs the card's own 16px radius — the old ring-offset-2 drew a
+      // white gap between card and ring, which read as a misplaced box (owner-reported). Same
+      // azure as the map chip it mirrors, plus a soft same-hue lift instead of hard chrome.
       className={`min-w-0 scroll-mt-4 rounded-2xl transition-shadow ${
-        activeId === l.id ? "ring-2 ring-porchlight-deep ring-offset-2" : ""
+        activeId === l.id
+          ? "ring-2 ring-porchlight-deep shadow-[0_10px_28px_-10px_rgb(28_114_154/0.45)]"
+          : ""
       }`}
     >
       <ListingCard listing={l} variant="plain" />

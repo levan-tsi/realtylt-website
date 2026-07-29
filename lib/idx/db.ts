@@ -304,7 +304,9 @@ export class DbIdxClient implements IdxClient {
       return { pins, total };
     }
     const filters = searchFilters(params);
-    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName";
+    // photoCount rides the mirror marker: exactly "how many photos /api/media serves from
+    // storage", which is the popup pager's contract (indices past it fall back safely).
+    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName,photoCount:listing->photosMirrored";
 
     if (bounds) {
       const bbox =
@@ -317,7 +319,7 @@ export class DbIdxClient implements IdxClient {
         `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc&limit=${PIN_CAP}`,
         { count: true },
       );
-      return { pins: rows.filter((r) => r.lat && r.lng), total };
+      return { pins: rows.filter((r) => r.lat && r.lng).map((r) => ({ ...r, photoCount: r.photoCount ?? 0 })), total };
     }
 
     const base = `idx_listings?${sel}&${filters ? `${filters}&` : ""}order=id.asc`;
@@ -328,7 +330,7 @@ export class DbIdxClient implements IdxClient {
         count: offset === 0,
       });
       if (offset === 0) total = t;
-      for (const r of rows) if (r.lat && r.lng) pins.push(r);
+      for (const r of rows) if (r.lat && r.lng) pins.push({ ...r, photoCount: r.photoCount ?? 0 });
       if (rows.length < PIN_CHUNK) break;
     }
     return { pins, total };
@@ -340,6 +342,7 @@ function toPin(l: Listing): MapPin | null {
   return {
     id: l.id, price: l.price, lat: l.lat, lng: l.lng, address: l.address,
     city: l.city, zip: l.zip, beds: l.beds, baths: l.baths, office: l.listOfficeName,
+    photoCount: l.photos.length,
   };
 }
 

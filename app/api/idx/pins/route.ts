@@ -48,6 +48,7 @@ export async function GET(req: Request) {
           lng: round4(l.lng),
           address: l.address,
           city: l.city,
+          photoCount: l.photos.length,
           zip: l.zip,
           beds: l.beds,
           baths: l.baths,

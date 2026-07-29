@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { boundsOfPins, chipPrice, MAP_FONT, popupHtml, spreadPins, type MapViewProps } from "./map-shared";
+import { boundsOfPins, chipPrice, MAP_FONT, popupNode, spreadPins, type MapViewProps } from "./map-shared";
 import { loadMaps } from "@/lib/idx/maps-loader";
 
 /** Official Google Maps results map (live-site parity — Brivity renders Google Maps).
@@ -110,7 +110,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
             chip.textContent = chipPrice(p.price);
             chip.addEventListener("click", () => {
               onSelectRef.current?.(p.id);
-              info.setContent(popupHtml(p));
+              info.setContent(popupNode(p));
               info.setPosition(pos);
               info.open({ map });
             });

@@ -90,6 +90,8 @@ export interface MapPin {
   baths: number;
   /** MLS compliance — popups keep the "Listed with …" line. */
   office: string;
+  /** How many photos /api/media/{id}/{n} can serve — the popup pager's bound (0 = none). */
+  photoCount: number;
 }
 
 export type SortKey = "newest" | "oldest" | "featured" | "price-asc" | "price-desc";

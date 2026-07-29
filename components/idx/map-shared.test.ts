@@ -10,6 +10,7 @@ const pin = (over: Partial<MapPin>): MapPin => ({
   address: "1 Main St",
   city: "Beacon",
   zip: "12508",
+  photoCount: 0,
   beds: 3,
   baths: 2,
   office: "Test Realty",

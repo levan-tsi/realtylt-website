@@ -13,7 +13,7 @@ describe("GET /api/idx/pins — full-result map pins", () => {
     expect(json.pins.length).toBeLessThanOrEqual(json.total);
     const pin = json.pins[0];
     expect(Object.keys(pin).sort()).toEqual(
-      ["address", "baths", "beds", "city", "id", "lat", "lng", "office", "price", "zip"],
+      ["address", "baths", "beds", "city", "id", "lat", "lng", "office", "photoCount", "price", "zip"],
     );
     expect(pin.lat).not.toBe(0); // Null Island rows never ship
     // Coordinates ship rounded to 4 decimals (~11 m — zip-centroid pins are approximate

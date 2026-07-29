@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
 import { listingPath } from "@/lib/idx/listing-url";
 import { listingStats } from "@/lib/format";
+import { CardPhotos } from "./CardPhotos";
 import { FavoriteButton } from "./FavoriteButton";
 import { MlsImage } from "./MlsImage";
 
@@ -102,8 +103,15 @@ export function ListingCard({
         <div className="photo-zoom relative aspect-[79/50] overflow-hidden bg-mist">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
-              <MlsImage
-                src={l.photos[0]}
+              // Owner's ask: flip through the pictures right on the card. The slim card
+              // carries ONE cover URL; the pager addresses the rest as /api/media/{id}/{n},
+              // bounded by the mirror marker (0/absent = single photo, no arrows). The REAL
+              // count, uncapped — the map popup shows the same number, and each press costs
+              // exactly one request either way.
+              <CardPhotos
+                id={l.id}
+                cover={l.photos[0]}
+                count={l.photosMirrored ?? 1}
                 alt={`${l.address}, ${l.city}, NY`}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 priority={priority}

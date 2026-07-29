@@ -86,13 +86,84 @@ export function boundsOfPins(pins: MapPin[]): MapBounds | null {
   return { north, south, east, west };
 }
 
-/** Popup mini-card markup shared by both map engines (Google gets it as an HTML string). */
-export function popupHtml(p: MapPin): string {
+/** Popup mini-card shared by both map engines, built as a real DOM node so the photo pager's
+ * arrow buttons carry live listeners (Google's InfoWindow accepts an element directly; the
+ * Leaflet view mounts it via a ref). Owner's ask: the popup shows the listing's PICTURES,
+ * lets you flip through them without opening the listing, and links through to it.
+ *
+ * MLS-safety: photos load through the /api/media proxy ONE at a time — the pager swaps the
+ * single <img>'s src per click, so opening a popup costs one request and each arrow press
+ * exactly one more. Indices past the real set 302 to the branded coming-soon still, so a
+ * stale photoCount can never show a broken frame. Inline styles on purpose: InfoWindow
+ * content renders outside the app's stylesheet. */
+export function popupNode(p: MapPin): HTMLElement {
   const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`].filter(Boolean).join(" / ");
-  return `<div style="min-width:180px;font-family:${MAP_FONT}">
-<p style="margin:0;font-weight:700">${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}</p>
-<p style="margin:4px 0">${p.address}, ${p.city} ${p.zip}</p>
-<p style="margin:4px 0;font-size:11px;color:#6E7681">Listed with ${p.office}</p>
-<a href="${listingPath(p)}" style="color:#102c54;font-weight:700">View listing</a>
-</div>`;
+  const root = document.createElement("div");
+  root.style.cssText = `width:248px;font-family:${MAP_FONT}`;
+
+  if (p.photoCount > 0) {
+    const frame = document.createElement("div");
+    frame.style.cssText =
+      "position:relative;width:248px;height:156px;border-radius:8px;overflow:hidden;background:#eceff3";
+    const img = document.createElement("img");
+    img.alt = `${p.address}, ${p.city}`;
+    img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block";
+    let idx = 0;
+    const show = (n: number) => {
+      idx = ((n % p.photoCount) + p.photoCount) % p.photoCount;
+      img.src = `/api/media/${p.id}/${idx}`;
+      counter.textContent = `${idx + 1} / ${p.photoCount}`;
+    };
+    const counter = document.createElement("span");
+    counter.style.cssText =
+      "position:absolute;right:6px;bottom:6px;padding:2px 7px;border-radius:8px;background:rgb(0 0 0/.7);color:#fff;font:700 10px/1.6 " +
+      MAP_FONT + ";letter-spacing:.08em";
+    frame.appendChild(img);
+    if (p.photoCount > 1) {
+      const arrow = (side: "left" | "right", label: string, step: number) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", label);
+        b.style.cssText =
+          `position:absolute;top:50%;${side}:6px;transform:translateY(-50%);width:28px;height:28px;` +
+          "border-radius:9999px;border:0;cursor:pointer;background:rgb(255 255 255/.92);" +
+          "box-shadow:0 1px 4px rgb(0 0 0/.25);display:grid;place-items:center;padding:0";
+        b.innerHTML =
+          `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${side === "left" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"}"/></svg>`;
+        b.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          show(idx + step);
+        });
+        return b;
+      };
+      frame.appendChild(arrow("left", "Previous photo", -1));
+      frame.appendChild(arrow("right", "Next photo", 1));
+      frame.appendChild(counter);
+    }
+    show(0);
+    root.appendChild(frame);
+  }
+
+  // Feed strings go in as TEXT — the old popupHtml interpolated them into markup, and an
+  // address is not a place to trust angle brackets.
+  const line = (txt: string, css: string) => {
+    const el = document.createElement("p");
+    el.style.cssText = css;
+    el.textContent = txt;
+    root.appendChild(el);
+  };
+  line(`${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}`, "margin:8px 0 0;font-weight:700;font-size:14px;color:#000000");
+  line(`${p.address}, ${p.city} ${p.zip}`, "margin:3px 0 0;font-size:12px;color:#000000");
+  line(`Listed with ${p.office}`, "margin:3px 0 0;font-size:11px;color:#6E7681");
+
+  const link = document.createElement("a");
+  link.href = listingPath(p);
+  link.textContent = "View Listing";
+  link.style.cssText =
+    "display:block;margin-top:9px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
+    `text-align:center;font:700 11px/1.4 ${MAP_FONT};letter-spacing:.12em;text-transform:uppercase;text-decoration:none`;
+  root.appendChild(link);
+
+  return root;
 }

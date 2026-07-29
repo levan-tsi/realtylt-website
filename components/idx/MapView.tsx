@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { divIcon } from "leaflet";
-import Link from "next/link";
 import type { MapPin } from "@/lib/idx/types";
-import { listingPath } from "@/lib/idx/listing-url";
-import { boundsOfPins, chipPrice, MAP_FONT as FONT, spreadPins, type MapViewProps } from "./map-shared";
+import { boundsOfPins, chipPrice, MAP_FONT as FONT, popupNode, spreadPins, type MapViewProps } from "./map-shared";
 import "leaflet/dist/leaflet.css";
 
 /** Leaflet/OSM results map. PAGE-COUPLED: receives exactly the current page's listings as
@@ -48,14 +46,28 @@ function FitPins({ pins }: { pins: MapPin[] }) {
   return null;
 }
 
+/** Mounts the SHARED vanilla-DOM popup mini-card (photo pager + View Listing) inside a
+ * react-leaflet Popup, so both map engines show the identical thing. Built once per open —
+ * the pager's own listeners live on the node. */
+function PopupCard({ pin }: { pin: MapPin }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const host = ref.current;
+    if (!host) return;
+    const node = popupNode(pin);
+    host.appendChild(node);
+    return () => {
+      host.removeChild(node);
+    };
+  }, [pin]);
+  return <div ref={ref} />;
+}
+
 function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
   return (
     <>
       {pins.map((p) => {
         const active = p.id === selectedId;
-        const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`]
-          .filter(Boolean)
-          .join(" / ");
         return (
           <Marker
             key={p.id}
@@ -65,20 +77,8 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
             zIndexOffset={active ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(p.id) }}
           >
-            <Popup>
-              <div style={{ minWidth: 180 }}>
-                <p style={{ margin: 0, fontWeight: 700 }}>
-                  {chipPrice(p.price)}
-                  {bb ? ` · ${bb}` : ""}
-                </p>
-                <p style={{ margin: "4px 0" }}>
-                  {p.address}, {p.city} {p.zip}
-                </p>
-                <p style={{ margin: "4px 0", fontSize: 11, color: "#6E7681" }}>Listed with {p.office}</p>
-                <Link href={listingPath(p)} style={{ color: "#102c54", fontWeight: 700 }}>
-                  View listing
-                </Link>
-              </div>
+            <Popup minWidth={248}>
+              <PopupCard pin={p} />
             </Popup>
           </Marker>
         );
