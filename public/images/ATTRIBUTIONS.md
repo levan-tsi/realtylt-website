@@ -75,3 +75,5 @@ below as unresolved rather than quietly omitted.
 | public/images/why/our-save-search.webp | RealtyLT save-a-search | RealtyLT | Our own screenshot | [source](https://github.com/levan-tsi/realtylt-website) |
 | public/images/mls/onekey-mls.svg | One Key MLS mark | One Key MLS | Trademark, required IDX attribution | [source](https://www.onekeymls.com/) |
 | public/images/mls/onekey-mls-on-dark.svg | One Key MLS mark, light-on-dark | One Key MLS | Trademark, required IDX attribution | [source](https://www.onekeymls.com/) |
+| public/images/mls/coming-soon-manor.webp | "Photo coming soon" placeholder — moonlit manor | RealtyLT, generated locally with Microsoft Mage-Flow (MIT) | Our own generated artwork | [source](https://github.com/microsoft/Mage) |
+| public/images/mls/coming-soon-manor-notext.webp | "Photo coming soon" placeholder, wordless cut for overlay tiles | RealtyLT, generated locally with Microsoft Mage-Flow (MIT) | Our own generated artwork | [source](https://github.com/microsoft/Mage) |

@@ -38,6 +38,7 @@ export function MlsImage({
   maxRetries = RETRY_DELAYS_MS.length,
   onLoaded,
   onUnavailable,
+  noPhotoCaption = true,
 }: {
   src: string;
   alt: string;
@@ -62,6 +63,9 @@ export function MlsImage({
   maxRetries?: number;
   /** Called once the photo has actually rendered — lets an owner know the tile is real. */
   onLoaded?: () => void;
+  /** Portrait overlay tiles print their own price/address over the photo bottom — exactly where
+   * the placeholder's baked caption sits — so they ask for the wordless cut of the artwork. */
+  noPhotoCaption?: boolean;
   /** Called once every candidate has failed. When provided, this renders nothing instead of
    * the branded placeholder — the parent owns the surviving set and removes the tile. */
   onUnavailable?: () => void;
@@ -101,7 +105,7 @@ export function MlsImage({
     return release;
   }, [bustedSrc, needsSlot, failed, priority, paused]);
 
-  if (failed) return onUnavailable ? null : <NoPhoto />;
+  if (failed) return onUnavailable ? null : <NoPhoto caption={noPhotoCaption} />;
 
   return (
     <>

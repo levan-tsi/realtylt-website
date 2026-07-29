@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { Listing } from "@/lib/idx/types";
 import { listingPath } from "@/lib/idx/listing-url";
 import { listingStats } from "@/lib/format";
-import { PLACEHOLDER_INNER } from "@/lib/idx/placeholder";
 import { FavoriteButton } from "./FavoriteButton";
 import { MlsImage } from "./MlsImage";
 
@@ -37,20 +36,25 @@ export function priceLabel(l: { price: number | null | undefined; propertyType?:
 }
 
 /** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
- * still replicating into Storage). A quiet, intentional Hudson Valley dusk illustration — soft
- * hills, a gabled house, one lit azure "porch-light" window — the SAME artwork the /api/media route
- * serves (lib/idx/placeholder.ts), so the state reads identically whether the tile falls back here
- * or to the route's SVG. `slice` fills the tile like object-cover at any card/gallery size. */
-export function NoPhoto() {
+ * still replicating into Storage). OWNER TRIAL 2026-07-29: the "manor in the mist" artwork
+ * generated with the local Mage-Flow setup (see ATTRIBUTIONS.md), picked by the owner over the
+ * hand-drawn SVG — a moonlit stone manor with the azure-door accent and PHOTO COMING SOON in
+ * letterspaced serif. 29KB webp. object-[center_60%] biases the crop toward the wordmark band so
+ * landscape cards keep both the moon and the text; portrait cards slice width and lose neither.
+ * The /api/media route still serves the SVG (lib/idx/placeholder.ts) — if the owner keeps this
+ * direction, regenerate that too and retire the SVG in one move. */
+export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   return (
-    <div className="absolute inset-0 bg-mist" aria-hidden>
-      <svg
-        viewBox="0 0 800 600"
-        preserveAspectRatio="xMidYMid slice"
-        className="h-full w-full"
-        // Static, self-authored artwork string (no user input) shared with the media route.
-        // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: PLACEHOLDER_INNER }}
+    <div className="absolute inset-0 bg-ink" aria-hidden>
+      <Image
+        // caption=false is the same artwork with the wording edit-removed: portrait overlay
+        // tiles write their own price/address over the photo bottom, exactly where the baked
+        // caption sits, so those tiles show the wordless cut.
+        src={caption ? "/images/mls/coming-soon-manor.webp" : "/images/mls/coming-soon-manor-notext.webp"}
+        alt=""
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover object-[center_60%]"
       />
     </div>
   );
@@ -177,6 +181,7 @@ export function ListingCard({
               alt={`${l.address}, ${l.city}, NY`}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               priority={priority}
+              noPhotoCaption={false}
             />
           ) : (
             <Image
@@ -189,7 +194,7 @@ export function ListingCard({
             />
           )
         ) : (
-          <NoPhoto />
+          <NoPhoto caption={false} />
         )}
         <div
           aria-hidden
