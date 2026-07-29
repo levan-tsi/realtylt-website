@@ -69,52 +69,77 @@ export default async function HomePage() {
           {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
           <HomeHeroVideo />
           {/* Scrim, two layers. A light overall wash keeps the picture readable as a picture;
-              the bottom gradient is what the type actually sits on. It reaches further up and
-              lands darker than before because the section is taller now — the search control
-              needs the same contrast footing the headline has. */}
+              the bottom gradient is what the type actually sits on. Round 12 eased it (85%->80%,
+              92->88, 58->50): the control stack is half its former height, so the gradient can
+              hand the mid-frame back to the photograph. Floors re-measured after the ease with
+              scripts/_scratch-r12-contrast.mjs — every hero text target clears with margin. */}
           <div aria-hidden className="absolute inset-0 bg-black/20" />
           <div
             aria-hidden
-            className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-black/92 via-black/58 to-transparent"
+            className="absolute inset-x-0 bottom-0 h-[80%] bg-gradient-to-t from-black/88 via-black/50 to-transparent"
           />
         </div>
 
-        <div className="relative mx-auto flex min-h-[540px] max-w-[1250px] flex-col justify-end px-4 pb-6 pt-24 md:min-h-[660px] md:pb-8 lg:px-16">
+        {/* Mobile height is viewport-relative (svh, so browser chrome never causes a jump):
+            with the control stack compacted to one bar + one text row, a fixed 540px hero
+            ended mid-screen — the photograph should own the first phone viewport the way it
+            owns the desktop one. max() keeps 540px as the floor for short/landscape phones. */}
+        <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-6 pt-24 md:min-h-[660px] md:pb-8 lg:px-16">
           <p className="t-eyebrow text-paper/70">Hudson Valley &amp; New York City</p>
           <h1 id="home-hero" className="t-display mt-5 text-paper">
             Let&rsquo;s Find <strong>Home</strong>
           </h1>
 
-          {/* One control, contained. A 1250px-wide bar reads as chrome; a 620px control under
-              the headline reads as part of the composition. The gap between the field and the
-              button is the owner's other named defect — they were butted together. */}
-          <form action="/search" role="search" className="mt-9 flex max-w-[620px] gap-3">
-            <label htmlFor="home-search" className="sr-only">
-              Search for homes by town, zip, or address
-            </label>
-            <LocationSuggest
-              id="home-search"
-              dark
-              placeholder="Search for Homes"
-              className="w-full rounded-xl border border-paper/30 bg-black/30 px-5 py-4 text-paper backdrop-blur-[2px] transition-colors placeholder:text-paper/60 hover:border-paper/45 focus:border-paper/70 focus:outline-none"
-            />
-            {/* Solid white: the one primary action in the hero. The two paths below it are
-                outlined, so a visitor can tell at a glance which of the three is the point. */}
-            {/* Default size, not lg: the form row stretches its children, so the button already
-                matches the field's height and the extra horizontal padding only made it
-                overweight next to a 215px field on a phone. */}
-            <Button type="submit" variant="light" className="shrink-0">
-              Search
-            </Button>
-          </form>
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Button href="/selling" variant="outline-light">
-              Sell Your Home
-            </Button>
-            <Button href="/home-value" variant="outline-light">
-              See Home Value
-            </Button>
+          {/* One instrument, two quiet paths. The owner rejected both prior states of this
+              control — input and button butted together (pre-11) and separated by a gap (11).
+              The third reading is the right one: they share a single container, connected
+              because they share a body, breathing because of the 4px inset. The two secondary
+              CTAs lost their boxes entirely: four floating rectangles covered the picture,
+              and the picture is the luxury. Radii stay concentric on the site scale —
+              container 12px = button 8px + 4px inset. */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <form
+              action="/search"
+              role="search"
+              className="search-instrument relative flex w-full max-w-[560px] items-center rounded-xl border border-paper/30 bg-black/45 p-1 backdrop-blur-[2px] transition-colors focus-within:bg-black/55 hover:border-paper/45"
+            >
+              <label htmlFor="home-search" className="sr-only">
+                Search for homes by town, zip, or address
+              </label>
+              <LocationSuggest
+                id="home-search"
+                dark
+                anchor="form"
+                placeholder="Search for Homes"
+                className="w-full bg-transparent px-4 py-2.5 text-paper placeholder:text-paper/60 focus:outline-none"
+              />
+              {/* Not <Button>: its 12px radius and lifting hover are wrong for a control that
+                  lives inside another control — the nested action keeps still and lets the
+                  container carry the focus state. */}
+              <button
+                type="submit"
+                className="shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              >
+                Search
+              </button>
+            </form>
+            {/* The same utility voice as the eyebrow above the headline — not a new style.
+                The hairline keeps the row reading as one instrument at widths where the
+                links sit beside the bar; when they wrap under it, it disappears. */}
+            <div className="flex items-center gap-x-6 lg:border-l lg:border-paper/25 lg:pl-6">
+              <Link
+                href="/selling"
+                className="py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+              >
+                Sell Your Home
+              </Link>
+              <Link
+                href="/home-value"
+                className="py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+              >
+                See Home Value
+              </Link>
+            </div>
           </div>
         </div>
 

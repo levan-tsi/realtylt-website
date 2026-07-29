@@ -23,6 +23,7 @@ export function LocationSuggest({
   defaultValue = "",
   dark = false,
   onPick,
+  anchor = "input",
 }: {
   id: string;
   name?: string;
@@ -33,6 +34,9 @@ export function LocationSuggest({
   dark?: boolean;
   /** When set, selection calls this instead of navigating (search page filters). */
   onPick?: (s: Suggestion) => void;
+  /** "form": the dropdown spans the nearest positioned ancestor (a composed search bar that
+   * wraps input + button in one container) instead of just the input's own box. */
+  anchor?: "input" | "form";
 }) {
   const router = useRouter();
   const listId = useId();
@@ -80,7 +84,7 @@ export function LocationSuggest({
   }
 
   return (
-    <div ref={wrapRef} className="relative flex-1">
+    <div ref={wrapRef} className={anchor === "form" ? "flex-1" : "relative flex-1"}>
       <input
         id={id}
         type="search"
@@ -116,7 +120,7 @@ export function LocationSuggest({
           id={listId}
           role="listbox"
           aria-label="Location suggestions"
-          className={`absolute inset-x-0 top-full z-30 mt-1 overflow-hidden rounded-xl border shadow-lg ${
+          className={`absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"} overflow-hidden rounded-xl border shadow-lg ${
             dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
           }`}
         >

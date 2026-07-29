@@ -150,6 +150,19 @@ body {
   outline-color: var(--color-paper);
 }
 
+/* Composed search instrument (home hero): the input lives INSIDE a rounded container, so the
+ * global ring above would draw a hard rectangle inside the pill. The container carries the
+ * ring instead — same 2px/2px geometry, same paper colour (the instrument only exists on the
+ * dark hero), and it follows the container's radius. Focusing the input is still visibly
+ * indicated, just on the control's true boundary. The nested button keeps its own ring. */
+.search-instrument:has(input:focus-visible) {
+  outline: 2px solid var(--color-paper);
+  outline-offset: 2px;
+}
+.search-instrument input:focus-visible {
+  outline: none;
+}
+
 ::selection {
   background: var(--color-porchlight);
   color: #ffffff;
