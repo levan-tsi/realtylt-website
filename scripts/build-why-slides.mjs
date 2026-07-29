@@ -39,15 +39,16 @@ const SLIDES = [
   {
     name: "our-search",
     url: `${BASE}/search?county=dutchess`,
-    // Keep the logo + nav in frame (this has to read as OUR site); drop the two thin
-    // utility strips above it.
-    scrollY: 84,
+    // Keep the logo + nav in frame (this has to read as OUR site); drop the utility strip
+    // above it. Round 11 merged the two 42px strips into ONE 40px bar — the old scrollY 84
+    // then cropped into the nav and sliced the logo in half in the marketing art.
+    scrollY: 40,
     wait: 9000,
   },
   {
     name: "our-home-value",
     url: `${BASE}/home-value`,
-    scrollY: 84,
+    scrollY: 40,
     wait: 6000,
   },
   {
