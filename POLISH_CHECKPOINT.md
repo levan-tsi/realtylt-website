@@ -1,5 +1,30 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 13b DONE — 2026-07-29 evening. Owner-driven rapid iteration, all deployed READY.
+##
+## (a) COMING-SOON ART IS THE OWNER'S OWN: he generated the moonlit manor with "COMING SOON"
+##     script (Google Nano Banana Pro via ElevenLabs; file was in ComfyUI/output) and said use
+##     it for ALL no-photo states. public/images/mls/coming-soon{,-notext}.webp — the wordless
+##     cut for portrait overlay tiles was made by the LOCAL Mage-Flow EDIT model removing the
+##     sky text from his image. /api/media stable-empty now 302s to the static webp (2 pinned
+##     route tests updated); transient-503-text/plain contract untouched; the hand-drawn SVG
+##     module retired. Caption crops with object-[center_35%] so the lettering never clips.
+## (b) SEARCH CARDS page through photos in place: components/idx/CardPhotos.tsx — arrows
+##     hover-revealed (always-on for touch), always-on "2/33" counter, one keyed MlsImage so
+##     each press = exactly one /api/media request. Count bound = photosMirrored (the slim
+##     card carries ONE cover URL by design — l.photos.length is ALWAYS 1 on cards; don't
+##     rediscover that). Controls z-20 over the whole-card link, stopPropagation.
+## (c) MAP POPUP shows photos + pager + VIEW LISTING: ONE vanilla-DOM builder
+##     (map-shared.popupNode) for BOTH engines — Google InfoWindow takes the element, Leaflet
+##     mounts via ref. MapPin gained required photoCount (mirror-marker semantics in db.ts;
+##     PostgREST select can't do jsonb_array_length, photosMirrored IS the proxy's bound).
+##     DEV RUNS THE GOOGLE ENGINE (key set) — probe .gm-style-iw, not .leaflet-popup.
+## (d) Card hover highlight: ring-offset-2's white gap read as a broken box (owner) — ring
+##     now hugs the card radius + soft same-hue shadow.
+## All driven for real on /search (arrows flip, URL stays, popup href correct, 0 overflow at
+## 390); tsc clean; 506/506; BOTH deploys verified READY on Vercel. Mage-Flow EDIT model also
+## installed (mage_flow_edit_turbo_int8) — text removal from images proven twice.
+##
 ## ═══ ROUND 13 DONE — 2026-07-29 (same day as 12). Owner feedback on 12, all three closed.
 ##
 ## (a) "Headline/search could be a little lower" — content pb 24/32 -> 12/16, cue block pb
