@@ -1,5 +1,4 @@
 import { getListingMedia } from "@/lib/idx/media";
-import { PLACEHOLDER_SVG } from "@/lib/idx/placeholder";
 import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
 
 /** /api/media/{listingId}/{idx} — same-origin photo proxy (the ONLY compliant way to show MLS
@@ -25,12 +24,14 @@ import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
  *    were a photo of the house, MlsImage's self-healing retry ladder never ran, and the client had
  *    no way to tell a real photo from a placeholder. Now the browser errors, the tile retries, and
  *    if it never recovers the gallery DROPS it (components/idx/ListingPhotos.tsx).
- *  • STABLE "this listing has no photo at this index" → the branded SVG at `200`, CDN-cached. That
- *    is the one legitimate placeholder: nothing real can ever appear in that slot.
+ *  • STABLE "this listing has no photo at this index" → a CDN-cached 302 to the branded
+ *    coming-soon still. That is the one legitimate placeholder: nothing real can ever appear
+ *    in that slot.
  */
 
-// The branded "photo coming soon" artwork is shared with components/idx/ListingCard.tsx NoPhoto
-// via lib/idx/placeholder.ts so both surfaces render the identical scene (see that file).
+// The branded "photo coming soon" artwork is the owner-picked still at
+// public/images/mls/coming-soon.webp — the SAME image ListingCard's NoPhoto renders, so the
+// state reads identically whether a tile falls back client-side or hits this route.
 
 // Aggressive CDN cache so repeat views never re-hit the media host: fresh at the edge for a day,
 // then served stale for a week while it revalidates in the background → the media host is hit
@@ -68,11 +69,12 @@ function placeholder(cacheControl: string, status: "empty" | "unavailable"): Res
     });
   }
   // "empty" is a stable fact — there is no photo at this index and never will be for this sync.
-  // The branded artwork is the honest answer and can be cached like an image.
-  return new Response(PLACEHOLDER_SVG, {
-    status: 200,
+  // The branded artwork is the honest answer: a redirect to the owner-picked "coming soon"
+  // still (static asset, CDN-cached), the same picture every no-photo surface shows.
+  return new Response(null, {
+    status: 302,
     headers: {
-      "Content-Type": "image/svg+xml",
+      Location: "/images/mls/coming-soon.webp",
       "Cache-Control": cacheControl,
       "X-Media-Status": status,
     },

@@ -36,25 +36,24 @@ export function priceLabel(l: { price: number | null | undefined; propertyType?:
 }
 
 /** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
- * still replicating into Storage). OWNER TRIAL 2026-07-29: the "manor in the mist" artwork
- * generated with the local Mage-Flow setup (see ATTRIBUTIONS.md), picked by the owner over the
- * hand-drawn SVG — a moonlit stone manor with the azure-door accent and PHOTO COMING SOON in
- * letterspaced serif. 29KB webp. object-[center_60%] biases the crop toward the wordmark band so
- * landscape cards keep both the moon and the text; portrait cards slice width and lose neither.
- * The /api/media route still serves the SVG (lib/idx/placeholder.ts) — if the owner keeps this
- * direction, regenerate that too and retire the SVG in one move. */
+ * still replicating into Storage). The artwork is the OWNER'S OWN generation (2026-07-29, Google
+ * Nano Banana Pro via ElevenLabs — see ATTRIBUTIONS.md): a moonlit stone manor, azure door, and
+ * COMING SOON in luminous script across the sky. Same image the /api/media route redirects to on
+ * its stable-empty path, so the state reads identically on every surface. The caption sits in the
+ * SKY, so landscape crops keep it; caption=false is the wordless cut (the sky text edit-removed
+ * with the local Mage-Flow edit model) for portrait overlay tiles, which would slice the words
+ * mid-letter and then print their own price over the photo anyway. */
 export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   return (
     <div className="absolute inset-0 bg-ink" aria-hidden>
       <Image
-        // caption=false is the same artwork with the wording edit-removed: portrait overlay
-        // tiles write their own price/address over the photo bottom, exactly where the baked
-        // caption sits, so those tiles show the wordless cut.
-        src={caption ? "/images/mls/coming-soon-manor.webp" : "/images/mls/coming-soon-manor-notext.webp"}
+        src={caption ? "/images/mls/coming-soon.webp" : "/images/mls/coming-soon-notext.webp"}
         alt=""
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="object-cover object-[center_60%]"
+        // Caption cut: bias the crop toward the sky so landscape cards never shave the
+        // lettering's ascenders; the wordless cut centers on the house.
+        className={caption ? "object-cover object-[center_35%]" : "object-cover"}
       />
     </div>
   );

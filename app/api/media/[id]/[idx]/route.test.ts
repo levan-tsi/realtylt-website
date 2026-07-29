@@ -88,11 +88,11 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a FAKE photo)", 
     expect(body).not.toContain("Photo coming soon");
   });
 
-  it("serves a CDN-cacheable SVG when the listing has no photo at that index", async () => {
+  it("redirects to the branded coming-soon still when the listing has no photo at that index", async () => {
     const fetchMock = stubImage();
     const res = await call("L1", "5");
-    expect(res.status).toBe(200);
-    expect(res.headers.get("Content-Type")).toBe("image/svg+xml");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.webp");
     expect(res.headers.get("Cache-Control")).toContain("s-maxage=3000");
     expect(res.headers.get("Cache-Control")).not.toContain("no-store");
     expect(res.headers.get("X-Media-Status")).toBe("empty");
@@ -109,8 +109,8 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a FAKE photo)", 
     // The placeholder is legitimate in exactly one situation: this index has no photo and never
     // will for this sync. Anything transient must stay undecodable so the client can drop the tile.
     const res = await call("L1", "5");
-    expect(res.status).toBe(200);
-    expect(await res.text()).toContain("Photo coming soon");
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.webp");
   });
 });
 
