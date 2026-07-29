@@ -15,18 +15,26 @@ loading the GPU during the old capture); measured old-vs-new bright-pixel densit
 0.227% — the master was never actually dim, the **crf 20 web encode was crushing the dark
 starfield**, so the web copy now encodes at **crf 18** (1436 kb/s, 6.2MB).
 
-The narration (LT clone, natural rate; timed to the film clock; none reads the screen except the
-close, on purpose):
+The narration (LT clone, natural rate; STORY V2, owner 2026-07-29: hook + sell the money).
+Grounded in the r/NewTubers 349-video hits-vs-flops study (found via the last30days skill):
+hits open with a CONCRETE, CHECKABLE number or claim that pays off the promise; atmospheric
+warmups and greetings correlate with flops; pace is baseline, not a differentiator. The $6,000
+is the LeadsCalculator's own default commission, so the page defends the film's hook number.
 
 | start | line |
 |---|---|
-| 0.30 | Eleven forty at night. This is when buyers shop. |
-| 4.15 | A real question. Most sites would answer with a form. |
-| 9.10 | This is the AI behind that website. And it never guesses. |
+| 0.30 | Last night, a six thousand dollar lead messaged your website. |
+| 4.90 | A real question. Most sites would answer with a form. |
+| 9.10 | This is the AI that answers for you. And it never guesses. |
 | 13.85 | It says so, honestly. Then it texts real listings from the live MLS. |
 | 20.10 | Search, text, transcript, all in the CRM. The call: booked by morning. |
 | 26.20 | It answered at eleven forty. You called at nine. |
-| 30.80 | Try it yourself, at realty L T dot com, slash A I. |
+| 30.80 | Keep the next one. Realty L T dot com, slash A I. |
+
+**The flight capture must pin the quality governor.** The page's adaptive governor reads the
+screenshot cadence as single-digit fps and dims the starfield two tiers within seconds — every
+pre-2026-07-29 capture was silently degraded this way. `_scratch-film-flight.mjs` now calls
+`window.__qt.force(0)` and truncates `__qt.tiers` before rolling; keep that.
 
 Retimed beats in film.html: .close in 25.30 / text up 25.80, out 29.30; .cta in 29.60 / .in up
 29.90 / .f 30.90. Stage render range is [0,6]+[12,36]. Pipeline: `_scratch-vo/gen11.py lt` (per
