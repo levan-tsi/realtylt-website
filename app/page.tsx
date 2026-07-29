@@ -84,7 +84,9 @@ export default async function HomePage() {
             with the control stack compacted to one bar + one text row, a fixed 540px hero
             ended mid-screen — the photograph should own the first phone viewport the way it
             owns the desktop one. max() keeps 540px as the floor for short/landscape phones. */}
-        <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-6 pt-24 md:min-h-[660px] md:pb-8 lg:px-16">
+        {/* pb tightened round 13 ("could be a little lower"): the group hangs closer to the
+            section's bottom edge, and the scroll cue's own block below shrank to match. */}
+        <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-3 pt-24 md:min-h-[660px] md:pb-4 lg:px-16">
           <p className="t-eyebrow text-paper/70">Hudson Valley &amp; New York City</p>
           <h1 id="home-hero" className="t-display mt-5 text-paper">
             Let&rsquo;s Find <strong>Home</strong>
@@ -123,21 +125,22 @@ export default async function HomePage() {
                 Search
               </button>
             </form>
-            {/* The site's utility-ACTION voice — 11px/700/0.14em, exactly what the county
-                chips speak (the eyebrow is the same size but wider-tracked at 0.22em; a
-                near-match to either would read as a mistake). The hairline keeps the row
-                reading as one instrument at widths where the links sit beside the bar;
-                when they wrap under it, it disappears. */}
-            <div className="flex items-center gap-x-6 lg:border-l lg:border-paper/25 lg:pl-6">
+            {/* The owner's call on the plain text links: "it's just text — give it a box or
+                proper recognizable CTA." These are the county-chip pills (36px, 11px/700/
+                0.14em uppercase, rounded-full), the compact action idiom the site already
+                speaks — recognizable as buttons without returning to the big rounded-xl
+                boxes that covered the video. Boxes delimit themselves, so the hairline
+                divider the text links needed is gone. */}
+            <div className="flex items-center gap-x-3">
               <Link
                 href="/selling"
-                className="py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline"
+                className="inline-flex min-h-[36px] items-center rounded-full border border-paper/60 px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
                 Sell Your Home
               </Link>
               <Link
                 href="/home-value"
-                className="py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-paper/85 underline-offset-[6px] transition-colors hover:text-paper hover:underline"
+                className="inline-flex min-h-[36px] items-center rounded-full border border-paper/60 px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
               >
                 See Home Value
               </Link>
@@ -146,7 +149,7 @@ export default async function HomePage() {
         </div>
 
         {/* Scroll cue — subtle "more below" chevron, now sitting on the photograph. */}
-        <div className="relative flex justify-center pb-6">
+        <div className="relative flex justify-center pb-4">
           <ScrollCue targetId="value" label="Scroll to home value" />
         </div>
       </section>
