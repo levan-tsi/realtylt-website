@@ -2,24 +2,37 @@
 
 ## STATUS (updated 2026-07-29, session 6: the film is narrated + /ai links in)
 
-**The film now has a voiceover** (owner: "an ElevenLabs-style voice explaining details"). No paid
-TTS existed anywhere (Higgsfield 0 credits, no ElevenLabs key in any env/Vercel/n8n), so the voice
-is **Microsoft Edge neural TTS** (`edge-tts`, free, no key): `en-US-AndrewMultilingualNeural`,
-seven timed lines mixed at -16 LUFS. Swap to ElevenLabs later by regenerating the same seven lines.
-The cut is now **33s**: the old cut faded to black at 30.6-31.0, so the clean CTA frame at 30.5 is
-held to 32.5 and the fade lands as the URL line ends.
+**The film is narrated by the OWNER'S OWN CLONED VOICE.** The ask was "an ElevenLabs voice
+explaining details"; mid-session the owner saved `ELEVENLABS_API_KEY` as a **Windows user env
+var** (read it via `(Get-ItemProperty HKCU:\Environment).ELEVENLABS_API_KEY` — a running session
+does not inherit a fresh setx). The account carries his clone: voice **`LT`,
+id `7AxhG2AEa5XhwSrAudqY`** — use it for RealtyLT narration; he confirmed it is his. The first
+pass used free Edge TTS (`edge-tts` + truststore, voice AndrewMultilingualNeural) — keep that as
+the no-key fallback. **The clone reads ~1.4x slower than Edge: retime the FILM to the voice,
+never speed up a real person's voice.** The close and CTA beats moved later in film.html and the
+cut is now **36s** (fade 35.5-36.0). The flight was retaken per the owner (other agents were
+loading the GPU during the old capture); measured old-vs-new bright-pixel density 0.215% vs
+0.227% — the master was never actually dim, the **crf 20 web encode was crushing the dark
+starfield**, so the web copy now encodes at **crf 18** (1436 kb/s, 6.2MB).
 
-The narration (each line timed to the film clock; none reads the screen except the close, on purpose):
+The narration (LT clone, natural rate; timed to the film clock; none reads the screen except the
+close, on purpose):
 
-| start | line | rate |
-|---|---|---|
-| 0.30 | Eleven forty at night. This is when buyers shop. | +0% |
-| 3.75 | A real question, on a real listing. Most sites would answer with a form. | +0% |
-| 8.60 | This is the AI behind that website. And it never guesses. | +0% |
-| 13.60 | It says so, honestly. Then it texts real listings from the live MLS. | +8% |
-| 18.90 | Search, text, transcript, all in the CRM. The call: booked by morning. | +8% |
-| 24.50 | It answered at eleven forty. You called at nine. | +0% |
-| 27.70 | Try it yourself, at realty L T dot com, slash A I. | +0% |
+| start | line |
+|---|---|
+| 0.30 | Eleven forty at night. This is when buyers shop. |
+| 4.15 | A real question. Most sites would answer with a form. |
+| 9.10 | This is the AI behind that website. And it never guesses. |
+| 13.85 | It says so, honestly. Then it texts real listings from the live MLS. |
+| 20.10 | Search, text, transcript, all in the CRM. The call: booked by morning. |
+| 26.20 | It answered at eleven forty. You called at nine. |
+| 30.80 | Try it yourself, at realty L T dot com, slash A I. |
+
+Retimed beats in film.html: .close in 25.30 / text up 25.80, out 29.30; .cta in 29.60 / .in up
+29.90 / .f 30.90. Stage render range is [0,6]+[12,36]. Pipeline: `_scratch-vo/gen11.py lt` (per
+line: `gen11.py lt 1.0 <i>`), then `_scratch-vo/assemble36.mjs` (VO mix, master crf 16 from the
+frame sequence, web crf 18). Narrated 1080p master for YouTube:
+`scripts/_scratch-video/film-master-1080-vo-lt.mp4`, local only.
 
 Traps that cost time in this pass:
 - **AVG MITMs Python TLS too**: `pip install truststore` + `truststore.inject_into_ssl()` before
