@@ -18,7 +18,9 @@ import { Reveal } from "@/components/ui/Reveal";
  *
  * `preload="none"` with a poster means zero bytes load for a reader who scrolls past, so a film
  * costs a page nothing until somebody presses play. `autoPlay` is deliberately absent, which is
- * the honest reading of prefers-reduced-motion.
+ * the honest reading of prefers-reduced-motion. The film is NARRATED (owner 2026-07-29), so the
+ * element must not be `muted` and must not `loop` — playback is user-initiated, sound is the
+ * point, and a looping narration restarts itself forever.
  */
 export function Film({
   film,
@@ -48,9 +50,7 @@ export function Film({
             <video
               className="block h-auto w-full"
               controls
-              muted
               playsInline
-              loop
               preload="none"
               poster={film.poster}
               width={film.width}

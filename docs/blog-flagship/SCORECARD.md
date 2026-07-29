@@ -223,6 +223,16 @@ Assembly: ffmpeg-static installed with --no-save so package.json is untouched. S
 because the VP9 encode came out LARGER than H.264 at matched quality. Stage file for segment 3 is
 scripts/_scratch-stage/phone.html; recorders are scripts/_scratch-film-a.mjs and -film-b.mjs.
 
+## RE-MEASURED 2026-07-29 — still 90.5 / 100 (the film gained narration)
+
+Session 6 gave the film a timed voiceover (edge-tts Andrew, seven lines, 33s cut with the CTA held
+clean through the URL line) and unmuted the player. Same reasoning as the re-cut before it: C3 was
+already satisfied by having a video, so a better video moves QUALITY, not the rubric. A narrated
+explainer is closer to what the C3 sources actually measure ("video or animated explainer"), but
+nudging my own score for my own work is the self-grading this file exists to prevent. 90.5 stands.
+The remaining 9.5 is unchanged: A1 original data (deferred on honest sample-size grounds), A2
+cost/setup/privacy coverage, C1 body imagery in the middle third, and judgement rounding.
+
 ## RE-MEASURED 2026-07-28 — still 90.5 / 100, and why that is the honest number
 
 This session re-cut the film, fixed a hydration fault, and turned the page into a template. The

@@ -1,6 +1,49 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (updated 2026-07-28, session 5: the film re-cut and the template)
+## STATUS (updated 2026-07-29, session 6: the film is narrated + /ai links in)
+
+**The film now has a voiceover** (owner: "an ElevenLabs-style voice explaining details"). No paid
+TTS existed anywhere (Higgsfield 0 credits, no ElevenLabs key in any env/Vercel/n8n), so the voice
+is **Microsoft Edge neural TTS** (`edge-tts`, free, no key): `en-US-AndrewMultilingualNeural`,
+seven timed lines mixed at -16 LUFS. Swap to ElevenLabs later by regenerating the same seven lines.
+The cut is now **33s**: the old cut faded to black at 30.6-31.0, so the clean CTA frame at 30.5 is
+held to 32.5 and the fade lands as the URL line ends.
+
+The narration (each line timed to the film clock; none reads the screen except the close, on purpose):
+
+| start | line | rate |
+|---|---|---|
+| 0.30 | Eleven forty at night. This is when buyers shop. | +0% |
+| 3.75 | A real question, on a real listing. Most sites would answer with a form. | +0% |
+| 8.60 | This is the AI behind that website. And it never guesses. | +0% |
+| 13.60 | It says so, honestly. Then it texts real listings from the live MLS. | +8% |
+| 18.90 | Search, text, transcript, all in the CRM. The call: booked by morning. | +8% |
+| 24.50 | It answered at eleven forty. You called at nine. | +0% |
+| 27.70 | Try it yourself, at realty L T dot com, slash A I. | +0% |
+
+Traps that cost time in this pass:
+- **AVG MITMs Python TLS too**: `pip install truststore` + `truststore.inject_into_ssl()` before
+  edge-tts, or every request dies on CERTIFICATE_VERIFY_FAILED.
+- **`tpad stop_mode=clone` clones the LAST frame, which is mid-fade** on this cut. Measure the
+  fade with signalstats YAVG (16.8 clean, 0.2 black), trim to the clean frame, hold THAT.
+- **astats `reset` is in FRAMES, not seconds** — `reset=0.25` silently gives a cumulative average
+  that reads flat and proves nothing. Verify alignment with `silencedetect` against the schedule.
+- **The player had `muted` + `loop`** from its silent days; a narrated film needs neither (play is
+  user-initiated, and a looping narration restarts itself forever). Both removed.
+- The VO pipeline (gen.py + assemble.mjs) is gitignored under `scripts/_scratch-vo/`; the words
+  and offsets above are the durable copy. One generation from the 1080p master
+  (`scripts/_scratch-video/film-master-1080.mp4`, local only): crf 14 narrated master, then the
+  web 720 copy from it. A narrated master for YouTube sits beside it as
+  `film-master-1080-vo.mp4`.
+
+**The /ai page now links back to this post.** In repo `realtylt-ai-page` (branch `windows-main`,
+deploys by push + `npx vercel promote`): each service panel shows a bordered "from the blog" card
+below "Read the use cases and FAQ", driven by a `BLOG_POST` map keyed like `SERVICE_SLUG`, plus a
+crawlable link in the sr-only SEO mirror. Only `chat` is mapped today; add one line there as each
+new topic ships. The owner explicitly did NOT want a services directory in the /ai outro (built,
+then removed on his correction).
+
+## EARLIER STATUS (2026-07-28, session 5: the film re-cut and the template)
 
 **The page is live and green.** `node scripts/score-flagship.mjs ai-chat-assistant-real-estate-website`
 passes 19/19 mechanical checks. The same gate scores the untreated workflow post 9/19 and exits 1,

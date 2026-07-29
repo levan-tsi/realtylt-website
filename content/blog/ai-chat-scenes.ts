@@ -20,9 +20,9 @@ export const FILM = {
   poster: "/video/film-1140pm-poster.jpg",
   width: 1280,
   height: 720,
-  seconds: 31,
+  seconds: 33,
   /** ISO 8601, which is the only duration format VideoObject accepts. */
-  duration: "PT31S",
+  duration: "PT33S",
   name: "11:40pm: what an AI chat assistant actually does in the gap",
   description:
     "A buyer asks a real estate website about a contingent offer at 11:40pm. The assistant answers, declines to invent what it does not know, searches the live MLS, texts the matches, writes the lead to the CRM, and books the call. Cut with live footage of the RealtyLT AI system at realtylt.com/ai.",
@@ -218,7 +218,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       eyebrow: "Watch it work",
       heading: "A question at 11:40pm, and everything that fires behind the answer.",
       caption: [
-        `Silent, ${FILM.seconds} seconds. The flight through the galaxy into the neural map is live footage of the system running at `,
+        `Narrated, ${FILM.seconds} seconds. The flight through the galaxy into the neural map is live footage of the system running at `,
         { href: "/ai#chat", label: "realtylt.com/ai" },
         ". The 11:40pm exchange is staged for the film, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
       ],
