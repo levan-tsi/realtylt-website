@@ -1,6 +1,53 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (updated 2026-07-29, session 6: the film is narrated + /ai links in)
+## STATUS (updated 2026-07-30, session 7: the CONTENT FACTORY — resume HERE)
+
+**NEXT SESSION'S JOB: finish and ship the first short-form story ad, "The $6,000 lead."**
+Everything is staged; pick up in this order:
+
+1. **Generate the 2 missing shots in Google Flow** (Chrome, via the claude-in-chrome tools —
+   the owner granted standing permission to take over Flow and the Gemini app): shot4 =
+   golden-hour aerial over Hudson Valley riverfront homes; shot6 = handshake on a craftsman
+   porch, agent + couple, morning light. Flow project "Jul 30, 10:41 AM"
+   (labs.google/fx/tools/flow). **The owner bought Google AI Pro on his PERSONAL gmail
+   `levan.realtylt@gmail.com`** — logged into Chrome alongside the Workspace account; use the
+   personal account's credit pool (Workspace lost Flow bundling 2026-07-07; that question is
+   settled, do not reopen it). Flow agent settings: confirm-before-generating ON (approve each
+   spend), video x1 16:9, Flash-tier model. The first 4 clips are downloaded and organized.
+2. **Assemble in Remotion** (`C:/Users/Levan/realtylt-stories`, blank template, installed and
+   answering). Footage: `public/footage/shot{1,2,3,5}-*.mp4` (8s 720p each). Cut: shots
+   1→2→3→4→5→6, LT-clone VO (write fresh short ad lines — hook rule below), big mobile-first
+   timed captions, close on realtylt.com/ai. Also cut a 9:16 vertical — that is the actual ad
+   format the owner wants for Facebook/IG/Shorts.
+3. **VO splice fix**: the owner hears cut-off tails between lines. Pad each ElevenLabs line
+   with trailing silence and crossfade ~80ms at joins in the ffmpeg mix. His clone still needs
+   a fresh 2-3 minute recording (he knows; one gentle reminder max).
+
+**The hook rule (r/NewTubers 349-video study; applies to EVERY video):** open with a concrete,
+checkable number that pays off the promise; no atmosphere, no greeting, no warmup.
+
+**Owner ideas queued (2026-07-30, his direction — scope before building):**
+- **Click-to-listen on every blog post**: NotebookLM-generated audio (podcast-hosts style) or
+  LT-voice TTS read-through, in a floating player that follows the reader with pause/play
+  while they scroll. Decide the voice per lane; the player is a real build item.
+- **Blog-as-video**: each post also as a full watchable video (talking-head avatar — his clone
+  once the new voice recording lands, or Flow's experimental avatar). He wants a credit-cost +
+  quality analysis BEFORE committing; run a small test and show him.
+- **davinci.ai** (davinci.ai/app/home): third-party AI suite he has an account on (image,
+  video, music, voice, browser editor, Nano Banana Pro). Logged in; driveable via Chrome.
+- **Gemini app** on the personal account can also generate images/video — alternate surface.
+
+**Chrome-driving notes:** the claude-in-chrome extension disconnects every few actions
+(service-worker restarts) — reconnect via tabs_context_mcp createIfEmpty and continue; batch
+actions; never schedule a critical click after a long wait. Flow downloads land in
+`C:/Users/Levan/Downloads` (the owner often downloads himself — check there first).
+
+**The blog film is DONE for now** (v4, 39s, live + byte-verified): slow galaxy drift → one
+scroll-speed dive → labeled brain with ignition cascade + idle spin; LT-clone VO with the
+$6,000 hook. Capture recipe = pinned golden path + CDP virtual time (below — never re-learn
+it). Only re-voice it after his new clone recording, and only if he asks.
+
+## EARLIER STATUS (2026-07-29, session 6: the film is narrated + /ai links in)
 
 **The film is narrated by the OWNER'S OWN CLONED VOICE.** The ask was "an ElevenLabs voice
 explaining details"; mid-session the owner saved `ELEVENLABS_API_KEY` as a **Windows user env
