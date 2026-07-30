@@ -1,27 +1,82 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (updated 2026-07-30, session 7: the CONTENT FACTORY — resume HERE)
+## STATUS (updated 2026-07-30, session 8: the first ad is CUT — resume HERE)
 
-**NEXT SESSION'S JOB: finish and ship the first short-form story ad, "The $6,000 lead."**
-Everything is staged; pick up in this order:
+**"The $6,000 lead" is DONE and rendered in both formats.** Watch these two files, then decide
+what the next ad is:
 
-1. **Generate the 2 missing shots in Google Flow** (Chrome, via the claude-in-chrome tools —
-   the owner granted standing permission to take over Flow and the Gemini app): shot4 =
-   golden-hour aerial over Hudson Valley riverfront homes; shot6 = handshake on a craftsman
-   porch, agent + couple, morning light. Flow project "Jul 30, 10:41 AM"
-   (labs.google/fx/tools/flow). **The owner bought Google AI Pro on his PERSONAL gmail
-   `levan.realtylt@gmail.com`** — logged into Chrome alongside the Workspace account; use the
-   personal account's credit pool (Workspace lost Flow bundling 2026-07-07; that question is
-   settled, do not reopen it). Flow agent settings: confirm-before-generating ON (approve each
-   spend), video x1 16:9, Flash-tier model. The first 4 clips are downloaded and organized.
-2. **Assemble in Remotion** (`C:/Users/Levan/realtylt-stories`, blank template, installed and
-   answering). Footage: `public/footage/shot{1,2,3,5}-*.mp4` (8s 720p each). Cut: shots
-   1→2→3→4→5→6, LT-clone VO (write fresh short ad lines — hook rule below), big mobile-first
-   timed captions, close on realtylt.com/ai. Also cut a 9:16 vertical — that is the actual ad
-   format the owner wants for Facebook/IG/Shorts.
-3. **VO splice fix**: the owner hears cut-off tails between lines. Pad each ElevenLabs line
-   with trailing silence and crossfade ~80ms at joins in the ffmpeg mix. His clone still needs
-   a fresh 2-3 minute recording (he knows; one gentle reminder max).
+- `C:/Users/Levan/realtylt-stories/out/six-thousand-lead-9x16.mp4` — 1080x1920, 32.5s, 15.7MB.
+  **This is the ad format** (Facebook/IG Reels/Shorts).
+- `C:/Users/Levan/realtylt-stories/out/six-thousand-lead-16x9.mp4` — 1920x1080, 32.5s, 25.6MB.
+  For YouTube and the site.
+
+Both are gitignored (`out/`); the repo holds everything needed to re-render them.
+
+**The story, six shots:** a $6,000 lead messages at 11:40pm / the office is dark / something
+answers anyway, and it never guesses / it sends real riverfront listings in Beacon from the live
+MLS / the call is booked before the coffee finishes / that commission stays with the agent,
+closing on realtylt.com/ai. Narrated in the owner's own cloned voice (LT).
+
+**Every number in it is defensible.** $6,000 is the blog's LeadsCalculator default commission,
+11:40pm is the post's own frame, and "it never guesses" is the product's documented behaviour.
+There is deliberately no invented response-time figure ("answers in 8 seconds") — nobody has
+measured one, and the whole pitch is that the assistant does not make things up.
+
+### What was built, and the three rules it encodes
+
+`C:/Users/Levan/realtylt-stories` is now the content factory. `src/ads/six-thousand-lead.ts` is
+the cut as DATA; `src/ads/Ad.tsx` renders it; one definition drives both deliveries so the two
+formats cannot drift apart. A second ad is a second data file, not new components.
+
+1. **Shot lengths are DERIVED FROM THE VOICE, not guessed.** `scripts/vo-gen.py <slug>` generates
+   the lines, `scripts/vo-prep.mjs <slug>` measures each one into `timing.json`, and every shot is
+   its line's length plus headroom. Retime the cut to the voice; never speed up a real person's
+   voice.
+2. **Nothing is spliced.** Each line is an independent `<Audio>` at an absolute frame, so the
+   assembly physically cannot clip a tail — that was the fault the owner heard in the ffmpeg-mixed
+   blog film, and it is now structurally impossible rather than patched. `silencedetect` confirms
+   every gap is a deliberate beat (1.2s / 1.4s / 1.3s).
+3. **The vertical cut never upscales.** A 1080x720 window over the 1280x720 source is a modest
+   side crop at native resolution. Cropping 16:9 to 9:16 the obvious way would have meant a 2.67x
+   blowup of 720p footage.
+
+### Two faults only a contact sheet could find
+
+Single stills looked perfect while the cut had both of these. Build the sheet
+(`fps=1,scale=270:480,tile=6x6`) for every ad:
+
+- **Frame one carried no text.** Frame one is the thumbnail and the number is the whole reason
+  anyone stops scrolling. The hook shot's caption now sits at full opacity from frame 0, no delay,
+  no fade.
+- **Text dropped out for ~0.6s at every cut.** In a sound-off format the captions ARE the script,
+  so that is a dropout, not a beat. Now ~0.26s.
+
+Caveat on the sheet: at 1fps it lands mid-fade and reads as a missing caption. Confirm any
+suspected gap by sampling the caption band at 15fps across that cut, not from the sheet.
+
+### Google Flow, as actually operated
+
+Owner's personal Google AI Pro account `levan.realtylt@gmail.com` (the Workspace account lost Flow
+bundling 2026-07-07; settled, do not reopen). **1050 credits before this session, 15 per clip**, so
+two clips cost 30. Settings that were already correct: confirm-before-generating ON, video 16:9,
+x1, Omni Flash, visible watermarking OFF. Download via the item's ⋮ menu → Download → **720p
+Original Size** (1080p is an upscale of the same 720p source and would not match the other clips).
+
+Gotchas that cost time here:
+- **The approval card sometimes renders with no buttons.** Typing "Approve" as a chat message
+  re-prompts it and the buttons appear. 
+- **Menu coordinates shift between the screenshot and the click** (the page re-lays out). Use
+  `find` to get an element ref and click the ref, never a coordinate, for menu items.
+- Prompts and the full footage ledger live in `public/footage/FOOTAGE.md`, including what
+  generation reliably gets wrong: **every phone screen is gibberish pseudo-text**, so never plan a
+  shot whose payoff is words on a device — the caption typography carries the meaning instead.
+
+### What is NOT done
+
+- **The owner has not watched it yet.** That is the next thing.
+- **His voice clone still wants a fresh 2-3 minute recording.** He knows; one gentle reminder max.
+- The other queued ideas below (click-to-listen blog audio, blog-as-video, davinci.ai) are
+  untouched, as is the blog TEMPLATE work (5 of 9 scenes still bespoke — see TEMPLATE PLAN).
 
 **The hook rule (r/NewTubers 349-video study; applies to EVERY video):** open with a concrete,
 checkable number that pays off the promise; no atmosphere, no greeting, no warmup.
