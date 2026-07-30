@@ -31,10 +31,19 @@ is the LeadsCalculator's own default commission, so the page defends the film's 
 | 26.20 | It answered at eleven forty. You called at nine. |
 | 30.80 | Keep the next one. Realty L T dot com, slash A I. |
 
-**The flight capture must pin the quality governor.** The page's adaptive governor reads the
-screenshot cadence as single-digit fps and dims the starfield two tiers within seconds — every
-pre-2026-07-29 capture was silently degraded this way. `_scratch-film-flight.mjs` now calls
-`window.__qt.force(0)` and truncates `__qt.tiers` before rolling; keep that.
+**THE FLIGHT IS CAPTURED IN PINNED MODE — never scroll-record it again.** Two supersessions of
+the old recipe, both measured:
+1. The quality governor dims a scroll capture (screenshot cadence reads as single-digit fps) —
+   pinning it (`__qt.force(0)` + truncate `__qt.tiers`) helps but is NOT enough, because
+2. **the real-user scroll path draws a ~7x sparser galaxy than the pinned golden path** (bright
+   pixels 0.128% vs 0.957% at p=0.05), and settling does not recover it (0.3-4s tested, flat).
+   Every scroll-driven capture was structurally dim — this was the owner's "galaxy still dimmed".
+The recorder is now `_scratch-film-flight2.mjs`: serve the ai-page repo locally, boot
+`#p=...,noscroll` (pinned), sweep journey-p per frame via the page's `__pinp` hook (added
+2026-07-29, pinned-only, deployed). One more trap it fixes: the OLD keys were SCROLL FRACTIONS,
+which land deeper in the journey than the same journey-p — that is why the old hold showed the
+hub labels. Labels need journey p > 0.85; the keys now end at 0.92 so the hold is the fully
+labeled brain ("AI chat assistant" lit) at golden density.
 
 Retimed beats in film.html: .close in 25.30 / text up 25.80, out 29.30; .cta in 29.60 / .in up
 29.90 / .f 30.90. Stage render range is [0,6]+[12,36]. Pipeline: `_scratch-vo/gen11.py lt` (per
