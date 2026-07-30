@@ -12,11 +12,16 @@ import { FavoriteButton } from "@/components/idx/FavoriteButton";
  *  - Save  = the same FavoriteButton (account/device-synced) used on the gallery.
  * Desktop shows anchors + actions; ≤md hides the anchors and keeps the actions (spec §L1). */
 
+// DOCUMENT ORDER, and it has to stay that way: this is a table of contents, and one that
+// disagrees with the page sends the visitor backwards. Measured 2026-07-30 on a real listing —
+// Overview y=614, Schools y=2145, Payment y=2478, Market Insights y=3409 — while the nav read
+// Overview · Payment · Market Insights · Schools, so working down it jumped 614 → 2478 → 3409 →
+// back up to 2145. (If Schools should instead READ last, move the section, not this list.)
 const ANCHORS = [
   { id: "overview", label: "Overview" },
+  { id: "schools", label: "Schools" },
   { id: "payment", label: "Payment" },
   { id: "market-insights", label: "Market Insights" },
-  { id: "schools", label: "Schools" },
 ] as const;
 
 export function ListingSubNav({
