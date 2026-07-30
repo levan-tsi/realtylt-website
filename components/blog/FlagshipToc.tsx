@@ -135,7 +135,17 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
         data-toc
         aria-label="On this page"
         className="group fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1360px]:block"
-        style={{ left: "max(1.5rem, calc((100vw - 80rem) / 2 - 3.25rem))" }}
+        // --toc-safe is the left edge of the WIDEST text column on the page (the scene bands'
+        // max-w-6xl + px-8). The rail positions itself so a fully expanded card (264px: card
+        // padding + tick cell + gap + 12rem labels) ends BEFORE that edge — the owner caught the
+        // opened card standing on top of a scene heading (2026-07-29): there is spare gutter on
+        // the LEFT, so the rail slides left instead of expanding over prose. On viewports too
+        // tight for that (< ~1664px), the rail floors at 1.5rem and the labels ellipsize via
+        // their own --toc-safe clamp below, so the card still never crosses onto text.
+        style={{
+          ["--toc-safe" as string]: "calc(max((100vw - 72rem) / 2, 0px) + 2rem)",
+          left: "max(1.5rem, min(calc((100vw - 80rem) / 2 - 3.25rem), calc(var(--toc-safe) - 264px)))",
+        }}
       >
         <div
           aria-hidden
@@ -187,7 +197,8 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                     />
                   </span>
                   <span
-                    className={`max-w-0 overflow-hidden whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[12rem] group-hover:opacity-100 group-focus-within:max-w-[12rem] group-focus-within:opacity-100 ${
+                    title={it.label}
+                    className={`max-w-0 overflow-hidden text-ellipsis whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[min(12rem,calc(var(--toc-safe)-96px))] group-hover:opacity-100 group-focus-within:max-w-[min(12rem,calc(var(--toc-safe)-96px))] group-focus-within:opacity-100 ${
                       active
                         ? dark
                           ? "font-bold text-paper"
