@@ -168,7 +168,14 @@ interface CardRow {
   photos_servable: number | null;
 }
 
-/** Cold serverless instances routinely drop their FIRST PostgREST request; without a retry
+/** Every visitor-facing card read goes through this. Observed on the home page 2026-07-30
+ * (~1 load in 3 under a parallel sweep): "[idx-db] getFeatured failed — serving the committed
+ * snapshot". The fallback did its job, but the rail then showed shape-stale snapshot data
+ * because of ONE dropped read, where search() — which has always been wrapped — would have
+ * recovered in a beat of latency. getListing, getFeatured, newestNonFeatured and searchPins
+ * are wrapped now too, so the whole read surface degrades on the same terms.
+ *
+ * Cold serverless instances routinely drop their FIRST PostgREST request; without a retry
  * that single blip degrades search to the shape-stale committed snapshot, which renders as
  * "0 listings found" for MORE-panel filters the snapshot predates. One immediate retry
  * turns that into a beat of extra latency instead (proven on prod: 0@4.6s then 755@1s). */
@@ -266,8 +273,8 @@ export class DbIdxClient implements IdxClient {
   async getListing(id: string): Promise<Listing | null> {
     if (!(await this.ready())) return this.fallbackClient().getListing(id);
     try {
-      const { rows } = await rest<CardRow>(
-        `idx_listings?id=eq.${encodeURIComponent(id)}&${CARD_SELECT}`,
+      const { rows } = await onceRetried(() =>
+        rest<CardRow>(`idx_listings?id=eq.${encodeURIComponent(id)}&${CARD_SELECT}`),
       );
       return rows[0] ? toCard(rows[0].listing, rows[0].photos_servable) : null;
     } catch (e) {
@@ -279,8 +286,10 @@ export class DbIdxClient implements IdxClient {
   async getFeatured(limit = 8): Promise<Listing[]> {
     if (!(await this.ready())) return this.fallbackClient().getFeatured(limit);
     try {
-      const own = await rest<CardRow>(
-        `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit}`,
+      const own = await onceRetried(() =>
+        rest<CardRow>(
+          `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit}`,
+        ),
       );
       const listings = own.rows.map((r) => toCard(r.listing, r.photos_servable));
       if (listings.length >= limit) return listings;
@@ -306,8 +315,10 @@ export class DbIdxClient implements IdxClient {
   }
 
   private async newestNonFeatured(limit: number, exclude: ReadonlySet<string>): Promise<Listing[]> {
-    const { rows } = await rest<CardRow>(
-      `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit + exclude.size}`,
+    const { rows } = await onceRetried(() =>
+      rest<CardRow>(
+        `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit + exclude.size}`,
+      ),
     );
     return rows
       .filter((r) => !exclude.has(r.listing.id))
@@ -351,9 +362,11 @@ export class DbIdxClient implements IdxClient {
       // count=exact reports the FULL in-bounds match count (ignoring limit), so `total`
       // stays truthful even when the viewport is capped. Rows with a 0 coordinate are
       // excluded automatically (a valid NY box never spans lat/lng 0).
-      const { rows, total } = await rest<MapPin>(
-        `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc&limit=${PIN_CAP}`,
-        { count: true },
+      const { rows, total } = await onceRetried(() =>
+        rest<MapPin>(
+          `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc&limit=${PIN_CAP}`,
+          { count: true },
+        ),
       );
       return { pins: rows.filter((r) => r.lat && r.lng).map((r) => ({ ...r, photoCount: r.photoCount ?? 0 })), total };
     }

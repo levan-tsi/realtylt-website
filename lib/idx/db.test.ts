@@ -66,6 +66,28 @@ describe("DbIdxClient.search", () => {
     expect(result.total).toBe(755); // real data, not the snapshot fallback
   });
 
+  // Observed on the home page 2026-07-30: one dropped PostgREST read made the Featured rail
+  // fall back to the shape-stale committed snapshot, while search() recovered from the same
+  // blip because it was wrapped. Every visitor-facing card read is wrapped now.
+  it("retries a dropped read on the home rails instead of serving the snapshot", async () => {
+    let featuredCalls = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes("idx_sync_state")) return new Response(JSON.stringify(READY_STATE), { status: 200 });
+        featuredCalls += 1;
+        if (featuredCalls === 1) throw new TypeError("fetch failed"); // cold connection drop
+        return new Response(JSON.stringify([{ listing: LISTING, photos_servable: 2 }]), { status: 200 });
+      }),
+    );
+
+    const rail = await new DbIdxClient().getFeatured(1);
+
+    expect(featuredCalls).toBe(2);
+    expect(rail[0]?.id).toBe("KEY777"); // real row, not the snapshot fallback
+  });
+
   it("filters over the generated columns, maps rows to cover-proxy cards", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
