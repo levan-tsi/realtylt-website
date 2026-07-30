@@ -799,11 +799,10 @@ export function SearchClient() {
           </button>
         </div>
       ) : filters.view === "map" ? (
-        // Owner round 13d: "make map bigger and instead of 3 lines scroll make it 2 lines
-        // totally showing 2+2+2" — two result columns, the MAP takes the larger share from
-        // xl up, and the compacted cards (16:9 photo, one-line address/office) land three
-        // full rows in the 80vh panel at 1080p (measured 6 fully visible).
-        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[1fr_1.35fr] 2xl:grid-cols-[1fr_1.5fr]">
+        // Owner round 13d sized the map up; 13e trimmed it back ~15% each way ("listing
+        // boxes little bigger, map little smaller") — an even split at xl, the map barely
+        // ahead on very wide screens. Cards stay 2:1/compact so three rows keep landing.
+        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-2 2xl:grid-cols-[1fr_1.1fr]">
           <ul
             ref={panelRef}
             aria-label="Search results"
