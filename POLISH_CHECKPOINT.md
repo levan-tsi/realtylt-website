@@ -1,5 +1,19 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 13d DONE — 2026-07-29 night. The nine-item search polish, driven at 1920.
+## Cards: equal heights (h-full flex-col + mt-auto + ONE-line truncated address/office); blue
+## ring GONE — map-selection reproduces the card's own hover lift ([translate:0_-4px] on the
+## article, the property .lift transitions). Layout: 2 cols, map takes the larger share from
+## xl ([1fr_1.35fr], 2xl 1.5fr), 2:1 photos, 84vh — 3 full rows after the filter bar scrolls
+## off. Hearts show ON the map (white chip + #ef4444 heart, both engines; favorites MUST be in
+## the mapPins memo deps). Popup: 16px chrome via globals (.gm-style-iw-c overrides need
+## !important); unmirrored indices 503 -> the img settles on the branded still (0 dead frames
+## measured over 12 presses). Find a Place = real bordered field. Wheel zooms directly
+## (greedy / scrollWheelZoom). DEFAULT SORT IS "mixed": address.asc order + day-rotated
+## window on the DB path (extra count query), day-seeded id-hash comparator in fixtures —
+## page 1 spans $119K-$2.5M and rotates daily. "mixed" is in SORTS (lib/idx/query.ts) and is
+## the URL-clean default in fromParams/toQuery.
+##
 ## ═══ ROUND 13c DONE — 2026-07-29 late. The owner's final-check five, deployed READY.
 ## Density: hybrid /search = 3 result columns from xl + 16:9 photos + p-3 bodies + 80vh
 ## panel/map -> 6 full + 3 peeking at 1080p (he asked for 4+2). Ring clip: the results panel
