@@ -20,9 +20,9 @@ export const FILM = {
   poster: "/video/film-1140pm-poster.jpg",
   width: 1280,
   height: 720,
-  seconds: 36,
+  seconds: 39,
   /** ISO 8601, which is the only duration format VideoObject accepts. */
-  duration: "PT36S",
+  duration: "PT39S",
   name: "11:40pm: what an AI chat assistant actually does in the gap",
   description:
     "A buyer asks a real estate website about a contingent offer at 11:40pm. The assistant answers, declines to invent what it does not know, searches the live MLS, texts the matches, writes the lead to the CRM, and books the call. Cut with live footage of the RealtyLT AI system at realtylt.com/ai.",
