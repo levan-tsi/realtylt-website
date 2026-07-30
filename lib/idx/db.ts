@@ -140,7 +140,9 @@ const ORDER: Record<SortKey, string> = {
 /** Cards carry ONE stable same-origin cover path (raw MediaURLs must never reach the
  * browser); the detail page expands the gallery via getProxiedPhotoPaths (DB-backed). */
 function toCard(l: Listing): Listing {
-  return { ...l, photos: [`/api/media/${l.id}/0`] };
+  // photoCount records the real total BEFORE the slimming — the card pager's honest bound
+  // (photosMirrored under-counts whenever the sync's full-JSONB upsert wiped the marker).
+  return { ...l, photoCount: l.photos.length, photos: [`/api/media/${l.id}/0`] };
 }
 
 /** Cold serverless instances routinely drop their FIRST PostgREST request; without a retry

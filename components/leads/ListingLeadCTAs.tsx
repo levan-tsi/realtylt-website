@@ -58,6 +58,10 @@ function nextSevenDays() {
 export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: string }) {
   const [modal, setModal] = useState<null | "tour" | "offer">(null);
   const [seedDate, setSeedDate] = useState<string | undefined>(undefined);
+  // Client-only ("today" is the visitor's clock, not the server's) — first five days for the
+  // on-page mobile strip; the sheet itself still offers all seven.
+  const [mobileDays, setMobileDays] = useState<ReturnType<typeof nextSevenDays>>([]);
+  useEffect(() => setMobileDays(nextSevenDays().slice(0, 5)), []);
 
   // The sticky sub-nav's "Make an Offer" button and the photo lightbox's "In Person Tour" /
   // "Make an Offer" CTAs open these same sheets (no duplicate lead path) via window events.
@@ -86,7 +90,29 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
 
   return (
     <>
-      {/* Mobile / small: live's tap-to-open bottom sheets (unchanged). */}
+      {/* Mobile / small: live's tap-to-open bottom sheets, with the tour DATES surfaced right
+          on the page (owner: "mobile does not have dates when you ask to schedule a tour") —
+          tapping a day opens the sheet seeded with it, same as desktop's inline card. Mounted
+          after hydration because "today" is a client fact (the modal already works this way). */}
+      {mobileDays.length > 0 && (
+        <div className="mb-2.5 lg:hidden">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Tour this home</p>
+          <div role="group" aria-label="Pick a tour day" className="mt-2 flex gap-2 overflow-x-auto pb-1">
+            {mobileDays.map((d) => (
+              <button
+                key={d.key}
+                type="button"
+                onClick={() => openTour(d.key)}
+                className="flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-xl border border-[#d7dbe0] px-2 py-2 text-ink transition-colors hover:border-ink"
+              >
+                <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{d.weekday}</span>
+                <span className="text-lg font-semibold leading-tight">{d.day}</span>
+                <span className="text-[10px] uppercase tracking-[0.1em] opacity-80">{d.month}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-2.5 lg:hidden">
         <button
           type="button"

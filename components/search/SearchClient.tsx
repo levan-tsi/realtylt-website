@@ -189,9 +189,9 @@ const toPin = (l: Listing): MapPin => ({
   beds: l.beds,
   baths: l.baths,
   office: l.listOfficeName,
-  // The pager's bound: what /api/media can actually serve (mirror marker), not the slim
-  // card's single cover URL.
-  photoCount: Math.max(l.photosMirrored ?? 0, l.photos.length ? 1 : 0),
+  // The pager's bound: the listing's real total (set at card-slimming time; the mirror
+  // marker under-counts on wiped-marker rows and left some popups arrowless).
+  photoCount: l.photoCount ?? Math.max(l.photosMirrored ?? 0, l.photos.length ? 1 : 0),
 });
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
@@ -796,15 +796,20 @@ export function SearchClient() {
           </button>
         </div>
       ) : filters.view === "map" ? (
-        // Split measured off live @1440: results ~800px (two 395px cards on a 10px gutter),
-        // 20px between the panel and a ~580px map. Fractional columns so it degrades from
-        // 1024 up instead of squeezing the cards at a fixed map width.
+        // Owner (round 13b): "you can fully see 2 listings and 2 half — it should show 4
+        // full and another 2 half if possible." Density comes from three levers: 16:9 card
+        // photos + tighter bodies (ListingCard), THREE result columns from xl up, and an
+        // 80vh panel. Measured at 1440 and 1920 after the change: >=4 fully visible plus
+        // partials at both. Fractional split columns unchanged below xl.
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.38fr_1fr]">
           <ul
             ref={panelRef}
             aria-label="Search results"
             aria-busy={state === "loading"}
-            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[75vh] lg:gap-x-2.5 lg:overflow-y-auto lg:pr-2 ${state === "loading" ? "opacity-60" : ""}`}
+            // pl/pt-1: the panel scroll-clips at its own edge, and the active card's 2px ring was
+            // losing its left side and top line (owner-reported) — 4px of breathing room keeps
+            // the ring whole. gap-y-4: denser rows, more listings in the first viewport.
+            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[80vh] lg:gap-x-2.5 lg:gap-y-4 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 xl:grid-cols-3 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {listings.map(renderCard)}
           </ul>
@@ -812,7 +817,7 @@ export function SearchClient() {
               map below the results too), so the first thing a phone visitor sees is homes rather
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
-          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[75vh]">
+          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[80vh]">
             <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
           </div>
         </div>

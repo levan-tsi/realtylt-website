@@ -56,6 +56,10 @@ export interface Listing {
   waterSource?: string[];
   parkingFeatures?: string[];
   photos: string[]; // paths under /public in fixture mode; feed URLs live
+  /** The listing's REAL photo total, surviving the card slimming (search cards keep ONE cover
+   * URL in `photos`, so `photos.length` is always 1 there — this is the pager/popup bound).
+   * The /api/media route serves any index: storage first, proxy fallback, branded still last. */
+  photoCount?: number;
   /** Photo mirroring (docs/mls-fix/PHOTO-MIRRORING.md): count of leading `photos` whose bytes
    * are copied into Supabase Storage at mls-photos/<id>/<idx>.jpg. MLS Grid MediaURLs are SIGNED
    * and expire ~1h after the sync captures them, so the /api/media route serves the first

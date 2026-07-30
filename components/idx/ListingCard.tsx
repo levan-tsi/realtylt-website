@@ -99,19 +99,20 @@ export function ListingCard({
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
         />
-        {/* Live search tiles measure 395x250 — a touch wider than 3:2. */}
-        <div className="photo-zoom relative aspect-[79/50] overflow-hidden bg-mist">
+        {/* 16:9, tighter than live's 79:50 — the owner wants more listings visible beside
+            the map ("4 full and another 2 half if possible"), and the density comes out of
+            the photo band + body padding, not the type. */}
+        <div className="photo-zoom relative aspect-[16/9] overflow-hidden bg-mist">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
               // Owner's ask: flip through the pictures right on the card. The slim card
               // carries ONE cover URL; the pager addresses the rest as /api/media/{id}/{n},
-              // bounded by the mirror marker (0/absent = single photo, no arrows). The REAL
-              // count, uncapped — the map popup shows the same number, and each press costs
-              // exactly one request either way.
+              // bounded by the listing's REAL total (photoCount, set at slimming time —
+              // the mirror marker under-counted and left some cards arrowless).
               <CardPhotos
                 id={l.id}
                 cover={l.photos[0]}
-                count={l.photosMirrored ?? 1}
+                count={l.photoCount ?? l.photosMirrored ?? 1}
                 alt={`${l.address}, ${l.city}, NY`}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 priority={priority}
@@ -142,9 +143,9 @@ export function ListingCard({
             </div>
           )}
         </div>
-        <div className="p-4">
+        <div className="p-3">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <p className="text-2xl font-bold text-ink">{priceLabel(l)}</p>
+            <p className="text-xl font-bold text-ink">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
           <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
@@ -152,7 +153,7 @@ export function ListingCard({
             {l.city}, {l.state} {l.zip}
           </p>
           {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
-          <div className="mt-2 flex items-end justify-between gap-2">
+          <div className="mt-1.5 flex items-end justify-between gap-2">
             {/* min-w-0 + break-words: a flex item is min-width:auto, so a long office name
                 would push this row wider than the card instead of wrapping inside it. */}
             <p className="min-w-0 break-words text-[11px] leading-snug text-stone">
