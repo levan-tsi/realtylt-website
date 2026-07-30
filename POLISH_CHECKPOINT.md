@@ -1,5 +1,16 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 13c DONE — 2026-07-29 late. The owner's final-check five, deployed READY.
+## Density: hybrid /search = 3 result columns from xl + 16:9 photos + p-3 bodies + 80vh
+## panel/map -> 6 full + 3 peeking at 1080p (he asked for 4+2). Ring clip: the results panel
+## scroll-clips its own edge — 4px inner padding keeps the active ring whole. THE BIG GOTCHA:
+## photosMirrored gets WIPED to 0 by the sync's full-JSONB upsert, so it is NOT a reliable
+## photo count — Listing.photoCount (recorded from the real array length in db.ts toCard,
+## BEFORE the photos array is slimmed to one cover URL) is the pager/popup bound now; 32/36
+## cards page. Mobile tour: the sheet ALWAYS had the 7-day strip (verified 390 + screenshot;
+## owner likely saw a cached page) — an on-page 5-day strip now sits above the mobile CTAs
+## and seeds the sheet (client-mounted: "today" is the visitor's clock, never SSR it).
+##
 ## ═══ ROUND 13b DONE — 2026-07-29 evening. Owner-driven rapid iteration, all deployed READY.
 ##
 ## (a) COMING-SOON ART IS THE OWNER'S OWN: he generated the moonlit manor with "COMING SOON"
