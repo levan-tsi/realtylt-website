@@ -75,8 +75,18 @@ export class FixtureIdxClient implements IdxClient {
       return true;
     });
 
+    // Daily-seeded id hash — a comparator-shaped shuffle, so "mixed" interleaves price
+    // bands deterministically (stable within a day, different tomorrow).
+    const day = Math.floor(Date.now() / 86_400_000);
+    const mixRank = (id: string) => {
+      let x = day;
+      for (const c of id) x = (Math.imul(x, 31) + c.charCodeAt(0)) | 0;
+      return x;
+    };
     out = [...out].sort((a, b) => {
       switch (sort) {
+        case "mixed":
+          return mixRank(a.id) - mixRank(b.id) || (a.id < b.id ? -1 : 1);
         case "price-asc":
           return a.price - b.price;
         case "price-desc":

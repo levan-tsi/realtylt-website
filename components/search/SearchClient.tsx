@@ -121,7 +121,7 @@ function fromParams(sp: URLSearchParams): Filters {
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     quick: sp.get("quick") === "new" ? "new" : "all",
-    sort: sp.get("sort") ?? "newest",
+    sort: sp.get("sort") ?? "mixed",
     page: Math.max(1, Number(sp.get("page")) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
     view: sp.get("view") === "grid" ? "grid" : "map",
@@ -145,7 +145,7 @@ function toQuery(f: Filters, forApi: boolean): string {
       if (v) sp.set("rental", "1");
       continue;
     }
-    if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "newest" && forApi === false))
+    if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "mixed" && forApi === false))
       continue;
     sp.set(k, String(v));
   }
@@ -211,7 +211,7 @@ export function SearchClient() {
   const [result, setResult] = useState<ApiResult | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [saveOpen, setSaveOpen] = useState(false);
-  const { saveSearch, signedIn } = useSaved();
+  const { saveSearch, signedIn, favorites } = useSaved();
   const { openSignIn, enabled: accountsEnabled } = useAuth();
   // Chip ↔ card highlight: clicking a map price chip scrolls to and highlights its card;
   // hovering/focusing a card highlights its chip. Shared so panel and map stay in sync.
@@ -337,7 +337,9 @@ export function SearchClient() {
 
   const listings = result?.listings ?? [];
   // Page-coupled map pins — exactly this page's located listings (owner's core ask).
-  const mapPins = useMemo(() => listings.map(toPin).filter((p) => p.lat && p.lng), [listings]);
+  // favorites in deps: hearting a card must restyle its map chip live, not on the next
+  // listings change.
+  const mapPins = useMemo(() => listings.map((l) => ({ ...toPin(l), saved: favorites.includes(l.id) })).filter((p) => p.lat && p.lng), [listings, favorites]);
 
   // One card renderer for both branches — carries the ref (chip→card scroll) and the
   // hover/focus↔chip highlight. In grid view the highlight is harmless (no map).
@@ -355,12 +357,12 @@ export function SearchClient() {
       // whole grid grows past the viewport instead of the text ellipsing. Current feed data
       // tops out at a 42-char address so nothing overflows today, but one longer row would
       // break the page sideways on a phone.
-      // The active highlight hugs the card's own 16px radius — the old ring-offset-2 drew a
-      // white gap between card and ring, which read as a misplaced box (owner-reported). Same
-      // azure as the map chip it mirrors, plus a soft same-hue lift instead of hard chrome.
-      className={`min-w-0 scroll-mt-4 rounded-2xl transition-shadow ${
+      // No ring at all (owner: "instead of blue we don't have a line, it just moves little
+      // up as it does now") — selecting from the map reproduces the card's own hover lift,
+      // via the same `translate` property .lift transitions, so the motion is identical.
+      className={`min-w-0 scroll-mt-4 rounded-2xl ${
         activeId === l.id
-          ? "ring-2 ring-porchlight-deep shadow-[0_10px_28px_-10px_rgb(28_114_154/0.45)]"
+          ? "[&_article]:[translate:0_-4px] [&_article]:shadow-[0_18px_40px_-18px_rgb(16_24_32/0.35)]"
           : ""
       }`}
     >
@@ -480,7 +482,7 @@ export function SearchClient() {
             key={filters.q}
             defaultValue={filters.q}
             placeholder="Find a Place"
-            className="w-full border-0 bg-transparent px-1 py-2.5 text-sm text-ink-soft placeholder:text-stone focus:outline-none"
+            className="w-full rounded-xl border border-[#d7dbe0] bg-white px-3 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
             onPick={(s) =>
               s.kind === "county" && s.county
                 ? apply({ county: s.county, q: "" })
@@ -715,6 +717,7 @@ export function SearchClient() {
             Sort By
           </label>
           <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={selectCls}>
+            <option value="mixed">Mixed</option>
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
             <option value="featured">Featured</option>
@@ -796,12 +799,11 @@ export function SearchClient() {
           </button>
         </div>
       ) : filters.view === "map" ? (
-        // Owner (round 13b): "you can fully see 2 listings and 2 half — it should show 4
-        // full and another 2 half if possible." Density comes from three levers: 16:9 card
-        // photos + tighter bodies (ListingCard), THREE result columns from xl up, and an
-        // 80vh panel. Measured at 1440 and 1920 after the change: >=4 fully visible plus
-        // partials at both. Fractional split columns unchanged below xl.
-        <div className="mt-8 grid gap-5 lg:grid-cols-[1.38fr_1fr]">
+        // Owner round 13d: "make map bigger and instead of 3 lines scroll make it 2 lines
+        // totally showing 2+2+2" — two result columns, the MAP takes the larger share from
+        // xl up, and the compacted cards (16:9 photo, one-line address/office) land three
+        // full rows in the 80vh panel at 1080p (measured 6 fully visible).
+        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[1fr_1.35fr] 2xl:grid-cols-[1fr_1.5fr]">
           <ul
             ref={panelRef}
             aria-label="Search results"
@@ -809,7 +811,7 @@ export function SearchClient() {
             // pl/pt-1: the panel scroll-clips at its own edge, and the active card's 2px ring was
             // losing its left side and top line (owner-reported) — 4px of breathing room keeps
             // the ring whole. gap-y-4: denser rows, more listings in the first viewport.
-            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[80vh] lg:gap-x-2.5 lg:gap-y-4 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 xl:grid-cols-3 ${state === "loading" ? "opacity-60" : ""}`}
+            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {listings.map(renderCard)}
           </ul>
@@ -817,7 +819,7 @@ export function SearchClient() {
               map below the results too), so the first thing a phone visitor sees is homes rather
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
-          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[80vh]">
+          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[84vh]">
             <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
           </div>
         </div>

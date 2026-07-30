@@ -96,9 +96,13 @@ export interface MapPin {
   office: string;
   /** How many photos /api/media/{id}/{n} can serve — the popup pager's bound (0 = none). */
   photoCount: number;
+  /** Client-only: the visitor has hearted this listing (SavedProvider) — the chip shows it. */
+  saved?: boolean;
 }
 
-export type SortKey = "newest" | "oldest" | "featured" | "price-asc" | "price-desc";
+/** "mixed" (the default) interleaves price bands and rotates daily, so the first page is
+ * never the same parade of listings — owner's ask. */
+export type SortKey = "mixed" | "newest" | "oldest" | "featured" | "price-asc" | "price-desc";
 
 export interface SearchParams {
   q?: string; // free-text location: town, zip, address fragment

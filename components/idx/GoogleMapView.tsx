@@ -69,7 +69,8 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
           streetViewControl: false,
           fullscreenControl: true,
           clickableIcons: false,
-          gestureHandling: "cooperative",
+          // Owner: no ctrl-to-zoom overlay — wheel zooms directly on hover.
+          gestureHandling: "greedy",
         });
         mapRef.current = map;
         const info = new google.maps.InfoWindow();
@@ -102,12 +103,24 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
             chip.type = "button";
             chip.className = "rlt-price-chip";
             chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address}`);
+            // Hearted listings read differently at a glance — white chip, red heart, same
+            // red as the card's FavoriteButton (owner's ask: saved homes visible ON the map).
             chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);${
               active
-                ? "--chip-bg:#1c729a;background:var(--chip-bg);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-                : "--chip-bg:#000;background:var(--chip-bg);box-shadow:0 2px 8px rgb(0 0 0/.3)"
-            };color:#fff;font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
-            chip.textContent = chipPrice(p.price);
+                ? "--chip-bg:#1c729a;background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
+                : p.saved
+                  ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
+                  : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
+            };font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
+            if (p.saved) {
+              const heart = document.createElement("span");
+              heart.style.color = "#ef4444";
+              heart.textContent = "♥ ";
+              chip.appendChild(heart);
+              chip.appendChild(document.createTextNode(chipPrice(p.price)));
+            } else {
+              chip.textContent = chipPrice(p.price);
+            }
             chip.addEventListener("click", () => {
               onSelectRef.current?.(p.id);
               info.setContent(popupNode(p));

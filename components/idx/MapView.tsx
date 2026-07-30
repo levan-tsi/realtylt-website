@@ -13,14 +13,20 @@ import "leaflet/dist/leaflet.css";
  * to and highlights its card (onSelect). Same-zip listings are fanned out (spreadPins) so no
  * chip hides another. Client-only — import via next/dynamic ssr:false. */
 
-const priceIcon = (price: number, active: boolean) =>
+// Hearted listings read differently at a glance: white chip, ink text, the same red heart
+// the card's FavoriteButton fills (owner's ask — saved homes visible ON the map).
+const priceIcon = (price: number, active: boolean, saved: boolean) =>
   divIcon({
     className: "",
     html: `<span class="rlt-price-chip" style="display:inline-block;transform:translate(-50%,-100%);${
       active
-        ? "--chip-bg:#1c729a;background:var(--chip-bg);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-        : "--chip-bg:#000;background:var(--chip-bg);box-shadow:0 2px 8px rgb(0 0 0/.3)"
-    };color:#fff;font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:8px">${chipPrice(price)}</span>`,
+        ? "--chip-bg:#1c729a;background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
+        : saved
+          ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
+          : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
+    };font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:8px">${
+      saved ? '<span style="color:#ef4444">♥</span> ' : ""
+    }${chipPrice(price)}</span>`,
     iconSize: [0, 0],
   });
 
@@ -72,7 +78,7 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
           <Marker
             key={p.id}
             position={[p.lat, p.lng]}
-            icon={priceIcon(p.price, active)}
+            icon={priceIcon(p.price, active, !!p.saved)}
             title={`${chipPrice(p.price)} — ${p.address}, ${p.city}`}
             zIndexOffset={active ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(p.id) }}
@@ -101,7 +107,9 @@ export default function MapView({ pins, selectedId, onSelect }: MapViewProps) {
       <MapContainer
         center={[41.5, -74.0]}
         zoom={9}
-        scrollWheelZoom={false}
+        // Owner: no ctrl-to-zoom nagging — the wheel zooms directly when the cursor is on
+        // the map.
+        scrollWheelZoom
         className="h-full min-h-96 w-full"
         attributionControl
       >

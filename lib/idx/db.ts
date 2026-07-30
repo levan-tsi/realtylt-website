@@ -129,6 +129,9 @@ function searchFilters(p: SearchParams): string {
 }
 
 const ORDER: Record<SortKey, string> = {
+  // Alphabetical-by-address is deliberately meaningless w.r.t. price and age — combined with
+  // the daily-rotated window in search() it reads as a fresh high/low mix every day.
+  mixed: "address.asc,id.asc",
   newest: "listed_at.desc,id.asc",
   oldest: "listed_at.asc,id.asc",
   // Own-office ("United Real Estate") listings first, then freshest — mirrors the home rails.
@@ -207,8 +210,18 @@ export class DbIdxClient implements IdxClient {
       const filters = searchFilters(params);
       const base = `idx_listings?select=listing&${filters ? `${filters}&` : ""}order=${ORDER[sort]}`;
 
+      // "mixed" rotates its window daily so the default page is never the same parade: one
+      // cheap count query picks a day-seeded start offset inside the filtered set (clamped,
+      // never wrapping, so pagination stays coherent within the day).
+      let rotate = 0;
+      if (sort === "mixed") {
+        const { total: t } = await onceRetried(() =>
+          rest<{ id: string }>(`idx_listings?select=id&${filters ? `${filters}&` : ""}limit=1`, { count: true }),
+        );
+        if (t > size) rotate = (Math.floor(Date.now() / 86_400_000) * 53) % (t - size + 1);
+      }
       const fetchPage = (p: number) =>
-        rest<{ listing: Listing }>(`${base}&limit=${size}&offset=${(p - 1) * size}`, { count: true });
+        rest<{ listing: Listing }>(`${base}&limit=${size}&offset=${rotate + (p - 1) * size}`, { count: true });
 
       let { rows, total } = await onceRetried(() => fetchPage(Math.max(1, page)));
       const totalPages = Math.max(1, Math.ceil(total / size));

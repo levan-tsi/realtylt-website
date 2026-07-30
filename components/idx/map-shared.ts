@@ -108,6 +108,13 @@ export function popupNode(p: MapPin): HTMLElement {
     const img = document.createElement("img");
     img.alt = `${p.address}, ${p.city}`;
     img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block";
+    // Indices past what storage/proxy can serve answer 503 text/plain (deliberately
+    // undecodable) — a plain <img> would show a dead frame mid-pager. Settle those on the
+    // branded still instead, once, no retry loop. (Owner-reported: "34 pics… letting me
+    // switch but not loading.")
+    img.addEventListener("error", () => {
+      if (!img.src.endsWith("/images/mls/coming-soon-notext.webp")) img.src = "/images/mls/coming-soon-notext.webp";
+    });
     let idx = 0;
     const show = (n: number) => {
       idx = ((n % p.photoCount) + p.photoCount) % p.photoCount;

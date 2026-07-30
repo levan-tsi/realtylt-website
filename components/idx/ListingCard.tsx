@@ -93,16 +93,16 @@ export function ListingCard({
 
   if (variant === "plain") {
     return (
-      <article className="lift group relative overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
+      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
         <Link
           href={listingPath(l)}
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
         />
-        {/* 16:9, tighter than live's 79:50 — the owner wants more listings visible beside
-            the map ("4 full and another 2 half if possible"), and the density comes out of
-            the photo band + body padding, not the type. */}
-        <div className="photo-zoom relative aspect-[16/9] overflow-hidden bg-mist">
+        {/* 2:1, tighter than live's 79:50 — the owner's density target is three FULL rows
+            beside the map ("2+2+2"), and the height comes out of the photo band + body
+            padding, not the type. */}
+        <div className="photo-zoom relative aspect-[2/1] overflow-hidden bg-mist">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
               // Owner's ask: flip through the pictures right on the card. The slim card
@@ -143,20 +143,22 @@ export function ListingCard({
             </div>
           )}
         </div>
-        <div className="p-3">
+        {/* flex-1 + mt-auto bottom row: every card in a grid row renders the same height —
+            wrapping office names were making neighbours uneven (owner-reported). Address is
+            one truncated line for the same reason, and for the 2+2+2 density target. */}
+        <div className="flex flex-1 flex-col p-3">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
             <p className="text-xl font-bold text-ink">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
-          <p className="mt-1 truncate text-sm italic text-ink-soft">{l.address}</p>
-          <p className="text-sm italic text-ink-soft">
-            {l.city}, {l.state} {l.zip}
+          <p className="mt-1 truncate text-sm italic text-ink-soft">
+            {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
-          <div className="mt-1.5 flex items-end justify-between gap-2">
+          <div className="mt-auto flex items-end justify-between gap-2 pt-1.5">
             {/* min-w-0 + break-words: a flex item is min-width:auto, so a long office name
                 would push this row wider than the card instead of wrapping inside it. */}
-            <p className="min-w-0 break-words text-[11px] leading-snug text-stone">
+            <p className="min-w-0 truncate text-[11px] leading-snug text-stone">
               Listed with{" "}
               {l.listAgentName ? (
                 <>

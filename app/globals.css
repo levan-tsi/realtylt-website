@@ -454,6 +454,24 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   outline: none;
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a !important;
 }
+/* Map popup chrome, both engines — the shared mini-card (map-shared popupNode) deserves the
+   site's corner scale instead of the engines' dated defaults: 16px panels, an even 12px
+   inset, and no scroll chrome around a fixed-size card. */
+.gm-style .gm-style-iw-c {
+  border-radius: 16px;
+  padding: 12px !important; /* Google inlines its own padding per side */
+}
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important; /* fixed-size card — the pane's scrollbars are dead chrome */
+  padding: 0 !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 16px;
+}
+.leaflet-popup-content {
+  margin: 12px;
+}
+
 /* Leaflet wraps the chip in a zero-size focusable marker element — surface the focus ring on
    the visible chip inside it when the marker takes keyboard focus. */
 .leaflet-marker-icon:focus-visible {

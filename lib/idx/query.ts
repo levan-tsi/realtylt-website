@@ -4,7 +4,7 @@
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
 import type { MapBounds, PropertyType, SearchParams, SortKey } from "./types";
 
-export const SORTS: SortKey[] = ["newest", "oldest", "featured", "price-asc", "price-desc"];
+export const SORTS: SortKey[] = ["mixed", "newest", "oldest", "featured", "price-asc", "price-desc"];
 /** The sale property types the /search Type dropdown offers (validation whitelist). "Rental"
  * is intentionally NOT here — the For-Rent surface is selected via the `rental` flag, not this
  * dropdown, so a sale search can never be tricked into `propertyType=Rental`. */
