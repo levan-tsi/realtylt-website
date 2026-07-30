@@ -38,7 +38,13 @@ the old recipe, both measured:
 2. **the real-user scroll path draws a ~7x sparser galaxy than the pinned golden path** (bright
    pixels 0.128% vs 0.957% at p=0.05), and settling does not recover it (0.3-4s tested, flat).
    Every scroll-driven capture was structurally dim — this was the owner's "galaxy still dimmed".
-The recorder is now `_scratch-film-flight2.mjs`: serve the ai-page repo locally, boot
+The recorder is now `_scratch-film-flight3.mjs` (v3, 2026-07-29 evening): after the REAL-TIME
+boot, CDP virtual time advances the page exactly one film frame per capture, so all real-time
+motion (ignition wave, twinkle, drift) plays at natural speed instead of ~9x fast - the owner
+read that compression as "stopping and shaking". At the hold, `__pinwave` fires the page's own
+arrival cascade and `__pinspin` eases in the hub idle spin (~2x live rate, reads on film).
+Screenshot starvation under paused virtual time is handled by a nudge-and-retry. v2
+(`_scratch-film-flight2.mjs`) is the same pinned sweep without virtual time: serve the ai-page repo locally, boot
 `#p=...,noscroll` (pinned), sweep journey-p per frame via the page's `__pinp` hook (added
 2026-07-29, pinned-only, deployed). One more trap it fixes: the OLD keys were SCROLL FRACTIONS,
 which land deeper in the journey than the same journey-p — that is why the old hold showed the
