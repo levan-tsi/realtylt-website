@@ -1,5 +1,14 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 13e/f DONE — 2026-07-29 latest. Split rebalanced ~15% back to the listings
+## (panel 616->733, map 922->805 at 1920; even at xl, [1fr_1.1fr] at 2xl). The map popup is a
+## PHOTO CARD now: both engines' chrome stripped bare (padding 0; hide .gm-ui-hover-effect AND
+## .gm-style-iw-ch/.gm-style-iw-chr — that header row is the invisible 17px white mat), photo
+## edge-to-edge (measured 0/0), HEART top-left toggles the favorite (MapViewProps.onToggleSave
+## <- SavedProvider.toggleFavorite; chip follows via pins memo), X top-right closes. Probe
+## gotcha: select our close with :not(.gm-ui-hover-effect) — the hidden stock X shares the
+## aria-label. All deploys verified READY.
+##
 ## ═══ ROUND 13d DONE — 2026-07-29 night. The nine-item search polish, driven at 1920.
 ## Cards: equal heights (h-full flex-col + mt-auto + ONE-line truncated address/office); blue
 ## ring GONE — map-selection reproduces the card's own hover lift ([translate:0_-4px] on the
