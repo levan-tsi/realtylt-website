@@ -112,8 +112,11 @@ export default async function SellingPage() {
                 <GoogleLogo height={20} className="translate-y-px" /> <Stars />{" "}
                 <strong className="text-paper">5.0</strong>
               </span>
-              <span className="border-l border-paper/25 pl-8">Fast Response</span>
-              <span className="border-l border-paper/25 pl-8">Free Consultation</span>
+              {/* The divider is a BETWEEN mark, so it only exists where the row is one line. At
+                  390 the three items wrap and "Free Consultation" started its line with a
+                  hanging rule and 32px of empty indent; below sm the gap alone separates them. */}
+              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Fast Response</span>
+              <span className="sm:border-l sm:border-paper/25 sm:pl-8">Free Consultation</span>
             </div>
             <p className="mt-4 text-xs tracking-wide text-paper/60">
               No obligation • Zero pressure • Honest advice

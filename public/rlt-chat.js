@@ -314,6 +314,21 @@
           bottom: calc(16px + env(safe-area-inset-bottom, 0px));
           right: 16px;
         }
+        /* PHONE ONLY: stay out of the first viewport. Measured 2026-07-30 at 390x844, the
+           launcher sat ON a real control on six routes — a form field in /selling's hero
+           (1710px²), a link on /blog and a county CTA on /top-areas buried under the whole
+           60x60 circle (3600px²), an input on /portal, "See Home Value" in the home hero.
+           A phone has no room to move it to, so it waits instead: nothing floats over the
+           first impression, and it fades in as soon as the visitor starts reading. Desktop
+           is untouched (it has the margin to spare). */
+        .rlt-bubble--tucked {
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(10px) scale(0.9);
+        }
+      }
+      @media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
+        .rlt-bubble { transition: transform 0.25s ease, opacity 0.25s ease, background 0.2s; }
       }
     `;
     document.head.appendChild(style);
@@ -332,6 +347,21 @@
     <span class="rlt-bubble-badge"></span>
   `;
   document.body.appendChild(bubble);
+
+  // The launcher is tucked away until the visitor has scrolled clear of the first viewport.
+  // The class is toggled at every width; only the phone stylesheet acts on it, so desktop
+  // behaviour is unchanged. Once the panel has been opened the launcher stays put — by then
+  // the visitor has asked for it, and having it vanish under them would be worse than an overlap.
+  let bubbleSummoned = false;
+  const TUCK_UNTIL = () => Math.round(window.innerHeight * 0.6);
+  const syncBubble = () => {
+    if (bubbleSummoned) return;
+    bubble.classList.toggle('rlt-bubble--tucked', window.scrollY < TUCK_UNTIL());
+  };
+  bubble.classList.add('rlt-bubble--tucked');
+  window.addEventListener('scroll', syncBubble, { passive: true });
+  window.addEventListener('resize', syncBubble, { passive: true });
+  syncBubble();
 
   const panel = document.createElement('div');
   panel.className = 'rlt-panel';
@@ -577,6 +607,9 @@
   // EVENT WIRING
   // ============================================================
   bubble.addEventListener('click', function() {
+    // Asked for once, always available after: never tuck it away again this visit.
+    bubbleSummoned = true;
+    bubble.classList.remove('rlt-bubble--tucked');
     panel.classList.add('rlt-open');
     bubble.style.display = 'none';
     // Don't auto-focus on touch devices - it triggers the keyboard immediately, which is jarring
