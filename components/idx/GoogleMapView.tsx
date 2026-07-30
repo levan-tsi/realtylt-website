@@ -18,7 +18,7 @@ declare global {
 }
 
 
-export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewProps) {
+export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
   pinsRef.current = pins;
@@ -26,6 +26,8 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
   selectedRef.current = selectedId;
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const onToggleSaveRef = useRef(onToggleSave);
+  onToggleSaveRef.current = onToggleSave;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -123,7 +125,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect }: MapViewPro
             }
             chip.addEventListener("click", () => {
               onSelectRef.current?.(p.id);
-              info.setContent(popupNode(p));
+              info.setContent(popupNode(p, { onClose: () => info.close(), onToggleSave: (id) => onToggleSaveRef.current?.(id) }));
               info.setPosition(pos);
               info.open({ map });
             });

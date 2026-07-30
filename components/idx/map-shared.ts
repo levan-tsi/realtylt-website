@@ -14,6 +14,8 @@ export interface MapViewProps {
   pins: MapPin[];
   selectedId?: string | null;
   onSelect?: (id: string) => void;
+  /** Toggle a listing's saved-heart from the popup (SearchClient wires SavedProvider in). */
+  onToggleSave?: (id: string) => void;
 }
 
 export const MAP_FONT = "Lato,Helvetica,Arial,sans-serif";
@@ -96,15 +98,64 @@ export function boundsOfPins(pins: MapPin[]): MapBounds | null {
  * exactly one more. Indices past the real set 302 to the branded coming-soon still, so a
  * stale photoCount can never show a broken frame. Inline styles on purpose: InfoWindow
  * content renders outside the app's stylesheet. */
-export function popupNode(p: MapPin): HTMLElement {
+export function popupNode(
+  p: MapPin,
+  opts: { onClose?: () => void; onToggleSave?: (id: string) => void } = {},
+): HTMLElement {
+  const { onClose, onToggleSave } = opts;
   const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`].filter(Boolean).join(" / ");
   const root = document.createElement("div");
-  root.style.cssText = `width:248px;font-family:${MAP_FONT}`;
+  // Edge-to-edge: both engines' popup chrome is stripped to a bare 16px-rounded shell
+  // (globals.css), so the photo IS the popup's top — no white mat around it (owner: "white
+  // box is too big… make it little bit bigger than pics and info").
+  root.style.cssText = `position:relative;width:252px;font-family:${MAP_FONT}`;
+
+  // The photo's two corner controls (owner: "one side X exit and one side heart to save"):
+  // heart top-LEFT toggles the favorite (flips locally at once; the chips follow via the
+  // provider), X top-RIGHT closes — the engines' stock X floats in dead white space above
+  // the content and is hidden in globals.css.
+  const cornerBtn = (side: "left" | "right", label: string) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", label);
+    b.style.cssText =
+      `position:absolute;top:6px;${side}:6px;z-index:5;width:26px;height:26px;border-radius:9999px;` +
+      "border:0;cursor:pointer;background:rgb(0 0 0/.55);display:grid;place-items:center;padding:0";
+    return b;
+  };
+  if (onClose) {
+    const x = cornerBtn("right", "Close");
+    x.innerHTML =
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+    x.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onClose();
+    });
+    root.appendChild(x);
+  }
+  if (onToggleSave) {
+    let saved = !!p.saved;
+    const heartSvg = () =>
+      `<svg width="13" height="13" viewBox="0 0 24 24" fill="${saved ? "#ef4444" : "none"}" stroke="${saved ? "#ef4444" : "#fff"}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`;
+    const h = cornerBtn("left", "Save this home");
+    h.setAttribute("aria-pressed", String(saved));
+    h.innerHTML = heartSvg();
+    h.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      saved = !saved;
+      h.innerHTML = heartSvg();
+      h.setAttribute("aria-pressed", String(saved));
+      onToggleSave(p.id);
+    });
+    root.appendChild(h);
+  }
 
   if (p.photoCount > 0) {
     const frame = document.createElement("div");
     frame.style.cssText =
-      "position:relative;width:248px;height:156px;border-radius:8px;overflow:hidden;background:#eceff3";
+      "position:relative;width:252px;height:158px;overflow:hidden;background:#eceff3";
     const img = document.createElement("img");
     img.alt = `${p.address}, ${p.city}`;
     img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block";
@@ -160,15 +211,15 @@ export function popupNode(p: MapPin): HTMLElement {
     el.textContent = txt;
     root.appendChild(el);
   };
-  line(`${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}`, "margin:8px 0 0;font-weight:700;font-size:14px;color:#000000");
-  line(`${p.address}, ${p.city} ${p.zip}`, "margin:3px 0 0;font-size:12px;color:#000000");
-  line(`Listed with ${p.office}`, "margin:3px 0 0;font-size:11px;color:#6E7681");
+  line(`${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}`, "margin:10px 12px 0;font-weight:700;font-size:14px;color:#000000");
+  line(`${p.address}, ${p.city} ${p.zip}`, "margin:3px 12px 0;font-size:12px;color:#000000");
+  line(`Listed with ${p.office}`, "margin:3px 12px 0;font-size:11px;color:#6E7681");
 
   const link = document.createElement("a");
   link.href = listingPath(p);
   link.textContent = "View Listing";
   link.style.cssText =
-    "display:block;margin-top:9px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
+    "display:block;margin:10px 12px 12px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
     `text-align:center;font:700 11px/1.4 ${MAP_FONT};letter-spacing:.12em;text-transform:uppercase;text-decoration:none`;
   root.appendChild(link);
 

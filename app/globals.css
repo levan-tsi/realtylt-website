@@ -459,17 +459,33 @@ input[type="search"]::-webkit-search-cancel-button:hover {
    inset, and no scroll chrome around a fixed-size card. */
 .gm-style .gm-style-iw-c {
   border-radius: 16px;
-  padding: 12px !important; /* Google inlines its own padding per side */
+  padding: 0 !important; /* the card is edge-to-edge; Google inlines its own padding per side */
 }
 .gm-style .gm-style-iw-d {
   overflow: hidden !important; /* fixed-size card — the pane's scrollbars are dead chrome */
   padding: 0 !important;
 }
+/* The stock InfoWindow close X floats in dead white space above the content — the shared
+   popup card carries its own close, on the photo. The header row it lived in (gm-style-iw-ch,
+   plus the -chr wrapper in newer Maps DOM) otherwise keeps ~17px of white mat above the
+   edge-to-edge photo. */
+.gm-style .gm-ui-hover-effect {
+  display: none !important;
+}
+.gm-style .gm-style-iw-ch,
+.gm-style .gm-style-iw-chr {
+  display: none;
+}
 .leaflet-popup-content-wrapper {
+  overflow: hidden;
   border-radius: 16px;
+  padding: 0;
 }
 .leaflet-popup-content {
-  margin: 12px;
+  margin: 0;
+}
+.leaflet-popup-close-button {
+  display: none;
 }
 
 /* Leaflet wraps the chip in a zero-size focusable marker element — surface the focus ring on

@@ -55,21 +55,22 @@ function FitPins({ pins }: { pins: MapPin[] }) {
 /** Mounts the SHARED vanilla-DOM popup mini-card (photo pager + View Listing) inside a
  * react-leaflet Popup, so both map engines show the identical thing. Built once per open —
  * the pager's own listeners live on the node. */
-function PopupCard({ pin }: { pin: MapPin }) {
+function PopupCard({ pin, onToggleSave }: { pin: MapPin; onToggleSave?: (id: string) => void }) {
   const ref = useRef<HTMLDivElement>(null);
+  const map = useMap();
   useEffect(() => {
     const host = ref.current;
     if (!host) return;
-    const node = popupNode(pin);
+    const node = popupNode(pin, { onClose: () => map.closePopup(), onToggleSave });
     host.appendChild(node);
     return () => {
       host.removeChild(node);
     };
-  }, [pin]);
+  }, [pin, map, onToggleSave]);
   return <div ref={ref} />;
 }
 
-function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
+function PinLayer({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
   return (
     <>
       {pins.map((p) => {
@@ -83,8 +84,8 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
             zIndexOffset={active ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(p.id) }}
           >
-            <Popup minWidth={248}>
-              <PopupCard pin={p} />
+            <Popup minWidth={252}>
+              <PopupCard pin={p} onToggleSave={onToggleSave} />
             </Popup>
           </Marker>
         );
@@ -93,7 +94,7 @@ function PinLayer({ pins, selectedId, onSelect }: MapViewProps) {
   );
 }
 
-export default function MapView({ pins, selectedId, onSelect }: MapViewProps) {
+export default function MapView({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
   // Rows without coordinates come through as lat/lng 0 — never pin (or fit) Null Island.
   // Same-zip listings are fanned out so every chip stays clickable.
   const located = useMemo(() => spreadPins(pins.filter((p) => p.lat && p.lng)), [pins]);
@@ -118,7 +119,7 @@ export default function MapView({ pins, selectedId, onSelect }: MapViewProps) {
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <FitPins pins={located} />
-        <PinLayer pins={located} selectedId={selectedId} onSelect={onSelect} />
+        <PinLayer pins={located} selectedId={selectedId} onSelect={onSelect} onToggleSave={onToggleSave} />
       </MapContainer>
     </div>
   );

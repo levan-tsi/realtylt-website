@@ -211,7 +211,7 @@ export function SearchClient() {
   const [result, setResult] = useState<ApiResult | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [saveOpen, setSaveOpen] = useState(false);
-  const { saveSearch, signedIn, favorites } = useSaved();
+  const { saveSearch, signedIn, favorites, toggleFavorite } = useSaved();
   const { openSignIn, enabled: accountsEnabled } = useAuth();
   // Chip ↔ card highlight: clicking a map price chip scrolls to and highlights its card;
   // hovering/focusing a card highlights its chip. Shared so panel and map stay in sync.
@@ -819,7 +819,7 @@ export function SearchClient() {
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
           <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[84vh]">
-            <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} />
+            <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} onToggleSave={toggleFavorite} />
           </div>
         </div>
       ) : (
