@@ -43,6 +43,8 @@ export function LeadForm({
   source,
   namePlaceholder = "Your Name",
   addressPlaceholder = "Property Address",
+  qualifier,
+  addressValue,
   savedSearches,
 }: {
   dark?: boolean;
@@ -71,6 +73,12 @@ export function LeadForm({
   source?: string;
   namePlaceholder?: string;
   addressPlaceholder?: string;
+  /** Structured intent to attach to this submission — the same `qualifier` field the listing
+   * tour/offer sheets send. parseLead normalizes it (flat, short strings) and folds it into the
+   * message so it is readable even in a plain CRM view. */
+  qualifier?: Record<string, string>;
+  /** Prefill/carry a property address on the payload's top-level `address` field. */
+  addressValue?: string;
   /** Saved searches to attach to this submission (the /saved listing-alert opt-in). A visitor
    * without an account keeps their searches in localStorage, so the only way the CRM ever sees
    * what to watch is if they travel with the lead. */
@@ -105,6 +113,8 @@ export function LeadForm({
         body: JSON.stringify({
           ...data,
           source: source ?? pathname,
+          ...(addressValue && !data.address ? { address: addressValue } : {}),
+          ...(qualifier ? { qualifier } : {}),
           ...(savedSearches?.length ? { savedSearches } : {}),
         }),
       });

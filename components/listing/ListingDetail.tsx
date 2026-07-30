@@ -8,6 +8,7 @@ import { ListingCard, priceLabel } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { ListingPhotos } from "@/components/idx/ListingPhotos";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { fullAddress, infoRequestQualifier } from "@/lib/leads/listing-intents";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
 import { ListingSubNav } from "@/components/listing/ListingSubNav";
 import { MarketInsights } from "@/components/listing/MarketInsights";
@@ -436,6 +437,11 @@ export async function ListingDetail({ id }: { id: string }) {
                   <LeadForm
                     compact
                     defaultReason="I'm interested in buying a home"
+                    // Name the property, exactly like the tour and offer sheets on this page do.
+                    // Without these the agent got a bare "interested in buying a home" and had to
+                    // read the listing id out of the source URL.
+                    addressValue={fullAddress({ address: l.address, city: l.city, state: l.state, zip: l.zip })}
+                    qualifier={infoRequestQualifier({ mlsNumber, listPrice: l.price })}
                     submitLabel="Request Info / Tour"
                     successTitle="Request sent."
                     successBody={`We'll get back to you about ${l.address} shortly.`}

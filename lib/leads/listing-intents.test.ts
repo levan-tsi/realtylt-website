@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatOffer, fullAddress, offerQualifier, tourQualifier, wrapIndex } from "./listing-intents";
+import { formatOffer, fullAddress, infoRequestQualifier, offerQualifier, tourQualifier, wrapIndex } from "./listing-intents";
 
 const listing = {
   id: "KEY123",
@@ -79,6 +79,16 @@ describe("offerQualifier", () => {
     const q = offerQualifier({ mlsNumber: "123", offerDisplay: "$1", listPrice: 1, preApproved: "" });
     expect(q).not.toHaveProperty("preApproved");
     expect(q).not.toHaveProperty("seenHomeInPerson");
+  });
+});
+
+describe("infoRequestQualifier — the sidebar form names the property too", () => {
+  it("carries the same intent/listing/listPrice shape as its sibling sheets", () => {
+    expect(infoRequestQualifier({ mlsNumber: "1026300", listPrice: 495_000 })).toEqual({
+      intent: "Request info / tour",
+      listing: "MLS# 1026300",
+      listPrice: "$495,000",
+    });
   });
 });
 

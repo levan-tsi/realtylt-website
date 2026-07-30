@@ -39,6 +39,18 @@ export function tourQualifier(o: {
   };
 }
 
+/** `qualifier` for the sidebar "Request Info / Tour" form. Its two siblings on the same page —
+ * the tour sheet and the offer sheet — have always named the property they are about; this one
+ * sent name/email/phone and left the agent to read the listing id out of the source URL. Same
+ * shape as the other two so every lead from a listing page arrives looking the same. */
+export function infoRequestQualifier(o: { mlsNumber: string; listPrice: number }): Record<string, string> {
+  return {
+    intent: "Request info / tour",
+    listing: `MLS# ${o.mlsNumber}`,
+    listPrice: `$${o.listPrice.toLocaleString("en-US")}`,
+  };
+}
+
 /** The two questions live realtylt.com asks before it will start an offer. They are the first
  * things an agent needs in order to judge how strong an offer is, so the answers ride along in the
  * SAME lead payload rather than a second submission. */
