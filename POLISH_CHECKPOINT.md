@@ -1,83 +1,181 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 14 BRIEF — THE FINAL PRE-DEPLOY CHECK (owner 2026-07-30). SINGLE AGENT, ~700k.
-## The owner's words: test and check EVERY small detail, find what we missed, fix EVERY bug,
-## every misalignment, everything not working properly. This is the FINAL check — the site
-## deploys after this round. If done before budget, POLISH until ~700k. Do not stop early,
-## do not ask permission mid-goal.
+## ═══ ROUND 14 DONE — 2026-07-30. THE FINAL PRE-DEPLOY CHECK. Single agent.
+## Nine defects found and fixed, every one by DRIVING the real site, not by reading code.
+## Evidence probes are the untracked scripts/_scratch-r14-*.mjs; shots in docs/design-r14/.
 ##
-## ── START HERE: THE BUG THE OWNER JUST CAUGHT (map photo counts lie) ──────────────────
-## Repro he gave: map popup said "8 pics"; switching showed the branded coming-soon still;
-## opening the LISTING PAGE showed ONE pic and nothing else. MECHANICS (understood, unfixed):
-##  • Popup/card pager bound = Listing.photoCount = the photos ARRAY length recorded at
-##    card-slimming (lib/idx/db.ts toCard) — it counts EXPIRED signed MediaURLs that were
-##    never mirrored. /api/media for those: storage probe misses -> legacy proxy hits the
-##    ~1h-expired source URL -> 503 -> popup settles on the branded still (by design).
-##  • The listing PAGE drops dead tiles entirely (ListingPhotos onUnavailable contract), so
-##    it honestly shows only the 1 real photo — hence 8-vs-1.
-## The pager should not promise more than is SERVABLE. Candidate fixes to weigh (measure
-## first): (a) bound = photosMirrored when >0 — but the sync WIPES that marker on re-upsert
-## (round-13c trap) and the route's storage probe still serves wiped-marker listings, so
-## this UNDERCOUNTS; (b) pager shrinks dynamically — when an index settles on the fallback,
-## cap count at the last good index (client-side truth); (c) a real servable-count column
-## kept by the sync/probe (server truth, schema work). (b) is cheap and honest; (c) is the
-## durable fix. Whatever ships: card counter, popup counter and the LISTING PAGE photo count
-## must agree for the same listing — that agreement IS the test.
+## ── 1. THE PHOTO-COUNT LIE (the bug he opened with) — CLOSED, with server truth ────────
+## Measured on the live feed, 27,986 active rows: BOTH existing numbers were wrong.
+##  • photos array length = the feed's CLAIM. 12,905 rows (46%) claim more than the mirror
+##    can serve; 615 claim photos and serve NONE. This bound the card + popup pagers.
+##  • listing->photosMirrored sits inside the jsonb the sync replaces wholesale, so it is
+##    wiped on re-upsert: 9,186 active rows read 0 while their photos sit in Storage. This
+##    bound the MAP PINS — which is why those popups showed no photo at all.
+## FIX = candidate (c), the durable one: a real COLUMN idx_listings.photos_servable, the
+## contiguous mirrored prefix present in storage.objects clamped to the claim (the PREFIX,
+## not the object count: objects {0,1,3} can only walk 0..1). Verified 0 mismatches on all
+## 29,044 rows. Refreshed hourly by public.idx_refresh_photos_servable() (pg_cron
+## 'idx-photos-servable-refresh' at :27, 20 min after the sync at :07); reads Storage only,
+## zero MLS contact; EXECUTE revoked from anon+authenticated so it is NOT a PostgREST RPC.
+## Migration committed at supabase/migrations/idx_photos_servable.sql; doc section added to
+## docs/mls-fix/PHOTO-MIRRORING.md. null = not computed yet -> every consumer falls back to
+## the claim, so a brand-new listing never renders an empty gallery.
+## Every surface reads that ONE number now: card pager, map popup, and the listing gallery
+## is TRUNCATED to it (getProxiedPhotoPaths), which also stops ~9 hopeless media requests
+## per view on the 46%. "With photos only" moved to the column too (it was hiding 9,186
+## listings that DO have photos; measured 11,723 -> 11,632, min photoCount 0 -> 1).
+## THE AGREEMENT TEST, in a real browser on KEY1026300 (claims 29, serves 4): card "1 / 4",
+## map popup "1 / 4" walked to 4/4 with four REAL frames (natural sizes 1157x1536 …
+## 1320x742, no dead frame, wraps to 1/4), listing page "VIEW ALL 4 PHOTOS", tiles 0..3.
+## KEY949886 (claims 17, serves 1): 1 everywhere.
 ##
-## ── THE MANDATE: EVERYTHING, EVERY STATE, IN A REAL BROWSER ───────────────────────
-## Page-by-page at 1440 AND 390 (320 for overflow), driving controls for real, not assuming:
-## home (hero instrument+video path, rails, carousel, footer form), /search (grid + map view,
-## filters incl. MORE panel, mixed/newest/price sorts, pagination, save-search, hearts, map
-## popups on BOTH engines — dev runs GOOGLE; Leaflet needs NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-## unset), listing pages (gallery, lightbox, tour/offer sheets + mobile day strip, market
-## insights, schools, sub-nav), /buying /selling /financing /connect /home-value wizard,
-## /top-areas + county pages, /reviews, /blog + flagship post (SECOND SESSION owns blog code
-## — report, don't fix, unless their tree is clean and it's a launch-blocker), portal
-## (sign-in, saved searches/favorites), 404, privacy/dmca. States: hover/focus/active/empty/
-## loading/error, JS-off, reduced-motion, print. A11y floors: focus ring everywhere, tap
-## >=24px, controls >=16px on mobile, contrast (probe: scripts/_scratch-r12-contrast.mjs —
-## remember oklab dual-canvas + per-target insetPx for bordered targets). Lead-form paths
-## must reach /api/lead with correct qualifiers (submit obvious fake data, then verify what
-## landed via the Supabase MCP — check the table name in lib/leads first).
+## ── 2. THE OTHER EIGHT ─────────────────────────────────────────────────────────────────
+## (a) SIDEWAYS SCROLL AT 320 on all six county pages + every listing page. Same CSS
+##     mistake both times: `display:grid` with only BREAKPOINTED columns, so below the
+##     breakpoint the implicit track is `auto` = sized by min-content. County: the card's
+##     `truncate` address (nowrap -> min-content 310px). Listing: the lead <select> (widest
+##     option 299px) + the tour day strip (313px, which HAS overflow-x-auto to scroll
+##     instead of push). Tracks measured 362px in a 288px box. `grid-cols-1` = minmax(0,1fr)
+##     fixed both. SearchClient's card <li> already carried min-w-0 with a comment saying
+##     exactly this — same fix, where it was missing.
+## (b) /search CLS was 0.6185 (Google calls >0.25 poor). SearchClient reads useSearchParams
+##     so Next serves the Suspense fallback for the whole server pass — and it was one line
+##     of text: main went 148px -> 771px on hydration and dragged the footer up. Fallback
+##     reserves 88vh now: 0.0111 @1440, 0.0267 @390. First row of covers is `priority` too
+##     (Next was naming the LCP image in a warning).
+## (c) /connect's portrait declared 300x380 for a 3024x4032 file (a true 3:4) — the box was
+##     20px shorter than what `h-auto` painted, so the page shifted every visit. 300x400.
+## (d) images.localPatterns: Next's default allows local images with an EMPTY query only, so
+##     MlsImage's retry URLs (?r=1) warned on every page with a photo — and that config
+##     becomes REQUIRED in Next 16. Two entries (default restored + `search` omitted, which
+##     is how Next spells "any query", scoped to /api/media/**). Verified 0 dead images.
+## (e) THE CHAT LAUNCHER SAT ON REAL CONTROLS in the first phone viewport, on 6 of 17
+##     routes: /blog 3600px² (a link under the whole 60x60 circle), /top-areas 3540px²,
+##     /portal 2706px² (an input), /selling 1710px² (the hero form's email field), / 612px²
+##     ("See Home Value"), listing 509px². A phone has nowhere to move it to, so below 480px
+##     it now stays tucked (opacity 0 + pointer-events none) until 60% of a viewport has
+##     scrolled, then fades in; once opened it never tucks again. Desktop untouched.
+##     Measured after: 0 covered controls across all 17 routes.
+## (f) /selling's hero trust dividers are BETWEEN marks, but flex-wrap gave "Free
+##     Consultation" its own line at 390 — leading with a hanging rule and 32px of empty
+##     indent. sm:-only now; desktop row is pixel-identical.
+## (g) The listing SUB-NAV was not in document order. Measured: Overview y=614, Schools
+##     y=2145, Payment y=2478, Market Insights y=3409, while the nav read Overview ·
+##     Payment · Market Insights · Schools — so working down it jumped forward twice then
+##     BACK UP. A contents list must follow its document. If Schools should READ last, move
+##     the SECTION (a content decision), not the list.
+## (h) The listing sidebar "Request Info / Tour" form sent name/email/phone and nothing
+##     else, while the tour and offer sheets beside it both sent a qualifier naming the
+##     property. LeadForm gained an optional `qualifier` + `addressValue` (parseLead already
+##     normalizes qualifier); it now sends intent "Request info / tour", listing "MLS# …",
+##     listPrice, and the full address.
+## (i) ONE DROPPED READ dropped the home rails to stale data: ~1 load in 3 logged
+##     "[idx-db] getFeatured failed — serving the committed snapshot". search() has been
+##     wrapped in onceRetried since that was diagnosed on prod; getListing, getFeatured,
+##     newestNonFeatured and searchPins never were. All wrapped now (+ a test).
 ##
-## ── DEPLOY-AFTER: WHAT THIS ROUND MUST LEAVE TRUE ─────────────────────────────
-## tsc clean · tests >= 506 passing, foreground · zero overflow 320/390 · all routes 200 ·
-## no console errors beyond the KNOWN pre-existing two (media 503s on unsynced keys in dev;
-## Next-16 images.localPatterns warning on /api/media?r= retries — the proper fix is a
-## next.config images.localPatterns entry, measure first, never touch CSP blindly) · every
-## commit page-scoped with real reasoning · push only after self-verifying · after EVERY
-## push, verify the Vercel deployment builds READY (project prj_0envsZqHojmxmbjnVCqqeXhUFQIl,
-## team team_LxVTdG0G7zPU5WSoNnZOpf8p) — a round is not done until his URL builds READY.
-## LAUNCH REMAINS OWNER-GATED: site is noindex ON PURPOSE. His go-live order: clear
-## NEXT_PUBLIC_SITE_URL in Vercel -> point realtylt.com apex -> remove PRELAUNCH=1. NEVER
-## remove noindex yourself. The two audit security items (published-CMA enumeration, raw MLS
-## MediaURLs) stay owner-gated — never loosen security, never add MLS DATA-API calls to
-## request paths, keep Playwright probes blocking **/api/media/** unless photos ARE the test.
+## ── 3. ALSO APPLIED HIS OWN PATTERN WHERE IT WAS STILL MISSING ─────────────────────────
+## /home-value's address bar was the LAST control built the way he rejected in round 11 —
+## field + unit + black FIND OUT butted together, three pieces pretending to be one. Round
+## 12 settled the answer on the hero and listed this bar as a candidate. It is that answer
+## now: one 12px shell, 4px inset, nested 8px button, .search-instrument so the global
+## unlayered focus ring lands on the CONTAINER (measured: container outline 2px paper, input
+## suppressed, both widths). Still advances to step 2 with the address carried; mobile input
+## computes to 16px. Before/after: docs/design-r14/p-home-value-390.png vs hv-{390,1440}-AFTER.png.
 ##
-## ── STANDING TRAPS (each cost a past round — read, believe) ──────────────────────
+## ── 4. VERIFIED BY ME, IN THE FOREGROUND (numbers, not adjectives) ─────────────────────
+## tsc clean · 514 tests passing (was 506; +8) · 48 routes x {1440,390,320} = 144 checks:
+## ZERO horizontal overflow (was 7), zero bad statuses, console clean · 0 dead links across
+## 179 distinct internal hrefs · 338 focus stops across 13 pages, every one with a visible
+## indicator · tap targets: only 8 under 24px and all are <label>s beside their own >=40px
+## input (WCAG equivalent-control) · corner-radius census: every off-scale value is inside a
+## device/browser ILLUSTRATION (a phone frame needs a phone's radius) — no drift in the
+## site's own chrome · JS-OFF: every page keeps its h1, forms and links, 0 invisible reveals,
+## /search serves its noscript path · reduced-motion /: 0 animations, 0 iframes, 0 videos ·
+## print (listing): 5,648 chars, h1 present, 0 fixed elements · 404 returns a real 404 with
+## working links · portal signed-out on all four routes · ALL ELEVEN lead surfaces POST with
+## the right source and interestReason (/selling + home footer "selling", rest "buying";
+## /home-value correctly preselects "selling") · listing gallery arrows walk 0->1->2->3,
+## lightbox focuses inside itself so ArrowRight goes 1/4->2/4 and Escape closes, every
+## sub-nav anchor lands its target at exactly 64px under the sticky bar, mortgage calculator
+## recomputes on every input ($3,520.16 -> $2,910.60 @40% down -> $2,334.08 @3% -> $3,062.28
+## on 15yr -> RESET restores) · /search: county chip, beds, withPhotos, all four sorts,
+## pagination (?page=2, ?page=4), heart (aria-pressed flips true + label changes + undo),
+## grid/map toggle (36 chips), save-search dialog — all driven, no page errors.
+##
+## ── 5. MY MISTAKE THIS ROUND — READ THIS BEFORE TESTING LEAD FORMS ─────────────────────
+## CRM_LEAD_WEBHOOK IS SET in .env.local. I submitted 10 test leads for real before checking,
+## and they reached the LIVE CRM (ids 52-61 + 1 contact + 1 notification). All deleted and
+## verified gone; the 7 remaining example.com contacts are pre-existing June/July seed data,
+## not mine. lib/leads honours LEAD_TEST_MODE=1 for exactly this. Better still, and what the
+## probes do now: intercept **/api/lead in the browser and fulfil it locally — you see the
+## exact payload and the server never runs submitLead.
+##
+## ── 6. STILL OPEN — OWNER DECISIONS, NOT WORK ─────────────────────────────────────────
+## 1. The two security items in PRELAUNCH-AUDIT.md §2 (published-CMA enumeration, raw MLS
+##    MediaURLs) — owner decision + a paired CRM change. Untouched, as instructed.
+## 2. The ambient Vimeo hero clip (vendor's, no licence record, third-party iframe on the
+##    LCP path). Recommendation unchanged: drop it, everyone gets the licensed still.
+## 3. REALTOR(R) block-R artwork must come from NAR's brand centre if he wants it.
+## 4. /search's sort <select> is 12px on a phone (deliberate rlt-compact-control exception,
+##    documented in SearchClient) — the one control below the 16px floor. Selects open a
+##    native picker on iOS rather than zooming, so it stands unless he wants it changed.
+## 5. At 320 only, the listing header's price block wraps under the address and its
+##    "Est. $X/mo" right-aligns inside a narrow box. Left alone deliberately: 390 is correct
+##    and fixing 320 means re-opening the alignment he set in round 13.
+##
+## ── 7. LAUNCH IS STILL OWNER-GATED (do not trip it) ───────────────────────────────────
+## The site is noindex ON PURPOSE. His go-live order, unchanged: clear NEXT_PUBLIC_SITE_URL
+## in Vercel -> point the realtylt.com apex here -> remove PRELAUNCH=1. NEVER remove the
+## noindex from here. Deploys verified READY through this round's pushes (project
+## prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team team_LxVTdG0G7zPU5WSoNnZOpf8p).
+##
+## ── 8. NEXT ROUND ─────────────────────────────────────────────────────────────────────
+## The nine above are closed and measured; the list in §6 is his to decide. If a new round
+## runs before launch: watch photos_servable actually track the hourly sync (query
+## idx_refresh_photos_servable's effect the morning after — it is the first thing in this
+## system that keeps itself honest), then re-run the four standing probes
+## (_scratch-r14-sweep / -overlap / -focus / -links) as a regression gate, since between
+## them they now cover overflow, status, console, launcher obstruction, focus indicators and
+## dead links across every route at three widths.
+## A SECOND SESSION owns the blog surfaces (lib/blog/*, components/blog/*, content/blog/*,
+## docs/services/*.png churn) — attribute before you fix anything there. Note the flagship
+## post's real slug is /blog/ai-chat-assistant-real-estate-website (an older probe list had
+## "-for-real-estate", which 404s and is NOT a site defect).
+##
+## ── 9. STANDING TRAPS (each cost a past round — read, believe) ────────────────────────
 ## • photosMirrored is WIPED to 0 by the sync's full-JSONB upsert — never trust it alone.
-## • Search cards carry ONE cover URL; l.photos.length is ALWAYS 1 there; photoCount is the
-##   array length (see the bug above).
-## • fullPage screenshots shear headings / catch unfired reveals / unpainted frames — verify
-##   in a scrolled viewport before calling anything broken; re-shoot pure-white frames.
-## • The unlayered :focus-visible ring beats ALL utilities (globals.css ~line 139); dark
-##   surfaces get paper via .bg-ink; composed controls need unlayered :has() rules.
-## • rtk mangles grep alternations + strips git-diff removals ("nothing deleted" lies — use
-##   git show / rtk proxy); python/bash heredocs sometimes die (AVG) — write a script file
-##   with the Write tool and run it instead.
+##   photos_servable is the number to read now; photoCount on a card IS that column.
+## • Search cards carry ONE cover URL; l.photos.length is ALWAYS 1 there.
+## • fullPage screenshots shear headings / catch unfired reveals; verify in a scrolled
+##   viewport. LOOK at the shot: a "0 overflow at 320" pass this round was a BUILD ERROR
+##   page rendering at exactly 320 — a JSX comment I had put between `) : (` and its element.
+## • The unlayered :focus-visible ring beats ALL utilities (globals.css ~line 139); composed
+##   controls need the .search-instrument :has() rule, not a utility.
+## • Probes lie in both directions: `innerText` is "" for elements inside a collapsed
+##   dropdown (reads as "nameless control"); a locator found by accessible NAME stops
+##   matching when the name changes on click (the heart looked broken and was not); a
+##   rect-overlap check must skip an opacity-0 / pointer-events-none element; and slicing an
+##   element's text to 120 chars can cut off the number you are measuring (the mortgage
+##   calculator looked frozen and was not). Verify the probe before believing the verdict.
+## • Nine parallel Playwright contexts against ONE next-dev server times everything out —
+##   run route sweeps sequentially.
+## • rtk mangles grep alternations (use the Grep tool) and strips git-diff removals; in
+##   git-bash use MSYS_NO_PATHCONV=1 when passing a leading-slash path as an argument.
 ## • Dev server: ONE per repo, port 3100; never next build while it runs; corrupted-cache
 ##   invariant -> kill node, rm -rf .next, restart. netstat first; :3000 is wslrelay.
 ## • Popup probes: our close X shares aria-label with Google's HIDDEN stock one — select
-##   :not(.gm-ui-hover-effect). Popup = map-shared.popupNode, ONE builder for both engines.
-## • Local image/edit generation (owner DEFAULT when he doesn't name a tool): ComfyUI at
-##   C:/Users/Levan/ComfyUI, Start-MageFlow.bat, _mage_t2i.py / _mage_edit.py (4 steps, cfg 1).
-## • Coming-soon art = the OWNER'S OWN image (coming-soon.webp + -notext.webp wordless cut).
-##   Do not regenerate or replace it without his say.
+##   :not(.gm-ui-hover-effect). Dev runs the GOOGLE engine; markers are button.rlt-price-chip
+##   (an OverlayView), NOT gmp-advanced-marker.
+## • On a listing page "Request a Tour" is a TAB; the CTA under the day strip is "In Person
+##   Tour". Clicking the tab correctly does nothing.
+## • Coming-soon art = the OWNER'S OWN image; do not regenerate it without his say.
 ## • Corner scale 8/12/16/24+full; anti-slop: no gradient text/buttons, no violet purples, no
-##   neon cyan, zero em dashes in visitor copy, no arrow-glyph CTAs; ink is #000 (never
-##   invent a navy); the saved-heart red is #ef4444 (FavoriteButton's).
-## • A second session shares this repo on the BLOG surfaces — never git add -A; check git
-##   status before committing; their in-flight TS errors are not yours to fix.
+##   neon cyan, zero em dashes in visitor copy, no arrow-glyph CTAs; ink is #000; the
+##   saved-heart red is #ef4444. MLS remarks are the agent's own words — never rewrite them
+##   to satisfy a copy rule.
+## • A second session shares this repo — never git add -A; check git status before
+##   committing; their in-flight TS errors are not yours to fix.
 ##
 ## ── DONE 2026-07-29 (rounds 12-13f) — do not redo, DO re-verify as part of the sweep ────
 ## Hero instrument (search+button one container, chip CTAs, lowered, 82svh mobile) · owner's
