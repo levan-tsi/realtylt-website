@@ -1,5 +1,92 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 14 BRIEF — THE FINAL PRE-DEPLOY CHECK (owner 2026-07-30). SINGLE AGENT, ~700k.
+## The owner's words: test and check EVERY small detail, find what we missed, fix EVERY bug,
+## every misalignment, everything not working properly. This is the FINAL check — the site
+## deploys after this round. If done before budget, POLISH until ~700k. Do not stop early,
+## do not ask permission mid-goal.
+##
+## ── START HERE: THE BUG THE OWNER JUST CAUGHT (map photo counts lie) ──────────────────
+## Repro he gave: map popup said "8 pics"; switching showed the branded coming-soon still;
+## opening the LISTING PAGE showed ONE pic and nothing else. MECHANICS (understood, unfixed):
+##  • Popup/card pager bound = Listing.photoCount = the photos ARRAY length recorded at
+##    card-slimming (lib/idx/db.ts toCard) — it counts EXPIRED signed MediaURLs that were
+##    never mirrored. /api/media for those: storage probe misses -> legacy proxy hits the
+##    ~1h-expired source URL -> 503 -> popup settles on the branded still (by design).
+##  • The listing PAGE drops dead tiles entirely (ListingPhotos onUnavailable contract), so
+##    it honestly shows only the 1 real photo — hence 8-vs-1.
+## The pager should not promise more than is SERVABLE. Candidate fixes to weigh (measure
+## first): (a) bound = photosMirrored when >0 — but the sync WIPES that marker on re-upsert
+## (round-13c trap) and the route's storage probe still serves wiped-marker listings, so
+## this UNDERCOUNTS; (b) pager shrinks dynamically — when an index settles on the fallback,
+## cap count at the last good index (client-side truth); (c) a real servable-count column
+## kept by the sync/probe (server truth, schema work). (b) is cheap and honest; (c) is the
+## durable fix. Whatever ships: card counter, popup counter and the LISTING PAGE photo count
+## must agree for the same listing — that agreement IS the test.
+##
+## ── THE MANDATE: EVERYTHING, EVERY STATE, IN A REAL BROWSER ───────────────────────
+## Page-by-page at 1440 AND 390 (320 for overflow), driving controls for real, not assuming:
+## home (hero instrument+video path, rails, carousel, footer form), /search (grid + map view,
+## filters incl. MORE panel, mixed/newest/price sorts, pagination, save-search, hearts, map
+## popups on BOTH engines — dev runs GOOGLE; Leaflet needs NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+## unset), listing pages (gallery, lightbox, tour/offer sheets + mobile day strip, market
+## insights, schools, sub-nav), /buying /selling /financing /connect /home-value wizard,
+## /top-areas + county pages, /reviews, /blog + flagship post (SECOND SESSION owns blog code
+## — report, don't fix, unless their tree is clean and it's a launch-blocker), portal
+## (sign-in, saved searches/favorites), 404, privacy/dmca. States: hover/focus/active/empty/
+## loading/error, JS-off, reduced-motion, print. A11y floors: focus ring everywhere, tap
+## >=24px, controls >=16px on mobile, contrast (probe: scripts/_scratch-r12-contrast.mjs —
+## remember oklab dual-canvas + per-target insetPx for bordered targets). Lead-form paths
+## must reach /api/lead with correct qualifiers (submit obvious fake data, then verify what
+## landed via the Supabase MCP — check the table name in lib/leads first).
+##
+## ── DEPLOY-AFTER: WHAT THIS ROUND MUST LEAVE TRUE ─────────────────────────────
+## tsc clean · tests >= 506 passing, foreground · zero overflow 320/390 · all routes 200 ·
+## no console errors beyond the KNOWN pre-existing two (media 503s on unsynced keys in dev;
+## Next-16 images.localPatterns warning on /api/media?r= retries — the proper fix is a
+## next.config images.localPatterns entry, measure first, never touch CSP blindly) · every
+## commit page-scoped with real reasoning · push only after self-verifying · after EVERY
+## push, verify the Vercel deployment builds READY (project prj_0envsZqHojmxmbjnVCqqeXhUFQIl,
+## team team_LxVTdG0G7zPU5WSoNnZOpf8p) — a round is not done until his URL builds READY.
+## LAUNCH REMAINS OWNER-GATED: site is noindex ON PURPOSE. His go-live order: clear
+## NEXT_PUBLIC_SITE_URL in Vercel -> point realtylt.com apex -> remove PRELAUNCH=1. NEVER
+## remove noindex yourself. The two audit security items (published-CMA enumeration, raw MLS
+## MediaURLs) stay owner-gated — never loosen security, never add MLS DATA-API calls to
+## request paths, keep Playwright probes blocking **/api/media/** unless photos ARE the test.
+##
+## ── STANDING TRAPS (each cost a past round — read, believe) ──────────────────────
+## • photosMirrored is WIPED to 0 by the sync's full-JSONB upsert — never trust it alone.
+## • Search cards carry ONE cover URL; l.photos.length is ALWAYS 1 there; photoCount is the
+##   array length (see the bug above).
+## • fullPage screenshots shear headings / catch unfired reveals / unpainted frames — verify
+##   in a scrolled viewport before calling anything broken; re-shoot pure-white frames.
+## • The unlayered :focus-visible ring beats ALL utilities (globals.css ~line 139); dark
+##   surfaces get paper via .bg-ink; composed controls need unlayered :has() rules.
+## • rtk mangles grep alternations + strips git-diff removals ("nothing deleted" lies — use
+##   git show / rtk proxy); python/bash heredocs sometimes die (AVG) — write a script file
+##   with the Write tool and run it instead.
+## • Dev server: ONE per repo, port 3100; never next build while it runs; corrupted-cache
+##   invariant -> kill node, rm -rf .next, restart. netstat first; :3000 is wslrelay.
+## • Popup probes: our close X shares aria-label with Google's HIDDEN stock one — select
+##   :not(.gm-ui-hover-effect). Popup = map-shared.popupNode, ONE builder for both engines.
+## • Local image/edit generation (owner DEFAULT when he doesn't name a tool): ComfyUI at
+##   C:/Users/Levan/ComfyUI, Start-MageFlow.bat, _mage_t2i.py / _mage_edit.py (4 steps, cfg 1).
+## • Coming-soon art = the OWNER'S OWN image (coming-soon.webp + -notext.webp wordless cut).
+##   Do not regenerate or replace it without his say.
+## • Corner scale 8/12/16/24+full; anti-slop: no gradient text/buttons, no violet purples, no
+##   neon cyan, zero em dashes in visitor copy, no arrow-glyph CTAs; ink is #000 (never
+##   invent a navy); the saved-heart red is #ef4444 (FavoriteButton's).
+## • A second session shares this repo on the BLOG surfaces — never git add -A; check git
+##   status before committing; their in-flight TS errors are not yours to fix.
+##
+## ── DONE 2026-07-29 (rounds 12-13f) — do not redo, DO re-verify as part of the sweep ────
+## Hero instrument (search+button one container, chip CTAs, lowered, 82svh mobile) · owner's
+## COMING SOON art on every no-photo surface incl. the /api/media 302 · search: equal-height
+## cards, 2-col + map split [1fr_1.1fr]@2xl, mixed default sort (daily-rotating window),
+## hearts on chips, photo pagers on cards+popups, popup = edge-to-edge photo card with
+## heart/X on the photo, greedy wheel zoom, boxed Find-a-Place, no blue ring (lift), on-page
+## mobile tour day strip. All deploys verified READY through 3b76550.
+##
 ## ═══ ROUND 13e/f DONE — 2026-07-29 latest. Split rebalanced ~15% back to the listings
 ## (panel 616->733, map 922->805 at 1920; even at xl, [1fr_1.1fr] at 2xl). The map popup is a
 ## PHOTO CARD now: both engines' chrome stripped bare (padding 0; hide .gm-ui-hover-effect AND
