@@ -95,6 +95,18 @@ const nextConfig: NextConfig = {
       // /storage/v1/object/public/ — this pattern is the optimizer's allowance for them.
       { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
     ],
+    // LOCAL (same-origin) paths the Image component will accept. Next's default is
+    // [{ pathname: "/**", search: "" }] — an EMPTY query string only — so MlsImage's retry
+    // URLs (/api/media/{id}/{n}?r=1, the cache-buster that heals a throttled photo) logged
+    // "using a query string which is not configured in images.localPatterns. This config will
+    // be required starting in Next.js 16." on every page with a listing photo. The first entry
+    // restores the default for everything else; the second omits `search`, which is how Next
+    // spells "any query string" (matchLocalPattern only compares `search` when it is defined).
+    // Narrow on purpose: only the media proxy's own path may carry a query.
+    localPatterns: [
+      { pathname: "/**", search: "" },
+      { pathname: "/api/media/**" },
+    ],
     // Never let the optimizer render SVG (an SVG can carry inline script) — default is
     // false; pinned explicitly so a future edit can't silently enable an XSS vector.
     dangerouslyAllowSVG: false,

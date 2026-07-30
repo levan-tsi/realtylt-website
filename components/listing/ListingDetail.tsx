@@ -228,7 +228,11 @@ export async function ListingDetail({ id }: { id: string }) {
 
       {/* ── Facts + contact */}
       <section id="overview" className="scroll-mt-16 bg-paper py-8 md:pb-16 md:pt-10">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
+        {/* grid-cols-1: the implicit `auto` track was sized by min-content, and two things in
+            this column cannot shrink — the lead form's <select> (its widest option is 299px) and
+            the tour day strip (313px, and it has overflow-x-auto precisely so it can scroll
+            instead of pushing). At 320 that made the track 362px inside a 320px box. */}
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
             {/* Share lives in the sticky sub-nav only — one Share control on the page, like live. */}
             <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">

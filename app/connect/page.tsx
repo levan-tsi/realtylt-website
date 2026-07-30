@@ -59,8 +59,11 @@ export default function ConnectPage() {
             <Image
               src="/images/levan-portrait.jpg"
               alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
+              // The file is 3024x4032 (a true 3:4). Declaring 300x380 reserved a box 20px
+              // shorter than the image `h-auto` then painted, so the page shifted on load and
+              // Next logged "width or height modified, but not the other" on every visit.
               width={300}
-              height={380}
+              height={400}
               className="h-auto w-full max-w-[300px] rounded-2xl"
             />
             <p className="t-h3 mt-5 text-ink">Levan Tsiklauri</p>

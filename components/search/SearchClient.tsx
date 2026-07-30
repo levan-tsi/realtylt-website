@@ -344,7 +344,10 @@ export function SearchClient() {
 
   // One card renderer for both branches — carries the ref (chip→card scroll) and the
   // hover/focus↔chip highlight. In grid view the highlight is harmless (no map).
-  const renderCard = (l: Listing) => (
+  // `i` is only used to mark the first row's covers as priority: one of them IS the page's LCP
+  // (Next logs the warning naming the exact image), and without it the browser treats the
+  // headline photo as lazy work. Four covers the widest row we render (xl:grid-cols-4).
+  const renderCard = (l: Listing, i: number) => (
     <li
       key={l.id}
       ref={(el) => {
@@ -367,7 +370,7 @@ export function SearchClient() {
           : ""
       }`}
     >
-      <ListingCard listing={l} variant="plain" />
+      <ListingCard listing={l} variant="plain" priority={i < 4} />
     </li>
   );
 

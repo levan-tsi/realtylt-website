@@ -188,7 +188,13 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
               {" " + short} listings for you.
             </p>
           ) : (
-            <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {/* grid-cols-1 is load-bearing, not decoration: without an explicit base column the
+                  single implicit track is `auto`, sized by the widest MIN-CONTENT inside it — and
+                  a card's address line is `truncate` (white-space:nowrap), so its min-content is
+                  the whole address. Measured at 320: the track came out 362px in a 288px box and
+                  the page scrolled sideways. grid-cols-1 is minmax(0,1fr), which lets the
+                  truncation actually happen. */}
               {result.listings.map((l) => (
                 <li key={l.id}>
                   <ListingCard listing={l} variant="plain" />

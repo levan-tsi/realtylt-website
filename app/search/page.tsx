@@ -26,9 +26,15 @@ export default function SearchPage() {
           </p>
         </div>
       </noscript>
+      {/* The fallback has to RESERVE the search UI's height, not just announce it. SearchClient
+          reads useSearchParams, so Next renders this fallback for the whole server pass and swaps
+          in the real UI on hydration — measured at 1440: main went 148px -> 771px and dragged the
+          footer up the page with it, for a CLS of 0.62 (Google calls anything over 0.25 poor).
+          Holding a viewport's worth of space keeps everything below it off-screen, where a shift
+          costs nothing, and the swap reads as the page arriving instead of jumping. */}
       <Suspense
         fallback={
-          <div data-js-only className="mx-auto max-w-[1400px] px-4 py-16 text-sm text-stone lg:px-8">
+          <div data-js-only className="mx-auto min-h-[88vh] max-w-[1400px] px-4 py-16 text-sm text-stone lg:px-8">
             Loading search…
           </div>
         }
