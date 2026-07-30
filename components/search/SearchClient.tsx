@@ -189,8 +189,9 @@ const toPin = (l: Listing): MapPin => ({
   beds: l.beds,
   baths: l.baths,
   office: l.listOfficeName,
-  // The pager's bound: the listing's real total (set at card-slimming time; the mirror
-  // marker under-counts on wiped-marker rows and left some popups arrowless).
+  // The pager's bound: photos_servable, carried on the card as photoCount — the same number
+  // the card counter and the listing page print, so a popup can never promise a photo the
+  // proxy cannot serve.
   photoCount: l.photoCount ?? Math.max(l.photosMirrored ?? 0, l.photos.length ? 1 : 0),
 });
 

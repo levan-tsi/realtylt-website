@@ -48,7 +48,9 @@ export async function GET(req: Request) {
           lng: round4(l.lng),
           address: l.address,
           city: l.city,
-          photoCount: l.photos.length,
+          // photos_servable, carried on the card as photoCount. l.photos.length is ALWAYS 1 on a
+          // slimmed card, so reading it here left every popup from this route arrowless.
+          photoCount: l.photoCount ?? l.photos.length,
           zip: l.zip,
           beds: l.beds,
           baths: l.baths,

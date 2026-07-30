@@ -93,6 +93,46 @@ describe("DbIdxClient.search", () => {
     expect(result.listings[0].photos).toEqual(["/api/media/KEY777/0"]);
   });
 
+  // The owner's "8 pics on the map, one photo on the page" bug: the card pager used to be bound by
+  // the photos ARRAY (the feed's claim), which 46% of active listings over-state.
+  it("binds the card's photo count to photos_servable, not the feed's claim", async () => {
+    stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      // LISTING claims two photos; storage can serve one.
+      return { body: [{ listing: LISTING, photos_servable: 1 }], total: 1 };
+    });
+
+    const result = await new DbIdxClient().search({});
+    expect(result.listings[0].photoCount).toBe(1);
+  });
+
+  it("falls back to the claim when photos_servable has not been computed for the row", async () => {
+    stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      // A listing inserted since the last refresh — the column is still null.
+      return { body: [{ listing: LISTING, photos_servable: null }], total: 1 };
+    });
+
+    const result = await new DbIdxClient().search({});
+    expect(result.listings[0].photoCount).toBe(2);
+  });
+
+  it("serves map pins their photo count from photos_servable", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return {
+        body: [{ id: "KEY777", price: 650_000, lat: 41.09, lng: -73.92, address: "9 Harbor Lane", city: "Nyack", zip: "10960", beds: 4, baths: 2.5, office: "Example Realty", photoCount: 6 }],
+        total: 1,
+      };
+    });
+
+    const { pins } = await new DbIdxClient().searchPins({}, { north: 42, south: 41, east: -73, west: -74 });
+    const pinCall = calls.find((u) => u.includes("idx_listings") && !u.includes("idx_sync_state"))!;
+    expect(pinCall).toContain("photoCount:photos_servable");
+    expect(pinCall).not.toContain("photosMirrored");
+    expect(pins[0].photoCount).toBe(6);
+  });
+
   it("emits jsonb NUMERIC filters for the MORE panel (single arrow -> so 10 sorts above 2)", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
@@ -114,7 +154,10 @@ describe("DbIdxClient.search", () => {
     expect(listingCall).toContain("listing->yearBuilt=gte.1990");
     expect(listingCall).toContain("listing->yearBuilt=lte.2020");
     expect(listingCall).toContain("listing->taxAnnual=lte.15000");
-    expect(listingCall).toContain("listing->photosMirrored=gt.0");
+    // "With photos" rides the photos_servable COLUMN, never the JSONB mirror marker: the sync's
+    // full-JSONB upsert wipes the marker, so the old filter hid listings that do have photos.
+    expect(listingCall).toContain("photos_servable=gt.0");
+    expect(listingCall).not.toContain("listing->photosMirrored");
     // The text-extraction form (which mis-sorts multi-digit values) must NOT be used.
     expect(listingCall).not.toContain("listing->>garageSpaces");
   });

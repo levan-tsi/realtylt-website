@@ -84,3 +84,60 @@ describe("getProxiedPhotoPaths", () => {
     expect(await getProxiedPhotoPaths("L1")).toEqual({ paths: [], mirrored: 0 });
   });
 });
+
+/** The owner's 2026-07-30 repro: a card promising 8 photos, a listing page showing 1. The gallery
+ * is bound by photos_servable now, so the page renders exactly what the proxy can serve — the same
+ * number the card and the map popup print. */
+describe("getProxiedPhotoPaths — bound by photos_servable (DB path)", () => {
+  const seedDb = (body: unknown) => {
+    process.env.SUPABASE_URL = "https://test-project.supabase.co";
+    process.env.SUPABASE_ANON_KEY = "test-anon-key";
+    const calls: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        calls.push(String(input));
+        return new Response(JSON.stringify(body), { status: 200 });
+      }),
+    );
+    return calls;
+  };
+
+  afterEach(() => {
+    delete process.env.SUPABASE_URL;
+    delete process.env.SUPABASE_ANON_KEY;
+  });
+
+  it("truncates a 6-photo claim to the 2 the proxy can actually serve", async () => {
+    const photos = Array.from({ length: 6 }, (_, i) => `https://media.mlsgrid.com/a/${i}.jpg`);
+    const calls = seedDb([{ photos, mirrored: 0, servable: 2 }]);
+
+    expect(await getProxiedPhotoPaths("KEY949886")).toEqual({
+      paths: ["/api/media/KEY949886/0", "/api/media/KEY949886/1"],
+      mirrored: 2,
+    });
+    // mirrored === paths.length is what lets the page PRINT the count instead of proving it tile
+    // by tile, and it is read off the column — never off the wiped JSONB marker.
+    expect(calls[0]).toContain("servable:photos_servable");
+  });
+
+  it("keeps one speculative path when nothing is mirrored yet, and does not claim it as a fact", async () => {
+    const photos = ["https://media.mlsgrid.com/a/0.jpg", "https://media.mlsgrid.com/a/1.jpg"];
+    seedDb([{ photos, mirrored: 0, servable: 0 }]);
+
+    expect(await getProxiedPhotoPaths("KEY000001")).toEqual({
+      paths: ["/api/media/KEY000001/0"],
+      mirrored: 0,
+    });
+  });
+
+  it("renders every claimed photo when the column has not been computed for the row", async () => {
+    const photos = ["https://media.mlsgrid.com/a/0.jpg", "https://media.mlsgrid.com/a/1.jpg"];
+    seedDb([{ photos, mirrored: 1, servable: null }]);
+
+    expect(await getProxiedPhotoPaths("KEY000002")).toEqual({
+      paths: ["/api/media/KEY000002/0", "/api/media/KEY000002/1"],
+      mirrored: 1,
+    });
+  });
+});

@@ -152,7 +152,12 @@ export function popupNode(
     root.appendChild(h);
   }
 
-  if (p.photoCount > 0) {
+  // EVERY popup has a photo frame. photoCount is photos_servable, so 0 means "nothing mirrored
+  // yet" — the card shows /api/media/{id}/0 for exactly those listings too (the route answers with
+  // a cover substitute or the branded still), and a popup that silently dropped its picture while
+  // the card beside it showed one was the same disagreement in the other direction.
+  {
+    const n = Math.max(1, p.photoCount);
     const frame = document.createElement("div");
     frame.style.cssText =
       "position:relative;width:252px;height:158px;overflow:hidden;background:#eceff3";
@@ -167,17 +172,17 @@ export function popupNode(
       if (!img.src.endsWith("/images/mls/coming-soon-notext.webp")) img.src = "/images/mls/coming-soon-notext.webp";
     });
     let idx = 0;
-    const show = (n: number) => {
-      idx = ((n % p.photoCount) + p.photoCount) % p.photoCount;
+    const show = (to: number) => {
+      idx = ((to % n) + n) % n;
       img.src = `/api/media/${p.id}/${idx}`;
-      counter.textContent = `${idx + 1} / ${p.photoCount}`;
+      counter.textContent = `${idx + 1} / ${n}`;
     };
     const counter = document.createElement("span");
     counter.style.cssText =
       "position:absolute;right:6px;bottom:6px;padding:2px 7px;border-radius:8px;background:rgb(0 0 0/.7);color:#fff;font:700 10px/1.6 " +
       MAP_FONT + ";letter-spacing:.08em";
     frame.appendChild(img);
-    if (p.photoCount > 1) {
+    if (n > 1) {
       const arrow = (side: "left" | "right", label: string, step: number) => {
         const b = document.createElement("button");
         b.type = "button";

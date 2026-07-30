@@ -107,8 +107,10 @@ export function ListingCard({
             isLiveMlsPhoto(l.photos[0]) ? (
               // Owner's ask: flip through the pictures right on the card. The slim card
               // carries ONE cover URL; the pager addresses the rest as /api/media/{id}/{n},
-              // bounded by the listing's REAL total (photoCount, set at slimming time —
-              // the mirror marker under-counted and left some cards arrowless).
+              // bounded by photoCount = idx_listings.photos_servable, the count of photos the
+              // proxy can actually serve. The card, the map popup and the listing page all print
+              // this same number — before, the card advertised the feed's CLAIM and the pager
+              // walked into indices that only ever answered with the coming-soon still.
               <CardPhotos
                 id={l.id}
                 cover={l.photos[0]}

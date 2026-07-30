@@ -25,7 +25,7 @@ export function CardPhotos({
   id: string;
   /** The cover photo's same-origin path (the one URL the slim card actually carries). */
   cover: string;
-  /** How many photos the media proxy can serve (photosMirrored); 1/absent = no pager. */
+  /** How many photos the media proxy can serve (idx_listings.photos_servable); <=1 = no pager. */
   count: number;
   alt: string;
   sizes: string;

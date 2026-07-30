@@ -108,7 +108,9 @@ function searchFilters(p: SearchParams): string {
   if (p.yearMin != null) parts.push(`listing->yearBuilt=gte.${p.yearMin}`);
   if (p.yearMax != null) parts.push(`listing->yearBuilt=lte.${p.yearMax}`);
   if (p.taxMax != null) parts.push(`listing->taxAnnual=lte.${p.taxMax}`);
-  if (p.withPhotosOnly) parts.push(`listing->photosMirrored=gt.0`);
+  // photos_servable, not the JSONB marker: the marker is wiped by the sync's full-JSONB upsert,
+  // so filtering on it hid 9,186 active listings that DO have photos (measured 2026-07-30).
+  if (p.withPhotosOnly) parts.push(`photos_servable=gt.0`);
   // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
   // property_type; otherwise an explicit sale type filters to it, and no sale type at all
   // still excludes rentals so the for-sale grid/count never carries a rental.
@@ -141,11 +143,29 @@ const ORDER: Record<SortKey, string> = {
 };
 
 /** Cards carry ONE stable same-origin cover path (raw MediaURLs must never reach the
- * browser); the detail page expands the gallery via getProxiedPhotoPaths (DB-backed). */
-function toCard(l: Listing): Listing {
-  // photoCount records the real total BEFORE the slimming — the card pager's honest bound
-  // (photosMirrored under-counts whenever the sync's full-JSONB upsert wiped the marker).
-  return { ...l, photoCount: l.photos.length, photos: [`/api/media/${l.id}/0`] };
+ * browser); the detail page expands the gallery via getProxiedPhotoPaths (DB-backed).
+ *
+ * `servable` is the idx_listings.photos_servable COLUMN — how many of this listing's photos the
+ * media proxy can actually serve (the contiguous mirrored prefix in Storage). It is the pager's
+ * bound on every surface, so the card counter, the map popup counter and the listing page all
+ * print the same number. The two numbers it replaces were both wrong: the photos ARRAY length is
+ * the feed's CLAIM (12,905 of 27,986 active listings claim more than the mirror can serve — the
+ * owner's "8 pics, one photo" bug), and listing->photosMirrored is wiped to 0 by the sync's
+ * full-JSONB upsert. null/undefined = never computed for this row (a listing inserted since the
+ * last refresh): fall back to the claim, which is the pre-2026-07-30 behaviour. */
+function toCard(l: Listing, servable?: number | null): Listing {
+  return {
+    ...l,
+    photoCount: typeof servable === "number" ? servable : l.photos.length,
+    photos: [`/api/media/${l.id}/0`],
+  };
+}
+
+/** Every card read pulls the listing JSONB plus the servable-photo column beside it. */
+const CARD_SELECT = "select=listing,photos_servable";
+interface CardRow {
+  listing: Listing;
+  photos_servable: number | null;
 }
 
 /** Cold serverless instances routinely drop their FIRST PostgREST request; without a retry
@@ -208,7 +228,7 @@ export class DbIdxClient implements IdxClient {
       const { sort = "newest", page = 1, pageSize = DEFAULT_PAGE_SIZE } = params;
       const size = Math.max(1, Math.min(pageSize, PIN_CHUNK));
       const filters = searchFilters(params);
-      const base = `idx_listings?select=listing&${filters ? `${filters}&` : ""}order=${ORDER[sort]}`;
+      const base = `idx_listings?${CARD_SELECT}&${filters ? `${filters}&` : ""}order=${ORDER[sort]}`;
 
       // "mixed" rotates its window daily so the default page is never the same parade: one
       // cheap count query picks a day-seeded start offset inside the filtered set (clamped,
@@ -221,7 +241,7 @@ export class DbIdxClient implements IdxClient {
         if (t > size) rotate = (Math.floor(Date.now() / 86_400_000) * 53) % (t - size + 1);
       }
       const fetchPage = (p: number) =>
-        rest<{ listing: Listing }>(`${base}&limit=${size}&offset=${rotate + (p - 1) * size}`, { count: true });
+        rest<CardRow>(`${base}&limit=${size}&offset=${rotate + (p - 1) * size}`, { count: true });
 
       let { rows, total } = await onceRetried(() => fetchPage(Math.max(1, page)));
       const totalPages = Math.max(1, Math.ceil(total / size));
@@ -230,7 +250,7 @@ export class DbIdxClient implements IdxClient {
       if (!rows.length && total > 0 && safePage !== page) ({ rows } = await fetchPage(safePage));
 
       return {
-        listings: rows.map((r) => toCard(r.listing)),
+        listings: rows.map((r) => toCard(r.listing, r.photos_servable)),
         total,
         page: safePage,
         pageSize: size,
@@ -246,10 +266,10 @@ export class DbIdxClient implements IdxClient {
   async getListing(id: string): Promise<Listing | null> {
     if (!(await this.ready())) return this.fallbackClient().getListing(id);
     try {
-      const { rows } = await rest<{ listing: Listing }>(
-        `idx_listings?id=eq.${encodeURIComponent(id)}&select=listing`,
+      const { rows } = await rest<CardRow>(
+        `idx_listings?id=eq.${encodeURIComponent(id)}&${CARD_SELECT}`,
       );
-      return rows[0] ? toCard(rows[0].listing) : null;
+      return rows[0] ? toCard(rows[0].listing, rows[0].photos_servable) : null;
     } catch (e) {
       console.error(`[idx-db] getListing(${id}) failed — serving the committed snapshot:`, e);
       return this.fallbackClient().getListing(id);
@@ -259,10 +279,10 @@ export class DbIdxClient implements IdxClient {
   async getFeatured(limit = 8): Promise<Listing[]> {
     if (!(await this.ready())) return this.fallbackClient().getFeatured(limit);
     try {
-      const own = await rest<{ listing: Listing }>(
-        `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&select=listing&order=${ORDER.newest}&limit=${limit}`,
+      const own = await rest<CardRow>(
+        `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit}`,
       );
-      const listings = own.rows.map((r) => toCard(r.listing));
+      const listings = own.rows.map((r) => toCard(r.listing, r.photos_servable));
       if (listings.length >= limit) return listings;
       // Top up with the freshest non-featured so the rail is never sparse.
       const fill = await this.newestNonFeatured(limit - listings.length, new Set());
@@ -286,14 +306,13 @@ export class DbIdxClient implements IdxClient {
   }
 
   private async newestNonFeatured(limit: number, exclude: ReadonlySet<string>): Promise<Listing[]> {
-    const { rows } = await rest<{ listing: Listing }>(
-      `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&select=listing&order=${ORDER.newest}&limit=${limit + exclude.size}`,
+    const { rows } = await rest<CardRow>(
+      `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit + exclude.size}`,
     );
     return rows
-      .map((r) => r.listing)
-      .filter((l) => !exclude.has(l.id))
+      .filter((r) => !exclude.has(r.listing.id))
       .slice(0, limit)
-      .map(toCard);
+      .map((r) => toCard(r.listing, r.photos_servable));
   }
 
   /** Map pins for the /search map. With `bounds` (the fast path the SearchClient always
@@ -319,9 +338,11 @@ export class DbIdxClient implements IdxClient {
       return { pins, total };
     }
     const filters = searchFilters(params);
-    // photoCount rides the mirror marker: exactly "how many photos /api/media serves from
-    // storage", which is the popup pager's contract (indices past it fall back safely).
-    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName,photoCount:listing->photosMirrored";
+    // photoCount rides photos_servable — exactly "how many photos /api/media serves from
+    // storage", which is the popup pager's contract, and the SAME number the card and the
+    // listing page print. It used to ride listing->photosMirrored, which the sync's full-JSONB
+    // upsert wipes: 9,186 active listings therefore showed a popup with NO photo at all.
+    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName,photoCount:photos_servable";
 
     if (bounds) {
       const bbox =
@@ -357,7 +378,9 @@ function toPin(l: Listing): MapPin | null {
   return {
     id: l.id, price: l.price, lat: l.lat, lng: l.lng, address: l.address,
     city: l.city, zip: l.zip, beds: l.beds, baths: l.baths, office: l.listOfficeName,
-    photoCount: l.photos.length,
+    // Carded listings carry ONE cover path, so photos.length is always 1 here — photoCount is
+    // the real bound whenever the card set it (see toCard).
+    photoCount: l.photoCount ?? l.photos.length,
   };
 }
 
@@ -451,17 +474,21 @@ export const getAreaInsights = unstable_cache(
 
 /** A listing's source MediaURLs + how many leading photos are mirrored to storage (RLS: active
  * rows only). null = DB unavailable/unconfigured (caller should fall back). */
-export async function getDbListingMedia(id: string): Promise<{ photos: string[]; mirrored: number } | null> {
+export async function getDbListingMedia(
+  id: string,
+): Promise<{ photos: string[]; mirrored: number; servable: number | null } | null> {
   if (!restConfig()) return null;
   try {
-    const { rows } = await rest<{ photos: unknown; mirrored: unknown }>(
-      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos,mirrored:listing->photosMirrored`,
+    const { rows } = await rest<{ photos: unknown; mirrored: unknown; servable: unknown }>(
+      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos,mirrored:listing->photosMirrored,servable:photos_servable`,
     );
     const photos = rows[0]?.photos;
     const mirrored = rows[0]?.mirrored;
+    const servable = rows[0]?.servable;
     return {
       photos: Array.isArray(photos) ? (photos as string[]) : [],
       mirrored: typeof mirrored === "number" && mirrored > 0 ? mirrored : 0,
+      servable: typeof servable === "number" ? servable : null,
     };
   } catch (e) {
     console.error(`[idx-db] media lookup (${id}) failed:`, e);

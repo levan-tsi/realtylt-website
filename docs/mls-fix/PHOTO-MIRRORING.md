@@ -63,6 +63,30 @@ The mirror state lives **inside the existing `listing` jsonb** (flows through th
 - `listing.photosMirroredTs` — the `modificationTimestamp` that mirror was built for. A newer value
   means the photo set may have changed, so the listing is re-mirrored from index 0.
 
+### `photos_servable` — the count the UI is allowed to print (added 2026-07-30)
+
+Living inside the jsonb is right for the *mirror cursor* and wrong for the *published count*: the
+sync upserts with `set listing = excluded.listing`, so `photosMirrored` is wiped on every re-upsert
+of an unmirrored run. Measured across 27,986 active rows on 2026-07-30:
+
+| number | what it is | how wrong |
+| --- | --- | --- |
+| `jsonb_array_length(listing->'photos')` | the feed's **claim** | 12,905 rows (46%) claim more than the mirror can serve; 615 claim photos and serve none |
+| `listing->photosMirrored` | mirror cursor, inside the wiped jsonb | 9,186 active rows read 0 while their photos sit in Storage |
+| **`photos_servable`** (column) | contiguous prefix actually present in `storage.objects`, clamped to the claim | 0 mismatches against Storage on all 29,044 rows |
+
+That is the owner-reported bug: a map popup promising "8 pics" over a listing page that shows one.
+The column survives the jsonb replace, so the card counter, the map popup counter and the listing
+page all print the **same** number — and `getProxiedPhotoPaths` truncates the gallery to it, which
+also stops ~9 hopeless media requests per view on the 46% that over-claim.
+
+Maintained by `public.idx_refresh_photos_servable()` (pg_cron `idx-photos-servable-refresh`, hourly
+at :27 — 20 minutes after the sync fires at :07). It reads `storage.objects` only: zero MLS contact.
+EXECUTE is revoked from `anon`/`authenticated` so it is not an anon-callable PostgREST RPC.
+`null` (a row inserted since the last refresh) means "not computed" and every consumer falls back to
+the claim, so a brand-new listing never renders an empty gallery. Migration:
+`supabase/migrations/idx_photos_servable.sql`.
+
 ### Media route (storage-first, no regression)
 
 1. Read `{ photos, mirrored }` from the DB (zero MLS DATA-API calls, same guard as before).

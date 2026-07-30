@@ -38,9 +38,9 @@ export function getSnapshotMediaUrls(id: string): string[] {
   return testSeed.get(id) ?? ensureIndex().get(id) ?? [];
 }
 
-/** id → {at, urls, mirrored} — bounds repeat DB lookups from gallery bursts. The /api/media
- * route sits behind a long CDN cache, so this stays tiny; still capped as a safety valve. */
-const dbCache = new Map<string, { at: number; urls: string[]; mirrored: number }>();
+/** id → {at, urls, mirrored, servable} — bounds repeat DB lookups from gallery bursts. The
+ * /api/media route sits behind a long CDN cache, so this stays tiny; still capped as a safety valve. */
+const dbCache = new Map<string, { at: number; urls: string[]; mirrored: number; servable: number | null }>();
 const DB_CACHE_TTL_MS = 10 * 60 * 1000;
 const DB_CACHE_MAX = 2000;
 
@@ -49,6 +49,11 @@ export interface ListingMedia {
   photos: string[];
   /** How many leading photos are permanently mirrored to Supabase Storage. */
   mirrored: number;
+  /** idx_listings.photos_servable — the contiguous mirrored prefix actually present in Storage,
+   * recomputed hourly from storage.objects (idx_refresh_photos_servable). Unlike `mirrored` this
+   * survives the sync's full-JSONB upsert, so it is the number every surface prints. null = not
+   * computed for this row yet (inserted since the last refresh). */
+  servable: number | null;
   /** False when the DB never answered (transient failure) — mirrored/photos are then only the
    * snapshot's guess, NOT authoritative. The route must not cache verdicts built on this. */
   dbOk: boolean;
@@ -58,22 +63,31 @@ export interface ListingMedia {
  * rows only), committed snapshot as the fallback store. ZERO MLS Grid contact either way. The
  * snapshot fallback carries no mirror info (mirrored:0) — the route then proxies as before. */
 export async function getListingMedia(id: string): Promise<ListingMedia> {
-  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0, dbOk: true };
-  if (testSeed.has(id)) return { photos: testSeed.get(id)!, mirrored: testMirroredSeed.get(id) ?? 0, dbOk: true };
+  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0, servable: null, dbOk: true };
+  if (testSeed.has(id)) {
+    return { photos: testSeed.get(id)!, mirrored: testMirroredSeed.get(id) ?? 0, servable: null, dbOk: true };
+  }
   const hit = dbCache.get(id);
-  if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) return { photos: hit.urls, mirrored: hit.mirrored, dbOk: true };
+  if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) {
+    return { photos: hit.urls, mirrored: hit.mirrored, servable: hit.servable, dbOk: true };
+  }
   // A 36-tile page bursts this route; a fraction of PostgREST reads drop under contention.
   // One retry recovers most of those instead of demoting the tile to the mirror-less snapshot.
   let fromDb = await getDbListingMedia(id); // null = DB unavailable
   if (fromDb === null && isDbConfigured()) fromDb = await getDbListingMedia(id);
   if (fromDb && (fromDb.photos.length || fromDb.mirrored)) {
-    dbCache.set(id, { at: Date.now(), urls: fromDb.photos, mirrored: fromDb.mirrored });
+    dbCache.set(id, { at: Date.now(), urls: fromDb.photos, mirrored: fromDb.mirrored, servable: fromDb.servable });
     if (dbCache.size > DB_CACHE_MAX) dbCache.delete(dbCache.keys().next().value as string);
     return { ...fromDb, dbOk: true };
   }
   // No DB configured at all = fixture/snapshot mode: the snapshot IS the authority (dbOk true).
   // DB configured but unreachable = transient: dbOk false, verdicts must not be cached.
-  return { photos: ensureIndex().get(id) ?? [], mirrored: 0, dbOk: fromDb !== null || !isDbConfigured() };
+  return {
+    photos: ensureIndex().get(id) ?? [],
+    mirrored: 0,
+    servable: null,
+    dbOk: fromDb !== null || !isDbConfigured(),
+  };
 }
 
 /** Ordered permanent MediaURLs only (compat shim for getProxiedPhotoPaths). */
@@ -93,13 +107,24 @@ export interface GalleryPhotos {
   mirrored: number;
 }
 
-/** Photos for the detail-page gallery: /api/media/{id}/{0..n-1}. ZERO MLS Grid contact. */
+/** Photos for the detail-page gallery: /api/media/{id}/{0..n-1}. ZERO MLS Grid contact.
+ *
+ * TRUNCATED TO WHAT IS SERVABLE (2026-07-30): when photos_servable is known, the gallery is the
+ * first `servable` paths and nothing more. Before this, the page rendered every CLAIMED photo and
+ * let each doomed tile 503 its way out of the band — which is why a listing could advertise 8
+ * pictures on the card and show 1 on its own page. Truncating makes the page's count a fact, makes
+ * it agree with the card and the map popup, and stops ~9 hopeless media requests per view on the
+ * 46% of listings that over-claim. servable === null (a row inserted since the last refresh) keeps
+ * the old claim-everything behaviour, so a brand-new listing never renders an empty gallery. */
 export async function getProxiedPhotoPaths(id: string): Promise<GalleryPhotos> {
-  const { photos, mirrored, dbOk } = await getListingMedia(id);
+  const { photos, mirrored, servable, dbOk } = await getListingMedia(id);
   if (photos.length) {
+    // servable 0 with photos claimed is a real state (nothing mirrored yet): keep one path so the
+    // page still asks, and let the route answer with a cover substitute or the branded still.
+    const n = servable === null ? photos.length : Math.max(1, Math.min(servable, photos.length));
     return {
-      paths: photos.map((_, i) => `/api/media/${id}/${i}`),
-      mirrored: Math.max(0, Math.min(mirrored, photos.length)),
+      paths: photos.slice(0, n).map((_, i) => `/api/media/${id}/${i}`),
+      mirrored: servable === null ? Math.max(0, Math.min(mirrored, photos.length)) : Math.min(servable, n),
     };
   }
   // No photos in any store. If the DB actually answered, that is a fact. If the read failed it is
