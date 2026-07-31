@@ -1,6 +1,134 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 15 BRIEF — 2026-07-31. THE LAUNCH ROUND. SINGLE AGENT, ~700k, no subagents.
+## ═══ ROUND 16 BRIEF — THE SITE IS WAITING ON TWO DNS RECORDS. Single agent, no subagents.
+## FIRST ACTION: read docs/parity/HANDOFF-ROUND-16.md end to end — measurements, the exact
+## DNS records, the regression gate, the traps. This block is the running order only.
+##
+## ── WHERE THE LAUNCH STANDS ──────────────────────────────────────────────────────────
+## Switch 1 DONE + verified (NEXT_PUBLIC_SITE_URL removed, redeployed: 7/7 canonicals and
+##   all 59 sitemap entries now say realtylt.com; robots.txt still Disallow: /).
+## Switch 2 HALF DONE. realtylt.com + www.realtylt.com are attached to the realtylt-website
+##   project in Vercel. DNS is at NAMECHEAP (ns = dns1/dns2.registrar-servers.com — NOT
+##   Route 53; the AWS address is the old site's hosting). No credentials here, so the
+##   owner sets these two records and nothing happens until he does:
+##       A  realtylt.com      76.76.21.21
+##       A  www.realtylt.com  76.76.21.21     (a CNAME to cname.vercel-dns.com is equally
+##                                             fine and survives an IP change)
+##   Do NOT move the zone's nameservers to Vercel — app.realtylt.com and anything else in
+##   the zone would move with it.
+## Switch 3 NOT DONE on purpose: it is gated on switch 2, and he should see the site on the
+##   real domain before it becomes indexable. When it is time:
+##   `vercel env rm PRELAUNCH production` -> redeploy -> _scratch-r15-noindex.mjs must show
+##   every route WITHOUT a noindex and robots.txt without Disallow -> submit the sitemap.
+##
+## ── ORDER FOR THE NEXT ROUND ─────────────────────────────────────────────────────────
+## 1. Re-run the four standing probes (handoff §4) ONE AT A TIME as a regression gate.
+## 2. If the DNS records are in: verify the domain end to end (nslookup, a real certificate,
+##    www reaches it, `vercel domains inspect realtylt.com` stops warning), show him, and
+##    only then consider switch 3 with the sanity gate in handoff §5.
+## 3. If they are not in: leave the switches alone and spend the round on design and detail.
+##    The site is in good shape; the open list is handoff §6 and most of it is his to decide.
+## 4. Anything else found: fix it measured, page-scoped commits, verify before pushing.
+##
+## ── GATES (unchanged) ────────────────────────────────────────────────────────────────
+## tsc clean · npm test green (538 now — never go below, add tests for logic you touch) ·
+## zero horizontal overflow at 1440/390/320 · zero dead links · every focus stop with a
+## visible indicator · no console errors · after EVERY push confirm the Vercel deploy builds
+## READY (prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team_LxVTdG0G7zPU5WSoNnZOpf8p).
+## TESTING LEAD FORMS HITS THE LIVE CRM — intercept **/api/lead or set LEAD_TEST_MODE=1.
+## A second session owns the blog surfaces; never git add -A.
+## The Vercel CLI IS logged in on this PC (levan-3774) — an older note saying otherwise is wrong.
+##
+##
+## ═══ ROUND 15 DONE — 2026-07-31. THE LAUNCH ROUND.
+## His instruction was "do all what u sugested is best and three lunch swithces too… ones
+## its done fixing all that go test everything again and see what else we missed secyrtity
+## wise bug wise what can be improved also design wise and fix it". All four parts done, in
+## that order, with the switches last.
+##
+## ── 1. /search SHIPS ITS FIRST PAGE OF HOMES INSIDE THE HTML ───────────────────────────
+## It was a static shell containing ZERO listings: SearchClient reads useSearchParams, so
+## Next served the Suspense fallback for the whole server pass and the browser had to parse,
+## boot, hydrate, fetch and only then paint. The page reads searchParams now (which is what
+## makes the route dynamic, and therefore what lets useSearchParams resolve on the server),
+## runs the same query and hands the result to SearchClient as its initial state. Both sides
+## go through ONE tested function — lib/idx/query#parseSearchRequest — so the HTML and the
+## client's own fetch cannot ask the feed different questions.
+## MEASURED ON PRODUCTION, 4 reps: /search warm 571/622/646/1091ms to first card (was a
+## ~750ms floor, 3224ms cold); ?county=orange 532/586/651/767ms (was 752ms); home 183-300ms.
+## Cold is 4300ms vs 3224ms — WORSE, honestly: the serverless cold start now blocks the HTML
+## instead of an API call behind a skeleton. Cold dominates only because there is no traffic.
+## The real wins are not the clock: 36 listings in the raw HTML at every variant tried, so a
+## crawler finally sees content; JS-off gets homes instead of a dead end; CLS 0.0100.
+## Two consequences handled: the URL sync uses history.replaceState (router.replace would
+## re-run the server query on every chip — measured after: 1 API call, 0 RSC per change, and
+## Back still lands on the search you left, 708 Homes @ ?county=orange with no flash), and
+## `mixed` caches its rotation count for 10 minutes with a fallback that drops the rotation
+## rather than ever showing "no homes match".
+##
+## ── 2. THE LAUNCH-DAY 404s NOBODY HAD LOOKED FOR ───────────────────────────────────────
+## Crawled the LIVE realtylt.com's own footer + HTML sitemap: of the 20 paths it publishes,
+## EIGHT had no route here and would have 404'd the moment the apex moved.
+## /privacy_policy -> /privacy-policy · /tos -> /dmca-terms · /myportal/* -> /portal/* ·
+## /sitemap and /sitemap/* -> /top-areas (that last one is a TREE: the vendor publishes
+## /sitemap/NY/<County>-County/City/<City>/Listings/Page/N plus School-District, Neighborhood
+## and Postal-Code branches across 22 counties). All 308, all verified, and the test walks
+## every destination so a rename cannot break them silently. /sitemap.xml still generates.
+## Also learned there: the live site's canonical host is WWW (the apex 301s to it) while ours
+## is the apex — fine, but expect Google to need a settling period.
+##
+## ── 3. SECURITY, MEASURED RATHER THAN ASSUMED ─────────────────────────────────────────
+## Asked PostgREST with the ANON key, table by table. Readable: idx_listings (28,031 active),
+## idx_sync_state, published blog_posts, and the owner-gated published-CMA set (1 report, 4
+## comps, 4 mls rows). NOT readable — 0 rows or 401: leads, contacts, portal_*, users,
+## organizations, twilio_accounts, email_*, phone_*, chat_logs, n8n_chat_histories,
+## idx_sync_config, api_keys, notifications, market_reports. No leak.
+## Every API route hit unauthenticated: three cron routes 401 (fail closed with no secret),
+## /api/revalidate 503 (unconfigured — see §5), /api/lead 415 on a wrong content-type,
+## POST /api/idx/search 405. All six security headers present on production.
+## 13 hostile /search queries (SQL-ish q and county, a script tag, page=999999999,
+## pageSize=100000, a PostgREST order-injection in sort): every one a 200 with a sane page,
+## no reflected script, no leaked error, no 500.
+## /api/idx/pins now REQUIRES a bbox (400 without). Nothing calls it, it is public and
+## uncached, and its unbounded path 502'd after 4.6s on the default query while costing ~7.5s
+## and 340KB for one county.
+##
+## ── 4. SEO HONESTY + THE AUDIT ITEM THAT WAS A NON-ISSUE ──────────────────────────────
+## Faceted /search is noindex,follow (crawled and followed so listings stay reachable — they
+## are not in the sitemap because the feed rotates — but not indexed as near-duplicates).
+## /saved declares noindex. A listing with 0 servable photos no longer publishes an image[]
+## in its JSON-LD (it was publishing the branded coming-soon still as if it were the house).
+## The audit's "no robots meta on 19 of 21 pages" is CLOSED AS A NON-ISSUE, measured: every
+## route already carries X-Robots-Tag: noindex,nofollow while PRELAUNCH=1 — all 21 checked on
+## production, including /sitemap.xml, /robots.txt and /og.png, which a meta tag cannot cover.
+##
+## ── 5. DESIGN: ONE REAL DEFECT, AND TWO THAT WERE NOT ─────────────────────────────────
+## /search's filter bar broke differently at EVERY width (measured by reading the wrapped
+## rows out of the DOM): at 1440 SAVE SEARCH sat alone under a full row; at 1280/1024 both
+## buttons were stranded mid-row; at 390 it was four ragged rows each starting at a different
+## x. Now the six dropdowns are a two-column grid on a phone (sm:contents dissolves the
+## wrapper above 640px, desktop unchanged), the three actions travel as one right-aligned
+## group, and SAVE SEARCH is the site's outline secondary instead of a second identical black
+## pill competing with SEARCH. Zero overflow at 320/390/1440, JS on and off.
+## NOT defects, both of which cost time: the /top-areas hero copy looks washed out in a
+## downscaled 390 shot and is crisp at 1:1 (judge type on a crop, never a scaled page shot);
+## and /connect's colour video emoji is inside GOOGLE's appointment iframe, not our markup.
+##
+## ── 6. VERIFIED BY ME, IN THE FOREGROUND ──────────────────────────────────────────────
+## tsc clean · 538 tests (was 526) · 48 routes x {1440,390,320}: 0 overflow, 0 console errors,
+## 0 h1 anomalies, 0 missing alt, 0 nameless controls · 0 covered controls · 338 focus stops
+## all with a visible indicator · 0 dead links across 216 hrefs · /search driven for real:
+## county chip, beds, page 2, leave-and-Back, deep link — 1 API call each, 0 RSC, 36 cards
+## every time · 22 redirect cases green on production · switch 1 verified on production.
+##
+## ── 7. THE ONE THING NOT TO REPEAT ────────────────────────────────────────────────────
+## Do NOT try to set Cache-Control for /search in next.config.ts. Now that the page renders
+## on the server it is a dynamic route and Next overwrites the header with
+## private, no-cache, no-store whatever the config says. Measured on production: no effect.
+## There is a comment in the file saying so.
+##
+##
+## ═══ ROUND 15 BRIEF (as given) — 2026-07-31. THE LAUNCH ROUND.
 ## FIRST ACTION: read docs/parity/HANDOFF-ROUND-15.md end to end. It has the measurements,
 ## the fixes, the regression gate and the traps. This block is the running order only.
 ##
