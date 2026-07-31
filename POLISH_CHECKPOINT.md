@@ -1,5 +1,50 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 15 BRIEF — 2026-07-31. THE LAUNCH ROUND. SINGLE AGENT, ~700k, no subagents.
+## FIRST ACTION: read docs/parity/HANDOFF-ROUND-15.md end to end. It has the measurements,
+## the fixes, the regression gate and the traps. This block is the running order only.
+##
+## The owner's instruction, verbatim: "do all what u sugested is best and three lunch
+## swithces too i did not relly understand how to do it my self you have permission to do
+## it in new session… ones its done fixing all that go test everything again and see what
+## else we missed secyrtity wise bug wise what can be improved also design wise and fix it".
+##
+## ── DO IT IN THIS ORDER. Do not reorder; step 4 is irreversible in public. ────────────
+## 1. SERVER-RENDER THE FIRST PAGE OF /search (handoff §3.1b). This is the headline job and
+##    the one he can feel. Measured on PROD: first card at 3,224ms cold / 752ms warm, vs the
+##    home page's 389ms, because the HTML ships ZERO listings — SearchClient reads
+##    useSearchParams, so Next serves the Suspense fallback for the whole server pass and the
+##    browser must hydrate, then fetch, then paint. Fetch page 1 on the server, hand it to
+##    SearchClient as initial data, let the client own everything after that. Photos keep
+##    loading progressively — that is deliberate (MLS rate limits), do NOT change it.
+##    Cheaper wins alongside: cache `mixed`'s daily total instead of an exact count per
+##    request (it runs an extra count over ~11.7k rows then pages with an OFFSET up to
+##    ~11,000; measured 306-649ms vs 139-230ms for `newest`).
+##    VERIFY: listing markup present in the raw HTML (curl it), first-card timing re-measured
+##    ON PROD, /search still filters/sorts/paginates, CLS still under 0.1, JS-off unchanged.
+## 2. THE FULL RE-TEST HE ASKED FOR — security, bugs, design. Run the four gate probes ONE AT
+##    A TIME (handoff §4: sweep / overlap / focus / links; concurrency MANUFACTURES fake
+##    500s and SyntaxErrors — §4 has the proof and _scratch-r14-recheck.mjs is the re-check).
+##    Then go past them: the audit's two open security items are OWNER-GATED, but everything
+##    else is fair game — anon-reachable data, rate limits, auth on portal routes, headers,
+##    the /api/idx/pins decision (§3.1), and a real design pass at 1440 + 390 with the
+##    frontend-design skill as the lens. Fix what you find, measured, page-scoped commits.
+## 3. Close the small open items in handoff §3.2-3.3 and §3.6 that are still ours.
+## 4. THE THREE LAUNCH SWITCHES — handoff §5b has the exact steps, the verification after
+##    each, and the two conditions: do them LAST (after 1-3 are verified), and stop between
+##    switch 2 and switch 3 so he can look at the real domain before it becomes indexable.
+##    Switch 2 needs registrar/DNS access — if there is none, STOP and hand back the exact
+##    records rather than improvising, and do NOT do switch 3 with the domain un-pointed.
+##
+## ── GATES (unchanged) ────────────────────────────────────────────────────────────────
+## tsc clean · npm test green (526 at handoff time — never go below, add tests for logic you
+## touch) · zero horizontal overflow at 1440/390/320 · zero dead links · every focus stop
+## with a visible indicator · no console errors · after EVERY push confirm the Vercel deploy
+## builds READY (prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team_LxVTdG0G7zPU5WSoNnZOpf8p).
+## TESTING LEAD FORMS HITS THE LIVE CRM — intercept **/api/lead in the browser or set
+## LEAD_TEST_MODE=1. A second session owns the blog surfaces; never git add -A.
+##
+##
 ## ═══ ROUND 14 DONE — 2026-07-30. THE FINAL PRE-DEPLOY CHECK. Single agent.
 ## Nine defects found and fixed, every one by DRIVING the real site, not by reading code.
 ## Evidence probes are the untracked scripts/_scratch-r14-*.mjs; shots in docs/design-r14/.

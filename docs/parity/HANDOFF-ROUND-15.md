@@ -265,6 +265,56 @@ agent's own words — never rewrite them to satisfy a copy rule.
 
 ---
 
+## 5b. THE OWNER HAS AUTHORISED THE LAUNCH SWITCHES — how to actually flip them
+
+**Authorisation, recorded 2026-07-31, in his words:** *"I'll start new session and tell it to do
+all what u sugested is best and three lunch swithces too i did not relly understand how to do it
+my self you have permission to do it in new session."*
+
+So round 15 may perform §6's three switches. Two conditions he did not ask for but should have,
+and which you should follow unless he overrides them:
+
+1. **Do the switches LAST**, after the search work and the re-test are finished and verified. Do
+   not launch in the same breath as an architectural change — if server-rendering `/search`
+   regresses, the people who find out should be us, not Google and his first real visitors.
+2. **Show him the site on the real domain before switch 3.** Switch 2 makes it reachable; switch
+   3 makes it indexable. Between them is the natural place to stop and let him look.
+
+### Switch 1 — clear `NEXT_PUBLIC_SITE_URL` (safe, reversible, do first)
+
+Vercel → project `realtylt-website` → Settings → Environment Variables → delete
+`NEXT_PUBLIC_SITE_URL` (Production at minimum), then redeploy. CLI equivalent:
+`vercel env rm NEXT_PUBLIC_SITE_URL production`. `lib/site.ts` already falls back to
+`https://realtylt.com`.
+
+**Verify before moving on:** fetch any page and confirm `<link rel="canonical">` now says
+`realtylt.com`, and that all `<loc>` entries in `/sitemap.xml` do too (there are 59). If they
+still say `vercel.app`, the redeploy did not pick it up — do not continue.
+
+### Switch 2 — point the `realtylt.com` apex at this deployment (needs registrar access)
+
+In Vercel: Settings → Domains → add `realtylt.com` and `www.realtylt.com`; Vercel then states the
+exact records it wants. At whoever hosts the DNS (it currently resolves to AWS, so likely Route
+53) set the apex A record to Vercel's `76.76.21.21` — or an ALIAS/ANAME to
+`cname.vercel-dns.com` if the provider supports it — and `www` as a CNAME to
+`cname.vercel-dns.com`.
+
+**This is the one step that may be outside the agent's reach.** If there is no registrar/DNS
+credential available, STOP and hand back with the exact records needed — do not improvise, and do
+not proceed to switch 3, because an un-pointed domain plus a removed noindex is the worst of both
+worlds. **Verify:** `nslookup realtylt.com` resolves to Vercel, and `https://realtylt.com` serves
+this site with a valid certificate.
+
+### Switch 3 — remove `PRELAUNCH=1` (this is go-live)
+
+Vercel → Environment Variables → delete `PRELAUNCH`, redeploy. **Verify:** `/robots.txt` no
+longer says `Disallow: /`, and no page carries a noindex. Then submit the sitemap in Google
+Search Console.
+
+**Sanity gate before switch 3:** the four probes in §4 clean, `npx tsc --noEmit` clean, `npm test`
+green, and switch 1 verified. If any of those is red, fix it first — after this switch the site
+is public and mistakes are seen.
+
 ## 6. Launch is owner-gated — do not trip it
 
 The site is `noindex` **on purpose**. His order, unchanged:
