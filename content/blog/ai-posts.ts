@@ -99,6 +99,8 @@ That is the whole problem, and it is not really a lost lead. It is a lost conver
 
 [[scene:in-short]]
 
+[[scene:reel]]
+
 ## What a missed call actually costs
 
 Nobody has published a study of how fast real estate agents answer their phones. What has been published is the next best thing, and it is worth reading properly rather than quoting.

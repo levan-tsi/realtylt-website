@@ -14,6 +14,30 @@
 
 import type { ConversationEvent, ConversationTurn, FlagshipContent, GridItem } from "@/lib/blog/flagship";
 
+/** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD,
+ * so the two can never disagree about length, dimensions or what the clip actually shows.
+ *
+ * Unlike the chat film this one is entirely a rendered stage: no /ai galaxy footage, so no
+ * headed browser and no GPU capture. A voice agent is a sound rather than a screen, and a
+ * screen recording of a phone call is just a phone. What the film shows instead is this page's
+ * own teardown, moving.
+ *
+ * The cut was DERIVED FROM THE VOICE: the narration was generated and measured first, and the
+ * stage was built to its measured line boundaries. Regenerating it is fully scripted, see
+ * docs/blog-flagship/FLAGSHIP-HANDOFF.md. */
+export const VOICE_FILM = {
+  src: "/video/film-942pm.mp4",
+  poster: "/video/film-942pm-poster.jpg",
+  width: 1280,
+  height: 720,
+  seconds: 45,
+  /** ISO 8601, which is the only duration format VideoObject accepts. */
+  duration: "PT45S",
+  name: "9:42pm: what an AI voice agent does when the phone rings and nobody is there",
+  description:
+    "A buyer rings a real estate office at 9:42 on a Sunday evening. Four rings, then voicemail, and they call the next agent. The film then shows the same call taken by an AI voice agent: it says it is an assistant and that the call is recorded, answers from the listing, declines to guess at what it cannot verify, books from the live calendar and writes the whole call to the CRM.",
+} as const;
+
 /** SCENE copy — "In short".
  *
  * Three lines carrying the whole argument, for the reader who is skimming and for the
@@ -198,11 +222,12 @@ export const FAILURE_MODES: GridItem[] = [
  * zero, because the primitives it needed (`statbars`, `diagram`, `conversation`, `plate`) were
  * generalised in the same round rather than copied. That is the whole test of the template.
  *
- * There is also no `film` and no `[[scene:reel]]`. The film that exists belongs to the chat
- * piece: it is narrated around a buyer MESSAGING a website at 11:40pm and being texted
- * listings. Reusing it here would put a video about the wrong channel on a page arguing that
- * you should say what is true, and one failed checklist item is cheaper than that. */
+ * The film is this topic's OWN. The chat piece's film was never an option: it is narrated
+ * around a buyer MESSAGING a website at 11:40pm and being texted listings, and putting a video
+ * about the wrong channel on a page arguing that you should say what is true would have cost
+ * more than a failed checklist item is worth. */
 export const AI_VOICE_FLAGSHIP: FlagshipContent = {
+  film: VOICE_FILM,
   /** A phone ringing at 9:42 on a Sunday evening, which is the moment the piece opens on and
    * the same moment the service page's own timeline starts from. Millerton at night rather
    * than the chat piece's twilight, so the two heroes are not the same photograph. */
@@ -219,6 +244,23 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       ariaLabel: "In short",
       eyebrow: "In short",
       claims: IN_SHORT,
+    },
+    /** The caption discloses that the narration is a voice clone. On a page whose whole
+     * argument is that an AI voice should say what it is, narrating the film with a synthetic
+     * copy of a real person and staying quiet about it would be the exact hypocrisy the piece
+     * warns about. It costs one sentence and it is the most on-brand sentence here. */
+    reel: {
+      kind: "film",
+      band: "dark",
+      label: "Watch it",
+      ariaLabel: "Watch it work",
+      eyebrow: "Watch it work",
+      heading: "A phone ringing at 9:42, and the same call taken properly.",
+      caption: [
+        `Narrated, ${VOICE_FILM.seconds} seconds. The voice reading it is a licensed clone of my own, which on this page seemed worth saying out loud rather than leaving you to wonder. The call is staged for the film and every line in it is something this page already says the agent does. The seven-times figure is the study cited below. For the version nobody staged, the `,
+        { href: "/services/ai-voice-agents", label: "service page" },
+        " has the whole build.",
+      ],
     },
     "response-audit": {
       kind: "statbars",

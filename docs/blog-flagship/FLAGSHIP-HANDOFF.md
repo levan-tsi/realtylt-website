@@ -1,6 +1,96 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (updated 2026-07-30, session 8: the first ad is CUT — resume HERE)
+## STATUS (2026-07-30, session 9: TOPIC 2 IS LIVE and the template is proven)
+
+**`/blog/ai-voice-agent-missed-calls-real-estate` ships at 18/19 on the gate**, and the one
+failure is deliberate: `dateModified === datePublished` because the post is NEW and has never
+been revised. An invented `updated` is the freshness fiction the type's own comment warns
+about. Set it on the first REAL revision and it goes to 19/19.
+
+**The template worked. Topic 2 added ZERO bespoke components.** The four scenes it needed were
+generalised out of topic 1's one-off code instead of copied:
+
+| new primitive | generalised from | what a topic now varies |
+|---|---|---|
+| `StatBars` | `ResponseCurve` | bars, which one is lit, `max` (100 for shares, omit for ratios), source, **required caveat** |
+| `Diagram` | `SystemDiagram` | steps, eyebrow/heading/lede, band, `idBase` |
+| `Conversation` | `Teardown` | turns, events, side labels, and `layout: "bubbles" | "transcript"` |
+| `Plate` | (new) | a photograph plus a caption that does real work |
+
+`ColdOpen` now takes `moment`, `suffix`, `photo` and `signature` as props (`"porchlight"` for
+the chat piece's breath, `"ring"` for a phone nobody answers), so a topic owns its hero without
+a second hero component. Defaults reproduce topic 1 exactly.
+
+**Two honesty rules are now STRUCTURAL rather than cultural.** `StatBars` requires a `note` and
+`Conversation` requires a `note`, so a topic physically cannot ship a cited chart without saying
+where the evidence stops, or a staged demonstration that does not admit it is staged.
+`lib/blog/flagship.test.ts` is now `describe.each` over a TOPICS table rather than a block to
+copy per topic, and it asserts those notes are non-empty and that every `sourceHref` is https.
+
+**What is left of the primitive plan:** only `Timeline` (from `ResponseGap`), and the chat
+post's own `ResponseCurve` / `SystemDiagram` / `Teardown` have NOT yet been migrated onto the
+primitives that were extracted from them. That migration is safe to do with
+`_scratch-shots.mjs before / after --diff` (noise floor ~0.0007) and is the obvious next job.
+The calculator stays bespoke by design.
+
+### THE VOICE FILM, and why the recipe is now committed
+
+`public/video/film-942pm.mp4` (45s, 1280x720, 1.3MB) is topic 2's own film. The chat film was
+never an option here: it is narrated around a buyer MESSAGING a website and being texted
+listings, so reusing it would have put a video about the wrong channel on a page arguing that
+you should say what is true.
+
+**The sources are COMMITTED, under `scripts/film/voice/`, not scratch.** The chat film's stage
+and pipeline live under gitignored `scripts/_scratch-*`, which means the shipped artifact cannot
+be regenerated from a clean checkout. That is fixed for this one:
+
+| step | command | note |
+|---|---|---|
+| 1 | `node scripts/film/voice/vo.mjs` | ElevenLabs LT clone. Generates the lines, MEASURES them, writes `schedule.json`. `--keep` reuses existing audio. |
+| 2 | `node scripts/film/voice/render.mjs` | 1350 lossless PNGs at 1920x1080. **Headless is fine** here: no /ai galaxy, so no GPU. `--probe 0,17,35` frames single moments instead. |
+| 3 | `node scripts/film/voice/assemble.mjs` | VO mix, crf 16 master, crf 18 web copy, poster from FRAME ZERO, and a `silencedetect` pass that proves every gap is a scheduled beat. |
+
+Needs `npm i ffmpeg-static --no-save` (it is not in package.json) and `ELEVENLABS_API_KEY`.
+
+Rules this film encodes, on top of the ad rules already in this file:
+- **The cut is DERIVED FROM THE VOICE.** Step 1 runs before the stage exists; the stage's beat
+  times ARE the measured line boundaries. Never speed up a real person's voice to fit a stage.
+- **The poster is frame zero.** The hook number is the reason anyone presses play, so the still
+  the player shows must be the frame the film opens on.
+- **The narration discloses that it is a clone**, in the on-page caption. On a piece arguing
+  that an AI voice must say what it is, narrating with a synthetic copy of a real person and
+  staying quiet about it is the exact hypocrisy the piece warns about.
+
+Faults found by probing frames, both of which a single still would have hidden:
+- **A higher z-index does not clear what is behind it.** "They call the next agent." rendered
+  straight through the 9:42 clock, because the clock's fade-out was scheduled 2.3s too late.
+  Sequence the outgoing beat against the narration, then check the frame.
+- **Do not run the caption band under a beat that is already a held statement.** Two of the
+  eight lines printed the same sentence twice at two sizes. Those captions were dropped; the
+  words are still on screen, larger, so it is not a dropout.
+
+### PREMISES THAT WERE WRONG, corrected against primary sources
+
+The brief for this session asserted **"NY is two-party consent for recording"**. It is not.
+[NY Penal Law 250.00](https://www.nysenate.gov/legislation/laws/PEN/250.00) defines mechanical
+overhearing as recording *"without the consent of at least one party thereto, by a person not
+present thereat"*, so a participant may record. New York is ONE-party. The post says so and
+argues we should disclose anyway, which is a better section than the wrong premise would have
+produced. **Verify every factual premise before building on it, including the brief's.**
+
+Every external claim on the page carries a link that was checked for a 200 before shipping:
+HBR/Oldroyd, the FCC's Feb 2024 declaratory ruling, NY Penal 250.00, Cal. Penal 632, CA AB 2905.
+
+### Known, and NOT fixed here
+
+**The /ai page's "from the blog" cards point at a 500 on the live site.** On production
+`SERVICES_BASE` resolves to `https://realtylt.com/...`, and the rebuilt marketing site is not on
+the apex yet, so `realtylt.com/blog/<slug>` redirects to www and returns **500**. This already
+affected the shipped `chat` card. The voice entry was added to `BLOG_POST` and pushed, but the
+deployment was deliberately **left on preview and NOT promoted**: promoting would put a second
+broken link on a live page. Promote both once the marketing site is on the apex.
+
+## EARLIER STATUS (updated 2026-07-30, session 8: the first ad is CUT)
 
 **"The $6,000 lead" is DONE and rendered in both formats.** Watch these two files, then decide
 what the next ad is:

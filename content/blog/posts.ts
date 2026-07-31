@@ -6,7 +6,7 @@ import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
 import { AI_CHAT_ASSISTANT_POST, AI_VOICE_AGENTS_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
-import { AI_VOICE_FLAGSHIP } from "./voice-agent-scenes";
+import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -65,6 +65,7 @@ export const POSTS: BlogPost[] = [
     body: [],
     placeholder: false,
     markdown: AI_VOICE_AGENTS_POST,
+    film: VOICE_FILM,
     flagship: AI_VOICE_FLAGSHIP,
   },
   {
