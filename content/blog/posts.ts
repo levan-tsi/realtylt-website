@@ -8,11 +8,13 @@ import {
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
+  LEAD_QUALIFICATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
+import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -59,6 +61,29 @@ export const POSTS: BlogPost[] = [
      form behind /services/ai-voice-agents, /services/ai-chat-assistant and
      /services/workflow-automation, and those pages link back to them. The first two are
      flagships: full-bleed scenes, cited data graphics and their own cold opens. */
+  {
+    slug: "ai-lead-qualification-real-estate-scoring",
+    title: "All Three Leads Look the Same. Two Are Worth Your Morning.",
+    date: "2026-07-31",
+    /** NO `updated` YET, DELIBERATELY, and this is the one readiness check the post does not
+     * pass on day one. `updated` means the date of the last substantive revision, and a post
+     * written, built and shipped inside a single day has not had one. Inventing a later date to
+     * turn the check green would be exactly the freshness fiction the field comment above warns
+     * about, on a page whose own argument is that the inputs have to be honest.
+     *
+     * Set this to the real date the first time the article is genuinely revised, which for the
+     * other three flagships happened within a week of shipping. */
+    excerpt:
+      "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
+    seoDescription:
+      "What AI lead qualification reads instead of your contact form, the three signals that predict who transacts, and the fair housing rules that govern scoring and routing.",
+    cover: "/images/counties/westchester.jpg",
+    body: [],
+    placeholder: false,
+    markdown: LEAD_QUALIFICATION_POST,
+    film: QUALIFY_FILM,
+    flagship: QUALIFY_FLAGSHIP,
+  },
   {
     slug: "database-reactivation-old-real-estate-leads",
     title: "They Said Not Right Now. That Was Three Years Ago.",

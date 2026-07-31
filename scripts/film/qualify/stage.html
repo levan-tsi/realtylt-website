@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>lead qualification film overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* FILM OVERLAY — "all three look the same", authored at the FINAL resolution (1280x720).
+
+   TRANSPARENT LAYER, NOT A FILM. Everything here is drawn over the b-roll cut that
+   scripts/film/qualify/bg.mjs builds separately; the renderer screenshots with omitBackground so
+   the PNGs carry alpha. Each scrim below is a per-beat decision about how much of the picture to
+   give up for legible type, not one global dimming.
+
+   EVERY BEAT SITS ON ONE FILM CLOCK, DERIVED FROM THE VOICE. The narration was generated and
+   measured first (scripts/film/qualify/vo.mjs) and every number below is one of its measured line
+   boundaries. Retime the stage to the voice; never speed up the voice.
+
+   THE RULES THE EARLIER FILMS PAID FOR, all applied here:
+   1. Frame one carries the number at FULL opacity. It is the poster, and the number is the only
+      reason anybody presses play.
+   2. Every switch range starts exactly where the previous one ends, so a changeover is one frame
+      and the caption can never fade through nothing.
+   3. No caption band under a beat that is already a held card. Lines 0, 3, 6 and 7 are carried by
+      cards at three to six times the caption size, so their caption rows are absent on purpose.
+   4. No text-transform on a citation. Uppercasing turned 64.1200(f)(5) into (F)(5) on the last
+      film, and Exhibit 6-23 has the same problem waiting in it. */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:transparent;
+  font-family:Lato,Helvetica,Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.stage{position:relative;width:1280px;height:720px}
+
+/* ─────────── scrims ─────────── */
+.scrim{position:absolute;inset:0;z-index:1;display:none}
+.sA{background:rgba(5,9,14,.76)}
+.sPic{background:linear-gradient(180deg,rgba(4,8,13,.72) 0%,rgba(4,8,13,.54) 30%,rgba(4,8,13,.20) 56%,rgba(4,8,13,.44) 78%,rgba(4,8,13,.88) 100%)}
+.sG{background:rgba(5,9,14,.80)}
+.glow{position:absolute;inset:0;z-index:2;display:none;
+  background:radial-gradient(46% 52% at 40% 44%,rgba(40,168,224,.15),transparent 70%)}
+
+/* ─────────── the caption band ─────────── */
+.cap{position:absolute;z-index:30;left:110px;right:110px;bottom:58px;text-align:center;
+  font-size:30px;font-weight:300;line-height:1.34;letter-spacing:-.01em;display:none;
+  text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.cap b{font-weight:700}
+
+/* ─────────── beat A · the hook (0.00 to 8.70) ─────────── */
+.hook{position:absolute;z-index:20;inset:0 0 120px 0;display:none;place-items:center;text-align:center}
+.hook .n{font-size:190px;font-weight:300;line-height:.86;letter-spacing:-.05em}
+.hook .n i{font-style:normal;font-size:92px;color:#28a8e0;letter-spacing:0;margin-left:6px;
+  position:relative;top:-26px}
+.hook .u{margin-top:28px;font-size:27px;font-weight:300;color:rgba(255,255,255,.74);max-width:900px}
+.hook .src{margin-top:22px;font-size:15px;letter-spacing:.11em;color:rgba(255,255,255,.4);
+  opacity:0;animation:in .5s 1.40s forwards}
+/* the second half of the hook, once the picture has fallen away */
+.hook .k{margin-top:30px;font-size:30px;font-weight:300;color:#28a8e0;opacity:0;
+  animation:up .5s 4.90s forwards}
+
+/* ─────────── beat B · three identical records (14.00 to 20.25) ─────────── */
+.recs{position:absolute;z-index:20;left:150px;right:150px;top:120px;display:none}
+.recs .hd{font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);
+  padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.16)}
+.rw{display:flex;justify-content:space-between;align-items:baseline;gap:30px;padding:24px 0;
+  border-bottom:1px solid rgba(255,255,255,.11);opacity:0;transform:translateY(9px)}
+.rw .nm{font-size:31px;font-weight:300}
+.rw .ty{font-size:20px;font-weight:300;color:rgba(255,255,255,.46);letter-spacing:.02em}
+.r1{animation:up .4s 14.35s forwards}
+.r2{animation:up .4s 14.95s forwards}
+.r3{animation:up .4s 15.55s forwards}
+.recs .ft{margin-top:34px;font-size:24px;font-weight:300;color:rgba(255,255,255,.72);opacity:0;
+  animation:up .5s 17.30s forwards}
+.recs .ft b{color:#28a8e0;font-weight:300}
+
+/* ─────────── beat D · the three signals (25.70 to 31.70) ─────────── */
+.sig{position:absolute;z-index:20;left:130px;right:130px;top:206px;display:none;
+  grid-template-columns:repeat(3,1fr);gap:44px;text-align:left}
+.sig div{opacity:0;transform:translateY(10px);border-top:2px solid rgba(40,168,224,.6);padding-top:20px}
+.sig .l{display:block;font-size:31px;font-weight:300;letter-spacing:-.01em}
+.sig .s{display:block;margin-top:12px;font-size:20px;font-weight:300;line-height:1.4;
+  color:rgba(255,255,255,.62)}
+.g1{animation:up .45s 26.05s forwards}
+.g2{animation:up .45s 26.75s forwards}
+.g3{animation:up .45s 27.45s forwards}
+
+/* ─────────── beat E · routing (31.70 to 39.20) ─────────── */
+.route{position:absolute;z-index:20;left:150px;right:150px;top:150px;display:none}
+.lane{display:flex;align-items:center;gap:20px;padding:20px 0;
+  border-bottom:1px solid rgba(255,255,255,.13);opacity:0;transform:translateY(9px)}
+.lane .d{width:11px;height:11px;border-radius:50%;flex:none}
+.lane.hot .d{background:#28a8e0}
+.lane.cool .d{background:rgba(255,255,255,.3)}
+.lane .l{font-size:25px;font-weight:300;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+.lane .r{margin-left:auto;font-size:16px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.5)}
+.lane.hot .r{color:#28a8e0}
+.l1{animation:up .4s 32.10s forwards}
+.l2{animation:up .4s 33.10s forwards}
+.l3{animation:up .4s 34.10s forwards}
+.route .ft{margin-top:32px;font-size:22px;font-weight:300;color:rgba(255,255,255,.66);opacity:0;
+  animation:up .5s 35.80s forwards;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+
+/* ─────────── beat F · the rule (39.20 to 45.10) ─────────── */
+/* The one line in this film worth remembering, so it gets the whole frame and a black bed. */
+.rule{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.rule .k{font-size:46px;font-weight:300;line-height:1.24;letter-spacing:-.02em;max-width:1080px}
+.rule .k em{font-style:normal;color:#28a8e0}
+/* .62 rather than .44. On a FULL BLACK bed a 16px tracked line at .44 measured as barely
+   present in the probe: over a photograph that alpha reads as restraint, over black it reads as
+   a rendering fault. The one beat with no picture behind it needs its footnote brighter, not
+   dimmer. */
+.rule .src{margin-top:38px;font-size:16px;letter-spacing:.11em;color:rgba(255,255,255,.62);
+  opacity:0;animation:in .5s 41.90s forwards}
+
+/* ─────────── beat G · the close (45.10 on) ─────────── */
+.cta{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.cta .k{font-size:44px;font-weight:300;letter-spacing:-.02em;max-width:980px}
+.cta .u{margin-top:34px;font-size:56px;font-weight:300;color:#28a8e0;letter-spacing:-.02em;
+  opacity:0;animation:up .5s 46.60s forwards}
+.cta .f{margin-top:30px;font-size:15px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);opacity:0;animation:in .5s 48.00s forwards}
+
+@keyframes in{to{opacity:1}}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="scrim sA"></div>
+  <div class="scrim sPic"></div>
+  <div class="scrim sG"></div>
+  <div class="glow gA"></div>
+  <div class="glow gD"></div>
+  <div class="glow gG"></div>
+
+  <!-- BEAT A · the number. Full opacity at frame 0: this frame is the poster. -->
+  <div class="hook">
+    <div>
+      <div class="n">15<i>%</i></div>
+      <div class="u">of sellers said they needed to sell as quickly as possible</div>
+      <div class="src">NAR 2025 generational trends, Exhibit 6-23</div>
+      <div class="k">Your call list does not know which fifteen.</div>
+    </div>
+  </div>
+
+  <!-- BEAT B · three records that look the same -->
+  <div class="recs">
+    <div class="hd">Yesterday, in your CRM</div>
+    <div class="rw r1"><span class="nm">D. Okafor</span><span class="ty">Buyer inquiry</span></div>
+    <div class="rw r2"><span class="nm">T. Reyes</span><span class="ty">Buyer inquiry</span></div>
+    <div class="rw r3"><span class="nm">M. Lund</span><span class="ty">Home value request</span></div>
+    <div class="ft">Two of them are worth your morning. <b>The form will not tell you which.</b></div>
+  </div>
+
+  <!-- BEAT D · the three signals -->
+  <div class="sig">
+    <div class="g1"><span class="l">Intent</span><span class="s">Whether they are actually going to move, or are reading about it</span></div>
+    <div class="g2"><span class="l">Budget</span><span class="s">Pre-approved, paying cash, or a number they have not tested yet</span></div>
+    <div class="g3"><span class="l">Timeline</span><span class="s">A lease ending, a job starting, a house already under contract</span></div>
+  </div>
+
+  <!-- BEAT E · routing -->
+  <div class="route">
+    <div class="lane hot l1"><span class="d"></span><span class="l">Pre-approved, house under contract, free this week</span><span class="r">Call now</span></div>
+    <div class="lane cool l2"><span class="d"></span><span class="l">No pre-approval, lease ends in September</span><span class="r">Nurture</span></div>
+    <div class="lane hot l3"><span class="d"></span><span class="l">Relocating for work, has to sell by spring</span><span class="r">Call now</span></div>
+    <div class="ft">Nobody is dropped. They are sorted.</div>
+  </div>
+
+  <!-- BEAT F · the rule -->
+  <div class="rule">
+    <div>
+      <div class="k">Score what somebody told you about their plans.<br><em>Never who they appear to be.</em></div>
+      <div class="src">Fair Housing Act, 42 U.S.C. 3604 &middot; NAR Code of Ethics, Article 10</div>
+    </div>
+  </div>
+
+  <!-- BEAT G · the close -->
+  <div class="cta">
+    <div>
+      <div class="k">Tomorrow the list is ordered by who to call.</div>
+      <div class="u">realtylt.com/ai</div>
+      <div class="f">Built and run by RealtyLT</div>
+    </div>
+  </div>
+
+  <!-- captions: one per narrated line that is not already carried by a card -->
+  <div class="cap c1">Three leads came in yesterday. On the screen they are identical.</div>
+  <!-- The line breaks are DELIBERATE. These two captions are wider than the band and wrapped
+       with a single word alone on the second line, which reads as a layout fault rather than as
+       a caption. Breaking them where the sentence breaks fixes it without shortening the words,
+       and the caption has to keep matching the narration for anybody watching with sound off. -->
+  <div class="cap c2">One is pre-approved with a house already under contract.<br>One signed a lease in September.</div>
+  <div class="cap c3">That difference is never on the form. <b>It is in what they said next.</b></div>
+  <div class="cap c4">So this reads the conversation, and scores <b>intent, budget and timeline.</b></div>
+  <div class="cap c5">Then it routes. The ready ones reach a person.<br>The rest get the follow-up that suits them.</div>
+</div>
+
+<script>
+/* Deterministic seek. Every beat is a CSS animation on the film clock, so freezing the document
+   and setting currentTime renders the exact state at time t.
+
+   [selector, display when present, from, until]. Every boundary is a measured line boundary from
+   scripts/_scratch-video/qualify-vo/schedule.json, and each range STARTS where the previous one
+   ends, so there is never a frame with nothing on it. */
+const SWITCH = [
+  // beat A · the hook, over the morning and then over black. c0 absent: the card carries it.
+  [".sA",    "block", 0.00,  4.40],
+  [".hook",  "grid",  0.00,  8.70],
+  [".gA",    "block", 0.00,  8.70],
+  // beat B · three records. The picture beat gets the caption, the black beat gets the card.
+  [".sPic",  "block", 8.70,  14.00],
+  [".c1",    "block", 8.70,  14.00],
+  [".recs",  "block", 14.00, 20.25],
+  [".c2",    "block", 14.00, 20.25],
+  // beat C is the bridge: a picture with only the caption on it. Its caption is switched at the
+  // bottom of __seek rather than here, so the one beat with no card of its own is impossible to
+  // lose in a table edit.
+  // beats C, D and E all sit over pictures and share the two-ended gradient.
+  [".sig",   "grid",  25.70, 31.70],
+  [".gD",    "block", 25.70, 31.70],
+  [".c4",    "block", 25.70, 31.70],
+  [".route", "block", 31.70, 39.20],
+  [".c5",    "block", 31.70, 39.20],
+  // beat F · the rule, on black, alone. c6 absent: the card is the line.
+  [".rule",  "grid",  39.20, 45.10],
+  // beat G · the close. c7 absent: the card carries the line and the URL, larger.
+  [".sG",    "block", 45.10, null],
+  [".gG",    "block", 45.10, null],
+  [".cta",   "grid",  45.10, null],
+];
+/* The picture gradient spans three separate beats, so it is switched by its own range rather
+   than repeated per beat: one element, one continuous window, no seam at 25.70 or 31.70. */
+const SPAN = [[".sPic", 8.70, 39.20]];
+
+/* Order is load-bearing. display:none CANCELS an element's animations, so a beat that has just
+   become visible gets a BRAND NEW animation running from zero. Show first, force the style
+   flush, and only then pause and seek. */
+window.__seek = (t) => {
+  for (const [sel, shown, from, until] of SWITCH) {
+    if (sel === ".sPic") continue; // owned by SPAN
+    for (const el of document.querySelectorAll(sel)) {
+      el.style.display = t >= from && (until === null || t < until) ? shown : "none";
+    }
+  }
+  for (const [sel, from, until] of SPAN) {
+    for (const el of document.querySelectorAll(sel)) {
+      el.style.display = t >= from && t < until ? "block" : "none";
+    }
+  }
+  // the bridge caption, whose line has no card
+  const c3 = document.querySelector(".c3");
+  if (c3) c3.style.display = t >= 20.25 && t < 25.70 ? "block" : "none";
+  void document.body.offsetHeight;
+  for (const a of document.getAnimations()) {
+    a.pause();
+    a.currentTime = t * 1000;
+  }
+};
+window.__ready = document.fonts.ready.then(() => {
+  window.__seek(0);
+  return true;
+});
+</script>
+</body>
+</html>

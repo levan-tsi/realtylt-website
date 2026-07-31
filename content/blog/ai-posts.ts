@@ -357,6 +357,122 @@ The two sibling problems are worth reading as well, because they are the same ar
 
 [[scene:funnel]]`;
 
+export const LEAD_QUALIFICATION_POST = `Open your CRM tomorrow morning and you will see a list. It is sorted by when each name arrived, because arrival time is the only thing the software knows for certain about any of them.
+
+Three of those names came in yesterday. On screen they are identical: a name, an email address, a phone number, and the words buyer inquiry.
+
+One is pre-approved, has their own house under contract, and is free on Thursday. One signed a twelve month lease in September. The third asked what their house is worth because they have been offered a job in another state and have to be out by spring.
+
+You will find out which is which some time next week, if you get that far down the list.
+
+[[scene:in-short]]
+
+[[scene:reel]]
+
+## What the list is actually sorted by
+
+There is a comfortable assumption underneath every CRM, which is that the leads in it are roughly interchangeable and that working them in order is therefore fair. It is not fair. It is just arbitrary, and arbitrary is expensive when the underlying population is as spread out as this one.
+
+The National Association of REALTORS asks recent sellers how urgent their sale was. Not how urgent it felt to their agent. How urgent it was.
+
+[[scene:urgency]]
+
+Fifteen percent needed to sell as quickly as possible. Forty three percent were in no hurry at all and waited for the right offer. Those two groups submit the same form, tick the same box, and arrive in your inbox looking exactly alike.
+
+That spread is the entire argument. If everybody were equally ready, the order of your morning would not matter and none of this would be worth building. They are not, the difference is large, and it is invisible in the place you are currently looking for it.
+
+[[scene:plate]]
+
+## What a form cannot tell you, and a conversation can
+
+The same NAR research measures how the process actually runs. Buyers searched for a median of ten weeks and looked at a median of seven homes. They searched for a median of two weeks before contacting an agent at all, which means by the time a form arrives, that person has already been at this for a fortnight and has already decided you were worth writing to.
+
+The most useful exhibit in the whole report is the one nobody quotes. NAR asks buyers why they bought when they did. The largest answer, at 43 percent, is "it was just the right time, was ready to buy a home", which tells you nothing at all and cannot be checked by anybody. The second largest, at 23 percent, is "did not have much choice, had to purchase".
+
+Read those two next to each other and the job becomes clear. Nearly a quarter of buyers were moved by something that happened to them: a lease, a job, a marriage, a death, a divorce. That is a fact with a date attached, and unlike a preference, it is something a person will tell you in the first two minutes of a real conversation. Qualification is not psychology. It is finding out whether the timing is a wish or an appointment.
+
+## What lead qualification actually does
+
+[[scene:what-it-does]]
+
+The fourth one is the whole point and it is smaller than it sounds. Nothing here makes a lead better. It changes the order you meet them in, and the order is the part you were previously leaving to a timestamp.
+
+## The three signals, and what they sound like
+
+Every scoring system in this business measures the same three things, because they are the three that predict. What separates a useful one from a decorative one is whether it reads them out of sentences or out of checkboxes.
+
+[[scene:three-signals]]
+
+A note on the third one, because it is the one people get wrong. A date on its own is weak. Anybody will type spring into a form. A date with a REASON attached is the strongest signal there is, because the reason is what makes the date real: the lease ends, the job starts, the closing is booked. When somebody volunteers the reason, they have told you they are not browsing.
+
+[[scene:pull-quote]]
+
+[[scene:teardown]]
+
+## The part that can get you in trouble
+
+Here is the section that nobody selling lead scoring will raise with you, and it is the reason to read this rather than a feature list.
+
+A score decides who gets a person and who gets an automated follow-up. That is a professional service, delivered differently to different people, by a system, at scale, with no human looking at any individual decision. There is a body of law about exactly that, it is older than any of this software, and it does not contain a software exemption.
+
+The Fair Housing Act makes it unlawful, at [42 U.S.C. 3604](https://www.law.cornell.edu/uscode/text/42/3604), to publish any statement about the sale of a dwelling "that indicates any preference, limitation, or discrimination" on a protected basis, and to represent to somebody, because of a protected characteristic, "that any dwelling is not available for inspection, sale, or rental when such dwelling is in fact so available". Nothing in either sentence cares whether the representation was made by a person or by a routing rule.
+
+If you are a REALTOR the bar is higher and broader. [Article 10 of the Code of Ethics](https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/2025-code-of-ethics-standards-of-practice) says plainly that REALTORS "shall not deny equal professional services to any person for reasons of race, color, religion, sex, disability, familial status, national origin, sexual orientation, or gender identity". Note the last two. Article 10 covers two categories the federal statute does not, so a system built to the floor of federal law is not automatically built to the standard you actually agreed to.
+
+None of that makes scoring wrong. It makes a particular kind of scoring wrong, and the line is clean enough to hold in your head.
+
+[[scene:fair-play]]
+
+The third one is the one worth writing on the wall. Qualification is allowed to change the order of YOUR day. It is never allowed to change what somebody else is permitted to see, ask, or be shown. The moment a low score results in fewer listings, a slower answer to a direct question, or a person who can never reach a human being, you have stopped ranking your own time and started rationing access to housing, and those are different activities with very different consequences.
+
+The practical protection is boring and it works: every score has to point at a sentence somebody actually wrote. If you cannot open a lead and see the words that produced the number, you cannot explain it to a client, you cannot correct it when it is wrong, and you certainly cannot defend it to anybody else.
+
+## What it does not do, and should not pretend to
+
+It is not a prediction about a person. It is a guess about a date, made from limited evidence, and it will be wrong regularly. Somebody who says they are twelve months out will call you in March because their landlord sold the building. That is not a scoring failure. It is what happens when the input is a plan and plans change.
+
+It does not replace reading. The score is a sort order, not a summary. An agent who calls the top of the list without opening the transcript underneath it has bought a slightly faster way to be unprepared.
+
+It does not work on nothing. A lead who filled in a form, said no more, and never replied has given the system a name and an email address, which is exactly what it has given you. There is no model that extracts intent from silence, and any vendor implying otherwise is describing a guess with a confidence interval printed on it.
+
+And it does not decide anything. Every hot lead is a suggestion that you call somebody. Every low score is a suggestion about the order of your afternoon. Nobody is refused, nothing is closed off, and if the system is ever doing more than suggesting, it has been built wrong.
+
+[[scene:routing-path]]
+
+## Where it goes wrong
+
+[[scene:failure-modes]]
+
+## Common questions, answered honestly
+
+### How does AI qualify a real estate lead?
+
+It reads the actual conversation instead of the form, and scores what it finds on three things: intent, budget and timeline. Whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three predict who transacts soon, and none of them appear on a contact form.
+
+### What is lead scoring, in plain terms?
+
+Ranking your leads by how likely they are to transact soon, so that your best hours go to the people closest to doing something. Without it, the ordering of your day is set by the order things arrived in, which is effectively random with respect to anything you care about.
+
+### Does a low score mean the lead gets dropped?
+
+No, and a system that drops them is the broken version. A low score means the lead goes to a follow-up track instead of your call list. Most leads are not ready today and some of them are ready in six months, and the point of scoring is to stop those two groups getting identical treatment. Everybody still gets answers, still gets listings, and can still reach a person.
+
+### Can the score be wrong?
+
+Regularly, and in both directions. A cautious person underplays their timeline and scores low. Somebody who talks a good game scores high and never moves. Treat the ranking as a sort order that saves you from starting at a random point, not as a verdict, and read the transcript before you dial either way.
+
+### Is it legal to score and route leads with software?
+
+Scoring your own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. That is the same standard you are already held to in person.
+
+## What to do about it
+
+If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#qualify), and the [lead qualification page](/services/lead-qualification) has the full breakdown of what it reads and where it routes.
+
+It is worth reading the two pieces either side of this one, because qualification only has something to work with if a conversation happened at all. The [assistant answering your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) and the [voice agent taking the 9:42 call](/blog/ai-voice-agent-missed-calls-real-estate) are where the sentences this reads come from, and [the leads already sitting in your CRM](/blog/database-reactivation-old-real-estate-leads) are the ones nobody has scored at all.
+
+[[scene:funnel]]`;
+
 export const WORKFLOW_AUTOMATION_POST = `Ask an agent what they do all day and they will tell you they sell houses.
 
 Then get them to write down every step of one deal, from the first inquiry to the closing table, and hand them a highlighter for anything that involves typing something into a system that another system already knows. The page turns yellow.
