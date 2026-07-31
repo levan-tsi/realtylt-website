@@ -113,12 +113,30 @@ const nextConfig: NextConfig = {
     contentDispositionType: "attachment",
   },
   async redirects() {
+    // Every URL Google already knows about comes with the domain when the apex swings here.
+    // These are the paths the LIVE site publishes in its own footer + HTML sitemap that this
+    // site does not answer to; without them, launch day turns each one into a 404.
     return [
       { source: "/index", destination: "/", permanent: true },
       { source: "/top_areas", destination: "/top-areas", permanent: true },
       { source: "/homevalue", destination: "/home-value", permanent: true },
       { source: "/home_value", destination: "/home-value", permanent: true },
       { source: "/realestateagent/search", destination: "/who-we-are", permanent: true },
+      // Same underscore-vs-hyphen split as /home_value, on the page a visitor is most likely
+      // to arrive at from a policy link.
+      { source: "/privacy_policy", destination: "/privacy-policy", permanent: true },
+      // Live calls it /tos ("terms-conditions"); ours carries the terms and the DMCA notice.
+      { source: "/tos", destination: "/dmca-terms", permanent: true },
+      // The old portal's four sections have the same names as ours, so this maps one to one.
+      { source: "/myportal", destination: "/portal", permanent: true },
+      { source: "/myportal/:path*", destination: "/portal/:path*", permanent: true },
+      // The vendor published a deep HTML area index — /sitemap/NY/<County>-County/City/<City>/
+      // Listings/Page/N and School-District, Neighborhood and Postal-Code trees beneath it,
+      // for 22 counties including many we do not serve. None of that shape exists here, and
+      // the honest destination for all of it is the index of the areas we DO work in.
+      // (Distinct from /sitemap.xml, which this site generates and which still resolves.)
+      { source: "/sitemap", destination: "/top-areas", permanent: true },
+      { source: "/sitemap/:path*", destination: "/top-areas", permanent: true },
     ];
   },
   async rewrites() {
@@ -144,7 +162,21 @@ const nextConfig: NextConfig = {
     if (process.env.PRELAUNCH === "1") {
       headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
     }
-    return [{ source: "/:path*", headers }];
+    return [
+      { source: "/:path*", headers },
+      // /search renders its first page of results on the server, so it is a dynamic route and
+      // Vercel sends it `private, no-cache, no-store` — every visitor pays the query, and a
+      // cold instance pays ~2.5s of function boot before the HTML even starts. Nothing in this
+      // page's HTML is visitor-specific (it was a statically prerendered shell until now;
+      // hearts and sign-in state are hydrated client-side), so the edge may share it. One
+      // minute of freshness against a feed that syncs hourly, and a long stale window so a
+      // revalidation never makes anyone wait. A DIFFERENT header key from the rule above, so
+      // no duplicate-header intersection (see the CSP note at the top of this file).
+      {
+        source: "/search",
+        headers: [{ key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=600" }],
+      },
+    ];
   },
 };
 
