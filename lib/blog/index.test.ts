@@ -89,6 +89,20 @@ describe("ISR window", () => {
   );
 });
 
+describe("every static post's cover", () => {
+  /** A cover pointing at a file that is not on disk is invisible in TypeScript, invisible in
+   * a build, and very visible on the page: the raw asset 404s, next/image then 400s on it, and
+   * the post's card on /blog plus its own hero both render empty. That shipped for months on
+   * the workflow post (/images/team-bg.jpg, which never existed). Cheap to assert, so assert. */
+  it("resolves to a file that actually exists in /public", () => {
+    for (const p of POSTS) {
+      if (p.cover.startsWith("http")) continue; // DB posts may carry an absolute Supabase URL
+      const abs = path.join(process.cwd(), "public", p.cover);
+      expect(fs.existsSync(abs), `${p.slug}: cover ${p.cover} is not in /public`).toBe(true);
+    }
+  });
+});
+
 describe("meta description of the static posts", () => {
   // What /blog/[slug] actually puts in <meta name="description">.
   const metaDescription = (a: Article) => a.seoDescription || a.excerpt;

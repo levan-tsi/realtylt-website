@@ -76,7 +76,11 @@ export const POSTS: BlogPost[] = [
       "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps, and what it takes to get them back.",
     seoDescription:
       "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps.",
-    cover: "/images/team-bg.jpg",
+    // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
+    // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
+    // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
+    // post is about. lib/blog/index.test.ts now fails on a cover that is not on disk.
+    cover: "/images/lifestyle/financing.jpg",
     body: [],
     placeholder: false,
     markdown: WORKFLOW_AUTOMATION_POST,
