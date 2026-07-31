@@ -31,7 +31,7 @@
 ## 4. Anything else found: fix it measured, page-scoped commits, verify before pushing.
 ##
 ## ── GATES (unchanged) ────────────────────────────────────────────────────────────────
-## tsc clean · npm test green (538 now — never go below, add tests for logic you touch) ·
+## tsc clean · npm test green (541 now — never go below, add tests for logic you touch) ·
 ## zero horizontal overflow at 1440/390/320 · zero dead links · every focus stop with a
 ## visible indicator · no console errors · after EVERY push confirm the Vercel deploy builds
 ## READY (prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team_LxVTdG0G7zPU5WSoNnZOpf8p).
@@ -101,6 +101,26 @@
 ## The audit's "no robots meta on 19 of 21 pages" is CLOSED AS A NON-ISSUE, measured: every
 ## route already carries X-Robots-Tag: noindex,nofollow while PRELAUNCH=1 — all 21 checked on
 ## production, including /sitemap.xml, /robots.txt and /og.png, which a meta tag cannot cover.
+##
+## ── 4b. THE THREE HE FOUND HIMSELF AFTER I SAID "DONE" ────────────────────────────────
+## "when you bring mouse to select page nothing happens… takes to 2end page but thats it."
+## (a) NO BUTTON ON THE SITE HAD A HAND CURSOR. Tailwind v4's Preflight dropped the
+##     cursor:pointer v3 put on buttons — measured 97 of 134 controls on /search and 34 of 35
+##     on the home page showing the plain arrow. One @layer base rule, disabled excluded.
+##     RE-RUN _scratch-r15-cursor.mjs after any major Tailwind upgrade; nothing else catches it.
+## (b) The pager's hover was white-on-mist (invisible) and the black pill keyed off
+##     result.page, so it only moved when the data landed — 972ms with NOTHING on screen in
+##     between. It keys off the clicked page now: 141ms. Hover is a light wash of the black.
+## (c) UNDERNEATH THAT, A REAL DATA BUG: `mixed` broke paging. It added a day-seeded ROW
+##     offset to EVERY page, and that offset can be nearly the whole set, so page 2 ran off
+##     the end. On production: Orange + 3 beds = 1,720 listings / 48 pages, and page 2
+##     returned FOUR, while page 3 reported a different total (1053). It rotates by WHOLE
+##     PAGES around a ring now — page p is ring page (r+p-1) mod pages — so every page is
+##     full, every listing appears once, and the offset can never exceed the set. Verified on
+##     the real feed: 5 consecutive full pages, 0 repeats, one stable total, last page full.
+##     PREDATES this round (the rotation shipped 07-29); round 14's pagination check passed
+##     only because that day's rotation happened to be small. A pass on one day's data is not
+##     a pass — _scratch-r15-pagewalk.mjs walks it properly.
 ##
 ## ── 5. DESIGN: ONE REAL DEFECT, AND TWO THAT WERE NOT ─────────────────────────────────
 ## /search's filter bar broke differently at EVERY width (measured by reading the wrapped

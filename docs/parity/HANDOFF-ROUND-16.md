@@ -178,6 +178,44 @@ every route already carries `X-Robots-Tag: noindex, nofollow` while `PRELAUNCH=1
 on production, including `/sitemap.xml`, `/robots.txt` and `/og.png`, which a meta tag cannot cover
 at all. Adding the meta would have been a second switch to forget to turn off.
 
+### 3.4b The two the owner found himself, after the round was "finished"
+
+He wrote: *"when you bring mouse to select page nothing happens, people might think its frozen…
+takes to 2end page but thats it."* Three separate causes, all real, all fixed.
+
+1. **No button on the site had a hand cursor.** Tailwind v4's Preflight dropped the
+   `cursor: pointer` that v3 put on buttons. Measured: **97 of 134** controls on `/search` and
+   **34 of 35** on the home page were showing the ordinary arrow — SEARCH, SAVE SEARCH, the county
+   chips, the pager, "Save this home", every form's submit. Only elements that happened to carry a
+   `cursor-pointer` class behaved. One `@layer base` rule in `globals.css` restores it, excluding
+   `:disabled` so a greyed-out chevron does not invite a click. After: 133 of 134, the exception
+   being that disabled chevron. **If you upgrade a major Tailwind version, re-run
+   `_scratch-r15-cursor.mjs`** — nothing else would have caught this.
+2. **The pager's hover was `bg-white` on a `bg-mist` panel**, i.e. almost invisible, and the click
+   had nothing to say for itself: the black pill keyed off `result.page`, so it only moved when the
+   new results landed — measured at **972ms** on the dev server, with nothing on screen in between.
+   It keys off the clicked page now: **141ms**, which is a React re-render rather than a network
+   wait. Hover is a light wash of the same black, plus a pressed state.
+3. **And underneath that was a genuine data bug: `mixed` broke paging.** It added a day-seeded ROW
+   offset to every page (`offset = rotate + (p-1)*size`), and `rotate` can be nearly the whole set,
+   so page 2 ran off the end. Measured on production, Orange county with 3+ beds — 1,720 listings,
+   48 pages:
+
+   ```
+   page 1 -> 36 listings, total 1720, totalPages 48
+   page 2 ->  4 listings, total 1720, totalPages 48
+   page 3 -> 36 listings, total 1053, totalPages 30   <- a different total mid-walk
+   ```
+
+   That last line is PostgREST reporting the count for an offset past the end. The rotation now
+   moves **whole pages around a ring** — page p is ring page `(r + p - 1) mod pages` — so every
+   page is full, every listing appears once, and the offset can never exceed the set. Verified
+   against the real feed, filtered and unfiltered: five consecutive full pages with zero repeats,
+   one stable total, and the true last page (327 of 327, 48 of 48) full. Three tests cover it.
+   **This predates this round** (the rotation shipped 2026-07-29) and round 14's pagination check
+   passed only because that day's rotation happened to be small. A pass on one day's data is not a
+   pass — `_scratch-r15-pagewalk.mjs` walks it properly.
+
 ### 3.5 Design
 
 The one real defect was `/search`'s filter bar, and it was real at **every** width — measured by
