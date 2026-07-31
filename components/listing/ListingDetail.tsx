@@ -176,8 +176,15 @@ export async function ListingDetail({ id }: { id: string }) {
     "@type": "RealEstateListing",
     name: `${l.address}, ${l.city}, NY ${l.zip}`,
     url: `${SITE.url}${listingPath(l)}`,
-    // Only claim images we actually have; a photo-less listing must not list the placeholder.
-    ...(photos.length ? { image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)) } : {}),
+    // Only claim images we can actually SERVE. `photos` deliberately keeps one speculative
+    // path when nothing is mirrored yet, so the page asks and the route answers with the
+    // branded coming-soon still — good for the visitor, but publishing that path here would
+    // tell Google this house has a photograph when what it has is our logo. gallery.mirrored
+    // is the servable count (idx_listings.photos_servable), so a listing waiting on the mirror
+    // simply has no `image` until it does.
+    ...(gallery.mirrored > 0
+      ? { image: photos.map((p) => (p.startsWith("http") ? p : `${SITE.url}${p}`)) }
+      : {}),
     description: l.description,
     datePosted: l.listedAt,
     about: {

@@ -162,21 +162,12 @@ const nextConfig: NextConfig = {
     if (process.env.PRELAUNCH === "1") {
       headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
     }
-    return [
-      { source: "/:path*", headers },
-      // /search renders its first page of results on the server, so it is a dynamic route and
-      // Vercel sends it `private, no-cache, no-store` — every visitor pays the query, and a
-      // cold instance pays ~2.5s of function boot before the HTML even starts. Nothing in this
-      // page's HTML is visitor-specific (it was a statically prerendered shell until now;
-      // hearts and sign-in state are hydrated client-side), so the edge may share it. One
-      // minute of freshness against a feed that syncs hourly, and a long stale window so a
-      // revalidation never makes anyone wait. A DIFFERENT header key from the rule above, so
-      // no duplicate-header intersection (see the CSP note at the top of this file).
-      {
-        source: "/search",
-        headers: [{ key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=600" }],
-      },
-    ];
+    // Do NOT try to add a Cache-Control here for /search. Now that it renders its results on
+    // the server it is a dynamic route, and Next overwrites the header with
+    // `private, no-cache, no-store` whatever this config says — measured on production, the
+    // rule had no effect at all. Crawl budget on faceted /search URLs is handled where it
+    // belongs instead, in app/robots.ts.
+    return [{ source: "/:path*", headers }];
   },
 };
 

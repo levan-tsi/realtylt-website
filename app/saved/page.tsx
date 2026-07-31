@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Saved | Your Homes & Searches",
   description:
     "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
+  // Someone else's saved list is empty by definition — there is no page here for a search
+  // result to lead to. /portal declares the same for the same reason.
+  robots: { index: false, follow: false },
 };
 
 export default async function SavedPage() {

@@ -18,10 +18,22 @@ const round4 = (n: number) => Math.round(n * 1e4) / 1e4;
 
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams;
+  const bounds = parseBounds(q);
+  // A BOUNDING BOX IS NOW REQUIRED. The unbounded path paged the whole filtered set with an
+  // exact count, so the default query — six counties, ~11.7k listings — blew its budget and
+  // came back as this route's own 502 after 4.6 seconds; a single county answered in ~7.5s
+  // with 340KB. That is real database time on a public, uncached URL, and nothing in the app
+  // asks for it (SearchClient derives its pins from the listings it already has). Callers that
+  // want pins send a viewport, which is the fast path this route was built for.
+  if (!bounds) {
+    return NextResponse.json(
+      { error: "A map viewport is required: north, south, east and west." },
+      { status: 400 },
+    );
+  }
   try {
     const client = getIdxClient();
     const filters = parseFilterParams(q);
-    const bounds = parseBounds(q);
 
     let pins: MapPin[];
     let total: number;

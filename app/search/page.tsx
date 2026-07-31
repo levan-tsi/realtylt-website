@@ -5,11 +5,28 @@ import { getIdxClient, isSampleData } from "@/lib/idx";
 import { parseSearchRequest } from "@/lib/idx/query";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
+type RawParams = Record<string, string | string[] | undefined>;
+
+const BASE_METADATA: Metadata = {
   title: "Search Listings | Hudson Valley Homes for Sale",
   description:
     "Search homes for sale across the Hudson Valley and all five NYC boroughs. Filter by price, beds, baths, and more, and browse in grid or map view.",
 };
+
+/** One search page, an unbounded number of URLs: every combination of county, beds, price,
+ * type, sort and page is its own address over the same inventory. The bare /search is the one
+ * worth ranking — the filtered variants are near-duplicates of it and of the county pages.
+ * They stay CRAWLABLE (`follow`) on purpose: listing URLs are not in the sitemap because the
+ * live feed rotates, so these pages are how a crawler walks to the homes themselves. Seen and
+ * followed, just not indexed. */
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<RawParams>;
+}): Promise<Metadata> {
+  const filtered = Object.keys(await searchParams).length > 0;
+  return filtered ? { ...BASE_METADATA, robots: { index: false, follow: true } } : BASE_METADATA;
+}
 
 /** Reading searchParams makes this route dynamic — which is the point. The page used to be a
  * static shell that shipped ZERO listings: SearchClient reads useSearchParams, so Next served
@@ -17,8 +34,6 @@ export const metadata: Metadata = {
  * the JS, hydrate, fetch /api/idx/search and only then paint. Measured on production, that put
  * the first card at 3,224ms cold / 752ms warm against the home page's 389ms, because the home
  * rails are server-rendered. Now the first page of results comes down inside the HTML. */
-type RawParams = Record<string, string | string[] | undefined>;
-
 function toUrlParams(sp: RawParams): URLSearchParams {
   const q = new URLSearchParams();
   for (const [k, v] of Object.entries(sp)) {
