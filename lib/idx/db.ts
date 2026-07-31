@@ -187,6 +187,27 @@ async function onceRetried<T>(op: () => Promise<T>): Promise<T> {
   }
 }
 
+/** How big is the filtered set? Only the "mixed" rotation asks, and only to pick a start
+ * offset — it does not need to be exact to the row. The number moves on the hourly sync, not
+ * per request, so an instance may remember it for a few minutes: that removes a second exact
+ * COUNT over the whole default six-county set (~11.7k rows) from every default /search.
+ * Measured before this: mixed 306-649ms vs newest 139-230ms on the same warm connection.
+ * A stale count can only put the rotation slightly past the tail, and search() falls back to
+ * an unrotated page if that ever empties page 1. */
+const ROTATION_COUNT_TTL_MS = 10 * 60_000;
+const rotationCounts = new Map<string, { at: number; total: number }>();
+
+async function rotationTotal(filters: string): Promise<number> {
+  const hit = rotationCounts.get(filters);
+  if (hit && Date.now() - hit.at < ROTATION_COUNT_TTL_MS) return hit.total;
+  const { total } = await onceRetried(() =>
+    rest<{ id: string }>(`idx_listings?select=id&${filters ? `${filters}&` : ""}limit=1`, { count: true }),
+  );
+  if (rotationCounts.size > 50) rotationCounts.clear(); // a handful of filter shapes in practice
+  rotationCounts.set(filters, { at: Date.now(), total });
+  return total;
+}
+
 export class DbIdxClient implements IdxClient {
   private stateCache?: { at: number; state: SyncState | null };
   private fb?: ReplicatedIdxClient;
@@ -242,15 +263,20 @@ export class DbIdxClient implements IdxClient {
       // never wrapping, so pagination stays coherent within the day).
       let rotate = 0;
       if (sort === "mixed") {
-        const { total: t } = await onceRetried(() =>
-          rest<{ id: string }>(`idx_listings?select=id&${filters ? `${filters}&` : ""}limit=1`, { count: true }),
-        );
+        const t = await rotationTotal(filters);
         if (t > size) rotate = (Math.floor(Date.now() / 86_400_000) * 53) % (t - size + 1);
       }
       const fetchPage = (p: number) =>
         rest<CardRow>(`${base}&limit=${size}&offset=${rotate + (p - 1) * size}`, { count: true });
 
       let { rows, total } = await onceRetried(() => fetchPage(Math.max(1, page)));
+      // The rotation offset is computed from a cached count, so a shrinking set could put it
+      // past the tail. An empty page with matches in the set is never a truthful answer —
+      // drop the rotation and serve the page straight.
+      if (!rows.length && total > 0 && rotate > 0) {
+        rotate = 0;
+        ({ rows, total } = await onceRetried(() => fetchPage(Math.max(1, page))));
+      }
       const totalPages = Math.max(1, Math.ceil(total / size));
       const safePage = Math.min(Math.max(1, page), totalPages);
       // Past-the-end page (stale link) — clamp like the fixture client and refetch.

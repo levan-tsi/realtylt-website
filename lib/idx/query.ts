@@ -2,7 +2,7 @@
  * (/api/idx/search and /api/idx/pins) — one validation story, no drift. */
 
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import type { MapBounds, PropertyType, SearchParams, SortKey } from "./types";
+import { SEARCH_PAGE_SIZE, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
 
 export const SORTS: SortKey[] = ["mixed", "newest", "oldest", "featured", "price-asc", "price-desc"];
 /** The sale property types the /search Type dropdown offers (validation whitelist). "Rental"
@@ -52,6 +52,27 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
       const d = num(q.get("newDays"));
       return d && d > 0 ? Math.min(d, 90) : undefined;
     })(),
+  };
+}
+
+/** The /search surface's own defaults, applied to a raw page URL. The server render
+ * (app/search/page.tsx) and the client's /api/idx/search fetch must ask the SAME question or
+ * the visitor sees one set of homes in the HTML and a different set a beat later, so both go
+ * through here. Mirrors SearchClient's `fromParams`/`toQuery`: sort defaults to "mixed", the
+ * "New Listings" quick filter means listed within NEW_LISTING_DAYS, and the grid is 36 a page.
+ * Anything unrecognised falls back to the default rather than erroring — this is a URL a
+ * visitor can type. */
+export const NEW_LISTING_DAYS = 7;
+
+export function parseSearchRequest(q: URLSearchParams): SearchParams {
+  const sort = q.get("sort") as SortKey | null;
+  const withQuick = new URLSearchParams(q);
+  if (q.get("quick") === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
+  return {
+    ...parseFilterParams(withQuick),
+    sort: sort && SORTS.includes(sort) ? sort : "mixed",
+    page: Math.max(1, Math.floor(num(q.get("page")) ?? 1)),
+    pageSize: SEARCH_PAGE_SIZE,
   };
 }
 

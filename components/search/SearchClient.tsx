@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
@@ -10,6 +10,9 @@ import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { pageWindow } from "@/lib/pagination";
+// "New Listings" quick-filter window (≤7 days, same as the card's "New" badge). Shared with
+// the server render so both sides ask the feed the same question.
+import { NEW_LISTING_DAYS } from "@/lib/idx/query";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
 import type { Listing, MapPin } from "@/lib/idx/types";
@@ -46,6 +49,10 @@ interface ApiResult {
   fixtureMode: boolean;
 }
 
+/** What /api/idx/search returns AND what app/search/page.tsx hands us for the first paint —
+ * the same shape from both sides on purpose. */
+export type SearchPayload = ApiResult;
+
 interface Filters {
   q: string;
   county: string;
@@ -78,9 +85,6 @@ interface Filters {
 
 /** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
 const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax"] as const;
-
-/** "New Listings" quick filter window — matches the card's "New" badge (≤7 days). */
-const NEW_LISTING_DAYS = 7;
 
 const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 3000].map(
   (k) => k * 1000,
@@ -205,12 +209,13 @@ const selectCls =
 const panelSelectCls =
   "min-w-0 flex-1 cursor-pointer rounded-xl border border-[#cccccc] bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
 
-export function SearchClient() {
-  const router = useRouter();
+export function SearchClient({ initial = null }: { initial?: SearchPayload | null }) {
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState<Filters>(() => fromParams(new URLSearchParams(searchParams)));
-  const [result, setResult] = useState<ApiResult | null>(null);
-  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  // `initial` is the server's answer to THIS url (app/search/page.tsx parsed the same query
+  // through lib/idx/query#parseSearchRequest), so the first paint already has homes in it.
+  const [result, setResult] = useState<ApiResult | null>(initial);
+  const [state, setState] = useState<"loading" | "ready" | "error">(initial ? "ready" : "loading");
   const [saveOpen, setSaveOpen] = useState(false);
   const { saveSearch, signedIn, favorites, toggleFavorite } = useSaved();
   const { openSignIn, enabled: accountsEnabled } = useAuth();
@@ -244,7 +249,7 @@ export function SearchClient() {
 
   // Re-sync when the URL changes underneath us (header "Search Listings" click,
   // browser Back/Forward) — state only seeds from the URL once on mount otherwise.
-  // Serialized comparison keeps our own router.replace() calls from looping.
+  // Serialized comparison keeps our own URL writes from looping.
   useEffect(() => {
     const next = fromParams(new URLSearchParams(searchParams));
     setFilters((prev) => (toQuery(prev, false) === toQuery(next, false) ? prev : next));
@@ -262,9 +267,9 @@ export function SearchClient() {
       // still carrying saveSearch=1 would re-open the dialog on every return visit.
       const qs = new URLSearchParams(window.location.search);
       qs.delete("saveSearch");
-      router.replace(`${window.location.pathname}${qs.size ? `?${qs}` : ""}`, { scroll: false });
+      window.history.replaceState(null, "", `${window.location.pathname}${qs.size ? `?${qs}` : ""}`);
     }
-  }, [searchParams, router]);
+  }, [searchParams]);
 
   // Reflect the committed filters into the URL — a post-commit effect (never updates the
   // Router mid-render) keyed on the serialized query, so it writes exactly once per real
@@ -273,11 +278,26 @@ export function SearchClient() {
   const filtersQs = toQuery(filters, false);
   useEffect(() => {
     const urlQs = toQuery(fromParams(new URLSearchParams(window.location.search)), false);
-    if (filtersQs !== urlQs) router.replace(`/search${filtersQs ? `?${filtersQs}` : ""}`, { scroll: false });
+    // The native History API, not router.replace: /search is a dynamic route now (it renders
+    // the first page of results on the server), so router.replace would re-run that DB query
+    // for every chip and dropdown while the client is already fetching the same page itself.
+    // Next syncs pushState/replaceState into useSearchParams, so the re-sync effect above and
+    // any deep link still see the truth. Same URL, same no-new-history-entry behaviour, one
+    // query instead of two.
+    if (filtersQs !== urlQs)
+      window.history.replaceState(null, "", `/search${filtersQs ? `?${filtersQs}` : ""}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtersQs]);
 
+  // The server already ran the query behind the first render — refetching it on mount would
+  // be a second identical round trip and would repaint the same 36 cards. Every later filter
+  // change falls through to the fetch below.
+  const serverPage = useRef(initial != null);
   useEffect(() => {
+    if (serverPage.current) {
+      serverPage.current = false;
+      return;
+    }
     let cancelled = false;
     setState("loading");
     // Search page shows a fuller 36-per-page grid (live parity); the "New Listings" quick

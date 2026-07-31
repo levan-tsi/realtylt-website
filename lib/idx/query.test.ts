@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { flag, inBounds, parseBounds, parseFilterParams } from "./query";
+import { flag, inBounds, parseBounds, parseFilterParams, parseSearchRequest } from "./query";
+import { SEARCH_PAGE_SIZE } from "./types";
 
 const q = (s: string) => new URLSearchParams(s);
 
@@ -46,6 +47,53 @@ describe("parseFilterParams — MORE panel filters", () => {
     for (const v of ["0", "false", "", "no", null]) expect(flag(v)).toBeUndefined();
     // A falsey withPhotos value never sets the toggle (default = include all).
     expect(parseFilterParams(q("withPhotos=0")).withPhotosOnly).toBeUndefined();
+  });
+});
+
+/** The server render of /search and SearchClient's own fetch must ask the feed the SAME
+ * question — otherwise the HTML shows one set of homes and hydration swaps in another. These
+ * lock the defaults that make the two agree (SearchClient: fromParams + toQuery). */
+describe("parseSearchRequest — the /search page's own defaults", () => {
+  it("a bare /search is mixed sort, page 1, a 36-card grid, six-county scope", () => {
+    expect(parseSearchRequest(q(""))).toMatchObject({
+      sort: "mixed",
+      page: 1,
+      pageSize: SEARCH_PAGE_SIZE,
+      county: undefined,
+      newWithinDays: undefined,
+    });
+  });
+
+  it("keeps a valid sort and falls back to mixed for anything else", () => {
+    expect(parseSearchRequest(q("sort=newest")).sort).toBe("newest");
+    expect(parseSearchRequest(q("sort=price-asc")).sort).toBe("price-asc");
+    expect(parseSearchRequest(q("sort=cheapest")).sort).toBe("mixed");
+    expect(parseSearchRequest(q("sort=")).sort).toBe("mixed");
+  });
+
+  it("translates the quick filter to a 7-day window, exactly like the client does", () => {
+    expect(parseSearchRequest(q("quick=new")).newWithinDays).toBe(7);
+    expect(parseSearchRequest(q("quick=all")).newWithinDays).toBeUndefined();
+    // An explicit newDays in the URL still wins its own way through parseFilterParams.
+    expect(parseSearchRequest(q("newDays=30")).newWithinDays).toBe(30);
+  });
+
+  it("clamps page to a whole number ≥ 1 (a typed URL is not to be trusted)", () => {
+    expect(parseSearchRequest(q("page=4")).page).toBe(4);
+    expect(parseSearchRequest(q("page=0")).page).toBe(1);
+    expect(parseSearchRequest(q("page=-3")).page).toBe(1);
+    expect(parseSearchRequest(q("page=abc")).page).toBe(1);
+    expect(parseSearchRequest(q("page=2.7")).page).toBe(2);
+  });
+
+  it("carries the filters through, and drops an unknown county rather than querying it", () => {
+    expect(parseSearchRequest(q("county=orange&bedsMin=3&withPhotos=1&rental=1"))).toMatchObject({
+      county: "orange",
+      bedsMin: 3,
+      withPhotosOnly: true,
+      rental: true,
+    });
+    expect(parseSearchRequest(q("county=narnia")).county).toBeUndefined();
   });
 });
 
