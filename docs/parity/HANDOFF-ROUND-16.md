@@ -239,6 +239,76 @@ border so the boxes match to the pixel. Before/after crops in `docs/design-r15/`
 
 ---
 
+## 3.9 The full click-everything pass, and what it found
+
+The owner asked for one more complete test — page by page, every box, every CTA, and whether
+property filtering really works. Four defects came out of it, all now fixed and pushed.
+
+**1. The MORE panel was serving stale snapshot data (§3.1 of the fix, and the big one).** See the
+commit and `supabase/migrations/idx_more_facts_columns.sql`. Year, lot, garage and tax were the
+only filters still reading out of the fat `listing` jsonb; under PostgREST's exact count they blew
+the anon statement timeout, `search()` caught it and quietly fell back to the committed snapshot.
+"Built 2000+" answered **zero** against a feed holding 4,713 such homes. They are generated
+columns now: 50–483ms with the exact count, where every one of them used to time out.
+
+**2. `mixed` broke pagination** — page 2 of a 1,720-home filtered set returned four. Rotating by
+whole pages around a ring fixed it (§3.4b).
+
+**3. No button on the site had a hand cursor** (Tailwind v4's Preflight), and the pager was white
+on white with no box (§3.4b).
+
+**4. The Top Areas caret could only ever CLOSE the flyout, and on a touchscreen it did nothing.**
+One boolean, set true by the wrapper's `onMouseEnter` and toggled by the caret's `onClick`, so the
+pointer arriving opened it and the click closed it. On touch the same thing happened through
+focus. Hover/focus are transient now and the click owns a separate PIN. **The rule that fixes this
+class of bug: a toggle handler must never ask "is it open right now" when opening it is exactly
+what the pointer or the focus just did.**
+
+**How the filters are checked now.** `scripts/_scratch-r15-filters.mjs` does not ask whether a
+filter fires — it asks whether every row that comes back obeys it. 46 checks: six counties, five
+boroughs, five bed and four bath minimums, price floors/ceilings/bands, sqft both directions, four
+property types, all seven MORE fields, rental mode both ways, the 7-day window, all four sorts
+proven ordered, three combinations, and an impossible price band that correctly finds nothing.
+**All 46 pass on production.** `-pagewalk` proves pages are full, non-overlapping and stably
+counted; `-mobile` drives the phone journeys end to end (menu → nav, hero search → results →
+filter chip → listing → lead form, with the lead route intercepted).
+
+**A warning about the click-everything sweep itself** (`-ctas.mjs`): its change detector compares
+URL, aria-expanded, dialog count and DOM/text length, and that is too coarse — it reported the
+heart, the card photo arrows, the chat launcher and every empty form submit as "nothing changed"
+when all four are correct. Treat its output as a list of things to look at, never as findings.
+Every one of them was re-checked against the state the control actually owns (`-ctas2.mjs`).
+
+## 3.10 Design — what was done, and what I would do next
+
+**Done: the site draws two lines instead of seventeen.** A census of the site's own chrome found
+59 distinct hard-coded colours, seventeen of them light greys doing one job (#dddddd, #e6e6e6,
+#eeeeee, #e5e5e5, #d7dbe0, and in the illustrations pairs a single unit apart). Two tokens now:
+`--color-line` (#dddddd) and `--color-line-strong` (#cccccc), used by 69 borders across the
+header, footer, cards, forms, search, services and every page shell. Rendered census after: 458
+and 312, the two dominant borders on the site. Nobody notices one grey; everybody feels all of
+them.
+
+**Note for anyone adding tokens:** `border-[--color-line]` is Tailwind v3 syntax and in v4 it
+silently does nothing — measured, the border computed to black at 0px. Tokens declared in `@theme`
+under `--color-*` generate real utilities, so write `border-line`.
+
+**Not done, in the order I would do them.** These are proposals, not work:
+
+1. **The hero is the site's thesis and it is currently a still.** The `hero-zoom` keyframe already
+   exists in `globals.css`. A very slow drift on the photograph, plus the eyebrow, headline and
+   search instrument arriving as a short sequence rather than together, would give the home page
+   one orchestrated moment — the restrained equivalent of what /ai does with the galaxy. Cheap,
+   reduced-motion safe, and it is the first thing every visitor sees.
+2. **The listing card's photo arrival.** The cover currently pops in over the pulse placeholder.
+   A soft cross-fade reads as craft on the object people touch most.
+3. **The save-heart has no moment.** It flips instantly. A 200ms fill with a small scale is the
+   kind of detail people remember.
+4. **/search's count line is the page's headline and is set as body text.** "11,741 listings
+   across the Hudson Valley" deserves the display face.
+5. **Photography grade.** Hero images are monochrome, county cards are full colour. Deliberate, but
+   worth one deliberate decision rather than two conventions.
+
 ## 4. The standing regression gate (all four re-run this round, clean)
 
 ```bash

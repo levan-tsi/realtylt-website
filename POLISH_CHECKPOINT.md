@@ -21,6 +21,28 @@
 ##   `vercel env rm PRELAUNCH production` -> redeploy -> _scratch-r15-noindex.mjs must show
 ##   every route WITHOUT a noindex and robots.txt without Disallow -> submit the sitemap.
 ##
+## ── THE CLICK-EVERYTHING PASS (his second ask) — FOUR MORE DEFECTS, ALL FIXED ────────
+## 1. THE MORE PANEL WAS SERVING STALE SNAPSHOT DATA. Year/lot/garage/tax were the only
+##    filters still reading the fat `listing` jsonb; under PostgREST's exact count they blew
+##    the anon statement timeout, search() caught it and fell back to the committed snapshot.
+##    "Built 2000+" answered ZERO against 4,713 such homes. Generated columns now
+##    (supabase/migrations/idx_more_facts_columns.sql): 50-483ms with the count, all green.
+## 2. `mixed` BROKE PAGINATION — page 2 of a 1,720-home set returned four. Rotates by whole
+##    pages around a ring now.
+## 3. NO BUTTON HAD A HAND CURSOR (Tailwind v4 Preflight) and the pager was white on white.
+## 4. THE TOP AREAS CARET COULD ONLY CLOSE THE FLYOUT, and on touch it did nothing at all.
+##    THE RULE: a toggle handler must never ask "is it open right now" when opening it is
+##    exactly what the pointer arriving or the focus landing has just done.
+## FILTERS ARE NOW CHECKED PROPERLY: not "does it fire" but "does every row obey it" —
+## 46 checks (counties, boroughs, beds, baths, price bands, sqft, types, all seven MORE
+## fields, rental both ways, the 7-day window, four sorts proven ordered, three combinations,
+## an impossible band that finds nothing). ALL 46 PASS ON PRODUCTION. scripts/
+## _scratch-r15-filters.mjs · -pagewalk · -mobile (phone journeys end to end).
+## DESIGN: the site draws TWO lines now, not seventeen near-identical greys — --color-line
+## (#dddddd) + --color-line-strong (#cccccc), 69 borders. `border-[--color-line]` is v3
+## syntax that silently does NOTHING in v4; tokens in @theme generate `border-line`.
+## Five more design moves are proposed, not done — handoff §3.10.
+##
 ## ── ORDER FOR THE NEXT ROUND ─────────────────────────────────────────────────────────
 ## 1. Re-run the four standing probes (handoff §4) ONE AT A TIME as a regression gate.
 ## 2. If the DNS records are in: verify the domain end to end (nslookup, a real certificate,
@@ -31,7 +53,7 @@
 ## 4. Anything else found: fix it measured, page-scoped commits, verify before pushing.
 ##
 ## ── GATES (unchanged) ────────────────────────────────────────────────────────────────
-## tsc clean · npm test green (541 now — never go below, add tests for logic you touch) ·
+## tsc clean · npm test green (557 now — never go below, add tests for logic you touch) ·
 ## zero horizontal overflow at 1440/390/320 · zero dead links · every focus stop with a
 ## visible indicator · no console errors · after EVERY push confirm the Vercel deploy builds
 ## READY (prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team_LxVTdG0G7zPU5WSoNnZOpf8p).
