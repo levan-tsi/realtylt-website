@@ -177,6 +177,19 @@ node scripts/_scratch-r14-links.mjs       # crawl every rendered href, fetch eac
 Expected clean output: `overflow 0 | bad-status 0 | console 0` (except the deliberate
 `/search` 12px select), `0 covered controls`, `TOTAL ... 0`, `non-200 internal links: 0`.
 
+**RUN THEM ONE AT A TIME.** Not just for speed — concurrency MANUFACTURES DEFECTS that look
+exactly like regressions. Running the sweep alongside two other Playwright probes against the
+single `next dev` server produced, in one pass: three `500`s, fourteen
+`SyntaxError: Invalid or unexpected token` page errors, two `Unexpected end of JSON input`, five
+pages reporting `h1 x0`, and `[idx-db] search failed` / `[blog] Supabase responded 500` fallback
+warnings. Every one was the dev server serving truncated chunks under load. A sequential
+re-check of all thirteen flagged route/width pairs — two loads each, 26 loads — came back
+**200, one h1, zero overflow, zero errors, on every single one**
+(`scripts/_scratch-r14-recheck.mjs` does exactly this, and is the right first move whenever a
+sweep looks alarming). Truncated-payload signatures — `SyntaxError: Invalid or unexpected
+token`, `Unexpected end of JSON input`, an `h1` count of 0 on a page that has one — are the
+tell. Re-check before you debug.
+
 Other probes worth knowing about, same directory: `-photocount` (the card/popup/page agreement
 test), `-leads2` and `-leadpayload` (lead payloads, **safely intercepted**), `-states2` (empty
 states, validation, honeypot, menu, save-search, rentals), `-edge` (rental / 0-bed / 0-photo
