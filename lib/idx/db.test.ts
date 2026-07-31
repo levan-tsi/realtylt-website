@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { applyIdxSync, DbIdxClient, getDbMediaUrls, normalizeForDb } from "./db";
+import { applyIdxSync, DbIdxClient, getDbMediaUrls, normalizeForDb, resetRotationCacheForTests } from "./db";
 import { PIN_CAP, type Listing } from "./types";
 
 const LISTING: Listing = {
@@ -35,6 +35,7 @@ function stubFetch(handler: (url: string) => { body: unknown; total?: number }) 
 beforeEach(() => {
   process.env.SUPABASE_URL = "https://test-project.supabase.co";
   process.env.SUPABASE_ANON_KEY = "test-anon-key";
+  resetRotationCacheForTests();
 });
 
 afterEach(() => {
@@ -113,6 +114,58 @@ describe("DbIdxClient.search", () => {
     expect(result.dataLastUpdated).toBe("2026-07-15T10:00:00.000Z");
     // Cards must NEVER carry raw MediaURLs — one stable same-origin cover path.
     expect(result.listings[0].photos).toEqual(["/api/media/KEY777/0"]);
+  });
+
+  // The owner's "it takes you to page 2 and that's it" bug. `mixed` used to add a day-seeded
+  // ROW offset to every page, and that offset can be nearly the whole set — so page 2 ran off
+  // the end. Measured on production before the fix: Orange county with 3+ beds is 1,720
+  // listings over 48 pages, and page 2 returned FOUR of them.
+  describe("the mixed rotation must never break paging", () => {
+    /** The page query selects cards; the rotation's count query selects ids. */
+    const CARD_MARKER = "photos_servable";
+
+    /** Walk pages of a `rows`-row set with the rotation on; collect the offsets asked for. */
+    const walkPages = async (rows: number, size: number, pages: number[]) => {
+      const offsets: number[] = [];
+      stubFetch((url) => {
+        if (url.includes("idx_sync_state")) return { body: READY_STATE };
+        const m = /offset=(\d+)/.exec(url);
+        if (m && url.includes(CARD_MARKER)) offsets.push(Number(m[1]));
+        // The count query asks for one id; the page query asks for cards.
+        if (!url.includes(CARD_MARKER)) return { body: [{ id: "x" }], total: rows };
+        const offset = Number(m?.[1] ?? 0);
+        const n = Math.max(0, Math.min(size, rows - offset));
+        return { body: Array.from({ length: n }, () => ({ listing: LISTING })), total: rows };
+      });
+      const results = [];
+      for (const p of pages) results.push(await new DbIdxClient().search({ sort: "mixed", page: p, pageSize: size }));
+      return { offsets, results };
+    };
+
+    it("asks for an offset inside the set on every page, and fills every page", async () => {
+      const { offsets, results } = await walkPages(1720, 36, [1, 2, 3, 4, 47, 48]);
+      // No request may ever point past the last row.
+      for (const o of offsets) expect(o).toBeLessThan(1720);
+      // Every offset is page-aligned — the rotation moves whole pages, never part of one.
+      for (const o of offsets) expect(o % 36).toBe(0);
+      // 47 full pages + one short tail page = 48. Only ONE page in the whole ring is short.
+      const short = results.filter((r) => r.listings.length < 36).length;
+      expect(short).toBeLessThanOrEqual(1);
+      // And the page/total arithmetic the pager prints stays honest.
+      expect(results[0].totalPages).toBe(48);
+      expect(results[0].total).toBe(1720);
+    });
+
+    it("visits a different page each step — no page repeats within the run", async () => {
+      const { offsets } = await walkPages(1720, 36, [1, 2, 3, 4]);
+      const pageOffsets = offsets.filter((o, i) => offsets.indexOf(o) === i);
+      expect(pageOffsets.length).toBe(offsets.length);
+    });
+
+    it("does not rotate a set that fits on one page", async () => {
+      const { offsets } = await walkPages(10, 36, [1]);
+      expect(offsets).toEqual([0]);
+    });
   });
 
   // The owner's "8 pics on the map, one photo on the page" bug: the card pager used to be bound by

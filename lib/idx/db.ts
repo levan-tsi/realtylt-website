@@ -197,6 +197,12 @@ async function onceRetried<T>(op: () => Promise<T>): Promise<T> {
 const ROTATION_COUNT_TTL_MS = 10 * 60_000;
 const rotationCounts = new Map<string, { at: number; total: number }>();
 
+/** Test hook — the cache is deliberately process-wide, so a test that changes the size of the
+ * set has to clear it or it inherits the previous test's ring. */
+export function resetRotationCacheForTests(): void {
+  rotationCounts.clear();
+}
+
 async function rotationTotal(filters: string): Promise<number> {
   const hit = rotationCounts.get(filters);
   if (hit && Date.now() - hit.at < ROTATION_COUNT_TTL_MS) return hit.total;
@@ -258,23 +264,39 @@ export class DbIdxClient implements IdxClient {
       const filters = searchFilters(params);
       const base = `idx_listings?${CARD_SELECT}&${filters ? `${filters}&` : ""}order=${ORDER[sort]}`;
 
-      // "mixed" rotates its window daily so the default page is never the same parade: one
-      // cheap count query picks a day-seeded start offset inside the filtered set (clamped,
-      // never wrapping, so pagination stays coherent within the day).
-      let rotate = 0;
+      // "mixed" rotates daily so the default page is never the same parade — but it rotates
+      // by WHOLE PAGES around a RING, and that matters.
+      //
+      // It used to add a day-seeded ROW offset to every page: `offset = rotate + (p-1)*size`.
+      // The comment claimed that kept pagination coherent. It did not. `rotate` can be almost
+      // the whole set, so page 2 ran off the end: measured on production, Orange county with
+      // 3+ beds is 1,720 listings across 48 pages and page 2 returned FOUR, while page 3 came
+      // back with a different total entirely (PostgREST's count for an offset past the end).
+      // The owner was looking at exactly this when he said paging "takes you to page 2 and
+      // that's it".
+      //
+      // Rotating by whole pages on a ring fixes it: page p of the visitor's sequence is ring
+      // page (r + p - 1) mod pages, so every page is a real full page, every listing appears
+      // exactly once, and the set's genuinely short tail page simply lands somewhere other
+      // than last. The offset can never exceed the set.
+      let ringPages = 0;
+      let rotatePages = 0;
       if (sort === "mixed") {
         const t = await rotationTotal(filters);
-        if (t > size) rotate = (Math.floor(Date.now() / 86_400_000) * 53) % (t - size + 1);
+        ringPages = Math.max(1, Math.ceil(t / size));
+        if (ringPages > 1) rotatePages = (Math.floor(Date.now() / 86_400_000) * 53) % ringPages;
       }
-      const fetchPage = (p: number) =>
-        rest<CardRow>(`${base}&limit=${size}&offset=${rotate + (p - 1) * size}`, { count: true });
+      const fetchPage = (p: number) => {
+        const index = rotatePages ? (rotatePages + p - 1) % ringPages : p - 1;
+        return rest<CardRow>(`${base}&limit=${size}&offset=${index * size}`, { count: true });
+      };
 
       let { rows, total } = await onceRetried(() => fetchPage(Math.max(1, page)));
-      // The rotation offset is computed from a cached count, so a shrinking set could put it
-      // past the tail. An empty page with matches in the set is never a truthful answer —
+      // The ring is sized from a cached count, so a shrinking set could still point a page
+      // past the real tail. An empty page with matches in the set is never a truthful answer —
       // drop the rotation and serve the page straight.
-      if (!rows.length && total > 0 && rotate > 0) {
-        rotate = 0;
+      if (!rows.length && total > 0 && rotatePages > 0) {
+        rotatePages = 0;
         ({ rows, total } = await onceRetried(() => fetchPage(Math.max(1, page))));
       }
       const totalPages = Math.max(1, Math.ceil(total / size));
