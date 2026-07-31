@@ -881,13 +881,17 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           id="results-pages"
           tabIndex={-1}
           aria-label="Results pages"
-          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl bg-mist px-4 py-3 scroll-mt-4"
+          // The owner could not see this control at all: mist (#f3f5f8) sitting on white is a
+          // 1.05:1 difference, so the panel and the page were the same colour, and the numbers
+          // inside it were bare text. It reads as an object now — the same bordered-panel
+          // language the filter bar and the cards use — with every number in a box of its own.
+          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl border border-[#dddddd] bg-mist px-4 py-3 scroll-mt-4"
         >
           <button
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className="rounded-lg px-3 py-2 text-sm text-stone transition-colors hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Previous page"
           >
             «
@@ -909,10 +913,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               aria-current={p === filters.page ? "page" : undefined}
               aria-label={`Page ${p}`}
               onClick={() => apply({ page: p })}
-              className={`min-w-9 rounded-lg px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
+              // Three states that cannot be mistaken for each other: a white box with a hairline
+              // (clickable), a grey fill with a black edge (under the cursor), solid black
+              // (where you are).
+              className={`min-w-9 rounded-lg border px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === filters.page
-                  ? "bg-ink font-bold text-paper"
-                  : "text-ink-soft hover:bg-ink/10 hover:text-ink active:bg-ink/20"
+                  ? "border-ink bg-ink font-bold text-paper"
+                  : "border-[#dddddd] bg-white text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
               }`}
             >
               {p}
@@ -922,7 +929,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className="rounded-lg px-3 py-2 text-sm text-stone transition-colors hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Next page"
           >
             »
