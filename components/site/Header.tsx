@@ -53,7 +53,20 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [areasOpen, setAreasOpen] = useState(false);
   const [boroughsOpen, setBoroughsOpen] = useState(false);
-  const [flyout, setFlyout] = useState(false);
+  // TWO reasons the Top Areas flyout can be open, and they must not cancel each other out.
+  // It used to be one boolean: the wrapper's onMouseEnter set it true and the caret's onClick
+  // TOGGLED it — so the mouse arriving on the caret opened the menu and the click that
+  // followed closed it again. Clicking the caret could therefore never open anything, and on
+  // a touchscreen (where the browser synthesises a mouseenter before the tap) it was the only
+  // thing that happened. Hover is transient; the click PINS it, so it survives the pointer
+  // leaving and a second click puts it away.
+  const [flyoutHover, setFlyoutHover] = useState(false);
+  const [flyoutPinned, setFlyoutPinned] = useState(false);
+  const flyout = flyoutHover || flyoutPinned;
+  const closeFlyout = () => {
+    setFlyoutHover(false);
+    setFlyoutPinned(false);
+  };
   const { count: saved } = useSaved();
   const pathname = usePathname();
   const flyoutTrigger = useRef<HTMLButtonElement>(null);
@@ -73,7 +86,7 @@ export function Header() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       if (flyout) {
-        setFlyout(false);
+        closeFlyout();
         flyoutTrigger.current?.focus();
       } else if (boroughsOpen) {
         setBoroughsOpen(false);
@@ -93,7 +106,7 @@ export function Header() {
   useEffect(() => {
     if (!flyout) return;
     const onDown = (e: MouseEvent) => {
-      if (!(e.target as HTMLElement).closest("[data-top-areas]")) setFlyout(false);
+      if (!(e.target as HTMLElement).closest("[data-top-areas]")) closeFlyout();
     };
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
@@ -196,11 +209,18 @@ export function Header() {
                     {...(hasGroups
                       ? {
                           "data-top-areas": "",
-                          onMouseEnter: () => setFlyout(true),
-                          onMouseLeave: () => setFlyout(false),
-                          onFocus: () => setFlyout(true),
+                          // pointerType, not onMouseEnter: a touchscreen synthesises a
+                          // mouseenter just before the tap, so hover-to-open was firing on
+                          // touch and the tap that followed only ever closed it again.
+                          onPointerEnter: (e: React.PointerEvent) => {
+                            if (e.pointerType === "mouse") setFlyoutHover(true);
+                          },
+                          onPointerLeave: (e: React.PointerEvent) => {
+                            if (e.pointerType === "mouse") setFlyoutHover(false);
+                          },
+                          onFocus: () => setFlyoutHover(true),
                           onBlur: (e: React.FocusEvent) => {
-                            if (!e.currentTarget.contains(e.relatedTarget as Node)) setFlyout(false);
+                            if (!e.currentTarget.contains(e.relatedTarget as Node)) closeFlyout();
                           },
                         }
                       : {})}
@@ -222,7 +242,16 @@ export function Header() {
                           aria-expanded={flyout}
                           aria-controls="top-areas-flyout"
                           aria-label={`${flyout ? "Hide" : "Show"} all top areas`}
-                          onClick={() => setFlyout((v) => !v)}
+                          // The click owns the PIN and nothing else, and it drops the transient
+                          // hover/focus open at the same time. Anything that reads "is it open
+                          // right now" here is wrong, because opening it is exactly what the
+                          // pointer arriving (mouse) or the focus landing (touch, keyboard)
+                          // has just done — that is how a caret click could only ever close
+                          // this menu, and why on a touchscreen it could not be opened at all.
+                          onClick={() => {
+                            setFlyoutPinned((v) => !v);
+                            setFlyoutHover(false);
+                          }}
                           className="inline-flex h-6 w-6 items-center justify-center text-stone transition-colors hover:text-ink"
                         >
                           <Chevron open={flyout} />
@@ -252,7 +281,7 @@ export function Header() {
                                 <li key={c.href}>
                                   <Link
                                     href={c.href}
-                                    onClick={() => setFlyout(false)}
+                                    onClick={closeFlyout}
                                     className="block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone transition-colors hover:bg-ink hover:text-paper"
                                   >
                                     {c.label}
