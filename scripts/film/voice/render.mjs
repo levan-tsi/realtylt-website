@@ -15,7 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const FPS = 30;
-const LEN = 45.0; // last word ends at 43.66; the tail is the hold before the fade
+const LEN = 60.0; // last word ends at 58.83; the tail is the hold before the fade (beat E added 2026-07-31)
 const OUT = "scripts/_scratch-video/voice-frames";
 const STAGE = "scripts/film/voice/stage.html";
 

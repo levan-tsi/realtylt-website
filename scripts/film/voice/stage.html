@@ -126,14 +126,36 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000;
 .rec i{width:11px;height:11px;border-radius:50%;background:#28a8e0;display:block;
   animation:breathe 2.4s ease-in-out 20.60s infinite}
 
-/* ─────────── beat D · the close (39.10 on) ─────────── */
+/* ─────────── beat E · the other direction (39.40 to 54.0) ───────────
+   Added 2026-07-31. The film demonstrated the agent RECEIVING a call and never showed it placing
+   one, which left out the half the service page calls the more valuable one.
+   "Under a minute" rather than an exact figure on purpose: the service page claims "within
+   seconds", so this is the conservative statement, and a precise number nobody has measured would
+   be invented precision on a film whose whole argument is that the details are checkable. */
+.ob.hide{display:none}
+/* The out is NOT optional. This beat and the close card are both z-index 8 and both centred, and
+   a higher z-index does not clear what is behind it: without this the close rendered straight
+   through "It calls out, too." The same fault the clock had against the verdict, warned about
+   thirty lines above, made again anyway and caught by probing a frame. Leaves at 53.90, which is
+   0.43s before the close card arrives at 54.33. */
+.ob{position:absolute;z-index:8;inset:0 0 300px 0;display:grid;place-items:center;text-align:center;
+  opacity:0;animation:in .42s 39.66s forwards,out .32s 53.90s forwards}
+.ob .k{font-size:78px;font-weight:300;letter-spacing:-.02em}
+.ob .s{margin-top:34px;font-size:30px;font-weight:300;color:rgba(255,255,255,.62);
+  letter-spacing:-.01em;opacity:0;animation:up .5s 40.60s forwards}
+.ob .q{margin-top:58px;font-size:26px;letter-spacing:.14em;text-transform:uppercase;
+  color:#28a8e0;opacity:0;animation:in .5s 47.30s forwards}
+
+/* ─────────── beat D · the close (54.3 on) ───────────
+   Shifted +15.17s when beat E was inserted, which is exactly the measured length of the two new
+   voice lines plus their gaps. Every time before the insertion point is untouched. */
 .cta{position:absolute;z-index:8;inset:0 0 300px 0;display:grid;place-items:center;text-align:center;
-  opacity:0;animation:in .42s 39.16s forwards}
+  opacity:0;animation:in .42s 54.33s forwards}
 .cta .k{font-size:62px;font-weight:300;letter-spacing:-.02em}
 .cta .u{margin-top:40px;font-size:78px;font-weight:300;color:#28a8e0;letter-spacing:-.02em;
-  opacity:0;animation:up .5s 40.30s forwards}
+  opacity:0;animation:up .5s 55.47s forwards}
 .cta .f{margin-top:38px;font-size:24px;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(255,255,255,.36);opacity:0;animation:in .5s 41.40s forwards}
+  color:rgba(255,255,255,.36);opacity:0;animation:in .5s 56.57s forwards}
 
 @keyframes in{to{opacity:1}}
 @keyframes out{to{opacity:0}}
@@ -192,6 +214,15 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000;
     </div>
   </div>
 
+  <!-- BEAT E · the other direction -->
+  <div class="ob">
+    <div>
+      <div class="k">It calls out, too.</div>
+      <div class="s">Somebody signs up on your site, and their phone rings inside a minute.</div>
+      <div class="q">Real lead? What do they want?</div>
+    </div>
+  </div>
+
   <!-- BEAT D · the close -->
   <div class="cta">
     <div>
@@ -209,6 +240,8 @@ html,body{width:1920px;height:1080px;overflow:hidden;background:#000;
   <div class="cap c4">This is the voice that answers instead. It says it is an assistant, and that the call is recorded.</div>
   <div class="cap c5">It answers from your listings. What it cannot verify, <b>it will not guess.</b></div>
   <div class="cap c6">It books from your real calendar, and writes the whole call to your CRM.</div>
+  <div class="cap c8">It works the other way too. Somebody signs up on your site, and it calls them back <b>inside a minute.</b></div>
+  <div class="cap c9">It finds out whether they are real and what they actually want, and only then does it book your time.</div>
   <div class="cap c7">Keep the next one. <span class="accent">realtylt.com/ai</span></div>
 </div>
 
@@ -230,6 +263,9 @@ const SWITCH = [
   [".c4", "block", 19.15, 27.15],
   [".c5", "block", 27.15, 32.50],
   [".c6", "block", 32.50, 39.30],
+  // c8 and c9 are the outbound beat. c9 stops at 54.33, the frame the close card arrives.
+  [".c8", "block", 39.30, 46.80],
+  [".c9", "block", 46.80, 54.33],
   // c7 is absent for the same reason as c3: the close card already carries the line and the
   // URL at 62px and 78px, so the caption band was printing the same two things a third time.
   // the voicemail label lands once the fourth ring has gone unanswered. The four dots are NOT

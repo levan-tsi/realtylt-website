@@ -30,7 +30,7 @@ const FILM = process.argv.find((a) => a.endsWith('.mp4')) ||
   'C:/Users/Levan/AppData/Local/Temp/claude/C--Users-Levan/6bab6991-6509-4c29-a532-d87577bb351d/scratchpad/film-942pm-clean.mp4';
 const OUT = "public/video/film-942pm.mp4";
 const TMP = "public/video/_film-942pm-broll.mp4";
-const FOOTAGE = "C:/Users/Levan/realtylt-stories/public/footage";
+const FOOTAGE = "scripts/film/footage";  // committed with the repo since 2026-07-31
 
 /** start/dur are positions in the FILM; from is the in-point inside the source clip.
  *  gain is how far the darkened image is allowed to come up under the type. */
@@ -40,11 +40,13 @@ const BEATS = [
   // 9:42 on a Sunday. The dark kitchen and the phone lying on the counter, which lights up.
   { clip: "shot1-1140pm-lead.mp4", start: 8.2, dur: 7.4, from: 1.2, gain: 0.80, sat: 0.55 },
   // NO footage under "They call the next agent." That line is the punch and it works because it
-  // arrives on nothing. A daylight aerial there was also tonally wrong under a line about a call
-  // at 9:42 at night.
-  // The close. Keys on the porch under "Keep the next one." Still the lowest of the four: this is
-  // the only beat carrying a URL, and a washed CTA is a wasted ending.
-  { clip: "shot6-keys-porch.mp4", start: 39.4, dur: 5.6, from: 3.4, gain: 0.72, sat: 0.55 },
+  // arrives on nothing.
+  // BEAT E, the outbound beat: a laptop somebody just signed up on, and the phone ringing back.
+  // Generated for this beat specifically rather than reused, because none of the six existing
+  // clips show the moment a form turns into a ringing phone.
+  { clip: "shot7-signup-callback.mp4", start: 39.7, dur: 7.8, from: 1.0, gain: 0.80, sat: 0.55 },
+  // The close. Keys on the porch under "Keep the next one." Lowest gain: it carries the URL.
+  { clip: "shot6-keys-porch.mp4", start: 54.4, dur: 5.6, from: 3.4, gain: 0.72, sat: 0.55 },
 ];
 
 const SCRIM_MIN = 0.16;   // luma multiplier at the centre of the frame, where the type lives
@@ -97,7 +99,7 @@ const overlays = BEATS.map((b, i) => {
 const SCRIM = `geq=lum='p(X,Y)*(${SCRIM_MIN}+${(1 - SCRIM_MIN).toFixed(2)}*min(1,hypot((X-W/2)/(W*0.52),(Y-H/2)/(H*0.70))))':cb='p(X,Y)':cr='p(X,Y)'`;
 
 const filter = [
-  `color=c=black:s=1280x720:r=30:d=45[base]`,
+  `color=c=black:s=1280x720:r=30:d=60[base]`,
   ...chains,
   ...overlays,
   // Composite the FILM OVER the footage, keyed on the film's own luma, rather than lighten-blending

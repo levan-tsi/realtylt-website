@@ -35,11 +35,24 @@ const LINES = [
   "It answers from your listings. What it cannot verify, it will not guess.",
   "It books from your real calendar, and writes the whole call to your C R M.",
   "Keep the next one. Realty L T dot com, slash A I.",
+  // 8 and 9: the outbound beat (owner 2026-07-31). The film only ever showed the agent RECEIVING
+  // a call, and the service page calls outbound the half where most of the value sits.
+  // "Inside a minute" is deliberately more conservative than the service page's "within seconds".
+  "It works the other way too. Somebody signs up on your site, and it calls them back inside a minute.",
+  "It finds out whether they are real and what they actually want, and only then does it book your time.",
 ];
 
-// Headroom after each line. A beat, not a dropout: in a sound-off feed the caption IS the
-// script, so these gaps are only where a shot is allowed to land, never where the words stop.
-const GAP = [0.55, 0.45, 0.3, 0.75, 0.5, 0.5, 0.7];
+// PLAY ORDER, not array order. The outbound lines are APPENDED at 8 and 9 rather than inserted at
+// 7, because --keep matches previously generated audio BY INDEX: inserting mid-array would have
+// silently paired the CTA's existing recording with the new line's text, and every line after it
+// would have shifted onto the wrong file. Appending keeps 0-7 byte-identical, which in turn keeps
+// every stage time before the insertion point valid and means only the close card has to move.
+const ORDER = [0, 1, 2, 3, 4, 5, 6, 8, 9, 7];
+
+// Headroom after each line, keyed BY LINE INDEX rather than by position, so it survives reordering.
+// A beat, not a dropout: in a sound-off feed the caption IS the script, so these gaps are only
+// where a shot is allowed to land, never where the words stop.
+const GAP = { 0: 0.55, 1: 0.45, 2: 0.3, 3: 0.75, 4: 0.5, 5: 0.5, 6: 0.7, 8: 0.35, 9: 0.6 };
 const LEAD_IN = 0.35;
 
 const key = process.env.ELEVENLABS_API_KEY;
@@ -76,7 +89,7 @@ for (let i = 0; i < LINES.length; i++) {
 
 const sched = [];
 let t = LEAD_IN;
-for (let i = 0; i < LINES.length; i++) {
+for (const i of ORDER) {
   const dur = measure(`${OUT}/line${i}.mp3`);
   sched.push({ i, start: +t.toFixed(2), dur: +dur.toFixed(2), end: +(t + dur).toFixed(2), text: LINES[i] });
   t += dur + (GAP[i] ?? 0);

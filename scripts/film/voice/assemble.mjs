@@ -21,8 +21,10 @@ const OUT = "scripts/_scratch-video";
 const PUB = "public/video";
 const sched = JSON.parse(readFileSync(`${DIR}/schedule.json`, "utf8"));
 
-const FILM_LEN = 45.0;   // last word lands at 43.66; the rest is the hold
-const FADE_AT = 44.5;    // 0.5s to black
+const FILM_LEN = 60.0;   // last word lands at 58.83; the rest is the hold
+const FADE_AT = 59.5;    // 0.5s to black. MOVE THIS WITH FILM_LEN: it is the one number that does
+                         // not follow from the schedule, and leaving it at 44.5 while the film grew
+                         // to 60s faded the whole outbound beat and the CTA to black.
 
 mkdirSync(PUB, { recursive: true });
 
