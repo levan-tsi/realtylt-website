@@ -82,8 +82,13 @@ export const AGENT_SOURCE = {
   max: 100,
   lit: 1,
   basis: "Share of all sellers surveyed. The remaining options each accounted for 3 percent or less.",
+  /** The period is on screen deliberately. This report was published in 2025 but the survey
+   * behind it was mailed in July 2024 and covers the twelve months to June 2024, and a reader
+   * who assumes "2025 report" means "2025 data" has been misled by an accurate citation. NAR's
+   * newer edition reports the same two categories at 37 and 29 percent, so the two thirds this
+   * page argues from holds in both, but the numbers drawn here are this report's. */
   sourceText:
-    "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 7-1. Survey mailed to 167,750 recent buyers, 5,390 responses.",
+    "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 7-1, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses.",
   sourceHref:
     "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
   note: "This measures how sellers found the agent they ended up hiring. It is not a measurement of how well any outreach method works, and it says nothing about reactivating a CRM. The reason it is here is the shape: the business goes to people who were already known, and the small bar for direct contact is the honest limit on that argument.",

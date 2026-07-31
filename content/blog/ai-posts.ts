@@ -299,7 +299,9 @@ We do not publish a price for this and I am not going to invent one here, becaus
 
 The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. Per message. There is a whole plaintiff's bar that does nothing else, and a list of thirty thousand contacts is a large multiplier attached to a small mistake.
 
-The second cost is less dramatic and more likely. Send a burst of unwanted messages from a business number and the carriers filter it, which means your legitimate messages to real clients quietly stop arriving too. You will not get an error. It will just go quiet, and you will find out weeks later.
+While we are here: you will see agents quote a figure of sixteen thousand dollars per text. That number is real but it belongs to a different statute, the Federal Trade Commission's civil penalties, not to the TCPA claim an individual can bring against you. The TCPA number is five hundred, and five hundred multiplied by a list is the number that should worry you.
+
+The second cost is less dramatic and far more likely, and it has a threshold you can actually look up. Send messages people did not want and some of them reply stop, which is their right and takes one word. Twilio, whose pipes a great many of these campaigns run through, publishes where that becomes a problem: an opt-out rate ["under 1% is considered healthy; over 3% may lead to carrier filtering"](https://www.twilio.com/docs/messaging/features/twilio-health-score-for-messaging). Filtering is not a bounce. Your messages to real clients simply stop arriving, silently, with no error, and you find out a fortnight later when somebody mentions they never got your text about the inspection.
 
 Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
 
@@ -312,6 +314,8 @@ Both of those costs are avoidable, and both of them are avoided in the same plac
 It does not manufacture intent. Most of that list is going to say no again, because most of them meant it. What reactivation changes is that somebody finally asked, and that the small number whose circumstances moved get found in the same week they moved rather than eighteen months later. Anybody quoting you a conversion rate on a cold database before they have seen the database is quoting you a number they made up.
 
 It does not fix a list that has no consent behind it. If the records do not carry a date and a source, the honest first project is not a campaign, it is a cleanup.
+
+It is not a subscription, and you should be suspicious of anybody who sells it as one. A database is finite. You work it once, you find the people whose situation changed, and then the same list is a year away from being worth working again. Vendors in this category run out of inventory and quietly pivot the client onto something else, and the ones who are straight with you say so at the start. Reactivation is a harvest, not a lead source, and it does not replace generating new business.
 
 It does not replace you calling the people who actually matter. Your past clients, the neighbor who sold with you in 2019, anybody whose relationship is the real asset: those calls are yours. A machine reintroducing itself to somebody who came to your daughter's christening is worse than no contact at all.
 
