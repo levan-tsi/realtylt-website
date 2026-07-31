@@ -130,14 +130,22 @@
 ## noindex from here. Deploys verified READY through this round's pushes (project
 ## prj_0envsZqHojmxmbjnVCqqeXhUFQIl, team team_LxVTdG0G7zPU5WSoNnZOpf8p).
 ##
-## ── 8. NEXT ROUND ─────────────────────────────────────────────────────────────────────
-## The nine above are closed and measured; the list in §6 is his to decide. If a new round
-## runs before launch: watch photos_servable actually track the hourly sync (query
-## idx_refresh_photos_servable's effect the morning after — it is the first thing in this
-## system that keeps itself honest), then re-run the four standing probes
-## (_scratch-r14-sweep / -overlap / -focus / -links) as a regression gate, since between
-## them they now cover overflow, status, console, launcher obstruction, focus indicators and
-## dead links across every route at three widths.
+## ── 8. NEXT ROUND — READ docs/parity/HANDOFF-ROUND-15.md FIRST ────────────────────────
+## That file is the real handoff: what is VERIFIED WORKING (so round 15 does not re-test
+## it), every open item with HOW to fix it and the risk, the four-probe regression gate
+## with its expected clean output, and the traps. This block is only the summary.
+##
+## The eleven defects are closed and measured; the list in §6 is the owner's to decide.
+## photos_servable NEEDS NO BABYSITTING — verified after four hourly runs: 29,149 rows, all
+## computed, zero never-computed (it absorbed 105 newly-synced listings by itself), each run
+## 21-28s. Start round 15 by re-running the four standing probes as a regression gate
+## (_scratch-r14-sweep / -overlap / -focus / -links): between them they cover overflow,
+## status, console, launcher obstruction, focus indicators and dead links across every route
+## at three widths. Expected: overflow 0 | bad-status 0 | 0 covered controls | 0 dead links.
+##
+## The biggest genuinely-open item is /api/idx/pins: an unused public endpoint (SearchClient
+## derives pins client-side) that 502s on its default query and costs ~7.5s / 340KB for one
+## county. Handoff §3.1 has the three ways to close it.
 ## A SECOND SESSION owns the blog surfaces (lib/blog/*, components/blog/*, content/blog/*,
 ## docs/services/*.png churn) — attribute before you fix anything there. Note the flagship
 ## post's real slug is /blog/ai-chat-assistant-real-estate-website (an older probe list had
