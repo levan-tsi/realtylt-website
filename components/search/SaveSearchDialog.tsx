@@ -27,6 +27,7 @@ export function SaveSearchDialog({
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const restoreRef = useRef<HTMLElement | null>(null);
+  const successRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState(defaultName);
   const [saved, setSaved] = useState(false);
 
@@ -47,6 +48,16 @@ export function SaveSearchDialog({
       restoreRef.current?.focus?.();
     };
   }, []);
+
+  // Saving REPLACES the form with the success panel, which destroys the element that had focus
+  // and drops it to <body> — measured 2026-07-30: focus left the dialog, so Escape no longer
+  // reached this component's onKeyDown and the modal could only be dismissed by clicking Done,
+  // while a screen reader never heard "Search saved." at all. The panel is already
+  // role="status" tabIndex={-1} for exactly this; it just needed the focus. Same fix, and the
+  // same reason, as LeadForm's success panel.
+  useEffect(() => {
+    if (saved) successRef.current?.focus();
+  }, [saved]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -106,7 +117,7 @@ export function SaveSearchDialog({
         </button>
 
         {saved ? (
-          <div role="status" tabIndex={-1} className="px-6 pb-7 pt-9 text-center outline-none sm:px-8">
+          <div ref={successRef} role="status" tabIndex={-1} className="px-6 pb-7 pt-9 text-center outline-none sm:px-8">
             <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-porchlight/10 text-porchlight-deep">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="m5 12.5 4.5 4.5L19 7" />
