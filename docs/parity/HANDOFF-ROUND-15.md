@@ -98,6 +98,41 @@ a bot walking it costs real database time for a feature no visitor uses.
 **Risk:** low either way, but it is a public contract change, so it is worth one line to the owner
 before deleting.
 
+### 3.1b /search is slow to show its first card, and it is NOT the pins route — MEDIUM
+
+The owner noticed this. Measured on **production** (dev numbers are meaningless here — a cold
+`next dev` compile made the same page look like 18s):
+
+```
+/search           TTFB 194ms · HTML parsed 584ms · API sent 830ms · API back 2803ms · FIRST CARD 3224ms
+/search?county=orange  TTFB  87ms · HTML parsed 304ms · API sent 431ms · API back  618ms · FIRST CARD  752ms
+/ (home)          TTFB  97ms                                          · FIRST CARD  389ms
+```
+
+Three separate contributions, in order of size:
+
+1. **/search renders entirely on the client.** `SearchClient` reads `useSearchParams`, so Next
+   serves the Suspense fallback for the whole server pass and the HTML contains **zero
+   listings** — the browser must parse HTML, load and execute JS, hydrate, fetch
+   `/api/idx/search`, then paint. That is the ~750ms floor even when everything is warm. The
+   home page paints its first card in 389ms because its rails are server-rendered.
+2. **Cold serverless start** adds ~1.5–2s on the first hit after idle or a new deploy (the
+   2803ms API response above vs ~300ms warm).
+3. **The `mixed` default sort costs roughly double a plain sort** — measured warm, unfiltered:
+   `mixed` 306–649ms vs `newest` 139–230ms. It runs an extra exact-count query over the whole
+   default six-county set (~11.7k rows) and then pages with a day-seeded OFFSET that can reach
+   ~11,000, which Postgres must scan through. Narrowing first (`?county=orange`) makes it cheap.
+
+**How to fix, biggest win first.** Server-render the first page of results and hand it to
+`SearchClient` as initial data, letting the client take over for subsequent filtering — this
+removes the hydrate-then-fetch round trip entirely and gives crawlers real content. It is the
+one architectural change worth making on this page, and it is not small: the `useSearchParams`
+dependency is what forces client rendering today. Cheaper partial wins: cache `mixed`'s daily
+total instead of recounting per request, and/or seed the rotation from a cached count.
+
+**Do not** blame `/api/idx/pins` (§3.1) — a network capture of a full `/search` session shows
+only `/api/idx/search`. The two are unrelated.
+
 ### 3.2 Zero-photo listings still publish one image URL to Google — LOW
 
 `getProxiedPhotoPaths` deliberately keeps one speculative path when `photos_servable` is 0, so a
