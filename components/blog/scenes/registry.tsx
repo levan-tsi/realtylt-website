@@ -1,8 +1,12 @@
 import type { ReactNode } from "react";
 import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
+import { Conversation } from "./primitives/Conversation";
+import { Diagram } from "./primitives/Diagram";
 import { Film } from "./primitives/Film";
 import { Grid } from "./primitives/Grid";
+import { Plate } from "./primitives/Plate";
 import { Statement } from "./primitives/Statement";
+import { StatBars } from "./primitives/StatBars";
 import { Summary } from "./primitives/Summary";
 import { LeadsCalculator } from "./LeadsCalculator";
 import { ResponseCurve } from "./ResponseCurve";
@@ -53,6 +57,15 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
       return <Summary {...scene} />;
     case "statement":
       return <Statement {...scene} />;
+    case "statbars":
+      // The scene key seeds the SVG's aria ids, so two charts on one page cannot collide.
+      return <StatBars {...scene} idBase={`sb-${key}`} />;
+    case "diagram":
+      return <Diagram {...scene} idBase={`dg-${key}`} />;
+    case "conversation":
+      return <Conversation {...scene} />;
+    case "plate":
+      return <Plate {...scene} />;
     case "film":
       // A film scene without a film is a content error, not a render error.
       return content.film ? <Film {...scene} film={content.film} /> : null;

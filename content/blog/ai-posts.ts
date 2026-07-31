@@ -1,11 +1,13 @@
-/** Long-form bodies for the two AI articles in POSTS.
+/** Long-form bodies for the AI articles in POSTS.
  *
  * They live here rather than inline in posts.ts because they are full articles (headings,
  * lists, quotes) and would bury the ten seeded stubs the file otherwise holds. Markdown
  * subset: see lib/blog/markdown.tsx.
  *
  * House rules that apply to everything written here: no em dashes, no arrow glyphs, no
- * claims we have not already made elsewhere on the site. */
+ * claims we have not already made elsewhere on the site. Every external statistic and every
+ * statute carries a real link, and every one of those links was checked for a 200 before it
+ * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
 export const AI_CHAT_ASSISTANT_POST = `Someone found your listing at twenty to midnight. They were on a phone, in bed, three tabs deep, comparing your Beacon colonial against two others. They had one question: would the seller look at a contingent offer.
 
@@ -84,6 +86,136 @@ Three failure modes, all avoidable, all common:
 If you would rather see one working than read about it, ours is live on [the RealtyLT AI page](/ai#chat), and you can talk to it right now. Ask it something hard. It will either answer, or tell you it cannot and offer to book a call, and both of those are the correct behaviour.
 
 The full breakdown of how it is built, what it connects to, and what it does with the leads it captures is on the [AI chat assistant page](/services/ai-chat-assistant).
+
+[[scene:funnel]]`;
+
+export const AI_VOICE_AGENTS_POST = `The phone rang at 9:42 on a Sunday evening. Somebody had been on your listing for eleven minutes, got as far as the taxes, and wanted a person.
+
+You were at dinner. Four rings, then your voicemail, then the small silence where somebody decides what to do next.
+
+They did not leave a message. Almost nobody does. They went back to the results page and called the next number on it.
+
+That is the whole problem, and it is not really a lost lead. It is a lost conversation, which is the only place a lead has ever turned into anything.
+
+[[scene:in-short]]
+
+## What a missed call actually costs
+
+Nobody has published a study of how fast real estate agents answer their phones. What has been published is the next best thing, and it is worth reading properly rather than quoting.
+
+In 2011, Harvard Business Review reported an audit of 2,241 US companies. The researchers submitted a test inquiry through each company's own website and timed how long the reply took.
+
+[[scene:response-audit]]
+
+Twenty three percent of them never replied at all. Among the ones that did, the average took 42 hours.
+
+Two honest notes before that number gets used for anything. It is cross-industry research from 2011, not a real estate study from this year, and the inquiries were web forms rather than phone calls. What carries over is not the percentage. It is the shape: a large group answers quickly, a large group never answers, and the average sits in days rather than minutes.
+
+The same researchers ran a second study, this one across [1.25 million sales leads](https://hbr.org/2011/03/the-short-life-of-online-sales-leads) at 29 business-to-consumer and 13 business-to-business companies. Firms that tried to make contact within an hour were nearly seven times likelier to qualify a lead than firms that waited one more hour, and more than sixty times likelier than firms that waited a day.
+
+The definition is the part everyone skips over. They counted a lead as qualified when it produced "a meaningful conversation with a key decision maker". Not an email opened. Not a form completed. A conversation, with the person who decides. That is exactly what your 9:42 call was, seen from the other end, which is why this research applies more directly to a ringing phone than to most of the things it gets quoted about.
+
+[[scene:plate]]
+
+## Why nobody leaves the voicemail
+
+Ask anyone what they do when a business does not pick up and you get the same answer, usually with a slightly embarrassed shrug. They hang up and try somebody else.
+
+It is not rudeness and it is not impatience. Leaving a voicemail is a commitment to wait, made by a person who has four more numbers on the screen in front of them and no particular reason to prefer yours. It also hands the next move to you, and they have no way of knowing whether you check.
+
+So what you receive is not "a lead could not reach me". It is nothing at all. There is no artifact. It shows up as a missed call, which looks identical to a wrong number, and by Tuesday it is gone.
+
+That is the specific reason a phone gap is worse than an inbox gap. An unanswered email is still sitting there in the morning with somebody's name on it, and you can still be the one who replies. An unanswered call left no name, no number that is worth ringing because they are already talking to somebody else, and no record that anything happened.
+
+## What an AI voice agent actually does
+
+Stripped of the marketing, it is a voice on the phone that can hold a real conversation, wired to the systems that make its answers true. Ours runs on Vapi.
+
+[[scene:four-moves]]
+
+The fourth one is the one people underrate. An appointment that arrives with a transcript attached is a completely different object from an appointment that arrives as a name and a time. You walk in already knowing what they asked and what they were worried about.
+
+## The one thing that decides whether it works
+
+Text chat forgives a pause. A typing indicator is a promise that something is coming, and two seconds of it costs nothing.
+
+A phone call has no typing indicator. There is only silence, and silence means one of three things to the person holding the handset: the line dropped, the other person is thinking, or nobody is there. Callers resolve that ambiguity in well under a second, and they resolve it badly.
+
+So latency is not a specification on a phone agent. It is the product. The gap between a caller finishing their sentence and the agent starting its answer is the entire difference between "somebody at the office picked up" and "I got one of those robots". That is why this stack is built around sub-second response rather than around a longer feature list.
+
+Two related things get forgotten, and between them they cost more calls than anything in a brochure.
+
+**People interrupt.** Real phone conversations are full of overlap. Somebody starts answering before you have finished the question, you stop talking, and neither of you thinks about it afterwards. An agent that cannot be cut off mid-sentence talks over a human being instead, and being talked over by a machine is the precise moment people hang up.
+
+**Turns are short.** On the phone a person says four words and waits. "Is it still available." An agent tuned to write paragraphs answers a four-word question with a speech, and the caller does exactly what you would do.
+
+[[scene:pull-quote]]
+
+[[scene:teardown]]
+
+## What it does not do, and should not pretend to
+
+This is the part vendors skip, so here it is plainly.
+
+It does not close. It does not hear the thing underneath the question, it does not know that a seller's timeline is a story, and it has no read on what is really going on in a divorce sale. Those are the reasons you have a job.
+
+It does not know what it cannot verify. Asked whether a seller would take a contingency, the honest answer is that nobody knows until somebody asks, and the agent should say so and put a call on your calendar. An AI that invents an answer to sound competent is worse than no AI at all, because you will hear about the invention from a furious client.
+
+It does not pretend to be a person. Ours introduces itself as an assistant. In practice nobody minds. What people mind is nobody picking up.
+
+And it does not replace ringing back the people who matter. If the caller is a past client, or your seller's neighbor, or anybody whose relationship is the actual asset, the agent's job is to hold the door open for twenty minutes. It is not to be the relationship.
+
+## The legal part nobody sells you
+
+Nobody selling phone AI opens with this, which is a decent reason to read it here. None of it is legal advice and all of it moves. The point is to know that the questions exist, because the person selling you the agent is not going to raise them.
+
+**An AI voice is not a loophole.** On February 8, 2024 the Federal Communications Commission ruled that calls made with AI-generated voices are ["artificial" for the purposes of the Telephone Consumer Protection Act](https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf). In practice that means the rules already governing prerecorded outbound calls, getting consent, identifying who is calling, and honoring an opt-out, apply in exactly the same way when the voice is generated. Dialing people with an AI sits inside the existing rules rather than around them.
+
+**Recording is a state question, and New York is not the strict one.** Under [New York Penal Law section 250.00](https://www.nysenate.gov/legislation/laws/PEN/250.00), recording counts as eavesdropping only when it is done "without the consent of at least one party thereto, by a person not present thereat". If you are on the call, you are that party, so in New York you may record your own calls without asking the other side. California is the other kind of state: [Penal Code section 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) makes it an offense to record a confidential communication without the consent of all parties, and roughly a dozen states take that view. If you list in the Hudson Valley and take a call from somebody in Los Angeles, assume the stricter rule.
+
+[[scene:vendor-questions]]
+
+**Some states already require the disclosure you should be making anyway.** California requires that a person called be told when a prerecorded message uses an artificial voice, defined as a voice generated or significantly altered by artificial intelligence. That is [Assembly Bill 2905](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240AB2905), chaptered in September 2024.
+
+Our position is simpler than the map. The agent says that it is an assistant and that the call is recorded, at the start of the call rather than in a rushed sentence at the end. Not because a statute in another state says so, but because there is no version of this where being told costs you more than being found out.
+
+And if you are running outbound at any volume, have your own attorney read the script once. It is an hour, and it is the cheapest hour in the whole project.
+
+[[scene:call-path]]
+
+## Where it goes wrong
+
+Three failure modes. None of them are the technology, which is exactly why they are the common ones.
+
+[[scene:failure-modes]]
+
+## Common questions, answered honestly
+
+### Will callers know they are talking to an AI?
+
+Yes, because it tells them. It introduces itself as an assistant at the start of the call. In practice the objection is far smaller than people expect: callers care enormously that somebody picked up at nine on a Sunday and answered the question, and very little about who. What we will not build is an agent that pretends to be a particular human being.
+
+### What happens when it cannot answer something?
+
+It says so plainly and books time with you instead of guessing. It will not invent a price, a legal position, or a fact about a property. Anything it cannot verify turns into a booked call, which is both the honest outcome and the higher-converting one.
+
+### Can it replace an inside sales agent?
+
+It replaces the mechanical half of the role: answering every call, dialing new leads within seconds, [qualifying](/services/lead-qualification) on budget, area and timeline, and booking the appointment. It does not replace an experienced agent at a listing appointment. Most teams run the AI as first contact and keep people for the conversations where judgment and relationship decide the outcome.
+
+### Does it work with my calendar and my CRM?
+
+Yes. It reads your live availability, so it only ever offers a time you actually have, and it writes the transcript, the qualification and the outcome back to your CRM. The [appointment booking](/services/ai-appointment-booking) side is the same machinery. It plugs into what you already run rather than adding one more thing to check.
+
+### Is it legal to have an AI make outbound calls?
+
+The same rules that govern your own outbound calling apply: you need consent to call, you have to honor do-not-call requests, and the agent identifies itself as an AI assistant. The FCC settled the underlying question in February 2024 by ruling that an AI-generated voice counts as an artificial voice under the TCPA, so nothing about using one relaxes the rules you were already under. We configure calling windows and opt-outs to match, and every call is logged so the record exists.
+
+## What to do about it
+
+If you would rather see one than read about one, the whole system is laid out on [the RealtyLT AI page](/ai#voice), and the [AI voice agents page](/services/ai-voice-agents) has the full breakdown of what it connects to and what it does with the calls it takes.
+
+The sibling problem is worth reading too. The same argument about being first, on the [website chat side](/blog/ai-chat-assistant-real-estate-website), where the buyer messaging you at 11:40pm never picks up the phone at all.
 
 [[scene:funnel]]`;
 

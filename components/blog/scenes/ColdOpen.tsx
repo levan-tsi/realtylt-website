@@ -2,15 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShareRow } from "@/components/blog/ShareRow";
 
+/** The ring signature's three hairlines, smallest first. Viewport-relative with a floor and
+ * a ceiling: pinned to the maximum from about 1024px up, and shrunk on a phone so the arcs
+ * never reach the headline sitting below the numerals. */
+const RINGS = ["clamp(6.5rem, 26vw, 13rem)", "clamp(10rem, 44vw, 22rem)", "clamp(14.5rem, 62vw, 34rem)"];
+
 /** SCENE 1 — the cold open.
  *
  * The flagship replaces the standard article hero with a single held moment: a porch light
- * still on at 11:40pm. One image, one accent, and a lot of dark. It is built to work as a
- * STILL as much as a page: this frame is the carousel cover and the video's first frame, so
- * nothing here depends on motion to read.
+ * still on at 11:40pm, a phone ringing at 9:42pm. One image, one accent, and a lot of dark.
+ * It is built to work as a STILL as much as a page: this frame is the carousel cover and the
+ * video's first frame, so nothing here depends on motion to read.
  *
- * The light itself is the only animated element (a slow 9s breath). The global
- * prefers-reduced-motion block in globals.css collapses it to a steady glow.
+ * PER TOPIC, the moment is the only thing that changes, so it is the only thing that is a
+ * prop. `signature` picks the single animated element the scene is allowed:
+ *
+ *  - PORCHLIGHT is a slow 9s breath on the glow behind the numerals. It is a light left on.
+ *  - RING is concentric hairlines with one sonar pulse riding out through them, reusing the
+ *    site's own `svc-ping`. It is a phone nobody is picking up.
+ *
+ * The hairline rings are STATIC and the pulse is the only animated part, which matters: the
+ * global reduced-motion block collapses an animation to its END frame, and `svc-ping` ends at
+ * opacity 0. If the pulse were the whole signature, every reduced-motion reader and every
+ * static screenshot would get a hero with nothing in it. The resting state is the finished
+ * frame, and the pulse is a bonus on top of it.
+ *
+ * Defaults reproduce the chat piece exactly, so a topic that supplies no hero is unchanged.
  */
 export function ColdOpen({
   title,
@@ -22,6 +39,10 @@ export function ColdOpen({
   url,
   updatedLabel,
   updatedTime,
+  moment = "11:40",
+  suffix = "pm",
+  photo = "/images/hero/hudson-twilight.jpg",
+  signature = "porchlight",
 }: {
   title: string;
   excerpt: string;
@@ -32,7 +53,12 @@ export function ColdOpen({
   url: string;
   updatedLabel?: string;
   updatedTime?: string;
+  moment?: string;
+  suffix?: string;
+  photo?: string;
+  signature?: "porchlight" | "ring";
 }) {
+  const ring = signature === "ring";
   return (
     <header
       data-band="dark"
@@ -61,11 +87,12 @@ export function ColdOpen({
         }
       `}</style>
 
-      {/* Twilight over the Hudson. Already licensed and logged in
-          public/images/ATTRIBUTIONS.md (CC BY 2.0), so no new asset obligation. */}
+      {/* Atmosphere, not a picture to look at. Every option is already licensed and logged
+          in public/images/ATTRIBUTIONS.md, so a topic swapping the plate takes on no new
+          asset obligation. */}
       <div aria-hidden className="cold-open-photo pointer-events-none absolute inset-0 -z-20 opacity-45">
         <Image
-          src="/images/hero/hudson-twilight.jpg"
+          src={photo}
           alt=""
           fill
           priority
@@ -98,12 +125,47 @@ export function ColdOpen({
           </Link>
         </nav>
 
-        {/* The moment. "PM" is the one place the accent appears in this scene. The light sits
-            in this block so it tracks the numerals at every width. */}
+        {/* The moment. The suffix is the one place the accent appears in this scene. The
+            signature sits in this block so it tracks the numerals at every width. */}
         <div className="rise rise-2 relative mt-14 w-fit md:mt-16">
+          {ring ? (
+            // A phone ringing in an empty office: hairlines going out and not coming back.
+            // Centred on the numerals, clipped by the section, so they leave the frame.
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-[18%] top-1/2 -z-10 h-0 w-0"
+            >
+              {/* Sized in vw with a clamp rather than in fixed rem. At 390px a flat 34rem
+                  ring is 544px across, so its arc swept straight through the headline
+                  underneath; these stay inside the numerals' own zone on a phone and are
+                  unchanged at desktop, where the clamp is pinned to its maximum. */}
+              {RINGS.map((size, i) => (
+                <span
+                  key={size}
+                  className="absolute rounded-full border border-porchlight"
+                  style={{
+                    width: size,
+                    height: size,
+                    left: `calc(${size} / -2)`,
+                    top: `calc(${size} / -2)`,
+                    opacity: 0.16 - i * 0.045,
+                  }}
+                />
+              ))}
+              <span
+                className="svc-ping absolute rounded-full border border-porchlight/45"
+                style={{
+                  width: RINGS[1],
+                  height: RINGS[1],
+                  left: `calc(${RINGS[1]} / -2)`,
+                  top: `calc(${RINGS[1]} / -2)`,
+                }}
+              />
+            </div>
+          ) : null}
           <div
             aria-hidden
-            className="cold-open-glow pointer-events-none absolute -inset-x-24 -inset-y-20 -z-10"
+            className={`${ring ? "" : "cold-open-glow "}pointer-events-none absolute -inset-x-24 -inset-y-20 -z-10`}
             style={{
               background: "radial-gradient(50% 50% at 50% 50%, rgba(40,168,224,0.22), transparent 70%)",
             }}
@@ -113,10 +175,10 @@ export function ColdOpen({
               className="font-light leading-[0.85] tracking-[-0.045em] text-paper"
               style={{ fontSize: "clamp(4.5rem, 15vw, 11rem)" }}
             >
-              11:40
+              {moment}
             </span>
             <span className="text-base font-normal uppercase tracking-[0.28em] text-porchlight md:text-xl">
-              pm
+              {suffix}
             </span>
           </p>
         </div>

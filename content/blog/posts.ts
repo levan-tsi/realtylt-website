@@ -4,8 +4,9 @@
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
-import { AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
+import { AI_CHAT_ASSISTANT_POST, AI_VOICE_AGENTS_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
+import { AI_VOICE_FLAGSHIP } from "./voice-agent-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -48,9 +49,24 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
-  /* ── The two AI exemplars. Real articles, full markdown bodies, not stubs. They are the
-     long form behind /services/ai-chat-assistant and /services/workflow-automation, and
-     those pages link back to them. */
+  /* ── The AI exemplars. Real articles, full markdown bodies, not stubs. They are the long
+     form behind /services/ai-voice-agents, /services/ai-chat-assistant and
+     /services/workflow-automation, and those pages link back to them. The first two are
+     flagships: full-bleed scenes, cited data graphics and their own cold opens. */
+  {
+    slug: "ai-voice-agent-missed-calls-real-estate",
+    title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",
+    date: "2026-07-30",
+    excerpt:
+      "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
+    seoDescription:
+      "What an AI voice agent does when a buyer calls at 9:42 on a Sunday, why latency decides whether it works, and the AI disclosure and call recording rules that apply.",
+    cover: "/images/hero/millerton-night.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_VOICE_AGENTS_POST,
+    flagship: AI_VOICE_FLAGSHIP,
+  },
   {
     slug: "workflow-automation-real-estate-business",
     title: "The Busywork Tax: What Workflow Automation Actually Removes",

@@ -37,6 +37,37 @@ export interface GridItem {
   body: string;
 }
 
+/** One bar of a cited data graphic. `display` is the label as written (60x, 37%), kept
+ * separate from `value` so the geometry and the typography cannot disagree. */
+export interface StatBar {
+  label: string;
+  value: number;
+  display: string;
+}
+
+/** One hop of a system diagram: what it is, and what it actually connects to. The second
+ * half is the part a conversation view can never show. */
+export interface DiagramStep {
+  label: string;
+  connects: string;
+  at?: string;
+}
+
+/** One turn of a staged conversation. `who` is the side, not a name: a topic supplies the
+ * side LABELS once rather than repeating them on every turn. */
+export interface ConversationTurn {
+  who: "them" | "us";
+  at: string;
+  text: string;
+}
+
+/** One thing the system did while the conversation was happening. */
+export interface ConversationEvent {
+  at: string;
+  label: string;
+  detail: string;
+}
+
 /** Bespoke components that are not (yet) primitives. Adding a key here is a deliberate
  * admission that a scene is one-off. */
 export type ComponentId =
@@ -96,11 +127,98 @@ export type Scene =
       caption: RichText;
       ariaLabel: string;
     })
+  /** A cited data graphic: n bars, a source, and the caveat that keeps it honest.
+   *
+   * Drawn as real inline SVG rather than CSS bars because a chart is the asset another site
+   * embeds and credits, so it has to survive being lifted out of the page. The numbers are
+   * also in the DOM as text, so nothing is locked inside a picture. */
+  | (SceneBase & {
+      kind: "statbars";
+      eyebrow: string;
+      /** The chart's own title. Rendered as the scene heading AND as the SVG <title>. */
+      caption: string;
+      bars: StatBar[];
+      /** The axis maximum. Omit and the chart scales to its own largest bar, which is right
+       * for RATIOS (60x against 1x) where the biggest value is the point being made. Set it
+       * to 100 for SHARES of a whole: scaling four percentages to the largest of them draws
+       * a 37% bar at full width, and a full-width bar reads as everything. */
+      max?: number;
+      /** Which bar carries the accent. Index into `bars`; omit for the first. */
+      lit?: number;
+      sourceText: string;
+      sourceHref: string;
+      /** What the data does NOT say. A chart without this is an advert. */
+      note: string;
+      /** Read out in the SVG description after the bars, for a screen reader. */
+      basis: string;
+    })
+  /** n labelled nodes on a spine, each with what it connects to. Wide by nature: the SVG
+   * keeps a min width and its own container scrolls, so the page never scrolls sideways. */
+  | (SceneBase & {
+      kind: "diagram";
+      eyebrow: string;
+      heading: string;
+      lede: string;
+      steps: DiagramStep[];
+      /** Prefix for the SVG's single-child <title>. React does not reconcile several text
+       * children inside <title>, and the two-child version re-rendered the whole page tree. */
+      altPrefix: string;
+    })
+  /** A staged exchange beside the machinery that fired during it. Both tracks at once IS the
+   * argument, which is why this is one scene and not two. */
+  | (SceneBase & {
+      kind: "conversation";
+      /** How the exchange is DRAWN. "bubbles" is a typed conversation; "transcript" is a
+       * spoken one. Getting this wrong makes a phone call look like a chat window, which is
+       * the wrong thing to tell a reader about the channel. Defaults to bubbles. */
+      layout?: "bubbles" | "transcript";
+      eyebrow: string;
+      heading: string;
+      /** The line that says this is an illustration, not a real client's transcript. */
+      note: string;
+      /** Column headings, and the per-turn side labels. A topic owns its own nouns. */
+      themLabel: string;
+      usLabel: string;
+      turnsHeading: string;
+      eventsHeading: string;
+      turns: ConversationTurn[];
+      events: ConversationEvent[];
+    })
+  /** One photograph, full bleed, with a caption that does real work. Pure atmosphere would
+   * not earn a band; the caption is what makes this a scene rather than decoration. */
+  | (SceneBase & {
+      kind: "plate";
+      src: string;
+      /** Real alt text. This image is content, so it is not aria-hidden. */
+      alt: string;
+      caption: string;
+      /** Licence line. The site keeps its ledger in public/images/ATTRIBUTIONS.md and the
+       * credit belongs next to the picture as well as in the file. */
+      credit: string;
+      ariaLabel: string;
+    })
   | (SceneBase & { kind: "component"; id: ComponentId });
+
+/** The cold open's own variables. The flagship hero is one held moment, and the moment is
+ * the only part that changes between topics: a clock at 11:40pm for the chat piece, a phone
+ * ringing at 9:42pm for this one. `signature` picks which single animated element the scene
+ * gets, because two would already be one too many. */
+export interface FlagshipHero {
+  /** The numerals. */
+  moment: string;
+  /** The unit beside them, in the accent. */
+  suffix: string;
+  /** Atmosphere behind the type. Masked away from the words, never sat behind them. */
+  photo: string;
+  signature: "porchlight" | "ring";
+}
 
 export interface FlagshipContent {
   /** Scene key (the `[[scene:key]]` marker) to its payload. */
   scenes: Record<string, Scene>;
+  /** The cold open. Omit and the hero falls back to the chat piece's original moment, so an
+   * existing topic keeps rendering exactly as it did. */
+  hero?: FlagshipHero;
   /** Short rail labels for PROSE headings, keyed by the heading's own anchor id. Optional:
    * order and ids are derived from the document, so a stale key here degrades to the full
    * heading text rather than to a dead row. scripts/_scratch-toc.mjs fails on a key that

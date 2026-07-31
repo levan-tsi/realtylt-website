@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { AI_CHAT_FLAGSHIP } from "@/content/blog/ai-chat-scenes";
-import { AI_CHAT_ASSISTANT_POST } from "@/content/blog/ai-posts";
-import { flagshipToc } from "./flagship";
+import { AI_VOICE_FLAGSHIP } from "@/content/blog/voice-agent-scenes";
+import { AI_CHAT_ASSISTANT_POST, AI_VOICE_AGENTS_POST } from "@/content/blog/ai-posts";
+import { flagshipToc, type FlagshipContent } from "./flagship";
 import { parseOutline } from "./markdown";
 import { parseHeadings } from "./toc";
 
@@ -70,31 +71,70 @@ describe("flagshipToc", () => {
   });
 });
 
-/** These are the checks a NEW topic has to pass. They are about the wiring, not about this
+/** These are the checks EVERY topic has to pass. They are about the wiring, not about any one
  * post: every marker resolves, every payload is used, and no short label points at a heading
- * that no longer exists. */
-describe("the topic content contract", () => {
-  const markers = outline.filter((e) => e.kind === "scene").map((e) => e.key);
+ * that no longer exists.
+ *
+ * TABLE-DRIVEN ON PURPOSE. The handoff told the next agent to copy this block per topic, and
+ * copying a guard nineteen times is how a guard rots: one copy gets a weaker assertion and
+ * nobody notices. Adding a topic is a row here, so a new topic is covered by construction
+ * rather than by whoever wrote it remembering to duplicate the file. */
+const TOPICS: [string, string, FlagshipContent][] = [
+  ["ai chat assistant", AI_CHAT_ASSISTANT_POST, AI_CHAT_FLAGSHIP],
+  ["ai voice agents", AI_VOICE_AGENTS_POST, AI_VOICE_FLAGSHIP],
+];
+
+describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {
+  const topicOutline = parseOutline(body);
+  const markers = topicOutline.filter((e) => e.kind === "scene").map((e) => e.key);
 
   it("has a payload for every [[scene:key]] the body places", () => {
-    const missing = markers.filter((k) => !AI_CHAT_FLAGSHIP.scenes[k]);
-    expect(missing).toEqual([]);
+    expect(markers.filter((k) => !content.scenes[k])).toEqual([]);
   });
 
   it("has no payload the body never places", () => {
-    const orphans = Object.keys(AI_CHAT_FLAGSHIP.scenes).filter((k) => !markers.includes(k));
-    expect(orphans).toEqual([]);
+    expect(Object.keys(content.scenes).filter((k) => !markers.includes(k))).toEqual([]);
   });
 
   it("has no short label pointing at a heading that is not in the body", () => {
-    const ids = new Set(parseHeadings(AI_CHAT_ASSISTANT_POST).map((h) => h.id));
-    const stale = Object.keys(AI_CHAT_FLAGSHIP.headingLabels ?? {}).filter((id) => !ids.has(id));
-    expect(stale).toEqual([]);
+    const ids = new Set(parseHeadings(body).map((h) => h.id));
+    expect(Object.keys(content.headingLabels ?? {}).filter((id) => !ids.has(id))).toEqual([]);
   });
 
   it("gives every scene a band, so the floating rail can always flip its contrast", () => {
-    for (const [key, scene] of Object.entries(AI_CHAT_FLAGSHIP.scenes)) {
+    for (const [key, scene] of Object.entries(content.scenes)) {
       expect(["dark", "light"], `scene ${key}`).toContain(scene.band);
     }
+  });
+
+  it("places enough scenes to clear the readiness gate", () => {
+    expect(markers.length).toBeGreaterThanOrEqual(5);
+  });
+
+  /** The honesty invariants. TypeScript forces the FIELDS to exist; these force them to say
+   * something. A cited chart whose source is a blank string, or whose caveat is empty, passes
+   * the compiler and fails the reader. */
+  it("gives every cited data graphic a live source and a real caveat", () => {
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      if (scene.kind !== "statbars") continue;
+      expect(scene.sourceHref, `scene ${key}`).toMatch(/^https:\/\//);
+      expect(scene.note.trim().length, `scene ${key} caveat`).toBeGreaterThan(20);
+      expect(scene.bars.length, `scene ${key} bars`).toBeGreaterThan(1);
+    }
+  });
+
+  it("makes every staged conversation admit that it is staged", () => {
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      if (scene.kind !== "conversation") continue;
+      expect(scene.note.trim().length, `scene ${key} note`).toBeGreaterThan(10);
+      expect(scene.turns.length, `scene ${key} turns`).toBeGreaterThan(1);
+    }
+  });
+
+  /** A film scene with no film renders nothing, which is a silent hole in the page rather
+   * than an error. Catch it here instead of in a screenshot. */
+  it("only places a film scene when the topic actually has a film", () => {
+    const placesFilm = Object.values(content.scenes).some((s) => s.kind === "film");
+    if (placesFilm) expect(content.film).toBeDefined();
   });
 });

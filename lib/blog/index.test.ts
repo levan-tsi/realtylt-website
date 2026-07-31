@@ -14,7 +14,11 @@ const dbRow = (over: Record<string, unknown> = {}) => ({
   body: "## Hello\n\nBody.",
   cover_image_url: "/images/listings/house-12.jpg",
   author_name: "Levan Tsiklauri",
-  published_at: "2026-07-13 15:45:26+00",
+  // Deliberately AFTER the newest static post. The merge sorts newest-first, so a fixture
+  // dated in the middle of the static list only passed the "in front of the stubs" assertion
+  // by accident, and publishing a newer static post silently broke it. Keep this ahead of
+  // POSTS[0].date so the test keeps measuring the merge instead of the calendar.
+  published_at: "2030-01-01 15:45:26+00",
   seo_title: null,
   seo_description: null,
   ...over,

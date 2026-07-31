@@ -148,6 +148,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             url={url}
             updatedLabel={post.updated ? fmtDate(post.updated) : undefined}
             updatedTime={post.updated}
+            {...(scenes?.hero ?? {})}
           />
         ) : (
         <header className="relative isolate overflow-hidden bg-ink text-paper">
