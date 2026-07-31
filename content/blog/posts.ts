@@ -57,6 +57,10 @@ export const POSTS: BlogPost[] = [
     slug: "ai-voice-agent-missed-calls-real-estate",
     title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",
     date: "2026-07-30",
+    /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
+     * count of states that had not been checked against the statutes, and now says only what
+     * was verified plus advice to check the caller's own state. Shipped 2026-07-31. */
+    updated: "2026-07-31",
     excerpt:
       "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
     seoDescription:

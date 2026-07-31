@@ -262,6 +262,44 @@ topic 2. It deliberately refuses to score A1, A2, A3, B3 and the qualitative hal
 so in its own output: a script cannot judge originality or craft, and one that pretended to would
 turn this rubric back into a self-graded number.
 
+## TOPIC 2 — ai voice agents (2026-07-30/31)
+
+`/blog/ai-voice-agent-missed-calls-real-estate`. **19/19 on the mechanical gate**, measured on
+the live production page with `node scripts/score-flagship.mjs <slug>`.
+
+**No /100 is recorded here for this post, deliberately.** Roughly 40 of the rubric's 100 points
+are judgement (A1 originality, A2 comprehensiveness, A3 insight, B3 first-hand experience, and
+the qualitative half of E2), and the agent that wrote the post is the last thing that should be
+scoring those. This file exists because a previous session graded its own homework and the
+owner called it. The mechanical number is objective and is what gets recorded; a human reads
+for the rest.
+
+What is measurable, against topic 1 at the same checkpoint:
+
+| | topic 1 (chat) | topic 2 (voice) |
+|---|---|---|
+| external citations | 1 | **5** |
+| body images | 2 | 3 |
+| `role="img"` graphics | 2 | 2 |
+| film | 39s | 45s, its own |
+| scene anchors | 9 | **11** |
+| words | 1,889 | 3,489 (incl. scene copy) |
+| bespoke components added | 5 | **0** |
+
+Every one of the five citations was checked for a 200 before shipping: HBR/Oldroyd (the 2,241
+company response audit AND the 1.25M lead study), the FCC's Feb 2024 declaratory ruling that AI
+voices are "artificial" under the TCPA, NY Penal Law 250.00, Cal. Penal Code 632, and California
+AB 2905. Topic 1 leaned on one citation; the difference is not diligence, it is that the legal
+section is this piece's actual contribution and it could not be written without them.
+
+**Where this post is honestly weaker than its gate score suggests:**
+- **Still no original data.** Same A1 gap as topic 1, same reason: our own call volume is not
+  publishable in a way that would build rather than cost credibility. This remains the single
+  biggest item nobody else could copy.
+- **Cost and setup time are still not covered.** The post covers the limits and the law well and
+  says nothing about what any of it costs, which is the first question a reader actually has.
+- **The middle third has one photograph.** Better than topic 1's zero, not yet good.
+
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
   A and B; the expertise questions explicitly name author background and links to an author page)
