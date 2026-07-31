@@ -27,6 +27,24 @@
   --font-mono: var(--font-lato), Helvetica, Arial, sans-serif;
 }
 
+/* ── The mouse must say "this is clickable".
+   Tailwind v4's Preflight dropped the `cursor: pointer` that v3 put on buttons, so every
+   <button> on this site was showing the ordinary arrow: measured 97 of 134 controls on
+   /search and 34 of 35 on the home page — SEARCH, SAVE SEARCH, the county chips, the
+   pagination, "Save this home", every form's submit. The owner reported it as the page
+   looking frozen, which is exactly right: nothing under the cursor claimed to be a control.
+   Only elements that happened to carry a `cursor-pointer` class (the dropdowns) behaved.
+
+   Disabled controls are excluded — a greyed-out "Previous page" must not invite a click.
+   In @layer base so any utility (`cursor-default`, `cursor-not-allowed`) still wins. */
+@layer base {
+  button:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
 /* ── Type scale. Three display steps and one eyebrow, so a page can have a hierarchy
    instead of three h2s that are all the same size. Fluid between the mobile and desktop
    ends rather than stepping at a breakpoint — headlines are the one place where a jump is

@@ -887,7 +887,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg px-3 py-2 text-sm text-stone transition-colors hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Previous page"
           >
             «
@@ -895,15 +895,24 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           {/* Live realtylt.com pages in a run of six consecutive numbers with chevrons on
               either side — no "1 … 150" ellipsis. pageWindow() clamps the run inside the
               set; the row wraps rather than overflowing a 390px viewport on 3-digit pages. */}
+          {/* The number you CLICKED goes black immediately, before the new page arrives.
+              It used to key off result.page, so for the few hundred milliseconds the fetch
+              took, nothing on screen acknowledged the click at all — the owner read that as
+              the page being frozen. The results list is already marked aria-busy and dimmed
+              while it catches up, so this is the one control saying "heard you". Hover is a
+              light wash of the same black rather than white-on-mist, which was very nearly
+              invisible on this panel. */}
           {pageWindow(result.page, result.totalPages).map((p) => (
             <button
               key={p}
               type="button"
-              aria-current={p === result.page ? "page" : undefined}
+              aria-current={p === filters.page ? "page" : undefined}
               aria-label={`Page ${p}`}
               onClick={() => apply({ page: p })}
               className={`min-w-9 rounded-lg px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
-                p === result.page ? "bg-ink font-bold text-paper" : "text-ink-soft hover:bg-white"
+                p === filters.page
+                  ? "bg-ink font-bold text-paper"
+                  : "text-ink-soft hover:bg-ink/10 hover:text-ink active:bg-ink/20"
               }`}
             >
               {p}
@@ -913,7 +922,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className="px-3 py-2 text-sm text-stone hover:text-ink disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg px-3 py-2 text-sm text-stone transition-colors hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Next page"
           >
             »
