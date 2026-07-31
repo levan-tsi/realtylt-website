@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 function ServiceCard({ service, large = false }: { service: Service; large?: boolean }) {
   return (
     <article
-      className={`group relative flex h-full flex-col rounded-2xl border border-[#dddddd] bg-white transition-colors hover:border-ink/35 ${
+      className={`group relative flex h-full flex-col rounded-2xl border border-line bg-white transition-colors hover:border-ink/35 ${
         large ? "p-7 md:p-8" : "p-6"
       }`}
     >
@@ -54,7 +54,7 @@ function ServiceCard({ service, large = false }: { service: Service; large?: boo
           {service.specs.slice(0, 3).map((s) => (
             <li
               key={s}
-              className="rounded-lg border border-[#dddddd] px-2 py-1 text-[11px] leading-none text-ink-soft"
+              className="rounded-lg border border-line px-2 py-1 text-[11px] leading-none text-ink-soft"
             >
               {s}
             </li>
@@ -237,7 +237,7 @@ export default function ServicesIndexPage() {
               <Reveal key={s.slug} as="li" delay={(i % 2) * 80} className="min-w-0">
                 <Link
                   href={`/services/${s.slug}`}
-                  className="group flex items-baseline gap-5 border-t border-[#dddddd] py-5"
+                  className="group flex items-baseline gap-5 border-t border-line py-5"
                 >
                   <span
                     aria-hidden

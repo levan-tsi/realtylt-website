@@ -207,7 +207,7 @@ const selectCls =
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
-  "min-w-0 flex-1 cursor-pointer rounded-xl border border-[#cccccc] bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
+  "min-w-0 flex-1 cursor-pointer rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
 
 export function SearchClient({ initial = null }: { initial?: SearchPayload | null }) {
   const searchParams = useSearchParams();
@@ -463,13 +463,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           const fd = new FormData(e.currentTarget);
           apply({ q: String(fd.get("q") ?? "") });
         }}
-        className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-[#dddddd] bg-white px-4 py-2 ${
+        className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-line bg-white px-4 py-2 ${
           moreOpen ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
         {/* For Sale / For Rent — the two are separate universes (rentals never mix into for-sale
             counts). Switching clears the price + sale-type filters since their ladders differ. */}
-        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded-xl border border-[#dddddd]">
+        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded-xl border border-line">
           {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
             const active = filters.rental === isRent;
             return (
@@ -506,7 +506,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             key={filters.q}
             defaultValue={filters.q}
             placeholder="Find a Place"
-            className="w-full rounded-xl border border-[#d7dbe0] bg-white px-3 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
             onPick={(s) =>
               s.kind === "county" && s.county
                 ? apply({ county: s.county, q: "" })
@@ -632,7 +632,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           friendly and overflow-safe at every width — cleaner than live's overlay; filters
           apply live (no "apply" step), a divergence noted in the parity file. */}
       {moreOpen && (
-        <div id="more-panel" className="rounded-b-2xl border border-t-0 border-[#dddddd] bg-white px-4 py-5 sm:px-6">
+        <div id="more-panel" className="rounded-b-2xl border border-t-0 border-line bg-white px-4 py-5 sm:px-6">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <label className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
               <input
@@ -673,7 +673,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end border-t border-[#eeeeee] pt-4">
+          <div className="mt-6 flex justify-end border-t border-line pt-4">
             <button
               type="button"
               onClick={() => setMoreOpen(false)}
@@ -699,7 +699,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                 boroughActive
                   ? "bg-ink text-paper"
-                  : "border border-[#cccccc] bg-white text-stone hover:border-ink hover:text-ink"
+                  : "border border-line-strong bg-white text-stone hover:border-ink hover:text-ink"
               }`}
             >
               NYC Boroughs
@@ -767,7 +767,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
-          <div role="group" aria-label="View" className="flex overflow-hidden rounded-xl border border-[#cccccc]">
+          <div role="group" aria-label="View" className="flex overflow-hidden rounded-xl border border-line-strong">
             {(["grid", "map"] as const).map((v) => (
               <button
                 key={v}
@@ -814,7 +814,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       ) : state === "loading" && !result ? (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
           {Array.from({ length: 6 }).map((_, i) => (
-            <li key={i} className="animate-pulse overflow-hidden rounded-2xl border border-[#dddddd]">
+            <li key={i} className="animate-pulse overflow-hidden rounded-2xl border border-line">
               <div className="aspect-[3/2] bg-mist" />
               <div className="space-y-2 p-4">
                 <div className="h-5 w-28 rounded-full bg-mist" />
@@ -825,7 +825,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           ))}
         </ul>
       ) : listings.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-[#cccccc] p-12 text-center">
+        <div className="mt-10 rounded-2xl border border-dashed border-line-strong p-12 text-center">
           <p className="text-xl font-light text-ink">No homes match those filters.</p>
           <p className="mt-2 text-sm text-stone">Try widening a range or clearing a filter.</p>
           <button
@@ -861,7 +861,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               map below the results too), so the first thing a phone visitor sees is homes rather
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
-          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-[#dddddd] lg:sticky lg:top-4 lg:h-[84vh]">
+          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[84vh]">
             <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} onToggleSave={toggleFavorite} />
           </div>
         </div>
@@ -885,13 +885,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           // 1.05:1 difference, so the panel and the page were the same colour, and the numbers
           // inside it were bare text. It reads as an object now — the same bordered-panel
           // language the filter bar and the cards use — with every number in a box of its own.
-          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl border border-[#dddddd] bg-mist px-4 py-3 scroll-mt-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl border border-line bg-mist px-4 py-3 scroll-mt-4"
         >
           <button
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Previous page"
           >
             «
@@ -919,7 +919,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               className={`min-w-9 rounded-lg border px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === filters.page
                   ? "border-ink bg-ink font-bold text-paper"
-                  : "border-[#dddddd] bg-white text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
+                  : "border-line bg-white text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
               }`}
             >
               {p}
@@ -929,7 +929,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
             aria-label="Next page"
           >
             »
@@ -941,7 +941,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         <MlsAttribution
           dataLastUpdated={result.dataLastUpdated}
           fixtureMode={result.fixtureMode}
-          className="mt-10 border-t border-[#dddddd] pt-6"
+          className="mt-10 border-t border-line pt-6"
         />
       )}
 

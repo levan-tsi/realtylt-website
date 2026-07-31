@@ -164,7 +164,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
 
   return (
     <div className="relative h-full min-h-96 w-full">
-      <p className="pointer-events-none absolute bottom-2 left-2 z-[5] rounded-lg border border-[#dddddd] bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+      <p className="pointer-events-none absolute bottom-2 left-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
         Locations approximate
       </p>
       <div ref={divRef} className="h-full min-h-96 w-full" />

@@ -249,7 +249,7 @@ export default async function HomePage() {
           <h2 id="counties-heading" className="sr-only">
             Counties we serve
           </h2>
-          <ul className="flex flex-wrap justify-center gap-2 border-t border-[#dddddd] pt-12">
+          <ul className="flex flex-wrap justify-center gap-2 border-t border-line pt-12">
             {SERVED_AREAS.map((c) => (
               <li key={c.slug}>
                 <Link
@@ -290,7 +290,7 @@ export default async function HomePage() {
               we&rsquo;re the top choice for buyers and sellers.
             </p>
           </Reveal>
-          <div className="mt-20 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-[#dddddd] pt-12 text-center md:grid-cols-4">
+          <div className="mt-20 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-line pt-12 text-center md:grid-cols-4">
             <StatCounter value={11} label="Counties & boroughs served" />
             <StatCounter value={24} suffix="h" label="Cash offer turnaround" />
             <StatCounter value={100} suffix="+" label="Sites your listing reaches" />

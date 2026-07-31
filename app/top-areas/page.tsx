@@ -53,7 +53,7 @@ export default function TopAreasPage() {
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {COUNTY_CONTENT.map((c, i) => (
               <Reveal key={c.slug} as="li" delay={(i % 3) * 110}>
-                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
+                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
                   <Link href={`/top-areas/${c.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${c.name}`} />
                   <div className="photo-zoom relative aspect-[16/9] overflow-hidden">
                     <Image
@@ -82,7 +82,7 @@ export default function TopAreasPage() {
       </section>
 
       {/* ── NYC boroughs */}
-      <section className="border-t border-[#eeeeee] bg-paper pb-16 md:pb-24" aria-labelledby="borough-cards">
+      <section className="border-t border-line bg-paper pb-16 md:pb-24" aria-labelledby="borough-cards">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -95,7 +95,7 @@ export default function TopAreasPage() {
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {BOROUGH_CONTENT.map((b, i) => (
               <Reveal key={b.slug} as="li" delay={(i % 3) * 110}>
-                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
+                <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
                   <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${b.name}`} />
                   <div className="flex items-center justify-between bg-ink px-5 py-4">
                     <h3 className="text-lg font-bold text-paper">{b.name}</h3>

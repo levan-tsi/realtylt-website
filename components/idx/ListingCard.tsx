@@ -93,7 +93,7 @@ export function ListingCard({
 
   if (variant === "plain") {
     return (
-      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[#dddddd] bg-white">
+      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
         <Link
           href={listingPath(l)}
           className="absolute inset-0 z-10"

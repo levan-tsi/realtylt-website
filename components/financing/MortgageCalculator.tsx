@@ -132,7 +132,7 @@ export function MortgageCalculator({
             </p>
             <p className="mt-3 text-center text-sm text-stone">Estimated Monthly Payment</p>
             <div
-              className="mt-6 flex h-10 w-full overflow-hidden rounded-full border-2 border-[#eeeeee]"
+              className="mt-6 flex h-10 w-full overflow-hidden rounded-full border-2 border-line"
               role="img"
               aria-label="Monthly payment breakdown"
             >

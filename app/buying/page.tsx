@@ -384,17 +384,17 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
           <span className="pb-1 text-stone">References</span>
         </div>
         <p className="mt-3 text-[10px] uppercase tracking-[0.12em] text-stone">Search name</p>
-        <div className="mt-1 h-7 rounded-lg border border-[#dddddd] bg-mist px-2 text-[11px] leading-7 text-stone">
+        <div className="mt-1 h-7 rounded-lg border border-line bg-mist px-2 text-[11px] leading-7 text-stone">
           Beacon · 3+ bd · under $600K
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
           <div>
             <p className="uppercase tracking-[0.12em] text-stone">Price</p>
-            <div className="mt-1 h-6 rounded-lg border border-[#dddddd] bg-mist" />
+            <div className="mt-1 h-6 rounded-lg border border-line bg-mist" />
           </div>
           <div>
             <p className="uppercase tracking-[0.12em] text-stone">Beds</p>
-            <div className="mt-1 h-6 rounded-lg border border-[#dddddd] bg-mist" />
+            <div className="mt-1 h-6 rounded-lg border border-line bg-mist" />
           </div>
         </div>
         <div className="mt-4 rounded-lg bg-ink py-2 text-center text-[11px] font-bold uppercase tracking-wide text-paper">
@@ -424,7 +424,7 @@ function TourSchedulerCard({
 
   return (
     <figure
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[#dddddd] bg-white shadow-2xl"
+      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-2xl"
       aria-label="Example home with tour-scheduling options"
     >
       <div className="relative aspect-[3/2] bg-mist">
@@ -450,7 +450,7 @@ function TourSchedulerCard({
         {/* Tabs (decorative) */}
         <div aria-hidden className="mt-4 grid grid-cols-2 text-center text-xs font-bold uppercase tracking-wide">
           <span className="border-b-2 border-ink pb-2 text-ink">Schedule a Tour</span>
-          <span className="border-b border-[#dddddd] pb-2 text-stone">Request Info</span>
+          <span className="border-b border-line pb-2 text-stone">Request Info</span>
         </div>
         {/* Date strip (decorative) */}
         <div aria-hidden className="mt-4 grid grid-cols-3 gap-2">

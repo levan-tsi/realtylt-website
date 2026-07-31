@@ -179,7 +179,7 @@ export function SaveSearchDialog({
               onChange={(e) => setName(e.target.value)}
               maxLength={80}
               placeholder="Name this search"
-              className="mt-1.5 w-full rounded-xl border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
+              className="mt-1.5 w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
             />
 
             {accountsEnabled && !signedIn && (

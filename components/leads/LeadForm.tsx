@@ -155,7 +155,7 @@ export function LeadForm({
         role="status"
         tabIndex={-1}
         className={`rounded-2xl border p-6 text-center outline-none ${
-          dark ? "border-paper/30 bg-white/5" : "border-[#cccccc] bg-mist"
+          dark ? "border-paper/30 bg-white/5" : "border-line-strong bg-mist"
         }`}
       >
         <p className={`text-2xl font-light ${dark ? "text-paper" : "text-ink"}`}>{successTitle}</p>

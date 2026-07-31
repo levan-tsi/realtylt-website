@@ -103,7 +103,7 @@ export function ListingLeadCTAs(props: { listing: ListingIntent; infoTargetId?: 
                 key={d.key}
                 type="button"
                 onClick={() => openTour(d.key)}
-                className="flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-xl border border-[#d7dbe0] px-2 py-2 text-ink transition-colors hover:border-ink"
+                className="flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-xl border border-line px-2 py-2 text-ink transition-colors hover:border-ink"
               >
                 <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{d.weekday}</span>
                 <span className="text-lg font-semibold leading-tight">{d.day}</span>
@@ -208,7 +208,7 @@ function InlineTourCard({
                   aria-pressed={date === d.key}
                   onClick={() => setDate(d.key)}
                   className={`flex min-h-11 flex-col items-center rounded-xl border px-1 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
-                    date === d.key ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
+                    date === d.key ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"
                   }`}
                 >
                   <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{d.weekday}</span>
@@ -346,7 +346,7 @@ function Sheet({
 }
 
 const fieldCls =
-  "w-full rounded-xl border border-[#cccccc] bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
+  "w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
 
 function SuccessBody({ title, body, onClose }: { title: string; body: string; onClose: () => void }) {
   return (
@@ -467,7 +467,7 @@ function TourModal({
                 aria-pressed={tourType === t}
                 onClick={() => setTourType(t)}
                 className={`min-h-11 rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors ${
-                  tourType === t ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
+                  tourType === t ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"
                 }`}
               >
                 {t}
@@ -484,7 +484,7 @@ function TourModal({
                 aria-pressed={date === d.key}
                 onClick={() => setDate(d.key)}
                 className={`flex min-w-[3.5rem] shrink-0 flex-col items-center rounded-xl border px-2 py-2 transition-colors ${
-                  date === d.key ? "border-ink bg-ink text-paper" : "border-[#d7dbe0] text-ink hover:border-ink"
+                  date === d.key ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"
                 }`}
               >
                 <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{d.weekday}</span>

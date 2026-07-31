@@ -26,11 +26,11 @@ export function Faq({ service }: { service: Service }) {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="border-t border-[#dddddd]">
+          <div className="border-t border-line">
             {service.faqs.map((f, i) => (
               // First one open: a column of seven closed rows is a section a visitor scrolls
               // past. The rest stay closed, and their answers are in the HTML regardless.
-              <details key={f.q} open={i === 0} className="group border-b border-[#dddddd]">
+              <details key={f.q} open={i === 0} className="group border-b border-line">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 transition-colors hover:text-porchlight-deep [&::-webkit-details-marker]:hidden">
                   <h3 className="text-lg font-bold leading-snug text-ink transition-colors group-hover:text-porchlight-deep">
                     {f.q}

@@ -99,7 +99,7 @@ export default function FinancingPage() {
               </p>
               <p className="mt-5 text-center text-[11px] uppercase tracking-[0.14em] text-stone">Loan amount</p>
               <p className="text-center text-3xl font-bold text-porchlight-deep">$455,000</p>
-              <div className="mt-5 grid grid-cols-2 gap-4 border-t border-[#dddddd] pt-4 text-center">
+              <div className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-4 text-center">
                 <div>
                   <p className="text-[11px] uppercase tracking-[0.14em] text-stone">Monthly payment</p>
                   <p className="text-lg text-ink">$3,500</p>
@@ -109,7 +109,7 @@ export default function FinancingPage() {
                   <p className="text-lg text-ink">30 years</p>
                 </div>
               </div>
-              <div className="mt-6 flex flex-wrap items-end justify-between gap-x-3 gap-y-3 border-t border-[#dddddd] pt-5">
+              <div className="mt-6 flex flex-wrap items-end justify-between gap-x-3 gap-y-3 border-t border-line pt-5">
                 <div>
                   <svg width="118" height="30" viewBox="0 0 118 30" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="max-w-full text-ink-soft" aria-hidden>
                     <path d="M3 20c5 0 7-13 10-13s1 18 4 18 5-22 8-22 2 20 5 20 4-9 7-9 3 5 6 5 5-7 9-7 6 3 10 3 8-4 12-3.5" />

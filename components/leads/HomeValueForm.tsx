@@ -74,7 +74,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
         id="hv-unit"
         name="unit"
         placeholder="Unit # (optional)"
-        className="hidden w-36 border-l border-[#dddddd] bg-transparent px-4 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none sm:block"
+        className="hidden w-36 border-l border-line bg-transparent px-4 py-2.5 text-sm text-ink placeholder:text-stone focus:outline-none sm:block"
       />
       {/* Not <Button>: its 12px radius and lifting hover are wrong for a control that lives
           inside another control — the nested action keeps still and lets the shell carry focus. */}

@@ -20,7 +20,7 @@ import { FOOTER_NAV, SITE } from "@/lib/site";
  */
 export function Footer() {
   return (
-    <footer className="border-t border-[#dddddd] bg-paper text-stone">
+    <footer className="border-t border-line bg-paper text-stone">
       <div className="mx-auto grid max-w-[1250px] gap-14 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
         <section aria-labelledby="footer-form-heading">
           <h2 id="footer-form-heading" className="t-h3 text-ink">
@@ -69,7 +69,7 @@ export function Footer() {
             </p>
           </address>
 
-          <nav aria-label="Footer" className="mt-10 border-t border-[#e6e6e6] pt-8">
+          <nav aria-label="Footer" className="mt-10 border-t border-line pt-8">
             {/* inline-flex min-h-[24px]: text-sm links with no padding measured ~17px tall,
                 under the WCAG 2.5.8 (24px) pointer-target minimum. Height only. */}
             <ul className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm font-light">
@@ -107,7 +107,7 @@ export function Footer() {
           preferred — and it is followed by the membership reference NAR's contextual-use rule
           requires. See docs/parity/DESIGN-ROUND11.md §3 for the rules these follow. */}
       <div className="mx-auto max-w-[1250px] px-4 pb-10 lg:px-8">
-        <div className="flex flex-col gap-5 border-t border-[#e6e6e6] pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+        <div className="flex flex-col gap-5 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
           <div className="flex items-center gap-5">
             <EqualHousingMark className="h-8 w-auto shrink-0 text-stone" />
             <p className="text-xs leading-relaxed">

@@ -511,7 +511,7 @@ function PathCard({
             </li>
           ))}
         </ul>
-        <div className="mt-6 border-t border-[#dddddd] pt-5">
+        <div className="mt-6 border-t border-line pt-5">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone">{fitsLabel}</p>
           <p className="mt-2 text-sm leading-relaxed text-stone">{fits.join(" • ")}</p>
         </div>

@@ -155,7 +155,7 @@ export function Header() {
       </div>
 
       {/* Logo + primary nav, one row, vertically centred. */}
-      <div className="border-b border-[#dddddd]">
+      <div className="border-b border-line">
         <div className="mx-auto flex max-w-[1250px] items-center justify-between gap-6 px-4 py-4 lg:px-8">
           <Link href="/" aria-label="RealtyLT home" className="shrink-0">
             <Image
@@ -264,14 +264,14 @@ export function Header() {
                       // clicking the caret while hovering really does close it.
                       <div
                         id="top-areas-flyout"
-                        className={`absolute left-0 top-full z-50 flex gap-6 rounded-2xl border border-[#dddddd] bg-paper p-4 shadow-lg transition-opacity duration-150 motion-reduce:transition-none ${
+                        className={`absolute left-0 top-full z-50 flex gap-6 rounded-2xl border border-line bg-paper p-4 shadow-lg transition-opacity duration-150 motion-reduce:transition-none ${
                           flyout ? "visible opacity-100" : "invisible opacity-0"
                         }`}
                       >
                         {TOP_AREA_GROUPS.map((g, gi) => (
                           <div
                             key={g.id}
-                            className={gi > 0 ? "border-l border-[#e6e6e6] pl-6" : undefined}
+                            className={gi > 0 ? "border-l border-line pl-6" : undefined}
                           >
                             <p className="whitespace-nowrap px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-stone/70">
                               {g.label}
@@ -306,7 +306,7 @@ export function Header() {
           as a plain, always-open list instead. Plain <a> rather than <Link>: prefetch is
           meaningless here and it keeps hydration away from the noscript subtree. */}
       <noscript>
-        <nav aria-label="Site links" className="border-b border-[#dddddd] bg-paper">
+        <nav aria-label="Site links" className="border-b border-line bg-paper">
           <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] lg:px-8">
             {[
               ...NAV.map((i) => ({ label: i.label, href: i.href })),
@@ -323,7 +323,7 @@ export function Header() {
       </noscript>
 
       {open && (
-        <nav aria-label="Mobile" className="border-b border-[#dddddd] bg-paper xl:hidden">
+        <nav aria-label="Mobile" className="border-b border-line bg-paper xl:hidden">
           <ul className="px-4 py-2">
             {NAV.map((item) => {
               const hasGroups = "groups" in item && item.groups;

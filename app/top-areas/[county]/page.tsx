@@ -153,14 +153,14 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
                 </div>
               </Reveal>
               <Reveal delay={120}>
-                <div className="h-full rounded-2xl border border-[#dddddd] bg-white p-7">
+                <div className="h-full rounded-2xl border border-line bg-white p-7">
                   <h3 className="text-xl font-bold text-ink">Towns we work</h3>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {c.towns.map((t) => (
                       <li key={t}>
                         <Link
                           href={`/search?q=${encodeURIComponent(t)}`}
-                          className="inline-block rounded-xl border border-[#cccccc] px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-ink hover:text-ink"
+                          className="inline-block rounded-xl border border-line-strong px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-ink hover:text-ink"
                         >
                           {t}
                         </Link>
@@ -183,7 +183,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
             </SectionHeading>
           </Reveal>
           {result.listings.length === 0 ? (
-            <p className="mt-8 rounded-2xl border border-dashed border-[#cccccc] p-10 text-center text-sm text-stone">
+            <p className="mt-8 rounded-2xl border border-dashed border-line-strong p-10 text-center text-sm text-stone">
               Nothing on the market right this moment. Save a search and we&rsquo;ll flag new
               {" " + short} listings for you.
             </p>

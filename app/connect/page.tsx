@@ -80,7 +80,7 @@ export default function ConnectPage() {
                 {SITE.address.postalCode}
               </p>
             </address>
-            <p className="mt-6 max-w-[300px] border-t border-[#e6e6e6] pt-6 text-sm leading-relaxed text-stone">
+            <p className="mt-6 max-w-[300px] border-t border-line pt-6 text-sm leading-relaxed text-stone">
               Would rather not pick a slot? Call or text and we&rsquo;ll find a time. Evenings and
               weekends included.
             </p>

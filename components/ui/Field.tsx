@@ -12,7 +12,7 @@ function tone(dark: boolean, error?: string) {
   if (error) return "border-red-500/80";
   return dark
     ? "border-paper/40 text-paper focus:border-paper/70 placeholder:text-paper/60"
-    : "border-[#cccccc] text-ink-soft focus:border-ink/50 bg-white";
+    : "border-line-strong text-ink-soft focus:border-ink/50 bg-white";
 }
 
 interface FieldShellProps {

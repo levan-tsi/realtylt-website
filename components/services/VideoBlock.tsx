@@ -26,7 +26,7 @@ export function VideoBlock({ service }: { service: Service }) {
               controls
               preload="none"
               poster={v.thumbnailUrl}
-              className="aspect-video w-full border border-[#dddddd] bg-ink"
+              className="aspect-video w-full border border-line bg-ink"
             >
               <source src={v.contentUrl} type="video/mp4" />
             </video>

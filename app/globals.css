@@ -15,6 +15,14 @@
   --color-paper: #ffffff;
   --color-mist: #f3f5f8;
   --color-stone: #6f6f6f;
+  /* The two lines this site is allowed to draw. On a page that is otherwise black, white and
+     one photograph, the rules between things ARE the design — and they had drifted into
+     seventeen near-identical greys (#dddddd, #e6e6e6, #eeeeee, #e5e5e5, #d7dbe0 … some a
+     single unit apart), which is not a set of decisions, it is a set of accidents. `line` is
+     the hairline that separates; `line-strong` is the one that asks to be noticed — an empty
+     state's dashed edge, a control that wants a visible frame. */
+  --color-line: #dddddd;
+  --color-line-strong: #cccccc;
   --color-river: #102c54;
   --color-porchlight: #28a8e0;
   --color-porchlight-deep: #1c729a;

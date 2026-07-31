@@ -188,7 +188,7 @@ export function SignInModal() {
           type="button"
           onClick={onGoogle}
           disabled={busy}
-          className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl border border-[#cccccc] bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+          className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
         >
           <svg aria-hidden viewBox="0 0 48 48" className="h-[18px] w-[18px]">
             <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.3 13.3 17.6 9.5 24 9.5z" />
@@ -200,9 +200,9 @@ export function SignInModal() {
         </button>
 
         <div className="my-4 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
-          <span className="h-px flex-1 bg-[#e5e5e5]" />
+          <span className="h-px flex-1 bg-line" />
           or
-          <span className="h-px flex-1 bg-[#e5e5e5]" />
+          <span className="h-px flex-1 bg-line" />
         </div>
 
         <form onSubmit={onSubmit} className="space-y-3">
