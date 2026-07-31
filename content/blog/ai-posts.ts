@@ -137,6 +137,18 @@ Stripped of the marketing, it is a voice on the phone that can hold a real conve
 
 The fourth one is the one people underrate. An appointment that arrives with a transcript attached is a completely different object from an appointment that arrives as a name and a time. You walk in already knowing what they asked and what they were worried about.
 
+## The same agent, pointed the other way
+
+Everything above is about the call you did not take. The bigger half of this is the call nobody made.
+
+Most leads never phone you at all. They fill in a form at nine at night, or they arrive from a portal or an ad, and then they sit in a list waiting for somebody to notice them. The standard answer to that is a follow-up task, which gets done tomorrow, or on Thursday, or never.
+
+The second of the four moves above is that other direction, and it earns more than the one line it gets there. Two things about calling out matter more than the speed does, and both of them are unglamorous.
+
+[[scene:outbound]]
+
+None of this makes the outbound call a good idea on its own. Ringing somebody who never asked to hear from you is how you end up in the do-not-call file, and the rules that govern your own dialing govern the agent exactly the same way. The section on the legal part below is about outbound as much as it is about recording.
+
 ## The one thing that decides whether it works
 
 Text chat forgives a pause. A typing indicator is a promise that something is coming, and two seconds of it costs nothing.

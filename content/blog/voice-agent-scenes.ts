@@ -114,6 +114,25 @@ export const FOUR_MOVES: GridItem[] = [
   },
 ];
 
+/** SCENE copy — the outbound direction.
+ *
+ * The service page calls outbound the half where most of the value sits, and the article was
+ * almost entirely about receiving. These are deliberately NOT "it dials in seconds": that is
+ * already FOUR_MOVES[1], and a scene repeating a claim the page has made is the duplication the
+ * probe exists to catch. These two are what the instant-dial line does not cover, and both are
+ * claims the service page already makes (`howItWorks` retry-on-schedule, and the
+ * database-reactivation use case). */
+export const OUTBOUND: GridItem[] = [
+  {
+    lead: "It calls again, on a schedule, without getting discouraged.",
+    body: "Somebody who did not pick up at two in the afternoon was driving, not uninterested. Human follow-up tends to die at the second attempt, because a third one starts to feel like pestering. The agent tries the evening instead, and the evening is often the one that connects.",
+  },
+  {
+    lead: "It can work the list you already gave up on.",
+    body: "Everybody who enquired last year and went quiet is the cheapest inventory you own, and nobody calls it because calling it is miserable. The agent works through it, has real conversations, and hands back the few who are ready to move now.",
+  },
+];
+
 /** SCENE copy — the teardown.
  *
  * An ILLUSTRATION of the pattern, not a recording of a real client, and the scene says so on
@@ -291,6 +310,17 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       glow: true,
       items: FOUR_MOVES,
     },
+    /** Light, deliberately: it sits between two dark bands (four-moves and the pull quote) with
+     *  only prose in between, and three darks in a row flattens the rhythm of the whole middle. */
+    outbound: {
+      kind: "grid",
+      band: "light",
+      label: "Calling out",
+      eyebrow: "The other direction",
+      heading: "Two unglamorous things.",
+      columns: 2,
+      items: OUTBOUND,
+    },
     "pull-quote": {
       kind: "statement",
       band: "dark",
@@ -370,6 +400,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
     "what-a-missed-call-actually-costs": "The cost",
     "why-nobody-leaves-the-voicemail": "No voicemail",
     "what-an-ai-voice-agent-actually-does": "What it does",
+    "the-same-agent-pointed-the-other-way": "Calling out",
     "the-one-thing-that-decides-whether-it-works": "Latency",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
     "the-legal-part-nobody-sells-you": "The legal part",
