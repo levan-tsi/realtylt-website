@@ -23,7 +23,11 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const FFMPEG = path.resolve("node_modules/ffmpeg-static/ffmpeg.exe");
-const FILM = "public/video/film-942pm.mp4";
+// SOURCE must be the CLEAN typographic film, never the output: this script is not idempotent and
+// running it on its own result double-exposes every beat. Pass the source as argv[2]; the default
+// is the scratch copy pulled from git before the first B-roll commit.
+const FILM = process.argv.find((a) => a.endsWith('.mp4')) ||
+  'C:/Users/Levan/AppData/Local/Temp/claude/C--Users-Levan/6bab6991-6509-4c29-a532-d87577bb351d/scratchpad/film-942pm-clean.mp4';
 const OUT = "public/video/film-942pm.mp4";
 const TMP = "public/video/_film-942pm-broll.mp4";
 const FOOTAGE = "C:/Users/Levan/realtylt-stories/public/footage";
@@ -32,14 +36,18 @@ const FOOTAGE = "C:/Users/Levan/realtylt-stories/public/footage";
  *  gain is how far the darkened image is allowed to come up under the type. */
 const BEATS = [
   // The 7x stat. An office nobody is sitting in, behind the number that says answer the phone.
-  { clip: "shot2-empty-office.mp4", start: 0.0, dur: 7.6, from: 1.5, gain: 0.34 },
-  // 9:42 on a Sunday. The dark kitchen and the phone lying on the counter.
-  { clip: "shot1-1140pm-lead.mp4", start: 8.2, dur: 7.4, from: 1.2, gain: 0.32 },
-  // The close. Keys on the porch under "Keep the next one." Lowest gain of the three: this is the
-  // only beat carrying a URL, the shot has a sun flare in it, and a washed CTA is a wasted ending.
-  { clip: "shot6-keys-porch.mp4", start: 39.4, dur: 5.6, from: 3.4, gain: 0.24 },
+  { clip: "shot2-empty-office.mp4", start: 0.0, dur: 7.6, from: 1.5, gain: 0.80, sat: 0.55 },
+  // 9:42 on a Sunday. The dark kitchen and the phone lying on the counter, which lights up.
+  { clip: "shot1-1140pm-lead.mp4", start: 8.2, dur: 7.4, from: 1.2, gain: 0.80, sat: 0.55 },
+  // NO footage under "They call the next agent." That line is the punch and it works because it
+  // arrives on nothing. A daylight aerial there was also tonally wrong under a line about a call
+  // at 9:42 at night.
+  // The close. Keys on the porch under "Keep the next one." Still the lowest of the four: this is
+  // the only beat carrying a URL, and a washed CTA is a wasted ending.
+  { clip: "shot6-keys-porch.mp4", start: 39.4, dur: 5.6, from: 3.4, gain: 0.72, sat: 0.55 },
 ];
 
+const SCRIM_MIN = 0.16;   // luma multiplier at the centre of the frame, where the type lives
 const FADE = 0.7; // seconds, each edge - a hard in on a ghosted image reads as a glitch
 
 for (const b of BEATS) {
@@ -62,7 +70,7 @@ const chains = BEATS.map((b, i) => {
     // Chroma is pulled toward neutral (128) in the SAME pass as luma. Darkening luma alone leaves
     // chroma at full strength, so what survives is disproportionately coloured and the warm shots
     // came back magenta. Near-monochrome is also the site's established photography rule.
-    `lutyuv=y=val*${b.gain.toFixed(3)}:u=128+(val-128)*0.22:v=128+(val-128)*0.22,` +
+    `lutyuv=y=val*${b.gain.toFixed(3)}:u=128+(val-128)*${b.sat.toFixed(2)}:v=128+(val-128)*${b.sat.toFixed(2)},` +
     `fade=t=in:st=0:d=${FADE}:alpha=0,fade=t=out:st=${(b.dur - FADE).toFixed(2)}:d=${FADE}:alpha=0,` +
     `setpts=PTS+${b.start}/TB[b${i}]`
   );
@@ -75,6 +83,18 @@ const overlays = BEATS.map((b, i) => {
   last = out;
   return chain;
 });
+
+// A SCRIM, applied once to the finished underlay.
+//
+// Raising the footage until it is clearly present also destroys the film's secondary type: the
+// sub-lines and the source credit are thin mid-grey, which reads beautifully on black and
+// disappears completely over a lit kitchen counter. Gain alone cannot solve that - dark enough for
+// the small type is too dark to see the image, which is exactly the note this pass came back with.
+//
+// So the image runs bright and a soft elliptical scrim darkens the middle, where every line of type
+// in this film sits. Edges keep the photograph, the centre keeps the contrast. This is what a title
+// designer would do with a gradient, expressed as a multiply on luma.
+const SCRIM = `geq=lum='p(X,Y)*(${SCRIM_MIN}+${(1 - SCRIM_MIN).toFixed(2)}*min(1,hypot((X-W/2)/(W*0.52),(Y-H/2)/(H*0.70))))':cb='p(X,Y)':cr='p(X,Y)'`;
 
 const filter = [
   `color=c=black:s=1280x720:r=30:d=45[base]`,
@@ -91,11 +111,12 @@ const filter = [
   // Keying on luma instead means a text pixel is 100% film and a background pixel is 100% footage,
   // so the accent colour is bit-for-bit what the stage rendered. Threshold at 45 because the stage
   // background sits near Y=15 and the type is well above 200.
-  `[3:v]split=2[fg][key]`,
+  `[under]${SCRIM}[unders]`,
+  `[${BEATS.length}:v]split=2[fg][key]`,
   `[key]format=gray,lut=y='if(gt(val,45),min(255,(val-45)*6),0)'[alpha]`,
   `[fg]format=yuva420p[fgy]`,
   `[fgy][alpha]alphamerge[fgk]`,
-  `[under][fgk]overlay=0:0:format=auto[v]`,
+  `[unders][fgk]overlay=0:0:format=auto[v]`,
 ].join(";");
 
 const args = [
@@ -103,13 +124,16 @@ const args = [
   ...inputs,
   "-i", FILM,
   "-filter_complex", filter,
-  "-map", "[v]", "-map", "3:a?",
+  "-map", "[v]", "-map", `${BEATS.length}:a?`,
   "-c:v", "libx264", "-crf", "20", "-preset", "slow", "-pix_fmt", "yuv420p",
   "-c:a", "copy",
   TMP,
 ];
 
-console.log("mixing B-roll into the voice film...");
+if (path.resolve(FILM) === path.resolve(OUT)) {
+  throw new Error('source and output are the same file: this would double-expose every beat');
+}
+console.log();
 execFileSync(FFMPEG, args, { stdio: ["ignore", "inherit", "inherit"] });
 
 if (process.argv.includes("--probe")) {

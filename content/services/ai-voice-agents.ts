@@ -79,6 +79,14 @@ export const aiVoiceAgents: Service = {
       body: "You have a list of leads nobody has called in months. The agent works through it outbound, holds real conversations, finds the handful who are ready to move now, and puts them on your calendar.",
     },
     {
+      title: "Call this one, now",
+      body: "You do not have to wait for a trigger. Point the agent at a single contact and tell it to call, and it dials on the spot with the same qualifying conversation and the same booking. Useful the moment somebody registers and you want them spoken to before they open the next tab.",
+    },
+    {
+      title: "Telling a lot of people at once",
+      body: "A price drop, an open house, a new listing that matches what a group of people told you they wanted. The agent works the whole list in parallel instead of one at a time, has a real conversation with whoever picks up, and books the ones who are interested. Consent and calling windows apply exactly as they would if you dialed the list yourself.",
+    },
+    {
       title: "The ISA you did not hire",
       body: "An inside sales agent costs a salary, needs training, and works a shift. The voice agent runs every hour of every day at a fraction of that, and it never has a bad morning on the phones.",
     },

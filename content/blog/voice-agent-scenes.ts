@@ -124,12 +124,20 @@ export const FOUR_MOVES: GridItem[] = [
  * database-reactivation use case). */
 export const OUTBOUND: GridItem[] = [
   {
+    lead: "You can point it at one person and tell it to call.",
+    body: "It does not have to wait for a trigger. Somebody registers, you want them spoken to before they open the next tab, so you tell the agent to dial that contact and it does, with the same qualifying conversation and the same booking at the end of it.",
+  },
+  {
     lead: "It calls again, on a schedule, without getting discouraged.",
     body: "Somebody who did not pick up at two in the afternoon was driving, not uninterested. Human follow-up tends to die at the second attempt, because a third one starts to feel like pestering. The agent tries the evening instead, and the evening is often the one that connects.",
   },
   {
     lead: "It can work the list you already gave up on.",
     body: "Everybody who enquired last year and went quiet is the cheapest inventory you own, and nobody calls it because calling it is miserable. The agent works through it, has real conversations, and hands back the few who are ready to move now.",
+  },
+  {
+    lead: "It can tell a whole list at once, not one at a time.",
+    body: "A price drop, an open house, a listing that matches what forty people told you they were looking for. One caller works that list for a week. The agent works it in parallel, talks to whoever picks up, and books the ones who care.",
   },
 ];
 
@@ -317,7 +325,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       band: "light",
       label: "Calling out",
       eyebrow: "The other direction",
-      heading: "Two unglamorous things.",
+      heading: "Four ways it calls out.",
       columns: 2,
       items: OUTBOUND,
     },
