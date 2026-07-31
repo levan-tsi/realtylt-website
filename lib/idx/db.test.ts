@@ -220,21 +220,23 @@ describe("DbIdxClient.search", () => {
     });
 
     const listingCall = calls.find((u) => u.includes("idx_listings") && !u.includes("idx_sync_state"))!;
-    // sqft is a generated column (max direction added this round); the rest ride the jsonb blob.
+    // EVERY fact is a real column. The four MORE-panel ones used to read out of the `listing`
+    // jsonb, which timed out under PostgREST's exact count and silently fell back to the
+    // committed snapshot — "Built 2000+" answered zero while the feed held 4,713 such homes.
     expect(listingCall).toContain("sqft=lte.3000");
-    expect(listingCall).toContain("listing->garageSpaces=gte.2");
-    expect(listingCall).toContain("listing->garageSpaces=lte.4");
-    expect(listingCall).toContain("listing->lotAcres=gte.1");
-    expect(listingCall).toContain("listing->lotAcres=lte.10");
-    expect(listingCall).toContain("listing->yearBuilt=gte.1990");
-    expect(listingCall).toContain("listing->yearBuilt=lte.2020");
-    expect(listingCall).toContain("listing->taxAnnual=lte.15000");
+    expect(listingCall).toContain("garage_spaces=gte.2");
+    expect(listingCall).toContain("garage_spaces=lte.4");
+    expect(listingCall).toContain("lot_acres=gte.1");
+    expect(listingCall).toContain("lot_acres=lte.10");
+    expect(listingCall).toContain("year_built=gte.1990");
+    expect(listingCall).toContain("year_built=lte.2020");
+    expect(listingCall).toContain("tax_annual=lte.15000");
     // "With photos" rides the photos_servable COLUMN, never the JSONB mirror marker: the sync's
     // full-JSONB upsert wipes the marker, so the old filter hid listings that do have photos.
     expect(listingCall).toContain("photos_servable=gt.0");
     expect(listingCall).not.toContain("listing->photosMirrored");
-    // The text-extraction form (which mis-sorts multi-digit values) must NOT be used.
-    expect(listingCall).not.toContain("listing->>garageSpaces");
+    // No filter may go back to reading the fat jsonb: that is what made these silently stale.
+    expect(listingCall).not.toContain("listing->");
   });
 
   it("defaults to the six Hudson Valley counties when no area is picked (NYC opt-in)", async () => {

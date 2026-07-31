@@ -95,19 +95,25 @@ function searchFilters(p: SearchParams): string {
   if (p.bathsMin != null) parts.push(`baths=gte.${p.bathsMin}`);
   if (p.sqftMin != null) parts.push(`sqft=gte.${p.sqftMin}`);
   if (p.sqftMax != null) parts.push(`sqft=lte.${p.sqftMax}`);
-  // "MORE" panel filters. garageSpaces/lotAcres/yearBuilt/taxAnnual aren't generated columns,
-  // so they filter through the `listing` jsonb. The SINGLE arrow `->` keeps the value as jsonb
-  // so PostgREST compares it NUMERICALLY (verified: `->garageSpaces=gte.2` == 583, while the
-  // text `->>` form mis-sorts "10" < "2"). A null/absent value never satisfies gte/lte, so
-  // rows missing the fact drop out — honest. Unindexed jsonb extraction, but a seq scan over
-  // the ~13k active rows measures in single-digit ms.
-  if (p.garageMin != null) parts.push(`listing->garageSpaces=gte.${p.garageMin}`);
-  if (p.garageMax != null) parts.push(`listing->garageSpaces=lte.${p.garageMax}`);
-  if (p.lotMin != null) parts.push(`listing->lotAcres=gte.${p.lotMin}`);
-  if (p.lotMax != null) parts.push(`listing->lotAcres=lte.${p.lotMax}`);
-  if (p.yearMin != null) parts.push(`listing->yearBuilt=gte.${p.yearMin}`);
-  if (p.yearMax != null) parts.push(`listing->yearBuilt=lte.${p.yearMax}`);
-  if (p.taxMax != null) parts.push(`listing->taxAnnual=lte.${p.taxMax}`);
+  // "MORE" panel filters — real generated columns since supabase/migrations/
+  // idx_more_facts_columns.sql, like every other fact on this table.
+  //
+  // They used to read out of the `listing` jsonb (`listing->yearBuilt=gte.2000`), and that
+  // was serving STALE SNAPSHOT DATA without telling anyone: `listing` is a fat jsonb that
+  // TOASTs, so the predicate had to detoast rows, and with PostgREST's exact count and the
+  // ORDER BY on top it blew the anon role's statement timeout — measured, year>=2000 alone
+  // was fine at 319ms and TIMED OUT at ~3.2s with the count. search() caught the error and
+  // fell back to the committed snapshot, so "Built 2000+" answered ZERO while the feed held
+  // 4,713 such homes. Expression indexes on the jsonb paths did not help; the bitmap heap
+  // recheck detoasts anyway. A NULL still never satisfies gte/lte, so a row that does not
+  // state its year is still honestly excluded from a year filter.
+  if (p.garageMin != null) parts.push(`garage_spaces=gte.${p.garageMin}`);
+  if (p.garageMax != null) parts.push(`garage_spaces=lte.${p.garageMax}`);
+  if (p.lotMin != null) parts.push(`lot_acres=gte.${p.lotMin}`);
+  if (p.lotMax != null) parts.push(`lot_acres=lte.${p.lotMax}`);
+  if (p.yearMin != null) parts.push(`year_built=gte.${p.yearMin}`);
+  if (p.yearMax != null) parts.push(`year_built=lte.${p.yearMax}`);
+  if (p.taxMax != null) parts.push(`tax_annual=lte.${p.taxMax}`);
   // photos_servable, not the JSONB marker: the marker is wiped by the sync's full-JSONB upsert,
   // so filtering on it hid 9,186 active listings that DO have photos (measured 2026-07-30).
   if (p.withPhotosOnly) parts.push(`photos_servable=gt.0`);
