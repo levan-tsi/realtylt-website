@@ -2,10 +2,11 @@
 
 ## STATUS (2026-07-30, session 9: TOPIC 2 IS LIVE and the template is proven)
 
-**`/blog/ai-voice-agent-missed-calls-real-estate` ships at 18/19 on the gate**, and the one
-failure is deliberate: `dateModified === datePublished` because the post is NEW and has never
-been revised. An invented `updated` is the freshness fiction the type's own comment warns
-about. Set it on the first REAL revision and it goes to 19/19.
+**`/blog/ai-voice-agent-missed-calls-real-estate` passes 19/19 on the gate**, verified on
+production 2026-07-31 (`node scripts/score-flagship.mjs ai-voice-agent-missed-calls-real-estate`,
+`published=2026-07-30 modified=2026-07-31`). The shipped chat post still passes 19/19 too, so the
+primitive extraction caused no regression. An earlier line here said 18/19; that was written
+before the post took its first real revision and was stale, not wrong at the time.
 
 **The template worked. Topic 2 added ZERO bespoke components.** The four scenes it needed were
 generalised out of topic 1's one-off code instead of copied:

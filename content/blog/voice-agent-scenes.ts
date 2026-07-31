@@ -190,7 +190,10 @@ export const VENDOR_QUESTIONS: GridItem[] = [
 export const CALL_PATH: { label: string; connects: string; at?: string }[] = [
   { label: "The call", connects: "Your own number, any hour", at: "9:42 pm" },
   { label: "The agent", connects: "A voice on Vapi, given limits" },
-  { label: "Your listings", connects: "What it is allowed to state" },
+  // Kept short deliberately: this is the third node, and the third node is the last one visible
+  // before the spine scrolls on a 390px phone. A longer caption here cuts mid-phrase and reads as
+  // a broken layout rather than as a scroller.
+  { label: "Your listings", connects: "What it may state" },
   { label: "Your calendar", connects: "Live availability, not a guess" },
   { label: "The record", connects: "CRM, with the transcript" },
   { label: "The handoff", connects: "Time booked with a person", at: "9:30 am" },
