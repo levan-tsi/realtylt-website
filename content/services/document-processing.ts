@@ -23,7 +23,7 @@ export const documentProcessing: Service = {
   seo: {
     title: "AI Document Processing for Real Estate Contracts",
     description:
-      "Purchase agreements, disclosures, and leases parsed in seconds. Terms, key dates, and parties extracted, missing fields flagged, and the result filed into your CRM.",
+      "Purchase agreements, disclosures, and leases parsed in seconds. Terms, key dates, and parties extracted, missing fields flagged, and filed into your CRM.",
   },
 
   figure: {
@@ -99,4 +99,6 @@ export const documentProcessing: Service = {
       a: "It removes the re-keying and the deadline tracking, which is the part of the job that is mechanical and the part where mistakes happen. The judgment, the chasing, and the client relationship stay with a person.",
     },
   ],
+
+  relatedPosts: ["workflow-automation-real-estate-business"],
 };

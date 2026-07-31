@@ -23,7 +23,7 @@ export const aiAudit: Service = {
   seo: {
     title: "AI Audit: Find Where AI Pays Off in Your Business First",
     description:
-      "A mapped review of how your business actually runs, a list of AI opportunities ranked by payback, a clear build plan, and a first win shipped. The low-risk way to start.",
+      "A mapped review of how your business actually runs, AI opportunities ranked by payback, a clear build plan, and a first win shipped. The low-risk way to start.",
   },
 
   figure: {

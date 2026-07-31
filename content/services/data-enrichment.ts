@@ -23,7 +23,7 @@ export const dataEnrichment: Service = {
   seo: {
     title: "Real Estate Data Enrichment: Append and Verify Contacts",
     description:
-      "Thin records become callable profiles. Phone and email appended and verified, duplicates collapsed, and unreachable rows flagged rather than sold to you as leads.",
+      "Thin records become callable profiles. Phone and email appended and verified, duplicates collapsed, and unreachable rows flagged rather than sold to you.",
   },
 
   figure: {
@@ -99,4 +99,6 @@ export const dataEnrichment: Service = {
       a: "They come back flagged as thin or unreachable rather than padded out with a guess. A dead number that looks like a live one is worse than a blank field, because you pay for it in dial time.",
     },
   ],
+
+  relatedPosts: ["workflow-automation-real-estate-business"],
 };

@@ -23,7 +23,7 @@ export const marketingAutomation: Service = {
   seo: {
     title: "Real Estate Marketing Automation: Email, SMS, and Nurture",
     description:
-      "Behavior-triggered email and SMS campaigns, social posting, listing promotion, and retargeting. The next touch fires from what the lead actually did, not from a calendar.",
+      "Behavior-triggered email and SMS, social posting, listing promotion, and retargeting. The next touch fires from what the lead did, not from a calendar.",
   },
 
   figure: {

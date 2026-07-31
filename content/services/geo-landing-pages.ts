@@ -23,7 +23,7 @@ export const geoLandingPages: Service = {
   seo: {
     title: "Local and GEO Landing Pages Built to Rank",
     description:
-      "A real page for every area you serve, written to rank in Google and to be quoted in AI answers, with local proof and lead capture built in. Not thin doorway pages.",
+      "A real page for every area you serve, written to rank in Google and to be quoted in AI answers, with local proof and lead capture. Not thin doorway pages.",
   },
 
   figure: {

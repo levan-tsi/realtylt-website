@@ -23,7 +23,7 @@ export const databaseReactivation: Service = {
   seo: {
     title: "Database Reactivation: Wake Your Cold Real Estate Leads",
     description:
-      "AI works your dormant CRM by text and by phone, holds real conversations with old leads, finds the ones ready to move now, and books them straight into your calendar.",
+      "AI works your dormant CRM by text and by phone, holds real conversations with old leads, finds the ones ready to move now, and books them in.",
   },
 
   figure: {
@@ -91,5 +91,10 @@ export const databaseReactivation: Service = {
       q: "How does it decide who is worth calling?",
       a: "It reads intent from what the person actually says: whether the move is still on, whether the timeline moved, whether they now have a house to sell. Everyone gets an attempt. Only the ones showing real intent reach your calendar.",
     },
+  ],
+
+  relatedPosts: [
+    "ai-voice-agent-missed-calls-real-estate",
+    "workflow-automation-real-estate-business",
   ],
 };

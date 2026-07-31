@@ -23,7 +23,7 @@ export const aiAppointmentBooking: Service = {
   seo: {
     title: "AI Appointment Booking: Book the Job in the First Conversation",
     description:
-      "An AI that replies in seconds, offers your real open slots, books the appointment inside the conversation, and sends the confirmations and reminders that stop no-shows.",
+      "An AI that replies in seconds, offers your real open slots, books inside the conversation, and sends the confirmations and reminders that stop no-shows.",
   },
 
   figure: {
@@ -91,5 +91,10 @@ export const aiAppointmentBooking: Service = {
       q: "Can it book on the phone as well as by text?",
       a: "Yes. The same booking runs behind the AI voice agent, so a caller can be booked mid-conversation exactly as a website visitor can.",
     },
+  ],
+
+  relatedPosts: [
+    "ai-voice-agent-missed-calls-real-estate",
+    "ai-chat-assistant-real-estate-website",
   ],
 };

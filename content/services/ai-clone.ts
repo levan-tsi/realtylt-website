@@ -23,7 +23,7 @@ export const aiClone: Service = {
   seo: {
     title: "AI Clone for Real Estate Agents: Video Avatar and Voice Twin",
     description:
-      "A video avatar and voice clone of you, wired to your listings and your market, recording personalized walkthroughs and following up with leads in your own face and voice.",
+      "A video avatar and voice clone of you, wired to your listings and your market, recording personalized walkthroughs and following up in your own face and voice.",
   },
 
   figure: {
@@ -91,5 +91,10 @@ export const aiClone: Service = {
       q: "Who owns the avatar and the voice?",
       a: "You do. The likeness and the voice are yours, they are used only on your content, and they are not shared, licensed on, or reused anywhere else.",
     },
+  ],
+
+  relatedPosts: [
+    "ai-chat-assistant-real-estate-website",
+    "ai-voice-agent-missed-calls-real-estate",
   ],
 };

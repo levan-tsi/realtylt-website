@@ -23,7 +23,7 @@ export const leadQualification: Service = {
   seo: {
     title: "AI Lead Qualification and Scoring for Real Estate",
     description:
-      "Every lead scored on intent, budget, and timeline from what they said, then routed to the right agent or nurture track, with the ready-to-move ones surfaced first.",
+      "Every lead scored on intent, budget, and timeline from what they said, then routed to the right agent or nurture track, with the ready ones surfaced first.",
   },
 
   figure: {
@@ -98,5 +98,10 @@ export const leadQualification: Service = {
       q: "Does a low score mean the lead is dropped?",
       a: "No. It means the lead goes to a nurture track instead of your call list. Most leads are not ready today and are ready in six months, and the point of scoring is to stop those two groups getting the same treatment.",
     },
+  ],
+
+  relatedPosts: [
+    "ai-voice-agent-missed-calls-real-estate",
+    "ai-chat-assistant-real-estate-website",
   ],
 };

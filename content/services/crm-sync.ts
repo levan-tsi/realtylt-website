@@ -23,7 +23,7 @@ export const crmSync: Service = {
   seo: {
     title: "Two-Way CRM Sync for Follow Up Boss, kvCORE, and HubSpot",
     description:
-      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is the record that is true.",
+      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is true.",
   },
 
   figure: {
@@ -87,5 +87,10 @@ export const crmSync: Service = {
       q: "Will it create duplicate contacts?",
       a: "No. Deduping and conflict rules are part of the build, so an inbound lead matching an existing contact updates that record rather than creating a second one.",
     },
+  ],
+
+  relatedPosts: [
+    "workflow-automation-real-estate-business",
+    "ai-voice-agent-missed-calls-real-estate",
   ],
 };

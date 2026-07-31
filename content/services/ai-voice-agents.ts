@@ -23,7 +23,7 @@ export const aiVoiceAgents: Service = {
   seo: {
     title: "AI Voice Agents for Real Estate: Inbound and Outbound Calls",
     description:
-      "AI phone agents that answer every call 24/7 and call new leads back in seconds, qualify them in a natural conversation, book the appointment, and log the outcome.",
+      "AI phone agents that answer every call 24/7 and call new leads back in seconds, qualify them in a natural conversation, book the appointment, and log it.",
   },
 
   figure: {
@@ -115,5 +115,10 @@ export const aiVoiceAgents: Service = {
     },
   ],
 
-  relatedPosts: ["ai-chat-assistant-real-estate-website", "workflow-automation-real-estate-business"],
+  /** Own flagship first, the way ai-chat-assistant does it: the deep dive on THIS service is
+   * the most useful next click from this page, not a sibling topic. */
+  relatedPosts: [
+    "ai-voice-agent-missed-calls-real-estate",
+    "ai-chat-assistant-real-estate-website",
+  ],
 };

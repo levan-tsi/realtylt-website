@@ -23,7 +23,7 @@ export const reviewAutomation: Service = {
   seo: {
     title: "Automated Google Review Requests by Text",
     description:
-      "Every happy customer is asked at the right moment, one tap from your Google review page. The best reviews land on your site, and unhappy feedback is caught privately.",
+      "Every happy customer is asked at the right moment, one tap from your Google review page. The best reviews land on your site, unhappy feedback stays private.",
   },
 
   stat: {
@@ -96,4 +96,6 @@ export const reviewAutomation: Service = {
       a: "Yes. Reviews can be pulled through to your site automatically so your best recent feedback appears where prospects are already looking.",
     },
   ],
+
+  relatedPosts: ["workflow-automation-real-estate-business"],
 };

@@ -23,7 +23,7 @@ export const aiScheduling: Service = {
   seo: {
     title: "AI Scheduling: Showings and Consults That Book Themselves",
     description:
-      "Live availability from Google or Outlook, offered inside the conversation, booked without conflicts, confirmed and reminded, and rescheduled without a human touching it.",
+      "Live availability from Google or Outlook, offered inside the conversation, booked without conflicts, confirmed, reminded, and rescheduled without a human.",
   },
 
   figure: {
@@ -86,5 +86,10 @@ export const aiScheduling: Service = {
       q: "Can people reschedule without calling me?",
       a: "Yes. A reschedule link handles it, the calendar updates, and the reminders adjust. That removes one of the most common reasons an appointment quietly becomes a no-show.",
     },
+  ],
+
+  relatedPosts: [
+    "ai-voice-agent-missed-calls-real-estate",
+    "workflow-automation-real-estate-business",
   ],
 };

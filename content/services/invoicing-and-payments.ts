@@ -23,7 +23,7 @@ export const invoicingAndPayments: Service = {
   seo: {
     title: "Automated Invoicing and Payment Follow-Up",
     description:
-      "Invoices sent the moment a job is booked or finished, deposits taken with a tap-to-pay link, and polite automatic reminders at 3, 7, and 14 days until you are paid.",
+      "Invoices sent the moment a job is booked or finished, deposits taken with a tap-to-pay link, and polite automatic reminders until you are actually paid.",
   },
 
   figure: {
@@ -92,4 +92,6 @@ export const invoicingAndPayments: Service = {
       a: "It connects to the invoicing and accounting tools you already run rather than replacing them, so the record of who owes what stays in one place.",
     },
   ],
+
+  relatedPosts: ["workflow-automation-real-estate-business"],
 };

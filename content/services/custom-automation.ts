@@ -23,7 +23,7 @@ export const customAutomation: Service = {
   seo: {
     title: "Custom AI Automation Built Around Your Workflow",
     description:
-      "Inbound and outbound agents, enrichment, qualification, scheduling, CRM sync, and document processing, orchestrated in n8n and wired to the stack you already run.",
+      "Inbound and outbound agents, enrichment, qualification, scheduling, CRM sync, and document processing, orchestrated in n8n and wired to your stack.",
   },
 
   figure: {
