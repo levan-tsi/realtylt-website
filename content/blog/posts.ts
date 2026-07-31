@@ -4,9 +4,15 @@
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
-import { AI_CHAT_ASSISTANT_POST, AI_VOICE_AGENTS_POST, WORKFLOW_AUTOMATION_POST } from "./ai-posts";
+import {
+  AI_CHAT_ASSISTANT_POST,
+  AI_VOICE_AGENTS_POST,
+  DATABASE_REACTIVATION_POST,
+  WORKFLOW_AUTOMATION_POST,
+} from "./ai-posts";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
+import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -53,6 +59,24 @@ export const POSTS: BlogPost[] = [
      form behind /services/ai-voice-agents, /services/ai-chat-assistant and
      /services/workflow-automation, and those pages link back to them. The first two are
      flagships: full-bleed scenes, cited data graphics and their own cold opens. */
+  {
+    slug: "database-reactivation-old-real-estate-leads",
+    title: "They Said Not Right Now. That Was Three Years Ago.",
+    /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
+     * session began on the 30th and the piece was rewritten and verified on the 31st. */
+    date: "2026-07-30",
+    updated: "2026-07-31",
+    excerpt:
+      "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign actually does with that list, the consent rules with dates in them that nobody selling you one mentions, and what it costs when it goes wrong.",
+    seoDescription:
+      "What AI database reactivation does with your old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
+    cover: "/images/hero/valley-aerial.jpg",
+    body: [],
+    placeholder: false,
+    markdown: DATABASE_REACTIVATION_POST,
+    film: REACTIVATION_FILM,
+    flagship: REACTIVATION_FLAGSHIP,
+  },
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
     title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",

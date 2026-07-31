@@ -143,11 +143,11 @@ Everything above is about the call you did not take. The bigger half of this is 
 
 Most leads never phone you at all. They fill in a form at nine at night, or they arrive from a portal or an ad, and then they sit in a list waiting for somebody to notice them. The standard answer to that is a follow-up task, which gets done tomorrow, or on Thursday, or never.
 
-The second of the four moves above is that other direction, and it earns more than the one line it gets there. Two things about calling out matter more than the speed does, and both of them are unglamorous.
+The second of the four moves above is that other direction, and it earns more than the one line it gets there. It is not only the automatic call either. You can point it at somebody and tell it to dial, and you can point it at a list.
 
 [[scene:outbound]]
 
-None of this makes the outbound call a good idea on its own. Ringing somebody who never asked to hear from you is how you end up in the do-not-call file, and the rules that govern your own dialing govern the agent exactly the same way. The section on the legal part below is about outbound as much as it is about recording.
+The last of those is the one to be careful with, and it is worth saying plainly rather than selling. Calling a hundred people at once is the same act whether a person does it or software does, and the rules do not soften because the dialing got cheaper. You still need a reason to be calling each of them, you still have to honor do-not-call and the calling windows, and the agent still has to say what it is when somebody picks up. Volume is exactly where outbound stops being useful and starts being a complaint, so the list you call should be people who asked to hear from you about that thing. The legal section below is about outbound at least as much as it is about recording.
 
 ## The one thing that decides whether it works
 
@@ -230,6 +230,126 @@ The same rules that govern your own outbound calling apply: you need consent to 
 If you would rather see one than read about one, the whole system is laid out on [the RealtyLT AI page](/ai#voice), and the [AI voice agents page](/services/ai-voice-agents) has the full breakdown of what it connects to and what it does with the calls it takes.
 
 The sibling problem is worth reading too. The same argument about being first, on the [website chat side](/blog/ai-chat-assistant-real-estate-website), where the buyer messaging you at 11:40pm never picks up the phone at all.
+
+[[scene:funnel]]`;
+
+export const DATABASE_REACTIVATION_POST = `In the spring of 2023 somebody filled in the home valuation form on your website. They wanted a number. You called twice, they said they were still thinking about it, and the thread went quiet the way most threads go quiet.
+
+They are still in your CRM. Their number still works. Nobody has dialed it since.
+
+Last year they sold that house. Somebody else listed it.
+
+Nothing was neglected in that story, which is exactly what makes it expensive. No ball was dropped and nobody was lazy. It is that following up with a person who said not right now, three years later, in the one month it stopped being not right now, is not a thing a human being is built to do.
+
+[[scene:in-short]]
+
+[[scene:reel]]
+
+## What is actually sitting in that database
+
+Everybody says the money is in the database. Almost nobody says what the money is made of, so here is the honest version.
+
+The National Association of REALTORS surveys recent buyers and sellers every year and asks, among a hundred other things, how they found the agent they hired. The most recent generational cut of that survey is worth looking at properly, because the two biggest answers are not marketing.
+
+[[scene:agent-source]]
+
+Two thirds of sellers hired somebody who was already known to them: referred by a friend, a neighbor or a relative, or an agent they had worked with before. Four percent found their agent on a website.
+
+Read the small bars too, because they are the honest half. Four percent of sellers hired an agent who had contacted them directly. Cold outreach is not what fills a listing calendar, and this piece is not going to pretend otherwise.
+
+What that leaves is an interesting middle. The people sitting in your CRM are not strangers and they are not friends. They are the group that raised a hand once, at a moment when the answer turned out to be later. They already know your name, they contacted you first, and they are the only group anywhere near the top of that chart that you actually hold a list of.
+
+[[scene:plate]]
+
+## Why nobody works it
+
+Ask an agent when they last went through their old leads properly and you get a wince.
+
+It is not laziness and it is not a discipline problem. It is that the work is genuinely awful. Three hundred conversations to find four people whose life has changed, most of them going to voicemail, a few of them annoyed, and the majority of the ones who do answer saying no for the second time. The reward for doing it properly is getting to do it again next quarter.
+
+There is a quieter trap in it too. Human follow-up dies at the second attempt, because a third starts to feel like pestering. But the person who did not pick up at two on a Tuesday was driving, not deciding, and the difference between those two is invisible from your end. So the list gets a burst of attention in a slow month, produces nothing that week, and gets closed again.
+
+Meanwhile the contacts in it keep aging in two directions at once. Some are drifting further out of reach. Some are quietly becoming ready. Nobody is watching which.
+
+## What database reactivation actually does
+
+[[scene:four-moves]]
+
+The last one is the part that decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from an appointment that arrives as a name and a time. You already know they have a house to sell, and you already know they said so themselves.
+
+## The part nobody selling you this will mention
+
+Reactivation is the one AI use case in real estate where the technology is the easy half and the rules are the hard half. Nobody selling you a done-for-you database campaign opens with this section, which is a decent reason to read it here.
+
+None of what follows is legal advice, I am not a lawyer, and the rules move. The point is to know that the questions exist, because the person selling you the campaign has no reason to raise them.
+
+**There is a clock on your old lead, and it is shorter than you think.** Federal rules exempt calls to somebody you have an established business relationship with from the national do-not-call registry. That exemption is defined with dates in it. Under [47 CFR 64.1200(f)(5)](https://www.law.cornell.edu/cfr/text/47/64.1200), the relationship runs from "the subscriber's purchase or transaction with the entity within the eighteen (18) months immediately preceding the date of the telephone call or on the basis of the subscriber's inquiry or application regarding products or services offered by the entity within the three months immediately preceding the date of the call". A closed deal buys you eighteen months. A form fill buys you three. Your 2023 lead ran out of both a long time ago, and if that number is on the registry, warmth is not a defense.
+
+**An automated call or text is a separate question with a stricter answer.** The do-not-call registry is one rule. Using an autodialer or an artificial voice is another one entirely, and clearing the first does not clear the second. The same regulation, at paragraph (a)(2), bars a telemarketing call or text to a mobile number placed with "an automatic telephone dialing system or an artificial or prerecorded voice" unless you have the prior express written consent of the person you are calling. Written consent is defined narrowly: a signed agreement, with a clear and conspicuous disclosure that the person is authorizing automated calls, and a statement that agreeing is not a condition of buying anything. An electronic signature counts. A checkbox on an IDX registration page that said "by registering you agree to be contacted" almost certainly does not.
+
+**A no has to be easy, and it has to stick.** The rules were tightened here recently and the current version is unusually specific. A person can revoke consent "by using any reasonable method", and stop, quit, end, revoke, opt out, cancel and unsubscribe are all listed as reasonable by definition. If somebody replies with different words, you have to treat that as an opt-out too. And the request "must be honored within a reasonable time not to exceed ten business days from receipt". You cannot make people use one specific channel to get out.
+
+[[scene:consent-check]]
+
+Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the records, and whatever your CRM does with the word stop. If a vendor cannot tell you how their campaign handles all three, the campaign is not ready to send.
+
+## What it costs when it goes wrong
+
+We do not publish a price for this and I am not going to invent one here, because it depends entirely on the size and state of the list. What is worth publishing is the other side of the ledger, because it is a fixed number and almost nobody quotes it.
+
+The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. Per message. There is a whole plaintiff's bar that does nothing else, and a list of thirty thousand contacts is a large multiplier attached to a small mistake.
+
+The second cost is less dramatic and more likely. Send a burst of unwanted messages from a business number and the carriers filter it, which means your legitimate messages to real clients quietly stop arriving too. You will not get an error. It will just go quiet, and you will find out weeks later.
+
+Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
+
+[[scene:pull-quote]]
+
+[[scene:teardown]]
+
+## What it does not do, and should not pretend to
+
+It does not manufacture intent. Most of that list is going to say no again, because most of them meant it. What reactivation changes is that somebody finally asked, and that the small number whose circumstances moved get found in the same week they moved rather than eighteen months later. Anybody quoting you a conversion rate on a cold database before they have seen the database is quoting you a number they made up.
+
+It does not fix a list that has no consent behind it. If the records do not carry a date and a source, the honest first project is not a campaign, it is a cleanup.
+
+It does not replace you calling the people who actually matter. Your past clients, the neighbor who sold with you in 2019, anybody whose relationship is the real asset: those calls are yours. A machine reintroducing itself to somebody who came to your daughter's christening is worse than no contact at all.
+
+And it does not close. It finds the conversation. Everything that happens after somebody says yes to a Thursday is the reason you have a job.
+
+[[scene:revival-path]]
+
+## Where it goes wrong
+
+[[scene:failure-modes]]
+
+## Common questions, answered honestly
+
+### Do old real estate leads actually convert?
+
+Some of them do, and that is the whole business case rather than a sales line. A person who said not right now two years ago was giving you a timeline, and that timeline has since run out. The job is finding the small share whose circumstances changed, which is exactly the kind of patient, repetitive work software does well and people do not.
+
+### Is it not annoying to text people who went quiet years ago?
+
+It is, if the opener is generic. The difference between reactivation and a blast is whether the first message references what that specific person actually asked about, asks a real question, and takes no for an answer the first time. It also matters enormously that the person hears from you rather than from a stranger, which is why the consent and identification questions above are not paperwork. They are the reason the message lands as a follow-up instead of as spam.
+
+### How does it decide who is worth calling?
+
+It reads intent from what the person says back: whether the move is still on, whether the timeline shifted, whether there is now a house to sell. Everybody in scope gets an attempt. Only the ones showing real intent reach your calendar.
+
+### Can I just do this myself with a mail merge?
+
+You can, and for a list of two hundred you probably should. The reason it stops working is volume and follow-through, not sophistication. A merge sends one message. What actually produces appointments is the second and third exchange, held at the hour the person happens to reply, across a few thousand contacts, without anybody getting bored. That is the part that is hard to staff and easy to automate.
+
+### What happens to the people who say no?
+
+They get recorded as a no, with whatever reason they gave, and they are not contacted again by the campaign. That is not only politeness. A no with a reason attached is the most useful thing the whole exercise produces, because it tells you which part of your list is genuinely dead and which part is just early.
+
+## What to do about it
+
+If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#reactivation), and the [database reactivation page](/services/database-reactivation) has the full breakdown of what it connects to and what it does with what it finds.
+
+The two sibling problems are worth reading as well, because they are the same argument at different moments. The [missed call at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate) is this one before the lead ever goes cold, and the [buyer messaging your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) is the moment the record in your CRM gets created in the first place.
 
 [[scene:funnel]]`;
 

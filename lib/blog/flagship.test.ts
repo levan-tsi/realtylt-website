@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { AI_CHAT_FLAGSHIP } from "@/content/blog/ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP } from "@/content/blog/voice-agent-scenes";
-import { AI_CHAT_ASSISTANT_POST, AI_VOICE_AGENTS_POST } from "@/content/blog/ai-posts";
+import { REACTIVATION_FLAGSHIP } from "@/content/blog/reactivation-scenes";
+import {
+  AI_CHAT_ASSISTANT_POST,
+  AI_VOICE_AGENTS_POST,
+  DATABASE_REACTIVATION_POST,
+} from "@/content/blog/ai-posts";
 import { flagshipToc, type FlagshipContent } from "./flagship";
 import { parseOutline } from "./markdown";
 import { parseHeadings } from "./toc";
@@ -82,6 +87,7 @@ describe("flagshipToc", () => {
 const TOPICS: [string, string, FlagshipContent][] = [
   ["ai chat assistant", AI_CHAT_ASSISTANT_POST, AI_CHAT_FLAGSHIP],
   ["ai voice agents", AI_VOICE_AGENTS_POST, AI_VOICE_FLAGSHIP],
+  ["database reactivation", DATABASE_REACTIVATION_POST, REACTIVATION_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

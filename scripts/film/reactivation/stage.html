@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>reactivation film overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* FILM OVERLAY — "they said not right now", authored at the FINAL resolution (1280x720).
+
+   THIS IS A TRANSPARENT LAYER, NOT A FILM. Everything you see here is drawn over real footage
+   that ffmpeg cuts separately (scripts/film/reactivation/bg.mjs). The body has no background
+   and the renderer screenshots with omitBackground, so the PNGs carry alpha and the picture
+   underneath survives. Every scrim below is therefore a deliberate design decision about how
+   much of the footage to give up in exchange for legible type, per beat, rather than one
+   global dimming.
+
+   1280x720 IS NATIVE. Every b-roll clip is natively 1280x720, so nothing in this film is ever
+   upscaled. The previous two films authored at 1920x1080 because their pictures were drawn
+   rather than shot.
+
+   EVERY BEAT SITS ON ONE FILM CLOCK, and that clock was DERIVED FROM THE VOICE. The narration
+   was generated and measured first (scripts/film/reactivation/vo.mjs) and the numbers below are
+   its measured line boundaries. Retime the stage to the voice; never speed up the voice.
+
+   THE TWO FAULTS EARLIER FILMS FOUND, both designed out here:
+   1. Frame one carried no text. Frame one is the poster and the number is the entire reason
+      anybody stops scrolling, so the hook card is at FULL opacity from frame 0: no fade, no
+      delay, no entrance.
+   2. Text dropped out at cuts. In a sound-off feed the caption IS the script, so a gap is a
+      dropout. Every switch boundary below is the exact end of the previous one, so a changeover
+      is one frame and can never fade through nothing.
+
+   AND THE THIRD, learned on the voice film: do NOT run the caption band under a beat that is
+   already a held statement. Lines 0, 4 and 7 are carried by cards at 3 to 6 times the caption
+   size, so their caption rows are deliberately absent. The words are on screen, just larger. */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:transparent;
+  font-family:Lato,Helvetica,Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.stage{position:relative;width:1280px;height:720px}
+
+/* ─────────── scrims ─────────── */
+/* One per beat, because how much footage to sacrifice is a per-shot decision. The aerial can
+   take a heavy flat scrim; the reply glow is the subject and only gets a foot gradient. */
+.scrim{position:absolute;inset:0;z-index:1;display:none}
+.sA{background:rgba(5,9,14,.80)}
+.sB{background:linear-gradient(90deg,rgba(4,8,13,.90) 0%,rgba(4,8,13,.72) 46%,rgba(4,8,13,.30) 78%,rgba(4,8,13,.42) 100%)}
+.sD{background:rgba(3,6,11,.955)}
+/* Two-ended, not bottom-weighted. The bubbles and the tick list both sit in the TOP third, and
+   a foot-only gradient left them over the brightest part of a sunlit kitchen. Dark at both
+   ends, clear through the middle, so the subject of the shot survives and the type is
+   readable over both of them. */
+.sE{background:linear-gradient(180deg,rgba(4,8,13,.70) 0%,rgba(4,8,13,.54) 30%,rgba(4,8,13,.18) 56%,rgba(4,8,13,.42) 78%,rgba(4,8,13,.88) 100%)}
+.sG{background:rgba(5,9,14,.80)}
+/* the one accent light in the room, on the beats that are cards rather than pictures */
+.glow{position:absolute;inset:0;z-index:2;display:none;
+  background:radial-gradient(46% 52% at 36% 44%,rgba(40,168,224,.16),transparent 70%)}
+
+/* ─────────── the caption band ─────────── */
+/* Bottom, always. It is the script for everyone watching with the sound off, which on a feed
+   is nearly everyone. */
+.cap{position:absolute;z-index:30;left:110px;right:110px;bottom:58px;text-align:center;
+  font-size:30px;font-weight:300;line-height:1.34;letter-spacing:-.01em;display:none;
+  text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.cap b{font-weight:700}
+.cap .accent{color:#28a8e0}
+
+/* ─────────── beat A · the hook (0.00 to 6.90) ─────────── */
+.hook{position:absolute;z-index:20;inset:0 0 130px 0;display:none;place-items:center;text-align:center}
+.hook .n{font-size:196px;font-weight:300;line-height:.86;letter-spacing:-.05em}
+.hook .n i{font-style:normal;font-size:96px;color:#28a8e0;letter-spacing:0;margin-left:8px;
+  position:relative;top:-28px}
+.hook .u{margin-top:28px;font-size:27px;font-weight:300;color:rgba(255,255,255,.72);max-width:920px}
+.hook .src{margin-top:22px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.36);opacity:0;animation:in .5s 1.30s forwards}
+
+/* ─────────── beat B · the record (6.90 to 16.55) ─────────── */
+/* A CRM row, drawn the way a CRM row looks: a label column and a value column, hairlines
+   between. It is an illustration and the page that carries this film says so. */
+.rec{position:absolute;z-index:20;left:96px;top:104px;width:560px;display:none;
+  border-left:2px solid rgba(40,168,224,.55);padding-left:26px}
+.rec .eb{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.42)}
+.rec .nm{margin-top:14px;font-size:52px;font-weight:300;letter-spacing:-.02em}
+.rec dl{margin-top:26px}
+.rec .row{display:flex;justify-content:space-between;gap:24px;padding:13px 0;
+  border-top:1px solid rgba(255,255,255,.13);font-size:20px;font-weight:300}
+.rec .row dt{color:rgba(255,255,255,.45);letter-spacing:.02em}
+.rec .row dd{color:rgba(255,255,255,.92);text-align:right}
+.rec .last{opacity:0;transform:translateY(8px);animation:up .45s 12.30s forwards}
+.rec .last dd{color:#28a8e0}
+/* the card cools once the last-contact date has landed: the record is still there, the
+   attention is not. */
+.rec.cold{filter:saturate(.35) brightness(.72);transition:none}
+
+/* ─────────── beat D · the clock (20.10 to 28.45) ─────────── */
+.clock{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.clock .n{font-size:196px;font-weight:300;line-height:.86;letter-spacing:-.05em}
+.clock .n i{font-style:normal;font-size:62px;color:#28a8e0;letter-spacing:.02em;margin-left:16px;
+  position:relative;top:-42px}
+.clock .u{margin-top:30px;font-size:29px;font-weight:300;color:rgba(255,255,255,.8);max-width:960px;
+  opacity:0;animation:up .5s 21.80s forwards}
+/* NOT uppercased. text-transform turned the paragraph reference into 64.1200(F)(5), and the
+   paragraph in the regulation is a lowercase (f). A citation with the wrong case on a page
+   whose whole argument is that the details are checkable is not a small thing. */
+.clock .src{margin-top:26px;font-size:16px;letter-spacing:.11em;
+  color:#28a8e0;opacity:0;animation:in .5s 24.60s forwards}
+
+/* ─────────── beat E · the opener (28.45 to 34.35) ─────────── */
+.chat{position:absolute;z-index:20;left:150px;right:150px;top:112px;display:none}
+.bub{max-width:660px;border-radius:18px;padding:18px 22px;font-size:22px;font-weight:300;
+  line-height:1.42;opacity:0;transform:translateY(10px)}
+.bub .who{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:9px;font-weight:700}
+.bub.us{background:rgba(40,168,224,.16);border:1px solid rgba(40,168,224,.42);
+  animation:up .45s 28.75s forwards}
+.bub.us .who{color:#28a8e0}
+.bub.them{margin-top:18px;margin-left:auto;background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.18);animation:up .45s 31.60s forwards}
+.bub.them .who{color:rgba(255,255,255,.5)}
+
+/* ─────────── beat F · the outcome (34.35 to 40.45) ─────────── */
+.out{position:absolute;z-index:20;left:150px;right:150px;top:126px;display:none}
+.ev{display:flex;gap:15px;align-items:flex-start;padding:15px 0;
+  border-bottom:1px solid rgba(255,255,255,.14);opacity:0;transform:translateY(9px)}
+.ev .d{width:9px;height:9px;border-radius:50%;background:#28a8e0;margin-top:9px;flex:none}
+.ev span.l{font-size:23px;font-weight:300;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+.v1{animation:up .4s 34.70s forwards}
+.v2{animation:up .4s 35.70s forwards}
+.v3{animation:up .4s 36.70s forwards}
+.booked{margin-top:30px;display:inline-flex;align-items:center;gap:13px;
+  border:1px solid rgba(40,168,224,.5);border-radius:999px;padding:11px 22px;
+  font-size:19px;letter-spacing:.02em;opacity:0;animation:up .45s 38.10s forwards}
+.booked i{width:9px;height:9px;border-radius:50%;background:#28a8e0;display:block;
+  animation:breathe 2.4s ease-in-out 38.10s infinite}
+
+/* ─────────── beat G · the close (40.45 on) ─────────── */
+.cta{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.cta .k{font-size:44px;font-weight:300;letter-spacing:-.02em;max-width:980px}
+.cta .u{margin-top:34px;font-size:56px;font-weight:300;color:#28a8e0;letter-spacing:-.02em;
+  opacity:0;animation:up .5s 41.90s forwards}
+.cta .f{margin-top:30px;font-size:15px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);opacity:0;animation:in .5s 43.30s forwards}
+
+@keyframes in{to{opacity:1}}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="scrim sA"></div>
+  <div class="scrim sB"></div>
+  <div class="scrim sD"></div>
+  <div class="scrim sE"></div>
+  <div class="scrim sG"></div>
+  <div class="glow gA"></div>
+  <div class="glow gD"></div>
+  <div class="glow gG"></div>
+
+  <!-- BEAT A · the number. Full opacity at frame 0: this frame is the poster. -->
+  <div class="hook">
+    <div>
+      <div class="n">66<i>%</i></div>
+      <div class="u">of sellers hire an agent they already knew, or the one a friend sent them</div>
+      <div class="src">NAR 2025 generational trends &middot; 5,390 buyers surveyed</div>
+    </div>
+  </div>
+
+  <!-- BEAT B · the record nobody opened -->
+  <div class="rec">
+    <div class="eb">In your CRM, right now</div>
+    <div class="nm">Dana M.</div>
+    <dl>
+      <div class="row"><dt>Asked about</dt><dd>Wappingers Falls</dd></div>
+      <div class="row"><dt>Wanted</dt><dd>A valuation</dd></div>
+      <div class="row last"><dt>Last contact</dt><dd>May 2023</dd></div>
+    </dl>
+  </div>
+
+  <!-- BEAT D · the clock. A regulation, held, with nothing competing with it. -->
+  <div class="clock">
+    <div>
+      <div class="n">3<i>months</i></div>
+      <div class="u">is how long an inquiry keeps you clear of the national do-not-call registry</div>
+      <div class="src">47 CFR 64.1200(f)(5)</div>
+    </div>
+  </div>
+
+  <!-- BEAT E · the opener -->
+  <div class="chat">
+    <div class="bub us"><span class="who">The assistant</span>Hi Dana, it is Levan's office. You asked us about Wappingers back in 2023. Is a move still on the table?</div>
+    <div class="bub them"><span class="who">Dana</span>shelved for a while honestly. we have started talking about it again though</div>
+  </div>
+
+  <!-- BEAT F · the outcome -->
+  <div class="out">
+    <div class="ev v1"><span class="d"></span><span class="l">Consent and dates checked before anything sent</span></div>
+    <div class="ev v2"><span class="d"></span><span class="l">Every reply written back to the CRM, including the no</span></div>
+    <div class="ev v3"><span class="d"></span><span class="l">Offered only times that were genuinely free</span></div>
+    <div class="booked"><i></i>Booked, Thursday 5:30pm</div>
+  </div>
+
+  <!-- BEAT G · the close -->
+  <div class="cta">
+    <div>
+      <div class="k">The cheapest appointment you will book this month.</div>
+      <div class="u">realtylt.com/ai</div>
+      <div class="f">Built and run by RealtyLT</div>
+    </div>
+  </div>
+
+  <!-- captions: one per narrated line that is not already carried by a card -->
+  <div class="cap c1">Every one of them asked somebody a question first. <b>Some of them asked you.</b></div>
+  <div class="cap c2">In 2023. And nobody has called them since.</div>
+  <div class="cap c3">This is what works the list you already paid for.</div>
+  <div class="cap c5">Then it opens with what that person actually asked about, and it follows the answer.</div>
+  <div class="cap c6">Most still say no, and <b>it writes down why.</b> The few who are ready get booked.</div>
+</div>
+
+<script>
+/* Deterministic seek. Every beat is a CSS animation on the film clock, so freezing the document
+   and setting currentTime renders the exact state at time t. No playback, no timing luck, and
+   the same t always produces the same pixels.
+
+   [selector, display when present, from, until]. Every boundary is the measured line boundary
+   from scripts/_scratch-video/reactivation-vo/schedule.json, and each range STARTS where the
+   previous one ends, so there is never a frame with nothing on it. */
+const SWITCH = [
+  // beat A · the hook. c0 is deliberately absent: the card carries that exact sentence at six
+  // times the caption size, and printing it twice is what the last film had to fix.
+  [".sA",   "block", 0.00,  6.90],
+  [".gA",   "block", 0.00,  6.90],
+  [".hook", "grid",  0.00,  6.90],
+  // beat B · the record
+  [".sB",   "block", 6.90,  20.10],
+  [".rec",  "block", 7.00,  16.55],
+  [".c1",   "block", 6.90,  12.10],
+  [".c2",   "block", 12.10, 16.55],
+  [".c3",   "block", 16.55, 20.10],
+  // beat D · the clock. c4 absent for the same reason as c0.
+  [".sD",   "block", 20.10, 28.45],
+  [".gD",   "block", 20.10, 28.45],
+  [".clock","grid",  20.10, 28.45],
+  // beats E and F share a foot gradient: both are pictures with type over the bottom of them.
+  [".sE",   "block", 28.45, 40.45],
+  [".chat", "block", 28.45, 34.35],
+  [".c5",   "block", 28.45, 34.35],
+  [".out",  "block", 34.35, 40.45],
+  [".c6",   "block", 34.35, 40.45],
+  // beat G · the close. c7 absent: the card carries the line and the URL, larger.
+  [".sG",   "block", 40.45, null],
+  [".gG",   "block", 40.45, null],
+  [".cta",  "grid",  40.45, null],
+];
+
+/* Order is load-bearing. display:none CANCELS an element's animations, so a beat that has just
+   become visible gets a BRAND NEW animation running from zero. Show first, force the style
+   flush, and only then pause and seek, or every element that appears mid-film renders its
+   `from` state instead of the state it should be in at t. */
+window.__seek = (t) => {
+  for (const [sel, shown, from, until] of SWITCH) {
+    for (const el of document.querySelectorAll(sel)) {
+      el.style.display = t >= from && (until === null || t < until) ? shown : "none";
+    }
+  }
+  // The record cools rather than leaves: it is still in the CRM, which is the point.
+  document.querySelector(".rec").classList.toggle("cold", t >= 14.40);
+  void document.body.offsetHeight;
+  for (const a of document.getAnimations()) {
+    a.pause();
+    a.currentTime = t * 1000;
+  }
+};
+window.__ready = document.fonts.ready.then(() => {
+  window.__seek(0);
+  return true;
+});
+</script>
+</body>
+</html>
