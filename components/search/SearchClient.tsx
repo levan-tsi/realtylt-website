@@ -515,6 +515,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           />
         </div>
 
+        {/* On a phone these six sit in two aligned columns instead of wrapping ragged — measured
+            before: Bed alone beside the place field, then Bath+Min Price, then Max Price+Sqft,
+            then Type+More+Search, each row starting at a different x. `sm:contents` dissolves
+            this wrapper from 640px up, so the desktop row is byte-identical to before. */}
+        <div className="grid w-full grid-cols-2 items-center gap-x-4 sm:contents">
         <label htmlFor="f-beds" className="sr-only">Minimum beds</label>
         <select id="f-beds" value={filters.bedsMin} onChange={(e) => apply({ bedsMin: e.target.value })} className={selectCls}>
           <option value="">Bed</option>
@@ -563,7 +568,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             </select>
           </>
         )}
+        </div>
 
+        {/* The three actions travel together. MORE opens the panel, SEARCH commits the text
+            field, SAVE SEARCH sets up the alert — and before this they could split across a
+            wrap: at 1440 SAVE SEARCH sat alone on a second line under a full row, which reads
+            as an accident rather than a decision. Grouped and pushed right, the bar is filters
+            on the left and actions on the right at every width, and when they do wrap they
+            wrap as one right-aligned cluster. */}
+        <div className="flex w-full flex-wrap items-center gap-3 sm:ml-auto sm:w-auto sm:flex-nowrap">
         {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}
         <button
           type="button"
@@ -587,16 +600,21 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           )}
         </button>
 
+        {/* Search is the primary action and grows into the space on a phone; Save Search is
+            secondary and reads that way now (it was a second identical black pill competing
+            with it). Both carry the same 2px border so the two boxes are exactly the same
+            height — the outline treatment is the site's existing secondary button, the one
+            "Clear All Filters" already uses. */}
         <button
           type="submit"
-          className="rounded-xl bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="grow rounded-xl border-2 border-ink bg-ink px-4 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0"
         >
           Search
         </button>
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-4 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
               for new matches, which is what a bell reads as (the heart means "favorite"
@@ -607,6 +625,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </svg>
           Save Search
         </button>
+        </div>
       </form>
 
       {/* ── MORE panel: advanced filters. In-flow (pushes results down) so it stays keyboard-
