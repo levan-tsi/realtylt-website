@@ -1,6 +1,118 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (2026-07-30, session 9: TOPIC 2 IS LIVE and the template is proven)
+## STATUS (2026-07-31, session 10: TOPICS 3 AND 4 ARE LIVE, and the films now use real footage)
+
+**Four flagships are live.** Measured on production with `node scripts/score-flagship.mjs <slug>`:
+
+| topic | slug | gate | film |
+|---|---|---|---|
+| 1 chat | `ai-chat-assistant-real-estate-website` | 19/19 | 39s |
+| 2 voice | `ai-voice-agent-missed-calls-real-estate` | 19/19 | 45s |
+| 3 reactivation | `database-reactivation-old-real-estate-leads` | **19/19** | **49s, real footage** |
+| 4 qualification | `ai-lead-qualification-real-estate-scoring` | **18/19** (D5, see below) | **53s, real footage** |
+
+Topics 3 and 4 each added **ZERO new components**. Three topics in a row now. The primitive set
+is right and should be left alone.
+
+### THE ONE CHECK TOPIC 4 DOES NOT PASS, and why it is the gate that is wrong
+
+**D5 wants `dateModified` later than `datePublished`. A post written and shipped in one day has
+not been revised, so it cannot pass D5 without a fabricated date.** Topics 1, 2 and 3 pass it only
+because each was genuinely revised on a later day than it was written. Topic 4 was not, so it is
+18/19 and `updated` is deliberately unset with a comment in `content/blog/posts.ts` saying so.
+
+Do not "fix" this by inventing a date. Either set `updated` when the article takes its first real
+revision, or change the check to distinguish "has been maintained" from "was published today".
+The self-grading rule in SCORECARD.md exists for exactly this shape of temptation.
+
+### THE FILM RECIPE CHANGED: real footage, two layers
+
+`scripts/film/reactivation/` and `scripts/film/qualify/` are the pattern now. Both are committed,
+both run from a clean checkout, and the b-roll they need is committed too at
+`scripts/film/footage/` (6 clips, 13MB, with the ledger). **Do not touch `scripts/film/voice/` or
+`public/video/film-942pm.mp4`** — the owner was reworking that film in parallel.
+
+| step | command | note |
+|---|---|---|
+| 1 | `node scripts/film/<topic>/vo.mjs` | ElevenLabs LT clone. Generates, MEASURES, writes `schedule.json`. `--keep` reuses audio. |
+| 2 | `node scripts/film/<topic>/bg.mjs` | Cuts the b-roll into the picture bed. **Every segment boundary is a measured line boundary.** |
+| 3 | `node scripts/film/<topic>/render.mjs` | Transparent PNGs (`omitBackground`). `--probe 0,17,25` composites single frames OVER the real bg. |
+| 4 | `node scripts/film/<topic>/assemble.mjs` | Overlay onto bg, VO mix, one encode, poster from frame zero, `silencedetect`. |
+
+**Why two layers and not a `<video>` in the stage.** Putting the clips inside the HTML would make
+the bundled Chromium decode H.264 (it often cannot) and would make every frame depend on a seek
+completing before the screenshot fires. Compositing in ffmpeg is deterministic and cannot land on
+a stale frame.
+
+**Authored at 1280x720, not 1920x1080.** That is the footage's native resolution, so nothing is
+upscaled and there is one encode generation. The earlier films authored at 1920 because their
+pictures were drawn rather than shot; both shipped at 1280x720 anyway.
+
+**CRF 23, not 16.** Flat dark graphics compress to almost nothing (the voice film is 45s in
+1.3MB). Real moving footage does not. 23 lands a 50s film at ~4.7MB, in the same range as the
+chat film, and `preload="none"` with a poster means a reader who scrolls past downloads none of it.
+
+**A black bed is a design choice, not a gap.** Three of topic 4's nine picture beats are black,
+because the beats that ask a viewer to stop and read a regulation are worse with footage under
+them.
+
+### Faults found by LOOKING, that the gate cannot see
+
+- **`text-transform: uppercase` corrupts a legal citation.** It rendered `64.1200(f)(5)` as
+  `(F)(5)`. On pages whose argument is that the details are checkable, that is not cosmetic.
+- **An alpha that reads as restraint over a photograph reads as a rendering fault over black.**
+  The fair housing footnote at `rgba(255,255,255,.44)` was nearly invisible on a black bed; .62.
+- **A foot-only scrim leaves the top third unprotected.** Both films put type in the TOP third
+  over sunlit kitchens. Gradients are two-ended now: dark at both ends, clear through the middle.
+- **A probe frame landing mid-fade lies.** The footnote above looked dimmer than it is because
+  t=42 was 0.1s into a 0.5s fade. Sample after the fade completes before believing a probe.
+- **The FIRST node of a `diagram` needs the SHORTEST caption.** Captions are centred under their
+  node and the first node sits at the very start of the scroll container, so anything wider than
+  the node spacing is clipped by the container edge at 390px. 33 characters lost a letter; 19 is
+  safe. The existing comment warned about the third node, which was the wrong node.
+- **Eyebrows run ~40% wider than the same words in body text** (uppercase plus tracking). 45
+  characters wrapped to two rows at 390 with one word alone. Keep them near 33.
+
+### RESEARCH FINDINGS worth carrying to every future topic
+
+A full sweep of what practitioners say plus a hunt for primary statistics produced a **zombie
+stat list. Do not cite any of these**, they are repeated everywhere and none survive checking:
+
+- **"80% of sales require 5 follow-ups" / "44% give up after one"**, attributed to the National
+  Sales Executive Association. **That association does not exist.**
+- **"82% of real estate transactions come from repeat and referral"** — no primary source, and
+  NAR's own Member Profile contradicts it.
+- **"Only 3% of the market is ready to buy now"** — Chet Holmes asked for a show of hands at
+  seminars. It is a heuristic, not research.
+- **Every response-rate figure for cold database SMS** ("30-60% response", "5-25% conversion").
+  All vendor marketing. **There is no independent study of this in any vertical**, which is itself
+  a finding and is why topic 3 quotes none.
+- **"$16,000 per text"** — a real number from a different statute (FTC), not the TCPA. Agents
+  believe it; correcting it is a credibility win and topic 3 does.
+
+Sources that DID survive and are reusable:
+- **NAR 2025 Home Buyers and Sellers Generational Trends** (free, NAR-hosted, complete, all
+  exhibits): `https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf`.
+  Topic 3 uses Exhibit 7-1, topic 4 uses Exhibit 6-23. **Note the period**: published 2025, survey
+  mailed July 2024, covers the twelve months to June 2024. Say so on screen.
+  NAR's newer full 2025 Profile is a **paid** product and its free "highlights" PDF is 6 pages of
+  front matter, so this is the best free primary available.
+- **Cornell LII** for federal law. eCFR blocks programmatic access; LII does not and carries the
+  same text.
+- **Twilio's own docs** for messaging deliverability thresholds.
+
+### Remaining topics, in the order I would do them
+
+`review-automation`, `ai-appointment-booking`, `local-seo`, `geo-landing-pages`, `crm-sync`,
+`ai-agent-workforce`, `skip-tracing-lead-generation`, `marketing-automation`,
+`document-processing`, `data-enrichment`, `ai-scheduling`, `invoicing-and-payments`, `ai-clone`,
+`ai-audit`, `custom-automation`. `workflow-automation` still has an untreated post at 9/19.
+
+**Each topic needs its own DIFFERENT third-party study.** Four topics have now used four
+different ones and reusing a fifth time would make the citations decorative. Search for the
+evidence that fits the argument before writing the argument.
+
+## EARLIER STATUS (2026-07-30, session 9: TOPIC 2 IS LIVE and the template is proven)
 
 **`/blog/ai-voice-agent-missed-calls-real-estate` passes 19/19 on the gate**, verified on
 production 2026-07-31 (`node scripts/score-flagship.mjs ai-voice-agent-missed-calls-real-estate`,

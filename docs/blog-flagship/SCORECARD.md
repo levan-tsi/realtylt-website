@@ -300,6 +300,52 @@ section is this piece's actual contribution and it could not be written without 
   says nothing about what any of it costs, which is the first question a reader actually has.
 - **The middle third has one photograph.** Better than topic 1's zero, not yet good.
 
+## TOPICS 3 AND 4 — database reactivation, lead qualification (2026-07-31)
+
+`/blog/database-reactivation-old-real-estate-leads` — **19/19**.
+`/blog/ai-lead-qualification-real-estate-scoring` — **18/19**.
+
+**No /100 is recorded for either, deliberately, for the same reason as topic 2.** Roughly 40 of
+the rubric's 100 points are judgement, and the agent that wrote the post is the last thing that
+should score those.
+
+| | topic 1 chat | topic 2 voice | topic 3 reactivation | topic 4 qualification |
+|---|---|---|---|---|
+| external citations | 1 | 5 | 4 | 3 |
+| body images | 2 | 3 | 3 | 3 |
+| `role="img"` graphics | 2 | 2 | 2 | 2 |
+| film | 39s | 45s | **49s, real footage** | **53s, real footage** |
+| scene anchors | 9 | 11 | 11 | 12 |
+| words (incl. scene copy) | 1,889 | 3,489 | 3,887 | 3,510 |
+| bespoke components added | 5 | 0 | **0** | **0** |
+
+**Why topic 4 is 18/19, and why that is the honest number.** D5 asks for a `dateModified` later
+than `datePublished`. A post written, built and shipped inside one day has not been revised, so
+the only way to turn that check green is to write a date that is not true. On a page whose own
+argument is that the inputs have to be honest, and in a file that exists because a previous
+session graded its own homework, that trade is not available. `updated` is unset with a comment
+saying why. It becomes true the first time the article is genuinely revised.
+
+That makes D5 the first criterion in this rubric that a brand-new page **cannot** satisfy without
+fiction. Worth fixing in the gate rather than in the content.
+
+**Every citation on both pages was read in the source before it shipped**, not taken from a
+summary: 47 CFR 64.1200 (a)(2), (a)(10) and (f)(5); 47 U.S.C. 227(b)(3); 42 U.S.C. 3604(c) and
+(d); NAR Code of Ethics Article 10; NAR 2025 Generational Trends Exhibits 7-1 and 6-23; and
+Twilio's published opt-out threshold. All returned 200 with the operative text present when
+re-checked after deploy.
+
+**Where these two are honestly weaker than their gate scores suggest:**
+- **Still no original data**, four topics running. Same reason: our own volume is not publishable
+  in a way that would build rather than cost credibility. This remains the one thing on the list
+  nobody else could copy.
+- **Cost is covered on topic 3 and dodged on topic 4.** Topic 3 refuses to invent a price and
+  instead quantifies what getting it wrong costs, which is the honest version. Topic 4 says
+  nothing about cost at all.
+- **The reactivation plate is a weak photograph.** The Poughkeepsie bridge shot is a flat grey
+  winter frame. It stays because the caption is doing real work that no prettier picture could,
+  but it is the least beautiful image across the four pieces.
+
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
   A and B; the expertise questions explicitly name author background and links to an author page)
