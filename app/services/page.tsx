@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     description:
       "AI chat assistants, voice agents, skip tracing, lead qualification, and workflow automation, built on the tools you already run.",
     url: `${SITE.url}/services`,
+    // Declaring `openGraph` replaces the layout's object, images included — without this the
+    // hub page shared with no picture while every /services/<slug> page under it had one.
+    images: [{ url: `${SITE.url}/og.png`, width: 1200, height: 630 }],
   },
 };
 

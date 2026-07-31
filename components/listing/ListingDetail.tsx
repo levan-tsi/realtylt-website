@@ -35,11 +35,22 @@ export async function listingMetadata(id: string): Promise<Metadata> {
   const canonical = `${SITE.url}${listingPath(l)}`;
   const title = `${l.address}, ${l.city} NY ${l.zip} | ${priceLabel(l)}`;
   const description = l.description.slice(0, 160);
+  // Share a house, show the house. Setting `openGraph` at all REPLACES the layout's object,
+  // images included — so this page was emitting og:title/description/url/type and NO og:image,
+  // and a listing pasted into Facebook, WhatsApp or iMessage previewed with no picture at all.
+  // The cover goes through the same absolute /api/media proxy URL the page's JSON-LD already
+  // publishes (never a raw MediaURL), and only when the listing has a photo the proxy can
+  // actually serve — photoCount is idx_listings.photos_servable — else the brand card.
+  const share =
+    (l.photoCount ?? 0) > 0
+      ? { url: `${SITE.url}/api/media/${l.id}/0`, alt: `${l.address}, ${l.city}, NY` }
+      : { url: `${SITE.url}/og.png`, width: 1200, height: 630, alt: SITE.name };
   return {
     title,
     description,
     alternates: { canonical },
-    openGraph: { title, description, url: canonical, type: "website" },
+    openGraph: { title, description, url: canonical, type: "website", images: [share] },
+    twitter: { card: "summary_large_image", title, description, images: [share.url] },
   };
 }
 
