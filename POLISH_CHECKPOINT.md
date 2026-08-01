@@ -43,7 +43,30 @@
 ## syntax that silently does NOTHING in v4; tokens in @theme generate `border-line`.
 ## Five more design moves are proposed, not done — handoff §3.10.
 ##
-## ── ORDER FOR THE NEXT ROUND ─────────────────────────────────────────────────────────
+## ── ORDER FOR THE NEXT ROUND (set 2026-08-01 with the owner) ─────────────────────────
+## 0. FIRST, AND BEFORE ANY DESIGN WORK: INVENTORY COMPLETENESS. Filtering is proven
+##    correct — 46 obey-checks, sorts ordered, pagination coherent, and counts tracking
+##    OneKey within 0-5% across SIX searches (Orange 2449/2482 · Orange 3bd 1707/1720 ·
+##    Newburgh 3bd 239/241 · Beacon 2bd 79/82 · Kingston 4bd 30/32 · New Rochelle 3bd
+##    144/151). What is NOT proven is whether we HOLD every home OneKey holds. On their
+##    Newburgh 3+ page, FOUR of the first twelve are absent from our data — 249 Grand St
+##    $1.25M, 354 Robinson Ave $475k, 30 Banbury Way #1204 $459k, 307 Route 17K $425k —
+##    verified by STREET NAME, so it is not an "Ave vs Avenue" artifact. Yet our totals run
+##    HIGHER than theirs, so we are not simply behind. Three candidate causes, and the whole
+##    question is one query: pull those four MLS numbers from the feed and read MlgCanView.
+##      (a) IDX permission — they are not licensed for display. Then NOTHING is wrong.
+##      (b) Sync timing — but one was posted 14h ago, which is too old for an hourly sync.
+##      (c) A real gap in the sync — the expensive one. Settle this before anything else.
+##    Do more spot-checks in other cities too; the owner wants repeated random testing, and
+##    every comparison so far has found something.
+## 0b. THERE IS NO TRUE CITY FILTER. The location box is free text over address+city+zip+
+##    county, so "Beacon" also returns Beacon Street in Middletown (2 of 82) and "Kingston"
+##    returns Kingston Ave in Poughkeepsie (2 of 32). Correct for a text search, wrong for a
+##    city search — remove those strays and Kingston is EXACT (30/30). The suggest dropdown
+##    already distinguishes them; decide whether picking a city should apply a real filter.
+## 0c. Only then the FIVE DESIGN MOVES (handoff §3.10): hero drift + sequenced arrival,
+##    card photo cross-fade, a real moment on the save-heart, the count line in the serif,
+##    one decision on photography grade. Then polish.
 ## 1. Re-run the four standing probes (handoff §4) ONE AT A TIME as a regression gate.
 ## 2. If the DNS records are in: verify the domain end to end (nslookup, a real certificate,
 ##    www reaches it, `vercel domains inspect realtylt.com` stops warning), show him, and
