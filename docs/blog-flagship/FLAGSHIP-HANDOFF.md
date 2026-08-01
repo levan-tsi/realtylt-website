@@ -1,5 +1,122 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## NEXT SESSION'S JOB (owner 2026-08-01) — THE FILMS. Resume HERE.
+
+**Single agent, one long session, no subagents.** The five posts are done and mechanically green.
+The films are the weak link, and the owner named the reason himself: **every film draws from the
+same seven clips.**
+
+### The actual defect, measured
+
+| film | clips used |
+|---|---|
+| voice | shot1, shot2, shot6, shot7 |
+| reactivation | shot1, shot2, shot3, shot4, shot5, shot6 |
+| qualify | shot1, shot2, shot3, shot4, shot5, shot6 |
+| workflow | shot2, shot3, shot5, shot6, shot7 |
+
+`shot6-keys-porch` and `shot2-empty-office` appear in **every single film**. Somebody who reads two
+posts watches the same keys-on-a-porch shot close both. That is the strongest "mass-produced" signal
+on the whole blog, and it undoes the point of the treatment.
+
+### What the owner asked for
+
+1. **Generate NEW, topic-specific footage per post.** Roughly 3-4 fresh clips each, keeping the
+   shared library only for genuinely generic beats. 15 credits a clip, ~1000 credits available, so
+   ~200 credits covers all four. See the Flow operating notes below.
+2. **Transitions.** Every film is hard cuts today. Design them; do not just crossfade everything.
+3. **Sound effects.** There are NONE today: narration only, no bed, no design. A ring, a notification,
+   a room tone under a beat. `realtylt-stories/scripts/music-gen.py` proves ElevenLabs Music works
+   and is commercially licensed (a paid ad cannot carry a music claim); the same account does sound
+   effects. Mix them UNDER the voice and MEASURE the separation, do not eyeball it.
+4. **Research first: what actually makes these perform organically and bring leads.** Use the
+   `last30days` skill plus real benchmarks. What is already established and should not be re-derived:
+   - **Hook rule** (r/NewTubers 349-video study): a concrete, checkable number in the first seconds.
+     No greeting, no atmosphere. Warmups correlate with flops.
+   - **Meta benchmarks 2026:** hook rate median 28%, top decile 45%, **under 15% means kill it**.
+     Hold rate 25-40% solid for a 15-30s cut. Best-performing length band is **15-30s**.
+   - **85% of feed video is watched with sound off**, captions add ~12% watch time and ~16% reach.
+     The captions ARE the script.
+   - Honest tension to resolve, not ignore: **organic reach rewards native, scrappy, un-ad-like
+     video**, which pulls directly against the Apple-minimalist house style. Decide deliberately
+     per surface rather than splitting the difference by accident.
+
+### AUDIO IS THE ONE THING NOBODY HAS EVER CHECKED
+
+Every film so far is verified by measured duration and `silencedetect` only. **No human and no agent
+has ever listened to any of them.** If you add sound design you are stacking on an unverified layer.
+Get the owner to listen, or state plainly in your report that the audio is unverified.
+
+### The pipelines, and which is which
+
+- **`scripts/film/reactivation/`, `qualify/`, `workflow/` are the CURRENT pattern**: two-layer, where
+  ffmpeg cuts the picture bed from real footage and Playwright draws transparent type over it,
+  authored at 1280x720 (the footage's native size), crf 23. `workflow/cut.mjs` is the best of them:
+  it DERIVES `FILM_LEN` and `FADE_AT` from the measured schedule so they cannot drift apart.
+- **`scripts/film/voice/` is the older single-layer stage**, with `broll.mjs` compositing footage
+  under it afterwards. It works and is finished; do not rebuild it unless you are improving it.
+- B-roll lives at `scripts/film/footage/` with a ledger. `shot7-signup-callback` has no recorded
+  prompt, so it cannot be regenerated. **Record the prompt for every new clip.**
+
+### Film traps, every one of them paid for. Do not relearn these.
+
+- **A fade-to-black constant does NOT follow from the schedule.** The voice film grew from 45s to 60s
+  and `FADE_AT` stayed at 44.5, so the entire new beat and the CTA faded to black. Derive it, or move
+  it every single time the length changes.
+- **A higher z-index does not clear what is behind it.** Two centred beats both visible render
+  straight through each other. Every beat needs an explicit `out`.
+- **Probe individual frames before committing to a full render.** Both faults above were found by
+  probing three frames and would have cost a full render each.
+- **`colorchannelmixer` takes TWELVE parameters.** Feeding it a 3x3 silently misassigns channels; a
+  cut came back entirely VIOLET, the exact palette the house rules ban.
+- **A `lighten` blend contaminates coloured type.** It takes the per-channel max, and the azure accent
+  is low-red, so warm footage behind it drags the colour toward magenta (measured: V chroma 125 to
+  130, past neutral). **Key on the film's own luma instead** so a text pixel is 100% film.
+- **Bright footage destroys thin type, and gain alone cannot fix it.** Dark enough for the small type
+  is too dark to see the picture. Use a scrim: image bright at the edges, darkened through the middle
+  where the type sits. The voice film's `broll.mjs` has a working one.
+- **Chroma must be pulled toward neutral in the same pass as luma**, or darkened warm shots come back
+  magenta.
+- **Never run a B-roll script with its own output as its input.** It is not idempotent.
+
+### Google Flow, as actually operated
+
+Owner's PERSONAL Google account `levan.realtylt@gmail.com` holds the AI Pro subscription (the
+Workspace account lost Flow bundling; settled, do not reopen). **15 credits per clip**, ~1000
+available. Settings that are already correct: confirm-before-generating ON, 16:9, x1, Omni Flash,
+visible watermarking OFF.
+
+- **Omni Flash generates 720p.** Its "1080p" download is an AI upscale, and it is only offered for
+  clips generated in the current project. Do not mix upscaled and native clips in one film: the
+  inconsistent sharpness looks worse than uniform 720p.
+- Download via the item's ⋮ menu → Download → **720p Original Size**. The big toolbar download button
+  fetches a ~23MB export that **stalled indefinitely** and never completed.
+- **Never click a menu item by coordinate** — the page re-lays out between screenshot and click, and
+  a Download click once landed on the wrong item. Use `find` to get an element ref, click the ref.
+- **The approval card sometimes renders with no buttons.** Do not re-prompt the generation; type
+  "Approve" as a chat message and the buttons come back.
+- Downloads land in `C:/Users/Levan/Downloads`.
+- **Every generated screen is unreadable pseudo-text.** Never plan a shot whose payoff is words on a
+  device; caption typography carries the meaning.
+
+### State at handoff
+
+Five AI-service posts, all measured on PRODUCTION 2026-08-01: chat 19/19, voice 19/19, reactivation
+19/19, workflow 19/19, qualification 18/19 (D5 only, and it cannot pass honestly until that post
+takes a real revision). 565 tests green. Fifteen posts total; the other ten are consumer topics the
+owner has explicitly put OUT OF SCOPE.
+
+`/ai` has 20 service nodes, 5 wired with a blog card, but **only 3 are live** — the page needs an
+explicit `vercel promote` and the owner approves those. `robots.txt` is `Disallow: /`; everything
+stays dark for a single go-live.
+
+**Open, owner-gated:** promote `/ai` (3 cards to 5) · `/search` ships 13MB of unresized MLS photos
+because full-size Supabase originals are served straight into small cards (the mirror is fine, the
+resizer is missing; those files belong to the concurrent session) · **original data of our own is
+gated on LAUNCH**, not on effort: 37 chat sessions and 18 exchanges in 30 days, mostly the owner's
+own testing, because there is no public traffic yet.
+
+
 ## STATUS (2026-08-01, session 11: TOPIC 5 IS LIVE, and every AI-service post is now a flagship)
 
 **Five flagships are live.** Measured on production with `node scripts/score-flagship.mjs <slug>`:
