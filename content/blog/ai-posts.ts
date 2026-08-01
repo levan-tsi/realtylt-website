@@ -477,13 +477,33 @@ export const WORKFLOW_AUTOMATION_POST = `Ask an agent what they do all day and t
 
 Then get them to write down every step of one deal, from the first inquiry to the closing table, and hand them a highlighter for anything that involves typing something into a system that another system already knows. The page turns yellow.
 
-That yellow is the busywork tax. It is not one big thing. It is forty small ones, each of which takes ninety seconds, and none of which feels worth automating on its own.
+That yellow is the busywork tax. It is not one big thing. It is forty small ones, each of which takes about ninety seconds, and none of which feels worth automating on its own.
+
+Ninety seconds is also not what any of them cost.
+
+[[scene:in-short]]
+
+## What ninety seconds actually costs
+
+In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine published the results of shadowing twenty four information workers at their desks with a stopwatch. Seven managers, nine analysts, eight developers. Each one was formally observed and timed for three and a half days, an average of twenty five hours and forty two minutes per person, more than seven hundred hours of observation in total, with every action noted to the second.
+
+It is not a survey of how busy people feel. It is a timed log of what they actually did, and it is still the clearest measurement anybody has published of the thing this article is about.
+
+They found that people spent an average of eleven minutes and four seconds on one piece of work before switching to something else or being interrupted, and that fifty seven percent of those stretches ended in an interruption rather than in a decision to stop. Then they measured the part almost nobody measures: how long it took to come back.
+
+[[scene:fragmented]]
+
+Put the middle bar next to the ninety seconds. The typing is not the cost. The cost is that a ninety second job pulls you out of something, and the something takes an average of twenty five minutes and twenty six seconds to get back to.
+
+The third bar is the one that should worry a real estate business in particular, because it is the shape of every step in your week that only happens when somebody remembers. Work that people picked back up themselves resumed in twenty one minutes and twenty eight seconds. Work that waited for somebody else to prompt the return sat for sixty one minutes and thirty seven seconds, nearly three times as long.
+
+One caution about that study, because it is the honest way to use it. Those were desk workers at a technology company, in one field study, and none of them were selling houses. It tells you what interruption does to knowledge work. It does not tell you what your own week looks like, and anybody who converts it into a dollar figure for your business has stopped citing it and started decorating with it.
 
 ## What it actually looks like
 
 Here is a real chain, the kind that exists in almost every real estate business, written out honestly:
 
-1. A lead fills in a form at 11pm.
+1. A lead fills in a form at 11:47pm.
 2. It lands in an inbox.
 3. In the morning, somebody reads it.
 4. They type the name, email, and phone into the CRM.
@@ -492,17 +512,13 @@ Here is a real chain, the kind that exists in almost every real estate business,
 7. They set a reminder to follow up.
 8. Three days later the reminder fires and they cannot remember who this was, so they read the original email again.
 
-Eight steps. Maybe twelve minutes of human attention, spread across three days, most of it spent reloading context that was already written down somewhere.
+Eight steps. Maybe twelve minutes of human attention, spread across three days, most of it spent reloading context that was already written down somewhere. Step eight is the twenty five minutes in miniature, three days late.
 
 Now do that forty times a month.
 
-## The three lies we tell ourselves about it
+[[scene:three-lies]]
 
-**"It only takes a minute."** It takes a minute forty times a month, which is an afternoon, which is a listing appointment you did not go on.
-
-**"I would rather do it myself so I know it is done right."** Usually true, and also how the tax gets paid forever. The answer is not to trust a system blindly. It is to build one you can watch.
-
-**"It is not worth automating something this small."** Individually, correct. The point is that these steps form a chain, and chains are exactly what automation is good at. You are not automating step four. You are automating one through eight.
+[[scene:plate]]
 
 ## What automation actually is, without the jargon
 
@@ -510,51 +526,86 @@ It is plumbing between the tools you already pay for.
 
 Your CRM holds the contact. Your calendar holds the time. Your email holds the conversation. Your forms hold the intake. Your documents hold the deal. All five of them know things the other four need, and the way that information currently travels between them is a human being with a mouse.
 
-Tools like [n8n, Make, and Zapier](/services/workflow-automation) connect them, so that finishing one step starts the next. Put a language model in the middle and it can also make the small judgment calls that used to need a person: is this the same Sarah Miller who inquired in March, is this lead actually hot, does this message need a human.
+Tools like [n8n, Make, and Zapier](/services/workflow-automation) connect them, so that finishing one step starts the next. Put a language model in the middle and it can also make the small judgment calls that used to need a person: is this the same Sarah Miller who inquired in March, is this lead actually hot, does this message need a human being rather than a template.
 
-That same chain, rebuilt:
+[[scene:rebuilt]]
 
-1. The form is submitted at 11pm.
-2. It is matched against the existing CRM records and updates the right one instead of creating a second.
-3. The phone number is validated and the address resolved.
-4. A text goes out within seconds, and it is a real reply, not an autoresponder.
-5. The lead is scored on what they actually said, and routed accordingly.
-6. A task lands on the right person's calendar with the context attached.
-
-Nobody woke up. Nobody typed. The lead was answered while they were still on the site.
+Nobody woke up. Nobody typed. The lead was answered while they were still on the site, the second record was never created, and the reminder in step seven was never needed, because the task arrived with the context already attached to it.
 
 ## How to find your own version of this
 
 You do not need a consultant for the first pass. You need a piece of paper and an honest hour.
 
-- **Follow one real job, end to end.** Not the ideal version. The one that actually happened last week, including the part where somebody had to chase a signature twice.
-- **Write down every step, including the ones that feel too small to write down.** Those are the ones.
-- **Mark every step where information moves between two systems by hand.** That is your list.
-- **Mark every step that only happens if somebody remembers.** That is your risk.
-- **Rank by how often it happens, not by how annoying it is.** The most irritating task is rarely the most expensive one. The expensive one is the boring thing you do fifty times a month without noticing.
+[[scene:audit]]
 
-Most people are surprised twice: first by how long the list is, and then by how boring the top of it is.
+[[scene:pull-quote]]
 
-> The task worth automating first is almost never the one that sounds impressive. It is the one you have done so many times that you stopped seeing it.
+## The failure nobody warns you about
 
-## What to be careful about
+Automation you cannot see is automation you cannot trust, and the failure is never the one people brace for. Nothing explodes. A chain quietly stops firing and nobody notices for a fortnight, because nothing visibly broke. It just went quiet.
 
-Automation you cannot see is automation you cannot trust. There is a real failure mode where a broken chain quietly stops firing and nobody notices for a fortnight, because nothing visibly broke. It just went quiet.
+The platforms are more candid about this in their documentation than any vendor will be in a sales call. [Zapier's own help pages](https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings) state that by default it "automatically pauses a Zap if it hits an error 95% or more percent of the times that it has run in the last 7 days", and its [run status reference](https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows) adds that a chain erroring repeatedly "will automatically turn off".
 
-So, three rules, learned the hard way:
+That is a sensible default and it is not the interesting part. Read the threshold the other way round. A chain that fails nineteen times out of twenty gets switched off, and you find out, because the work visibly stops. A chain that fails one time in twenty stays on, stays green, and is doing exactly what it looks like it is doing ninety five percent of the time. Over forty leads a month that is two people who wrote to you and got nothing, every month, and there is nothing in the system whose job it is to tell you their names.
 
-- **Every run gets logged.** If you cannot answer "did it run, and what did it do", you have built a black box.
-- **Failures shout.** A step that fails should alert somebody, not disappear.
-- **Anything genuinely ambiguous stops and asks.** A system that guesses when it should have asked will eventually guess wrong in front of a client.
+The same asymmetry is in the tools that do it properly. [n8n documents an error workflow](https://docs.n8n.io/flow-logic/error-handling/) that begins with an Error Trigger and runs when an execution fails, so a failure can send a message to a person instead of landing in a log. It is one setting per chain. Almost nobody sets it, because on the day you build a chain it works, and a thing that works does not feel like it needs a smoke alarm.
 
-## The part nobody tells you
+[[scene:silence]]
 
-The hours you get back are real, but they are not the main thing.
+[[scene:plate-two]]
 
-The main thing is that the mistakes stop. The lead that never got called. The deadline that slipped because it lived on page nine of a PDF. The follow-up that fired at someone who already went under contract with a competitor, which is the most humiliating email in this industry.
+## What it costs, and how long it takes
 
-Those are not time problems. They are the cost of a system that depends on a person remembering, at the end of a long day, to do something small.
+There is no honest price on this page, because the number depends on three things nobody can guess from an article: how many systems the chain has to touch, whether those systems have a usable interface for software to talk to, and how many steps need a judgment rather than a field copy. Anybody who quotes you before asking all three is quoting a template.
 
-If you want to know which of your own steps is worth fixing first, that is exactly what the [AI audit](/services/ai-audit) is for: we follow the work, rank what each fix is worth, and build the first one. The rest of the stack is written up on the [workflow automation page](/services/workflow-automation).
+What can be said honestly is the shape of it. The platforms themselves are the cheap part and are billed by how often your chains run, so a small business pays a subscription rather than a project. Simple chains, like intake and an instant reply, are typically live in days. Multi-system workflows with real branching take longer, and the slow part is almost never the building. It is mapping what your business actually does today, which is the hour with the piece of paper, done properly and with somebody arguing with you about it.
 
-The tax is not going to itemise itself.`;
+The recurring cost people forget is ownership. A chain is software. It will break the day a vendor renames a field, and somebody has to be the person who notices. Budget for that, or the chain quietly becomes one of the mistakes it was built to remove.
+
+## What it does not do, and should not pretend to
+
+It does not fix a bad process. If the manual version of the job loses leads, the automated version loses them faster, at three in the morning, with a log entry saying it worked. Wiring makes a process consistent, and consistency is only an improvement when the process was right.
+
+It does not remove judgment. Every chain worth building has a step where a person would have paused, and the correct behaviour at that step is to stop and ask rather than to guess. A system that guesses when it should have asked will eventually guess wrong in front of a client, in writing, at a time of its own choosing.
+
+It is mostly not artificial intelligence, whatever it gets sold as. Four of the six hops in the diagram above are a field moving from one place to another with no cleverness in them at all, and they are more reliable for it. A model earns its place at the one or two steps that genuinely need a decision. A build that puts a language model in front of a step which was really an if statement has bought unpredictability it did not need and cannot debug.
+
+And it does not hand you back a day. It hands back an afternoon a month and removes a category of mistake. That is a smaller and duller claim than the one usually made for this, and it is the one that survives contact with a real business.
+
+[[scene:failure-modes]]
+
+## Common questions, answered honestly
+
+### What is workflow automation, in plain terms?
+
+It is connecting the software you already use so that finishing one step automatically starts the next. Instead of a person copying a lead from a form into a CRM, writing a reply, and setting a reminder, the whole chain fires by itself the moment the form is submitted.
+
+### What is the difference between n8n, Make, and Zapier?
+
+They all wire apps together and they differ in depth. Zapier is the simplest and the most limited. Make handles branching and more complicated logic. n8n is self-hostable and the most flexible, which matters when a workflow needs custom code or the data has to stay in your own environment. The right answer is decided by the workflow, not by a preference, and it is worth asking anybody who tells you otherwise why.
+
+### Do I have to replace the software I already use?
+
+No, and that is the point of it. Automation sits between your existing tools and connects them. Your CRM, your calendar and your inbox stay exactly where they are, which is also why this is usually the cheapest improvement available to a small business: nothing has to be migrated.
+
+### What happens when an automation breaks?
+
+It should alert, log what failed and why, and not silently drop the work. That is a build decision rather than something you get for free: the platforms will retry and will eventually switch a chain off, but only a chain that was built with an error path tells a human being. Chains should also be versioned so a bad change can be rolled back, and any step needing real judgment should be built to stop and ask.
+
+### How long does it take to automate a workflow?
+
+Simple chains, like intake and an instant reply, are typically live in days. Multi-system workflows with real branching take longer, mostly because mapping what your business actually does today is the slow part, not the building.
+
+### Is any of this worth it for a one-person business?
+
+Often more, not less. A one-person business has no one to absorb the busywork, so every manual step is taken out of the only calendar there is. Start with a single chain at the top of the frequency list rather than a platform, and judge it after a month against how many times you touched that job by hand.
+
+## What to do about it
+
+If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#workflow), and the [workflow automation page](/services/workflow-automation) has the full breakdown of what gets wired to what. If you want somebody to sit through the hour with the piece of paper with you, that is exactly what the [AI audit](/services/ai-audit) is: we follow one real job, rank what each fix is worth, and build the first one.
+
+The three pieces either side of this one are the individual chains, written out at length. The [assistant answering your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) and the [voice agent taking the 9:42 call](/blog/ai-voice-agent-missed-calls-real-estate) are two of the hops in the diagram above, and [scoring the lead once it arrives](/blog/ai-lead-qualification-real-estate-scoring) is a third.
+
+The tax is not going to itemise itself.
+
+[[scene:funnel]]`;

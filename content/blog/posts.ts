@@ -15,6 +15,7 @@ import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
 import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
+import { WORKFLOW_FLAGSHIP } from "./workflow-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -125,10 +126,15 @@ export const POSTS: BlogPost[] = [
     slug: "workflow-automation-real-estate-business",
     title: "The Busywork Tax: What Workflow Automation Actually Removes",
     date: "2026-07-13",
+    /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
+     * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
+     * graphic, the rebuilt chain as a diagram, its own film, and two sections it never had (what
+     * it costs, and what it does not do). Roughly half the sentences on the page are new. */
+    updated: "2026-08-01",
     excerpt:
-      "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps, and what it takes to get them back.",
+      "The manual step takes ninety seconds. Getting back to what you were doing takes twenty five minutes. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
     seoDescription:
-      "Nobody thinks they spend their week copying data between tabs. Then they write it down. Here is how to find the hours a real estate business loses to manual steps.",
+      "What workflow automation removes from a real estate business, how to find your own list in an hour, and the quiet failure the platforms document but nobody mentions.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
@@ -137,6 +143,7 @@ export const POSTS: BlogPost[] = [
     body: [],
     placeholder: false,
     markdown: WORKFLOW_AUTOMATION_POST,
+    flagship: WORKFLOW_FLAGSHIP,
   },
   {
     slug: "ai-chat-assistant-real-estate-website",

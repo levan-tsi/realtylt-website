@@ -54,7 +54,12 @@ describe("extractToc", () => {
     expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(6);
     expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(3);
     expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(9);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(6);
+    // The workflow post was rebuilt as a flagship on 2026-08-01 and gained a "Common questions"
+    // section: 9 top-level sections plus 6 questions. Same shape of assertion as above, so a
+    // heading going missing still fails rather than being absorbed by a looser number.
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(9);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(6);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(15);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
       const ids = extractToc(post).map((t) => t.id);
@@ -73,7 +78,23 @@ describe("readingTime", () => {
 
 describe("extractFaqs", () => {
   it("never fabricates: a post with no FAQ section still yields []", () => {
-    expect(extractFaqs(WORKFLOW_AUTOMATION_POST)).toEqual([]);
+    // A FIXTURE, not a real post. This used to point at the workflow article, which was the one
+    // long body on the site with no Q&A section in it. That article became a flagship and grew
+    // one, and a negative control that depends on a piece of content never gaining a feature is
+    // a control that expires. Question-shaped headings are included deliberately: the section
+    // heading is what turns FAQ extraction on, and this proves it.
+    const noFaqSection = [
+      "# A post with questions in it but no question section",
+      "",
+      "## What it actually looks like",
+      "",
+      "Some body copy that is long enough to be a real answer if anything were pairing it.",
+      "",
+      "### Is this a question?",
+      "",
+      "It is shaped like one, and it is not inside a section that says so.",
+    ].join("\n");
+    expect(extractFaqs(noFaqSection)).toEqual([]);
   });
 
   it("pairs the AI post's real questions with their answers (drives FAQPage JSON-LD)", () => {

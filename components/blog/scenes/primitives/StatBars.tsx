@@ -56,6 +56,21 @@ export function StatBars({
   const BAR_H = 20;
   const H = bars.length * ROW;
 
+  // The value column has to FIT ITS LONGEST VALUE. This was a fixed 78px, which is right for the
+  // percentages and ratios the first four topics charted ("15%", "60x") and silently clips
+  // anything longer: the workflow topic charts durations, and "25 min 26 sec" lost its last three
+  // characters off the right edge of the viewBox. Nothing in the DOM was wrong and no probe could
+  // see it, because an SVG does not overflow, it crops.
+  //
+  // Derived from the string rather than hand-tuned per topic, and floored at the original 90 so
+  // every chart already shipped keeps exactly the geometry it shipped with. 8.6 is a deliberate
+  // over-estimate of Lato's average advance at 17px; a value column that is slightly too wide
+  // only makes a bar shorter, and a bar that is slightly short still tells the truth because the
+  // number beside it is the thing being read.
+  const longest = Math.max(...bars.map((b) => b.display.length));
+  const reserve = Math.max(90, Math.round(longest * 8.6) + 22);
+  const track = W - reserve;
+
   return (
     <section
       className={dark ? "bg-ink py-24 text-paper md:py-32" : "bg-mist py-24 md:py-32"}
@@ -93,7 +108,7 @@ export function StatBars({
                 .join(". ")}. ${basis}`}</desc>
               {bars.map((b, i) => {
                 const y = i * ROW;
-                const w = (b.value / axis) * (W - 90);
+                const w = (b.value / axis) * track;
                 const on = i === lit;
                 return (
                   <g key={b.label}>
@@ -109,7 +124,7 @@ export function StatBars({
                     <rect
                       x={0}
                       y={y + 30}
-                      width={W - 90}
+                      width={track}
                       height={BAR_H}
                       rx={10}
                       fill={dark ? "#1c222b" : "#e1e6ec"}
@@ -124,7 +139,7 @@ export function StatBars({
                       fill={on ? "#28a8e0" : dark ? "#55616f" : "#9aa7b6"}
                     />
                     <text
-                      x={W - 78}
+                      x={track + 12}
                       y={y + 45}
                       fill={on ? (dark ? "#ffffff" : "#12161c") : dark ? "#9aa7b6" : "#5c6672"}
                       style={{ fontSize: 17, fontWeight: on ? 700 : 400 }}
