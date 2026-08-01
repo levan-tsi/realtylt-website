@@ -346,6 +346,51 @@ re-checked after deploy.
   winter frame. It stays because the caption is doing real work that no prettier picture could,
   but it is the least beautiful image across the four pieces.
 
+## TOPIC 5 — workflow automation (2026-08-01)
+
+`/blog/workflow-automation-real-estate-business` — **19/19**, measured on the live production page
+with `node scripts/score-flagship.mjs <slug>`.
+
+**No /100 is recorded, deliberately, for the same reason as topics 2, 3 and 4.** Roughly 40 of
+this rubric's 100 points are judgement, and the agent that wrote the post is the last thing that
+should be scoring those.
+
+| | t1 chat | t2 voice | t3 reactivation | t4 qualification | t5 workflow |
+|---|---|---|---|---|---|
+| external citations | 1 | 5 | 4 | 3 | 4 |
+| body images | 2 | 3 | 3 | 3 | **4** |
+| `role="img"` graphics | 2 | 2 | 2 | 2 | 2 |
+| film | 39s | 60s | 49s | 53s | **59s, real footage** |
+| scene anchors | 9 | 11 | 11 | 12 | 12 |
+| words (incl. scene copy) | 1,889 | 3,489 | 3,887 | 3,510 | **3,832** |
+| bespoke components added | 5 | 0 | 0 | 0 | **0** |
+
+**This is the first topic to close the A2 gap this file has flagged on all four earlier posts.**
+Every previous flagship was silent, or nearly silent, on what any of it costs and how long it
+takes. This one has a section for each, and it refuses to print a price rather than inventing one:
+it names the three things the price actually depends on, says what determines the timeline, and
+names the recurring cost everybody forgets, which is who owns the chain when it breaks. It also
+has a "what it does not do" section, which topic 1 had and topics 3 and 4 only partly did.
+
+**Where this post is honestly weaker than its 19/19 suggests:**
+- **Still no original data**, five topics running. Same reason as every previous topic: our own
+  run volume is not publishable in a way that would build rather than cost credibility. This
+  remains the one item on the list nobody else could copy, and it is now the ONLY substantial gap
+  left in this rubric that has never moved.
+- **The evidence is borrowed from another field.** The cited study measured software developers
+  and analysts at a technology company in 2004, not estate agents, and the page says so twice, on
+  screen in the chart's caveat and again in the prose. That is the honest handling, and it is
+  still a weaker foundation than a real-estate-specific measurement would be. None exists that
+  survived checking.
+- **The second photograph is a heavily processed HDR sunset.** It is the strongest image left in
+  `public/images/` that no other flagship had used as a plate, and its caption does real work, but
+  it is a stock-feeling frame on a page whose other picture is genuinely on-topic.
+
+**Every citation was read in the source before it shipped**, and re-checked live afterwards: the
+three HTML sources were fetched in a real browser and asserted to still contain the operative
+phrase, and the PDF was re-downloaded and its text re-extracted to confirm all six figures used on
+the page are present, and that the two figures the internet attributes to it are not.
+
 ## Sources
 - Google Search Central, "Creating helpful, reliable, people-first content" (primary source for
   A and B; the expertise questions explicitly name author background and links to an author page)

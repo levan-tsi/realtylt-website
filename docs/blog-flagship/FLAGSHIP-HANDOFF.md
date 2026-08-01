@@ -1,6 +1,96 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS (2026-07-31, session 10: TOPICS 3 AND 4 ARE LIVE, and the films now use real footage)
+## STATUS (2026-08-01, session 11: TOPIC 5 IS LIVE, and every AI-service post is now a flagship)
+
+**Five flagships are live.** Measured on production with `node scripts/score-flagship.mjs <slug>`:
+
+| topic | slug | gate | film |
+|---|---|---|---|
+| 1 chat | `ai-chat-assistant-real-estate-website` | 19/19 | 39s |
+| 2 voice | `ai-voice-agent-missed-calls-real-estate` | 19/19 | 60s |
+| 3 reactivation | `database-reactivation-old-real-estate-leads` | 19/19 | 49s, real footage |
+| 4 qualification | `ai-lead-qualification-real-estate-scoring` | 18/19 (D5, see below) | 53s, real footage |
+| 5 workflow | `workflow-automation-real-estate-business` | **19/19** | **59s, real footage** |
+
+Topic 5 added **ZERO new components**, four topics in a row. There is no longer an untreated
+AI-service post: the 9/19 the gate used to score is gone.
+
+**Topic 5 passes D5 honestly**, which is worth understanding rather than copying. It shipped
+2026-07-13 as a plain 1,200 word article and was genuinely rebuilt on 08-01, so `updated` is a
+true statement about a real revision. That is the ONLY way to pass D5. Topic 4 still cannot, and
+still should not fake it.
+
+### THE ZOMBIE STAT THIS TOPIC ALMOST PUBLISHED, and the rule that caught it
+
+The interruption research everybody quotes is Mark, Gonzalez and Harris, *No Task Left Behind?*
+(CHI 2005, UC Irvine). The figure attributed to it across the entire internet is **"23 minutes and
+15 seconds"** to return to interrupted work, usually beside **"81.9 percent resumed the same
+day"**. **Neither number is in the paper.** Verified by extracting the text of a freshly fetched
+copy: `23 min. 15` and `81.9` are both ABSENT. The published figures are **25 min 26 sec** and
+**77.2 percent**, and both are on the page.
+
+This is now the second correction of this shape (topic 3 corrected "$16,000 per text"). The rule
+that produced both: **read the operative sentence in the primary source, never a summary of it,
+even when the summary is unanimous.** `pdftotext` is on this machine and handles a two-column
+CHI paper fine; use it without `-layout`, which interleaves the columns and scrambles the numbers.
+
+### A REAL DEFECT NO PROBE COULD SEE, and why it is worth remembering
+
+`StatBars` reserved a fixed 78px for its value text. That is correct for `15%` and `60x`, which is
+everything the first four topics charted, and it silently **crops** `25 min 26 sec` to
+`25 min 26`. **An SVG does not overflow, it crops**, so no overflow check, no scrollWidth check
+and no DOM assertion can find it. Only looking at the picture finds it.
+
+Fixed in the primitive rather than worked around in content: the reserve is derived from the
+longest `display` string and floored at the old 90, so the four shipped charts keep byte-identical
+geometry (verified live: track width still exactly 550 on all four, 506 on the new one).
+
+**`node scripts/check-svg-crop.mjs` is the standing guard**, and it is committed rather than
+scratch. It calls `getBBox()` on every `text` node in every `svg[role="img"]` across all five
+posts and fails if any ink reaches more than 1.5 user units past an edge. Its first version was
+WRONG and flagged two shipped charts, because a label anchored at x=0 reports x = -0.83 from its
+glyph side bearing; the threshold is documented in the file with the measurement that sets it (the
+real defect was 24.7u, the widest innocent bearing is 0.83u). **Run it against the shipped posts
+before believing it about a new one.**
+
+### THE FADE TRAP IS NOW STRUCTURALLY GONE
+
+The three earlier films wrote the film's length into two scripts by hand and the fade point into
+one, and a render was lost when the cut grew and the hardcoded fade did not move. `scripts/film/
+workflow/cut.mjs` derives `FILM_LEN` and `FADE_AT` from the measured schedule and every other
+script imports them. `bg.mjs` additionally asserts each beat starts exactly where the previous one
+ended, so a mistyped boundary fails the cut instead of quietly shifting the picture off the voice.
+**Copy `scripts/film/workflow/` rather than `qualify/` for the next film.**
+
+Verify a finished film on the FINISHED FILE, not on the stage: a 30-frame contact sheet
+(`fps=1/2,scale=256:-1,tile=6x5`) read against the schedule, `silencedetect` against the line
+boundaries, and `signalstats` YAVG sampled through the tail to prove the fade lands where the
+schedule says (this one: 41 at t=58.4, 21 at t=58.9).
+
+### Sources used, so topic 6 does not reuse one
+
+Five topics, five different bodies of evidence. Topic 5 used:
+- **Mark, Gonzalez and Harris, CHI 2005**, `https://ics.uci.edu/~gmark/CHI2005.pdf` (author-hosted,
+  free, complete). 24 information workers, 700+ hours, timed to the second. The ACM DOI page
+  bot-blocks and could not be read, so it is deliberately NOT cited.
+- **Zapier's own help pages** for the 95-percent-in-7-days auto-pause default and the run status
+  vocabulary. Both re-checked live for the operative phrase after deploy.
+- **n8n's docs** for the error workflow and Error Trigger.
+
+**Vendor PRICING was investigated and deliberately not cited**: n8n's and Zapier's pricing pages
+render their numbers in JavaScript, so the figures could not be read from the source. The post
+refuses to print a price instead, which is the topic-3 pattern.
+
+### Remaining topics, in the order I would do them
+
+`review-automation`, `ai-appointment-booking`, `local-seo`, `geo-landing-pages`, `crm-sync`,
+`ai-agent-workforce`, `skip-tracing-lead-generation`, `marketing-automation`,
+`document-processing`, `data-enrichment`, `ai-scheduling`, `invoicing-and-payments`, `ai-clone`,
+`ai-audit`, `custom-automation`.
+
+**Each needs its own DIFFERENT third-party study**, and the bar is now five in a row.
+
+## EARLIER STATUS (2026-07-31, session 10: TOPICS 3 AND 4 ARE LIVE, and the films now use real footage)
 
 **Four flagships are live.** Measured on production with `node scripts/score-flagship.mjs <slug>`:
 
