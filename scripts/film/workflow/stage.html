@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>workflow automation film overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* FILM OVERLAY — "the busywork tax", authored at the FINAL resolution (1280x720).
+
+   TRANSPARENT LAYER, NOT A FILM. Everything here is drawn over the b-roll cut that
+   scripts/film/workflow/bg.mjs builds separately; the renderer screenshots with omitBackground so
+   the PNGs carry alpha. Each scrim below is a per-beat decision about how much of the picture to
+   give up for legible type, not one global dimming.
+
+   EVERY BEAT SITS ON ONE FILM CLOCK, DERIVED FROM THE VOICE. The narration was generated and
+   measured first (scripts/film/workflow/vo.mjs) and every switch boundary below is one of its
+   measured line boundaries, the same numbers bg.mjs reads out of schedule.json.
+
+   THE RULES THE EARLIER FILMS PAID FOR, all applied here:
+   1. Frame one carries the number at FULL opacity. It is the poster, and the number is the only
+      reason anybody presses play.
+   2. Every switch range starts exactly where the previous one ends, so a changeover is one frame
+      and the caption can never fade through nothing.
+   3. No caption band under a beat that is already a held card. Lines 0, 2, 4, 6 and 7 are carried
+      by cards at three to six times the caption size, so their caption rows are absent on purpose.
+   4. No text-transform on a citation. Uppercasing turned 64.1200(f)(5) into (F)(5) on an earlier
+      film, and "95%" and "CHI 2005" have the same problem waiting in them.
+   5. A footnote over BLACK needs more alpha than the same footnote over a photograph. Both source
+      lines here sit on black beats, so both are .62 rather than the .44 that reads as restraint
+      over a picture and as a rendering fault over nothing. */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:transparent;
+  font-family:Lato,Helvetica,Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.stage{position:relative;width:1280px;height:720px}
+
+/* ─────────── scrims ─────────── */
+.scrim{position:absolute;inset:0;z-index:1;display:none}
+.sA{background:rgba(5,9,14,.78)}
+.sPic{background:linear-gradient(180deg,rgba(4,8,13,.74) 0%,rgba(4,8,13,.56) 30%,rgba(4,8,13,.22) 56%,rgba(4,8,13,.46) 78%,rgba(4,8,13,.88) 100%)}
+.sG{background:rgba(5,9,14,.80)}
+.glow{position:absolute;inset:0;z-index:2;display:none;
+  background:radial-gradient(46% 52% at 40% 44%,rgba(40,168,224,.15),transparent 70%)}
+
+/* ─────────── the caption band ─────────── */
+.cap{position:absolute;z-index:30;left:110px;right:110px;bottom:58px;text-align:center;
+  font-size:30px;font-weight:300;line-height:1.34;letter-spacing:-.01em;display:none;
+  text-shadow:0 2px 18px rgba(0,0,0,.75)}
+.cap b{font-weight:700}
+
+/* ─────────── beat A · the hook (0.00 to 7.82) ─────────── */
+.hook{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.hook .n{font-size:186px;font-weight:300;line-height:.86;letter-spacing:-.05em}
+.hook .unit{margin-top:10px;font-size:26px;font-weight:300;letter-spacing:.26em;color:#28a8e0}
+.hook .u{margin-top:26px;font-size:27px;font-weight:300;color:rgba(255,255,255,.74);max-width:860px}
+.hook .src{margin-top:20px;font-size:15px;letter-spacing:.09em;color:rgba(255,255,255,.62);
+  opacity:0;animation:in .5s 1.60s forwards}
+/* the second half of the hook, once the picture has fallen away */
+.hook .k{margin-top:28px;font-size:30px;font-weight:300;color:#28a8e0;opacity:0;
+  animation:up .5s 4.60s forwards}
+
+/* ─────────── beat B2 · the same lead, by hand (13.36 to 19.90) ─────────── */
+.hand{position:absolute;z-index:20;left:200px;right:200px;top:172px;display:none}
+.hand .hd{font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);
+  padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.16)}
+.rw{display:flex;justify-content:space-between;align-items:baseline;gap:30px;padding:21px 0;
+  border-bottom:1px solid rgba(255,255,255,.11);opacity:0;transform:translateY(9px)}
+.rw .tm{font-size:20px;font-weight:300;color:#28a8e0;letter-spacing:.02em;min-width:190px;text-align:left}
+.rw .nm{font-size:28px;font-weight:300;text-align:right;flex:1}
+.h1{animation:up .4s 13.75s forwards}
+.h2{animation:up .4s 14.85s forwards}
+.h3{animation:up .4s 15.95s forwards}
+.h4{animation:up .4s 17.05s forwards}
+
+/* ─────────── beat D · the chain, wired (26.76 to 34.03) ─────────── */
+.chain{position:absolute;z-index:20;left:100px;right:100px;top:176px;display:none}
+.chain .hd{font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);
+  text-align:center;padding-bottom:52px}
+.spine{position:relative;display:flex;justify-content:space-between}
+/* The rail is drawn BEHIND the nodes and spans between the first and last dot, so it never
+   sticks out past the chain the way a full-width rule would. */
+.spine::before{content:"";position:absolute;left:90px;right:90px;top:35px;height:2px;
+  background:linear-gradient(90deg,rgba(40,168,224,.22),#28a8e0)}
+.nd{position:relative;width:180px;text-align:center;opacity:0;transform:translateY(9px)}
+.nd .l{font-size:21px;font-weight:300;letter-spacing:-.01em}
+.nd .dot{width:11px;height:11px;border-radius:50%;background:#12181f;border:1.5px solid #5c6672;
+  margin:16px auto 0}
+.nd.end .dot{background:#28a8e0;border-color:#28a8e0;width:15px;height:15px;margin-top:14px}
+.nd .c{margin-top:16px;font-size:15px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.35}
+.nd .at{margin-top:12px;font-size:14px;letter-spacing:.12em;color:#28a8e0}
+.n1{animation:up .4s 27.10s forwards}
+.n2{animation:up .4s 27.65s forwards}
+.n3{animation:up .4s 28.20s forwards}
+.n4{animation:up .4s 28.75s forwards}
+.n5{animation:up .4s 29.30s forwards}
+.n6{animation:up .4s 29.85s forwards}
+.chain .ft{margin-top:56px;text-align:center;font-size:25px;font-weight:300;
+  color:rgba(255,255,255,.74);opacity:0;animation:up .5s 31.20s forwards}
+.chain .ft b{color:#28a8e0;font-weight:300}
+
+/* ─────────── beat F · the rule (40.93 to 49.30) ─────────── */
+/* The one line in this film worth remembering, so it gets the whole frame and a black bed. */
+.rule{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.rule .k{font-size:46px;font-weight:300;line-height:1.24;letter-spacing:-.02em;max-width:1060px}
+.rule .k em{font-style:normal;color:#28a8e0}
+.rule .s2{margin-top:34px;font-size:25px;font-weight:300;color:rgba(255,255,255,.72);opacity:0;
+  animation:up .5s 44.20s forwards;max-width:960px}
+.rule .src{margin-top:30px;font-size:16px;letter-spacing:.09em;color:rgba(255,255,255,.62);
+  opacity:0;animation:in .5s 46.10s forwards}
+
+/* ─────────── beat G · the close (49.30 on) ─────────── */
+.cta{position:absolute;z-index:20;inset:0 0 110px 0;display:none;place-items:center;text-align:center}
+.cta .k{font-size:44px;font-weight:300;letter-spacing:-.02em;max-width:980px}
+.cta .u{margin-top:34px;font-size:56px;font-weight:300;color:#28a8e0;letter-spacing:-.02em;
+  opacity:0;animation:up .5s 51.30s forwards}
+.cta .f{margin-top:30px;font-size:15px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);opacity:0;animation:in .5s 53.20s forwards}
+
+@keyframes in{to{opacity:1}}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="scrim sA"></div>
+  <div class="scrim sPic"></div>
+  <div class="scrim sG"></div>
+  <div class="glow gA"></div>
+  <div class="glow gD"></div>
+  <div class="glow gG"></div>
+
+  <!-- BEAT A · the number. Full opacity at frame 0: this frame is the poster. -->
+  <div class="hook">
+    <div>
+      <div class="n">25</div>
+      <div class="unit">MINUTES</div>
+      <div class="u">before interrupted work was picked up again</div>
+      <div class="src">Mark, Gonzalez and Harris, CHI 2005. 24 workers, timed to the second.</div>
+      <div class="k">The typing itself took ninety seconds.</div>
+    </div>
+  </div>
+
+  <!-- BEAT B2 · the same lead, by hand -->
+  <div class="hand">
+    <div class="hd">The same lead, by hand</div>
+    <div class="rw h1"><span class="tm">11:47 pm</span><span class="nm">The form arrives</span></div>
+    <div class="rw h2"><span class="tm">9:14 am</span><span class="nm">Somebody retypes the name</span></div>
+    <div class="rw h3"><span class="tm">9:16 am</span><span class="nm">A second record now exists</span></div>
+    <div class="rw h4"><span class="tm">3 days later</span><span class="nm">Read the whole thing again</span></div>
+  </div>
+
+  <!-- BEAT D · the chain, wired -->
+  <div class="chain">
+    <div class="hd">Wired</div>
+    <div class="spine">
+      <div class="nd end n1"><span class="l">The form</span><div class="dot"></div><div class="c">Site or portal</div><div class="at">11:47 PM</div></div>
+      <div class="nd n2"><span class="l">The record</span><div class="dot"></div><div class="c">Matched, not doubled</div></div>
+      <div class="nd n3"><span class="l">The details</span><div class="dot"></div><div class="c">Phone and address</div></div>
+      <div class="nd n4"><span class="l">The reply</span><div class="dot"></div><div class="c">A real answer</div></div>
+      <div class="nd n5"><span class="l">The route</span><div class="dot"></div><div class="c">Scored and assigned</div></div>
+      <div class="nd end n6"><span class="l">The task</span><div class="dot"></div><div class="c">On the calendar</div><div class="at">11:47 PM</div></div>
+    </div>
+    <div class="ft">Both ends, <b>the same minute.</b></div>
+  </div>
+
+  <!-- BEAT F · the rule -->
+  <div class="rule">
+    <div>
+      <div class="k">A chain that fails one time in twenty<br><em>stays switched on.</em></div>
+      <div class="s2">Nineteen in twenty and it turns itself off. One in twenty and nobody is told.</div>
+      <div class="src">Zapier pauses a Zap at 95% errors over 7 days. Its own documentation.</div>
+    </div>
+  </div>
+
+  <!-- BEAT G · the close -->
+  <div class="cta">
+    <div>
+      <div class="k">Log every run. Make every failure shout.</div>
+      <div class="u">realtylt.com/ai</div>
+      <div class="f">Built and run by RealtyLT</div>
+    </div>
+  </div>
+
+  <!-- captions: one per narrated line that is not already carried by a card -->
+  <div class="cap c1">A form arrives at 11:47pm. Nobody sees it until morning.</div>
+  <div class="cap c3">Eight steps. Twelve minutes. Spread over three days.<br><b>Forty times a month.</b></div>
+  <div class="cap c5">Nobody woke up. Nobody typed.<br>It was answered while they were still on the site.</div>
+</div>
+
+<script>
+/* Deterministic seek. Every beat is a CSS animation on the film clock, so freezing the document
+   and setting currentTime renders the exact state at time t.
+
+   [selector, display when present, from, until]. Every boundary is a measured line boundary from
+   scripts/_scratch-video/workflow-vo/schedule.json, and each range STARTS where the previous one
+   ends, so there is never a frame with nothing on it. A HIGHER Z-INDEX DOES NOT CLEAR WHAT IS
+   BEHIND IT: two centred beats that are both "visible" render through each other, which cost a
+   whole render on the voice film. Every beat here has an explicit out. */
+const SWITCH = [
+  // beat A · the hook, over the desk and then over black. c0 absent: the card carries it.
+  [".sA",    "block", 0.00,  4.40],
+  [".hook",  "grid",  0.00,  7.82],
+  [".gA",    "block", 0.00,  7.82],
+  // beat B1 · the office at night. Picture beat, so it gets the caption.
+  [".c1",    "block", 7.82,  13.36],
+  // beat B2 · the by-hand log, on black. c2 absent: the rows are the line.
+  [".hand",  "block", 13.36, 19.90],
+  // beat B3 · the morning. Picture beat, caption again.
+  [".c3",    "block", 19.90, 26.76],
+  // beat D · the wired chain, on black. c4 absent: the spine is the line.
+  [".chain", "block", 26.76, 34.03],
+  [".gD",    "block", 26.76, 34.03],
+  // beat E · the reply already sent. Picture beat.
+  [".c5",    "block", 34.03, 40.93],
+  // beat F · the rule, on black, alone. c6 absent: the card is the line.
+  [".rule",  "grid",  40.93, 49.30],
+  // beat G · the close. c7 absent: the card carries the line and the URL, larger.
+  [".sG",    "block", 49.30, null],
+  [".gG",    "block", 49.30, null],
+  [".cta",   "grid",  49.30, null],
+];
+/* The picture gradient spans every beat between the hook and the close, so there is no seam at
+   any interior cut. Over the black beats it is black on black and costs nothing. */
+const SPAN = [[".sPic", 7.82, 49.30]];
+
+/* Order is load-bearing. display:none CANCELS an element's animations, so a beat that has just
+   become visible gets a BRAND NEW animation running from zero. Show first, force the style
+   flush, and only then pause and seek. */
+window.__seek = (t) => {
+  for (const [sel, shown, from, until] of SWITCH) {
+    for (const el of document.querySelectorAll(sel)) {
+      el.style.display = t >= from && (until === null || t < until) ? shown : "none";
+    }
+  }
+  for (const [sel, from, until] of SPAN) {
+    for (const el of document.querySelectorAll(sel)) {
+      el.style.display = t >= from && t < until ? "block" : "none";
+    }
+  }
+  void document.body.offsetHeight;
+  for (const a of document.getAnimations()) {
+    a.pause();
+    a.currentTime = t * 1000;
+  }
+};
+window.__ready = document.fonts.ready.then(() => {
+  window.__seek(0);
+  return true;
+});
+</script>
+</body>
+</html>

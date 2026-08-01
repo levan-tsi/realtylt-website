@@ -15,7 +15,7 @@ import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
 import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
-import { WORKFLOW_FLAGSHIP } from "./workflow-scenes";
+import { WORKFLOW_FILM, WORKFLOW_FLAGSHIP } from "./workflow-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -143,6 +143,7 @@ export const POSTS: BlogPost[] = [
     body: [],
     placeholder: false,
     markdown: WORKFLOW_AUTOMATION_POST,
+    film: WORKFLOW_FILM,
     flagship: WORKFLOW_FLAGSHIP,
   },
   {

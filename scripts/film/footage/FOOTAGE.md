@@ -23,6 +23,12 @@ watermarking OFF, on the owner's personal Google AI Pro account `levan.realtylt@
 Shots 1, 2, 3 and 5 were generated in an earlier session; their prompts above are reconstructed from
 the Flow-assigned filenames, so treat them as descriptions rather than verbatim.
 
+## Added later
+
+| file | length | what it shows |
+|---|---|---|
+| `shot7-signup-callback.mp4` | 10s | A laptop open on a wooden desk in daylight with a phone lying face up beside it; slow push in, and the phone screen lights up with an incoming call in the last two seconds. Generated for the voice film (commit 6309f34) because none of the first six clips showed a form turning into a ringing phone. **Its prompt was not recorded at the time**, so this is a description of the take rather than a reconstruction of the prompt; a re-run cannot reproduce it and the file is therefore irreplaceable. Reused as the opening beat of the workflow film, where it is the desk the whole article is about. |
+
 ### What generation gets wrong, and how the cut works around it
 
 - **Screen content is always gibberish.** Every phone screen in these clips carries unreadable

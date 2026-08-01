@@ -19,6 +19,35 @@
 
 import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
 
+/** The film. One definition, read by the scene that plays it AND by the VideoObject JSON-LD, so
+ * the two can never disagree about length, dimensions or what the clip actually shows.
+ *
+ * Third film built on real footage, same committed recipe as the reactivation and qualification
+ * ones: vo.mjs generates and MEASURES the narration, bg.mjs cuts the picture bed to those
+ * measured boundaries, render.mjs draws the type on transparent PNGs, assemble.mjs composites and
+ * mixes. 1280x720 because that is the footage's native resolution and nothing here is upscaled.
+ *
+ * ONE THING THIS ONE DOES THAT THE OTHER THREE DID NOT: the cut lives in scripts/film/workflow/
+ * cut.mjs and every other script imports the length and the fade point from it. The previous
+ * films wrote the length into two files and the fade into one, which is exactly how a re-recorded
+ * line leaves a hardcoded fade behind and blacks out the last third of a render.
+ *
+ * Four of the nine picture beats are deliberately BLACK, alternating with the footage. Three of
+ * them are held cards (the by-hand log, the wired chain, the rule) and hairline type over a
+ * sunlit kitchen is not a card, it is a smudge. */
+export const WORKFLOW_FILM = {
+  src: "/video/film-workflow.mp4",
+  poster: "/video/film-workflow-poster.jpg",
+  width: 1280,
+  height: 720,
+  seconds: 59,
+  /** ISO 8601, which is the only duration format VideoObject accepts. */
+  duration: "PT59S",
+  name: "Ninety seconds of typing, and the twenty five minutes it actually costs",
+  description:
+    "A form arrives at 11:47pm and nobody sees it until the morning. The film follows the same lead by hand, eight steps spread across three days, then wired as a single chain whose first and last hop land in the same minute. It closes on the failure nobody warns you about: the platforms only switch a chain off when it fails almost every time it runs, so a chain failing one time in twenty stays on, stays green, and nobody is told.",
+} as const;
+
 /** SCENE copy — "In short".
  *
  * Three lines carrying the whole argument, for the reader who is skimming and for the assistants
@@ -185,6 +214,7 @@ export const FAILURE_MODES: GridItem[] = [
  * scene with no film renders nothing, and lib/blog/flagship.test.ts fails on that combination
  * rather than letting it ship as a silent hole. */
 export const WORKFLOW_FLAGSHIP: FlagshipContent = {
+  film: WORKFLOW_FILM,
   /** A duration rather than a clock, a year or a share: the held moment on this topic is the gap
    * between what a small job takes and what it costs. The four heroes before this one were
    * 11:40pm, 9:42pm, 2023 and 15%, so this is the first that is a length of time rather than a
@@ -202,6 +232,19 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       ariaLabel: "In short",
       eyebrow: "In short",
       claims: IN_SHORT,
+    },
+    reel: {
+      kind: "film",
+      band: "dark",
+      label: "Watch it",
+      ariaLabel: "Watch it work",
+      eyebrow: "Watch it work",
+      heading: "One lead, by hand and then wired.",
+      caption: [
+        `Narrated, ${WORKFLOW_FILM.seconds} seconds. The voice reading it is a licensed clone of my own, which seemed worth saying rather than leaving you to wonder. The lead is invented and the timestamps are staged, but both numbers on screen are the cited ones from further down this page: the twenty five minutes is the field study and the ninety five percent is Zapier's own documentation. The chain it draws is the one on the `,
+        { href: "/services/workflow-automation", label: "service page" },
+        ".",
+      ],
     },
     fragmented: {
       kind: "statbars",

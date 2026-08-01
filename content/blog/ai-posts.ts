@@ -483,6 +483,8 @@ Ninety seconds is also not what any of them cost.
 
 [[scene:in-short]]
 
+[[scene:reel]]
+
 ## What ninety seconds actually costs
 
 In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine published the results of shadowing twenty four information workers at their desks with a stopwatch. Seven managers, nine analysts, eight developers. Each one was formally observed and timed for three and a half days, an average of twenty five hours and forty two minutes per person, more than seven hundred hours of observation in total, with every action noted to the second.
