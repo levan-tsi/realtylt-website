@@ -50,6 +50,33 @@
 ## · The COMING SOON artwork is a typographic panel now, not a generated house. His own
 ##   original is RETAINED in the repo (public/images/mls/coming-soon.webp) — he may want it.
 ##
+## ── THE NEXT ROUND'S HEADLINE: A SIGNATURE MOMENT ON THE HOME PAGE ──────────────────
+## Owner, 2026-08-02: "can we make something cool on that first page like 3d transition with
+## mouse … we have really cool ai page why cant we make something cool there too and keep
+## luxury feeling."
+## THE BRIEF, and the trap to avoid: /ai can be abstract because it sells a CAPABILITY. The
+## home page sells HOMES, so an abstract particle field there is decoration, and decoration on
+## a luxury page reads as vibe-coded. The signature must be made of something only RealtyLT
+## has. RECOMMENDED (see DESIGN-ROUND16.md for the taste rules that bind it):
+##   THE VALLEY, DRAWN FROM OUR OWN INVENTORY. A dark, quiet map of the Hudson Valley where
+##   every active listing is a point of light — 11,609 of them, and we already hold lat/lng for
+##   each. Mouse moves, the field parallaxes with real depth; the nearest lights brighten and
+##   one resolves into a price and a town. It says "we cover this whole valley" with evidence
+##   rather than a claim, it cannot be copied by a competitor because it IS our data, and it
+##   stays dark and restrained. Reuse the /ai page's rendering discipline, NOT its look.
+##   Cheaper alternatives if that is too much: depth-parallax on the existing hero photograph
+##   (mouse shifts sky/ridge/foreground as separate planes), or the hero cross-fading through
+##   one home's photographs as the pointer travels.
+## HARD CONSTRAINTS: LCP is the hero IMAGE (measured, ~1.5s dev) — never fade it, only
+## transform. Reduced-motion and JS-off must land the finished hero. No purple/gradient/neon
+## (design-anti-ai-slop-palette). Mobile gets a still, like the video does today.
+##
+## ── OFF-MARKET PHOTO CLEANUP IS LIVE (shipped 2026-08-02) ────────────────────────────
+## The hourly sync now deletes photos for homes that left the market, 60 listings a run, and
+## CLEARS THE JSONB MIRROR MARKER as it goes — without that, a returning listing resumes at
+## index 30, downloads nothing and shows zero photos for ever. Backlog was 2,570 folders
+## (~5.7GB), so it clears in about two days. Watch `cleanup` in the cron's JSON summary.
+##
 ## ── FIRST ACTIONS NEXT ROUND ─────────────────────────────────────────────────────────
 ## 1. `node scripts/_scratch-r16-debt.mjs` — if "modified in last 24h" is 0 the feed is frozen
 ##    again; that is the whole health of the site in one number.
