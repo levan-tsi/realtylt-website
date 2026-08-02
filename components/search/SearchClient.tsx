@@ -792,7 +792,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               Open Houses + Price Reduced stay omitted: our OneKey feed replicates neither the
               OpenHouse resource nor a price-drop field, and a filter that cannot answer is
               worse than no filter. */}
-          <div role="group" aria-label="Quick filter" className="flex items-center gap-1">
+          {/* flex-wrap, and it is load-bearing at 320: this group grew from two answers to four
+              last round, and four un-wrappable buttons ("All Listings / Active / New Listings /
+              Pending") measure wider than a 320px viewport can hold, so /search pushed the whole
+              document 22px sideways. Wrapping is the honest fix — the row is a set of peers, and
+              a phone is allowed to stack them. */}
+          <div role="group" aria-label="Quick filter" className="flex flex-wrap items-center gap-1">
             {([["all", "All Listings"], ["active", "Active"], ["new", "New Listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button
                 key={val}
