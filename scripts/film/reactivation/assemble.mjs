@@ -21,16 +21,14 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync, mkdirSync, statSync } from "node:fs";
 import ffmpegPath from "ffmpeg-static";
+import { sched, FILM_LEN, FADE, FADE_AT, LAST_WORD } from "./cut.mjs";
+import { buildBed } from "../bed.mjs";
 
 const V = "scripts/_scratch-video";
 const DIR = `${V}/reactivation-vo`;
 const FRAMES = `${V}/reactivation-frames`;
 const BG = `${V}/reactivation-bg/bg.mp4`;
 const PUB = "public/video";
-const sched = JSON.parse(readFileSync(`${DIR}/schedule.json`, "utf8"));
-
-const FILM_LEN = 48.6; // last word lands at 47.08; the rest is the hold on the close card
-const FADE_AT = 48.1; // 0.5s to black
 const CRF = 23;
 
 mkdirSync(PUB, { recursive: true });
@@ -58,9 +56,18 @@ run([...inputs, "-filter_complex", `${delays};${mix}`, "-map", "[vo]", "-ac", "1
   "-y", `${V}/vo-reactivation.wav`], "vo-mix");
 console.log(`vo track: ${mb(`${V}/vo-reactivation.wav`)}`);
 
+// 1b) the sound bed, derived from the same PLAN the picture is cut from, then summed under the
+//     voice. The voice is loudnorm'd to -16 LUFS ABOVE, before the bed is added, so the bed
+//     cannot drag the narration's level around: the mix is a sum, not a second normalisation.
+const bed = await buildBed("reactivation");
+run(["-i", `${V}/vo-reactivation.wav`, "-i", bed,
+  "-filter_complex", `[0:a][1:a]amix=inputs=2:normalize=0,atrim=0:${FILM_LEN},asetpts=PTS-STARTPTS[a]`,
+  "-map", "[a]", "-ac", "1", "-ar", "48000", "-y", `${V}/mix-reactivation.wav`], "bed-mix");
+console.log(`mixed:   ${mb(`${V}/mix-reactivation.wav`)}`);
+
 // 2) the film that ships: footage under type, in one pass
-run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/vo-reactivation.wav`,
-  "-filter_complex", `[0:v][1:v]overlay=0:0:format=auto,fade=t=out:st=${FADE_AT}:d=0.5[v]`,
+run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/mix-reactivation.wav`,
+  "-filter_complex", `[0:v][1:v]overlay=0:0:format=auto,fade=t=out:st=${FADE_AT}:d=${FADE}[v]`,
   "-map", "[v]", "-map", "2:a",
   "-c:v", "libx264", "-crf", String(CRF), "-preset", "slow", "-pix_fmt", "yuv420p",
   "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",

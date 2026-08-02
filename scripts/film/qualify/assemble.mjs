@@ -21,16 +21,14 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync, mkdirSync, statSync } from "node:fs";
 import ffmpegPath from "ffmpeg-static";
+import { sched, FILM_LEN, FADE, FADE_AT, LAST_WORD } from "./cut.mjs";
+import { buildBed } from "../bed.mjs";
 
 const V = "scripts/_scratch-video";
 const DIR = `${V}/qualify-vo`;
 const FRAMES = `${V}/qualify-frames`;
 const BG = `${V}/qualify-bg/bg.mp4`;
 const PUB = "public/video";
-const sched = JSON.parse(readFileSync(`${DIR}/schedule.json`, "utf8"));
-
-const FILM_LEN = 53.0; // last word lands at 51.47; the rest is the hold on the close card
-const FADE_AT = 52.5;   // 0.5s to black
 const CRF = 23;
 
 mkdirSync(PUB, { recursive: true });
@@ -54,13 +52,27 @@ const mix =
   sched.map((_, k) => `[d${k}]`).join("") +
   `amix=inputs=${sched.length}:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=11,` +
   `atrim=0:${FILM_LEN},asetpts=PTS-STARTPTS[vo]`;
+// This file was copied from the reactivation film and, until 2026-08-01, still wrote its voice
+// track to vo-reactivation.wav. It shipped the right audio purely because it overwrote that file
+// immediately before reading it back - but running this script silently destroyed the other
+// film's intermediate, and any change to the order would have put the wrong narration on the
+// wrong film. The paths are this topic's now.
 run([...inputs, "-filter_complex", `${delays};${mix}`, "-map", "[vo]", "-ac", "1", "-ar", "48000",
-  "-y", `${V}/vo-reactivation.wav`], "vo-mix");
-console.log(`vo track: ${mb(`${V}/vo-reactivation.wav`)}`);
+  "-y", `${V}/vo-qualify.wav`], "vo-mix");
+console.log(`vo track: ${mb(`${V}/vo-qualify.wav`)}`);
+
+// 1b) the sound bed, derived from the same PLAN the picture is cut from, then summed under the
+//     voice. The voice is loudnorm'd to -16 LUFS ABOVE, before the bed is added, so the bed
+//     cannot drag the narration's level around: the mix is a sum, not a second normalisation.
+const bed = await buildBed("qualify");
+run(["-i", `${V}/vo-qualify.wav`, "-i", bed,
+  "-filter_complex", `[0:a][1:a]amix=inputs=2:normalize=0,atrim=0:${FILM_LEN},asetpts=PTS-STARTPTS[a]`,
+  "-map", "[a]", "-ac", "1", "-ar", "48000", "-y", `${V}/mix-qualify.wav`], "bed-mix");
+console.log(`mixed:   ${mb(`${V}/mix-qualify.wav`)}`);
 
 // 2) the film that ships: footage under type, in one pass
-run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/vo-reactivation.wav`,
-  "-filter_complex", `[0:v][1:v]overlay=0:0:format=auto,fade=t=out:st=${FADE_AT}:d=0.5[v]`,
+run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/mix-qualify.wav`,
+  "-filter_complex", `[0:v][1:v]overlay=0:0:format=auto,fade=t=out:st=${FADE_AT}:d=${FADE}[v]`,
   "-map", "[v]", "-map", "2:a",
   "-c:v", "libx264", "-crf", String(CRF), "-preset", "slow", "-pix_fmt", "yuv420p",
   "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
@@ -74,8 +86,11 @@ run(["-i", BG, "-i", `${FRAMES}/f00000.png`,
   "-frames:v", "1", "-q:v", "3", "-y", `${PUB}/film-qualify-poster.jpg`], "poster");
 console.log(`poster: ${mb(`${PUB}/film-qualify-poster.jpg`)}`);
 
-// 4) prove the gaps are deliberate beats rather than clipped tails
-const det = run(["-i", `${V}/vo-reactivation.wav`, "-af", "silencedetect=n=-38dB:d=0.25", "-f", "null", "-"], "silence");
+// 4) prove the gaps are deliberate beats rather than clipped tails.
+//    On the VOICE-ONLY track on purpose: once the bed is under it there is no silence anywhere in
+//    the film by design, so pointing silencedetect at the mix would report nothing and prove
+//    nothing. Intelligibility of the finished mix is answered by scripts/film/verify-audio.mjs.
+const det = run(["-i", `${V}/vo-qualify.wav`, "-af", "silencedetect=n=-38dB:d=0.25", "-f", "null", "-"], "silence");
 const marks = [...det.matchAll(/silence_(start|end): ([\d.]+)/g)].map((m) => `${m[1]}@${(+m[2]).toFixed(2)}`);
 console.log(`\nsilence: ${marks.join(" ")}`);
 console.log("\nscheduled line boundaries:");

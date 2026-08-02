@@ -22,27 +22,12 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, statSync, existsSync, writeFileSync } from "node:fs";
 import ffmpegPath from "ffmpeg-static";
+import { FPS, W, H, FILM_LEN, PLAN } from "./cut.mjs";
+import { fadeChain, moves } from "../beats.mjs";
 
 const FOOTAGE = "scripts/film/footage";
 const OUT = "scripts/_scratch-video/qualify-bg";
-const FPS = 30;
-const W = 1280;
-const H = 720;
 
-/** [beat, clip or null for black, in-point, out-point, what the shot is doing here].
- *  `null` is a deliberate black bed: the three-month card is the one moment in the film that
- *  asks the viewer to stop and read a regulation, and footage under it would be noise. */
-const PLAN = [
-  ["A1 the morning", "shot5-morning-ring", 0.4, 4.8, "sunrise, coffee, the day the list gets opened"],
-  ["A2 the number alone", null, 0, 4.3, "black: the picture falls away and 15% is the only thing left"],
-  ["B1 three leads arrived", "shot3-reply-glow", 0.3, 5.6, "a thread glowing on a phone"],
-  ["B2 the three records", null, 0, 6.25, "black, because three identical rows only read on black"],
-  ["C  what the form cannot say", "shot2-empty-office", 1.5, 6.95, "the desk the list is opened at"],
-  ["D  the signals", "shot1-1140pm-lead", 1.0, 7.0, "the night the inquiry was actually written"],
-  ["E  routing", "shot4-hudson-aerial", 0.0, 7.5, "the market the leads are spread across"],
-  ["F  the rule", null, 0, 5.9, "black: the fair housing line is the one that should sit alone"],
-  ["G  the close", "shot6-keys-porch", 2.1, 10.0, "keys changing hands on a porch"],
-];
 
 mkdirSync(OUT, { recursive: true });
 const run = (args, tag) => {
@@ -56,26 +41,26 @@ const run = (args, tag) => {
 
 let t = 0;
 const parts = [];
-for (const [beat, clip, from, to, why] of PLAN) {
-  const dur = +(to - from).toFixed(3);
+PLAN.forEach(({ beat, clip, in: inPoint, dur, why }, i) => {
   const seg = `${OUT}/seg${parts.length}.mp4`;
   if (clip) {
     const src = `${FOOTAGE}/${clip}.mp4`;
     if (!existsSync(src)) throw new Error(`missing footage: ${src}`);
     // -ss before -i is the fast seek; re-encoding to a common 30fps CBR-ish profile is what
     // makes the concat safe. setsar=1 matters: a mismatched aspect ratio makes concat refuse.
-    run(["-ss", String(from), "-t", String(dur), "-i", src,
-      "-vf", `fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1,format=yuv420p`,
+    const fades = fadeChain(PLAN, i, dur);
+    run(["-ss", String(inPoint), "-t", String(dur), "-i", src,
+      "-vf", `fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1${fades ? "," + fades : ""},format=yuv420p`,
       "-an", "-c:v", "libx264", "-crf", "14", "-preset", "slow", "-y", seg], beat);
   } else {
     run(["-f", "lavfi", "-i", `color=c=black:s=${W}x${H}:r=${FPS}:d=${dur}`,
       "-vf", "setsar=1,format=yuv420p", "-c:v", "libx264", "-crf", "14", "-preset", "medium",
       "-y", seg], beat);
   }
-  console.log(`${String(t.toFixed(2)).padStart(6)} -> ${(t + dur).toFixed(2).padStart(6)}  ${beat.padEnd(30)} ${clip ?? "(black)"}  ${why}`);
+  console.log(`${String(t.toFixed(2)).padStart(6)} -> ${(t + dur).toFixed(2).padStart(6)}  ${beat.padEnd(30)} ${(clip ?? "(black)").padEnd(22)} ${(clip ? moves(PLAN, i).label : "-").padEnd(9)} ${why}`);
   parts.push(seg);
   t += dur;
-}
+});
 
 // concat via the demuxer: no re-encode of the segments, so the picture is encoded exactly once
 // before the overlay pass.
