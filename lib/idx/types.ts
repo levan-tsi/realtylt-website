@@ -105,6 +105,10 @@ export interface MapPin {
   office: string;
   /** How many photos /api/media/{id}/{n} can serve — the popup pager's bound (0 = none). */
   photoCount: number;
+  /** On-market status, so the map can tell a home you can still buy from one that is already
+   * spoken for. Without it every chip looked identical and 4,775 Pending listings were
+   * indistinguishable from 6,763 Active ones. */
+  status?: string;
   /** Client-only: the visitor has hearted this listing (SavedProvider) — the chip shows it. */
   saved?: boolean;
 }

@@ -413,7 +413,7 @@ export class DbIdxClient implements IdxClient {
     // storage", which is the popup pager's contract, and the SAME number the card and the
     // listing page print. It used to ride listing->photosMirrored, which the sync's full-JSONB
     // upsert wipes: 9,186 active listings therefore showed a popup with NO photo at all.
-    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,office:listing->>listOfficeName,photoCount:photos_servable";
+    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,status,office:listing->>listOfficeName,photoCount:photos_servable";
 
     if (bounds) {
       const bbox =
@@ -451,6 +451,7 @@ function toPin(l: Listing): MapPin | null {
   return {
     id: l.id, price: l.price, lat: l.lat, lng: l.lng, address: l.address,
     city: l.city, zip: l.zip, beds: l.beds, baths: l.baths, office: l.listOfficeName,
+    status: l.status,
     // Carded listings carry ONE cover path, so photos.length is always 1 here — photoCount is
     // the real bound whenever the card set it (see toCard).
     photoCount: l.photoCount ?? l.photos.length,

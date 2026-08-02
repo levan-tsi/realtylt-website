@@ -204,6 +204,8 @@ const toPin = (l: Listing): MapPin => ({
   beds: l.beds,
   baths: l.baths,
   office: l.listOfficeName,
+  // Lets the map draw a Pending home differently from one you can still buy.
+  status: l.status,
   // The pager's bound: photos_servable, carried on the card as photoCount — the same number
   // the card counter and the listing page print, so a popup can never promise a photo the
   // proxy cannot serve.
