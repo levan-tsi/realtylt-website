@@ -48,6 +48,9 @@ export interface MirrorTarget {
   priorMirrored?: number;
   /** The modificationTimestamp that prior mirror was built for. */
   priorMirroredTs?: string;
+  /** How many photos the listing had when that mirror was built. This — not the modification
+   * timestamp — is what decides whether the set changed; see planRange. */
+  priorPhotoCount?: number;
 }
 
 export interface MirrorOutcome {
@@ -56,6 +59,8 @@ export interface MirrorOutcome {
   photosMirrored: number;
   /** Timestamp this mirror now corresponds to (always the current modificationTimestamp). */
   photosMirroredTs: string;
+  /** Photo count this mirror was built against — the change-detection signal for next time. */
+  photosMirroredCount: number;
   /** True when every photo (up to the cap) is mirrored. Reported for observability — the sync
    * advances its watermark regardless, because photo debt is recoverable and stale data is not. */
   fully: boolean;
@@ -123,11 +128,28 @@ export function isImagePayload(contentType: string | null | undefined, bytes: Ui
   return true;
 }
 
-/** Where a target should (re)start mirroring: 0 when the photo set may have changed, else the
- * already-mirrored prefix. `end` is the capped photo count. */
+/** Where a target should (re)start mirroring: 0 when the photo set really may have changed,
+ * otherwise the already-mirrored prefix. `end` is the capped photo count.
+ *
+ * WHY THIS IS NOT KEYED ON ModificationTimestamp ANY MORE (measured 2026-08-02): it used to be,
+ * and any change to a listing — a price edit, a status flip to Pending — reset its mirror to 0.
+ * A budget-bounded run then re-mirrored only the COVER (the queue is covers-first), so the row
+ * came back reporting exactly one photo and threw away the record of the rest. Listings that
+ * churn churn a lot: 84% of our Pending rows were serving ONE photo while the feed held 7, 14,
+ * 25, 29, 35, 38. It was not that OneKey removed pictures; we kept discarding them.
+ *
+ * The photo COUNT is the honest cheap signal instead. Signed MediaURLs are re-issued on every
+ * fetch so the URLs themselves cannot be compared, but a listing whose photo count is unchanged
+ * has almost certainly not had its set rebuilt — and the objects live at deterministic paths,
+ * so even a swapped photo at the same index is overwritten in place the next time that listing
+ * genuinely grows or shrinks. Re-mirroring from 0 on every price change is the expensive,
+ * lossy option; this is the one that lets a gallery actually fill up. */
 export function planRange(t: MirrorTarget, cap: number): { start: number; end: number } {
   const end = Math.min(t.photos.length, cap);
-  const sameSet = !!t.priorMirroredTs && t.priorMirroredTs === t.modificationTimestamp;
+  const knownSet = t.priorPhotoCount != null && t.priorPhotoCount === t.photos.length;
+  // No recorded count yet (rows mirrored before this change) → fall back to the old timestamp
+  // test rather than assuming, so an unknown row still self-heals instead of trusting a stale prefix.
+  const sameSet = knownSet || (t.priorPhotoCount == null && !!t.priorMirroredTs && t.priorMirroredTs === t.modificationTimestamp);
   const start = sameSet ? Math.min(t.priorMirrored ?? 0, end) : 0;
   return { start, end };
 }
@@ -254,6 +276,7 @@ export async function mirrorPhotos(
       id: t.id,
       photosMirrored: mirrored,
       photosMirroredTs: t.modificationTimestamp,
+      photosMirroredCount: t.photos.length,
       fully: mirrored >= end,
       uploaded,
     };

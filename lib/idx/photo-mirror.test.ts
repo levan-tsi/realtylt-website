@@ -109,8 +109,8 @@ describe("mirrorPhotos — happy path", () => {
     const out = await mirrorPhotos([target("A", 2), target("B", 1)], deps);
     expect(uploads.sort()).toEqual(["A/0.jpg", "A/1.jpg", "B/0.jpg"]);
     expect(out).toEqual([
-      { id: "A", photosMirrored: 2, photosMirroredTs: "2026-07-16T00:00:00Z", fully: true, uploaded: 2 },
-      { id: "B", photosMirrored: 1, photosMirroredTs: "2026-07-16T00:00:00Z", fully: true, uploaded: 1 },
+      { id: "A", photosMirrored: 2, photosMirroredTs: "2026-07-16T00:00:00Z", photosMirroredCount: 2, fully: true, uploaded: 2 },
+      { id: "B", photosMirrored: 1, photosMirroredTs: "2026-07-16T00:00:00Z", photosMirroredCount: 1, fully: true, uploaded: 1 },
     ]);
   });
 });
@@ -241,6 +241,48 @@ describe("mirrorPhotos — a disguised rate limit never becomes a photo", () => 
     const out = await mirrorPhotos([target("A", 1)], deps, { maxRetries: 3 });
     expect(uploads).toEqual(["A/0.jpg"]);
     expect(out[0]).toMatchObject({ photosMirrored: 1, fully: true });
+  });
+});
+
+describe("planRange — a price change must not throw away a mirrored gallery", () => {
+  /** THE ONE-PHOTO BUG (measured 2026-08-02): change detection compared modificationTimestamp,
+   * so ANY edit — a price cut, a flip to Pending — reset the mirror to 0. The queue is
+   * covers-first and budget-bounded, so the run re-mirrored only the cover and the row came
+   * back reporting ONE photo. 84% of Pending listings were serving one photo against feed sets
+   * of 7, 14, 25, 29, 35 and 38. */
+  it("resumes from the mirrored prefix when the photo COUNT is unchanged", () => {
+    const t = target("A", 30, "NEW-TS", { priorMirrored: 22, priorMirroredTs: "OLD-TS", priorPhotoCount: 30 });
+    expect(planRange(t, 50)).toEqual({ start: 22, end: 30 }); // keeps the 22, goes deeper
+  });
+
+  it("re-mirrors from 0 when the photo count actually changed", () => {
+    const t = target("A", 12, "NEW-TS", { priorMirrored: 9, priorMirroredTs: "OLD-TS", priorPhotoCount: 30 });
+    expect(planRange(t, 50)).toEqual({ start: 0, end: 12 }); // the set was rebuilt — start over
+  });
+
+  it("falls back to the timestamp test for rows mirrored before counts were recorded", () => {
+    const stale = target("A", 30, "NEW-TS", { priorMirrored: 22, priorMirroredTs: "OLD-TS" });
+    expect(planRange(stale, 50)).toEqual({ start: 0, end: 30 }); // unknown count → do not trust
+    const same = target("A", 30, "SAME-TS", { priorMirrored: 22, priorMirroredTs: "SAME-TS" });
+    expect(planRange(same, 50)).toEqual({ start: 22, end: 30 });
+  });
+
+  it("reports the count it mirrored against, so the next run can compare", async () => {
+    const { deps } = fakeDeps();
+    const [out] = await mirrorPhotos([target("A", 4)], deps);
+    expect(out.photosMirroredCount).toBe(4);
+  });
+
+  it("end to end: a changed listing keeps its gallery and deepens instead of resetting", async () => {
+    const { deps, uploads } = fakeDeps();
+    // 30 photos, 22 already mirrored, listing edited (new ts) but the same 30 photos.
+    const out = await mirrorPhotos(
+      [target("A", 30, "NEW-TS", { priorMirrored: 22, priorMirroredTs: "OLD-TS", priorPhotoCount: 30 })],
+      deps,
+      { photoBudget: 4 },
+    );
+    expect(uploads).toEqual(["A/22.jpg", "A/23.jpg", "A/24.jpg", "A/25.jpg"]); // continued, not restarted
+    expect(out[0].photosMirrored).toBe(26);
   });
 });
 

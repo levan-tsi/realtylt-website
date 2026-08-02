@@ -4,6 +4,10 @@
 import type { CountySlug } from "@/lib/site";
 
 export type PropertyType = "Residential" | "Multi-Family" | "Land" | "Commercial" | "Rental";
+/** The statuses a visitor can filter down to. Deliberately NOT every value the feed carries —
+ * these are the two people ask for by name ("show me what is still available", "show me what is
+ * already spoken for"). Closed/Withdrawn/Expired never reach the site at all. */
+export type ListingStatusFilter = "Active" | "Pending";
 
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
@@ -66,9 +70,14 @@ export interface Listing {
    * `photosMirrored` photos from storage (permanent) and only falls back to the source URL for
    * the rest. Absent/0 = nothing mirrored yet (route uses the existing proxy/placeholder path). */
   photosMirrored?: number;
-  /** The `modificationTimestamp` the current mirror corresponds to. A newer value means the
-   * photo set may have changed, so the sync re-mirrors that listing from index 0. */
+  /** The `modificationTimestamp` the current mirror corresponds to. Kept for rows mirrored
+   * before `photosMirroredCount` existed, which still fall back to comparing it. */
   photosMirroredTs?: string;
+  /** How many photos the listing had when the mirror was built. THIS is the change-detection
+   * signal: comparing modification timestamps reset the mirror on every price or status edit,
+   * and a budget-bounded run then re-mirrored only the cover — which is why 84% of Pending
+   * listings were serving a single photo against feed sets of 7 to 38. See planRange. */
+  photosMirroredCount?: number;
   lat: number;
   lng: number;
   /** MLS compliance — always rendered ("Listed with …"). */
@@ -111,6 +120,10 @@ export interface SearchParams {
    * and wrong for a chosen place: "Beacon" as free text also returns Beacon Street in
    * Middletown, and "Kingston" returns Kingston Avenue in Poughkeepsie. */
   city?: string;
+  /** Narrow to one on-market status. The site shows Active, Coming Soon, Pending and Under
+   * Contract together by default (OneKey's own portal does the same), but "only show me what I
+   * can actually buy today" is a real question and it was unanswerable. */
+  status?: ListingStatusFilter;
   county?: CountySlug;
   priceMin?: number;
   priceMax?: number;

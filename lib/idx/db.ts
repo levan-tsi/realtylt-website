@@ -132,6 +132,9 @@ function searchFilters(p: SearchParams): string {
   // An EXACT city — what the visitor picked from the suggest dropdown. Equality, not a
   // substring, so "Beacon" cannot drag in Beacon Street in Middletown.
   if (p.city) parts.push(`city=eq.${encodeURIComponent(p.city)}`);
+  // On-market status. RLS already limits the table to rows we may show at all, so this only
+  // ever narrows within Active / Coming Soon / Pending / Under Contract.
+  if (p.status) parts.push(`status=eq.${encodeURIComponent(p.status)}`);
   // search_hay = lower(address city zip county). Strip LIKE wildcards from user input;
   // PostgREST's * wildcard wraps the needle for the same substring semantics as fixture.
   const needle = p.q?.trim().toLowerCase().replace(/[%_]/g, " ").trim();
@@ -578,20 +581,23 @@ export async function getDbMediaUrls(id: string): Promise<string[] | null> {
  * `id=in.()` URL stays short; missing/never-mirrored ids simply do not appear in the result. */
 export async function getMirrorState(
   ids: readonly string[],
-): Promise<Map<string, { mirrored: number; ts?: string }>> {
-  const out = new Map<string, { mirrored: number; ts?: string }>();
+): Promise<Map<string, { mirrored: number; ts?: string; count?: number }>> {
+  const out = new Map<string, { mirrored: number; ts?: string; count?: number }>();
   if (!restConfig() || !ids.length) return out;
   const CHUNK = 150;
   for (let i = 0; i < ids.length; i += CHUNK) {
     const slice = ids.slice(i, i + CHUNK).map((id) => encodeURIComponent(id));
     try {
-      const { rows } = await rest<{ id: string; mirrored: unknown; ts: unknown }>(
-        `idx_listings?id=in.(${slice.join(",")})&select=id,mirrored:listing->photosMirrored,ts:listing->photosMirroredTs`,
+      const { rows } = await rest<{ id: string; mirrored: unknown; ts: unknown; count: unknown }>(
+        `idx_listings?id=in.(${slice.join(",")})&select=id,mirrored:listing->photosMirrored,ts:listing->photosMirroredTs,count:listing->photosMirroredCount`,
       );
       for (const r of rows) {
         out.set(r.id, {
           mirrored: typeof r.mirrored === "number" ? r.mirrored : 0,
           ts: typeof r.ts === "string" ? r.ts : undefined,
+          // Absent on rows mirrored before photosMirroredCount existed — planRange treats an
+          // unknown count as "fall back to the timestamp test" rather than as a match.
+          count: typeof r.count === "number" ? r.count : undefined,
         });
       }
     } catch (e) {

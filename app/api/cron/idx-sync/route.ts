@@ -52,7 +52,14 @@ const REMOVE_BATCH = 500;
 // run cannot finish mirroring, the watermark does NOT advance, so the next tick re-fetches the
 // same window (fresh signed URLs) and continues from each listing's already-mirrored prefix.
 const MIRROR_PHOTO_CAP = Math.max(1, Math.min(50, Number(process.env.MIRROR_PHOTO_CAP) || 50));
-const MIRROR_PHOTO_BUDGET = Math.max(1, Number(process.env.MIRROR_PHOTO_BUDGET) || 600);
+// Raised from 600. The run is bounded by MIRROR_WALL_MS anyway, and 600 was well under what the
+// wall clock affords (~400ms a photo at concurrency 4 fills roughly 2,700 in 270s), so the old
+// number just left the budget unspent while galleries stayed shallow. NOTE FOR THE OWNER: photo
+// storage is a real cost — mls-photos already holds ~358k objects at ~296KB (~101GB), so
+// deepening galleries grows the bill. MIRROR_PHOTO_CAP (50) is the lever, and it is env-settable;
+// do NOT lower it without reading the note on planRange, because reporting a shorter prefix
+// takes photos away from listings that currently show them.
+const MIRROR_PHOTO_BUDGET = Math.max(1, Number(process.env.MIRROR_PHOTO_BUDGET) || 1200);
 const MIRROR_CONCURRENCY = Math.max(1, Math.min(8, Number(process.env.MIRROR_CONCURRENCY) || 4));
 const MIRROR_WALL_MS = 270_000; // mirror + DB writes must finish under maxDuration (300s)
 
@@ -123,7 +130,7 @@ export async function GET(req: Request) {
     // mirror this run.
     const prior = delta.upserts.length
       ? await getMirrorState(delta.upserts.map((l) => l.id))
-      : new Map<string, { mirrored: number; ts?: string }>();
+      : new Map<string, { mirrored: number; ts?: string; count?: number }>();
     if (cfg && delta.upserts.length) {
       const outcomes = await mirrorPhotos(
         delta.upserts.map((l) => ({
@@ -132,6 +139,7 @@ export async function GET(req: Request) {
           modificationTimestamp: l.modificationTimestamp,
           priorMirrored: prior.get(l.id)?.mirrored,
           priorMirroredTs: prior.get(l.id)?.ts,
+          priorPhotoCount: prior.get(l.id)?.count,
         })),
         mirrorDeps(cfg),
         {
@@ -151,6 +159,7 @@ export async function GET(req: Request) {
         if (!o) continue;
         l.photosMirrored = o.photosMirrored;
         l.photosMirroredTs = o.photosMirroredTs;
+        l.photosMirroredCount = o.photosMirroredCount;
         mirroredPhotos += o.uploaded;
         if (!o.fully) mirrorFully = false;
       }
