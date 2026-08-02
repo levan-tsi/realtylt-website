@@ -45,8 +45,8 @@ export const PLAN = sequence([
     amb: "amb-dawn-kitchen", why: "sunrise, coffee, the day the list gets opened" },
   { beat: "A2 the number alone", clip: null, in: 0, out: 4.3,
     amb: "amb-void", why: "black: the picture falls away and 15% is the only thing left" },
-  { beat: "B1 three leads arrived", clip: "shot3-reply-glow", in: 0.3, out: 5.6,
-    amb: "amb-night-interior", why: "a thread glowing on a phone" },
+  { beat: "B1 three leads arrived", clip: "shot13-three-folders", in: 0.3, out: 5.6,
+    amb: "amb-desk-day", why: "three identical folders, which is exactly what the line says" },
   { beat: "B2 the three records", clip: null, in: 0, out: 6.25,
     amb: "amb-void", why: "black, because three identical rows only read on black" },
   { beat: "C  what the form cannot say", clip: "shot2-empty-office", in: 1.5, out: 6.95,
@@ -57,8 +57,8 @@ export const PLAN = sequence([
     amb: "amb-open-air", why: "the market the leads are spread across" },
   { beat: "F  the rule", clip: null, in: 0, out: 5.9,
     amb: "amb-void", why: "black: the fair housing line is the one that should sit alone" },
-  { beat: "G  the close", clip: "shot6-keys-porch", in: 2.1, out: 10.0,
-    amb: "amb-porch-morning", why: "keys changing hands on a porch" },
+  { beat: "G  the close", clip: "shot9-desk-callback", in: 2.1, out: 10.0,
+    amb: "amb-desk-day", why: "the list being worked: somebody sitting down to make the call" },
 ], FILM_LEN);
 
 /** ONE sound, and it is the one the picture is already showing.
@@ -70,5 +70,8 @@ export const PLAN = sequence([
  *  it the same sound everywhere would reinforce the exact sameness the new footage is meant to
  *  break. Each film's one event is different on purpose. */
 export const HITS = [
-  { sfx: "hit-phone-buzz", afterLine: 1, nudge: 0.05, why: "the leads arriving, over the glowing thread" },
+  // Moved off line 1 when that beat stopped being a phone. Beat D is the night the inquiry was
+  // actually written, and the gap after line 4 falls inside it, so the buzz is the picture's own
+  // sound rather than an effect laid over an unrelated shot.
+  { sfx: "hit-phone-buzz", afterLine: 4, nudge: 0.05, why: "the inquiry arriving, over the night it was written" },
 ];

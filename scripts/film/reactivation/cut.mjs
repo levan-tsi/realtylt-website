@@ -42,16 +42,19 @@ export const PLAN = sequence([
     amb: "amb-open-air", why: "the valley, wide and calm, under the number" },
   { beat: "B1 the inquiry, back then", clip: "shot1-1140pm-lead", in: 0.6, out: 5.8,
     amb: "amb-night-interior", why: "a phone lighting up on a counter at night" },
-  { beat: "B2 and nobody called", clip: "shot2-empty-office", in: 0.0, out: 8.0,
-    amb: "amb-night-interior", why: "the office where the follow-up did not happen" },
+  { beat: "B2 and nobody called", clip: "shot11-old-records", in: 0.0, out: 8.0,
+    amb: "amb-night-interior", why: "stacks of paper records nobody has opened: the list itself" },
   { beat: "D  the three-month clock", clip: null, in: 0, out: 8.35,
     amb: "amb-void", why: "black, so the regulation is the only thing on screen" },
   { beat: "E  the opener", clip: "shot3-reply-glow", in: 0.5, out: 6.4,
     amb: "amb-night-interior", why: "a reply glowing on a screen" },
   { beat: "F  the outcome", clip: "shot5-morning-ring", in: 0.9, out: 7.0,
     amb: "amb-dawn-kitchen", why: "morning, and the phone is ringing the other way" },
-  { beat: "G  the close", clip: "shot6-keys-porch", in: 1.85, out: 10.0,
-    amb: "amb-porch-morning", why: "keys changing hands on a porch" },
+  // The in-point is not arbitrary. This clip listens for its first five seconds and only breaks
+  // into a smile at about 6.5, so entering at 1.85 plays the whole arc under the closing line
+  // rather than opening on a worried face or cutting in after the payoff.
+  { beat: "G  the close", clip: "shot8-porch-callback", in: 1.85, out: 10.0,
+    amb: "amb-porch-morning", why: "the call being taken, and the moment it turns" },
 ], FILM_LEN);
 
 /** ONE sound, and it is the one the picture is already showing.

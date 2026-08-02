@@ -42,8 +42,8 @@ export const FADE_AT = +(FILM_LEN - FADE).toFixed(2);
  *  `in` is the in-point into the source clip. `from`/`to` are FILM times taken from the
  *  schedule; the segment length follows. */
 export const PLAN = [
-  { beat: "A1 the hook, on the desk", clip: "shot7-signup-callback", in: 0.4, from: 0, to: 4.4,
-    amb: "amb-desk-day", why: "the laptop and the phone the whole article is about" },
+  { beat: "A1 the hook, on the desk", clip: "shot12-typing-notes", in: 0.4, from: 0, to: 4.4,
+    amb: "amb-night-interior", why: "hands typing over handwritten notes: the ninety seconds the line is about" },
   { beat: "A2 the number alone", clip: null, in: 0, from: 4.4, to: gapEnd(0),
     amb: "amb-void", why: "black: the picture falls away and 25 is all that is left" },
   { beat: "B1 nobody sees it", clip: "shot2-empty-office", in: 1.0, from: gapEnd(0), to: gapEnd(1),
@@ -58,8 +58,8 @@ export const PLAN = [
     amb: "amb-night-interior", why: "the reply already on their phone" },
   { beat: "F  the rule", clip: null, in: 0, from: gapEnd(5), to: gapEnd(6),
     amb: "amb-void", why: "black: the one line in this film worth remembering" },
-  { beat: "G  the close", clip: "shot6-keys-porch", in: 0.31, from: gapEnd(6), to: FILM_LEN,
-    amb: "amb-porch-morning", why: "keys changing hands on a porch" },
+  { beat: "G  the close", clip: "shot10-laptop-close", in: 0.31, from: gapEnd(6), to: FILM_LEN,
+    amb: "amb-desk-day", why: "the laptop closes and they leave: what the automation actually buys" },
 ];
 
 /** Single sounds, placed in the SILENCE BETWEEN narrated lines rather than over a word.
@@ -78,7 +78,9 @@ export const HITS = [
   // film is arguing for, and it is the one moment a sound says it faster than the narration can.
   // It sits under the picture of the glowing screen, just after the line that claims it.
   { sfx: "hit-notify", afterLine: 5, nudge: 0.1, why: "the answer arriving, over the glowing screen" },
-  // Keys, once, in the gap BEFORE the picture cuts to the porch: the sound arrives first and the
-  // image confirms it, which is a older and better trick than landing both on the same frame.
-  { sfx: "hit-keys", afterLine: 6, nudge: 0.2, why: "the handover, a beat before we see it" },
+  // There WAS a second sound here, keys jingling ahead of the cut to a porch. The close is no
+  // longer a porch, and the obvious replacement - a laptop lid closing - has nowhere to go: the
+  // lid shuts about a second into the closing shot and the only gaps in the narration are 0.7s
+  // BEFORE that beat starts and 8s after it. A sound two seconds early is worse than no sound, so
+  // this film ends on one event rather than a forced second.
 ];
