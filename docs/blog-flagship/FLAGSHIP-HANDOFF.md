@@ -1,6 +1,108 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## NEXT SESSION'S JOB (owner 2026-08-02) — THE TALKING-HEAD FILM. Resume HERE.
+## STATUS 2026-08-02 (session 13): THE LIKENESS IS FIXED. It was never the face model — it was what the face model had been trained on.
+
+**Read this before touching the avatar again.** The previous session's diagnosis (below) was that the
+footage is too wide and the face too small. That is true and still worth fixing, but it was not the
+binding constraint. The binding constraint was that **the five "designed looks" on the avatar are
+generative re-renders of a stranger**, and every judgement the owner made was made against those.
+
+### What was done, and what it proves
+
+1. **Trained a personal model on 37 frames of his own 4K footage.** `app.heygen.com/avatar/design-look`
+   → **"Improve likeness with a personal model"** → **Train your personal model**. 60 credits,
+   ~12 minutes, minimum 10 images, 30+ scores "Great". Once trained the pill becomes a
+   **Personal model** toggle on the prompt bar and every look generation uses it.
+2. **NEVER train on the existing looks.** The picker offers the avatar's 6 looks pre-selected and 5 of
+   them are AI-generated pictures of a man who is not him. Training on those bakes the drift in.
+   Upload real frames and select only those.
+3. **Controlled A/B, and this is the part that makes the claim honest.** The same prompt, the same
+   lighting, run twice — personal model ON and personal model OFF. The sheet is committed at
+   `docs/blog-flagship/avatar/likeness-ab.png`: real him, then two model-ON renders, then two
+   model-OFF renders. Model-OFF regresses to a younger, slimmer man with a patchy beard. **The gain
+   is the training, not the prompt and not the flattering light.**
+
+### The five faults, named, because "make it more realistic" fixes nothing
+
+Judge every attempt against a native frame of `IMG_7153.MOV`, never against the last attempt. What
+the untrained looks got wrong, in the order they read as wrong:
+
+| his real face | what the generic look did |
+|---|---|
+| thick, straight, **dark brows sitting low** over the eye | thin, arched, lifted |
+| narrow **hooded** eyes, heavy upper lid | round and wide open |
+| receding hairline **with hair at the temples** | smooth shiny dome |
+| broad, heavy lower face | slimmed and lengthened |
+| dense beard with a **high cheek line** | thin, cheek line dropped |
+
+The personal model corrects all five. It still slightly narrows the jaw and slightly over-darkens the
+brows; that is the residual, and it is small enough that the renders read as the same man.
+
+### The training-set recipe (`scripts/_scratch-video/avatar/v2/extract.mjs`, gitignored)
+
+- **Three SITTING takes only** — `IMG_7153`, `IMG_7156`, `IMG_7239`. **Skip `IMG_7091`**: its face is
+  ~190px, so a 1024 crop is a 5x upscale and teaches the model softness.
+- **720px square crops at y=1731**, which is 120px *below* the face centre. That is deliberate: it
+  pushes the oil painting's bottom edge out of frame. A prop repeating in all 37 images is a
+  background the model can learn as part of him. Take C sits lower, so its box is y=1861.
+- 18 candidates per take → contact sheet → **cull by eye**: blinks, hands over the face, the black
+  folder, and anything looking down. ~11 keepers per take.
+- Plus **3 chest-up frames** so the model learns his build. The generic looks all slimmed him.
+- 37 total, ~1.5MB, JPEG q3 at 1024².
+
+### Driving the upload without opening a native file dialog
+
+The upload tile looks like a button but contains a **hidden `input[type=file]`**. Do not click the
+tile — that opens an OS picker that blocks the session. `find` the input, then `file_upload` against
+**the input's ref**. Uploads **append** across calls, so batch them (12/13/12 worked). Each uploaded
+frame also becomes a selectable **"Photo Avatar" look**, which is how a video can be rendered from a
+real photograph of him with zero identity drift.
+
+### TWO VIDEOS EXIST FOR HIM TO JUDGE. Same script, same 16:9, same instruction. Only the plate differs.
+
+| | plate | file |
+|---|---|---|
+| **V1** | a **real photograph** of him — his chair, his mint wall, his olive sweatshirt | `Realty LT - The Gap_1080p.mp4` in Downloads |
+| **V2** | the **personal-model** look — dim charcoal room, him in the right third, empty wall left | see Projects, "RealtyLT - The Gap" |
+
+**V1's verdict, and it is the useful one: the identity is perfect and the plate is wrong.** It is
+unarguably him, because it is a photograph. But his real footage is a *bright mint-green wall, flat
+webcam light, olive sweatshirt, shot portrait*, and the Video Agent's editorial style is near-black
+`#101014` with a Didone serif. Dropped into that frame it pillar-boxes into a tall strip and reads as
+a webcam pasted onto a magazine page. **The graphics and type in V1 are genuinely good — keep them.**
+
+That is the whole argument for V2: the personal-model look was prompted to *be* the frame (dim
+charcoal, landscape, him small in the right third, empty wall on the left for the cards).
+
+### Three things the Video Agent gets wrong unless told
+
+1. **It invents listing data.** V1 printed **"$850,000 / 123 Maple Street, Austin"** — a fabricated
+   address in the wrong state, on a brand whose entire argument is that the details are checkable.
+   Forbid it explicitly: no address, no house number, no city, no price. The only numbers allowed on
+   screen are $6,000, 11:40 PM and 9:00 AM.
+2. **It obeys an explicit framing rule, and only an explicit one.** Told "presenter must remain small,
+   about a quarter of frame height, never filling the screen", it wrote exactly that into its own
+   plan. The owner's own mitigation is therefore free — just say it.
+3. **It renders quiet: −24.7 LUFS integrated.** Social wants −14 to −16. Normalise before anything
+   ships.
+
+### Cost, measured
+
+Creator plan, 600 credits/month, resets Sep 2. This round spent **85**: 60 model training, 5 look
+generations (2–3 each), 20 for a Video Agent video. 497 left at the time of writing. Digital Twin
+slots: 2 of 5 used.
+
+### Still true, still owed
+
+- **The reshoot is still the biggest single lever** and the recipe below is unchanged. The personal
+  model raised the floor; a chest-up take at 40% face would raise the ceiling.
+- **Identity verification is the owner's to do.** Three failed avatar generations still sit at the top
+  of `my-avatars`. Do not attempt the verification flow.
+- The three bad b-roll clips are still on production (see the footage-audit section below).
+
+---
+
+## THE ORIGINAL BRIEF (owner 2026-08-02) — kept because the sequence and the reshoot recipe still stand
 
 Still the `/blog` command. **Single agent, one long session, no subagents.**
 
