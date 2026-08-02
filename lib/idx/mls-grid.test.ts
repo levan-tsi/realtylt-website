@@ -186,6 +186,23 @@ describe("mapProperty", () => {
     expect(days).toBeLessThan(10.1);
   });
 
+  it("ignores a NEGATIVE DaysOnMarket instead of dating the listing in the future", () => {
+    // KEYH6078348 really carries DaysOnMarket -1526. Subtracting it dated the home
+    // 2030-10-06, and "Newest" sorts on that column, so one row sat four years above
+    // every real listing on the page.
+    const l = mapProperty({ ...row, DaysOnMarket: -1526, ModificationTimestamp: "2024-12-04T22:48:37.683Z" })!;
+    expect(l.listedAt).toBe("2024-12-04T22:48:37.683Z"); // falls through to the modification ts
+    expect(+new Date(l.listedAt)).toBeLessThan(Date.now());
+  });
+
+  it("still honours a REAL future OnMarketDate — Coming Soon is not an error", () => {
+    // 117 active rows are Coming Soon with a genuine on-market date days ahead. The clamp
+    // above must not touch them: it only guards the derived fallback.
+    expect(mapProperty({ ...row, OnMarketDate: "2026-08-14" })!.listedAt).toBe(
+      new Date("2026-08-14").toISOString(),
+    );
+  });
+
   it("falls back to a jittered zip centroid when the feed has no coordinates", () => {
     const { Latitude: _lat, Longitude: _lng, ...noCoords } = row;
     const l = mapProperty(noCoords)!;

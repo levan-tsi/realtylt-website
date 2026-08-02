@@ -716,11 +716,19 @@ export function mapProperty(p: ResoProperty): Listing | null {
     listOfficeName: p.ListOfficeName ?? "",
     originatingSystem: "OneKey MLS",
     modificationTimestamp: modified,
-    // The feed serves OnMarketDate again (re-audited 2026-07-15) — use the real date;
-    // DaysOnMarket derivation stays as the fallback for rows without it.
+    // The feed serves OnMarketDate again (re-audited 2026-07-15) — use the real date. A real
+    // OnMarketDate may legitimately be in the FUTURE: 117 active rows are Coming Soon with a
+    // genuine on-market date days ahead, and that is not an error to correct.
+    //
+    // The DaysOnMarket derivation is only a fallback for rows without one, and the feed can
+    // serve it NEGATIVE — KEYH6078348 carries DaysOnMarket -1526, which subtracted from today
+    // dated the listing 2030-10-06. That single row then sorted FIRST under "Newest", four
+    // years ahead of every real home. A negative days-on-market is not a date we can derive
+    // anything from, so it falls through to the modification timestamp like any other row
+    // missing the field.
     listedAt: p.OnMarketDate
       ? new Date(p.OnMarketDate).toISOString()
-      : p.DaysOnMarket != null
+      : p.DaysOnMarket != null && p.DaysOnMarket >= 0
         ? new Date(Date.now() - p.DaysOnMarket * 86_400_000).toISOString()
         : modified,
     // The owner's own inventory headlines the Featured rail. OneKey abbreviates the
