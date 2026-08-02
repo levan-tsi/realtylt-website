@@ -1,5 +1,65 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## STATUS 2026-08-02 (session 13b): the floating ToC, the footage defects, and why NOT HyperFrames
+
+### The floating rail was covering the text on EVERY service page, at EVERY width
+
+The owner reported it on services; the audit found it was worse than that. `scripts/_scratch-toc-audit.mjs`
+hovers the rail and compares the expanded card's right edge against the narrowest real text
+block: **43 of 54 combinations overlapped** — all five service pages at all seven widths (75px at
+1360, 39px elsewhere), plus reactivation, qualification and workflow at 1360/1440/1512 (17px, over
+the lead form). `ArticleToc` was never affected: it is a sticky in-column rail and cannot overlap.
+
+**The root cause is that both rails derived their safe edge from an ASSUMED container width.**
+`FlagshipToc` was "fixed" on 2026-07-29 with `calc(max((100vw - 72rem) / 2, 0px) + 2rem)`, and
+`ServiceToc` never got even that. A container width is a proxy for the thing that actually matters,
+and it was wrong: measured at 1512 the flagship's narrowest text starts at **163px** while the
+formula predicted 212px. So `lib/toc/safe-edge.ts` now MEASURES the left edge of the narrowest text
+on the page and both rails clamp to that. It re-measures on resize, on fonts.ready, and through a
+ResizeObserver, because measuring once on mount silently produced a rail that never appeared at all.
+
+**A consequence worth knowing:** where the gutter cannot hold a readable label the rail is not shown
+at all and the bottom pill + sheet takes over — a rail clamped to an 8px label satisfies "never
+overlaps" while being useless. In practice that means the rail from ~1728px up and the sheet below,
+on both surfaces. If you would rather keep the rail at narrower widths, the lever is
+`LABEL_MIN_USEFUL` in that file.
+
+### Two films shipped with a generated-footage defect ON SCREEN
+
+Measured at 0.2s steps, not taken from the audit's prose:
+
+| film | clip | what was on screen | fix |
+|---|---|---|---|
+| workflow, the close | `shot10-laptop-close` | first ~1.0s: **silver lid with an Apple logo over a black base**, turning space-grey as it shuts | enter at 1.05 |
+| reactivation, "and nobody called" | `shot11-old-records` | the push-in holds to ~7.2 then **hard-cuts to an unrelated filing cabinet**; the beat ran to 8.0 | `srcEnd: 7.15` |
+
+**Correction to the earlier status in this file: workflow's HOOK was never the problem.** The melt in
+`shot12-typing-notes` starts at ~5.0s and the hook uses 0.4→4.8, so it stops just before it. Only
+the close was broken.
+
+Both defects sit at a clip boundary, so the usable span is shorter than the beat. `bg.mjs` gained
+**`srcEnd`** — the last usable source second, stretched with `setpts` to fill the beat — so a defect
+comes out without moving a beat boundary and sliding the picture off the voice. 8% and 12% on two
+near-static shots, invisible. `setpts` goes BEFORE `fps` or the output is no longer true CFR. With
+the field absent the filter chain is byte-identical, so the other three films are untouched.
+
+### HyperFrames: evaluated, and it is the wrong tool for THIS job
+
+The owner asked whether to use HeyGen's HyperFrames instead of the local pipeline. No, for two
+reasons that have nothing to do with its quality:
+
+1. **It animates HTML; it does not generate or repair footage.** The problem here was broken
+   AI-generated video, which HyperFrames has no opinion about. It could replace the *type and
+   motion* layer — which is the part that already works, is committed, and renders from the same
+   PLAN the picture is cut from.
+2. **From Claude Code its `compose` and `render_video` are disabled by design** (the MCP rejects
+   them for clients with a local filesystem and points at `npx skills add heygen-com/hyperframes`).
+   That local route produces standalone HTML/GSAP files — which is what the Playwright type layer
+   already is.
+
+Keep it in mind for a different deliverable: a pure motion-graphics explainer with no live footage.
+That is close to what the HeyGen Video Agent already produces for the avatar cuts.
+
 ## STATUS 2026-08-02 (session 13): THE LIKENESS IS FIXED. It was never the face model — it was what the face model had been trained on.
 
 **Read this before touching the avatar again.** The previous session's diagnosis (below) was that the
