@@ -51,9 +51,11 @@ top block is the live brief. Check the rendered page before believing either.
    search surface** (measured per surface, below), so it is not a rare edge case. This is the
    highest-leverage single asset on the site. Not changed here because it is a branded asset and
    may be the owner's own choice.
-2. **The hero photograph is a vintage convertible in front of a gate.** It is the first frame of
-   the old vendor's Vimeo clip. It is not a home, not the Hudson Valley, and not licensed to us.
-   See §3 — this is the open decision, and the alternative is already sitting in the repo.
+2. **The desktop hero is the old vendor's footage, and we have no licence for it.** Be precise
+   about what a visitor actually sees, because it changes over the first few seconds: the poster
+   (`hero-vimeo-frame.jpg`, a vintage convertible in front of a gate) holds for a beat, then the
+   Vimeo clip fades in over it and plays home interiors. Neither the frame nor the clip has a
+   licence record. See §3 — this is the open decision, and the alternative is already in the repo.
 3. ~~The hero is a still.~~ **Done this round.**
 4. ~~The `/search` count line is the page's headline set as body text.~~ **Done this round.**
 5. ~~The save-heart has no moment.~~ **Done this round.**
@@ -74,14 +76,18 @@ Every phone and every reduced-motion visitor already gets the alternative, and *
 for it**: Breakneck Ridge (Jeff Pang, CC BY 2.0). Two screenshots, same viewport, same everything
 else:
 
-- `docs/design-r16/hero-vimeo-frame-1440.png` — what desktop visitors see today
-- `docs/design-r16/hero-licensed-still-1440.png` — what everyone else already sees
+- `docs/design-r16/hero-vimeo-frame-1440.png` — what desktop visitors see today, captured 4s in,
+  so it is the CLIP playing (a dining room), not the poster
+- `docs/design-r16/hero-licensed-still-1440.png` — what everyone else already gets
 
-**The recommendation is unchanged from the audit, and looking at them side by side makes it
-stronger: drop the clip and give everyone the still.** It removes an unlicensed asset, removes a
-third-party iframe from the LCP path, deletes a component, and — the part that actually matters —
-puts the Hudson Highlands behind "Let's Find Home" instead of a sports car. The photograph says
-where this business works. A car says nothing.
+**The recommendation is unchanged from the audit: drop the clip and give everyone the still.** It
+removes an unlicensed asset, removes a third-party iframe from the LCP path, deletes a component,
+and puts the Hudson Highlands behind "Let's Find Home".
+
+The honest counter-argument, since he is the one deciding: the clip is *ambient motion of home
+interiors*, and motion in a hero is a real asset that a still cannot replace. If he can confirm the
+clip is licensed to RealtyLT, keeping it is defensible on its own merits. **The licence is the
+question; the aesthetics are close enough that either answer is fine.**
 
 It is left undone because it is a licensing question about content the owner may hold rights to,
 and `ATTRIBUTIONS.md` is explicit that it "needs an owner decision, not a patch". **One yes and it
