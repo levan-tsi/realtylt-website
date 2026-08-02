@@ -1,6 +1,82 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 16 BRIEF — THE SITE IS WAITING ON TWO DNS RECORDS. Single agent, no subagents.
+## ═══ ROUND 17 BRIEF — set 2026-08-02. Single agent, no subagents.
+## FIRST ACTION: read docs/parity/HANDOFF-ROUND-16.md (still current for the launch switches and
+## the trap list) and docs/parity/DESIGN-ROUND16.md (this round's assessment). This block is the
+## running order only.
+##
+## ── WHAT ROUND 16 FOUND, AND IT WAS NOT A DESIGN PROBLEM ─────────────────────────────
+## THE SITE'S INVENTORY HAD BEEN FROZEN FOR SEVEN DAYS. The watermark had not moved past
+## 2026-07-25; 15,628 feed rows were waiting; ZERO listings in our table had been modified in
+## the previous 24h. The owner's four "missing" Newburgh homes were all listed AFTER the freeze,
+## so the answer to his question was (c) a real gap in the sync — not IDX permission, not timing.
+## THE CHAIN, because no single link looked broken: media.mlsgrid.com answers a rate limit with
+## the 21-byte text/plain body "Request limit reached". Our download only checked response.ok, so
+## under a 2xx that counted as a photo; we uploaded a text file to Storage as <id>/<idx>.jpg;
+## the bucket's mime allowlist refused it (400 invalid_mime_type); the photo never mirrored;
+## `fully` never went true; and the cron HELD ITS WATERMARK on every run. Each following run
+## re-scanned the same window and re-downloaded the same failing photos, which is what kept the
+## media host rate-limiting us. A self-sustaining deadlock.
+## FIXED, three parts: isImagePayload() (a 2xx is not proof of a photo — content-type AND magic
+## bytes, anything else is retryable, never uploaded); uploadPhoto logs the response BODY, not
+## just the status (a bare 400 is what made this take a day to see); and THE WATERMARK NOW
+## TRACKS DATA, NOT PHOTOS — photo debt is recoverable, stale listings are not.
+## Plus a circuit breaker: 24 consecutive failures with no success stops the mirror pass, so a
+## refusing host costs seconds instead of the whole 300s invocation.
+## VERIFIED ON PRODUCTION: caught up in 4 runs / 231s. 6,242 upserted, 1,593 delistings applied,
+## watermark now current. 1,908 rows modified in the last 24h (was 0). All four Newburgh homes
+## present. Runs took 76/69/62/24s instead of 279s.
+##
+## ── ORDER FOR ROUND 17 ───────────────────────────────────────────────────────────────
+## 1. CHECK THE SYNC FIRST, EVERY ROUND. One query, and it is the whole health of the site:
+##      node scripts/_scratch-r16-debt.mjs      # freshness + photo coverage
+##    If "modified in last 24h" is 0, the feed is frozen again — stop and fix that first.
+##    Consider making this a real committed test rather than a scratch probe.
+## 2. PHOTO DEBT. The catch-up brought in ~1,500 listings faster than photos could mirror, and
+##    the media host was refusing EVERY download (22/22 sampled = 429). NO BACKFILL WAS RUN ON
+##    PURPOSE — the account is at suspension risk and had been hammered hourly for a week.
+##    Re-probe with scripts/_scratch-r16-mediatruth.mjs; if it is serving again, run
+##    `node scripts/backfill-photos.mjs` (bounded — read its header, the full pass is owner-gated).
+##    Measured coverage on the first screen of each surface: 6-14% showing the placeholder.
+## 3. THE HERO PHOTOGRAPH — the one real design decision left, and it needs the OWNER, not us.
+##    Today desktop shows the old vendor's Vimeo frame: a vintage convertible, no licence record,
+##    a third-party iframe on the LCP path. Phones and reduced-motion visitors already get
+##    Breakneck Ridge, which we DO hold a licence for and which looks better. Two screenshots to
+##    show him: docs/design-r16/hero-vimeo-frame-1440.png vs hero-licensed-still-1440.png.
+##    One yes and it is a ten-minute change. See DESIGN-ROUND16.md §3.
+## 4. THE NO-PHOTO PLACEHOLDER is the highest-leverage un-done design item: a gothic mansion at
+##    night with gold script, on 6-14% of cards, against a site that is calm monochrome
+##    everywhere else. Untouched because it is branding — ask him.
+## 5. Then detail work. The launch switches are unchanged and still gated (below).
+##
+## ── STANDING WARNINGS EARNED THIS ROUND ──────────────────────────────────────────────
+## - THE /website COMMAND TEXT IS A STALE SNAPSHOT. Five of the six "named defects" in it were
+##   already shipped in rounds 11-15 (hero search spacing, hero on black, mobile footer order,
+##   EHO/REALTOR marks, the six unlicensed photos). VERIFY IN A BROWSER before building anything
+##   a brief claims is broken. This checkpoint's top block is the live brief.
+## - A STATUS-ONLY ERROR LOG AT AN INTEGRATION BOUNDARY IS A WEEK OF DEBUGGING. Log the body.
+## - Probes lie in both directions, again: blocking **/api/media** in a screenshot run makes
+##   every card show the coming-soon placeholder, and `quick=new` on the API returns the
+##   unfiltered total because SearchClient translates it to newDays before fetching. Neither is
+##   a site defect. Check the probe before filing the bug.
+##
+## ── LAUNCH: UNCHANGED, STILL WAITING ON THE OWNER ────────────────────────────────────
+## Switch 1 DONE. Switch 2 still needs two DNS records AT NAMECHEAP (verified again this round:
+## realtylt.com and www both still resolve to 34.210.134.29, the old AWS host):
+##     A  realtylt.com      76.76.21.21
+##     A  www.realtylt.com  76.76.21.21
+## Switch 3 gated on switch 2. Do NOT remove the noindex yourself.
+##
+## ── GATES ────────────────────────────────────────────────────────────────────────────
+## tsc clean · npm test green (588 now, was 557 — never go below) · zero horizontal overflow at
+## 1440/390/320 · zero dead links · every focus stop visible · no console errors · confirm the
+## Vercel deploy builds READY after every push.
+## TESTING LEAD FORMS HITS THE LIVE CRM — intercept **/api/lead or set LEAD_TEST_MODE=1.
+## A second session owns the blog surfaces; never git add -A.
+##
+##
+## ═══ ROUND 16 BRIEF (COMPLETE — kept for the reasoning) ═══
+## ═══ THE SITE IS WAITING ON TWO DNS RECORDS. Single agent, no subagents.
 ## FIRST ACTION: read docs/parity/HANDOFF-ROUND-16.md end to end — measurements, the exact
 ## DNS records, the regression gate, the traps. This block is the running order only.
 ##
