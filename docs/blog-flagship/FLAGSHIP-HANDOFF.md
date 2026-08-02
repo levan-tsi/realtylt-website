@@ -58,21 +58,64 @@ tile — that opens an OS picker that blocks the session. `find` the input, then
 frame also becomes a selectable **"Photo Avatar" look**, which is how a video can be rendered from a
 real photograph of him with zero identity drift.
 
-### TWO VIDEOS EXIST FOR HIM TO JUDGE. Same script, same 16:9, same instruction. Only the plate differs.
+### THREE VIDEOS EXIST FOR HIM TO JUDGE. Same script, same 16:9, same voice. Only the PLATE differs.
 
-| | plate | file |
+| | plate | file in `C:/Users/Levan/Downloads` |
 |---|---|---|
-| **V1** | a **real photograph** of him — his chair, his mint wall, his olive sweatshirt | `Realty LT - The Gap_1080p.mp4` in Downloads |
-| **V2** | the **personal-model** look — dim charcoal room, him in the right third, empty wall left | see Projects, "RealtyLT - The Gap" |
+| **V1** | a **real photograph** of him — his chair, his mint wall, his olive sweatshirt | `Realty LT - The Gap_1080p.mp4` |
+| **V2** | **personal-model**, medium: dim charcoal room, him right, cards in the empty wall left | `Realty LT - The Gap Built For_1080p.mp4` |
+| **V3** | the wide plate + the three fixes — **right rules, wrong crop** (read below) | `Realty LT_ The Gap Built For_1080p.mp4` (note the underscore) |
+
+Side by side: `docs/blog-flagship/avatar/v1-vs-v2.png`.
+
+**Nothing here is finished, and the reason is worth carrying: V2 has the right crop and the wrong
+rules; V3 has the right rules and the wrong crop.** They have never both been true in one render.
 
 **V1's verdict, and it is the useful one: the identity is perfect and the plate is wrong.** It is
 unarguably him, because it is a photograph. But his real footage is a *bright mint-green wall, flat
 webcam light, olive sweatshirt, shot portrait*, and the Video Agent's editorial style is near-black
 `#101014` with a Didone serif. Dropped into that frame it pillar-boxes into a tall strip and reads as
 a webcam pasted onto a magazine page. **The graphics and type in V1 are genuinely good — keep them.**
+It also printed the fabricated "$850,000 / 123 Maple Street, Austin".
 
-That is the whole argument for V2: the personal-model look was prompted to *be* the frame (dim
-charcoal, landscape, him small in the right third, empty wall on the left for the cards).
+**V2 is the direction.** One dark room, one warm lamp, one amber accent, edge to edge. The cards sit
+in the empty wall beside him and never touch his body. The listing card is honest — *LIVE FROM THE
+MLS / MLS LISTING RETRIEVED* over a line-drawn house, no address and no price. The closing
+`RealtyLT.com/AI` in the Didone with the amber rule is the strongest frame in either cut.
+
+**V2's three remaining faults, which is what V3 fixes:**
+1. He is still ~65% of frame height, not the quarter that was asked for — **because the framing is a
+   property of the LOOK, not of the video prompt.** The Video Agent cannot make him smaller than the
+   plate. V3 regenerates the look wider.
+2. **Frame one carries no card**; the $6,000 arrives about 1.5s in. Frame one is the thumbnail and
+   the number is the reason anyone presses play — this repo's own ad rule, and V1 got it right.
+3. It invented a `REF: 2026-MLS-0802`, and it ends on black instead of holding the CTA.
+
+**How wide is too wide, measured:** a full-room wide plate put his face at ~4% of frame height —
+unreadable, which defeats the point of putting a real person on camera at all. The usable band is
+**him at a third to a half of frame height, face still readable**. Both plates are in
+`scripts/_scratch-video/avatar/v2/wide-cmp.png` and `med-cmp.png`.
+
+### V3: all three content fixes landed, and the framing went BACKWARDS
+
+Verified on the finished file, not on the plan:
+- ✅ **Frame one carries the card** — `TRANSACTION VERIFIED / $6,000 / 11:40 PM` at full opacity on
+  frame zero. That is the thumbnail fix.
+- ✅ **The CTA holds to the last frame.** No fade to black.
+- ✅ **Nothing is invented.** No address, no price, no reference number anywhere. The card sequence
+  (`Contact Form` → `LIVE FROM THE MLS` → `CALL BOOKED` → `9:00 AM AGENT NOTIFIED` →
+  `RealtyLT.com/AI`) actually dramatises the script beat by beat, which V2's did not.
+- ❌ **He got BIGGER, not smaller** — roughly 70% of frame height with his hands large in frame.
+  **The Video Agent cropped into the wide plate even though the instruction said "never crop into his
+  face, never zoom".** So the plate constrains the *maximum* width, and the agent still re-frames
+  inside it. That is the open problem.
+- ❌ The `LIVE FROM THE MLS` card has empty grey boxes in it that read as a loading skeleton.
+- ❌ It closes on praying hands. Off-brand; the wide plate exposed his hands and the model animated
+  them enthusiastically throughout.
+
+**The next pass is one render, not a new direction:** V3's instructions plus a plate that survives
+the agent's re-crop. Worth trying the `Edit a copy in AI Studio` route, where the avatar's size and
+position on the canvas are set by hand instead of being negotiated with the agent.
 
 ### Three things the Video Agent gets wrong unless told
 

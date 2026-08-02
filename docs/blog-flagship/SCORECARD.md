@@ -1,5 +1,12 @@
 # Flagship blog scorecard — rubric derived from research, THEN measured
 
+## STILL 90.5 / 100 (2026-08-02, session 13: the avatar round)
+
+**Not re-measured, and deliberately so.** This session touched no page and no component — it worked
+entirely inside HeyGen on the talking-head avatar and three comparison videos. Nothing the rubric
+scores was changed, so re-running the scorer would only reprint the same number with a newer date on
+it. The work is in `FLAGSHIP-HANDOFF.md` and `docs/blog-flagship/avatar/`.
+
 ## STILL 90.5 / 100 (re-measured 2026-08-01, session 12: the films round)
 
 **The page score did not move, and it should not have.** This session worked on the FILMS, not on
