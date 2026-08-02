@@ -67,10 +67,25 @@
 ##     A  www.realtylt.com  76.76.21.21
 ## Switch 3 gated on switch 2. Do NOT remove the noindex yourself.
 ##
-## ── GATES ────────────────────────────────────────────────────────────────────────────
-## tsc clean · npm test green (588 now, was 557 — never go below) · zero horizontal overflow at
-## 1440/390/320 · zero dead links · every focus stop visible · no console errors · confirm the
-## Vercel deploy builds READY after every push.
+## ── GATES: WHERE THEY ACTUALLY LANDED THIS ROUND ─────────────────────────────────────
+## tsc clean · npm test 588 passing (was 557) · sweep 144 checks: HORIZONTAL OVERFLOW 0,
+## images-without-alt 0, nameless controls 0 · focus stops without an indicator 0 of 338.
+## THE SWEEP'S OTHER ANOMALIES WERE THE DEV SERVER, NOT THE SITE, and this is worth reading
+## before re-investigating them: two routes (/services/data-enrichment, /services/ai-scheduling)
+## returned 500 with Next's `clientReferenceManifest` invariant, plus 2 h1x0 and 4 PAGEERRORs
+## that are the same corrupted-.next-cache family. ALL SIX CHECKED ON PRODUCTION: 200/200/200,
+## h1=1 each, ZERO page errors (scripts/_scratch-r16-prodcheck.mjs). The cache was NOT cleared
+## because the dev server is shared with another session — clearing it means killing theirs.
+## Next round, if those two routes still 500 locally: kill next, rm -rf .next node_modules/.cache,
+## start exactly one, re-run. The other 404s are the four documented stale route entries
+## (/top-areas/sullivan, /top-areas/columbia, the old blog slug, /homes-for-sale/dutchess-county-ny)
+## plus the deliberate /this-route-does-not-exist — stop re-investigating those.
+## THE LINK CRAWL WAS RUN AGAINST PRODUCTION (scripts/_scratch-r16-links-prod.mjs), because
+## crawling a dev server with a corrupted cache manufactures failures. Prefer that probe.
+## Result: 214 distinct internal hrefs, NON-200: 0.
+## RUN THE PROBES ONE AT A TIME. I ran the sweep alongside the link crawl and it died with
+## "Execution context was destroyed" — exactly the flake the round-14 handoff warns about.
+## Confirm the Vercel deploy builds READY after every push.
 ## TESTING LEAD FORMS HITS THE LIVE CRM — intercept **/api/lead or set LEAD_TEST_MODE=1.
 ## A second session owns the blog surfaces; never git add -A.
 ##
