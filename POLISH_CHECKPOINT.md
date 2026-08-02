@@ -62,6 +62,53 @@
 ## points of light. It is the only one that could not exist on a competitor's site.
 ## HIS CALL. If he likes one, harden it and merge; if not, keep iterating or keep the Vimeo.
 ##
+## ── FOUR THINGS HE ADDED 2026-08-02, ALL VERIFIED, NONE STARTED ─────────────────────
+##
+## 1. "PENDING SHOWS ON THE MAP CHIP BUT NOT IN THE POPUP." He is right, and it is now
+##    inconsistent in a way that is worse than before: the chip went hollow for Pending this
+##    round, so a visitor learns the distinction, opens the popup — and it says nothing. The
+##    listing CARD has carried a PENDING badge top-left all along.
+##    VERIFIED: components/idx/map-shared.ts has ZERO references to `status`; popupNode never
+##    renders one. The data is already in hand — MapPin.status was added this round for the
+##    hollow chips — so this is a badge in popupNode matching the card's, same corner, same
+##    8px radius, same uppercase treatment. Small. Do it first, it closes a gap we opened.
+##
+## 2. "PHOTO COMING SOON NEEDS WORK, KEEP SOMETHING MINIMALISTIC." The gothic mansion is gone
+##    and the direction (a typographic panel, not a fake house) is endorsed — he wants the
+##    EXECUTION better. Current: public/images/mls/coming-soon.svg + -notext.svg, mist wash,
+##    hairline frame, drawn aperture glyph, "Photograph coming soon" in Newsreader + REALTYLT.
+##    Where I would push it: the aperture glyph is the most generic thing on it (every empty
+##    state everywhere uses that icon) — consider dropping it entirely and letting the type
+##    carry the panel alone, or replacing it with something of ours. Also check it at CARD
+##    size, not full size: at 2:1 and portrait crops the type may be too small to read, which
+##    argues for a size-aware pair rather than one artwork cropped. He said MINIMAL — take
+##    away, do not add.
+##
+## 3. NEXT / PREVIOUS LISTING ON THE LISTING PAGE. "when you click listing you have to go back
+##    to search or map to find other — what if we add next listing and clickable arrow next to
+##    address or whichever is best and appropriate, maybe next to search overview."
+##    THE HARD PART IS NOT THE ARROWS, IT IS "NEXT WITHIN WHAT". A listing page is reachable
+##    from a filtered search, a map pin, a rail, a saved search or a cold link, and "next"
+##    means nothing unless it means next IN THE SET THEY WERE LOOKING AT. Options, cheapest
+##    first: carry the search query in the listing URL and resolve neighbours from it; or
+##    persist the last result set client-side (sessionStorage) and use it when the referrer
+##    matches; or fall back to no arrows at all on a cold link rather than inventing an order.
+##    A cold visitor from Google must never see arrows that lead somewhere arbitrary.
+##    Place it near the address, and it must not fight the existing sub-nav. Keyboard arrows
+##    too if it is cheap. THIS IS A REAL FEATURE, not a polish item — scope it properly.
+##
+## 4. HIS CMA QUESTION, ANSWERED — AND THE SCOPE IS BIGGER THAN ONE TABLE.
+##    "only cma page is not market report should be there too?"
+##    market_reports is ALREADY FIXED and is the model we are copying: anon SELECT returns
+##    nothing and get_active_market_report() exists (verified, HTTP 200). Nothing to do there.
+##    BUT checking his instinct turned up MORE than cma_reports. Anon can enumerate all three
+##    CMA tables, not one:
+##        cma_reports       1 row   <- ENUMERABLE
+##        cma_report_comps  4 rows  <- ENUMERABLE
+##        mls_listings      4 rows  <- ENUMERABLE
+##    So the fix in the next section must cover the comps and the cached MLS rows too, or the
+##    report body stays readable after the report header is locked. He was right to ask.
+##
 ## ── THE CRM PAIRING HE ASKED ABOUT: STILL NEEDED, NOT DONE, NEEDS HIS GO-AHEAD ──────
 ## Re-verified with the ANON key 2026-08-02: an anonymous caller CAN still enumerate every
 ## published CMA (1 row today, prepared_for "Mary Johnson"), and get_published_cma_report()
@@ -72,7 +119,11 @@
 ##   2. CRM repo (~/realtylt-crm): point apps/web/lib/data/cma-public.ts::getPublishedCmaReport
 ##      at that RPC. It is the ONLY anon consumer — checked every other reader; lib/data/cma.ts
 ##      and lead-engagement.ts run as a signed-in agent and are unaffected.
-##   3. Supabase: only then drop policy cma_reports_public_select.
+##   3. Supabase: only then drop policy cma_reports_public_select — AND the equivalent anon
+##      policies on cma_report_comps and mls_listings (see item 4 above: all three enumerate,
+##      so locking only the header leaves the report's body and comps readable).
+##      The RPC in step 1 should therefore return the report WITH its comps, the way
+##      get_active_market_report already does, rather than three separate gated calls.
 ## Not done because step 2 lands in a repo another session owns (branch fix/brivity-parity) and
 ## steps 1/3 straddle a CRM deploy. Full write-up in docs/parity/HERO-LAB.md.
 ## The OTHER audit item needs no CRM pairing: 57 raw media.mlsgrid.com URLs are anon-readable
