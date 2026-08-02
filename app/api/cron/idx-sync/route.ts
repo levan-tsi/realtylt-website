@@ -3,7 +3,8 @@ import { applyIdxSync, getMirrorState, getSyncWatermark } from "@/lib/idx/db";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
 import { mirrorPhotos, preservedMarker, type MirrorDeps } from "@/lib/idx/photo-mirror";
-import { storageWriteConfig, uploadPhoto, type StorageWriteConfig } from "@/lib/idx/storage";
+import { cleanupOffMarketPhotos, withoutMirrorMarker, type CleanupDeps } from "@/lib/idx/photo-cleanup";
+import { PHOTO_BUCKET, storageWriteConfig, uploadPhoto, type StorageWriteConfig } from "@/lib/idx/storage";
 
 /** Hourly INCREMENTAL MLS sync into Supabase idx_listings (secret-gated).
  *
@@ -54,14 +55,79 @@ const REMOVE_BATCH = 500;
 const MIRROR_PHOTO_CAP = Math.max(1, Math.min(50, Number(process.env.MIRROR_PHOTO_CAP) || 50));
 // Raised from 600. The run is bounded by MIRROR_WALL_MS anyway, and 600 was well under what the
 // wall clock affords (~400ms a photo at concurrency 4 fills roughly 2,700 in 270s), so the old
-// number just left the budget unspent while galleries stayed shallow. NOTE FOR THE OWNER: photo
-// storage is a real cost — mls-photos already holds ~358k objects at ~296KB (~101GB), so
-// deepening galleries grows the bill. MIRROR_PHOTO_CAP (50) is the lever, and it is env-settable;
-// do NOT lower it without reading the note on planRange, because reporting a shorter prefix
-// takes photos away from listings that currently show them.
+// number just left the budget unspent while galleries stayed shallow.
+//
+// STORAGE IS NOT A REASON TO CAP THIS, and an earlier version of this comment said it was —
+// measured 2026-08-02: the plan includes 250GB at $0.03/GB after, the bucket holds ~120GB, and
+// the ceiling if EVERY listing reaches full depth is ~194GB, because finished listings average
+// 24.9 photos rather than the 50 cap. Overage at the ceiling is $0.00. Capping would only make
+// galleries shallower. If anyone ever does lower MIRROR_PHOTO_CAP, read planRange first: a
+// shorter cap makes it report a SHORTER prefix, which strips photos off listings that currently
+// show them unless the objects above the cap are deleted too.
 const MIRROR_PHOTO_BUDGET = Math.max(1, Number(process.env.MIRROR_PHOTO_BUDGET) || 1200);
 const MIRROR_CONCURRENCY = Math.max(1, Math.min(8, Number(process.env.MIRROR_CONCURRENCY) || 4));
 const MIRROR_WALL_MS = 270_000; // mirror + DB writes must finish under maxDuration (300s)
+
+/** Supabase-backed deps for the off-market photo cleanup. Service-role only, server-side only.
+ * Every call is scoped to ONE listing's own prefix — there is no path here that can address the
+ * bucket as a whole. */
+function cleanupDeps(cfg: StorageWriteConfig, restBase: string): CleanupDeps {
+  const h = { apikey: cfg.key, Authorization: `Bearer ${cfg.key}`, "Content-Type": "application/json" };
+  return {
+    async findStale(limit) {
+      // is_active=false is the database's own verdict that this home is off the market, and
+      // photos_servable is computed FROM storage.objects, so >0 means the files really exist.
+      const r = await fetch(
+        `${restBase}/idx_listings?is_active=eq.false&photos_servable=gt.0&select=id,photos_servable&order=updated_at.asc&limit=${limit}`,
+        { headers: h, signal: AbortSignal.timeout(15_000) },
+      );
+      if (!r.ok) return [];
+      return ((await r.json()) as Array<{ id: string; photos_servable: number }>).map((x) => ({
+        id: x.id,
+        servable: x.photos_servable,
+      }));
+    },
+    async listObjects(id) {
+      const r = await fetch(`${cfg.base}/object/list/${PHOTO_BUCKET}`, {
+        method: "POST",
+        headers: h,
+        body: JSON.stringify({ prefix: id, limit: 100, offset: 0 }),
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!r.ok) throw new Error(`list ${id}: ${r.status}`);
+      return ((await r.json()) as Array<{ name: string }>).map((o) => `${id}/${o.name}`);
+    },
+    async deleteObjects(keys) {
+      if (!keys.length) return 0;
+      const r = await fetch(`${cfg.base}/object/${PHOTO_BUCKET}`, {
+        method: "DELETE",
+        headers: h,
+        body: JSON.stringify({ prefixes: keys }),
+        signal: AbortSignal.timeout(30_000),
+      });
+      if (!r.ok) throw new Error(`delete: ${r.status} ${(await r.text()).slice(0, 120)}`);
+      return keys.length;
+    },
+    async clearMarker(id) {
+      // Read-modify-write the JSONB: PostgREST cannot drop a key in place, and the marker is
+      // what decides whether a returning listing downloads anything at all.
+      const g = await fetch(`${restBase}/idx_listings?id=eq.${encodeURIComponent(id)}&select=listing`, {
+        headers: h,
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!g.ok) return false;
+      const [row] = (await g.json()) as Array<{ listing: Record<string, unknown> }>;
+      if (!row?.listing) return false;
+      const p = await fetch(`${restBase}/idx_listings?id=eq.${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        headers: { ...h, Prefer: "return=minimal" },
+        body: JSON.stringify({ listing: withoutMirrorMarker(row.listing) }),
+        signal: AbortSignal.timeout(15_000),
+      });
+      return p.ok;
+    },
+  };
+}
 
 /** Real download (media host, token as User-Agent) + upload (Supabase Storage, service role). */
 function mirrorDeps(cfg: StorageWriteConfig): MirrorDeps {
@@ -203,6 +269,23 @@ export async function GET(req: Request) {
     const mirrorDebt = delta.upserts.length - delta.upserts.filter((l) => (l.photosMirrored ?? 0) >= Math.min(l.photos.length, MIRROR_PHOTO_CAP)).length;
     await applyIdxSync({ secret, watermark: delta.watermark });
 
+    // OFF-MARKET PHOTO CLEANUP (owner's ask: "when its off market delete pictures. if its back we
+    // will download again. other way we will carry dead weight"). Nothing in this codebase had
+    // ever deleted a photo, so the bucket only grew: 2,570 of its 28,251 listing folders belonged
+    // to homes no longer on the market.
+    //
+    // Runs LAST, after the watermark is safely written, and inside its own try — this is the only
+    // destructive path in the route and it must never be able to cost us a sync. Bounded per run.
+    let cleanup = { listings: 0, objects: 0, markersCleared: 0, failed: 0 };
+    const restBase = `${process.env.SUPABASE_URL?.trim().replace(/\/+$/, "")}/rest/v1`;
+    if (cfg) {
+      try {
+        cleanup = await cleanupOffMarketPhotos(cleanupDeps(cfg, restBase));
+      } catch (e) {
+        console.error("[idx-sync] photo cleanup failed (data sync unaffected):", e);
+      }
+    }
+
     const summary = {
       ok: true,
       scanned: delta.scanned,
@@ -213,6 +296,7 @@ export async function GET(req: Request) {
       mirroredPhotos,
       mirrorFully, // false = some photos still owed; the watermark advances anyway (see above)
       mirrorDebt, // listings upserted this run whose photo prefix is still short
+      cleanup, // off-market photos reclaimed this run
       watermark: delta.watermark,
       complete: delta.complete, // false = more feed pages pending; next tick resumes from the watermark
       ms: Date.now() - started,
