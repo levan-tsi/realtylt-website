@@ -22,6 +22,7 @@ import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 import { MIN_CITY_ACTIVES, pickAreaInsights, type AreaInsights, type InsightRow } from "@/lib/reports/insights";
+import { interleaveByBand, pickPriceSpread } from "./price-spread";
 
 interface SyncState {
   watermark: string;
@@ -42,6 +43,20 @@ const EXCLUDE_RENTALS = "property_type=neq.Rental";
 /** Live realtylt.com floors SALE searches at $10k to drop placeholder/junk rows ($1 lots, $0
  * comps). Applied as the DEFAULT min only when the user set no priceMin, and never to rentals. */
 const SALE_PRICE_FLOOR = 10_000;
+/** What earns a slot in a home-page rail. A rail is a shop window, not a search result: it may
+ * legitimately be choosier than /search, which still shows everything. Three conditions —
+ *  - it has a photograph (photos_servable > 0). A grey placeholder sells nothing.
+ *  - it is not Coming Soon. The owner: "all of them are coming soons with no pic, there should
+ *    be new freshly listed listings".
+ *  - it is actually on the market (listed_at <= now). Coming Soon rows carry a FUTURE
+ *    OnMarketDate, which is exactly why they sorted to the top of a "newest" rail. */
+const railWorthy = () =>
+  `photos_servable=gt.0&status=neq.${encodeURIComponent("Coming Soon")}&listed_at=lte.${new Date().toISOString()}`;
+/** Candidates to consider before curating down to the rail's size — wide enough to contain the
+ * scarce high-end bands (only 1.2% of inventory is above $5M). */
+const RAIL_POOL = 240;
+/** A second, price-descending pool so the scarce high bands are actually represented. */
+const RAIL_LUXURY_POOL = 24;
 
 function restConfig(): { base: string; key: string } | null {
   const url = process.env.SUPABASE_URL?.trim();
@@ -316,8 +331,14 @@ export class DbIdxClient implements IdxClient {
       // Past-the-end page (stale link) — clamp like the fixture client and refetch.
       if (!rows.length && total > 0 && safePage !== page) ({ rows } = await fetchPage(safePage));
 
+      // "Mixed" promises a mix, and until now it delivered alphabetical-by-address, which
+      // correlates with nothing — so a page was whatever the alphabet handed over, and since
+      // 78% of the inventory is under $1M that meant page after page of the same price. The
+      // rows are only REORDERED here: same listings, same count, same pagination, same map
+      // pins. Every other sort is an explicit instruction from the visitor and is left alone.
+      const cards = rows.map((r) => toCard(r.listing, r.photos_servable));
       return {
-        listings: rows.map((r) => toCard(r.listing, r.photos_servable)),
+        listings: sort === "mixed" ? interleaveByBand(cards) : cards,
         total,
         page: safePage,
         pageSize: size,
@@ -346,12 +367,16 @@ export class DbIdxClient implements IdxClient {
   async getFeatured(limit = 8): Promise<Listing[]> {
     if (!(await this.ready())) return this.fallbackClient().getFeatured(limit);
     try {
-      const own = await onceRetried(() =>
-        rest<CardRow>(
-          `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit}`,
-        ),
-      );
-      const listings = own.rows.map((r) => toCard(r.listing, r.photos_servable));
+      const ownBase = `idx_listings?is_featured=eq.true&${EXCLUDE_RENTALS}&${railWorthy()}&${CARD_SELECT}`;
+      const [ownNew, ownLux] = await Promise.all([
+        onceRetried(() => rest<CardRow>(`${ownBase}&order=${ORDER.newest}&limit=${RAIL_POOL}`)),
+        onceRetried(() => rest<CardRow>(`${ownBase}&order=${ORDER["price-desc"]}&limit=${RAIL_LUXURY_POOL}`)),
+      ]);
+      const ownSeen = new Set<string>();
+      const own = {
+        rows: [...ownNew.rows, ...ownLux.rows].filter((r) => !ownSeen.has(r.listing.id) && ownSeen.add(r.listing.id)),
+      };
+      const listings = pickPriceSpread(own.rows.map((r) => toCard(r.listing, r.photos_servable)), limit);
       if (listings.length >= limit) return listings;
       // Top up with the freshest non-featured so the rail is never sparse.
       const fill = await this.newestNonFeatured(limit - listings.length, new Set());
@@ -375,15 +400,30 @@ export class DbIdxClient implements IdxClient {
   }
 
   private async newestNonFeatured(limit: number, exclude: ReadonlySet<string>): Promise<Listing[]> {
-    const { rows } = await onceRetried(() =>
-      rest<CardRow>(
-        `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&${CARD_SELECT}&order=${ORDER.newest}&limit=${limit + exclude.size}`,
-      ),
+    // Pull a WIDE pool, then curate it. The rail used to take the top `limit` by listed_at and
+    // print whatever came back — which was 7 Coming Soon rows with NO photograph, because
+    // Coming Soon listings carry a FUTURE OnMarketDate and therefore sort first under "newest".
+    // A shop window made of grey placeholders for homes nobody can view yet is worse than no
+    // shop window. RAIL_WORTHY is the fix; pickPriceSpread then chooses across price bands so
+    // the rail is not eight variations on the same starter home.
+    const base = `idx_listings?is_featured=eq.false&${EXCLUDE_RENTALS}&${railWorthy()}&${CARD_SELECT}`;
+    // TWO pools, because the newest 240 almost never contains a $10M home — there are only 26
+    // in the entire six-county inventory (0.2%), so "show a few high end" cannot be satisfied
+    // by freshness alone. The second query guarantees the top bands have stock for
+    // pickPriceSpread to draw on; without it the spread silently degrades to "whatever the
+    // newest happened to include", which is the behaviour being fixed.
+    const [pool, luxury] = await Promise.all([
+      onceRetried(() => rest<CardRow>(`${base}&order=${ORDER.newest}&limit=${RAIL_POOL}`)),
+      onceRetried(() => rest<CardRow>(`${base}&order=${ORDER["price-desc"]}&limit=${RAIL_LUXURY_POOL}`)),
+    ]);
+    const seen = new Set<string>();
+    const candidates = [...pool.rows, ...luxury.rows].filter(
+      (r) => !exclude.has(r.listing.id) && !seen.has(r.listing.id) && seen.add(r.listing.id),
     );
-    return rows
-      .filter((r) => !exclude.has(r.listing.id))
-      .slice(0, limit)
-      .map((r) => toCard(r.listing, r.photos_servable));
+    return pickPriceSpread(
+      candidates.map((r) => toCard(r.listing, r.photos_servable)),
+      limit,
+    );
   }
 
   /** Map pins for the /search map. With `bounds` (the fast path the SearchClient always
