@@ -14,6 +14,8 @@ import { pageWindow } from "@/lib/pagination";
 // the server render so both sides ask the feed the same question.
 import { NEW_LISTING_DAYS } from "@/lib/idx/query";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
+import { listingPath } from "@/lib/idx/listing-url";
+import { saveResultSet } from "@/lib/idx/result-set";
 import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
 import type { Listing, MapPin } from "@/lib/idx/types";
 
@@ -350,6 +352,21 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
     li?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
     li?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
   }, []);
+
+  // RECORD THE SET THE VISITOR IS LOOKING AT, so a listing page can offer "next home" and mean
+  // it. Written here because this is the only place the set is genuinely known — the listing page
+  // is ISR-cached and shared, and cannot be told what search produced it. The map is page-coupled
+  // to these exact listings, so a pin click inherits the same order for free.
+  // See lib/idx/result-set.ts for why this is not carried in the URL.
+  useEffect(() => {
+    if (!result?.listings.length) return;
+    saveResultSet({
+      items: result.listings.map((l) => ({ id: l.id, path: listingPath(l), address: l.address })),
+      page: result.page,
+      totalPages: result.totalPages,
+      searchHref: `/search${window.location.search}`,
+    });
+  }, [result]);
 
   // Page change scrolls the results back to the top (live parity — paging never opens a page
   // mid-list). In map view the results column is its own scroll container; in grid view the

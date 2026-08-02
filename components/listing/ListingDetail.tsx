@@ -10,6 +10,7 @@ import { ListingPhotos } from "@/components/idx/ListingPhotos";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { fullAddress, infoRequestQualifier } from "@/lib/leads/listing-intents";
 import { ListingLeadCTAs } from "@/components/leads/ListingLeadCTAs";
+import { ListingPager } from "@/components/listing/ListingPager";
 import { ListingSubNav } from "@/components/listing/ListingSubNav";
 import { MarketInsights } from "@/components/listing/MarketInsights";
 import { ClampedDescription, SpecDisclosure } from "@/components/listing/SpecDisclosure";
@@ -253,18 +254,25 @@ export async function ListingDetail({ id }: { id: string }) {
             instead of pushing). At 320 that made the track 362px inside a 320px box. */}
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-[1.5fr_1fr] lg:px-8">
           <div>
-            {/* Share lives in the sticky sub-nav only — one Share control on the page, like live. */}
-            <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-stone">
-              <Link href="/search" className="inline-flex min-h-6 items-center hover:text-ink">Search</Link>
-              {county && (
-                <>
-                  {" / "}
-                  <Link href={`/top-areas/${county.slug}`} className="inline-flex min-h-6 items-center hover:text-ink">
-                    {county.name}
-                  </Link>
-                </>
-              )}
-            </nav>
+            {/* Share lives in the sticky sub-nav only — one Share control on the page, like live.
+                The prev/next pager shares this row: the breadcrumb already says WHERE THIS CAME
+                FROM, and moving within that set is the same thought. It also owns the only row on
+                the page with spare width at 320 — the sticky sub-nav's action group is 281px of a
+                320px screen, so a pager there overflowed the viewport by 88px (measured). */}
+            <div className="flex items-center justify-between gap-3">
+              <nav aria-label="Breadcrumb" className="min-w-0 text-xs uppercase tracking-[0.14em] text-stone">
+                <Link href="/search" className="inline-flex min-h-6 items-center hover:text-ink">Search</Link>
+                {county && (
+                  <>
+                    {" / "}
+                    <Link href={`/top-areas/${county.slug}`} className="inline-flex min-h-6 items-center hover:text-ink">
+                      {county.name}
+                    </Link>
+                  </>
+                )}
+              </nav>
+              <ListingPager id={l.id} />
+            </div>
             <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
               <h1 className="font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl">
                 {l.address}

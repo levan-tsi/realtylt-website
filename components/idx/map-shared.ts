@@ -182,6 +182,21 @@ export function popupNode(
       "position:absolute;right:6px;bottom:6px;padding:2px 7px;border-radius:8px;background:rgb(0 0 0/.7);color:#fff;font:700 10px/1.6 " +
       MAP_FONT + ";letter-spacing:.08em";
     frame.appendChild(img);
+    // STATUS BADGE — the same fact the card has always carried, and since the chips went hollow
+    // for Pending this round a visitor now LEARNS the distinction from the map and then opens a
+    // popup that says nothing about it. Only non-Active statuses appear (Pending, Coming Soon),
+    // exactly like ListingCard's chip: solid ink, 8px radius, 10px bold uppercase.
+    // It sits bottom-LEFT rather than the card's top-left because both top corners of a popup are
+    // controls (heart, close) — pairing it with the photo counter on the bottom edge keeps the
+    // controls clean and gives the frame a deliberate two-corner rhythm instead of a crowded one.
+    if (p.status && p.status !== "Active") {
+      const badge = document.createElement("span");
+      badge.textContent = p.status;
+      badge.style.cssText =
+        "position:absolute;left:6px;bottom:6px;padding:3px 8px;border-radius:8px;background:#000000;" +
+        `color:#fff;font:700 10px/1.4 ${MAP_FONT};letter-spacing:.14em;text-transform:uppercase`;
+      frame.appendChild(badge);
+    }
     if (n > 1) {
       const arrow = (side: "left" | "right", label: string, step: number) => {
         const b = document.createElement("button");
