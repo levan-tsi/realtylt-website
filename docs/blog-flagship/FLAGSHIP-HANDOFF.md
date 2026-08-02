@@ -1,10 +1,147 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## NEXT SESSION'S JOB (owner 2026-08-02) — THE TALKING-HEAD FILM. Resume HERE.
+
+Still the `/blog` command. **Single agent, one long session, no subagents.**
+
+Build a **long-form video of the owner presenting the blog's own material** - graphics, b-roll,
+hooks, pattern changes to hold attention - for **AI chat assistant** and **AI voice agent**, then
+cut it into shorts. He has a **paid HeyGen subscription** (bought 2026-08-02) and wants the quality
+proven before committing to a full production run.
+
+### DO THESE IN ORDER. He was explicit about the sequence.
+
+1. **Fix the avatar look first** (see the measured diagnosis below).
+2. **Then make ONE video for ONE service, in 2-3 versions, to compare.** Not a batch. One service,
+   a few treatments, judged side by side.
+3. Only after he has judged that, scale to the rest.
+
+### THE AVATAR IS WEAK FOR A MEASURED REASON, AND IT IS NOT THE ACCOUNT TIER
+
+The source is `C:/Users/Levan/Downloads/IMG_7091.MOV`: **3840x2160, 30fps, 42s, portrait**
+(rotation -90). That is a 4K file, so "free account" and "low quality source" are both wrong
+diagnoses. Measured on the actual frames:
+
+- **His face is ~330px tall inside a 2160x3840 frame - about 8% of frame height.** It is a
+  FULL-BODY WIDE shot, standing, filmed from across the room. The file is 4K; the FACE never was.
+  This is the dominant cause and it dwarfs the others.
+- **A busy, high-contrast oil painting sits directly behind his head** - brown and ochre
+  architecture exactly where the model has to separate head from background. That is a matting
+  nightmare and produces edge artifacts.
+- **Flat ambient room light, no key.** The face has no modeling.
+- **He stands still, arms down, full body.** Almost no gesture for the model to learn.
+
+**The fix costs nothing.** Same phone, same 4K, but framed CHEST-UP against a plain wall with a
+window or a lamp as a key light. That alone takes the face from ~330px to roughly 1600px, a ~5x
+increase in real facial detail, and removes the painting from behind his head. Recommend he
+re-shoot before anything else; it is a two-minute job with a bigger payoff than any setting.
+
+**Interim lever, which is what he asked for:** the avatar detail page has **"Upload look"** and
+**"Design with AI"**. `Upload look` with a good, close, well-lit still of him is how you "bring the
+avatar closer to me" without a re-shoot. Try that first and compare against the existing looks.
+
+### HEYGEN STATE, as actually inspected 2026-08-02
+
+- Logged in, Chrome. Avatars at `app.heygen.com/avatar/my-avatars`.
+- **Avatar "Levan Tsiklauri" EXISTS**, id `0956f43471c14b24a68d8ca9a3a4da0c`, **6 looks** already
+  generated (business-suit variants from the IMG_7091 footage).
+- **His voice is ALREADY CLONED in HeyGen**: voice "Levan Tsiklauri", tagged *From Avatar,
+  ElevenLabs, Multilingual, Male*. So HeyGen pulled the voice off the avatar video by itself, and
+  it is ElevenLabs underneath. Two others exist: "New Recording 2.m4a" and "Custom voice - Voice 1".
+- **There is an "Import from 3rd party" button on the Voices page.** If HeyGen's auto-clone is worse
+  than the known-good ElevenLabs clone (`LT`, id `7AxhG2AEa5XhwSrAudqY`), import that instead. **A/B
+  the two voices as one of the comparison axes** - the owner has said the LT voice is the best part
+  of the existing films, so keep that variable controlled.
+- **THREE FAILED avatar generations** are sitting at the top of the list, all named
+  `6067c5df5ccc46899ff2605107dca61f`, with three different causes: identity mismatch ("Reset"),
+  identity not verified ("Verify identity"), and a Google Drive share-permission failure.
+
+**IDENTITY VERIFICATION IS THE OWNER'S TO DO, NOT THE AGENT'S.** Two of those failures need a
+consent/identity check that proves the person in the footage is the account holder. Do not attempt
+it, do not upload footage on his behalf to clear it, and do not click through a verification flow.
+Surface it and ask him to complete it. Same for any purchase or plan change.
+
+### WHAT THE RESEARCH SAYS TO BUILD, so this is not re-derived
+
+Full detail in `[[research-video-hooks-that-convert]]`; the operative parts:
+
+- **Do NOT shoot long and slice it into shorts.** A slice has a middle, not a hook. Hook changes
+  swing performance **50-200%**; body edits move 20-30%. Shorts and long-form are different
+  audiences at roughly **11% crossover**. **Shoot atomic units, each written with its own hook, and
+  assemble the long video FROM them.** Same effort, far better shorts.
+- **Length:** completion is 74% at 7-15s, 49% at 30-60s, **46% past 60s**. The long video is its own
+  product; the shorts must be genuinely short.
+- **Open on a checkable number the page underneath can defend.** No greeting, no warm-up.
+- **AI-looking footage is now a liability**, not a saving - brands have pulled campaigns and real
+  estate has started disclosing AI use. That is the whole argument for putting him on camera, and
+  it also means the generated b-roll must stay subordinate and audited.
+- **Charts are the safest and strongest visual asset we own.** StatBars, Diagram, Conversation and
+  Timeline already exist on the blog and were designed from day one to be chopped into video. Prefer
+  them over generated b-roll. Zero slop risk, maximum credibility.
+- **Mitigation he suggested and it is a good one:** keep his head small in frame and let the
+  graphics carry the screen. A smaller talking head hides avatar artifacts and is also better
+  information design.
+
+### THE SCRIPT THAT IS ALREADY WRITTEN AND APPROVED IN SHAPE
+
+Use this as unit 1 / the quality test. Paste EXACTLY - no stage directions, no brackets, HeyGen
+reads the text field literally, and the URL must be spelled phonetically or TTS mangles it:
+
+> Last night a six thousand dollar lead messaged a real estate website at eleven forty at night.
+> Real question, real listing. Most sites answer that with a contact form. This one answered the
+> question, pulled live listings from the MLS, said plainly what it could not confirm, and booked
+> the call before morning. The agent found out at nine. That is the gap I build for. Realty L T dot
+> com, slash A I.
+
+The other units come from the two posts' own scene copy in
+`content/blog/ai-chat-scenes.ts` and the voice post's content file - the numbers there are already
+sourced and defensible, which is the standard ($6,000 is the LeadsCalculator's own default).
+
+### WHAT TO JUDGE WHEN THE FIRST RENDER LANDS
+
+Not "does it look like him". Look for the things that make people bounce, in this order:
+1. **Lip sync on the numbers** - "six thousand" and "eleven forty" are where sync slips, and they
+   are the two words the hook rests on.
+2. **Blink rate and hands.** No blinking or one frozen gesture reads uncanny within ~4 seconds,
+   which is inside the window that decides reach.
+3. **The first two seconds specifically** - ~80% of completion variance.
+4. **Watch it on a phone with sound off**, because 85% of feed video plays muted.
+
+### THE THREE BAD CLIPS ARE STILL ON PRODUCTION
+
+Unrelated to the avatar work but owed: `shot10-laptop-close`, `shot11-old-records` and
+`shot12-typing-notes` failed the footage audit (see the section below) and are cut into the live
+workflow and reactivation films. Either replace them or pull them back to the previous clips.
+`node scripts/film/audit-footage.mjs` builds the sheets; READ them before any clip enters a cut.
+
 ## THE FILMS ROUND IS DONE (2026-08-01, session 12). What is left is below.
 
 Three of the four asks are shipped and verified on the finished files. The fourth, the research
 question, is answered as a decision rather than a document. **The one thing still owed to the
 owner is that he LISTENS to a film** - see the honesty note at the end of this section.
+
+### 0. THE FOOTAGE AUDIT, and the three clips that failed it
+
+The owner watched the films and caught what no check in this repo could: in `shot10-laptop-close`
+a laptop closes **backwards**, with a **second laptop** on the same table. On audit it was worse -
+the laptop is **silver in frame one and space-grey a second later**. `node
+scripts/film/audit-footage.mjs` now builds a 12-frame contact sheet per clip into
+`docs/blog-flagship/footage-audit/`. It deliberately judges nothing; there is no measurement that
+replaces looking, so its only job is to make looking fast.
+
+| clip | verdict |
+|---|---|
+| `shot8-porch-callback` | **GOOD** - clean throughout, real arc (worried, then smiles at ~6.5s) |
+| `shot9-desk-callback` | OK |
+| `shot10-laptop-close` | **BAD** - identity drift, duplicate prop, lid backwards |
+| `shot11-old-records` | **BAD** - hard cut to an unrelated scene at ~7.5s, hallucinated tab text ("MISSY", "OAKBERY") |
+| `shot12-typing-notes` | **BAD** - keyboard melts into nonsense keys, a red nail appears mid-shot |
+| `shot13-three-folders` | OK **only** 0.3-5.6s; three folders become one after 7.5s |
+
+**The failure taxonomy, all five found in one batch of six:** identity drift, duplicate props,
+hallucinated text (despite "no text" in the prompt), a cut inside the clip, and melted mechanisms.
+Prompt against these, not just for the subject: no keyboards or screens in frame, ONE hero object,
+a single continuous action. And record a clip's SAFE RANGE in the ledger, not just its filename.
 
 ### 1. The sameness is fixed. `keys-porch` no longer closes every film.
 
