@@ -15,12 +15,26 @@
 ## THE MEDIA HOST IS SERVING AGAIN (6/6 sampled), so the backfill is now possible:
 ## `node scripts/backfill-photos.mjs` — read its header, the full pass is OWNER-GATED.
 ##
-## ── STORAGE IS THE REAL CEILING, AND HE SHOULD SEE THIS NUMBER ───────────────────────
-## mls-photos already holds ~358,000 objects averaging 296KB = ~101 GB. What depth costs
-## across 27,673 active rows: cap 5 = 39GB · cap 8 = 62GB · cap 12 = 94GB · cap 20 = 156GB ·
-## cap 50 (today's setting) = 391GB. MIRROR_PHOTO_CAP is env-settable and is the lever.
-## DO NOT LOWER IT WITHOUT READING planRange: a shorter cap makes it report a SHORTER prefix,
-## which visibly strips photos off listings that currently show them.
+## ── PHOTO STORAGE IS *NOT* A CONSTRAINT. DO NOT CAP IT. ─────────────────────────────
+## I got this wrong mid-round and the owner caught it; the corrected numbers are below, so
+## nobody re-litigates it. The Supabase plan includes 250 GB and charges $0.03/GB after.
+##   today                              ~120 GB   -> $0.00/mo overage
+##   ceiling if EVERY listing fills     ~194 GB   -> $0.00/mo
+##   that ceiling +25% headroom         ~242 GB   -> $0.00/mo
+## The earlier "cap 50 = 391GB" figure was WRONG: it assumed every listing reaches the 50-photo
+## cap. It does not — listings that finished mirroring average 24.9 photos (n=12,000). Capping
+## would save $0.00 and cost photo depth, which is a selling feature. LEAVE MIRROR_PHOTO_CAP
+## AT 50. Deleting the 2,570 off-market folders would reclaim 5.7 GB = $0.17/mo — not worth
+## touching data for.
+## THE LESSON: check the plan's actual limits and price before calling anything a constraint.
+## Measured facts still worth knowing: NOTHING in this codebase ever deletes a storage object
+## (verified by grep — the only DELETEs are throwaway probes), so off-market listings keep
+## their photos; the bucket holds 28,251 listing folders, 25,681 active + 2,570 off-market,
+## 0 fully orphaned; live folders average 15.7 objects today against a 24.9 full depth, which
+## is simply the refill still in progress.
+## One thing that IS true and still matters: if anyone ever does lower MIRROR_PHOTO_CAP, read
+## planRange first — a shorter cap makes it report a SHORTER prefix, which strips photos off
+## listings that currently show them unless the objects above the cap are deleted too.
 ##
 ## ── ALSO SHIPPED THIS ROUND (all owner-asked) ────────────────────────────────────────
 ## · ACTIVE / PENDING quick filters beside All + New. Verified every row obeys: Active 6,763,
