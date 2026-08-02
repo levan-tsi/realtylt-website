@@ -139,6 +139,10 @@ export async function GET(req: Request) {
           photoBudget: MIRROR_PHOTO_BUDGET,
           timeBudgetMs: Math.max(0, started + MIRROR_WALL_MS - Date.now()),
           concurrency: MIRROR_CONCURRENCY,
+          // A sustained 429 window used to eat the whole invocation proving the same point a few
+          // hundred times, which starved the data writes that run after it. Give up quickly when
+          // nothing is getting through; the debt is picked up next tick or by the backfill.
+          failFastAfter: 24,
         },
       );
       const byId = new Map(outcomes.map((o) => [o.id, o]));

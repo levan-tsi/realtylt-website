@@ -244,6 +244,35 @@ describe("mirrorPhotos — a disguised rate limit never becomes a photo", () => 
   });
 });
 
+describe("mirrorPhotos — circuit breaker on a refusing media host", () => {
+  it("stops early once nothing at all is getting through", async () => {
+    const { deps, downloads } = fakeDeps({ downloadStatus: () => 429 });
+    await mirrorPhotos([target("A", 50), target("B", 50)], deps, { maxRetries: 0, failFastAfter: 5 });
+    // Without the breaker this would attempt all 100. It gives up shortly after the threshold
+    // (in-flight workers finish their current item).
+    expect(downloads.length).toBeLessThan(20);
+    expect(downloads.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it("does NOT trip while photos are still succeeding", async () => {
+    // Every other photo fails, so failures never run consecutively past the threshold.
+    const { deps, uploads } = fakeDeps({
+      downloadStatus: (url) => (Number(url.split("/").pop()?.split("?")[0]) % 2 === 1 ? 429 : 200),
+    });
+    // Threshold above the concurrency: up to 3 failures can land before the first success
+    // resolves, and that must not be mistaken for "nothing is getting through".
+    const out = await mirrorPhotos([target("A", 10)], deps, { maxRetries: 0, failFastAfter: 5 });
+    expect(uploads.length).toBe(5); // all five even-indexed photos still mirrored
+    expect(out[0].photosMirrored).toBe(1); // contiguous prefix stops at the first gap
+  });
+
+  it("is disabled by failFastAfter: 0", async () => {
+    const { deps, downloads } = fakeDeps({ downloadStatus: () => 429 });
+    await mirrorPhotos([target("A", 30)], deps, { maxRetries: 0, failFastAfter: 0 });
+    expect(downloads.length).toBe(30); // every photo attempted
+  });
+});
+
 describe("mirrorPhotos — upload failure stops the prefix", () => {
   it("does not count a photo whose upload failed", async () => {
     const { deps } = fakeDeps({ uploadOk: (path) => path !== "A/1.jpg" });

@@ -74,6 +74,13 @@ export interface MirrorOptions {
   concurrency?: number;
   /** Retries per photo on 429/transient failure (default 3). */
   maxRetries?: number;
+  /** CIRCUIT BREAKER. Give up on the whole run after this many consecutive failures with not a
+   * single success (default 24; 0 disables). When the media host is refusing everything — a
+   * sustained 429 window — every photo costs its full retry ladder, and a run spends its entire
+   * wall clock proving the same point several hundred times. Measured 2026-08-01: two feed pages
+   * took 279s and mirrored nothing, which starved the data sync that runs after it. Tripping
+   * early costs a little mirroring on a flaky minute and buys the sync its whole budget back. */
+  failFastAfter?: number;
 }
 
 const clampCap = (cap: number | undefined) => Math.max(0, Math.min(cap ?? MAX_MIRROR_PHOTOS, MAX_MIRROR_PHOTOS));
@@ -202,6 +209,7 @@ export async function mirrorPhotos(
   const timeBudgetMs = opts.timeBudgetMs ?? Number.MAX_SAFE_INTEGER;
   const concurrency = Math.max(1, opts.concurrency ?? 4);
   const maxRetries = Math.max(0, opts.maxRetries ?? 3);
+  const failFastAfter = Math.max(0, opts.failFastAfter ?? 24);
   const sleep = deps.sleep ?? defaultSleep;
   const now = deps.now ?? Date.now;
 
@@ -209,17 +217,29 @@ export async function mirrorPhotos(
   const succeeded = new Set<string>(); // `${id}:${idx}`
   const startedAt = now();
   let cursor = 0;
+  let consecutiveFailures = 0;
+
+  const tripped = () => failFastAfter > 0 && succeeded.size === 0 && consecutiveFailures >= failFastAfter;
 
   const worker = async () => {
     for (;;) {
       if (now() - startedAt >= timeBudgetMs) return; // out of time — stop pulling work
+      if (tripped()) return; // nothing is getting through — stop wasting the run's clock
       const i = cursor++;
       if (i >= queue.length) return;
       const item = queue[i];
       const dl = await fetchWithBackoff(deps, item.url, maxRetries, sleep);
-      if (!dl.ok || !dl.bytes) continue;
+      if (!dl.ok || !dl.bytes) {
+        consecutiveFailures++;
+        continue;
+      }
       const ok = await deps.upload(`${item.id}/${item.idx}.jpg`, dl.bytes, dl.contentType ?? "image/jpeg");
-      if (ok) succeeded.add(`${item.id}:${item.idx}`);
+      if (ok) {
+        succeeded.add(`${item.id}:${item.idx}`);
+        consecutiveFailures = 0;
+      } else {
+        consecutiveFailures++;
+      }
     }
   };
   await Promise.all(Array.from({ length: concurrency }, worker));
