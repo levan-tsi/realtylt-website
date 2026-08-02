@@ -1,6 +1,52 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 17 BRIEF — set 2026-08-02. Single agent, no subagents.
+## ═══ ROUND 18 BRIEF — set 2026-08-02 late. Single agent, no subagents.
+##
+## ── ROUND 17 ANSWERED THE OWNER'S "WHY ONLY ONE PICTURE" AND IT WAS US ───────────────
+## He asked whether Pending listings with one photo meant OneKey removed them. NO — WE were
+## discarding them. 84% of Pending rows (8,402 of 10,043) served exactly ONE photo; sampled
+## eight against the feed and seven hold 7/14/16/25/29/35/38. Cause: change detection compared
+## photosMirroredTs to ModificationTimestamp, so ANY edit — a price cut, a status flip — reset
+## the mirror to 0, and the covers-first budget then re-mirrored only the cover. Listings that
+## churn (Pending) were reset faster than they could fill. Now keyed on the photo COUNT, with a
+## fallback to the old test for rows predating it. MIRROR_PHOTO_BUDGET 600 -> 1200.
+## GALLERIES REFILL GRADUALLY as listings re-sync — this is NOT instant, and the next round
+## should re-measure: `node scripts/_scratch-r17-onephoto.mjs` (expect the 84% to fall).
+## THE MEDIA HOST IS SERVING AGAIN (6/6 sampled), so the backfill is now possible:
+## `node scripts/backfill-photos.mjs` — read its header, the full pass is OWNER-GATED.
+##
+## ── STORAGE IS THE REAL CEILING, AND HE SHOULD SEE THIS NUMBER ───────────────────────
+## mls-photos already holds ~358,000 objects averaging 296KB = ~101 GB. What depth costs
+## across 27,673 active rows: cap 5 = 39GB · cap 8 = 62GB · cap 12 = 94GB · cap 20 = 156GB ·
+## cap 50 (today's setting) = 391GB. MIRROR_PHOTO_CAP is env-settable and is the lever.
+## DO NOT LOWER IT WITHOUT READING planRange: a shorter cap makes it report a SHORTER prefix,
+## which visibly strips photos off listings that currently show them.
+##
+## ── ALSO SHIPPED THIS ROUND (all owner-asked) ────────────────────────────────────────
+## · ACTIVE / PENDING quick filters beside All + New. Verified every row obeys: Active 6,763,
+##   Pending 4,775, SSR count agrees with the API for both.
+## · MAP HOVER PREVIEWS + press-to-pin, and PENDING is now visible (solid = for sale, hollow =
+##   spoken for, with a legend). Four wrong answers on the way — read the commit, especially:
+##   overlay.draw() rebuilds every chip on each map idle, so per-chip mouseleave CANNOT be
+##   trusted and a `click` can be swallowed between press and release.
+## · HOME RAILS no longer show Coming Soon with no picture (was 7 of 8). A rail now requires a
+##   photograph, on-market-today, and not Coming Soon.
+## · PRICE SPREAD across rails + the "mixed" search order (lib/idx/price-spread.ts). /search
+##   page 1 went from one price band in the first four cards to four.
+## · The COMING SOON artwork is a typographic panel now, not a generated house. His own
+##   original is RETAINED in the repo (public/images/mls/coming-soon.webp) — he may want it.
+##
+## ── FIRST ACTIONS NEXT ROUND ─────────────────────────────────────────────────────────
+## 1. `node scripts/_scratch-r16-debt.mjs` — if "modified in last 24h" is 0 the feed is frozen
+##    again; that is the whole health of the site in one number.
+## 2. `node scripts/_scratch-r17-onephoto.mjs` — is the one-photo share actually falling?
+## 3. SHOW HIM THE RAILS. The home page is ISR-cached for 600s, so rail changes do NOT appear
+##    immediately after a deploy — I chased that for a while before spotting it.
+## 4. Still HIS decisions, both carried: the hero photograph (DESIGN-ROUND16.md §3) and
+##    whether to keep the retired coming-soon artwork.
+##
+##
+## ═══ ROUND 17 BRIEF (COMPLETE — kept for the reasoning) — set 2026-08-02.
 ## FIRST ACTION: read docs/parity/HANDOFF-ROUND-16.md (still current for the launch switches and
 ## the trap list) and docs/parity/DESIGN-ROUND16.md (this round's assessment). This block is the
 ## running order only.
