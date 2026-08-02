@@ -17,6 +17,7 @@ export class FixtureIdxClient implements IdxClient {
     const {
       q,
       city,
+      status,
       county,
       priceMin,
       priceMax,
@@ -69,6 +70,8 @@ export class FixtureIdxClient implements IdxClient {
       // Exact city (suggest-dropdown pick), case-insensitive to match PostgREST's `eq` on the
       // normalised city column. Mirrors db.searchFilters.
       if (city && l.city.toLowerCase() !== city.trim().toLowerCase()) return false;
+      // On-market status ("Active" / "Pending" quick filters). Mirrors db.searchFilters.
+      if (status && l.status !== status) return false;
       if (q) {
         const needle = q.trim().toLowerCase();
         if (needle) {

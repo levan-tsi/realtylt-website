@@ -2,7 +2,10 @@
  * (/api/idx/search and /api/idx/pins) — one validation story, no drift. */
 
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import { SEARCH_PAGE_SIZE, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
+import { SEARCH_PAGE_SIZE, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
+
+/** Status values a URL may ask for. Anything else falls back to "no status filter". */
+export const STATUS_FILTERS: ListingStatusFilter[] = ["Active", "Pending"];
 
 export const SORTS: SortKey[] = ["mixed", "newest", "oldest", "featured", "price-asc", "price-desc"];
 /** The sale property types the /search Type dropdown offers (validation whitelist). "Rental"
@@ -31,6 +34,9 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     // is our own inventory and changes hourly — but length-bounded and always compared with
     // an equality operator, never interpolated into a pattern.
     city: q.get("city")?.trim().slice(0, 80) || undefined,
+    status: STATUS_FILTERS.includes(q.get("status") as ListingStatusFilter)
+      ? (q.get("status") as ListingStatusFilter)
+      : undefined,
     county: county && SERVED_AREAS.some((c) => c.slug === county) ? county : undefined,
     priceMin: num(q.get("priceMin")),
     priceMax: num(q.get("priceMax")),
@@ -71,7 +77,15 @@ export const NEW_LISTING_DAYS = 7;
 export function parseSearchRequest(q: URLSearchParams): SearchParams {
   const sort = q.get("sort") as SortKey | null;
   const withQuick = new URLSearchParams(q);
-  if (q.get("quick") === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
+  // The count-line quick filter is ONE control with four mutually exclusive answers, but they
+  // are not all the same kind of question: "new" is a time window, "active"/"pending" are a
+  // status. Translate here so the server render and the client's own fetch ask the SAME
+  // question — if they drifted, the visitor would see one set of homes in the HTML and a
+  // different set a beat later.
+  const quick = q.get("quick");
+  if (quick === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
+  if (quick === "active") withQuick.set("status", "Active");
+  if (quick === "pending") withQuick.set("status", "Pending");
   return {
     ...parseFilterParams(withQuick),
     sort: sort && SORTS.includes(sort) ? sort : "mixed",

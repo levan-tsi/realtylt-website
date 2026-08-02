@@ -80,8 +80,9 @@ interface Filters {
   /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
    * the for-sale experience (rentals are excluded from it entirely). */
   rental: boolean;
-  /** Count-line quick filter (live realtylt.com): "all" or "new" (listed ≤7 days). */
-  quick: "all" | "new";
+  /** Count-line quick filter. "all" = every on-market status; "active" / "pending" narrow to
+   * one status; "new" is a 7-day listed-within window. One control, four exclusive answers. */
+  quick: "all" | "active" | "new" | "pending";
   sort: string;
   page: number;
   view: "grid" | "map";
@@ -129,7 +130,9 @@ function fromParams(sp: URLSearchParams): Filters {
     taxMax: sp.get("taxMax") ?? "",
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
-    quick: sp.get("quick") === "new" ? "new" : "all",
+    quick: (["active", "new", "pending"] as const).includes(sp.get("quick") as never)
+      ? (sp.get("quick") as "active" | "new" | "pending")
+      : "all",
     sort: sp.get("sort") ?? "mixed",
     page: Math.max(1, Number(sp.get("page")) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
@@ -181,6 +184,8 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     f.yearMin && `built ${f.yearMin}+`,
     f.taxMax && `tax under $${(+f.taxMax).toLocaleString()}`,
     f.quick === "new" && "new listings",
+    f.quick === "active" && "active only",
+    f.quick === "pending" && "pending only",
     f.withPhotos && "with photos",
   ].filter(Boolean) as string[];
   return { name: parts.length ? parts.join(" · ") : "All listings", parts };
@@ -245,7 +250,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // Any filter that narrows the default six-county set — so the count line reads "N found"
   // instead of "across the Hudson Valley" the moment a real filter is on (honest count).
   const hasActiveFilters =
-    !!filters.q || !!filters.county || filters.quick === "new" || !!filters.priceMin || !!filters.priceMax ||
+    !!filters.q || !!filters.city || !!filters.county || filters.quick !== "all" || !!filters.priceMin || !!filters.priceMax ||
     !!filters.bedsMin || !!filters.bathsMin || !!filters.propertyType || moreCount > 0;
 
   const apply = useCallback((patch: Partial<Filters>) => {
@@ -310,7 +315,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
     // filter maps to a server-side listed-within-N-days filter.
     const api = new URLSearchParams(toQuery(filters, true));
     api.set("pageSize", String(SEARCH_PAGE_SIZE));
+    // Mirrors parseSearchRequest — the server render and this fetch must ask the same question.
     if (filters.quick === "new") api.set("newDays", String(NEW_LISTING_DAYS));
+    if (filters.quick === "active") api.set("status", "Active");
+    if (filters.quick === "pending") api.set("status", "Pending");
     fetch(`/api/idx/search?${api.toString()}`)
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
@@ -756,10 +764,17 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               </>
             )}
           </p>
-          {/* Quick filter (live: "All Listings ˅"). Open Houses + Price Reduced are omitted —
-              our OneKey feed doesn't replicate the OpenHouse resource or a price-drop field. */}
+          {/* Quick filter. Four mutually exclusive answers, in the order someone actually asks
+              them: everything, then only what is still buyable, then only what is fresh, then
+              only what is already spoken for. They are not all the same KIND of question —
+              "new" is a 7-day window, Active/Pending are a status — which is why the
+              translation lives in one place (parseSearchRequest) that both the server render
+              and the client fetch go through.
+              Open Houses + Price Reduced stay omitted: our OneKey feed replicates neither the
+              OpenHouse resource nor a price-drop field, and a filter that cannot answer is
+              worse than no filter. */}
           <div role="group" aria-label="Quick filter" className="flex items-center gap-1">
-            {([["all", "All Listings"], ["new", "New Listings"]] as const).map(([val, label]) => (
+            {([["all", "All Listings"], ["active", "Active"], ["new", "New Listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button
                 key={val}
                 type="button"
