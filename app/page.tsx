@@ -63,7 +63,7 @@ export default async function HomePage() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-center grayscale"
+              className="hero-zoom absolute inset-0 h-full w-full object-cover object-center grayscale"
             />
           </picture>
           {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
@@ -87,8 +87,19 @@ export default async function HomePage() {
         {/* pb tightened round 13 ("could be a little lower"): the group hangs closer to the
             section's bottom edge, and the scroll cue's own block below shrank to match. */}
         <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-3 pt-24 md:min-h-[660px] md:pb-4 lg:px-16">
-          <p className="t-eyebrow text-paper/70">Hudson Valley &amp; New York City</p>
-          <h1 id="home-hero" className="t-display mt-5 text-paper">
+          {/* THE ARRIVAL. The hero is the page's thesis and it was landing all at once, fully
+              formed, like a printed slide. Now the photograph settles (hero-zoom, 8s, 1.08 -> 1)
+              while the words arrive in the order you would read them: place, promise, then the
+              instrument to act on it. Reuses the site's existing .rise ladder rather than
+              inventing a second motion vocabulary.
+              LCP is safe here and it was measured, not assumed: the LCP element on this page is
+              the hero IMAGE (median 1592ms on the dev server across 5 reps), and the image is
+              never faded — only scaled, which does not delay its paint. Fading the headline
+              instead of the photograph is the whole reason this costs nothing.
+              Reduced motion is covered by the global block at the foot of globals.css, which
+              collapses every animation to 0.01ms — so those visitors get the finished hero. */}
+          <p className="t-eyebrow rise text-paper/70">Hudson Valley &amp; New York City</p>
+          <h1 id="home-hero" className="t-display rise rise-2 mt-5 text-paper">
             Let&rsquo;s Find <strong>Home</strong>
           </h1>
 
@@ -99,7 +110,7 @@ export default async function HomePage() {
               CTAs lost their boxes entirely: four floating rectangles covered the picture,
               and the picture is the luxury. Radii stay concentric on the site scale —
               container 12px = button 8px + 4px inset. */}
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
             <form
               action="/search"
               role="search"

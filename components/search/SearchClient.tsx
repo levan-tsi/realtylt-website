@@ -739,12 +739,21 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           Sort By + view toggle right */}
       <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <p className="text-sm text-stone" role="status">
+          {/* This strip is a row of instruments — quick filter, sort, view — and the count was
+              dressed exactly like them: small, bold, the same weight as a control label. It is
+              the only CONTENT here, the answer the whole page exists to give, so it is set in
+              the display face the rest of the site uses for anything that leads. Sized to the
+              strip's existing height rather than above it: the owner's density target is three
+              full rows of cards beside the map, and a headline row would eat one. */}
+          <p className="flex flex-wrap items-baseline gap-x-2 text-sm text-stone" role="status">
             {state === "loading" ? "Searching…" : state === "error" ? "" : (
-              <strong className="font-bold text-ink">
-                {(result?.total ?? 0).toLocaleString()} listings
-                {hasActiveFilters ? " found" : " across the Hudson Valley"}
-              </strong>
+              <>
+                <strong className="font-display text-2xl font-light leading-none text-ink">
+                  {(result?.total ?? 0).toLocaleString()}
+                </strong>
+                <span className="text-ink">listings{hasActiveFilters ? " found" : ""}</span>
+                {!hasActiveFilters && <span>across the Hudson Valley</span>}
+              </>
             )}
           </p>
           {/* Quick filter (live: "All Listings ˅"). Open Houses + Price Reduced are omitted —

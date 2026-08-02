@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useSaved } from "@/components/auth/SavedProvider";
 
 /** Heart toggle — saves to the client's account when signed in, otherwise to this device.
@@ -22,6 +23,11 @@ export function FavoriteButton({
   const { isFavorite, toggleFavorite } = useSaved();
   const fav = isFavorite(id);
   const onLight = tone === "onLight";
+  // Saving a home should feel like something happened. The pop is tied to the ACT, not to the
+  // state: keying it off `fav` alone would set every already-saved heart bouncing on page load
+  // and on every re-render, which reads as a glitch rather than a confirmation. Removing a home
+  // gets no pop either — taking something away should not celebrate.
+  const [pop, setPop] = useState(false);
 
   return (
     <button
@@ -32,6 +38,7 @@ export function FavoriteButton({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (!fav) setPop(true);
         void toggleFavorite(id);
       }}
       className={`${
@@ -45,7 +52,8 @@ export function FavoriteButton({
       <svg
         aria-hidden
         viewBox="0 0 24 24"
-        className={`h-[18px] w-[18px] transition-colors ${
+        onAnimationEnd={() => setPop(false)}
+        className={`h-[18px] w-[18px] transition-colors duration-200 ${pop ? "heart-pop" : ""} ${
           fav
             ? "fill-red-500 stroke-red-500"
             : onLight

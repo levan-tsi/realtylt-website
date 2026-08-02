@@ -346,6 +346,26 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ── Saving a home. The fill already cross-fades; this gives the act a beat of weight so it
+   reads as "kept" rather than as a colour change. Applied by FavoriteButton only on the click
+   that SAVES — never on mount, never on removal. The overshoot is small on purpose: the heart
+   sits on someone's photograph, and a bouncy heart would be the loudest thing on the page. */
+@keyframes heart-pop {
+  0% {
+    scale: 1;
+  }
+  45% {
+    scale: 1.28;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.heart-pop {
+  animation: heart-pop 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
 /* ── Selling hero phone pill: a gentle attention pulse on MOBILE only, where calling is the
    primary action (live parity). Disabled ≥640px and — via the global reduced-motion block
    at the bottom of this file — for reduced-motion visitors. */
