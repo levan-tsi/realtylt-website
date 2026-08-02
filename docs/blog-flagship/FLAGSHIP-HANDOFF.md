@@ -24,6 +24,26 @@ overlaps" while being useless. In practice that means the rail from ~1728px up a
 on both surfaces. If you would rather keep the rail at narrower widths, the lever is
 `LABEL_MIN_USEFUL` in that file.
 
+**Result, measured on the same harness: 43 overlaps of 54 → 0 of 35, with 42 combinations on the
+sheet.** Services at 1920 now end the card at 219 against text at 352 (was 391 against 352).
+
+### A stale dev-server chunk cost an hour, and it looks exactly like a product bug
+
+Mid-fix the rail started vanishing non-deterministically on service pages, and a probe reported
+"no rail" where the maths said there should be one. It was neither: Next's dev server was serving a
+**broken cached compile** after rapid edits, and the page threw `Invalid or unexpected token` before
+hydration — so no effect ran, so no rail. `tsc` was clean and the unit suite was green the whole
+time. A `git stash` / `git stash pop` forced a recompile and both surfaces came back.
+
+Two lessons, both paid for here:
+- **On this dev server, a hydration-time syntax error with clean `tsc` means a stale chunk, not your
+  code.** Listen for `pageerror` in the probe — that one line named the real cause immediately, and
+  everything before it was guesswork.
+- **A probe that cannot find the thing it is measuring reports a PASS.** The first "0 overlaps" was
+  measured while the rail was not mounting on services at all; it was worthless and was thrown away.
+  Any overlap harness must also assert the rail EXISTS and its labels are non-zero, which
+  `_scratch-toc-shot.mjs` now does.
+
 ### Two films shipped with a generated-footage defect ON SCREEN
 
 Measured at 0.2s steps, not taken from the audit's prose:
