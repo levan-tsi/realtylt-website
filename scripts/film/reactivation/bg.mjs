@@ -41,16 +41,23 @@ const run = (args, tag) => {
 
 let t = 0;
 const parts = [];
-PLAN.forEach(({ beat, clip, in: inPoint, dur, why }, i) => {
+PLAN.forEach(({ beat, clip, in: inPoint, dur, srcEnd, why }, i) => {
   const seg = `${OUT}/seg${parts.length}.mp4`;
   if (clip) {
     const src = `${FOOTAGE}/${clip}.mp4`;
     if (!existsSync(src)) throw new Error(`missing footage: ${src}`);
-    // -ss before -i is the fast seek; re-encoding to a common 30fps CBR-ish profile is what
-    // makes the concat safe. setsar=1 matters: a mismatched aspect ratio makes concat refuse.
+    // `srcEnd` is the last SECOND OF THE SOURCE that is usable — the point where a generated
+    // clip breaks (a cut to an unrelated scene, a melting prop, an identity flip). When it is
+    // set, the shorter usable span is stretched with setpts to fill the beat the narration
+    // needs, so a defect can be cut out without moving a single beat boundary. setpts has to
+    // come BEFORE fps: retiming first and resampling second yields real CFR output, whereas
+    // the other order leaves a stream whose effective rate is no longer FPS.
+    const span = srcEnd === undefined ? dur : +(srcEnd - inPoint).toFixed(3);
+    if (span <= 0) throw new Error(`${beat}: srcEnd ${srcEnd} is not after in ${inPoint}`);
+    const retime = srcEnd === undefined ? "" : `setpts=${(dur / span).toFixed(6)}*PTS,`;
     const fades = fadeChain(PLAN, i, dur);
-    run(["-ss", String(inPoint), "-t", String(dur), "-i", src,
-      "-vf", `fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1${fades ? "," + fades : ""},format=yuv420p`,
+    run(["-ss", String(inPoint), "-t", String(span), "-i", src,
+      "-vf", `${retime}fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1${fades ? "," + fades : ""},format=yuv420p`,
       "-an", "-c:v", "libx264", "-crf", "14", "-preset", "slow", "-y", seg], beat);
   } else {
     run(["-f", "lavfi", "-i", `color=c=black:s=${W}x${H}:r=${FPS}:d=${dur}`,
