@@ -5,6 +5,40 @@
 ## FIRST ACTION: read docs/parity/DESIGN-ROUND18.md. It carries every number below with the
 ## evidence, plus before/after renders in docs/design-r18/. This block is the running order.
 ##
+## ── THE HERO LAB IS NOW PUSHED AND HE HAS A LINK (2026-08-02, late) ──────────────────
+## He asked "did you create main page design to show me or not yet?" — three candidates had
+## existed since the previous round but ONLY on a local branch, so he had never seen them.
+## Branch `hero-lab` is now pushed, with main MERGED INTO IT so the preview shows the current
+## site with the three heroes on top. Vercel preview + a 23h share link (mint a fresh one with
+## the Vercel MCP get_access_to_vercel_url when it expires):
+##   https://realtylt-website-git-hero-lab-levans-projects-a543d940.vercel.app/lab/hero
+## Verified live myself: http 200, all three variants render, 1 canvas, 0 page errors,
+## 0 overflow. Full-page capture in docs/design-r18/herolab-live.png, and B with the pointer
+## actually in it in docs/design-r18/valley-1..3.png.
+## MY HONEST READ OF B ("The Valley", still my recommendation): it works — the Hudson corridor
+## reads as a real denser band, the nearest listing brightens and names itself ($749,900
+## WALLKILL), and "6,000 HOMES, LIVE" sits quietly bottom-right. Two real weaknesses to fix if
+## he picks it: the field is concentrated in the RIGHT half so the composition is lopsided
+## (the headline occupies the empty left, which half-rescues it), and at 1x the points read as
+## faint smudges rather than crisp lights. Neither is fatal; both are tuning.
+##
+## ── TWO MORE HE REPORTED AFTER ROUND 18 SHIPPED — BOTH FIXED, BOTH VERIFIED ──────────
+## 1. THE LISTING-PAGE PHOTO ARROWS MOVED ONCE AND FROZE. Not the lightbox — the band on the
+##    page itself. Measured before the fix on a 31-photo listing: hero 0 -> 0 -> 0 -> 0 while
+##    the column went 1,2,3 then 2,3,4 then never moved; Back oscillated between two states.
+##    CAUSE: the hero was picked as "first surviving photo NOT in the side column" instead of
+##    "first surviving photo at or after the anchor" — identical only while the anchor is 0.
+##    Now lib/idx/photo-band.ts::heroAt, with 10 new tests that WALK THE ARROWS, so a frozen
+##    carousel fails a test instead of reaching him. After: 0->1->2->3->4 and back.
+## 2. "MAKE IT MORE UNDERSTANDABLE THAT YOU ARE SWITCHING LISTINGS." Fixing (1) is what made
+##    this urgent: the page now carries TWO working arrow pairs. The pager reads LISTING 3 OF
+##    36, and the breadcrumb row wraps on a phone rather than shortening the label. Also, while
+##    a photo arrow has FOCUS the two arrow keys belong to the photos (preventDefault; the
+##    pager already bails on a defaulted event).
+## Full stress run 13/13 — both arrow directions, rapid presses, wrapping, the key-ownership
+## split, pager click + key, disabled first listing, cold visitor, JS-off, and 24 page-width
+## combinations. tsc clean, 635 tests.
+##
 ## ── HIS PHOTO QUESTION IS ANSWERED, AND ONE DECISION IS WAITING ON HIM ───────────────
 ## Round 17 fixed change detection and expected the one-photo share to fall. IT DID NOT MOVE:
 ## 8,400 of 10,045 Pending rows (84%) still serve exactly one photo, against 8,402 of 10,043
