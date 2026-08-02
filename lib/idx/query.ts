@@ -27,6 +27,10 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
   const type = q.get("propertyType") as PropertyType | null;
   return {
     q: q.get("q")?.slice(0, 100) || undefined,
+    // Exact city, from the suggest dropdown. Not whitelisted against an enum — the city list
+    // is our own inventory and changes hourly — but length-bounded and always compared with
+    // an equality operator, never interpolated into a pattern.
+    city: q.get("city")?.trim().slice(0, 80) || undefined,
     county: county && SERVED_AREAS.some((c) => c.slug === county) ? county : undefined,
     priceMin: num(q.get("priceMin")),
     priceMax: num(q.get("priceMax")),

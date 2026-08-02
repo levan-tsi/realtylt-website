@@ -55,6 +55,10 @@ export type SearchPayload = ApiResult;
 
 interface Filters {
   q: string;
+  /** An EXACT city, set only by picking one from the suggest dropdown. `q` stays the typed
+   * free-text search (a substring over address+city+zip+county); choosing "Beacon, NY" from a
+   * list means the city Beacon, not every address containing the word. */
+  city: string;
   county: string;
   priceMin: string;
   priceMax: string;
@@ -107,6 +111,7 @@ const TRUE_FLAGS = new Set(["1", "true", "on", "yes"]);
 function fromParams(sp: URLSearchParams): Filters {
   return {
     q: sp.get("q") ?? "",
+    city: sp.get("city") ?? "",
     county: sp.get("county") ?? "",
     priceMin: sp.get("priceMin") ?? "",
     priceMax: sp.get("priceMax") ?? "",
@@ -162,6 +167,7 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
   const county = SERVED_AREAS.find((c) => c.slug === f.county)?.name;
   const parts = [
     f.q && `“${f.q}”`,
+    f.city && `${f.city}, NY`,
     county && `${county}, NY`,
     f.propertyType,
     f.bedsMin && `${f.bedsMin}+ bd`,
@@ -461,7 +467,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         onSubmit={(e) => {
           e.preventDefault();
           const fd = new FormData(e.currentTarget);
-          apply({ q: String(fd.get("q") ?? "") });
+          // Typing over a picked city and submitting means the typed text, not the old city.
+          apply({ q: String(fd.get("q") ?? ""), city: "" });
         }}
         className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-line bg-white px-4 py-2 ${
           moreOpen ? "rounded-t-2xl" : "rounded-2xl"
@@ -503,14 +510,19 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </label>
           <LocationSuggest
             id="search-q"
-            key={filters.q}
-            defaultValue={filters.q}
+            key={filters.city || filters.q}
+            defaultValue={filters.city || filters.q}
             placeholder="Find a Place"
             className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
+            /* PICKING a place is a different act from typing one. A county picks its first-class
+               filter, a city picks an exact city, and a ZIP stays free text (search_hay covers
+               it exactly anyway). Each clears the other two so the three can never stack. */
             onPick={(s) =>
               s.kind === "county" && s.county
-                ? apply({ county: s.county, q: "" })
-                : apply({ q: s.q })
+                ? apply({ county: s.county, q: "", city: "" })
+                : s.kind === "city"
+                  ? apply({ city: s.q, q: "" })
+                  : apply({ q: s.q, city: "" })
             }
           />
         </div>
@@ -832,7 +844,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             onClick={() =>
               apply({
-                q: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
+                q: "", city: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
                 sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
               })
             }

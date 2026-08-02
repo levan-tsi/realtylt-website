@@ -106,6 +106,11 @@ export type SortKey = "mixed" | "newest" | "oldest" | "featured" | "price-asc" |
 
 export interface SearchParams {
   q?: string; // free-text location: town, zip, address fragment
+  /** An EXACT city, set when the visitor picks one from the suggest dropdown rather than
+   * typing. `q` is a substring over address+city+zip+county, which is right for typed text
+   * and wrong for a chosen place: "Beacon" as free text also returns Beacon Street in
+   * Middletown, and "Kingston" returns Kingston Avenue in Poughkeepsie. */
+  city?: string;
   county?: CountySlug;
   priceMin?: number;
   priceMax?: number;

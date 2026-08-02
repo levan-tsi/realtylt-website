@@ -129,6 +129,9 @@ function searchFilters(p: SearchParams): string {
     const since = new Date(Date.now() - p.newWithinDays * 86_400_000).toISOString();
     parts.push(`listed_at=gte.${encodeURIComponent(since)}`);
   }
+  // An EXACT city — what the visitor picked from the suggest dropdown. Equality, not a
+  // substring, so "Beacon" cannot drag in Beacon Street in Middletown.
+  if (p.city) parts.push(`city=eq.${encodeURIComponent(p.city)}`);
   // search_hay = lower(address city zip county). Strip LIKE wildcards from user input;
   // PostgREST's * wildcard wraps the needle for the same substring semantics as fixture.
   const needle = p.q?.trim().toLowerCase().replace(/[%_]/g, " ").trim();

@@ -16,6 +16,7 @@ export class FixtureIdxClient implements IdxClient {
   async search(params: SearchParams = {}): Promise<SearchResult> {
     const {
       q,
+      city,
       county,
       priceMin,
       priceMax,
@@ -65,6 +66,9 @@ export class FixtureIdxClient implements IdxClient {
       if (withPhotosOnly && !((l.photosMirrored ?? 0) > 0)) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
+      // Exact city (suggest-dropdown pick), case-insensitive to match PostgREST's `eq` on the
+      // normalised city column. Mirrors db.searchFilters.
+      if (city && l.city.toLowerCase() !== city.trim().toLowerCase()) return false;
       if (q) {
         const needle = q.trim().toLowerCase();
         if (needle) {

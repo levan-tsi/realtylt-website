@@ -65,6 +65,38 @@ describe("FixtureIdxClient — filters", () => {
     expect(picked.listings.some((l) => l.id === "BK-TEST")).toBe(true); // opt-in shows it
   });
 
+  /** The defect this closes (measured on production 2026-07-31): the location box was free text
+   * over address+city+zip+county, so searching "Beacon" returned 82 homes of which 2 were on
+   * Beacon Street in Middletown, and "Kingston" returned 32 of which 2 were on Kingston Avenue
+   * in Poughkeepsie. Right for typed text, wrong for a place chosen off a list. */
+  it("city= is exact and excludes a same-named STREET in another town", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const inBeacon: Listing = { ...base, id: "IN-BEACON", county: "dutchess", city: "Beacon", address: "12 Maple Street" };
+    const beaconStreet: Listing = { ...base, id: "BEACON-ST", county: "orange", city: "Middletown", address: "40 Beacon Street" };
+    const c = new FixtureIdxClient([inBeacon, beaconStreet]);
+
+    const free = await c.search({ q: "Beacon", pageSize: 100 });
+    expect(free.listings.map((l) => l.id).sort()).toEqual(["BEACON-ST", "IN-BEACON"]); // text: both
+
+    const exact = await c.search({ city: "Beacon", pageSize: 100 });
+    expect(exact.listings.map((l) => l.id)).toEqual(["IN-BEACON"]); // picked: only the town
+  });
+
+  it("city= ignores case and surrounding space", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const c = new FixtureIdxClient([{ ...base, id: "NR", county: "westchester", city: "New Rochelle" }]);
+    expect((await c.search({ city: "  new rochelle " })).listings.map((l) => l.id)).toEqual(["NR"]);
+  });
+
+  it("city= combines with q rather than replacing it", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const c = new FixtureIdxClient([
+      { ...base, id: "A", county: "dutchess", city: "Beacon", address: "12 Maple Street" },
+      { ...base, id: "B", county: "dutchess", city: "Beacon", address: "9 Oak Lane" },
+    ]);
+    expect((await c.search({ city: "Beacon", q: "maple" })).listings.map((l) => l.id)).toEqual(["A"]);
+  });
+
   it("filters by price range", async () => {
     const r = await client.search({ priceMin: 400_000, priceMax: 700_000, pageSize: 100 });
     expect(r.total).toBeGreaterThan(0);

@@ -19,6 +19,28 @@ describe("parseFilterParams — newDays (New Listings quick filter)", () => {
   });
 });
 
+describe("parseFilterParams — city (an exact place, not a text match)", () => {
+  it("parses a picked city", () => {
+    expect(parseFilterParams(q("city=Beacon")).city).toBe("Beacon");
+  });
+  it("carries a multi-word city intact", () => {
+    expect(parseFilterParams(q("city=New+Rochelle")).city).toBe("New Rochelle");
+  });
+  it("trims and bounds the length so a crafted value cannot be huge", () => {
+    expect(parseFilterParams(q("city=%20%20Kingston%20%20")).city).toBe("Kingston");
+    expect(parseFilterParams(q(`city=${"x".repeat(200)}`)).city).toHaveLength(80);
+  });
+  it("is absent for an empty or missing value", () => {
+    expect(parseFilterParams(q("")).city).toBeUndefined();
+    expect(parseFilterParams(q("city=")).city).toBeUndefined();
+    expect(parseFilterParams(q("city=%20%20")).city).toBeUndefined();
+  });
+  it("is independent of q — the two are different questions", () => {
+    const p = parseFilterParams(q("city=Beacon&q=maple"));
+    expect(p).toMatchObject({ city: "Beacon", q: "maple" });
+  });
+});
+
 describe("parseFilterParams — MORE panel filters", () => {
   it("parses every MORE range field + the without-photos toggle", () => {
     const p = parseFilterParams(
