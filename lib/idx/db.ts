@@ -376,7 +376,9 @@ export class DbIdxClient implements IdxClient {
       const own = {
         rows: [...ownNew.rows, ...ownLux.rows].filter((r) => !ownSeen.has(r.listing.id) && ownSeen.add(r.listing.id)),
       };
-      const listings = pickPriceSpread(own.rows.map((r) => toCard(r.listing, r.photos_servable)), limit);
+      const listings = interleaveByBand(
+        pickPriceSpread(own.rows.map((r) => toCard(r.listing, r.photos_servable)), limit),
+      );
       if (listings.length >= limit) return listings;
       // Top up with the freshest non-featured so the rail is never sparse.
       const fill = await this.newestNonFeatured(limit - listings.length, new Set());
@@ -420,9 +422,12 @@ export class DbIdxClient implements IdxClient {
     const candidates = [...pool.rows, ...luxury.rows].filter(
       (r) => !exclude.has(r.listing.id) && !seen.has(r.listing.id) && seen.add(r.listing.id),
     );
-    return pickPriceSpread(
-      candidates.map((r) => toCard(r.listing, r.photos_servable)),
-      limit,
+    // PICK across bands, then ORDER across them. Picking alone is not enough: the home page
+    // asks for 24 and RailPager shows 8 at a time, so a spread that preserved newest-first order
+    // put every high-end home on page 2 of the rail — selected, and invisible. The owner asked
+    // for what the rail SHOWS to be balanced, which means the first screen.
+    return interleaveByBand(
+      pickPriceSpread(candidates.map((r) => toCard(r.listing, r.photos_servable)), limit),
     );
   }
 
