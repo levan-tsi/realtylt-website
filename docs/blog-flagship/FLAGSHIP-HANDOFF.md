@@ -11,10 +11,21 @@ proven before committing to a full production run.
 
 ### DO THESE IN ORDER. He was explicit about the sequence.
 
-1. **Fix the avatar look first** (see the measured diagnosis below).
-2. **Then make ONE video for ONE service, in 2-3 versions, to compare.** Not a batch. One service,
-   a few treatments, judged side by side.
-3. Only after he has judged that, scale to the rest.
+1. **Get the avatar as close to the real him as you can** using the three likeness levers below.
+   Spend credits; he expects several attempts.
+2. **Then make ONE video for ONE service** (start with AI chat assistant), **in 2-3 versions, to
+   compare.** Not a batch. One service, a few treatments, judged side by side.
+3. **Polish it and try a few times.** He is explicit that this is iterative.
+4. **If it still is not close enough after a genuine effort, say so plainly and stop** - he will
+   shoot new footage, and the recipe for that shoot is at the end of this section. Do not burn the
+   whole session grinding a likeness that is not converging; a clear "this needs new footage, here
+   is what to shoot" is a better outcome than twenty mediocre renders.
+5. Only after he has judged the one video, scale to the rest.
+
+**And the mitigation he suggested, which is a good one and should be in every version:** keep his
+head SMALL in frame and let the graphics carry the screen. A smaller talking head hides avatar
+artifacts, and it is better information design regardless. If the likeness stays imperfect, a
+head-small treatment is the version most likely to ship.
 
 ### THE AVATAR IS WEAK FOR A MEASURED REASON, AND IT IS NOT THE ACCOUNT TIER
 
@@ -31,20 +42,75 @@ diagnoses. Measured on the actual frames:
 - **Flat ambient room light, no key.** The face has no modeling.
 - **He stands still, arms down, full body.** Almost no gesture for the model to learn.
 
-**The fix costs nothing.** Same phone, same 4K, but framed CHEST-UP against a plain wall with a
-window or a lamp as a key light. That alone takes the face from ~330px to roughly 1600px, a ~5x
-increase in real facial detail, and removes the painting from behind his head. Recommend he
-re-shoot before anything else; it is a two-minute job with a bigger payoff than any setting.
+**He then shot two better takes**, and the current avatar is built from them. All three measured
+from the frames, identical native crops in `scripts/_scratch-video/avatar/heads.png`:
 
-**Interim lever, which is what he asked for:** the avatar detail page has **"Upload look"** and
-**"Design with AI"**. `Upload look` with a good, close, well-lit still of him is how you "bring the
-avatar closer to me" without a re-shoot. Try that first and compare against the existing looks.
+| file | shot | face in frame | detail | behind his head |
+|---|---|---|---|---|
+| `IMG_7091.MOV` | standing, full body | ~5% | soft | **the oil painting** |
+| **`IMG_7153.MOV`** | **sitting, medium** | **~8%, largest** | **crisp** | **plain wall** |
+| `IMG_7239.MOV` | sitting, medium | ~7% | crisp | painting, chair wing beside head |
+
+`IMG_7153` is the best source of the three and is what the current avatar should be using. The two
+real gains over 7091 are sharpness and a clean background behind the head, not size.
+
+**THE RESHOOT RECIPE, if the tweaks do not converge.** All three takes are still MEDIUM shots at
+~8% face; the target is 40%+. This is 90 seconds of work and is the largest remaining lever, bigger
+than any plan tier or setting:
+
+- Sit, phone at **eye level** on a tripod or a stack of books, **arm's length to ~1.2m** away.
+  Chest-up, top of head near the top of frame.
+- **Plain wall behind the head only.** No painting, no chair wing. A plain stool against the teal
+  wall is ideal.
+- **Face a window**, or a lamp slightly off to one side at face height. The side light is what
+  gives the face shape - all three existing takes are flat ambient, which is why he looks washed.
+- **Talk naturally with normal hand gestures for ~90 seconds.** He is very still in all three
+  takes, and gesture is what the model learns.
+- 4K, 30fps.
+
+### THE AVATAR WAS REGENERATED FROM BETTER FOOTAGE AND IS STILL NOT HIM
+
+**Owner's verdict 2026-08-02: "I regenerated, it's still far, but maybe with some tweaks it can
+work."** So this is the job: **spend the tweaks, make ONE video, polish it, try a few times. If it
+still is not close enough, he will shoot new footage.** He has credits; use them. He is fine with
+several attempts, and he will judge.
+
+**There are now TWO avatars, both called "Levan Tsiklauri". Use the SITTING one.**
+
+| avatar | id | built from | thumbnail |
+|---|---|---|---|
+| **NEW, use this** | `87f6dc9a26684cf1bca69d6a3dd40a9c` | the sitting take (IMG_7153 / IMG_7239) | him in the leather chair |
+| old, ignore | `0956f43471c14b24a68d8ca9a3a4da0c` | IMG_7091, full-body standing | him standing |
+
+Both have 6 looks. The new one is built on measurably better source (see the footage comparison
+above): sharper face, and crucially a **plain wall behind his head instead of the oil painting**.
+
+### THE THREE LIKENESS LEVERS, found on the Design-with-AI screen
+
+`app.heygen.com/avatar/design-look` (reached via an avatar -> **Design with AI**) is the "chat frame
+by frame edit / edit a person" surface the owner meant. It has three things worth spending credits
+on, in this order:
+
+1. **"Improve likeness with a personal model"** - a button on the prompt bar, and the most direct
+   lever there is. Try this FIRST, before any prompt wording.
+2. **"References"** - attach reference images. Feed it real stills of him. Pull clean frames
+   straight out of the source with ffmpeg rather than hunting for photos; `IMG_7153.MOV` at t=15
+   with `crop=700:700:764:1641` is a good head crop, and `scripts/_scratch-video/avatar/heads.png`
+   already holds a three-way comparison.
+3. **The chat box** ("Describe the edits you'd like to make to this look") - plain-language
+   correction of what is off. Be specific about what is wrong rather than asking for "more
+   realistic": beard shape, hairline, face width, skin tone.
+
+Also on that screen: **Remix this look**, **Recent creations**, and Look Packs (Studio Streamer,
+Coastal Linen, Cool Tech / Slate). A device/aspect selector sits beside the prompt.
+
+**Judge each attempt against the REAL him, not against the last attempt.** The reference is
+`IMG_7153.MOV`; build a side-by-side of the render against a native frame from it before deciding
+anything. Drifting toward a nicer-looking stranger is the failure mode.
 
 ### HEYGEN STATE, as actually inspected 2026-08-02
 
 - Logged in, Chrome. Avatars at `app.heygen.com/avatar/my-avatars`.
-- **Avatar "Levan Tsiklauri" EXISTS**, id `0956f43471c14b24a68d8ca9a3a4da0c`, **6 looks** already
-  generated (business-suit variants from the IMG_7091 footage).
 - **His voice is ALREADY CLONED in HeyGen**: voice "Levan Tsiklauri", tagged *From Avatar,
   ElevenLabs, Multilingual, Male*. So HeyGen pulled the voice off the avatar video by itself, and
   it is ElevenLabs underneath. Two others exist: "New Recording 2.m4a" and "Custom voice - Voice 1".
