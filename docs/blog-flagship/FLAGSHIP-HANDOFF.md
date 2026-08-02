@@ -1,10 +1,358 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## STATUS 2026-08-02 (session 13): THE LIKENESS IS FIXED. It was never the face model — it was what the face model had been trained on.
+
+**Read this before touching the avatar again.** The previous session's diagnosis (below) was that the
+footage is too wide and the face too small. That is true and still worth fixing, but it was not the
+binding constraint. The binding constraint was that **the five "designed looks" on the avatar are
+generative re-renders of a stranger**, and every judgement the owner made was made against those.
+
+### What was done, and what it proves
+
+1. **Trained a personal model on 37 frames of his own 4K footage.** `app.heygen.com/avatar/design-look`
+   → **"Improve likeness with a personal model"** → **Train your personal model**. 60 credits,
+   ~12 minutes, minimum 10 images, 30+ scores "Great". Once trained the pill becomes a
+   **Personal model** toggle on the prompt bar and every look generation uses it.
+2. **NEVER train on the existing looks.** The picker offers the avatar's 6 looks pre-selected and 5 of
+   them are AI-generated pictures of a man who is not him. Training on those bakes the drift in.
+   Upload real frames and select only those.
+3. **Controlled A/B, and this is the part that makes the claim honest.** The same prompt, the same
+   lighting, run twice — personal model ON and personal model OFF. The sheet is committed at
+   `docs/blog-flagship/avatar/likeness-ab.png`: real him, then two model-ON renders, then two
+   model-OFF renders. Model-OFF regresses to a younger, slimmer man with a patchy beard. **The gain
+   is the training, not the prompt and not the flattering light.**
+
+### The five faults, named, because "make it more realistic" fixes nothing
+
+Judge every attempt against a native frame of `IMG_7153.MOV`, never against the last attempt. What
+the untrained looks got wrong, in the order they read as wrong:
+
+| his real face | what the generic look did |
+|---|---|
+| thick, straight, **dark brows sitting low** over the eye | thin, arched, lifted |
+| narrow **hooded** eyes, heavy upper lid | round and wide open |
+| receding hairline **with hair at the temples** | smooth shiny dome |
+| broad, heavy lower face | slimmed and lengthened |
+| dense beard with a **high cheek line** | thin, cheek line dropped |
+
+The personal model corrects all five. It still slightly narrows the jaw and slightly over-darkens the
+brows; that is the residual, and it is small enough that the renders read as the same man.
+
+### The training-set recipe (`scripts/_scratch-video/avatar/v2/extract.mjs`, gitignored)
+
+- **Three SITTING takes only** — `IMG_7153`, `IMG_7156`, `IMG_7239`. **Skip `IMG_7091`**: its face is
+  ~190px, so a 1024 crop is a 5x upscale and teaches the model softness.
+- **720px square crops at y=1731**, which is 120px *below* the face centre. That is deliberate: it
+  pushes the oil painting's bottom edge out of frame. A prop repeating in all 37 images is a
+  background the model can learn as part of him. Take C sits lower, so its box is y=1861.
+- 18 candidates per take → contact sheet → **cull by eye**: blinks, hands over the face, the black
+  folder, and anything looking down. ~11 keepers per take.
+- Plus **3 chest-up frames** so the model learns his build. The generic looks all slimmed him.
+- 37 total, ~1.5MB, JPEG q3 at 1024².
+
+### Driving the upload without opening a native file dialog
+
+The upload tile looks like a button but contains a **hidden `input[type=file]`**. Do not click the
+tile — that opens an OS picker that blocks the session. `find` the input, then `file_upload` against
+**the input's ref**. Uploads **append** across calls, so batch them (12/13/12 worked). Each uploaded
+frame also becomes a selectable **"Photo Avatar" look**, which is how a video can be rendered from a
+real photograph of him with zero identity drift.
+
+### THREE VIDEOS EXIST FOR HIM TO JUDGE. Same script, same 16:9, same voice. Only the PLATE differs.
+
+| | plate | file in `C:/Users/Levan/Downloads` |
+|---|---|---|
+| **V1** | a **real photograph** of him — his chair, his mint wall, his olive sweatshirt | `Realty LT - The Gap_1080p.mp4` |
+| **V2** | **personal-model**, medium: dim charcoal room, him right, cards in the empty wall left | `Realty LT - The Gap Built For_1080p.mp4` |
+| **V3** | the wide plate + the three fixes — **right rules, wrong crop** (read below) | `Realty LT_ The Gap Built For_1080p.mp4` (note the underscore) |
+
+Side by side: `docs/blog-flagship/avatar/v1-vs-v2.png`.
+
+**Nothing here is finished, and the reason is worth carrying: V2 has the right crop and the wrong
+rules; V3 has the right rules and the wrong crop.** They have never both been true in one render.
+
+**V1's verdict, and it is the useful one: the identity is perfect and the plate is wrong.** It is
+unarguably him, because it is a photograph. But his real footage is a *bright mint-green wall, flat
+webcam light, olive sweatshirt, shot portrait*, and the Video Agent's editorial style is near-black
+`#101014` with a Didone serif. Dropped into that frame it pillar-boxes into a tall strip and reads as
+a webcam pasted onto a magazine page. **The graphics and type in V1 are genuinely good — keep them.**
+It also printed the fabricated "$850,000 / 123 Maple Street, Austin".
+
+**V2 is the direction.** One dark room, one warm lamp, one amber accent, edge to edge. The cards sit
+in the empty wall beside him and never touch his body. The listing card is honest — *LIVE FROM THE
+MLS / MLS LISTING RETRIEVED* over a line-drawn house, no address and no price. The closing
+`RealtyLT.com/AI` in the Didone with the amber rule is the strongest frame in either cut.
+
+**V2's three remaining faults, which is what V3 fixes:**
+1. He is still ~65% of frame height, not the quarter that was asked for — **because the framing is a
+   property of the LOOK, not of the video prompt.** The Video Agent cannot make him smaller than the
+   plate. V3 regenerates the look wider.
+2. **Frame one carries no card**; the $6,000 arrives about 1.5s in. Frame one is the thumbnail and
+   the number is the reason anyone presses play — this repo's own ad rule, and V1 got it right.
+3. It invented a `REF: 2026-MLS-0802`, and it ends on black instead of holding the CTA.
+
+**How wide is too wide, measured:** a full-room wide plate put his face at ~4% of frame height —
+unreadable, which defeats the point of putting a real person on camera at all. The usable band is
+**him at a third to a half of frame height, face still readable**. Both plates are in
+`scripts/_scratch-video/avatar/v2/wide-cmp.png` and `med-cmp.png`.
+
+### V3: all three content fixes landed, and the framing went BACKWARDS
+
+Verified on the finished file, not on the plan:
+- ✅ **Frame one carries the card** — `TRANSACTION VERIFIED / $6,000 / 11:40 PM` at full opacity on
+  frame zero. That is the thumbnail fix.
+- ✅ **The CTA holds to the last frame.** No fade to black.
+- ✅ **Nothing is invented.** No address, no price, no reference number anywhere. The card sequence
+  (`Contact Form` → `LIVE FROM THE MLS` → `CALL BOOKED` → `9:00 AM AGENT NOTIFIED` →
+  `RealtyLT.com/AI`) actually dramatises the script beat by beat, which V2's did not.
+- ❌ **He got BIGGER, not smaller** — roughly 70% of frame height with his hands large in frame.
+  **The Video Agent cropped into the wide plate even though the instruction said "never crop into his
+  face, never zoom".** So the plate constrains the *maximum* width, and the agent still re-frames
+  inside it. That is the open problem.
+- ❌ The `LIVE FROM THE MLS` card has empty grey boxes in it that read as a loading skeleton.
+- ❌ It closes on praying hands. Off-brand; the wide plate exposed his hands and the model animated
+  them enthusiastically throughout.
+
+**The next pass is one render, not a new direction:** V3's instructions plus a plate that survives
+the agent's re-crop. Worth trying the `Edit a copy in AI Studio` route, where the avatar's size and
+position on the canvas are set by hand instead of being negotiated with the agent.
+
+### Three things the Video Agent gets wrong unless told
+
+1. **It invents listing data.** V1 printed **"$850,000 / 123 Maple Street, Austin"** — a fabricated
+   address in the wrong state, on a brand whose entire argument is that the details are checkable.
+   Forbid it explicitly: no address, no house number, no city, no price. The only numbers allowed on
+   screen are $6,000, 11:40 PM and 9:00 AM.
+2. **It obeys an explicit framing rule, and only an explicit one.** Told "presenter must remain small,
+   about a quarter of frame height, never filling the screen", it wrote exactly that into its own
+   plan. The owner's own mitigation is therefore free — just say it.
+3. **It renders quiet: −24.7 LUFS integrated.** Social wants −14 to −16. Normalise before anything
+   ships.
+
+### Cost, measured
+
+Creator plan, 600 credits/month, resets Sep 2. This round spent **85**: 60 model training, 5 look
+generations (2–3 each), 20 for a Video Agent video. 497 left at the time of writing. Digital Twin
+slots: 2 of 5 used.
+
+### Still true, still owed
+
+- **The reshoot is still the biggest single lever** and the recipe below is unchanged. The personal
+  model raised the floor; a chest-up take at 40% face would raise the ceiling.
+- **Identity verification is the owner's to do.** Three failed avatar generations still sit at the top
+  of `my-avatars`. Do not attempt the verification flow.
+- The three bad b-roll clips are still on production (see the footage-audit section below).
+
+---
+
+## THE ORIGINAL BRIEF (owner 2026-08-02) — kept because the sequence and the reshoot recipe still stand
+
+Still the `/blog` command. **Single agent, one long session, no subagents.**
+
+Build a **long-form video of the owner presenting the blog's own material** - graphics, b-roll,
+hooks, pattern changes to hold attention - for **AI chat assistant** and **AI voice agent**, then
+cut it into shorts. He has a **paid HeyGen subscription** (bought 2026-08-02) and wants the quality
+proven before committing to a full production run.
+
+### DO THESE IN ORDER. He was explicit about the sequence.
+
+1. **Get the avatar as close to the real him as you can** using the three likeness levers below.
+   Spend credits; he expects several attempts.
+2. **Then make ONE video for ONE service** (start with AI chat assistant), **in 2-3 versions, to
+   compare.** Not a batch. One service, a few treatments, judged side by side.
+3. **Polish it and try a few times.** He is explicit that this is iterative.
+4. **If it still is not close enough after a genuine effort, say so plainly and stop** - he will
+   shoot new footage, and the recipe for that shoot is at the end of this section. Do not burn the
+   whole session grinding a likeness that is not converging; a clear "this needs new footage, here
+   is what to shoot" is a better outcome than twenty mediocre renders.
+5. Only after he has judged the one video, scale to the rest.
+
+**And the mitigation he suggested, which is a good one and should be in every version:** keep his
+head SMALL in frame and let the graphics carry the screen. A smaller talking head hides avatar
+artifacts, and it is better information design regardless. If the likeness stays imperfect, a
+head-small treatment is the version most likely to ship.
+
+### THE AVATAR IS WEAK FOR A MEASURED REASON, AND IT IS NOT THE ACCOUNT TIER
+
+The source is `C:/Users/Levan/Downloads/IMG_7091.MOV`: **3840x2160, 30fps, 42s, portrait**
+(rotation -90). That is a 4K file, so "free account" and "low quality source" are both wrong
+diagnoses. Measured on the actual frames:
+
+- **His face is ~330px tall inside a 2160x3840 frame - about 8% of frame height.** It is a
+  FULL-BODY WIDE shot, standing, filmed from across the room. The file is 4K; the FACE never was.
+  This is the dominant cause and it dwarfs the others.
+- **A busy, high-contrast oil painting sits directly behind his head** - brown and ochre
+  architecture exactly where the model has to separate head from background. That is a matting
+  nightmare and produces edge artifacts.
+- **Flat ambient room light, no key.** The face has no modeling.
+- **He stands still, arms down, full body.** Almost no gesture for the model to learn.
+
+**He then shot two better takes**, and the current avatar is built from them. All three measured
+from the frames, identical native crops in `scripts/_scratch-video/avatar/heads.png`:
+
+| file | shot | face in frame | detail | behind his head |
+|---|---|---|---|---|
+| `IMG_7091.MOV` | standing, full body | ~5% | soft | **the oil painting** |
+| **`IMG_7153.MOV`** | **sitting, medium** | **~8%, largest** | **crisp** | **plain wall** |
+| `IMG_7239.MOV` | sitting, medium | ~7% | crisp | painting, chair wing beside head |
+
+`IMG_7153` is the best source of the three and is what the current avatar should be using. The two
+real gains over 7091 are sharpness and a clean background behind the head, not size.
+
+**THE RESHOOT RECIPE, if the tweaks do not converge.** All three takes are still MEDIUM shots at
+~8% face; the target is 40%+. This is 90 seconds of work and is the largest remaining lever, bigger
+than any plan tier or setting:
+
+- Sit, phone at **eye level** on a tripod or a stack of books, **arm's length to ~1.2m** away.
+  Chest-up, top of head near the top of frame.
+- **Plain wall behind the head only.** No painting, no chair wing. A plain stool against the teal
+  wall is ideal.
+- **Face a window**, or a lamp slightly off to one side at face height. The side light is what
+  gives the face shape - all three existing takes are flat ambient, which is why he looks washed.
+- **Talk naturally with normal hand gestures for ~90 seconds.** He is very still in all three
+  takes, and gesture is what the model learns.
+- 4K, 30fps.
+
+### THE AVATAR WAS REGENERATED FROM BETTER FOOTAGE AND IS STILL NOT HIM
+
+**Owner's verdict 2026-08-02: "I regenerated, it's still far, but maybe with some tweaks it can
+work."** So this is the job: **spend the tweaks, make ONE video, polish it, try a few times. If it
+still is not close enough, he will shoot new footage.** He has credits; use them. He is fine with
+several attempts, and he will judge.
+
+**There are now TWO avatars, both called "Levan Tsiklauri". Use the SITTING one.**
+
+| avatar | id | built from | thumbnail |
+|---|---|---|---|
+| **NEW, use this** | `87f6dc9a26684cf1bca69d6a3dd40a9c` | the sitting take (IMG_7153 / IMG_7239) | him in the leather chair |
+| old, ignore | `0956f43471c14b24a68d8ca9a3a4da0c` | IMG_7091, full-body standing | him standing |
+
+Both have 6 looks. The new one is built on measurably better source (see the footage comparison
+above): sharper face, and crucially a **plain wall behind his head instead of the oil painting**.
+
+### THE THREE LIKENESS LEVERS, found on the Design-with-AI screen
+
+`app.heygen.com/avatar/design-look` (reached via an avatar -> **Design with AI**) is the "chat frame
+by frame edit / edit a person" surface the owner meant. It has three things worth spending credits
+on, in this order:
+
+1. **"Improve likeness with a personal model"** - a button on the prompt bar, and the most direct
+   lever there is. Try this FIRST, before any prompt wording.
+2. **"References"** - attach reference images. Feed it real stills of him. Pull clean frames
+   straight out of the source with ffmpeg rather than hunting for photos; `IMG_7153.MOV` at t=15
+   with `crop=700:700:764:1641` is a good head crop, and `scripts/_scratch-video/avatar/heads.png`
+   already holds a three-way comparison.
+3. **The chat box** ("Describe the edits you'd like to make to this look") - plain-language
+   correction of what is off. Be specific about what is wrong rather than asking for "more
+   realistic": beard shape, hairline, face width, skin tone.
+
+Also on that screen: **Remix this look**, **Recent creations**, and Look Packs (Studio Streamer,
+Coastal Linen, Cool Tech / Slate). A device/aspect selector sits beside the prompt.
+
+**Judge each attempt against the REAL him, not against the last attempt.** The reference is
+`IMG_7153.MOV`; build a side-by-side of the render against a native frame from it before deciding
+anything. Drifting toward a nicer-looking stranger is the failure mode.
+
+### HEYGEN STATE, as actually inspected 2026-08-02
+
+- Logged in, Chrome. Avatars at `app.heygen.com/avatar/my-avatars`.
+- **His voice is ALREADY CLONED in HeyGen**: voice "Levan Tsiklauri", tagged *From Avatar,
+  ElevenLabs, Multilingual, Male*. So HeyGen pulled the voice off the avatar video by itself, and
+  it is ElevenLabs underneath. Two others exist: "New Recording 2.m4a" and "Custom voice - Voice 1".
+- **There is an "Import from 3rd party" button on the Voices page.** If HeyGen's auto-clone is worse
+  than the known-good ElevenLabs clone (`LT`, id `7AxhG2AEa5XhwSrAudqY`), import that instead. **A/B
+  the two voices as one of the comparison axes** - the owner has said the LT voice is the best part
+  of the existing films, so keep that variable controlled.
+- **THREE FAILED avatar generations** are sitting at the top of the list, all named
+  `6067c5df5ccc46899ff2605107dca61f`, with three different causes: identity mismatch ("Reset"),
+  identity not verified ("Verify identity"), and a Google Drive share-permission failure.
+
+**IDENTITY VERIFICATION IS THE OWNER'S TO DO, NOT THE AGENT'S.** Two of those failures need a
+consent/identity check that proves the person in the footage is the account holder. Do not attempt
+it, do not upload footage on his behalf to clear it, and do not click through a verification flow.
+Surface it and ask him to complete it. Same for any purchase or plan change.
+
+### WHAT THE RESEARCH SAYS TO BUILD, so this is not re-derived
+
+Full detail in `[[research-video-hooks-that-convert]]`; the operative parts:
+
+- **Do NOT shoot long and slice it into shorts.** A slice has a middle, not a hook. Hook changes
+  swing performance **50-200%**; body edits move 20-30%. Shorts and long-form are different
+  audiences at roughly **11% crossover**. **Shoot atomic units, each written with its own hook, and
+  assemble the long video FROM them.** Same effort, far better shorts.
+- **Length:** completion is 74% at 7-15s, 49% at 30-60s, **46% past 60s**. The long video is its own
+  product; the shorts must be genuinely short.
+- **Open on a checkable number the page underneath can defend.** No greeting, no warm-up.
+- **AI-looking footage is now a liability**, not a saving - brands have pulled campaigns and real
+  estate has started disclosing AI use. That is the whole argument for putting him on camera, and
+  it also means the generated b-roll must stay subordinate and audited.
+- **Charts are the safest and strongest visual asset we own.** StatBars, Diagram, Conversation and
+  Timeline already exist on the blog and were designed from day one to be chopped into video. Prefer
+  them over generated b-roll. Zero slop risk, maximum credibility.
+- **Mitigation he suggested and it is a good one:** keep his head small in frame and let the
+  graphics carry the screen. A smaller talking head hides avatar artifacts and is also better
+  information design.
+
+### THE SCRIPT THAT IS ALREADY WRITTEN AND APPROVED IN SHAPE
+
+Use this as unit 1 / the quality test. Paste EXACTLY - no stage directions, no brackets, HeyGen
+reads the text field literally, and the URL must be spelled phonetically or TTS mangles it:
+
+> Last night a six thousand dollar lead messaged a real estate website at eleven forty at night.
+> Real question, real listing. Most sites answer that with a contact form. This one answered the
+> question, pulled live listings from the MLS, said plainly what it could not confirm, and booked
+> the call before morning. The agent found out at nine. That is the gap I build for. Realty L T dot
+> com, slash A I.
+
+The other units come from the two posts' own scene copy in
+`content/blog/ai-chat-scenes.ts` and the voice post's content file - the numbers there are already
+sourced and defensible, which is the standard ($6,000 is the LeadsCalculator's own default).
+
+### WHAT TO JUDGE WHEN THE FIRST RENDER LANDS
+
+Not "does it look like him". Look for the things that make people bounce, in this order:
+1. **Lip sync on the numbers** - "six thousand" and "eleven forty" are where sync slips, and they
+   are the two words the hook rests on.
+2. **Blink rate and hands.** No blinking or one frozen gesture reads uncanny within ~4 seconds,
+   which is inside the window that decides reach.
+3. **The first two seconds specifically** - ~80% of completion variance.
+4. **Watch it on a phone with sound off**, because 85% of feed video plays muted.
+
+### THE THREE BAD CLIPS ARE STILL ON PRODUCTION
+
+Unrelated to the avatar work but owed: `shot10-laptop-close`, `shot11-old-records` and
+`shot12-typing-notes` failed the footage audit (see the section below) and are cut into the live
+workflow and reactivation films. Either replace them or pull them back to the previous clips.
+`node scripts/film/audit-footage.mjs` builds the sheets; READ them before any clip enters a cut.
+
 ## THE FILMS ROUND IS DONE (2026-08-01, session 12). What is left is below.
 
 Three of the four asks are shipped and verified on the finished files. The fourth, the research
 question, is answered as a decision rather than a document. **The one thing still owed to the
 owner is that he LISTENS to a film** - see the honesty note at the end of this section.
+
+### 0. THE FOOTAGE AUDIT, and the three clips that failed it
+
+The owner watched the films and caught what no check in this repo could: in `shot10-laptop-close`
+a laptop closes **backwards**, with a **second laptop** on the same table. On audit it was worse -
+the laptop is **silver in frame one and space-grey a second later**. `node
+scripts/film/audit-footage.mjs` now builds a 12-frame contact sheet per clip into
+`docs/blog-flagship/footage-audit/`. It deliberately judges nothing; there is no measurement that
+replaces looking, so its only job is to make looking fast.
+
+| clip | verdict |
+|---|---|
+| `shot8-porch-callback` | **GOOD** - clean throughout, real arc (worried, then smiles at ~6.5s) |
+| `shot9-desk-callback` | OK |
+| `shot10-laptop-close` | **BAD** - identity drift, duplicate prop, lid backwards |
+| `shot11-old-records` | **BAD** - hard cut to an unrelated scene at ~7.5s, hallucinated tab text ("MISSY", "OAKBERY") |
+| `shot12-typing-notes` | **BAD** - keyboard melts into nonsense keys, a red nail appears mid-shot |
+| `shot13-three-folders` | OK **only** 0.3-5.6s; three folders become one after 7.5s |
+
+**The failure taxonomy, all five found in one batch of six:** identity drift, duplicate props,
+hallucinated text (despite "no text" in the prompt), a cut inside the clip, and melted mechanisms.
+Prompt against these, not just for the subject: no keyboards or screens in frame, ONE hero object,
+a single continuous action. And record a clip's SAFE RANGE in the ledger, not just its filename.
 
 ### 1. The sameness is fixed. `keys-porch` no longer closes every film.
 

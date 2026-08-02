@@ -16,8 +16,12 @@ export const SITE = {
   phoneE164: "+19179057923",
   email: "levan@realtylt.com",
   disclaimer: "Each office is independently owned and operated.",
-  fairHousingPdf:
-    "https://dos.ny.gov/system/files/documents/2025/04/fairhousingnotice.pdf",
+  /** The STABLE landing path, not a dated file path. The old link
+   *  (`/system/files/documents/2025/04/fairhousingnotice.pdf`) 404'd on 2026-08-02: NY DOS moved
+   *  the file and renamed it the "Housing and Anti-Discrimination Notice" (02.2025). This path
+   *  redirects to whatever the current file is, so a rename cannot break a required disclosure
+   *  again. Note dos.ny.gov 403s every scripted request — check this one in a real browser. */
+  fairHousingPdf: "https://dos.ny.gov/fair-housing-notice",
 } as const;
 
 export const COUNTIES = [

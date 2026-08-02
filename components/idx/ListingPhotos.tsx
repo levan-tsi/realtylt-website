@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { bandShape, sideSources, survivingPhotos, viewAllLabel } from "@/lib/idx/photo-band";
+import { bandShape, heroAt, sideSources, survivingPhotos, viewAllLabel } from "@/lib/idx/photo-band";
 import { FavoriteButton } from "./FavoriteButton";
 import { isLiveMlsPhoto, NoPhoto } from "./ListingCard";
 import { ListingGallery } from "./ListingGallery";
@@ -91,25 +91,26 @@ export function ListingPhotos({
   // disturbing anything else. Anchoring matters: if the side slots followed the promoting hero,
   // every dead cover would drag three fresh photos into the band and multiply the request cost on
   // exactly the listings that are already failing.
-  const sideCandidates = useMemo(() => {
-    const anchorSrc = photos[Math.min(Math.max(anchor, 0), photos.length - 1)];
-    if (!anchorSrc) return [];
-    const next = sideSources(photos, anchorSrc, dead);
-    return exhausted ? next.filter((s) => attempted.includes(s)) : next;
-  }, [photos, anchor, dead, exhausted, attempted]);
-
-  // Hero and side slots PARTITION the photos: the hero promotes past a dead cover into a photo the
-  // column is not already showing, so no photo is ever loaded twice (a side being pulled into the
-  // hero would restart its retry ladder from scratch and double the request cost of a broken
-  // gallery). Only when nothing else survives does the hero take the column's first tile.
+  // THE HERO IS THE PHOTO AT THE ANCHOR (heroAt promotes past dead ones), AND THE COLUMN FOLLOWS
+  // IT — so an arrow press moves the whole band as one.
+  //
+  // It used to pick the hero as "the first surviving photo NOT in the side column", which is only
+  // the same thing while the anchor is 0. Press Next once and the column advanced to photos 2-4,
+  // photo 0 stopped being "in the column", and the hero snapped straight back to it; press again
+  // and the arrow computed the identical anchor, so the band froze. The owner reported exactly
+  // that — "it only moves once and does not do anything, or going back" — and it measured as
+  // hero 0 → 0 → 0 → 0 on a 31-photo listing, with Back oscillating between two states.
+  // lib/idx/photo-band.test.ts now walks the arrows so this cannot come back silently.
+  //
+  // Hero and side slots still PARTITION the photos (sideSources starts AFTER the hero), so no
+  // photo is loaded twice — a side pulled into the hero would restart its retry ladder and double
+  // the request cost of a broken gallery.
   const { heroSrc, sides } = useMemo(() => {
-    const outside = pool.find((p) => !sideCandidates.includes(p));
-    if (outside) return { heroSrc: outside, sides: sideCandidates };
-    const first = sideCandidates.find((s) => pool.includes(s));
-    return first
-      ? { heroSrc: first, sides: sideCandidates.filter((s) => s !== first) }
-      : { heroSrc: undefined as string | undefined, sides: [] as string[] };
-  }, [pool, sideCandidates]);
+    const hero = heroAt(photos, anchor, pool);
+    if (!hero) return { heroSrc: undefined as string | undefined, sides: [] as string[] };
+    const next = sideSources(photos, hero, dead);
+    return { heroSrc: hero, sides: (exhausted ? next.filter((s) => attempted.includes(s)) : next).filter((s) => s !== hero) };
+  }, [photos, anchor, pool, dead, exhausted, attempted]);
   const hero = Math.max(0, available.indexOf(heroSrc ?? ""));
 
   // The band's chrome — arrows, view-mode buttons, the "view all" pill, the whole-tile lightbox
@@ -152,6 +153,21 @@ export function ListingPhotos({
       setAnchor(Math.max(0, photos.indexOf(next)));
     },
     [available, heroSrc, photos],
+  );
+
+  // WHILE ONE OF THESE ARROWS HAS FOCUS, ← / → BELONG TO THE PHOTOS. The listing page also has a
+  // previous/next LISTING pager listening on the window for those keys, and after clicking a photo
+  // arrow the focus is sitting right here — so pressing → would have jumped to another home while
+  // the visitor was plainly looking at pictures. preventDefault is what the pager's own guard
+  // reads (it bails on an already-defaulted event), so the ownership rule lives with the control
+  // that owns the arrows rather than as a special case over in the pager.
+  const arrowKeys = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      go(e.key === "ArrowLeft" ? -1 : 1);
+    },
+    [go],
   );
 
   // key={src} is load-bearing: when the hero promotes past a dead photo React would otherwise reuse
@@ -227,12 +243,12 @@ export function ListingPhotos({
               there is nothing to page to. */}
           {heroReady && count > 1 && (
             <>
-              <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
+              <button type="button" onClick={() => go(-1)} onKeyDown={arrowKeys} aria-label="Previous photo" className={`${arrowBtn} left-4`}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m15 6-6 6 6 6" />
                 </svg>
               </button>
-              <button type="button" onClick={() => go(1)} aria-label="Next photo" className={`${arrowBtn} right-4`}>
+              <button type="button" onClick={() => go(1)} onKeyDown={arrowKeys} aria-label="Next photo" className={`${arrowBtn} right-4`}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="m9 6 6 6-6 6" />
                 </svg>

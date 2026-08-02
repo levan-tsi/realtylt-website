@@ -1,90 +1,115 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 18 BRIEF — set 2026-08-02 late. Single agent, no subagents.
+## ═══ ROUND 19 BRIEF — set 2026-08-02 late (round 18 COMPLETE). Single agent, no subagents.
 ##
-## ── ROUND 17 ANSWERED THE OWNER'S "WHY ONLY ONE PICTURE" AND IT WAS US ───────────────
-## He asked whether Pending listings with one photo meant OneKey removed them. NO — WE were
-## discarding them. 84% of Pending rows (8,402 of 10,043) served exactly ONE photo; sampled
-## eight against the feed and seven hold 7/14/16/25/29/35/38. Cause: change detection compared
-## photosMirroredTs to ModificationTimestamp, so ANY edit — a price cut, a status flip — reset
-## the mirror to 0, and the covers-first budget then re-mirrored only the cover. Listings that
-## churn (Pending) were reset faster than they could fill. Now keyed on the photo COUNT, with a
-## fallback to the old test for rows predating it. MIRROR_PHOTO_BUDGET 600 -> 1200.
-## GALLERIES REFILL GRADUALLY as listings re-sync — this is NOT instant, and the next round
-## should re-measure: `node scripts/_scratch-r17-onephoto.mjs` (expect the 84% to fall).
-## THE MEDIA HOST IS SERVING AGAIN (6/6 sampled), so the backfill is now possible:
-## `node scripts/backfill-photos.mjs` — read its header, the full pass is OWNER-GATED.
+## FIRST ACTION: read docs/parity/DESIGN-ROUND18.md. It carries every number below with the
+## evidence, plus before/after renders in docs/design-r18/. This block is the running order.
 ##
-## ── PHOTO STORAGE IS *NOT* A CONSTRAINT. DO NOT CAP IT. ─────────────────────────────
-## I got this wrong mid-round and the owner caught it; the corrected numbers are below, so
-## nobody re-litigates it. The Supabase plan includes 250 GB and charges $0.03/GB after.
-##   today                              ~120 GB   -> $0.00/mo overage
-##   ceiling if EVERY listing fills     ~194 GB   -> $0.00/mo
-##   that ceiling +25% headroom         ~242 GB   -> $0.00/mo
-## The earlier "cap 50 = 391GB" figure was WRONG: it assumed every listing reaches the 50-photo
-## cap. It does not — listings that finished mirroring average 24.9 photos (n=12,000). Capping
-## would save $0.00 and cost photo depth, which is a selling feature. LEAVE MIRROR_PHOTO_CAP
-## AT 50. Deleting the 2,570 off-market folders would reclaim 5.7 GB = $0.17/mo — not worth
-## touching data for.
-## THE LESSON: check the plan's actual limits and price before calling anything a constraint.
-## Measured facts still worth knowing: NOTHING in this codebase ever deletes a storage object
-## (verified by grep — the only DELETEs are throwaway probes), so off-market listings keep
-## their photos; the bucket holds 28,251 listing folders, 25,681 active + 2,570 off-market,
-## 0 fully orphaned; live folders average 15.7 objects today against a 24.9 full depth, which
-## is simply the refill still in progress.
-## One thing that IS true and still matters: if anyone ever does lower MIRROR_PHOTO_CAP, read
-## planRange first — a shorter cap makes it report a SHORTER prefix, which strips photos off
-## listings that currently show them unless the objects above the cap are deleted too.
+## ── HIS PHOTO QUESTION IS ANSWERED, AND ONE DECISION IS WAITING ON HIM ───────────────
+## Round 17 fixed change detection and expected the one-photo share to fall. IT DID NOT MOVE:
+## 8,400 of 10,045 Pending rows (84%) still serve exactly one photo, against 8,402 of 10,043
+## last round. THE FIX IS FINE ANYWAY — I split the two explanations apart by looking only at
+## rows the cron has TOUCHED since it shipped:
+##     last 24h (1,318 rows)          6% one-photo    69% at 5+ photos
+##     last 24h, Pending only (45)    13% one-photo   80% at 5+
+## So the 84% is pure BACKLOG. A listing only re-mirrors when the feed touches it again, and
+## that is ~1,300 rows a day against 27,605 active — about three weeks to clear on its own.
+## (Also confirmed the fix is really deployed: essentially every row written since 2026-08-02
+## ~06:00 UTC carries photosMirroredCount. The 7,705 written at 00:00 UTC predate it.)
 ##
-## ── ALSO SHIPPED THIS ROUND (all owner-asked) ────────────────────────────────────────
-## · ACTIVE / PENDING quick filters beside All + New. Verified every row obeys: Active 6,763,
-##   Pending 4,775, SSR count agrees with the API for both.
-## · MAP HOVER PREVIEWS + press-to-pin, and PENDING is now visible (solid = for sale, hollow =
-##   spoken for, with a legend). Four wrong answers on the way — read the commit, especially:
-##   overlay.draw() rebuilds every chip on each map idle, so per-chip mouseleave CANNOT be
-##   trusted and a `click` can be swallowed between press and release.
-## · HOME RAILS no longer show Coming Soon with no picture (was 7 of 8). A rail now requires a
-##   photograph, on-market-today, and not Coming Soon.
-## · PRICE SPREAD across rails + the "mixed" search order (lib/idx/price-spread.ts). /search
-##   page 1 went from one price band in the first four cards to four.
-## · The COMING SOON artwork is a typographic panel now, not a generated house. His own
-##   original is RETAINED in the repo (public/images/mls/coming-soon.webp) — he may want it.
+## THE BACKFILL IS THE ONLY LEVER THAT CLEARS IT, AND IT WORKS RIGHT NOW. I ran a deliberately
+## small live slice (1 page, 6 listings, cap 12): 72 photos fetched, 72 downloaded, ZERO
+## failures. The media host is serving. The full job, measured:
+##     13,382 listings hold fewer photos than the feed has
+##     271,141 photos missing   ·   8,077 of those listings are Pending   ·   ~68 GB
+## 68 GB lands near the ~194 GB "every listing full" ceiling that round 17 already priced at
+## $0/mo overage, so storage is STILL not a constraint. Roughly half a day of downloading.
+##   >>> ASK HIM, THEN RUN IT: node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
+##   >>> It is resumable (scripts/.photo-backfill-watermark.local); --fresh restarts.
+## This is the single biggest visible-quality item left on the site. Everything else is polish.
 ##
-## ── THE NEXT ROUND'S HEADLINE: A SIGNATURE MOMENT ON THE HOME PAGE ──────────────────
-## Owner, 2026-08-02: "can we make something cool on that first page like 3d transition with
-## mouse … we have really cool ai page why cant we make something cool there too and keep
-## luxury feeling."
-## THE BRIEF, and the trap to avoid: /ai can be abstract because it sells a CAPABILITY. The
-## home page sells HOMES, so an abstract particle field there is decoration, and decoration on
-## a luxury page reads as vibe-coded. The signature must be made of something only RealtyLT
-## has. RECOMMENDED (see DESIGN-ROUND16.md for the taste rules that bind it):
-##   THE VALLEY, DRAWN FROM OUR OWN INVENTORY. A dark, quiet map of the Hudson Valley where
-##   every active listing is a point of light — 11,609 of them, and we already hold lat/lng for
-##   each. Mouse moves, the field parallaxes with real depth; the nearest lights brighten and
-##   one resolves into a price and a town. It says "we cover this whole valley" with evidence
-##   rather than a claim, it cannot be copied by a competitor because it IS our data, and it
-##   stays dark and restrained. Reuse the /ai page's rendering discipline, NOT its look.
-##   Cheaper alternatives if that is too much: depth-parallax on the existing hero photograph
-##   (mouse shifts sky/ridge/foreground as separate planes), or the hero cross-fading through
-##   one home's photographs as the pointer travels.
-## HARD CONSTRAINTS: LCP is the hero IMAGE (measured, ~1.5s dev) — never fade it, only
-## transform. Reduced-motion and JS-off must land the finished hero. No purple/gradient/neon
-## (design-anti-ai-slop-palette). Mobile gets a still, like the video does today.
+## ── ROUND 18 SHIPPED THREE OF HIS FOUR, ALL VERIFIED IN A REAL BROWSER ───────────────
+## 1. MAP POPUP NOW SHOWS THE STATUS BADGE. Same treatment as the card (solid ink, 8px, 10px
+##    bold uppercase), placed bottom-LEFT because both top corners of a popup are controls;
+##    it pairs with the photo counter. Hovered a real Pending chip to prove it; an Active chip
+##    beside it renders none.
+## 2. COMING-SOON PANEL REDRAWN. Rendered at the crops it actually gets FIRST, and the old one
+##    was breaking: the inset hairline frame was cropped down to two stray rules on every card
+##    (object-cover scales a near-square card by HEIGHT and throws the sides away), the type
+##    collapsed to ~10px, and the aperture glyph was the loudest thing on it. Frame and glyph
+##    GONE — two elements removed, none added, as he asked. Square viewBox + a safe area that
+##    survives every crop, and the phrase set on two lines so a 300px card renders ~19px.
+##    His original gothic-mansion raster is still in the repo, untouched.
+## 3. PREVIOUS / NEXT HOME. Only appears when the listing on screen is in the result set the
+##    visitor was actually browsing (written to sessionStorage by SearchClient); a cold Google
+##    visitor sees nothing. Lives on the BREADCRUMB row — the sticky sub-nav was built first
+##    and measured: its Offer/Share/Save group is 281px of a 320px screen, so the pager pushed
+##    the document 88px past the viewport at 320. Arrow keys work too, guarded so the photo
+##    lightbox keeps its own ← / → (proven both ways).
+## 4. HIS CMA ITEM IS STILL NOT DONE and cannot be done from this repo — see below.
 ##
-## ── OFF-MARKET PHOTO CLEANUP IS LIVE (shipped 2026-08-02) ────────────────────────────
-## The hourly sync now deletes photos for homes that left the market, 60 listings a run, and
-## CLEARS THE JSONB MIRROR MARKER as it goes — without that, a returning listing resumes at
-## index 30, downloads nothing and shows zero photos for ever. Backlog was 2,570 folders
-## (~5.7GB), so it clears in about two days. Watch `cleanup` in the cron's JSON summary.
+## PLUS one defect nobody had reported: /search pushed the document 22px sideways AT 320,
+## because round 17 grew the quick-filter group to four buttons and the row could not wrap.
+##
+## ── WHAT I CHASED AND DELIBERATELY DID NOT CHANGE (do not re-discover these) ─────────
+## · A "dark circle covering a control" at 320 is NEXTJS-PORTAL, the dev-mode indicator. It
+##   does not exist in production. The real chat launcher covers no interactive element at
+##   1440 / 390 / 320.
+## · PAGE 1 OF A `mixed` SEARCH SHOWS 31 CARDS where every other page shows 36. This is
+##   CORRECT. Verified independently: all 283 listings served across the 8 pages, zero
+##   duplicates, zero missing against a sort=newest reference. The daily ring rotation moves
+##   whole pages, so the set's short tail page lands somewhere other than last. I considered
+##   pinning the tail to always-last and rejected it — rotation only decides which page NUMBER
+##   a fixed group of 36 appears as, so pinning would permanently deny those ~31 listings any
+##   front-page turn, to avoid a ragged row about one day in eight. A wash, in the exact code
+##   that once served four results on page 2.
+##
+## ── STILL HIS CALL, BOTH CARRIED ─────────────────────────────────────────────────────
+## · THE HERO LAB is built and untouched this round, because he asked to judge it first:
+##     git checkout hero-lab  →  dev server  →  /lab/hero      (git checkout main to return)
+##   LOCAL BRANCH ONLY, never pushed; main still plays the Vimeo clip. docs/parity/HERO-LAB.md
+##   on that branch has the three variants and the honest weakness of each. My recommendation
+##   is still B, "The Valley" — 6,000 real listings at their real coordinates as points of
+##   light, the only one that could not exist on a competitor's site. Screenshots undersell
+##   two of them; they need a mouse moving.
+## · THE COMING-SOON ORIGINAL (public/images/mls/coming-soon.webp) — keep or delete.
+##
+## ── THE CMA ENUMERATION: THREE ORDERED STEPS, AND STEP 2 IS IN ANOTHER REPO ──────────
+## Unchanged and still needed. Anon can enumerate all THREE tables, not one: cma_reports,
+## cma_report_comps, mls_listings. The order is the whole point — dropping the policy first
+## breaks his live CMA page:
+##   1. Supabase: add get_published_cma_report(report_id uuid) SECURITY DEFINER returning the
+##      report WITH its comps (mirrors get_active_market_report, which fixed the identical
+##      market_reports flaw).
+##   2. CRM repo (~/realtylt-crm): point apps/web/lib/data/cma-public.ts::getPublishedCmaReport
+##      at that RPC. It is the ONLY anon consumer.
+##   3. Supabase: only then drop cma_reports_public_select AND the anon policies on
+##      cma_report_comps and mls_listings.
+## Not done because step 2 lands in a repo another session owns and steps 1/3 straddle a CRM
+## deploy. The OTHER audit item needs no pairing: 57 raw media.mlsgrid.com URLs are anon-
+## readable (all already expired) — store /api/media proxy paths in listing.photos. Wants its
+## own round; it touches the rate-sensitive sync path.
 ##
 ## ── FIRST ACTIONS NEXT ROUND ─────────────────────────────────────────────────────────
-## 1. `node scripts/_scratch-r16-debt.mjs` — if "modified in last 24h" is 0 the feed is frozen
-##    again; that is the whole health of the site in one number.
-## 2. `node scripts/_scratch-r17-onephoto.mjs` — is the one-photo share actually falling?
-## 3. SHOW HIM THE RAILS. The home page is ISR-cached for 600s, so rail changes do NOT appear
-##    immediately after a deploy — I chased that for a while before spotting it.
-## 4. Still HIS decisions, both carried: the hero photograph (DESIGN-ROUND16.md §3) and
-##    whether to keep the retired coming-soon artwork.
+## 1. node scripts/_scratch-r16-debt.mjs — if "modified in last 24h" is 0 the feed is frozen
+##    again; that is the whole health of the site in one number. (It was 1,319 today.)
+## 2. node scripts/_scratch-r17-onephoto.mjs — and read the section above BEFORE concluding
+##    anything from the 84%: the number only falls when the backfill runs.
+## 3. Ask him about the backfill, the hero lab, and the retired coming-soon artwork.
+## 4. The home page is ISR-cached for 600s, so rail changes do NOT appear straight after a
+##    deploy — that cost me time in round 17.
+##
+## ── GATES (unchanged, and they all passed this round) ────────────────────────────────
+## tsc clean · 625 tests pass (baseline was 476; never go below) · 0 horizontal overflow at
+## 1440/390/320 across home, search, buying, selling, connect, financing, top-areas, listing ·
+## no JS errors, no 4xx/5xx · JS-off still renders the listing page (200, h1 and breadcrumb
+## present, pager correctly absent — it is a progressive enhancement) · focus-visible ring
+## measured 2px #102C54, tap targets 28px.
+##
+## LAUNCH IS STILL GATED. The site is noindex on purpose. In this order, and only when he
+## says: clear NEXT_PUBLIC_SITE_URL in Vercel (every canonical and all 58 sitemap entries
+## currently point at the temp vercel.app host), point the realtylt.com apex here, then remove
+## PRELAUNCH=1. Do not remove the noindex yourself.
 ##
 ##
 ## ═══ ROUND 17 BRIEF (COMPLETE — kept for the reasoning) — set 2026-08-02.
