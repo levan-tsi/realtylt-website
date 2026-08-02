@@ -50,7 +50,36 @@
 ## · The COMING SOON artwork is a typographic panel now, not a generated house. His own
 ##   original is RETAINED in the repo (public/images/mls/coming-soon.webp) — he may want it.
 ##
-## ── THE NEXT ROUND'S HEADLINE: A SIGNATURE MOMENT ON THE HOME PAGE ──────────────────
+## ── START HERE: THE HERO LAB IS BUILT AND WAITING ON HIS EYES ───────────────────────
+## Owner set the order 2026-08-02: DNS ON HOLD (do not touch the launch switches), KEEP THE
+## VIMEO CLIP for now, and judge three prototype heroes before anything ships.
+##   git checkout hero-lab   →  dev server  →  /lab/hero      (git checkout main to return)
+## LOCAL BRANCH ONLY, deliberately never pushed — main is untouched and the live hero still
+## plays the Vimeo clip. Read docs/parity/HERO-LAB.md on that branch: three variants (Depth /
+## The Valley / Traverse), the argument for each, the honest weakness of each, and the costs.
+## Screenshots undersell two of them — they only make sense with a mouse moving.
+## MY RECOMMENDATION IS B, "The Valley": 6,000 real listings at their real coordinates as
+## points of light. It is the only one that could not exist on a competitor's site.
+## HIS CALL. If he likes one, harden it and merge; if not, keep iterating or keep the Vimeo.
+##
+## ── THE CRM PAIRING HE ASKED ABOUT: STILL NEEDED, NOT DONE, NEEDS HIS GO-AHEAD ──────
+## Re-verified with the ANON key 2026-08-02: an anonymous caller CAN still enumerate every
+## published CMA (1 row today, prepared_for "Mary Johnson"), and get_published_cma_report()
+## does NOT exist (RPC 404s). Three steps, and the ORDER is the whole point — dropping the
+## policy first breaks his live CMA page:
+##   1. Supabase: add get_published_cma_report(report_id uuid) SECURITY DEFINER (mirrors
+##      get_active_market_report, which is how the identical market_reports flaw was fixed).
+##   2. CRM repo (~/realtylt-crm): point apps/web/lib/data/cma-public.ts::getPublishedCmaReport
+##      at that RPC. It is the ONLY anon consumer — checked every other reader; lib/data/cma.ts
+##      and lead-engagement.ts run as a signed-in agent and are unaffected.
+##   3. Supabase: only then drop policy cma_reports_public_select.
+## Not done because step 2 lands in a repo another session owns (branch fix/brivity-parity) and
+## steps 1/3 straddle a CRM deploy. Full write-up in docs/parity/HERO-LAB.md.
+## The OTHER audit item needs no CRM pairing: 57 raw media.mlsgrid.com URLs are anon-readable
+## (all 57 already expired). Website-side fix — store /api/media proxy paths in listing.photos.
+## Wants its own round; it touches the rate-sensitive sync path.
+##
+## ── THE ORIGINAL DESIGN BRIEF FOR THE SIGNATURE (kept — it is what the lab answers) ──
 ## Owner, 2026-08-02: "can we make something cool on that first page like 3d transition with
 ## mouse … we have really cool ai page why cant we make something cool there too and keep
 ## luxury feeling."
