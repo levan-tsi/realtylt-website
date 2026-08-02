@@ -1,54 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Photograph coming soon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Photograph coming soon">
   <!--
     The placeholder a listing shows before its photographs have mirrored.
 
-    WHAT THIS REPLACES, and why it is not another picture: a raster of a gothic mansion at
-    night, under fog and a full moon, with "Coming Soon" in glowing gold script. The owner:
-    "we need better coming soon pic, quality is low and in general dont like what we have now."
-    Both complaints have the same answer. It was low resolution because it was a 1200px raster
-    filling 2x retina cards, and it looked wrong because it was a FAKE HOUSE — a generated
-    image pretending to be a property, on a site that is otherwise calm, monochrome and
-    restrained. Replacing it with a better fake house would have kept the second problem.
+    THE DIRECTION (settled, and endorsed by the owner): no house. The panel this replaced was a
+    generated gothic mansion — a FAKE PROPERTY standing in for a real one, on a site that is
+    otherwise calm and monochrome. A better fake house would have kept that problem. So this is
+    a typographic panel in the site's own palette and display face: it cannot be mistaken for
+    the actual home, it cannot read as generated, and it is resolution-independent.
 
-    So there is no house. This is a typographic panel in the site's own palette and display
-    face: it cannot look generated, it cannot be mistaken for the actual property, it is
-    resolution-independent, and it weighs about 1KB instead of 50. Restraint is the luxury
-    signal the rest of the site already runs on.
+    WHAT CHANGED IN ROUND 18, and it was measured rather than preferred. The owner: "photo
+    coming soon needs work, keep something minimalistic." Rendered at the crops it actually
+    gets — NoPhoto uses object-cover — the previous drawing was breaking:
 
-    Palette and type are the site's own tokens, hard-coded because an SVG served as an <img>
-    gets no CSS from the page: ink #000, mist #f3f5f8, stone #6f6f6f, line #dddddd,
-    Newsreader for display (with the same Georgia/serif fallback stack globals.css uses).
+      · THE HAIRLINE FRAME DIED AT CARD SIZE. Its inset rectangle sat at x=40 of a 1200-wide
+        artwork, and a near-square card scales by HEIGHT and throws the sides away. On every
+        search card, home tile and square crop you saw only the top and bottom rules — two
+        stray lines near the edges, which reads as a rendering fault rather than as a frame.
+      · THE APERTURE GLYPH was the loudest thing on the panel at every size, and it is the most
+        generic mark in software: every empty state everywhere uses it.
+      · THE TYPE COLLAPSED to roughly 10px on a search card, so the one thing this panel exists
+        to say was the hardest thing on it to read.
+
+    So the frame and the glyph are GONE — two elements removed, none added — and what fixes the
+    rest is structural, not decorative:
+
+      SQUARE viewBox. A 3:2 artwork cropped into a 3:4 tile loses a third of its width; a square
+      one is close to every box we ask it to fill, so nothing important leaves the frame.
+      Everything here lives inside a safe area of x 150-850, y 200-800, which survives every crop
+      the site uses (the 2:1 map popup through the 3:4 portrait tile).
+
+      TWO LINES. Breaking the phrase lets each line be far larger inside the same safe width —
+      66px against 52 — so a 300px card renders ~19px of readable type instead of ~10px. It also
+      reads as a considered setting rather than as a system message.
+
+    Type never resolves to Newsreader in practice, and that is fine: an SVG loaded through <img>
+    is its own document and gets no @font-face from the page, so the Georgia fallback is what
+    ships and this is set to Georgia's metrics. Palette is hard-coded for the same reason:
+    ink #000, stone #6f6f6f, over the mist wash the cards already sit on.
   -->
   <defs>
     <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f7f8fa"/>
-      <stop offset="1" stop-color="#eceff4"/>
+      <stop offset="1" stop-color="#e9edf2"/>
     </linearGradient>
   </defs>
 
-  <rect width="1200" height="800" fill="url(#wash)"/>
+  <rect width="1000" height="1000" fill="url(#wash)"/>
 
-  <!-- A single hairline frame, inset. The same restraint as the site's two-line system. -->
-  <rect x="40" y="40" width="1120" height="720" fill="none" stroke="#dddddd" stroke-width="2"/>
-
-  <!-- A drawn aperture, not a photograph: the universal "picture" mark, stated quietly.
-       Stroked only, so it reads as a diagram rather than as content. -->
-  <g transform="translate(600 330)" fill="none" stroke="#9aa3ad" stroke-width="5"
-     stroke-linecap="round" stroke-linejoin="round">
-    <rect x="-92" y="-70" width="184" height="140" rx="10"/>
-    <circle cx="-42" cy="-26" r="17"/>
-    <path d="M-92 42 l58 -56 a10 10 0 0 1 14 0 l38 38 l26 -24 a10 10 0 0 1 14 0 l48 46"/>
-  </g>
-
-  <text x="600" y="486" text-anchor="middle"
-        font-family="Newsreader, Georgia, 'Times New Roman', serif"
-        font-size="52" font-weight="300" letter-spacing="-0.5" fill="#000000">
-    Photograph coming soon
+  <text text-anchor="middle" font-family="Newsreader, Georgia, 'Times New Roman', serif"
+        font-size="66" font-weight="300" letter-spacing="-0.5" fill="#000000">
+    <tspan x="500" y="470">Photograph</tspan>
+    <tspan x="500" y="548">coming soon</tspan>
   </text>
 
-  <text x="600" y="536" text-anchor="middle"
+  <text x="500" y="628" text-anchor="middle"
         font-family="Lato, Helvetica, Arial, sans-serif"
-        font-size="21" font-weight="700" letter-spacing="3.2" fill="#6f6f6f">
+        font-size="23" font-weight="700" letter-spacing="3.6" fill="#6f6f6f">
     REALTYLT
   </text>
 </svg>

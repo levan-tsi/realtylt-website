@@ -1,32 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Photograph coming soon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Photograph coming soon">
   <!--
-    The CAPTIONLESS variant — used where the card or popup already says what is going on, or
-    where the frame is too small to read a line of type (map popups, gallery thumbnails, the
-    card's wordless cut). Same panel as coming-soon.svg with the words removed rather than a
-    different picture, so the two never look like two different brands sitting side by side.
+    The CAPTIONLESS cut — used where the surface already says what is going on, or where the
+    frame is too small to read a line of type: map popups, gallery thumbnails, and the portrait
+    overlay tiles that print their own price and address across the image.
 
-    See coming-soon.svg for why this is a typographic panel and not a photograph.
+    It is the SAME panel as coming-soon.svg with the words removed rather than a different
+    picture, so the two never look like two brands sitting side by side. See that file for why
+    the hairline frame and the aperture glyph went away in round 18, and why the artwork is now
+    square (both were measured at the crops these are actually asked to fill).
+
+    The wordmark alone is deliberate. At the sizes this cut serves — a 252px popup, a 96px
+    thumbnail — a sentence is unreadable and an icon is noise, so what is left is a quiet field
+    with one small mark on it, which is what an empty frame ought to look like. It is set a
+    little larger and lighter than the captioned panel's wordmark because here it is the only
+    thing on the panel rather than a footnote under a headline.
   -->
   <defs>
     <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f7f8fa"/>
-      <stop offset="1" stop-color="#eceff4"/>
+      <stop offset="1" stop-color="#e9edf2"/>
     </linearGradient>
   </defs>
 
-  <rect width="1200" height="800" fill="url(#wash)"/>
-  <rect x="40" y="40" width="1120" height="720" fill="none" stroke="#dddddd" stroke-width="2"/>
+  <rect width="1000" height="1000" fill="url(#wash)"/>
 
-  <g transform="translate(600 372)" fill="none" stroke="#9aa3ad" stroke-width="5"
-     stroke-linecap="round" stroke-linejoin="round">
-    <rect x="-92" y="-70" width="184" height="140" rx="10"/>
-    <circle cx="-42" cy="-26" r="17"/>
-    <path d="M-92 42 l58 -56 a10 10 0 0 1 14 0 l38 38 l26 -24 a10 10 0 0 1 14 0 l48 46"/>
-  </g>
-
-  <text x="600" y="512" text-anchor="middle"
+  <text x="500" y="512" text-anchor="middle"
         font-family="Lato, Helvetica, Arial, sans-serif"
-        font-size="21" font-weight="700" letter-spacing="3.2" fill="#6f6f6f">
+        font-size="30" font-weight="700" letter-spacing="4.6" fill="#8b9099">
     REALTYLT
   </text>
 </svg>
