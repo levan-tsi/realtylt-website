@@ -1,5 +1,29 @@
 # Flagship blog scorecard — rubric derived from research, THEN measured
 
+## STILL 90.5 / 100 (re-measured 2026-08-01, session 12: the films round)
+
+**The page score did not move, and it should not have.** This session worked on the FILMS, not on
+the pages: new topic-specific footage, a sound bed under every re-cut film, and a transition
+grammar. The rubric scores what is ON the page, and C3 asks whether a film exists, not whether it
+is well cut. All five posts still pass their mechanical gate unchanged - chat, voice, reactivation
+and workflow at 19/19, qualification at 18/19 for the D5 reason it has always failed honestly.
+
+Reporting it as a gain would be exactly the self-grading this file exists to prevent. What
+improved is measurable, but on the artifact rather than the rubric:
+
+| measured on the FINISHED file | before | after |
+|---|---|---|
+| lines transcribed intact from the shipped mp4 | never checked | **100% of every line, all 5 films** |
+| films with any sound under the narration | 0 of 5 | 3 of 5 (voice and chat still bare) |
+| films whose close is `shot6-keys-porch` | 4 of 4 | **1 of 4** |
+| picture transitions | hard cuts only | dip/lift/cut grammar, derived from the plan |
+
+**The rubric has no dimension for any of that**, which is a gap worth naming rather than papering
+over: a film that is present and captioned scores the same as a film that is well made. If a
+future round wants credit for craft here, the honest move is to add a dimension a script can
+actually measure - and to accept that "is it tasteful" will never be one of them.
+
+
 Written 2026-07-27. The rubric below was written **before** measuring the page, from the sources
 listed at the bottom, so the page is graded against the reference rather than against itself.
 Weights follow how hard each source ties the item to organic traffic, AI citation, or design

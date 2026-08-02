@@ -1,62 +1,130 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## NEXT SESSION'S JOB (owner 2026-08-01) — THE FILMS. Resume HERE.
+## THE FILMS ROUND IS DONE (2026-08-01, session 12). What is left is below.
 
-**Single agent, one long session, no subagents.** The five posts are done and mechanically green.
-The films are the weak link, and the owner named the reason himself: **every film draws from the
-same seven clips.**
+Three of the four asks are shipped and verified on the finished files. The fourth, the research
+question, is answered as a decision rather than a document. **The one thing still owed to the
+owner is that he LISTENS to a film** - see the honesty note at the end of this section.
 
-### The actual defect, measured
+### 1. The sameness is fixed. `keys-porch` no longer closes every film.
 
-| film | clips used |
-|---|---|
-| voice | shot1, shot2, shot6, shot7 |
-| reactivation | shot1, shot2, shot3, shot4, shot5, shot6 |
-| qualify | shot1, shot2, shot3, shot4, shot5, shot6 |
-| workflow | shot2, shot3, shot5, shot6, shot7 |
+| film | close, before | close, now |
+|---|---|---|
+| reactivation | shot6-keys-porch | **shot8-porch-callback** - the call being taken, and the moment it turns |
+| qualify | shot6-keys-porch | **shot9-desk-callback** - sitting down to work the list |
+| workflow | shot6-keys-porch | **shot10-laptop-close** - the laptop shuts and the room empties |
 
-`shot6-keys-porch` and `shot2-empty-office` appear in **every single film**. Somebody who reads two
-posts watches the same keys-on-a-porch shot close both. That is the strongest "mass-produced" signal
-on the whole blog, and it undoes the point of the treatment.
+Six new clips, two per re-cut film: a close plus one beat that only makes sense for that topic
+(`shot11-old-records`, `shot12-typing-notes`, `shot13-three-folders`). `shot6-keys-porch` now
+appears in ONE film instead of four, `shot2-empty-office` in two instead of four. Every prompt is
+in `scripts/film/footage/FOOTAGE.md`. **Flow's download path changed and the old recipe in that
+ledger no longer works** - the fix is written down there, read it before generating more.
 
-### What the owner asked for
+**Not done: the owner asked for 3-4 new clips per post and this is 2, and the voice film was not
+re-cut at all** (it is the older single-layer pipeline and still uses keys-porch). Six clips, 90
+credits. More footage is the cheapest remaining upgrade.
 
-1. **Generate NEW, topic-specific footage per post.** Roughly 3-4 fresh clips each, keeping the
-   shared library only for genuinely generic beats. 15 credits a clip, ~1000 credits available, so
-   ~200 credits covers all four. See the Flow operating notes below.
-2. **Transitions.** Every film is hard cuts today. Design them; do not just crossfade everything.
-3. **Sound effects.** There are NONE today: narration only, no bed, no design. A ring, a notification,
-   a room tone under a beat. `realtylt-stories/scripts/music-gen.py` proves ElevenLabs Music works
-   and is commercially licensed (a paid ad cannot carry a music claim); the same account does sound
-   effects. Mix them UNDER the voice and MEASURE the separation, do not eyeball it.
-4. **Research first: what actually makes these perform organically and bring leads.** Use the
-   `last30days` skill plus real benchmarks. What is already established and should not be re-derived:
-   - **Hook rule** (r/NewTubers 349-video study): a concrete, checkable number in the first seconds.
-     No greeting, no atmosphere. Warmups correlate with flops.
-   - **Meta benchmarks 2026:** hook rate median 28%, top decile 45%, **under 15% means kill it**.
-     Hold rate 25-40% solid for a 15-30s cut. Best-performing length band is **15-30s**.
-   - **85% of feed video is watched with sound off**, captions add ~12% watch time and ~16% reach.
-     The captions ARE the script.
-   - Honest tension to resolve, not ignore: **organic reach rewards native, scrappy, un-ad-like
-     video**, which pulls directly against the Apple-minimalist house style. Decide deliberately
-     per surface rather than splitting the difference by accident.
+### 2. Every film has a sound bed. There was none before.
 
-### AUDIO IS THE ONE THING NOBODY HAS EVER CHECKED
+`scripts/film/sfx/` is a committed library of 6 beds and 4 events with a prompt ledger, and
+`scripts/film/bed.mjs` builds a film's bed **from the same PLAN the picture is cut from**, so a
+beat cannot have a picture without a sound. Levels are measured at build time from each source's
+own loudness, not typed. Black cards get `amb-void` rather than silence, because a hole in the
+sound is heard as a fault and not as a pause.
 
-Every film so far is verified by measured duration and `silencedetect` only. **No human and no agent
-has ever listened to any of them.** If you add sound design you are stacking on an unverified layer.
-Get the owner to listen, or state plainly in your report that the audio is unverified.
+**Each film's one event is deliberately different** - a notification for workflow, a ring for
+reactivation, a buzz for qualify - for the same reason the footage had to change. Restraint is the
+rule: one or two events in a 60-second film, never over a word.
+
+### 3. Transitions are a grammar, derived from the plan
+
+In `scripts/film/beats.mjs`. Footage into black **dips**, black into footage **lifts**, and
+footage into footage stays a **hard cut** because two real shots meeting needs no help - the note
+"do not just crossfade everything" was right. Two exemptions that would be defects otherwise: the
+first beat never lifts (the poster is frame zero and must be the picture), and the last never dips
+(assemble already fades at FADE_AT).
+
+### 4. The surface question, decided rather than split
+
+The honest tension was "organic reach rewards scrappy, native video" against the Apple-minimalist
+house style. **They are different surfaces and should not be averaged.** The on-page film is
+`controls`, no `autoPlay`, no `muted`, `preload="none"` behind a poster (verified in
+`components/blog/scenes/primitives/Film.tsx`): it is only ever watched by someone who clicked into
+a 3,000-word technical article and then deliberately pressed play. There is no scroll competition
+and no sound-off default, so cinematic restraint is correct there and sound design pays off. The
+scrappy/sound-off/captions-are-the-script rules belong to the 9:16 feed cut, which is a different
+deliverable and lives in `realtylt-stories`. Do not import feed instincts into the on-page film.
+
+### THE AUDIO IS NOW MEASURED, BUT STILL NOT HEARD
+
+`scripts/film/verify-audio.mjs` transcribes the SHIPPED mp4 and diffs it against the schedule that
+produced it. All five films return **100% of every line**, with the beds under them, which is what
+makes "the bed does not drown the voice" a measurement instead of an opinion. `sfx-verify.mjs`
+proves every bed is speech-free, steady and not music, calibrated against deliberately generated
+music as a negative control.
+
+**That is not the same as listening.** Nobody has heard whether the bed is TASTEFUL, whether the
+notification sounds cheap, or whether the porch ambience suits the close. Those are judgement, a
+script cannot judge them, and this round did not fake it. **Ask the owner to play one film.**
 
 ### The pipelines, and which is which
 
 - **`scripts/film/reactivation/`, `qualify/`, `workflow/` are the CURRENT pattern**: two-layer, where
   ffmpeg cuts the picture bed from real footage and Playwright draws transparent type over it,
-  authored at 1280x720 (the footage's native size), crf 23. `workflow/cut.mjs` is the best of them:
-  it DERIVES `FILM_LEN` and `FADE_AT` from the measured schedule so they cannot drift apart.
+  authored at 1280x720 (the footage's native size), crf 23. **All three now have a `cut.mjs`** that
+  derives `FILM_LEN` and `FADE_AT` from the measured schedule and holds the beat PLAN, so the fade
+  trap is structurally gone from every one of them rather than just from workflow. Copy any of them.
 - **`scripts/film/voice/` is the older single-layer stage**, with `broll.mjs` compositing footage
-  under it afterwards. It works and is finished; do not rebuild it unless you are improving it.
+  under it afterwards. It has NO bed, NO transitions and still uses keys-porch. It is the obvious
+  next film to bring up to the others.
 - B-roll lives at `scripts/film/footage/` with a ledger. `shot7-signup-callback` has no recorded
   prompt, so it cannot be regenerated. **Record the prompt for every new clip.**
+
+### The order to run a film, now that sound exists
+
+| step | command |
+|---|---|
+| 1 | `node scripts/film/<topic>/vo.mjs` - narration, MEASURED into `schedule.json`. `--keep` reuses audio. |
+| 2 | `node scripts/film/<topic>/bg.mjs` - the picture bed, with the transition grammar applied. |
+| 3 | `node scripts/film/<topic>/render.mjs` - transparent type PNGs. `--probe 0,17,25` for single frames. |
+| 4 | `node scripts/film/<topic>/assemble.mjs` - builds the sound bed, mixes it under the voice, encodes. |
+| 5 | `node scripts/film/verify-audio.mjs` - transcribes the SHIPPED file. Must stay at 100%. |
+
+`node scripts/film/sfx-gen.mjs` and `sfx-verify.mjs` only need re-running if you add a sound.
+
+### Sound and measurement traps, paid for 2026-08-01
+
+- **Never ask a generator for a QUIET sound.** The first seven bed prompts described how the beds
+  should sit in the finished film - "very faint", "barely audible", "almost inaudible" - and
+  generation obeyed exactly, returning seven files at -68 to -70 LUFS. That is the noise floor:
+  lifting one to a usable level brings its own codec noise with it. Ask for the SOUND, name a
+  loud real source ("microphone close beside a refrigerator"), and set level in the mix.
+- **Words like "soft", "gentle" and "smooth" also push it toward silence.** The takes that landed
+  at a usable level all named a continuous mechanical source. "Nothing starts or stops" is what
+  stops a bed being a series of events.
+- **`ebur128=framelog=verbose` prints NOTHING in this ffmpeg build.** A steadiness probe built on
+  it measured nothing, reported null, and the gate read null as a failure - so every bed "failed"
+  on a probe that was not measuring. Use `astats=metadata=1` with `ametadata=mode=print`.
+- **The integrated loudness is the LAST `I:` in an ebur128 log, not the first.** Taking the first
+  reported a flat -70 LUFS for every file in the library, including events peaking at -5.
+- **`astats` `reset` counts DECODER FRAMES, not seconds**, and the ratio varies by file. Re-bucket
+  the windows using the measured duration instead of assuming a frame size.
+- **Calibrate a "is this music" gate against music you generated ON PURPOSE.** A flatness threshold
+  picked by intuition (0.06) rejected a real air-conditioner bed. Generating an ambient music pad
+  (0.0099) and a synth drone (0.0134) as negative controls showed real beds sit at 0.0455 and up,
+  so the gate belongs between them. The idea that FAILED the same test is worth remembering too:
+  "music moves in pitch, machines do not", measured as spectral-centroid variation, ranked
+  `amb-void` as more musical than the synth drone. It separates nothing.
+- **A plain max-minus-min range is not "steadiness".** It called every bed unsteady for two
+  innocent reasons: generated clips often fade up from digital silence, and birdsong is supposed to
+  punctuate a porch. Use p95 over p50, and count how many windows are loud - recurring texture is
+  content, one spike is an incident.
+- **Guard an imported module's CLI block.** `bed.mjs` ran its `process.argv` block on import and
+  exited the whole assembly before it started. Compare `import.meta.url` to `process.argv[1]`.
+- **A sound needs somewhere to GO.** Every gap in these narrations is 0.40-0.90s, so an event is
+  trimmed to its gap and faded rather than ringing under the next sentence. When the picture
+  changed, workflow's second event had no gap within two seconds of the thing it described, and
+  the right answer was to drop it, not to place it early.
 
 ### Film traps, every one of them paid for. Do not relearn these.
 
