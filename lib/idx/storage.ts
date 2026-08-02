@@ -104,7 +104,11 @@ export async function uploadPhoto(
     signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) {
-    console.error(`[storage] upload ${path} failed: ${res.status}`);
+    // Log the BODY, not just the status. Storage answers several unrelated problems with a bare
+    // 400 — a wrong mime type, a size overrun, a bad path — and a status-only line cost this
+    // project seven days of a frozen feed before anyone could tell which one it was.
+    const detail = await res.text().catch(() => "");
+    console.error(`[storage] upload ${path} failed: ${res.status} ${detail.slice(0, 200)}`);
     return false;
   }
   return true;

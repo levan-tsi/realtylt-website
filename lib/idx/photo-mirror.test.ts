@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   buildQueue,
+  isImagePayload,
   mirrorPhotos,
   planRange,
   preservedMarker,
@@ -8,10 +9,16 @@ import {
   type MirrorTarget,
 } from "./photo-mirror";
 
+/** A byte payload that passes isImagePayload — a real JPEG signature plus enough length.
+ * The fake must produce something plausible now that a non-image 2xx is treated as a failure. */
+const JPEG = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46, 0x49, 0x46, 0, 1, 0, 0]);
+
 /** Fake deps that record every download/upload and let a test script per-URL outcomes. */
 function fakeDeps(opts: {
   downloadStatus?: (url: string, attempt: number) => number; // non-200 → failure
   uploadOk?: (path: string) => boolean;
+  /** Override the downloaded payload — used to simulate the media host's text/plain rate limit. */
+  payload?: (url: string) => { bytes: Uint8Array; contentType: string };
 } = {}) {
   const downloads: string[] = [];
   const uploads: string[] = [];
@@ -24,7 +31,8 @@ function fakeDeps(opts: {
       attempts.set(url, a + 1);
       const status = opts.downloadStatus ? opts.downloadStatus(url, a) : 200;
       if (status !== 200) return { ok: false, status };
-      return { ok: true, status: 200, bytes: new Uint8Array([1, 2, 3]), contentType: "image/jpeg" };
+      const p = opts.payload?.(url) ?? { bytes: JPEG, contentType: "image/jpeg" };
+      return { ok: true, status: 200, bytes: p.bytes, contentType: p.contentType };
     },
     async upload(path) {
       const ok = opts.uploadOk ? opts.uploadOk(path) : true;
@@ -161,6 +169,78 @@ describe("mirrorPhotos — 429 backoff", () => {
     const { deps, downloads } = fakeDeps({ downloadStatus: () => 404 });
     await mirrorPhotos([target("A", 1)], deps, { maxRetries: 3 });
     expect(downloads.length).toBe(1); // no retries on 404
+  });
+});
+
+describe("isImagePayload — a 2xx is not proof of a photo", () => {
+  const TEXT = new TextEncoder().encode("Request limit reached");
+
+  it("rejects the media host's text/plain rate-limit body", () => {
+    expect(isImagePayload("text/plain", TEXT)).toBe(false);
+  });
+
+  it("rejects that body even when it is served WITHOUT a content-type", () => {
+    expect(isImagePayload(undefined, TEXT)).toBe(false);
+  });
+
+  it("rejects an image/jpeg label over a non-image body", () => {
+    expect(isImagePayload("image/jpeg", TEXT)).toBe(false);
+  });
+
+  it("rejects an empty or truncated payload", () => {
+    expect(isImagePayload("image/jpeg", new Uint8Array(0))).toBe(false);
+    expect(isImagePayload("image/jpeg", new Uint8Array([0xff, 0xd8, 0xff]))).toBe(false);
+  });
+
+  it("accepts a real JPEG, PNG and WebP", () => {
+    expect(isImagePayload("image/jpeg", JPEG)).toBe(true);
+    expect(isImagePayload("image/png", new Uint8Array([0x89, 0x50, 0x4e, 0x47, 13, 10, 26, 10, 0, 0, 0, 13]))).toBe(true);
+    const webp = new Uint8Array([0x52, 0x49, 0x46, 0x46, 1, 2, 3, 4, 0x57, 0x45, 0x42, 0x50]);
+    expect(isImagePayload("image/webp", webp)).toBe(true);
+  });
+
+  it("rejects a RIFF container that is not WebP (a WAV, not a photo)", () => {
+    const wav = new Uint8Array([0x52, 0x49, 0x46, 0x46, 1, 2, 3, 4, 0x57, 0x41, 0x56, 0x45]);
+    expect(isImagePayload("image/webp", wav)).toBe(false);
+  });
+
+  it("accepts a valid JPEG that the host mislabelled", () => {
+    expect(isImagePayload("application/octet-stream", JPEG)).toBe(false); // declared non-image wins
+    expect(isImagePayload("", JPEG)).toBe(true); // no declaration → trust the bytes
+  });
+});
+
+describe("mirrorPhotos — a disguised rate limit never becomes a photo", () => {
+  /** THE ROUND-16 DEADLOCK: the media host returned 200 + "Request limit reached" as text/plain,
+   * mirrorPhotos uploaded it as a .jpg, Storage refused it (400 invalid_mime_type), so `fully`
+   * never went true and the sync cron held its watermark — for seven days. */
+  const rateLimitBody = () => ({
+    bytes: new TextEncoder().encode("Request limit reached"),
+    contentType: "text/plain",
+  });
+
+  it("does not upload a 200 that carries a text/plain body", async () => {
+    const { deps, uploads } = fakeDeps({ payload: rateLimitBody });
+    const out = await mirrorPhotos([target("A", 2)], deps, { maxRetries: 0 });
+    expect(uploads).toEqual([]); // nothing poisoned the bucket
+    expect(out[0]).toMatchObject({ photosMirrored: 0, fully: false, uploaded: 0 });
+  });
+
+  it("treats it as retryable — it backs off like a 429 rather than accepting it", async () => {
+    const { deps, downloads, sleeps } = fakeDeps({ payload: rateLimitBody });
+    await mirrorPhotos([target("A", 1)], deps, { maxRetries: 2 });
+    expect(downloads.length).toBe(3); // initial + 2 retries
+    expect(sleeps).toEqual([500, 1000]); // exponential backoff, same as a real 429
+  });
+
+  it("recovers on the retry that finally returns a real photo", async () => {
+    let n = 0;
+    const { deps, uploads } = fakeDeps({
+      payload: () => (n++ === 0 ? rateLimitBody() : { bytes: JPEG, contentType: "image/jpeg" }),
+    });
+    const out = await mirrorPhotos([target("A", 1)], deps, { maxRetries: 3 });
+    expect(uploads).toEqual(["A/0.jpg"]);
+    expect(out[0]).toMatchObject({ photosMirrored: 1, fully: true });
   });
 });
 

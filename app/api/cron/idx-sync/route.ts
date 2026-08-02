@@ -28,9 +28,11 @@ import { storageWriteConfig, uploadPhoto, type StorageWriteConfig } from "@/lib/
  *
  * Photos (docs/mls-fix/PHOTO-MIRRORING.md): each changed listing's signed MediaURLs are mirrored
  * to Supabase Storage during this run, while the URLs are still valid (they expire ~1h from now).
- * Bounded by MIRROR_PHOTO_BUDGET + a wall clock; a burst that cannot finish mirroring HOLDS the
- * watermark so the next tick re-fetches fresh URLs and completes. No-op (data unaffected) until
- * SUPABASE_SERVICE_ROLE_KEY is configured server-side.
+ * Bounded by MIRROR_PHOTO_BUDGET + a wall clock. Mirroring is BEST EFFORT and never blocks the
+ * watermark (see the note at the write below — holding it froze the feed for seven days); photos
+ * still owed are reported as `mirrorDebt` and picked up by change detection or
+ * scripts/backfill-photos.mjs. No-op (data unaffected) until SUPABASE_SERVICE_ROLE_KEY is
+ * configured server-side.
  *
  * Auth: `Authorization: Bearer ${CRON_SECRET}`. Params: ?maxPages=N (manual runs).
  * Skips (200) until the baseline pull has marked idx_sync_state.baseline_complete.
@@ -172,10 +174,21 @@ export async function GET(req: Request) {
       const out = await applyIdxSync({ secret, deactivateIds: delta.removeIds.slice(i, i + REMOVE_BATCH) });
       deactivated += out.deactivated;
     }
-    // Do NOT pass a listing until its photos are mirrored: keep the watermark when a burst could
-    // not finish mirroring, so the next tick re-fetches fresh URLs and completes the prefix.
-    const nextWatermark = mirrorFully ? delta.watermark : watermark;
-    await applyIdxSync({ secret, watermark: nextWatermark });
+    // THE WATERMARK TRACKS DATA, NOT PHOTOS. It used to be held until every photo in the window
+    // had mirrored, on the theory that the next tick would re-fetch fresh URLs and finish the job.
+    // That theory fails closed in the worst way: if mirroring cannot succeed at all — the media
+    // host rate-limiting, a payload Storage refuses — `fully` never goes true, the watermark never
+    // moves, and the ENTIRE inventory freezes behind it while the cron re-scans the same window
+    // every hour (which is itself what sustains the rate limiting). Measured 2026-08-01: the feed
+    // had not advanced past 2026-07-25, seven days, with 15,628 rows waiting.
+    //
+    // Photo mirroring has its own durable resume state — `photosMirrored`/`photosMirroredTs` per
+    // listing, honoured by planRange — so an unmirrored listing is recoverable later (change
+    // detection re-mirrors it when it next changes; scripts/backfill-photos.mjs sweeps the rest).
+    // Stale listing data is not recoverable at all: it is simply wrong until the watermark moves.
+    // So data freshness wins, and unfinished mirroring is reported as debt instead of a stop.
+    const mirrorDebt = delta.upserts.length - delta.upserts.filter((l) => (l.photosMirrored ?? 0) >= Math.min(l.photos.length, MIRROR_PHOTO_CAP)).length;
+    await applyIdxSync({ secret, watermark: delta.watermark });
 
     const summary = {
       ok: true,
@@ -185,9 +198,10 @@ export async function GET(req: Request) {
       removalsSeen: delta.removeIds.length, // ids never stored no-op at the DB
       deactivated,
       mirroredPhotos,
-      mirrorFully, // false = burst bigger than the photo budget; watermark held for next tick
-      watermark: nextWatermark,
-      complete: delta.complete && mirrorFully, // false = next tick resumes (data and/or photos)
+      mirrorFully, // false = some photos still owed; the watermark advances anyway (see above)
+      mirrorDebt, // listings upserted this run whose photo prefix is still short
+      watermark: delta.watermark,
+      complete: delta.complete, // false = more feed pages pending; next tick resumes from the watermark
       ms: Date.now() - started,
     };
     console.log("[idx-sync]", JSON.stringify(summary));

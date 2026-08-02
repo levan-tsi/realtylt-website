@@ -56,7 +56,8 @@ export interface MirrorOutcome {
   photosMirrored: number;
   /** Timestamp this mirror now corresponds to (always the current modificationTimestamp). */
   photosMirroredTs: string;
-  /** True when every photo (up to the cap) is mirrored — the sync may advance its watermark. */
+  /** True when every photo (up to the cap) is mirrored. Reported for observability — the sync
+   * advances its watermark regardless, because photo debt is recoverable and stale data is not. */
   fully: boolean;
   /** Photos actually downloaded+uploaded this run (for logging/observability). */
   uploaded: number;
@@ -76,6 +77,44 @@ export interface MirrorOptions {
 }
 
 const clampCap = (cap: number | undefined) => Math.max(0, Math.min(cap ?? MAX_MIRROR_PHOTOS, MAX_MIRROR_PHOTOS));
+
+/** Magic-byte signatures for the formats the mls-photos bucket accepts. */
+const IMAGE_MAGIC: ReadonlyArray<readonly number[]> = [
+  [0xff, 0xd8, 0xff], // JPEG
+  [0x89, 0x50, 0x4e, 0x47], // PNG
+  [0x52, 0x49, 0x46, 0x46], // RIFF — WebP (checked further below)
+  [0x47, 0x49, 0x46, 0x38], // GIF8
+];
+
+const toBytes = (b: Uint8Array | ArrayBuffer | undefined): Uint8Array | undefined =>
+  b === undefined ? undefined : b instanceof Uint8Array ? b : new Uint8Array(b);
+
+/** Is this 2xx media response ACTUALLY a photo?
+ *
+ * WHY THIS EXISTS (measured 2026-08-01, and it froze the whole site's inventory for seven days):
+ * media.mlsgrid.com answers a rate limit with the 21-byte `text/plain` body "Request limit
+ * reached". Our download only gated on `response.ok`, so whenever that arrived under a 2xx it
+ * counted as a successful photo — and we then uploaded a text file to Storage as `<id>/<idx>.jpg`.
+ * The bucket's mime allowlist correctly refused it (HTTP 400 `invalid_mime_type`), the photo never
+ * mirrored, `fully` never went true, and the sync cron HELD ITS WATERMARK on every run. The feed
+ * stopped advancing past 2026-07-25 while the cron re-downloaded the same failing photos hourly,
+ * which is itself what kept the media host returning 429.
+ *
+ * So: never trust the status alone. Require an image content-type AND real image magic bytes —
+ * a truncated or error payload passes neither, and a mislabelled-but-valid JPEG still passes on
+ * its bytes. A response that fails this is treated as a retryable failure, exactly like a 429. */
+export function isImagePayload(contentType: string | null | undefined, bytes: Uint8Array | undefined): boolean {
+  if (!bytes || bytes.length < 12) return false; // nothing real is this small
+  const ct = (contentType ?? "").toLowerCase();
+  if (ct && !ct.startsWith("image/")) return false;
+  const magic = IMAGE_MAGIC.some((sig) => sig.every((b, i) => bytes[i] === b));
+  if (!magic) return false;
+  // RIFF is also WAV/AVI — a WebP names itself at offset 8.
+  if (bytes[0] === 0x52 && bytes[1] === 0x49) {
+    return bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50;
+  }
+  return true;
+}
 
 /** Where a target should (re)start mirroring: 0 when the photo set may have changed, else the
  * already-mirrored prefix. `end` is the capped photo count. */
@@ -137,6 +176,12 @@ async function fetchWithBackoff(
   let last: DownloadResult = { ok: false, status: 0 };
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     last = await deps.download(url);
+    // A 2xx carrying something that is not an image is a RATE LIMIT IN DISGUISE, not a photo
+    // (see isImagePayload). Demote it to a retryable failure so it backs off and is never
+    // uploaded — uploading it is what deadlocked the sync's watermark.
+    if (last.ok && !isImagePayload(last.contentType, toBytes(last.bytes))) {
+      last = { ok: false, status: last.status || 429 };
+    }
     if (last.ok) return last;
     // 404/403 are permanent for this URL — do not hammer the media host.
     if (last.status === 404 || last.status === 403) return last;
