@@ -223,7 +223,14 @@ export function ListingCard({
           <p className="mt-1 text-lg font-medium leading-snug">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
-          {statsShort && <p className="mt-1 text-xs italic">{statsShort}</p>}
+          {/* ALWAYS rendered, even when the feed carries no beds/baths/sqft (land, commercial,
+              some multi-family). This block is anchored to the bottom of the card, so dropping
+              the line pushed the price and address 20px DOWN — measured across a home rail, a
+              row of four cards sat on three different baselines. The empty line is invisible
+              against the gradient and simply holds the position. */}
+          <p className="mt-1 text-xs italic" aria-hidden={!statsShort}>
+            {statsShort || " "}
+          </p>
           <div className="mt-2 flex items-end justify-between gap-2">
             <p className="min-w-0 break-words text-[10px] italic leading-tight text-white/85">
               Listed With {l.listOfficeName}
