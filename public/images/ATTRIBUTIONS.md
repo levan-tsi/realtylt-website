@@ -75,5 +75,7 @@ below as unresolved rather than quietly omitted.
 | public/images/why/our-save-search.webp | RealtyLT save-a-search | RealtyLT | Our own screenshot | [source](https://github.com/levan-tsi/realtylt-website) |
 | public/images/mls/onekey-mls.svg | One Key MLS mark | One Key MLS | Trademark, required IDX attribution | [source](https://www.onekeymls.com/) |
 | public/images/mls/onekey-mls-on-dark.svg | One Key MLS mark, light-on-dark | One Key MLS | Trademark, required IDX attribution | [source](https://www.onekeymls.com/) |
-| public/images/mls/coming-soon.webp | "Coming soon" placeholder — moonlit manor, owner-generated | Levan Tsiklauri, Google Nano Banana Pro via ElevenLabs | Owner's own generated artwork | [source](https://elevenlabs.io/) |
-| public/images/mls/coming-soon-notext.webp | Wordless cut for overlay tiles (sky text removed with local Mage-Flow edit) | Levan Tsiklauri + RealtyLT | Owner's own generated artwork | [source](https://elevenlabs.io/) |
+| public/images/mls/coming-soon.svg | "Photograph coming soon" panel — IN USE. Typographic, drawn in the site's own palette and display face | RealtyLT | Our own artwork | — |
+| public/images/mls/coming-soon-notext.svg | Wordless cut of the same panel, for overlay tiles that print their own price | RealtyLT | Our own artwork | — |
+| public/images/mls/coming-soon.webp | RETIRED 2026-08-02, kept on purpose — "coming soon" placeholder, moonlit manor | Levan Tsiklauri, Google Nano Banana Pro via ElevenLabs | Owner's own generated artwork | [source](https://elevenlabs.io/) |
+| public/images/mls/coming-soon-notext.webp | RETIRED 2026-08-02, kept on purpose — wordless cut (sky text removed with local Mage-Flow edit) | Levan Tsiklauri + RealtyLT | Owner's own generated artwork | [source](https://elevenlabs.io/) |

@@ -26,12 +26,19 @@ export interface Priced {
 /** The bands, cheapest first. `share` is how many of a selection SHOULD come from each band
  * when supply allows; leftovers cascade down to the bands that actually have stock. */
 export const PRICE_BANDS: ReadonlyArray<{ label: string; min: number; max: number; share: number }> = [
-  { label: "under $500k", min: 0, max: 500_000, share: 0.2 },
+  { label: "under $500k", min: 0, max: 500_000, share: 0.15 },
   { label: "$500k–$1M", min: 500_000, max: 1_000_000, share: 0.3 },
-  { label: "$1M–$5M", min: 1_000_000, max: 5_000_000, share: 0.25 },
+  { label: "$1M–$5M", min: 1_000_000, max: 5_000_000, share: 0.3 },
   { label: "$5M–$10M", min: 5_000_000, max: 10_000_000, share: 0.15 },
   { label: "$10M+", min: 10_000_000, max: Infinity, share: 0.1 },
 ];
+
+/** Which band to hand a LEFTOVER slot to, best first. Not cheapest-first, which is the obvious
+ * order and the wrong one: run against the real inventory it filled a rail with $29,000 and
+ * $30,000 land parcels sitting beside a $10M house. The owner asked for "55% between 500k-5m",
+ * so the two middle bands take the slack, then the entry band, and the scarce top bands last
+ * (they already hold a guaranteed slot each and there is barely any stock to spare). */
+const BACKFILL_ORDER = [1, 2, 0, 3, 4] as const;
 
 export function bandOf(price: number): number {
   for (let i = 0; i < PRICE_BANDS.length; i++) {
@@ -73,8 +80,13 @@ export function pickPriceSpread<T extends Priced>(rows: readonly T[], limit: num
       picked.push(...buckets[i].splice(0, quota[i]));
     }
   }
-  // Backfill whatever the quotas left unspent, cheapest-band-first so the rail leans toward
-  // what most visitors are actually shopping for.
+  // Backfill whatever the quotas left unspent, middle bands first (see BACKFILL_ORDER).
+  for (const i of BACKFILL_ORDER) {
+    if (picked.length >= limit) break;
+    picked.push(...buckets[i].splice(0, limit - picked.length));
+  }
+  // Last resort: if the preferred bands are exhausted, take anything rather than ship a short
+  // rail with holes in it.
   for (let i = 0; picked.length < limit && i < buckets.length; i++) {
     picked.push(...buckets[i].splice(0, limit - picked.length));
   }

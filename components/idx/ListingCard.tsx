@@ -36,25 +36,36 @@ export function priceLabel(l: { price: number | null | undefined; propertyType?:
   return l.propertyType === "Rental" ? `${label}/mo` : label;
 }
 
-/** Branded fallback when a listing's photo isn't available yet (feed rows without Media, or photos
- * still replicating into Storage). The artwork is the OWNER'S OWN generation (2026-07-29, Google
- * Nano Banana Pro via ElevenLabs — see ATTRIBUTIONS.md): a moonlit stone manor, azure door, and
- * COMING SOON in luminous script across the sky. Same image the /api/media route redirects to on
- * its stable-empty path, so the state reads identically on every surface. The caption sits in the
- * SKY, so landscape crops keep it; caption=false is the wordless cut (the sky text edit-removed
- * with the local Mage-Flow edit model) for portrait overlay tiles, which would slice the words
- * mid-letter and then print their own price over the photo anyway. */
+/** Branded fallback when a listing's photograph isn't available yet (feed rows without Media, or
+ * photos still replicating into Storage). Same asset the /api/media route redirects to on its
+ * stable-empty path, so the state reads identically on every surface.
+ *
+ * IT IS NOT A PICTURE OF A HOUSE, deliberately. It used to be: a moonlit stone manor under fog
+ * with COMING SOON in gold script (the owner's own Nano Banana Pro generation, 2026-07-29). He
+ * asked for it to be replaced — "quality is low and in general dont like what we have now" — and
+ * both halves of that have the same answer. It was soft because a 1200px raster was filling 2x
+ * retina cards, and it looked wrong because it was a FABRICATED PROPERTY standing in for a real
+ * one, on a site that is otherwise calm and monochrome. A better fake house would have fixed only
+ * the first half. This is a typographic panel in the site's own palette and display face: it
+ * cannot be mistaken for the actual home, it cannot read as generated, it is resolution
+ * independent at any card size, and it is ~1KB instead of 50.
+ *
+ * `caption=false` is the wordless cut for portrait overlay tiles, which print their own price and
+ * address over the image and do not need a second line of type competing with it.
+ *
+ * `unoptimized` because Next's image optimizer rasterises SVG — which would throw away the entire
+ * reason this is an SVG. bg-mist, not bg-ink: the panel is light, and a black backing plate showed
+ * as a hard frame around it while the image decoded. */
 export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   return (
-    <div className="absolute inset-0 bg-ink" aria-hidden>
+    <div className="absolute inset-0 bg-mist" aria-hidden>
       <Image
-        src={caption ? "/images/mls/coming-soon.webp" : "/images/mls/coming-soon-notext.webp"}
+        src={caption ? "/images/mls/coming-soon.svg" : "/images/mls/coming-soon-notext.svg"}
         alt=""
         fill
+        unoptimized
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        // Caption cut: bias the crop toward the sky so landscape cards never shave the
-        // lettering's ascenders; the wordless cut centers on the house.
-        className={caption ? "object-cover object-[center_35%]" : "object-cover"}
+        className="object-cover"
       />
     </div>
   );

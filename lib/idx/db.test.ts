@@ -85,7 +85,10 @@ describe("DbIdxClient.search", () => {
 
     const rail = await new DbIdxClient().getFeatured(1);
 
-    expect(featuredCalls).toBe(2);
+    // 3, not 2: the rail draws TWO pools now — the newest, plus a price-descending one so the
+    // scarce high-end bands are represented (only 1.2% of inventory is above $5M, so freshness
+    // alone never surfaces a $10M home). The first call is the injected drop, then both pools.
+    expect(featuredCalls).toBe(3);
     expect(rail[0]?.id).toBe("KEY777"); // real row, not the snapshot fallback
   });
 

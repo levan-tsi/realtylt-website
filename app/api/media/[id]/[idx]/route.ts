@@ -30,7 +30,7 @@ import { publicPhotoUrl, storageObjectExists } from "@/lib/idx/storage";
  */
 
 // The branded "photo coming soon" artwork is the owner-picked still at
-// public/images/mls/coming-soon.webp — the SAME image ListingCard's NoPhoto renders, so the
+// public/images/mls/coming-soon.svg — the SAME image ListingCard's NoPhoto renders, so the
 // state reads identically whether a tile falls back client-side or hits this route.
 
 // Aggressive CDN cache so repeat views never re-hit the media host: fresh at the edge for a day,
@@ -74,7 +74,7 @@ function placeholder(cacheControl: string, status: "empty" | "unavailable"): Res
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/images/mls/coming-soon.webp",
+      Location: "/images/mls/coming-soon.svg",
       "Cache-Control": cacheControl,
       "X-Media-Status": status,
     },

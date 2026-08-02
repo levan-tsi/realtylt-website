@@ -92,7 +92,7 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a FAKE photo)", 
     const fetchMock = stubImage();
     const res = await call("L1", "5");
     expect(res.status).toBe(302);
-    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.webp");
+    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.svg");
     expect(res.headers.get("Cache-Control")).toContain("s-maxage=3000");
     expect(res.headers.get("Cache-Control")).not.toContain("no-store");
     expect(res.headers.get("X-Media-Status")).toBe("empty");
@@ -110,7 +110,7 @@ describe("GET /api/media/[id]/[idx] — failure contract (never a FAKE photo)", 
     // will for this sync. Anything transient must stay undecodable so the client can drop the tile.
     const res = await call("L1", "5");
     expect(res.status).toBe(302);
-    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.webp");
+    expect(res.headers.get("Location")).toBe("/images/mls/coming-soon.svg");
   });
 });
 

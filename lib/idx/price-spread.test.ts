@@ -69,6 +69,25 @@ describe("pickPriceSpread — a rail that spans the range", () => {
     expect(pickPriceSpread([], 8)).toEqual([]);
     expect(pickPriceSpread(pool, 0)).toEqual([]);
   });
+
+  it("gives the leftover slots to the MIDDLE bands, not to the cheapest", () => {
+    // Run against the real featured inventory, backfilling cheapest-first put a $29,000 and a
+    // $30,000 land parcel on the rail beside a $10M house. The owner asked for "55% between
+    // 500k-5m", so the slack belongs to the middle.
+    const realistic = [
+      ...Array.from({ length: 20 }, (_, i) => at(29_000 + i, `junk${i}`)),
+      ...Array.from({ length: 20 }, (_, i) => at(750_000 + i, `mid${i}`)),
+      ...Array.from({ length: 20 }, (_, i) => at(2_400_000 + i, `upper${i}`)),
+      at(6_800_000, "lux"),
+      at(10_000_000, "mega"),
+    ];
+    const out = pickPriceSpread(realistic, 8);
+    const midCount = out.filter((r) => r.price >= 500_000 && r.price < 5_000_000).length;
+    expect(midCount).toBeGreaterThanOrEqual(4); // the bulk sits where he asked for it
+    expect(out.filter((r) => r.price < 500_000)).toHaveLength(1); // exactly the guaranteed slot
+    expect(out.some((r) => r.price >= 10_000_000)).toBe(true);
+    expect(out.some((r) => r.price >= 5_000_000 && r.price < 10_000_000)).toBe(true);
+  });
 });
 
 describe("interleaveByBand — the mixed sort's actual promise", () => {

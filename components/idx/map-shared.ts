@@ -169,7 +169,7 @@ export function popupNode(
     // branded still instead, once, no retry loop. (Owner-reported: "34 pics… letting me
     // switch but not loading.")
     img.addEventListener("error", () => {
-      if (!img.src.endsWith("/images/mls/coming-soon-notext.webp")) img.src = "/images/mls/coming-soon-notext.webp";
+      if (!img.src.endsWith("/images/mls/coming-soon-notext.svg")) img.src = "/images/mls/coming-soon-notext.svg";
     });
     let idx = 0;
     const show = (to: number) => {

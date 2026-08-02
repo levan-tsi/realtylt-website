@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Photograph coming soon">
+  <!--
+    The CAPTIONLESS variant — used where the card or popup already says what is going on, or
+    where the frame is too small to read a line of type (map popups, gallery thumbnails, the
+    card's wordless cut). Same panel as coming-soon.svg with the words removed rather than a
+    different picture, so the two never look like two different brands sitting side by side.
+
+    See coming-soon.svg for why this is a typographic panel and not a photograph.
+  -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f8fa"/>
+      <stop offset="1" stop-color="#eceff4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#wash)"/>
+  <rect x="40" y="40" width="1120" height="720" fill="none" stroke="#dddddd" stroke-width="2"/>
+
+  <g transform="translate(600 372)" fill="none" stroke="#9aa3ad" stroke-width="5"
+     stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-92" y="-70" width="184" height="140" rx="10"/>
+    <circle cx="-42" cy="-26" r="17"/>
+    <path d="M-92 42 l58 -56 a10 10 0 0 1 14 0 l38 38 l26 -24 a10 10 0 0 1 14 0 l48 46"/>
+  </g>
+
+  <text x="600" y="512" text-anchor="middle"
+        font-family="Lato, Helvetica, Arial, sans-serif"
+        font-size="21" font-weight="700" letter-spacing="3.2" fill="#6f6f6f">
+    REALTYLT
+  </text>
+</svg>
