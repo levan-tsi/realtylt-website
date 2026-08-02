@@ -259,7 +259,10 @@ export async function ListingDetail({ id }: { id: string }) {
                 FROM, and moving within that set is the same thought. It also owns the only row on
                 the page with spare width at 320 — the sticky sub-nav's action group is 281px of a
                 320px screen, so a pager there overflowed the viewport by 88px (measured). */}
-            <div className="flex items-center justify-between gap-3">
+            {/* flex-wrap: the pager now names itself ("LISTING 3 OF 36") and that word costs
+                width. On a 320px phone the breadcrumb alone is ~185px, so rather than shorten the
+                label — the label IS the fix — the pager drops to its own line. */}
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
               <nav aria-label="Breadcrumb" className="min-w-0 text-xs uppercase tracking-[0.14em] text-stone">
                 <Link href="/search" className="inline-flex min-h-6 items-center hover:text-ink">Search</Link>
                 {county && (

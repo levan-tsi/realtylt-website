@@ -99,13 +99,14 @@ export function ListingPager({ id }: { id: string }) {
     // not reserve dead space on every cold listing page.
     <div className="flex shrink-0 items-center gap-0.5" role="group" aria-label="Browse your search results">
       {arrow("prev")}
-      {/* The count is the point of the control — two bare arrows in a page's sub-nav could be
-          anything (the gallery has arrows too). It says WHERE you are and how much is left.
-          `tabular-nums` so the width does not twitch as the number changes. */}
-      <span className="whitespace-nowrap px-1 text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-stone">
-        <span className="text-ink">{nav.index + 1}</span>
-        <span className="px-0.5">/</span>
-        {nav.count}
+      {/* IT SAYS "LISTING", and that word is doing real work. The photo band directly below this
+          row has its own ‹ › pair, so two identical arrow pairs sit on one page — the owner read
+          the top one as another photo control ("make it more understandable that you are
+          switching listings"). "3 / 36" alone could be either. "LISTING 3 OF 36" cannot, and it
+          echoes the "2,471 listings found" the visitor just came from on /search, which is
+          exactly the connection worth making. `tabular-nums` so the width does not twitch. */}
+      <span className="whitespace-nowrap px-1.5 text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-stone">
+        Listing <span className="text-ink">{nav.index + 1}</span> of {nav.count}
       </span>
       {arrow("next")}
     </div>

@@ -57,6 +57,38 @@ export function sideSources(
   return out;
 }
 
+/** WHICH PHOTO THE BAND IS SHOWING AS ITS HERO: the first photo still in `pool` at or after
+ * `anchor`, walking the CLAIMED array and wrapping.
+ *
+ * WHY THIS IS A FUNCTION NOW (owner, 2026-08-02: "clicking to move pictures… it only moves once
+ * and does not do anything, or going back"). The band already had the right idea — an anchor that
+ * only the arrows move, and a hero that promotes past a dead cover — but the hero was actually
+ * picked as "the first surviving photo that is NOT in the side column". That is only the same
+ * thing while the anchor is 0. Press Next once and the sides advance to photos 2-4, so photo 0 is
+ * no longer "in the side column" and the hero SNAPS BACK to it; press it again and the arrow
+ * computes the identical anchor, so the band freezes solid. Measured before the fix on a 31-photo
+ * listing: hero 0 → 0 → 0 → 0 → 0 while the column read 1,2,3 then 2,3,4 and then never moved.
+ * Back oscillated between two states for the same reason.
+ *
+ * Anchoring on the CLAIMED array (not the surviving one) is deliberate and unchanged: a dead side
+ * tile must empty its slot rather than drag a fresh photo into the band, or a covers-only listing
+ * walks all 48 claimed photos at three requests each. */
+export function heroAt(
+  claimed: readonly string[],
+  anchor: number,
+  pool: readonly string[],
+): string | undefined {
+  const n = claimed.length;
+  if (n === 0 || pool.length === 0) return undefined;
+  const start = Math.min(Math.max(Math.trunc(anchor) || 0, 0), n - 1);
+  const alive = new Set(pool);
+  for (let k = 0; k < n; k++) {
+    const p = claimed[(start + k) % n];
+    if (alive.has(p)) return p;
+  }
+  return undefined;
+}
+
 /** Label for the in-photo "view all" pill.
  *
  * A number only appears once every claimed photo has actually been accounted for (loaded, or
