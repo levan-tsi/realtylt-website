@@ -25,24 +25,10 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, statSync, existsSync, writeFileSync } from "node:fs";
 import ffmpegPath from "ffmpeg-static";
-import { FPS, W, H, gapEnd, FILM_LEN } from "./cut.mjs";
+import { FPS, W, H, FILM_LEN, PLAN } from "./cut.mjs";
 
 const FOOTAGE = "scripts/film/footage";
 const OUT = "scripts/_scratch-video/workflow-bg";
-
-/** [beat, clip or null for black, in-point, from, to, what the shot is doing here].
- *  `from`/`to` are FILM times taken from the schedule; the segment length follows. */
-const PLAN = [
-  ["A1 the hook, on the desk", "shot7-signup-callback", 0.4, 0, 4.4, "the laptop and the phone the whole article is about"],
-  ["A2 the number alone", null, 0, 4.4, gapEnd(0), "black: the picture falls away and 25 is all that is left"],
-  ["B1 nobody sees it", "shot2-empty-office", 1.0, gapEnd(0), gapEnd(1), "the office the form lands in, at night, empty"],
-  ["B2 the same lead by hand", null, 0, gapEnd(1), gapEnd(2), "black, because four timed rows only read on black"],
-  ["B3 forty times a month", "shot5-morning-ring", 0.6, gapEnd(2), gapEnd(3), "sunrise: the morning it finally gets read"],
-  ["D  the chain, wired", null, 0, gapEnd(3), gapEnd(4), "black: a six node spine in hairline type needs it"],
-  ["E  answered on the site", "shot3-reply-glow", 0.4, gapEnd(4), gapEnd(5), "the reply already on their phone"],
-  ["F  the rule", null, 0, gapEnd(5), gapEnd(6), "black: the one line in this film worth remembering"],
-  ["G  the close", "shot6-keys-porch", 0.31, gapEnd(6), FILM_LEN, "keys changing hands on a porch"],
-];
 
 mkdirSync(OUT, { recursive: true });
 const run = (args, tag) => {
@@ -54,29 +40,61 @@ const run = (args, tag) => {
   return r.stderr || "";
 };
 
+// TRANSITIONS, DERIVED FROM THE PLAN RATHER THAN LISTED SEPARATELY.
+//
+// The brief was "design them, do not just crossfade everything", and that is the right
+// instruction: a dissolve between two unrelated generated clips is the single most slideshow-like
+// thing a cut can do. So there is a grammar, and it comes from what each beat's NEIGHBOURS are:
+//
+//   footage -> black   the picture falls away, so the footage fades down into the card.
+//   black -> footage   the picture returns, so the footage fades up out of the card.
+//   footage -> footage a HARD CUT, always. Two real shots meeting is correct film grammar and
+//                      needs no help; softening it is what makes a reel look like a wedding video.
+//
+// In this film every footage beat happens to be separated by a black card, so the vocabulary
+// resolves to dips and lifts and there is no dissolve anywhere. That is the plan being honest
+// about itself, not a limitation.
+//
+// TWO BOUNDARIES ARE DELIBERATELY EXEMPT, and both would be bugs if they were not:
+//   - The FIRST beat never fades up. The poster is frame zero, and the hook number is the reason
+//     anybody presses play, so frame zero has to be the picture rather than a black frame the
+//     fade has not finished leaving yet.
+//   - The LAST beat never fades down here, because assemble.mjs already fades the whole film at
+//     FADE_AT. Doing both would darken the close twice over.
+const DIP = 0.35;
+
 let t = 0;
 const parts = [];
-for (const [beat, clip, inPoint, from, to, why] of PLAN) {
+PLAN.forEach(({ beat, clip, in: inPoint, from, to, why }, i) => {
   const dur = +(to - from).toFixed(3);
   if (Math.abs(from - t) > 0.005) throw new Error(`beat ${beat} starts at ${from} but the cut is at ${t}`);
   const seg = `${OUT}/seg${parts.length}.mp4`;
+  const prev = PLAN[i - 1], next = PLAN[i + 1];
+  const lift = clip && prev && !prev.clip && i > 0;          // arriving out of a black card
+  const dip = clip && next && !next.clip;                     // leaving into a black card
+  const moves = [lift && "lift", dip && "dip"].filter(Boolean).join("+") || "cut";
+
   if (clip) {
     const src = `${FOOTAGE}/${clip}.mp4`;
     if (!existsSync(src)) throw new Error(`missing footage: ${src}`);
+    const fades = [
+      lift ? `fade=t=in:st=0:d=${DIP}` : null,
+      dip ? `fade=t=out:st=${(dur - DIP).toFixed(3)}:d=${DIP}` : null,
+    ].filter(Boolean).join(",");
     // -ss before -i is the fast seek; re-encoding to a common 30fps profile is what makes the
     // concat safe. setsar=1 matters: a mismatched aspect ratio makes concat refuse.
     run(["-ss", String(inPoint), "-t", String(dur), "-i", src,
-      "-vf", `fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1,format=yuv420p`,
+      "-vf", `fps=${FPS},scale=${W}:${H}:flags=lanczos,setsar=1${fades ? "," + fades : ""},format=yuv420p`,
       "-an", "-c:v", "libx264", "-crf", "14", "-preset", "slow", "-y", seg], beat);
   } else {
     run(["-f", "lavfi", "-i", `color=c=black:s=${W}x${H}:r=${FPS}:d=${dur}`,
       "-vf", "setsar=1,format=yuv420p", "-c:v", "libx264", "-crf", "14", "-preset", "medium",
       "-y", seg], beat);
   }
-  console.log(`${String(t.toFixed(2)).padStart(6)} -> ${(t + dur).toFixed(2).padStart(6)}  ${beat.padEnd(26)} ${(clip ?? "(black)").padEnd(22)} ${why}`);
+  console.log(`${String(t.toFixed(2)).padStart(6)} -> ${(t + dur).toFixed(2).padStart(6)}  ${beat.padEnd(26)} ${(clip ?? "(black)").padEnd(22)} ${(clip ? moves : "-").padEnd(9)} ${why}`);
   parts.push(seg);
   t += dur;
-}
+});
 
 // concat via the demuxer: no re-encode of the segments, so the picture is encoded exactly once
 // before the overlay pass.

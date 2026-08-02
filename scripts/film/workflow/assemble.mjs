@@ -22,6 +22,7 @@ import { spawnSync } from "node:child_process";
 import { mkdirSync, statSync } from "node:fs";
 import ffmpegPath from "ffmpeg-static";
 import { sched, FILM_LEN, FADE, FADE_AT, LAST_WORD } from "./cut.mjs";
+import { buildBed } from "../bed.mjs";
 
 const V = "scripts/_scratch-video";
 const DIR = `${V}/workflow-vo`;
@@ -57,8 +58,17 @@ run([...inputs, "-filter_complex", `${delays};${mix}`, "-map", "[vo]", "-ac", "1
   "-y", `${V}/vo-workflow.wav`], "vo-mix");
 console.log(`vo track: ${mb(`${V}/vo-workflow.wav`)}`);
 
+// 1b) the sound bed, derived from the same PLAN the picture is cut from, then summed under the
+//     voice. The voice is loudnorm'd to -16 LUFS ABOVE, before the bed is added, so the bed
+//     cannot drag the narration's level around: the mix is a sum, not a second normalisation.
+const bed = await buildBed("workflow");
+run(["-i", `${V}/vo-workflow.wav`, "-i", bed,
+  "-filter_complex", `[0:a][1:a]amix=inputs=2:normalize=0,atrim=0:${FILM_LEN},asetpts=PTS-STARTPTS[a]`,
+  "-map", "[a]", "-ac", "1", "-ar", "48000", "-y", `${V}/mix-workflow.wav`], "bed-mix");
+console.log(`mixed:   ${mb(`${V}/mix-workflow.wav`)}`);
+
 // 2) the film that ships: footage under type, in one pass
-run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/vo-workflow.wav`,
+run(["-i", BG, "-framerate", "30", "-i", `${FRAMES}/f%05d.png`, "-i", `${V}/mix-workflow.wav`,
   "-filter_complex", `[0:v][1:v]overlay=0:0:format=auto,fade=t=out:st=${FADE_AT}:d=${FADE}[v]`,
   "-map", "[v]", "-map", "2:a",
   "-c:v", "libx264", "-crf", String(CRF), "-preset", "slow", "-pix_fmt", "yuv420p",
@@ -73,7 +83,11 @@ run(["-i", BG, "-i", `${FRAMES}/f00000.png`,
   "-frames:v", "1", "-q:v", "3", "-y", `${PUB}/film-workflow-poster.jpg`], "poster");
 console.log(`poster: ${mb(`${PUB}/film-workflow-poster.jpg`)}`);
 
-// 4) prove the gaps are deliberate beats rather than clipped tails
+// 4) prove the gaps are deliberate beats rather than clipped tails.
+//    This runs on the VOICE-ONLY track on purpose. Once the bed is under it there is no silence
+//    anywhere in the film by design, so pointing silencedetect at the mix would report nothing
+//    and prove nothing. Intelligibility of the finished mix is a different question and is
+//    answered by scripts/film/verify-audio.mjs, which transcribes the shipped file.
 const det = run(["-i", `${V}/vo-workflow.wav`, "-af", "silencedetect=n=-38dB:d=0.25", "-f", "null", "-"], "silence");
 const marks = [...det.matchAll(/silence_(start|end): ([\d.]+)/g)].map((m) => `${m[1]}@${(+m[2]).toFixed(2)}`);
 console.log(`\nsilence: ${marks.join(" ")}`);
