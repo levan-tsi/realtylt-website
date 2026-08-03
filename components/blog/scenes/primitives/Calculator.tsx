@@ -25,6 +25,7 @@ import type { CalcFactor, CalcFormat, CalcInput, CalcStep } from "@/lib/blog/fla
 
 const fmt = (v: number, format: CalcFormat) => {
   if (format === "money") return "$" + Math.round(v).toLocaleString("en-US");
+  if (format === "percent") return `${Math.round(v)}%`;
   // One decimal below ten, because a funnel that narrows to 9.6 closings should not round up to
   // a round 10 on the way to the money. Above ten the decimal is noise.
   if (v > 0 && v < 10) return String(Math.round(v * 10) / 10);
@@ -64,7 +65,10 @@ export function Calculator({
   const multiplier = (id: string) => {
     const input = byId[id];
     if (!input) return 1;
-    return input.kind === "range" ? state[id] : (input.options[state[id]]?.value ?? 1);
+    if (input.kind !== "range") return input.options[state[id]]?.value ?? 1;
+    // A share reads as 40% and multiplies as 0.40. Doing that here rather than in the content
+    // file means a topic cannot write 40 where it meant 0.4.
+    return input.format === "percent" ? state[id] / 100 : state[id];
   };
 
   /** How a multiplier reads in the ladder. A rate says itself; a control says whose number it

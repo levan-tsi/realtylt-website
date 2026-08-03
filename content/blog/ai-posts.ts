@@ -129,6 +129,8 @@ So what you receive is not "a lead could not reach me". It is nothing at all. Th
 
 That is the specific reason a phone gap is worse than an inbox gap. An unanswered email is still sitting there in the morning with somebody's name on it, and you can still be the one who replies. An unanswered call left no name, no number that is worth ringing because they are already talking to somebody else, and no record that anything happened.
 
+[[scene:calls-calculator]]
+
 ## What an AI voice agent actually does
 
 Stripped of the marketing, it is a voice on the phone that can hold a real conversation, wired to the systems that make its answers true. Ours runs on Vapi.
@@ -293,6 +295,10 @@ None of what follows is legal advice, I am not a lawyer, and the rules move. The
 
 Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the records, and whatever your CRM does with the word stop. If a vendor cannot tell you how their campaign handles all three, the campaign is not ready to send.
 
+Once you know how much of that list you are actually allowed to contact, the rest is arithmetic, and it is arithmetic nobody can do for you.
+
+[[scene:list-calculator]]
+
 ## What it costs when it goes wrong
 
 We do not publish a price for this and I am not going to invent one here, because it depends entirely on the size and state of the list. What is worth publishing is the other side of the ledger, because it is a fixed number and almost nobody quotes it.
@@ -404,6 +410,10 @@ Every scoring system in this business measures the same three things, because th
 [[scene:three-signals]]
 
 A note on the third one, because it is the one people get wrong. A date on its own is weak. Anybody will type spring into a form. A date with a REASON attached is the strongest signal there is, because the reason is what makes the date real: the lease ends, the job starts, the closing is booked. When somebody volunteers the reason, they have told you they are not browsing.
+
+None of those three signals arrive in the form. Somebody has to go and find them, one lead at a time, and that is a job with a number on it.
+
+[[scene:triage-calculator]]
 
 [[scene:pull-quote]]
 
@@ -539,6 +549,10 @@ Nobody woke up. Nobody typed. The lead was answered while they were still on the
 You do not need a consultant for the first pass. You need a piece of paper and an honest hour.
 
 [[scene:audit]]
+
+When you have that list in front of you, the arithmetic is the easy part.
+
+[[scene:busywork-calculator]]
 
 [[scene:pull-quote]]
 

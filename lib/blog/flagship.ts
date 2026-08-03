@@ -123,7 +123,9 @@ export interface CalcChoice {
 
 export type CalcInput = CalcRange | CalcChoice;
 
-export type CalcFormat = "count" | "money" | "hours";
+/** `percent` is an input-only format: it reads as "40%" and contributes 0.40 to the chain, so a
+ * topic can ask the reader for a share without a content file having to remember to write 0.4. */
+export type CalcFormat = "count" | "money" | "hours" | "percent";
 
 /** Either the reader's own number, or a rate we state out loud. There is no third kind on
  * purpose: a multiplier is one or the other, and an unlabelled constant is how a calculator
