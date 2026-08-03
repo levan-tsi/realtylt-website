@@ -424,9 +424,21 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       turns: QUALIFY_TURNS,
       events: QUALIFY_EVENTS,
     },
+    /** DARK, and it is the only thing standing in 6,973px of light surface.
+     *
+     * Measured on the rendered page, this post ran from the teardown at 45% to the diagram at
+     * 74% without a single dark band: conversation, prose, grid, prose, offer, prose, all of
+     * it paper or mist. That was 29% of the page in one tone, the worst in the cohort against
+     * a 21% median, and the declared rule ("no two adjacent bands should share a background")
+     * cannot see it because no two adjacent bands did.
+     *
+     * Mist is a real break and reads as one at full size, but it is a quiet one. This is the
+     * section where a score can put you on the wrong side of the Fair Housing Act, so if
+     * exactly one thing in that stretch gets the weight of a full-bleed black band, it is
+     * this one. Three columns on dark is already proved by the workflow post. */
     "fair-play": {
       kind: "grid",
-      band: "light",
+      band: "dark",
       label: "The three rules",
       eyebrow: "The part nobody sells you",
       heading: "Three rules that keep a score on the right side of the line.",

@@ -303,9 +303,13 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       glow: true,
       items: FOUR_MOVES,
     },
+    /** DARK. Same reason as the qualification post's fair-play grid: this page ran 5,732px,
+     * a quarter of its height, without one dark band in it, and this is the section the
+     * article says is the whole reason a large share of these campaigns should never have
+     * been sent. If one thing in that stretch carries the weight, it is the consent check. */
     "consent-check": {
       kind: "grid",
-      band: "light",
+      band: "dark",
       label: "The three checks",
       eyebrow: "Take this to anybody, including us",
       heading: "Three things to check before a single message goes out.",
