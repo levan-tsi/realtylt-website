@@ -1,0 +1,70 @@
+import fs from "node:fs";
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+
+/** THE PORTALLED COMBOBOX POPUP.
+ *
+ * Round 19 found the home-page dropdown had never been clickable: the hero is `isolate
+ * overflow-hidden`, so an absolutely-positioned list anchored near its bottom edge was clipped
+ * by the hero AND out-painted by the scroll cue. The fix was to portal the list to <body> as
+ * `position: fixed`.
+ *
+ * That fix is global, and it changed what "dismiss" has to mean. While the list was an in-flow
+ * child being clipped, leaving it open was invisible. A fixed, portalled list at z-60 is not:
+ * it floats over the whole page, including the control that focus just moved to.
+ *
+ * There is no jsdom in this project (vitest runs in node), so behaviour is proven in a real
+ * browser by scripts/_scratch-r20-dropdown.mjs — hit-tests at 1440/390/320, scroll and resize
+ * tracking, arrow keys, Escape, Tab, outside click, and JS off. These guard the two lines that
+ * probe cannot see the absence of until someone deletes them.
+ */
+
+const SRC = fs.readFileSync(
+  path.resolve(__dirname, "LocationSuggest.tsx"),
+  "utf8",
+);
+/** Read only what ships — the doc comments above each handler describe the very thing being
+ * matched, and a naive substring search reads the explanation as the implementation. */
+const CODE = SRC.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+
+describe("LocationSuggest — a portalled popup has to be dismissable", () => {
+  /** A keyboard visitor never produces a mousedown, so the outside-click listener alone left
+   * the list on screen when Tab moved focus to the search button behind it. */
+  it("closes when focus leaves the input", () => {
+    expect(CODE).toMatch(/onBlur=/);
+  });
+
+  /** ...but not when focus lands INSIDE the list, or a click on an option would unmount the
+   * thing being clicked before the click could land. */
+  it("does not close when focus moves into the list itself", () => {
+    expect(CODE).toMatch(/relatedTarget/);
+    expect(CODE).toMatch(/listRef\.current\?\.contains/);
+  });
+
+  /** The list is portalled out of wrapRef, so an outside-click check that only asks about
+   * wrapRef treats the mousedown starting a click on an option as an outside click. That was
+   * the original bug's second half. */
+  it("treats the portalled list as inside for outside-click purposes", () => {
+    const handler = CODE.slice(CODE.indexOf("function onDoc"), CODE.indexOf("function pick"));
+    expect(handler).toMatch(/wrapRef\.current\?\.contains/);
+    expect(handler).toMatch(/listRef\.current\?\.contains/);
+  });
+
+  /** Escape is the one dismissal a combobox must have by spec. */
+  it("closes on Escape", () => {
+    expect(CODE).toMatch(/["']Escape["']/);
+  });
+
+  /** Selection is aria-activedescendant, which means focus never leaves the input — and the
+   * options' mousedown is prevented so a mouse click cannot blur it either. If that
+   * preventDefault goes, the blur handler above starts closing the list mid-click. */
+  it("keeps focus on the input while an option is being clicked", () => {
+    expect(CODE).toMatch(/onMouseDown=\{\(e\) => e\.preventDefault\(\)\}/);
+    expect(CODE).toMatch(/aria-activedescendant/);
+  });
+
+  /** Progressive enhancement: with JS off the surrounding form still submits ?q=. */
+  it("is a real named input so the plain form still submits", () => {
+    expect(CODE).toMatch(/name=\{name\}/);
+  });
+});

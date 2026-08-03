@@ -139,6 +139,22 @@ export function LocationSuggest({
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        /* Close when focus leaves the control. The only other thing that closes this list is a
+           mousedown outside it, which a keyboard visitor never produces — so tabbing off the
+           input used to leave the popup on screen. That was harmless while the list was an
+           in-flow absolute child being clipped by the hero; since round 19 portalled it to
+           <body> as position:fixed at z-60 it is global, so an orphaned list floats over the
+           page and covers the very control Tab just moved to.
+           relatedTarget is the element about to receive focus: null when the window itself
+           loses focus (close, correctly), and inside the list only if an option ever takes
+           focus. Options do not — selection is aria-activedescendant and their mousedown is
+           prevented so the input keeps focus through a click — but guarding it here means a
+           later change to that cannot silently close the list mid-pick. */
+        onBlur={(e) => {
+          const next = e.relatedTarget as Node | null;
+          if (next && listRef.current?.contains(next)) return;
+          setOpen(false);
+        }}
         onKeyDown={(e) => {
           if (!open) return;
           if (e.key === "ArrowDown") {
