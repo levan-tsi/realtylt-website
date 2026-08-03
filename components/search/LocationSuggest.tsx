@@ -47,6 +47,9 @@ export function LocationSuggest({
   /** The label `pick` just wrote into the input, so the query effect can tell a choice from
    * typing. Null whenever the next change is genuinely the visitor's. */
   const pickedRef = useRef<string | null>(null);
+  /** True until the query effect has run once, so a value that arrived from the URL is never
+   * treated as something the visitor typed. */
+  const firstRunRef = useRef(true);
   const [value, setValue] = useState(defaultValue);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
@@ -78,11 +81,20 @@ export function LocationSuggest({
 
   useEffect(() => {
     const needle = value.trim();
+    // NEVER open on mount. The initial value comes from the URL (`?q=` / `?city=`), not from
+    // anybody typing, so searching it means the page can load with a dropdown already covering
+    // its own results. This is also the second half of the picked-value problem below: choosing
+    // a city on /search rewrites the URL, which remounts this component with the chosen name as
+    // its defaultValue — a fresh instance, a fresh ref, and the list reopened 2.6s later.
+    if (firstRunRef.current) {
+      firstRunRef.current = false;
+      return;
+    }
     // A value we put in the box ourselves is a CHOICE, not a query. `pick` closes the list and
     // then writes the chosen label into the input, which used to look exactly like typing: the
-    // effect below re-ran, fetched suggestions for the thing they just picked, and re-opened
-    // the list over the results. On the home page nobody saw it, because picking navigates
-    // away. On /search you stay on the page, and it reopened 400ms later and sat there.
+    // effect re-ran, fetched suggestions for the thing they just picked, and re-opened the list
+    // over the results. On the home page nobody saw it, because picking navigates away. On
+    // /search you stay on the page, and it came back 400ms later and sat there.
     if (pickedRef.current !== null && needle === pickedRef.current) {
       pickedRef.current = null;
       return;
