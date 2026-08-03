@@ -1,5 +1,73 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
+## NEXT SESSION'S JOB (owner 2026-08-02) — RAISE ALL FIVE TO THE STANDARD. Resume HERE.
+
+**Videos are on hold by the owner.** Do not touch the films, the avatar or HeyGen this round.
+
+The spec is already written and enforced: `docs/blog-flagship/STANDARD.md` (the judgement half) and
+`node scripts/flagship-standard.mjs` (the measurable half, floored at the cohort median and
+ratcheted in `standard.json`). **Read STANDARD.md first — it carries the owner's brief verbatim.**
+
+Run `node scripts/flagship-standard.mjs` to get the live gap list. As of 2026-08-02:
+
+| post | owes |
+|---|---|
+| **chat** | prose 1,030 → 2,906 · sections 14 → 17 · citations 1 → 4 · FAQ 3 → 5 · images 5 → 6 |
+| voice | money math · calculator |
+| reactivation | money math · calculator |
+| qualification | prose 2,641 → 2,906 · citations 3 → 4 · cost section · money math · calculator |
+| workflow | money math · calculator |
+
+### Do the CALCULATOR first. It closes four posts and it is the owner's actual brief.
+
+`components/blog/scenes/LeadsCalculator.tsx` (173 lines) is hard-wired to chat's economics. Generalise
+it into a primitive the way `StatBars`, `Diagram` and `Conversation` were generalised — declarative
+inputs, every assumption rendered on screen, and a REQUIRED `note` like the other honest primitives.
+
+**The trap is the arithmetic, not the React.** The comment at the top of that file records why: an
+earlier draft multiplied every missed INQUIRY by a full commission, so 192 missed inquiries read as
+192 lost closings. The chain has to stay explicit and get smaller at every step — inquiries →
+conversations won at your reply speed → closings at a stated close rate → commission — and the
+commission must be the READER's input, never a figure asserted for them.
+
+Four chains to build, each needing the same discipline:
+
+- **voice** — missed calls/month → share that were real inquiries → share you win by answering live
+  → closings → commission. The post already argues the caller rings the next agent; the model must
+  not double-count that against the reactivation one.
+- **reactivation** — dormant contacts → share still in market → share that answer → closings. The
+  post deliberately cites NO response-rate figure because there is no independent study
+  (see the zombie-stat list below), so this one's assumptions must be openly labelled as the
+  reader's own guesses, not sourced rates. That is a feature: it is the honest version.
+- **qualification** — leads/month → minutes triaging each → hours/year, AND the deals mis-ranked.
+  Time saved is the weaker half; the stronger half is the good lead that got worked third.
+- **workflow** — manual steps/week × minutes each → hours/year → the reader's own hourly cost. The
+  post already owns the 25 min 26 sec interruption figure (Mark, Gonzalez and Harris, CHI 2005),
+  which is the one sourced multiplier available here.
+
+### Then chat, which is the long pole and is mostly RESEARCH
+
+It needs +1,876 words of prose and **+3 external citations**, and the bar is unforgiving: a
+DIFFERENT primary source per topic, read in the primary document, never a summary. That rule has
+already caught two zombie stats — "23 minutes and 15 seconds" (the real figure is 25 min 26 sec) and
+"$16,000 per text" (a real number from the wrong statute). Chat has already spent its source
+(Oldroyd / HBR). Budget real time for finding three more that survive checking, and add the sections
+its own successors have and it does not: **what it costs and how long it takes**, and a practical
+section the reader can act on.
+
+Its FAQ also needs reshaping, not just extending. Today's three entries are objections — *"Will it
+annoy my visitors?"* — which is what WE are defensive about. Workflow's six are the model because
+they include what people actually search: the definitional one ("what IS this, in plain terms") is
+mandatory, because that is the entry an AI answer lifts.
+
+### Two things that are NOT this round
+
+- **Original data (`A1`, −3 on the rubric)** is genuinely blocked, not deferred: 37 chat sessions in
+  30 days, mostly the owner's own testing. It needs public traffic, not effort.
+- **The 10 consumer placeholder posts** are live, indexable, in the sitemap and render the literal
+  string "[Placeholder draft. The owner's final article replaces this text.]". One line to noindex
+  them and drop them from the sitemap. Cheap, and separate from the standard work.
+
 ## STATUS 2026-08-02 (session 13b): the floating ToC, the footage defects, and why NOT HyperFrames
 
 ### The floating rail was covering the text on EVERY service page, at EVERY width
