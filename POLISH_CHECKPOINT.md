@@ -1,149 +1,65 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 19 BRIEF — set 2026-08-02 late (round 18 COMPLETE). Single agent, no subagents.
+## ═══ ROUND 19 BRIEF — set 2026-08-02, end of round 18b. Single agent, no subagents.
 ##
-## FIRST ACTION: read docs/parity/DESIGN-ROUND18.md. It carries every number below with the
-## evidence, plus before/after renders in docs/design-r18/. This block is the running order.
+## >>> READ docs/parity/HANDOFF-ROUND-19.md FIRST. It is the running order for this round and
+## >>> it carries the reasoning. This block is only the short version.
 ##
-## ── THE HERO LAB IS NOW PUSHED AND HE HAS A LINK (2026-08-02, late) ──────────────────
-## He asked "did you create main page design to show me or not yet?" — three candidates had
-## existed since the previous round but ONLY on a local branch, so he had never seen them.
-## Branch `hero-lab` is now pushed, with main MERGED INTO IT so the preview shows the current
-## site with the three heroes on top. Vercel preview + a 23h share link (mint a fresh one with
-## the Vercel MCP get_access_to_vercel_url when it expires):
-##   https://realtylt-website-git-hero-lab-levans-projects-a543d940.vercel.app/lab/hero
-## Verified live myself: http 200, all three variants render, 1 canvas, 0 page errors,
-## 0 overflow. Full-page capture in docs/design-r18/herolab-live.png, and B with the pointer
-## actually in it in docs/design-r18/valley-1..3.png.
-## MY HONEST READ OF B ("The Valley", still my recommendation): it works — the Hudson corridor
-## reads as a real denser band, the nearest listing brightens and names itself ($749,900
-## WALLKILL), and "6,000 HOMES, LIVE" sits quietly bottom-right. Two real weaknesses to fix if
-## he picks it: the field is concentrated in the RIGHT half so the composition is lopsided
-## (the headline occupies the empty left, which half-rescues it), and at 1x the points read as
-## faint smudges rather than crisp lights. Neither is fatal; both are tuning.
+## ── ASK HIM TWO THINGS BEFORE BUILDING ANYTHING ─────────────────────────────────────
+## 1. THE PHOTO BACKFILL — go or no-go. 8,400 Pending listings show ONE photo while the feed
+##    holds 20-40, and that is the biggest visible quality gap on the site. Proven working
+##    (72 of 72, zero failures), sized at 13,382 listings / 271,141 photos / ~68GB / $0
+##    storage / ~12h. MY RECOMMENDATION IS YES BUT IN CHUNKS — start with --max-listings 2000
+##    and watch the failure count. Commands and abort criteria in handoff section 1.
+## 2. THE HERO — his last word was "this pages still look like shit the demo pages", and it is
+##    AMBIGUOUS: the bare lab-page presentation, or the heroes themselves including the new D?
+##    ASK before spending a round on it. Four candidates live on branch hero-lab at /lab/hero.
 ##
-## ── TWO MORE HE REPORTED AFTER ROUND 18 SHIPPED — BOTH FIXED, BOTH VERIFIED ──────────
-## 1. THE LISTING-PAGE PHOTO ARROWS MOVED ONCE AND FROZE. Not the lightbox — the band on the
-##    page itself. Measured before the fix on a 31-photo listing: hero 0 -> 0 -> 0 -> 0 while
-##    the column went 1,2,3 then 2,3,4 then never moved; Back oscillated between two states.
-##    CAUSE: the hero was picked as "first surviving photo NOT in the side column" instead of
-##    "first surviving photo at or after the anchor" — identical only while the anchor is 0.
-##    Now lib/idx/photo-band.ts::heroAt, with 10 new tests that WALK THE ARROWS, so a frozen
-##    carousel fails a test instead of reaching him. After: 0->1->2->3->4 and back.
-## 2. "MAKE IT MORE UNDERSTANDABLE THAT YOU ARE SWITCHING LISTINGS." Fixing (1) is what made
-##    this urgent: the page now carries TWO working arrow pairs. The pager reads LISTING 3 OF
-##    36, and the breadcrumb row wraps on a phone rather than shortening the label. Also, while
-##    a photo arrow has FOCUS the two arrow keys belong to the photos (preventDefault; the
-##    pager already bails on a defaulted event).
-## Full stress run 13/13 — both arrow directions, rapid presses, wrapping, the key-ownership
-## split, pager click + key, disabled first listing, cold visitor, JS-off, and 24 page-width
-## combinations. tsc clean, 635 tests.
+## ── HIS NEW ASKS, BOTH SPECIFIED IN THE HANDOFF ─────────────────────────────────────
+## · CONSENT TO CALL/TEXT on the CTAs and forms. VERIFIED STATE: this site has ZERO consent
+##   language anywhere, while FOUR components collect a phone number (LeadForm,
+##   ListingLeadCTAs, QualifyingWizard, TrackedButton) — and the CRM now has a LIVE dialer and
+##   LIVE Twilio SMS pointed at exactly those leads. Research first: TCPA, the FCC one-to-one
+##   consent rule (adopted and then VACATED on appeal in early 2025 — verify it, do not assert
+##   from memory), New York rules, and his brokerage. Store the PROOF — the wording shown, the
+##   timestamp, the page URL, the IP — not a boolean. Handoff section 2.
+##   NOTE: CRM_LEAD_WEBHOOK points at the LIVE CRM. Intercept **/api/lead in every probe.
+## · "GENERAL BOXES AND ALL" design pass — inventory the card/panel/box vocabulary across the
+##   whole site before touching anything, and fix the SYSTEM rather than individual boxes.
+##   Get his hero verdict first: the box language should follow the hero, not fight it.
 ##
-## ── HIS PHOTO QUESTION IS ANSWERED, AND ONE DECISION IS WAITING ON HIM ───────────────
-## Round 17 fixed change detection and expected the one-photo share to fall. IT DID NOT MOVE:
-## 8,400 of 10,045 Pending rows (84%) still serve exactly one photo, against 8,402 of 10,043
-## last round. THE FIX IS FINE ANYWAY — I split the two explanations apart by looking only at
-## rows the cron has TOUCHED since it shipped:
-##     last 24h (1,318 rows)          6% one-photo    69% at 5+ photos
-##     last 24h, Pending only (45)    13% one-photo   80% at 5+
-## So the 84% is pure BACKLOG. A listing only re-mirrors when the feed touches it again, and
-## that is ~1,300 rows a day against 27,605 active — about three weeks to clear on its own.
-## (Also confirmed the fix is really deployed: essentially every row written since 2026-08-02
-## ~06:00 UTC carries photosMirroredCount. The 7,705 written at 00:00 UTC predate it.)
+## ── HIS QUESTION, ANSWERED: THE CHAT REBUILD BELONGS IN THE **CRM** SESSION ──────────
+## Everything hard about it is stateful, and all of that state lives in the CRM: conversation
+## storage, realtime delivery, AI-answers-first, the turn-the-AI-off-and-take-over handoff,
+## agent presence, and Twilio SMS. The CRM already owns takeover — the Pause wire is live and
+## proven on production. Property search is NOT a reason to build it on the website:
+## /api/idx/search is already an HTTP API the CRM's AI can call as a tool. The website owes it
+## a documented, rate-safe search contract, the page context (which listing they are on), and
+## then a widget swap. WRITE THE MESSAGE CONTRACT DOWN BEFORE EITHER SIDE STARTS — two sessions
+## building against an unwritten contract will invent two schemas. Full reasoning, handoff §3.
+## And never let the AI touch MLS Grid directly; it searches our own database only.
 ##
-## THE BACKFILL IS THE ONLY LEVER THAT CLEARS IT, AND IT WORKS RIGHT NOW. I ran a deliberately
-## small live slice (1 page, 6 listings, cap 12): 72 photos fetched, 72 downloaded, ZERO
-## failures. The media host is serving. The full job, measured:
-##     13,382 listings hold fewer photos than the feed has
-##     271,141 photos missing   ·   8,077 of those listings are Pending   ·   ~68 GB
-## 68 GB lands near the ~194 GB "every listing full" ceiling that round 17 already priced at
-## $0/mo overage, so storage is STILL not a constraint. Roughly half a day of downloading.
-##   >>> ASK HIM, THEN RUN IT: node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
-##   >>> It is resumable (scripts/.photo-backfill-watermark.local); --fresh restarts.
-## This is the single biggest visible-quality item left on the site. Everything else is polish.
+## ── SHIPPED IN 18b, DO NOT RE-DO ────────────────────────────────────────────────────
+## · Prev/next listing now reads "PREVIOUS · LISTING 3 OF 50 · NEXT" and appears from EVERY
+##   browse surface (search, both home rails, Saved, county pages), correctly absent for a cold
+##   visitor. Arrow keys work; the lightbox and the photo band keep their own arrows.
+## · THE LISTING PHOTO BAND WAS FROZEN — it moved once and stopped, because the hero was picked
+##   as "first surviving photo NOT in the side column" instead of "first at or after the
+##   anchor". Fixed as lib/idx/photo-band.ts::heroAt, with tests that walk the arrows.
+## · PAGE SIZE 36 -> 50. Measured before changing it (177ms -> 215ms, 87KB -> 123KB) and
+##   VERIFIED LIVE ON PRODUCTION: server-rendered 50 cards, stored set 50, page 1 of 50.
+##   If he still sees 36 it is his BROWSER CACHE — hard-refresh.
+## · /search 320px overflow, the map popup status badge, and the coming-soon panel redraw.
 ##
-## ── ROUND 18 SHIPPED THREE OF HIS FOUR, ALL VERIFIED IN A REAL BROWSER ───────────────
-## 1. MAP POPUP NOW SHOWS THE STATUS BADGE. Same treatment as the card (solid ink, 8px, 10px
-##    bold uppercase), placed bottom-LEFT because both top corners of a popup are controls;
-##    it pairs with the photo counter. Hovered a real Pending chip to prove it; an Active chip
-##    beside it renders none.
-## 2. COMING-SOON PANEL REDRAWN. Rendered at the crops it actually gets FIRST, and the old one
-##    was breaking: the inset hairline frame was cropped down to two stray rules on every card
-##    (object-cover scales a near-square card by HEIGHT and throws the sides away), the type
-##    collapsed to ~10px, and the aperture glyph was the loudest thing on it. Frame and glyph
-##    GONE — two elements removed, none added, as he asked. Square viewBox + a safe area that
-##    survives every crop, and the phrase set on two lines so a 300px card renders ~19px.
-##    His original gothic-mansion raster is still in the repo, untouched.
-## 3. PREVIOUS / NEXT HOME. Only appears when the listing on screen is in the result set the
-##    visitor was actually browsing (written to sessionStorage by SearchClient); a cold Google
-##    visitor sees nothing. Lives on the BREADCRUMB row — the sticky sub-nav was built first
-##    and measured: its Offer/Share/Save group is 281px of a 320px screen, so the pager pushed
-##    the document 88px past the viewport at 320. Arrow keys work too, guarded so the photo
-##    lightbox keeps its own ← / → (proven both ways).
-## 4. HIS CMA ITEM IS STILL NOT DONE and cannot be done from this repo — see below.
+## ── GATES ───────────────────────────────────────────────────────────────────────────
+## tsc clean · 635 tests pass (never go below) · 0 horizontal overflow at 1440/390/320 across
+## home, search, buying, selling, connect, financing, top-areas and a listing · no JS errors ·
+## JS-off still renders the listing page. The traps that cost real time last round are listed
+## in handoff section 8 — read them before debugging anything.
 ##
-## PLUS one defect nobody had reported: /search pushed the document 22px sideways AT 320,
-## because round 17 grew the quick-filter group to four buttons and the row could not wrap.
-##
-## ── WHAT I CHASED AND DELIBERATELY DID NOT CHANGE (do not re-discover these) ─────────
-## · A "dark circle covering a control" at 320 is NEXTJS-PORTAL, the dev-mode indicator. It
-##   does not exist in production. The real chat launcher covers no interactive element at
-##   1440 / 390 / 320.
-## · PAGE 1 OF A `mixed` SEARCH SHOWS 31 CARDS where every other page shows 36. This is
-##   CORRECT. Verified independently: all 283 listings served across the 8 pages, zero
-##   duplicates, zero missing against a sort=newest reference. The daily ring rotation moves
-##   whole pages, so the set's short tail page lands somewhere other than last. I considered
-##   pinning the tail to always-last and rejected it — rotation only decides which page NUMBER
-##   a fixed group of 36 appears as, so pinning would permanently deny those ~31 listings any
-##   front-page turn, to avoid a ragged row about one day in eight. A wash, in the exact code
-##   that once served four results on page 2.
-##
-## ── STILL HIS CALL, BOTH CARRIED ─────────────────────────────────────────────────────
-## · THE HERO LAB is built and untouched this round, because he asked to judge it first:
-##     git checkout hero-lab  →  dev server  →  /lab/hero      (git checkout main to return)
-##   LOCAL BRANCH ONLY, never pushed; main still plays the Vimeo clip. docs/parity/HERO-LAB.md
-##   on that branch has the three variants and the honest weakness of each. My recommendation
-##   is still B, "The Valley" — 6,000 real listings at their real coordinates as points of
-##   light, the only one that could not exist on a competitor's site. Screenshots undersell
-##   two of them; they need a mouse moving.
-## · THE COMING-SOON ORIGINAL (public/images/mls/coming-soon.webp) — keep or delete.
-##
-## ── THE CMA ENUMERATION: THREE ORDERED STEPS, AND STEP 2 IS IN ANOTHER REPO ──────────
-## Unchanged and still needed. Anon can enumerate all THREE tables, not one: cma_reports,
-## cma_report_comps, mls_listings. The order is the whole point — dropping the policy first
-## breaks his live CMA page:
-##   1. Supabase: add get_published_cma_report(report_id uuid) SECURITY DEFINER returning the
-##      report WITH its comps (mirrors get_active_market_report, which fixed the identical
-##      market_reports flaw).
-##   2. CRM repo (~/realtylt-crm): point apps/web/lib/data/cma-public.ts::getPublishedCmaReport
-##      at that RPC. It is the ONLY anon consumer.
-##   3. Supabase: only then drop cma_reports_public_select AND the anon policies on
-##      cma_report_comps and mls_listings.
-## Not done because step 2 lands in a repo another session owns and steps 1/3 straddle a CRM
-## deploy. The OTHER audit item needs no pairing: 57 raw media.mlsgrid.com URLs are anon-
-## readable (all already expired) — store /api/media proxy paths in listing.photos. Wants its
-## own round; it touches the rate-sensitive sync path.
-##
-## ── FIRST ACTIONS NEXT ROUND ─────────────────────────────────────────────────────────
-## 1. node scripts/_scratch-r16-debt.mjs — if "modified in last 24h" is 0 the feed is frozen
-##    again; that is the whole health of the site in one number. (It was 1,319 today.)
-## 2. node scripts/_scratch-r17-onephoto.mjs — and read the section above BEFORE concluding
-##    anything from the 84%: the number only falls when the backfill runs.
-## 3. Ask him about the backfill, the hero lab, and the retired coming-soon artwork.
-## 4. The home page is ISR-cached for 600s, so rail changes do NOT appear straight after a
-##    deploy — that cost me time in round 17.
-##
-## ── GATES (unchanged, and they all passed this round) ────────────────────────────────
-## tsc clean · 625 tests pass (baseline was 476; never go below) · 0 horizontal overflow at
-## 1440/390/320 across home, search, buying, selling, connect, financing, top-areas, listing ·
-## no JS errors, no 4xx/5xx · JS-off still renders the listing page (200, h1 and breadcrumb
-## present, pager correctly absent — it is a progressive enhancement) · focus-visible ring
-## measured 2px #102C54, tap targets 28px.
-##
-## LAUNCH IS STILL GATED. The site is noindex on purpose. In this order, and only when he
-## says: clear NEXT_PUBLIC_SITE_URL in Vercel (every canonical and all 58 sitemap entries
-## currently point at the temp vercel.app host), point the realtylt.com apex here, then remove
-## PRELAUNCH=1. Do not remove the noindex yourself.
+## LAUNCH IS STILL GATED. The site is noindex on purpose. In this order, and only when he says:
+## clear NEXT_PUBLIC_SITE_URL in Vercel (every canonical and all 58 sitemap entries point at the
+## temp vercel.app host), point the realtylt.com apex here, then remove PRELAUNCH=1.
 ##
 ##
 ## ═══ ROUND 17 BRIEF (COMPLETE — kept for the reasoning) — set 2026-08-02.
