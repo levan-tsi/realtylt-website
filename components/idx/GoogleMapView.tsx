@@ -163,7 +163,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
                   : spokenFor
                     ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#4a4a4a;box-shadow:0 0 0 1.5px #4a4a4a,0 2px 8px rgb(0 0 0/.22)"
                     : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
-            };font:700 11px/1 ${MAP_FONT};padding:5px 8px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
+            };font:700 11px/1 ${MAP_FONT};padding:7px 9px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
             if (spokenFor) chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address} — ${p.status}`);
             if (p.saved) {
               const heart = document.createElement("span");

@@ -24,7 +24,7 @@ const priceIcon = (price: number, active: boolean, saved: boolean) =>
         : saved
           ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
           : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
-    };font:700 11px/1 ${FONT};padding:5px 8px;white-space:nowrap;border-radius:8px">${
+    };font:700 11px/1 ${FONT};padding:7px 9px;white-space:nowrap;border-radius:8px">${
       saved ? '<span style="color:#ef4444">♥</span> ' : ""
     }${chipPrice(price)}</span>`,
     iconSize: [0, 0],
