@@ -113,11 +113,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </div>
   );
 
+  // The prompt is audience-specific, because the two audiences are not the same person. A
+  // consumer post is passed to somebody who is moving; a flagship is 3,300 words aimed at the
+  // person who runs the brokerage, and telling them to send it to a home buyer is the wrong ask.
+  // The sentence is capped so the share row keeps its ~356px and never orphans an icon onto a
+  // second line: five targets plus the copy pill is the widest this row gets.
   const endCap = (
     <div className="mt-16 border-t border-line pt-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-stone">
-          Found this useful? Send it to someone who is buying, selling, or moving.
+        <p className="text-sm text-stone sm:max-w-[19rem]">
+          {flagship
+            ? "Know somebody who would argue with this? Send it to them."
+            : "Found this useful? Send it to someone who is buying, selling, or moving."}
         </p>
         <ShareRow url={url} title={post.title} tone="dark" />
       </div>
