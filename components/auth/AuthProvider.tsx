@@ -10,6 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { authErrorMessage } from "@/lib/auth/error-message";
 import type { Session, User } from "@supabase/supabase-js";
 import { createBrowserSupabase, type SupabaseBrowserClient } from "@/lib/supabase/client";
 import type { ActivityType, PortalProfile } from "@/lib/portal/types";
@@ -176,7 +177,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (email, password) => {
       if (!supabase) return { ok: false, error: "Accounts are unavailable right now." };
       const { error } = await supabase.auth.signInWithPassword({ email, password });
-      return error ? { ok: false, error: error.message } : { ok: true };
+      return error ? { ok: false, error: authErrorMessage(error) } : { ok: true };
     },
     [supabase],
   );
@@ -192,7 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data: { full_name: name, phone: phone ?? null, account_type: "portal" },
         },
       });
-      if (error) return { ok: false, error: error.message };
+      if (error) return { ok: false, error: authErrorMessage(error) };
       // No session but a user → email confirmation is required.
       if (!data.session && data.user) return { ok: true, needsConfirm: true };
       return { ok: true };
@@ -210,7 +211,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           data: { account_type: "portal" },
         },
       });
-      return error ? { ok: false, error: error.message } : { ok: true };
+      return error ? { ok: false, error: authErrorMessage(error) } : { ok: true };
     },
     [supabase],
   );
@@ -239,7 +240,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (fullName !== undefined) patch.full_name = fullName || null;
       if (phone !== undefined) patch.phone = phone || null;
       const { error } = await supabase.from("portal_clients").update(patch).eq("id", user.id);
-      if (error) return { ok: false, error: error.message };
+      // A PostgREST error ("new row violates row-level security policy…") is our plumbing too.
+      if (error) return { ok: false, error: authErrorMessage(error) };
       setProfile((p) =>
         p
           ? {
