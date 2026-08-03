@@ -118,6 +118,37 @@ export const IN_SHORT: string[] = [
  * Lifted VERBATIM from the bullet list that used to sit under "Where it goes wrong" in
  * AI_CHAT_ASSISTANT_POST. Same rule as the four moves: the scene REPLACES the list rather
  * than repeating it. */
+/** SCENE copy — the three self-checks.
+ *
+ * Every other flagship stages its rules section as an ACTION grid after the explanation:
+ * reactivation's consent check, qualification's fair-play rules, workflow's three rules for
+ * keeping a chain visible. This post explained three rules across seven hundred words of
+ * quoted statute and then handed the reader nothing to do with them, which made it the only
+ * post in the set whose hardest reading had no exit.
+ *
+ * It ADDS rather than repeats: two instructions that were buried at the end of a statute
+ * paragraph came out of the prose and became fuller versions of themselves here, and the
+ * first rule never had an action at all. A scene replaces the markdown it stages, so those
+ * sentences now appear exactly once on the page.
+ *
+ * Three columns on a dark band. That combination is already proved by the workflow post and
+ * is new to this one, which matters because this post's other three-column grid sits on mist
+ * and the two would otherwise be the same picture twice. */
+export const SELF_CHECKS: Move[] = [
+  {
+    lead: "Open your own chat window and read the first thing it says.",
+    body: "The test is not whether a disclosure exists somewhere in your terms. It is whether a stranger on a phone would know, inside one line, that they are talking to software. If you have to go looking for it, it is not clear and conspicuous, and the fix is one sentence you can write this evening.",
+  },
+  {
+    lead: "Time one of your own listing pages twice, and keep both numbers.",
+    body: "Once before the widget goes on and once after, on a phone rather than on your desktop, because that is where your traffic is. The thresholds are published and the test costs nothing. If the vendor cannot tell you what their script weighs, that is your answer, and the good ones load nothing at all until somebody taps the bubble.",
+  },
+  {
+    lead: "Tab into the chat window, then try to tab back out of it.",
+    body: "Keyboard only, no mouse, on the page a buyer would actually land on. If focus goes in and will not come out, a visitor using a screen reader is stuck on your website with no way forward. That is not a slow page. That is somebody who cannot leave your front door.",
+  },
+];
+
 export const FAILURE_MODES: Move[] = [
   {
     lead: "It is not connected to anything.",
@@ -355,6 +386,14 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. The reply curve is a judgement and not a measurement: an immediate reply is treated as winning roughly nine conversations in ten, a few hours about half, the next day about a fifth. It is shaped by the research quoted above rather than derived from it, and deliberately not by the unsourced 78% figure this article declines to use. The 5% close rate is ours and is deliberately low, because an inquiry is a conversation and not a signed deal, and a calculator that multiplies every missed inquiry by a full commission is selling you something. The two numbers you can drag are yours. All three are a place to start arguing from, not a measurement of your business.",
       action: { label: "See how it is built", href: "/services/ai-chat-assistant" },
       secondary: { label: "Talk it through", href: "/connect" },
+    },
+    "self-checks": {
+      kind: "grid",
+      band: "dark",
+      eyebrow: "Three you can run tonight",
+      heading: "All three take an afternoon, and none of them needs us.",
+      columns: 3,
+      items: SELF_CHECKS,
     },
     /** Placed straight after "How to test one before you buy it", which is the most generous
      * section in the piece: four questions the reader can put to any vendor, us included. The
