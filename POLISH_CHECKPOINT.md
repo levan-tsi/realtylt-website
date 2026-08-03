@@ -8,7 +8,14 @@
 ##   2. STRESS-TEST ROUND 19 (handoff §4). He asked for this by name. The consent record and
 ##      the new global dropdown portal are the two that matter most. Start with the ONE path
 ##      round 19 could not prove: sign in for real and generate a CMA end to end.
-##   3. GOOGLE PLACES on the home-value box — HIS DECISION, it bills per session. I drove his
+##   3. THE HOME-VALUE ADDRESS BOX. He was RIGHT that Google is already wired: measured on our
+##      own key, Geocoding AND Street View are ENABLED and already used by the listing gallery,
+##      and geocoding resolves his exact "150 hooker ave poughkeepsie ny" to a full address with
+##      ZIP, with a real Street View panorama. ONLY Places is REQUEST_DENIED. So option (a),
+##      which the first draft of the handoff missed, costs NOTHING new: geocode on submit and
+##      show his live site's "We've found your home!" card with the Street View thumbnail and
+##      normalised address. Do that first. Places API (New) adds only the type-ahead dropdown
+##      and is the only part that bills — his call. I drove his
 ##      live site: the "google fill" he means is on /homevalue, NOT the search box, and it is
 ##      Google Places over every address on earth. 150 Hooker Ave genuinely is not in our
 ##      inventory, so no listing search can ever find it. Handoff §2 has his live flow captured

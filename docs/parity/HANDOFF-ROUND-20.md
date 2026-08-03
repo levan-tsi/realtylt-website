@@ -77,22 +77,50 @@ in `idx_listings` and no 150. No listing search can ever return it. Only Places 
 **Round 19 already shipped steps 2–3 in our own form** (the fork, with both branches wired). What
 is missing is step 1 (Places), the Street View confirmation, and the address normalisation.
 
-**HIS DECISION, because it costs money.** Places Autocomplete bills per session
-(~$2.83–$17 per 1,000 sessions depending on the request type; verify current pricing before
-quoting him a number — do not assert it from this document). `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
-already exists for the map, so it is an API-enable plus billing, not a new integration.
-Options to put to him:
+### WHAT IS ALREADY WIRED — he pushed back on this and he was right
 
-- **(a) Google Places on the home-value box only.** Matches live exactly, smallest bill, and it
-  is the one box where an arbitrary address is the point. **My recommendation.**
-- **(b) Places everywhere including the listing search.** Expensive and mostly wrong: on a
-  listing search, suggesting an address we do not have a listing for leads to a dead end.
-- **(c) Neither.** Our own address suggestions (shipped round 19) already beat live for finding
-  *listings*; we simply cannot value an off-market home from a typed address.
+He asked: *"don't we already use it in our map with street view and everything for all
+propertys, isn't it already wired in, don't we need just enablement on those areas?"*
 
-If (a): restrict to `country: "us"` and bias to the Hudson Valley bounds, use the session-token
-API so a whole typed query bills once, and store the returned `place_id` + normalised components
-on the lead so the CRM gets a clean address instead of free text.
+**Mostly yes.** Measured against the live key this session (`scripts/_scratch-r19-gapis.mjs`,
+`scripts/_scratch-r19-places.mjs`):
+
+| Google API | state on our existing key | already used by |
+|---|---|---|
+| Maps JavaScript | **enabled** | `GoogleMapView`, the listing gallery |
+| **Geocoding** | **enabled** — resolved his exact query to `150 Hooker Ave, Poughkeepsie, NY 12601, USA` | `ListingGallery` geocodes each listing on open |
+| **Street View** | **enabled** — `getPanorama` returned `OK`, and a panorama EXISTS for 150 Hooker Ave | the listing gallery's Street View tab |
+| **Places** | **REQUEST_DENIED** | nothing yet |
+
+So billing is live on the project, the singleton loader exists (`lib/idx/maps-loader.ts`), and
+Street View + Geocoding already work on the very address he tested. **Places is the only piece
+not switched on**, and Google's own error names the fix: the legacy `AutocompleteService` is
+"not available to new customers" as of 2025-03-01, so it has to be **Places API (New)** with
+`AutocompleteSuggestion`.
+
+### This changes the options, and the cheap one is genuinely good
+
+**(a) Geocoding + Street View only — NO new API, works today, costs nothing new.**
+Type the full address, press Find Out, geocode it, then show his live site's confirmation step:
+*"We've found your home!"* with the **Street View thumbnail** and the **normalised address with
+ZIP**, plus an Edit link. That is steps 2–3 of his live flow, built entirely on APIs that are
+already enabled and already paid for. What it does NOT give is the type-ahead dropdown while
+typing — the visitor types the whole address themselves. **Do this one first regardless**, it is
+most of the perceived value.
+
+**(b) Add Places API (New) for the type-ahead.** One Cloud console toggle plus `&libraries=places`
+on the loader and the new `AutocompleteSuggestion` API. Small code change, real recurring bill
+(per-session pricing — check Google's current rates before quoting him, do not assert them from
+this document). Restrict to `country: "us"`, bias to Hudson Valley bounds, use session tokens so
+a whole typed query bills once, and store the returned `place_id` + components on the lead so
+the CRM gets a clean address instead of free text.
+
+**(c) Places on the listing search too.** Still not recommended: suggesting an address we have no
+listing for is a dead end, and our own address suggestions (round 19) already beat live there.
+
+**Recommendation: (a) now, (b) as his call.** The earlier version of this handoff framed Places
+as the only route and overstated the integration — that was wrong, and (a) was the option it
+missed.
 
 ---
 
