@@ -159,7 +159,11 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
           <div
             ref={sheetRef}
             onKeyDown={onSheetKeyDown}
-            className="fixed inset-0 z-[70]"
+            /* z-[1000000] for the same reason as components/blog/FlagshipToc.tsx: the chat
+             * launcher from /rlt-chat.js is fixed at z-index 999998 and was painting on top of
+             * this aria-modal dialog. The rest of the site's full-screen overlays already use
+             * 1000000 and up to clear it. */
+            className="fixed inset-0 z-[1000000]"
             role="dialog"
             aria-modal="true"
             aria-label="On this page"

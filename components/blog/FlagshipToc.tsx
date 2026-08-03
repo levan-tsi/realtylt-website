@@ -259,7 +259,25 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           <div
             ref={sheetRef}
             onKeyDown={onSheetKeyDown}
-            className="fixed inset-0 z-[70]"
+            /* z-[1000000], not z-[70], and the number is not arbitrary.
+             *
+             * The chat launcher injected by /rlt-chat.js is `position: fixed` at
+             * z-index 999998, bottom right. At z-[70] this sheet opened UNDERNEATH it, so on a
+             * 390px phone a 60x60 button belonging to a different widget sat on top of the
+             * navigation rows in the bottom right corner of an `aria-modal` dialog. Measured on
+             * the real page: bubble at (314,768)-(374,828) against a sheet running from y=490
+             * to the bottom of the viewport.
+             *
+             * The site already knew about this and this rail was the only surface that did not:
+             * components/idx/ListingGallery.tsx and components/leads/QualifyingWizard.tsx use
+             * z-[1000000], and components/leads/ListingLeadCTAs.tsx uses z-[1000001], all of
+             * them to clear the same launcher. This now follows that convention rather than
+             * inventing a third one.
+             *
+             * components/blog/ArticleToc.tsx had the identical bug and is fixed with it.
+             * components/services/ServiceToc.tsx still has it, and belongs to another session:
+             * see docs/blog-flagship/SERVICES-CRITIQUE.md. */
+            className="fixed inset-0 z-[1000000]"
             role="dialog"
             aria-modal="true"
             aria-label="On this page"

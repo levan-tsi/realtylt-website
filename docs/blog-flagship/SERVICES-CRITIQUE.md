@@ -231,6 +231,16 @@ limits language at all.** See §4.
 
 **Two pages have no related reading:** `geo-landing-pages` and `local-seo` carry `relatedPosts: []`.
 
+**`components/services/ServiceToc.tsx` line 173 opens its mobile sheet under the chat launcher.**
+Not a content problem, and it is the one code change worth making. The sheet is
+`role="dialog" aria-modal="true"` at `z-[70]`; the launcher injected by `/rlt-chat.js` is
+`position: fixed` at `z-index: 999998`. Measured on a 390px phone, a 60x60 button belonging to a
+different widget paints on top of the bottom-right corner of the open dialog and covers navigation
+rows. The rest of the site already knows this: `components/idx/ListingGallery.tsx` and
+`components/leads/QualifyingWizard.tsx` use `z-[1000000]`, `components/leads/ListingLeadCTAs.tsx`
+uses `z-[1000001]`. The two blog rails had the identical bug and were fixed to `z-[1000000]` on
+2026-08-03; services is the third and it is the same one-token change.
+
 **None of the twenty has a `video`.** The type supports it and the JSON-LD activates the moment one
 exists, so the cost of the first one is a recording, not a build.
 
