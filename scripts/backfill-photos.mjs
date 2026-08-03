@@ -42,6 +42,15 @@ const CAP = flag("--covers-only") ? 1 : Math.max(1, Math.min(MAX_PHOTOS, Number(
 const MAX_PAGES = Number(opt("--max-pages", "2"));
 const MAX_LISTINGS = Number(opt("--max-listings", "50"));
 const CONCURRENCY = Math.max(1, Math.min(6, Number(opt("--concurrency", "4"))));
+/** Requests per second against media.mlsgrid.com. Concurrency alone does not bound a rate: four
+ * workers with no pacing fire as fast as the host answers, which measured well into double
+ * figures per second. MLS Grid has suspended this key before for exactly that, and a suspension
+ * freezes the whole inventory, so the default is deliberately timid. Raise it knowingly. */
+const RPS = Math.max(0.25, Number(opt("--rps", "2")) || 2);
+/** Stop the whole run once the host has said "slow down" this many times. Backing off per
+ * request is not enough: the previous behaviour was to keep going, burn 4,017 rejected requests
+ * in one slice, and report a number that looked like progress. */
+const MAX_429 = Math.max(1, Number(opt("--max-429", "25")) || 25);
 if (flag("--fresh")) rmSync(RESUME_FILE, { force: true });
 const positional = argv.filter((a, i) => !a.startsWith("--") && argv[i - 1]?.startsWith("--") !== true);
 const base = (positional.find((a) => a.startsWith("http")) ?? "https://realtylt-website.vercel.app").replace(/\/+$/, "");
@@ -83,14 +92,55 @@ async function uploadPhoto(path, bytes, contentType) {
   return false;
 }
 
+/** Why a download failed, counted. The slice line reports `fetched` vs `downloaded`, and a gap
+ * between them is the documented ABORT criterion — but it never said WHY, so the one signal the
+ * operator is told to stop on carried no diagnosis. A 429 gap means we are being throttled and
+ * the whole feed is at risk (that is what froze the inventory for seven days in round 16); a
+ * 403/400 gap on a long slice is far more likely to be MLS Grid's signed media URLs expiring
+ * mid-slice, which is a pacing problem and not a rate-limit one. Those two need opposite
+ * responses, so the histogram is printed with every slice. */
+const dlStatus = new Map();
+const bump = (k) => dlStatus.set(k, (dlStatus.get(k) ?? 0) + 1);
+export const downloadReport = () =>
+  [...dlStatus.entries()].sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k}:${v}`).join(" ");
+
+/** One shared gate in front of every media request, so CONCURRENCY controls how many downloads
+ * are in flight and RPS controls how fast they start. Serialising the *starts* is what actually
+ * bounds the rate; the workers still overlap the transfers. */
+let nextSlot = 0;
+async function pace() {
+  const gap = 1000 / RPS;
+  const now = Date.now();
+  const at = Math.max(now, nextSlot);
+  nextSlot = at + gap;
+  if (at > now) await sleep(at - now);
+}
+
+let seen429 = 0;
+/** Thrown out of the worker pool to end the run — see MAX_429. */
+class RateLimited extends Error {}
+
 async function downloadPhoto(url) {
   for (let attempt = 0; attempt <= 3; attempt++) {
+    await pace();
     try {
       const r = await fetch(url, { headers: { "User-Agent": MLS_TOKEN }, signal: AbortSignal.timeout(20000) });
-      if (r.ok) return { bytes: Buffer.from(await r.arrayBuffer()), contentType: r.headers.get("content-type") ?? "image/jpeg" };
-      if (r.status === 404 || r.status === 403) return null;
-      if (r.status === 429) await sleep(Math.min(8000, 500 * 2 ** attempt));
-    } catch {
+      if (r.ok) { bump("ok"); return { bytes: Buffer.from(await r.arrayBuffer()), contentType: r.headers.get("content-type") ?? "image/jpeg" }; }
+      if (r.status === 404 || r.status === 403) { bump(String(r.status)); return null; }
+      if (r.status === 429) {
+        if (++seen429 >= MAX_429) {
+          bump("429");
+          throw new RateLimited(`media.mlsgrid.com returned 429 ${seen429} times — stopping before the key is suspended`);
+        }
+        // Give the host real room, and slow every future request down too: being told to slow
+        // down once means the current rate is wrong, not that this one request was unlucky.
+        nextSlot = Math.max(nextSlot, Date.now() + Math.min(30000, 2000 * 2 ** attempt));
+        await sleep(Math.min(8000, 500 * 2 ** attempt));
+      }
+      if (attempt === 3) bump(String(r.status));
+    } catch (e) {
+      if (e instanceof RateLimited) throw e;
+      if (attempt === 3) bump(e?.name === "TimeoutError" ? "timeout" : "neterr");
       await sleep(500 * 2 ** attempt);
     }
   }
@@ -176,7 +226,7 @@ async function rpc(body) {
 // ── main loop ─────────────────────────────────────────────────────────────────────────────────
 let watermark = existsSync(RESUME_FILE) ? readFileSync(RESUME_FILE, "utf8").trim() : EPOCH;
 if (watermark !== EPOCH) console.log(`resuming from ${watermark} (${RESUME_FILE})`);
-console.log(`backfill-photos: ${DRY ? "DRY-RUN" : "LIVE"} cap=${CAP} maxPages=${MAX_PAGES} maxListings=${MAX_LISTINGS} concurrency=${CONCURRENCY} base=${base}`);
+console.log(`backfill-photos: ${DRY ? "DRY-RUN" : "LIVE"} cap=${CAP} maxPages=${MAX_PAGES} maxListings=${MAX_LISTINGS} concurrency=${CONCURRENCY} rps=${RPS} max429=${MAX_429} base=${base}`);
 
 let pagesUsed = 0;
 let listingsSeen = 0;
@@ -208,6 +258,8 @@ for (;;) {
   }
 
   console.log(`slice: kept ${slice.kept}, took ${listings.length}, mirrored ${listings.reduce((s, l) => s + l.photosMirrored, 0)} photos (skipped ${skipped} already-mirrored, fetched ${fetched}, downloaded ${downloaded}), watermark ${slice.watermark}${slice.complete ? " — FEED COMPLETE" : ""}`);
+  // The diagnosis behind the abort criterion (see downloadPhoto).
+  if (fetched > downloaded) console.log(`  download failures by status: ${downloadReport()}`);
 
   if (slice.complete) { console.log("feed complete — full inventory scanned."); rmSync(RESUME_FILE, { force: true }); break; }
   if (slice.watermark === watermark) throw new Error("watermark did not advance — aborting");
