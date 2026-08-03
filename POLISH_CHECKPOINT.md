@@ -1,5 +1,25 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 20 BRIEF — set 2026-08-03, end of round 19.
+## >>> READ docs/parity/HANDOFF-ROUND-20.md FIRST. It is the running order and carries the
+## >>> reasoning. Short version:
+##   1. FINISH THE PHOTO BACKFILL. Half done, 13,280 photos, ZERO failures, zero rate limits.
+##      node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
+##   2. STRESS-TEST ROUND 19 (handoff §4). He asked for this by name. The consent record and
+##      the new global dropdown portal are the two that matter most. Start with the ONE path
+##      round 19 could not prove: sign in for real and generate a CMA end to end.
+##   3. GOOGLE PLACES on the home-value box — HIS DECISION, it bills per session. I drove his
+##      live site: the "google fill" he means is on /homevalue, NOT the search box, and it is
+##      Google Places over every address on earth. 150 Hooker Ave genuinely is not in our
+##      inventory, so no listing search can ever find it. Handoff §2 has his live flow captured
+##      step by step and three options with a recommendation.
+##   4. Compare ours vs live on login + the report page (handoff §5). Not done this round.
+## ── ANSWERED THIS ROUND: "does automated and recorded cover AI calls?" YES for the
+##    disclosure — an AI voice IS an artificial voice, and the rule does not require the word
+##    "AI". But that clause cannot be removed or the box stops covering the Vapi calls at all.
+##    Get ten minutes from his brokerage's compliance person before launch. Handoff §3.
+##
+##
 ## ═══ ROUND 19 — DONE 2026-08-03. Reasoning in docs/parity/DESIGN-ROUND19.md.
 ##
 ## ── HIS TWO DECISIONS, TAKEN AT THE START OF THE ROUND ──────────────────────────────
