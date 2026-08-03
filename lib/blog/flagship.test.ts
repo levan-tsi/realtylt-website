@@ -158,4 +158,29 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
     const placesFilm = Object.values(content.scenes).some((s) => s.kind === "film");
     if (placesFilm) expect(content.film).toBeDefined();
   });
+
+  /** A scene REPLACES the prose it stages; it never echoes it. The rule is written down in
+   * STANDARD.md and in the Grid primitive's own docstring, and until 2026-08-03 one scene in
+   * the cohort broke it: the voice post's pull quote opened with "A phone call has no typing
+   * indicator", word for word the first sentence of a body paragraph two screens above.
+   *
+   * A pull quote that lifts a nearby sentence is a copy and paste rather than a distillation,
+   * and the reader meets the same words twice on a page whose whole standard is that nothing
+   * is said twice. Nine of the ten statements were already original; this catches the tenth.
+   *
+   * Held to whole sentences of five words or more, so a shared phrase that is just the
+   * topic's own vocabulary cannot trip it. That distinction is the same one the sibling
+   * overlap metric had to learn: repeating a SENTENCE is the failure, repeating a NOUN is not. */
+  it("never puts a body sentence into a held statement scene", () => {
+    const flat = body.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      if (scene.kind !== "statement") continue;
+      const echoes = scene.text
+        .split(/(?<=[.!?])\s+/)
+        .map((s) => s.trim())
+        .filter((s) => s.split(/\s+/).length >= 5)
+        .filter((s) => flat.includes(s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim()));
+      expect(echoes, `scene ${key} repeats the body verbatim`).toEqual([]);
+    }
+  });
 });

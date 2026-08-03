@@ -515,12 +515,17 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       columns: 2,
       items: OUTBOUND,
     },
+    /** The first sentence used to be "A phone call has no typing indicator", which is the
+     * opening sentence of a body paragraph two screens above it, word for word. A pull quote
+     * that lifts a nearby sentence is a copy and paste rather than a distillation, and it is
+     * the one scene on this page where the reader reads the same words twice. Nine of the
+     * cohort's ten statements were already original; this was the tenth. */
     "pull-quote": {
       kind: "statement",
       band: "dark",
       field: "river",
       tone: "quote",
-      text: "A phone call has no typing indicator. Every second of silence is the caller deciding whether anybody is actually there.",
+      text: "Silence on a phone is not a pause. Every second of it is the caller deciding whether anybody is actually there.",
     },
     teardown: {
       kind: "conversation",
