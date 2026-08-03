@@ -189,7 +189,7 @@ In 2011, Harvard Business Review reported an audit of 2,241 US companies. The re
 
 [[scene:response-audit]]
 
-Twenty three percent of them never replied at all. Among the ones that did, the average took 42 hours.
+Twenty three percent of them never replied at all. Among the ones that answered inside the thirty day window, the average took 42 hours.
 
 Two honest notes before that number gets used for anything. It is cross-industry research from 2011, not a real estate study from this year, and the inquiries were web forms rather than phone calls. What carries over is not the percentage. It is the shape: a large group answers quickly, a large group never answers, and the average sits in days rather than minutes.
 
@@ -265,7 +265,7 @@ And it does not replace ringing back the people who matter. If the caller is a p
 
 Nobody selling phone AI opens with this, which is a decent reason to read it here. None of it is legal advice and all of it moves. The point is to know that the questions exist, because the person selling you the agent is not going to raise them.
 
-**An AI voice is not a loophole.** On February 8, 2024 the Federal Communications Commission ruled that calls made with AI-generated voices are ["artificial" for the purposes of the Telephone Consumer Protection Act](https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf). In practice that means the rules already governing prerecorded outbound calls, getting consent, identifying who is calling, and honoring an opt-out, apply in exactly the same way when the voice is generated. Dialing people with an AI sits inside the existing rules rather than around them.
+**An AI voice is not a loophole.** In a declaratory ruling adopted on February 2, 2024 and released six days later, the Federal Communications Commission confirmed that calls made with AI-generated voices are ["artificial" for the purposes of the Telephone Consumer Protection Act](https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf). In practice that means the rules already governing prerecorded outbound calls, getting consent, identifying who is calling, and honoring an opt-out, apply in exactly the same way when the voice is generated. Dialing people with an AI sits inside the existing rules rather than around them.
 
 **Recording is a state question, and New York is not the strict one.** Under [New York Penal Law section 250.00](https://www.nysenate.gov/legislation/laws/PEN/250.00), recording counts as eavesdropping only when it is done "without the consent of at least one party thereto, by a person not present thereat". If you are on the call, you are that party, so in New York you may record your own calls without asking the other side. California is the other kind of state: [Penal Code section 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) makes it an offense to record a confidential communication without the consent of all parties, and several other states take the same approach. Before you lean on any of this, check the rule in the state your caller is actually sitting in, because the lists of these that circulate online go stale and none of them are the statute. If you list in the Hudson Valley and take a call from somebody in Los Angeles, assume the stricter rule.
 
@@ -483,7 +483,7 @@ That spread is the entire argument. If everybody were equally ready, the order o
 
 The same NAR research measures how the process actually runs. Buyers searched for a median of ten weeks and looked at a median of seven homes. They searched for a median of two weeks before contacting an agent at all, which means by the time a form arrives, that person has already been at this for a fortnight and has already decided you were worth writing to.
 
-The most useful exhibit in the whole report is the one nobody quotes. NAR asks buyers why they bought when they did. The largest answer, at 43 percent, is "it was just the right time, was ready to buy a home", which tells you nothing at all and cannot be checked by anybody. The second largest, at 23 percent, is "did not have much choice, had to purchase".
+The most useful exhibit in the whole report is the one nobody quotes. Exhibit 1-16 asks buyers the primary reason for the timing of their purchase. The largest answer, at 43 percent, is "it was just the right time, was ready to buy a home", which tells you nothing at all and cannot be checked by anybody. The second largest, at 23 percent, is "did not have much choice, had to purchase".
 
 Read those two next to each other and the job becomes clear. Nearly a quarter of buyers were moved by something that happened to them: a lease, a job, a marriage, a death, a divorce. That is a fact with a date attached, and unlike a preference, it is something a person will tell you in the first two minutes of a real conversation. Qualification is not psychology. It is finding out whether the timing is a wish or an appointment.
 

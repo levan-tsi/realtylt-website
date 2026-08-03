@@ -82,7 +82,11 @@ export const URGENCY = {
   lit: 0,
   basis: "Share of all sellers surveyed.",
   sourceText:
-    "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 6-23, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses.",
+    // 2026-08-03, from the methodology page: the survey was mailed to recent BUYERS, and NAR
+    // says "Information about sellers comes from those buyers who also sold a home". 5,390 is
+    // the buyer response count, so the seller base under this exhibit is smaller and printing
+    // the buyer number alone overstates it.
+    "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 6-23, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses; seller answers come from those buyers who also sold a home, so the seller base is smaller.",
   sourceHref:
     "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
   note: "This was asked of people who had already sold, looking back at how it went. It is not a measurement of how many of your inquiries are urgent and cannot be used as one. All it establishes is that the spread between the most urgent sellers and the least urgent ones is very wide, which is the only thing this page needs it for.",
