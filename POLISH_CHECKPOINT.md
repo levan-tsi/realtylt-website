@@ -106,10 +106,10 @@
 ##   JS off still submits ?q=.
 ##
 ## ── PHOTO COVERAGE, MEASURED AT THE END OF THE ROUND ────────────────────────────────
-##   active rows          27,667      (feed alive: newest listing 19:19 UTC today)
-##   zero photos           1,577      <- 2,039 when round 19 started, 1,799 at round 20's
-##   at least 1 photo     26,090
-##   5 or more            13,372      <- 12,636 / 13,105
+##   active rows          27,675      (feed alive: newest listing 22:04 UTC today)
+##   zero photos           1,552      <- 2,039 when round 19 started, 1,799 at round 20's
+##   at least 1 photo     26,123
+##   5 or more            13,465      <- 12,636 / 13,105
 ## FIRST HEALTHY SLICE AFTER THE FIX, and it retired the abort rule it was measured against:
 ##   slice: 316 listings, mirrored 7194 (fetched 7645, downloaded 7194)
 ##     download failures by status: ok:7194 400:451
@@ -119,10 +119,20 @@
 ## wrong. JUDGE THE HISTOGRAM, NOT THE GAP: 429 means stop (the key can be suspended, that
 ## froze the inventory for 7 days in round 16, and the script now self-aborts at 25);
 ## 400/403/404 are dead links and are normal. Round 21's handoff has the table.
-#### The backfill was still walking a slice when the round ended. It is resumable from
-## scripts/.photo-backfill-watermark.local (2026-07-31T07:20) and safe to leave running:
-##   node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
-## Expect roughly an hour per slice at the safe rate. DO NOT raise --rps.
+##
+## THE BACKFILL IS STOPPED, AND DO NOT SIMPLY RESUME IT. Two things ended it, neither the
+## pacing. (a) A Postgres DEADLOCK (40P01) with the hourly pg_cron sync, which writes the same
+## idx_listings rows -- rpc() now retries 40P01/40001 with jittered backoff, which is the
+## documented response to a deadlock. The live feed was never at risk: Postgres killed OUR
+## transaction and the sync survived (verified: newest listing 22:04 UTC, 1,393 rows modified
+## in 24h). (b) MLS GRID STARTED THROTTLING AT 2 REQ/S MID-SESSION. The same rate ran a
+## 7,645-request slice with ZERO 429s, and an hour later a TWELVE-listing slice tripped the
+## 25-strike abort. The host's tolerance changed underneath us, so --rps 2 is no longer safe
+## advice. Round 21 must PROBE FIRST:
+##   node scripts/backfill-photos.mjs --max-pages 1 --max-listings 12
+## and read the histogram. ANY 429 means stop for the day -- do not lower --rps and retry, do
+## not pace around it. His key has been suspended six times in four days for exactly this.
+## Resumable from scripts/.photo-backfill-watermark.local (2026-07-31T17:42).
 ##
 ## ── GATES ───────────────────────────────────────────────────────────────────────────
 ## tsc clean. Tests 670 -> 775 (+59 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,

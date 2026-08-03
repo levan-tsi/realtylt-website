@@ -109,7 +109,31 @@ the feed handed them to us. Nothing is wrong and nothing is at risk.
 | `400:` / `403:` / `404:` | dead or expired media links in the feed | carry on, this is normal |
 | `timeout:` / `neterr:` in bulk | network or host trouble | stop and look |
 
-**To continue** — it is resumable and it is worth continuing:
+### DO NOT JUST RESUME IT. Two things ended the run, and neither was the pacing
+
+**1. A deadlock with the hourly sync.** `idx_sync_apply` returned 500 with Postgres `40P01`: this
+backfill is not the only writer on `idx_listings`, and the hourly `pg_cron` sync writes the same
+rows. A deadlock is Postgres picking a victim so the other transaction can finish, and the
+answer is to retry the victim — which `rpc()` now does (40P01 / 40001, backoff plus jitter so the
+retry does not land on the sync's next write in lockstep). The live feed was never at risk:
+Postgres killed OUR transaction and the sync survived.
+
+**2. MLS Grid started throttling at 2 req/s, mid-session.** The same rate ran a 7,645-request
+slice with **zero** 429s, and roughly an hour later a **12-listing** slice tripped the 25-strike
+abort. The host's tolerance changed underneath us — most likely a longer-window quota — so
+**"resume at `--rps 2`" is no longer safe advice.**
+
+**Before running any long slice, probe:**
+
+```bash
+node scripts/backfill-photos.mjs --max-pages 1 --max-listings 12    # ~250 photos
+```
+
+Read the histogram on the slice line. **Any `429:` at all means stop for the day** — do not lower
+`--rps` and try again, do not "pace around it". His key has been suspended six times in four days
+for exactly this and a suspension freezes the entire inventory
+(`[[infra-mlsgrid-account-facts]]`). If the probe is clean (`ok:` only, or `ok:` plus `400/403/404`),
+then it is reasonable to run:
 
 ```bash
 node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
