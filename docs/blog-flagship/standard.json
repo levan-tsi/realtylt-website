@@ -9,9 +9,9 @@
     "bodyImages": 6,
     "dataGraphics": 2,
     "hasCostSection": true,
-    "hasMoneyMath": true,
     "hasCalculator": true,
     "hasLimitsSection": true,
-    "hasHowToSection": true
+    "hasHowToSection": true,
+    "siblingOverlap": 71
   }
 }

@@ -24,23 +24,61 @@ explanation of how large language models work. They are asking, in this order:
 
 A post that does not answer all five is not finished, whatever it scores.
 
-## 2. It has to show them the money
+## 2. It has to show them what it is worth — in whatever unit it can defend
 
-**Every post carries an explicit money case, and the reader has to be able to argue with it.** Not
-"saves time", not "improves conversion" — a number with its arithmetic visible.
+**Not always a dollar figure.** Owner, 2026-08-02: *"it should not be always exactly the dollar
+amount if possible and we can show some research and data ok if not... we can show how much time
+they would save and they can calculate themselves with hourly $ value."*
 
-Three things, all now required (`hasMoneyMath`, `hasCalculator`, `hasCostSection`):
+That is the right instinct and it is now a rule, because forcing a dollar number is pressure to
+invent one. The reactivation post cites no response-rate figures precisely BECAUSE no independent
+study of cold database SMS exists in any vertical — a `$` requirement would have pushed it into
+making one up, destroying the honesty that is its whole argument.
 
-- **A number they can check.** A four-figure sum built from stated assumptions. The chat post's
-  $6,000 is the model: it is the LeadsCalculator's own default commission, so it is arguable rather
-  than asserted. If a number cannot be sourced or derived on the page, it does not go on the page.
-- **An interactive calculator**, so it becomes THEIR number rather than ours. `LeadsCalculator`
-  already exists and is used by two posts; the other three owe one.
-- **What it costs and how long it takes.** Refusing to publish a vendor's price because their
-  pricing page renders in JavaScript is honest (topic 3 and 5 do this); refusing to discuss cost at
-  all is not. Say what drives the cost even where a figure cannot be quoted.
+**A "quantified stake" check was written and then deleted.** Measured across the cohort, all five
+posts already quantify — chat in dollars ($6,000, $57,600), voice in hours (42), workflow and
+qualification in shares (57%, 77.2%, 15%, 43%). A gate everyone passes measures nothing.
 
-## 3. It has to answer every question they might have
+So the unit is the post's choice, and only two things are required:
+
+- **`hasCalculator` — the reader has to be able to put THEIR numbers in.** This is the real
+  instrument and the only thing that actually separated the posts. A general statistic is someone
+  else's number; a calculator makes it theirs. It may output **money OR time** — hours saved with
+  an optional "your hourly value" field is a first-class answer, not a fallback.
+- **`hasCostSection` — what it costs and how long it takes.** Refusing to publish a vendor's price
+  because their pricing page renders in JavaScript is honest (topics 3 and 5 do this); refusing to
+  discuss cost at all is not. Say what drives the cost even where a figure cannot be quoted.
+
+Whatever the unit, the arithmetic stays on screen. The chat calculator's chain is the model —
+inquiries → conversations won at your reply speed → closings at a stated close rate → commission —
+and it exists because an earlier draft multiplied every missed inquiry by a full commission, turning
+192 inquiries into 192 lost deals. **The number must get smaller at every honest step.**
+
+## 3. Every post must be unmistakably its own
+
+Owner: *"not to repeat same things and details, all blogs should be unique to their service and
+things and story and videos and everything."*
+
+The template's risk was never that topic 1 is good; it is that topics 2–19 become the same article
+with the nouns swapped. **Reusing a COMPONENT is good and is the point of the primitive set. Reusing
+a SENTENCE is not.**
+
+`siblingOverlap` measures this: seven-word phrases a post shares with its most similar sibling,
+minus anything common to all five (a phrase in every post is chrome — author block, footer, lead
+form — and is supposed to be identical). Measured 2026-08-02, with 54 chrome phrases excluded:
+
+| post | overlap with nearest sibling |
+|---|---|
+| workflow | **50** — the most distinct, and it was written last and most deliberately |
+| chat, voice | 71 |
+| reactivation, qualification | **74** — each other's nearest, written in the same session |
+
+The floor is a MAXIMUM and it ratchets DOWNWARD: as the posts become more distinct the ceiling
+tightens, and it can never be loosened. Each post also owes its own story, its own third-party
+source, its own film and its own calculator model — sameness in any of those is the same failure
+wearing different clothes.
+
+## 4. It has to answer every question they might have
 
 The FAQ is not objection-handling. **Objections are what WE are worried about; questions are what
 THEY typed into a search box.** The chat post's three entries — *"Will it annoy my visitors?"*, *"My
@@ -55,7 +93,7 @@ Every post needs both kinds, and FAQPage schema is the single highest-impact str
 cited by an AI answer. Minimum five, and the definitional question ("what IS this, in plain terms")
 is mandatory — it is the one an engine lifts.
 
-## 4. It has to sell with storytelling
+## 5. It has to sell with storytelling
 
 The architecture already supports this and it is under-used. The rule:
 
@@ -70,7 +108,7 @@ The architecture already supports this and it is under-used. The rule:
   argument is that the details are checkable destroys the argument. This has already happened once
   in a HeyGen cut ("123 Maple Street, Austin") and must never reach a post.
 
-## 5. Meet them at their level
+## 6. Meet them at their level
 
 Plain conversational words. No jargon without an immediate plain-English gloss. No em dashes as a
 tic, no arrow glyphs, no AI-flowery register. If a sentence would not survive being said out loud to
@@ -109,10 +147,11 @@ post had everything.
 | post | owes |
 |---|---|
 | **chat** | prose 1,030 → 2,906 · sections 14 → 17 · citations 1 → 4 · FAQ 3 → 5 · images 5 → 6 |
-| voice | money math · calculator |
-| reactivation | money math · calculator |
-| qualification | prose 2,641 → 2,906 · citations 3 → 4 · cost section · money math · calculator |
-| workflow | money math · calculator |
+| voice | calculator |
+| reactivation | calculator · sibling overlap 74 → ≤71 |
+| qualification | prose 2,641 → 2,906 · citations 3 → 4 · cost section · calculator · overlap 74 → ≤71 |
+| workflow | calculator |
 
-**Four of the five have no money case at all** — the single clearest confirmation that the owner's
-brief was pointing at something real.
+**Four of the five have no calculator** — no way for a reader to put their own numbers in. That is
+the single clearest confirmation the owner's brief was pointing at something real, and it is the
+one item that closes four posts at once.

@@ -55,10 +55,25 @@ const METRICS = [
   ["bodyImages", "number", "images in the body"],
   ["dataGraphics", "number", "svg[role=img] data graphics"],
   ["hasCostSection", "boolean", "a section that names what it costs"],
-  ["hasMoneyMath", "boolean", "an explicit dollar figure the reader can check"],
-  ["hasCalculator", "boolean", "an interactive money calculator"],
+  // There is deliberately NO "must contain a dollar figure" check. Owner, 2026-08-02: "it should
+  // not be always exactly the dollar amount if possible... we can show how much time they would
+  // save and they can calculate themselves with hourly $ value". Demanding a $ number is pressure
+  // to invent one, and it would break the reactivation post specifically, which cites no response
+  // rates BECAUSE no independent study exists.
+  //
+  // A "quantified stake" check was written and then removed: measured across the cohort, ALL FIVE
+  // posts already quantify — chat in dollars ($6,000), voice in hours (42), workflow and
+  // qualification in shares (57%, 77.2%, 15%, 43%). A gate everyone passes measures nothing.
+  // What actually separates them is whether the reader can put THEIR OWN numbers in, which is
+  // exactly the calculator below. The unit is the post's choice; the instrument is not.
+  ["hasCalculator", "boolean", "an interactive calculator in the reader's own numbers (money OR time)"],
   ["hasLimitsSection", "boolean", "a section on what it will NOT do"],
   ["hasHowToSection", "boolean", "a section the reader can act on themselves"],
+  // Lower is better. Owner: "not to repeat same things and details, all blogs should be unique to
+  // their service". Counts 7-word phrases this post shares with its most similar sibling, MINUS
+  // anything common to all five — a phrase in every post is chrome (author block, footer, lead
+  // form) and is supposed to be identical. What is left is topic bleed.
+  ["siblingOverlap", "max", "7-word phrases shared with the nearest sibling (chrome excluded)"],
 ];
 
 async function measure(page, slug) {
@@ -70,7 +85,6 @@ async function measure(page, slug) {
     const paras = [...art.querySelectorAll("p")]
       .map((p) => p.textContent.trim())
       .filter((t) => t.split(/\s+/).length >= 25);
-    const text = art.textContent ?? "";
     const links = [...art.querySelectorAll("a[href]")].map((a) => a.getAttribute("href") ?? "");
     const ld = [...document.querySelectorAll('script[type="application/ld+json"]')]
       .map((s) => s.textContent ?? "")
@@ -86,11 +100,17 @@ async function measure(page, slug) {
       bodyImages: art.querySelectorAll("img").length,
       dataGraphics: art.querySelectorAll("svg[role='img']").length,
       hasCostSection: anyHead(/cost|price|worth it|what you pay|invest/i),
-      // A four-figure sum with a separator: the kind of number a reader can argue with.
-      hasMoneyMath: /\$\s?\d{1,3},\d{3}/.test(text),
       hasCalculator: !!art.querySelector("input[type='range'], [data-calculator]"),
       hasLimitsSection: anyHead(/does not|will not|cannot|limits|not do/i),
       hasHowToSection: anyHead(/how to|find your own|what to do|do it yourself|your own version/i),
+      // Raw material for the sibling-overlap metric, computed across the cohort below.
+      shingles: (() => {
+        const paraText = paras.join(" ").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
+        const w = paraText.trim().split(" ");
+        const out = new Set();
+        for (let i = 0; i + 7 <= w.length; i++) out.add(w.slice(i, i + 7).join(" "));
+        return [...out];
+      })(),
     };
   });
 }
@@ -105,6 +125,26 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 const rows = {};
 for (const slug of POSTS) rows[slug] = await measure(page, slug);
 await browser.close();
+
+// ── sibling overlap. A phrase present in EVERY post is chrome (author block, footer, lead form)
+// and is supposed to be identical, so it is subtracted first. What survives is topic bleed, and
+// each post is scored against its most similar sibling rather than the average — the pair that
+// reads as a template is the one that matters.
+{
+  const sets = Object.fromEntries(POSTS.map((s) => [s, new Set(rows[s].shingles)]));
+  const chrome = new Set([...sets[POSTS[0]]].filter((p) => POSTS.every((s) => sets[s].has(p))));
+  for (const a of POSTS) {
+    let worst = 0;
+    for (const b of POSTS) {
+      if (a === b) continue;
+      const shared = [...sets[a]].filter((p) => sets[b].has(p) && !chrome.has(p)).length;
+      if (shared > worst) worst = shared;
+    }
+    rows[a].siblingOverlap = worst;
+    delete rows[a].shingles;
+  }
+  console.log(`(${chrome.size} boilerplate phrases common to all five were excluded as chrome)`);
+}
 
 // ── the cohort table
 const name = (s) => s.split("-").slice(0, 2).join("-").padEnd(22);
@@ -123,13 +163,14 @@ for (const [k, kind] of METRICS) {
 }
 
 const prev = existsSync(STANDARD_PATH) ? JSON.parse(readFileSync(STANDARD_PATH, "utf8")) : { metrics: {} };
-// Monotonic: the bar is the higher of what was already required and what the cohort now proves.
+// Monotonic in the direction that means BETTER. `number` bars only rise; a `max` bar (overlap,
+// where less is better) only tightens. Either way a weak round cannot relax the standard.
 const standard = {};
 for (const [k, kind] of METRICS) {
   const before = prev.metrics?.[k];
-  standard[k] = kind === "boolean"
-    ? Boolean(before) || proven[k]
-    : Math.max(Number(before ?? 0), proven[k]);
+  if (kind === "boolean") standard[k] = Boolean(before) || proven[k];
+  else if (kind === "max") standard[k] = Math.min(Number(before ?? Infinity), proven[k]);
+  else standard[k] = Math.max(Number(before ?? 0), proven[k]);
 }
 
 console.log("\nSTANDARD  (numbers = cohort median, booleans = any post proves it, never lowered)");
@@ -158,14 +199,16 @@ let fails = 0;
 console.log("\nGAP  (what each post owes the standard)");
 for (const slug of POSTS) {
   const short = METRICS.filter(([k, kind]) =>
-    kind === "boolean" ? standard[k] && !rows[slug][k] : rows[slug][k] < standard[k]);
+    kind === "boolean" ? standard[k] && !rows[slug][k]
+    : kind === "max" ? rows[slug][k] > standard[k]
+    : rows[slug][k] < standard[k]);
   if (!short.length) { console.log(`  ok    ${name(slug)}`); continue; }
   fails++;
   console.log(`  SHORT ${name(slug)}`);
   for (const [k, kind, label] of short) {
-    const want = kind === "boolean" ? "yes" : standard[k];
+    const want = kind === "boolean" ? "yes" : kind === "max" ? `<=${standard[k]}` : standard[k];
     const got = kind === "boolean" ? "missing" : rows[slug][k];
-    console.log(`          ${k.padEnd(16)} needs ${String(want).padEnd(6)} has ${String(got).padEnd(6)} — ${label}`);
+    console.log(`          ${k.padEnd(18)} needs ${String(want).padEnd(7)} has ${String(got).padEnd(6)} — ${label}`);
   }
 }
 console.log(fails ? `\n${fails} of ${POSTS.length} posts are below the standard.` : `\nall ${POSTS.length} posts meet the standard.`);
