@@ -405,6 +405,8 @@ It is not a subscription, and you should be suspicious of anybody who sells it a
 
 It does not replace you calling the people who actually matter. Your past clients, the neighbor who sold with you in 2019, anybody whose relationship is the real asset: those calls are yours. A machine reintroducing itself to somebody who came to your daughter's christening is worse than no contact at all.
 
+It also does not survive being run twice in a row. The first pass takes the accumulated years off the list, and whatever it finds is genuinely there. The second pass, three months later, is fishing in a pond somebody already emptied, and the temptation at that point is to widen the definition of who counts as a lead until there is a list again. That is the moment a reactivation campaign quietly turns into cold outreach, with none of the consent behind it that made the first one defensible.
+
 And it does not close. It finds the conversation. Everything that happens after somebody says yes to a Thursday is the reason you have a job.
 
 [[scene:revival-path]]
@@ -663,6 +665,12 @@ Nobody woke up. Nobody typed. The lead was answered while they were still on the
 You do not need a consultant for the first pass. You need a piece of paper and an honest hour.
 
 [[scene:audit]]
+
+Then rank it, because the order you do them in matters more than the list does. Sort by two things and ignore everything else: how often the step happens, and how little judgment it needs. The top of that list is always something dull and frequent, a field being copied from one system into another twenty times a week, and it is worth more than the impressive-sounding thing at the bottom that happens twice a month and needs somebody to think.
+
+Most people get this backwards, and it is an expensive way round. The interesting problem is the one with judgment in it, so that is the one they want to automate first, and it is the one most likely to be wrong in front of a client. Start with the boring repetitive hop that nobody will miss, watch it run for a fortnight, and let the trust be earned by something whose failure costs an apology rather than a deal.
+
+There is a third column worth adding while you have the page out: who notices when this step does not happen. If the answer is nobody, you have found something more useful than a time saving. You have found a step that has probably already been skipped, more than once, and nobody knows which deals it was skipped on.
 
 When you have that list in front of you, the arithmetic is the easy part.
 
