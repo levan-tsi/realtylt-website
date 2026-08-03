@@ -223,6 +223,16 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
         ". The 11:40pm exchange is staged for the film, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
       ],
     },
+    plate: {
+      kind: "plate",
+      band: "dark",
+      src: "/images/counties/dutchess.jpg",
+      alt: "The Walkway Over the Hudson, the former Poughkeepsie and Highland railroad bridge, crossing the river",
+      caption:
+        "The old railroad bridge at Poughkeepsie, twenty minutes up the river from the Beacon colonial in the first paragraph. Every question this article is about is a question about one specific house in one specific town, which is the whole reason a clever assistant with nothing behind it cannot answer a single one of them.",
+      credit: "Photograph by bobistraveling, CC BY 2.0.",
+      ariaLabel: "A Dutchess County river crossing",
+    },
     "response-curve": { kind: "component", id: "response-curve", band: "light" },
     "response-gap": { kind: "component", id: "response-gap", band: "dark", label: "The gap" },
     "leads-calculator": {
@@ -314,7 +324,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "Commission you are handing over",
-      note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. An immediate reply wins roughly 90% of the conversations, a few hours wins about half, the next day wins about a fifth, because most leads close with whoever responded first. The 5% close rate is ours and is deliberately low: an inquiry is a conversation, not a signed deal, and a calculator that multiplies every missed inquiry by a full commission is selling you something. The two numbers you can drag are yours. All three are a starting point, not a measurement of your business.",
+      note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. The reply curve is a judgement and not a measurement: an immediate reply is treated as winning roughly nine conversations in ten, a few hours about half, the next day about a fifth. It is shaped by the research quoted above rather than derived from it, and deliberately not by the unsourced 78% figure this article declines to use. The 5% close rate is ours and is deliberately low, because an inquiry is a conversation and not a signed deal, and a calculator that multiplies every missed inquiry by a full commission is selling you something. The two numbers you can drag are yours. All three are a place to start arguing from, not a measurement of your business.",
       action: { label: "See how it is built", href: "/services/ai-chat-assistant" },
     },
     "four-moves": {
@@ -374,8 +384,12 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
    * document, so a heading renamed here degrades to its full text instead of leaving a dead
    * row, and _scratch-toc.mjs fails on a key that matches no heading. */
   headingLabels: {
-    "the-number-everyone-quotes-and-what-it-really-means": "The number",
+    "the-number-everyone-quotes-and-where-it-actually-comes-from": "The number",
     "what-an-ai-chat-assistant-actually-does": "What it does",
+    "what-makes-an-answer-true-which-is-the-whole-job": "True answers",
+    "the-part-nobody-selling-you-a-chat-widget-mentions": "The fine print",
+    "what-it-costs-and-how-long-it-takes": "What it costs",
+    "how-to-test-one-before-you-buy-it": "How to test one",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",

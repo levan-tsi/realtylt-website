@@ -42,13 +42,22 @@ describe("flagshipToc", () => {
    * that loses its label, or a heading that is renamed, shows up here rather than as a rail
    * row that jumps nowhere. */
   it("derives exactly the rail the flagship shipped with", () => {
+    // Every row is either a labelled scene or an H2, in document order. Asserting the whole rail
+    // rather than its length is what catches a renamed heading whose short label was not renamed
+    // with it: that leaves the row pointing at a live anchor with the full 58-character heading
+    // as its label, which is not a rail, and it is exactly what happened when this post was
+    // raised to the standard on 2026-08-02.
     expect(flagshipToc(outline, AI_CHAT_FLAGSHIP)).toEqual([
       { id: "scene-reel", label: "Watch it", scene: true },
-      { id: "the-number-everyone-quotes-and-what-it-really-means", label: "The number" },
+      { id: "the-number-everyone-quotes-and-where-it-actually-comes-from", label: "The number" },
       { id: "scene-response-gap", label: "The gap", scene: true },
       { id: "scene-leads-calculator", label: "Your numbers", scene: true },
       { id: "what-an-ai-chat-assistant-actually-does", label: "What it does" },
       { id: "scene-four-moves", label: "Four moves", scene: true },
+      { id: "what-makes-an-answer-true-which-is-the-whole-job", label: "True answers" },
+      { id: "the-part-nobody-selling-you-a-chat-widget-mentions", label: "The fine print" },
+      { id: "what-it-costs-and-how-long-it-takes", label: "What it costs" },
+      { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
       { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
       { id: "scene-teardown", label: "The teardown", scene: true },
       { id: "common-questions-answered-honestly", label: "Common questions" },

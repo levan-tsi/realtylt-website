@@ -21,13 +21,19 @@ That gap, the one between when people actually look and when we actually answer,
 
 [[scene:reel]]
 
-## The number everyone quotes, and what it really means
+## The number everyone quotes, and where it actually comes from
 
-Roughly 78% of leads close with whoever responds first. It gets repeated so often that it has stopped landing.
+Seventy eight percent of customers buy from whoever answers first. You have seen it on a slide, probably more than once, and it is the number this entire category is sold on.
+
+We went looking for the study behind it, because a claim doing that much work should have a document under it. There is not one that anybody can produce. It is attributed on hundreds of pages to a survey with no published report, no stated sample, and no methodology, and every citation leads to another article citing a third. None of that proves the figure is wrong. It does mean nobody quoting it knows whether it is right, and a number nobody can check is a slogan wearing a percentage sign.
+
+So this article does not use it. What follows rests on a different piece of work, one where the sample size, the industries and the definitions are all published and can be argued with.
 
 [[scene:response-curve]]
 
-What it means in practice is smaller and more brutal than it sounds. It does not mean the fastest agent is the best agent. It means that being first buys you the conversation, and the conversation is the only thing that has ever sold a house. Everything you are good at happens after somebody picks up.
+Look at what the chart is counting, because it is not sales. It counts whether the firm ever got into a real exchange with somebody who could decide anything. That is a much lower bar than closing and a far higher one than a reply landing in an inbox, and it is precisely the bar your contact form is failing at twenty to midnight.
+
+That is a smaller claim than the slide makes and a more useful one. It does not say the fastest agent is the best agent, and it does not say speed closes deals. It says being first buys you the conversation, and the conversation is the only thing that has ever sold a house. Everything you are actually good at happens after somebody picks up.
 
 So the question is not whether you are a better agent than the one who answered at 11:41pm. You probably are. The question is whether you were in the room.
 
@@ -45,6 +51,60 @@ The version we run does four things:
 
 The last one is the one people underrate. A lead that arrives with a transcript attached is a completely different object from a lead that arrives as a name and an email address. You already know what they want before you dial.
 
+[[scene:plate]]
+
+## What makes an answer true, which is the whole job
+
+Every vendor in this category will tell you their assistant is trained on your data. Ask what that sentence means and the answers split into two groups that have almost nothing to do with each other.
+
+The first group means the assistant was shown your website. Somebody pointed a crawler at your pages, the text got chopped up and stored, and when a visitor asks a question the system finds the paragraphs that look most similar and asks a language model to write an answer out of them. That works for what your website already says. It is a better search box, and a better search box is genuinely worth having.
+
+It also cannot tell you whether 14 Willow Street is still available, because your website is a copy of the truth taken at some point in the past, and the question is about right now.
+
+The second group means the assistant is connected to the systems that hold the live answer, and calls them while the person is waiting. Asked about availability it queries the feed and reads back what the feed says this minute. Asked about taxes it reads the field, or says it does not have it. The difference between the two groups is not model quality and it is not prompt writing. It is whether anything on the other end is actually live.
+
+That distinction matters more here than in almost any other industry, because our facts move faster than our web pages. A listing goes to contingent on a Tuesday afternoon. A price drops on Friday. An open house gets cancelled because of weather. Every one of those events makes a website-trained assistant confidently wrong, and confidently wrong at eleven at night with nobody watching is exactly the failure that costs you a client rather than a lead.
+
+There is a second half to it, and it is the harder half: what happens when the system does not have the answer. A model asked a question it cannot ground will produce something plausible, because producing something plausible is what it does. The fix is not a cleverer model. It is a rule that when a lookup returns nothing, the assistant says it does not know and offers you instead. That behaviour has to be built and it has to be tested, and it is the single most valuable thing in any of this. When you are testing one, ask it something it cannot possibly know and watch what it does. That answer tells you more than an hour of demo.
+
+## The part nobody selling you a chat widget mentions
+
+Three things that never come up in a sales call and are all yours to live with afterwards. None of this is legal advice, and the first one is a statute from a state you probably do not work in, which is the point.
+
+**Do not let it pretend to be a person, and understand why that is a rule and not a preference.** California has had a bot disclosure law since 2019. Under [Business and Professions Code section 17941](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941), it is unlawful "to use a bot to communicate or interact with another person in California online, with the intent to mislead the other person about its artificial identity" in order to "incentivize a purchase or sale of goods or services in a commercial transaction". The escape hatch is one sentence long and it is free: "A person using a bot shall not be liable under this section if the person discloses that it is a bot." The disclosure has to be "clear, conspicuous, and reasonably designed to inform".
+
+Read the definitions before you decide it does not apply to you. The chapter defines an online platform as a site with ten million or more unique monthly United States visitors, and that number is what most summaries of this law report. But the prohibition in 17941 is not written against platforms. It is written against any person using a bot online, and "online" is defined as any public facing website. Whether that reaches a brokerage in the Hudson Valley whose visitor is in Los Angeles is a question for an actual lawyer, and we are not one. What is not in doubt is that the compliant behaviour and the decent behaviour are the same behaviour, it costs one sentence, and nobody has ever lost a client because a chat window said it was an assistant.
+
+**It is going to cost you page speed, and page speed is a number Google publishes.** A chat widget is third party JavaScript that loads on every page of your site. Google's own [Core Web Vitals thresholds](https://web.dev/articles/vitals) say that "to provide a good user experience, pages should have a INP of 200 milliseconds or less" and that largest contentful paint "should occur within 2.5 seconds of when the page first starts loading". A heavy widget eats into both, on the mobile phones where most of your traffic already is. Before you install one, run your own listing page through a page speed test and write the numbers down. Then install it and run the same test again. If the vendor cannot tell you what their script weighs, that is your answer, and the good ones load nothing at all until somebody taps the bubble.
+
+**Somebody has to be able to use it with a keyboard.** The Web Content Accessibility Guidelines have a criterion at level A called [No Keyboard Trap](https://www.w3.org/TR/WCAG22/), and it says that if focus can be moved into a component with a keyboard "then focus can be moved away from that component using only a keyboard interface". Chat widgets fail this constantly: the bubble opens, the focus goes in, and it never comes out. For a visitor using a screen reader that is not an annoyance, it is the end of their visit to your website. Tab into it, tab out of it, and if you cannot, do not ship it. Given what this industry is regulated on, a front door some people cannot get out of is a bad thing to have bolted onto every page.
+
+## What it costs, and how long it takes
+
+There is no price on this page and there is not going to be, because the number is decided by things nobody can see from here. Three of them, and only one is the software.
+
+The first is what it is allowed to look at. An assistant answering out of your website content is a small project measured in days. An assistant that answers questions about live inventory has to be connected to the feed that holds it, and that is a data project with its own rules, its own refresh behaviour and its own failure modes. Anybody quoting you before they have asked which of those you want has quoted you a template.
+
+The second is what happens after the conversation ends. A transcript that lands in an inbox is worth a fraction of a transcript that lands on the right contact record in the CRM you already use, with the lead scored and the appointment on the calendar. That plumbing is usually the larger half of the build and it is the half people forget to ask about, because it is invisible in a demo.
+
+The third is the running cost, and it is honestly small. Each conversation costs a few cents of model usage. What is not free is the reading: somebody has to go through what people actually asked, once a week at first, because the questions your visitors ask are the single best piece of market research you will ever be handed, and because that is how you find the answer it got wrong before a client does.
+
+On timing, the honest shape is that a useful version answering from your own content can be live in about a week, a connected version takes longer and the delay is almost never the assistant, and the first month is worth more than the build. That is the month you find out what people are asking at eleven at night, which nobody could have told you in advance.
+
+## How to test one before you buy it
+
+Take this to any vendor, including us. Five questions, and you can ask all of them inside a demo window without anybody's permission.
+
+Ask it something it cannot know. Make up an address on a real street and ask what the taxes are. What you want back is an admission that it has no way to confirm that, and an offer of a person. If it produces a number, you have just watched it invent one, and it will do that to a client on a Tuesday.
+
+Ask it something that changed this week. A price cut, a status change, anything with a date on it. This is the question that separates an assistant reading a copy of your website from one reading the feed.
+
+Ask it something a competitor's buyer would ask. Then look at where the answer came from, and whether you are comfortable with that being said in your name to somebody you have never met.
+
+Try to break the handoff. Say you want to speak to a person. Say it rudely. The assistant's job at that moment is to stop selling and get out of the way, and a surprising number of them argue.
+
+Then close the laptop and open your phone. Load the page on mobile data rather than the office wifi, and count the seconds before you can type. Most of these are demoed on a desktop over a fast connection, and almost none of your buyers are.
+
 ## What it does not do, and should not pretend to
 
 This is the part most vendors skip, so let us be plain about it.
@@ -61,17 +121,33 @@ And it does not pretend to be a person. Ours introduces itself as an assistant. 
 
 ## Common questions, answered honestly
 
+### What is an AI chat assistant for a real estate website, in plain terms?
+
+A text conversation on your own site, answered by a language model that is wired to the systems holding the real answers. Somebody types a question the way they would ask you, it answers in sentences rather than menus, it looks things up rather than guessing, and when it reaches the end of what it can confirm it books time with you instead. The part that makes it worth having is not that it talks. It is that it is awake at eleven at night and it is connected to something true.
+
+### How is it different from the chatbot I already have?
+
+If yours is a decision tree with four buttons, you have a menu. The difference is whether it can answer a question nobody scripted in advance, and whether the answer comes from live data or from a page written eight months ago. Ask yours something specific about a listing. If it offers you a phone number and a contact form, you have a form with a friendlier shape.
+
 ### Will it annoy my visitors?
 
-A bad one will. A pop-up that fires two seconds after landing and demands a phone number before it has been useful is an ad wearing a chat widget's clothes. The one worth running answers a question first and asks for a number once it has earned it.
+A bad one will. A pop-up that fires two seconds after landing and demands a phone number before it has been useful is an advert in a chat widget's clothes. The one worth running answers a question first and asks for a number once it has earned it. The measurable version of that question is your own bounce rate before and after, which you should look at rather than guess about.
 
 ### My leads want a human, not a bot
 
-They do, eventually. What they want right now, at 11:40pm, is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client.
+They do, eventually. What they want at 11:40pm is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client. What people object to is not being helped by software, it is being trapped by it, and those are different products.
 
-### I already have a chatbot
+### Does it work on the MLS, or only on what my website already says?
 
-If it is a decision tree with four buttons, you have a menu, not an assistant. The difference is whether it can answer a question nobody scripted in advance.
+Both exist and they are not the same purchase. An assistant reading your website can only tell somebody what your website already told them, which is a better search box. An assistant connected to the feed can answer about status, price and availability as they stand this minute. Ask any vendor which one they are selling, and ask them what happens the afternoon a listing goes contingent.
+
+### Do I have to tell people it is an AI?
+
+Say yes and stop thinking about it. There are statutes in this area, at least one of them makes disclosure the thing that keeps you out of trouble, and the rules will not be fewer next year. Beyond the law it is simply the right call: an assistant that introduces itself costs you nothing, and being caught pretending costs you the only thing you actually sell.
+
+### What happens when it gets something wrong?
+
+Somebody has to be reading. Set it up so every conversation is stored and so you or somebody on your team reads the week's transcripts, at least at first. A wrong answer that nobody reads is a wrong answer it will give again on Thursday, and the person who finds it for you will be a client.
 
 ## Where it goes wrong
 
@@ -87,7 +163,7 @@ If you would rather see one working than read about it, ours is live on [the Rea
 
 Then go and do the same thing to your own site, because that is the free half of this and nobody needs to sell you anything for it. Open it on your phone, at night, in bed, the way the person comparing your Beacon colonial against two others did. Ask it the question they asked. Count how many taps it takes to get an answer, and notice whether you ever get one or just get asked for your email address.
 
-The build itself, what it connects to, and what it does with the leads it captures is written out on the [AI chat assistant page](/services/ai-chat-assistant).
+The build itself, and what happens to a lead in the minutes after the conversation ends, is written out on the [AI chat assistant page](/services/ai-chat-assistant).
 
 [[scene:funnel]]`;
 

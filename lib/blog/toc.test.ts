@@ -48,12 +48,13 @@ describe("extractToc", () => {
   });
 
   it("finds the six sections in each real article", () => {
-    // The AI post now carries three ### questions inside its "Common questions" section, so
-    // its outline is 6 top-level sections + 3 questions. Assert the SECTION count directly
-    // rather than relaxing the number, so a heading going missing still fails this test.
-    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(6);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(3);
-    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(9);
+    // The AI post was raised to the flagship standard on 2026-08-02 and gained four sections
+    // (what makes an answer true, the fine print, what it costs, how to test one) and four more
+    // questions: 10 top-level sections + 7 questions. Assert the SECTION count directly rather
+    // than relaxing the number, so a heading going missing still fails this test.
+    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth <= 2)).toHaveLength(10);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(7);
+    expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(17);
     // The workflow post was rebuilt as a flagship on 2026-08-01 and gained a "Common questions"
     // section: 9 top-level sections plus 6 questions. Same shape of assertion as above, so a
     // heading going missing still fails rather than being absorbed by a looser number.
@@ -98,14 +99,20 @@ describe("extractFaqs", () => {
   });
 
   it("pairs the AI post's real questions with their answers (drives FAQPage JSON-LD)", () => {
-    // The objections section was reshaped into "Common questions, answered honestly" with three
-    // ### questions, which is what makes the page emit FAQPage schema. These are the article's
-    // own words restructured, not invented Q&A, so assert the real questions are the ones found.
+    // Reshaped again on 2026-08-02. The first three entries were all OBJECTIONS, which is what
+    // we are defensive about rather than what anybody types into a search box, and the
+    // definitional question ("what IS this, in plain terms") was missing entirely even though it
+    // is the entry an AI answer lifts. It now leads. Assert the real questions, so a rewrite
+    // that quietly drops the definitional one fails here.
     const faqs = extractFaqs(AI_CHAT_ASSISTANT_POST);
     expect(faqs.map((f) => f.q)).toEqual([
+      "What is an AI chat assistant for a real estate website, in plain terms?",
+      "How is it different from the chatbot I already have?",
       "Will it annoy my visitors?",
       "My leads want a human, not a bot",
-      "I already have a chatbot",
+      "Does it work on the MLS, or only on what my website already says?",
+      "Do I have to tell people it is an AI?",
+      "What happens when it gets something wrong?",
     ]);
     expect(faqs.every((f) => f.a.length > 40)).toBe(true);
   });
