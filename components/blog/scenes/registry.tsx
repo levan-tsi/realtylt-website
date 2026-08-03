@@ -5,6 +5,7 @@ import { Conversation } from "./primitives/Conversation";
 import { Diagram } from "./primitives/Diagram";
 import { Film } from "./primitives/Film";
 import { Grid } from "./primitives/Grid";
+import { Offer } from "./primitives/Offer";
 import { Plate } from "./primitives/Plate";
 import { Statement } from "./primitives/Statement";
 import { StatBars } from "./primitives/StatBars";
@@ -71,6 +72,8 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
       return <Calculator {...scene} />;
     case "plate":
       return <Plate {...scene} />;
+    case "offer":
+      return <Offer {...scene} />;
     case "film":
       // A film scene without a film is a content error, not a render error.
       return content.film ? <Film {...scene} film={content.film} /> : null;

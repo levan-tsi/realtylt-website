@@ -326,6 +326,19 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       resultLabel: "Commission you are handing over",
       note: "The arithmetic is on screen on purpose, because the easy version of this calculator is a lie. The reply curve is a judgement and not a measurement: an immediate reply is treated as winning roughly nine conversations in ten, a few hours about half, the next day about a fifth. It is shaped by the research quoted above rather than derived from it, and deliberately not by the unsourced 78% figure this article declines to use. The 5% close rate is ours and is deliberately low, because an inquiry is a conversation and not a signed deal, and a calculator that multiplies every missed inquiry by a full commission is selling you something. The two numbers you can drag are yours. All three are a place to start arguing from, not a measurement of your business.",
       action: { label: "See how it is built", href: "/services/ai-chat-assistant" },
+      secondary: { label: "Talk it through", href: "/connect" },
+    },
+    /** Placed straight after "How to test one before you buy it", which is the most generous
+     * section in the piece: four questions the reader can put to any vendor, us included. The
+     * offer is to run those same five questions for them. Nothing new is being sold here. */
+    offer: {
+      kind: "offer",
+      band: "light",
+      eyebrow: "Or have us run it",
+      text: "Send us the address of your site and we will put all five of those questions to whatever is answering on it now, then send you back what it actually said.",
+      reassure: "No charge, and nobody calls you unless you ask us to.",
+      action: { label: "Send us your site", href: "/connect" },
+      ariaLabel: "Have us test your current chat widget",
     },
     "four-moves": {
       kind: "grid",

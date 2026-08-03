@@ -410,6 +410,20 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       resultLabel: "Going to whoever picked up",
       note: "Two things worth knowing about this arithmetic. The first is that it is far gentler than the research above would justify: the 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to reach a decision maker than firms that waited one more hour, and more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe, so the callback curve here is a plain judgement and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though somebody who dialled you is warmer than somebody who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
       action: { label: "See how it is built", href: "/services/ai-voice-agents" },
+      secondary: { label: "Ask about yours", href: "/connect" },
+    },
+    /** Placed after the legal section, on the sentence telling the reader to have their own
+     * attorney read the script. Handing over the script itself is the give: it makes that hour
+     * cheaper, and the disclosure lines are already published in the prose above, so this is
+     * offering a document rather than making a new claim. */
+    offer: {
+      kind: "offer",
+      band: "light",
+      eyebrow: "The script itself",
+      text: "Ask and we will send you in writing the exact opening our agents use: the line that says it is an assistant, and the line that says the call is recorded. Give that to your attorney rather than a blank page.",
+      reassure: "One page, no charge, and yours to use whoever ends up building the thing.",
+      action: { label: "Ask for the script", href: "/connect" },
+      ariaLabel: "Ask for the disclosure script",
     },
     plate: {
       kind: "plate",

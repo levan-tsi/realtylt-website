@@ -381,6 +381,20 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       resultLabel: "Sorting, not selling",
       note: "There is no dollar figure at the end of this one and no hourly-rate slider, which is a deliberate refusal rather than an omission. Those hours are the cheap half of the problem and they are the half that is easy to count. The expensive half has no slider at all, because it happens once: the seller who has to be out by spring, sitting third in a list sorted by arrival time, still waiting on Thursday. One of those in a year is worth more than every hour above it, and nobody who has not seen your pipeline can tell you how often it happens to you. The hours are what the sorting costs. The order is what it costs you.",
       action: { label: "See how it is built", href: "/services/lead-qualification" },
+      secondary: { label: "Get a second read", href: "/connect" },
+    },
+    /** Placed on the outcomes paragraph, which describes a report the article admits almost
+     * nobody runs. Offering to run it is the only offer on this page that costs us more than it
+     * makes us, which is why it is the right one. The reassurance repeats the article's own
+     * disclaimer rather than softening it. */
+    offer: {
+      kind: "offer",
+      band: "light",
+      eyebrow: "The report nobody runs",
+      text: "Pull the leads your system ranked lowest last quarter, and we will read what they actually got back from you beside what the highest-ranked ones got. That comparison is the only one that looks at outcomes instead of inputs.",
+      reassure: "Nothing on this page is legal advice and this would not be either. You keep the report whatever you decide.",
+      action: { label: "Run the outcomes check", href: "/connect" },
+      ariaLabel: "Ask us to run the outcomes check",
     },
     "pull-quote": {
       kind: "statement",

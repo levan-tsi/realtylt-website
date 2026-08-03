@@ -105,6 +105,8 @@ Try to break the handoff. Say you want to speak to a person. Say it rudely. The 
 
 Then close the laptop and open your phone. Load the page on mobile data rather than the office wifi, and count the seconds before you can type. Most of these are demoed on a desktop over a fast connection, and almost none of your buyers are.
 
+[[scene:offer]]
+
 ## What it does not do, and should not pretend to
 
 This is the part most vendors skip, so let us be plain about it.
@@ -275,6 +277,8 @@ Our position is simpler than the map. The agent says that it is an assistant and
 
 And if you are running outbound at any volume, have your own attorney read the script once. It is an hour, and it is the cheapest hour in the whole project.
 
+[[scene:offer]]
+
 [[scene:call-path]]
 
 ## Where it goes wrong
@@ -390,6 +394,8 @@ While we are here: you will see agents quote a figure of sixteen thousand dollar
 The second cost is less dramatic and far more likely, and it has a threshold you can actually look up. Send messages people did not want and some of them reply stop, which is their right and takes one word. Twilio, whose pipes a great many of these campaigns run through, publishes where that becomes a problem: an opt-out rate ["under 1% is considered healthy; over 3% may lead to carrier filtering"](https://www.twilio.com/docs/messaging/features/twilio-health-score-for-messaging). Filtering is not a bounce. Your messages to real clients simply stop arriving, silently, with no error, and you find out a fortnight later when somebody mentions they never got your text about the inspection.
 
 Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
+
+[[scene:offer]]
 
 [[scene:pull-quote]]
 
@@ -536,6 +542,8 @@ Now read those beside a scoring model. It is also optimising, also on data produ
 Be careful how far that carries, because it is guidance about advertising. It says nothing about CRMs, nothing about lead scoring, and nothing about a real estate agent ordering their own call list, and it is not authority for anything in this article. What transfers is the mechanism, which is the same mechanism, and one recommendation, which costs nothing: "Monitor outcomes of advertising campaigns for housing-related ads, to the extent possible, to identify and mitigate discriminatory outcomes."
 
 Outcomes. Not inputs. In practice that is a report almost nobody runs: take the leads your system scored low last quarter and check what they actually received. Did they get answers, did they get listings, could they reach a person. If the low-scored group got less of your TIME, the ranking did its job. If they got less of your SERVICE, it stopped being a ranking, and no audit of the inputs would ever have told you.
+
+[[scene:offer]]
 
 ## What it costs, and what the number really depends on
 
@@ -691,6 +699,8 @@ The same asymmetry is in the tools that do it properly. [n8n documents an error 
 [[scene:silence]]
 
 [[scene:plate-two]]
+
+[[scene:offer]]
 
 ## What it costs, and how long it takes
 

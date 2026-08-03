@@ -41,6 +41,7 @@ export function Calculator({
   resultLabel,
   note,
   action,
+  secondary,
   ariaLabel,
 }: {
   eyebrow: string;
@@ -51,6 +52,7 @@ export function Calculator({
   resultLabel: string;
   note: string;
   action?: { label: string; href: string };
+  secondary?: { label: string; href: string };
   ariaLabel: string;
 }) {
   const uid = useId();
@@ -217,13 +219,29 @@ export function Calculator({
               })}
             </dl>
 
-            {action ? (
-              <a
-                href={action.href}
-                className="mt-9 inline-flex w-fit items-center rounded-xl bg-paper px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors duration-200 hover:bg-mist"
-              >
-                {action.label}
-              </a>
+            {/* Two actions, and the order is deliberate. The filled one stays the low-commitment
+                read; the outline one reaches a person. Somebody who has just dragged four sliders
+                onto their own business is exactly who should be able to ask a human about the
+                answer, and until 2026-08-03 this panel gave them nowhere to do it. */}
+            {action || secondary ? (
+              <div className="mt-9 flex flex-wrap gap-3">
+                {action ? (
+                  <a
+                    href={action.href}
+                    className="inline-flex items-center rounded-xl bg-paper px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors duration-200 hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-porchlight"
+                  >
+                    {action.label}
+                  </a>
+                ) : null}
+                {secondary ? (
+                  <a
+                    href={secondary.href}
+                    className="inline-flex items-center rounded-xl border border-paper/25 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-paper/80 transition-colors duration-200 hover:border-paper/60 hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-porchlight"
+                  >
+                    {secondary.label}
+                  </a>
+                ) : null}
+              </div>
             ) : null}
           </div>
         </div>

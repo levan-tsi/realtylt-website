@@ -293,7 +293,25 @@ export type Scene =
       /** The line above the big number. */
       resultLabel: string;
       note: string;
+      /** The two actions under the result, and the ORDER is the argument. The first stays the
+       * low-commitment one (read how it is built); the second reaches a person. Measured
+       * 2026-08-03, the whole middle of every flagship could be read without ever finding a way
+       * to talk to anybody, and the two links that did exist pointed at more of our own pages.
+       * `secondary` is optional so a topic that has nothing honest to offer here can say so by
+       * leaving it out. */
       action?: { label: string; href: string };
+      secondary?: { label: string; href: string };
+      ariaLabel: string;
+    })
+  /** One ask, in the middle, earned by the section above it. `reassure` is required and says
+   * what will NOT happen — see primitives/Offer.tsx for why that is structural. */
+  | (SceneBase & {
+      kind: "offer";
+      band: "light";
+      eyebrow: string;
+      text: string;
+      reassure: string;
+      action: { label: string; href: string };
       ariaLabel: string;
     })
   | (SceneBase & { kind: "component"; id: ComponentId });

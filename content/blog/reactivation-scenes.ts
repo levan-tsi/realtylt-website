@@ -404,6 +404,19 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       resultLabel: "What working the list once might return",
       note: "Every multiplier in this one is yours. There is not a single rate of ours in it, and that is deliberate rather than lazy: no independent study of cold database response rates in real estate exists, this article says a few paragraphs up that anybody quoting you a conversion rate before they have seen your database is quoting a number they made up, and we are not going to do it in a widget either. The defaults are set low on purpose so the first thing you do is argue with them. Note also that there is no row turning this into an annual figure. A database is finite. This is what working the list once might return, not a number that repeats every year, and a vendor who annualises it is selling you a subscription to a harvest.",
       action: { label: "See how it is built", href: "/services/database-reactivation" },
+      secondary: { label: "Check yours with us", href: "/connect" },
+    },
+    /** Placed on the sentence that says both costs are avoided in the same place: before the
+     * first message goes out. This is the one topic where the offer is genuinely protective
+     * rather than commercial, so it says out loud that we do not need the file. */
+    offer: {
+      kind: "offer",
+      band: "light",
+      eyebrow: "Before the first message",
+      text: "Run your own list through the three checks above. If you would rather have a second pair of eyes on it, tell us roughly what is in there and where the records came from, and we will tell you which parts of it we would not touch.",
+      reassure: "We do not need the file itself to answer that, and nothing gets sent to anybody.",
+      action: { label: "Ask before you send", href: "/connect" },
+      ariaLabel: "Ask us about your own list before sending",
     },
     "pull-quote": {
       kind: "statement",

@@ -2,7 +2,7 @@
   "note": "Derived by scripts/flagship-standard.mjs --ratchet. Monotonic: never lowered by hand.",
   "updated": "2026-08-03",
   "metrics": {
-    "proseWords": 3295,
+    "proseWords": 3320,
     "sections": 18,
     "citations": 4,
     "faqQuestions": 5,
@@ -12,6 +12,6 @@
     "hasCalculator": true,
     "hasLimitsSection": true,
     "hasHowToSection": true,
-    "siblingOverlap": 1
+    "siblingOverlap": 0
   }
 }

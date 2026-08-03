@@ -375,6 +375,20 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       resultLabel: "Hours of typing, a year",
       note: "This counts the typing and nothing else, which makes it the smallest honest version of the number. It deliberately does not multiply anything by twenty five minutes and twenty six seconds. That figure is real and it is on this page, but it was measured on twenty four desk workers at a technology company and none of them were selling houses, and this article says a few paragraphs up that anybody converting it into a dollar figure for your business has stopped citing it and started decorating with it. That applies to us. So the interruption cost, which is almost certainly the larger half, is missing from the number above on purpose, and the hourly figure is yours rather than an average we picked.",
       action: { label: "See how it is built", href: "/services/workflow-automation" },
+      secondary: { label: "Bring us your week", href: "/connect" },
+    },
+    /** Placed after the silent-failure section, which establishes that the error alarm is one
+     * setting per chain and that almost nobody turns it on. Sending somebody that setting helps
+     * a reader who will never hire us, on chains we did not build. That is the whole test of
+     * whether an offer is earned. */
+    offer: {
+      kind: "offer",
+      band: "light",
+      eyebrow: "The alarm, at least",
+      text: "Whatever you are running today, tell us which platform it is on and we will send back the exact setting that makes a failed chain tell a person instead of a log file.",
+      reassure: "It works whether or not we ever build you anything, which is rather the point.",
+      action: { label: "Ask for the setting", href: "/connect" },
+      ariaLabel: "Ask for the failure-alert setting",
     },
     "pull-quote": {
       kind: "statement",
