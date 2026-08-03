@@ -123,15 +123,22 @@ async function measure(page, slug) {
       //
       // What is left after the change is prose the author chose, which is what the owner
       // actually objected to: "not to repeat same things and details".
+      // Shingled PER PARAGRAPH, never across the joined text. Joining first manufactures
+      // phrases nobody wrote out of the seam between two paragraphs, and those seams are where
+      // the chrome is: measured 2026-08-03, three of the four phrases voice and qualification
+      // still "shared" were windows straddling the end of the last body paragraph and the start
+      // of the identical author bio ("at all i run realtylt in the hudson"). The bio is in all
+      // five and is correctly excluded as chrome; only the seam survived, because the words
+      // before it differ. A phrase that spans a paragraph break is an artifact of the ruler.
       shingles: (() => {
-        const bodyParas = [...art.querySelectorAll("p")]
-          .filter((p) => !p.closest("section"))
-          .map((p) => p.textContent.trim())
-          .filter((t) => t.split(/\s+/).length >= 25);
-        const paraText = bodyParas.join(" ").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
-        const w = paraText.trim().split(" ");
         const out = new Set();
-        for (let i = 0; i + 7 <= w.length; i++) out.add(w.slice(i, i + 7).join(" "));
+        for (const p of art.querySelectorAll("p")) {
+          if (p.closest("section")) continue;
+          const t = p.textContent.trim();
+          if (t.split(/\s+/).length < 25) continue;
+          const w = t.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim().split(" ");
+          for (let i = 0; i + 7 <= w.length; i++) out.add(w.slice(i, i + 7).join(" "));
+        }
         return [...out];
       })(),
     };

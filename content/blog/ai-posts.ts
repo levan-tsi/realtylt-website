@@ -309,7 +309,7 @@ The same rules that govern your own outbound calling apply: you need consent to 
 
 There is a test for this that takes ninety seconds and costs nothing, and it is worth doing before you spend a dollar with anybody, us included. Borrow a phone your office does not have saved, ring your own number on a Sunday evening, and sit through the whole thing the way a stranger would. Count the rings. Listen to what your voicemail actually says, all the way to the beep. Then decide whether that is the first thing you want somebody standing outside your listing to hear.
 
-Most people who do that come away having learned something they did not want to know, which is the point. You can hear the alternative on [the RealtyLT AI page](/ai#voice), and what it connects to and what it does with the calls it takes is on the [AI voice agents page](/services/ai-voice-agents).
+Most people who do that come away having learned something they did not want to know, which is the point. You can hear the alternative on [the RealtyLT AI page](/ai#voice). The [AI voice agents page](/services/ai-voice-agents) has the rest of it: what the agent is wired to, and what it does with a call once it has taken one.
 
 The same argument at the other end of the day is on the [website chat side](/blog/ai-chat-assistant-real-estate-website), where the buyer messaging you at 11:40pm never picks up the phone at all.
 
@@ -591,7 +591,7 @@ Measure your own baseline first, because you cannot tell whether scoring helped 
 
 The number that matters is how many of the ten you could answer at all. In most pipelines it is one or two, and the useful part is not the score. It is discovering that on eight of them you are ranking your Tuesday on a name, an email address and a timestamp, which is the same as not ranking it.
 
-There is a walkthrough of the whole thing on [the RealtyLT AI page](/ai#qualify), and what it reads and where it routes is on the [lead qualification page](/services/lead-qualification).
+There is a walkthrough of the whole thing on [the RealtyLT AI page](/ai#qualify). The [lead qualification page](/services/lead-qualification) sets out exactly what gets read, what gets scored, and where each band of leads is routed.
 
 None of this has anything to score unless a conversation happened first. [The 11:40pm website conversation](/blog/ai-chat-assistant-real-estate-website) and [the 9:42 Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate) are where the sentences come from, and [the leads already sitting in your CRM](/blog/database-reactivation-old-real-estate-leads) are the ones nobody has scored at all.
 
