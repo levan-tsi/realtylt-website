@@ -132,8 +132,13 @@ export const TURN_GAP = {
   /** The average, not the extreme. The two end bars exist to show how tight the whole span
    * is; the 208 is the number a reader should walk away holding. */
   lit: 2,
+  /** TWO LEVELS ON ONE AXIS, said out loud, which is the lesson the workflow post's chart had to
+   * learn the same day this one shipped. The outer bars are two of the ten language averages;
+   * the inner two are the middle and the average of the whole dataset. Every figure is exact
+   * and every label is accurate, and that is not the same as the chart being true: bars sitting
+   * side by side get read as one comparison unless the caption says otherwise. */
   basis:
-    "The grey track behind each bar is one full second. Ten languages on five continents, measured from video of ordinary unscripted conversation between two and six people. Yes or no questions were 67% of everything coded.",
+    "The grey track behind each bar is one full second. The outer two bars are the fastest and the slowest of the ten language averages; the inner two are the middle and the average of the whole dataset, which sit apart because the spread runs long. Ten languages on five continents, measured from video of ordinary unscripted conversation between two and six people. Yes or no questions were 67% of everything coded.",
   sourceText:
     "Stivers and ten co-authors, Universals and cultural variation in turn-taking in conversation, PNAS 2009.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/",
