@@ -66,14 +66,14 @@ export const POSTS: BlogPost[] = [
     slug: "ai-lead-qualification-real-estate-scoring",
     title: "All Three Leads Look the Same. Two Are Worth Your Morning.",
     date: "2026-07-31",
-    /** NO `updated` YET, DELIBERATELY, and this is the one readiness check the post does not
-     * pass on day one. `updated` means the date of the last substantive revision, and a post
-     * written, built and shipped inside a single day has not had one. Inventing a later date to
-     * turn the check green would be exactly the freshness fiction the field comment above warns
-     * about, on a page whose own argument is that the inputs have to be honest.
-     *
-     * Set this to the real date the first time the article is genuinely revised, which for the
-     * other three flagships happened within a week of shipping. */
+    /** Shipped 07-31 with NO `updated`, deliberately, because a post written and shipped inside
+     * one day has not been revised and inventing a date would have been exactly the freshness
+     * fiction this page argues against. The revision has now happened: on 08-02 it gained a
+     * section on why auditing your inputs is not enough (built on HUD's April 2024 guidance on
+     * algorithmic housing advertising, a source the post did not have), a section on what it
+     * costs, a calculator in the reader's own numbers, and a rewritten close. Roughly 950 words
+     * of it are new. The date below is a true statement about that. */
+    updated: "2026-08-02",
     excerpt:
       "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:
@@ -91,7 +91,10 @@ export const POSTS: BlogPost[] = [
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
-    updated: "2026-07-31",
+    /** 07-31: rewritten and verified. 08-02: gained a calculator whose every multiplier is the
+     * reader's own, because no independent study of cold database response rates exists, plus a
+     * rewritten legal preamble and close. */
+    updated: "2026-08-02",
     excerpt:
       "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign actually does with that list, the consent rules with dates in them that nobody selling you one mentions, and what it costs when it goes wrong.",
     seoDescription:
@@ -109,8 +112,12 @@ export const POSTS: BlogPost[] = [
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
-     * was verified plus advice to check the caller's own state. Shipped 2026-07-31. */
-    updated: "2026-07-31",
+     * was verified plus advice to check the caller's own state. Shipped 2026-07-31.
+     *
+     * 08-02: a second real revision. It gained a calculator, and its "what it does not do"
+     * section was rewritten from scratch because it had been the chat post's with the synonyms
+     * swapped, down to the same divorce sale and the same contingency question. */
+    updated: "2026-08-02",
     excerpt:
       "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
     seoDescription:
@@ -129,8 +136,10 @@ export const POSTS: BlogPost[] = [
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
      * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
      * graphic, the rebuilt chain as a diagram, its own film, and two sections it never had (what
-     * it costs, and what it does not do). Roughly half the sentences on the page are new. */
-    updated: "2026-08-01",
+     * it costs, and what it does not do). Roughly half the sentences on the page are new.
+     * 08-02: gained a calculator that counts the typing and deliberately leaves out the 25 min
+     * 26 sec interruption cost, for the reason the article itself gives. */
+    updated: "2026-08-02",
     excerpt:
       "The manual step takes ninety seconds. Getting back to what you were doing takes twenty five minutes. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
     seoDescription:
@@ -150,11 +159,15 @@ export const POSTS: BlogPost[] = [
     slug: "ai-chat-assistant-real-estate-website",
     title: "Your Website Answered That Buyer at 11:40pm. Did You?",
     date: "2026-07-12",
-    updated: "2026-07-27",
+    /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
+     * and carried one citation, which the voice post also used, so it effectively had no source
+     * of its own. It now names that problem, rests on research it can show you, and gains three
+     * primary sources plus four sections its own successors already had. 1,030 words to 3,313. */
+    updated: "2026-08-02",
     excerpt:
-      "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. Here is what an AI chat assistant actually does in that gap, and what it cannot do.",
+      "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. What an AI chat assistant actually does in that gap, why the number this whole category is sold on cannot be sourced, and what to ask before you buy one.",
     seoDescription:
-      "Most home searching happens at night, on a phone, and most real estate sites answer the next morning. What an AI chat assistant does in that gap, and what it cannot do.",
+      "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one before you buy.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,
