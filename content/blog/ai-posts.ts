@@ -361,7 +361,7 @@ Meanwhile the contacts in it keep aging in two directions at once. Some are drif
 
 [[scene:four-moves]]
 
-The last one is the part that decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from an appointment that arrives as a name and a time. You already know they have a house to sell, and you already know they said so themselves.
+The last one is the part that decides whether any of it was worth doing. An appointment that arrives with the reply attached is a different object from an appointment that arrives as a name and a time. You already know there is a house to sell, and you already know they said so themselves.
 
 ## The part nobody selling you this will mention
 
