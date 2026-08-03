@@ -213,14 +213,41 @@ async function mirrorSlice(listings) {
   return { outcomes, fetched: queue.length, skipped, downloaded };
 }
 
+/** Apply a chunk of upserts.
+ *
+ * This backfill is not the only writer on idx_listings — the hourly pg_cron sync is writing the
+ * same rows at the same time, and round 20 lost a whole slice to the collision:
+ *
+ *   idx_sync_apply 500: {"code":"40P01","details":"Process A waits for ShareLock on
+ *   transaction X; blocked by process B. Process B waits for ShareLock on ... blocked by A."}
+ *
+ * A deadlock is not a bug to report, it is Postgres picking a victim so the other transaction
+ * can finish — and the documented response is to retry the victim. Throwing instead killed the
+ * run after an hour of paced downloading (the watermark saved the earlier slices, but the slice
+ * in flight was discarded). So: retry 40P01 and serialisation failures with backoff and a little
+ * jitter, so the retry does not land on the sync's next write in lockstep. Anything else still
+ * throws, because anything else is a real failure.
+ */
+const RETRYABLE_PG = /40P01|40001|deadlock detected|could not serialize/i;
+
 async function rpc(body) {
-  const res = await fetch(`${SB_URL}/rest/v1/rpc/idx_sync_apply`, {
-    method: "POST",
-    headers: { apikey: SB_ANON, Authorization: `Bearer ${SB_ANON}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ _secret: SECRET, ...body }),
-  });
-  if (!res.ok) throw new Error(`idx_sync_apply ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  return res.json();
+  for (let attempt = 0; attempt <= 4; attempt++) {
+    const res = await fetch(`${SB_URL}/rest/v1/rpc/idx_sync_apply`, {
+      method: "POST",
+      headers: { apikey: SB_ANON, Authorization: `Bearer ${SB_ANON}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ _secret: SECRET, ...body }),
+    });
+    if (res.ok) return res.json();
+    const text = (await res.text()).slice(0, 200);
+    if (attempt < 4 && RETRYABLE_PG.test(text)) {
+      const wait = Math.round(1000 * 2 ** attempt + Math.random() * 750);
+      console.log(`  idx_sync_apply deadlocked with the hourly sync — retrying in ${wait}ms (attempt ${attempt + 1}/4)`);
+      await sleep(wait);
+      continue;
+    }
+    throw new Error(`idx_sync_apply ${res.status}: ${text}`);
+  }
+  throw new Error("idx_sync_apply: unreachable");
 }
 
 // ── main loop ─────────────────────────────────────────────────────────────────────────────────
