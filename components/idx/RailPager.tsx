@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Listing } from "@/lib/idx/types";
 import { ListingCard } from "./ListingCard";
+import { ResultSetScope } from "./ResultSetScope";
 
 const PER_PAGE = 8;
 
@@ -52,16 +53,21 @@ export function RailPager({
 
   return (
     <div role="group" aria-roledescription="carousel" aria-label={ariaLabel}>
-      <ul
-        ref={track}
-        className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4"
-      >
-        {shown.map((l, i) => (
-          <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
-            <ListingCard listing={l} priority={eager && page === 0 && i < 4} />
-          </li>
-        ))}
-      </ul>
+      {/* The WHOLE rail is the set, not just the eight on screen — so Previous/Next on a listing
+          page keeps walking the rail past the page boundary the visitor never chose. Scoped per
+          rail because the home page renders two of them. */}
+      <ResultSetScope listings={listings} backHref="/">
+        <ul
+          ref={track}
+          className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4"
+        >
+          {shown.map((l, i) => (
+            <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
+              <ListingCard listing={l} priority={eager && page === 0 && i < 4} />
+            </li>
+          ))}
+        </ul>
+      </ResultSetScope>
 
       {pageCount > 1 && (
         <div className="mt-7 flex items-center justify-center gap-4">
