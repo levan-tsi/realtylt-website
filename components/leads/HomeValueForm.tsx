@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { LeadForm } from "./LeadForm";
+import { FoundYourHome } from "./FoundYourHome";
 
 /** Home-value hero form, matched to live realtylt.com: at rest a single horizontal bar
  * (address + unit + black FIND OUT) sitting on the photo. Submitting the bar reveals the
@@ -15,6 +16,12 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   const [address, setAddress] = useState<string | null>(defaultAddress?.trim() || null);
   /** Which of the two things they came for. Null until they say. */
   const [intent, setIntent] = useState<"value" | "sell" | null>(null);
+  /** Google's normalised version of what they typed, once the confirmation step resolves it.
+   * Everything downstream — the report link, the lead, the CRM — should carry THIS rather than
+   * the free text, because it has the ZIP and a consistent shape. Null until (and unless) it
+   * resolves, and the typed address remains the fallback at every step. */
+  const [normalised, setNormalised] = useState<string | null>(null);
+  const confirmedAddress = normalised ?? address;
 
   // ── Step 2: the fork. Somebody typing their address wants ONE of two different things and
   // the page had been assuming the second. "What is it worth" is answerable right now, on
@@ -24,10 +31,18 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   if (address !== null && intent === null) {
     return (
       <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
-        <p className="text-sm text-stone">
-          For <strong className="text-ink">{address}</strong>
+        {/* The confirmation and the fork share one screen. Live splits them across two, but the
+            second screen exists there only to carry the Edit link, and "Use a different address"
+            already sits at the bottom of this one. Renders nothing at all unless Google places
+            the address, so the plain "For <what they typed>" line below stays the fallback. */}
+        <FoundYourHome query={address} onResolved={setNormalised} />
+        {normalised && <p className="text-sm font-bold text-ink">We&rsquo;ve found your home.</p>}
+        <p className={`text-sm text-stone ${normalised ? "mt-1" : ""}`}>
+          For <strong className="text-ink">{confirmedAddress}</strong>
         </p>
-        <h2 className="t-h3 mt-1 text-ink">What would you like to do?</h2>
+        {/* mt-4, not mt-1: the confirmation adds a line above the address, and three stacked
+            sentences at 4px apart read as one block instead of a statement and a question. */}
+        <h2 className="t-h3 mt-4 text-ink">What would you like to do?</h2>
         <div className="mt-5 grid gap-3">
           <button
             type="button"
@@ -57,6 +72,9 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
           onClick={() => {
             setAddress(null);
             setIntent(null);
+            // Without this the previous home's normalised address survives into the next
+            // attempt, and the card confirms an address the visitor never typed.
+            setNormalised(null);
           }}
           className="mt-4 text-sm text-stone underline underline-offset-4 transition-colors hover:text-ink"
         >
@@ -70,13 +88,13 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   // is the portal's own gate, and `next` brings them back here rather than dumping them on a
   // dashboard with their address forgotten.
   if (address !== null && intent === "value") {
-    const target = `/portal/reports?address=${encodeURIComponent(address)}`;
+    const target = `/portal/reports?address=${encodeURIComponent(confirmedAddress ?? address)}`;
     return (
       <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
         <h2 className="t-h3 text-ink">Your market report</h2>
         <p className="mt-2 text-sm leading-[1.6] text-stone">
           We build it from our own live inventory: active, pending and sold homes near{" "}
-          <strong className="text-ink">{address}</strong>. Sign in and it saves to your account so
+          <strong className="text-ink">{confirmedAddress}</strong>. Sign in and it saves to your account so
           you can come back to it.
         </p>
         <Link
@@ -101,13 +119,13 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
       <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
         <p className="text-sm leading-relaxed text-stone">
           Almost there. Tell us where to send the numbers for{" "}
-          <strong className="text-ink">{address}</strong>.
+          <strong className="text-ink">{confirmedAddress}</strong>.
         </p>
         <div className="mt-4">
           <LeadForm
             compact
             withAddress
-            defaultAddress={address}
+            defaultAddress={confirmedAddress ?? address}
             defaultReason="I'm interested in selling a home"
             submitLabel="Get My Home Value"
             successTitle="Request received."
