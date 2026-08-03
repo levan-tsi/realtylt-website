@@ -206,7 +206,7 @@ export function MortgageCalculator({
 
         {/* Representative rates strip — clicking a term seeds the calculator's term + rate.
             Honest: derived from the editable rate above, not a live "today's rate" feed. */}
-        <div className="mt-6 border-t border-[#d9dde2] pt-5">
+        <div className="mt-6 border-t border-line-strong pt-5">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Representative rates</p>
           <ul className="mt-2 divide-y divide-[#d9dde2]">
             {REP_RATE_TERMS.map((term) => {

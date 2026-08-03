@@ -32,7 +32,7 @@ export async function RelatedPosts({ service }: { service: Service }) {
         <ul className="mt-10 grid gap-6 md:grid-cols-2">
           {posts.map((p, i) => (
             <Reveal key={p.slug} as="li" delay={i * 110} className="min-w-0">
-              <article className="group relative grid h-full grid-cols-[auto_1fr] items-center gap-5 rounded-2xl border border-line bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-porchlight/40 hover:shadow-[0_18px_44px_-20px_rgb(16_24_32/0.35)] sm:gap-6 sm:p-5">
+              <article className="group relative grid h-full grid-cols-[auto_1fr] items-center gap-5 rounded-2xl border border-line bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-porchlight/40 hover:shadow-lift sm:gap-6 sm:p-5">
                 <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10" aria-label={p.title} />
                 <div className="photo-zoom relative h-24 w-24 shrink-0 overflow-hidden rounded-xl sm:h-28 sm:w-28">
                   <Image src={p.cover} alt="" fill sizes="112px" className="object-cover" />

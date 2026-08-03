@@ -97,7 +97,7 @@ export function Conversation({
                     <li
                       key={i}
                       className={`border-t py-5 first:border-t-0 first:pt-0 ${
-                        dark ? "border-white/12" : "border-[#dfe4ea]"
+                        dark ? "border-white/12" : "border-line"
                       }`}
                     >
                       <div className="flex items-baseline gap-3">
@@ -144,12 +144,12 @@ export function Conversation({
                     <li key={i} className={them ? "flex justify-end" : "flex justify-start"}>
                       <div className={`max-w-[86%] ${them ? "text-right" : "text-left"}`}>
                         <p
-                          className={`rounded-[14px] px-5 py-3.5 leading-[1.6] ${
+                          className={`rounded-2xl px-5 py-3.5 leading-[1.6] ${
                             them
                               ? "bg-river text-paper"
                               : dark
-                                ? "bg-white/[0.07] text-paper shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]"
-                                : "bg-paper text-ink-soft shadow-[0_1px_2px_rgb(16_44_84/0.06)]"
+                                ? "bg-white/[0.07] text-paper shadow-edge"
+                                : "bg-paper text-ink-soft shadow-raise"
                           }`}
                         >
                           {t.text}
@@ -181,7 +181,7 @@ export function Conversation({
                   <li
                     key={e.label}
                     className={`border-t py-4 first:border-t-0 first:pt-0 ${
-                      dark ? "border-white/12" : "border-[#dfe4ea]"
+                      dark ? "border-white/12" : "border-line"
                     }`}
                   >
                     <div className="flex items-baseline gap-3">

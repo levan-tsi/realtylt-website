@@ -419,7 +419,7 @@ export async function ListingDetail({ id }: { id: string }) {
           {/* Contact CTA */}
           <Reveal delay={100}>
             <aside className="lg:sticky lg:top-24">
-              <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-[0_24px_60px_-30px_rgb(16_24_32/0.25)] md:p-7">
+              <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-float md:p-7">
                 {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
                 <ListingLeadCTAs
                   infoTargetId="listing-info-form"

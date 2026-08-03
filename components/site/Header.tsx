@@ -264,7 +264,7 @@ export function Header() {
                       // clicking the caret while hovering really does close it.
                       <div
                         id="top-areas-flyout"
-                        className={`absolute left-0 top-full z-50 flex gap-6 rounded-2xl border border-line bg-paper p-4 shadow-lg transition-opacity duration-150 motion-reduce:transition-none ${
+                        className={`absolute left-0 top-full z-50 flex gap-6 rounded-2xl border border-line bg-paper p-4 shadow-lift transition-opacity duration-150 motion-reduce:transition-none ${
                           flyout ? "visible opacity-100" : "invisible opacity-0"
                         }`}
                       >

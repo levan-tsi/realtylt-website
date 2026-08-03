@@ -24,7 +24,7 @@ function Shell({
   children: React.ReactNode;
 }) {
   return (
-    <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-6 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.07)] md:p-7">
+    <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-6 shadow-panel md:p-7">
       {/* caption only — the decorative "///" glyph was removed (owner 2026-07-26: it read as
           tech garnish). Clean left-aligned label under a hairline. */}
       <figcaption className="border-b border-paper/10 pb-4">
@@ -55,8 +55,8 @@ export function ServiceFigure({ figure }: { figure: Figure }) {
               key={i}
               className={
                 t.who === "ai"
-                  ? "mr-auto max-w-[92%] rounded-2xl rounded-tl-md border-l-2 border-porchlight bg-white/[0.06] px-4 py-3"
-                  : "ml-auto max-w-[88%] rounded-2xl rounded-tr-md border border-paper/15 px-4 py-3"
+                  ? "mr-auto max-w-[92%] rounded-2xl rounded-tl-lg border-l-2 border-porchlight bg-white/[0.06] px-4 py-3"
+                  : "ml-auto max-w-[88%] rounded-2xl rounded-tr-lg border border-paper/15 px-4 py-3"
               }
             >
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/45">

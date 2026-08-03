@@ -65,7 +65,7 @@ export function AccountMenu() {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-full z-50 mt-1 min-w-48 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-lg"
+          className="absolute right-0 top-full z-50 mt-1 min-w-48 overflow-hidden rounded-xl border border-line bg-paper py-1 shadow-lift"
         >
           {MENU.map((m) => (
             <Link
@@ -86,7 +86,7 @@ export function AccountMenu() {
               await signOut();
               router.push("/");
             }}
-            className="block w-full border-t border-[#eee] px-4 py-2 text-left text-sm text-stone transition-colors hover:bg-ink hover:text-paper"
+            className="block w-full border-t border-line px-4 py-2 text-left text-sm text-stone transition-colors hover:bg-ink hover:text-paper"
           >
             Sign Out
           </button>

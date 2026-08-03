@@ -347,7 +347,7 @@ function QualifyingWizard({
         aria-modal="true"
         aria-labelledby="rlt-wizard-title"
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative w-full max-w-md overflow-hidden rounded-2xl bg-paper text-ink shadow-2xl"
+        className="rlt-pop-in relative w-full max-w-md overflow-hidden rounded-2xl bg-paper text-ink shadow-float"
       >
         {/* progress rail */}
         <div className="h-1 w-full bg-mist" aria-hidden>

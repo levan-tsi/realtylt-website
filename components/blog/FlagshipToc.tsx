@@ -154,8 +154,8 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           aria-hidden
           className={`pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-2xl border opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 ${
             dark
-              ? "border-white/12 bg-ink/85 shadow-[0_18px_44px_-22px_rgba(0,0,0,0.8)]"
-              : "border-[#e3e6ea] bg-paper/95 shadow-[0_18px_44px_-22px_rgba(16,24,32,0.5)]"
+              ? "border-white/12 bg-ink/85 shadow-lift"
+              : "border-line bg-paper/95 shadow-lift"
           }`}
         />
         <ul className="relative flex flex-col gap-1">
@@ -179,7 +179,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                   // wins, and it only overrides the colour, so the width and offset still come
                   // from the site-wide rule.
                   style={dark ? { outlineColor: "var(--color-paper)" } : undefined}
-                  className="flex items-center rounded-md outline-offset-4"
+                  className="flex items-center rounded-lg outline-offset-4"
                 >
                   {/* 24px hit cell keeps the resting target accessible; the tick lives inside. */}
                   <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center">
@@ -236,7 +236,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="flex max-w-full items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-ink px-5 py-3 text-sm text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+            className="flex max-w-full items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg
               aria-hidden
@@ -270,7 +270,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
               onClick={() => setOpen(false)}
               className="absolute inset-0 bg-ink/40"
             />
-            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-[#e3e6ea] bg-paper px-4 pb-8 pt-3">
+            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-line bg-paper px-4 pb-8 pt-3">
               <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#d9dde3]" aria-hidden />
               <div className="mb-2 flex items-center justify-between px-1">
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone">On this page</p>
@@ -292,7 +292,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                         href={`#${it.id}`}
                         onClick={(e) => jump(e, it.id)}
                         aria-current={active ? "location" : undefined}
-                        className={`flex items-center gap-3 rounded-[10px] px-3 py-3 text-sm transition-colors ${
+                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-colors ${
                           active ? "bg-mist font-bold text-ink" : "text-stone hover:bg-mist hover:text-ink"
                         }`}
                       >

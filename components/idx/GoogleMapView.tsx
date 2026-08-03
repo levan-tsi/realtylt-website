@@ -273,10 +273,13 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           mean, in the same breath as the existing accuracy disclaimer. */}
       <div className="pointer-events-none absolute bottom-2 left-2 z-[5] flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
         <span className="flex items-center gap-1.5">
+          {/* @design-allow the swatch is a MINIATURE of the map's price chip, which is 8px at
+              ~26px tall — so at 10px tall it is 3px. On the UI scale it would read as a pill. */}
           <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-black" />
           For sale
         </span>
         <span className="flex items-center gap-1.5">
+          {/* @design-allow miniature of the map chip, same reason as above. */}
           <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-white ring-[1.5px] ring-[#4a4a4a]" />
           Pending
         </span>

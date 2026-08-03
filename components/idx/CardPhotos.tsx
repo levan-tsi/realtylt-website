@@ -38,7 +38,7 @@ export function CardPhotos({
 
   const arrowCls =
     "absolute top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full " +
-    "bg-white/90 text-ink shadow-sm ring-1 ring-black/10 transition-opacity " +
+    "bg-white/90 text-ink shadow-raise ring-1 ring-black/10 transition-opacity " +
     "opacity-0 group-hover:opacity-100 focus-visible:opacity-100 [@media(pointer:coarse)]:opacity-100 " +
     "hover:bg-white";
 

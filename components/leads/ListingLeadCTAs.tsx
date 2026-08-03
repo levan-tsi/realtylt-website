@@ -324,7 +324,7 @@ function Sheet({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-2xl bg-paper text-ink shadow-2xl ${
+        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-2xl bg-paper text-ink shadow-float ${
           wide ? "max-w-xl" : "max-w-md"
         }`}
       >

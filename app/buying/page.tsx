@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { TrackedButton } from "@/components/leads/TrackedButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { BrowserChrome, Laptop, MockCard, MockChip, Phone } from "@/components/ui/DeviceMock";
 import { MlsImage } from "@/components/idx/MlsImage";
 import { isLiveMlsPhoto, formatPrice } from "@/components/idx/ListingCard";
 import { getIdxClient } from "@/lib/idx";
@@ -270,24 +271,11 @@ export default async function BuyingPage() {
   );
 }
 
-/** A CSS laptop mockup (graphite bezel) — same pattern as the /selling device frames. */
-function LaptopFrame({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mx-auto w-full max-w-xl">
-      <div className="rounded-[14px] border-[10px] border-[#20262e] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.55)]">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[4px] bg-black">{children}</div>
-      </div>
-      <div className="mx-auto h-3 w-[94%] rounded-b-[10px] bg-gradient-to-b from-[#cfd3d9] to-[#a7adb6]" />
-      <div className="mx-auto h-1.5 w-[22%] rounded-b-[8px] bg-[#9aa1ab]" />
-    </div>
-  );
-}
-
 /** Small real-listing thumbnail — MLS photo (self-healing) or fixture image, price chip. */
 function Thumb({ listing }: { listing: Listing }) {
   const src = listing.photos[0];
   return (
-    <div className="relative overflow-hidden rounded-[3px] border border-white/10 bg-mist">
+    <MockCard className="relative">
       <div className="relative aspect-[4/3]">
         {src ? (
           isLiveMlsPhoto(src) ? (
@@ -296,11 +284,9 @@ function Thumb({ listing }: { listing: Listing }) {
             <Image src={src} alt="" fill sizes="160px" className="object-cover" />
           )
         ) : null}
-        <span className="absolute bottom-1 left-1 rounded-sm bg-ink/80 px-1.5 py-0.5 text-[9px] font-bold text-paper">
-          {formatPrice(listing.price)}
-        </span>
+        <MockChip className="bg-ink/80 text-[9px]">{formatPrice(listing.price)}</MockChip>
       </div>
-    </div>
+    </MockCard>
   );
 }
 
@@ -309,19 +295,9 @@ function SearchLaptop({ listings }: { listings: Listing[] }) {
   const tiles = listings.slice(0, 6);
   return (
     <figure className="mx-auto w-full max-w-xl" aria-label="Our home-search results on a laptop">
-      <LaptopFrame>
+      <Laptop>
         <div className="flex h-full w-full flex-col bg-white">
-          {/* browser chrome */}
-          <div className="flex items-center gap-2 border-b border-[#e5e7eb] bg-mist px-3 py-2">
-            <span className="flex gap-1.5" aria-hidden>
-              <span className="h-2.5 w-2.5 rounded-full bg-[#e0533d]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#4caf67]" />
-            </span>
-            <span className="ml-1 flex h-5 flex-1 items-center rounded bg-white px-2 text-[10px] text-stone">
-              realtylt.com/search
-            </span>
-          </div>
+          <BrowserChrome url="realtylt.com/search" />
           {/* results grid */}
           <div className="grid flex-1 grid-cols-3 gap-2 p-2.5">
             {tiles.map((l) => (
@@ -329,7 +305,7 @@ function SearchLaptop({ listings }: { listings: Listing[] }) {
             ))}
           </div>
         </div>
-      </LaptopFrame>
+      </Laptop>
     </figure>
   );
 }
@@ -343,43 +319,38 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
       aria-label="Listing alerts on a phone with a Save-a-Search panel"
     >
       {/* Phone */}
-      <div className="w-[200px] rounded-[30px] border-[9px] border-[#20262e] bg-[#20262e] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.6)]">
-        <div className="overflow-hidden rounded-[22px] bg-white">
-          <div className="flex h-6 items-center justify-center bg-white">
-            <span className="h-1.5 w-14 rounded-full bg-[#e5e7eb]" aria-hidden />
-          </div>
-          <div className="px-3 pb-4">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Recent Listings</p>
-            <ul className="mt-2 space-y-2">
-              {feed.map((l) => (
-                <li key={l.id} className="flex items-center gap-2">
-                  <div className="relative h-10 w-12 shrink-0 overflow-hidden rounded-[3px] bg-mist">
-                    {l.photos[0] ? (
-                      isLiveMlsPhoto(l.photos[0]) ? (
-                        <MlsImage src={l.photos[0]} alt="" sizes="48px" />
-                      ) : (
-                        <Image src={l.photos[0]} alt="" fill sizes="48px" className="object-cover" />
-                      )
-                    ) : null}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[11px] font-bold text-ink">{formatPrice(l.price)}</p>
-                    <p className="truncate text-[10px] text-stone">{l.city}, {l.state}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <Phone width={218}>
+        <div className="px-3 pb-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Recent Listings</p>
+          <ul className="mt-2 space-y-2">
+            {feed.map((l) => (
+              <li key={l.id} className="flex items-center gap-2">
+                <MockCard hairline={false} className="relative h-10 w-12 shrink-0">
+                  {l.photos[0] ? (
+                    isLiveMlsPhoto(l.photos[0]) ? (
+                      <MlsImage src={l.photos[0]} alt="" sizes="48px" />
+                    ) : (
+                      <Image src={l.photos[0]} alt="" fill sizes="48px" className="object-cover" />
+                    )
+                  ) : null}
+                </MockCard>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold text-ink">{formatPrice(l.price)}</p>
+                  <p className="truncate text-[10px] text-stone">{l.city}, {l.state}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      </Phone>
 
       {/* Overlapping "Save a Search" panel (decorative) */}
       <div
         aria-hidden
-        className="absolute bottom-0 right-0 w-[230px] rounded-2xl border border-[#e5e7eb] bg-white p-4 text-ink shadow-[0_24px_50px_-20px_rgba(0,0,0,0.5)] sm:w-[260px]"
+        className="absolute bottom-0 right-0 w-[230px] rounded-2xl border border-line bg-white p-4 text-ink shadow-float sm:w-[260px]"
       >
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-ink">Save a Search</p>
-        <div className="mt-3 flex gap-1 border-b border-[#e5e7eb] pb-2 text-[10px] font-bold uppercase tracking-wide">
+        <div className="mt-3 flex gap-1 border-b border-line pb-2 text-[10px] font-bold uppercase tracking-wide">
           <span className="border-b-2 border-porchlight pb-1 text-ink">Save the Search</span>
           <span className="pb-1 text-stone">References</span>
         </div>
@@ -424,7 +395,7 @@ function TourSchedulerCard({
 
   return (
     <figure
-      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-2xl"
+      className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-white shadow-float"
       aria-label="Example home with tour-scheduling options"
     >
       <div className="relative aspect-[3/2] bg-mist">
@@ -458,7 +429,7 @@ function TourSchedulerCard({
             <div
               key={d.day}
               className={`rounded-xl border py-2 text-center ${
-                i === 0 ? "border-ink bg-mist" : "border-[#e5e7eb]"
+                i === 0 ? "border-ink bg-mist" : "border-line"
               }`}
             >
               <p className="text-[10px] uppercase tracking-wide text-stone">{d.dow}</p>

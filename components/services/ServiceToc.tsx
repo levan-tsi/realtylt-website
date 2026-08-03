@@ -97,7 +97,7 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
         {/* The floating card materialises behind the labels on hover / focus. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-2xl border border-[#e3e6ea] bg-paper/95 opacity-0 shadow-[0_18px_44px_-22px_rgba(16,24,32,0.5)] backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"
+          className="pointer-events-none absolute -inset-x-4 -inset-y-3 rounded-2xl border border-line bg-paper/95 opacity-0 shadow-lift backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"
         />
         <ul className="relative flex flex-col gap-1">
           {items.map((it) => {
@@ -149,7 +149,7 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-ink px-5 py-3 text-sm text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg
               aria-hidden
@@ -182,7 +182,7 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
               onClick={() => setOpen(false)}
               className="absolute inset-0 bg-ink/40"
             />
-            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-[#e3e6ea] bg-paper px-4 pb-8 pt-3">
+            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-line bg-paper px-4 pb-8 pt-3">
               <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#d9dde3]" aria-hidden />
               <div className="mb-2 flex items-center justify-between px-1">
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone">On this page</p>

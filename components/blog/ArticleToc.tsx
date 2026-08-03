@@ -76,7 +76,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
   const activeText = items.find((i) => i.id === activeId)?.text ?? items[0]?.text ?? "";
 
   const List = ({ variant }: { variant: "rail" | "sheet" }) => (
-    <ul className={variant === "rail" ? "relative border-l border-[#e3e6ea]" : "space-y-0.5"}>
+    <ul className={variant === "rail" ? "relative border-l border-line" : "space-y-0.5"}>
       {items.map((it) => {
         const active = it.id === activeId;
         if (variant === "rail") {
@@ -91,7 +91,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
                 } ${
                   active
                     ? "border-porchlight font-bold text-ink"
-                    : "border-transparent text-stone hover:border-[#c3c9d2] hover:text-ink"
+                    : "border-transparent text-stone hover:border-line-strong hover:text-ink"
                 }`}
               >
                 {it.text}
@@ -105,7 +105,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
               href={`#${it.id}`}
               onClick={(e) => jump(e, it.id)}
               aria-current={active ? "location" : undefined}
-              className={`flex items-center gap-3 rounded-[10px] px-3 py-3 text-sm transition-colors ${
+              className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm transition-colors ${
                 it.depth === 3 ? "pl-9" : ""
               } ${active ? "bg-mist font-bold text-ink" : "text-stone hover:bg-mist hover:text-ink"}`}
             >
@@ -142,7 +142,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-ink px-5 py-3 text-sm text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" strokeWidth="1.9">
               <path d="M4 6h10M4 12h16M4 18h12" strokeLinecap="round" />
@@ -170,7 +170,7 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
               onClick={() => setOpen(false)}
               className="absolute inset-0 bg-ink/40"
             />
-            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-[#e3e6ea] bg-paper px-4 pb-8 pt-3">
+            <div className="toc-sheet absolute inset-x-0 bottom-0 max-h-[70vh] overflow-y-auto rounded-t-2xl border-t border-line bg-paper px-4 pb-8 pt-3">
               <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#d9dde3]" aria-hidden />
               <div className="mb-2 flex items-center justify-between px-1">
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone">On this page</p>

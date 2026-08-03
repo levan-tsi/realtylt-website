@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { BrowserChrome, Laptop, MockCard, MockChip, Phone } from "@/components/ui/DeviceMock";
 import { Stars } from "@/components/ui/Stars";
 import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import { TestimonialCard } from "@/components/ui/TestimonialCard";
@@ -138,7 +139,7 @@ export default async function SellingPage() {
           </div>
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
-            <div id="offer-form" className="scroll-mt-28 rounded-2xl border border-paper/20 bg-black/55 p-6 shadow-2xl backdrop-blur md:p-8">
+            <div id="offer-form" className="scroll-mt-28 rounded-2xl border border-paper/20 bg-black/55 p-6 shadow-float backdrop-blur md:p-8">
               <h2 className="text-xl font-bold text-paper">Get Your Cash Offer &amp; Home Value</h2>
               <p className="mb-5 mt-1 text-sm text-paper/70">
                 Four quick details and we&rsquo;ll get to work on your numbers.
@@ -274,10 +275,10 @@ export default async function SellingPage() {
           {/* Comparable Property Statistics — live: WHITE card w/ blue bars + suggested range */}
           <Reveal delay={150}>
             <figure
-              className="rounded-2xl bg-white p-6 text-ink shadow-2xl md:p-8"
+              className="rounded-2xl bg-white p-6 text-ink shadow-float md:p-8"
               aria-label="Comparable property statistics: 5 active, 5 pending, 5 sold, with a suggested list-price range"
             >
-              <figcaption className="flex items-baseline justify-between border-b border-[#e5e7eb] pb-4">
+              <figcaption className="flex items-baseline justify-between border-b border-line pb-4">
                 <span className="text-sm font-bold uppercase tracking-[0.12em] text-ink">
                   Comparable Property Statistics
                 </span>
@@ -302,7 +303,7 @@ export default async function SellingPage() {
                 ))}
               </div>
 
-              <div className="mt-7 border-t border-[#e5e7eb] pt-5">
+              <div className="mt-7 border-t border-line pt-5">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Suggested list price</p>
                 <p className="mt-1 text-2xl font-bold text-ink md:text-[28px]">$465,000 - $510,000</p>
                 <p className="mt-1 text-xs text-stone">Illustrative range from a 15-comparable analysis of your home.</p>
@@ -346,7 +347,7 @@ export default async function SellingPage() {
             </ul>
           </Reveal>
           <Reveal delay={140}>
-            <LaptopFrame tone="dark">
+            <Laptop tone="dark">
               <div className="relative h-full w-full">
                 <Image
                   src="/images/listings/house-08.jpg"
@@ -356,7 +357,7 @@ export default async function SellingPage() {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-ink/20" />
-                <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper/90 shadow-lg">
+                <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper/90 shadow-lift">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 text-ink" aria-hidden>
                     <path d="M8 5v14l11-7z" />
                   </svg>
@@ -365,7 +366,7 @@ export default async function SellingPage() {
                   3D Walkthrough
                 </span>
               </div>
-            </LaptopFrame>
+            </Laptop>
           </Reveal>
         </div>
       </section>
@@ -424,7 +425,7 @@ export default async function SellingPage() {
             </p>
           </Reveal>
           <Reveal delay={150}>
-            <LaptopFrame tone="dark">
+            <Laptop tone="dark">
               <div className="flex h-full w-full flex-col bg-[#0d1319] text-paper">
                 <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
                   <span className="text-xs font-bold tracking-wide">Your Seller Portal</span>
@@ -450,7 +451,7 @@ export default async function SellingPage() {
                   ))}
                 </ul>
               </div>
-            </LaptopFrame>
+            </Laptop>
           </Reveal>
         </div>
       </section>
@@ -488,12 +489,12 @@ function PathCard({
     <article className="relative mt-8 flex h-full flex-col rounded-2xl border-2 border-ink bg-white">
       {/* Floating badge, centred on the card's top edge. Not aria-hidden any more: it carries
           the one word that distinguishes the two paths, so a screen reader needs it. */}
-      <span className="absolute -top-[18px] left-1/2 z-10 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-paper shadow-md">
+      <span className="absolute -top-[18px] left-1/2 z-10 inline-flex -translate-x-1/2 items-center whitespace-nowrap rounded-full bg-ink px-5 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-paper shadow-lift">
         {badge}
       </span>
       {/* black header block — live: title, subtitle, then the key-benefit banner over a
           translucent top border, all on black */}
-      <div className="rounded-t-[14px] bg-ink px-6 pb-6 pt-11 text-center">
+      <div className="rounded-t-2xl bg-ink px-6 pb-6 pt-11 text-center">
         <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
         <p className="mx-auto mt-2 max-w-xs text-sm text-paper/70">{subtitle}</p>
         <p className="mt-5 border-t border-white/30 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
@@ -523,21 +524,6 @@ function PathCard({
   );
 }
 
-/** A CSS laptop mockup. `tone="dark"` gives a graphite bezel (for photo/portal content). */
-function LaptopFrame({ children, tone = "light" }: { children: React.ReactNode; tone?: "light" | "dark" }) {
-  const bezel = tone === "dark" ? "border-[#20262e]" : "border-[#d8dce1]";
-  return (
-    <div className="mx-auto w-full max-w-xl">
-      <div className={`rounded-[14px] border-[10px] ${bezel} shadow-[0_30px_60px_-28px_rgba(0,0,0,0.55)]`}>
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[4px] bg-black">{children}</div>
-      </div>
-      {/* hinge / base */}
-      <div className="mx-auto h-3 w-[94%] rounded-b-[10px] bg-gradient-to-b from-[#cfd3d9] to-[#a7adb6]" />
-      <div className="mx-auto h-1.5 w-[22%] rounded-b-[8px] bg-[#9aa1ab]" />
-    </div>
-  );
-}
-
 /** One small photo cell — MLS photo (self-healing) or fixture image. */
 function CollageImg({ listing, sizes }: { listing: Listing; sizes: string }) {
   const src = listing.photos[0];
@@ -560,54 +546,41 @@ function DeviceCollage({ listings }: { listings: Listing[] }) {
     : "";
   return (
     <figure className="relative mx-auto max-w-xl pb-10 pr-6 sm:pb-6 sm:pr-10" aria-label="Your listing marketed across every device and portal">
-      <LaptopFrame>
+      <Laptop>
         <div className="flex h-full w-full flex-col bg-white">
-          {/* browser chrome */}
-          <div className="flex items-center gap-2 border-b border-[#e5e7eb] bg-mist px-3 py-2">
-            <span className="flex gap-1.5" aria-hidden>
-              <span className="h-2.5 w-2.5 rounded-full bg-[#e0533d]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#4caf67]" />
-            </span>
-            <span className="ml-1 flex h-5 flex-1 items-center rounded bg-white px-2 text-[10px] text-stone">
-              realtylt.com/search
-            </span>
-          </div>
+          <BrowserChrome url="realtylt.com/search" />
           {/* results grid */}
           <div className="grid flex-1 grid-cols-3 gap-2 p-2.5">
             {tiles.map((l) => (
-              <div key={l.id} className="overflow-hidden rounded-[3px] border border-[#eceff2] bg-mist">
+              <MockCard key={l.id}>
                 <div className="relative aspect-[4/3]">
                   <CollageImg listing={l} sizes="120px" />
-                  <span className="absolute bottom-1 left-1 rounded-sm bg-ink/75 px-1.5 py-0.5 text-[8px] font-bold text-paper">
-                    {formatPrice(l.price)}
-                  </span>
+                  <MockChip className="bg-ink/75 text-[8px]">{formatPrice(l.price)}</MockChip>
                 </div>
-              </div>
+              </MockCard>
             ))}
           </div>
         </div>
-      </LaptopFrame>
+      </Laptop>
       {/* phone */}
       {phone && (
-        <div className="absolute bottom-0 right-0 w-[116px] rounded-[20px] border-[6px] border-[#20262e] bg-[#20262e] shadow-2xl sm:w-[132px]">
-          <div className="overflow-hidden rounded-[14px] bg-white">
-            <div className="relative aspect-[3/4] bg-mist">
-              <CollageImg listing={phone} sizes="132px" />
-            </div>
-            <div className="p-2">
-              <p className="text-[10px] font-bold text-ink">{formatPrice(phone.price)}</p>
-              <p className="text-[8px] text-stone">
-                {phoneStats}
-                {phoneStats && " · "}
-                {phone.city}
-              </p>
-              <p className="mt-1.5 rounded-sm bg-ink py-1 text-center text-[8px] font-bold uppercase tracking-wide text-paper">
-                View listing
-              </p>
-            </div>
+        <Phone width={132} speaker={false} className="absolute bottom-0 right-0">
+          <div className="relative aspect-[3/4] bg-mist">
+            <CollageImg listing={phone} sizes="132px" />
           </div>
-        </div>
+          <div className="p-2">
+            <p className="text-[10px] font-bold text-ink">{formatPrice(phone.price)}</p>
+            <p className="text-[8px] text-stone">
+              {phoneStats}
+              {phoneStats && " · "}
+              {phone.city}
+            </p>
+            {/* @design-allow a miniature button inside a 132px phone, at the same quarter scale as the mock cards. */}
+            <p className="mt-1.5 rounded-[2px] bg-ink py-1 text-center text-[8px] font-bold uppercase tracking-wide text-paper">
+              View listing
+            </p>
+          </div>
+        </Phone>
       )}
     </figure>
   );

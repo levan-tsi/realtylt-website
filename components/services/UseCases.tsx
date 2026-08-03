@@ -23,7 +23,7 @@ export function UseCases({ service }: { service: Service }) {
         <ul className="mt-12 grid gap-6 sm:grid-cols-2">
           {service.useCases.map((c, i) => (
             <Reveal key={c.title} as="li" delay={(i % 2) * 100} className="min-w-0">
-              <article className="h-full rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-porchlight/40 hover:shadow-[0_18px_44px_-20px_rgb(16_24_32/0.35)] md:p-9">
+              <article className="h-full rounded-2xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-porchlight/40 hover:shadow-lift md:p-9">
                 <p
                   aria-hidden
                   className="text-xs font-bold tabular-nums tracking-[0.2em] text-porchlight-deep"

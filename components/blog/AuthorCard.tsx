@@ -17,7 +17,7 @@ import Link from "next/link";
  */
 export function AuthorCard({ author }: { author: string }) {
   return (
-    <aside className="mt-16 border-t border-[#e3e6ea] pt-8" aria-label={`About ${author}`}>
+    <aside className="mt-16 border-t border-line pt-8" aria-label={`About ${author}`}>
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-mist">
           <Image

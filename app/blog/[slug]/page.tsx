@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   );
 
   const endCap = (
-    <div className="mt-16 border-t border-[#e3e6ea] pt-7">
+    <div className="mt-16 border-t border-line pt-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-stone">
           Found this useful? Send it to someone who is buying, selling, or moving.

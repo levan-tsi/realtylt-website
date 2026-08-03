@@ -96,7 +96,7 @@ export function Grid({
           {items.map((m, i) => (
             <Reveal key={m.lead} delay={(two ? 80 : 90) * i}>
               <div
-                className={`border-t ${dark ? "border-white/12" : "border-[#d5dbe2]"} ${two ? "pt-7" : "pt-6"}`}
+                className={`border-t ${dark ? "border-white/12" : "border-line-strong"} ${two ? "pt-7" : "pt-6"}`}
               >
                 <p
                   className={`font-light leading-snug tracking-[-0.01em] ${

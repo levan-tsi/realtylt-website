@@ -419,7 +419,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       // via the same `translate` property .lift transitions, so the motion is identical.
       className={`min-w-0 scroll-mt-4 rounded-2xl ${
         activeId === l.id
-          ? "[&_article]:[translate:0_-4px] [&_article]:shadow-[0_18px_40px_-18px_rgb(16_24_32/0.35)]"
+          ? "[&_article]:[translate:0_-4px] [&_article]:shadow-lift"
           : ""
       }`}
     >

@@ -112,7 +112,7 @@ export default async function BlogIndexPage() {
                 </article>
               </Reveal>
 
-              <div className="mt-14 border-t border-[#e3e6ea] pt-12">
+              <div className="mt-14 border-t border-line pt-12">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone">More reading</p>
                 <ul className="mt-7 grid gap-x-6 gap-y-11 sm:grid-cols-2 lg:grid-cols-3">
                   {rest.map((p, i) => (

@@ -46,7 +46,7 @@ export function Film({
         </Reveal>
 
         <Reveal delay={120} className="mt-12 md:mt-16">
-          <div className="overflow-hidden rounded-[14px] bg-[#0a0a0a] shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]">
+          <div className="overflow-hidden rounded-2xl bg-[#0a0a0a] shadow-edge">
             <video
               className="block h-auto w-full"
               controls

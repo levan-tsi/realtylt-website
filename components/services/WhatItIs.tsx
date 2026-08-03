@@ -26,7 +26,7 @@ export function WhatItIs({ service }: { service: Service }) {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone">
               What it runs on
             </p>
-            <ul className="mt-5 divide-y divide-[#e3e6ea] border-y border-[#e3e6ea]">
+            <ul className="mt-5 divide-y divide-[#e3e6ea] border-y border-line">
               {service.specs.map((s) => (
                 <li key={s} className="flex items-center gap-3 py-3.5">
                   <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-porchlight" />

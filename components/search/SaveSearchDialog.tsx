@@ -103,7 +103,7 @@ export function SaveSearchDialog({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-paper text-ink shadow-2xl"
+        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-paper text-ink shadow-float"
       >
         <button
           type="button"

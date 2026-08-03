@@ -12,13 +12,13 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary:
-    "rounded-xl uppercase tracking-[0.1em] bg-ink text-paper hover:-translate-y-0.5 hover:bg-ink-soft hover:shadow-[0_10px_24px_-10px_rgb(0_0_0/0.5)] active:translate-y-0",
+    "rounded-xl uppercase tracking-[0.1em] bg-ink text-paper hover:-translate-y-0.5 hover:bg-ink-soft hover:shadow-lift active:translate-y-0",
   outline:
     "rounded-xl uppercase tracking-[0.1em] border-2 border-ink text-ink hover:bg-ink hover:text-paper active:translate-y-px",
   "outline-light":
     "rounded-xl uppercase tracking-[0.1em] border border-paper text-paper hover:bg-paper hover:text-ink active:translate-y-px",
   light:
-    "rounded-xl uppercase tracking-[0.1em] bg-paper text-ink hover:-translate-y-0.5 hover:bg-mist hover:shadow-[0_10px_24px_-10px_rgb(0_0_0/0.45)] active:translate-y-0",
+    "rounded-xl uppercase tracking-[0.1em] bg-paper text-ink hover:-translate-y-0.5 hover:bg-mist hover:shadow-lift active:translate-y-0",
   ghost: "text-ink hover:text-stone underline-offset-4 hover:underline",
 };
 

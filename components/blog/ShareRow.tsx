@@ -55,7 +55,7 @@ export function ShareRow({
   const iconBtn =
     tone === "light"
       ? "text-paper/70 hover:text-paper hover:border-paper/60 border-paper/25"
-      : "text-stone hover:text-ink hover:border-ink/50 border-[#d9dde3]";
+      : "text-stone hover:text-ink hover:border-ink/50 border-line-strong";
 
   return (
     <div className="flex items-center gap-2.5">

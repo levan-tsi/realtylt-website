@@ -43,7 +43,7 @@ export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex:
         </Reveal>
 
         <Reveal delay={140}>
-          <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-5 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(255_255_255/0.07)] md:p-6">
+          <figure className="rounded-3xl border border-paper/15 bg-ink-soft p-5 shadow-panel md:p-6">
             <Constellation
               count={12}
               lit={nodeIndex}

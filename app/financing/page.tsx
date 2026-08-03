@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Phone } from "@/components/ui/DeviceMock";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 
@@ -88,7 +89,7 @@ export default function FinancingPage() {
           </Reveal>
           <Reveal delay={140}>
             {/* Pre-approval letter card — circled check, accented amount, signature, stamp, dots */}
-            <figure className="mx-auto max-w-sm rounded-2xl bg-white p-6 shadow-2xl sm:p-8" aria-label="Illustrative pre-approval letter">
+            <figure className="mx-auto max-w-sm rounded-2xl bg-white p-6 shadow-float sm:p-8" aria-label="Illustrative pre-approval letter">
               <span className="mx-auto grid h-11 w-11 place-items-center rounded-full border-2 border-porchlight text-porchlight-deep" aria-hidden>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m5 12.5 4.5 4.5L19 7" />
@@ -265,35 +266,30 @@ function HomeownershipPhoneMock() {
       className="mx-auto w-full max-w-[300px]"
       aria-label="Illustrative estimate of the value of homeownership over five years"
     >
-      <div className="rounded-[34px] border-[10px] border-[#20262e] bg-[#20262e] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.55)]">
-        <div className="overflow-hidden rounded-[24px] bg-white">
-          <div className="flex h-7 items-center justify-center bg-white">
-            <span className="h-1.5 w-16 rounded-full bg-[#e5e7eb]" aria-hidden />
-          </div>
-          <div className="px-5 pb-6 pt-1">
-            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-stone">Estimated value of</p>
-            <p className="text-lg font-bold text-ink">Homeownership</p>
-            <dl className="mt-5 space-y-3">
-              {rows.map((r) => (
-                <div key={r.label} className="flex items-baseline justify-between border-b border-[#eef1f4] pb-3">
-                  <div>
-                    <dt className="text-sm font-medium text-ink">{r.label}</dt>
-                    <dd className="text-[11px] text-stone">{r.note}</dd>
-                  </div>
-                  <span className="text-sm font-bold text-porchlight-deep">{r.value}</span>
+      <Phone width={300}>
+        <div className="px-5 pb-6 pt-1">
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-stone">Estimated value of</p>
+          <p className="text-lg font-bold text-ink">Homeownership</p>
+          <dl className="mt-5 space-y-3">
+            {rows.map((r) => (
+              <div key={r.label} className="flex items-baseline justify-between border-b border-line pb-3">
+                <div>
+                  <dt className="text-sm font-medium text-ink">{r.label}</dt>
+                  <dd className="text-[11px] text-stone">{r.note}</dd>
                 </div>
-              ))}
-            </dl>
-            <div className="mt-5 rounded-xl bg-ink px-4 py-3 text-center">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/70">5-year total</p>
-              <p className="text-2xl font-bold text-paper">+$33,078</p>
-            </div>
-            <figcaption className="mt-3 text-center text-[10px] text-stone">
-              Illustrative estimate, not a guarantee.
-            </figcaption>
+                <span className="text-sm font-bold text-porchlight-deep">{r.value}</span>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-5 rounded-xl bg-ink px-4 py-3 text-center">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/70">5-year total</p>
+            <p className="text-2xl font-bold text-paper">+$33,078</p>
           </div>
+          <figcaption className="mt-3 text-center text-[10px] text-stone">
+            Illustrative estimate, not a guarantee.
+          </figcaption>
         </div>
-      </div>
+      </Phone>
     </figure>
   );
 }
@@ -314,8 +310,8 @@ function ApplicationBrowserMock() {
       className="mx-auto w-full max-w-xl"
       aria-label="Illustration of a loan application moving through processing"
     >
-      <div className="overflow-hidden rounded-xl border border-[#d8dce1] bg-white shadow-[0_30px_60px_-28px_rgba(0,0,0,0.4)]">
-        <div className="flex items-center gap-2 border-b border-[#e5e7eb] bg-mist px-3 py-2.5">
+      <div className="overflow-hidden rounded-xl border border-line-strong bg-white shadow-float">
+        <div className="flex items-center gap-2 border-b border-line bg-mist px-3 py-2.5">
           <span className="flex gap-1.5" aria-hidden>
             <span className="h-2.5 w-2.5 rounded-full bg-[#e0533d]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#e8b13a]" />
@@ -332,11 +328,11 @@ function ApplicationBrowserMock() {
           </div>
           <ol className="mt-5 space-y-2.5">
             {steps.map((s) => (
-              <li key={s.label} className="flex items-center gap-3 rounded-lg border border-[#eceff2] px-3.5 py-2.5">
+              <li key={s.label} className="flex items-center gap-3 rounded-lg border border-line px-3.5 py-2.5">
                 <span
                   aria-hidden
                   className={`grid h-5 w-5 shrink-0 place-items-center rounded-full ${
-                    s.done ? "bg-ink text-paper" : "border border-[#cfd4da] text-transparent"
+                    s.done ? "bg-ink text-paper" : "border border-line-strong text-transparent"
                   }`}
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

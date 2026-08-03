@@ -148,10 +148,10 @@ export function Calculator({
                               type="button"
                               onClick={() => setState((s) => ({ ...s, [input.id]: oi }))}
                               aria-pressed={on}
-                              className={`flex items-center justify-between gap-4 rounded-[10px] border px-4 py-3 text-left transition-colors duration-200 ${
+                              className={`flex items-center justify-between gap-4 rounded-xl border px-4 py-3 text-left transition-colors duration-200 ${
                                 on
                                   ? "border-porchlight bg-porchlight/[0.07]"
-                                  : "border-[#dfe4ea] bg-paper hover:border-ink/25"
+                                  : "border-line bg-paper hover:border-ink/25"
                               }`}
                             >
                               <span
@@ -173,7 +173,7 @@ export function Calculator({
 
           {/* ── Result. Dark panel with the house top-edge light catch. */}
           <div
-            className="flex flex-col justify-center rounded-[18px] bg-ink p-8 text-paper sm:p-10"
+            className="flex flex-col justify-center rounded-2xl bg-ink p-8 text-paper sm:p-10"
             style={{ boxShadow: "inset 0 1px 0 rgb(255 255 255 / 0.07)" }}
           >
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-paper/55">
@@ -220,7 +220,7 @@ export function Calculator({
             {action ? (
               <a
                 href={action.href}
-                className="mt-9 inline-flex w-fit items-center rounded-[10px] bg-paper px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors duration-200 hover:bg-mist"
+                className="mt-9 inline-flex w-fit items-center rounded-xl bg-paper px-6 py-3.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors duration-200 hover:bg-mist"
               >
                 {action.label}
               </a>

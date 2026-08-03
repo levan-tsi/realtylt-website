@@ -48,9 +48,9 @@ export function Plate({
         <Reveal>
           <figure>
             <div
-              className={`relative aspect-[16/9] overflow-hidden rounded-[14px] md:aspect-[21/9] ${
+              className={`relative aspect-[16/9] overflow-hidden rounded-2xl md:aspect-[21/9] ${
                 dark
-                  ? "bg-[#0a0a0a] shadow-[inset_0_1px_0_rgb(255_255_255/0.07)]"
+                  ? "bg-[#0a0a0a] shadow-edge"
                   : "bg-[#dfe4ea]"
               }`}
             >

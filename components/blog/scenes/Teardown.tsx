@@ -42,10 +42,10 @@ export function Teardown() {
                   <li key={i} className={visitor ? "flex justify-end" : "flex justify-start"}>
                     <div className={`max-w-[86%] ${visitor ? "text-right" : "text-left"}`}>
                       <p
-                        className={`rounded-[14px] px-5 py-3.5 leading-[1.6] ${
+                        className={`rounded-2xl px-5 py-3.5 leading-[1.6] ${
                           visitor
                             ? "bg-river text-paper"
-                            : "bg-paper text-ink-soft shadow-[0_1px_2px_rgb(16_44_84/0.06)]"
+                            : "bg-paper text-ink-soft shadow-raise"
                         }`}
                       >
                         {t.text}
@@ -69,7 +69,7 @@ export function Teardown() {
               {TEARDOWN_EVENTS.map((e, i) => {
                 const last = i === TEARDOWN_EVENTS.length - 1;
                 return (
-                  <li key={e.label} className="border-t border-[#dfe4ea] py-4 first:border-t-0 first:pt-0">
+                  <li key={e.label} className="border-t border-line py-4 first:border-t-0 first:pt-0">
                     <div className="flex items-baseline gap-3">
                       <span
                         aria-hidden

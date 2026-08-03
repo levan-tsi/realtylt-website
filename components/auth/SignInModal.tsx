@@ -161,7 +161,7 @@ export function SignInModal() {
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         onKeyDown={onPanelKeyDown}
-        className="relative w-full max-w-[400px] rounded-2xl bg-white p-7 shadow-2xl"
+        className="relative w-full max-w-[400px] rounded-2xl bg-white p-7 shadow-float"
       >
         <button
           type="button"

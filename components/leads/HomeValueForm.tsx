@@ -15,7 +15,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
 
   if (address !== null) {
     return (
-      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-2xl md:p-7">
+      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
         <p className="text-sm leading-relaxed text-stone">
           Almost there. Tell us where to send the numbers for{" "}
           <strong className="text-ink">{address}</strong>.

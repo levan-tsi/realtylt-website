@@ -271,7 +271,7 @@ export default async function HomePage() {
                       ? `/top-areas/${c.slug}`
                       : (boroughPath(c.slug) ?? `/search?county=${c.slug}`)
                   }
-                  className="inline-flex min-h-[36px] items-center rounded-full border border-[#dcdcdc] px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                  className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   {c.name}
                 </Link>

@@ -26,7 +26,7 @@ export function Summary({
     <section className="bg-paper pb-4 pt-2" aria-label={ariaLabel}>
       <div className="mx-auto max-w-6xl px-4 lg:px-8">
         <Reveal className="mx-auto max-w-[44rem]">
-          <div className="border-y border-[#e3e6ea] py-8 md:py-10">
+          <div className="border-y border-line py-8 md:py-10">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone">{eyebrow}</p>
             <ul className="mt-6 space-y-4">
               {claims.map((line) => (
