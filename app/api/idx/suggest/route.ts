@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { SERVED_AREAS } from "@/lib/site";
 import { listingPath } from "@/lib/idx/listing-url";
+import { addressFilterClause, addressTokens } from "@/lib/idx/address-query";
 
 /** Location autocomplete for the hero + search inputs — live-site parity (its quick-search
  * suggests areas as you type). Suggestions come from OUR replicated inventory: county names
@@ -71,29 +72,12 @@ async function addressMatches(q: string, limit: number) {
   const url = process.env.SUPABASE_URL?.trim();
   const key = process.env.SUPABASE_ANON_KEY?.trim();
   if (!url || !key) return [];
-  // TOKENISED, not one contiguous substring. "150 hooker ave poughkeepsie ny" is how a person
-  // types an address and how Google hands one back, but as a single ILIKE it matches nothing —
-  // the stored address is "150 Hooker Avenue" and the town lives in its own column. So every
-  // word must appear SOMEWHERE across address/city/zip, in any order.
-  //
-  // Dropped first: the state, and the street-suffix abbreviations people mix freely ("ave" vs
-  // the stored "Avenue"). Requiring "ave" to appear would reject the very row it describes.
-  const NOISE = new Set(["ny", "usa", "us", "ave", "av", "st", "rd", "dr", "ln", "ct", "blvd", "hwy", "pl", "ter", "cir", "apt", "unit", "#"]);
-  const tokens = q
-    .replace(/[,()*\\.]/g, " ")
-    .split(/\s+/)
-    .map((t) => t.trim())
-    .filter((t) => t.length >= 2 && !NOISE.has(t))
-    .slice(0, 5);
+  // Tokenising and the filter body live in lib/idx/address-query.ts — this is the only place on
+  // the site where a visitor's raw keystrokes are concatenated into a PostgREST filter, so it is
+  // unit-tested there rather than reasoned about here.
+  const tokens = addressTokens(q);
   if (!tokens.length) return [];
-  // PostgREST: and=( or(address.ilike.*t*,city.ilike.*t*,zip.ilike.*t*), … ) — every token has
-  // to land somewhere, which is what makes word order and extra words harmless.
-  const clause = tokens
-    .map((t) => {
-      const e = encodeURIComponent(t);
-      return `or(address.ilike.*${e}*,city.ilike.*${e}*,zip.ilike.*${e}*)`;
-    })
-    .join(",");
+  const clause = addressFilterClause(tokens);
   try {
     const res = await fetch(
       `${url.replace(/\/+$/, "")}/rest/v1/idx_listings` +
