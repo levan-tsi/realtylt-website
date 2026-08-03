@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
+import { tocRailStyle, useTocSafeEdge } from "@/lib/toc/safe-edge";
 
 export interface FlagshipTocItem {
   id: string;
@@ -70,6 +71,9 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
   const sheetRef = useRef<HTMLDivElement>(null);
   const tone = useBandTone();
   const dark = tone === "dark";
+  // 256 = card chrome (64) + the widest label we allow (12rem). The rail places itself so a
+  // card that wide still ends before the measured text edge.
+  const railStyle = tocRailStyle(useTocSafeEdge(), 256);
 
   const jump = useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -130,22 +134,21 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
 
   return (
     <>
-      {/* ── Desktop: fixed hover/focus-expanding rail in the left gutter. */}
+      {/* ── Desktop: fixed hover/focus-expanding rail in the left gutter.
+          The rail slides left so a fully expanded card ends BEFORE the text — the owner caught
+          the opened card standing on a scene heading (2026-07-29). That fix derived the safe
+          edge from an assumed container (`max-w-6xl + px-8`), which is a guess: measured at
+          1512 the narrowest text on this page actually starts at 163px, not the 212px the
+          formula predicted, so the card still covered the lead form by 17px. The edge is now
+          MEASURED from the DOM (lib/toc/safe-edge) and the labels clamp to the room that is
+          really there. Hidden until the measurement lands, so it cannot flash in the wrong
+          place. */}
+      {railStyle && (
       <nav
         data-toc
         aria-label="On this page"
         className="group fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1360px]:block"
-        // --toc-safe is the left edge of the WIDEST text column on the page (the scene bands'
-        // max-w-6xl + px-8). The rail positions itself so a fully expanded card (264px: card
-        // padding + tick cell + gap + 12rem labels) ends BEFORE that edge — the owner caught the
-        // opened card standing on top of a scene heading (2026-07-29): there is spare gutter on
-        // the LEFT, so the rail slides left instead of expanding over prose. On viewports too
-        // tight for that (< ~1664px), the rail floors at 1.5rem and the labels ellipsize via
-        // their own --toc-safe clamp below, so the card still never crosses onto text.
-        style={{
-          ["--toc-safe" as string]: "calc(max((100vw - 72rem) / 2, 0px) + 2rem)",
-          left: "max(1.5rem, min(calc((100vw - 80rem) / 2 - 3.25rem), calc(var(--toc-safe) - 264px)))",
-        }}
+        style={railStyle}
       >
         <div
           aria-hidden
@@ -198,7 +201,7 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
                   </span>
                   <span
                     title={it.label}
-                    className={`max-w-0 overflow-hidden text-ellipsis whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[min(12rem,calc(var(--toc-safe)-96px))] group-hover:opacity-100 group-focus-within:max-w-[min(12rem,calc(var(--toc-safe)-96px))] group-focus-within:opacity-100 ${
+                    className={`max-w-0 overflow-hidden text-ellipsis whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[min(12rem,var(--toc-label-max))] group-hover:opacity-100 group-focus-within:max-w-[min(12rem,var(--toc-label-max))] group-focus-within:opacity-100 ${
                       active
                         ? dark
                           ? "font-bold text-paper"
@@ -216,9 +219,12 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           })}
         </ul>
       </nav>
+      )}
 
-      {/* ── Mobile / narrow: floating trigger + bottom sheet, matching the rest of the site. */}
-      <div className="min-[1360px]:hidden">
+      {/* ── Mobile / narrow: floating trigger + bottom sheet, matching the rest of the site.
+          Shown whenever the rail is NOT — a runtime decision now, not just a breakpoint: a wide
+          viewport whose gutter cannot hold a readable label gets the sheet too. */}
+      <div className={railStyle ? "min-[1360px]:hidden" : ""}>
         {!open && (
           // Centred inside the space that EXCLUDES the site's chat launcher rather than in the
           // viewport. Centred on the viewport, this pill lands 1px from the launcher at 390 and

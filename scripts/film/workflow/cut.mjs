@@ -58,7 +58,13 @@ export const PLAN = [
     amb: "amb-night-interior", why: "the reply already on their phone" },
   { beat: "F  the rule", clip: null, in: 0, from: gapEnd(5), to: gapEnd(6),
     amb: "amb-void", why: "black: the one line in this film worth remembering" },
-  { beat: "G  the close", clip: "shot10-laptop-close", in: 0.31, from: gapEnd(6), to: FILM_LEN,
+  // Enters at 1.05, not 0.31. Measured 2026-08-02 at 0.2s steps: for the first ~1.0s the lid is
+  // SILVER with an Apple logo over a black base, and it turns space-grey as it shuts — a colour
+  // flip and an apparent second machine, which is what failed the footage audit. From ~1.05 it is
+  // one closed dark laptop and a person stepping away, which is exactly the beat. srcEnd is the
+  // clip's real end, so the 8.95s that survive stretch across the 9.7s the narration needs; on a
+  // shot this static the 8% slowdown is invisible.
+  { beat: "G  the close", clip: "shot10-laptop-close", in: 1.05, srcEnd: 10.0, from: gapEnd(6), to: FILM_LEN,
     amb: "amb-desk-day", why: "the laptop closes and they leave: what the automation actually buys" },
 ];
 

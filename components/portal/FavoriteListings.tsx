@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ListingCard } from "@/components/idx/ListingCard";
+import { ResultSetScope } from "@/components/idx/ResultSetScope";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { useSaved } from "@/components/auth/SavedProvider";
 import type { Listing } from "@/lib/idx/types";

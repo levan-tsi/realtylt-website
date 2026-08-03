@@ -217,12 +217,12 @@ describe("FixtureIdxClient — sort + pagination", () => {
     expect(p1.listings[0].id).not.toBe(p2.listings[0].id);
   });
 
-  it("honours the scoped 36-per-page search size without changing the 12 rail default", async () => {
-    expect(SEARCH_PAGE_SIZE).toBe(36);
+  it("honours the scoped 50-per-page search size without changing the 12 rail default", async () => {
+    expect(SEARCH_PAGE_SIZE).toBe(50);
     const search = await client.search({ pageSize: SEARCH_PAGE_SIZE });
-    expect(search.pageSize).toBe(36);
-    expect(search.listings.length).toBe(36); // dataset holds ≥36 across the default counties
-    expect(search.totalPages).toBe(Math.ceil(search.total / 36));
+    expect(search.pageSize).toBe(50);
+    expect(search.listings.length).toBe(50); // dataset holds ≥50 across the default counties
+    expect(search.totalPages).toBe(Math.ceil(search.total / 50));
     // The unscoped default (rails/portal) stays at 12.
     expect((await client.search({})).pageSize).toBe(12);
   });

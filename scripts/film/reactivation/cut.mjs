@@ -42,7 +42,12 @@ export const PLAN = sequence([
     amb: "amb-open-air", why: "the valley, wide and calm, under the number" },
   { beat: "B1 the inquiry, back then", clip: "shot1-1140pm-lead", in: 0.6, out: 5.8,
     amb: "amb-night-interior", why: "a phone lighting up on a counter at night" },
-  { beat: "B2 and nobody called", clip: "shot11-old-records", in: 0.0, out: 8.0,
+  // srcEnd 7.15, not the 8.0 this beat runs for. Measured 2026-08-02 at 0.2s steps: the slow
+  // push-in over the paper stacks holds cleanly to ~7.2, then the clip HARD CUTS to an unrelated
+  // filing-cabinet shot — the defect that failed the footage audit, and it was inside the range
+  // this film used. The 7.15s that survive stretch to fill the 8.0s beat; the shot is a slow
+  // push-in on static paper, so the 12% slowdown reads as nothing at all.
+  { beat: "B2 and nobody called", clip: "shot11-old-records", in: 0.0, out: 8.0, srcEnd: 7.15,
     amb: "amb-night-interior", why: "stacks of paper records nobody has opened: the list itself" },
   { beat: "D  the three-month clock", clip: null, in: 0, out: 8.35,
     amb: "amb-void", why: "black, so the regulation is the only thing on screen" },

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToId, useScrollSpy } from "@/lib/toc/scroll-spy";
+import { tocRailStyle, useTocSafeEdge } from "@/lib/toc/safe-edge";
 import type { ServiceTocItem } from "@/lib/services/toc";
 
 /** Hovering table of contents for a service page.
@@ -18,6 +19,9 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
   const [activeId, setActiveId] = useScrollSpy(items.map((i) => i.id));
   const [open, setOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  // 240 = card chrome (64) + the widest label we allow (11rem). The rail places itself so a
+  // card that wide still ends before the measured text edge.
+  const railStyle = tocRailStyle(useTocSafeEdge(), 240);
 
   const jump = useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -78,12 +82,17 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
   return (
     <>
       {/* ── Desktop: fixed hover/focus-expanding rail in the left gutter.
-          left = the gutter minus the rail, clamped so it never crosses the content. */}
+          The rail is harmless at rest (labels are clipped to zero width); the whole risk is on
+          hover, when the card expands to the RIGHT — which is where the content is. So its
+          position and its label width both come from the MEASURED left edge of the page's text
+          (lib/toc/safe-edge), not from an assumed container width. Hidden until that edge is
+          known, so it can never flash in the wrong place. */}
+      {railStyle && (
       <nav
         data-toc
         aria-label="On this page"
         className="group fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1360px]:block"
-        style={{ left: "max(1.5rem, calc((100vw - 80rem) / 2 - 3.25rem))" }}
+        style={railStyle}
       >
         {/* The floating card materialises behind the labels on hover / focus. */}
         <div
@@ -110,9 +119,12 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
                     />
                   </span>
                   {/* Label is clipped to zero width at rest (no invisible overlay over the
-                      content), and slides open with the card. */}
+                      content), and slides open only as far as --toc-label-max, which is the
+                      room actually left between the rail and the text. Ellipsis rather than
+                      overflow, so a long label truncates instead of reaching the prose. */}
                   <span
-                    className={`max-w-0 overflow-hidden whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[11rem] group-hover:opacity-100 group-focus-within:max-w-[11rem] group-focus-within:opacity-100 ${
+                    title={it.label}
+                    className={`max-w-0 overflow-hidden text-ellipsis whitespace-nowrap pl-2 text-[13px] leading-none opacity-0 transition-all duration-200 group-hover:max-w-[min(11rem,var(--toc-label-max))] group-hover:opacity-100 group-focus-within:max-w-[min(11rem,var(--toc-label-max))] group-focus-within:opacity-100 ${
                       active ? "font-bold text-ink" : "text-stone"
                     }`}
                   >
@@ -124,9 +136,12 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
           })}
         </ul>
       </nav>
+      )}
 
-      {/* ── Mobile / narrow: floating trigger + bottom sheet (same as the blog article). */}
-      <div className="min-[1360px]:hidden">
+      {/* ── Mobile / narrow: floating trigger + bottom sheet (same as the blog article).
+          Shown whenever the rail is NOT — which is now a runtime decision, not just a
+          breakpoint: a wide viewport with no usable gutter gets the sheet too. */}
+      <div className={railStyle ? "min-[1360px]:hidden" : ""}>
         {!open && (
           <button
             type="button"

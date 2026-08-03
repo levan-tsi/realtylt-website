@@ -61,35 +61,40 @@ export function ListingPager({ id }: { id: string }) {
 
   if (!nav || nav.count < 2) return null;
 
+  // THE ARROWS SAY WHAT THEY DO, IN WORDS. Owner: "what shows is just number and arrows, we
+  // should add next listing / previous listing so people could understand what it is." He is
+  // right, and the photo-band fix is what made it urgent — the page now carries TWO working arrow
+  // pairs, and a bare chevron cannot tell you which one moves homes. The words are the control;
+  // the chevron is decoration beside them.
   const btn =
-    "inline-flex h-7 w-7 items-center justify-center rounded-xl text-stone transition-colors " +
-    "hover:bg-ink/5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
+    "inline-flex min-h-7 items-center gap-1 rounded-xl px-1.5 text-[11px] font-bold uppercase " +
+    "tracking-[0.08em] text-stone transition-colors hover:bg-ink/5 hover:text-ink " +
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
 
   const arrow = (dir: "prev" | "next") => {
     const to = dir === "prev" ? nav.prev : nav.next;
-    const label =
-      dir === "prev"
-        ? to
-          ? `Previous home in your results: ${to.address}`
-          : "Previous home (this is the first result)"
-        : to
-          ? `Next home in your results: ${to.address}`
-          : "Next home (this is the last result on this page)";
+    const word = dir === "prev" ? "Previous" : "Next";
+    const label = to
+      ? `${word} listing: ${to.address}`
+      : dir === "prev"
+        ? "Previous listing (this is the first one)"
+        : "Next listing (this is the last one)";
     const path = dir === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6";
     const icon = (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d={path} />
       </svg>
     );
+    const inner = dir === "prev" ? <>{icon}{word}</> : <>{word}{icon}</>;
     // The ends are DISABLED, not hidden: a control that disappears under your cursor as you
     // reach the last home is worse than one that visibly runs out.
     return to ? (
       <Link href={to.path} aria-label={label} title={label} className={btn}>
-        {icon}
+        {inner}
       </Link>
     ) : (
-      <span aria-hidden className={`${btn} pointer-events-none text-stone/35`}>
-        {icon}
+      <span aria-hidden title={label} className={`${btn} pointer-events-none text-stone/35`}>
+        {inner}
       </span>
     );
   };
@@ -97,16 +102,13 @@ export function ListingPager({ id }: { id: string }) {
   return (
     // Returns null (not an empty box) when there is no set, so the breadcrumb row's flex gap does
     // not reserve dead space on every cold listing page.
-    <div className="flex shrink-0 items-center gap-0.5" role="group" aria-label="Browse your search results">
+    <div className="flex shrink-0 items-center gap-0.5" role="group" aria-label="Browse listings">
       {arrow("prev")}
-      {/* IT SAYS "LISTING", and that word is doing real work. The photo band directly below this
-          row has its own ‹ › pair, so two identical arrow pairs sit on one page — the owner read
-          the top one as another photo control ("make it more understandable that you are
-          switching listings"). "3 / 36" alone could be either. "LISTING 3 OF 36" cannot, and it
-          echoes the "2,471 listings found" the visitor just came from on /search, which is
-          exactly the connection worth making. `tabular-nums` so the width does not twitch. */}
-      <span className="whitespace-nowrap px-1.5 text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-stone">
-        Listing <span className="text-ink">{nav.index + 1}</span> of {nav.count}
+      {/* The middle says LISTING too, so the group reads as one sentence about homes rather than
+          three separate controls. `tabular-nums` keeps the width from twitching as it counts. */}
+      <span className="whitespace-nowrap px-1 text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-stone">
+        <span className="hidden sm:inline">Listing </span>
+        <span className="text-ink">{nav.index + 1}</span> of {nav.count}
       </span>
       {arrow("next")}
     </div>

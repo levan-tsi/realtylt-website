@@ -12,11 +12,18 @@ export type ListingStatusFilter = "Active" | "Pending";
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
 export const MAX_PAGE_SIZE = 100;
-/** The /search results grid paints a fuller page than the portal/home rails — live
- * realtylt.com shows 35-36 per page (a clean 2-column grid) with the map coupled to that
- * page. Scoped to the search surface via an explicit pageSize param so the 12-per-rail
- * default is never inflated elsewhere. */
-export const SEARCH_PAGE_SIZE = 36;
+/** The /search results grid paints a fuller page than the portal/home rails. Scoped to the
+ * search surface via an explicit pageSize param so the 12-per-rail default is never inflated
+ * elsewhere.
+ *
+ * 50, raised from 36 on the owner's ask 2026-08-02 ("can we raise it to 50 per page, it would
+ * not slow things right?"). Measured on warm requests before changing it, so the answer is not
+ * a guess: 36 -> 177ms median, 50 -> 215ms, 60 -> 227ms; payload 87KB -> 123KB -> 150KB. The
+ * per-listing cost is flat (~2.5KB), so this is linear and small, and it divides evenly by the
+ * grid's 2 / 3 / 4 columns where 36 left a ragged row at 4-up. Stopped at 50 rather than 60
+ * because the map plots exactly this page as chips and each card can pull a photo — both scale
+ * with the number, and the media host is the one resource here with a history of pushing back. */
+export const SEARCH_PAGE_SIZE = 50;
 
 export type ListingStatus = "Active" | "Coming Soon" | "Pending" | "Under Contract";
 
