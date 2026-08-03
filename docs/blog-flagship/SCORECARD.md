@@ -1,5 +1,43 @@
 # Flagship blog scorecard — rubric derived from research, THEN measured
 
+## 2026-08-03 (session 14): the facts moved. I am not posting a new total.
+
+The chat post changed more in this round than in any since it was built, and two of the named
+deductions below are objectively addressed. I am deliberately not printing a new number, because
+the two that moved (A2, C1) are judgement rows and this file exists because the owner called a
+self-graded score "cheating to pass the score". **Re-measure it, or have somebody who did not build
+it read the page.** What follows is what changed, measured on production.
+
+`words: 4418` (was 1889) · `imagesInBody: 3` (was 2) · `externalCitations: 8` (was 5) ·
+`h2: 18` · `dateModified: 2026-08-02` · schema unchanged and complete
+(RealEstateAgent, BlogPosting, BreadcrumbList, FAQPage, VideoObject) · FAQ entries 3 to 7.
+
+**A2, −1.5, was "silent on cost, setup time and privacy/compliance". All three are now on the
+page**: a "What it costs, and how long it takes" section naming the three drivers and the timing,
+and "The part nobody selling you a chat widget mentions" covering bot disclosure under Cal. Bus. &
+Prof. Code 17941, the page-speed cost of a third-party widget against Google's published Core Web
+Vitals thresholds, and the WCAG keyboard-trap criterion. That deduction is answerable now in a way
+it was not before.
+
+**C1, −2, was "two body images is thin for a 1,900-word piece; the middle third has none".** The
+middle third now has one, a `plate` in Dutchess County placed where the argument turns. But the
+piece is 3,355 prose words rather than 1,900, so three body images is still arguably thin, and I
+would not claim the full two points back. Somebody should look and decide.
+
+**A1, −3, has NOT moved and cannot be fixed with effort.** Original data of our own is gated on
+public traffic: 37 chat sessions in 30 days, most of them the owner's own testing.
+
+### A correction to this file's own plan
+
+Fix #1 in the table at the bottom says: *"Cite the 78% stat. It traces to Dr James Oldroyd's Lead
+Response Management Study."* **It does not.** This round went looking for it: the 78% figure is
+attributed on hundreds of pages to a survey with no published report, no stated sample and no
+methodology, and every citation leads to another article citing a third. What Oldroyd's work
+actually supports is the response-time odds the post already charts, which is a different and
+smaller claim. The post now says the number cannot be sourced rather than sourcing it, which is the
+opposite of what this file planned and the only honest version. **The plan was wrong; leaving it
+uncorrected would be worse than the original error.**
+
 ## STILL 90.5 / 100 (2026-08-02, session 13: the avatar round)
 
 **Not re-measured, and deliberately so.** This session touched no page and no component — it worked

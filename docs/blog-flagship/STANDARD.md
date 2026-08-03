@@ -139,7 +139,44 @@ absolute must-haves; this one keeps the set honest against itself.
 from a long one. It is measured because a post a third the length of its siblings is a real signal,
 not because long is good. Read the writing.
 
-## The opening gap (2026-08-02)
+## What the instrument was measuring wrong (2026-08-03)
+
+Two corrections to `siblingOverlap`, both made after reading the phrases it was actually counting
+rather than trusting the number. Neither loosens the standard; both point it at the right text, and
+the bar went from 71 to 1 as a result.
+
+1. **It read every paragraph on the page, including citation apparatus.** The
+   reactivation/qualification pair scored 74 on things that are supposed to be identical: twenty of
+   the shared phrases were the two posts describing the same NAR survey in the same words. A source
+   description is not writing, and rewording one of them to pass a gate would be falsifying a
+   citation. It now reads paragraphs outside any scene `<section>`, which is the article's own prose.
+2. **It joined the paragraphs before shingling**, so a seven-word window could straddle the seam
+   between two of them and invent a phrase nobody wrote. Three of the last four "shared" phrases
+   were windows spanning the end of a body paragraph and the start of the identical author bio.
+   Shingled per paragraph now.
+
+What survived those two corrections was real, and it was the thing the owner had complained about:
+the voice post's limits section was the chat post's with the synonyms swapped, and all five posts
+closed on one sentence with the nouns changed.
+
+## The ratchet has an order, and it is ratchet FIRST
+
+`--ratchet` raises the bar to what the cohort has proved. Because a numeric bar is the cohort
+median, raising it puts the two weakest posts below it by construction. That is not a bug, it is
+what a ratchet is for, but it means:
+
+**Ratchet at the START of a round and close the gap it opens. Never at the end.**
+
+A round that ratchets last leaves a permanently red gate and a next session that cannot tell the
+difference between "we raised the bar" and "we broke something". This round ratcheted mid-way and
+then closed it, so it ends green.
+
+Related, and fixed on 2026-08-03: `check` used to re-derive the median on every run rather than
+reading the recorded bar, which made a green run arithmetically impossible. Sort five posts
+a<=b<=c<=d<=e; the median is c; "every post >= c" requires a == b == c. The two weakest posts were
+reported short forever, however good they got.
+
+## The opening gap (2026-08-02) — CLOSED 2026-08-03
 
 All five posts were below the standard the moment it was derived, which is the point — no single
 post had everything.
@@ -155,3 +192,10 @@ post had everything.
 **Four of the five have no calculator** — no way for a reader to put their own numbers in. That is
 the single clearest confirmation the owner's brief was pointing at something real, and it is the
 one item that closes four posts at once.
+
+**Closed 2026-08-03, measured on production:** all five carry a calculator, chat went from 1,030
+prose words and 1 citation to 3,355 and 4, qualification gained a cost section and a fourth
+primary source, and sibling overlap across the cohort is 0 to 1. `node
+scripts/flagship-standard.mjs` prints "all 5 posts meet the standard" and
+`scripts/score-flagship.mjs` prints "Mechanically ready" for all five for the first time. The
+recorded bar rose with them: prose 2,906 to 3,295, sections 17 to 18, overlap 71 to 1.

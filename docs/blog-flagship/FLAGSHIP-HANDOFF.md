@@ -1,6 +1,162 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## NEXT SESSION'S JOB (owner 2026-08-02) — RAISE ALL FIVE TO THE STANDARD. Resume HERE.
+## STATUS 2026-08-03 (session 14): ALL FIVE MEET THE STANDARD, measured on production. Resume HERE.
+
+`node scripts/flagship-standard.mjs` prints **all 5 posts meet the standard**, and
+`node scripts/score-flagship.mjs <slug>` prints **Mechanically ready** for all five, including
+qualification, which had been 18/19 since it shipped. The cohort is tightly banded for the first
+time: 3,301 to 3,594 prose words, 18 to 21 sections, 4 to 5 citations, sibling overlap 0 to 1.
+
+**Videos stayed on hold, as instructed. Nothing in this round touched a film, the avatar or HeyGen.**
+
+### 1. The calculator is a primitive now, and that is what closed four posts at once
+
+`components/blog/scenes/primitives/Calculator.tsx`, scene `kind: "calculator"`. The old
+`LeadsCalculator` is deleted and `cold-open-calculator` is gone from `ComponentId`.
+
+It sat behind the bespoke-component hatch for five topics on the stated grounds that its model
+was "genuinely per-topic and cannot be expressed as data". That judgement is what cost four posts
+their calculator, because nobody was ever going to hand-write a fifth bespoke component. What
+varies between topics is arithmetic, and arithmetic IS data.
+
+**The shape is the honesty.** A chain starts at 1 and every step multiplies it, so no multiplier
+can be applied off screen. Each step renders as a row: the running total, and beside it whether
+the multiplier was the reader's number ("your $6,000") or a rate we are asserting ("a 5% close
+rate"). The ladder cannot disagree with the headline because they are the same computation. That
+is what stops the failure the old file's comment records, where an earlier draft multiplied every
+missed inquiry by a full commission.
+
+`format: "percent"` is input-only: it reads as 40% and multiplies as 0.40, so a content file
+cannot write 40 where it meant 0.4.
+
+**Each of the five refuses a different number, on purpose.** They are not one model with the nouns
+swapped:
+
+| post | chain | headline | what it refuses |
+|---|---|---|---|
+| chat | inquiries, share handed over, year, 5% close, commission | $57,600 a year | the unsourced 78% (see below) |
+| voice | missed calls, real inquiries, callback speed, year, 5% close, commission | $27,000 a year | building the multiplier from the 7x/60x odds, which would produce a number nobody should believe |
+| reactivation | contacts, legally reachable, answer and moving, become a deal, commission | $21,600 **once** | any rate of ours at all, and any "a year" row: a database is finite |
+| qualification | leads, minutes triaging, year, hours, share not moving | 50 **hours** a year | the dollar figure. The expensive half is the seller who had to be out by spring sitting third |
+| workflow | steps a week, minutes each, 52 weeks, hours, hourly value | 104 **hours** a year | multiplying by 25 min 26 sec, for the reason the article itself gives |
+
+Verify one with `node scripts/_scratch-calc.mjs <slug> [out] [base]`. It shoots both widths, reads
+the ladder back out of the DOM, and drives every control to its maximum. **Drive a range with
+`fill()`, never by setting `.value` and dispatching an event** — that races React's own value
+tracker and one of two sliders silently did not move, which made the probe under-report.
+
+### 2. The sameness metric was measuring citation apparatus, and under it the posts really were the same article
+
+Two findings, and the second only became visible after the first was fixed.
+
+**`siblingOverlap` drew from every paragraph on the page.** So the reactivation/qualification pair
+scored 74 against a 71 ceiling on things that are SUPPOSED to be identical: about twenty of the
+shared phrases were the two posts describing the same NAR survey in the same words, which is a
+citation basis line, and rewording one to pass a gate would be falsifying a source description.
+Fifteen more were the film's standing disclosure that the narration is a licensed clone of the
+owner's voice. Both escaped the chrome filter only because it needs a phrase in ALL FIVE and these
+sit in two and four. **It now reads paragraphs that are not inside a scene `<section>`** — the
+article's own prose, which is the thing the owner objected to.
+
+**It also joined the paragraphs before shingling**, which manufactures phrases nobody wrote out of
+the seam between two of them. Three of the last four "shared" phrases were windows straddling the
+end of the final paragraph and the start of the identical author bio. **Shingled per paragraph now.**
+
+That left the real bleed, and it was real: **the voice post's limits section was the chat post's
+with the synonyms swapped**, down to the same divorce sale and the same contingency question, and
+**all five posts closed on one sentence with the nouns changed**. Both rewritten. Every post now
+ends by returning to its own opening and handing the reader something to do tonight that costs
+nothing: ask your own site the question at midnight, ring your own office from a number it does not
+know, open one 2023 record, score your last ten leads from what is already on file, take a
+highlighter to one deal.
+
+Measured on article prose: **74/74/71/71/50 to 0/0/1/1/0.**
+
+`node scripts/_scratch-overlap.mjs [base] --phrases` prints the actual shared phrases. A number
+cannot be fixed surgically; the sentences can.
+
+### 3. The gate had a bar that could never be reached
+
+Both the check and the ratchet used the LIVE median. Sort five posts a<=b<=c<=d<=e, the median is
+c, and "every post at or above c" requires a >= c, which requires a == b == c. **So the two weakest
+posts were reported SHORT forever, on every numeric metric, however good they got**, and the bar
+moved fastest in the round the most work had been done.
+
+`--ratchet` is now the moment the bar rises to what the cohort has proved; `check` measures the
+recorded bar in `standard.json`. Nothing is relaxed, and a run prints an `available` row showing
+what the ratchet would raise it to.
+
+**The discipline that follows from this, and it is the important part: ratchet at the START of a
+round, not the end.** Ratcheting opens a gap by construction. This round ratcheted mid-way
+(proseWords 2,906 to 3,295, sections 17 to 18, overlap 71 to 1), which left reactivation and
+workflow short, and then closed it — workflow gained how to RANK the audit list, reactivation
+gained the limit that the second pass is fishing in a pond already emptied. Ending green means the
+next session inherits a signal rather than a permanent red.
+
+### 4. Chat was the long pole and it was resting on a number nobody can source
+
+It opened on "78% of leads close with whoever responds first" with **no citation at all**, and its
+one external link was the HBR piece the voice post already used, so it effectively had no source of
+its own. We went looking: that figure is attributed on hundreds of pages to a survey with no
+published report, no stated sample and no methodology, and every citation leads to another article
+citing a third. **The post now says so** and rests on the research it can actually show you. The
+calculator's note follows it: the reply curve is labelled a judgement shaped by that research
+rather than derived from it, and explicitly not from the 78%.
+
+Three new sources, each read in the primary document, none shared with another post:
+
+- **Cal. Bus. & Prof. Code 17941** (SB 1001, chaptered Stats. 2018 Ch. 892). The definitions matter
+  more than the summaries do: the ten-million-visitor threshold everybody reports belongs to
+  "online platform" in 17940(c), a term the prohibition in 17941 does not use.
+- **Google's Core Web Vitals thresholds** (web.dev), quoted exactly: INP "200 milliseconds or
+  less", LCP within "2.5 seconds".
+- **WCAG 2.2, No Keyboard Trap (Level A)**, because a chat widget you cannot tab out of is a front
+  door that locks.
+
+Plus four sections its successors had and it did not: what makes an answer true (website-trained
+versus connected to something live, the only distinction that matters and the one no vendor
+volunteers), what it costs, how to test one before you buy it, and a second `plate`. The FAQ was
+three objections, which is what WE are defensive about; it now leads with the definitional question
+an AI answer lifts. **1,030 words to 3,355.**
+
+### 5. Two defects found by looking, not by a gate
+
+- **A renamed heading left its short rail label pointing at a dead anchor**, so the floating rail
+  showed the full 58-character heading instead of "The number". The `headingLabels` test caught
+  exactly what it was built to catch. Three other tests encoded the old article's shape and were
+  updated to the new one, keeping their intent that a missing heading still fails.
+- **On every flagship, an H2 following a paragraph had 0px above it and 24px below**, so a section
+  heading sat glued to the paragraph it ended and floated away from the one it introduced. It reads
+  correctly on the standard template only by accident of structure: a heading there opens its own
+  `<section>` and picks the space up from `section + section`. The flagship layout flattens a prose
+  band into one container, so there was no boundary left to carry it. Fixed in `app/globals.css`
+  with the same 3.25rem, scoped to a direct child of `.prose-custom` so the sectioned path cannot
+  match, and to `* +` so a heading opening a band after a scene is not pushed off it.
+
+### 6. D5 can now be told the truth
+
+Qualification shipped 07-31 with no `updated`, deliberately, because a post written and shipped in
+one day has not been revised. **The revision has now happened**, so the date is a true statement
+rather than a fix, and all five posts pass their mechanical gate. Each `updated` in
+`content/blog/posts.ts` carries a comment saying what actually changed.
+
+### What is owed next
+
+- **The 10 consumer placeholder posts** are still live, indexable, in the sitemap and rendering the
+  literal string "[Placeholder draft. The owner's final article replaces this text.]". One line to
+  noindex them and drop them from the sitemap. Cheap, and untouched by this round.
+- **Original data of our own (`A1`, -3 on the rubric)** is still blocked on public traffic, not on
+  effort.
+- **Ratchet FIRST next round**, then close the gap it opens. `available` currently shows
+  proseWords 3,320 and overlap 0.
+- `scripts/_scratch-toc.mjs` times out: it waits for `nav[data-toc]`, which since session 13b only
+  mounts from about 1728px up. Not a regression. The rail was verified directly instead: 16 rows on
+  chat at 1920, all resolving, longest label 19 characters.
+- `node_modules` was missing the whole `@jridgewell` scope, so vitest could not start. Repaired
+  with `npm i @jridgewell/sourcemap-codec --no-save`, which does not touch `package.json`. 635
+  tests green.
+
+## THE PREVIOUS ROUND'S BRIEF (owner 2026-08-02) — kept for the reasoning. The gap table below is CLOSED.
 
 **Videos are on hold by the owner.** Do not touch the films, the avatar or HeyGen this round.
 
