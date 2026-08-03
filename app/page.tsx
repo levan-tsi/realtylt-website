@@ -166,20 +166,30 @@ export default async function HomePage() {
 
       {/* ── Home value split — "Find Your Home Value" + "Tell Us About Your Home" form */}
       <section id="value" className="sec bg-paper" aria-labelledby="value-heading">
-        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        {/* lg:items-center, because the two columns are not the same height and never will be:
+            the form is a tall panel and the copy beside it is five lines shorter. Left-aligned
+            at the top it left ~545px of dead white under the copy, which is exactly the "unused
+            extra space" complaint. Centred, the shorter column sits against the middle of the
+            taller one and the section reads as one object. */}
+        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
           <Reveal>
-            <SectionHeading as="h2">
+            {/* The eyebrow is the section's entry point, and it is the first one on this page:
+                every home-page section had been a bare centred h2, so nothing told a reader
+                which section they had arrived in before the headline did. */}
+            <SectionHeading as="h2" eyebrow="For sellers">
               <span id="value-heading">Find Your Home Value</span>
             </SectionHeading>
-            {/* The owner's own words, verbatim — his copy, not ours to rewrite. What changed in
-                round 11 is the SETTING: the opening paragraph reads a size up in the darker ink
-                so the block has an entry point, the measure is tighter (max-w-md ~62 characters
-                rather than a 90-character line), and the paragraphs are spaced further apart.
-                Three dense grey paragraphs at one size was a wall. */}
+            {/* The owner's own words, verbatim — his copy, not ours to rewrite. What round 11
+                changed was the SETTING: the opening paragraph reads a size up in the darker ink
+                so the block has an entry point, the measure is tighter (~62 characters rather
+                than 90), and the paragraphs are spaced further apart.
+                Round 19 moved his THIRD paragraph out of here and onto the form. It is an
+                instruction — "Enter your information on this page" — and it was sitting at the
+                bottom of a text column on the far side of the page from the thing it instructs.
+                Not a rewrite: the same sentence, next to what it is about. */}
             {[
               "So, you're ready to sell your home! Congratulations, you've come to the right place. We belong to one of the strongest real estate brokerages in the area. We have great confidence in our brand and you can, too. We demand excellence throughout the home-selling process.",
               "We have established a solid reputation for impeccable customer service and marketing strategies. When you entrust the sale of your home to us, you are putting your faith in our entire network of experts in Real estate sales, Real estate purchases, Loan processing and Marketing.",
-              "Enter your information on this page to discover what your home is worth. We have experts in every area that have access to the resources needed to provide an accurate estimate.",
             ].map((p, i) => (
               <p
                 key={i}
@@ -194,20 +204,32 @@ export default async function HomePage() {
             ))}
           </Reveal>
           <Reveal delay={140}>
-            <h3 className="t-h3 mb-6 text-ink">Tell Us About Your Home</h3>
-            {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
-                Message stacked single-column (no interest dropdown). Wiring/validation/
-                honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
-            <LeadForm
-              splitName
-              withAddress
-              stackAddressRow
-              hideReason
-              defaultReason="I'm interested in selling a home"
-              submitLabel="Send Message"
-              successTitle="Got it. Thanks."
-              successBody="We'll start on your home's numbers and reach out shortly."
-            />
+            {/* The form is an OBJECT, not loose fields on a page. It had been a bare heading over
+                naked inputs sitting directly on the white, next to a column of body copy — so the
+                densest, most important thing in the section was the one thing with no edges. Every
+                other form on the site that matters sits in a panel; this one now does too. 24px is
+                the large-feature-panel step, which is what this is. */}
+            <div className="rounded-3xl border border-line bg-mist p-6 md:p-8 lg:p-10">
+              <h3 className="t-h3 text-ink">Tell Us About Your Home</h3>
+              <p className="mb-7 mt-3 max-w-md leading-[1.7] text-stone">
+                Enter your information on this page to discover what your home is worth. We have
+                experts in every area that have access to the resources needed to provide an
+                accurate estimate.
+              </p>
+              {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
+                  Message stacked single-column (no interest dropdown). Wiring/validation/
+                  honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
+              <LeadForm
+                splitName
+                withAddress
+                stackAddressRow
+                hideReason
+                defaultReason="I'm interested in selling a home"
+                submitLabel="Send Message"
+                successTitle="Got it. Thanks."
+                successBody="We'll start on your home's numbers and reach out shortly."
+              />
+            </div>
           </Reveal>
         </div>
       </section>
