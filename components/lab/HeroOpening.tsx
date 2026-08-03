@@ -177,13 +177,12 @@ export function HeroOpening({ src, children }: { src: string; children: React.Re
         style={{ background: "linear-gradient(to top, rgba(0,0,0,.86) 0%, rgba(0,0,0,.42) 34%, transparent 72%)" }}
       />
 
+      {/* The hairline that draws across as the copy arrives is rendered BY THE COPY, as the first
+          item in its bottom-anchored stack — this component only animates it (`.rlt-rule`). It
+          used to live here at `bottom-[210px]`, which was fine in a 620px demo frame and drew
+          straight through the headline the moment the hero became full-height. A magic offset
+          against a viewport it was never tested at is a bug waiting for a bigger screen. */}
       <div ref={type} className="rlt-copy relative z-10 h-full will-change-transform">
-        {/* The rule draws across the frame as the copy arrives — the one line that says a
-            deliberate thing is starting. */}
-        <div
-          aria-hidden
-          className="rlt-rule absolute inset-x-8 bottom-[210px] h-px origin-left bg-paper/25 lg:inset-x-14"
-        />
         {children}
       </div>
     </div>

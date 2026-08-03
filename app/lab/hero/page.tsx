@@ -1,9 +1,7 @@
-import Link from "next/link";
 import { getIdxClient } from "@/lib/idx";
-import { HeroDepth } from "@/components/lab/HeroDepth";
-import { HeroOpening } from "@/components/lab/HeroOpening";
-import { HeroValley, type ValleyPoint } from "@/components/lab/HeroValley";
-import { HeroTraverse, type TraverseHome } from "@/components/lab/HeroTraverse";
+import { type ValleyPoint } from "@/components/lab/HeroValley";
+import { type TraverseHome } from "@/components/lab/HeroTraverse";
+import { HeroStage } from "@/components/lab/HeroStage";
 
 /** LOCAL DESIGN LAB — three candidate home-page heroes, side by side with the real thing.
  *
@@ -71,95 +69,5 @@ export default async function HeroLab() {
     homes = [];
   }
 
-  const Copy = ({ tone = "light" }: { tone?: "light" | "dark" }) => (
-    <div className="flex h-full flex-col justify-end px-8 pb-10 lg:px-14">
-      <p className={`t-eyebrow ${tone === "dark" ? "text-paper/60" : "text-paper/70"}`}>
-        Hudson Valley &amp; New York City
-      </p>
-      <h2 className="t-display mt-4 text-paper">
-        Let&rsquo;s Find <strong>Home</strong>
-      </h2>
-      <div className="mt-7 flex w-full max-w-[520px] items-center rounded-xl border border-paper/30 bg-black/45 p-1 backdrop-blur-[2px]">
-        <span className="w-full px-4 py-2.5 text-sm text-paper/60">Search for Homes</span>
-        <span className="shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink">
-          Search
-        </span>
-      </div>
-    </div>
-  );
-
-  const Frame = ({
-    letter, name, thesis, cost, children,
-  }: { letter: string; name: string; thesis: string; cost: string; children: React.ReactNode }) => (
-    <section className="mb-16">
-      <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-        <p className="t-eyebrow text-stone">Variant {letter}</p>
-        <h3 className="t-h3 mt-1 text-ink">{name}</h3>
-        <p className="mt-2 max-w-[70ch] text-sm leading-relaxed text-ink-soft">{thesis}</p>
-        <p className="mt-1 max-w-[70ch] text-xs text-stone">{cost}</p>
-      </div>
-      <div className="mt-5 h-[620px] w-full">{children}</div>
-    </section>
-  );
-
-  return (
-    <main className="bg-paper pb-24 pt-10">
-      <div className="mx-auto mb-12 max-w-[1250px] px-4 lg:px-8">
-        <h1 className="t-h1 text-ink">Home hero — the candidates</h1>
-        <p className="mt-3 max-w-[70ch] text-sm leading-relaxed text-ink-soft">
-          Nothing here is live. The site still plays the Vimeo clip. Move the mouse across each
-          one — they all behave differently, and two of them are only interesting in motion.
-          Each is monochrome and dark on purpose: the point is to add depth without adding noise.
-        </p>
-        <p className="mt-2 text-sm text-stone">
-          Full argument, costs and recommendation: <code className="text-ink">docs/parity/HERO-LAB.md</code>
-          {" · "}
-          <Link href="/" className="underline">the live hero for comparison</Link>
-        </p>
-      </div>
-
-      <Frame
-        letter="D"
-        name="The Opening"
-        thesis="A title sequence, then light that follows you. The page ARRIVES: the photograph settles out of an over-scale, a warm light blooms out of the valley floor, a hairline draws across the frame, and the three lines of copy un-mask upward in sequence. After that a large, very soft warm pool follows the pointer and the valley WARMS where you look — the same photograph graded up under a radial mask, so no colour is invented."
-        cost="No new asset, no data, no canvas, no dependency. The LCP photograph is painted at once and only ever transformed. Reduced motion and touch land the finished frame with no animation at all."
-      >
-        <HeroOpening src="/images/hero/valley-aerial.jpg">
-          <Copy tone="dark" />
-        </HeroOpening>
-      </Frame>
-      <Frame
-        letter="A"
-        name="Depth"
-        thesis="The photograph we already own, stopped being flat. The picture, the valley haze and the type sit on three planes that answer the pointer at different rates. Nothing else changes."
-        cost="Cheapest and safest: no new data, no canvas, no dependency, and the LCP image is only ever transformed — never faded, never re-decoded."
-      >
-        <HeroDepth src="/images/hero/valley-aerial.jpg">
-          <Copy />
-        </HeroDepth>
-      </Frame>
-
-      <Frame
-        letter="B"
-        name="The Valley"
-        thesis={`Every active listing we hold, at its real coordinates — ${points.length.toLocaleString("en-US")} points of light over the Hudson Valley. The field parallaxes with the pointer and the nearest home names itself. It does not claim coverage, it shows it, and no competitor can copy it because it is our data.`}
-        cost="Canvas 2D, no Three.js, no dependency. One extra query at build/revalidate time. The riskiest to get right and the only one that is unmistakably RealtyLT."
-      >
-        <HeroValley points={points}>
-          <Copy tone="dark" />
-        </HeroValley>
-      </Frame>
-
-      <Frame
-        letter="C"
-        name="Traverse"
-        thesis="Your idea: one house, and the mouse changes it. Moving across the frame travels through real homes we are selling, each cross-fading into the next with its address and price."
-        cost="Only uses homes whose photos are already in our own Storage, and preloads a fixed set of 8 once — so hovering never touches the MLS media host. That constraint is not optional given the rate limiting."
-      >
-        <HeroTraverse homes={homes}>
-          <Copy />
-        </HeroTraverse>
-      </Frame>
-    </main>
-  );
+  return <HeroStage points={points} homes={homes} />;
 }
