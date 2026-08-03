@@ -71,14 +71,33 @@ async function addressMatches(q: string, limit: number) {
   const url = process.env.SUPABASE_URL?.trim();
   const key = process.env.SUPABASE_ANON_KEY?.trim();
   if (!url || !key) return [];
-  // PostgREST `ilike` needs `*` for the wildcard, and commas/parens would break the filter
-  // grammar, so anything structural is stripped rather than escaped.
-  const safe = q.replace(/[,()*\\]/g, " ").trim();
-  if (!safe) return [];
+  // TOKENISED, not one contiguous substring. "150 hooker ave poughkeepsie ny" is how a person
+  // types an address and how Google hands one back, but as a single ILIKE it matches nothing —
+  // the stored address is "150 Hooker Avenue" and the town lives in its own column. So every
+  // word must appear SOMEWHERE across address/city/zip, in any order.
+  //
+  // Dropped first: the state, and the street-suffix abbreviations people mix freely ("ave" vs
+  // the stored "Avenue"). Requiring "ave" to appear would reject the very row it describes.
+  const NOISE = new Set(["ny", "usa", "us", "ave", "av", "st", "rd", "dr", "ln", "ct", "blvd", "hwy", "pl", "ter", "cir", "apt", "unit", "#"]);
+  const tokens = q
+    .replace(/[,()*\\.]/g, " ")
+    .split(/\s+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length >= 2 && !NOISE.has(t))
+    .slice(0, 5);
+  if (!tokens.length) return [];
+  // PostgREST: and=( or(address.ilike.*t*,city.ilike.*t*,zip.ilike.*t*), … ) — every token has
+  // to land somewhere, which is what makes word order and extra words harmless.
+  const clause = tokens
+    .map((t) => {
+      const e = encodeURIComponent(t);
+      return `or(address.ilike.*${e}*,city.ilike.*${e}*,zip.ilike.*${e}*)`;
+    })
+    .join(",");
   try {
     const res = await fetch(
       `${url.replace(/\/+$/, "")}/rest/v1/idx_listings` +
-        `?select=id,address,city,zip&status=eq.Active&address=ilike.*${encodeURIComponent(safe)}*` +
+        `?select=id,address,city,zip&status=eq.Active&and=(${clause})` +
         `&order=address.asc&limit=${limit}`,
       {
         headers: { apikey: key, Authorization: `Bearer ${key}` },
