@@ -56,7 +56,9 @@ export async function POST(req: Request) {
         ? ((body as Record<string, unknown>).source as string)
         : "/";
 
-    const parsed = parseLead(body, source);
+    // The IP is part of the consent record, so it is read here (the only place that has the
+    // request) rather than trusted from the body.
+    const parsed = parseLead(body, source, clientIp(req));
 
     // Honeypot hits are dropped silently — bots see success.
     if (parsed.kind === "spam") return NextResponse.json({ ok: true });

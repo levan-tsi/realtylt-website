@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import { INTEREST_REASONS, type InterestReason } from "@/lib/site";
 import { parseAddress, parseFullName } from "./field-parsers";
+import { buildConsent } from "./consent";
 import type { LeadPayload, LeadResult, SavedSearchRequest } from "./types";
 
 const OTHER: InterestReason = "Other reason to contact an agent";
@@ -17,7 +18,7 @@ export type ParsedLead =
 /** Validate a raw form body. Honeypot field is `rlt_hp` — bots fill it, humans never see it.
  * (Deliberately non-semantic: a `website` field gets filled by Chrome address autofill for
  * real visitors, silently dropping their leads.) */
-export function parseLead(body: unknown, source: string): ParsedLead {
+export function parseLead(body: unknown, source: string, ip = "unknown"): ParsedLead {
   const b = (body ?? {}) as Record<string, unknown>;
   const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
@@ -73,6 +74,14 @@ export function parseLead(body: unknown, source: string): ParsedLead {
   // Structured name parts (CRM enrichment) — only attach non-empty values.
   if (nameParts.firstName) lead.firstName = nameParts.firstName;
   if (nameParts.lastName) lead.lastName = nameParts.lastName;
+
+  // CONSENT TO CALL OR TEXT. Recorded only when there is a number the consent could cover —
+  // a signed authorisation to dial nothing is not a record, it is noise in the CRM. Every
+  // field but `granted` is stamped here, server-side: the timestamp, the page, the IP and the
+  // agreement text are evidence, and evidence the submitter can write is not evidence.
+  if (lead.phone) {
+    lead.consent = buildConsent({ granted: b.consentToContact, phone: lead.phone, source, ip });
+  }
 
   const address = str(b.address);
   if (address) {

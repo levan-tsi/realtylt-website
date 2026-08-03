@@ -1,5 +1,6 @@
 "use client";
 
+import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { usePathname } from "next/navigation";
@@ -238,6 +239,10 @@ export function LeadForm({
       {!compact && (
         <Textarea label="Message" name="message" dark={dark} hideLabel placeholder="Your Message" />
       )}
+
+      {/* Permission to call or text. Sits directly under the fields and above the submit, so
+          it is read as part of agreeing rather than as small print after the fact. */}
+      <ConsentCheckbox dark={dark} />
 
       {status === "error" && (
         <p role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">

@@ -1,6 +1,7 @@
 /** Lead-capture types — every form on the site funnels into this payload (brief §5B). */
 
 import type { InterestReason } from "@/lib/site";
+import type { ContactConsent } from "./consent";
 
 export interface LeadPayload {
   name: string;
@@ -35,6 +36,11 @@ export interface LeadPayload {
    * alerts, the searches travel with the lead. Without this the site would be asking for an
    * email address to power something it had given the CRM no way to act on. */
   savedSearches?: SavedSearchRequest[];
+  /** Permission to call or text this number, with the proof of it. Present on every lead that
+   * carries a phone number, INCLUDING when it was declined — "they were asked and said no" is
+   * a thing the CRM needs to know before someone presses dial, and an absent field cannot say
+   * it. See lib/leads/consent.ts for what the law actually requires here. */
+  consent?: ContactConsent;
 }
 
 export interface SavedSearchRequest {

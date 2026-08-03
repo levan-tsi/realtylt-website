@@ -1,5 +1,6 @@
 "use client";
 
+import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { SITE } from "@/lib/site";
@@ -424,6 +425,7 @@ function TourModal({
       name: data.name,
       email: data.email,
       phone: data.phone,
+      consentToContact: data.consentToContact,
       address: fullAddress(listing),
       source: `/listing/${listing.id}`,
       interestReason: REASON_BUYING,
@@ -509,6 +511,10 @@ function TourModal({
             <input className={fieldCls} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
           </div>
 
+            <div className="mt-4">
+              <ConsentCheckbox />
+            </div>
+
           <ErrorNote show={state === "error"} />
           <button
             type="submit"
@@ -584,6 +590,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
       name: data.name,
       email: data.email,
       phone: data.phone,
+      consentToContact: data.consentToContact,
       message: data.message,
       address: fullAddress(listing),
       source: `/listing/${listing.id}`,
@@ -651,6 +658,10 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
             <input className={fieldCls} name="email" type="email" required autoComplete="email" placeholder="Email address" aria-label="Email address" />
             <input className={fieldCls} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
           </div>
+
+            <div className="mt-4">
+              <ConsentCheckbox />
+            </div>
 
           {/* Live parity: the two questions that tell us how strong an offer is. They travel in the
               existing qualifier payload, so this is still ONE lead post. */}
