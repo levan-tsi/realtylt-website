@@ -87,6 +87,28 @@ the run. Re-verified on the same slice size:
 fetched 464, downloaded 464, mirrored 464   (no 429 at all)
 ```
 
+### THE ABORT RULE HAS CHANGED — do not stop on `fetched > downloaded` alone
+
+The first healthy slice after the fix proved the inherited rule is too blunt. It read:
+
+```
+slice: kept 316, took 316, mirrored 7194 photos (fetched 7645, downloaded 7194)
+  download failures by status: ok:7194 400:451
+```
+
+`fetched > downloaded` by 451, which the old rule says abort — but **zero 429s**, and every
+single photo that downloaded was mirrored (7,194 of 7,194, against 2,490 of 3,097 before the
+fix). The 451 are HTTP **400**: MLS Grid signed media URLs that were already dead or expired when
+the feed handed them to us. Nothing is wrong and nothing is at risk.
+
+**So: judge the histogram, not the gap.**
+
+| line | meaning | do |
+|---|---|---|
+| `429:` anything | MLS Grid is throttling us | **STOP.** The key can be suspended; that froze the inventory for 7 days in round 16. The script now self-aborts at 25. |
+| `400:` / `403:` / `404:` | dead or expired media links in the feed | carry on, this is normal |
+| `timeout:` / `neterr:` in bulk | network or host trouble | stop and look |
+
 **To continue** — it is resumable and it is worth continuing:
 
 ```bash
@@ -97,6 +119,11 @@ Watermark in `scripts/.photo-backfill-watermark.local`. **It is slow on purpose*
 second, so a 7,000-photo slice takes about an hour. Let it run in the background across a whole
 round. **Do not raise `--rps` to make it finish faster.** Coverage when round 20 ended is in the
 checkpoint; re-measure with `scripts/_scratch-r16-debt.mjs`.
+
+One consequence of the 400s worth knowing: a listing whose photo 0 is a dead link keeps a
+mirrored count of 0 forever, because the count is a contiguous prefix from the first photo. If
+the zero-photo number stops falling while slices keep reporting `400:` in the hundreds, that is
+why — and the fix is a feed question (are those listings' media re-published?), not a pacing one.
 
 ---
 

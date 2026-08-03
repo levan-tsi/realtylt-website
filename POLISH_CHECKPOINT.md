@@ -110,7 +110,16 @@
 ##   zero photos           1,577      <- 2,039 when round 19 started, 1,799 at round 20's
 ##   at least 1 photo     26,090
 ##   5 or more            13,372      <- 12,636 / 13,105
-## The backfill was still walking a slice when the round ended. It is resumable from
+## FIRST HEALTHY SLICE AFTER THE FIX, and it retired the abort rule it was measured against:
+##   slice: 316 listings, mirrored 7194 (fetched 7645, downloaded 7194)
+##     download failures by status: ok:7194 400:451
+## fetched > downloaded by 451, which the OLD rule says abort -- but ZERO 429s, and every
+## photo that downloaded was mirrored (7194/7194, against 2490/3097 before the fix). The 451
+## are HTTP 400: MLS Grid signed media URLs already dead or expired in the feed. Nothing is
+## wrong. JUDGE THE HISTOGRAM, NOT THE GAP: 429 means stop (the key can be suspended, that
+## froze the inventory for 7 days in round 16, and the script now self-aborts at 25);
+## 400/403/404 are dead links and are normal. Round 21's handoff has the table.
+#### The backfill was still walking a slice when the round ended. It is resumable from
 ## scripts/.photo-backfill-watermark.local (2026-07-31T07:20) and safe to leave running:
 ##   node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
 ## Expect roughly an hour per slice at the safe rate. DO NOT raise --rps.
