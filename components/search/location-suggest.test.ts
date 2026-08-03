@@ -63,6 +63,19 @@ describe("LocationSuggest — a portalled popup has to be dismissable", () => {
     expect(CODE).toMatch(/aria-activedescendant/);
   });
 
+  /** Choosing a suggestion writes the chosen label into the input, which looks identical to
+   * typing it. Without a guard the query effect re-ran, fetched suggestions for the thing they
+   * had just picked, and re-opened the list OVER the results — invisible on the home page,
+   * because picking navigates away, and permanent on /search, where you stay. Measured on
+   * production: closed at 200ms, back with 5 options at 600ms, still there at 4.6s. */
+  it("does not re-open the list with suggestions for the option just picked", () => {
+    expect(CODE).toMatch(/pickedRef/);
+    // The flag has to be SET in pick and READ in the query effect, or it guards nothing.
+    const pickFn = CODE.slice(CODE.indexOf("function pick"), CODE.indexOf("const portal"));
+    expect(pickFn).toMatch(/pickedRef\.current\s*=/);
+    expect(CODE).toMatch(/pickedRef\.current !== null/);
+  });
+
   /** Progressive enhancement: with JS off the surrounding form still submits ?q=. */
   it("is a real named input so the plain form still submits", () => {
     expect(CODE).toMatch(/name=\{name\}/);

@@ -44,6 +44,9 @@ export function LocationSuggest({
   const listId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  /** The label `pick` just wrote into the input, so the query effect can tell a choice from
+   * typing. Null whenever the next change is genuinely the visitor's. */
+  const pickedRef = useRef<string | null>(null);
   const [value, setValue] = useState(defaultValue);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
@@ -75,6 +78,15 @@ export function LocationSuggest({
 
   useEffect(() => {
     const needle = value.trim();
+    // A value we put in the box ourselves is a CHOICE, not a query. `pick` closes the list and
+    // then writes the chosen label into the input, which used to look exactly like typing: the
+    // effect below re-ran, fetched suggestions for the thing they just picked, and re-opened
+    // the list over the results. On the home page nobody saw it, because picking navigates
+    // away. On /search you stay on the page, and it reopened 400ms later and sat there.
+    if (pickedRef.current !== null && needle === pickedRef.current) {
+      pickedRef.current = null;
+      return;
+    }
     if (needle.length < 2) {
       setItems([]);
       setOpen(false);
@@ -110,6 +122,9 @@ export function LocationSuggest({
 
   function pick(s: Suggestion) {
     setOpen(false);
+    // Tell the query effect that this next value change is ours. Cleared the moment it is used,
+    // so editing the text afterwards searches normally again.
+    pickedRef.current = s.q.trim();
     setValue(s.q);
     // An ADDRESS is a destination, not a filter. On /search, onPick would swallow it and
     // re-filter the grid the visitor is already looking at, when what they asked for was
