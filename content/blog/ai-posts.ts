@@ -237,6 +237,10 @@ Text chat forgives a pause. A typing indicator is a promise that something is co
 
 A phone call has no typing indicator. There is only silence, and silence means one of three things to the person holding the handset: the line dropped, the other person is thinking, or nobody is there. Callers resolve that ambiguity in well under a second, and they resolve it badly.
 
+How far under a second is worth seeing, because it is smaller than almost anybody guesses.
+
+[[scene:turn-gap]]
+
 So latency is not a specification on a phone agent. It is the product. The gap between a caller finishing their sentence and the agent starting its answer is the entire difference between "somebody at the office picked up" and "I got one of those robots". That is why this stack is built around sub-second response rather than around a longer feature list.
 
 Two related things get forgotten, and between them they cost more calls than anything in a brochure.

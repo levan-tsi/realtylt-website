@@ -90,6 +90,56 @@ export const RESPONSE_AUDIT = {
   note: "Cross-industry research from 2011, timing replies to inquiries submitted through a website rather than to phone calls. These percentages are not a real estate benchmark and should not be quoted as one. The shape is the part that carries over.",
 };
 
+/** SCENE copy — the size of the gap. The page's SECOND cited graphic, and the reason it
+ * exists is that this article's central claim had no number under it.
+ *
+ * The section it sits in argues that latency is not a specification on a phone agent, it is
+ * the product, and that a caller reads silence as nobody being there. Every word of that was
+ * assertion. This is the measurement: across ten languages on five continents, the average
+ * gap between one person finishing a question and the next person starting to answer is 208
+ * milliseconds, and every language's commonest gap falls between nothing and two tenths of a
+ * second. That is the window a phone agent is trying to sit inside, and prose cannot show a
+ * reader how narrow it is.
+ *
+ * Read in the primary document: Stivers, Enfield, Brown, Englert, Hayashi, Heinemann,
+ * Hoymann, Rossano, de Ruiter, Yoon and Levinson, "Universals and cultural variation in
+ * turn-taking in conversation", PNAS 106(26), 2009, PMID 19553212. Every figure below is
+ * quoted from that paper: mean +208 ms across the full dataset, cross-linguistic median
+ * +100 ms, Japanese fastest at +7 ms, Danish slowest at +469 ms, overall mode 0 ms with each
+ * language's mode between 0 and +200 ms.
+ *
+ * NOT ONE NUMBER HERE IS OURS, deliberately. The obvious fifth bar is what a slow voice stack
+ * takes to answer, and we have not measured it, so drawing it would put an invented figure on
+ * a chart. The note draws the comparison in words instead, against the paper's own slowest
+ * number, where the reader can check the arithmetic. */
+export const TURN_GAP = {
+  eyebrow: "The size of the gap",
+  caption: "How long people leave before answering a question, measured in ten languages",
+  bars: [
+    { label: "Japanese, the fastest of the ten", value: 7, display: "7 ms" },
+    { label: "The halfway point across all ten", value: 100, display: "100 ms" },
+    { label: "The average across all ten", value: 208, display: "208 ms" },
+    { label: "Danish, the slowest of the ten", value: 469, display: "469 ms" },
+  ],
+  /** THE AXIS IS THE ARGUMENT, so it is pinned rather than left to scale itself. Scaled to
+   * its own biggest bar, Danish would be drawn full width and read as the maximum a person
+   * could possibly wait, which is the opposite of the finding. Pinned to one second, the
+   * empty right half of every track is the point: all of human conversation, across ten
+   * languages and five continents, happens inside the left half of a single second. The
+   * basis line says out loud what the track is, because an unlabelled axis is a lie you did
+   * not have to tell. */
+  max: 1000,
+  /** The average, not the extreme. The two end bars exist to show how tight the whole span
+   * is; the 208 is the number a reader should walk away holding. */
+  lit: 2,
+  basis:
+    "The grey track behind each bar is one full second. Ten languages on five continents, measured from video of ordinary unscripted conversation between two and six people. Yes or no questions were 67% of everything coded.",
+  sourceText:
+    "Stivers and ten co-authors, Universals and cultural variation in turn-taking in conversation, PNAS 2009.",
+  sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/",
+  note: "Read what this does not say. Every conversation in it happened face to face and not one of them was a phone call, and the same paper found that people answer faster when the person asking is looking at them, which is exactly what a phone takes away. It measures people answering people, so it has nothing at all to say about what a caller will put up with from a machine. What it does establish is the size of the window. Every one of the ten languages had its commonest gap somewhere between nothing and two tenths of a second, and the authors note that speakers are sensitive to shifts of a hundred milliseconds. An agent that thinks for a full second has left more than twice the gap of the slowest conversational culture in the study, and the caller does not hear that as thinking.",
+};
+
 /** SCENE copy — the four moves.
  *
  * Lifted from the four steps in content/services/ai-voice-agents.ts (`howItWorks`) and put
@@ -297,6 +347,15 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       band: "light",
       label: "The evidence",
       ...RESPONSE_AUDIT,
+    },
+    /** Dark on purpose. It lands in the middle of the longest run of white reading column on
+     * the page, and it is also the only place the article's central claim about latency has a
+     * measured number under it. */
+    "turn-gap": {
+      kind: "statbars",
+      band: "dark",
+      label: "The silence",
+      ...TURN_GAP,
     },
     "calls-calculator": {
       kind: "calculator",

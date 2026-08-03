@@ -245,15 +245,21 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
         ". The 11:40pm exchange is staged for the film, and every line in it is something this page already says the assistant does. For the unstaged version, go and ask it yourself.",
       ],
     },
+    /** This plate used to be the Poughkeepsie railroad bridge, which the reactivation post also
+     * carries. Two flagships in a five-post cohort were running the same photograph, and
+     * `siblingOverlap` cannot see it because it reads text. It was also the wrong picture: a
+     * flat grey river on a page whose whole argument is that somebody wanted to know one thing
+     * about ONE HOUSE. The bridge stays where it earns its place, on reactivation, where a
+     * crossing that sat unused for thirty five years is the argument. */
     plate: {
       kind: "plate",
       band: "dark",
-      src: "/images/counties/dutchess.jpg",
-      alt: "The Walkway Over the Hudson, the former Poughkeepsie and Highland railroad bridge, crossing the river",
+      src: "/images/listings/house-01.jpg",
+      alt: "A shingled house with a deep covered porch, a lamp hanging in it, seen from the street",
       caption:
-        "The old railroad bridge at Poughkeepsie, twenty minutes up the river from the Beacon colonial in the first paragraph. Every question this article is about is a question about one specific house in one specific town, which is the whole reason a clever assistant with nothing behind it cannot answer a single one of them.",
-      credit: "Photograph by bobistraveling, CC BY 2.0.",
-      ariaLabel: "A Dutchess County river crossing",
+        "A shingled house with a deep porch and a light hanging in it. This is the shape of nearly every question this article is about. Nobody messages a real estate website at twenty to midnight to ask what an AI assistant is. They ask whether the seller of one specific house would look at a contingent offer, and no amount of fluency answers that. Something behind the conversation has to know which house you mean.",
+      credit: "Photograph by CodyR, CC BY 2.0.",
+      ariaLabel: "A house with a porch light on",
     },
     "response-curve": { kind: "component", id: "response-curve", band: "light" },
     "response-gap": { kind: "component", id: "response-gap", band: "dark", label: "The gap" },
