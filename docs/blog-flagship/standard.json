@@ -1,0 +1,17 @@
+{
+  "note": "Derived by scripts/flagship-standard.mjs --ratchet. Monotonic: never lowered by hand.",
+  "updated": "2026-08-02",
+  "metrics": {
+    "proseWords": 2906,
+    "sections": 17,
+    "citations": 4,
+    "faqQuestions": 5,
+    "bodyImages": 6,
+    "dataGraphics": 2,
+    "hasCostSection": true,
+    "hasMoneyMath": true,
+    "hasCalculator": true,
+    "hasLimitsSection": true,
+    "hasHowToSection": true
+  }
+}
