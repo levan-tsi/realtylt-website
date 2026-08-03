@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { ComponentId, FlagshipContent } from "@/lib/blog/flagship";
+import { Calculator } from "./primitives/Calculator";
 import { Conversation } from "./primitives/Conversation";
 import { Diagram } from "./primitives/Diagram";
 import { Film } from "./primitives/Film";
@@ -8,7 +9,6 @@ import { Plate } from "./primitives/Plate";
 import { Statement } from "./primitives/Statement";
 import { StatBars } from "./primitives/StatBars";
 import { Summary } from "./primitives/Summary";
-import { LeadsCalculator } from "./LeadsCalculator";
 import { ResponseCurve } from "./ResponseCurve";
 import { ResponseGap } from "./ResponseGap";
 import { SystemDiagram } from "./SystemDiagram";
@@ -29,12 +29,15 @@ import { Teardown } from "./Teardown";
  * must read as a finished still (a carousel slide) as well as a scroll moment.
  */
 
-/** Bespoke components: the scenes not yet reduced to primitives, plus the calculator, whose
- * model is genuinely per-topic and cannot be expressed as data. */
+/** Bespoke components: the scenes not yet reduced to primitives.
+ *
+ * The calculator used to live here on the grounds that its model was "genuinely per-topic and
+ * cannot be expressed as data". That was wrong, and four posts with no calculator at all was
+ * the price. What varies between topics is the arithmetic, and arithmetic IS data: see
+ * primitives/Calculator.tsx. */
 const COMPONENTS: Record<ComponentId, () => ReactNode> = {
   "response-curve": ResponseCurve,
   "response-gap": ResponseGap,
-  "cold-open-calculator": LeadsCalculator,
   teardown: Teardown,
   "system-diagram": SystemDiagram,
 };
@@ -64,6 +67,8 @@ export function renderScene(key: string, content?: FlagshipContent): ReactNode {
       return <Diagram {...scene} idBase={`dg-${key}`} />;
     case "conversation":
       return <Conversation {...scene} />;
+    case "calculator":
+      return <Calculator {...scene} />;
     case "plate":
       return <Plate {...scene} />;
     case "film":

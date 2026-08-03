@@ -10,8 +10,15 @@
  * touches no component at all.
  *
  * `kind: "component"` is the honest escape hatch. It names a bespoke component for the scenes
- * that genuinely are one-off (the calculator's model is per-topic and cannot be data), and it
- * lets the remaining scenes migrate to primitives one at a time instead of in one risky sweep.
+ * that are still one-off, and it lets the remaining scenes migrate to primitives one at a time
+ * instead of in one risky sweep.
+ *
+ * It is also where this file was WRONG once, and the mistake is worth keeping written down: the
+ * calculator sat behind that hatch for five topics on the grounds that its model was per-topic
+ * and "cannot be data". The cost of that judgement was four posts with no calculator at all,
+ * because nobody was going to hand-write a fifth bespoke component. What varies between topics
+ * is the arithmetic, and arithmetic is data. When a scene resists becoming a primitive, look
+ * again at what is actually varying before accepting the hatch.
  */
 
 import type { OutlineEntry } from "./markdown";
@@ -68,10 +75,74 @@ export interface ConversationEvent {
   detail: string;
 }
 
+/** ── The calculator's parts.
+ *
+ * Generalised out of LeadsCalculator, which was one topic's arithmetic compiled into a
+ * component. The reason it is worth generalising is not code reuse: it is that the HONESTY is
+ * structural here rather than remembered. An earlier draft of the chat model multiplied every
+ * missed inquiry by a full commission, so 192 inquiries read as 192 lost closings. The shape
+ * below makes that mistake hard to make again, because the running total starts at 1 and every
+ * multiplier is a visible row. Nothing can be applied off screen.
+ */
+
+/** One option of a choice control. `value` is the multiplier it contributes; `display` is how
+ * that multiplier reads in the arithmetic, so the two cannot drift apart. */
+export interface CalcOption {
+  value: number;
+  label: string;
+  sub: string;
+  display: string;
+}
+
+/** A number the reader drags. */
+export interface CalcRange {
+  kind: "range";
+  id: string;
+  label: string;
+  hint?: string;
+  min: number;
+  max: number;
+  step: number;
+  initial: number;
+  format: CalcFormat;
+  /** Width class for the value beside the slider, sized for the widest value the range can
+   * produce so dragging never shifts the track. */
+  width: string;
+}
+
+/** A judgement the reader makes, where a slider would imply false precision. */
+export interface CalcChoice {
+  kind: "choice";
+  id: string;
+  label: string;
+  hint?: string;
+  /** Index into `options`. */
+  initial: number;
+  options: CalcOption[];
+}
+
+export type CalcInput = CalcRange | CalcChoice;
+
+export type CalcFormat = "count" | "money" | "hours";
+
+/** Either the reader's own number, or a rate we state out loud. There is no third kind on
+ * purpose: a multiplier is one or the other, and an unlabelled constant is how a calculator
+ * turns into a black box. */
+export type CalcFactor =
+  | { from: "input"; id: string }
+  | { from: "rate"; value: number; display: string };
+
+export interface CalcStep {
+  /** What the running total IS once this step has been applied. */
+  label: string;
+  by: CalcFactor;
+  format: CalcFormat;
+  unit: string;
+}
+
 /** Bespoke components that are not (yet) primitives. Adding a key here is a deliberate
  * admission that a scene is one-off. */
 export type ComponentId =
-  | "cold-open-calculator"
   | "response-curve"
   | "response-gap"
   | "teardown"
@@ -195,6 +266,32 @@ export type Scene =
       /** Licence line. The site keeps its ledger in public/images/ATTRIBUTIONS.md and the
        * credit belongs next to the picture as well as in the file. */
       credit: string;
+      ariaLabel: string;
+    })
+  /** The reader's own numbers, and the arithmetic that turns them into a stake.
+   *
+   * The band is fixed light rather than declared: the controls are a working surface and want
+   * a light field, and the dark result panel is the punchline. A second colourway would be a
+   * variant nobody asked for.
+   *
+   * `note` is required for the same reason StatBars' is — a calculator without a statement of
+   * where its arithmetic stops being true is a sales tool with sliders. */
+  | (Omit<SceneBase, "band"> & {
+      kind: "calculator";
+      band: "light";
+      eyebrow: string;
+      heading: string;
+      inputs: CalcInput[];
+      /** The arithmetic, one visible row each. The running total starts at 1 and every step
+       * multiplies it, so a step cannot be applied without being shown. */
+      chain: CalcStep[];
+      /** Which row is the big number. Index into `chain`. Money for the posts whose stake is
+       * money, hours for the posts whose stake is time. */
+      headline: number;
+      /** The line above the big number. */
+      resultLabel: string;
+      note: string;
+      action?: { label: string; href: string };
       ariaLabel: string;
     })
   | (SceneBase & { kind: "component"; id: ComponentId });
