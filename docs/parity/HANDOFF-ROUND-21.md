@@ -112,8 +112,17 @@ checkpoint; re-measure with `scripts/_scratch-r16-debt.mjs`.
   handoff's list of nine surfaces was over-inclusive by one.
 - **The dropdown portal.** Hit-tested at 1440/390/320 on both mounts, tracks its anchor on
   scroll and resize to within 1px, arrows/Escape/outside-click all correct, JS off still submits
-  `?q=`. One real defect found and fixed: **Tab away left the list open**, floating over the
-  control focus had just moved to.
+  `?q=`. **Two** real defects found and fixed:
+  - **Tab away left the list open**, floating over the control focus had just moved to.
+  - **Picking a suggestion re-opened the list over the results**, and this one is worth reading
+    twice because it is a lesson about where to measure. It reproduced ONLY on production
+    (closed at 200ms, back with 5 options at 600ms, still there at 4.6s); the dev server said
+    clean, because its suggest index happened to return nothing for the picked term. It also had
+    TWO triggers, and fixing the obvious one only moved the reappearance from 600ms to 2.6s:
+    `pick` writes the chosen label into the input (looks like typing), **and** the URL rewrite
+    remounts the component with that label as its `defaultValue` (looks like typing to a fresh
+    instance). The rule that covers both: **never open on mount** — an initial value comes from
+    the URL, never from a keystroke.
 - **The address filter.** `encodeURIComponent` is NOT what protects it — PostgREST decodes
   before it parses, so `%2C` becomes a separator. The character strip is the protection, and it
   holds; 23 tests assert clause STRUCTURE rather than substrings, and were watched failing with

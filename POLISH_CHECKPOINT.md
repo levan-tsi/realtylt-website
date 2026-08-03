@@ -30,7 +30,7 @@
 ##
 ## ═══ ROUND 20 — DONE 2026-08-03. Handoff in docs/parity/HANDOFF-ROUND-21.md.
 ##
-## ── FOUR REAL DEFECTS, ALL FIXED AND ALL FOUND BY ATTACKING RATHER THAN READING ─────
+## ── FIVE REAL DEFECTS, ALL FIXED AND ALL FOUND BY ATTACKING RATHER THAN READING ─────
 ## 1. THE BACKFILL WAS BEING RATE-LIMITED, and the number it printed looked like progress.
 ##    The round-19 abort criterion (fetched > downloaded) fired on the first slice: 7,114
 ##    fetched, 3,097 downloaded. It could not say WHY, and the two possible causes need
@@ -48,13 +48,23 @@
 ##    "dismiss" has to mean: only a mousedown outside and Escape closed it, and a keyboard
 ##    visitor produces neither by moving on. The orphaned list covered the SEARCH button that
 ##    Tab had just focused. Now closes on blur unless focus is moving into the list.
-## 3. "SIGNUPS NOT ALLOWED FOR THIS INSTANCE" was printed to visitors in a red alert.
+## 3. PICKING A SUGGESTION RE-OPENED THE LIST over the results it had just filtered, and this
+##    one is the round's lesson about WHERE to measure. It reproduced only on PRODUCTION
+##    (closed at 200ms, back with 5 options at 600ms, still there at 4.6s); dev said clean,
+##    because its suggest index happened to return nothing for the picked term. Same code,
+##    opposite conclusion, and the one that mattered ran where visitors are. It also had TWO
+##    triggers, and fixing the obvious one only moved the reappearance from 600ms to 2.6s:
+##    pick writes the chosen label into the input (indistinguishable from typing), AND the URL
+##    rewrite remounts the component with that label as its defaultValue (indistinguishable
+##    from typing, to a fresh instance). The rule covering both: NEVER open on mount, because
+##    an initial value comes from the URL and never from a keystroke. Verified on production.
+## 4. THE RAW SUPABASE SENTENCE was printed to visitors in a red alert.
 ##    Supabase's own words, on a real estate site, describing our plumbing and offering nothing
 ##    to do next. Every auth call returned error.message raw. lib/auth/error-message.ts maps
 ##    what a visitor can actually hit and falls back to our line WITH the phone number.
 ##    Now reads: "New accounts aren't open yet. Call or text (917) 905-7923 and we'll set one
 ##    up for you."
-## 4. "WE'VE FOUND YOUR HOME. FOR UNITED STATES." Google's geocoder does not return
+## 5. "WE HAVE FOUND YOUR HOME. FOR UNITED STATES." Google's geocoder does not return
 ##    ZERO_RESULTS for junk — with the country restricted it answers OK with a country-level
 ##    result. The first build of the new confirmation card said that in bold, and would have
 ##    sent "United States" to the CRM as a home to value. lib/geo/address-precision.ts now
@@ -95,10 +105,23 @@
 ##   tracks its anchor on scroll and resize to within 1px, arrows/Escape/outside-click correct,
 ##   JS off still submits ?q=.
 ##
+## ── PHOTO COVERAGE, MEASURED AT THE END OF THE ROUND ────────────────────────────────
+##   active rows          27,667      (feed alive: newest listing 19:19 UTC today)
+##   zero photos           1,577      <- 2,039 when round 19 started, 1,799 at round 20's
+##   at least 1 photo     26,090
+##   5 or more            13,372      <- 12,636 / 13,105
+## The backfill was still walking a slice when the round ended. It is resumable from
+## scripts/.photo-backfill-watermark.local (2026-07-31T07:20) and safe to leave running:
+##   node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
+## Expect roughly an hour per slice at the safe rate. DO NOT raise --rps.
+##
 ## ── GATES ───────────────────────────────────────────────────────────────────────────
-## tsc clean. Tests 670 -> 774 (+58 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,
+## tsc clean. Tests 670 -> 775 (+59 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,
 ## 17 auth errors, 12 address-precision; the rest arrived from the session sharing this repo).
-## Never went below baseline. 6 commits, pushed to main.
+## Never went below baseline. 9 commits, all pushed to main.
+## Production sweep (10 pages x 1440/390/320): 28/30 clean, and the two failures were /buying
+## GOTO timeouts under contention from my own concurrent probes -- /buying re-measured clean at
+## all three widths (networkidle ~1.5s, no overflow). Dev sweep: 1 failure, the /connect flake.
 ##
 ## ── TRAPS THAT COST TIME, so the next round does not pay twice ──────────────────────
 ## · Next dev COMPILES A ROUTE ON FIRST REQUEST — the first measurement at each mount timed out
