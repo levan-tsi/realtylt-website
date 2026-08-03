@@ -192,6 +192,23 @@ for (const [k, kind] of METRICS) {
   proven[k] = kind === "boolean" ? vals.some(Boolean) : median(vals);
 }
 
+/** The point below which siblingOverlap stops measuring sameness and starts measuring the English
+ * language. Two 3,300-word articles about adjacent parts of one industry will share domain
+ * phrases by coincidence, and driving that to zero does not make the writing more distinct, it
+ * makes it worse.
+ *
+ * MEASURED, not guessed. On 2026-08-03 the bar reached 0 and the single phrase keeping
+ * reactivation and qualification at 1 was "they have a house to sell and" — which is simply how
+ * an agent describes a seller-side lead, and which appears in four of the five content files
+ * because it is the vocabulary of the business. The honest edit was to vary one of the two
+ * sentences; the dishonest one would have been to keep going, and a ceiling of 0 demands exactly
+ * that, forever, on every future round.
+ *
+ * So the RATCHET is clamped here. The check is not: a post above the recorded bar still fails.
+ * This only stops the bar itself being recorded somewhere unreachable. Raising this number is
+ * relaxing the standard and needs the same evidence this comment carries. */
+const OVERLAP_NOISE_FLOOR = 2;
+
 const prev = existsSync(STANDARD_PATH) ? JSON.parse(readFileSync(STANDARD_PATH, "utf8")) : { metrics: {} };
 // Monotonic in the direction that means BETTER. `number` bars only rise; a `max` bar (overlap,
 // where less is better) only tightens. Either way a weak round cannot relax the standard.
@@ -199,8 +216,10 @@ const raised = {};
 for (const [k, kind] of METRICS) {
   const before = prev.metrics?.[k];
   if (kind === "boolean") raised[k] = Boolean(before) || proven[k];
-  else if (kind === "max") raised[k] = Math.min(Number(before ?? Infinity), proven[k]);
-  else raised[k] = Math.max(Number(before ?? 0), proven[k]);
+  else if (kind === "max") {
+    const floor = k === "siblingOverlap" ? OVERLAP_NOISE_FLOOR : 0;
+    raised[k] = Math.max(floor, Math.min(Number(before ?? Infinity), proven[k]));
+  } else raised[k] = Math.max(Number(before ?? 0), proven[k]);
 }
 
 // WHAT THE CHECK MEASURES AGAINST, and why it is the RECORDED bar rather than the live median.

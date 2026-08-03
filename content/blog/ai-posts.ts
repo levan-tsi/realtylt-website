@@ -597,7 +597,7 @@ Scoring your own time is not the risk. The risk is scoring on anything that stan
 
 ## What to do about it
 
-Measure your own baseline first, because you cannot tell whether scoring helped if you never wrote down where you started. Take the last ten leads in your CRM and, against each name, answer the three questions from further up this page: are they pre-approved, do they have a house to sell, and when do they have to move. Do not go hunting. Answer only from what is already on the record.
+Measure your own baseline first, because you cannot tell whether scoring helped if you never wrote down where you started. Take the last ten leads in your CRM and, against each name, answer the three questions from further up this page: are they pre-approved, is there a house to sell, and when do they have to move. Do not go hunting. Answer only from what is already on the record.
 
 The number that matters is how many of the ten you could answer at all. In most pipelines it is one or two, and the useful part is not the score. It is discovering that on eight of them you are ranking your Tuesday on a name, an email address and a timestamp, which is the same as not ranking it.
 

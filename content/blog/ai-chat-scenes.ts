@@ -95,9 +95,20 @@ export const RESPONSE_CURVE = {
  * restatement of the hero excerpt (which sets up the problem): these are the answers.
  *
  * Every line is already argued somewhere in the body. A summary that claims something the
- * article does not support is how a summary box becomes a liability. */
+ * article does not support is how a summary box becomes a liability.
+ *
+ * IT BECAME ONE, and the fix is the reason this comment now names the failure. Line one asserted
+ * "roughly 78% of leads close with whoever responds first" for a day after the body had been
+ * rewritten to say that figure has no traceable source and that this article declines to use it.
+ * So the page argued against itself, and it did it in the single worst place: this box exists to
+ * be lifted by an assistant answering on somebody's behalf, which made the unsourceable number
+ * the most quotable thing on a page whose whole argument is that the details are checkable.
+ *
+ * The rule that follows: when a claim is removed from the body, grep the SCENES for it. The
+ * summary, the calculator note and the chart caption are separate files and none of them moves
+ * on its own. */
 export const IN_SHORT: string[] = [
-  "Being first buys the conversation. Roughly 78% of leads close with whoever responds first.",
+  "Being first buys the conversation. Trying within the hour was nearly seven times likelier to reach a decision maker than waiting one more hour.",
   "A good assistant answers at any hour, searches the live MLS, moves to text, and writes what it learns to the CRM.",
   "It does not close, and it should say so rather than invent an answer it cannot verify.",
 ];
