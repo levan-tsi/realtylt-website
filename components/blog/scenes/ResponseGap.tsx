@@ -6,6 +6,24 @@ import { Reveal } from "@/components/ui/Reveal";
  * Both times are facts from the story (asked at 11:40pm, called back at 9am), so the scene
  * invents no performance claim.
  *
+ * IT USED TO. Until 2026-08-03 the line under the times read "Roughly 78% of leads close with
+ * whoever responds first", which is the exact figure the article spends its second section
+ * proving nobody can source, and ends by saying "so this article does not use it". The body
+ * was rewritten to disown that number, the summary box was caught a day later, the
+ * calculator's note names it as the figure the model is deliberately NOT built on, and this
+ * scene kept asserting it in twenty point type on a full-bleed black band nine hundred pixels
+ * further down.
+ *
+ * THE REASON IT SURVIVED IS WORTH MORE THAN THE FIX. `scripts/_scratch-claims.mjs` reads the
+ * prose and the scene PAYLOADS, because a statistic inside a StatBars object never appears in
+ * the markdown. A bespoke component's copy is in neither: it is a string literal in TSX. This
+ * post is the only one in the cohort with bespoke components, which is exactly why it is the
+ * only one where a retracted claim could keep talking. When a claim leaves the body, grep the
+ * scene payloads AND components/blog/scenes/*.tsx.
+ *
+ * The replacement asserts nothing that is not already in the story. It also does not repeat a
+ * prose sentence, because a scene replaces the markdown it stages rather than echoing it.
+ *
  * WHY IT IS A NIGHT SCENE: the signature is a line that starts at full porchlight and cools
  * to nothing. On white that gradient is invisible at hairline weight (tried it), and the
  * subject is literally the middle of the night. On black the light reads, and fading to
@@ -96,7 +114,8 @@ export function ResponseGap() {
 
         <Reveal delay={180}>
           <p className="mt-16 max-w-xl text-lg leading-relaxed text-paper/70 md:mt-24 md:text-xl">
-            Roughly 78% of leads close with whoever responds first.
+            Nine hours and twenty minutes is not a slow reply. It is a conversation that
+            happened without you.
           </p>
         </Reveal>
       </div>

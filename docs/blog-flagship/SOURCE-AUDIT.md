@@ -151,12 +151,29 @@ the ones we assert, each already labelled on screen:
 - **The reactivation calculator refuses to assert any rate at all**, because no independent study of
   cold database SMS exists. Every multiplier there is the reader's own guess and is labelled as one.
 
-## The zombie stat, still refused
+## The zombie stat, still refused — and it was still on the page when this was written
 
 **"78% of leads close with whoever responds first."** No published report, no stated sample, no
 methodology; every citation leads to another article citing a third. The chat post says so in the
 prose and the calculator's note names it as the figure the model is deliberately NOT built on. Do not
 let it back in.
+
+**It had not actually left.** Found 2026-08-03, live on production, in the `response-gap` scene:
+a full-bleed black band about nine hundred pixels below the section that proves the figure cannot be
+sourced, printing *"Roughly 78% of leads close with whoever responds first"* in twenty point type.
+The retraction had reached three surfaces on three different days and missed the fourth.
+
+**Why it survived two audits, which is worth more than the fix.** `scripts/_scratch-claims.mjs`
+reads the prose AND the scene payloads, because a statistic inside a `StatBars` object never appears
+in the markdown. A bespoke component's copy is in *neither*: it is a string literal inside a `.tsx`
+file. The chat post is the only post in the cohort with bespoke components, which is exactly why it
+is the only one where a retracted claim could keep talking. The component's own docstring said "the
+scene invents no performance claim", which had been true when it was written.
+
+`lib/blog/zombie-claims.test.ts` now guards it. It reads every file where visible scene copy can
+live — the five content files and every `.tsx` under `components/blog/scenes` — and fails on any of
+the three figures below unless the same passage disowns them. It was proved red by putting the old
+line back before it was trusted green.
 
 Two others this repo has already killed and should not relearn: **"23 minutes 15 seconds"** (the real
 CHI 2005 figure is 25 min 26 sec) and **"$16,000 per text"** (a real number, from the FTC's civil
