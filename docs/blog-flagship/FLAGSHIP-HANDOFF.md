@@ -13,10 +13,24 @@ Run `node scripts/flagship-standard.mjs` to get the live gap list. As of 2026-08
 | post | owes |
 |---|---|
 | **chat** | prose 1,030 → 2,906 · sections 14 → 17 · citations 1 → 4 · FAQ 3 → 5 · images 5 → 6 |
-| voice | money math · calculator |
-| reactivation | money math · calculator |
-| qualification | prose 2,641 → 2,906 · citations 3 → 4 · cost section · money math · calculator |
-| workflow | money math · calculator |
+| voice | calculator |
+| reactivation | calculator · sibling overlap 74 → ≤71 |
+| qualification | prose 2,641 → 2,906 · citations 3 → 4 · cost section · calculator · overlap 74 → ≤71 |
+| workflow | calculator |
+
+**Two owner corrections landed after the first draft of this brief, and they change the job:**
+
+1. **The stake does NOT have to be a dollar figure.** *"It should not be always exactly the dollar
+   amount... we can show how much time they would save and they can calculate themselves with
+   hourly $ value."* A `hasQuantifiedStake` check was written and deleted — calibrated against the
+   cohort, all five posts already quantify (chat in dollars, voice in 42 hours, workflow and
+   qualification in shares), so it separated nothing. The calculator may output **money OR time**.
+   Do not force a `$` into reactivation: it cites no response rates because no independent study
+   exists, and inventing one would destroy its whole argument.
+2. **Sameness is now measured.** `siblingOverlap` counts 7-word phrases shared with the nearest
+   sibling, minus chrome. Reactivation and qualification sit at 74 against a ≤71 ceiling — they are
+   each other's nearest and were written in the same session. Reusing a COMPONENT is the point of
+   the primitive set; reusing a SENTENCE is not. The ceiling only ever tightens.
 
 ### Do the CALCULATOR first. It closes four posts and it is the owner's actual brief.
 
