@@ -88,15 +88,36 @@ export const FRAGMENTED = {
    * heading size rather than read well as prose. Kept near the length of the qualification
    * post's, which holds on one line at 1440. */
   caption: "How long it took to get back to interrupted work",
+  /** THREE BARS BECAME FOUR, because two of the three were not the categories a reader would
+   * take them for.
+   *
+   * As shipped, bar 2 was "Before interrupted work was picked up again" (25 min 26 sec) and
+   * bar 3 was "Before it was picked up, when somebody else prompted it" (61 min 37 sec). Both
+   * labels are literally accurate and both figures are in the paper. Side by side they invite
+   * a comparison that is not available, because they are not disjoint: 25 min 26 sec is the
+   * average over EVERY same-day resumption and it already contains the externally prompted
+   * ones. A reader sees 25 against 61 and concludes prompting roughly doubles it.
+   *
+   * The paper gives the honest pair and it makes the point HARDER, not softer: work people went
+   * back to on their own resumed in 21 min 28 sec, work that waited for somebody else sat for
+   * 61 min 37 sec. Nearly three times, not twice. The article's own audit grid was already
+   * quoting that pair correctly; only the chart was mixing an average with a subset.
+   *
+   * The arithmetic reconciles exactly and is now in the basis line, for the same reason the
+   * calculator puts its chain on screen: 90.1% self-resumed at 21 min 28 sec plus 9.9%
+   * externally resumed at 61 min 37 sec gives 25 min 26 sec. Nothing is derived and nothing is
+   * ours; all four figures are quoted from the paper. */
   bars: [
     { label: "Time in one piece of work before switching", value: 11.07, display: "11 min 4 sec" },
-    { label: "Before interrupted work was picked up again", value: 25.43, display: "25 min 26 sec" },
-    { label: "Before it was picked up, when somebody else prompted it", value: 61.62, display: "61 min 37 sec" },
+    { label: "Back to it when you went back on your own", value: 21.47, display: "21 min 28 sec" },
+    { label: "Back to it, averaged over every case", value: 25.43, display: "25 min 26 sec" },
+    { label: "Back to it only because somebody else prompted it", value: 61.62, display: "61 min 37 sec" },
   ],
   /** Durations against each other, not shares of a whole, so the axis scales to the largest bar.
-   * A `max` here would draw all three short and lose the ratio that is the entire point. */
-  lit: 1,
-  basis: "Average elapsed time, 24 information workers observed at their desks and timed to the second.",
+   * A `max` here would draw all four short and lose the ratio that is the entire point. */
+  lit: 2,
+  basis:
+    "Average elapsed time, 24 information workers observed at their desks and timed to the second. The middle figure is not a third category: nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
   sourceText:
     "Gloria Mark, Victor M. Gonzalez and Justin Harris, No Task Left Behind? Examining the Nature of Fragmented Work, Proceedings of CHI 2005, University of California, Irvine. Over 700 hours of observation; 57 percent of work segments ended in an interruption and 77.2 percent of interrupted work was resumed the same day.",
   sourceHref: "https://ics.uci.edu/~gmark/CHI2005.pdf",

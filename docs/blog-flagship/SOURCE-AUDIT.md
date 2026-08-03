@@ -107,13 +107,37 @@ carrying its exhibit number.
 | 17 | qualification | NAR Exhibit 6-23: 15 / 42 / 43 | NAR PDF p.114 | **exact**, basis corrected |
 | 18 | qualification | 42 U.S.C. 3604, two quoted fragments; Article 10 covers two classes the statute does not | law.cornell.edu + nar.realtor | **exact, and the comparison is right** — 3604 lists race, color, religion, sex, handicap, familial status, national origin; Article 10 adds sexual orientation and gender identity |
 | 19 | qualification | HUD FHEO, "Monitor outcomes of advertising campaigns for housing-related ads, to the extent possible, to identify and mitigate discriminatory outcomes" | archives.hud.gov PDF | **exact**, dated April 29 2024, and the post says "April 2024" |
-| 20 | workflow | Mark, Gonzalez, Harris CHI 2005: 11 min 4 sec, 25 min 26 sec, 57%, 77.2%, 700 hours, 24 workers | ics.uci.edu CHI2005.pdf | **exact, every one** |
+| 20 | workflow | Mark, Gonzalez, Harris CHI 2005: 11 min 4 sec, 25 min 26 sec, 21 min 28 sec, 61 min 37 sec, 57%, 77.2%, 700 hours, 24 workers | ics.uci.edu CHI2005.pdf | **exact, every one** — chart reshaped, see below |
 | 21 | workflow | Zapier pauses a Zap at "an error 95% or more percent of the times that it has run in the last 7 days" | Zapier help | **exact** |
 | 22 | workflow | a repeatedly-erroring Zap "will automatically turn off" | Zapier run-status ref | **exact** |
 | 23 | workflow | n8n's error workflow starts with an Error Trigger, one setting per chain | docs.n8n.io | **exact** |
 
 (Twenty-three rows against nineteen distinct URLs: several documents carry more than one checked
 claim.)
+
+### 7. The workflow chart put an AVERAGE next to one of the things it averages (found 2026-08-03)
+
+Every figure on that chart was exact and every label was literally accurate, which is why the
+first audit passed it. The fault was the arrangement. Bar 2 read *"Before interrupted work was
+picked up again"* (25 min 26 sec) and bar 3 read *"Before it was picked up, when somebody else
+prompted it"* (61 min 37 sec). Those are not two categories. **25 min 26 sec is the average over
+every same-day resumption and it already contains the 61 min 37 sec cases**, so a reader
+comparing the two bars draws a conclusion the data does not offer.
+
+The paper gives the disjoint pair, and it makes the point harder rather than softer:
+
+> *"The amount of time before working spheres were externally resumed was significantly longer
+> (61 min. 37 sec., sd=95 min. 11 sec.) than working spheres that were self-resumed (21 min. 28
+> sec., sd=46 min. 47 sec.), t(987)=7.05, p<.001."*
+
+Nearly three times, not twice. The article's own audit grid was already quoting that pair
+correctly; only the chart mixed the levels. It is now four bars, and the basis line shows the
+reconciliation on screen the way the calculator shows its chain: 90.1% self-resumed at 21 min 28
+sec plus 9.9% externally resumed at 61 min 37 sec gives exactly 25 min 26 sec.
+
+**The lesson generalises past this chart.** Every figure being exact is not the same as the chart
+being true. Check that bars sitting side by side are at the same LEVEL, and that none of them
+contains another.
 
 ### The workflow paper's setting, for the record
 
