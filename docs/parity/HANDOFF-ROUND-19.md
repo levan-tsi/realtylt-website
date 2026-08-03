@@ -154,12 +154,20 @@ link with the Vercel MCP `get_access_to_vercel_url` — they last ~23h):
   light tracks the pointer (29.77% → 70.19%), no errors.
 - A "Depth", B "The Valley", C "Traverse" — see `docs/parity/HERO-LAB.md`.
 
-**HIS LAST WORD WAS "this pages still look like shit the demo pages", and it is ambiguous** —
-it may mean the *lab page presentation* (which is deliberately bare scaffolding: a plain white
-page with paragraphs of my argument above each hero) or it may mean *the heroes themselves,
-including D*. **Ask him which before spending a round on it.** If it is the presentation, the lab
-page needs to stop looking like a dev tool: full-bleed variants, no essay, a way to flip between
-them in place rather than scrolling past three.
+**HE CLARIFIED, AND THE LAB PAGE IS NOW REBUILT.** "this pages still look like shit the demo
+pages" meant the *lab page itself*, not the heroes. It was a white document with a paragraph of
+argument stacked above each hero, the site's own header/footer/chat launcher sitting on top of
+the frames being judged, and four heroes you had to scroll between. All three of those work
+against the only job the page has.
+
+It is now one **full-bleed stage** at the real size, dark surround, no site chrome, and the
+variants **swap in place** — same frame, same position, instant A/B, which is the only way a
+difference this subtle is judgeable. Keys `1-4` switch, `R` replays the entrance, `W` toggles the
+argument (which now gives "where it is weak" equal billing with the pitch). Verified on the
+deployed build: header and footer hidden, switcher present, 0 overflow, no page errors.
+
+**WHAT IS STILL OPEN IS HIS VERDICT ON THE HEROES THEMSELVES** — which of A/B/C/D, if any, goes
+on the home page. Nothing has shipped to `app/page.tsx`; it still plays the Vimeo clip.
 
 Nothing has shipped to the live home page. `app/page.tsx` still plays the Vimeo clip.
 

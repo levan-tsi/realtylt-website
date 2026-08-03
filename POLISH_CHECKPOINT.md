@@ -11,9 +11,12 @@
 ##    (72 of 72, zero failures), sized at 13,382 listings / 271,141 photos / ~68GB / $0
 ##    storage / ~12h. MY RECOMMENDATION IS YES BUT IN CHUNKS — start with --max-listings 2000
 ##    and watch the failure count. Commands and abort criteria in handoff section 1.
-## 2. THE HERO — his last word was "this pages still look like shit the demo pages", and it is
-##    AMBIGUOUS: the bare lab-page presentation, or the heroes themselves including the new D?
-##    ASK before spending a round on it. Four candidates live on branch hero-lab at /lab/hero.
+## 2. THE HERO — WHICH OF A/B/C/D GOES ON THE HOME PAGE, if any. Nothing has shipped;
+##    app/page.tsx still plays the Vimeo clip. He clarified that "the demo pages look like
+##    shit" meant the LAB PAGE, not the heroes — and the lab is now REBUILT as a full-bleed
+##    stage: dark, no site chrome, variants SWAP IN PLACE (keys 1-4, R replays the entrance,
+##    W toggles the argument). Verified on the deployed build. So the only thing still open
+##    here is his verdict on the heroes themselves.
 ##
 ## ── HIS NEW ASKS, BOTH SPECIFIED IN THE HANDOFF ─────────────────────────────────────
 ## · CONSENT TO CALL/TEXT on the CTAs and forms. VERIFIED STATE: this site has ZERO consent
@@ -28,7 +31,7 @@
 ##   whole site before touching anything, and fix the SYSTEM rather than individual boxes.
 ##   Get his hero verdict first: the box language should follow the hero, not fight it.
 ##
-## ── HIS QUESTION, ANSWERED: THE CHAT REBUILD BELONGS IN THE **CRM** SESSION ──────────
+## ── THE CHAT: SETTLED. HE SAID "ok I will rebuild chat later in crm" — NOT this round. ──
 ## Everything hard about it is stateful, and all of that state lives in the CRM: conversation
 ## storage, realtime delivery, AI-answers-first, the turn-the-AI-off-and-take-over handoff,
 ## agent presence, and Twilio SMS. The CRM already owns takeover — the Pause wire is live and
