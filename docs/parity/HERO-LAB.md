@@ -22,6 +22,37 @@ the type we already have. None of them introduces a colour, a gradient, or a dep
 
 ---
 
+## D — "The Opening" ← the one to look at first
+
+Added after the owner saw A/B/C and said: *"they are really bad, I need something to make me
+say wow — some crazy transition or mouse movement or something."*
+
+Reading the first three back, they share one fault: **they are all ambient. Nothing ever
+HAPPENS.** A parallax plane, a drifting point field and a cross-fade are textures — they reward
+study, and a hero gets about one second. So D does the two things none of them did:
+
+**1. It arrives.** The page opens like a title card resolving. The photograph settles out of an
+over-scale, a warm light blooms up out of the valley, a hairline draws across the frame, and the
+three lines of copy un-mask upward in sequence (380 / 520 / 720ms). Over in 1.9s, once.
+
+**2. It answers the pointer with LIGHT, not motion.** A large, very soft warm pool follows the
+cursor and the valley warms where you look — the same photograph graded up under a radial mask,
+so no colour is invented. Over the hillside the trees turn green-gold; over the sky a faint
+additive core burns through the cloud as a sun break. Moving the mouse feels like weather
+crossing the valley.
+
+- **Uses:** the licensed still we already ship. No new asset, no data, no canvas, no dependency.
+- **LCP:** safe. The photograph is painted immediately and is only ever ed.
+- **The entrance is pure CSS**, deliberately: it was briefly gated on a JS flag and that is wrong
+  twice over — it cannot start until hydration (the finished frame flashes, then re-animates),
+  and with JS slow or broken the hero sits in its opening state for ever.
+- **Honest weaknesses:** it is a mood, not a fact about RealtyLT — B is still the only variant
+  that could not exist on a competitor's site. And the warm pool is strongest over vegetation;
+  the additive core is what keeps it alive over sky, and that core has to stay faint or it reads
+  as a torch.
+- Reduced motion and touch land the finished frame with no animation at all.
+
+---
 ## A — "Depth"
 
 The photograph we already own, no longer flat. The picture, the valley haze and the type sit on

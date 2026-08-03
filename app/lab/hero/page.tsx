@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getIdxClient } from "@/lib/idx";
 import { HeroDepth } from "@/components/lab/HeroDepth";
+import { HeroOpening } from "@/components/lab/HeroOpening";
 import { HeroValley, type ValleyPoint } from "@/components/lab/HeroValley";
 import { HeroTraverse, type TraverseHome } from "@/components/lab/HeroTraverse";
 
@@ -104,7 +105,7 @@ export default async function HeroLab() {
   return (
     <main className="bg-paper pb-24 pt-10">
       <div className="mx-auto mb-12 max-w-[1250px] px-4 lg:px-8">
-        <h1 className="t-h1 text-ink">Home hero — three candidates</h1>
+        <h1 className="t-h1 text-ink">Home hero — the candidates</h1>
         <p className="mt-3 max-w-[70ch] text-sm leading-relaxed text-ink-soft">
           Nothing here is live. The site still plays the Vimeo clip. Move the mouse across each
           one — they all behave differently, and two of them are only interesting in motion.
@@ -117,6 +118,16 @@ export default async function HeroLab() {
         </p>
       </div>
 
+      <Frame
+        letter="D"
+        name="The Opening"
+        thesis="A title sequence, then light that follows you. The page ARRIVES: the photograph settles out of an over-scale, a warm light blooms out of the valley floor, a hairline draws across the frame, and the three lines of copy un-mask upward in sequence. After that a large, very soft warm pool follows the pointer and the valley WARMS where you look — the same photograph graded up under a radial mask, so no colour is invented."
+        cost="No new asset, no data, no canvas, no dependency. The LCP photograph is painted at once and only ever transformed. Reduced motion and touch land the finished frame with no animation at all."
+      >
+        <HeroOpening src="/images/hero/valley-aerial.jpg">
+          <Copy tone="dark" />
+        </HeroOpening>
+      </Frame>
       <Frame
         letter="A"
         name="Depth"
