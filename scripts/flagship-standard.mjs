@@ -104,8 +104,31 @@ async function measure(page, slug) {
       hasLimitsSection: anyHead(/does not|will not|cannot|limits|not do/i),
       hasHowToSection: anyHead(/how to|find your own|what to do|do it yourself|your own version/i),
       // Raw material for the sibling-overlap metric, computed across the cohort below.
+      //
+      // The ARTICLE'S OWN PROSE only: paragraphs that are not inside a scene. A scene is a
+      // full-bleed <section>, so this drops film captions, chart source lines and chart
+      // caveats, and keeps the writing.
+      //
+      // That distinction is not tidiness, it is the difference between measuring the right
+      // thing and the wrong one. Measured 2026-08-02 on the reactivation/qualification pair,
+      // which sat at 74 against a 71 ceiling: essentially the whole 74 was apparatus. About
+      // twenty of the shared phrases were the two posts describing the SAME NAR survey in the
+      // same words ("survey mailed to 167,750 recent buyers, 5,390 responses"), which is a
+      // citation basis line and is supposed to be identical; rewording one of them to pass a
+      // metric would be falsifying a source description. Another fifteen were the film
+      // caption's standing disclosure that the narration is a licensed clone of the owner's
+      // voice, which is a disclosure and belongs in every film. Those phrases escaped the
+      // chrome filter only because it requires a phrase in ALL FIVE posts and these are in
+      // two and four respectively.
+      //
+      // What is left after the change is prose the author chose, which is what the owner
+      // actually objected to: "not to repeat same things and details".
       shingles: (() => {
-        const paraText = paras.join(" ").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
+        const bodyParas = [...art.querySelectorAll("p")]
+          .filter((p) => !p.closest("section"))
+          .map((p) => p.textContent.trim())
+          .filter((t) => t.split(/\s+/).length >= 25);
+        const paraText = bodyParas.join(" ").toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
         const w = paraText.trim().split(" ");
         const out = new Set();
         for (let i = 0; i + 7 <= w.length; i++) out.add(w.slice(i, i + 7).join(" "));

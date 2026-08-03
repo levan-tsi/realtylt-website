@@ -85,7 +85,9 @@ Three failure modes, all avoidable, all common:
 
 If you would rather see one working than read about it, ours is live on [the RealtyLT AI page](/ai#chat), and you can talk to it right now. Ask it something hard. It will either answer, or tell you it cannot and offer to book a call, and both of those are the correct behaviour.
 
-The full breakdown of how it is built, what it connects to, and what it does with the leads it captures is on the [AI chat assistant page](/services/ai-chat-assistant).
+Then go and do the same thing to your own site, because that is the free half of this and nobody needs to sell you anything for it. Open it on your phone, at night, in bed, the way the person comparing your Beacon colonial against two others did. Ask it the question they asked. Count how many taps it takes to get an answer, and notice whether you ever get one or just get asked for your email address.
+
+The build itself, what it connects to, and what it does with the leads it captures is written out on the [AI chat assistant page](/services/ai-chat-assistant).
 
 [[scene:funnel]]`;
 
@@ -137,7 +139,7 @@ Stripped of the marketing, it is a voice on the phone that can hold a real conve
 
 [[scene:four-moves]]
 
-The fourth one is the one people underrate. An appointment that arrives with a transcript attached is a completely different object from an appointment that arrives as a name and a time. You walk in already knowing what they asked and what they were worried about.
+The fourth one is the one people underrate. When you ring back, you are not opening with "how can I help". You already know they got as far as the taxes, that they asked twice about the septic, and that they used the word soon. On the phone that is worth more than it is anywhere else, because you can hear how somebody answers a question they have already answered once, and whether the second version is the same.
 
 ## The same agent, pointed the other way
 
@@ -173,9 +175,9 @@ Two related things get forgotten, and between them they cost more calls than any
 
 This is the part vendors skip, so here it is plainly.
 
-It does not close. It does not hear the thing underneath the question, it does not know that a seller's timeline is a story, and it has no read on what is really going on in a divorce sale. Those are the reasons you have a job.
+It does not close, and on the phone the reason is specific. Half of what a good agent hears in a first call is not in the words: the pause before an answer, the second voice in the background saying something you were not meant to catch, the cheerfulness that is covering something. A transcript records none of that, and a model reading the transcript cannot miss it, because it was never there.
 
-It does not know what it cannot verify. Asked whether a seller would take a contingency, the honest answer is that nobody knows until somebody asks, and the agent should say so and put a call on your calendar. An AI that invents an answer to sound competent is worse than no AI at all, because you will hear about the invention from a furious client.
+It does not know what it cannot verify. Asked whether the boiler was replaced or whether the seller would take less, the correct behaviour is to say plainly that it does not know and put a call on your calendar. A voice that invents an answer to sound competent is worse than no answer at all, and worse on the phone than anywhere else, because the caller has no way to check it and every reason to believe a confident voice.
 
 It does not pretend to be a person. Ours introduces itself as an assistant. In practice nobody minds. What people mind is nobody picking up.
 
@@ -229,9 +231,11 @@ The same rules that govern your own outbound calling apply: you need consent to 
 
 ## What to do about it
 
-If you would rather see one than read about one, the whole system is laid out on [the RealtyLT AI page](/ai#voice), and the [AI voice agents page](/services/ai-voice-agents) has the full breakdown of what it connects to and what it does with the calls it takes.
+There is a test for this that takes ninety seconds and costs nothing, and it is worth doing before you spend a dollar with anybody, us included. Borrow a phone your office does not have saved, ring your own number on a Sunday evening, and sit through the whole thing the way a stranger would. Count the rings. Listen to what your voicemail actually says, all the way to the beep. Then decide whether that is the first thing you want somebody standing outside your listing to hear.
 
-The sibling problem is worth reading too. The same argument about being first, on the [website chat side](/blog/ai-chat-assistant-real-estate-website), where the buyer messaging you at 11:40pm never picks up the phone at all.
+Most people who do that come away having learned something they did not want to know, which is the point. You can hear the alternative on [the RealtyLT AI page](/ai#voice), and what it connects to and what it does with the calls it takes is on the [AI voice agents page](/services/ai-voice-agents).
+
+The same argument at the other end of the day is on the [website chat side](/blog/ai-chat-assistant-real-estate-website), where the buyer messaging you at 11:40pm never picks up the phone at all.
 
 [[scene:funnel]]`;
 
@@ -281,9 +285,9 @@ The last one is the part that decides whether any of it was worth doing. An appo
 
 ## The part nobody selling you this will mention
 
-Reactivation is the one AI use case in real estate where the technology is the easy half and the rules are the hard half. Nobody selling you a done-for-you database campaign opens with this section, which is a decent reason to read it here.
+Reactivation is the one AI use case in real estate where the technology is the easy half and the rules are the hard half. Everything above this line is a build problem, and it is a solved one. Everything below it is the reason a large share of these campaigns should never have been sent at all.
 
-None of what follows is legal advice, I am not a lawyer, and the rules move. The point is to know that the questions exist, because the person selling you the campaign has no reason to raise them.
+I am not a lawyer and none of what follows is legal advice. Read it instead as the list of things you are entitled to ask about before anybody sends a message with your name on it, ourselves included. There are three of them, they are all answerable from your own records in an afternoon, and a vendor who cannot answer all three has told you something important.
 
 **There is a clock on your old lead, and it is shorter than you think.** Federal rules exempt calls to somebody you have an established business relationship with from the national do-not-call registry. That exemption is defined with dates in it. Under [47 CFR 64.1200(f)(5)](https://www.law.cornell.edu/cfr/text/47/64.1200), the relationship runs from "the subscriber's purchase or transaction with the entity within the eighteen (18) months immediately preceding the date of the telephone call or on the basis of the subscriber's inquiry or application regarding products or services offered by the entity within the three months immediately preceding the date of the call". A closed deal buys you eighteen months. A form fill buys you three. Your 2023 lead ran out of both a long time ago, and if that number is on the registry, warmth is not a defense.
 
@@ -357,9 +361,11 @@ They get recorded as a no, with whatever reason they gave, and they are not cont
 
 ## What to do about it
 
-If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#reactivation), and the [database reactivation page](/services/database-reactivation) has the full breakdown of what it connects to and what it does with what it finds.
+Start with one record instead of with a campaign, and do it before you talk to a vendor. Open your CRM, sort by oldest, and find your own version of the person who asked what their house was worth in the spring of 2023. Then look at what you are actually holding: is there a date on the record, is there a source, and is there anything anywhere that says how that person agreed you could contact them. Four minutes on one record will tell you which of the two projects in this article you are really looking at, a campaign or a cleanup, and no consultant can tell you that faster than your own database can.
 
-The two sibling problems are worth reading as well, because they are the same argument at different moments. The [missed call at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate) is this one before the lead ever goes cold, and the [buyer messaging your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) is the moment the record in your CRM gets created in the first place.
+The system is laid out on [the RealtyLT AI page](/ai#reactivation), and the [database reactivation page](/services/database-reactivation) sets out what it reads, what it sends, and what happens to a reply once somebody sends one.
+
+Two earlier moments in the same story are written out elsewhere: [the missed call at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate) is this problem before the lead ever goes cold, and [the buyer messaging your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) is where the record you just opened came from in the first place.
 
 [[scene:funnel]]`;
 
@@ -477,9 +483,13 @@ Scoring your own time is not the risk. The risk is scoring on anything that stan
 
 ## What to do about it
 
-If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#qualify), and the [lead qualification page](/services/lead-qualification) has the full breakdown of what it reads and where it routes.
+Measure your own baseline first, because you cannot tell whether scoring helped if you never wrote down where you started. Take the last ten leads in your CRM and, against each name, answer the three questions from further up this page: are they pre-approved, do they have a house to sell, and when do they have to move. Do not go hunting. Answer only from what is already on the record.
 
-It is worth reading the two pieces either side of this one, because qualification only has something to work with if a conversation happened at all. The [assistant answering your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) and the [voice agent taking the 9:42 call](/blog/ai-voice-agent-missed-calls-real-estate) are where the sentences this reads come from, and [the leads already sitting in your CRM](/blog/database-reactivation-old-real-estate-leads) are the ones nobody has scored at all.
+The number that matters is how many of the ten you could answer at all. In most pipelines it is one or two, and the useful part is not the score. It is discovering that on eight of them you are ranking your Tuesday on a name, an email address and a timestamp, which is the same as not ranking it.
+
+There is a walkthrough of the whole thing on [the RealtyLT AI page](/ai#qualify), and what it reads and where it routes is on the [lead qualification page](/services/lead-qualification).
+
+None of this has anything to score unless a conversation happened first. [The 11:40pm website conversation](/blog/ai-chat-assistant-real-estate-website) and [the 9:42 Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate) are where the sentences come from, and [the leads already sitting in your CRM](/blog/database-reactivation-old-real-estate-leads) are the ones nobody has scored at all.
 
 [[scene:funnel]]`;
 
@@ -618,9 +628,11 @@ Often more, not less. A one-person business has no one to absorb the busywork, s
 
 ## What to do about it
 
-If you would rather see the system than read about it, it is laid out on [the RealtyLT AI page](/ai#workflow), and the [workflow automation page](/services/workflow-automation) has the full breakdown of what gets wired to what. If you want somebody to sit through the hour with the piece of paper with you, that is exactly what the [AI audit](/services/ai-audit) is: we follow one real job, rank what each fix is worth, and build the first one.
+Go and get the highlighter. One deal, from the first inquiry to the closing table, every step written down in the order it really happens, and a mark against anything where a person types in something another system already knows. Nobody has to approve it, it costs an hour, and at the end of it you are holding the only document that makes any of the rest of this decidable. Until that page exists, every quote you are given is a guess about a business the person quoting has not seen.
 
-The three pieces either side of this one are the individual chains, written out at length. The [assistant answering your website at 11:40pm](/blog/ai-chat-assistant-real-estate-website) and the [voice agent taking the 9:42 call](/blog/ai-voice-agent-missed-calls-real-estate) are two of the hops in the diagram above, and [scoring the lead once it arrives](/blog/ai-lead-qualification-real-estate-scoring) is a third.
+You can see the wiring on [the RealtyLT AI page](/ai#workflow), and what gets connected to what is on the [workflow automation page](/services/workflow-automation). If you would rather somebody sat through that hour with you, that is exactly what the [AI audit](/services/ai-audit) is: we follow one real job, rank what each fix is worth, and build the first one.
+
+Three of the hops are written out at length on their own: [the 11:40pm website conversation](/blog/ai-chat-assistant-real-estate-website), [the 9:42 Sunday phone call](/blog/ai-voice-agent-missed-calls-real-estate), and [scoring the lead once it arrives](/blog/ai-lead-qualification-real-estate-scoring).
 
 The tax is not going to itemise itself.
 
