@@ -1,5 +1,94 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 19 — DONE 2026-08-03. Reasoning in docs/parity/DESIGN-ROUND19.md.
+##
+## ── HIS TWO DECISIONS, TAKEN AT THE START OF THE ROUND ──────────────────────────────
+## 1. PHOTO BACKFILL: "yes, in chunks". RUNNING, bounded at 2,000 listings, and CLEAN:
+##    631 listings / 13,280 photos through two slices, fetched == downloaded on both,
+##    ZERO failures and ZERO "Request limit reached". Resumable via
+##    scripts/.photo-backfill-watermark.local. TO CONTINUE, and it is worth continuing:
+##      node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
+##    ABORT if fetched > downloaded or any rate-limit line appears. Coverage when the round
+##    started: 27,643 active rows, 2,039 with zero photos, only 12,636 at 5+.
+## 2. THE HERO: "none of them, keep looking". NOTHING SHIPPED — app/page.tsx still plays the
+##    Vimeo clip, and the four candidates are still on branch `hero-lab` at /lab/hero. He has
+##    not seen a hero he wants yet, so this is still open and still needs a NEW direction
+##    rather than a re-pitch of A/B/C/D.
+##
+## ── WHAT SHIPPED (5 commits, pushed, on main) ───────────────────────────────────────
+## · THE BOX VOCABULARY — his "general boxes and all". Measured first: 26 distinct corner
+##   radii against a 5-step scale, 13 hardcoded hairline greys against the 2 declared tokens,
+##   16 arbitrary shadows in TWO hues (pure black beside blue-black = two suns on one page).
+##   Now: shadow-raise / lift / float, one hue (16 24 32), plus shadow-panel (dark surfaces)
+##   and shadow-edge (top highlight, no drop). All 13 greys onto line / line-strong.
+##   #20262e was never a hairline, it is the graphite a device is MADE of -> --color-graphite.
+## · THE DEVICES, DRAWN ONCE. LaptopFrame was verbatim in buying AND selling with the browser
+##   chrome copy-pasted beside it, and the phone had been drawn THREE times (30/9/22, 20/6/14,
+##   34/10/24). Every one of those is ~13% of the device width, because that is what a phone
+##   looks like — so components/ui/DeviceMock.tsx DERIVES the geometry from the width and the
+##   drift cannot return. All three pages share one drawing, re-photographed and still right.
+## · THE GATE, and it is the point: components/design-system.test.ts fails on a new hardcoded
+##   hairline, an ad-hoc shadow or an off-scale radius. globals.css ALREADY carried a comment
+##   about greys having drifted once into "seventeen near-identical greys" — so a previous
+##   round fixed exactly this and it came back, because tokens with no enforcement are a style
+##   guide and a style guide loses to whoever is typing. Two escape hatches, both needing a
+##   written reason: @design-artwork (a file that draws a real object) and @design-allow (one
+##   line). Writing it FIRST paid twice: it flagged rounded-xl as illegal (`-x` parsed as a
+##   direction) and flagged three English sentences containing the word "rounded".
+## · CONSENT TO CALL OR TEXT. Researched, not recalled: the FCC one-to-one rule is NOT in
+##   force (vacated, IMC v. FCC, Jan 2025; the FCC then deleted the language), so the standard
+##   is the older prior express written consent, 47 CFR 64.1200(f)(9). The sharper edge is NEW
+##   YORK: GBL 399-z(5)(a) makes an UNSOLICITED telemarketing call unlawful in an area under a
+##   declared state of emergency, NY runs rolling ones, NYSAR keeps telling members cold
+##   calling is therefore still prohibited, up to $20,000 PER CALL. Consent is what makes a
+##   call solicited. Stores the PROOF — exact wording, version, seller, timestamp, page, IP,
+##   number — all stamped server-side. A DECLINE is recorded too (absent = no phone; granted
+##   false = asked and said no). Contract for the CRM: docs/parity/LEAD-CONSENT-CONTRACT.md.
+##   Handoff correction: TrackedButton does NOT collect a phone, it is a tel:/booking anchor.
+##   The bug it nearly shipped with: both listing sheets build their POST body from named
+##   fields, so consentToContact was being DROPPED. Box ticked, lead sent, nothing recorded.
+## · HOME VALUE BLOCK — the second thing a visitor sees, and it was the weakest. The form now
+##   sits in a panel instead of being naked inputs on white; his third paragraph ("Enter your
+##   information on this page") moved onto the form it instructs, verbatim; lg:items-center
+##   killed ~545px of dead white. One eyebrow, "For sellers", because it carries real
+##   information. Deliberately NOT added to the other three headings, where it would decorate.
+## · MAP PRICE CHIPS were 21px against the 24px tap floor -> 50x25. Not free, and measured
+##   both ways: 30 of 50 chips overlapped a neighbour before, 32 after.
+##
+## ── GATES ───────────────────────────────────────────────────────────────────────────
+## tsc clean · npm test 670 passing (was 635) · final sweep 10 pages x 1440/390/320 = 30
+## checks: horizontal overflow 0, images without alt 0, nameless controls 0, stuck reveals 0,
+## page errors 0, tap targets under 24px 0.
+##
+## ── THREE PROBES THAT LIED THIS ROUND. READ THIS BEFORE DEBUGGING ANYTHING ───────────
+## 1. A fullPage screenshot NEVER scroll-triggers an IntersectionObserver, so every `.reveal`
+##    below the fold photographs at opacity 0. The home page appeared to have a 710px hole in
+##    it and the stat counters read 0 / 0h / 0+ / 0. All four were the probe. Walk the page a
+##    viewport at a time first, then shoot.
+## 2. An element that is `display:none` can never intersect, so it can never reveal. The one
+##    "stuck reveal" on /financing at 390 was a `hidden lg:block` desktop-only block.
+## 3. The naive tap-target rule reported 30 failures and EVERY ONE was a correct pattern: a
+##    skip link is meant to be clipped until focused, a honeypot is meant to be 1px, a
+##    checkbox's target is the <label> around it, and "Keyboard shortcuts"/"Terms" are
+##    Google's own map chrome. Measure the thing a finger hits.
+## Also: "Invalid or unexpected token" and a 500 on /buying were BOTH the dev server, not the
+## code — production checked clean on all four pages (scripts/_scratch-r19-prod.mjs).
+##
+## ── NEXT ROUND ──────────────────────────────────────────────────────────────────────
+## 1. FINISH THE BACKFILL (command above). Biggest visible quality gain available.
+## 2. THE HERO still has no answer. He has rejected four; the next attempt should start from
+##    what he actually reacts to rather than another variant set. Ask him what he likes on
+##    SOMEONE ELSE'S site before building a fifth.
+## 3. THE BOX SYSTEM IS DONE AT THE TOKEN LEVEL, NOT THE COMPOSITION LEVEL. The radii, lines
+##    and shadows are now one system; what has NOT been reviewed is padding and internal
+##    rhythm inside those boxes. That is the honest remainder of "general boxes and all".
+## 4. Section cadence: every home-page section is still centred-h2-then-grid-then-outline-pill.
+##    It reads as one repeated shape. Worth one deliberate pass.
+## 5. Carried and unchanged: published-CMA enumeration + 57 raw MediaURLs (both need HIS
+##    decision and a paired CRM change), the retired coming-soon artwork, and the chat rebuild
+##    which belongs to the CRM session (contract first — handoff §3).
+##
+##
 ## ═══ ROUND 19 BRIEF — set 2026-08-02, end of round 18b. Single agent, no subagents.
 ##
 ## >>> READ docs/parity/HANDOFF-ROUND-19.md FIRST. It is the running order for this round and
