@@ -1,6 +1,108 @@
 # FLAGSHIP BLOG — handoff brief (single agent, ~700k, build it scene by scene)
 
-## STATUS 2026-08-03 (session 14): ALL FIVE MEET THE STANDARD, measured on production. Resume HERE.
+## STATUS 2026-08-03 (session 15): the graphics round, and the retracted number that was still on the page. Resume HERE.
+
+**The most important thing in this round was not a graphic.** The chat flagship spends its second
+section proving that "78% of leads close with whoever responds first" has no published report, no
+stated sample and no methodology, and ends "So this article does not use it." About nine hundred
+pixels below that, the `response-gap` scene printed the figure in twenty point type on full-bleed
+black. It was live on production. Two earlier audits missed it and the reason is structural:
+`scripts/_scratch-claims.mjs` reads the prose and the scene PAYLOADS, and a bespoke component's copy
+is in neither, because it is a string literal in a `.tsx` file. **The chat post is the only post in
+the cohort with bespoke components, which is exactly why it is the only one where a dead claim could
+keep talking.** `lib/blog/zombie-claims.test.ts` now reads every file where visible scene copy can
+live and guards all three figures this repo has killed. Proved red before it was trusted green.
+
+The same class of defect is still live on the SERVICES surface and is worse there. See
+`docs/blog-flagship/SERVICES-CRITIQUE.md`: `content/services/ai-chat-assistant.ts` leads with the
+same 78% three times, and its own `relatedPosts` links to the article that debunks it.
+
+### What changed, and what was measured to decide it
+
+| finding, measured on the rendered page | before | after |
+|---|---|---|
+| chat's longest run with no scene of any kind | 1,584 words | 969 + 575 |
+| longest unbroken LIGHT surface, reactivation | 5,732px (25%) | 3,215px (14%) |
+| longest unbroken LIGHT surface, qualification | 6,973px (29%) | 4,031px (17%) |
+| cited data graphics, voice | 2 | 3 |
+| flagships sharing a photograph | chat + reactivation | none |
+| statement scenes lifting a body sentence | 1 of 10 | 0 |
+| blog ToC sheets opening under the chat launcher | 2 | 0 |
+
+**Four scratch probes are worth keeping and are how each of those was found.** They are gitignored,
+so they live on this machine only; re-create them if they are gone.
+
+- `_scratch-gfxmap.mjs` — classifies every scene by what is INSIDE it (photo / chart / film /
+  instrument / cards / text) rather than by its kind name, then prints the longest runs of prose
+  with no scene at all. This is what showed chat was a 1,584-word outlier against a 550 cohort.
+- `_scratch-bands.mjs` — the light/dark rhythm as RENDERED. The declared rule ("no two adjacent
+  bands share a background") is satisfied by all five posts and cannot see a quarter of a page in
+  one tone. **Read the comment in it about transparent backgrounds**: the first version parsed
+  `rgba(0,0,0,0)` as a colour and scored every prose band as DARK, which is the exact inversion of
+  what it exists to find, and it reported a confident 1,256px.
+- `_scratch-strip.mjs` / `_scratch-mstrip.mjs` — the whole 24,000px article as one scaled strip.
+  "Does this get boring" is a question about the SHAPE of the page and the shape is only visible
+  all at once. The 78% was found by reading a mobile strip.
+- `_scratch-look.mjs` — shoots one scene by aria-label at 1440 and 390/DPR3. **It asserts that no
+  `.reveal` is still at opacity 0 before it shoots**, because a tight `scrollTo` loop outruns the
+  IntersectionObserver and the screenshot comes back a black rectangle that looks exactly like a
+  product bug. That cost twenty minutes before the assertion existed.
+
+### The three judgements, so they are not re-litigated
+
+1. **house-01 replaced the Poughkeepsie bridge on the chat post.** Two flagships were running the
+   same photograph and `siblingOverlap` reads text, so it could never see it. Every remaining
+   licensed image was shot at the plate's real 21:9 crop on the ink band before choosing
+   (`_scratch-plateswatch.mjs`). The bridge stays on reactivation, where a crossing that sat unused
+   for thirty five years IS the argument.
+2. **The voice post got a third cited graphic and the other four did not.** Its central claim
+   ("latency is not a specification on a phone agent, it is the product") had no number under it.
+   Stivers and ten co-authors, PNAS 2009, ten languages on five continents: mean gap between a
+   question ending and an answer starting of 208 ms. **The axis is pinned to one second on purpose**
+   — left to scale itself the slowest bar fills the track and reads as the maximum a person could
+   wait, which is the opposite of the finding. Pinned, the empty right half of every track is the
+   point. Not one number on it is ours.
+3. **Chat did NOT get a second photograph, deliberately.** The obvious move was a plate at the
+   fine-print boundary and every remaining licensed image was shot at the real crop to find one.
+   None of them carries an argument. That section is a legal briefing with no held moment in it,
+   and the Plate primitive's own rule is that a photograph which is decoration does not deserve a
+   band. It got an action grid instead, which is what every sibling already does after a rules
+   section and what this post alone did not.
+
+### A thing I believed about the ruler for two hours, and it was false
+
+I spent real time designing around "`proseWords` counts words OUTSIDE a scene, so staging a
+comparison as a grid is penalised and would push chat under the floor". **That is wrong.** Read
+`scripts/flagship-standard.mjs` line 83: `paras` is every `<p>` inside `#article-root` with 25 or
+more words, scenes included. Moving prose into a grid does not cost a single word, and chat rose
+from 3,469 to 3,597 in the round that moved 66 words of prose INTO one.
+
+The metric that excludes scenes is `siblingOverlap`, not `proseWords`, and the two sit forty lines
+apart in the same file. I caught it because the number moved the opposite way to my prediction and
+I went and read the script instead of explaining the number away.
+
+Two things follow.
+
+1. **The label is imprecise, not the metric.** "words of real prose" actually measures total
+   substantive text, which is arguably the right thing to measure. A grid body, a chart's `note`
+   and a plate caption all count, so a post can raise it with longer captions. Worth knowing before
+   trusting a rise.
+2. **Chat's "two groups" section still has no graphic, and now for one reason instead of two.** The
+   comparison in "What makes an answer true" is the one place in the cohort where a side-by-side
+   would beat paragraphs on scannability. It was left alone because the prose builds sympathy for
+   the weak option ("a better search box is genuinely worth having"), then turns on one sentence
+   ("It also cannot tell you whether 14 Willow Street is still available"), then gives the strong
+   option. A grid shows both at once and destroys that order. **If a future session disagrees, the
+   metric is not an argument either way. Argue it on the writing.**
+
+**Also NOT done: the ratchet.** `available` currently shows proseWords 3,469 and siblingOverlap 2.
+Ratcheting first is the discipline this file records, and this round did not, because the scope was
+graphics and reading experience rather than the numeric floor. Ratcheting proseWords to 3,469 puts
+workflow (3,334) below the bar and the honest way to close that is writing, not padding.
+
+---
+
+## STATUS 2026-08-03 (session 14): ALL FIVE MEET THE STANDARD, measured on production.
 
 `node scripts/flagship-standard.mjs` prints **all 5 posts meet the standard**, and
 `node scripts/score-flagship.mjs <slug>` prints **Mechanically ready** for all five, including
