@@ -562,6 +562,18 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .prose-custom > section:first-child > *:first-child {
   margin-top: 0;
 }
+/* A prose heading that FOLLOWS something needs room above it, and on the flagship path it had
+   none: measured 2026-08-02, every H2 after a paragraph had 0px above and 24px below, so the
+   heading sat glued to the paragraph it ended and floated above the one it introduced, which is
+   backwards. It reads correctly on the standard template only because a heading there opens its
+   own <section> and picks the space up from `section + section` above.
+   The flagship layout flattens a prose band into this container, so there is no section boundary
+   to carry it. Same 3.25rem, so the two paths now have one rhythm. Scoped to a DIRECT child, so
+   the sectioned path is untouched, and to `* +` so a heading that opens a band after a
+   full-bleed scene is not pushed away from it. */
+.prose-custom > * + h2.prose-h {
+  margin-top: 3.25rem;
+}
 /* Lead paragraph — the article's opening line reads a size up, in a darker ink. */
 .prose-custom > section:first-child > p:first-child {
   font-size: 1.25rem;
