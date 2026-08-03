@@ -443,6 +443,34 @@ The third one is the one worth writing on the wall. Qualification is allowed to 
 
 The practical protection is boring and it works: every score has to point at a sentence somebody actually wrote. If you cannot open a lead and see the words that produced the number, you cannot explain it to a client, you cannot correct it when it is wrong, and you certainly cannot defend it to anybody else.
 
+## Checking the inputs is not the whole job
+
+Traceable inputs protect you from the obvious failure, which is a system reading something it should never have been shown. They do not protect you from the quiet one, where every input is innocent and the output still lands unevenly.
+
+The clearest official statement of that problem is about a different technology, and it is worth reading anyway. In April 2024 the Office of Fair Housing and Equal Opportunity published [guidance on how the Fair Housing Act applies to housing advertising delivered through digital platforms](https://archives.hud.gov/news/2024/FHEO_Guidance_on_Advertising_through_Digital_Platforms.pdf), and specifically to the case where an algorithm rather than a person decides who gets shown what. Two sentences in it should stop anybody who is about to rank leads with software.
+
+The first describes how the harm happens. Discriminatory delivery, HUD writes, "can happen without the advertiser's direction or knowledge, and can even frustrate an advertiser's intention that an ad be distributed more broadly". Nobody chose it, and somebody's stated intention was overridden by the machinery underneath it.
+
+The second is a list of what that costs, and the first item is the one that maps onto a lead score. Among the ways ad targeting risks violating the Act, HUD names "denying consumers information about housing opportunities".
+
+Now read those beside a scoring model. It is also optimising, also on data produced by a market with its own history sitting inside it, and nobody has to type a protected characteristic anywhere for the output to correlate with one.
+
+Be careful how far that carries, because it is guidance about advertising. It says nothing about CRMs, nothing about lead scoring, and nothing about a real estate agent ordering their own call list, and it is not authority for anything in this article. What transfers is the mechanism, which is the same mechanism, and one recommendation, which costs nothing: "Monitor outcomes of advertising campaigns for housing-related ads, to the extent possible, to identify and mitigate discriminatory outcomes."
+
+Outcomes. Not inputs. In practice that is a report almost nobody runs: take the leads your system scored low last quarter and check what they actually received. Did they get answers, did they get listings, could they reach a person. If the low-scored group got less of your TIME, the ranking did its job. If they got less of your SERVICE, it stopped being a ranking, and no audit of the inputs would ever have told you.
+
+## What it costs, and what the number really depends on
+
+There is no price on this page, and for scoring there are three things that move it. Only one of them is software.
+
+The first is whether you have any sentences at all. This reads conversations, so a business whose leads arrive as a name, an email address and the words buyer inquiry has handed it nothing to read. That business is not buying a scoring project. It is buying whatever produces a conversation first, and a vendor who sells it scoring instead has sold it a sort order on an empty column. This is far and away the most common reason an estimate turns out to be wrong.
+
+The second is what your CRM will let anybody write back to it. Putting a number and its reason onto a contact record is a field update in some systems, an integration project in others, and in one or two well-known ones it is a support ticket and a fortnight. Settle that before anybody quotes you, because it decides whether this is days or weeks and it has nothing to do with the model.
+
+The third is the one people leave out of the budget entirely: somebody has to check whether the scores were any good. Ranking drifts, quietly, and nothing in the system will raise its hand. Once a quarter, an hour, reading the transcripts under the ten highest and the ten lowest and asking whether the order matched what really happened. Pay for that hour or you will spend a year with a number everybody trusts and nobody has tested.
+
+On timing, the honest shape is this. Where the conversations already exist, scoring is usually live in days, because the difficult parts are reading and routing rather than arithmetic. Where they do not, the first project is the conversation, and that is a longer answer than anybody wants at the point they are asking about scoring.
+
 ## What it does not do, and should not pretend to
 
 It is not a prediction about a person. It is a guess about a date, made from limited evidence, and it will be wrong regularly. Somebody who says they are twelve months out will call you in March because their landlord sold the building. That is not a scoring failure. It is what happens when the input is a plan and plans change.

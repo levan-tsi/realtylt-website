@@ -188,31 +188,53 @@ for (const [k, kind] of METRICS) {
 const prev = existsSync(STANDARD_PATH) ? JSON.parse(readFileSync(STANDARD_PATH, "utf8")) : { metrics: {} };
 // Monotonic in the direction that means BETTER. `number` bars only rise; a `max` bar (overlap,
 // where less is better) only tightens. Either way a weak round cannot relax the standard.
-const standard = {};
+const raised = {};
 for (const [k, kind] of METRICS) {
   const before = prev.metrics?.[k];
-  if (kind === "boolean") standard[k] = Boolean(before) || proven[k];
-  else if (kind === "max") standard[k] = Math.min(Number(before ?? Infinity), proven[k]);
-  else standard[k] = Math.max(Number(before ?? 0), proven[k]);
+  if (kind === "boolean") raised[k] = Boolean(before) || proven[k];
+  else if (kind === "max") raised[k] = Math.min(Number(before ?? Infinity), proven[k]);
+  else raised[k] = Math.max(Number(before ?? 0), proven[k]);
 }
 
-console.log("\nSTANDARD  (numbers = cohort median, booleans = any post proves it, never lowered)");
+// WHAT THE CHECK MEASURES AGAINST, and why it is the RECORDED bar rather than the live median.
+//
+// Both were the live median until 2026-08-02, and that made a green run arithmetically
+// impossible. Sort five posts a<=b<=c<=d<=e; the median is c; "every post >= the median" requires
+// a >= c, which requires a == b == c. So the two weakest posts were reported SHORT forever, on
+// every numeric metric, however good they got. The bar moved every time anybody improved
+// anything, and the round it moved fastest was the round the most work had been done.
+//
+// The fix keeps the ratchet and drops the moving target: `--ratchet` is the moment the bar rises
+// to what the cohort has proved, and `check` measures against that recorded bar. Nothing is
+// relaxed, because the recorded value is still monotonic and still derived from the cohort's own
+// median. It just holds still long enough to be reached.
+const standard = {};
+for (const [k] of METRICS) standard[k] = prev.metrics?.[k] ?? raised[k];
+
+const show = (o) => METRICS.map(([k, kind]) =>
+  (kind === "boolean" ? (o[k] ? "yes" : "—") : String(o[k])).padStart(14)).join("");
+console.log("\nSTANDARD  (the recorded bar. --ratchet raises it to what the cohort proves)");
 console.log("".padEnd(22) + METRICS.map(([k]) => k.slice(0, 13).padStart(14)).join(""));
-console.log("required".padEnd(22) + METRICS.map(([k, kind]) =>
-  (kind === "boolean" ? (standard[k] ? "yes" : "—") : String(standard[k])).padStart(14)).join(""));
+console.log("required".padEnd(22) + show(standard));
+const pending = METRICS.filter(([k]) => String(raised[k]) !== String(standard[k]));
+if (pending.length && MODE !== "ratchet") {
+  console.log("available".padEnd(22) + show(raised) + "   <- --ratchet");
+}
 
 if (MODE === "ratchet") {
-  const raised = METRICS.filter(([k]) => String(prev.metrics?.[k]) !== String(standard[k]));
+  // `raised`, not `standard`: standard is the bar as recorded, and ratcheting is precisely the
+  // act of replacing it with what the cohort has since proved.
+  const moved = METRICS.filter(([k]) => String(prev.metrics?.[k]) !== String(raised[k]));
   writeFileSync(STANDARD_PATH, JSON.stringify({
     note: "Derived by scripts/flagship-standard.mjs --ratchet. Monotonic: never lowered by hand.",
     // LOCAL date, not the ISO one: this machine is UTC-4, so after 20:00 `toISOString()` stamps
     // tomorrow. A standard that claims to have been raised on a day that has not happened yet is
     // a small lie in a file whose whole job is to be trusted.
     updated: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10),
-    metrics: standard,
+    metrics: raised,
   }, null, 2) + "\n");
-  console.log(`\nratcheted ${raised.length} metric(s) -> ${STANDARD_PATH}`);
-  raised.forEach(([k]) => console.log(`  ${k}: ${prev.metrics?.[k] ?? "—"} -> ${standard[k]}`));
+  console.log(`\nratcheted ${moved.length} metric(s) -> ${STANDARD_PATH}`);
+  moved.forEach(([k]) => console.log(`  ${k}: ${prev.metrics?.[k] ?? "—"} -> ${raised[k]}`));
   process.exit(0);
 }
 if (MODE === "measure") process.exit(0);
