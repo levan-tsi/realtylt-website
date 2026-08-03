@@ -1,32 +1,119 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 20 BRIEF — set 2026-08-03, end of round 19.
-## >>> READ docs/parity/HANDOFF-ROUND-20.md FIRST. It is the running order and carries the
-## >>> reasoning. Short version:
-##   1. FINISH THE PHOTO BACKFILL. Half done, 13,280 photos, ZERO failures, zero rate limits.
-##      node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
-##   2. STRESS-TEST ROUND 19 (handoff §4). He asked for this by name. The consent record and
-##      the new global dropdown portal are the two that matter most. Start with the ONE path
-##      round 19 could not prove: sign in for real and generate a CMA end to end.
-##   3. THE HOME-VALUE ADDRESS BOX. He was RIGHT that Google is already wired: measured on our
-##      own key, Geocoding AND Street View are ENABLED and already used by the listing gallery,
-##      and geocoding resolves his exact "150 hooker ave poughkeepsie ny" to a full address with
-##      ZIP, with a real Street View panorama. ONLY Places is REQUEST_DENIED. So option (a),
-##      which the first draft of the handoff missed, costs NOTHING new: geocode on submit and
-##      show his live site's "We've found your home!" card with the Street View thumbnail and
-##      normalised address. Do that first. Places API (New) adds only the type-ahead dropdown
-##      and is the only part that bills — his call. I drove his
-##      live site: the "google fill" he means is on /homevalue, NOT the search box, and it is
-##      Google Places over every address on earth. 150 Hooker Ave genuinely is not in our
-##      inventory, so no listing search can ever find it. Handoff §2 has his live flow captured
-##      step by step and three options with a recommendation.
-##   4. Compare ours vs live on login + the report page (handoff §5). Not done this round.
-## ── ANSWERED THIS ROUND: "does automated and recorded cover AI calls?" YES for the
-##    disclosure — an AI voice IS an artificial voice, and the rule does not require the word
-##    "AI". But that clause cannot be removed or the box stops covering the Vapi calls at all.
-##    Get ten minutes from his brokerage's compliance person before launch. Handoff §3.
+## ═══ ROUND 21 BRIEF — set 2026-08-03, end of round 20.
+## >>> READ docs/parity/HANDOFF-ROUND-21.md FIRST. It carries the reasoning. Short version:
+##   1. THE ACCOUNT WALL IS HIS DECISION AND IT BLOCKS LAUNCH. Supabase has
+##      disable_signup=true, so password sign-up AND magic link both 422 with
+##      "signup_disabled", and Google OAuth is off. All three doors are shut, so NOBODY can
+##      make an account: the home-value "See what it's worth" branch, saved-search alerts and
+##      the entire /portal dead-end for every visitor. One dashboard toggle
+##      (Authentication -> Sign In / Providers -> allow new users to sign up). NOT flipped
+##      here, because loosening an auth control is not a builder's call. Settle two things at
+##      the same time: mailer_autoconfirm is false so a confirmation email must actually
+##      arrive (realtylt.com still has no SPF/DMARC), and the Google button currently offers a
+##      provider that is disabled.
+##   2. KEEP THE PHOTO BACKFILL RUNNING. It is safe now and it is slow on purpose (~2 photos a
+##      second). node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
+##      DO NOT raise --rps to make it finish faster.
+##   3. PLACES API (New) for the home-value type-ahead — the only part that bills, and the only
+##      part not shipped. Everything around it now works on APIs already enabled and paid for.
+##   4. SQUARE FOOTAGE BLOCKS THE CMA and the home-value flow never asks for it. A visitor who
+##      came from "See what it's worth" is stopped at the generator. Design call: ask for it in
+##      the address bar, or estimate from comps and let them correct it.
+##
+## ── ANSWERED THIS ROUND ─────────────────────────────────────────────────────────────
+## "Check your work every way possible and stress-test it." Done, and it found four real
+## defects (below). The one thing round 19 could not prove — a signed-in CMA end to end — now
+## has a number against it: $410,000 for 150 Hooker Ave, range $371k-$498k, from 24 active
+## comps at a median $228/sq ft, with comps linking to real listings. It works.
 ##
 ##
+## ═══ ROUND 20 — DONE 2026-08-03. Handoff in docs/parity/HANDOFF-ROUND-21.md.
+##
+## ── FOUR REAL DEFECTS, ALL FIXED AND ALL FOUND BY ATTACKING RATHER THAN READING ─────
+## 1. THE BACKFILL WAS BEING RATE-LIMITED, and the number it printed looked like progress.
+##    The round-19 abort criterion (fetched > downloaded) fired on the first slice: 7,114
+##    fetched, 3,097 downloaded. It could not say WHY, and the two possible causes need
+##    OPPOSITE responses — expiring signed media URLs is a pacing annoyance, 429s put his MLS
+##    key at risk of the suspension that froze the inventory for seven days in round 16. So
+##    downloadPhoto now counts by status. A 20-listing probe answered it: ok:493 429:20.
+##    Rate limiting, on a run a fifth the size. WORSE: that run mirrored ZERO photos despite
+##    493 downloads, because the queue is covers-first and a listing's count is its CONTIGUOUS
+##    prefix — the throttled burst is all covers, so losing photo 0 discards everything after
+##    it. Fixed with a shared pacer (--rps, default 2), a 429 that pushes the next slot out up
+##    to 30s, and --max-429 (default 25) that ends the run. Re-verified same slice size:
+##    fetched 464, downloaded 464, mirrored 464, no 429 at all.
+## 2. TABBING OFF THE SEARCH BOX left the suggestions floating over the page. Round 19
+##    portalled the list to <body> as position:fixed, which was right, and changed what
+##    "dismiss" has to mean: only a mousedown outside and Escape closed it, and a keyboard
+##    visitor produces neither by moving on. The orphaned list covered the SEARCH button that
+##    Tab had just focused. Now closes on blur unless focus is moving into the list.
+## 3. "SIGNUPS NOT ALLOWED FOR THIS INSTANCE" was printed to visitors in a red alert.
+##    Supabase's own words, on a real estate site, describing our plumbing and offering nothing
+##    to do next. Every auth call returned error.message raw. lib/auth/error-message.ts maps
+##    what a visitor can actually hit and falls back to our line WITH the phone number.
+##    Now reads: "New accounts aren't open yet. Call or text (917) 905-7923 and we'll set one
+##    up for you."
+## 4. "WE'VE FOUND YOUR HOME. FOR UNITED STATES." Google's geocoder does not return
+##    ZERO_RESULTS for junk — with the country restricted it answers OK with a country-level
+##    result. The first build of the new confirmation card said that in bold, and would have
+##    sent "United States" to the CRM as a home to value. lib/geo/address-precision.ts now
+##    requires a street number AND a route, or a premise/subpremise type.
+##
+## ── SHIPPED: "WE'VE FOUND YOUR HOME", AT NO NEW COST ────────────────────────────────
+## He pushed back with "don't we already use it in our map with street view and everything,
+## isn't it already wired in" and he was right. Geocoding and Street View are ENABLED, billed,
+## and already used by the listing gallery; Places is the only one that is not, and Places buys
+## exactly one thing — the type-ahead while you type. So the confirmation step ships now: the
+## visitor types the address, we geocode it, show them their own roof, and hand the NORMALISED
+## address onward. "150 hooker ave poughkeepsie ny" now reaches the report link and the CRM as
+## "150 Hooker Ave, Poughkeepsie, NY 12601" with a real ZIP. Confirmation and fork share one
+## screen; live splits them only to carry an Edit link we already had.
+## Degrades to NOTHING: no key, no geocode, no Street View coverage, blocked referrer — the
+## card is exactly what it was. Verified junk / town-only / ZIP-only all refuse to claim a home.
+##
+## ── WHAT WAS PROVEN, SO ROUND 21 DOES NOT RE-PROVE IT ───────────────────────────────
+## · CONSENT: 18 new tests drive the real route over a real socket with CRM_LEAD_WEBHOOK
+##   pointed at a local capture server, so nothing reaches production. Forged at/ip/text/
+##   version/seller/source/phone are ALL overwritten; only `granted` is the client's, and only
+##   "true"/"on"/boolean read as yes. No phone = no consent record. 415/413/400/429 hold.
+##   In a browser: ALL 11 surfaces that take a phone send the field, unticked, not required,
+##   keyboard-reachable, 21:1 focus ring on dark, no overflow at 320. /connect has NO form —
+##   it is a booking embed with tel:/mailto: links, so the handoff's list of nine was
+##   over-inclusive by one.
+## · THE ADDRESS FILTER: encodeURIComponent is NOT the protection (PostgREST decodes before it
+##   parses, so %2C becomes a separator). The character strip is, and it holds. 23 tests assert
+##   clause STRUCTURE, not substrings — "status" IS allowed to survive as a value, and a test
+##   that forbade the substring would fail on a street named Church while proving nothing.
+##   Watched failing with the comma and dot removed. Active-only proven with a real case:
+##   2 Alyssa Lane renders on /search but returns no suggestion because it is Pending.
+##   Latency p95 480ms on production, inside the 2.5s timeout.
+## · THE DESIGN GATE: watched failing on a planted hex border, ad-hoc shadow, Tailwind
+##   shadow-md and rounded-[7px]. Both escape hatches still work, and @design-artwork correctly
+##   does NOT waive the shadow rule — a drawing is still lit by the same sun.
+## · THE DROPDOWN PORTAL: hit-tested at 1440/390/320 on both mounts (0 covered, 0 off-screen),
+##   tracks its anchor on scroll and resize to within 1px, arrows/Escape/outside-click correct,
+##   JS off still submits ?q=.
+##
+## ── GATES ───────────────────────────────────────────────────────────────────────────
+## tsc clean. Tests 670 -> 774 (+58 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,
+## 17 auth errors, 12 address-precision; the rest arrived from the session sharing this repo).
+## Never went below baseline. 6 commits, pushed to main.
+##
+## ── TRAPS THAT COST TIME, so the next round does not pay twice ──────────────────────
+## · Next dev COMPILES A ROUTE ON FIRST REQUEST — the first measurement at each mount timed out
+##   and the two after it passed. That is a compile, not a defect. Warm every route first.
+## · textContent is NOT the accessible name. The consent label looked like it ran two sentences
+##   together; the real accname separates block elements. Nearly filed a defect that was not one.
+## · /connect never reaches networkidle reliably (20.6s once, hard timeout the next) because of
+##   its third-party booking embed, while the page renders correctly every time.
+## · /homes-for-sale bare is a 404 — that shape is the listing DETAIL url. The index is /search
+##   and it renders client-side.
+## · A listing page has THREE forms that take a phone: "Schedule a Tour" is an inline panel,
+##   "Make an Offer" is a dialog. Scoping both the same way makes one fail every time.
+## · git commit -- <files> -m "msg" is wrong; -- must come AFTER -m.
+##
+
 ## ═══ ROUND 19 — DONE 2026-08-03. Reasoning in docs/parity/DESIGN-ROUND19.md.
 ##
 ## ── HIS TWO DECISIONS, TAKEN AT THE START OF THE ROUND ──────────────────────────────
