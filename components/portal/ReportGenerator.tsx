@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input, Select } from "@/components/ui/Field";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
@@ -20,9 +20,14 @@ export function ReportGenerator() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  // CMA fields
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
+  // CMA fields. `?address=` arrives from the /home-value fork: somebody has already typed
+  // their address once, and asking for it a second time on the other side of a sign-in is how
+  // people give up. The town is split out of it when the string carries one.
+  const params = useSearchParams();
+  const handedOver = (params.get("address") ?? "").trim();
+  const handedParts = handedOver.split(",").map((s) => s.trim()).filter(Boolean);
+  const [address, setAddress] = useState(handedParts[0] ?? "");
+  const [city, setCity] = useState(handedParts.length > 1 ? handedParts[1] : "");
   const [county, setCounty] = useState<CountySlug>("dutchess");
   const [propertyType, setPropertyType] = useState<PropertyType>("Residential");
   const [beds, setBeds] = useState("3");

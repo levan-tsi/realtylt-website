@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { SERVED_AREAS } from "@/lib/site";
+import { listingPath } from "@/lib/idx/listing-url";
 
 /** Location autocomplete for the hero + search inputs — live-site parity (its quick-search
  * suggests areas as you type). Suggestions come from OUR replicated inventory: county names
@@ -12,7 +13,7 @@ interface Suggestion {
   label: string;
   /** What the search page should receive. */
   q: string;
-  kind: "county" | "city" | "zip";
+  kind: "county" | "city" | "zip" | "address";
   count?: number;
   /** Direct href when the suggestion maps to a first-class filter (county). */
   href?: string;
@@ -63,6 +64,34 @@ async function buildIndex(): Promise<void> {
   indexBuiltAt = Date.now();
 }
 
+/** Live address lookup against our own replicated inventory. Active rows only — suggesting a
+ * home that sold last spring would be worse than suggesting nothing. Never throws: a failed
+ * lookup degrades to area suggestions rather than breaking the keystroke. */
+async function addressMatches(q: string, limit: number) {
+  const url = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_ANON_KEY?.trim();
+  if (!url || !key) return [];
+  // PostgREST `ilike` needs `*` for the wildcard, and commas/parens would break the filter
+  // grammar, so anything structural is stripped rather than escaped.
+  const safe = q.replace(/[,()*\\]/g, " ").trim();
+  if (!safe) return [];
+  try {
+    const res = await fetch(
+      `${url.replace(/\/+$/, "")}/rest/v1/idx_listings` +
+        `?select=id,address,city,zip&status=eq.Active&address=ilike.*${encodeURIComponent(safe)}*` +
+        `&order=address.asc&limit=${limit}`,
+      {
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+        signal: AbortSignal.timeout(2_500),
+      },
+    );
+    if (!res.ok) return [];
+    return (await res.json()) as { id: string; address: string; city: string; zip: string }[];
+  } catch {
+    return [];
+  }
+}
+
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams.get("q")?.trim().toLowerCase() ?? "";
   if (q.length < 2) return NextResponse.json({ suggestions: [] });
@@ -106,5 +135,35 @@ export async function GET(req: Request) {
       }
     }
   }
-  return NextResponse.json({ suggestions: out.slice(0, 8) });
+
+  // ── ADDRESSES. The owner's ask: typing a street address should find that home, not just its
+  // town. Areas alone means somebody who knows exactly which house they want has to search the
+  // whole county and scroll for it.
+  //
+  // Deliberately NOT part of the cached index: there are ~27,600 active listings and holding
+  // every address in instance memory to answer a keystroke is the wrong trade. This is one
+  // indexed ILIKE against a column we already store, capped at 4 rows, and it only runs when
+  // the query actually looks like an address (a house number, or long enough to be a street
+  // name) — so ordinary town typing never pays for it.
+  const looksLikeAddress = /^\d+\s+\S/.test(q) || (q.length >= 4 && /[a-z]/.test(q));
+  if (looksLikeAddress && out.length < 8) {
+    const addrs = await addressMatches(q, 4);
+    for (const a of addrs) {
+      if (out.length >= 8) break;
+      out.push({
+        label: `${a.address}, ${a.city}`,
+        q: a.address,
+        kind: "address",
+        href: listingPath({ id: a.id, address: a.address, city: a.city, zip: a.zip }),
+      });
+    }
+  }
+
+  // An exact house match is what they meant. Put addresses first when the query opened with a
+  // house number; otherwise areas still lead, because "Beacon" is a town before it is a street.
+  const startsWithNumber = /^\d+\s+\S/.test(q);
+  const ordered = startsWithNumber
+    ? [...out.filter((s) => s.kind === "address"), ...out.filter((s) => s.kind !== "address")]
+    : out;
+  return NextResponse.json({ suggestions: ordered.slice(0, 8) });
 }

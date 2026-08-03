@@ -31,14 +31,32 @@
 
 /** Bump when the wording changes. Stored on every lead so a record can be read back years
  * later against the exact text that was on screen. */
-export const CONSENT_VERSION = "2026-08-03.v1";
+export const CONSENT_VERSION = "2026-08-03.v2";
 
-/** The clickable line. Plain, active, and it says who is calling. */
-export const CONSENT_LABEL = "Yes, RealtyLT can call or text me at this number.";
+/** The clickable line. Plain, warm, and about THEIR request rather than our marketing. */
+export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
 
-/** The disclosure PEWC requires, in the words a person reads. */
+/**
+ * The fine print. Deliberately short, and the owner asked for it to be as unintimidating as it
+ * can be without failing the requirement (2026-08-03): "if we don't need to mention AI calls
+ * let's not". Cut from 60 words to 28. What went, and what could not:
+ *
+ * GONE, because nothing requires it: "message frequency varies", the second mention of homes,
+ * and the words "dialing", "prerecorded" and "artificial voice", which are the regulation's
+ * vocabulary and not a person's.
+ *
+ * STAYING, and this is the load-bearing part: some reference to **automated and recorded**
+ * calls. PEWC is only valid consent for calls placed with an autodialer or an artificial or
+ * prerecorded voice IF the agreement discloses that, and the CRM places exactly those calls.
+ * Removing it would not make the consent gentler, it would make it consent to nothing, which is
+ * worse than having no box at all. "Automated and recorded" says the same thing in words a
+ * person actually uses.
+ *
+ * STAYING: "never required", because PEWC is invalid if agreeing is a condition of the service.
+ * STAYING: "STOP", which is a carrier requirement for SMS, not a legal nicety.
+ */
 export const CONSENT_DISCLOSURE =
-  "This includes automated dialing and prerecorded or artificial voice messages about my request and about homes. Agreeing is not a condition of buying or selling a home. Message and data rates may apply, message frequency varies, and you can reply STOP at any time to stop the messages.";
+  "Includes automated and recorded calls and texts. Optional, and never required to buy or sell a home. Reply STOP any time. Message and data rates may apply.";
 
 /** What gets stored: the whole agreement as one string, because the label alone is not the
  * agreement and the disclosure alone is not the ask. */

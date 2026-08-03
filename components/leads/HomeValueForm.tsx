@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { LeadForm } from "./LeadForm";
@@ -10,8 +11,90 @@ import { LeadForm } from "./LeadForm";
  * to send them), which reuses the shared LeadForm with the address prefilled. */
 export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = {}) {
   // A non-empty defaultAddress (e.g. handed over from the /selling wizard) jumps straight
-  // to the contact card with the address already captured.
+  // past the bar with the address already captured.
   const [address, setAddress] = useState<string | null>(defaultAddress?.trim() || null);
+  /** Which of the two things they came for. Null until they say. */
+  const [intent, setIntent] = useState<"value" | "sell" | null>(null);
+
+  // ── Step 2: the fork. Somebody typing their address wants ONE of two different things and
+  // the page had been assuming the second. "What is it worth" is answerable right now, on
+  // their own, from our own comps; "I want to sell it" needs a person. Guessing wrong sends a
+  // curious owner into a lead form they did not ask for, which is how a valuation tool starts
+  // feeling like a trap.
+  if (address !== null && intent === null) {
+    return (
+      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
+        <p className="text-sm text-stone">
+          For <strong className="text-ink">{address}</strong>
+        </p>
+        <h2 className="t-h3 mt-1 text-ink">What would you like to do?</h2>
+        <div className="mt-5 grid gap-3">
+          <button
+            type="button"
+            onClick={() => setIntent("value")}
+            className="group rounded-xl border border-line bg-mist/60 p-4 text-left transition-colors hover:border-ink hover:bg-mist"
+          >
+            <span className="block font-bold text-ink">See what it&rsquo;s worth</span>
+            <span className="mt-1 block text-sm leading-[1.6] text-stone">
+              A market report built from active, pending and sold comps near you. Yours in a
+              minute, and it stays in your account.
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setIntent("sell")}
+            className="group rounded-xl border border-line bg-mist/60 p-4 text-left transition-colors hover:border-ink hover:bg-mist"
+          >
+            <span className="block font-bold text-ink">I&rsquo;m thinking about selling</span>
+            <span className="mt-1 block text-sm leading-[1.6] text-stone">
+              Send us the details and we&rsquo;ll come back with your list price and a cash offer,
+              side by side.
+            </span>
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setAddress(null);
+            setIntent(null);
+          }}
+          className="mt-4 text-sm text-stone underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Use a different address
+        </button>
+      </div>
+    );
+  }
+
+  // ── "See what it's worth": hand the address to the report builder in the portal. Signing in
+  // is the portal's own gate, and `next` brings them back here rather than dumping them on a
+  // dashboard with their address forgotten.
+  if (address !== null && intent === "value") {
+    const target = `/portal/reports?address=${encodeURIComponent(address)}`;
+    return (
+      <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
+        <h2 className="t-h3 text-ink">Your market report</h2>
+        <p className="mt-2 text-sm leading-[1.6] text-stone">
+          We build it from our own live inventory: active, pending and sold homes near{" "}
+          <strong className="text-ink">{address}</strong>. Sign in and it saves to your account so
+          you can come back to it.
+        </p>
+        <Link
+          href={target}
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-ink px-5 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-opacity hover:opacity-90"
+        >
+          Build my report
+        </Link>
+        <button
+          type="button"
+          onClick={() => setIntent(null)}
+          className="mt-4 block text-sm text-stone underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Back
+        </button>
+      </div>
+    );
+  }
 
   if (address !== null) {
     return (
@@ -31,6 +114,13 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
             successBody="We're pulling your comps now. Expect to hear from us within the day."
           />
         </div>
+        <button
+          type="button"
+          onClick={() => setIntent(null)}
+          className="mt-4 text-sm text-stone underline underline-offset-4 transition-colors hover:text-ink"
+        >
+          Back
+        </button>
       </div>
     );
   }

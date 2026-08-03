@@ -74,21 +74,27 @@ describe("consent — the wording carries what the law requires", () => {
   /** Prior express written consent (47 CFR 64.1200(f)(9)) is only valid if it discloses the
    * automated dialing AND that agreeing is not a condition of buying anything. If someone
    * softens the copy later, these fail before it reaches a visitor. */
-  it("discloses automated dialing and prerecorded messages", () => {
-    expect(CONSENT_DISCLOSURE.toLowerCase()).toContain("automated dialing");
-    expect(CONSENT_DISCLOSURE.toLowerCase()).toContain("prerecorded");
+  /** The wording was deliberately softened in v2 (the owner: "if we don't need to mention AI
+   * calls let's not"). These guard the two clauses that CANNOT go, so a future softening pass
+   * cannot quietly turn the box into consent to nothing. */
+  it("discloses that the calls and texts may be automated and recorded", () => {
+    const d = CONSENT_DISCLOSURE.toLowerCase();
+    expect(d).toContain("automated");
+    // covers "artificial or prerecorded voice" in a person's vocabulary
+    expect(d).toMatch(/recorded/);
   });
 
-  it("says agreeing is not a condition of buying or selling", () => {
-    expect(CONSENT_DISCLOSURE.toLowerCase()).toContain("not a condition");
+  it("says agreeing is never required to get the service", () => {
+    expect(CONSENT_DISCLOSURE.toLowerCase()).toMatch(/never required|not required|not a condition/);
   });
 
   it("tells them how to stop the messages", () => {
     expect(CONSENT_DISCLOSURE.toLowerCase()).toContain("stop");
   });
 
-  it("names who is being authorised", () => {
-    expect(CONSENT_LABEL).toContain("RealtyLT");
+  /** Kept short on purpose. If this ever fails upward, someone is re-inflating the fine print. */
+  it("stays short enough that a person will actually read it", () => {
+    expect(CONSENT_DISCLOSURE.split(/\s+/).length).toBeLessThanOrEqual(32);
   });
 
   /** House rule: no em dashes in anything a visitor reads. */

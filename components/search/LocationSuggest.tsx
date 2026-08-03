@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 
 interface Suggestion {
   label: string;
   q: string;
-  kind: "county" | "city" | "zip";
+  kind: "county" | "city" | "zip" | "address";
   count?: number;
   href?: string;
   county?: string;
@@ -41,10 +43,35 @@ export function LocationSuggest({
   const router = useRouter();
   const listId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const [value, setValue] = useState(defaultValue);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
+  /** Where to draw the popup, in viewport coordinates. Null until measured (and on the server),
+   * which is also the signal to fall back to the old in-flow absolute positioning. */
+  const [anchorRect, setAnchorRect] = useState<{ left: number; top: number; width: number } | null>(null);
+
+  /** Measure the control the popup hangs off. `anchor="form"` means the whole search
+   * instrument, not just the input, so the dropdown lines up with the bar rather than with the
+   * text field inside it. Re-measured on scroll and resize because the popup is fixed: it does
+   * not travel with the page on its own. */
+  useEffect(() => {
+    if (!open) return;
+    const measure = () => {
+      const el = anchor === "form" ? wrapRef.current?.closest("form") ?? wrapRef.current : wrapRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      setAnchorRect({ left: r.left, top: r.bottom + 8, width: r.width });
+    };
+    measure();
+    window.addEventListener("scroll", measure, true);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", measure, true);
+      window.removeEventListener("resize", measure);
+    };
+  }, [open, anchor, items.length]);
 
   useEffect(() => {
     const needle = value.trim();
@@ -70,7 +97,12 @@ export function LocationSuggest({
   // Close on outside click.
   useEffect(() => {
     function onDoc(e: MouseEvent) {
-      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+      const t = e.target as Node;
+      // The list is PORTALLED to <body>, so it is no longer inside wrapRef. Without this the
+      // mousedown that begins a click on an option counts as an outside click, the list
+      // unmounts, and the click never lands on anything.
+      if (wrapRef.current?.contains(t) || listRef.current?.contains(t)) return;
+      setOpen(false);
     }
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -79,9 +111,18 @@ export function LocationSuggest({
   function pick(s: Suggestion) {
     setOpen(false);
     setValue(s.q);
+    // An ADDRESS is a destination, not a filter. On /search, onPick would swallow it and
+    // re-filter the grid the visitor is already looking at, when what they asked for was
+    // that one house. Areas still hand off to onPick so the search page can filter in place.
+    if (s.kind === "address" && s.href) return router.push(s.href);
     if (onPick) return onPick(s);
     router.push(s.href ?? `/search?q=${encodeURIComponent(s.q)}`);
   }
+
+  /** Out of the hero entirely once measured. Before measurement (and during SSR) it renders
+   * in place, so a no-JS or first-paint visitor still gets a sane control. */
+  const portal = (node: ReactNode) =>
+    anchorRect && typeof document !== "undefined" ? createPortal(node, document.body) : node;
 
   return (
     <div ref={wrapRef} className={anchor === "form" ? "flex-1" : "relative flex-1"}>
@@ -115,12 +156,21 @@ export function LocationSuggest({
         }}
         className={className}
       />
-      {open && (
+      {open && portal(
         <ul
+          ref={listRef}
           id={listId}
           role="listbox"
           aria-label="Location suggestions"
-          className={`absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"} overflow-hidden rounded-xl border shadow-lift ${
+          /* FIXED + PORTALLED, and this was a real bug rather than a refinement: on the home
+             page NONE of these were clickable. The hero is `isolate overflow-hidden`, so an
+             absolutely-positioned dropdown anchored to the search bar near the hero's bottom
+             edge was both clipped by the hero AND out-painted by the scroll cue and the section
+             below it — document.elementFromPoint at each option's centre returned the scroll
+             cue, never the option. It looked fine in a screenshot, which is why it survived.
+             A combobox popup cannot live inside a clipping, isolated ancestor. */
+          style={anchorRect ? { position: "fixed", left: anchorRect.left, top: anchorRect.top, width: anchorRect.width } : undefined}
+          className={`${anchorRect ? "z-[60]" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} overflow-hidden rounded-xl border shadow-lift ${
             dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
           }`}
         >
@@ -139,7 +189,7 @@ export function LocationSuggest({
               >
                 <span>{s.label}</span>
                 <span className={`shrink-0 text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}>
-                  {s.count ? `${s.count.toLocaleString("en-US")} homes` : s.kind}
+                  {s.count ? `${s.count.toLocaleString("en-US")} homes` : s.kind === "address" ? "View home" : s.kind}
                 </span>
               </button>
             </li>
