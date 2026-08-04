@@ -105,9 +105,17 @@ the feed handed them to us. Nothing is wrong and nothing is at risk.
 
 | line | meaning | do |
 |---|---|---|
-| `429:` anything | MLS Grid is throttling us | **STOP.** The key can be suspended; that froze the inventory for 7 days in round 16. The script now self-aborts at 25. |
+| `429:` **clustered or rising** | MLS Grid is throttling us | **STOP.** The key can be suspended; that froze the inventory for 7 days in round 16. The script self-aborts at 25. |
+| `429:` one or two in tens of thousands | an incidental burst; the pacer already backed off and carried on | carry on, and keep watching |
 | `400:` / `403:` / `404:` | dead or expired media links in the feed | carry on, this is normal |
 | `timeout:` / `neterr:` in bulk | network or host trouble | stop and look |
+
+**Judge the RATE, not the presence — this table said "any 429 at all means stop" and that was
+too absolute.** It also disagreed with the script, whose guard is 25. The two cases look nothing
+alike: sustained throttling was **20 429s in 500 requests**, while a healthy run showed
+**1 in 20,833** (`ok:20368 400:464 429:1`) and the pacer absorbed it without the slice suffering
+— that same slice's gap was 464 dead links and that one 429. The counters are CUMULATIVE for the
+process, so subtract the previous slice's line before reading a new one.
 
 ### DO NOT JUST RESUME IT. Two things ended the run, and neither was the pacing
 
