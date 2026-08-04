@@ -162,7 +162,9 @@
 ##   node scripts/backfill-photos.mjs --max-pages 1 --max-listings 12
 ## and read the histogram. ANY 429 means stop for the day -- do not lower --rps and retry, do
 ## not pace around it. His key has been suspended six times in four days for exactly this.
-## Resumable from scripts/.photo-backfill-watermark.local (2026-07-31T17:42).
+## Resumable from scripts/.photo-backfill-watermark.local — READ THE FILE, do not trust a value
+## quoted in a doc. It advances every slice (it moved four times during the write-up of this
+## checkpoint alone), so any number written here is stale by the time anyone reads it.
 ##
 ## ── LISTING ALERTS: the carried item, and the answer is that the WEBSITE half is DONE ─
 ## Both paths verified in a browser. Signed OUT, /saved offers a lead form ("Want new matches
