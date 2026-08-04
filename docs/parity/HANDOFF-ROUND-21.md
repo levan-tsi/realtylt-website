@@ -162,6 +162,38 @@ this split (it is the committed replacement for the old `_scratch-r16-debt.mjs`,
 covered by the `scripts/_scratch-*` gitignore rule and therefore existed on one machine only,
 despite two handoffs opening with "first action: run it").
 
+### FINISHING THE FORWARD WALK WILL NOT CLEAR THE BACKLOG
+
+Measured after a perfect slice (6,917 fetched / 6,917 downloaded / 6,917 mirrored, no 429s, no
+gap at all): the headline fell 1,705 → 1,610, but **the older-than-7d backlog moved 460 → 457.**
+All the gain was in the recent cohort. The walk is helping new arrivals and not touching the old
+ones, because it goes forward by modification timestamp and has already passed them.
+
+And they are not empty listings. Sampling 40 of them: **40 out of 40 carry photos in the feed**
+(10, 11, 3 …). They are listings whose mirroring did not complete — most plausibly the covers
+that died in the pre-fix rate-limited slices, where the watermark advanced past them anyway and
+stranded them at a contiguous prefix of zero.
+
+**The fix needs no new code, and specifically must NOT be an MLS lookup by id** — `sync-mls` is
+watermark-only by design and adding a DATA-API call for specific listings is the thing that gets
+this key suspended. Instead **re-walk the feed from the beginning** once the forward pass is
+done:
+
+```bash
+node scripts/backfill-photos.mjs --fresh --max-pages 999 --max-listings 999999
+```
+
+`--fresh` deletes the watermark file and restarts at the epoch. That is cheap rather than
+wasteful, because `mirrorSlice` skips a listing's already-mirrored prefix whenever its stored
+`photosMirroredTs` still matches the live `modificationTimestamp` — so everything already done
+downloads nothing and only the stranded rows are retried. Expect the `skipped N already-mirrored`
+figure on each slice line to be large; if it is 0 on a re-walk, the skip logic is not matching
+and something is wrong.
+
+*(Reasoned from the code, not measured — testing it means deleting the watermark file, and the
+forward pass was still running. Verify the skip count on the first re-walk slice before letting
+it run long.)*
+
 One consequence of the 400s worth knowing: a listing whose photo 0 is a dead link keeps a
 mirrored count of 0 forever, because the count is a contiguous prefix from the first photo. If
 the zero-photo number stops falling while slices keep reporting `400:` in the hundreds, that is
