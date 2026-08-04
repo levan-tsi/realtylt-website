@@ -262,6 +262,15 @@ why — and the fix is a feed question (are those listings' media re-published?)
 - **The hero.** He rejected all four candidates ("keep looking"). `app/page.tsx` still plays the
   Vimeo clip; the candidates are on branch `hero-lab` at `/lab/hero`. Do not re-pitch A/B/C/D.
 - **The chat rebuild** belongs to the CRM session.
+- **Recent + saved searches on focus — SHIPPED at his request** (end of round 20). Clicking an
+  empty search box now offers the searches this device ran (localStorage, capped at 5, deduped by
+  destination) and the ones deliberately saved, under two quiet headings. It never opens empty.
+  Two things it forced, both worth keeping in mind if you touch the popup: arrow keys now walk
+  ONE `visible` array (they used to walk `items` while the screen showed history), and the popup
+  **flips above the bar** when there is more room there — the hero's search sits low enough that
+  only ~46px existed below it at 1440x900, and being position:fixed it dragged along on scroll so
+  the last rows were unreachable. Bounded and scrollable either way, verified at 1440/390/320 and
+  on /search.
 - **Listing alerts are DONE on the website side** — checked in a browser this round, so do not
   rebuild them. Signed out, `/saved` offers a lead form whose POST really carries the search
   (`savedSearches[0] = {label, query, criteria:{city:"Poughkeepsie"}}`) with consent attached.
