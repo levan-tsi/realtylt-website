@@ -39,6 +39,51 @@ export function ReportGenerator() {
   const [town, setTown] = useState("");
   const [towns, setTowns] = useState<string[]>([]);
 
+  /** THE TOWN DECIDES THE COUNTY.
+   *
+   * This defaulted to Dutchess and never looked at the address it had been handed, which is a
+   * silently wrong VALUATION rather than a wrong label: measured on our own data, a Yonkers
+   * home under county=dutchess draws 24 comps in Beacon/Fishkill/Hyde Park at a median
+   * $312/sq ft, against $426 for actual Yonkers comps. On an 1,800 sq ft home that is about
+   * $562,000 instead of $767,000, under a heading naming the seller's own street.
+   *
+   * Re-resolved whenever the TOWN changes, so a county picked by hand survives until the town
+   * moves under it — which is the point at which it stopped being the right answer anyway.
+   */
+  const [sqftSeeded, setSqftSeeded] = useState(false);
+  useEffect(() => {
+    const t = city.trim();
+    if (t.length < 2) return;
+    let active = true;
+    fetch(`/api/reports/county?town=${encodeURIComponent(t)}`)
+      .then((r) => r.json())
+      .then((j: { county?: CountySlug | null; medianSqft?: number | null }) => {
+        if (!active) return;
+        if (j.county) setCounty(j.county);
+        // Seed the square footage from the homes we are about to compare against.
+        //
+        // The field was empty and the generator refused to run without it, so somebody arriving
+        // from the /home-value fork ("See what it's worth") hit a hard stop asking for a number
+        // most people do not carry in their head. A blank stop is the worst of both worlds: it
+        // neither answers them nor shows them what a reasonable answer looks like.
+        //
+        // Nothing is assumed silently — the number lands in the box, visible and editable, and
+        // the line under it says where it came from. Only ever fills an EMPTY field, so it can
+        // never overwrite what somebody typed.
+        setSqft((cur) => {
+          if (cur !== "" || !j.medianSqft) return cur;
+          setSqftSeeded(true);
+          return String(j.medianSqft);
+        });
+      })
+      .catch(() => {
+        /* leave whatever is selected — a failed lookup must not silently change the market */
+      });
+    return () => {
+      active = false;
+    };
+  }, [city]);
+
   // Load the town list for the market county.
   useEffect(() => {
     let active = true;
@@ -202,7 +247,25 @@ export function ReportGenerator() {
             <option value="Residential">Residential</option>
             <option value="Multi-Family">Multi-Family</option>
           </Select>
-          <Input label="Approx. sq ft" value={sqft} onChange={(e) => setSqft(e.target.value.replace(/[^0-9]/g, ""))} inputMode="numeric" placeholder="2,000" />
+          <div>
+            <Input
+              label="Approx. sq ft"
+              value={sqft}
+              onChange={(e) => {
+                setSqft(e.target.value.replace(/[^0-9]/g, ""));
+                setSqftSeeded(false);
+              }}
+              inputMode="numeric"
+              placeholder="2,000"
+            />
+            {/* Say where the number came from. A prefilled field that does not explain itself
+                is a guess wearing the visitor's clothes. */}
+            {sqftSeeded && (
+              <p className="mt-1.5 text-xs leading-[1.5] text-stone">
+                Typical for homes near you. Change it to yours for a closer estimate.
+              </p>
+            )}
+          </div>
           <Input label="Beds" value={beds} onChange={(e) => setBeds(e.target.value.replace(/[^0-9]/g, ""))} inputMode="numeric" />
           <Input label="Baths" value={baths} onChange={(e) => setBaths(e.target.value.replace(/[^0-9.]/g, ""))} inputMode="decimal" />
         </div>
