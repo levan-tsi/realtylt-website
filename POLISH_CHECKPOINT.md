@@ -125,10 +125,21 @@
 ##   JS off still submits ?q=.
 ##
 ## ── PHOTO COVERAGE, MEASURED AT THE END OF THE ROUND ────────────────────────────────
-##   active rows          27,675      (feed alive: newest listing 22:04 UTC today)
-##   zero photos           1,552      <- 2,039 when round 19 started, 1,799 at round 20's
-##   at least 1 photo     26,123
-##   5 or more            13,465      <- 12,636 / 13,105
+##   live rows            27,681     (feed alive: newest listing 19:07 UTC on 08-04)
+##   photos_servable >= 1 25,946
+##   photos_servable >= 5 13,404
+##   photos_servable = 0   1,705  <-- AND READ THIS ONE BY AGE, or it looks like a regression:
+##       first seen <24h     223   arrived with no photos yet; the hourly sync collects them
+##       first seen <7d    1,245
+##       OLDER THAN 7d       460   <-- THE REAL BACKLOG, and the only number worth watching
+##
+##   The headline goes UP while the backfill is working, because 150-220 new listings land
+##   every day carrying nothing mirrored. That is why it read 2,039 -> 1,799 -> 1,552 -> 1,705
+##   across the round without anything going wrong. scripts/inventory-health.mjs prints the
+##   split now, and it is COMMITTED: the old _scratch-r16-debt.mjs matched the
+##   scripts/_scratch-* gitignore rule, so the check TWO handoffs opened with ("first action,
+##   if this is zero the feed is frozen and nothing else matters") existed on one machine only.
+##
 ## FIRST HEALTHY SLICE AFTER THE FIX, and it retired the abort rule it was measured against:
 ##   slice: 316 listings, mirrored 7194 (fetched 7645, downloaded 7194)
 ##     download failures by status: ok:7194 400:451
@@ -367,7 +378,7 @@
 ##
 ## ── ORDER FOR ROUND 17 ───────────────────────────────────────────────────────────────
 ## 1. CHECK THE SYNC FIRST, EVERY ROUND. One query, and it is the whole health of the site:
-##      node scripts/_scratch-r16-debt.mjs      # freshness + photo coverage
+##      node scripts/inventory-health.mjs      # freshness + photo coverage
 ##    If "modified in last 24h" is 0, the feed is frozen again — stop and fix that first.
 ##    Consider making this a real committed test rather than a scratch probe.
 ## 2. PHOTO DEBT. The catch-up brought in ~1,500 listings faster than photos could mirror, and

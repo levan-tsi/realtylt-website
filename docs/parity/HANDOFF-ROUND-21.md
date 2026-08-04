@@ -8,7 +8,7 @@ this session unless it says otherwise.** Round 20's summary is the top block of
 
 ## 0. First actions, in order
 
-1. `node scripts/_scratch-r16-debt.mjs` — freshness. If "modified in last 24h" is 0, the feed is
+1. `node scripts/inventory-health.mjs` — freshness. If "modified in last 24h" is 0, the feed is
    frozen and nothing else matters. It was **1,572** at the start of round 20.
 2. **§1 below, the account wall.** It is one dashboard toggle and it is currently the single
    biggest thing standing between a visitor and everything the portal does.
@@ -142,7 +142,25 @@ node scripts/backfill-photos.mjs --max-pages 999 --max-listings 999999
 Watermark in `scripts/.photo-backfill-watermark.local`. **It is slow on purpose**: ~2 photos a
 second, so a 7,000-photo slice takes about an hour. Let it run in the background across a whole
 round. **Do not raise `--rps` to make it finish faster.** Coverage when round 20 ended is in the
-checkpoint; re-measure with `scripts/_scratch-r16-debt.mjs`.
+checkpoint; re-measure with `scripts/inventory-health.mjs`.
+
+### READ THE ZERO-PHOTO NUMBER BY AGE, or it will look like a regression
+
+The headline count goes **UP** while the backfill is working, because roughly 150-220 new
+listings arrive every day carrying no mirrored photos yet. Measured 2026-08-04 on 27,681 live
+rows:
+
+```
+photos_servable = 0    : 1705
+  first seen in last 24h : 223    (arrived with no photos — normal, the sync collects them)
+  first seen in last 7d  : 1245
+  OLDER THAN 7d          : 460    <-- the real backlog, and the only number worth watching
+```
+
+So the persistent problem is ~460 listings, not 1,705. `scripts/inventory-health.mjs` prints
+this split (it is the committed replacement for the old `_scratch-r16-debt.mjs`, which was
+covered by the `scripts/_scratch-*` gitignore rule and therefore existed on one machine only,
+despite two handoffs opening with "first action: run it").
 
 One consequence of the 400s worth knowing: a listing whose photo 0 is a dead link keeps a
 mirrored count of 0 forever, because the count is a contiguous prefix from the first photo. If
