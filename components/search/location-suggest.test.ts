@@ -76,6 +76,41 @@ describe("LocationSuggest — a portalled popup has to be dismissable", () => {
     expect(CODE).toMatch(/pickedRef\.current !== null/);
   });
 
+  /** Clicking an empty box offers what you already searched and what you saved — the owner's
+   * ask, and the behaviour his live site has. The panel must never be EMPTY though: a first-time
+   * visitor focusing the box has no history, and opening a blank popup over the hero is worse
+   * than opening nothing. */
+  it("opens the recent/saved panel on focus, but only when there is something to show", () => {
+    expect(CODE).toMatch(/onFocus=/);
+    expect(CODE).toMatch(/loadHistory\(\)\.length > 0/);
+  });
+
+  /** Arrow keys must walk the list that is ON SCREEN. Keeping `items` and `history` separate but
+   * navigating only `items` is how a keyboard visitor ends up arrowing through an invisible list. */
+  it("navigates whichever list is visible", () => {
+    expect(CODE).toMatch(/const visible = showingHistory \? history : items/);
+    expect(CODE).toMatch(/pick\(visible\[active\]\)/);
+    expect(CODE).not.toMatch(/pick\(items\[active\]\)/);
+  });
+
+  /** A search only reaches the panel if something records it. Both routes have to: choosing a
+   * suggestion, and typing a query and pressing Enter without choosing one. */
+  it("records a search both when a suggestion is picked and when one is typed", () => {
+    const pickFn = CODE.slice(CODE.indexOf("function pick"), CODE.indexOf("const visible"));
+    expect(pickFn).toMatch(/recordRecentSearch/);
+    const keys = CODE.slice(CODE.indexOf("onKeyDown"));
+    expect(keys).toMatch(/recordRecentSearch/);
+  });
+
+  /** The hero's search bar sits low on a laptop, so a popup that always opens downward runs off
+   * the bottom — and being position:fixed and re-anchored on scroll, scrolling drags it along and
+   * the last rows stay out of reach. It has to flip. */
+  it("opens upward when there is more room above the bar, and is always bounded", () => {
+    expect(CODE).toMatch(/maxHeight/);
+    expect(CODE).toMatch(/below >= 220 \|\| below >= above/);
+    expect(CODE).toMatch(/overflow-y-auto/);
+  });
+
   /** Progressive enhancement: with JS off the surrounding form still submits ?q=. */
   it("is a real named input so the plain form still submits", () => {
     expect(CODE).toMatch(/name=\{name\}/);

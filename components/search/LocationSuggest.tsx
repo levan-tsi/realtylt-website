@@ -1,17 +1,31 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import { getRecentSearches, recordRecentSearch } from "@/lib/saved";
+import { useSaved } from "@/components/auth/SavedProvider";
 
 interface Suggestion {
   label: string;
   q: string;
-  kind: "county" | "city" | "zip" | "address";
+  kind: "county" | "city" | "zip" | "address" | "text";
   count?: number;
   href?: string;
   county?: string;
+  /** Set on the pre-typing panel so each row can say why it is there. */
+  group?: "Recent" | "Saved";
+}
+
+/** Where the popup is drawn, in viewport coordinates. `bottom` instead of `top` means it opened
+ * UPWARDS, because there was more room above the bar than below it. */
+interface PopupBox {
+  left: number;
+  width: number;
+  maxHeight: number;
+  top?: number;
+  bottom?: number;
 }
 
 /** Location autocomplete (live-site parity: the quick-search suggests areas as you type).
@@ -41,6 +55,7 @@ export function LocationSuggest({
   anchor?: "input" | "form";
 }) {
   const router = useRouter();
+  const { searches: savedSearches } = useSaved();
   const listId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -54,9 +69,14 @@ export function LocationSuggest({
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
+  /** What the box offers BEFORE anything is typed: the searches this visitor ran, and the ones
+   * they deliberately saved. Loaded on focus rather than on mount, so a page that nobody
+   * searches from never touches localStorage. */
+  const [history, setHistory] = useState<Suggestion[]>([]);
+  const showingHistory = value.trim().length < 2;
   /** Where to draw the popup, in viewport coordinates. Null until measured (and on the server),
    * which is also the signal to fall back to the old in-flow absolute positioning. */
-  const [anchorRect, setAnchorRect] = useState<{ left: number; top: number; width: number } | null>(null);
+  const [anchorRect, setAnchorRect] = useState<PopupBox | null>(null);
 
   /** Measure the control the popup hangs off. `anchor="form"` means the whole search
    * instrument, not just the input, so the dropdown lines up with the bar rather than with the
@@ -68,7 +88,18 @@ export function LocationSuggest({
       const el = anchor === "form" ? wrapRef.current?.closest("form") ?? wrapRef.current : wrapRef.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
-      setAnchorRect({ left: r.left, top: r.bottom + 8, width: r.width });
+      // Bound it to the space that actually exists, and open UPWARDS when there is more of it
+      // above. The home hero's search bar sits low on a laptop, so a downward popup ran off the
+      // bottom of the window — and because it is position:fixed and re-anchored on scroll,
+      // scrolling the page drags it along and the last rows stay exactly as far out of reach.
+      // A clamped max-height alone could not fix that: below the bar there was only ~46px.
+      const below = window.innerHeight - r.bottom - 24;
+      const above = r.top - 24;
+      setAnchorRect(
+        below >= 220 || below >= above
+          ? { left: r.left, width: r.width, top: r.bottom + 8, maxHeight: Math.max(140, below) }
+          : { left: r.left, width: r.width, bottom: window.innerHeight - r.top + 8, maxHeight: Math.max(140, above) },
+      );
     };
     measure();
     window.addEventListener("scroll", measure, true);
@@ -101,7 +132,11 @@ export function LocationSuggest({
     }
     if (needle.length < 2) {
       setItems([]);
-      setOpen(false);
+      // Clearing the box does not mean "go away" — it means they are starting over, which is
+      // exactly when the recent/saved panel is useful again. Only close if there is nothing to
+      // show. (This never fires on mount: the first-run guard above returns before it.)
+      setActive(-1);
+      setOpen(loadHistory().length > 0);
       return;
     }
     const t = setTimeout(async () => {
@@ -116,6 +151,9 @@ export function LocationSuggest({
       }
     }, 150);
     return () => clearTimeout(t);
+    // loadHistory is stable per saved-search list; including it would re-run the query on every
+    // provider render and re-fetch the same needle.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   // Close on outside click.
@@ -132,7 +170,40 @@ export function LocationSuggest({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
+  /** Build the pre-typing panel. Recent first (it is the likeliest thing they want), then the
+   * ones they deliberately saved. A saved search that is also recent appears once, under Recent,
+   * because two identical rows in a five-row panel is a bug the visitor has to resolve. */
+  const loadHistory = useCallback(() => {
+    const recent: Suggestion[] = getRecentSearches().map((r) => ({
+      label: r.label,
+      q: r.label,
+      kind: r.kind,
+      href: r.href,
+      group: "Recent",
+    }));
+    const seen = new Set(recent.map((r) => r.href));
+    const saved: Suggestion[] = savedSearches
+      .map((s) => ({
+        label: s.label,
+        q: s.label,
+        kind: "text" as const,
+        href: `/search?${s.query}`,
+        group: "Saved" as const,
+      }))
+      .filter((s) => !seen.has(s.href));
+    const next = [...recent, ...saved].slice(0, 8);
+    setHistory(next);
+    return next;
+  }, [savedSearches]);
+
   function pick(s: Suggestion) {
+    // Remember it, unless it came FROM the history panel — recordRecentSearch already moves a
+    // repeat to the top, so this only avoids re-stamping a row the visitor merely re-ran.
+    recordRecentSearch({
+      label: s.label,
+      href: s.href ?? `/search?q=${encodeURIComponent(s.q)}`,
+      kind: s.kind,
+    });
     setOpen(false);
     // Tell the query effect that this next value change is ours. Cleared the moment it is used,
     // so editing the text afterwards searches normally again.
@@ -145,6 +216,11 @@ export function LocationSuggest({
     if (onPick) return onPick(s);
     router.push(s.href ?? `/search?q=${encodeURIComponent(s.q)}`);
   }
+
+  /** One list drives rendering AND the arrow keys. Keeping `items` and `history` as separate
+   * arrays but navigating only `items` is how a keyboard visitor ends up arrowing through a list
+   * that is not on screen. */
+  const visible = showingHistory ? history : items;
 
   /** Out of the hero entirely once measured. Before measurement (and during SSR) it renders
    * in place, so a no-JS or first-paint visitor still gets a sane control. */
@@ -166,6 +242,13 @@ export function LocationSuggest({
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        /* Clicking into an empty box offers the searches they already ran and the ones they
+           saved. That is the single most likely thing somebody wants from a property search --
+           the one they ran yesterday -- and an empty dropdown on focus wastes the moment. */
+        onFocus={() => {
+          if (value.trim().length >= 2) return;
+          if (loadHistory().length > 0) setOpen(true);
+        }}
         /* Close when focus leaves the control. The only other thing that closes this list is a
            mousedown outside it, which a keyboard visitor never produces — so tabbing off the
            input used to leave the popup on screen. That was harmless while the list was an
@@ -186,13 +269,21 @@ export function LocationSuggest({
           if (!open) return;
           if (e.key === "ArrowDown") {
             e.preventDefault();
-            setActive((a) => Math.min(a + 1, items.length - 1));
+            setActive((a) => Math.min(a + 1, visible.length - 1));
           } else if (e.key === "ArrowUp") {
             e.preventDefault();
             setActive((a) => Math.max(a - 1, -1));
           } else if (e.key === "Enter" && active >= 0) {
             e.preventDefault();
-            pick(items[active]);
+            pick(visible[active]);
+          } else if (e.key === "Enter") {
+            // Typed a query and pressed Enter without choosing a suggestion. The surrounding
+            // form handles the navigation; this is only here so that search is remembered too,
+            // otherwise the panel would only ever show searches made by picking.
+            const q = value.trim();
+            if (q.length >= 2) {
+              recordRecentSearch({ label: q, href: `/search?q=${encodeURIComponent(q)}`, kind: "text" });
+            }
           } else if (e.key === "Escape") {
             setOpen(false);
           }
@@ -204,7 +295,7 @@ export function LocationSuggest({
           ref={listRef}
           id={listId}
           role="listbox"
-          aria-label="Location suggestions"
+          aria-label={showingHistory ? "Recent and saved searches" : "Location suggestions"}
           /* FIXED + PORTALLED, and this was a real bug rather than a refinement: on the home
              page NONE of these were clickable. The hero is `isolate overflow-hidden`, so an
              absolutely-positioned dropdown anchored to the search bar near the hero's bottom
@@ -212,13 +303,37 @@ export function LocationSuggest({
              below it — document.elementFromPoint at each option's centre returned the scroll
              cue, never the option. It looked fine in a screenshot, which is why it survived.
              A combobox popup cannot live inside a clipping, isolated ancestor. */
-          style={anchorRect ? { position: "fixed", left: anchorRect.left, top: anchorRect.top, width: anchorRect.width } : undefined}
-          className={`${anchorRect ? "z-[60]" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} overflow-hidden rounded-xl border shadow-lift ${
+          style={
+            anchorRect
+              ? {
+                  position: "fixed",
+                  left: anchorRect.left,
+                  ...(anchorRect.top !== undefined
+                    ? { top: anchorRect.top }
+                    : { bottom: anchorRect.bottom }),
+                  width: anchorRect.width,
+                  maxHeight: anchorRect.maxHeight,
+                }
+              : undefined
+          }
+          className={`${anchorRect ? "z-[60] overflow-y-auto overscroll-contain" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} overflow-x-hidden rounded-xl border shadow-lift ${
             dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
           }`}
         >
-          {items.map((s, i) => (
-            <li key={s.kind + s.q} id={`${listId}-${i}`} role="option" aria-selected={i === active}>
+          {visible.map((s, i) => (
+            <li key={(s.group ?? s.kind) + s.q + i} id={`${listId}-${i}`} role="option" aria-selected={i === active}>
+              {/* A quiet heading the first time each group appears, so "Recent" and "Saved" are
+                  told apart without a second control or a tab. */}
+              {showingHistory && s.group !== visible[i - 1]?.group && (
+                <span
+                  aria-hidden
+                  className={`block px-4 pb-1 pt-3 text-[11px] font-bold uppercase tracking-[0.12em] ${
+                    dark ? "text-paper/40" : "text-stone"
+                  }`}
+                >
+                  {s.group}
+                </span>
+              )}
               <button
                 type="button"
                 onMouseDown={(e) => e.preventDefault()}
@@ -232,7 +347,13 @@ export function LocationSuggest({
               >
                 <span>{s.label}</span>
                 <span className={`shrink-0 text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}>
-                  {s.count ? `${s.count.toLocaleString("en-US")} homes` : s.kind === "address" ? "View home" : s.kind}
+                  {s.count
+                    ? `${s.count.toLocaleString("en-US")} homes`
+                    : s.kind === "address"
+                      ? "View home"
+                      : s.kind === "text"
+                        ? ""
+                        : s.kind}
                 </span>
               </button>
             </li>

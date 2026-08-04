@@ -93,6 +93,62 @@ export function savedCount(): number {
   return getFavorites().length + getSavedSearches().length;
 }
 
+/* ── RECENT SEARCHES ─────────────────────────────────────────────────────────────────────────
+ *
+ * What the search box offers before you have typed anything. The owner's live site does this and
+ * it is the right behaviour: the single most likely thing somebody wants from a property search
+ * is the search they ran yesterday. An empty dropdown on focus is a wasted moment.
+ *
+ * Deliberately SEPARATE from saved searches. A saved search is a decision ("watch this for me");
+ * a recent one is just history, and conflating them would either bury the deliberate list in
+ * noise or imply we are keeping things the visitor never asked us to keep. Device-local, capped,
+ * and clearable.
+ */
+
+export interface RecentSearch {
+  /** What to show: "Poughkeepsie, NY", "150 Hooker Ave, Poughkeepsie". */
+  label: string;
+  /** Where it goes — a full path for a listing, or a /search query for an area. */
+  href: string;
+  /** Distinguishes a place from a specific home in the UI. */
+  kind: "county" | "city" | "zip" | "address" | "text";
+  at: string;
+}
+
+const RECENT_KEY = "rlt:recent-searches";
+/** Five. Enough to be useful, short enough that the panel never becomes a page. */
+const RECENT_MAX = 5;
+
+function isRecent(v: unknown): v is RecentSearch {
+  const s = v as RecentSearch;
+  return (
+    typeof s === "object" && s !== null &&
+    typeof s.label === "string" && typeof s.href === "string" &&
+    typeof s.kind === "string" && typeof s.at === "string"
+  );
+}
+
+export function getRecentSearches(): RecentSearch[] {
+  const v = read<unknown>(RECENT_KEY, []);
+  if (Array.isArray(v) && v.every(isRecent)) return v;
+  write(RECENT_KEY, []);
+  return [];
+}
+
+/** Record a search. Most recent first, de-duplicated by destination so running the same search
+ * twice moves it up rather than filling the list with itself. */
+export function recordRecentSearch(entry: Omit<RecentSearch, "at">) {
+  const label = entry.label.trim();
+  const href = entry.href.trim();
+  if (!label || !href) return;
+  const rest = getRecentSearches().filter((r) => r.href !== href);
+  write(RECENT_KEY, [{ ...entry, label, href, at: new Date().toISOString() }, ...rest].slice(0, RECENT_MAX));
+}
+
+export function clearRecentSearches() {
+  write(RECENT_KEY, []);
+}
+
 /** Wipe device-local favorites + searches. Called once after they've been migrated into a
  * client account on sign-in, so they aren't re-migrated on the next login. */
 export function clearLocal() {
