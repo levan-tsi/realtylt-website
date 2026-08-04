@@ -30,7 +30,7 @@
 ##
 ## ═══ ROUND 20 — DONE 2026-08-03. Handoff in docs/parity/HANDOFF-ROUND-21.md.
 ##
-## ── FIVE REAL DEFECTS, ALL FIXED AND ALL FOUND BY ATTACKING RATHER THAN READING ─────
+## ── SIX REAL DEFECTS, ALL FIXED AND ALL FOUND BY ATTACKING RATHER THAN READING ──────
 ## 1. THE BACKFILL WAS BEING RATE-LIMITED, and the number it printed looked like progress.
 ##    The round-19 abort criterion (fetched > downloaded) fired on the first slice: 7,114
 ##    fetched, 3,097 downloaded. It could not say WHY, and the two possible causes need
@@ -70,7 +70,26 @@
 ##    sent "United States" to the CRM as a home to value. lib/geo/address-precision.ts now
 ##    requires a street number AND a route, or a premise/subpremise type.
 ##
-## ── SHIPPED: "WE'VE FOUND YOUR HOME", AT NO NEW COST ────────────────────────────────
+## 6. EVERY SELLER OUTSIDE DUTCHESS WAS VALUED AGAINST THE WRONG COUNTY, and this is the
+##    worst one because it is a wrong NUMBER, not a wrong label. The CMA generator defaulted
+##    its county to Dutchess and never looked at the address the home-value fork had just
+##    handed it. Measured on our own inventory:
+##      Yonkers home, county=dutchess     24 comps in Beacon/Fishkill/Hyde Park, $312/sq ft
+##      Yonkers home, county=westchester  24 comps in Yonkers,                   $426/sq ft
+##    On an 1,800 sq ft home that is about $562,000 against $767,000, printed under a heading
+##    naming the seller's own street, above a comps table quietly listing homes an hour up the
+##    river. It looked fine only because every address anyone had tested was in Dutchess. The
+##    town decides the county now, resolved from our own listings and re-resolved whenever the
+##    town changes. Verified signed in: 12 Main Street, Yonkers -> Westchester County, 24 of
+##    24 comps in Yonkers.
+##    The same call fixed the SQUARE-FOOTAGE DEAD STOP: the field was required and empty, so
+##    anyone arriving from "See what it's worth" was refused until they produced a number most
+##    people do not carry in their head. It now seeds the median of every active home in their
+##    town with a line saying so, only ever into an EMPTY box. The first attempt at that seed
+##    was instructively wrong -- asking the comps route for a median without a subject size
+##    returns the town's CHEAPEST two dozen listings, so "typical near you" in Yonkers came out
+##    as 600 sq ft of co-op. Correct medians: Yonkers 1,080, Poughkeepsie 1,760, Nyack 2,100.
+#### ── SHIPPED: "WE'VE FOUND YOUR HOME", AT NO NEW COST ────────────────────────────────
 ## He pushed back with "don't we already use it in our map with street view and everything,
 ## isn't it already wired in" and he was right. Geocoding and Street View are ENABLED, billed,
 ## and already used by the listing gallery; Places is the only one that is not, and Places buys
@@ -134,10 +153,19 @@
 ## not pace around it. His key has been suspended six times in four days for exactly this.
 ## Resumable from scripts/.photo-backfill-watermark.local (2026-07-31T17:42).
 ##
-## ── GATES ───────────────────────────────────────────────────────────────────────────
-## tsc clean. Tests 670 -> 775 (+59 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,
+## ── LISTING ALERTS: the carried item, and the answer is that the WEBSITE half is DONE ─
+## Both paths verified in a browser. Signed OUT, /saved offers a lead form ("Want new matches
+## by email?") and the POST really carries the search: savedSearches[0] = {label:"Poughkeepsie,
+## NY", query:"city=Poughkeepsie", criteria:{city:"Poughkeepsie"}} -- structured criteria the
+## CRM can act on, with consent attached. Signed IN, toggling alerts writes `alerts` AND the
+## structured criteria to portal_saved_searches. The save dialog is honest to anonymous
+## visitors ("Saving to this device. Sign in to sync across devices and get new-listing
+## alerts") and there is no fake toggle anywhere. So the claim is honourable and the only
+## thing blocking the signed-in path is the account wall.
+#### ── GATES ───────────────────────────────────────────────────────────────────────────
+## tsc clean. Tests 670 -> 782 (+66 mine: 18 consent-http, 6 LocationSuggest, 23 address-query,
 ## 17 auth errors, 12 address-precision; the rest arrived from the session sharing this repo).
-## Never went below baseline. 9 commits, all pushed to main.
+## Never went below baseline. 11 commits, all pushed to main.
 ## Production sweep (10 pages x 1440/390/320): 28/30 clean, and the two failures were /buying
 ## GOTO timeouts under contention from my own concurrent probes -- /buying re-measured clean at
 ## all three widths (networkidle ~1.5s, no overflow). Dev sweep: 1 failure, the /connect flake.

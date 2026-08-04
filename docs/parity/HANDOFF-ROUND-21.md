@@ -195,11 +195,12 @@ why — and the fix is a feed question (are those listings' media re-published?)
   to the CRM — on APIs already enabled and already billed. Places adds only the dropdown while
   you type, and it is the only part that bills. **His call.** Check Google's current per-session
   pricing before quoting him; do not assert it from memory.
-- **Square footage blocks the CMA**, and the home-value flow does not collect it. A visitor who
-  came from "See what it's worth" lands on the generator and is stopped by *"Enter your home's
-  approximate square footage."* It is a legitimate requirement (the estimate is $/sq ft), but
-  either the address bar should ask for it, or the generator should estimate from the comps and
-  let them correct it. Worth a design decision.
+- ~~Square footage blocks the CMA~~ — **done.** The box is seeded with the median of every active
+  home in the visitor's town, labelled "Typical for homes near you", and only ever into an empty
+  field. Watch the trap if you touch it: asking the comps route for a median *without* a subject
+  size returns the town's CHEAPEST two dozen listings, because that is how it ranks with no size
+  to sort by — "typical for Yonkers" came out as 600 sq ft of co-op. The median has to come from
+  every active row in the town (`/api/reports/county`).
 - **Refresh at the fork drops the step.** It is component state, not a URL param. Deliberate for
   now — putting it in the URL makes a half-finished valuation linkable, which is a design call.
 - **Sold comps.** The report says, honestly, "from comparable homes currently **for sale**". Live
@@ -211,6 +212,16 @@ why — and the fix is a feed question (are those listings' media re-published?)
 - **The hero.** He rejected all four candidates ("keep looking"). `app/page.tsx` still plays the
   Vimeo clip; the candidates are on branch `hero-lab` at `/lab/hero`. Do not re-pitch A/B/C/D.
 - **The chat rebuild** belongs to the CRM session.
+- **Listing alerts are DONE on the website side** — checked in a browser this round, so do not
+  rebuild them. Signed out, `/saved` offers a lead form whose POST really carries the search
+  (`savedSearches[0] = {label, query, criteria:{city:"Poughkeepsie"}}`) with consent attached.
+  Signed in, toggling alerts writes `alerts` plus the structured criteria to
+  `portal_saved_searches`. The save dialog is honest to anonymous visitors and there is no fake
+  toggle. What remains is the CRM sending, plus the account wall for the signed-in path.
+- **Small polish, not a defect:** the portal sub-nav scrolls horizontally on a phone (5 tabs,
+  626px of content in a 358px strip) and has no visual affordance that it does. Verified
+  reachable — scrolling works and Profile navigates — so this is a "would be nicer with a fade",
+  not a bug.
 
 ---
 
@@ -219,6 +230,11 @@ why — and the fix is a feed question (are those listings' media re-published?)
 - **Next dev compiles a route on its first request.** The first measurement at each mount timed
   out and the two after it passed — that is a compile, not a defect. Warm every route before
   measuring anything.
+- **`document.elementFromPoint` returns null for anything OFF the viewport**, so a hit-test on an
+  element that has simply scrolled out of view reports "unreachable". That nearly filed the
+  portal sub-nav as a broken mobile nav; it scrolls perfectly well and Profile navigates. Scroll
+  the container first, THEN hit-test. And check you grabbed the right container — the first pass
+  matched the site header's "Saved" link and measured the wrong `<nav>` entirely.
 - **`textContent` is not the accessible name.** The consent label looked like it ran two
   sentences together ("my request.Includes automated"); the real accname separates block
   elements, and Playwright's role-name matching proves it. Nearly filed a defect that was not one.
