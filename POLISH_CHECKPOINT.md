@@ -124,21 +124,26 @@
 ##   tracks its anchor on scroll and resize to within 1px, arrows/Escape/outside-click correct,
 ##   JS off still submits ?q=.
 ##
-## ── PHOTO COVERAGE, MEASURED AT THE END OF THE ROUND ────────────────────────────────
-##   live rows            27,681     (feed alive: newest listing 19:07 UTC on 08-04)
-##   photos_servable >= 1 25,946
-##   photos_servable >= 5 13,404
-##   photos_servable = 0   1,705  <-- AND READ THIS ONE BY AGE, or it looks like a regression:
-##       first seen <24h     223   arrived with no photos yet; the hourly sync collects them
-##       first seen <7d    1,245
-##       OLDER THAN 7d       460   <-- THE REAL BACKLOG, and the only number worth watching
+## ── PHOTO COVERAGE — FINAL, and the backfill did the job it was fixed to do ─────────
+##                        round19 start   round20 start   mid-round        FINAL
+##   zero photos              2,039          1,799          1,705           609
+##   photos_servable >= 5    12,636         13,105         13,404        14,719
+##   photos_servable >= 20        -          7,757          7,858         8,612
+##   live rows 27,680. Zero-photo down 64% from where round 20 found it.
+##   By age, which is the honest read:  <24h 124 | <7d 225 | OLDER THAN 7d 384
+##   (the real backlog moved 460 -> 384; the rest of the fall is the queue draining)
 ##
-##   The headline goes UP while the backfill is working, because 150-220 new listings land
-##   every day carrying nothing mirrored. That is why it read 2,039 -> 1,799 -> 1,552 -> 1,705
-##   across the round without anything going wrong. scripts/inventory-health.mjs prints the
-##   split now, and it is COMMITTED: the old _scratch-r16-debt.mjs matched the
-##   scripts/_scratch-* gitignore rule, so the check TWO handoffs opened with ("first action,
-##   if this is zero the feed is frozen and nothing else matters") existed on one machine only.
+##   THE FORWARD WALK IS EFFECTIVELY DONE. The watermark reached 2026-08-05T09:01, i.e.
+##   the head of the feed, after 18 slices. So the remaining 384 will NOT be fixed by
+##   running it again forward -- they need the --fresh re-walk described in the round-21
+##   handoff, and that is the next backfill action, not a resume.
+##
+##   HOW IT ENDED: the --max-429 guard fired. media.mlsgrid.com returned 429 twenty-five
+##   times and the script aborted itself before the key could be suspended -- exactly what
+##   it was added for, on its second real outing. DO NOT RESTART IT THE SAME DAY. The
+##   throttle is a longer-window quota; probe with a 12-listing slice first (handoff §2).
+##   One slice during the run shows the damage pattern to recognise: mirrored 2,373 from
+##   6,475 downloaded, because throttled covers break every contiguous prefix behind them.
 ##
 ## FIRST HEALTHY SLICE AFTER THE FIX, and it retired the abort rule it was measured against:
 ##   slice: 316 listings, mirrored 7194 (fetched 7645, downloaded 7194)
