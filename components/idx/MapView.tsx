@@ -212,7 +212,9 @@ function ClusterLayer({
   return (
     <>
       {viewportTotal !== null && fetchedPins !== null && viewportTotal > fetchedPins.length && (
-        <p className="pointer-events-none absolute bottom-2 right-2 z-[500] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+        // bottom-12 on phones: side by side with the legend the two badges overlap at 390px
+        // (same collision fixed on the Google engine — keep the pair in step).
+        <p className="pointer-events-none absolute bottom-12 right-2 z-[500] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:bottom-2">
           Showing {fetchedPins.length.toLocaleString()} of {viewportTotal.toLocaleString()} — zoom in for more
         </p>
       )}

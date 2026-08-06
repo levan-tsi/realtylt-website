@@ -549,7 +549,10 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         <span>Locations approximate</span>
       </div>
       {viewportTotal !== null && fetchedCount !== null && viewportTotal > fetchedCount && (
-        <p className="pointer-events-none absolute bottom-2 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+        // bottom-12 on phones: at 390px this and the legend are wider than the map together,
+        // and both bottom-2 meant the banner sat ON the legend ("LOCATIONS APPROXIMATE" read
+        // "LOCA" — screenshotted). Stacked clear of it until sm, side by side after.
+        <p className="pointer-events-none absolute bottom-14 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:bottom-2">
           Showing {fetchedCount.toLocaleString()} of {viewportTotal.toLocaleString()} — zoom in for more
         </p>
       )}
