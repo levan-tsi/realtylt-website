@@ -192,6 +192,80 @@ const BASE = Date.UTC(2026, 6, 9, 14, 30, 0); // 2026-07-09T14:30:00Z
 const DAY = 86_400_000;
 const PHOTO_COUNT = 18;
 
+// ── Six /search facet filters (supabase/migrations/idx_search_facet_columns.sql) need real
+// coverage in the fixture set, or a fixture test passes VACUOUSLY (0 rows in, 0 out, green).
+// Deterministic per-row (function of `i`), same pattern as listedAt/photoBase above: every
+// filter below gets at least one matching row, one non-matching-but-present row, and one row
+// that OMITS the source field entirely (an absent fact must be EXCLUDED, never matched — see
+// FixtureIdxClient.search). The omission moduli (11, 5, 6, 8, 7) are chosen so they never land
+// on a "multi" row (indices 2, 12, 40, 43, 52), which need all four RESO subtypes intact.
+
+/** RESO PropertySubType per style. "multi" cycles the four values HOME_TYPE_VALUES["multi-family"]
+ * groups, so a homeType=multi-family test sees all four, never Single Family Residence. Every
+ * 11th row omits this entirely (a listing whose subtype the feed never populated). */
+const MULTI_SUBTYPES = ["Duplex", "Triplex", "Quadruplex", "Multi Family"] as const;
+const multiRowIndices = ROWS.reduce<number[]>((acc, r, idx) => (r[6] === "multi" ? [...acc, idx] : acc), []);
+function propertySubTypeFor(i: number, style: Style): string | undefined {
+  if (i % 11 === 0) return undefined; // omitted — older row, feed never stated a subtype
+  if (style === "multi") return MULTI_SUBTYPES[multiRowIndices.indexOf(i) % MULTI_SUBTYPES.length];
+  if (style === "townhouse") return "Townhouse";
+  return "Single Family Residence";
+}
+
+/** cooling — "Central Air" is the centralAir=true signal; other cooling types are real but
+ * non-matching; every 5th row omits cooling entirely. */
+function coolingFor(i: number): string[] | undefined {
+  switch (i % 5) {
+    case 0: return undefined;
+    case 1: return ["Central Air"];
+    case 2: return ["Central Air", "Ceiling Fan(s)"];
+    case 3: return ["Wall Unit(s)"];
+    default: return ["None"];
+  }
+}
+
+/** basement — REAL_BASEMENT (types.ts) is the basement=true signal; None/Crawl Space are real
+ * feed values that do NOT count; every 6th row omits basement entirely. */
+function basementFor(i: number): string[] | undefined {
+  switch (i % 6) {
+    case 0: return undefined;
+    case 1: return ["Full"];
+    case 2: return ["Finished"];
+    case 3: return ["Walk-Out Access"];
+    case 4: return ["Crawl Space"];
+    default: return ["None"];
+  }
+}
+
+/** lotFeatures — WATERFRONT_FEATURES (types.ts) is the waterfront=true signal; every 8th row
+ * omits lotFeatures entirely. */
+function lotFeaturesFor(i: number): string[] | undefined {
+  switch (i % 8) {
+    case 0: return undefined;
+    case 1: return ["Waterfront"];
+    case 2: return ["Water Access"];
+    case 3: return ["Level"];
+    case 4: return ["Wooded"];
+    case 5: return ["Corner Lot"];
+    case 6: return ["Cul-de-Sac"];
+    default: return ["Level", "Wooded"];
+  }
+}
+
+/** interiorFeatures — carries BOTH the firstFloorBed and eatInKitchen signals; every 7th row
+ * omits interiorFeatures entirely. */
+function interiorFeaturesFor(i: number): string[] | undefined {
+  switch (i % 7) {
+    case 0: return undefined;
+    case 1: return ["First Floor Bedroom"];
+    case 2: return ["Eat-in Kitchen"];
+    case 3: return ["First Floor Bedroom", "Eat-in Kitchen"];
+    case 4: return ["Walk-in Closet(s)"];
+    case 5: return ["Cathedral Ceiling(s)"];
+    default: return ["Pantry"];
+  }
+}
+
 function buildListing(row: Row, i: number): Listing {
   const [townName, street, price, beds, baths, sqft, style, flags = ""] = row;
   const town = TOWNS[townName];
@@ -231,6 +305,11 @@ function buildListing(row: Row, i: number): Listing {
     openHouse: flags.includes("OH") || undefined,
     description,
     features: [s.label, ...s.features],
+    propertySubType: propertySubTypeFor(i, style),
+    cooling: coolingFor(i),
+    basement: basementFor(i),
+    lotFeatures: lotFeaturesFor(i),
+    interiorFeatures: interiorFeaturesFor(i),
     photos,
     lat: +(town.lat + (((i * 29) % 21) - 10) / 1000).toFixed(5),
     lng: +(town.lng + (((i * 31) % 21) - 10) / 1000).toFixed(5),
