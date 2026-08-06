@@ -148,6 +148,13 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // popup exists: without this, EVERY Escape press on /search blurred whatever control
         // the visitor was typing in.
         let popupOpen = false;
+        // Which pin the open popup belongs to — the idempotence key. Re-rendering an InfoWindow
+        // that is ALREADY showing this pin restarts Google's open pipeline, and mid-relayout the
+        // window transiently hit-tests over the chip under a stationary pointer; Chromium then
+        // fires synthetic boundary events, the chip "re-enters", and openPopup runs again —
+        // an open/close flicker loop that left top-edge hover previews permanently invisible
+        // (watched locally: five mouseenter firings in 80ms with the popup never settling).
+        let shownForId: string | null = null;
         // Deferred close, shared by every chip and by the popup itself.
         let closeTimer: ReturnType<typeof setTimeout> | undefined;
         const cancelClose = () => {
@@ -159,6 +166,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           closeTimer = setTimeout(() => {
             if (!pinnedRef.current) {
               popupOpen = false;
+              shownForId = null;
               info.close(); // a pinned popup is never closed by the pointer
             }
           }, ms);
@@ -198,6 +206,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
           popupOpen = false;
+          shownForId = null;
           info.close();
           // Pull focus only when it sits somewhere that can REOPEN the popup (a chip's focus
           // handler, or inside the window Google is about to tear down) — never an unrelated
@@ -219,6 +228,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
           popupOpen = false;
+          shownForId = null;
           info.close();
         };
         // keydown on WINDOW, capture phase — confirmed live that even a document-level capture
@@ -356,10 +366,19 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             // a popup the visitor deliberately kept, and clicking a second chip re-pins cleanly.
             const openPopup = (pinned: boolean) => {
               cancelClose();
+              // IDEMPOTENT for the pin already showing: a redundant re-open restarts Google's
+              // open pipeline and (via synthetic boundary events under a stationary pointer)
+              // can loop it forever — see shownForId above. Pinning an already-previewed home
+              // only needs the pin recorded, not a re-render.
+              if (popupOpen && shownForId === p.id) {
+                if (pinned) pinnedRef.current = p.id;
+                return;
+              }
               const node = popupNode(p, {
                 onClose: () => {
                   pinnedRef.current = null;
                   popupOpen = false;
+                  shownForId = null;
                   info.close();
                 },
                 onToggleSave: (id) => onToggleSaveRef.current?.(id),
@@ -383,11 +402,17 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               node.style.left = "";
               node.style.top = "";
               info.setContent(node);
-              // Stay within the viewport instead of always opening the same direction: measure
-              // the chip's real position (same technique as LocationSuggest's dropdown) and
-              // flip below its anchor when there isn't room above for it.
+              // Stay within the MAP BOX instead of always opening the same direction. The
+              // InfoWindow is clipped by the map container (overflow-hidden), so the room that
+              // matters is the intersection of the map's rect and the window — a chip just
+              // under the map's top edge can have a whole page of window above it and still
+              // no room at all.
               const chipRect = chip.getBoundingClientRect();
-              const placement = popupPlacement(chipRect, window.innerHeight);
+              const mapRect = el.getBoundingClientRect();
+              const placement = popupPlacement(chipRect, {
+                top: Math.max(mapRect.top, 0),
+                bottom: Math.min(mapRect.bottom, window.innerHeight),
+              });
               info.setOptions({
                 // Above: 26px clears the chip. Below: the tip lands measured+40 under the
                 // anchor, so the body (whose bottom sits a tail's height above the tip) starts
@@ -404,6 +429,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               info.setPosition(pos);
               info.open({ map });
               popupOpen = true;
+              shownForId = p.id;
               if (pinned) pinnedRef.current = p.id;
             };
             chip.addEventListener("mouseenter", () => {

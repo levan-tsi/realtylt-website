@@ -96,22 +96,31 @@ describe("boundsOfPins", () => {
   });
 });
 
-describe("popupPlacement — flips above/below so the popup never runs off the fold", () => {
+describe("popupPlacement — flips above/below so the popup never runs off its CLIP box", () => {
+  const window800 = { top: 0, bottom: 800 };
+
   it("opens above by default when there is room (the chip's existing look)", () => {
-    expect(popupPlacement({ top: 400, bottom: 426 }, 800)).toBe("above");
+    expect(popupPlacement({ top: 400, bottom: 426 }, window800)).toBe("above");
   });
 
-  it("flips below when the anchor is near the top of the viewport", () => {
+  it("flips below when the anchor is near the top of the clip box", () => {
     // Only 40px above (a 300px popup can't fit); plenty below.
-    expect(popupPlacement({ top: 40, bottom: 66 }, 800)).toBe("below");
+    expect(popupPlacement({ top: 40, bottom: 66 }, window800)).toBe("below");
   });
 
   it("stays above when neither side fully fits but above still has more room", () => {
-    expect(popupPlacement({ top: 250, bottom: 276 }, 400)).toBe("above");
+    expect(popupPlacement({ top: 250, bottom: 276 }, { top: 0, bottom: 400 })).toBe("above");
   });
 
   it("flips below when below has more room even if above is short", () => {
-    expect(popupPlacement({ top: 60, bottom: 86 }, 900)).toBe("below");
+    expect(popupPlacement({ top: 60, bottom: 86 }, { top: 0, bottom: 900 })).toBe("below");
+  });
+
+  // The clip is the MAP CONTAINER, not the window: a chip 9px under the map's top edge had
+  // 400px of window above it, so a window-only measure said "above" and the popup rendered
+  // decapitated behind the map's overflow-hidden edge (watched live on /search).
+  it("flips below for a chip near the top of a map that starts mid-page", () => {
+    expect(popupPlacement({ top: 406, bottom: 431 }, { top: 397, bottom: 900 })).toBe("below");
   });
 });
 

@@ -156,15 +156,19 @@ export function createPinFetcher(opts: {
 const POPUP_HEIGHT = 300;
 const POPUP_MARGIN = 16;
 
-/** Given the anchor chip's viewport rect, which side should the popup open on so it stays on
- * screen? The chip already sits visually above its pin, so "above" is the default look — this
+/** Given the anchor chip's viewport rect, which side should the popup open on so it stays
+ * visible? `clip` is the box the popup is actually CLIPPED by — for the Google engine that is
+ * the intersection of the map container (overflow-hidden) and the window, NOT the window
+ * alone: a chip 9px under the map's top edge had 400px of window above it, so a window-only
+ * measure said "above" and the card rendered decapitated behind the map's edge (watched
+ * live). The chip already sits visually above its pin, so "above" is the default look — this
  * only flips to "below" when there truly isn't room above. */
 export function popupPlacement(
   anchorRect: { top: number; bottom: number },
-  viewportHeight: number,
+  clip: { top: number; bottom: number },
 ): "above" | "below" {
-  const spaceAbove = anchorRect.top - POPUP_MARGIN;
-  const spaceBelow = viewportHeight - anchorRect.bottom - POPUP_MARGIN;
+  const spaceAbove = anchorRect.top - clip.top - POPUP_MARGIN;
+  const spaceBelow = clip.bottom - anchorRect.bottom - POPUP_MARGIN;
   return spaceAbove >= POPUP_HEIGHT || spaceAbove >= spaceBelow ? "above" : "below";
 }
 
