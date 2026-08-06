@@ -185,14 +185,17 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           pinnedRef.current = null;
           info.close();
         };
-        // CAPTURE phase, not bubble: the Maps JS SDK runs its own keydown handling on the map
-        // and its InfoWindow (confirmed live — a bubble-phase listener never saw Escape at all),
-        // and capture guarantees this runs before anything downstream can stop the event.
-        document.addEventListener("keydown", onDocKey, true);
+        // keydown on WINDOW, capture phase — confirmed live that even a document-level capture
+        // listener never saw Escape: the Maps JS SDK registers its own document-level capture
+        // listener during map init, BEFORE this one exists (this runs inside loadMaps().then()),
+        // and same-node/same-phase listeners fire in registration order, so theirs won. window
+        // sits topologically OUTSIDE document in the capture chain, so a window listener always
+        // fires first regardless of registration order — the fix that actually holds.
+        window.addEventListener("keydown", onDocKey, true);
         document.addEventListener("mousedown", onDocDown, true);
         cleanupRef.current = () => {
           document.removeEventListener("mousemove", onDocMove);
-          document.removeEventListener("keydown", onDocKey, true);
+          window.removeEventListener("keydown", onDocKey, true);
           document.removeEventListener("mousedown", onDocDown, true);
         };
 
