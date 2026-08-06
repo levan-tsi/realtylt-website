@@ -119,6 +119,18 @@ describe("parseSearchRequest — the /search page's own defaults", () => {
     expect(p.status).toBeUndefined();
   });
 
+  // Apartment is 1,162 Rental against exactly 1 Residential in this feed, and the for-sale
+  // search excludes rentals outright — so offering it to a buyer returned zero results, always.
+  // Hiding the option in the dropdown is not enough: ?homeType=apartment stays typeable, and a
+  // filter the control cannot show is a ghost that narrows the query invisibly.
+  it("drops a rental-only home type on a for-sale search, but honours it under ?rental=1", () => {
+    expect(parseSearchRequest(q("homeType=apartment")).homeType).toBeUndefined();
+    expect(parseSearchRequest(q("homeType=apartment&rental=1")).homeType).toBe("apartment");
+    // Types that exist on both sides are untouched either way.
+    expect(parseSearchRequest(q("homeType=condo")).homeType).toBe("condo");
+    expect(parseSearchRequest(q("homeType=condo&rental=1")).homeType).toBe("condo");
+  });
+
   it("clamps page to a whole number ≥ 1 (a typed URL is not to be trusted)", () => {
     expect(parseSearchRequest(q("page=4")).page).toBe(4);
     expect(parseSearchRequest(q("page=0")).page).toBe(1);

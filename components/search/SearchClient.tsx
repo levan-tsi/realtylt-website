@@ -119,13 +119,20 @@ const FEATURE_TOGGLES: { key: (typeof MORE_FLAGS)[number]; label: string }[] = [
 ];
 
 /** Home-type options. Values match HOME_TYPE_VALUES in lib/idx/types.ts, which maps each to the
- * RESO PropertySubType values it covers. */
-const HOME_TYPE_OPTS: { value: string; label: string }[] = [
+ * RESO PropertySubType values it covers.
+ *
+ * `rentalOnly` exists because of a real bug this shipped with for one commit: "Apartment" was
+ * offered on the FOR SALE search, where it can never return anything. Measured — Apartment is
+ * 1,162 Rental and exactly 1 Residential, and the for-sale search excludes rentals outright
+ * (EXCLUDE_RENTALS in db.ts), so every buyer who picked it got zero results, always. The
+ * original count that justified the option (243, sampled) never split sale from rental. It is
+ * real inventory, just rental inventory, so it moves rather than disappears. */
+const HOME_TYPE_OPTS: { value: string; label: string; rentalOnly?: boolean }[] = [
   { value: "house", label: "House" },
   { value: "condo", label: "Condo" },
   { value: "coop", label: "Co-op" },
   { value: "multi-family", label: "Multi-family" },
-  { value: "apartment", label: "Apartment" },
+  { value: "apartment", label: "Apartment", rentalOnly: true },
   { value: "manufactured", label: "Manufactured or mobile" },
 ];
 
@@ -148,6 +155,12 @@ const fmtLot = (n: number) => (n < 1 ? `${n} ac` : `${n} ac`);
 const TRUE_FLAGS = new Set(["1", "true", "on", "yes"]);
 
 function fromParams(sp: URLSearchParams): Filters {
+  const isRental = TRUE_FLAGS.has(sp.get("rental") ?? "");
+  // A rental-only home type on a FOR SALE url is a ghost filter: the option is not in the
+  // dropdown, so the select reads "Any home type" while the query still narrows to something
+  // that can never match. Drop it here, at the single entry point, rather than in the control.
+  const rawHomeType = sp.get("homeType") ?? "";
+  const homeTypeOpt = HOME_TYPE_OPTS.find((o) => o.value === rawHomeType);
   return {
     q: sp.get("q") ?? "",
     city: sp.get("city") ?? "",
@@ -166,7 +179,7 @@ function fromParams(sp: URLSearchParams): Filters {
     yearMin: sp.get("yearMin") ?? "",
     yearMax: sp.get("yearMax") ?? "",
     taxMax: sp.get("taxMax") ?? "",
-    homeType: HOME_TYPE_OPTS.some((o) => o.value === sp.get("homeType")) ? sp.get("homeType")! : "",
+    homeType: homeTypeOpt && (!homeTypeOpt.rentalOnly || isRental) ? homeTypeOpt.value : "",
     centralAir: TRUE_FLAGS.has(sp.get("centralAir") ?? ""),
     basement: TRUE_FLAGS.has(sp.get("basement") ?? ""),
     waterfront: TRUE_FLAGS.has(sp.get("waterfront") ?? ""),
@@ -575,7 +588,19 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 onClick={() =>
                   filters.rental === isRent
                     ? undefined
-                    : apply({ rental: isRent, priceMin: "", priceMax: "", propertyType: "" })
+                    : apply({
+                        rental: isRent,
+                        priceMin: "",
+                        priceMax: "",
+                        propertyType: "",
+                        // Leaving For Rent with "Apartment" chosen would carry a filter into
+                        // the sale search that can never match there, and the dropdown would
+                        // not even show it. Clear it on the way out.
+                        homeType:
+                          !isRent && HOME_TYPE_OPTS.find((o) => o.value === filters.homeType)?.rentalOnly
+                            ? ""
+                            : filters.homeType,
+                      })
                 }
                 className={`min-h-6 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
                   active ? "bg-ink text-white" : "bg-white text-stone hover:text-ink"
@@ -773,7 +798,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   className={panelSelectCls}
                 >
                   <option value="">Any home type</option>
-                  {HOME_TYPE_OPTS.map((o) => (<option key={o.value} value={o.value}>{o.label}</option>))}
+                  {HOME_TYPE_OPTS.filter((o) => !o.rentalOnly || filters.rental).map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
                 </select>
               </div>
             </div>

@@ -199,6 +199,14 @@ export type HomeType = keyof typeof HOME_TYPE_VALUES;
 
 export const HOME_TYPES = Object.keys(HOME_TYPE_VALUES) as HomeType[];
 
+/** Home types that only exist as RENTALS in this feed, so asking for them on the for-sale
+ * search is asking for nothing. Apartment is 1,162 Rental against exactly 1 Residential, and
+ * the for-sale search excludes rentals outright — so every buyer who picked it got zero
+ * results, always. Enforced in parseFilterParams (server AND the client's own fetch go through
+ * it) rather than only hidden in the dropdown, because a hidden option still leaves
+ * `?homeType=apartment` typeable, and a filter the control cannot show is a ghost. */
+export const RENTAL_ONLY_HOME_TYPES = new Set<HomeType>(["apartment"]);
+
 /** Basement values that count as HAVING one. None / Common / Crawl Space / Storage Space /
  * See Remarks / Bilco Door(s) all appear in this feed and none is what someone ticking the box
  * is asking for. WATERFRONT is the same idea for lotFeatures.

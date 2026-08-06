@@ -2,7 +2,7 @@
  * (/api/idx/search and /api/idx/pins) — one validation story, no drift. */
 
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import { HOME_TYPES, SEARCH_PAGE_SIZE, type HomeType, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
+import { HOME_TYPES, RENTAL_ONLY_HOME_TYPES, SEARCH_PAGE_SIZE, type HomeType, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
 
 /** Status values a URL may ask for. Anything else falls back to "no status filter". */
 export const STATUS_FILTERS: ListingStatusFilter[] = ["Active", "Pending"];
@@ -58,9 +58,14 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     withPhotosOnly: flag(q.get("withPhotos")),
     // Home type + feature toggles. The type is whitelisted against HOME_TYPE_VALUES, so a
     // crafted `homeType` can never reach the query builder; the toggles are yes-only flags.
-    homeType: HOME_TYPES.includes(q.get("homeType") as HomeType)
-      ? (q.get("homeType") as HomeType)
-      : undefined,
+    homeType: (() => {
+      const t = q.get("homeType") as HomeType;
+      if (!HOME_TYPES.includes(t)) return undefined;
+      // A rental-only type on a for-sale search can never match, so it is dropped rather than
+      // silently returning nothing (see RENTAL_ONLY_HOME_TYPES).
+      if (RENTAL_ONLY_HOME_TYPES.has(t) && !flag(q.get("rental"))) return undefined;
+      return t;
+    })(),
     centralAir: flag(q.get("centralAir")),
     basement: flag(q.get("basement")),
     waterfront: flag(q.get("waterfront")),
