@@ -459,6 +459,18 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               openPopup(true);
               onSelectRef.current?.(p.id);
             });
+            // Keyboard pinning. Enter/Space on a button fires only `click` — never pointerdown
+            // — so a keyboard user could preview a home (focus, above) but never PIN it, and
+            // tabbing onward closed the popup before its links were reachable. detail === 0
+            // is the keyboard-activation signature; mouse clicks (detail ≥ 1) already pinned
+            // on the press and are ignored here.
+            chip.addEventListener("click", (e) => {
+              if (e.detail !== 0) return;
+              cancelClose();
+              pinnedRef.current = p.id;
+              openPopup(true);
+              onSelectRef.current?.(p.id);
+            });
             container.appendChild(chip);
           }
         };
