@@ -10,6 +10,7 @@ import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { pageWindow } from "@/lib/pagination";
+import { boundsForCounty } from "@/components/idx/county-bounds";
 // "New Listings" quick-filter window (≤7 days, same as the card's "New" badge). Shared with
 // the server render so both sides ask the feed the same question.
 import { NEW_LISTING_DAYS } from "@/lib/idx/query";
@@ -193,8 +194,8 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
   return { name: parts.length ? parts.join(" · ") : "All listings", parts };
 }
 
-/** Project the current page's listings to slim map pins — the results map is PAGE-COUPLED
- * (owner's ask): it plots exactly these homes as price chips, swapping when the page does. */
+/** Project the current page's listings to slim map pins — seeds the map's first paint (and its
+ * initial fit) before the viewport-scoped, clustered fetch (mapFiltersQuery below) takes over. */
 const toPin = (l: Listing): MapPin => ({
   id: l.id,
   price: l.price,
@@ -213,6 +214,17 @@ const toPin = (l: Listing): MapPin => ({
   // proxy cannot serve.
   photoCount: l.photoCount ?? Math.max(l.photosMirrored ?? 0, l.photos.length ? 1 : 0),
 });
+
+/** api-shaped filters (no page/pageSize) — the same `quick` → newDays/status translation the
+ * results fetch below uses, shared with the map's viewport pin fetch so both ask /api/idx the
+ * identical question and never drift into showing two different sets of homes. */
+function apiFilterParams(f: Filters): URLSearchParams {
+  const api = new URLSearchParams(toQuery(f, true));
+  if (f.quick === "new") api.set("newDays", String(NEW_LISTING_DAYS));
+  if (f.quick === "active") api.set("status", "Active");
+  if (f.quick === "pending") api.set("status", "Pending");
+  return api;
+}
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
@@ -315,14 +327,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
     }
     let cancelled = false;
     setState("loading");
-    // Search page shows a fuller 36-per-page grid (live parity); the "New Listings" quick
-    // filter maps to a server-side listed-within-N-days filter.
-    const api = new URLSearchParams(toQuery(filters, true));
+    // Search page shows a fuller 36-per-page grid (live parity); apiFilterParams applies the
+    // same "New Listings" quick-filter → listed-within-N-days translation parseSearchRequest
+    // uses server-side, so this fetch and the first server render ask the same question.
+    const api = apiFilterParams(filters);
     api.set("pageSize", String(SEARCH_PAGE_SIZE));
-    // Mirrors parseSearchRequest — the server render and this fetch must ask the same question.
-    if (filters.quick === "new") api.set("newDays", String(NEW_LISTING_DAYS));
-    if (filters.quick === "active") api.set("status", "Active");
-    if (filters.quick === "pending") api.set("status", "Pending");
     fetch(`/api/idx/search?${api.toString()}`)
       .then((r) => {
         if (!r.ok) throw new Error(String(r.status));
@@ -390,10 +399,18 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   }, [result]);
 
   const listings = result?.listings ?? [];
-  // Page-coupled map pins — exactly this page's located listings (owner's core ask).
-  // favorites in deps: hearting a card must restyle its map chip live, not on the next
-  // listings change.
+  // Seeds the map's first paint; the map itself takes over with a viewport-scoped, clustered
+  // fetch (see filtersQuery below) once it settles. favorites in deps: hearting a card must
+  // restyle its map chip live, not on the next listings change.
   const mapPins = useMemo(() => listings.map((l) => ({ ...toPin(l), saved: favorites.includes(l.id) })).filter((p) => p.lat && p.lng), [listings, favorites]);
+  // What the map appends its own viewport bounds to for /api/idx/pins — same filters as the
+  // results fetch, so panning the map never shows homes the active filters would exclude.
+  const mapFiltersQuery = useMemo(() => apiFilterParams(filters).toString(), [filters]);
+  // A chosen county frames its WHOLE real extent (county-bounds.ts) rather than whatever the
+  // current results page happens to contain — so picking Queens actually shows Queens, and its
+  // viewport fetch pulls every pin in it (clustering is what keeps that renderable). A
+  // free-text/city search has no predefined box and keeps framing to its own result pins.
+  const mapInitialBounds = useMemo(() => (filters.county ? boundsForCounty(filters.county) : null), [filters.county]);
 
   // One card renderer for both branches — carries the ref (chip→card scroll) and the
   // hover/focus↔chip highlight. In grid view the highlight is harmless (no map).
@@ -922,7 +939,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
           <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[84vh]">
-            <MapView pins={mapPins} selectedId={activeId} onSelect={focusCard} onToggleSave={toggleFavorite} />
+            <MapView
+              pins={mapPins}
+              selectedId={activeId}
+              onSelect={focusCard}
+              onToggleSave={toggleFavorite}
+              filtersQuery={mapFiltersQuery}
+              favorites={favorites}
+              initialBounds={mapInitialBounds}
+            />
           </div>
         </div>
       ) : (

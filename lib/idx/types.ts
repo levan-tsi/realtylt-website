@@ -185,11 +185,17 @@ export interface MapBounds {
   west: number;
 }
 
-/** Max pins returned for a bounded (viewport) map fetch. A dense borough holds 4k+
- * listings; loading them all is the /search slowness this cap kills. When a viewport
- * truncates, `total` still reports the true in-bounds count so the UI can say
- * "showing N of M — zoom in to see all". Unbounded callers are never capped. */
-export const PIN_CAP = 800;
+/** Max pins returned for a bounded (viewport) map fetch. Raised from 800 once the map started
+ * CLUSTERING (components/idx/clustering.ts, supercluster) instead of drawing one DOM chip per
+ * pin — clustering's own cost stays cheap even far past this cap (benchmarked: a full-inventory
+ * 27,779-point index builds in ~28ms and queries in single-digit ms; see the round's report),
+ * so the real ceiling is PAYLOAD, not compute. At ~181 bytes/pin (measured on the slim MapPin
+ * JSON shape), 3,000 pins is ~530KB — comparable to the ~972KB this route already shipped
+ * unbounded before it required a viewport, and it covers every county except the densest NYC
+ * boroughs at their widest zoom. When a viewport truncates, `total` still reports the true
+ * in-bounds count so the UI can say "showing N of M — zoom in to see all". Unbounded callers
+ * are never capped. */
+export const PIN_CAP = 3000;
 
 /** Pin set for the map + the matching listing count. With a viewport bbox, `pins` is
  * capped at PIN_CAP while `total` is the true count inside the box (see /api/idx/pins). */

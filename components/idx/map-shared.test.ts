@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { boundsOfPins, chipPrice, spreadPins } from "./map-shared";
+import { describe, expect, it, vi } from "vitest";
+import { boundsOfPins, chipPrice, createPinFetcher, popupPlacement, spreadPins } from "./map-shared";
 import type { MapPin } from "@/lib/idx/types";
 
 const pin = (over: Partial<MapPin>): MapPin => ({
@@ -93,5 +93,73 @@ describe("boundsOfPins", () => {
       pin({ id: "B", lat: 41.8, lng: -73.7 }),
     ]);
     expect(b).toEqual({ north: 41.8, south: 41.2, east: -73.7, west: -74.3 });
+  });
+});
+
+describe("popupPlacement — flips above/below so the popup never runs off the fold", () => {
+  it("opens above by default when there is room (the chip's existing look)", () => {
+    expect(popupPlacement({ top: 400, bottom: 426 }, 800)).toBe("above");
+  });
+
+  it("flips below when the anchor is near the top of the viewport", () => {
+    // Only 40px above (a 300px popup can't fit); plenty below.
+    expect(popupPlacement({ top: 40, bottom: 66 }, 800)).toBe("below");
+  });
+
+  it("stays above when neither side fully fits but above still has more room", () => {
+    expect(popupPlacement({ top: 250, bottom: 276 }, 400)).toBe("above");
+  });
+
+  it("flips below when below has more room even if above is short", () => {
+    expect(popupPlacement({ top: 60, bottom: 86 }, 900)).toBe("below");
+  });
+});
+
+describe("createPinFetcher — debounced, race-safe /api/idx/pins fetches", () => {
+  const bounds = { north: 41, south: 40, east: -73, west: -74 };
+
+  it("debounces rapid requests into a single fetch", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn(async () => ({ ok: true, json: async () => ({ pins: [], total: 0 }) }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vi.stubGlobal("fetch", fetchMock as any);
+    const onData = vi.fn();
+    const { request } = createPinFetcher({ filtersQuery: "", onData, debounceMs: 100 });
+    request(bounds);
+    request(bounds);
+    request(bounds);
+    expect(fetchMock).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(100);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(onData).toHaveBeenCalledWith([], 0);
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
+  it("drops a stale response — only the newest request's data reaches onData", async () => {
+    vi.useFakeTimers();
+    let call = 0;
+    const fetchMock = vi.fn(async () => {
+      call += 1;
+      const mine = call;
+      // The FIRST call resolves slower than the second, simulating an in-flight request for
+      // bounds the visitor has already panned away from.
+      const delayMs = mine === 1 ? 50 : 10;
+      await new Promise((r) => setTimeout(r, delayMs));
+      return { ok: true, json: async () => ({ pins: [], total: mine }) };
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vi.stubGlobal("fetch", fetchMock as any);
+    const onData = vi.fn();
+    const { request } = createPinFetcher({ filtersQuery: "", onData, debounceMs: 10 });
+    request(bounds);
+    await vi.advanceTimersByTimeAsync(10); // first debounce fires, first fetch starts
+    request({ ...bounds, north: 42 });
+    await vi.advanceTimersByTimeAsync(10); // second debounce fires, second fetch starts
+    await vi.advanceTimersByTimeAsync(60); // both fetches settle
+    expect(onData).toHaveBeenCalledTimes(1);
+    expect(onData).toHaveBeenCalledWith([], 2); // the SECOND (newer) request's data, not the first
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
   });
 });

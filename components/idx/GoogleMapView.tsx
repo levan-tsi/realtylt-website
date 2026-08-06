@@ -1,15 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { boundsOfPins, chipPrice, MAP_FONT, popupNode, spreadPins, type MapViewProps } from "./map-shared";
+import { useEffect, useRef, useState } from "react";
+import {
+  boundsOfPins,
+  buildClusterBubble,
+  chipPrice,
+  createPinFetcher,
+  MAP_FONT,
+  popupNode,
+  popupPlacement,
+  spreadPins,
+  type MapViewProps,
+} from "./map-shared";
+import { buildClusterIndex, clusterExpansionZoom, getClusterEntries, type ClusterIndex } from "./clustering";
 import { loadMaps } from "@/lib/idx/maps-loader";
+import type { MapBounds, MapPin } from "@/lib/idx/types";
 
 /** Official Google Maps results map (live-site parity — Brivity renders Google Maps).
  * Loads only when NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is set; SearchClient falls back to the
- * Leaflet/OSM view without it. PAGE-COUPLED: plots exactly the current page's listings as
- * black price chips (floored, live-style), auto-fits them on page/filter/sort change, and a
- * chip click scrolls to + highlights its card via onSelect. Same-zip listings are fanned out
- * (spreadPins). Rendered as an OverlayView so no mapId/AdvancedMarker requirement. No new deps. */
+ * Leaflet/OSM view without it. `pins` seeds the first paint and frames the initial view (auto-
+ * fit on page/filter/sort change, as before). Once `filtersQuery` is set, the map fetches its
+ * own pin set for the live viewport via /api/idx/pins (debounced, race-safe) and clusters it
+ * with supercluster — Zillow-style: a dense borough shows a handful of count bubbles at low
+ * zoom instead of thousands of unrenderable chips, and clicking a bubble zooms into it.
+ * Rendered as an OverlayView so no mapId/AdvancedMarker requirement. */
 
 declare global {
   // Minimal surface of the Maps JS API we touch — avoids @types/google.maps as a dep.
@@ -17,13 +31,16 @@ declare global {
   var google: any;
 }
 
-
-export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
+export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
   pinsRef.current = pins;
+  const initialBoundsRef = useRef(initialBounds);
+  initialBoundsRef.current = initialBounds;
   const selectedRef = useRef(selectedId);
   selectedRef.current = selectedId;
+  const favoritesRef = useRef(favorites);
+  favoritesRef.current = favorites;
   /** The listing the visitor CLICKED. Owned by click and the popup's X only — hover never
    * writes it, which is what keeps a passing pointer from closing a chosen popup. */
   const pinnedRef = useRef<string | null>(null);
@@ -38,14 +55,34 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const overlayRef = useRef<any>(null);
 
-  // Fit the map to the current page's pins. Degenerate/tiny boxes (a single listing, or many
-  // sharing a zip) get a zoom clamp so the map doesn't slam to street level.
+  // Viewport-fetched pins (Zillow-style clustering source) — null until the first fetch for
+  // the live bounds resolves, so the overlay falls back to `pins` (the results page) until then.
+  const fetchedPinsRef = useRef<MapPin[] | null>(null);
+  const [viewportTotal, setViewportTotal] = useState<number | null>(null);
+  const [fetchedCount, setFetchedCount] = useState<number | null>(null);
+  const fetcherRef = useRef<ReturnType<typeof createPinFetcher> | null>(null);
+  // Cluster index, cached by the RAW pin-array reference it was built from (draw() runs on
+  // every idle AND every selectedId change — rebuilding a supercluster index over thousands of
+  // points on a mere card hover would be wasted CPU the visitor would feel as jank).
+  const indexCacheRef = useRef<{ source: MapPin[]; index: ClusterIndex; byId: Map<string, MapPin> } | null>(null);
+
+  const getIndex = (source: MapPin[]) => {
+    if (indexCacheRef.current?.source !== source) {
+      indexCacheRef.current = { source, index: buildClusterIndex(source), byId: new Map(source.map((p) => [p.id, p])) };
+    }
+    return indexCacheRef.current;
+  };
+
+  // Fit the map to `initialBounds` (a chosen county's real extent) when given, else to the
+  // seed pins' own bounds. Degenerate/tiny boxes (a single listing, or many sharing a zip) get
+  // a zoom clamp so the map doesn't slam to street level.
   const fitToPins = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     map: any,
     located: MapViewProps["pins"],
+    boundsOverride?: MapBounds | null,
   ) => {
-    const b = boundsOfPins(located);
+    const b = boundsOverride ?? boundsOfPins(located);
     if (!b) return;
     map.fitBounds(
       new google.maps.LatLngBounds({ lat: b.south, lng: b.west }, { lat: b.north, lng: b.east }),
@@ -84,7 +121,9 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // fit it; that fires `idle`, `idle` calls overlay.draw(), and draw() rebuilds every chip
         // from scratch — so the chip the pointer was over got destroyed mid-hover and its
         // `mouseleave` never fired, leaving the preview stuck open. It is also just better
-        // behaviour: the map should not lurch out from under a passing pointer.
+        // behaviour: the map should not lurch out from under a passing pointer. Because this
+        // disables Google's own keep-in-view behaviour, the popup can otherwise render partly
+        // off the map's own box — popupPlacement (below) is what keeps it on screen instead.
         const info = new google.maps.InfoWindow({ disableAutoPan: true });
 
         // Deferred close, shared by every chip and by the popup itself.
@@ -116,13 +155,68 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           scheduleClose();
         };
         document.addEventListener("mousemove", onDocMove, { passive: true });
-        cleanupRef.current = () => document.removeEventListener("mousemove", onDocMove);
 
-        const located = () => spreadPins(pinsRef.current.filter((p) => p.lat && p.lng));
+        // Easy to close three ways (owner's ask): the X on the photo, Escape, or a click
+        // anywhere outside the popup — including a PINNED one, which onDocMove above
+        // deliberately leaves alone (a passing pointer must never outrank a deliberate choice,
+        // but a deliberate Escape or outside click is exactly that).
+        const onDocKey = (e: KeyboardEvent) => {
+          if (e.key !== "Escape") return;
+          pinnedRef.current = null;
+          info.close();
+        };
+        // mousedown (not click) so it closes before a DIFFERENT chip's own pointerdown re-pins —
+        // the same ordering the chips' own PIN ON THE PRESS logic below relies on.
+        const onDocDown = (e: MouseEvent) => {
+          const el = e.target as Element | null;
+          if (el?.closest?.(".rlt-price-chip") || el?.closest?.(".gm-style-iw") || el?.closest?.(".rlt-cluster-bubble")) return;
+          pinnedRef.current = null;
+          info.close();
+        };
+        document.addEventListener("keydown", onDocKey);
+        document.addEventListener("mousedown", onDocDown);
+        cleanupRef.current = () => {
+          document.removeEventListener("mousemove", onDocMove);
+          document.removeEventListener("keydown", onDocKey);
+          document.removeEventListener("mousedown", onDocDown);
+        };
 
-        fitToPins(map, located());
+        // The pin set the overlay draws from: viewport-fetched pins once the first fetch has
+        // landed, else the seed (results-page) pins — same fallback the Leaflet engine uses.
+        const activeSource = () => (fetchedPinsRef.current ?? pinsRef.current).filter((p) => p.lat && p.lng);
 
-        // HTML chip overlay — one floored price chip per listing on the page.
+        fitToPins(map, spreadPins(activeSource()), initialBoundsRef.current);
+
+        // ── Viewport pin fetch (Zillow-style: cluster over what's actually on screen). Only
+        // wired when the caller opted in with filtersQuery; otherwise the map stays exactly the
+        // old page-coupled behaviour.
+        const requestViewport = () => {
+          if (!filtersQuery) return;
+          const b = map.getBounds();
+          if (!b) return;
+          fetcherRef.current?.request({
+            north: b.getNorth(),
+            south: b.getSouth(),
+            east: b.getEast(),
+            west: b.getWest(),
+          });
+        };
+        if (filtersQuery) {
+          fetcherRef.current = createPinFetcher({
+            filtersQuery,
+            onData: (p, total) => {
+              if (disposed) return;
+              fetchedPinsRef.current = p;
+              setFetchedCount(p.length);
+              setViewportTotal(total);
+              overlay?.draw?.();
+            },
+          });
+          requestViewport();
+        }
+
+        // HTML chip/bubble overlay — one price chip per unclustered listing, one count bubble
+        // per cluster, in the current viewport at the current zoom.
         overlay = new google.maps.OverlayView();
         overlay.onAdd = function () {
           this.container = document.createElement("div");
@@ -138,7 +232,37 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           const proj = this.getProjection();
           if (!proj) return;
           const sel = selectedRef.current;
-          for (const p of located()) {
+          const zoom = map.getZoom() ?? 9;
+          const b = map.getBounds();
+          const { index, byId } = getIndex(activeSource());
+          const bounds = b
+            ? { north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() }
+            : boundsOfPins(activeSource()) ?? { north: 90, south: -90, east: 180, west: -180 };
+          const entries = getClusterEntries(index, byId, bounds, zoom);
+          // Same-centroid leaf pins still get fanned out so no chip hides another — spread only
+          // the pins actually rendering individually this frame (clusters already absorbed the
+          // rest), keyed back by id since spreadPins doesn't preserve input order.
+          const spreadById = new Map(
+            spreadPins(entries.filter((e) => e.kind === "pin").map((e) => e.pin)).map((p) => [p.id, p]),
+          );
+
+          for (const entry of entries) {
+            if (entry.kind === "cluster") {
+              const pos = new google.maps.LatLng(entry.lat, entry.lng);
+              const pt = proj.fromLatLngToDivPixel(pos);
+              const bubble = buildClusterBubble(entry.count, () => {
+                map.panTo(pos);
+                map.setZoom(clusterExpansionZoom(index, entry.id));
+              });
+              bubble.style.position = "absolute";
+              bubble.style.left = `${pt.x}px`;
+              bubble.style.top = `${pt.y}px`;
+              bubble.style.transform = "translate(-50%,-50%)";
+              container.appendChild(bubble);
+              continue;
+            }
+
+            const p = spreadById.get(entry.pin.id) ?? entry.pin;
             const pos = new google.maps.LatLng(p.lat, p.lng);
             const pt = proj.fromLatLngToDivPixel(pos);
             const active = p.id === sel;
@@ -149,23 +273,20 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             // Hearted listings read differently at a glance — white chip, red heart, same
             // red as the card's FavoriteButton (owner's ask: saved homes visible ON the map).
             // SOLID = you can still buy it. HOLLOW = already spoken for (Pending / Under
-            // Contract). The owner could not tell them apart on the map, and 4,775 of the
-            // 11,609 homes on it are Pending — nearly half the pins were promising something
-            // they could not deliver. Deliberately NOT a new hue: the site runs monochrome with
-            // one accent, and Zillow's yellow here would be the loudest thing on the page. Fill
-            // versus outline is the same distinction and it survives being colour-blind.
+            // Contract). Deliberately NOT a new hue: the site runs monochrome with one accent.
             const spokenFor = p.status === "Pending" || p.status === "Under Contract";
+            const saved = p.saved || (favoritesRef.current?.includes(p.id) ?? false);
             chip.style.cssText = `position:absolute;left:${pt.x}px;top:${pt.y}px;transform:translate(-50%,-100%);${
               active
                 ? "--chip-bg:#1c729a;background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-                : p.saved
+                : saved
                   ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
                   : spokenFor
                     ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#4a4a4a;box-shadow:0 0 0 1.5px #4a4a4a,0 2px 8px rgb(0 0 0/.22)"
                     : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
             };font:700 11px/1 ${MAP_FONT};padding:7px 9px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
             if (spokenFor) chip.setAttribute("aria-label", `${chipPrice(p.price)} — ${p.address} — ${p.status}`);
-            if (p.saved) {
+            if (saved) {
               const heart = document.createElement("span");
               heart.style.color = "#ef4444";
               heart.textContent = "♥ ";
@@ -198,11 +319,15 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               node.addEventListener("mouseenter", cancelClose);
               node.addEventListener("mouseleave", () => scheduleClose());
               info.setContent(node);
-              // Lift the preview clear of the chip that opened it. Without this the popup lands
-              // on top of its own chip, so "hover to peek, click to keep" cannot work — the
-              // click hits the popup, and since the popup is a LINK to the listing it navigates
-              // instead of pinning. 26px is the chip's height plus a hair, measured.
-              info.setOptions({ pixelOffset: new google.maps.Size(0, -26) });
+              // Stay within the viewport instead of always opening the same direction: measure
+              // the chip's real position (same technique as LocationSuggest's dropdown) and
+              // flip below its anchor when there isn't room above for it — the bug this fixes
+              // is disableAutoPan (above) trading Google's own keep-in-view behaviour away.
+              const chipRect = chip.getBoundingClientRect();
+              const placement = popupPlacement(chipRect, window.innerHeight);
+              // 26px clears the chip's own height; the popup opens flush against whichever
+              // side was chosen instead of overlapping the chip that opened it.
+              info.setOptions({ pixelOffset: new google.maps.Size(0, placement === "above" ? -26 : 26) });
               info.setPosition(pos);
               info.open({ map });
               if (pinned) pinnedRef.current = p.id;
@@ -237,8 +362,12 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         };
         overlay.setMap(map);
         overlayRef.current = overlay;
-        // Redraw chips on every settle (pan/zoom) so their pixel positions stay correct.
-        map.addListener("idle", () => overlay.draw());
+        // Redraw chips on every settle (pan/zoom) so their pixel positions stay correct, and
+        // (when opted in) fetch the new viewport's pins.
+        map.addListener("idle", () => {
+          overlay.draw();
+          requestViewport();
+        });
       })
       .catch((e: unknown) => console.error("[maps]", e));
 
@@ -246,21 +375,53 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
       disposed = true;
       cleanupRef.current?.();
       cleanupRef.current = null;
+      fetcherRef.current?.cancel();
       overlay?.setMap(null);
       mapRef.current = null;
       overlayRef.current = null;
     };
+    // filtersQuery intentionally starts the effect over (a fresh fetcher, a fresh map) only via
+    // the dedicated effect below — re-running this whole mount effect on every filter change
+    // would tear down and rebuild the Google Map instance itself, which is far more than a new
+    // search needs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // New page/filter/sort: refit the frame to the new pins and redraw the chips (an idle
-  // won't fire on its own without a user move).
+  // A filter change: drop the old viewport's fetched pins (they belong to the previous search)
+  // and start a fresh fetcher for the current bounds — mirrors the mount-time wiring above but
+  // runs on every later change instead of only once.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!filtersQuery || !map || typeof google === "undefined") return;
+    fetchedPinsRef.current = null;
+    setFetchedCount(null);
+    setViewportTotal(null);
+    fetcherRef.current?.cancel();
+    fetcherRef.current = createPinFetcher({
+      filtersQuery,
+      onData: (p, total) => {
+        fetchedPinsRef.current = p;
+        setFetchedCount(p.length);
+        setViewportTotal(total);
+        overlayRef.current?.draw?.();
+      },
+    });
+    const b = map.getBounds();
+    if (b) fetcherRef.current.request({ north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() });
+    overlayRef.current?.draw?.();
+  }, [filtersQuery]);
+
+  // New page/filter/sort: refit the frame — to the chosen county's real extent when given, else
+  // the new seed pins' own bounds — and redraw (an idle won't fire on its own without a user
+  // move). Viewport-fetched pins (once any exist) are left alone here — re-fitting on every
+  // fetch would fight a visitor's own pan/zoom.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || typeof google === "undefined") return;
-    fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)));
+    fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)), initialBounds);
     overlayRef.current?.draw?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins]);
+  }, [pins, initialBounds]);
 
   // A card hover/focus highlights the matching chip — redraw with the new active id.
   useEffect(() => {
@@ -285,6 +446,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         </span>
         <span>Locations approximate</span>
       </div>
+      {viewportTotal !== null && fetchedCount !== null && viewportTotal > fetchedCount && (
+        <p className="pointer-events-none absolute bottom-2 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+          Showing {fetchedCount.toLocaleString()} of {viewportTotal.toLocaleString()} — zoom in for more
+        </p>
+      )}
       <div ref={divRef} className="h-full min-h-96 w-full" />
     </div>
   );

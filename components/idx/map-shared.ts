@@ -2,20 +2,37 @@ import type { MapBounds, MapPin } from "@/lib/idx/types";
 import { listingPath } from "@/lib/idx/listing-url";
 
 /** Shared map math — used by both the Leaflet fallback and the Google Maps view.
- * The results map is PAGE-COUPLED: it plots exactly the current page's listings as black
- * price chips (owner's ask — "the map shows that page's homes; page 2 swaps both"), so no
- * clustering or viewport refetch. Same-zip listings share a centroid, so `spreadPins` fans
- * them out deterministically and the chip labels are FLOORED like live ($875K / $1.3M). */
+ * `pins` seeds the FIRST paint (the current results page, so the map is never empty while the
+ * viewport fetch is in flight); once the map settles, both engines fetch their own pin set for
+ * the visible viewport via `/api/idx/pins` (see `createPinFetcher`) and cluster it client-side
+ * with supercluster (./clustering.ts) — Zillow-style, so a dense borough never tries to draw
+ * every pin. Same-zip listings share a centroid, so `spreadPins` fans leaf pins out
+ * deterministically and the chip labels are FLOORED like live ($875K / $1.3M). */
 
-/** Props both map engines accept. `pins` is the current page's listings; clicking a chip
- * calls `onSelect(id)` so the results panel can scroll to and highlight that card;
- * `selectedId` highlights the matching chip when a card is hovered/focused. */
+/** Props both map engines accept. `pins` seeds the first paint; `filtersQuery` (the same
+ * query string sent to /api/idx/search, minus paging) is what each engine appends its own
+ * viewport bounds to when fetching /api/idx/pins. `favorites` lets a fetched pin (not
+ * necessarily on the current results page) still show its saved-heart state. Clicking a chip
+ * calls `onSelect(id)` so the results panel can scroll to and highlight a matching card when
+ * one exists; `selectedId` highlights the matching chip when a card is hovered/focused. */
 export interface MapViewProps {
   pins: MapPin[];
   selectedId?: string | null;
   onSelect?: (id: string) => void;
   /** Toggle a listing's saved-heart from the popup (SearchClient wires SavedProvider in). */
   onToggleSave?: (id: string) => void;
+  /** api-shaped filters (no page/pageSize/bounds) — appended with the live viewport's bounds
+   * to fetch /api/idx/pins. Omitted (or unset) means the map stays page-coupled, the old
+   * behaviour, which the map-shared tests and any caller that hasn't opted in still get. */
+  filtersQuery?: string;
+  /** Ids the visitor has hearted — merged onto viewport-fetched pins the results page never saw. */
+  favorites?: string[];
+  /** Frame to fit on mount and on every filter change, in place of boundsOfPins(pins) — set
+   * this to a chosen county's real extent (county-bounds.ts) so picking "Queens" frames the
+   * WHOLE borough (and its viewport fetch pulls every pin in it) rather than whatever the
+   * current results page happens to contain. Falls back to boundsOfPins(pins) when unset,
+   * e.g. a free-text search with no predefined box. */
+  initialBounds?: MapBounds | null;
 }
 
 export const MAP_FONT = "Lato,Helvetica,Arial,sans-serif";
@@ -86,6 +103,115 @@ export function boundsOfPins(pins: MapPin[]): MapBounds | null {
     if (p.lng < west) west = p.lng;
   }
   return { north, south, east, west };
+}
+
+/** Debounced `/api/idx/pins` fetcher shared by both map engines. `.request(bounds)` schedules
+ * a fetch after `debounceMs` of quiet (a drag/zoom fires many intermediate bounds; only the
+ * last one should hit the network). A sequence counter drops any response that isn't from the
+ * most recent request, so a slow fetch for a bounds the visitor already panned away from can
+ * never clobber fresher data — the classic race a plain debounce misses. */
+export function createPinFetcher(opts: {
+  filtersQuery: string;
+  onData: (pins: MapPin[], total: number) => void;
+  onError?: () => void;
+  debounceMs?: number;
+}) {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let seq = 0;
+  const request = (bounds: MapBounds) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      const mySeq = ++seq;
+      const qs = new URLSearchParams(opts.filtersQuery);
+      qs.set("north", String(bounds.north));
+      qs.set("south", String(bounds.south));
+      qs.set("east", String(bounds.east));
+      qs.set("west", String(bounds.west));
+      fetch(`/api/idx/pins?${qs.toString()}`)
+        .then((r) => (r.ok ? (r.json() as Promise<{ pins: MapPin[]; total: number }>) : Promise.reject(r.status)))
+        .then((data) => {
+          if (mySeq !== seq) return; // a newer request already superseded this one
+          opts.onData(data.pins, data.total);
+        })
+        .catch(() => {
+          if (mySeq === seq) opts.onError?.();
+        });
+    }, opts.debounceMs ?? 400);
+  };
+  const cancel = () => {
+    if (timer) clearTimeout(timer);
+  };
+  return { request, cancel };
+}
+
+/** Rough footprint of the popup mini-card (photo frame 158 + price/address/office lines ~72 +
+ * the View Listing button ~42, plus a little breathing room) — enough to decide which side of
+ * its anchor has room, without waiting for a real layout pass. Same technique as
+ * LocationSuggest's dropdown: measure the space above vs. below and open toward the side that
+ * actually has it, rather than always the same direction and hoping. */
+const POPUP_HEIGHT = 300;
+const POPUP_MARGIN = 16;
+
+/** Given the anchor chip's viewport rect, which side should the popup open on so it stays on
+ * screen? The chip already sits visually above its pin, so "above" is the default look — this
+ * only flips to "below" when there truly isn't room above. */
+export function popupPlacement(
+  anchorRect: { top: number; bottom: number },
+  viewportHeight: number,
+): "above" | "below" {
+  const spaceAbove = anchorRect.top - POPUP_MARGIN;
+  const spaceBelow = viewportHeight - anchorRect.bottom - POPUP_MARGIN;
+  return spaceAbove >= POPUP_HEIGHT || spaceAbove >= spaceBelow ? "above" : "below";
+}
+
+/** Cluster bubble size/label tier — Zillow-style: the more homes inside it, the bigger the
+ * bubble and the bigger its number, so the map's own density reads at a glance without opening
+ * anything. Four tiers keep the largest bubble (a whole dense county at low zoom) readable
+ * without swallowing the map. */
+export function clusterTier(count: number): { size: number; font: number } {
+  if (count < 10) return { size: 34, font: 12 };
+  if (count < 50) return { size: 42, font: 13 };
+  if (count < 200) return { size: 50, font: 14 };
+  return { size: 58, font: 15 };
+}
+
+/** Cluster count label — exact under 1,000 (supercluster's own tiles rarely exceed that per
+ * bubble at a usable zoom), abbreviated to one decimal above it ("9.7k"), same floored-trim
+ * spirit as chipPrice. */
+export function clusterLabel(count: number): string {
+  if (count < 1000) return String(count);
+  const k = count / 1000;
+  return `${k.toFixed(k < 10 ? 1 : 0).replace(/\.0$/, "")}k`;
+}
+
+/** The cluster bubble's shared visual language (monochrome ink circle, white border, one
+ * shadow scale) as a standalone CSS string — `.rlt-cluster-bubble` in globals.css carries the
+ * class-level rules (hover/focus, transition); this is only the per-bubble size that varies. */
+function clusterBubbleStyle(count: number): string {
+  const { size, font } = clusterTier(count);
+  return `width:${size}px;height:${size}px;font-size:${font}px`;
+}
+
+/** Real DOM node for a cluster bubble (GoogleMapView's OverlayView appends live elements). */
+export function buildClusterBubble(count: number, onClick: () => void): HTMLButtonElement {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "rlt-cluster-bubble";
+  b.setAttribute("aria-label", `${count} homes — click to zoom in`);
+  b.style.cssText = clusterBubbleStyle(count);
+  b.textContent = clusterLabel(count);
+  b.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClick();
+  });
+  return b;
+}
+
+/** Same bubble as an HTML string (Leaflet's `divIcon` takes markup, not a live node — it builds
+ * its own container and injects this). */
+export function clusterBubbleHtml(count: number): string {
+  return `<span class="rlt-cluster-bubble" style="${clusterBubbleStyle(count)}" role="button" aria-label="${count} homes — click to zoom in">${clusterLabel(count)}</span>`;
 }
 
 /** Popup mini-card shared by both map engines, built as a real DOM node so the photo pager's
