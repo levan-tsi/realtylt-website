@@ -176,6 +176,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           if (e.key !== "Escape") return;
           pinnedRef.current = null;
           info.close();
+          // Closing can hand focus back to the chip that opened it, and the chip's OWN focus
+          // handler below treats a focus-visible refocus as "preview me" — reopening the very
+          // popup Escape just closed (observed live: Escape appeared to do nothing). Blurring
+          // whatever now has focus stops that refocus from ever firing.
+          (document.activeElement as HTMLElement | null)?.blur?.();
         };
         // mousedown (not click) so it closes before a DIFFERENT chip's own pointerdown re-pins —
         // the same ordering the chips' own PIN ON THE PRESS logic below relies on.
