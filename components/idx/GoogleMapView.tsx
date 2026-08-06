@@ -168,6 +168,14 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         };
         document.addEventListener("mousemove", onDocMove, { passive: true });
 
+        // A deliberate close (Escape / click-outside) must WIN even if closing hands focus back
+        // to the chip that opened it — its own focus handler (below) treats a focus-visible
+        // refocus as "preview me" and would reopen the exact popup just closed. Verified live
+        // this reopen race is real and timing-dependent (sometimes the refocus fires before the
+        // next check, sometimes after), so blur() alone wasn't reliable — this timestamp is a
+        // hard, deterministic guard: the focus handler refuses to reopen for a short window
+        // after ANY deliberate close, regardless of what triggers the refocus or when.
+        let suppressReopenUntil = 0;
         // Easy to close three ways (owner's ask): the X on the photo, Escape, or a click
         // anywhere outside the popup — including a PINNED one, which onDocMove above
         // deliberately leaves alone (a passing pointer must never outrank a deliberate choice,
@@ -175,11 +183,8 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         const onDocKey = (e: KeyboardEvent) => {
           if (e.key !== "Escape") return;
           pinnedRef.current = null;
+          suppressReopenUntil = Date.now() + 400;
           info.close();
-          // Closing can hand focus back to the chip that opened it, and the chip's OWN focus
-          // handler below treats a focus-visible refocus as "preview me" — reopening the very
-          // popup Escape just closed (observed live: Escape appeared to do nothing). Blurring
-          // whatever now has focus stops that refocus from ever firing.
           (document.activeElement as HTMLElement | null)?.blur?.();
         };
         // mousedown (not click) so it closes before a DIFFERENT chip's own pointerdown re-pins —
@@ -188,6 +193,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           const el = e.target as Element | null;
           if (el?.closest?.(".rlt-price-chip") || el?.closest?.(".gm-style-iw") || el?.closest?.(".rlt-cluster-bubble")) return;
           pinnedRef.current = null;
+          suppressReopenUntil = Date.now() + 400;
           info.close();
         };
         // keydown on WINDOW, capture phase — confirmed live that even a document-level capture
@@ -356,9 +362,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             });
             // Keyboard parity: the chips are real buttons, so tabbing to one previews it too.
             // Guarded to keyboard focus only — a mouse press also focuses, and re-opening the
-            // popup mid-press was part of what was eating the click.
+            // popup mid-press was part of what was eating the click. Also guarded against the
+            // reopen race a deliberate close (Escape/outside-click, above) can trigger.
             chip.addEventListener("focus", (e) => {
               if (!(e.target as HTMLElement).matches(":focus-visible")) return;
+              if (Date.now() < suppressReopenUntil) return;
               cancelClose();
               if (!pinnedRef.current) openPopup(false);
             });
