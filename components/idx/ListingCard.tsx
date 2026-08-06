@@ -231,7 +231,13 @@ export function ListingCard({
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
           <p className="text-2xl font-bold leading-tight">{priceLabel(l)}</p>
-          <p className="mt-1 text-lg font-medium leading-snug">
+          {/* Clamped AND reserved at two lines, for the same reason the stats line below is
+              always rendered: this block is anchored to the card's bottom, so anything that
+              changes its height moves the price. A three-line address (measured on production:
+              "144 Cream Street, Poughkeepsie (Town), NY 12601") pushed one card's price up
+              exactly one line — price tops across that row read -1199/-1223/-1199/-1199, so
+              three of four aligned and one did not, which reads as a bug rather than a rhythm. */}
+          <p className="mt-1 line-clamp-2 min-h-[2lh] text-lg font-medium leading-snug">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           {/* ALWAYS rendered, even when the feed carries no beds/baths/sqft (land, commercial,
@@ -242,8 +248,14 @@ export function ListingCard({
           <p className="mt-1 text-xs italic" aria-hidden={!statsShort}>
             {statsShort || " "}
           </p>
-          <div className="mt-2 flex items-end justify-between gap-2">
-            <p className="min-w-0 break-words text-[10px] italic leading-tight text-white/85">
+          <div className="mt-2 flex items-end justify-between gap-3">
+            {/* Second source of the same drift, and the collision the eye actually catches: a
+                long office name wrapped to two lines and ran under the View button, while a
+                short one stayed on one — so the row's height, and therefore the price above it,
+                depended on the brokerage. Reserved at two lines like the address. Not truncated:
+                at 10px in ~180px of usable width, one line clips "United RE Hudson Valley Edge"
+                mid-word, and this is attribution. */}
+            <p className="min-w-0 line-clamp-2 min-h-[2lh] break-words text-[10px] italic leading-tight text-white/85">
               Listed With {l.listOfficeName}
             </p>
             <span className="shrink-0 rounded-lg bg-ink px-4 py-1 text-sm text-paper transition-colors group-hover:bg-ink-soft">
