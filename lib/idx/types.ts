@@ -160,10 +160,63 @@ export interface SearchParams {
   taxMax?: number; // annual property tax, USD
   /** Exclude listings without a mirrored cover photo (the branded-placeholder rows). */
   withPhotosOnly?: boolean;
+  /** Home type — RESO PropertySubType, which is a finer cut than PropertyType: condos, co-ops
+   * and townhouses are all `Residential`. One token can cover several feed values (see
+   * HOME_TYPE_VALUES), so this filters with `in.()`, not equality. */
+  homeType?: HomeType;
+  // ── Feature toggles, backed by generated boolean columns (supabase/migrations/
+  // idx_search_facet_columns.sql). Each is "yes" only — nobody searches for "no basement" —
+  // and a row whose feed record omits the source array yields NULL and is honestly excluded.
+  centralAir?: boolean;
+  basement?: boolean;
+  waterfront?: boolean;
+  firstFloorBed?: boolean;
+  eatInKitchen?: boolean;
   sort?: SortKey;
   page?: number; // 1-based
   pageSize?: number; // default 12
 }
+
+/** Home-type tokens the /search "Home type" control offers, and the RESO PropertySubType
+ * values each one covers. Grouped where a group is genuinely ONE concept to a buyer: nobody
+ * shopping for a two-family thinks in terms of Duplex vs Triplex vs Quadruplex, but everybody
+ * knows the difference between a condo and a co-op — which is why those stay apart.
+ *
+ * Counts measured across active inventory 2026-08-06 (31,536 rows): Single Family 10,349,
+ * Co-op 962*, Condo 733*, Duplex 596*, Apartment 243* (*sampled at 6,000). Every token below
+ * maps to real inventory; a token that could never return a home would be a filter that
+ * cannot answer, which this project does not ship. */
+export const HOME_TYPE_VALUES = {
+  house: ["Single Family Residence"],
+  condo: ["Condominium"],
+  coop: ["Stock Cooperative"],
+  "multi-family": ["Duplex", "Triplex", "Quadruplex", "Multi Family"],
+  apartment: ["Apartment"],
+  manufactured: ["Manufactured Home", "Mobile Home"],
+} as const satisfies Record<string, readonly string[]>;
+
+export type HomeType = keyof typeof HOME_TYPE_VALUES;
+
+export const HOME_TYPES = Object.keys(HOME_TYPE_VALUES) as HomeType[];
+
+/** Home types that only exist as RENTALS in this feed, so asking for them on the for-sale
+ * search is asking for nothing. Apartment is 1,162 Rental against exactly 1 Residential, and
+ * the for-sale search excludes rentals outright — so every buyer who picked it got zero
+ * results, always. Enforced in parseFilterParams (server AND the client's own fetch go through
+ * it) rather than only hidden in the dropdown, because a hidden option still leaves
+ * `?homeType=apartment` typeable, and a filter the control cannot show is a ghost. */
+export const RENTAL_ONLY_HOME_TYPES = new Set<HomeType>(["apartment"]);
+
+/** Basement values that count as HAVING one. None / Common / Crawl Space / Storage Space /
+ * See Remarks / Bilco Door(s) all appear in this feed and none is what someone ticking the box
+ * is asking for. WATERFRONT is the same idea for lotFeatures.
+ *
+ * These two lists are DUPLICATED, deliberately and unavoidably, in the generated columns in
+ * supabase/migrations/idx_search_facet_columns.sql — SQL cannot import TypeScript. The DB path
+ * reads the column and the fixture path reads these arrays, so if they ever drift the two
+ * would answer the same question differently. lib/idx/facets.test.ts pins them together. */
+export const REAL_BASEMENT = ["Finished", "Full", "Partially Finished", "Partial", "Walk-Out Access"] as const;
+export const WATERFRONT_FEATURES = ["Waterfront", "Water Access"] as const;
 
 export interface SearchResult {
   listings: Listing[];

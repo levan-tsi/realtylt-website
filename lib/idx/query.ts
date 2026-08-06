@@ -2,7 +2,7 @@
  * (/api/idx/search and /api/idx/pins) — one validation story, no drift. */
 
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import { SEARCH_PAGE_SIZE, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
+import { HOME_TYPES, RENTAL_ONLY_HOME_TYPES, SEARCH_PAGE_SIZE, type HomeType, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
 
 /** Status values a URL may ask for. Anything else falls back to "no status filter". */
 export const STATUS_FILTERS: ListingStatusFilter[] = ["Active", "Pending"];
@@ -56,6 +56,21 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     yearMax: num(q.get("yearMax")),
     taxMax: num(q.get("taxMax")),
     withPhotosOnly: flag(q.get("withPhotos")),
+    // Home type + feature toggles. The type is whitelisted against HOME_TYPE_VALUES, so a
+    // crafted `homeType` can never reach the query builder; the toggles are yes-only flags.
+    homeType: (() => {
+      const t = q.get("homeType") as HomeType;
+      if (!HOME_TYPES.includes(t)) return undefined;
+      // A rental-only type on a for-sale search can never match, so it is dropped rather than
+      // silently returning nothing (see RENTAL_ONLY_HOME_TYPES).
+      if (RENTAL_ONLY_HOME_TYPES.has(t) && !flag(q.get("rental"))) return undefined;
+      return t;
+    })(),
+    centralAir: flag(q.get("centralAir")),
+    basement: flag(q.get("basement")),
+    waterfront: flag(q.get("waterfront")),
+    firstFloorBed: flag(q.get("firstFloorBed")),
+    eatInKitchen: flag(q.get("eatInKitchen")),
     // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
     // for an absurd range.
     newWithinDays: (() => {
@@ -82,7 +97,12 @@ export function parseSearchRequest(q: URLSearchParams): SearchParams {
   // status. Translate here so the server render and the client's own fetch ask the SAME
   // question — if they drifted, the visitor would see one set of homes in the HTML and a
   // different set a beat later.
-  const quick = q.get("quick");
+  // DEFAULTS TO "active" (owner's call, 2026-08-06). Measured on production the day it changed:
+  // the default six-county scope held 11,611 listings, of which 4,777 — 41% — were Pending.
+  // Two in five homes a visitor scrolled past could not be bought, and nothing on the page said
+  // so until they opened one. "all" is still one click away on the same control; it just has to
+  // be asked for now, which is why it is the value that travels in the URL.
+  const quick = q.get("quick") ?? "active";
   if (quick === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
   if (quick === "active") withQuick.set("status", "Active");
   if (quick === "pending") withQuick.set("status", "Pending");

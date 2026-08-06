@@ -2,7 +2,7 @@
  * Deterministic in-memory search over ~60 OneKey-shaped sample listings. */
 
 import { FIXTURE_LISTINGS } from "./fixture-data";
-import { DEFAULT_PAGE_SIZE } from "./types";
+import { DEFAULT_PAGE_SIZE, HOME_TYPE_VALUES, REAL_BASEMENT, WATERFRONT_FEATURES } from "./types";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 
@@ -33,6 +33,12 @@ export class FixtureIdxClient implements IdxClient {
       yearMax,
       taxMax,
       withPhotosOnly,
+      homeType,
+      centralAir,
+      basement,
+      waterfront,
+      firstFloorBed,
+      eatInKitchen,
       propertyType,
       newWithinDays,
       sort = "newest",
@@ -65,6 +71,16 @@ export class FixtureIdxClient implements IdxClient {
       if (yearMax != null && !((l.yearBuilt ?? Infinity) <= yearMax)) return false;
       if (taxMax != null && !((l.taxAnnual ?? Infinity) <= taxMax)) return false;
       if (withPhotosOnly && !((l.photosMirrored ?? 0) > 0)) return false;
+      // Home type + feature toggles. Same semantics as the generated columns the DB path
+      // filters on (supabase/migrations/idx_search_facet_columns.sql): an ABSENT array is a
+      // miss, never a match, because a listing that does not state whether it has central air
+      // must not appear under "Central air".
+      if (homeType && !(HOME_TYPE_VALUES[homeType] as readonly string[]).includes(l.propertySubType ?? "")) return false;
+      if (centralAir && !l.cooling?.includes("Central Air")) return false;
+      if (basement && !l.basement?.some((v) => (REAL_BASEMENT as readonly string[]).includes(v))) return false;
+      if (waterfront && !l.lotFeatures?.some((v) => (WATERFRONT_FEATURES as readonly string[]).includes(v))) return false;
+      if (firstFloorBed && !l.interiorFeatures?.includes("First Floor Bedroom")) return false;
+      if (eatInKitchen && !l.interiorFeatures?.includes("Eat-in Kitchen")) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       // Exact city (suggest-dropdown pick), case-insensitive to match PostgREST's `eq` on the

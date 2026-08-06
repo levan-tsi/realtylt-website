@@ -14,8 +14,7 @@ import { HomeHeroVideo } from "@/components/home/HomeHeroVideo";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
-import { COUNTIES, SERVED_AREAS } from "@/lib/site";
-import { boroughPath } from "@/content/boroughs";
+import { TOP_AREA_GROUPS } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -257,49 +256,75 @@ export default async function HomePage() {
       {/* ── Testimonial band — live: ONE centered quote with arrows between the two rails */}
       <TestimonialBand items={TESTIMONIALS} />
 
-      {/* ── New listings */}
+      {/* ── New listings. Deliberately NOT the same section again.
+          This and Featured above were identical objects — centred heading, card grid, MLS
+          attribution, and a centred outline pill carrying the same four words, "See More
+          Listings", twice on one page. A visitor scrolling past could not tell they had moved.
+          The fix is hierarchy, not new wording: Featured stays the loud one (centred heading
+          over a symmetric grid, which is the one place centring is structure rather than
+          decoration, and a pill), and this one is quiet — heading left, its link inline beside
+          it, no second pill. Two sections that differ in WEIGHT read as two sections; two that
+          differ only in their heading text read as one repeated shape. The link is also named
+          for where it actually goes, since it does not lead to the same place Featured's does. */}
       <section className="sec bg-paper" aria-labelledby="new-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <SectionHeading align="center" as="h2">
-              <span id="new-heading">New Listings</span>
-            </SectionHeading>
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+              <SectionHeading as="h2">
+                <span id="new-heading">New Listings</span>
+              </SectionHeading>
+              <Button href="/search?sort=newest" variant="ghost">
+                See all new listings
+              </Button>
+            </div>
           </Reveal>
           <div className="mt-10">
             <RailPager listings={fresh} ariaLabel="New listings" />
           </div>
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
-          <div className="mt-10 text-center">
-            <Button href="/search?sort=newest" variant="outline">See More Listings</Button>
-          </div>
         </div>
       </section>
 
-      {/* ── Counties strip. No top padding of its own: the hairline rule is what separates it
-          from the listings above, and a second gap on top of that rule reads as a mistake. */}
-      <section className="bg-paper pb-20 md:pb-28" aria-labelledby="counties-heading">
+      {/* ── Areas strip. No top padding of its own: the hairline rule is what separates it
+          from the listings above, and a second gap on top of that rule reads as a mistake.
+
+          It used to be eleven identical pills centre-justified into one bag, which wrapped 7 + 4
+          so the second row read as an orphaned remnant, and which silently mixed two different
+          kinds of place — "THE BRONX" sat at the end of the county row as though it were a
+          county. The distinction is true and it is the business's actual footprint, so the
+          structure now carries it instead of throwing it away. lib/site.ts already said these
+          are "presented separately (Top Areas flyout, home areas strip)"; only the flyout was
+          doing it. Sharing TOP_AREA_GROUPS also means this strip and the nav flyout can never
+          drift, and it retires the borough-slug branch this file was reimplementing inline.
+
+          Left-aligned on purpose: every other section below the hero centres its heading, and
+          uniform centring is what makes the page read as one repeated shape. */}
+      <section className="bg-paper pb-20 md:pb-28" aria-labelledby="areas-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <h2 id="counties-heading" className="sr-only">
-            Counties we serve
+          <h2 id="areas-heading" className="sr-only">
+            Areas we serve
           </h2>
-          <ul className="flex flex-wrap justify-center gap-2 border-t border-line pt-12">
-            {SERVED_AREAS.map((c) => (
-              <li key={c.slug}>
-                <Link
-                  // Both counties and boroughs now have Top Areas pages; boroughs map their
-                  // internal slug to the readable URL (bronx → /top-areas/the-bronx).
-                  href={
-                    COUNTIES.some((k) => k.slug === c.slug)
-                      ? `/top-areas/${c.slug}`
-                      : (boroughPath(c.slug) ?? `/search?county=${c.slug}`)
-                  }
-                  className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
-                >
-                  {c.name}
-                </Link>
-              </li>
+          <div className="space-y-8 border-t border-line pt-12">
+            {TOP_AREA_GROUPS.map((group) => (
+              <div key={group.id} className="flex flex-col gap-3 md:flex-row md:gap-10">
+                {/* pt-2.5 optically sets the 11px label against the pills' text rather than
+                    their box, which sits 36px tall. */}
+                <h3 className="t-eyebrow shrink-0 text-ink md:w-36 md:pt-2.5">{group.label}</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 

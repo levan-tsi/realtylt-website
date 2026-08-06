@@ -100,6 +100,37 @@ describe("parseSearchRequest — the /search page's own defaults", () => {
     expect(parseSearchRequest(q("newDays=30")).newWithinDays).toBe(30);
   });
 
+  // The default is Active, not every on-market status. Measured on production the day it
+  // changed: 11,611 listings in the default six-county scope, 4,777 of them Pending — two in
+  // five homes a visitor scrolled past could not be bought. SearchClient's `fromParams` must
+  // default to the same value; if these two ever disagree the visitor gets one set of homes in
+  // the server HTML and a different set when the client refetches a beat later.
+  it("defaults to Active, and only 'all' widens it to every on-market status", () => {
+    expect(parseSearchRequest(q("")).status).toBe("Active");
+    expect(parseSearchRequest(q("county=dutchess")).status).toBe("Active");
+    expect(parseSearchRequest(q("quick=all")).status).toBeUndefined();
+    expect(parseSearchRequest(q("quick=pending")).status).toBe("Pending");
+    expect(parseSearchRequest(q("quick=active")).status).toBe("Active");
+  });
+
+  it("leaves status alone for the New Listings window — 'new' is a date, not a status", () => {
+    const p = parseSearchRequest(q("quick=new"));
+    expect(p.newWithinDays).toBe(7);
+    expect(p.status).toBeUndefined();
+  });
+
+  // Apartment is 1,162 Rental against exactly 1 Residential in this feed, and the for-sale
+  // search excludes rentals outright — so offering it to a buyer returned zero results, always.
+  // Hiding the option in the dropdown is not enough: ?homeType=apartment stays typeable, and a
+  // filter the control cannot show is a ghost that narrows the query invisibly.
+  it("drops a rental-only home type on a for-sale search, but honours it under ?rental=1", () => {
+    expect(parseSearchRequest(q("homeType=apartment")).homeType).toBeUndefined();
+    expect(parseSearchRequest(q("homeType=apartment&rental=1")).homeType).toBe("apartment");
+    // Types that exist on both sides are untouched either way.
+    expect(parseSearchRequest(q("homeType=condo")).homeType).toBe("condo");
+    expect(parseSearchRequest(q("homeType=condo&rental=1")).homeType).toBe("condo");
+  });
+
   it("clamps page to a whole number ≥ 1 (a typed URL is not to be trusted)", () => {
     expect(parseSearchRequest(q("page=4")).page).toBe(4);
     expect(parseSearchRequest(q("page=0")).page).toBe(1);

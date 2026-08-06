@@ -1,5 +1,146 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 22 — DONE 2026-08-06. Design + the owner's four live asks. Reasoning in
+## ═══ docs/parity/DESIGN-ROUND22.md. 9 commits pushed to main.
+##
+## >>> READ FIRST: the /website SLASH COMMAND IS STALE. Its §1a "named defects" (hero on a
+## >>> black background, search strip cramped, mobile footer order) were all fixed in round 11,
+## >>> and its §2 carried list (listing alerts, Equal Housing/REALTOR marks, unlicensed stock
+## >>> photos) is DONE — verified this round, do not redo any of it. Its baseline of "476 tests"
+## >>> is stale too; it is 806 now. The real brief is THIS block. The command's own §0 says so.
+##
+## ── THE DESIGN FINDING, and it was not a palette or a typeface ───────────────────────
+## Every section below the hero was the SAME WEIGHT: centred h2, content, centred pill, same
+## vertical padding. Uniform whitespace stops reading as generosity and starts reading as a
+## template, because nothing is emphasised when everything is. Two consecutive listing rails
+## were literally the same section, down to the same four words on the button ("See More
+## Listings") a screen apart. Fixed by giving them different WEIGHT, not different words:
+## Featured keeps the loud shape (centred heading over a symmetric grid, plus a pill); New
+## Listings is quiet (heading left, link inline, no second pill).
+##
+## ── PRECISION DEFECTS, all measured before and after ─────────────────────────────────
+## · LISTING CARD PRICES did not share a baseline. Production, New Listings row: price tops
+##   -1199 / -1223 / -1199 / -1199. A 3-line address ("144 Cream Street, Poughkeepsie (Town),
+##   NY 12601") pushed one price up exactly one line, and a 2-line office name did it again.
+##   Both blocks are clamped AND reserved at two lines now — the same remedy line 237 already
+##   used for beds/baths. scripts/_scratch-r22-clamp.mjs tests the INVARIANT rather than
+##   waiting for an awkward listing: inject a 90-char address, the block must not move.
+##   Watched it FAIL against production's old code (attribution heights [13,25], price moved
+##   59px) and HOLD after.
+## · A ONE-PHOTO LISTING sat off-centre in a black band: 933x400 at x=112, 112px of black left
+##   and 395px right. `aspect-[21/9]` + `max-h-[400px]` looks like it caps the height, but
+##   aspect-ratio works BOTH ways — clamp the height and the WIDTH is derived from it. Pinned
+##   the height instead; measured 1216/112/112. NOT an edge case: 6 of 10 sampled listings
+##   render the single-photo layout (933px; 800px is the multi-photo 2fr column).
+## · THE AREAS STRIP mixed six counties and five boroughs into one bag of 11 identical pills
+##   wrapping 7+4, with "THE BRONX" at the end of the county row. Now two labelled groups
+##   sharing TOP_AREA_GROUPS with the nav flyout, so they cannot drift. lib/site.ts already
+##   SAID these were "presented separately (Top Areas flyout, home areas strip)" — only the
+##   flyout was doing it.
+## · FOOTER had two copyright notices two strips apart. Dropped the redundant one; the black
+##   bar is a centred utility strip now. Nav links 4px -> 10px row gaps (they sit in a column
+##   that ends ~220px above the strip below, so the room was already there).
+##
+## ── HIS FOUR LIVE ASKS THIS ROUND ────────────────────────────────────────────────────
+## 1. "WHY DOES QUEENS HAVE SO MANY?" — it is correct, and verified against OneKey's own
+##    history: OneKey formed March 2020 by merging MLS of Long Island with Hudson Gateway.
+##    Queens is geographically ON Long Island and was MLSLI's core NYC borough; Brooklyn and
+##    Manhattan were REBNY/RLS territory. Census, on-market: Queens 9,740 · Westchester 4,859
+##    · Orange 2,844 · Bronx 2,451 · Dutchess 1,973 · Brooklyn 1,758 · Rockland 1,737 ·
+##    Ulster 1,067 · Putnam 668 · Manhattan 520 · Staten Island 162. TOTAL 27,779.
+##    The default /search scope is the six Hudson Valley counties only (11,611), so the
+##    boroughs' 13,545 sit behind the "NYC Boroughs" chip. lib/site.ts:54 still says "~7k
+##    borough listings" — that comment is STALE, it is 13,545, and Queens alone outweighs all
+##    six counties' Active inventory. Worth his decision whether boroughs join the default.
+##    Also: OneKey covers Nassau/Suffolk/Sullivan and we pull NONE of them. Not a bug — the
+##    sync is scoped to his 11 — but the data is inside his licence if he ever wants it.
+## 2. "START WITH ACTIVE ONLY, people are not interested in pendings" — DONE. 4,777 of 11,611
+##    (41%) were Pending, so two in five homes a visitor scrolled past could not be bought.
+##    /search defaults to Active (6,723 live). "All Listings" is one click and is now the
+##    value that travels in the URL. Changed in all FOUR coupled places (parseSearchRequest,
+##    fromParams, toQuery's omit rule, hasActiveFilters) because the server render and the
+##    client refetch must ask the same question. Active and New are SEPARATE filters — "new"
+##    is a 7-day date window and does not touch status, so neither contains the other.
+## 3. "MORE ONLY HAS 6 FILTERS" — DONE, 10 selects + 6 checkboxes now. Added Home type
+##    (RESO PropertySubType: House/Condo/Co-op/Multi-family/Apartment/Manufactured — the cut
+##    PropertyType CANNOT make, since condos, co-ops and multi-families are all "Residential")
+##    plus Central air / Basement / First-floor bedroom / Eat-in kitchen / Waterfront.
+##    **POOL IS IMPOSSIBLE AND THIS IS THE FINDING.** "pool" appears in 659 of 4,000 sampled
+##    active rows and 650 are in the free-text DESCRIPTION; ZERO in any structured field.
+##    SELECT_FIELDS never requests RESO's PoolPrivateYN/PoolFeatures. A description ILIKE
+##    matches "no pool", "pool table" and "community pool" alike. Real pool data needs a
+##    SELECT_FIELDS change + confirmation OneKey populates it. Same for FIREPLACE.
+## 4. "ZILLOW-STYLE CLUSTERED MAP" — pros/cons given, built on a PREVIEW branch, NOT merged.
+##    Not a toggle: GoogleMapView.tsx paints pills through ONE custom OverlayView, not
+##    Markers, so @googlemaps/markerclusterer is not a drop-in. See the round-23 brief.
+##
+## ── A BUG I SHIPPED AND CAUGHT ONE COMMIT LATER ──────────────────────────────────────
+## "Apartment" in Home type could NEVER answer on the for-sale search: it is 1,162 Rental and
+## exactly 1 Residential, and for-sale excludes rentals. I justified the option from a
+## propertySubType count that never split sale from rental — breaking, in the same commit, the
+## "a filter that cannot answer is worse than no filter" rule I had just written into the
+## migration comment. It is rental inventory, so it MOVED rather than vanished (For Rent only,
+## 594 homes). Hiding the option was NOT enough: ?homeType=apartment stays typeable and became
+## a ghost filter narrowing the query while the select read "Any home type" — so the rule lives
+## in RENTAL_ONLY_HOME_TYPES and is enforced in parseFilterParams, which both the server render
+## and the client fetch go through.
+##
+## ── THE DATABASE WAS IO-STARVED FOR THE FIRST HOUR, THEN RECOVERED ───────────────────
+## A plain count over idx_listings (171 MB, 31,536 rows) took 75s+ with wait_event NULL while
+## catalog reads returned instantly — ~2 MB/s, project still reading ACTIVE_HEALTHY. That is
+## [[supabase-io-exhaustion-signature]] exactly. It killed the photo-backfill probe with
+## `idx_sync_apply 504`. Later the SAME count returned in 341ms. So: measure before blaming,
+## and do not chase queries while it is drained.
+## THE PHOTO BACKFILL DID NOT RUN THIS ROUND. Watermark did NOT advance (2026-08-05T09:01:39).
+## It is safe to probe again now the DB is healthy — 12 listings first, read the histogram,
+## ANY 429 means stop for the day.
+## Also ruled out: the Storage image-transformation quota is NOT involved in anything here.
+## publicPhotoUrl builds /object/public/, never /render/image/public/, and a grep for
+## transform/render across lib+app+components is empty. Site resizing is Vercel's
+## /_next/image, a different bill, and that Supabase project is shared with other work.
+##
+## ── GATES ────────────────────────────────────────────────────────────────────────────
+## tsc clean. Tests 788 -> 806 (+18: 17 facet-obedience, 1 rental-only home type). Sweep of
+## 13 routes x 1440/390/320 = 39 checks: ZERO horizontal overflow anywhere. 9 commits pushed;
+## every change re-verified on PRODUCTION after the deploy, not just locally.
+##
+## ── TWO THINGS THAT LOOKED LIKE DEFECTS AND WERE NOT ─────────────────────────────────
+## · "SyntaxError: Invalid or unexpected token" and a BLANK /services (900px) on dev were the
+##   DEV SERVER, twice confirmed — production rendered /services at 4,629px with no errors.
+##   Both JSON.parse sites already have try/catch fallbacks. Restarting dev fixed it.
+## · The 7 selects at 12px on /search mobile are a DELIBERATE, documented opt-out
+##   (.rlt-compact-control). The text input beside them IS floored at 16px; only the selects
+##   opt out, and a select opens a native picker rather than focusing a text field. Forcing
+##   16px introduces no overflow at 390 or 320 but visibly fattens the bar. LEFT AS IS —
+##   confirm on a real iPhone before changing it.
+## · The one "nameless input" on three pages is the honeypot, inside an aria-hidden 1px
+##   -left-[9999px] wrapper. Correct. My probe measured the input, not its clipping parent.
+##
+## ═══ ROUND 23 BRIEF ═══════════════════════════════════════════════════════════════════
+## SINGLE AGENT unless he says otherwise — the round-22 fleet was a per-session grant and he
+## said so explicitly ([[feedback-subagents-per-session-only]]).
+## 1. THE CLUSTERED MAP is on branch `map-clusters` with a Vercel PREVIEW. His bar: "if it
+##    works operational and definitely good and better than it was and passes all tests
+##    without bugs we can move to production after." Judge it, then merge or iterate.
+##    Popup decision taken: the popup is the default for EVERY pin click and contains the only
+##    link to the full page — one rule, not a click-target coin-flip.
+## 2. THE ACCOUNT WALL still blocks launch and is still his: Supabase disable_signup=true, so
+##    nobody can create an account. Settle mailer_autoconfirm (realtylt.com has no SPF/DMARC)
+##    and the Google button offering a disabled provider at the same time.
+## 3. PHOTO BACKFILL: probe 12 listings, then the --fresh re-walk for the ~384 stale rows.
+## 4. POOL + FIREPLACE need a SELECT_FIELDS change. Confirm OneKey populates PoolPrivateYN /
+##    FireplaceYN before building anything on them.
+## 5. HOME-VALUE COPY is the old vendor's boilerplate ("We demand excellence throughout the
+##    home-selling process") and it is the SECOND thing a visitor sees. Round 11 recorded it
+##    as his words, verbatim, not ours to rewrite — so ASK him for four sentences in his own
+##    voice about how he actually prices a home.
+## 6. THE HERO still has no answer (he rejected four). Separately, hero-vimeo-frame.jpg is the
+##    old vendor's clip's first frame and carries NO licence record; the licensed Hudson
+##    Highlands photo that phones already get is both safer and better. His call.
+## 7. Carried, unchanged: published-CMA enumeration + 57 raw MediaURLs (his decision + a
+##    paired CRM change), Places API (New) for the type-ahead, sold comps (MLS licence).
+##
+##
 ## ═══ ROUND 21 BRIEF — set 2026-08-03, end of round 20.
 ## >>> READ docs/parity/HANDOFF-ROUND-21.md FIRST. It carries the reasoning. Short version:
 ##   1. THE ACCOUNT WALL IS HIS DECISION AND IT BLOCKS LAUNCH. Supabase has
