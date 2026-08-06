@@ -185,12 +185,15 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           pinnedRef.current = null;
           info.close();
         };
-        document.addEventListener("keydown", onDocKey);
-        document.addEventListener("mousedown", onDocDown);
+        // CAPTURE phase, not bubble: the Maps JS SDK runs its own keydown handling on the map
+        // and its InfoWindow (confirmed live — a bubble-phase listener never saw Escape at all),
+        // and capture guarantees this runs before anything downstream can stop the event.
+        document.addEventListener("keydown", onDocKey, true);
+        document.addEventListener("mousedown", onDocDown, true);
         cleanupRef.current = () => {
           document.removeEventListener("mousemove", onDocMove);
-          document.removeEventListener("keydown", onDocKey);
-          document.removeEventListener("mousedown", onDocDown);
+          document.removeEventListener("keydown", onDocKey, true);
+          document.removeEventListener("mousedown", onDocDown, true);
         };
 
         // The pin set the overlay draws from: viewport-fetched pins once the first fetch has
