@@ -194,7 +194,8 @@ function fromParams(sp: URLSearchParams): Filters {
       ? (sp.get("quick") as "all" | "new" | "pending")
       : "active",
     sort: sp.get("sort") ?? "mixed",
-    page: Math.max(1, Number(sp.get("page")) || 1),
+    // Floored — a crafted ?page=2.7 would otherwise ride into the API and break its offset math.
+    page: Math.max(1, Math.floor(Number(sp.get("page"))) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
     view: sp.get("view") === "grid" ? "grid" : "map",
   };
@@ -426,13 +427,25 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
   // Chip → card: flag it active, MOVE KEYBOARD FOCUS into the matching card (so a keyboard user
-  // who activates a chip lands on that listing), then scroll it into view honoring reduced
-  // motion. Focusing the card's link also scrolls it (preventScroll lets our own scroll win).
+  // who activates a chip lands on that listing), then bring it into view honoring reduced
+  // motion. The scroll is scoped to the RESULTS PANEL alone — never the window. The old
+  // scrollIntoView walked every scrollable ancestor, and scrolling the page mid-click moved
+  // the map under the pointer: the click's own compatibility mousedown then landed on the map
+  // div and read as an outside press, closing the popup the pointerdown had just pinned
+  // (watched live on the preview — scrollY jumped 0 → 252 between pointerdown and mousedown).
+  // On phones the panel is not a scroll container (the page is) and the map sits BELOW the
+  // list, so scrolling there would drag the map out from under the open popup — skip it.
   const focusCard = useCallback((id: string) => {
     setActiveId(id);
     const li = cardRefs.current.get(id);
     li?.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
-    li?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+    const panel = panelRef.current;
+    if (!li || !panel || !panel.contains(li)) return;
+    if (panel.scrollHeight <= panel.clientHeight || getComputedStyle(panel).overflowY === "visible") return;
+    const lr = li.getBoundingClientRect();
+    const pr = panel.getBoundingClientRect();
+    const delta = lr.top < pr.top ? lr.top - pr.top : lr.bottom > pr.bottom ? lr.bottom - pr.bottom : 0;
+    if (delta) panel.scrollTo({ top: panel.scrollTop + delta, behavior: scrollBehavior() });
   }, []);
 
   // RECORD THE SET THE VISITOR IS LOOKING AT, so a listing page can offer "next home" and mean

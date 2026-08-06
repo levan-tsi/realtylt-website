@@ -140,6 +140,10 @@ export function createPinFetcher(opts: {
   };
   const cancel = () => {
     if (timer) clearTimeout(timer);
+    // Also invalidate anything already IN FLIGHT — a cancelled fetcher must never deliver.
+    // Without this, a filter change that cancelled the old fetcher could still receive the
+    // old query's pins a beat later and paint the previous search over the new one.
+    seq++;
   };
   return { request, cancel };
 }

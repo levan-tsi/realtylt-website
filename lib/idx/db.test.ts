@@ -289,19 +289,26 @@ describe("DbIdxClient.searchPins", () => {
     expect(listingCalls).toBe(2);
   });
 
-  it("bounded viewport: ONE capped bbox query (never the 15k chunk loop), drops Null Island", async () => {
+  it("bounded viewport: bbox query in 1000-row slices up to PIN_CAP (a single limit=3000 is silently clamped by PostgREST max-rows), drops Null Island", async () => {
     const pin = (id: string, lat = 40.7, lng = -73.85) => ({
       id, price: 1, lat, lng, address: "x", city: "y", zip: "z", beds: 1, baths: 1, office: "o",
     });
-    const rows = Array.from({ length: PIN_CAP }, (_, i) => pin(`P${i}`));
-    rows[2] = pin("NULLISH", 0, 0); // no coords → dropped
+    const slice = (n: number, from: number) => Array.from({ length: n }, (_, i) => pin(`P${from + i}`));
     let listingCalls = 0;
-    let lastUrl = "";
+    const urls: string[] = [];
     stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
       listingCalls++;
-      lastUrl = url;
-      return { body: rows, total: 4602 }; // content-range total = true in-bounds count
+      urls.push(url);
+      // A real PostgREST answers at most max-rows (1000) per request, whatever the limit says.
+      // Seen live: limit=3000 shipped exactly 1,000 pins under a banner reading "of 6,714".
+      if (url.includes("offset=1000")) return { body: slice(1000, 1000) };
+      if (url.includes("offset=2000")) {
+        const rows = slice(1000, 2000);
+        rows[2] = pin("NULLISH", 0, 0); // no coords → dropped
+        return { body: rows };
+      }
+      return { body: slice(1000, 0), total: 4602 }; // content-range total = true in-bounds count
     });
 
     const { pins, total } = await new DbIdxClient().searchPins(
@@ -309,16 +316,40 @@ describe("DbIdxClient.searchPins", () => {
       { north: 40.7943, south: 40.5705, east: -73.6697, west: -73.9633 },
     );
 
-    expect(listingCalls).toBe(1); // single query — the whole point
-    expect(lastUrl).toContain("county=eq.queens");
-    expect(lastUrl).toContain("lat=gte.40.5705");
-    expect(lastUrl).toContain("lat=lte.40.7943");
-    expect(lastUrl).toContain("lng=gte.-73.9633");
-    expect(lastUrl).toContain("lng=lte.-73.6697");
-    expect(lastUrl).toContain(`limit=${PIN_CAP}`);
-    expect(lastUrl).toContain("order=listed_at.desc");
+    expect(listingCalls).toBe(3); // 1000-row slices up to PIN_CAP, never the 15k loop
+    for (const u of urls) {
+      expect(u).toContain("county=eq.queens");
+      expect(u).toContain("lat=gte.40.5705");
+      expect(u).toContain("lat=lte.40.7943");
+      expect(u).toContain("lng=gte.-73.9633");
+      expect(u).toContain("lng=lte.-73.6697");
+      expect(u).toContain("limit=1000");
+      expect(u).toContain("order=listed_at.desc");
+    }
+    expect(urls[1]).toContain("offset=1000");
+    expect(urls[2]).toContain("offset=2000");
     expect(total).toBe(4602); // in-bounds count, so the UI can flag truncation
     expect(pins).toHaveLength(PIN_CAP - 1); // the coordinate-less row is dropped
+    expect(new Set(pins.map((p) => p.id)).size).toBe(PIN_CAP - 1); // slices never overlap
+  });
+
+  it("bounded viewport under 1000 in-bounds rows: exactly one query", async () => {
+    const pin = (id: string) => ({
+      id, price: 1, lat: 40.7, lng: -73.85, address: "x", city: "y", zip: "z", beds: 1, baths: 1, office: "o",
+    });
+    let listingCalls = 0;
+    stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      listingCalls++;
+      return { body: Array.from({ length: 42 }, (_, i) => pin(`P${i}`)), total: 42 };
+    });
+    const { pins, total } = await new DbIdxClient().searchPins(
+      { county: "queens" },
+      { north: 40.7943, south: 40.5705, east: -73.6697, west: -73.9633 },
+    );
+    expect(listingCalls).toBe(1);
+    expect(total).toBe(42);
+    expect(pins).toHaveLength(42);
   });
 });
 

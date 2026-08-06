@@ -76,11 +76,16 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
   // Cluster index, cached by the RAW pin-array reference it was built from (draw() runs on
   // every idle AND every selectedId change — rebuilding a supercluster index over thousands of
   // points on a mere card hover would be wasted CPU the visitor would feel as jank).
-  const indexCacheRef = useRef<{ source: MapPin[]; index: ClusterIndex; byId: Map<string, MapPin> } | null>(null);
+  const indexCacheRef = useRef<{ source: MapPin[]; located: MapPin[]; index: ClusterIndex; byId: Map<string, MapPin> } | null>(null);
 
+  // Keyed by the RAW pin array (fetched or seed), not a filtered copy — the first version
+  // keyed on activeSource()'s fresh .filter() result, which is a new reference every call, so
+  // the "cache" rebuilt the whole supercluster index on every draw (every idle, every card
+  // hover). `located` is cached alongside for the same reason.
   const getIndex = (source: MapPin[]) => {
     if (indexCacheRef.current?.source !== source) {
-      indexCacheRef.current = { source, index: buildClusterIndex(source), byId: new Map(source.map((p) => [p.id, p])) };
+      const located = source.filter((p) => p.lat && p.lng);
+      indexCacheRef.current = { source, located, index: buildClusterIndex(located), byId: new Map(located.map((p) => [p.id, p])) };
     }
     return indexCacheRef.current;
   };
@@ -138,6 +143,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // off the map's own box — popupPlacement (below) is what keeps it on screen instead.
         const info = new google.maps.InfoWindow({ disableAutoPan: true });
 
+        // Whether the InfoWindow is showing right now — the deliberate-close listeners below
+        // are page-wide (window keydown, document pointerdown) and must be inert while no
+        // popup exists: without this, EVERY Escape press on /search blurred whatever control
+        // the visitor was typing in.
+        let popupOpen = false;
         // Deferred close, shared by every chip and by the popup itself.
         let closeTimer: ReturnType<typeof setTimeout> | undefined;
         const cancelClose = () => {
@@ -147,7 +157,10 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         const scheduleClose = (ms = 180) => {
           cancelClose();
           closeTimer = setTimeout(() => {
-            if (!pinnedRef.current) info.close(); // a pinned popup is never closed by the pointer
+            if (!pinnedRef.current) {
+              popupOpen = false;
+              info.close(); // a pinned popup is never closed by the pointer
+            }
           }, ms);
         };
         // ONE AUTHORITATIVE RULE for dismissing a preview, instead of a mouseleave on each chip.
@@ -181,19 +194,31 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // deliberately leaves alone (a passing pointer must never outrank a deliberate choice,
         // but a deliberate Escape or outside click is exactly that).
         const onDocKey = (e: KeyboardEvent) => {
-          if (e.key !== "Escape") return;
+          if (e.key !== "Escape" || !popupOpen) return;
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
+          popupOpen = false;
           info.close();
-          (document.activeElement as HTMLElement | null)?.blur?.();
+          // Pull focus only when it sits somewhere that can REOPEN the popup (a chip's focus
+          // handler, or inside the window Google is about to tear down) — never an unrelated
+          // control the visitor was typing in.
+          const ae = document.activeElement as HTMLElement | null;
+          if (ae?.closest?.(".rlt-price-chip") || ae?.closest?.(".gm-style-iw")) ae.blur?.();
         };
-        // mousedown (not click) so it closes before a DIFFERENT chip's own pointerdown re-pins —
-        // the same ordering the chips' own PIN ON THE PRESS logic below relies on.
-        const onDocDown = (e: MouseEvent) => {
+        // POINTERDOWN, the same event the chips pin on, so the ordering is deterministic:
+        // this document-capture listener always runs before a chip's own target-phase handler
+        // (return early keeps a chip press pinning), and an outside press always closes.
+        // The mousedown version had a real, watched-live failure: a chip press scrolled the
+        // page (focusCard), and the press's own compatibility mousedown — dispatched at the
+        // same screen coordinates AFTER the scroll — landed on the map div and read as
+        // "outside", unpinning the popup the pointerdown had just pinned.
+        const onDocDown = (e: Event) => {
           const el = e.target as Element | null;
           if (el?.closest?.(".rlt-price-chip") || el?.closest?.(".gm-style-iw") || el?.closest?.(".rlt-cluster-bubble")) return;
+          if (!popupOpen) return;
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
+          popupOpen = false;
           info.close();
         };
         // keydown on WINDOW, capture phase — confirmed live that even a document-level capture
@@ -203,11 +228,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // sits topologically OUTSIDE document in the capture chain, so a window listener always
         // fires first regardless of registration order — the fix that actually holds.
         window.addEventListener("keydown", onDocKey, true);
-        document.addEventListener("mousedown", onDocDown, true);
+        document.addEventListener("pointerdown", onDocDown, true);
         cleanupRef.current = () => {
           document.removeEventListener("mousemove", onDocMove);
           window.removeEventListener("keydown", onDocKey, true);
-          document.removeEventListener("mousedown", onDocDown, true);
+          document.removeEventListener("pointerdown", onDocDown, true);
         };
 
         // The pin set the overlay draws from: viewport-fetched pins once the first fetch has
@@ -257,10 +282,12 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           if (!proj) return;
           const sel = selectedRef.current;
           const zoom = map.getZoom() ?? 9;
-          const { index, byId } = getIndex(activeSource());
+          // The raw ref (not activeSource()) keys the index cache — a fresh filtered array
+          // every draw would defeat it and rebuild supercluster on every hover highlight.
+          const { index, byId, located } = getIndex(fetchedPinsRef.current ?? pinsRef.current);
           const bounds =
             toBounds(map.getBounds()) ??
-            boundsOfPins(activeSource()) ?? { north: 90, south: -90, east: 180, west: -180 };
+            boundsOfPins(located) ?? { north: 90, south: -90, east: 180, west: -180 };
           const entries = getClusterEntries(index, byId, bounds, zoom);
           // Same-centroid leaf pins still get fanned out so no chip hides another — spread only
           // the pins actually rendering individually this frame (clusters already absorbed the
@@ -332,6 +359,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               const node = popupNode(p, {
                 onClose: () => {
                   pinnedRef.current = null;
+                  popupOpen = false;
                   info.close();
                 },
                 onToggleSave: (id) => onToggleSaveRef.current?.(id),
@@ -341,18 +369,41 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               // its heart and X are unreachable unless you click first.
               node.addEventListener("mouseenter", cancelClose);
               node.addEventListener("mouseleave", () => scheduleClose());
+              // Measure the card's REAL height before opening. An InfoWindow body always
+              // renders ABOVE its anchor + pixelOffset tip, so "open below the chip" needs the
+              // tip pushed a full card-height down — the earlier +26 nudged it 52px and the
+              // card still ran off the top of the map (verified live: only the VIEW LISTING
+              // button survived the clip). Heights genuinely vary (pager row, status badge).
+              node.style.cssText += ";position:absolute;visibility:hidden;left:-9999px;top:0";
+              document.body.appendChild(node);
+              const measured = node.offsetHeight || 300;
+              node.remove();
+              node.style.position = "relative";
+              node.style.visibility = "";
+              node.style.left = "";
+              node.style.top = "";
               info.setContent(node);
               // Stay within the viewport instead of always opening the same direction: measure
               // the chip's real position (same technique as LocationSuggest's dropdown) and
-              // flip below its anchor when there isn't room above for it — the bug this fixes
-              // is disableAutoPan (above) trading Google's own keep-in-view behaviour away.
+              // flip below its anchor when there isn't room above for it.
               const chipRect = chip.getBoundingClientRect();
               const placement = popupPlacement(chipRect, window.innerHeight);
-              // 26px clears the chip's own height; the popup opens flush against whichever
-              // side was chosen instead of overlapping the chip that opened it.
-              info.setOptions({ pixelOffset: new google.maps.Size(0, placement === "above" ? -26 : 26) });
+              info.setOptions({
+                // Above: 26px clears the chip. Below: the tip lands measured+40 under the
+                // anchor, so the body (whose bottom sits a tail's height above the tip) starts
+                // just beneath the chip instead of overlapping it.
+                pixelOffset: new google.maps.Size(0, placement === "above" ? -26 : measured + 40),
+                // A PINNED popup may pan the map to keep itself fully in view — the flip
+                // handles the common top-edge case without motion, the pan covers everything
+                // else (horizontal edges included). A passing hover must never lurch the map,
+                // so previews keep the pan disabled. The redraw a pan triggers is safe now
+                // that dismissal is the document-level authority (onDocMove), not a per-chip
+                // mouseleave that a rebuilt chip would orphan.
+                disableAutoPan: !pinned,
+              });
               info.setPosition(pos);
               info.open({ map });
+              popupOpen = true;
               if (pinned) pinnedRef.current = p.id;
             };
             chip.addEventListener("mouseenter", () => {

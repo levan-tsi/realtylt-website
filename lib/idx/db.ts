@@ -480,16 +480,28 @@ export class DbIdxClient implements IdxClient {
       const bbox =
         `lat=gte.${bounds.south}&lat=lte.${bounds.north}` +
         `&lng=gte.${bounds.west}&lng=lte.${bounds.east}`;
+      const base = `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc`;
       // count=exact reports the FULL in-bounds match count (ignoring limit), so `total`
       // stays truthful even when the viewport is capped. Rows with a 0 coordinate are
       // excluded automatically (a valid NY box never spans lat/lng 0).
+      //
+      // PIN_CHUNK slices, like the unbounded path below: a single limit=PIN_CAP request is
+      // silently CLAMPED by PostgREST's max-rows (1000), which shipped 1,000 pins while the
+      // banner said "of 6,714" — seen live on the preview, not hypothesized. The first slice
+      // answers alone in the common case; a dense viewport fans the rest out in parallel.
       const { rows, total } = await onceRetried(() =>
-        rest<MapPin>(
-          `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc&limit=${PIN_CAP}`,
-          { count: true },
-        ),
+        rest<MapPin>(`${base}&limit=${PIN_CHUNK}`, { count: true }),
       );
-      return { pins: rows.filter((r) => r.lat && r.lng).map((r) => ({ ...r, photoCount: r.photoCount ?? 0 })), total };
+      let all = rows;
+      if (rows.length === PIN_CHUNK && total > PIN_CHUNK) {
+        const more = await Promise.all(
+          Array.from({ length: Math.ceil((Math.min(total, PIN_CAP) - PIN_CHUNK) / PIN_CHUNK) }, (_, i) =>
+            onceRetried(() => rest<MapPin>(`${base}&limit=${PIN_CHUNK}&offset=${(i + 1) * PIN_CHUNK}`)).then((r) => r.rows),
+          ),
+        );
+        all = rows.concat(...more).slice(0, PIN_CAP);
+      }
+      return { pins: all.filter((r) => r.lat && r.lng).map((r) => ({ ...r, photoCount: r.photoCount ?? 0 })), total };
     }
 
     const base = `idx_listings?${sel}&${filters ? `${filters}&` : ""}order=id.asc`;
