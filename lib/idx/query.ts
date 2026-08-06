@@ -82,7 +82,12 @@ export function parseSearchRequest(q: URLSearchParams): SearchParams {
   // status. Translate here so the server render and the client's own fetch ask the SAME
   // question — if they drifted, the visitor would see one set of homes in the HTML and a
   // different set a beat later.
-  const quick = q.get("quick");
+  // DEFAULTS TO "active" (owner's call, 2026-08-06). Measured on production the day it changed:
+  // the default six-county scope held 11,611 listings, of which 4,777 — 41% — were Pending.
+  // Two in five homes a visitor scrolled past could not be bought, and nothing on the page said
+  // so until they opened one. "all" is still one click away on the same control; it just has to
+  // be asked for now, which is why it is the value that travels in the URL.
+  const quick = q.get("quick") ?? "active";
   if (quick === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
   if (quick === "active") withQuick.set("status", "Active");
   if (quick === "pending") withQuick.set("status", "Pending");

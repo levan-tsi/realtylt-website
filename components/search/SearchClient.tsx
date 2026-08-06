@@ -132,9 +132,11 @@ function fromParams(sp: URLSearchParams): Filters {
     taxMax: sp.get("taxMax") ?? "",
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
-    quick: (["active", "new", "pending"] as const).includes(sp.get("quick") as never)
-      ? (sp.get("quick") as "active" | "new" | "pending")
-      : "all",
+    // Default "active", mirroring parseSearchRequest — if these two disagreed the visitor would
+    // get one set of homes in the HTML and a different set a beat later.
+    quick: (["all", "new", "pending"] as const).includes(sp.get("quick") as never)
+      ? (sp.get("quick") as "all" | "new" | "pending")
+      : "active",
     sort: sp.get("sort") ?? "mixed",
     page: Math.max(1, Number(sp.get("page")) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
@@ -146,9 +148,10 @@ function toQuery(f: Filters, forApi: boolean): string {
   const sp = new URLSearchParams();
   for (const [k, v] of Object.entries(f)) {
     if (k === "view" && (forApi || v === "map")) continue; // hybrid (map) is the default view
-    // `quick` never goes to the API verbatim (it's translated to newDays in the fetch), and
-    // stays out of the URL when it's the default "all".
-    if (k === "quick" && (forApi || v === "all")) continue;
+    // `quick` never goes to the API verbatim (it's translated to newDays/status in the fetch),
+    // and stays out of the URL when it's the default — which is now "active", so "all" is the
+    // value that has to travel.
+    if (k === "quick" && (forApi || v === "active")) continue;
     // withPhotos is a boolean flag — emit `withPhotos=1` when on, drop it entirely when off.
     if (k === "withPhotos") {
       if (v) sp.set("withPhotos", "1");
@@ -186,7 +189,10 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     f.yearMin && `built ${f.yearMin}+`,
     f.taxMax && `tax under $${(+f.taxMax).toLocaleString()}`,
     f.quick === "new" && "new listings",
-    f.quick === "active" && "active only",
+    // "active only" is the default now, so it is not something the visitor narrowed BY —
+    // naming it here would put it in every saved search's title. Widening to every on-market
+    // status is the choice worth recording.
+    f.quick === "all" && "every status",
     f.quick === "pending" && "pending only",
     f.withPhotos && "with photos",
   ].filter(Boolean) as string[];
@@ -254,7 +260,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // Any filter that narrows the default six-county set — so the count line reads "N found"
   // instead of "across the Hudson Valley" the moment a real filter is on (honest count).
   const hasActiveFilters =
-    !!filters.q || !!filters.city || !!filters.county || filters.quick !== "all" || !!filters.priceMin || !!filters.priceMax ||
+    !!filters.q || !!filters.city || !!filters.county || filters.quick !== "active" || !!filters.priceMin || !!filters.priceMax ||
     !!filters.bedsMin || !!filters.bathsMin || !!filters.propertyType || moreCount > 0;
 
   const apply = useCallback((patch: Partial<Filters>) => {
@@ -778,7 +784,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 <strong className="font-display text-2xl font-light leading-none text-ink">
                   {(result?.total ?? 0).toLocaleString()}
                 </strong>
-                <span className="text-ink">listings{hasActiveFilters ? " found" : ""}</span>
+                {/* Say what the number IS. The unfiltered view is now Active-only, so calling
+                    6,738 simply "listings across the Hudson Valley" would read as the whole
+                    market when 11,611 are on it. "active" is also the word on the control
+                    beside it, so the page uses one vocabulary for one thing. */}
+                <span className="text-ink">
+                  {hasActiveFilters ? "listings found" : "active listings"}
+                </span>
                 {!hasActiveFilters && <span>across the Hudson Valley</span>}
               </>
             )}

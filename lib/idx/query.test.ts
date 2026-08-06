@@ -100,6 +100,25 @@ describe("parseSearchRequest — the /search page's own defaults", () => {
     expect(parseSearchRequest(q("newDays=30")).newWithinDays).toBe(30);
   });
 
+  // The default is Active, not every on-market status. Measured on production the day it
+  // changed: 11,611 listings in the default six-county scope, 4,777 of them Pending — two in
+  // five homes a visitor scrolled past could not be bought. SearchClient's `fromParams` must
+  // default to the same value; if these two ever disagree the visitor gets one set of homes in
+  // the server HTML and a different set when the client refetches a beat later.
+  it("defaults to Active, and only 'all' widens it to every on-market status", () => {
+    expect(parseSearchRequest(q("")).status).toBe("Active");
+    expect(parseSearchRequest(q("county=dutchess")).status).toBe("Active");
+    expect(parseSearchRequest(q("quick=all")).status).toBeUndefined();
+    expect(parseSearchRequest(q("quick=pending")).status).toBe("Pending");
+    expect(parseSearchRequest(q("quick=active")).status).toBe("Active");
+  });
+
+  it("leaves status alone for the New Listings window — 'new' is a date, not a status", () => {
+    const p = parseSearchRequest(q("quick=new"));
+    expect(p.newWithinDays).toBe(7);
+    expect(p.status).toBeUndefined();
+  });
+
   it("clamps page to a whole number ≥ 1 (a typed URL is not to be trusted)", () => {
     expect(parseSearchRequest(q("page=4")).page).toBe(4);
     expect(parseSearchRequest(q("page=0")).page).toBe(1);
