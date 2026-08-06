@@ -72,7 +72,12 @@ export function Footer() {
           <nav aria-label="Footer" className="mt-10 border-t border-line pt-8">
             {/* inline-flex min-h-[24px]: text-sm links with no padding measured ~17px tall,
                 under the WCAG 2.5.8 (24px) pointer-target minimum. Height only. */}
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm font-light">
+            {/* gap-y-2.5, not 1: at 4px against 24px targets these read as a cramped list of
+                options rather than a set of destinations, and at 1440 the column they sit in
+                ends ~220px above the strip below it — the space to breathe was already there
+                and unused. The pairs are horizontal and meant to be (Buying|Selling,
+                Financing|Home Value), so the row gap is the one to open, not the column gap. */}
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-2.5 text-sm font-light">
               {FOOTER_NAV.map((item) =>
                 "external" in item && item.external ? (
                   // /ai is served by an external rewrite, not an RSC route — a plain anchor
@@ -121,10 +126,12 @@ export function Footer() {
       </div>
 
       <div className="bg-ink text-paper/70">
-        <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-between lg:px-8">
-          <p>
-            &copy; {new Date().getFullYear()} {SITE.name}
-          </p>
+        {/* A pure utility strip. It used to open with a second copyright notice — "© 2026
+            RealtyLT" sitting directly under "© 2026 Levan Tsiklauri | United Real Estate. Each
+            office is independently owned and operated." two strips apart. One of them had to
+            go, and it is this one: the other names the legal entity and carries the franchise
+            disclaimer, and it belongs with the Equal Housing and REALTOR® marks it sits beside. */}
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-center lg:px-8">
           {/* inline-flex min-h-[24px]: text-xs links with no padding were ~13px tall, under the
               WCAG 2.5.8 (24px) pointer-target minimum on mobile. */}
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
