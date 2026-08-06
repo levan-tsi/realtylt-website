@@ -213,7 +213,15 @@ export function ListingPhotos({
           className={`photo-zoom relative overflow-hidden md:rounded-2xl ${
             sides.length > 0
               ? "aspect-[3/2] lg:aspect-auto lg:h-[400px]"
-              : "aspect-[3/2] md:aspect-[21/9] md:max-h-[400px]"
+              : // A listing with ONE photo had no considered state. `aspect-[21/9]` with
+                // `max-h-[400px]` looks like it caps the height, but aspect-ratio works both
+                // ways: once the height is clamped to 400 the WIDTH collapses to 400 x 21/9 =
+                // 933, and the box stops filling its column. Measured on production at 1440:
+                // a 933x400 photo sitting at x=112 with 112px of black to its left and 395px
+                // to its right, visibly off-centre inside a full-bleed black band.
+                // Pin the height instead and let the width fill, which also makes the band the
+                // same 400px tall whether a listing carries one photo or twelve.
+                "aspect-[3/2] md:aspect-auto md:h-[400px] md:w-full"
           }`}
         >
           {heroSrc ? (
