@@ -92,6 +92,12 @@ export const NEW_LISTING_DAYS = 7;
 export function parseSearchRequest(q: URLSearchParams): SearchParams {
   const sort = q.get("sort") as SortKey | null;
   const withQuick = new URLSearchParams(q);
+  // On /search, `quick` is the ONLY status control. Raw ?status= / ?newDays= are API-route
+  // params the SearchClient has never read — honoring them here would render an HTML answer
+  // the client immediately disagrees with (?quick=all&status=Active: Active-only homes in the
+  // HTML, every on-market status after the first client fetch). Drop them before translating.
+  withQuick.delete("status");
+  withQuick.delete("newDays");
   // The count-line quick filter is ONE control with four mutually exclusive answers, but they
   // are not all the same kind of question: "new" is a time window, "active"/"pending" are a
   // status. Translate here so the server render and the client's own fetch ask the SAME

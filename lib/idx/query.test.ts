@@ -96,8 +96,19 @@ describe("parseSearchRequest — the /search page's own defaults", () => {
   it("translates the quick filter to a 7-day window, exactly like the client does", () => {
     expect(parseSearchRequest(q("quick=new")).newWithinDays).toBe(7);
     expect(parseSearchRequest(q("quick=all")).newWithinDays).toBeUndefined();
-    // An explicit newDays in the URL still wins its own way through parseFilterParams.
-    expect(parseSearchRequest(q("newDays=30")).newWithinDays).toBe(30);
+    // A raw ?newDays= is an API-route param the SearchClient never reads — /search ignores it,
+    // or the server HTML answers a question the client's own fetch immediately re-asks without.
+    expect(parseSearchRequest(q("newDays=30")).newWithinDays).toBeUndefined();
+    expect(parseSearchRequest(q("quick=new&newDays=30")).newWithinDays).toBe(7);
+  });
+
+  // On /search, `quick` is the ONLY status control — SearchClient's fromParams has no status
+  // field at all, so a server render that honoured ?status= would show homes the client's very
+  // first fetch disagrees with (?quick=all&status=Active was live drift before this).
+  it("ignores a raw ?status= — quick alone decides", () => {
+    expect(parseSearchRequest(q("quick=all&status=Active")).status).toBeUndefined();
+    expect(parseSearchRequest(q("status=Pending")).status).toBe("Active"); // quick defaults
+    expect(parseSearchRequest(q("quick=new&status=Pending")).status).toBeUndefined();
   });
 
   // The default is Active, not every on-market status. Measured on production the day it
