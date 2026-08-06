@@ -17,7 +17,7 @@
  */
 
 import { unstable_cache } from "next/cache";
-import { DEFAULT_PAGE_SIZE, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
+import { DEFAULT_PAGE_SIZE, HOME_TYPE_VALUES, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
 import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
@@ -132,6 +132,22 @@ function searchFilters(p: SearchParams): string {
   // photos_servable, not the JSONB marker: the marker is wiped by the sync's full-JSONB upsert,
   // so filtering on it hid 9,186 active listings that DO have photos (measured 2026-07-30).
   if (p.withPhotosOnly) parts.push(`photos_servable=gt.0`);
+  // Home type — RESO PropertySubType. One token covers several feed values (a buyer looking for
+  // a two-family does not distinguish Duplex from Triplex), so this is `in.()`, not equality.
+  // Values are quoted because they contain spaces, and encoded because they travel in a URL;
+  // they come from our own whitelist, never from the visitor.
+  if (p.homeType) {
+    const vals = HOME_TYPE_VALUES[p.homeType].map((v) => `"${encodeURIComponent(v)}"`).join(",");
+    parts.push(`property_sub_type=in.(${vals})`);
+  }
+  // Feature toggles — generated boolean columns, indexed partial on is_active. `is.true` and
+  // not `eq.true`, so a NULL (the feed did not state it) is excluded rather than matched: a
+  // listing that never says whether it has central air must not turn up under "Central air".
+  if (p.centralAir) parts.push("has_central_air=is.true");
+  if (p.basement) parts.push("has_basement=is.true");
+  if (p.waterfront) parts.push("has_waterfront=is.true");
+  if (p.firstFloorBed) parts.push("has_first_floor_bed=is.true");
+  if (p.eatInKitchen) parts.push("has_eat_in_kitchen=is.true");
   // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
   // property_type; otherwise an explicit sale type filters to it, and no sale type at all
   // still excludes rentals so the for-sale grid/count never carries a rental.

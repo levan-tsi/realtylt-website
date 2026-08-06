@@ -77,6 +77,15 @@ interface Filters {
   yearMin: string;
   yearMax: string;
   taxMax: string;
+  /** Home type — RESO PropertySubType, grouped into the words a buyer uses. Empty = any. */
+  homeType: string;
+  // ── Feature toggles. Yes-only: nobody searches for "no basement". A listing whose feed
+  // record omits the source field is excluded rather than matched (see lib/idx/fixture.ts).
+  centralAir: boolean;
+  basement: boolean;
+  waterfront: boolean;
+  firstFloorBed: boolean;
+  eatInKitchen: boolean;
   /** true = only listings with a mirrored cover photo (default off = include everything). */
   withPhotos: boolean;
   /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
@@ -91,7 +100,34 @@ interface Filters {
 }
 
 /** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
-const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax"] as const;
+const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType"] as const;
+
+/** The MORE panel's boolean toggles. Separate from MORE_KEYS because they count as active when
+ * TRUE rather than when non-empty, and because toQuery emits them as `=1` or not at all — a
+ * `centralAir=false` in the URL would be noise that also breaks the "is this the default?" read. */
+const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen"] as const;
+
+/** Feature toggles, in the order they are offered. Labels are what a buyer would say, not the
+ * RESO value underneath. Counts are active inventory measured 2026-08-06, and they are the
+ * reason each one is here — a filter that cannot answer is worse than no filter. */
+const FEATURE_TOGGLES: { key: (typeof MORE_FLAGS)[number]; label: string }[] = [
+  { key: "centralAir", label: "Central air" },        // 8,398
+  { key: "basement", label: "Basement" },             // 13,198
+  { key: "firstFloorBed", label: "First-floor bedroom" },
+  { key: "eatInKitchen", label: "Eat-in kitchen" },
+  { key: "waterfront", label: "Waterfront or water access" }, // 206
+];
+
+/** Home-type options. Values match HOME_TYPE_VALUES in lib/idx/types.ts, which maps each to the
+ * RESO PropertySubType values it covers. */
+const HOME_TYPE_OPTS: { value: string; label: string }[] = [
+  { value: "house", label: "House" },
+  { value: "condo", label: "Condo" },
+  { value: "coop", label: "Co-op" },
+  { value: "multi-family", label: "Multi-family" },
+  { value: "apartment", label: "Apartment" },
+  { value: "manufactured", label: "Manufactured or mobile" },
+];
 
 const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 3000].map(
   (k) => k * 1000,
@@ -130,6 +166,12 @@ function fromParams(sp: URLSearchParams): Filters {
     yearMin: sp.get("yearMin") ?? "",
     yearMax: sp.get("yearMax") ?? "",
     taxMax: sp.get("taxMax") ?? "",
+    homeType: HOME_TYPE_OPTS.some((o) => o.value === sp.get("homeType")) ? sp.get("homeType")! : "",
+    centralAir: TRUE_FLAGS.has(sp.get("centralAir") ?? ""),
+    basement: TRUE_FLAGS.has(sp.get("basement") ?? ""),
+    waterfront: TRUE_FLAGS.has(sp.get("waterfront") ?? ""),
+    firstFloorBed: TRUE_FLAGS.has(sp.get("firstFloorBed") ?? ""),
+    eatInKitchen: TRUE_FLAGS.has(sp.get("eatInKitchen") ?? ""),
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     // Default "active", mirroring parseSearchRequest — if these two disagreed the visitor would
@@ -160,6 +202,13 @@ function toQuery(f: Filters, forApi: boolean): string {
     // rental (For Rent mode) — same flag treatment so it round-trips in the URL + saved searches.
     if (k === "rental") {
       if (v) sp.set("rental", "1");
+      continue;
+    }
+    // The MORE panel's feature toggles, same rule: `=1` when on, absent when off. Without this
+    // they would fall through to the generic branch below and emit `centralAir=false`, because
+    // `false` is neither "" nor null.
+    if ((MORE_FLAGS as readonly string[]).includes(k)) {
+      if (v) sp.set(k, "1");
       continue;
     }
     if (v === "" || v == null || (k === "page" && v === 1) || (k === "sort" && v === "mixed" && forApi === false))
@@ -195,6 +244,8 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     f.quick === "all" && "every status",
     f.quick === "pending" && "pending only",
     f.withPhotos && "with photos",
+    HOME_TYPE_OPTS.find((o) => o.value === f.homeType)?.label.toLowerCase(),
+    ...FEATURE_TOGGLES.filter((t) => f[t.key]).map((t) => t.label.toLowerCase()),
   ].filter(Boolean) as string[];
   return { name: parts.length ? parts.join(" · ") : "All listings", parts };
 }
@@ -256,7 +307,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // "MORE" filters panel (garage / sqft / lot / year / tax + without-photos). Collapsed by
   // default; the button carries a count of the active advanced filters.
   const [moreOpen, setMoreOpen] = useState(false);
-  const moreCount = MORE_KEYS.filter((k) => filters[k] !== "").length + (filters.withPhotos ? 1 : 0);
+  const moreCount =
+    MORE_KEYS.filter((k) => filters[k] !== "").length +
+    MORE_FLAGS.filter((k) => filters[k]).length +
+    (filters.withPhotos ? 1 : 0);
   // Any filter that narrows the default six-county set — so the count line reads "N found"
   // instead of "across the Hudson Valley" the moment a real filter is on (honest count).
   const hasActiveFilters =
@@ -456,7 +510,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   const clearMore = () =>
     apply({
       sqftMin: "", sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "",
-      yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
+      yearMin: "", yearMax: "", taxMax: "", homeType: "", withPhotos: false,
+      centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
     });
 
   // One labelled min→max row for the MORE panel.
@@ -700,23 +755,76 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </div>
 
           <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {/* Home type leads the panel: it is the coarsest cut anyone makes and the one the
+                panel could not make at all until now. PropertyType (Residential / Land /
+                Commercial) is a different, blunter question and stays on the bar — condos,
+                co-ops and multi-families are ALL "Residential", which is exactly why this
+                exists. */}
+            <div>
+              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Home type</p>
+              {/* The flex wrapper is load-bearing: panelSelectCls is `flex-1`, which does
+                  nothing outside a flex container, so a standalone select collapses to the
+                  width of its longest option while every rangeRow select fills its column. */}
+              <div className="flex">
+                <select
+                  aria-label="Home type"
+                  value={filters.homeType}
+                  onChange={(e) => apply({ homeType: e.target.value })}
+                  className={panelSelectCls}
+                >
+                  <option value="">Any home type</option>
+                  {HOME_TYPE_OPTS.map((o) => (<option key={o.value} value={o.value}>{o.label}</option>))}
+                </select>
+              </div>
+            </div>
             {rangeRow("Garage", "garageMin", "garageMax", GARAGE_OPTS, (n) => `${n}`)}
             {rangeRow("Square footage", "sqftMin", "sqftMax", SQFT_OPTS, (n) => n.toLocaleString())}
             {rangeRow("Lot size", "lotMin", "lotMax", LOT_OPTS, fmtLot)}
             {rangeRow("Year built", "yearMin", "yearMax", YEAR_OPTS, (n) => `${n}`)}
             <div>
               <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Max annual tax</p>
-              <select
-                aria-label="Maximum annual property tax"
-                value={filters.taxMax}
-                onChange={(e) => apply({ taxMax: e.target.value })}
-                className={panelSelectCls}
-              >
-                <option value="">No max</option>
-                {TAX_OPTS.map((n) => (<option key={n} value={n}>${n.toLocaleString()}</option>))}
-              </select>
+              {/* Same flex wrapper, and this one is a pre-existing defect the new Home type
+                  control inherited: at 1440 this select measured ~95px against its
+                  neighbours' ~315px, which reads as a broken cell rather than a choice. */}
+              <div className="flex">
+                <select
+                  aria-label="Maximum annual property tax"
+                  value={filters.taxMax}
+                  onChange={(e) => apply({ taxMax: e.target.value })}
+                  className={panelSelectCls}
+                >
+                  <option value="">No max</option>
+                  {TAX_OPTS.map((n) => (<option key={n} value={n}>${n.toLocaleString()}</option>))}
+                </select>
+              </div>
             </div>
           </div>
+
+          {/* Features. Checkboxes rather than another rank of selects, because each is a yes/no
+              question and a select that only ever says "Any / Yes" is a checkbox wearing a hat.
+              Every one is backed by a generated boolean column and by real inventory — see
+              supabase/migrations/idx_search_facet_columns.sql for the measured counts and for
+              why Pool and Fireplace are NOT here (the feed carries neither as structured data;
+              "pool" lives only in free text, where it also says "no pool" and "pool table"). */}
+          <fieldset className="mt-6 border-t border-line pt-5">
+            <legend className="sr-only">Features</legend>
+            <p aria-hidden className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">
+              Features
+            </p>
+            <div className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+              {FEATURE_TOGGLES.map((t) => (
+                <label key={t.key} className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
+                  <input
+                    type="checkbox"
+                    checked={filters[t.key]}
+                    onChange={(e) => apply({ [t.key]: e.target.checked })}
+                    className="h-4 w-4 shrink-0 accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                  />
+                  {t.label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
           <div className="mt-6 flex justify-end border-t border-line pt-4">
             <button
