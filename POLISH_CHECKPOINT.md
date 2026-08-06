@@ -116,14 +116,44 @@
 ## · The one "nameless input" on three pages is the honeypot, inside an aria-hidden 1px
 ##   -left-[9999px] wrapper. Correct. My probe measured the input, not its clipping parent.
 ##
+## ── THE CLUSTERED MAP SHIPPED, AND THE ADVERSARIAL PASS IS WHY IT IS SAFE ────────────
+## Built on a preview branch, then handed to a Fable 5 agent as the final gate. That pass
+## found SEVEN real defects the building agent's own "all gates green" report had missed,
+## including the flagship one: **clicking a map pin unpinned its own popup** — the chip's
+## pointerdown pinned it, focusCard's scrollIntoView scrolled the window 252px, and the same
+## click's compatibility mousedown then landed on the map at the OLD coordinates and the
+## outside-click closer unpinned it. Also: the "viewport flip" was geometric fiction (an
+## InfoWindow body always renders above its anchor, so +26px moved it 52px and a top-edge
+## popup was decapitated); PIN_CAP=3000 never actually shipped because PostgREST's max-rows
+## clamped the single limit=3000 request to 1,000; Escape on /search blurred whatever input
+## you were typing in; and a keyboard user could preview a home but never pin it, because
+## Enter fires `click` and the pin handler listened for `pointerdown`.
+##
+## VERIFIED BY ME, not taken on report — on the deployed preview at 1440 with REAL mouse
+## input, asserting the popup is OPEN before asserting it closes (a probe that reports
+## "closed" when nothing opened cannot fail):
+##   click opens OPEN · stays open 2.5s yes · Escape closes yes · STAYS closed yes ·
+##   reopen OPEN · outside closes yes · STAYS closed yes
+## Clustering, real mouse wheel: 72 -> 29 -> 10 bubbles zooming out, 10 -> 90 zooming back
+## in, counts summing 991-1000 throughout. Cluster click zooms (72 -> 66 bubbles, 9 -> 14
+## chips). Zero horizontal overflow at 390 and 320. tsc clean, 821 tests.
+##
+## THE MOBILE MAP DOES NOT RENDER AT 390, AND THAT IS PRE-EXISTING — not a regression from
+## this work. Controlled against production (main, no clustering) at both widths:
+##   production @390 gm=false · @1440 gm=true      preview @390 gm=false · @1440 gm=true
+## Identical. The MAP toggle reports pressed on mobile and you get the card grid anyway.
+## Worth HIS decision whether a phone should get the map at all; it did not block the merge.
+##
+## STILL UNVERIFIED on the map: the popup's mobile interaction (untestable while the mobile
+## map does not render), the Leaflet fallback engine (only renders when the Maps key is
+## ABSENT, so never in production), natural Tab-order reachability of map chips (Enter-pin
+## works; the full tab walk kept restarting at the skip link), and the popup photo pager
+## with real photos (deliberately not exercised — MLS safety).
+##
 ## ═══ ROUND 23 BRIEF ═══════════════════════════════════════════════════════════════════
 ## SINGLE AGENT unless he says otherwise — the round-22 fleet was a per-session grant and he
 ## said so explicitly ([[feedback-subagents-per-session-only]]).
-## 1. THE CLUSTERED MAP is on branch `map-clusters` with a Vercel PREVIEW. His bar: "if it
-##    works operational and definitely good and better than it was and passes all tests
-##    without bugs we can move to production after." Judge it, then merge or iterate.
-##    Popup decision taken: the popup is the default for EVERY pin click and contains the only
-##    link to the full page — one rule, not a click-target coin-flip.
+## 1. THE CLUSTERED MAP IS MERGED (done at the end of round 22 — see the block below).
 ## 2. THE ACCOUNT WALL still blocks launch and is still his: Supabase disable_signup=true, so
 ##    nobody can create an account. Settle mailer_autoconfirm (realtylt.com has no SPF/DMARC)
 ##    and the Google button offering a disabled provider at the same time.
