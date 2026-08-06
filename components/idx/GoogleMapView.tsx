@@ -31,6 +31,18 @@ declare global {
   var google: any;
 }
 
+/** google.maps.LatLngBounds has its OWN accessors — getNorthEast()/getSouthWest(), each a
+ * LatLng with lat()/lng() methods — NOT Leaflet's getNorth/getSouth/getEast/getWest. Module
+ * scope so both the mount effect's viewport fetch and the filtersQuery-change effect share one
+ * conversion. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toBounds(b: any): MapBounds | null {
+  if (!b) return null;
+  const ne = b.getNorthEast();
+  const sw = b.getSouthWest();
+  return { north: ne.lat(), east: ne.lng(), south: sw.lat(), west: sw.lng() };
+}
+
 export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
@@ -192,14 +204,9 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // old page-coupled behaviour.
         const requestViewport = () => {
           if (!filtersQuery) return;
-          const b = map.getBounds();
+          const b = toBounds(map.getBounds());
           if (!b) return;
-          fetcherRef.current?.request({
-            north: b.getNorth(),
-            south: b.getSouth(),
-            east: b.getEast(),
-            west: b.getWest(),
-          });
+          fetcherRef.current?.request(b);
         };
         if (filtersQuery) {
           fetcherRef.current = createPinFetcher({
@@ -233,11 +240,10 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           if (!proj) return;
           const sel = selectedRef.current;
           const zoom = map.getZoom() ?? 9;
-          const b = map.getBounds();
           const { index, byId } = getIndex(activeSource());
-          const bounds = b
-            ? { north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() }
-            : boundsOfPins(activeSource()) ?? { north: 90, south: -90, east: 180, west: -180 };
+          const bounds =
+            toBounds(map.getBounds()) ??
+            boundsOfPins(activeSource()) ?? { north: 90, south: -90, east: 180, west: -180 };
           const entries = getClusterEntries(index, byId, bounds, zoom);
           // Same-centroid leaf pins still get fanned out so no chip hides another — spread only
           // the pins actually rendering individually this frame (clusters already absorbed the
@@ -406,8 +412,8 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         overlayRef.current?.draw?.();
       },
     });
-    const b = map.getBounds();
-    if (b) fetcherRef.current.request({ north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() });
+    const b = toBounds(map.getBounds());
+    if (b) fetcherRef.current.request(b);
     overlayRef.current?.draw?.();
   }, [filtersQuery]);
 
