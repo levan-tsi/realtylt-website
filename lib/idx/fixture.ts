@@ -39,6 +39,9 @@ export class FixtureIdxClient implements IdxClient {
       waterfront,
       firstFloorBed,
       eatInKitchen,
+      washerDryer,
+      formalDining,
+      municipalUtilities,
       propertyType,
       newWithinDays,
       sort = "newest",
@@ -83,6 +86,10 @@ export class FixtureIdxClient implements IdxClient {
       if (waterfront && !l.lotFeatures?.some((v) => (WATERFRONT_FEATURES as readonly string[]).includes(v))) return false;
       if (firstFloorBed && !l.interiorFeatures?.includes("First Floor Bedroom")) return false;
       if (eatInKitchen && !l.interiorFeatures?.includes("Eat-in Kitchen")) return false;
+      if (washerDryer && !l.interiorFeatures?.includes("Washer/Dryer Hookup")) return false;
+      if (formalDining && !l.interiorFeatures?.includes("Formal Dining")) return false;
+      // One toggle, two facts — mirrors db.searchFilters: BOTH must be stated and municipal.
+      if (municipalUtilities && !(l.waterSource?.includes("Public") && l.sewer?.includes("Public Sewer"))) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       // Map-viewport box (round 23). Mirrors db.searchFilters: a 0/absent coordinate can

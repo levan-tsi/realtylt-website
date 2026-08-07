@@ -71,6 +71,9 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     waterfront: flag(q.get("waterfront")),
     firstFloorBed: flag(q.get("firstFloorBed")),
     eatInKitchen: flag(q.get("eatInKitchen")),
+    washerDryer: flag(q.get("washerDryer")),
+    formalDining: flag(q.get("formalDining")),
+    municipalUtilities: flag(q.get("municipalUtilities")),
     // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
     // for an absurd range.
     newWithinDays: (() => {

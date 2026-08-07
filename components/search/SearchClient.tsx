@@ -88,6 +88,10 @@ interface Filters {
   waterfront: boolean;
   firstFloorBed: boolean;
   eatInKitchen: boolean;
+  washerDryer: boolean;
+  formalDining: boolean;
+  /** One toggle over two facts (public water AND public sewer) — "no well, no septic". */
+  municipalUtilities: boolean;
   /** true = only listings with a mirrored cover photo (default off = include everything). */
   withPhotos: boolean;
   /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
@@ -107,7 +111,7 @@ const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lo
 /** The MORE panel's boolean toggles. Separate from MORE_KEYS because they count as active when
  * TRUE rather than when non-empty, and because toQuery emits them as `=1` or not at all — a
  * `centralAir=false` in the URL would be noise that also breaks the "is this the default?" read. */
-const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen"] as const;
+const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen", "washerDryer", "formalDining", "municipalUtilities"] as const;
 
 /** Feature toggles, in the order they are offered. Labels are what a buyer would say, not the
  * RESO value underneath. Counts are active inventory measured 2026-08-06, and they are the
@@ -117,6 +121,9 @@ const FEATURE_TOGGLES: { key: (typeof MORE_FLAGS)[number]; label: string }[] = [
   { key: "basement", label: "Basement" },             // 13,198
   { key: "firstFloorBed", label: "First-floor bedroom" },
   { key: "eatInKitchen", label: "Eat-in kitchen" },
+  { key: "washerDryer", label: "Washer/dryer hookup" },   // 2,585
+  { key: "formalDining", label: "Formal dining room" },   // 3,264
+  { key: "municipalUtilities", label: "Municipal water and sewer" }, // no well, no septic
   { key: "waterfront", label: "Waterfront or water access" }, // 206
 ];
 
@@ -187,6 +194,9 @@ function fromParams(sp: URLSearchParams): Filters {
     waterfront: TRUE_FLAGS.has(sp.get("waterfront") ?? ""),
     firstFloorBed: TRUE_FLAGS.has(sp.get("firstFloorBed") ?? ""),
     eatInKitchen: TRUE_FLAGS.has(sp.get("eatInKitchen") ?? ""),
+    washerDryer: TRUE_FLAGS.has(sp.get("washerDryer") ?? ""),
+    formalDining: TRUE_FLAGS.has(sp.get("formalDining") ?? ""),
+    municipalUtilities: TRUE_FLAGS.has(sp.get("municipalUtilities") ?? ""),
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     // Default "active", mirroring parseSearchRequest — if these two disagreed the visitor would
@@ -609,6 +619,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       sqftMin: "", sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "",
       yearMin: "", yearMax: "", taxMax: "", homeType: "", withPhotos: false,
       centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
+      washerDryer: false, formalDining: false, municipalUtilities: false,
     });
 
   // One labelled min→max row for the MORE panel.

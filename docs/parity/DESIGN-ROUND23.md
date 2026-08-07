@@ -205,3 +205,33 @@ anything requiring sign-in is a dead end for every visitor until the owner flips
 
 Build order note: the handoff ranks filters (§2) above the rail, so the rail/plan build takes
 whatever budget survives them — this section is the committed thinking either way.
+
+## 8. Filters: three more honest questions, and two that refused
+
+Measured inside the Active for-sale surface first (the Apartment trap's lesson), then shipped
+through the settled mechanism (generated STORED column → partial index → SearchParams →
+parseFilterParams → searchFilters → fixture → UI):
+
+- **Washer/dryer hookup** (2,585 of 16,826) and **Formal dining room** (3,264) —
+  interiorFeatures checkboxes, same family as the five that exist.
+- **Municipal water and sewer** — ONE toggle over TWO facts (`has_public_water` AND
+  `has_public_sewer`), because "no well, no septic" is a single buyer decision in this
+  market. Vocabularies verified clean on a 2,000-row sample (Public / Well / … and
+  Public Sewer / Septic Tank / …). The columns stay separate facts so a future control can
+  split them without another table rewrite.
+
+**Refused, with reasons recorded in the migration header:** Max HOA — `AssociationFee` is
+replicated (2,929 numeric, median $580) but `AssociationFeeFrequency` is NOT in
+SELECT_FIELDS, so monthly cannot be told from annual and a "$500/mo max" filter would lie;
+it joins pool and fireplace on the needs-a-sync-change list. School district — 79% filled,
+135 internally-consistent values, but a hardcoded 135-option select would rot into dead
+options as inventory shifts; it needs a small dynamic values source (the suggest-index
+pattern) before it can ship honestly.
+
+**Validated the way he asked** ("test it in every few random way to confirm the data is
+correct compare to one key mls"): 8 seeded-random filter combos (county × 1-2 facets × price
+band) through our live API, every returned row's raw OneKey jsonb re-checked against every
+predicate independently — **328 row-predicate sets, zero violations**
+(scripts/_scratch-r23-facet-live.mjs, extending round 22's 365-row pass). External leg:
+onekeymls.com's own portal shows **100** results for Beacon, NY; our all-on-market Beacon
+count is **99** — one listing apart, accounted for by our $10k junk-price floor.

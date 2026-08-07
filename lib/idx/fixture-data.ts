@@ -252,17 +252,30 @@ function lotFeaturesFor(i: number): string[] | undefined {
   }
 }
 
-/** interiorFeatures — carries BOTH the firstFloorBed and eatInKitchen signals; every 7th row
- * omits interiorFeatures entirely. */
+/** interiorFeatures — carries the firstFloorBed, eatInKitchen, washerDryer and formalDining
+ * signals; every 7th row omits interiorFeatures entirely. */
 function interiorFeaturesFor(i: number): string[] | undefined {
   switch (i % 7) {
     case 0: return undefined;
-    case 1: return ["First Floor Bedroom"];
-    case 2: return ["Eat-in Kitchen"];
+    case 1: return ["First Floor Bedroom", "Washer/Dryer Hookup"];
+    case 2: return ["Eat-in Kitchen", "Formal Dining"];
     case 3: return ["First Floor Bedroom", "Eat-in Kitchen"];
     case 4: return ["Walk-in Closet(s)"];
-    case 5: return ["Cathedral Ceiling(s)"];
+    case 5: return ["Cathedral Ceiling(s)", "Formal Dining"];
     default: return ["Pantry"];
+  }
+}
+
+/** sewer + waterSource — the municipalUtilities signal (BOTH must be municipal). Every 5th row
+ * omits both fields entirely; the vocabularies mirror what the feed actually uses (measured
+ * 2026-08-06: Public Sewer / Septic Tank ... and Public / Well / Private ...). */
+function utilitiesFor(i: number): { sewer?: string[]; waterSource?: string[] } {
+  switch (i % 5) {
+    case 0: return {};
+    case 1: return { sewer: ["Public Sewer"], waterSource: ["Public"] };
+    case 2: return { sewer: ["Septic Tank"], waterSource: ["Well"] };
+    case 3: return { sewer: ["Public Sewer"], waterSource: ["Well"] }; // mixed: NOT municipal-both
+    default: return { sewer: ["Cesspool"], waterSource: ["Public"] };
   }
 }
 
@@ -310,6 +323,7 @@ function buildListing(row: Row, i: number): Listing {
     basement: basementFor(i),
     lotFeatures: lotFeaturesFor(i),
     interiorFeatures: interiorFeaturesFor(i),
+    ...utilitiesFor(i),
     photos,
     lat: +(town.lat + (((i * 29) % 21) - 10) / 1000).toFixed(5),
     lng: +(town.lng + (((i * 31) % 21) - 10) / 1000).toFixed(5),

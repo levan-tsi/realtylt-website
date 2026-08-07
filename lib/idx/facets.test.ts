@@ -160,6 +160,73 @@ describe("eatInKitchen filter", () => {
   });
 });
 
+describe("washerDryer filter (round 23)", () => {
+  const matchRow = FIXTURE_LISTINGS.find((l) => l.interiorFeatures?.includes("Washer/Dryer Hookup"));
+  const nonMatchRow = FIXTURE_LISTINGS.find(
+    (l) => l.interiorFeatures && !l.interiorFeatures.includes("Washer/Dryer Hookup"),
+  );
+  const omittedRow = FIXTURE_LISTINGS.find((l) => l.interiorFeatures === undefined);
+
+  it("fixture data has a match, a non-match and an omitted row to test against", () => {
+    expect(matchRow).toBeDefined();
+    expect(nonMatchRow).toBeDefined();
+    expect(omittedRow).toBeDefined();
+  });
+
+  it("every returned row genuinely has a washer/dryer hookup; non-matching and omitted rows are absent", async () => {
+    const r = await client.search({ washerDryer: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.interiorFeatures?.includes("Washer/Dryer Hookup"))).toBe(true);
+    expect(r.listings.some((l) => l.id === nonMatchRow!.id)).toBe(false);
+    expect(r.listings.some((l) => l.id === omittedRow!.id)).toBe(false);
+  });
+});
+
+describe("formalDining filter (round 23)", () => {
+  const matchRow = FIXTURE_LISTINGS.find((l) => l.interiorFeatures?.includes("Formal Dining"));
+  const nonMatchRow = FIXTURE_LISTINGS.find(
+    (l) => l.interiorFeatures && !l.interiorFeatures.includes("Formal Dining"),
+  );
+
+  it("fixture data has a match and a non-match to test against", () => {
+    expect(matchRow).toBeDefined();
+    expect(nonMatchRow).toBeDefined();
+  });
+
+  it("every returned row genuinely has a formal dining room; non-matching rows are absent", async () => {
+    const r = await client.search({ formalDining: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.interiorFeatures?.includes("Formal Dining"))).toBe(true);
+    expect(r.listings.some((l) => l.id === nonMatchRow!.id)).toBe(false);
+  });
+});
+
+describe("municipalUtilities filter (round 23) — one toggle, BOTH facts", () => {
+  const bothRow = FIXTURE_LISTINGS.find(
+    (l) => l.sewer?.includes("Public Sewer") && l.waterSource?.includes("Public"),
+  );
+  const mixedRow = FIXTURE_LISTINGS.find(
+    (l) => l.sewer?.includes("Public Sewer") && l.waterSource && !l.waterSource.includes("Public"),
+  );
+  const omittedRow = FIXTURE_LISTINGS.find((l) => l.sewer === undefined && l.waterSource === undefined);
+
+  it("fixture data has a both-municipal, a mixed, and an omitted row to test against", () => {
+    expect(bothRow).toBeDefined();
+    expect(mixedRow).toBeDefined();
+    expect(omittedRow).toBeDefined();
+  });
+
+  it("every returned row has BOTH municipal water and sewer; a public-sewer-with-well row is absent", async () => {
+    const r = await client.search({ municipalUtilities: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(
+      r.listings.every((l) => l.sewer?.includes("Public Sewer") && l.waterSource?.includes("Public")),
+    ).toBe(true);
+    expect(r.listings.some((l) => l.id === mixedRow!.id)).toBe(false);
+    expect(r.listings.some((l) => l.id === omittedRow!.id)).toBe(false);
+  });
+});
+
 /** REAL_BASEMENT and WATERFRONT_FEATURES (types.ts) are duplicated, unavoidably, in the
  * generated columns in supabase/migrations/idx_search_facet_columns.sql — SQL cannot import
  * TypeScript. This pins the two lists together so a future edit to one is caught here instead

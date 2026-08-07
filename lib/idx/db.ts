@@ -148,6 +148,10 @@ function searchFilters(p: SearchParams): string {
   if (p.waterfront) parts.push("has_waterfront=is.true");
   if (p.firstFloorBed) parts.push("has_first_floor_bed=is.true");
   if (p.eatInKitchen) parts.push("has_eat_in_kitchen=is.true");
+  if (p.washerDryer) parts.push("has_washer_dryer=is.true");
+  if (p.formalDining) parts.push("has_formal_dining=is.true");
+  // One toggle, two facts: "no well, no septic" is a single buyer decision (round 23).
+  if (p.municipalUtilities) parts.push("has_public_water=is.true", "has_public_sewer=is.true");
   // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
   // property_type; otherwise an explicit sale type filters to it, and no sale type at all
   // still excludes rentals so the for-sale grid/count never carries a rental.

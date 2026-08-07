@@ -180,6 +180,11 @@ export interface SearchParams {
   waterfront?: boolean;
   firstFloorBed?: boolean;
   eatInKitchen?: boolean;
+  washerDryer?: boolean;
+  formalDining?: boolean;
+  /** ONE toggle over TWO facts (has_public_water AND has_public_sewer): the buyer question it
+   * answers is "no well, no septic", which is a single decision in this market. */
+  municipalUtilities?: boolean;
   /** Scope results to a map viewport (round 23: the grid and the map must answer the SAME
    * question — he caught page 2 of the county scope contradicting what the map showed). Set
    * by /api/idx/search from north/south/east/west params; never part of the page URL, so the
