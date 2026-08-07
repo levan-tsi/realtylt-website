@@ -151,9 +151,33 @@
 ## with real photos (deliberately not exercised — MLS safety).
 ##
 ## ═══ ROUND 23 BRIEF ═══════════════════════════════════════════════════════════════════
-## SINGLE AGENT unless he says otherwise — the round-22 fleet was a per-session grant and he
-## said so explicitly ([[feedback-subagents-per-session-only]]).
-## 1. THE CLUSTERED MAP IS MERGED (done at the end of round 22 — see the block below).
+## >>> READ docs/parity/HANDOFF-ROUND-23.md FIRST. It is the running order and carries the
+## >>> reasoning, his verbatim words, and the verification traps. This is the short version.
+##
+## SINGLE AGENT. FABLE. NO SUBAGENTS — the round-22 fleet was a one-session grant and he ended
+## it explicitly ([[feedback-subagents-per-session-only]]). Work to ~700k tokens.
+##
+## HE TESTED THE MAP AND IT IS NOT ZILLOW YET. Measured on production at default zoom:
+## **85 cluster bubbles against 5 price chips**. Zillow is the opposite — prices are the
+## default rendering and a cluster is the exception; at low zoom it shows a SAMPLE of
+## individual prices and re-picks them per viewport, which is what he means by "some
+## disappear when you zoom out and appear in different places". supercluster is currently
+## radius 60 / maxZoom 17 in components/idx/clustering.ts and is far too eager. GO LOOK AT
+## ZILLOW before choosing numbers.
+##   · "we did not get pop up, it just goes to page" — I could NOT reproduce navigation: a
+##     chip click opens a 252x272 popup and the URL does not change. He is clicking CIRCLES,
+##     which zoom, because there are 85 of them and 5 chips. Fix the ratio first, then re-check.
+##   · A new listing's chip shows "NEW" where the PRICE should be. Price must always show.
+##   · Three pin renderings (price pill / dot / cluster) read as three unrelated states.
+##     Zillow has two. Collapse toward that.
+## 1. BOROUGHS INTO THE DEFAULT — his decision, made. DEFAULT_COUNTY_SLUGS is the six HV
+##    counties; he wants all five NYC boroughs in the default map/scope. That roughly DOUBLES
+##    the set (11,611 -> ~25,156 on-market). Consequences: the "across the Hudson Valley" copy,
+##    the map's initial frame, county-bounds, and the pin cap. lib/site.ts:54 still says "~7k
+##    borough listings" — stale, it is 13,545.
+## 2. FILTERS — add what matters, then TEST IN SEVERAL RANDOM WAYS against OneKey MLS itself.
+##    Pool and fireplace still need a SELECT_FIELDS change first.
+## 3. Re-test two or three more times against Zillow; polish the design only if budget remains.
 ## 2. THE ACCOUNT WALL still blocks launch and is still his: Supabase disable_signup=true, so
 ##    nobody can create an account. Settle mailer_autoconfirm (realtylt.com has no SPF/DMARC)
 ##    and the Google button offering a disabled provider at the same time.
