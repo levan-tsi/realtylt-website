@@ -55,7 +55,7 @@
 ## the migration header with unlock conditions.
 ## VALIDATION: 8 seeded-random combos through the live API, every returned row's raw OneKey
 ## jsonb re-checked per predicate — 328 row-predicate sets, ZERO violations
-## (scripts/_scratch-r23-facet-live.mjs). External: onekeymls.com shows 100 for Beacon; ours
+## (scripts/verify-facets-live.mjs). External: onekeymls.com shows 100 for Beacon; ours
 ## 99 all-on-market — the gap is our $10k junk floor.
 ##
 ## ── THE RAIL + /plan (research FIRST, committed before code) ─────────────────────────
@@ -84,7 +84,7 @@
 ##
 ## ═══ ROUND 24 BRIEF ═══════════════════════════════════════════════════════════════════
 ## 1. HIS RE-TEST of the map vs Zillow — expect notes on pill density, dot size, popup feel.
-##    The ratio probe (scripts/_scratch-r23-mapratio.mjs) and popup probe (-popup.mjs) are
+##    The ratio probe (scripts/verify-map-markers.mjs) and popup probe (verify-map-popup.mjs) are
 ##    the regression harness; run them BASE=production before and after any change.
 ## 2. MOBILE MAP still does not render at 390 (pre-existing, documented r22+r23). His call
 ##    whether phones get the map at all; if yes, that is the round.

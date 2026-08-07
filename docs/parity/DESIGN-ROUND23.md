@@ -6,7 +6,7 @@ carries the reasoning; the commits carry the diffs.
 
 ## 1. The marker language: price pills + dots, no count circles
 
-**Measured today on production at 1440×900** (scripts/_scratch-r23-mapratio.mjs): default frame
+**Measured today on production at 1440×900** (scripts/verify-map-markers.mjs): default frame
 renders 14 price chips + 10 cluster bubbles; one wheel zoom in (the moment the viewport fetch
 takes over) it becomes **6 chips against 96 count bubbles**. That is the owner's complaint,
 reproduced: the map answers "how many" when the visitor asked "how much".
@@ -96,7 +96,7 @@ Decisions worth recording:
 - The count line reads **"N homes in this map area"** when scoped — and N is verified equal to
   the API's own total for the identical box.
 
-Verified with real mouse input on the dev server (scripts/_scratch-r23-viewport.mjs):
+Verified with real mouse input on the dev server (scripts/verify-viewport-scope.mjs):
 count line 5,360 = API total for the same box · 150 cards · 0 extra fetches in 6 idle seconds
 (the loop is shut) · a 260px pan produced exactly 1 scoped refetch and the count changed ·
 page-2's fetch carried the same box · the saved result set held all 150 viewport items, so
@@ -239,6 +239,6 @@ pattern) before it can ship honestly.
 correct compare to one key mls"): 8 seeded-random filter combos (county × 1-2 facets × price
 band) through our live API, every returned row's raw OneKey jsonb re-checked against every
 predicate independently — **328 row-predicate sets, zero violations**
-(scripts/_scratch-r23-facet-live.mjs, extending round 22's 365-row pass). External leg:
+(scripts/verify-facets-live.mjs, extending round 22's 365-row pass). External leg:
 onekeymls.com's own portal shows **100** results for Beacon, NY; our all-on-market Beacon
 count is **99** — one listing apart, accounted for by our $10k junk-price floor.
