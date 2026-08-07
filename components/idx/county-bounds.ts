@@ -20,19 +20,19 @@ export const COUNTY_BOUNDS: Record<CountySlug, MapBounds> = {
   "staten-island": { south: 40.5065, north: 40.6391, west: -74.2317, east: -74.0676 },
 };
 
-/** The whole served region (six Hudson Valley counties + five boroughs) — the widest
- * frame the feed covers. Matches the served-region boxes in
- * scripts/build-zip-centroids.mjs. Retained for reference/callers that need the full extent. */
+/** The whole served region (six Hudson Valley counties + five boroughs) — the widest frame
+ * the feed covers, and since round 23 the DEFAULT /search frame: the boroughs joined the
+ * default scope (owner's call), so the opening viewport has to hold Hudson Valley AND NYC.
+ * Matches the served-region boxes in scripts/build-zip-centroids.mjs. */
 export const SERVED_REGION: MapBounds = { south: 40.49, north: 42.14, west: -74.75, east: -73.51 };
 
 /** The six Top-Areas counties' combined extent (the union of the Dutchess/Westchester/Putnam/
- * Rockland/Ulster/Orange boxes above). This is the DEFAULT /search frame when no county is
- * chosen: the six areas we publish pages for, with NYC left out of first paint so the opening
- * viewport is the Hudson Valley (fewer, more relevant pins → faster, on-brand first render).
- * Boroughs stay one deep-link/expander click away and frame themselves normally when chosen. */
+ * Rockland/Ulster/Orange boxes above). No longer the default frame (SERVED_REGION is, since
+ * the boroughs joined the default scope) — kept for callers that mean specifically the
+ * Hudson Valley. */
 export const HUDSON_VALLEY: MapBounds = { south: 40.8902, north: 42.1357, west: -74.7481, east: -73.5129 };
 
-/** Frame for the current county filter (or the six-county Hudson Valley when none). */
+/** Frame for the current county filter (or the whole served region when none). */
 export function boundsForCounty(county: string): MapBounds {
-  return COUNTY_BOUNDS[county as CountySlug] ?? HUDSON_VALLEY;
+  return COUNTY_BOUNDS[county as CountySlug] ?? SERVED_REGION;
 }

@@ -10,7 +10,7 @@ import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { pageWindow } from "@/lib/pagination";
-import { boundsForCounty } from "@/components/idx/county-bounds";
+import { boundsForCounty, SERVED_REGION } from "@/components/idx/county-bounds";
 // "New Listings" quick-filter window (≤7 days, same as the card's "New" badge). Shared with
 // the server render so both sides ask the feed the same question.
 import { NEW_LISTING_DAYS } from "@/lib/idx/query";
@@ -37,9 +37,10 @@ const MapView = dynamic(
 });
 
 /** Primary chips = the six Top-Areas counties (the areas we publish pages for), Orange first
- * to match the live site. The five NYC boroughs live behind the "NYC boroughs" expander below,
- * so the default /search stays scoped to the Hudson Valley — boroughs are still fully
- * searchable and deep-linkable (?county=brooklyn), just not front-and-center. */
+ * to match the live site. The five NYC boroughs live behind the "NYC boroughs" expander below
+ * as a PRESENTATION grouping only — since round 23 the default scope includes all eleven areas
+ * (owner: "set as default to show all active listings on the map"), so the chips narrow, they
+ * no longer gate. */
 const COUNTY_CHIPS: CountySlug[] = ["orange", "dutchess", "westchester", "putnam", "rockland", "ulster"];
 const BOROUGH_CHIPS: CountySlug[] = ["bronx", "brooklyn", "manhattan", "queens", "staten-island"];
 
@@ -542,9 +543,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   const mapFiltersQuery = useMemo(() => apiFilterParams(filters).toString(), [filters]);
   // A chosen county frames its WHOLE real extent (county-bounds.ts) rather than whatever the
   // current results page happens to contain — so picking Queens actually shows Queens, and its
-  // viewport fetch pulls every pin in it (clustering is what keeps that renderable). A
-  // free-text/city search has no predefined box and keeps framing to its own result pins.
-  const mapInitialBounds = useMemo(() => (filters.county ? boundsForCounty(filters.county) : null), [filters.county]);
+  // viewport fetch pulls every pin in it (label thinning is what keeps that renderable). A
+  // free-text/city search has no predefined box and frames to its own result pins; NO place at
+  // all frames the whole served region, Hudson Valley AND NYC, since the boroughs joined the
+  // default scope (round 23) — seed pins alone are one page and could under-frame it.
+  const mapInitialBounds = useMemo(
+    () => (filters.county ? boundsForCounty(filters.county) : filters.city || filters.q ? null : SERVED_REGION),
+    [filters.county, filters.city, filters.q],
+  );
 
   // One card renderer for both branches — carries the ref (chip→card scroll) and the
   // hover/focus↔chip highlight. In grid view the highlight is harmless (no map).
@@ -1007,7 +1013,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 <span className="text-ink">
                   {activeViewportQs ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
                 </span>
-                {!hasActiveFilters && !activeViewportQs && <span>across the Hudson Valley</span>}
+                {!hasActiveFilters && !activeViewportQs && <span>across the Hudson Valley and NYC</span>}
               </>
             )}
           </p>

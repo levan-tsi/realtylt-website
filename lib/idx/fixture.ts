@@ -51,7 +51,9 @@ export class FixtureIdxClient implements IdxClient {
       if (county) {
         if (l.county !== county) return false;
       } else if (!(DEFAULT_COUNTY_SLUGS as readonly string[]).includes(l.county)) {
-        // No area picked → default to the six Hudson Valley counties (NYC boroughs are opt-in).
+        // No area picked → the whole served scope (all eleven areas since round 23). Still
+        // enforced so an out-of-scope row in a seeded fixture can never leak into a default
+        // search.
         return false;
       }
       if (priceMin != null && l.price < priceMin) return false;

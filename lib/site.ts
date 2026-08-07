@@ -51,10 +51,13 @@ export const SERVED_AREAS = [...COUNTIES, ...BOROUGHS] as const;
 
 export type CountySlug = (typeof SERVED_AREAS)[number]["slug"];
 
-/** Default /search scope when the visitor hasn't picked an area: the six Hudson Valley counties
- * the map frame already shows. NYC boroughs stay fully searchable but opt-in (borough expander or
- * ?county=slug), so the count, grid, and map pins don't get swamped by the ~7k borough listings. */
-export const DEFAULT_COUNTY_SLUGS: readonly CountySlug[] = COUNTIES.map((c) => c.slug);
+/** Default /search scope when the visitor hasn't picked an area: EVERYTHING we serve — the six
+ * Hudson Valley counties AND the five NYC boroughs (owner's call, 2026-08-06: "lets show ny 5
+ * boroughs too, set as default to show all active listings on the map"). Until round 23 this
+ * was the six counties only, with the boroughs' 13,545 on-market listings (measured 2026-08-06
+ * — Queens alone, 9,740, outweighs all six counties' Active inventory) hidden behind the
+ * borough expander. The map's label thinning is what makes the full scope renderable. */
+export const DEFAULT_COUNTY_SLUGS: readonly CountySlug[] = SERVED_AREAS.map((c) => c.slug);
 
 /** The Bronx is the one area whose readable page slug differs from its internal area slug
  * (/top-areas/the-bronx vs the DB/search value "bronx"). content/boroughs owns that mapping;

@@ -270,7 +270,7 @@ describe("DbIdxClient.search", () => {
     expect(listingCall).not.toContain("listing->");
   });
 
-  it("defaults to the six Hudson Valley counties when no area is picked (NYC opt-in)", async () => {
+  it("defaults to the WHOLE served scope — HV counties AND NYC boroughs (owner's call, round 23)", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
       return { body: [{ listing: LISTING }], total: 5402 };
@@ -278,7 +278,9 @@ describe("DbIdxClient.search", () => {
 
     const result = await new DbIdxClient().search({});
     const listingCall = calls.find((u) => u.includes("idx_listings") && !u.includes("idx_sync_state"))!;
-    expect(listingCall).toContain("county=in.(dutchess,westchester,putnam,rockland,ulster,orange)");
+    expect(listingCall).toContain(
+      "county=in.(dutchess,westchester,putnam,rockland,ulster,orange,bronx,brooklyn,manhattan,queens,staten-island)",
+    );
     expect(listingCall).not.toContain("county=eq.");
     expect(result.total).toBe(5402);
   });

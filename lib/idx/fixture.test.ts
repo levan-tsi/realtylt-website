@@ -72,13 +72,13 @@ describe("FixtureIdxClient — filters", () => {
     expect(r.total).toBe(1);
   });
 
-  it("defaults to the six Hudson Valley counties, excluding NYC boroughs until one is picked", async () => {
+  it("defaults to the WHOLE served scope — NYC boroughs included (owner's call, round 23)", async () => {
     const borough: Listing = { ...FIXTURE_LISTINGS[0], id: "BK-TEST", county: "brooklyn" };
     const seeded = new FixtureIdxClient([...FIXTURE_LISTINGS, borough]);
     const def = await seeded.search({ pageSize: 500 });
-    expect(def.listings.some((l) => l.id === "BK-TEST")).toBe(false); // NYC hidden by default
-    const picked = await seeded.search({ county: "brooklyn", pageSize: 500 });
-    expect(picked.listings.some((l) => l.id === "BK-TEST")).toBe(true); // opt-in shows it
+    expect(def.listings.some((l) => l.id === "BK-TEST")).toBe(true); // boroughs in the default
+    const picked = await seeded.search({ county: "putnam", pageSize: 500 });
+    expect(picked.listings.some((l) => l.id === "BK-TEST")).toBe(false); // a chosen county still narrows
   });
 
   /** The defect this closes (measured on production 2026-07-31): the location box was free text
