@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcMortgage, donutArcs, representativeRate } from "./mortgage";
+import { calcMortgage, donutArcs, priceForMonthly, representativeRate } from "./mortgage";
 
 describe("calcMortgage", () => {
   it("matches the live-site worked example ($3,198.20 total)", () => {
@@ -244,5 +244,41 @@ describe("representativeRate (term-seeding)", () => {
   it("falls back to a sane base and never goes negative", () => {
     expect(representativeRate(NaN, 30)).toBe(6);
     expect(representativeRate(0.1, 15)).toBe(0);
+  });
+});
+
+describe("priceForMonthly (round 23 — the /plan budget → price bridge)", () => {
+  const A = { downPct: 20, ratePct: 6, termYears: 30 };
+
+  it("round-trips through calcMortgage: the answer's payment sits within one $5k step of the budget", () => {
+    for (const budget of [1500, 3200, 6000, 12_000]) {
+      const price = priceForMonthly(budget, A);
+      const pay = (p: number) =>
+        calcMortgage({ price: p, annualTax: NaN, termYears: A.termYears, downPct: A.downPct, ratePct: A.ratePct, monthlyHoa: 0, monthlyInsurance: 0 }).monthlyTotal;
+      expect(pay(price)).toBeLessThanOrEqual(budget); // never promises more than the budget buys
+      expect(pay(price + 5_000)).toBeGreaterThan(budget); // and is the LAST $5k step that fits
+    }
+  });
+
+  it("answers are floored to $5k so they read as budgets", () => {
+    expect(priceForMonthly(3200, A) % 5_000).toBe(0);
+  });
+
+  it("fixed monthly costs alone exceeding the budget answer 0, not a negative price", () => {
+    expect(priceForMonthly(150, { ...A, monthlyHoa: 200 })).toBe(0);
+  });
+
+  it("a higher budget never buys less (monotone)", () => {
+    let prev = 0;
+    for (const budget of [1000, 2000, 3000, 4500, 7000]) {
+      const p = priceForMonthly(budget, A);
+      expect(p).toBeGreaterThanOrEqual(prev);
+      prev = p;
+    }
+  });
+
+  it("garbage budgets answer 0", () => {
+    expect(priceForMonthly(NaN, A)).toBe(0);
+    expect(priceForMonthly(-50, A)).toBe(0);
   });
 });

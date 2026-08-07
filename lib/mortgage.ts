@@ -67,6 +67,42 @@ export function representativeRate(baseRate: number, termYears: number): number 
   return Math.max(0, Math.round((base + spread) * 100) / 100);
 }
 
+/** ── The budget → price bridge (round 23, /plan) ────────────────────────────────────────
+ * Zillow's Plan asks for your finances and answers through its lender; ours inverts the
+ * question with what it already knows: given the monthly payment someone is comfortable
+ * with, what price can they shop at? Inverted by BINARY SEARCH over calcMortgage itself —
+ * one source of truth, so the bridge can never drift from the calculator on /financing.
+ * `annualTax: NaN` keeps calcMortgage's NY-style estimate scaling with the price, which is
+ * exactly right here (nobody knows the taxes of a home they haven't found yet).
+ * Monotonic in price for any sane inputs, so the search converges; answers are floored to
+ * $5k so the number reads like a budget, not an actuarial table. */
+export function priceForMonthly(
+  monthlyBudget: number,
+  a: { downPct: number; ratePct: number; termYears: number; monthlyHoa?: number; monthlyInsurance?: number },
+): number {
+  if (!Number.isFinite(monthlyBudget) || monthlyBudget <= 0) return 0;
+  const at = (price: number) =>
+    calcMortgage({
+      price,
+      annualTax: NaN,
+      termYears: a.termYears,
+      downPct: a.downPct,
+      ratePct: a.ratePct,
+      monthlyHoa: a.monthlyHoa ?? 0,
+      monthlyInsurance: a.monthlyInsurance ?? 0,
+    }).monthlyTotal;
+  if (at(0) > monthlyBudget) return 0; // fixed costs alone exceed the budget
+  let lo = 0;
+  let hi = 10_000_000;
+  if (at(hi) <= monthlyBudget) return hi; // budget beyond the ladder's top — cap, honestly rare
+  for (let i = 0; i < 40; i++) {
+    const mid = (lo + hi) / 2;
+    if (at(mid) <= monthlyBudget) lo = mid;
+    else hi = mid;
+  }
+  return Math.floor(lo / 5_000) * 5_000;
+}
+
 export function calcMortgage(input: MortgageInput): MortgageResult {
   const { price, annualTax, termYears, downPct, ratePct, monthlyHoa, monthlyInsurance } = input;
 

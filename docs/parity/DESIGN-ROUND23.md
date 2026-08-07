@@ -203,8 +203,15 @@ anything requiring sign-in is a dead end for every visitor until the owner flips
   Inbox needs a real messaging decision. Both recorded here so the next round inherits the
   reasoning, not the temptation.
 
-Build order note: the handoff ranks filters (§2) above the rail, so the rail/plan build takes
-whatever budget survives them — this section is the committed thinking either way.
+Build order note: the handoff ranks filters (§2) above the rail, so the rail/plan build took
+the budget that survived them — and it did fit this round. What shipped, exactly as designed
+above: `components/search/SearchRail.tsx` (three items, lg+ only, live Saved count from the
+signed-out heart store), `/plan` with the budget → price bridge (`priceForMonthly` — a binary
+search over `calcMortgage` itself, so the bridge can never drift from the /financing
+calculator; 5 tests including a round-trip invariant: the answer's payment is the LAST $5k
+step that fits the budget), the four NY-specific stages, and the call/text block. Verified at
+1440 (screenshots in scripts/_scratch-r23/) and at 390 (rail hidden, zero overflow). Sanity:
+$3,200/mo at 20% down, 6% answers $585,000 — P&I $2,806 + NY-estimate tax $373 = $3,179.
 
 ## 8. Filters: three more honest questions, and two that refused
 
