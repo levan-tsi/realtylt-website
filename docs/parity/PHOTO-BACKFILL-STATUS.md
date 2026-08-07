@@ -279,3 +279,32 @@ zero-photo cohort grows by roughly 150-250 rows per day.
 *Note: a parallel read-only auditor agent was reconciling Supabase Storage against `photos_servable`
 during this session. It touches no MLS traffic and no watermark; its findings are independent of this
 document.*
+
+## Round 24c addendum — root cause CONFIRMED upstream, no self-heal possible (2026-08-07, main session)
+
+Verified first-hand after the owner challenged the diagnosis (rightly — the Media Access
+lead below was wrong):
+
+- **Our sync is innocent**: `lib/idx/mls-grid.ts` maps `Media[].MediaURL` verbatim
+  (filter/sort/slice/map, no string building) and requests a plain `$expand=Media` with no
+  inner `$select`. The `undefined` arrives inside MLS Grid's payload.
+- **The missing segment is `KEY<ResourceRecordKey>`**: healthy URLs (Aug 5 and earlier)
+  read `/images/KEY426086573/<file>.jpeg`; current ones `/images/undefined/<file>.jpeg`.
+- **Their media schema migrated ~Aug 5**: media records now carry hex MediaKeys
+  (`6a5eda85…`) alongside numeric ResourceRecordKey; their URL builder evidently reads a
+  field that no longer exists and substitutes `undefined`.
+- **Signatures bind the path**: rewriting the segment (tested once via the probe's
+  mediaTest with a fresh token) flips 404 NoSuchKey → 403. No downstream repair can work.
+- **Media Access setting is NOT the cause** — it is set to "Pulling photo URL" (owner
+  verified on screen). An earlier claim that it was unset came from a slow-painting SPA
+  panel plus an old memory note, not from reading the radio state. Do not chase it again.
+- The probe gained `?ids=…&media=1` (raw media records, ≤3/row) for exactly this class of
+  question — one paced request, no bulk.
+
+**The only fix is MLS Grid's.** Ticket drafted and handed to the owner 2026-08-07. When
+they fix it: `--dry-run --max-pages 1 --max-listings 5` must show `/images/KEY…/` paths
+again, then the 12-listing probe, then covers-only, then `--cap 8`, per the plan above.
+
+Separately recovered today with zero MLS traffic: 240 listings / 959 already-mirrored
+photos that were miscounted as unservable (photos_servable + photosMirrored reconciled
+against storage.objects; spot-verified serving deep gallery indexes on production).
