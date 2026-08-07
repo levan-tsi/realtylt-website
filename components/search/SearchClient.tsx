@@ -1136,10 +1136,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </button>
         </div>
       ) : filters.view === "map" ? (
-        // Owner round 13d sized the map up; 13e trimmed it back ~15% each way ("listing
-        // boxes little bigger, map little smaller") — an even split at xl, the map barely
-        // ahead on very wide screens. Cards stay 2:1/compact so three rows keep landing.
-        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-2 2xl:grid-cols-[1fr_1.1fr]">
+        // Round 23, owner: "make those boxes 10% less and make map bigger to fill that
+        // space, since we are adding map zoom in zoom out all listing feature". Now that the
+        // grid is viewport-scoped, the map is the primary instrument and earns the width:
+        // measured at 1440 the split goes 690/690 -> ~620/760 (cards -10%, map +10%), and the
+        // tightened card (aspect 21/10 photo, slimmer body) brings three FULL rows into the
+        // 756px panel where the old geometry fit two. lg (small laptops) keeps the old split —
+        // two 300px cards need the width more than the map does there.
+        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[0.9fr_1.1fr] 2xl:grid-cols-[0.85fr_1.15fr]">
           <ul
             ref={panelRef}
             aria-label="Search results"

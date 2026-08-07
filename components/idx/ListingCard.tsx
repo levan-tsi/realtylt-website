@@ -110,10 +110,11 @@ export function ListingCard({
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
         />
-        {/* 2:1, tighter than live's 79:50 — the owner's density target is three FULL rows
-            beside the map ("2+2+2"), and the height comes out of the photo band + body
-            padding, not the type. */}
-        <div className="photo-zoom relative aspect-[2/1] overflow-hidden bg-mist">
+        {/* 2:1 on phones; 21:10 from lg, where the owner's density target is three FULL rows
+            beside the map ("2+2+2") — the height comes out of the photo band + body padding,
+            not the type: measured at 1440, card 282 -> 240 while the photo's share of it
+            holds at 59% (the body gives up as much as the band does). */}
+        <div className="photo-zoom relative aspect-[2/1] overflow-hidden bg-mist lg:aspect-[21/10]">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
               // Owner's ask: flip through the pictures right on the card. The slim card
@@ -158,17 +159,20 @@ export function ListingCard({
         </div>
         {/* flex-1 + mt-auto bottom row: every card in a grid row renders the same height —
             wrapping office names were making neighbours uneven (owner-reported). Address is
-            one truncated line for the same reason, and for the 2+2+2 density target. */}
-        <div className="flex flex-1 flex-col p-3">
+            one truncated line for the same reason, and for the 2+2+2 density target. From lg
+            the body tightens (round 23, owner: "a lot of unused white... bring those
+            closer") — padding, price line and address each give a little so the third row
+            lands; phones keep the roomier scale. */}
+        <div className="flex flex-1 flex-col p-3 lg:pb-2 lg:pt-2">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <p className="text-xl font-bold text-ink">{priceLabel(l)}</p>
+            <p className="text-xl font-bold leading-7 text-ink lg:text-lg lg:leading-6">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
-          <p className="mt-1 truncate text-sm italic text-ink-soft">
+          <p className="mt-1 truncate text-sm italic text-ink-soft lg:mt-0.5 lg:text-[13px]">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
-          <div className="mt-auto flex items-end justify-between gap-2 pt-1.5">
+          <div className="mt-auto flex items-end justify-between gap-2 pt-1.5 lg:pt-1">
             {/* min-w-0 + break-words: a flex item is min-width:auto, so a long office name
                 would push this row wider than the card instead of wrapping inside it. */}
             <p className="min-w-0 truncate text-[11px] leading-snug text-stone">

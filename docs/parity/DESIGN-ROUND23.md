@@ -102,5 +102,35 @@ count line 5,360 = API total for the same box · 150 cards · 0 extra fetches in
 page-2's fetch carried the same box · the saved result set held all 150 viewport items, so
 prev/next on a listing page walks exactly the homes he was looking at.
 
-(Sections for the borough default scope, card density, and the side-rail research follow as
-those land.)
+## 5. The boroughs join the default scope
+
+His decision, made: all eleven served areas are the default (the boroughs' 13,545 on-market
+listings were behind the expander; Queens alone outweighs the six counties' Active
+inventory). The default frame is the whole served region, the count line says "across the
+Hudson Valley and NYC", the county chips now narrow rather than gate, and a chosen county
+still flies the map to its real extent. Label thinning + the viewport-scoped grid are what
+make the doubled scope renderable and honest. Browser verification of the fly-to is deferred
+until the shared Supabase project recovers from its IO-starved window (same signature as
+yesterday: 20-30s queries, TimeoutErrors, drain rather than chase).
+
+## 6. Cards give the map its width
+
+Owner: "a lot of unused white... bring those closer... show picture more... make those boxes
+10% less and make map bigger." Done by measurement at 1440×900, not feel:
+
+| | before | after |
+|---|---|---|
+| cards column / map column | 690 / 690 px | 621 / 759 px |
+| card | 334×282 | 300×240 |
+| photo band / body | 166 / 114 px | 142 / 97 px |
+| photo share of card | 59% | 59% |
+| FULL rows visible in the panel | **2** | **3** |
+
+The height came out of the body (p-3 → tighter lg paddings, price 20px → 18px with a tighter
+leading, address 14px → 13px) and the band's aspect (2:1 → 21:10 from lg) in equal measure,
+so the photo's share holds while the card sheds 15% of its height — denser without reading
+cramped. Phones keep the roomier scale untouched (all trims are lg:). The grid split moves
+from an even 50/50 to 45/55 at xl and 42.5/57.5 at 2xl; lg (small laptops) keeps the old
+split because two 300px cards need the width more than the map does there. Verified: the
+round-22 clamp invariant still HELD (injected 90-char address, price top 2301 → 2301) and
+zero horizontal overflow at 390 and 320.
