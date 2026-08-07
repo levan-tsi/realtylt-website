@@ -74,10 +74,12 @@ Short on purpose — a seller's next real step is a valuation conversation, not 
   for this site, no emoji, no clip-art). Rest: paper on mist border. Hover: mist fill.
   Selected: ink fill, paper text — the county chips' grammar. Focus: river ring, always
   visible.
-- **The route spine**: desktop, a vertical line down the panel's left with a dot per
-  answered step and the chosen word beside it; phones, the spine lies horizontally under
-  the header, dots only. Thin ink lines, nothing animated except the new dot's single
-  ease-in (and none under reduced motion).
+- **The route spine**: a thin dotted route along the panel's top — a filled dot per
+  answered step with the chosen word beside it (words on desktop, dots alone on phones),
+  connected by hairline segments that ink as you pass them. BUILT HORIZONTAL ON BOTH,
+  revising the first sketch's vertical-left desktop spine: a 640px panel's width belongs to
+  the shapes, and a left rail squeezed the option grid to its detriment. Nothing animates
+  except the new dot's single ease-in (none under reduced motion).
 - **Type**: the site's display face for the question (t-h3 scale), body for option labels,
   the uppercase-tracking utility style for the eyebrow ("Step 3 · Budget"). No new faces,
   no new colours, zero em dashes in visitor copy.

@@ -215,6 +215,22 @@ body {
   outline: none;
 }
 
+/* The plan quiz focuses its question heading on every step change so screen readers announce
+ * the new question. A heading is not an interactive target, so the global ring above stays
+ * off it — specificity (1,1,1) beats the unlayered (0,1,0) rule. The quiz's buttons and
+ * inputs keep the standard ring. */
+h2#plan-quiz-title:focus-visible {
+  outline: none;
+}
+
+/* While the plan quiz takeover is open, the chat launcher (z-index 999998, byte-exact from
+ * the live site) would float on top of the scrim — the one thing the overlay's own z cannot
+ * outrank. The takeover toggles this class on <body> for exactly its open window. */
+body.rlt-quiz-open .rlt-bubble,
+body.rlt-quiz-open .rlt-panel {
+  visibility: hidden;
+}
+
 ::selection {
   background: var(--color-porchlight);
   color: #ffffff;

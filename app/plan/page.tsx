@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { BudgetBridge } from "@/components/plan/BudgetBridge";
+import { PlanQuizHost } from "@/components/plan/PlanQuiz";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -58,6 +60,13 @@ export default function PlanPage() {
           </p>
         </div>
       </header>
+
+      {/* The quiz (round 24 — design in DESIGN-ROUND24.md). Suspense because the host reads
+          ?quiz=1 (the rail's entry) via useSearchParams; the fallback is nothing, so JS-off
+          and first paint both show the static page unchanged. */}
+      <Suspense fallback={null}>
+        <PlanQuizHost />
+      </Suspense>
 
       <section aria-labelledby="bridge-heading" className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         <h2 id="bridge-heading" className="sr-only">

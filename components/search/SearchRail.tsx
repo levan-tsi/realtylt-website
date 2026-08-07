@@ -59,7 +59,9 @@ export function SearchRail() {
           </Link>
         </li>
         <li>
-          <Link href="/plan" className={`${item} text-stone hover:bg-mist hover:text-ink`}>
+          {/* ?quiz=1 opens the plan quiz on arrival (round 24) — the rail's Plan item IS
+              "click on things, popup quiz", his words. /plan without it stays quiet. */}
+          <Link href="/plan?quiz=1" className={`${item} text-stone hover:bg-mist hover:text-ink`}>
             {icon.plan}
             Plan
           </Link>
