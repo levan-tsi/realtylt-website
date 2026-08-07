@@ -134,3 +134,74 @@ from an even 50/50 to 45/55 at xl and 42.5/57.5 at 2xl; lg (small laptops) keeps
 split because two 300px cards need the width more than the map does there. Verified: the
 round-22 clamp invariant still HELD (injected 90-char address, price top 2301 → 2301) and
 zero horizontal overflow at 390 and 320.
+
+## 7. The side rail — research first, and what ours should be instead
+
+### What Zillow's five tabs actually are (researched 2026-08-06)
+
+Seen directly on Zillow's own page (scripts/_scratch-r23/zillow.png, captured before its bot
+gate): a slim left rail — Search, Updates, Favorites, Plan, Inbox. What each is for, from
+product coverage of the June 2026 "Homebuyer Hub" launch (Inman 2026-06-23, HousingWire,
+zillow.com/learn/what-is-buyability) plus product knowledge:
+
+- **Search** — the map+list surface itself; the rail's home state.
+- **Updates** — a feed of changes to homes you've engaged with: price cuts, status changes,
+  new saved-search matches. Needs an account and a sending pipeline to mean anything. Its
+  weakness: the "99+" badge is noise engineered as urgency.
+- **Favorites** — hearted homes, with status badges.
+- **Plan** — the Homebuyer Hub: "BuyAbility" (a live-rate affordability number that doubles
+  as a Zillow Home Loans pre-qualification funnel), local market stats (active inventory,
+  median days to pending, price forecasts), and "your team" — an agent and loan officer from
+  Zillow's marketplace. Staged budget → find → offer → close. Its weakness is its honesty:
+  the planning tool exists to route you into Zillow's lender and Premier Agent programs, and
+  the useful numbers sit behind an account and a data-entry wall.
+- **Inbox** — messages with those marketplace agents.
+
+### What ours can honestly answer today
+
+The rule from the filters work binds here: **a tab that cannot answer is worse than no tab.**
+Audit of what exists behind each candidate, on this codebase, today:
+
+| Zillow tab | our honest equivalent today |
+|---|---|
+| Search | `/search` — the round's map+list, live |
+| Favorites | hearts work signed-OUT (SavedProvider, localStorage) and `/saved` exists |
+| Plan | `MortgageCalculator` on `/financing` · `/buying`'s process content · the CMA/home-value flow · a human who answers 7 days a week |
+| Updates | NOTHING SENDS (alerts flag is stored; the CRM will send) — cannot answer |
+| Inbox | no messaging system — cannot answer |
+
+And the standing constraint: **nobody can create an account** (Supabase signup disabled), so
+anything requiring sign-in is a dead end for every visitor until the owner flips it.
+
+### Three shapes considered
+
+1. **Clone the five tabs** — rejected outright: Updates and Inbox would be empty theatre.
+2. **No rail; promote /saved and a plan page in the top nav** — honest but loses the thing he
+   actually liked: persistent, one-click side navigation while the map is open.
+3. **A three-item rail that only says true things** — Search / Saved / Plan, desktop /search
+   (lg+, where the map lives; phones keep the nav). **Chosen.**
+
+### The design (v1)
+
+- **Rail:** slim fixed-width column on /search at lg+, icons + 11px labels, monochrome ink,
+  active state = solid ink block (the site's existing pressed language). Items: Search
+  (current surface), Saved (navigates /saved; live count badge from SavedProvider — it works
+  signed-out), Plan (navigates /plan).
+- **/plan — "make it better" means inverting Zillow's funnel.** Zillow asks for your data,
+  then shows you homes through its lender. Ours answers immediately, asks for nothing:
+  1. **Monthly budget → homes bridge.** Reuse the financing calculator's math INVERTED: a
+     monthly number (with rate/taxes/insurance assumptions stated inline) becomes a price
+     ceiling and one button — "See homes under $X/mo" → `/search?priceMax=N`. Zillow gates
+     this behind pre-qualification; ours is one slider and no account.
+  2. **The four stages, told straight** — budget → search → offer → close, each a short
+     paragraph in the site's voice linking the real pages (/financing, /buying, /home-value),
+     NY-specific where it matters (attorney closings, county transfer taxes).
+  3. **The team, without a marketplace** — Zillow sells you a stranger; this site IS the
+     agent. Call/text CTA, seven days, the existing consent-safe lead path.
+- **Explicitly NOT shipped:** Updates and Inbox. When the CRM's alert sender goes live,
+  Updates becomes buildable (the saved-search `alerts` flag already travels with leads);
+  Inbox needs a real messaging decision. Both recorded here so the next round inherits the
+  reasoning, not the temptation.
+
+Build order note: the handoff ranks filters (§2) above the rail, so the rail/plan build takes
+whatever budget survives them — this section is the committed thinking either way.
