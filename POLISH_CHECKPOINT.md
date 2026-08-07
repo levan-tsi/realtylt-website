@@ -1,5 +1,80 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 24b — DONE 2026-08-07 (same session as 24). His five follow-up notes, shipped
+## ═══ and re-proven on PRODUCTION. 5 commits. READ THE ROUND-25 BRIEF AT THE BOTTOM OF THIS
+## ═══ BLOCK — the owner's instruction is that the next agent CHECKS THIS ROUND'S WORK first.
+##
+## ── "black box of prices could be smaller just the size of the price" ─────────────────
+## The chip is TWO boxes now (the dot's own pattern): transparent button shell keeps the
+## 24px tap floor (rendered 53x25), .rlt-chip-face is the visible box hugging the glyphs at
+## 3px 6px (rendered 45x17). Tail + shadows moved to the face; the 4px shell padding IS the
+## tail height so the tip still lands on the spot. chipStateStyles (map-shared) is the one
+## state-ink source for both engines. The planner collides on the FACE (PILL_H 26 -> 18):
+## production now labels 25/73/92 prices across three zooms vs 19/54/80 before — his
+## "optimize and fill" served by geometry.
+##
+## ── "saved and plan next to pending... they look faar" + the white spots ──────────────
+## The round-23 left rail is RETIRED (component deleted). Saved (live count) + Plan
+## (/plan?quiz=1) sit in the result meta row right after the Pending quick filter. The
+## filter bar holds ONE 58px row at 1440 (was 104 — the action cluster missed row one by
+## 6px once the form's own padding was counted; gaps/paddings/input basis each gave a
+## little). Content starts 46px higher, map top 385 -> 339, zero overflow 1440/390/320.
+##
+## ── "plan action some clicks dissapeard pop up and nothing haapend" ───────────────────
+## Reproduced on production: the takeover closed with the plan's first card below the eye
+## line — completing the quiz read as the popup vanishing into an unchanged page. Every
+## close with answers now scrolls the plan to the viewport top and hands the heading focus
+## (after the dialog's cleanup restores its own). verify-plan-quiz asserts the LANDING
+## (heading near top + holding focus), 19/19 on production.
+##
+## ── "double check those too with zillow" — the MORE panel audit ───────────────────────
+## Item-by-item table in DESIGN-ROUND24.md §8. Two honest gaps closed, measured first
+## (25,118 in-surface):
+## · KEYWORDS — Zillow's box over the remarks. listing->>'description' (PublicRemarks,
+##   app-shaped) fills 99.8%. Generated STORED tsvector + GIN partial (idx_round24b_
+##   keywords_views.sql, applied live); PostgREST wfts(english); value stripped to
+##   websearch vocabulary in parseFilterParams (held by test). "pool" 3,388 stemmed ·
+##   "fireplace" 3,620 — the sync-gated pool/fireplace asks now answer the Zillow way.
+##   NOTE FOR THE SYNC: the replica stores the APP-SHAPED Listing (keys like description,
+##   interiorFeatures) — NOT raw RESO names. publicRemarks does not exist as a key.
+## · VIEWS — lotFeatures "Views", 804 — "Scenic views" checkbox.
+## Still refused with reasons (§8 table): HOA max, stories, 55+, open house, price
+## reduced, pets — each needs data the sync does not replicate.
+##
+## ── GATES AT CLOSE (all on PRODUCTION, same session) ──────────────────────────────────
+## tsc clean · tests 869 (was 864) · facets 362 row-predicate sets 0 violations (keywords
+## + views combos included; fts total 3,619 vs measured 3,620 = one listing of churn) ·
+## quiz 19/19 · markers 25/73/92, zero circles · popup contract 10/10 · escape 6/6 ·
+## pin walk PASS · viewport scope green · bar 58px, Saved/Plan present, overflow 0.
+##
+## ═══ ROUND 25 BRIEF (owner: "prepare handoff for next agent to check your work and work
+## ═══ polish and do the same thing what ever was left or needs more work") ═══════════════
+## 1. CHECK ROUND 24/24b's WORK FIRST — re-run at round start, all against production:
+##    verify-map-markers/popup/viewport-scope/pin-walk/facets-live/plan-quiz (all take
+##    BASE=). Then LOOK: /search at 1440+390 (pills, one-row bar, Saved/Plan row), the quiz
+##    end-to-end on a phone viewport (the landing), keywords=pool through the MORE panel.
+##    Anything that fails or looks off: fix before new work. Instruments have lied THREE
+##    ways this session (below) — trust re-measurement, not the checkpoint.
+## 2. Instrument lessons this session: a probe picked an OFF-VIEWPORT dot and blamed the
+##    site (pickers clamp now); a time-window guard held on dev and failed on production
+##    (the guard is positional now); THREE stale-chunk episodes (screenshot identical after
+##    a fix = the dev server has not recompiled — touch the file, verify the served chunk).
+## 3. Polish candidates seen but not taken: the top-of-grid "Photograph coming soon" cards
+##    (sort=mixed surfaces photo-less rows first — consider photos-first weighting in mixed
+##    sort, owner has not been asked); QualifyingWizard's step title likely wears the same
+##    global focus ring the quiz shed (h2 exception pattern in globals.css); the MORE panel
+##    is 11 cells + 9 checkboxes now — consider grouping headers if another facet lands.
+## 4. Carried, HIS: account wall (disable_signup) · mobile map at 390 · photo backfill
+##    (12-probe rule, ANY 429 = stop day) · home-value copy + hero · CMA enumeration +
+##    MediaURLs · Updates tab awaits the CRM sender · SELECT_FIELDS sync batch
+##    (style/stories/55+/fireplace-YN/pool/hardwood/HOA-frequency) needs his go-ahead, ONE
+##    careful probe, never burst · school district dynamic values source.
+## 5. Quiz follow-ons if he likes it: more entry points, seller path asking the address to
+##    prefill /home-value, alerts flag riding the hand-off.
+## 6. Standing: single agent unless he grants subagents; commit pathspec only; block
+##    **/api/media/** in probes; **/api/lead posts to the LIVE CRM — intercept in probes;
+##    launch switches are HIS (NEXT_PUBLIC_SITE_URL, apex, PRELAUNCH=1).
+
 ## ═══ ROUND 24 — DONE 2026-08-07. His four asks, all shipped and re-proven on PRODUCTION.
 ## ═══ Reasoning in docs/parity/DESIGN-ROUND24.md. 6 commits pushed to main.
 ##
