@@ -189,6 +189,25 @@ export function PlanQuizHost() {
     if (params.get("quiz") === "1") setOpen(true);
   }, [params]);
 
+  // EVERY close lands the visitor ON their plan (owner's report, verbatim: "some clicks
+  // dissapeard pop up and nothing haapend... no see my plan"). Measured on production: the
+  // sheet closed with the plan's first card below the visitor's eye line, so completing the
+  // quiz read as nothing happening. The delay lets the dialog unmount (its cleanup restores
+  // focus to the CTA) before the heading takes focus and the scroll brings the plan in.
+  const close = () => {
+    setOpen(false);
+    if (!touched) return; // nothing answered → nothing to land on
+    setTimeout(() => {
+      const el = document.getElementById("your-plan-heading");
+      if (!el) return;
+      el.focus({ preventScroll: true });
+      el.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
+    }, 80);
+  };
+
   return (
     <>
       <section className="border-b border-line bg-mist">
@@ -219,7 +238,7 @@ export function PlanQuizHost() {
             setAnswers(a);
             setTouched(true);
           }}
-          onClose={() => setOpen(false)}
+          onClose={close}
         />
       )}
     </>
@@ -555,7 +574,9 @@ function TailoredPlan({ answers }: { answers: QuizAnswers }) {
     <section aria-labelledby="your-plan-heading" className="border-b border-line">
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         <p className="text-xs font-bold uppercase tracking-[0.24em] text-stone">Your plan so far</p>
-        <h2 id="your-plan-heading" className="t-h2 mt-2 text-ink">
+        {/* Focus target for the quiz's close-and-land (the host scrolls here); the global
+            ring is right on a landing announcement, so it is not suppressed. */}
+        <h2 id="your-plan-heading" tabIndex={-1} className="t-h2 mt-2 text-ink">
           Here is where <strong>you stand</strong>
         </h2>
 

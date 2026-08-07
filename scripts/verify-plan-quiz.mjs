@@ -54,6 +54,17 @@ await p.waitForTimeout(1500);
 
 check("takeover closed after the last step", !(await p.locator('[role="dialog"]').isVisible()));
 
+// Owner's round-24b report ("see my plan... nothing happened"): closing must LAND on the
+// plan — scrolled to the top of the viewport and holding focus, not merely existing.
+await p.waitForTimeout(900); // smooth scroll settles
+const landing = await p.evaluate(() => {
+  const el = document.getElementById("your-plan-heading");
+  const r = el?.getBoundingClientRect();
+  return { top: r ? Math.round(r.top) : null, focused: document.activeElement?.id === "your-plan-heading" };
+});
+check("plan is scrolled into the eye line", landing.top !== null && landing.top >= -10 && landing.top < 260, `top=${landing.top}`);
+check("plan heading holds focus", landing.focused);
+
 // 3. The tailored plan on the page.
 const planText = await p.locator("section:has(#your-plan-heading)").textContent();
 check("ceiling equals the bridge's own answer for $3,200/mo", planText?.includes("$585,000") ?? false);
