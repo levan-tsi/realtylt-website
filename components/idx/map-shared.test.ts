@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { boundsOfPins, chipPrice, createPinFetcher, popupPlacement, spreadPins } from "./map-shared";
+import { boundsOfPins, chipPrice, createPinFetcher, pinResultSet, popupPlacement, spreadPins } from "./map-shared";
+import { listingPath } from "@/lib/idx/listing-url";
 import type { MapPin } from "@/lib/idx/types";
 
 const pin = (over: Partial<MapPin>): MapPin => ({
@@ -170,5 +171,37 @@ describe("createPinFetcher — debounced, race-safe /api/idx/pins fetches", () =
     expect(onData).toHaveBeenCalledWith([], 2); // the SECOND (newer) request's data, not the first
     vi.unstubAllGlobals();
     vi.useRealTimers();
+  });
+});
+
+describe("pinResultSet", () => {
+  const three = [
+    pin({ id: "A", address: "1 Main St" }),
+    pin({ id: "B", address: "2 Oak St", lat: 41.6 }),
+    pin({ id: "C", address: "3 Elm St", lat: 41.7 }),
+  ];
+
+  it("preserves the pin order and builds the canonical listing path for every item", () => {
+    const set = pinResultSet(three, "/search?county=queens&view=map");
+    expect(set).not.toBeNull();
+    expect(set!.items.map((i) => i.id)).toEqual(["A", "B", "C"]);
+    expect(set!.items.map((i) => i.address)).toEqual(["1 Main St", "2 Oak St", "3 Elm St"]);
+    // the path must be EXACTLY what the popup's View Listing href is, or membership breaks
+    expect(set!.items[0].path).toBe(listingPath(three[0]));
+    expect(set!.searchHref).toBe("/search?county=queens&view=map");
+    // a viewport walk is one set, not a page of a larger paged thing
+    expect(set!.page).toBe(1);
+    expect(set!.totalPages).toBe(1);
+  });
+
+  it("drops Null Island rows — an unlocated home was never on the map", () => {
+    const set = pinResultSet([...three, pin({ id: "D", lat: 0, lng: 0 })], "/search");
+    expect(set!.items.map((i) => i.id)).toEqual(["A", "B", "C"]);
+  });
+
+  it("returns null when fewer than two located pins — one home is not a set to page through", () => {
+    expect(pinResultSet([pin({ id: "A" })], "/search")).toBeNull();
+    expect(pinResultSet([], "/search")).toBeNull();
+    expect(pinResultSet([pin({ id: "A" }), pin({ id: "B", lat: 0, lng: 0 })], "/search")).toBeNull();
   });
 });

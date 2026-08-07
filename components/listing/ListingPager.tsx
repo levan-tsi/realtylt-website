@@ -108,7 +108,8 @@ export function ListingPager({ id }: { id: string }) {
           three separate controls. `tabular-nums` keeps the width from twitching as it counts. */}
       <span className="whitespace-nowrap px-1 text-[11px] font-bold uppercase tracking-[0.08em] tabular-nums text-stone">
         <span className="hidden sm:inline">Listing </span>
-        <span className="text-ink">{nav.index + 1}</span> of {nav.count}
+        {/* A map-walk set holds thousands — "2,999 of 3,000" reads; "2999 of 3000" counts. */}
+        <span className="text-ink">{(nav.index + 1).toLocaleString("en-US")}</span> of {nav.count.toLocaleString("en-US")}
       </span>
       {arrow("next")}
     </div>

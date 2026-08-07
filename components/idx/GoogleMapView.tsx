@@ -6,11 +6,13 @@ import {
   createPinFetcher,
   dotStyleVars,
   MAP_FONT,
+  pinResultSet,
   popupNode,
   popupPlacement,
   spreadPins,
   type MapViewProps,
 } from "./map-shared";
+import { saveResultSet } from "@/lib/idx/result-set";
 import { planMarkers } from "./pin-thinning";
 import { loadMaps } from "@/lib/idx/maps-loader";
 import type { MapBounds, MapPin } from "@/lib/idx/types";
@@ -392,6 +394,13 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
                   info.close();
                 },
                 onToggleSave: (id) => onToggleSaveRef.current?.(id),
+                // View Listing pressed: the walk the listing page offers is THE HOMES THIS MAP
+                // IS SHOWING — the viewport pin fetch, which holds up to PIN_CAP homes the
+                // grid's saved page never did (the grid's own save covers only its 150).
+                onNavigate: () => {
+                  const set = pinResultSet(activeSource(), window.location.pathname + window.location.search);
+                  if (set) saveResultSet(set);
+                },
               });
               // The popup must be part of its own hover target. Without this, moving the pointer
               // off the chip and ONTO the preview closes the thing you were reaching for, and

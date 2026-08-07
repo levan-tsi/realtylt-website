@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { divIcon } from "leaflet";
 import type { MapBounds, MapPin } from "@/lib/idx/types";
@@ -11,10 +11,12 @@ import {
   createPinFetcher,
   dotHtml,
   MAP_FONT as FONT,
+  pinResultSet,
   popupNode,
   spreadPins,
   type MapViewProps,
 } from "./map-shared";
+import { saveResultSet } from "@/lib/idx/result-set";
 import "leaflet/dist/leaflet.css";
 
 /** Leaflet/OSM results map. `pins` seeds the first paint and frames the initial view (page/
@@ -77,13 +79,13 @@ function FitPins({ pins, initialBounds, fitKey }: { pins: MapPin[]; initialBound
  * the pager's own listeners live on the node. Easy to close three ways (owner's ask): the X on
  * the photo, Escape, or a click anywhere outside the popup — this component only EXISTS while
  * the popup is open, so its effect is exactly the open→close window to listen in. */
-function PopupCard({ pin, onToggleSave }: { pin: MapPin; onToggleSave?: (id: string) => void }) {
+function PopupCard({ pin, onToggleSave, onNavigate }: { pin: MapPin; onToggleSave?: (id: string) => void; onNavigate?: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const map = useMap();
   useEffect(() => {
     const host = ref.current;
     if (!host) return;
-    const node = popupNode(pin, { onClose: () => map.closePopup(), onToggleSave });
+    const node = popupNode(pin, { onClose: () => map.closePopup(), onToggleSave, onNavigate });
     host.appendChild(node);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") map.closePopup();
@@ -101,11 +103,19 @@ function PopupCard({ pin, onToggleSave }: { pin: MapPin; onToggleSave?: (id: str
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onOutside);
     };
-  }, [pin, map, onToggleSave]);
+  }, [pin, map, onToggleSave, onNavigate]);
   return <div ref={ref} />;
 }
 
+/** The set the listing page will walk if this popup's View Listing is followed — the pins the
+ * layer is drawing from, in fetch order (see pinResultSet). Both layers pass their own list. */
+const writePinSet = (pins: readonly MapPin[]) => {
+  const set = pinResultSet(pins, window.location.pathname + window.location.search);
+  if (set) saveResultSet(set);
+};
+
 function PinLayer({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
+  const onNavigate = useCallback(() => writePinSet(pins), [pins]);
   return (
     <>
       {pins.map((p) => {
@@ -120,7 +130,7 @@ function PinLayer({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
             eventHandlers={{ click: () => onSelect?.(p.id) }}
           >
             <Popup minWidth={252}>
-              <PopupCard pin={p} onToggleSave={onToggleSave} />
+              <PopupCard pin={p} onToggleSave={onToggleSave} onNavigate={onNavigate} />
             </Popup>
           </Marker>
         );
@@ -210,6 +220,9 @@ function ThinnedLayer({
     const base = (fetchedPins ?? seedPins).filter((p) => p.lat && p.lng);
     return spreadPins(base).map((p) => ({ ...p, saved: favSet.has(p.id) || p.saved }));
   }, [fetchedPins, seedPins, favSet]);
+  // The walk covers the whole viewport fetch (up to PIN_CAP homes), not just the drawn plan —
+  // the plan is re-thinned every zoom tick, the fetch is the stable "what this map is showing".
+  const onNavigate = useCallback(() => writePinSet(fetchedPins ?? seedPins), [fetchedPins, seedPins]);
 
   // Screen-space plan for the live viewport — container points share one pixel space with
   // the container box, so the planner's cull + collision math needs no conversion.
@@ -240,7 +253,7 @@ function ThinnedLayer({
             eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
           >
             <Popup minWidth={252}>
-              <PopupCard pin={m.pin} onToggleSave={onToggleSave} />
+              <PopupCard pin={m.pin} onToggleSave={onToggleSave} onNavigate={onNavigate} />
             </Popup>
           </Marker>
         ) : (
@@ -253,7 +266,7 @@ function ThinnedLayer({
             eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
           >
             <Popup minWidth={252}>
-              <PopupCard pin={m.pin} onToggleSave={onToggleSave} />
+              <PopupCard pin={m.pin} onToggleSave={onToggleSave} onNavigate={onNavigate} />
             </Popup>
           </Marker>
         ),

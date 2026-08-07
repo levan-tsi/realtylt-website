@@ -1,5 +1,6 @@
 import type { MapBounds, MapPin } from "@/lib/idx/types";
 import { listingPath } from "@/lib/idx/listing-url";
+import type { ResultSet } from "@/lib/idx/result-set";
 
 /** Shared map math — used by both the Leaflet fallback and the Google Maps view.
  * `pins` seeds the FIRST paint (the current results page, so the map is never empty while the
@@ -205,11 +206,29 @@ export function dotHtml(opts: { label: string; saved: boolean; spokenFor: boolea
  * exactly one more. Indices past the real set 302 to the branded coming-soon still, so a
  * stale photoCount can never show a broken frame. Inline styles on purpose: InfoWindow
  * content renders outside the app's stylesheet. */
+/** The map's own answer to "next within what" (round 24, owner: "where ever is zoomed in and
+ * shows on the map and you click next or previous property it moves through them"). The grid
+ * saves its visible page, but the map draws from the viewport PIN fetch — up to PIN_CAP homes
+ * the grid never held, so a pin-opened listing page had no walk at all. This builds the result
+ * set from those pins, in fetch order (listed_at desc — the same clause builder and order the
+ * grid uses, so the two surfaces tell one story). Written only when a popup link is actually
+ * followed: a click names its own list, the ResultSetScope principle. */
+export function pinResultSet(pins: readonly MapPin[], searchHref: string): ResultSet | null {
+  const located = pins.filter((p) => p.lat && p.lng);
+  if (located.length < 2) return null; // one home is not a set to page through
+  return {
+    items: located.map((p) => ({ id: p.id, path: listingPath(p), address: p.address })),
+    page: 1,
+    totalPages: 1,
+    searchHref,
+  };
+}
+
 export function popupNode(
   p: MapPin,
-  opts: { onClose?: () => void; onToggleSave?: (id: string) => void } = {},
+  opts: { onClose?: () => void; onToggleSave?: (id: string) => void; onNavigate?: () => void } = {},
 ): HTMLElement {
-  const { onClose, onToggleSave } = opts;
+  const { onClose, onToggleSave, onNavigate } = opts;
   const bb = [p.beds > 0 && `${p.beds} bd`, p.baths > 0 && `${p.baths} ba`].filter(Boolean).join(" / ");
   const root = document.createElement("div");
   // Edge-to-edge: both engines' popup chrome is stripped to a bare 16px-rounded shell
@@ -345,6 +364,9 @@ export function popupNode(
   const link = document.createElement("a");
   link.href = listingPath(p);
   link.textContent = "View Listing";
+  // Fires BEFORE the browser follows the href (default action runs after listeners) — the
+  // engine writes the viewport result set here so the listing page can walk the map's homes.
+  if (onNavigate) link.addEventListener("click", onNavigate);
   link.style.cssText =
     "display:block;margin:10px 12px 12px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
     `text-align:center;font:700 11px/1.4 ${MAP_FONT};letter-spacing:.12em;text-transform:uppercase;text-decoration:none`;
