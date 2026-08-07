@@ -182,8 +182,20 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // gets orphaned open with the pointer nowhere near it. This asks the only question that
         // matters — is the pointer over a chip, or over the preview itself? — and it keeps
         // working no matter how many times the chips are rebuilt underneath it.
+        // Where the pointer last really was, and where it sat when the visitor deliberately
+        // closed a popup. The pair is the stationary-pointer guard (below): a marker rebuild
+        // under a pointer that has NOT moved since the close fires a synthetic mouseenter at
+        // the SAME coordinates, and that mouseenter must not undo an Escape. A time window
+        // cannot do this job — dev's fast pin fetch landed inside any window tried, and
+        // production's slower one landed after it (reproduced both ways, 2026-08-07).
+        let lastPointer: { x: number; y: number } | null = null;
+        let closedAt: { x: number; y: number } | null = null;
         // Deferred, so crossing the small gap between the chip and the popup does not dismiss it.
         const onDocMove = (e: MouseEvent) => {
+          lastPointer = { x: e.clientX, y: e.clientY };
+          // Real movement releases the guard; Chromium's synthetic moves repeat the same
+          // coordinates, so a 4px leash separates a hand from a relayout.
+          if (closedAt && Math.hypot(e.clientX - closedAt.x, e.clientY - closedAt.y) > 4) closedAt = null;
           if (pinnedRef.current) return; // a deliberate choice outranks a passing pointer
           const el = e.target as Element | null;
           if (el?.closest?.(".rlt-price-chip") || el?.closest?.(".rlt-map-dot") || el?.closest?.(".gm-style-iw")) {
@@ -210,6 +222,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           if (e.key !== "Escape" || !popupOpen) return;
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
+          closedAt = lastPointer; // arm the stationary-pointer guard where the hand is now
           popupOpen = false;
           shownForId = null;
           info.close();
@@ -232,6 +245,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           if (!popupOpen) return;
           pinnedRef.current = null;
           suppressReopenUntil = Date.now() + 400;
+          closedAt = lastPointer;
           popupOpen = false;
           shownForId = null;
           info.close();
@@ -452,14 +466,17 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               shownForId = p.id;
               if (pinned) pinnedRef.current = p.id;
             };
-            marker.addEventListener("mouseenter", () => {
+            marker.addEventListener("mouseenter", (e) => {
               cancelClose();
               if (pinnedRef.current) return; // a deliberate choice outranks a passing pointer
-              // draw() rebuilding this marker under a stationary pointer fires a synthetic
-              // mouseenter — within the deliberate-close window that reopened the popup the
-              // visitor just Escaped (reproduced: Escape during post-zoom settle, pointer on
-              // the marker, pin fetch lands, popup back). Same guard the focus handler earned.
-              if (Date.now() < suppressReopenUntil) return;
+              // draw() rebuilding this marker under a STATIONARY pointer fires a synthetic
+              // mouseenter at the same coordinates, and that must not undo the Escape the
+              // visitor just pressed (reproduced: Escape during post-zoom settle, pin fetch
+              // lands, popup back). The guard is positional, not a time window — dev's fast
+              // fetch landed inside every window tried, production's slow one landed after.
+              // closedAt clears on the first REAL pointer movement (onDocMove, 4px leash),
+              // so an actual re-approach previews exactly as before.
+              if (closedAt && Math.hypot(e.clientX - closedAt.x, e.clientY - closedAt.y) <= 4) return;
               openPopup(false);
             });
             // Keyboard parity: the markers are real buttons, so tabbing to one previews it too.
