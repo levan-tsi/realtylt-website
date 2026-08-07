@@ -17,7 +17,7 @@
  */
 
 import { unstable_cache } from "next/cache";
-import { DEFAULT_PAGE_SIZE, HOME_TYPE_VALUES, PIN_CAP, type IdxClient, type Listing, type MapBounds, type MapPin, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
+import { DEFAULT_PAGE_SIZE, HOME_TYPE_VALUES, PIN_CAP, type HeatingType, type IdxClient, type Listing, type MapBounds, type MapPin, type ParkingType, type PinsResult, type SearchParams, type SearchResult, type SortKey } from "./types";
 import { inBounds } from "./query";
 import { ReplicatedIdxClient } from "./replicated";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
@@ -91,6 +91,21 @@ async function rest<T>(path: string, opts: { count?: boolean } = {}): Promise<{ 
   return { rows, total };
 }
 
+/** Round-24 select facets → their generated columns (idx_round24_facet_columns.sql). */
+const HEATING_COLUMNS: Record<HeatingType, string> = {
+  "natural-gas": "has_heat_natural_gas",
+  oil: "has_heat_oil",
+  electric: "has_heat_electric",
+  propane: "has_heat_propane",
+  "heat-pump": "has_heat_pump",
+};
+const PARKING_COLUMNS: Record<ParkingType, string> = {
+  attached: "has_park_attached",
+  detached: "has_park_detached",
+  driveway: "has_park_driveway",
+  assigned: "has_park_assigned",
+};
+
 /** SearchParams → PostgREST filter string over the generated columns. */
 function searchFilters(p: SearchParams): string {
   const parts: string[] = [];
@@ -152,6 +167,14 @@ function searchFilters(p: SearchParams): string {
   if (p.formalDining) parts.push("has_formal_dining=is.true");
   // One toggle, two facts: "no well, no septic" is a single buyer decision (round 23).
   if (p.municipalUtilities) parts.push("has_public_water=is.true", "has_public_sewer=is.true");
+  // Round-24 selects — one whitelisted token maps to one generated column
+  // (idx_round24_facet_columns.sql). Explicit maps, not string-mangling: tokens were
+  // validated in parseFilterParams, so these lookups can only ever see a known key.
+  if (p.heating) parts.push(`${HEATING_COLUMNS[p.heating]}=is.true`);
+  if (p.parking) parts.push(`${PARKING_COLUMNS[p.parking]}=is.true`);
+  if (p.basementFinished) parts.push("has_basement_finished=is.true");
+  if (p.basementWalkout) parts.push("has_basement_walkout=is.true");
+  if (p.nearTransit) parts.push("has_near_transit=is.true");
   // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
   // property_type; otherwise an explicit sale type filters to it, and no sale type at all
   // still excludes rentals so the for-sale grid/count never carries a rental.

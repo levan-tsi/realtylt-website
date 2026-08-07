@@ -237,18 +237,43 @@ function basementFor(i: number): string[] | undefined {
   }
 }
 
-/** lotFeatures — WATERFRONT_FEATURES (types.ts) is the waterfront=true signal; every 8th row
- * omits lotFeatures entirely. */
+/** lotFeatures — WATERFRONT_FEATURES (types.ts) is the waterfront=true signal, "Near Public
+ * Transit" the nearTransit one (round 24); every 8th row omits lotFeatures entirely. */
 function lotFeaturesFor(i: number): string[] | undefined {
   switch (i % 8) {
     case 0: return undefined;
     case 1: return ["Waterfront"];
     case 2: return ["Water Access"];
-    case 3: return ["Level"];
+    case 3: return ["Level", "Near Public Transit"];
     case 4: return ["Wooded"];
-    case 5: return ["Corner Lot"];
+    case 5: return ["Corner Lot", "Near Public Transit"];
     case 6: return ["Cul-de-Sac"];
     default: return ["Level", "Wooded"];
+  }
+}
+
+/** heating — the round-24 heating-fuel select's signal (HEATING_VALUES tokens each appear, a
+ * delivery-only row like Baseboard matches NO fuel, and every 6th row omits heating). */
+function heatingFor(i: number): string[] | undefined {
+  switch (i % 6) {
+    case 0: return undefined;
+    case 1: return ["Natural Gas", "Forced Air"];
+    case 2: return ["Oil", "Baseboard"];
+    case 3: return ["Electric", "Heat Pump"];
+    case 4: return ["Propane"];
+    default: return ["Baseboard", "Hot Water"]; // delivery only — states heating, names no fuel
+  }
+}
+
+/** parkingFeatures — the round-24 parking select's signal (PARKING_VALUES tokens each appear,
+ * a Garage-only row matches NO kind, and every 5th row omits parking). */
+function parkingFor(i: number): string[] | undefined {
+  switch (i % 5) {
+    case 0: return undefined;
+    case 1: return ["Garage", "Attached", "Driveway"];
+    case 2: return ["Garage", "Detached"];
+    case 3: return ["Assigned", "Parking Lot"];
+    default: return ["Garage", "Garage Door Opener"]; // garage stated, kind unstated
   }
 }
 
@@ -323,6 +348,8 @@ function buildListing(row: Row, i: number): Listing {
     basement: basementFor(i),
     lotFeatures: lotFeaturesFor(i),
     interiorFeatures: interiorFeaturesFor(i),
+    heating: heatingFor(i),
+    parkingFeatures: parkingFor(i),
     ...utilitiesFor(i),
     photos,
     lat: +(town.lat + (((i * 29) % 21) - 10) / 1000).toFixed(5),

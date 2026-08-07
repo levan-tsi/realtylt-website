@@ -14,39 +14,51 @@ const KEY = env.SUPABASE_ANON_KEY;
 const base = (process.env.BASE ?? "http://localhost:3100").replace(/\/+$/, "");
 
 // Seeded PRNG so the "random ways" are reproducible in the handoff.
-let seed = 20260806;
+// Reseeded for round 24 so the new select facets actually rotate into the combos.
+let seed = 20260807;
 const rnd = () => (seed = (seed * 1103515245 + 12345) % 2 ** 31) / 2 ** 31;
 const pick = (a) => a[Math.floor(rnd() * a.length)];
 
 const COUNTIES = ["dutchess", "westchester", "orange", "queens", "brooklyn", "ulster", ""];
+// [param, value, predicate over the raw OneKey jsonb]. Value "1" = the boolean toggles;
+// everything else is a round-24 select token.
 const FACETS = [
-  ["washerDryer", (l) => l.interiorFeatures?.includes("Washer/Dryer Hookup")],
-  ["formalDining", (l) => l.interiorFeatures?.includes("Formal Dining")],
-  ["municipalUtilities", (l) => l.sewer?.includes("Public Sewer") && l.waterSource?.includes("Public")],
-  ["centralAir", (l) => l.cooling?.includes("Central Air")],
-  ["basement", (l) => l.basement?.some((v) => ["Finished", "Full", "Partially Finished", "Partial", "Walk-Out Access"].includes(v))],
-  ["eatInKitchen", (l) => l.interiorFeatures?.includes("Eat-in Kitchen")],
-  ["firstFloorBed", (l) => l.interiorFeatures?.includes("First Floor Bedroom")],
+  ["washerDryer", "1", (l) => l.interiorFeatures?.includes("Washer/Dryer Hookup")],
+  ["formalDining", "1", (l) => l.interiorFeatures?.includes("Formal Dining")],
+  ["municipalUtilities", "1", (l) => l.sewer?.includes("Public Sewer") && l.waterSource?.includes("Public")],
+  ["centralAir", "1", (l) => l.cooling?.includes("Central Air")],
+  ["basement", "1", (l) => l.basement?.some((v) => ["Finished", "Full", "Partially Finished", "Partial", "Walk-Out Access"].includes(v))],
+  ["eatInKitchen", "1", (l) => l.interiorFeatures?.includes("Eat-in Kitchen")],
+  ["firstFloorBed", "1", (l) => l.interiorFeatures?.includes("First Floor Bedroom")],
+  // Round-24 select facets — one token, one exact feed value.
+  ["heating", "natural-gas", (l) => l.heating?.includes("Natural Gas")],
+  ["heating", "oil", (l) => l.heating?.includes("Oil")],
+  ["parking", "attached", (l) => l.parkingFeatures?.includes("Attached")],
+  ["parking", "driveway", (l) => l.parkingFeatures?.includes("Driveway")],
+  ["basementFinished", "1", (l) => l.basement?.includes("Finished")],
+  ["basementWalkout", "1", (l) => l.basement?.includes("Walk-Out Access")],
+  ["nearTransit", "1", (l) => l.lotFeatures?.includes("Near Public Transit")],
 ];
 
 let checkedRows = 0, violations = 0;
-for (let round = 0; round < 8; round++) {
+for (let round = 0; round < 12; round++) {
   const county = pick(COUNTIES);
   const nFacets = 1 + Math.floor(rnd() * 2); // 1-2 facets per combo
   const facets = [];
   while (facets.length < nFacets) {
     const f = pick(FACETS);
-    if (!facets.includes(f)) facets.push(f);
+    // one value per param — two heating tokens in one query would AND to nothing
+    if (!facets.some((g) => g[0] === f[0])) facets.push(f);
   }
   const priceMax = pick(["", "400000", "750000", "1500000"]);
   const qs = new URLSearchParams({ pageSize: "50", status: "Active" });
   if (county) qs.set("county", county);
   if (priceMax) qs.set("priceMax", priceMax);
-  for (const [k] of facets) qs.set(k, "1");
+  for (const [k, v] of facets) qs.set(k, v);
 
   const res = await fetch(`${base}/api/idx/search?${qs}`).then((r) => r.json());
   const rows = res.listings ?? [];
-  const label = `${county || "ALL"} ${facets.map((f) => f[0]).join("+")}${priceMax ? " <=$" + priceMax : ""}`;
+  const label = `${county || "ALL"} ${facets.map((f) => (f[1] === "1" ? f[0] : `${f[0]}=${f[1]}`)).join("+")}${priceMax ? " <=$" + priceMax : ""}`;
   if (!rows.length) {
     console.log(`combo ${round + 1}: ${label} -> total ${res.total} (no rows to check)`);
     continue;
@@ -63,8 +75,8 @@ for (let round = 0; round < 8; round++) {
     if (!db) { console.log(`  MISSING raw row for ${row.id}`); violations++; continue; }
     const L = db.listing;
     checkedRows++;
-    for (const [k, predicate] of facets) {
-      if (!predicate(L)) { console.log(`  VIOLATION ${row.id}: fails ${k}`); violations++; }
+    for (const [k, v, predicate] of facets) {
+      if (!predicate(L)) { console.log(`  VIOLATION ${row.id}: fails ${k}=${v}`); violations++; }
     }
     if (priceMax && db.price > +priceMax) { console.log(`  VIOLATION ${row.id}: price ${db.price} > ${priceMax}`); violations++; }
     if (county && db.county !== county) { console.log(`  VIOLATION ${row.id}: county ${db.county} != ${county}`); violations++; }

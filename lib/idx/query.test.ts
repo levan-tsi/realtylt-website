@@ -192,3 +192,21 @@ describe("inBounds", () => {
     expect(inBounds({ lat: 0, lng: 0 }, b)).toBe(false); // Null Island
   });
 });
+
+describe("listedDays — the Days-on-market select (round 24)", () => {
+  it("translates a page listedDays into the API's newDays window", () => {
+    const p = parseSearchRequest(new URLSearchParams("listedDays=30"));
+    expect(p.newWithinDays).toBe(30);
+  });
+
+  it("composes with quick=new by taking the SMALLER window — both constraints hold", () => {
+    expect(parseSearchRequest(new URLSearchParams("quick=new&listedDays=30")).newWithinDays).toBe(7);
+    expect(parseSearchRequest(new URLSearchParams("quick=new&listedDays=3")).newWithinDays).toBe(3);
+  });
+
+  it("is bounded by the same 90-day cap as raw newDays, and garbage is ignored", () => {
+    expect(parseSearchRequest(new URLSearchParams("listedDays=5000")).newWithinDays).toBe(90);
+    expect(parseSearchRequest(new URLSearchParams("listedDays=banana")).newWithinDays).toBeUndefined();
+    expect(parseSearchRequest(new URLSearchParams("listedDays=-3")).newWithinDays).toBeUndefined();
+  });
+});

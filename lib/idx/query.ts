@@ -2,7 +2,7 @@
  * (/api/idx/search and /api/idx/pins) — one validation story, no drift. */
 
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import { HOME_TYPES, RENTAL_ONLY_HOME_TYPES, SEARCH_PAGE_SIZE, type HomeType, type ListingStatusFilter, type MapBounds, type PropertyType, type SearchParams, type SortKey } from "./types";
+import { HEATING_TYPES, HOME_TYPES, PARKING_TYPES, RENTAL_ONLY_HOME_TYPES, SEARCH_PAGE_SIZE, type HeatingType, type HomeType, type ListingStatusFilter, type MapBounds, type ParkingType, type PropertyType, type SearchParams, type SortKey } from "./types";
 
 /** Status values a URL may ask for. Anything else falls back to "no status filter". */
 export const STATUS_FILTERS: ListingStatusFilter[] = ["Active", "Pending"];
@@ -74,6 +74,13 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     washerDryer: flag(q.get("washerDryer")),
     formalDining: flag(q.get("formalDining")),
     municipalUtilities: flag(q.get("municipalUtilities")),
+    // Round-24 selects — whitelisted tokens, same rule as homeType: a crafted value can never
+    // reach the query builder, it just means "no filter".
+    heating: HEATING_TYPES.includes(q.get("heating") as HeatingType) ? (q.get("heating") as HeatingType) : undefined,
+    parking: PARKING_TYPES.includes(q.get("parking") as ParkingType) ? (q.get("parking") as ParkingType) : undefined,
+    basementFinished: flag(q.get("basementFinished")),
+    basementWalkout: flag(q.get("basementWalkout")),
+    nearTransit: flag(q.get("nearTransit")),
     // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
     // for an absurd range.
     newWithinDays: (() => {
@@ -115,6 +122,14 @@ export function parseSearchRequest(q: URLSearchParams): SearchParams {
   if (quick === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
   if (quick === "active") withQuick.set("status", "Active");
   if (quick === "pending") withQuick.set("status", "Pending");
+  // "Days on market" MORE select (round 24) — a PAGE param, translated to the API's newDays
+  // window here exactly like the client's own fetch does. It composes with quick=new by
+  // taking the smaller window: both constraints are the visitor's, both hold.
+  const listed = num(q.get("listedDays"));
+  if (listed && listed > 0) {
+    const current = num(withQuick.get("newDays"));
+    withQuick.set("newDays", String(Math.min(listed, current ?? Infinity)));
+  }
   return {
     ...parseFilterParams(withQuick),
     sort: sort && SORTS.includes(sort) ? sort : "mixed",

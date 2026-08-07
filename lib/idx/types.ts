@@ -185,6 +185,23 @@ export interface SearchParams {
   /** ONE toggle over TWO facts (has_public_water AND has_public_sewer): the buyer question it
    * answers is "no well, no septic", which is a single decision in this market. */
   municipalUtilities?: boolean;
+  // ── Round 24 (owner: "drop down filters are still less and needs adding more"). Selects,
+  // not more checkboxes, because that is the word he used and each has several real answers.
+  // Backed by generated columns in supabase/migrations/idx_round24_facet_columns.sql; counts
+  // measured in-surface 2026-08-07 (25,130 for-sale on-market rows ≥ $10k) before building.
+  /** Heating fuel — one token, one Heating array value (HEATING_VALUES). Gas 8,854 · Oil
+   * 3,610 · Electric 2,281 · Heat pump 703 · Propane 567. */
+  heating?: HeatingType;
+  /** Parking kind — one token, one ParkingFeatures value (PARKING_VALUES). Driveway 9,238 ·
+   * Attached 2,582 · Assigned 2,033 · Detached 1,384. */
+  parking?: ParkingType;
+  /** Basement, one level deeper than the yes/no `basement` flag: Finished 6,545 ·
+   * Walk-out 4,193. The UI offers one select (Any / Yes / Finished / Walk-out) that sets
+   * exactly one of the three basement params. */
+  basementFinished?: boolean;
+  basementWalkout?: boolean;
+  /** lotFeatures "Near Public Transit" — 2,871. Commuter-belt question, his live site asks it. */
+  nearTransit?: boolean;
   /** Scope results to a map viewport (round 23: the grid and the map must answer the SAME
    * question — he caught page 2 of the county scope contradicting what the map showed). Set
    * by /api/idx/search from north/south/east/west params; never part of the page URL, so the
@@ -235,6 +252,34 @@ export const RENTAL_ONLY_HOME_TYPES = new Set<HomeType>(["apartment"]);
  * would answer the same question differently. lib/idx/facets.test.ts pins them together. */
 export const REAL_BASEMENT = ["Finished", "Full", "Partially Finished", "Partial", "Walk-Out Access"] as const;
 export const WATERFRONT_FEATURES = ["Waterfront", "Water Access"] as const;
+
+/** Round-24 select facets: token → the ONE feed value it means. Same duplication contract as
+ * REAL_BASEMENT above — the SQL in idx_round24_facet_columns.sql repeats these literals in its
+ * generated columns, and lib/idx/facets.test.ts pins the two together so they cannot drift.
+ * "Finished" deliberately does NOT match "Partially Finished": jsonb array containment is
+ * exact-element, and a buyer asking for a finished basement is not asking for half of one. */
+export const HEATING_VALUES = {
+  "natural-gas": "Natural Gas",
+  oil: "Oil",
+  electric: "Electric",
+  propane: "Propane",
+  "heat-pump": "Heat Pump",
+} as const satisfies Record<string, string>;
+export type HeatingType = keyof typeof HEATING_VALUES;
+export const HEATING_TYPES = Object.keys(HEATING_VALUES) as HeatingType[];
+
+export const PARKING_VALUES = {
+  attached: "Attached",
+  detached: "Detached",
+  driveway: "Driveway",
+  assigned: "Assigned",
+} as const satisfies Record<string, string>;
+export type ParkingType = keyof typeof PARKING_VALUES;
+export const PARKING_TYPES = Object.keys(PARKING_VALUES) as ParkingType[];
+
+export const BASEMENT_FINISHED_VALUE = "Finished";
+export const BASEMENT_WALKOUT_VALUE = "Walk-Out Access";
+export const NEAR_TRANSIT_VALUE = "Near Public Transit";
 
 export interface SearchResult {
   listings: Listing[];

@@ -92,6 +92,20 @@ interface Filters {
   formalDining: boolean;
   /** One toggle over two facts (public water AND public sewer) — "no well, no septic". */
   municipalUtilities: boolean;
+  // ── Round-24 selects (owner: "drop down filters are still less"). Strings, empty = any.
+  /** Heating fuel token (HEATING_VALUES in lib/idx/types.ts). */
+  heating: string;
+  /** Parking kind token (PARKING_VALUES). */
+  parking: string;
+  /** "Days on market" — listed within N days. A PAGE param the API route translates to its
+   * newDays window (composing with quick=new by taking the smaller). */
+  listedDays: string;
+  /** Basement, one level deeper than the yes/no flag. ONE select (Any / Yes / Finished /
+   * Walk-out) drives all three basement booleans, exactly one ever set. */
+  basementFinished: boolean;
+  basementWalkout: boolean;
+  /** lotFeatures "Near Public Transit" — the commuter question his live site asks. */
+  nearTransit: boolean;
   /** true = only listings with a mirrored cover photo (default off = include everything). */
   withPhotos: boolean;
   /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
@@ -106,25 +120,51 @@ interface Filters {
 }
 
 /** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
-const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType"] as const;
+const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType", "heating", "parking", "listedDays"] as const;
 
 /** The MORE panel's boolean toggles. Separate from MORE_KEYS because they count as active when
  * TRUE rather than when non-empty, and because toQuery emits them as `=1` or not at all — a
  * `centralAir=false` in the URL would be noise that also breaks the "is this the default?" read. */
-const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen", "washerDryer", "formalDining", "municipalUtilities"] as const;
+const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen", "washerDryer", "formalDining", "municipalUtilities", "basementFinished", "basementWalkout", "nearTransit"] as const;
 
 /** Feature toggles, in the order they are offered. Labels are what a buyer would say, not the
  * RESO value underneath. Counts are active inventory measured 2026-08-06, and they are the
- * reason each one is here — a filter that cannot answer is worse than no filter. */
+ * reason each one is here — a filter that cannot answer is worse than no filter.
+ * Basement moved OUT of this list in round 24: it became a select (Any / Yes / Finished /
+ * Walk-out) — four real answers is a dropdown, not a checkbox. */
 const FEATURE_TOGGLES: { key: (typeof MORE_FLAGS)[number]; label: string }[] = [
   { key: "centralAir", label: "Central air" },        // 8,398
-  { key: "basement", label: "Basement" },             // 13,198
   { key: "firstFloorBed", label: "First-floor bedroom" },
   { key: "eatInKitchen", label: "Eat-in kitchen" },
   { key: "washerDryer", label: "Washer/dryer hookup" },   // 2,585
   { key: "formalDining", label: "Formal dining room" },   // 3,264
   { key: "municipalUtilities", label: "Municipal water and sewer" }, // no well, no septic
+  { key: "nearTransit", label: "Near public transit" },   // 2,871 (round 24)
   { key: "waterfront", label: "Waterfront or water access" }, // 206
+];
+
+// ── Round-24 select options. Tokens match HEATING_VALUES / PARKING_VALUES in lib/idx/types.ts;
+// counts are in idx_round24_facet_columns.sql's header (measured in-surface before building).
+const HEATING_OPTS = [
+  { value: "natural-gas", label: "Natural gas" },
+  { value: "oil", label: "Oil" },
+  { value: "electric", label: "Electric" },
+  { value: "propane", label: "Propane" },
+  { value: "heat-pump", label: "Heat pump" },
+];
+const PARKING_OPTS = [
+  { value: "attached", label: "Attached garage" },
+  { value: "detached", label: "Detached garage" },
+  { value: "driveway", label: "Driveway" },
+  { value: "assigned", label: "Assigned spot" },
+];
+const LISTED_OPTS = [
+  { value: "1", label: "Last 24 hours" },
+  { value: "3", label: "Last 3 days" },
+  { value: "7", label: "Last week" },
+  { value: "14", label: "Last 2 weeks" },
+  { value: "30", label: "Last month" },
+  { value: "90", label: "Last 3 months" },
 ];
 
 /** Home-type options. Values match HOME_TYPE_VALUES in lib/idx/types.ts, which maps each to the
@@ -197,6 +237,13 @@ function fromParams(sp: URLSearchParams): Filters {
     washerDryer: TRUE_FLAGS.has(sp.get("washerDryer") ?? ""),
     formalDining: TRUE_FLAGS.has(sp.get("formalDining") ?? ""),
     municipalUtilities: TRUE_FLAGS.has(sp.get("municipalUtilities") ?? ""),
+    // Round-24 selects — invalid tokens fall back to "any", mirroring parseFilterParams.
+    heating: HEATING_OPTS.some((o) => o.value === sp.get("heating")) ? sp.get("heating")! : "",
+    parking: PARKING_OPTS.some((o) => o.value === sp.get("parking")) ? sp.get("parking")! : "",
+    listedDays: LISTED_OPTS.some((o) => o.value === sp.get("listedDays")) ? sp.get("listedDays")! : "",
+    basementFinished: TRUE_FLAGS.has(sp.get("basementFinished") ?? ""),
+    basementWalkout: TRUE_FLAGS.has(sp.get("basementWalkout") ?? ""),
+    nearTransit: TRUE_FLAGS.has(sp.get("nearTransit") ?? ""),
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     // Default "active", mirroring parseSearchRequest — if these two disagreed the visitor would
@@ -271,6 +318,12 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     f.quick === "pending" && "pending only",
     f.withPhotos && "with photos",
     HOME_TYPE_OPTS.find((o) => o.value === f.homeType)?.label.toLowerCase(),
+    f.heating && `${HEATING_OPTS.find((o) => o.value === f.heating)?.label.toLowerCase()} heat`,
+    PARKING_OPTS.find((o) => o.value === f.parking)?.label.toLowerCase(),
+    f.listedDays && LISTED_OPTS.find((o) => o.value === f.listedDays)?.label.toLowerCase(),
+    f.basement && "basement",
+    f.basementFinished && "finished basement",
+    f.basementWalkout && "walk-out basement",
     ...FEATURE_TOGGLES.filter((t) => f[t.key]).map((t) => t.label.toLowerCase()),
   ].filter(Boolean) as string[];
   return { name: parts.length ? parts.join(" · ") : "All listings", parts };
@@ -305,6 +358,14 @@ function apiFilterParams(f: Filters): URLSearchParams {
   if (f.quick === "new") api.set("newDays", String(NEW_LISTING_DAYS));
   if (f.quick === "active") api.set("status", "Active");
   if (f.quick === "pending") api.set("status", "Pending");
+  // "Days on market" is a PAGE param; the API speaks newDays. Composes with quick=new by
+  // taking the smaller window — the same translation parseSearchRequest applies server-side,
+  // so the HTML render and this fetch ask the identical question.
+  if (f.listedDays) {
+    api.delete("listedDays");
+    const current = Number(api.get("newDays"));
+    api.set("newDays", String(Math.min(+f.listedDays, Number.isFinite(current) && current > 0 ? current : Infinity)));
+  }
   return api;
 }
 
@@ -620,6 +681,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       yearMin: "", yearMax: "", taxMax: "", homeType: "", withPhotos: false,
       centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
       washerDryer: false, formalDining: false, municipalUtilities: false,
+      heating: "", parking: "", listedDays: "", basementFinished: false, basementWalkout: false, nearTransit: false,
     });
 
   // One labelled min→max row for the MORE panel.
@@ -646,6 +708,26 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         >
           <option value="">No max</option>
           {opts.map((n) => (<option key={n} value={n}>{fmt(n)}</option>))}
+        </select>
+      </div>
+    </div>
+  );
+
+  // One labelled single-choice cell for the MORE panel (round-24 dropdowns). The flex wrapper
+  // is load-bearing for the same reason as Home type's: panelSelectCls is flex-1.
+  type SelKey = "heating" | "parking" | "listedDays";
+  const selectRow = (label: string, key: SelKey, anyLabel: string, opts: { value: string; label: string }[]) => (
+    <div>
+      <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
+      <div className="flex">
+        <select
+          aria-label={label}
+          value={filters[key]}
+          onChange={(e) => apply({ [key]: e.target.value } as Partial<Filters>)}
+          className={panelSelectCls}
+        >
+          <option value="">{anyLabel}</option>
+          {opts.map((o) => (<option key={o.value} value={o.value}>{o.label}</option>))}
         </select>
       </div>
     </div>
@@ -917,6 +999,36 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 >
                   <option value="">No max</option>
                   {TAX_OPTS.map((n) => (<option key={n} value={n}>${n.toLocaleString()}</option>))}
+                </select>
+              </div>
+            </div>
+            {/* Round-24 dropdowns (owner: "drop down filters are still less"). Each token is a
+                generated column with measured inventory — idx_round24_facet_columns.sql. */}
+            {selectRow("Days on market", "listedDays", "Any time", LISTED_OPTS)}
+            {selectRow("Heating fuel", "heating", "Any heating", HEATING_OPTS)}
+            {selectRow("Parking", "parking", "Any parking", PARKING_OPTS)}
+            <div>
+              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Basement</p>
+              {/* ONE select drives three URL flags, exactly one ever set: "Yes" is the old
+                  basement toggle (REAL_BASEMENT semantics), the deeper cuts are exact feed
+                  values — Finished 6,545 · Walk-out 4,193, measured in-surface. */}
+              <div className="flex">
+                <select
+                  aria-label="Basement"
+                  value={filters.basementWalkout ? "walkout" : filters.basementFinished ? "finished" : filters.basement ? "yes" : ""}
+                  onChange={(e) =>
+                    apply({
+                      basement: e.target.value === "yes",
+                      basementFinished: e.target.value === "finished",
+                      basementWalkout: e.target.value === "walkout",
+                    })
+                  }
+                  className={panelSelectCls}
+                >
+                  <option value="">Any</option>
+                  <option value="yes">Yes</option>
+                  <option value="finished">Finished</option>
+                  <option value="walkout">Walk-out</option>
                 </select>
               </div>
             </div>

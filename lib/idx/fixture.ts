@@ -2,7 +2,7 @@
  * Deterministic in-memory search over ~60 OneKey-shaped sample listings. */
 
 import { FIXTURE_LISTINGS } from "./fixture-data";
-import { DEFAULT_PAGE_SIZE, HOME_TYPE_VALUES, REAL_BASEMENT, WATERFRONT_FEATURES } from "./types";
+import { BASEMENT_FINISHED_VALUE, BASEMENT_WALKOUT_VALUE, DEFAULT_PAGE_SIZE, HEATING_VALUES, HOME_TYPE_VALUES, NEAR_TRANSIT_VALUE, PARKING_VALUES, REAL_BASEMENT, WATERFRONT_FEATURES } from "./types";
 import type { IdxClient, Listing, SearchParams, SearchResult } from "./types";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 
@@ -42,6 +42,11 @@ export class FixtureIdxClient implements IdxClient {
       washerDryer,
       formalDining,
       municipalUtilities,
+      heating,
+      parking,
+      basementFinished,
+      basementWalkout,
+      nearTransit,
       propertyType,
       newWithinDays,
       sort = "newest",
@@ -90,6 +95,13 @@ export class FixtureIdxClient implements IdxClient {
       if (formalDining && !l.interiorFeatures?.includes("Formal Dining")) return false;
       // One toggle, two facts — mirrors db.searchFilters: BOTH must be stated and municipal.
       if (municipalUtilities && !(l.waterSource?.includes("Public") && l.sewer?.includes("Public Sewer"))) return false;
+      // Round-24 selects — one token means one exact feed value (HEATING_VALUES /
+      // PARKING_VALUES in types.ts), same absent-is-a-miss rule as every facet above.
+      if (heating && !l.heating?.includes(HEATING_VALUES[heating])) return false;
+      if (parking && !l.parkingFeatures?.includes(PARKING_VALUES[parking])) return false;
+      if (basementFinished && !l.basement?.includes(BASEMENT_FINISHED_VALUE)) return false;
+      if (basementWalkout && !l.basement?.includes(BASEMENT_WALKOUT_VALUE)) return false;
+      if (nearTransit && !l.lotFeatures?.includes(NEAR_TRANSIT_VALUE)) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       // Map-viewport box (round 23). Mirrors db.searchFilters: a 0/absent coordinate can

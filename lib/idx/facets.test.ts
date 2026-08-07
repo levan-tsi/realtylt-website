@@ -12,7 +12,7 @@ import { describe, expect, it } from "vitest";
 import { FixtureIdxClient } from "./fixture";
 import { FIXTURE_LISTINGS } from "./fixture-data";
 import { parseFilterParams } from "./query";
-import { HOME_TYPE_VALUES, HOME_TYPES, REAL_BASEMENT, WATERFRONT_FEATURES } from "./types";
+import { BASEMENT_FINISHED_VALUE, BASEMENT_WALKOUT_VALUE, HEATING_VALUES, HOME_TYPE_VALUES, HOME_TYPES, NEAR_TRANSIT_VALUE, PARKING_VALUES, REAL_BASEMENT, WATERFRONT_FEATURES } from "./types";
 
 const client = new FixtureIdxClient();
 const wide = { pageSize: 500 }; // wide enough for every fixture row within the default counties
@@ -256,5 +256,122 @@ describe("REAL_BASEMENT / WATERFRONT_FEATURES pinned against the SQL migration",
   it("WATERFRONT_FEATURES matches has_waterfront's array[...] in the migration", () => {
     const sqlValues = arrayLiteralAfter("has_waterfront").sort();
     expect(sqlValues).toEqual([...WATERFRONT_FEATURES].sort());
+  });
+});
+
+describe("heating filter (round 24) — one token, one exact Heating value", () => {
+  it("every returned row genuinely heats with the asked fuel; a delivery-only row is absent", async () => {
+    for (const token of ["natural-gas", "oil", "electric", "propane", "heat-pump"] as const) {
+      const value = HEATING_VALUES[token];
+      const r = await client.search({ heating: token, ...wide });
+      expect(r.listings.length, `${token} must answer with real fixture inventory`).toBeGreaterThan(0);
+      expect(r.listings.every((l) => l.heating?.includes(value))).toBe(true);
+    }
+    // A row that states heating but names no fuel (Baseboard/Hot Water) matches NO fuel token.
+    const deliveryOnly = FIXTURE_LISTINGS.find(
+      (l) => l.heating && !Object.values(HEATING_VALUES).some((v) => l.heating!.includes(v)),
+    );
+    expect(deliveryOnly).toBeDefined();
+    const r = await client.search({ heating: "natural-gas", ...wide });
+    expect(r.listings.some((l) => l.id === deliveryOnly!.id)).toBe(false);
+    // And a row that omits heating entirely is absent too (absent ≠ match).
+    const omitted = FIXTURE_LISTINGS.find((l) => l.heating === undefined);
+    expect(omitted).toBeDefined();
+    expect(r.listings.some((l) => l.id === omitted!.id)).toBe(false);
+  });
+
+  it("an invalid heating token in the URL is ignored", () => {
+    expect(parseFilterParams(new URLSearchParams("heating=coal")).heating).toBeUndefined();
+    expect(parseFilterParams(new URLSearchParams("heating=oil")).heating).toBe("oil");
+  });
+});
+
+describe("parking filter (round 24)", () => {
+  it("every returned row genuinely offers the asked parking kind; a garage-only row is absent", async () => {
+    for (const token of ["attached", "detached", "driveway", "assigned"] as const) {
+      const value = PARKING_VALUES[token];
+      const r = await client.search({ parking: token, ...wide });
+      expect(r.listings.length, `${token} must answer with real fixture inventory`).toBeGreaterThan(0);
+      expect(r.listings.every((l) => l.parkingFeatures?.includes(value))).toBe(true);
+    }
+    // "Garage" without Attached/Detached states a garage but not the kind — matches neither.
+    const kindless = FIXTURE_LISTINGS.find(
+      (l) => l.parkingFeatures?.includes("Garage") && !l.parkingFeatures.includes("Attached") && !l.parkingFeatures.includes("Detached"),
+    );
+    expect(kindless).toBeDefined();
+    const r = await client.search({ parking: "attached", ...wide });
+    expect(r.listings.some((l) => l.id === kindless!.id)).toBe(false);
+    const omitted = FIXTURE_LISTINGS.find((l) => l.parkingFeatures === undefined);
+    expect(omitted).toBeDefined();
+    expect(r.listings.some((l) => l.id === omitted!.id)).toBe(false);
+  });
+
+  it("an invalid parking token in the URL is ignored", () => {
+    expect(parseFilterParams(new URLSearchParams("parking=valet")).parking).toBeUndefined();
+    expect(parseFilterParams(new URLSearchParams("parking=driveway")).parking).toBe("driveway");
+  });
+});
+
+describe("basement depth filters (round 24) — Finished / Walk-out beyond the yes/no flag", () => {
+  it("basementFinished returns only rows whose basement array says Finished, exactly", async () => {
+    const r = await client.search({ basementFinished: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.basement?.includes(BASEMENT_FINISHED_VALUE))).toBe(true);
+    // A Full-only basement is a real basement but NOT a finished one.
+    const fullOnly = FIXTURE_LISTINGS.find((l) => l.basement?.includes("Full") && !l.basement.includes("Finished"));
+    expect(fullOnly).toBeDefined();
+    expect(r.listings.some((l) => l.id === fullOnly!.id)).toBe(false);
+  });
+
+  it("basementWalkout returns only Walk-Out Access rows", async () => {
+    const r = await client.search({ basementWalkout: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.basement?.includes(BASEMENT_WALKOUT_VALUE))).toBe(true);
+  });
+});
+
+describe("nearTransit filter (round 24)", () => {
+  it("every returned row's lotFeatures says Near Public Transit; others and omitted are absent", async () => {
+    const r = await client.search({ nearTransit: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.lotFeatures?.includes(NEAR_TRANSIT_VALUE))).toBe(true);
+    const without = FIXTURE_LISTINGS.find((l) => l.lotFeatures && !l.lotFeatures.includes(NEAR_TRANSIT_VALUE));
+    const omitted = FIXTURE_LISTINGS.find((l) => l.lotFeatures === undefined);
+    expect(without).toBeDefined();
+    expect(omitted).toBeDefined();
+    expect(r.listings.some((l) => l.id === without!.id)).toBe(false);
+    expect(r.listings.some((l) => l.id === omitted!.id)).toBe(false);
+  });
+});
+
+/** Same duplication contract as REAL_BASEMENT above: the round-24 migration repeats the
+ * token → value literals in its generated columns, and this pins the SQL against the TS maps
+ * so the DB path and the fixture path can never answer the same question differently. */
+describe("round-24 token maps pinned against idx_round24_facet_columns.sql", () => {
+  const sql24 = readFileSync(join(process.cwd(), "supabase/migrations/idx_round24_facet_columns.sql"), "utf8");
+  const literalAfter = (column: string): string => {
+    const at = sql24.indexOf(column);
+    if (at < 0) throw new Error(`column "${column}" not found in the round-24 migration`);
+    const m = sql24.slice(at).match(/'\["([^"]+)"\]'::jsonb/);
+    if (!m) throw new Error(`no '["..."]'::jsonb literal after "${column}" in the round-24 migration`);
+    return m[1];
+  };
+
+  it("every heating column's literal matches HEATING_VALUES", () => {
+    expect(literalAfter("has_heat_natural_gas")).toBe(HEATING_VALUES["natural-gas"]);
+    expect(literalAfter("has_heat_oil")).toBe(HEATING_VALUES.oil);
+    expect(literalAfter("has_heat_electric")).toBe(HEATING_VALUES.electric);
+    expect(literalAfter("has_heat_propane")).toBe(HEATING_VALUES.propane);
+    expect(literalAfter("has_heat_pump")).toBe(HEATING_VALUES["heat-pump"]);
+  });
+
+  it("basement, parking and transit literals match their TS constants", () => {
+    expect(literalAfter("has_basement_finished")).toBe(BASEMENT_FINISHED_VALUE);
+    expect(literalAfter("has_basement_walkout")).toBe(BASEMENT_WALKOUT_VALUE);
+    expect(literalAfter("has_park_attached")).toBe(PARKING_VALUES.attached);
+    expect(literalAfter("has_park_detached")).toBe(PARKING_VALUES.detached);
+    expect(literalAfter("has_park_driveway")).toBe(PARKING_VALUES.driveway);
+    expect(literalAfter("has_park_assigned")).toBe(PARKING_VALUES.assigned);
+    expect(literalAfter("has_near_transit")).toBe(NEAR_TRANSIT_VALUE);
   });
 });
