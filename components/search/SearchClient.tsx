@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
@@ -748,7 +749,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           // Typing over a picked city and submitting means the typed text, not the old city.
           apply({ q: String(fd.get("q") ?? ""), city: "" });
         }}
-        className={`mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border border-line bg-white px-4 py-2 ${
+        // gap-x-3 (was 4): at 1440 the action cluster missed the first row by a whisker and
+        // the whole bar wrapped two lines tall — the owner's "unused empty big spots". The
+        // trimmed gaps fit filters AND actions on one line, and content starts a row higher.
+        className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-white px-3.5 py-2 ${
           moreOpen ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
@@ -789,7 +793,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           })}
         </div>
 
-        <div className="flex min-w-40 grow basis-44 items-center gap-2">
+        <div className="flex min-w-36 grow basis-40 items-center gap-2">
           {/* Live prefixes the place field with a map pin. */}
           <svg aria-hidden viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0 text-stone" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
             <path d="M10 17.5s5.5-4.9 5.5-9a5.5 5.5 0 1 0-11 0c0 4.1 5.5 9 5.5 9Z" />
@@ -878,7 +882,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             as an accident rather than a decision. Grouped and pushed right, the bar is filters
             on the left and actions on the right at every width, and when they do wrap they
             wrap as one right-aligned cluster. */}
-        <div className="flex w-full flex-wrap items-center gap-3 sm:ml-auto sm:w-auto sm:flex-nowrap">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto sm:flex-nowrap">
         {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}
         <button
           type="button"
@@ -909,14 +913,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             "Clear All Filters" already uses. */}
         <button
           type="submit"
-          className="grow rounded-xl border-2 border-ink bg-ink px-4 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0"
+          className="grow rounded-xl border-2 border-ink bg-ink px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0"
         >
           Search
         </button>
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-4 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className="inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
         >
           {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
               for new matches, which is what a bell reads as (the heart means "favorite"
@@ -1112,7 +1116,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
 
       {/* ── Result meta row — live: light gray strip, "N listings found" + quick filter left,
           Sort By + view toggle right */}
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {/* This strip is a row of instruments — quick filter, sort, view — and the count was
               dressed exactly like them: small, bold, the same weight as a control label. It is
@@ -1171,6 +1175,36 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               </button>
             ))}
           </div>
+          {/* Saved + Plan, moved here from the round-23 left rail (round 24b — owner: "add
+              saved and plan next to pending... they look faar"). Same one-click destinations,
+              now beside the controls the eye already reads; the rail's width went to the
+              cards and the map. Plan keeps the ?quiz=1 entry ("click on things, popup quiz"). */}
+          <span aria-hidden className="hidden h-4 w-px bg-line-strong sm:block" />
+          <Link
+            href="/saved"
+            className="relative inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+            </svg>
+            Saved
+            {favorites.length > 0 && (
+              <span className="grid h-4 min-w-4 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold leading-none text-paper">
+                {favorites.length > 99 ? "99+" : favorites.length}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/plan?quiz=1"
+            className="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          >
+            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <circle cx="6" cy="19" r="2" />
+              <circle cx="18" cy="5" r="2" />
+              <path d="M8 19h6a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8h1" />
+            </svg>
+            Plan
+          </Link>
         </div>
         <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
           <label htmlFor="f-sort" className="text-xs font-bold uppercase tracking-[0.12em] text-stone">

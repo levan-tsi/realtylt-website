@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SearchClient, type SearchPayload } from "@/components/search/SearchClient";
-import { SearchRail } from "@/components/search/SearchRail";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { parseSearchRequest } from "@/lib/idx/query";
 import { SITE } from "@/lib/site";
@@ -92,14 +91,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           </div>
         }
       >
-        {/* The rail (round 23): three side destinations that can all answer today — Search,
-            Saved (with a live count), Plan. Desktop only; phones keep the header nav. */}
-        <div className="lg:flex">
-          <SearchRail />
-          <div className="min-w-0 flex-1">
-            <SearchClient initial={initial} />
-          </div>
-        </div>
+        {/* The round-23 side rail retired in round 24b (owner: Saved and Plan "look faar") —
+            its destinations live in the result meta row now, next to the quick filters, and
+            the freed width went to the cards and the map. */}
+        <SearchClient initial={initial} />
       </Suspense>
     </>
   );
