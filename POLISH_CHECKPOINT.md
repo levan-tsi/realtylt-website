@@ -188,9 +188,24 @@
 ##    the set (11,611 -> ~25,156 on-market). Consequences: the "across the Hudson Valley" copy,
 ##    the map's initial frame, county-bounds, and the pin cap. lib/site.ts:54 still says "~7k
 ##    borough listings" — stale, it is 13,545.
-## 2. FILTERS — add what matters, then TEST IN SEVERAL RANDOM WAYS against OneKey MLS itself.
+## 3. THE RESULT CARDS ARE INEFFICIENT and the map should take the space. His words: "a lot of
+##    unused white... bring those closer... show picture more... make those boxes 10% less and
+##    make map bigger". Do it AFTER the viewport-scoped list, because that is what earns the map
+##    the width. Keep round 22's clamp invariant (prices share a baseline) — re-run
+##    scripts/_scratch-r22-clamp.mjs after touching the card.
+## 4. FILTERS — add what matters, then TEST IN SEVERAL RANDOM WAYS against OneKey MLS itself.
 ##    Pool and fireplace still need a SELECT_FIELDS change first.
-## 3. Re-test two or three more times against Zillow; polish the design only if budget remains.
+## 5. A ZILLOW-STYLE SIDE RAIL (Search / Updates / Favorites / Plan / Inbox) — RESEARCH AND
+##    IMPROVE, do not copy. He singled out "Plan": study it, brainstorm, write the thinking into
+##    docs/parity/DESIGN-ROUND23.md and COMMIT IT BEFORE the code. Ship no tab that cannot
+##    answer, and note the account wall blocks anything needing a signed-in user.
+## 6. Re-test two or three more times against Zillow; polish the design only if budget remains.
+##
+## FIXED AT THE END OF ROUND 22, do not re-diagnose: "Search Listings does nothing" was a slow
+## silent transition (590 / 599 / 1,604 / 6,890ms on production, every other nav link fine).
+## app/search/loading.tsx now covers it. The page's existing <Suspense> could NOT — on a client
+## navigation Next holds the whole RSC response until the server component emits, so the
+## boundary has nothing to fall back from. Any new slow route needs its own loading.tsx.
 ## 2. THE ACCOUNT WALL still blocks launch and is still his: Supabase disable_signup=true, so
 ##    nobody can create an account. Settle mailer_autoconfirm (realtylt.com has no SPF/DMARC)
 ##    and the Google button offering a disabled provider at the same time.

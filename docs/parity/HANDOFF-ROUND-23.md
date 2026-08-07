@@ -141,6 +141,55 @@ Interaction with §1: once the boroughs join the default scope, the initial fram
 Hudson Valley **and** NYC, and "click a county to zoom to it" becomes the primary way to get back
 to a sane zoom. These two features support each other — build them together.
 
+## 1d. THE RESULT CARDS ARE INEFFICIENT, AND THE MAP SHOULD TAKE THE SPACE
+
+> "on the left where listings are, i think those boxes of listings could be better in design and
+> more efficient. it has a lot of unused white, we could bring those closer and reduce white part
+> and show picture more. also maybe make those boxes 10% less and make map bigger to fill that
+> space, since we are adding map zoom in zoom out all listing feature"
+
+Two linked asks, and the second follows from §1b: **once the list is scoped to what the map is
+showing, the map becomes the primary instrument and deserves the width.**
+
+- **Reduce the white.** The `/search` card (the COMPACT variant in `components/idx/ListingCard.tsx`,
+  the one with `p-3` and the bottom `mt-auto` row — NOT the portrait rail card) carries a lot of
+  padding relative to its photo. Tighten the text block, pull the metadata closer, and give the
+  photograph more of the card. **The photography is the best asset on this site and the card
+  under-uses it.**
+- **~10% narrower cards, wider map.** The grid/map split lives in `SearchClient.tsx`. Measure the
+  current split before changing it and state the new ratio.
+- Do NOT break what round 22 fixed: the rail card's address and attribution are **clamped and
+  reserved at two lines** so every price in a row shares a baseline. Whatever you do to the
+  compact card, re-run `scripts/_scratch-r22-clamp.mjs` and keep the invariant.
+- Density is a real constraint, not a taste call: the owner's stated target elsewhere was "three
+  full rows of cards beside the map". Measure how many rows fit before and after.
+
+## 1e. A ZILLOW-STYLE SIDE RAIL — RESEARCH AND IMPROVE ON IT, DO NOT COPY IT
+
+> "I was looking at zillow and they have this Search / 99+ Updates / Favorites / Plan / Inbox next
+> to map and its helpful, so lets put that in queue too but make it little different and better.
+> for example check everything on Plan and see how we can help similarly to my clients and make it
+> better, more interactive and easy to understand and really helpful for whoever's looking. so do
+> research and brainstorming on those and improve and make mine better"
+
+**This is a research-and-design task, not an implementation ticket.** He is explicit: study what
+Zillow actually offers under each of those, then design something better for HIS clients.
+
+1. **Go look at Zillow's real product** — Search, Updates, Favorites, Plan, Inbox. Understand what
+   each one is FOR and where it is weak. Pay particular attention to **Plan** (affordability,
+   readiness, next steps), which is the one he singled out.
+2. **Brainstorm before building.** Invoke the `brainstorming` skill. Write the thinking into
+   `docs/parity/DESIGN-ROUND23.md` and commit it BEFORE the code, so the reasoning survives.
+3. **Map it onto what this site can honestly serve today.** Much of it already exists in pieces —
+   `/saved` (favorites), `portal_saved_searches` with an `alerts` flag, the CMA/home-value flow,
+   the lead + consent pipeline. A rail that surfaces those coherently is worth far more than five
+   new empty tabs.
+4. **Do not ship a tab that cannot answer.** The same rule that keeps Pool off the filter panel
+   applies here: an "Updates" badge that never counts anything, or an "Inbox" with no messages
+   behind it, is worse than not having it. **The account wall (§5.1) blocks anything that needs a
+   signed-in user — check that before designing around it.**
+5. Restraint still governs the look: this is a quiet, considered site, not a dashboard.
+
 ## 2. FILTERS — expand, then PROVE against OneKey
 
 > "there is bunch of drop downs in more section on our page and zillow. work on filters, add
@@ -217,6 +266,22 @@ Sample **several random towns and criteria**, not one.
 
 ---
 
+## 3b. FIXED AT THE VERY END OF ROUND 22 — do not re-diagnose it
+
+**"Search Listings does nothing when I click"** — he reported the top-nav link as dead. It was
+not. It navigates, slowly and silently: measured on production from `/buying`, the URL committed
+after **590ms, 599ms, 1,604ms and 6,890ms** across four runs. Every OTHER nav link was fine; only
+`/search` stalls, because it is the one route whose server component fetches a page of results
+before it can emit anything.
+
+`app/search/loading.tsx` now exists and fixes it (verified: pending state shown, URL committed
+1,093ms). The lesson worth keeping: **the page's existing `<Suspense>` boundary claimed in a
+comment that it covered client-side navigation into `/search`, and it cannot** — on a client
+navigation Next holds the entire RSC response until the route's server component produces output,
+so the boundary has nothing to fall back FROM. `loading.tsx` is the only thing Next renders the
+instant a transition starts. **If you add another slow route, it needs its own `loading.tsx`;
+there are no others in `app/` today.**
+
 ## 4. STANDING FACTS
 
 - **Repo** `C:\Users\Levan\realtylt-website`, branch `main`, remote `levan-tsi/realtylt-website`.
@@ -273,9 +338,12 @@ Sample **several random towns and criteria**, not one.
    `saveResultSet` the viewport set, keep a measured render cap.
 3. **County click frames the map (§1c)** and **boroughs into the default scope (§1)** — build
    these together, they support each other.
-4. **Filters** — add what matters, then validate against OneKey in several random ways.
-5. **Re-test everything two or three more times**, comparing against Zillow as you go.
-6. **Then, and only if there is budget left, polish the design.**
+4. **Card efficiency + wider map (§1d)** — do this AFTER §1b, because the list being
+   viewport-scoped is the reason the map earns the width.
+5. **Filters (§2)** — add what matters, then validate against OneKey in several random ways.
+6. **The side rail (§1e)** — research and brainstorm FIRST, commit the thinking, then build.
+7. **Re-test everything two or three more times**, comparing against Zillow as you go.
+8. **Then, and only if there is budget left, polish the design.**
 
 His instruction if you do not finish: *"if it did not finish everything, polish map and everything
 one more time and then check if everything works properly compare to zillow too, and if still have
