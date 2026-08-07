@@ -1,5 +1,87 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 24 — DONE 2026-08-07. His four asks, all shipped and re-proven on PRODUCTION.
+## ═══ Reasoning in docs/parity/DESIGN-ROUND24.md. 6 commits pushed to main.
+##
+## ── THE PIN WALK (his "click next or previous property it moves through them") ───────
+## Root cause held: grid saves 150, map draws the 3,000-pin fetch, so a pin beyond the 150
+## landed pager-less. Fix: popupNode gained ONE onNavigate hook (both engines); View Listing
+## writes the WHOLE viewport pin set as the result set — fetch order = listed_at desc, the
+## grid's own order, so the grid's 150 are simply the set's first 150. Proven by NAVIGATION
+## on production (verify-pin-walk.mjs, committed): a deliberately beyond-grid pin -> set
+## 150 -> 3,000 -> pager "Listing … of 3,000" (numbers grew en-US separators) -> Next lands
+## on exactly the set's next item. The photo-arrow trap is dodged by asserting the
+## "Previous/Next listing:" labels inside the "Browse listings" group.
+##
+## ── HIS "still dont have pop up", CLOSED WITH NUMBERS ─────────────────────────────────
+## Stress = 34 attempts across five zooms + impatient post-wheel tries. Production now
+## 34/34, plus the Escape-repro probe 6/6 (was 2/6). TWO fixes were needed:
+## 1. The INSTRUMENT lied first: verify-map-popup picked a dot at y=915 in a 900px viewport
+##    and reported the site broken — a real mouse cannot touch what is not painted. Pickers
+##    now clamp to the visible viewport (committed).
+## 2. The real race: draw() rebuilding a marker under a STATIONARY pointer fires a synthetic
+##    mouseenter that reopened the popup the visitor just Escaped. A 400ms window held on
+##    dev and FAILED on production (slower pin fetch lands after any window) — the shipped
+##    guard is POSITIONAL: closedAt = pointer at deliberate close, released by the first
+##    real move past 4px. Time was the wrong instrument; movement is the honest signal.
+##
+## ── FILTERS: FOUR DROPDOWNS + A TOGGLE, MEASURED FIRST ────────────────────────────────
+## Enumerated live realtylt.com's Brivity search (33 selects / 126 checkables, read live)
+## and Zillow's More panel, then measured in-surface (25,130 for-sale rows ≥$10k): shipped
+## Heating fuel (gas 8,854 / oil 3,610 / electric 2,281 / heat pump 703 / propane 567),
+## Parking (driveway 9,238 / attached 2,582 / assigned 2,033 / detached 1,384), Basement
+## select (Any/Yes/Finished 6,545/Walk-out 4,193 — one select drives three exclusive URL
+## flags, the checkbox retired into it), Days on market (NO column needed — listedDays
+## translates to the API's newDays, composing with quick=new by min), Near public transit
+## (2,871). Migration idx_round24_facet_columns.sql applied live (ALTER then indexes,
+## column counts reproduced the measured predicates EXACTLY). facets.test.ts pins the SQL
+## literals to the TS token maps. REFUSED: ExteriorFeatures (top value "Mailbox"). Deferred
+## with reasons in the migration header: style/stories/55+/fireplace/pool/hardwood/HOA (all
+## SELECT_FIELDS sync changes), school district (dynamic values source). Validation:
+## verify-facets-live.mjs extended for select facets — 12 seeded combos, 431 row-predicate
+## sets against raw OneKey jsonb, ZERO violations, dev AND production. External onekeymls
+## anchor carries from round 23 (the replica pipeline is untouched this round).
+##
+## ── THE QUIZ (his "popup quiz with shapes") — DESIGN CENTERPIECE, LIVE ────────────────
+## Design committed BEFORE code (DESIGN-ROUND24.md). Rail's Plan item -> /plan?quiz=1 ->
+## takeover of line-drawn shapes (the rail's 1.8-stroke language); every answer inks a stop
+## on the ROUTE SPINE across the panel top (the signature); the END is the page becoming
+## their plan: ceiling via priceForMonthly ITSELF ($3,200 -> $585,000 pinned by test),
+## live area counts from /api/idx/search, next stage by their situation, and ONE search
+## link carrying exactly their tokens (incl. the new facets — quiz and MORE panel speak one
+## vocabulary; the URL round-trips through parseFilterParams by test). Identity LAST and
+## optional: ConsentCheckbox unchecked, qualifier carries every answer + searchUrl for the
+## CRM, skipping keeps everything on-page (no storage). JS-off /plan = the static page.
+## verify-plan-quiz.mjs (committed): 17/17 on production, **/api/lead INTERCEPTED (the
+## local form posts to the LIVE CRM webhook otherwise — keep this in every future probe).
+## Build traps caught by LOOKING: fixed overlay anchored below the header (ancestor
+## transform = containing block -> portal to <body>; verify stacking with elementFromPoint,
+## not full-page eyeballing — the dimmed header read as "lit" at full-page scale TWICE),
+## chat launcher z 999998 tucks under the scrim via body.rlt-quiz-open, the unlayered
+## :focus-visible rule needed a scoped h2#plan-quiz-title exception, and two em dashes had
+## crept into visitor copy (swept).
+##
+## ── GATES ─────────────────────────────────────────────────────────────────────────────
+## tsc clean. Tests 840 -> 864 (map-shared pinResultSet 3, facets 12, query listedDays 3,
+## plan-quiz 9, minus 3 superseded... net +24, all FOREGROUND). Production sweep at close,
+## every probe green: markers 19/54/80 pills zero circles · viewport 15,194=15,194, 0 idle
+## refetches · popup contract 10/10 both kinds · stress 34/34 · escape 6/6 · pin walk PASS
+## · facets 431/0 · quiz 17/17. Overflow: quiz surfaces checked at 390 (0px). Dev :3100
+## verified same-answer as production before trusting (2,191 = 2,191 pins).
+##
+## ═══ ROUND 25 CANDIDATES ══════════════════════════════════════════════════════════════
+## 1. Carried, HIS: account wall (disable_signup) · mobile map at 390 · photo backfill
+##    (12-probe rule, ANY 429 = stop) · home-value copy + hero · CMA enumeration +
+##    MediaURLs · Updates tab awaits the CRM sender.
+## 2. Filters next rung: school-district dynamic values source (suggest-index pattern);
+##    the SELECT_FIELDS batch (style/stories/55+/fireplace/pool/hardwood/HOA-frequency)
+##    needs his go-ahead for ONE careful sync probe — suspension history says never burst.
+## 3. Quiz follow-ons if he likes it: entry points beyond /plan (home page? listing pages?),
+##    seller path could ask the address and prefill /home-value, and the saved-search
+##    alerts flag could ride the hand-off (the CRM reads the same criteria shape).
+## 4. QualifyingWizard's own step titles likely show the same global focus ring the quiz
+##    shed — check and align.
+
 ## ═══ ROUND 23 — DONE 2026-08-07. The map became the instrument. Reasoning in
 ## ═══ docs/parity/DESIGN-ROUND23.md. 9 commits pushed to main, all re-verified on PRODUCTION.
 ##
