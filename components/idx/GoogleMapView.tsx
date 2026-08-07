@@ -446,6 +446,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             marker.addEventListener("mouseenter", () => {
               cancelClose();
               if (pinnedRef.current) return; // a deliberate choice outranks a passing pointer
+              // draw() rebuilding this marker under a stationary pointer fires a synthetic
+              // mouseenter — within the deliberate-close window that reopened the popup the
+              // visitor just Escaped (reproduced: Escape during post-zoom settle, pointer on
+              // the marker, pin fetch lands, popup back). Same guard the focus handler earned.
+              if (Date.now() < suppressReopenUntil) return;
               openPopup(false);
             });
             // Keyboard parity: the markers are real buttons, so tabbing to one previews it too.

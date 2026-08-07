@@ -23,11 +23,16 @@ const center = (sel) =>
     const els = [...document.querySelectorAll(s)];
     const box = document.querySelector(".gm-style")?.getBoundingClientRect();
     if (!box) return null;
-    // prefer one well inside the map (not clipped at an edge, not under the count strip)
+    // prefer one well inside the map (not clipped at an edge, not under the count strip).
+    // Clamp to the VISIBLE viewport too — .gm-style's rect can extend below the fold, and
+    // this probe once picked a dot at y=915 in a 900px viewport: a real mouse cannot touch
+    // what is not painted, and the "failure" it reported was the instrument's own.
+    const right = Math.min(box.right, window.innerWidth);
+    const bottom = Math.min(box.bottom, window.innerHeight);
     for (const e of els) {
       const r = e.getBoundingClientRect();
       const x = r.x + r.width / 2, y = r.y + r.height / 2;
-      if (x > box.x + 80 && x < box.right - 120 && y > box.y + 120 && y < box.bottom - 120 && r.width > 0)
+      if (x > box.x + 80 && x < right - 120 && y > box.y + 120 && y < bottom - 120 && r.width > 0)
         return { x, y };
     }
     return null;
