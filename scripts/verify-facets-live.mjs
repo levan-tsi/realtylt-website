@@ -38,6 +38,12 @@ const FACETS = [
   ["basementFinished", "1", (l) => l.basement?.includes("Finished")],
   ["basementWalkout", "1", (l) => l.basement?.includes("Walk-Out Access")],
   ["nearTransit", "1", (l) => l.lotFeatures?.includes("Near Public Transit")],
+  // Round 24b. Keyword validation words are chosen so a plain substring re-check agrees
+  // with the stemmed tsvector ("fireplace" has no stem-only matches; "pool" would count
+  // "pools" that ilike also finds).
+  ["views", "1", (l) => l.lotFeatures?.includes("Views")],
+  ["keywords", "fireplace", (l) => /fireplace/i.test(l.description ?? "")],
+  ["keywords", "pool", (l) => /pool/i.test(l.description ?? "")],
 ];
 
 let checkedRows = 0, violations = 0;

@@ -131,3 +131,41 @@ Short on purpose — a seller's next real step is a valuation conversation, not 
    checks, zero violations. Refused: ExteriorFeatures (top value: "Mailbox"). Deferred with
    reasons: style/stories/55+/fireplace/pool/hardwood/HOA (SELECT_FIELDS sync changes),
    school district (needs a dynamic values source).
+
+## 8. Round 24b — the Zillow completeness audit (owner: "double check those too with zillow")
+
+Item by item against Zillow's More panel, with what we did about each:
+
+| Zillow offers | Ours | Status |
+| --- | --- | --- |
+| Price, beds, baths, home type | Yes | Long since shipped |
+| Square feet, lot size, year built | Yes | Ranges in MORE |
+| Basement (has/finished/walkout) | Yes | Round-24 select |
+| Parking spots + must-have garage | Garage range + parking kind | Round 22 + 24 |
+| Days on Zillow | Days on market | Round 24 (listed_at) |
+| HOA max | No | AssociationFeeFrequency not replicated; a mixed-frequency max would lie |
+| Number of stories | No | Levels/StoriesTotal not replicated (sync-gated) |
+| Senior living 55+ | No | SeniorCommunityYN not replicated (sync-gated) |
+| Views | **Yes (24b)** | lotFeatures "Views", 804 in-surface — "Scenic views" toggle |
+| **Keywords** | **Yes (24b)** | The crown piece, below |
+| Must-have A/C, waterfront, laundry | Yes | centralAir · waterfront · washer/dryer hookup |
+| Pool, fireplace as structured must-haves | Via keywords | PoolPrivateYN/FireplaceYN sync-gated; the remarks answer instead |
+| Open house only | No | The OpenHouse resource is not replicated |
+| Price reduced | No | No price-history column; the sync overwrites in place |
+| Pets (rentals) | No | petsAllowed not replicated |
+
+**Keywords** is Zillow's free-text box over the listing remarks, and ours ships the same
+thing honestly: `PublicRemarks` is already replicated (stored app-shaped under
+`listing->>'description'`, 25,062 of 25,118 in-surface — 99.8%), so a generated STORED
+tsvector + GIN partial index (idx_round24b_keywords_views.sql) answers websearch queries
+("pool", "fireplace deck", quoted phrases, -exclusions) without ever touching the fat jsonb
+on the hot path. Measured before building: "pool" 3,388 stemmed · "fireplace" 3,620 ·
+"horse" 207. This also closes the practical gap the sync-gated pool/fireplace booleans left:
+the buyer who wants a pool types the word, exactly as they would on Zillow.
+
+The value's journey is length-bounded and stripped to websearch's own vocabulary in
+parseFilterParams (letters, digits, spaces, hyphens, quotes), so PostgREST filter syntax
+cannot ride in — held by test. The fixture path reads the same promise plainly (every asked
+word appears in the remarks, unstemmed); live validation re-checks returned rows' raw
+description with substring-safe words (fireplace, pool) — 362 row-predicate sets, zero
+violations, keywords combos included.

@@ -107,6 +107,9 @@ interface Filters {
   basementWalkout: boolean;
   /** lotFeatures "Near Public Transit" — the commuter question his live site asks. */
   nearTransit: boolean;
+  /** Round 24b (Zillow audit): keywords = websearch full text over the remarks; views = lotFeatures Views. */
+  keywords: string;
+  views: boolean;
   /** true = only listings with a mirrored cover photo (default off = include everything). */
   withPhotos: boolean;
   /** "For Rent" mode — rentals only, priced per month, sale $10k floor exempt. Default off =
@@ -121,12 +124,12 @@ interface Filters {
 }
 
 /** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
-const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType", "heating", "parking", "listedDays"] as const;
+const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType", "heating", "parking", "listedDays", "keywords"] as const;
 
 /** The MORE panel's boolean toggles. Separate from MORE_KEYS because they count as active when
  * TRUE rather than when non-empty, and because toQuery emits them as `=1` or not at all — a
  * `centralAir=false` in the URL would be noise that also breaks the "is this the default?" read. */
-const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen", "washerDryer", "formalDining", "municipalUtilities", "basementFinished", "basementWalkout", "nearTransit"] as const;
+const MORE_FLAGS = ["centralAir", "basement", "waterfront", "firstFloorBed", "eatInKitchen", "washerDryer", "formalDining", "municipalUtilities", "basementFinished", "basementWalkout", "nearTransit", "views"] as const;
 
 /** Feature toggles, in the order they are offered. Labels are what a buyer would say, not the
  * RESO value underneath. Counts are active inventory measured 2026-08-06, and they are the
@@ -141,6 +144,7 @@ const FEATURE_TOGGLES: { key: (typeof MORE_FLAGS)[number]; label: string }[] = [
   { key: "formalDining", label: "Formal dining room" },   // 3,264
   { key: "municipalUtilities", label: "Municipal water and sewer" }, // no well, no septic
   { key: "nearTransit", label: "Near public transit" },   // 2,871 (round 24)
+  { key: "views", label: "Scenic views" },                // 804 (round 24b, lotFeatures "Views")
   { key: "waterfront", label: "Waterfront or water access" }, // 206
 ];
 
@@ -245,6 +249,8 @@ function fromParams(sp: URLSearchParams): Filters {
     basementFinished: TRUE_FLAGS.has(sp.get("basementFinished") ?? ""),
     basementWalkout: TRUE_FLAGS.has(sp.get("basementWalkout") ?? ""),
     nearTransit: TRUE_FLAGS.has(sp.get("nearTransit") ?? ""),
+    keywords: (sp.get("keywords") ?? "").slice(0, 80),
+    views: TRUE_FLAGS.has(sp.get("views") ?? ""),
     withPhotos: TRUE_FLAGS.has(sp.get("withPhotos") ?? ""),
     rental: TRUE_FLAGS.has(sp.get("rental") ?? ""),
     // Default "active", mirroring parseSearchRequest — if these two disagreed the visitor would
@@ -322,6 +328,7 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     f.heating && `${HEATING_OPTS.find((o) => o.value === f.heating)?.label.toLowerCase()} heat`,
     PARKING_OPTS.find((o) => o.value === f.parking)?.label.toLowerCase(),
     f.listedDays && LISTED_OPTS.find((o) => o.value === f.listedDays)?.label.toLowerCase(),
+    f.keywords && `says "${f.keywords}"`,
     f.basement && "basement",
     f.basementFinished && "finished basement",
     f.basementWalkout && "walk-out basement",
@@ -683,6 +690,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
       washerDryer: false, formalDining: false, municipalUtilities: false,
       heating: "", parking: "", listedDays: "", basementFinished: false, basementWalkout: false, nearTransit: false,
+      keywords: "", views: false,
     });
 
   // One labelled min→max row for the MORE panel.
@@ -1034,6 +1042,33 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   <option value="finished">Finished</option>
                   <option value="walkout">Walk-out</option>
                 </select>
+              </div>
+            </div>
+            <div>
+              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Keywords</p>
+              {/* Zillow's Keywords box (round 24b): websearch full text over the listing
+                  remarks — 99.8% of the surface carries them, so "pool" (3,388) and
+                  "fireplace" (3,620) finally answer without a sync change. Applies on Enter
+                  or when focus leaves; `key` resets the box when Reset advanced clears it. */}
+              <div className="flex">
+                <input
+                  type="text"
+                  aria-label="Keywords in the listing description"
+                  key={filters.keywords}
+                  defaultValue={filters.keywords}
+                  placeholder={'Try "pool" or "fireplace"'}
+                  maxLength={80}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      apply({ keywords: e.currentTarget.value });
+                    }
+                  }}
+                  onBlur={(e) => {
+                    if (e.target.value !== filters.keywords) apply({ keywords: e.target.value });
+                  }}
+                  className="min-w-0 flex-1 rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+                />
               </div>
             </div>
           </div>

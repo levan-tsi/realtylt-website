@@ -47,6 +47,8 @@ export class FixtureIdxClient implements IdxClient {
       basementFinished,
       basementWalkout,
       nearTransit,
+      keywords,
+      views,
       propertyType,
       newWithinDays,
       sort = "newest",
@@ -102,6 +104,15 @@ export class FixtureIdxClient implements IdxClient {
       if (basementFinished && !l.basement?.includes(BASEMENT_FINISHED_VALUE)) return false;
       if (basementWalkout && !l.basement?.includes(BASEMENT_WALKOUT_VALUE)) return false;
       if (nearTransit && !l.lotFeatures?.includes(NEAR_TRANSIT_VALUE)) return false;
+      if (views && !l.lotFeatures?.includes("Views")) return false;
+      // Keywords (round 24b). The DB path is stemmed websearch full text; this path is the
+      // plain reading of the same promise — every asked word appears in the remarks. The
+      // fixture does not stem and ignores websearch negation, which the tests acknowledge.
+      if (keywords) {
+        const hay = (l.description ?? "").toLowerCase();
+        const terms = keywords.toLowerCase().replace(/"/g, "").split(/\s+/).filter((t) => t && !t.startsWith("-"));
+        if (terms.length && !terms.every((t) => hay.includes(t))) return false;
+      }
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
       // Map-viewport box (round 23). Mirrors db.searchFilters: a 0/absent coordinate can

@@ -81,6 +81,15 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
     basementFinished: flag(q.get("basementFinished")),
     basementWalkout: flag(q.get("basementWalkout")),
     nearTransit: flag(q.get("nearTransit")),
+    // Keywords (round 24b) — websearch full text over the remarks. websearch_to_tsquery
+    // never errors on user input by design; the strip below only keeps the value from
+    // carrying PostgREST filter syntax (letters, digits, spaces, hyphens and quotes are the
+    // whole websearch vocabulary), and the length bound keeps the URL sane.
+    keywords: (() => {
+      const k = (q.get("keywords") ?? "").replace(/[^\p{L}\p{N}\s\-"']/gu, "").trim().slice(0, 80);
+      return k || undefined;
+    })(),
+    views: flag(q.get("views")),
     // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
     // for an absurd range.
     newWithinDays: (() => {

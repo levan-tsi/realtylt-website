@@ -175,6 +175,10 @@ function searchFilters(p: SearchParams): string {
   if (p.basementFinished) parts.push("has_basement_finished=is.true");
   if (p.basementWalkout) parts.push("has_basement_walkout=is.true");
   if (p.nearTransit) parts.push("has_near_transit=is.true");
+  if (p.views) parts.push("has_views=is.true");
+  // Keywords → websearch full text on the generated remarks_tsv (GIN, round 24b). The
+  // config is named so the query side stems exactly like the stored column.
+  if (p.keywords) parts.push(`remarks_tsv=wfts(english).${encodeURIComponent(p.keywords)}`);
   // Sale property-type filter. In for-rent mode the eq.Rental scope above already owns
   // property_type; otherwise an explicit sale type filters to it, and no sale type at all
   // still excludes rentals so the for-sale grid/count never carries a rental.

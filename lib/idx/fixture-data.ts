@@ -245,7 +245,7 @@ function lotFeaturesFor(i: number): string[] | undefined {
     case 1: return ["Waterfront"];
     case 2: return ["Water Access"];
     case 3: return ["Level", "Near Public Transit"];
-    case 4: return ["Wooded"];
+    case 4: return ["Wooded", "Views"];
     case 5: return ["Corner Lot", "Near Public Transit"];
     case 6: return ["Cul-de-Sac"];
     default: return ["Level", "Wooded"];

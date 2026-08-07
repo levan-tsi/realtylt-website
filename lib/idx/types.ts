@@ -202,6 +202,13 @@ export interface SearchParams {
   basementWalkout?: boolean;
   /** lotFeatures "Near Public Transit" — 2,871. Commuter-belt question, his live site asks it. */
   nearTransit?: boolean;
+  // ── Round 24b (the Zillow completeness audit, DESIGN-ROUND24.md §8).
+  /** Zillow's Keywords box over the listing remarks (99.8% filled): websearch full text on a
+   * generated tsvector (idx_round24b_keywords_views.sql). Stemmed and word-bounded — "pool"
+   * 3,388 · "fireplace" 3,620 — which answers the two most-wanted sync-gated facts honestly. */
+  keywords?: string;
+  /** lotFeatures "Views" — 804. Zillow's views must-have, one honest toggle. */
+  views?: boolean;
   /** Scope results to a map viewport (round 23: the grid and the map must answer the SAME
    * question — he caught page 2 of the county scope contradicting what the map showed). Set
    * by /api/idx/search from north/south/east/west params; never part of the page URL, so the

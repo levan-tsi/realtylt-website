@@ -375,3 +375,46 @@ describe("round-24 token maps pinned against idx_round24_facet_columns.sql", () 
     expect(literalAfter("has_near_transit")).toBe(NEAR_TRANSIT_VALUE);
   });
 });
+
+describe("views filter (round 24b)", () => {
+  it("every returned row's lotFeatures says Views; others and omitted are absent", async () => {
+    const r = await client.search({ views: true, ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => l.lotFeatures?.includes("Views"))).toBe(true);
+    const without = FIXTURE_LISTINGS.find((l) => l.lotFeatures && !l.lotFeatures.includes("Views"));
+    const omitted = FIXTURE_LISTINGS.find((l) => l.lotFeatures === undefined);
+    expect(without).toBeDefined();
+    expect(omitted).toBeDefined();
+    expect(r.listings.some((l) => l.id === without!.id)).toBe(false);
+    expect(r.listings.some((l) => l.id === omitted!.id)).toBe(false);
+  });
+});
+
+describe("keywords filter (round 24b) — Zillow's Keywords box over the remarks", () => {
+  it("every returned row's description says the word; rows that do not are absent", async () => {
+    const r = await client.search({ keywords: "fireplace", ...wide });
+    expect(r.listings.length).toBeGreaterThan(0);
+    expect(r.listings.every((l) => /fireplace/i.test(l.description))).toBe(true);
+    const without = FIXTURE_LISTINGS.find((l) => !/fireplace/i.test(l.description));
+    expect(without).toBeDefined();
+    expect(r.listings.some((l) => l.id === without!.id)).toBe(false);
+  });
+
+  it("two words mean BOTH must appear", async () => {
+    const both = await client.search({ keywords: "fireplace deck", ...wide });
+    expect(both.listings.every((l) => /fireplace/i.test(l.description) && /deck/i.test(l.description))).toBe(true);
+  });
+
+  it("parseFilterParams bounds and strips the value — PostgREST syntax cannot ride in", () => {
+    expect(parseFilterParams(new URLSearchParams("keywords=pool")).keywords).toBe("pool");
+    expect(parseFilterParams(new URLSearchParams("keywords=" + encodeURIComponent("pool,remarks_tsv=is.null&x"))).keywords).toBe("poolremarkstsvisnullx");
+    expect(parseFilterParams(new URLSearchParams("keywords=" + "x".repeat(200))).keywords).toHaveLength(80);
+    expect(parseFilterParams(new URLSearchParams("keywords=")).keywords).toBeUndefined();
+  });
+
+  it("the migration's tsvector reads the same jsonb key the fixture reads", () => {
+    const sql24b = readFileSync(join(process.cwd(), "supabase/migrations/idx_round24b_keywords_views.sql"), "utf8");
+    expect(sql24b).toContain("listing ->> 'description'");
+    expect(sql24b).toMatch(/has_views[\s\S]*?'\["Views"\]'::jsonb/);
+  });
+});
