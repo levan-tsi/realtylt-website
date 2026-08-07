@@ -515,14 +515,33 @@ input[type="search"]::-webkit-search-cancel-button:hover {
    bubble; the raise collapses to instant under the global reduced-motion rule below.
    `!important` on transform is required because each chip carries an inline positioning
    transform (translate(-50%,-100%)) that a plain class rule can't override. */
+/* Round 24b (owner: "black box of prices on the map could be smaller, just the size of the
+   price"). The chip is now TWO boxes, the dot's own pattern: the button is a transparent
+   hit shell (4px padding on every side keeps the 24px tap floor: 4+3+11+3+4 = 25px tall)
+   and .rlt-chip-face is the visible black box, hugging the glyphs at 3px 6px. Backgrounds,
+   shadows and the teardrop tail all live on the FACE — on the shell they would ring pure
+   air 4px away from the ink. The 4px shell padding doubles as the tail's height, so the
+   teardrop's tip still lands exactly on the listing's spot. */
 .rlt-price-chip {
   position: relative;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.rlt-chip-face {
+  position: relative;
+  display: block;
+  padding: 3px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: box-shadow 0.12s ease;
 }
 /* Downward pointer tail → a live-parity teardrop pin whose tip sits on the listing's spot.
    Colour follows the chip via --chip-bg (black normally, azure when active), set inline by
    each map engine. */
-.rlt-price-chip::after {
+.rlt-chip-face::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -535,11 +554,15 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .rlt-price-chip:focus-visible {
   transform: translate(-50%, -100%) scale(1.12) !important;
   z-index: 1200 !important;
-  /* !important: each chip carries an inline box-shadow that a plain class rule can't beat. */
+}
+/* !important: each face carries an inline box-shadow that a plain class rule can't beat. */
+.rlt-price-chip:hover .rlt-chip-face {
   box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
 }
 .rlt-price-chip:focus-visible {
   outline: none;
+}
+.rlt-price-chip:focus-visible .rlt-chip-face {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a !important;
 }
 /* Map dots (Zillow-style thinning, round 23): a home whose price pill has no pixel room wears

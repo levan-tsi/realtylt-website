@@ -8,6 +8,7 @@ import { planMarkers } from "./pin-thinning";
 import {
   boundsOfPins,
   chipPrice,
+  chipStateStyles,
   createPinFetcher,
   dotHtml,
   MAP_FONT as FONT,
@@ -29,20 +30,18 @@ import "leaflet/dist/leaflet.css";
 
 // Hearted listings read differently at a glance: white chip, ink text, the same red heart
 // the card's FavoriteButton fills (owner's ask — saved homes visible ON the map).
-const priceIcon = (price: number, active: boolean, saved: boolean) =>
-  divIcon({
+// Two boxes since round 24b (transparent hit shell + .rlt-chip-face hugging the price) —
+// geometry in globals.css, state ink in chipStateStyles, shared with the Google engine.
+const priceIcon = (price: number, active: boolean, saved: boolean) => {
+  const st = chipStateStyles({ active, saved, spokenFor: false });
+  return divIcon({
     className: "",
-    html: `<span class="rlt-price-chip" style="display:inline-block;transform:translate(-50%,-100%);${
-      active
-        ? "--chip-bg:#1c729a;background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-        : saved
-          ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
-          : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
-    };font:700 11px/1 ${FONT};padding:7px 9px;white-space:nowrap;border-radius:8px">${
+    html: `<span class="rlt-price-chip" style="display:inline-block;transform:translate(-50%,-100%);${st.outer}"><span class="rlt-chip-face" style="${st.face};font:700 11px/1 ${FONT}">${
       saved ? '<span style="color:#ef4444">♥</span> ' : ""
-    }${chipPrice(price)}</span>`,
+    }${chipPrice(price)}</span></span>`,
     iconSize: [0, 0],
   });
+};
 
 /** Fit the map to `initialBounds` (a chosen county's real extent) when given, else to the
  * pins' own bounds — on mount and then ONLY when `fitKey` (the results' place) changes, the

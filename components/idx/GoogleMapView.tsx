@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   boundsOfPins,
+  chipStateStyles,
   createPinFetcher,
   dotStyleVars,
   MAP_FONT,
@@ -357,28 +358,29 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               marker.setAttribute("aria-label", label);
               marker.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-50%);${dotStyleVars(saved, spokenFor)}`;
             } else {
+              // Two boxes since round 24b (owner: the black box should be "just the size of
+              // the price"): the button is a transparent hit shell keeping the 24px tap
+              // floor, .rlt-chip-face is the visible box hugging the glyphs. Geometry lives
+              // in globals.css; state ink in chipStateStyles, shared with the Leaflet engine.
               const chip = document.createElement("button");
               chip.type = "button";
               chip.className = "rlt-price-chip";
               chip.setAttribute("aria-label", label);
-              chip.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-100%);${
-                active
-                  ? "--chip-bg:#1c729a;background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45);z-index:1000"
-                  : saved
-                    ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35);z-index:500"
-                    : spokenFor
-                      ? "--chip-bg:#ffffff;background:var(--chip-bg);color:#4a4a4a;box-shadow:0 0 0 1.5px #4a4a4a,0 2px 8px rgb(0 0 0/.22)"
-                      : "--chip-bg:#000;background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)"
-              };font:700 11px/1 ${MAP_FONT};padding:7px 9px;white-space:nowrap;border:0;cursor:pointer;border-radius:8px`;
+              const st = chipStateStyles({ active, saved, spokenFor });
+              chip.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-100%);${st.outer}`;
+              const face = document.createElement("span");
+              face.className = "rlt-chip-face";
+              face.style.cssText = `${st.face};font:700 11px/1 ${MAP_FONT}`;
               if (saved) {
                 const heart = document.createElement("span");
                 heart.style.color = "#ef4444";
                 heart.textContent = "♥ ";
-                chip.appendChild(heart);
-                chip.appendChild(document.createTextNode(m.label));
+                face.appendChild(heart);
+                face.appendChild(document.createTextNode(m.label));
               } else {
-                chip.textContent = m.label;
+                face.textContent = m.label;
               }
+              chip.appendChild(face);
               marker = chip;
             }
             // HOVER PREVIEWS, CLICK PINS (owner: "when you bring mouse to the price it should

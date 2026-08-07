@@ -40,7 +40,12 @@ export interface PlannedMarker {
  * at a mid zoom. Priority order above decides who survives it, so it always drops tail dots. */
 export const MARKER_CAP = 600;
 
-const PILL_H = 26; // 11px/1 line + 7px vertical padding ×2, matching the real chip
+// Round 24b: the pill's VISIBLE face shrank to hug the price (3px 6px padding — owner:
+// "just the size of the price"), and the collision box follows the FACE, not the button's
+// transparent 24px hit shell. Denser labelling is the point: a smaller box means more
+// prices fit before thinning to dots. The shells of two adjacent pills may overlap a few
+// transparent pixels; any tap ON a face still resolves to that face's own pill.
+const PILL_H = 18; // 11px/1 line + 3px vertical padding ×2, + a hair for the face's border ring
 const PILL_GAP = 3; // min air between two pills before one of them becomes a dot
 const DOT_CLEARANCE = 10; // a dot closer than this to an accepted dot is invisible — drop it
 /** Pins this far outside the viewport still plan — half a wide pill, so a chip whose anchor
@@ -48,9 +53,9 @@ const DOT_CLEARANCE = 10; // a dot closer than this to an accepted dot is invisi
 const EDGE_MARGIN = 48;
 
 /** The same estimate the eye makes: label glyphs at 700 11px Lato run ~7px average, plus the
- * chip's 9px horizontal padding ×2, plus the heart a saved chip prepends. */
+ * face's 6px horizontal padding ×2, plus the heart a saved chip prepends. */
 function estimatePillWidth(label: string, saved: boolean): number {
-  return label.length * 7 + 18 + (saved ? 12 : 0);
+  return label.length * 7 + 12 + (saved ? 12 : 0);
 }
 
 /** djb2 — tiny, deterministic, unsigned. Not cryptographic and does not need to be: it only

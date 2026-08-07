@@ -190,6 +190,21 @@ export function dotStyleVars(saved: boolean, spokenFor: boolean): string {
   return saved ? "--dot-bg:#fff;--dot-ring:#ef4444" : spokenFor ? "--dot-bg:#fff;--dot-ring:#4a4a4a" : "";
 }
 
+/** Price-chip state styles, split across the chip's two boxes (round 24b — the owner asked
+ * for the black box "just the size of the price", so the button became a transparent 24px+
+ * hit shell and .rlt-chip-face the visible box; globals.css carries the geometry). The
+ * OUTER string sets --chip-bg (the face and its teardrop tail both read it) and stacking;
+ * the FACE string sets the ink. Shared by both engines so the two cannot drift. */
+export function chipStateStyles(s: { active: boolean; saved: boolean; spokenFor: boolean }): { outer: string; face: string } {
+  if (s.active)
+    return { outer: "--chip-bg:#1c729a;z-index:1000", face: "background:var(--chip-bg);color:#fff;box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45)" };
+  if (s.saved)
+    return { outer: "--chip-bg:#ffffff;z-index:500", face: "background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35)" };
+  if (s.spokenFor)
+    return { outer: "--chip-bg:#ffffff", face: "background:var(--chip-bg);color:#4a4a4a;box-shadow:0 0 0 1.5px #4a4a4a,0 2px 8px rgb(0 0 0/.22)" };
+  return { outer: "--chip-bg:#000", face: "background:var(--chip-bg);color:#fff;box-shadow:0 2px 8px rgb(0 0 0/.3)" };
+}
+
 /** The dot as an HTML string (Leaflet's `divIcon` takes markup, not a live node). The inline
  * translate centres the mark on its point — same pattern as the Leaflet price chip. */
 export function dotHtml(opts: { label: string; saved: boolean; spokenFor: boolean }): string {

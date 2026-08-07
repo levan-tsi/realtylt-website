@@ -66,9 +66,11 @@ describe("planMarkers — Zillow-style label thinning (pills + dots, no count ci
     const placed = pills(plan);
     expect(placed.length).toBeGreaterThan(0);
     expect(dots(plan).length).toBeGreaterThan(0); // density is absorbed by dots, not circles
+    // The FACE box (round 24b: 6px horizontal padding, 18px tall) — the same estimate the
+    // planner collides on. The transparent hit shells may kiss; the visible ink must not.
     const rect = (m: PlannedMarker) => {
-      const w = m.label.length * 7 + 18;
-      return { l: m.x - w / 2, r: m.x + w / 2, t: m.y - 26, b: m.y };
+      const w = m.label.length * 7 + 12;
+      return { l: m.x - w / 2, r: m.x + w / 2, t: m.y - 18, b: m.y };
     };
     for (let a = 0; a < placed.length; a++)
       for (let b = a + 1; b < placed.length; b++) {
