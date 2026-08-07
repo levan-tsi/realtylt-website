@@ -166,6 +166,17 @@ function searchFilters(p: SearchParams): string {
   // On-market status. RLS already limits the table to rows we may show at all, so this only
   // ever narrows within Active / Coming Soon / Pending / Under Contract.
   if (p.status) parts.push(`status=eq.${encodeURIComponent(p.status)}`);
+  // Map-viewport box (round 23) — the same clause set /api/idx/pins always used, now shared,
+  // so the grid and the map literally cannot ask different geographic questions. Rows with a
+  // 0 coordinate are excluded automatically (a valid NY box never spans lat/lng 0).
+  if (p.bounds) {
+    parts.push(
+      `lat=gte.${p.bounds.south}`,
+      `lat=lte.${p.bounds.north}`,
+      `lng=gte.${p.bounds.west}`,
+      `lng=lte.${p.bounds.east}`,
+    );
+  }
   // search_hay = lower(address city zip county). Strip LIKE wildcards from user input;
   // PostgREST's * wildcard wraps the needle for the same substring semantics as fixture.
   const needle = p.q?.trim().toLowerCase().replace(/[%_]/g, " ").trim();
@@ -324,7 +335,10 @@ export class DbIdxClient implements IdxClient {
       // than last. The offset can never exceed the set.
       let ringPages = 0;
       let rotatePages = 0;
-      if (sort === "mixed") {
+      // No ring for a viewport-scoped query: the daily rotation exists so the DEFAULT page is
+      // never the same parade, but a map viewport is ephemeral — rotating it would cost an
+      // extra count per pan and grow rotationTotal's cache by one entry per box ever panned.
+      if (sort === "mixed" && !params.bounds) {
         const t = await rotationTotal(filters);
         ringPages = Math.max(1, Math.ceil(t / size));
         if (ringPages > 1) rotatePages = (Math.floor(Date.now() / 86_400_000) * 53) % ringPages;
@@ -477,10 +491,10 @@ export class DbIdxClient implements IdxClient {
     const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,status,office:listing->>listOfficeName,photoCount:photos_servable";
 
     if (bounds) {
-      const bbox =
-        `lat=gte.${bounds.south}&lat=lte.${bounds.north}` +
-        `&lng=gte.${bounds.west}&lng=lte.${bounds.east}`;
-      const base = `idx_listings?${sel}&${filters ? `${filters}&` : ""}${bbox}&order=listed_at.desc,id.asc`;
+      // One bbox builder: searchFilters owns the box clauses now (round 23 gave the grid the
+      // same box), so the pins query and the grid query cannot drift.
+      const boxed = searchFilters({ ...params, bounds });
+      const base = `idx_listings?${sel}&${boxed ? `${boxed}&` : ""}order=listed_at.desc,id.asc`;
       // count=exact reports the FULL in-bounds match count (ignoring limit), so `total`
       // stays truthful even when the viewport is capped. Rows with a 0 coordinate are
       // excluded automatically (a valid NY box never spans lat/lng 0).

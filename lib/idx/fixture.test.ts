@@ -56,6 +56,22 @@ describe("FixtureIdxClient — filters", () => {
     expect(r.listings.every((l) => l.county === "putnam")).toBe(true);
   });
 
+  /** Round 23: the /search grid can be scoped to the map's viewport box so the list and the
+   * map answer the same question. Obedience, not just presence: every returned row must sit
+   * INSIDE the box, and an unlocated row (lat/lng 0) must never ride into a scoped answer. */
+  it("bounds= returns only homes inside the box, and totals to exactly those", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const inside: Listing = { ...base, id: "IN-BOX", county: "dutchess", lat: 41.5, lng: -73.9 };
+    const north: Listing = { ...base, id: "TOO-NORTH", county: "dutchess", lat: 42.5, lng: -73.9 };
+    const west: Listing = { ...base, id: "TOO-WEST", county: "dutchess", lat: 41.5, lng: -74.9 };
+    const unlocated: Listing = { ...base, id: "NO-COORDS", county: "dutchess", lat: 0, lng: 0 };
+    const c = new FixtureIdxClient([inside, north, west, unlocated]);
+
+    const r = await c.search({ bounds: { north: 42.0, south: 41.0, east: -73.5, west: -74.2 }, pageSize: 100 });
+    expect(r.listings.map((l) => l.id)).toEqual(["IN-BOX"]);
+    expect(r.total).toBe(1);
+  });
+
   it("defaults to the six Hudson Valley counties, excluding NYC boroughs until one is picked", async () => {
     const borough: Listing = { ...FIXTURE_LISTINGS[0], id: "BK-TEST", county: "brooklyn" };
     const seeded = new FixtureIdxClient([...FIXTURE_LISTINGS, borough]);

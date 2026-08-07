@@ -27,12 +27,21 @@ export interface MapViewProps {
   filtersQuery?: string;
   /** Ids the visitor has hearted — merged onto viewport-fetched pins the results page never saw. */
   favorites?: string[];
-  /** Frame to fit on mount and on every filter change, in place of boundsOfPins(pins) — set
+  /** Frame to fit on mount and on every refit, in place of boundsOfPins(pins) — set
    * this to a chosen county's real extent (county-bounds.ts) so picking "Queens" frames the
    * WHOLE borough (and its viewport fetch pulls every pin in it) rather than whatever the
    * current results page happens to contain. Falls back to boundsOfPins(pins) when unset,
    * e.g. a free-text search with no predefined box. */
   initialBounds?: MapBounds | null;
+  /** Refit gate (round 23). The map refits ONLY when this string changes — the caller sets it
+   * to the PLACE whose results are showing (county|city|q|rental), so picking a new place
+   * flies the map there, while price/status/paging changes leave the visitor's viewport
+   * alone. This is also what makes the viewport-scoped grid loop-safe: a grid refetch changes
+   * `pins` but not the place, so it can never trigger a refit, a new idle, and another fetch. */
+  fitKey?: string;
+  /** Fired on every map settle (idle / moveend) with the live viewport box — the SearchClient
+   * scopes the results grid to it so the list and the map answer the same question. */
+  onBoundsChange?: (b: MapBounds) => void;
 }
 
 export const MAP_FONT = "Lato,Helvetica,Arial,sans-serif";

@@ -119,6 +119,34 @@ describe("DbIdxClient.search", () => {
     expect(result.listings[0].photos).toEqual(["/api/media/KEY777/0"]);
   });
 
+  // Round 23: the grid can be scoped to the map's viewport, so the list and the map answer
+  // the same question — he caught page 2 of the county scope contradicting what the map
+  // showed. The box uses the exact clause set /api/idx/pins always used (one builder).
+  it("scopes the grid to a viewport box, and skips the mixed ring for it", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 151 };
+    });
+
+    const result = await new DbIdxClient().search({
+      sort: "mixed", page: 1, pageSize: 150,
+      bounds: { north: 41.8, south: 41.2, east: -73.6, west: -74.4 },
+    });
+
+    const listingCalls = calls.filter((u) => u.includes("idx_listings"));
+    // No rotationTotal pre-count: a viewport query is ephemeral, so `mixed` serves it straight
+    // (one query, not two) instead of building a daily ring per panned box.
+    expect(listingCalls).toHaveLength(1);
+    expect(listingCalls[0]).toContain("lat=gte.41.2");
+    expect(listingCalls[0]).toContain("lat=lte.41.8");
+    expect(listingCalls[0]).toContain("lng=gte.-74.4");
+    expect(listingCalls[0]).toContain("lng=lte.-73.6");
+    expect(listingCalls[0]).toContain("limit=150");
+    expect(listingCalls[0]).toContain("offset=0");
+    expect(result.total).toBe(151);
+    expect(result.totalPages).toBe(2); // paging still exists ABOVE the viewport page size
+  });
+
   // The owner's "it takes you to page 2 and that's it" bug. `mixed` used to add a day-seeded
   // ROW offset to every page, and that offset can be nearly the whole set — so page 2 ran off
   // the end. Measured on production before the fix: Orange county with 3+ beds is 1,720

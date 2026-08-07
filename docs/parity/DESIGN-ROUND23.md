@@ -66,5 +66,41 @@ its map, and its result-count header ("246 results"). Marker-language details ab
 owner's description plus prior knowledge of the product, and the numbers chosen here are
 verified against OUR map with the ratio probe, before/after.
 
-(Sections for the viewport-scoped list, borough default scope, card density, and the side-rail
-research follow as those land.)
+## 4. The list and the map answer one question now
+
+The defect he caught: round 22 made the MAP viewport-scoped while the GRID kept paging 50 at a
+time over the unbounded county scope — page 2 contradicted what the map showed. The fix gives
+`/api/idx/search` the same `north/south/east/west` box `/api/idx/pins` takes (one clause
+builder, `searchFilters`, so the two literally cannot drift), and the SearchClient scopes the
+grid to the map's settled viewport in map view.
+
+Decisions worth recording:
+
+- **The viewport page size is 150** (`VIEWPORT_PAGE_SIZE`) — his sentence sets it: "if you
+  zoomed and there is 150 show 150 on the list". Paging still exists above it (Zillow
+  paginates too; what makes it feel seamless is the scoping, not the absence of pages), and
+  the pager's fetch carries the same box, so page 2 of a viewport is page 2 OF THAT VIEWPORT.
+- **The refit gate (fitKey).** The naive wiring loops forever: scoped refetch → new seed pins
+  → map refits → new idle → new box → refetch. The map now refits ONLY when the PLACE
+  (county | city | free text | rental) whose results are showing changes — a county click
+  flies the map, a price tweak or the grid's own refetch never moves it. fitKey is set when a
+  place's results LAND, so the flight uses the new place's pins, not the old ones.
+- **A viewport box is tagged with the place it was captured over.** A box settled over
+  Dutchess must not scope a brand-new Queens search (Queens ∩ Dutchess-viewport = nothing);
+  a mismatched box simply goes unused until the map refits and reports a fresh one.
+- **A moved viewport resets to page 1** — a new box is a new question. This also means a
+  `?page=3` deep link resets once the map takes over in map view; that page number belonged
+  to the place-scoped list the map view no longer shows. Grid view still honors it.
+- **Grid view stays unscoped** (50/page over the place scope) — it has no map to agree with,
+  and it is the JS-disabled and shared-URL rendering.
+- The count line reads **"N homes in this map area"** when scoped — and N is verified equal to
+  the API's own total for the identical box.
+
+Verified with real mouse input on the dev server (scripts/_scratch-r23-viewport.mjs):
+count line 5,360 = API total for the same box · 150 cards · 0 extra fetches in 6 idle seconds
+(the loop is shut) · a 260px pan produced exactly 1 scoped refetch and the count changed ·
+page-2's fetch carried the same box · the saved result set held all 150 viewport items, so
+prev/next on a listing page walks exactly the homes he was looking at.
+
+(Sections for the borough default scope, card density, and the side-rail research follow as
+those land.)

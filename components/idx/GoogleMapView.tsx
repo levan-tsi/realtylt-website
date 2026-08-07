@@ -43,12 +43,18 @@ function toBounds(b: any): MapBounds | null {
   return { north: ne.lat(), east: ne.lng(), south: sw.lat(), west: sw.lng() };
 }
 
-export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds }: MapViewProps) {
+export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds, fitKey, onBoundsChange }: MapViewProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef(pins);
   pinsRef.current = pins;
   const initialBoundsRef = useRef(initialBounds);
   initialBoundsRef.current = initialBounds;
+  const fitKeyRef = useRef(fitKey);
+  fitKeyRef.current = fitKey;
+  /** The fitKey the map last fitted for — the refit gate's memory. */
+  const lastFitKeyRef = useRef<string | undefined>(undefined);
+  const onBoundsChangeRef = useRef(onBoundsChange);
+  onBoundsChangeRef.current = onBoundsChange;
   const selectedRef = useRef(selectedId);
   selectedRef.current = selectedId;
   const favoritesRef = useRef(favorites);
@@ -247,6 +253,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         const activeSource = () => (fetchedPinsRef.current ?? pinsRef.current).filter((p) => p.lat && p.lng);
 
         fitToPins(map, spreadPins(activeSource()), initialBoundsRef.current);
+        lastFitKeyRef.current = fitKeyRef.current; // the mount fit covers the current place
 
         // ── Viewport pin fetch (Zillow-style: cluster over what's actually on screen). Only
         // wired when the caller opted in with filtersQuery; otherwise the map stays exactly the
@@ -481,11 +488,14 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         };
         overlay.setMap(map);
         overlayRef.current = overlay;
-        // Redraw chips on every settle (pan/zoom) so their pixel positions stay correct, and
-        // (when opted in) fetch the new viewport's pins.
+        // Redraw markers on every settle (pan/zoom) so their pixel positions stay correct,
+        // (when opted in) fetch the new viewport's pins, and report the settled box so the
+        // results grid can scope itself to it.
         map.addListener("idle", () => {
           overlay.draw();
           requestViewport();
+          const settled = toBounds(map.getBounds());
+          if (settled) onBoundsChangeRef.current?.(settled);
         });
       })
       .catch((e: unknown) => console.error("[maps]", e));
@@ -529,17 +539,21 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
     overlayRef.current?.draw?.();
   }, [filtersQuery]);
 
-  // New page/filter/sort: refit the frame — to the chosen county's real extent when given, else
-  // the new seed pins' own bounds — and redraw (an idle won't fire on its own without a user
-  // move). Viewport-fetched pins (once any exist) are left alone here — re-fitting on every
-  // fetch would fight a visitor's own pan/zoom.
+  // New seed pins: redraw (an idle won't fire on its own without a user move), and refit ONLY
+  // when the PLACE changed (fitKey — the caller ties it to the results' county/city/q, so a
+  // county click flies the map there while a price tweak, a page turn, or the grid's own
+  // viewport-scoped refetch leaves the visitor's viewport alone). The fitKey gate is what
+  // keeps the round-23 loop shut: refetch → new pins → (no refit) → no idle → no refetch.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || typeof google === "undefined") return;
-    fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)), initialBounds);
+    if (fitKey !== lastFitKeyRef.current) {
+      lastFitKeyRef.current = fitKey;
+      fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)), initialBounds);
+    }
     overlayRef.current?.draw?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pins, initialBounds]);
+  }, [pins, initialBounds, fitKey]);
 
   // A card hover/focus highlights the matching chip — redraw with the new active id.
   useEffect(() => {

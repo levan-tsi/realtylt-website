@@ -11,7 +11,8 @@ export type ListingStatusFilter = "Active" | "Pending";
 
 /** Search paging bounds — shared by the API route and the fixture client. */
 export const DEFAULT_PAGE_SIZE = 12;
-export const MAX_PAGE_SIZE = 100;
+// ≥ VIEWPORT_PAGE_SIZE below — the map-view grid asks for a whole viewport in one page.
+export const MAX_PAGE_SIZE = 150;
 /** The /search results grid paints a fuller page than the portal/home rails. Scoped to the
  * search surface via an explicit pageSize param so the 12-per-rail default is never inflated
  * elsewhere.
@@ -24,6 +25,13 @@ export const MAX_PAGE_SIZE = 100;
  * because the map plots exactly this page as chips and each card can pull a photo — both scale
  * with the number, and the media host is the one resource here with a history of pushing back. */
 export const SEARCH_PAGE_SIZE = 50;
+/** Map-view page size once the grid is scoped to the map viewport (round 23). The owner's ask
+ * — "if you zoomed and there is 150 show 150 on the list" — sets the number: a viewport worth
+ * of homes should be ONE list, and paging only starts above it. Measured before shipping (see
+ * DESIGN-ROUND23.md): 150 compact cards render and scroll cleanly in the results panel, and
+ * the payload stays linear at ~2.5KB/listing (~375KB, one request per map settle, CDN-cached).
+ * Zillow paginates at 40 but its seamless feel comes from viewport scoping, not page size. */
+export const VIEWPORT_PAGE_SIZE = 150;
 
 export type ListingStatus = "Active" | "Coming Soon" | "Pending" | "Under Contract";
 
@@ -172,6 +180,11 @@ export interface SearchParams {
   waterfront?: boolean;
   firstFloorBed?: boolean;
   eatInKitchen?: boolean;
+  /** Scope results to a map viewport (round 23: the grid and the map must answer the SAME
+   * question — he caught page 2 of the county scope contradicting what the map showed). Set
+   * by /api/idx/search from north/south/east/west params; never part of the page URL, so the
+   * server render stays place-scoped and the client adds the box once the map settles. */
+  bounds?: MapBounds;
   sort?: SortKey;
   page?: number; // 1-based
   pageSize?: number; // default 12

@@ -43,12 +43,19 @@ const priceIcon = (price: number, active: boolean, saved: boolean) =>
   });
 
 /** Fit the map to `initialBounds` (a chosen county's real extent) when given, else to the
- * pins' own bounds — whenever either changes (new page, filter, sort, or county). Deferred a
+ * pins' own bounds — on mount and then ONLY when `fitKey` (the results' place) changes, the
+ * same refit gate the Google engine runs: a grid refetch or filter tweak never yanks the
+ * visitor's viewport, and the viewport-scoped grid cannot loop through a refit. Deferred a
  * macrotask so the synchronous `moveend` from fitBounds(animate:false) can't run sibling
  * setState mid-commit. maxZoom caps a single-listing page from zooming to the street. */
-function FitPins({ pins, initialBounds }: { pins: MapPin[]; initialBounds?: MapBounds | null }) {
+function FitPins({ pins, initialBounds, fitKey }: { pins: MapPin[]; initialBounds?: MapBounds | null; fitKey?: string }) {
   const map = useMap();
+  const lastFitKeyRef = useRef<string | undefined>(undefined);
+  const fitted = useRef(false);
   useEffect(() => {
+    if (fitted.current && fitKey === lastFitKeyRef.current) return;
+    fitted.current = true;
+    lastFitKeyRef.current = fitKey;
     const b = initialBounds ?? boundsOfPins(pins);
     if (!b) return;
     const id = setTimeout(() => {
@@ -61,7 +68,7 @@ function FitPins({ pins, initialBounds }: { pins: MapPin[]; initialBounds?: MapB
       );
     }, 0);
     return () => clearTimeout(id);
-  }, [pins, initialBounds, map]);
+  }, [pins, initialBounds, fitKey, map]);
   return null;
 }
 
@@ -144,6 +151,7 @@ function ThinnedLayer({
   selectedId,
   onSelect,
   onToggleSave,
+  onBoundsChange,
 }: {
   seedPins: MapPin[];
   filtersQuery: string;
@@ -151,18 +159,23 @@ function ThinnedLayer({
   selectedId?: string | null;
   onSelect?: (id: string) => void;
   onToggleSave?: (id: string) => void;
+  onBoundsChange?: (b: MapBounds) => void;
 }) {
   const map = useMap();
   const [fetchedPins, setFetchedPins] = useState<MapPin[] | null>(null);
   const [viewportTotal, setViewportTotal] = useState<number | null>(null);
   const fetcherRef = useRef<ReturnType<typeof createPinFetcher> | null>(null);
-  // Bumped on every moveend/zoomend so the cluster recompute below (which reads live map
+  const onBoundsChangeRef = useRef(onBoundsChange);
+  onBoundsChangeRef.current = onBoundsChange;
+  // Bumped on every moveend/zoomend so the marker re-plan below (which reads live map
   // state, not React state) actually re-renders — Leaflet's bounds/zoom aren't props.
   const [, tick] = useReducer((n: number) => n + 1, 0);
 
   const requestViewport = () => {
     const b = map.getBounds();
-    fetcherRef.current?.request({ north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() });
+    const box = { north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() };
+    fetcherRef.current?.request(box);
+    onBoundsChangeRef.current?.(box);
   };
 
   // New filters (or first mount): drop any pins fetched under the OLD filters and start a
@@ -249,7 +262,7 @@ function ThinnedLayer({
   );
 }
 
-export default function MapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds }: MapViewProps) {
+export default function MapView({ pins, selectedId, onSelect, onToggleSave, filtersQuery, favorites, initialBounds, fitKey, onBoundsChange }: MapViewProps) {
   // Rows without coordinates come through as lat/lng 0 — never pin (or fit) Null Island.
   // Same-zip listings are fanned out so every chip stays clickable.
   const located = useMemo(() => spreadPins(pins.filter((p) => p.lat && p.lng)), [pins]);
@@ -276,7 +289,7 @@ export default function MapView({ pins, selectedId, onSelect, onToggleSave, filt
         {/* The initial frame always fits the chosen county's real extent (or the results page's
             own bounds, for a free-text search) — clustering takes it from there without ever
             re-fitting on its own (that would fight a visitor's pan). */}
-        <FitPins pins={located} initialBounds={initialBounds} />
+        <FitPins pins={located} initialBounds={initialBounds} fitKey={fitKey} />
         {filtersQuery ? (
           <ThinnedLayer
             seedPins={located}
@@ -285,6 +298,7 @@ export default function MapView({ pins, selectedId, onSelect, onToggleSave, filt
             selectedId={selectedId}
             onSelect={onSelect}
             onToggleSave={onToggleSave}
+            onBoundsChange={onBoundsChange}
           />
         ) : (
           <PinLayer pins={located} selectedId={selectedId} onSelect={onSelect} onToggleSave={onToggleSave} />

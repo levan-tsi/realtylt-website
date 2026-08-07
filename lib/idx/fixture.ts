@@ -83,6 +83,12 @@ export class FixtureIdxClient implements IdxClient {
       if (eatInKitchen && !l.interiorFeatures?.includes("Eat-in Kitchen")) return false;
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
+      // Map-viewport box (round 23). Mirrors db.searchFilters: a 0/absent coordinate can
+      // never sit inside a valid NY box, so unlocated rows are excluded from a scoped grid.
+      if (params.bounds) {
+        const b = params.bounds;
+        if (!(l.lat >= b.south && l.lat <= b.north && l.lng >= b.west && l.lng <= b.east)) return false;
+      }
       // Exact city (suggest-dropdown pick), case-insensitive to match PostgREST's `eq` on the
       // normalised city column. Mirrors db.searchFilters.
       if (city && l.city.toLowerCase() !== city.trim().toLowerCase()) return false;

@@ -17,8 +17,8 @@ import { NEW_LISTING_DAYS } from "@/lib/idx/query";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { listingPath } from "@/lib/idx/listing-url";
 import { saveResultSet } from "@/lib/idx/result-set";
-import { SEARCH_PAGE_SIZE } from "@/lib/idx/types";
-import type { Listing, MapPin } from "@/lib/idx/types";
+import { SEARCH_PAGE_SIZE, VIEWPORT_PAGE_SIZE } from "@/lib/idx/types";
+import type { Listing, MapBounds, MapPin } from "@/lib/idx/types";
 
 // Official Google Maps when the key is configured (live-site parity); Leaflet/OSM
 // fallback otherwise. NEXT_PUBLIC_ vars are inlined at build, so only one chunk loads.
@@ -297,6 +297,12 @@ function apiFilterParams(f: Filters): URLSearchParams {
   return api;
 }
 
+/** The PLACE part of the filters — what decides where the map should be looking. A change in
+ * any of these refits the map (fitKey) and invalidates the old viewport box; everything else
+ * (price, beds, status, paging, sort) refines WITHIN the place and leaves the viewport alone.
+ * `rental` is here because For Rent is a different universe whose extent can differ entirely. */
+const placeKey = (f: Filters) => `${f.county}|${f.city}|${f.q}|${f.rental}`;
+
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
   // rlt-compact-control: keep the slim 12px size on a phone. The global mobile 16px floor
@@ -314,6 +320,33 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // through lib/idx/query#parseSearchRequest), so the first paint already has homes in it.
   const [result, setResult] = useState<ApiResult | null>(initial);
   const [state, setState] = useState<"loading" | "ready" | "error">(initial ? "ready" : "loading");
+  // The place whose RESULTS are currently showing — the map's refit gate (fitKey). Updated
+  // when a fetch LANDS, never when a filter is merely chosen, so the map refits with the new
+  // place's pins already in hand rather than the old ones.
+  const [resultPlace, setResultPlace] = useState(() => placeKey(filters));
+  // The map's settled viewport, tagged with the place it was showing when it settled. The tag
+  // is the validity check: a box captured over Dutchess must not scope a brand-new Queens
+  // search (results would be Queens ∩ Dutchess-viewport = nothing) — a stale box simply goes
+  // unused until the map refits and reports a fresh one.
+  const [viewport, setViewport] = useState<{ place: string; qs: string } | null>(null);
+  const placeRef = useRef(placeKey(filters));
+  placeRef.current = placeKey(filters);
+  const viewportRef = useRef(viewport);
+  viewportRef.current = viewport;
+  const onMapBounds = useCallback((b: MapBounds) => {
+    const qs = `north=${b.north}&south=${b.south}&east=${b.east}&west=${b.west}`;
+    const prev = viewportRef.current;
+    if (prev && prev.place === placeRef.current && prev.qs === qs) return; // settle, no movement
+    setViewport({ place: placeRef.current, qs });
+    // A moved viewport is a new question — page 1 of it is the only honest answer. (This also
+    // runs on the map's first settle, so a ?page=3 deep link resets once the map takes over:
+    // that page belonged to the place-scoped list, which the map view no longer shows.)
+    setFilters((f) => (f.page === 1 ? f : { ...f, page: 1 }));
+  }, []);
+  // A viewport that matches the CURRENT place scopes the grid (map view only — the grid view
+  // has no map to agree with). This string is also the fetch effect's dependency.
+  const activeViewportQs =
+    filters.view === "map" && viewport && viewport.place === placeKey(filters) ? viewport.qs : null;
   const [saveOpen, setSaveOpen] = useState(false);
   const { saveSearch, signedIn, favorites, toggleFavorite } = useSaved();
   const { openSignIn, enabled: accountsEnabled } = useAuth();
@@ -391,7 +424,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   }, [filtersQs]);
 
   // The server already ran the query behind the first render — refetching it on mount would
-  // be a second identical round trip and would repaint the same 36 cards. Every later filter
+  // be a second identical round trip and would repaint the same cards. Every later filter
   // change falls through to the fetch below.
   const serverPage = useRef(initial != null);
   useEffect(() => {
@@ -401,26 +434,40 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
     }
     let cancelled = false;
     setState("loading");
-    // Search page shows a fuller 36-per-page grid (live parity); apiFilterParams applies the
-    // same "New Listings" quick-filter → listed-within-N-days translation parseSearchRequest
-    // uses server-side, so this fetch and the first server render ask the same question.
+    // apiFilterParams applies the same "New Listings" quick-filter → listed-within-N-days
+    // translation parseSearchRequest uses server-side, so this fetch and the first server
+    // render ask the same question. With a settled map viewport (map view), the grid is
+    // SCOPED TO THE BOX and asks for a whole viewport in one page (VIEWPORT_PAGE_SIZE) —
+    // round 23, after the owner caught page 2 of the county scope contradicting the map.
     const api = apiFilterParams(filters);
-    api.set("pageSize", String(SEARCH_PAGE_SIZE));
-    fetch(`/api/idx/search?${api.toString()}`)
-      .then((r) => {
-        if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<ApiResult>;
-      })
-      .then((data) => {
-        if (cancelled) return;
-        setResult(data);
-        setState("ready");
-      })
-      .catch(() => !cancelled && setState("error"));
+    if (activeViewportQs) {
+      for (const [k, v] of new URLSearchParams(activeViewportQs)) api.set(k, v);
+      api.set("pageSize", String(VIEWPORT_PAGE_SIZE));
+    } else {
+      api.set("pageSize", String(SEARCH_PAGE_SIZE));
+    }
+    const run = () =>
+      fetch(`/api/idx/search?${api.toString()}`)
+        .then((r) => {
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json() as Promise<ApiResult>;
+        })
+        .then((data) => {
+          if (cancelled) return;
+          setResult(data);
+          setResultPlace(placeKey(filters));
+          setState("ready");
+        })
+        .catch(() => !cancelled && setState("error"));
+    // Wheel-zooming settles once per step, and each settle moves the box — coalesce scoped
+    // refetches the same way the pin fetcher does (its debounce is 400ms) so three quick
+    // steps cost one grid query. Filter edits stay immediate.
+    const t = setTimeout(run, activeViewportQs ? 350 : 0);
     return () => {
       cancelled = true;
+      clearTimeout(t);
     };
-  }, [filters]);
+  }, [filters, activeViewportQs]);
 
   // Respect reduced-motion for programmatic scrolls (design rule).
   const scrollBehavior = (): ScrollBehavior =>
@@ -450,9 +497,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
 
   // RECORD THE SET THE VISITOR IS LOOKING AT, so a listing page can offer "next home" and mean
   // it. Written here because this is the only place the set is genuinely known — the listing page
-  // is ISR-cached and shared, and cannot be told what search produced it. The map is page-coupled
-  // to these exact listings, so a pin click inherits the same order for free.
-  // See lib/idx/result-set.ts for why this is not carried in the URL.
+  // is ISR-cached and shared, and cannot be told what search produced it. In map view the result
+  // is the VIEWPORT set (up to VIEWPORT_PAGE_SIZE homes), so prev/next on a listing walks exactly
+  // the homes he was looking at on the map — his "it saves those 150 and lets you go back and
+  // forth". See lib/idx/result-set.ts for why this is not carried in the URL.
   useEffect(() => {
     if (!result?.listings.length) return;
     saveResultSet({
@@ -949,14 +997,17 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 <strong className="font-display text-2xl font-light leading-none text-ink">
                   {(result?.total ?? 0).toLocaleString()}
                 </strong>
-                {/* Say what the number IS. The unfiltered view is now Active-only, so calling
-                    6,738 simply "listings across the Hudson Valley" would read as the whole
-                    market when 11,611 are on it. "active" is also the word on the control
-                    beside it, so the page uses one vocabulary for one thing. */}
+                {/* Say what the number IS. Once the map has settled, the grid is scoped to its
+                    viewport (round 23) and the honest label is "in this map area" — his exact
+                    ask: "if you zoomed and there is 150 show 150 on the list". Before that,
+                    the unfiltered view is Active-only, so calling 6,738 simply "listings
+                    across the Hudson Valley" would read as the whole market when 11,611 are
+                    on it. "active" is also the word on the control beside it, so the page
+                    uses one vocabulary for one thing. */}
                 <span className="text-ink">
-                  {hasActiveFilters ? "listings found" : "active listings"}
+                  {activeViewportQs ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
                 </span>
-                {!hasActiveFilters && <span>across the Hudson Valley</span>}
+                {!hasActiveFilters && !activeViewportQs && <span>across the Hudson Valley</span>}
               </>
             )}
           </p>
@@ -1107,6 +1158,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               filtersQuery={mapFiltersQuery}
               favorites={favorites}
               initialBounds={mapInitialBounds}
+              fitKey={resultPlace}
+              onBoundsChange={onMapBounds}
             />
           </div>
         </div>
