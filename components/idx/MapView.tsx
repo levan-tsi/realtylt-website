@@ -4,13 +4,12 @@ import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { divIcon } from "leaflet";
 import type { MapBounds, MapPin } from "@/lib/idx/types";
-import { buildClusterIndex, clusterExpansionZoom, getClusterEntries } from "./clustering";
+import { planMarkers } from "./pin-thinning";
 import {
   boundsOfPins,
   chipPrice,
-  clusterBubbleHtml,
-  clusterTier,
   createPinFetcher,
+  dotHtml,
   MAP_FONT as FONT,
   popupNode,
   spreadPins,
@@ -19,12 +18,12 @@ import {
 import "leaflet/dist/leaflet.css";
 
 /** Leaflet/OSM results map. `pins` seeds the first paint and frames the initial view (page/
- * filter/sort change auto-fits it, as before); once `filtersQuery` is set, ClusterLayer takes
- * over — it fetches its own pin set for the live viewport via /api/idx/pins and clusters it
- * with supercluster, Zillow-style: a dense borough shows a handful of count bubbles at low
- * zoom instead of thousands of unrenderable markers, and clicking a bubble zooms into it.
- * Individual (unclustered) pins still plot as the familiar black price chip (floored $875K /
- * $1.3M, live-style) with the shared photo-pager popup. Client-only — next/dynamic ssr:false. */
+ * filter/sort change auto-fits it, as before); once `filtersQuery` is set, ThinnedLayer takes
+ * over — it fetches its own pin set for the live viewport via /api/idx/pins and renders it
+ * Zillow-style (./pin-thinning.ts): a price pill for every home the screen has room to label,
+ * a small dot for the rest, no count circles. Pills are the familiar black price chip (floored
+ * $875K / $1.3M, live-style) with the shared photo-pager popup. Client-only — next/dynamic
+ * ssr:false. */
 
 // Hearted listings read differently at a glance: white chip, ink text, the same red heart
 // the card's FavoriteButton fills (owner's ask — saved homes visible ON the map).
@@ -123,25 +122,22 @@ function PinLayer({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
   );
 }
 
-/** Cluster bubble icon — sized via the same tier used by the Google engine so the two look
- * identical. iconSize matches the tier's diameter (unlike the price chip, a cluster bubble's
- * anchor is its own centre, not a pin tip below it). */
-const clusterIcon = (count: number) => {
-  const { size } = clusterTier(count);
-  return divIcon({
+/** Dot icon — the same home wearing less ink (shared markup via dotHtml, so the two engines
+ * look identical). iconSize [0,0]: the span centres itself on the point with its own inline
+ * translate, the same pattern as the price chip above. */
+const dotIcon = (label: string, saved: boolean, spokenFor: boolean) =>
+  divIcon({
     className: "",
-    html: clusterBubbleHtml(count),
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
+    html: dotHtml({ label, saved, spokenFor }),
+    iconSize: [0, 0],
   });
-};
 
-/** Viewport-fetched, clustered pin layer (Zillow-style). Fetches its own pin set for the live
- * map bounds via /api/idx/pins (debounced, race-safe — createPinFetcher) and reclusters on
- * every pan/zoom settle with supercluster. `seedPins` (the results page) render immediately;
+/** Viewport-fetched, thinned pin layer (Zillow-style). Fetches its own pin set for the live
+ * map bounds via /api/idx/pins (debounced, race-safe — createPinFetcher) and re-plans on
+ * every pan/zoom settle with planMarkers. `seedPins` (the results page) render immediately;
  * once the first viewport fetch resolves, its pins take over — a filter change drops the old
  * viewport set at once so the map never shows the previous search under new chips. */
-function ClusterLayer({
+function ThinnedLayer({
   seedPins,
   filtersQuery,
   favorites,
@@ -202,43 +198,49 @@ function ClusterLayer({
     return spreadPins(base).map((p) => ({ ...p, saved: favSet.has(p.id) || p.saved }));
   }, [fetchedPins, seedPins, favSet]);
 
-  const index = useMemo(() => buildClusterIndex(activePins), [activePins]);
-  const pinsById = useMemo(() => new Map(activePins.map((p) => [p.id, p])), [activePins]);
-
-  const b = map.getBounds();
-  const bounds: MapBounds = { north: b.getNorth(), south: b.getSouth(), east: b.getEast(), west: b.getWest() };
-  const entries = getClusterEntries(index, pinsById, bounds, map.getZoom());
+  // Screen-space plan for the live viewport — container points share one pixel space with
+  // the container box, so the planner's cull + collision math needs no conversion.
+  const size = map.getSize();
+  const plan = planMarkers({
+    pins: activePins,
+    project: (lat, lng) => map.latLngToContainerPoint([lat, lng]),
+    viewport: { left: 0, top: 0, right: size.x, bottom: size.y },
+    selectedId,
+  });
 
   return (
     <>
-      {viewportTotal !== null && fetchedPins !== null && viewportTotal > fetchedPins.length && (
+      {viewportTotal !== null && fetchedPins !== null && viewportTotal > plan.length && (
         // bottom-12 on phones: side by side with the legend the two badges overlap at 390px
         // (same collision fixed on the Google engine — keep the pair in step).
         <p className="pointer-events-none absolute bottom-12 right-2 z-[500] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:bottom-2">
-          Showing {fetchedPins.length.toLocaleString()} of {viewportTotal.toLocaleString()} — zoom in for more
+          {plan.length.toLocaleString()} of {viewportTotal.toLocaleString()} homes shown. Zoom in for more
         </p>
       )}
-      {entries.map((e) =>
-        e.kind === "cluster" ? (
+      {plan.map((m) =>
+        m.kind === "dot" ? (
           <Marker
-            key={`c-${e.id}`}
-            position={[e.lat, e.lng]}
-            icon={clusterIcon(e.count)}
-            eventHandlers={{
-              click: () => map.setView([e.lat, e.lng], clusterExpansionZoom(index, e.id), { animate: true }),
-            }}
-          />
-        ) : (
-          <Marker
-            key={e.pin.id}
-            position={[e.pin.lat, e.pin.lng]}
-            icon={priceIcon(e.pin.price, e.pin.id === selectedId, !!e.pin.saved)}
-            title={`${chipPrice(e.pin.price)} — ${e.pin.address}, ${e.pin.city}`}
-            zIndexOffset={e.pin.id === selectedId ? 1000 : 0}
-            eventHandlers={{ click: () => onSelect?.(e.pin.id) }}
+            key={m.pin.id}
+            position={[m.pin.lat, m.pin.lng]}
+            icon={dotIcon(`${m.label} — ${m.pin.address}, ${m.pin.city}`, !!m.pin.saved, m.pin.status === "Pending" || m.pin.status === "Under Contract")}
+            title={`${m.label} — ${m.pin.address}, ${m.pin.city}`}
+            eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
           >
             <Popup minWidth={252}>
-              <PopupCard pin={e.pin} onToggleSave={onToggleSave} />
+              <PopupCard pin={m.pin} onToggleSave={onToggleSave} />
+            </Popup>
+          </Marker>
+        ) : (
+          <Marker
+            key={m.pin.id}
+            position={[m.pin.lat, m.pin.lng]}
+            icon={priceIcon(m.pin.price, m.pin.id === selectedId, !!m.pin.saved)}
+            title={`${m.label} — ${m.pin.address}, ${m.pin.city}`}
+            zIndexOffset={m.pin.id === selectedId ? 1000 : 0}
+            eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
+          >
+            <Popup minWidth={252}>
+              <PopupCard pin={m.pin} onToggleSave={onToggleSave} />
             </Popup>
           </Marker>
         ),
@@ -276,7 +278,7 @@ export default function MapView({ pins, selectedId, onSelect, onToggleSave, filt
             re-fitting on its own (that would fight a visitor's pan). */}
         <FitPins pins={located} initialBounds={initialBounds} />
         {filtersQuery ? (
-          <ClusterLayer
+          <ThinnedLayer
             seedPins={located}
             filtersQuery={filtersQuery}
             favorites={favorites}

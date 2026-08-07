@@ -4,9 +4,9 @@ import { listingPath } from "@/lib/idx/listing-url";
 /** Shared map math — used by both the Leaflet fallback and the Google Maps view.
  * `pins` seeds the FIRST paint (the current results page, so the map is never empty while the
  * viewport fetch is in flight); once the map settles, both engines fetch their own pin set for
- * the visible viewport via `/api/idx/pins` (see `createPinFetcher`) and cluster it client-side
- * with supercluster (./clustering.ts) — Zillow-style, so a dense borough never tries to draw
- * every pin. Same-zip listings share a centroid, so `spreadPins` fans leaf pins out
+ * the visible viewport via `/api/idx/pins` (see `createPinFetcher`) and thin it client-side
+ * (./pin-thinning.ts) — Zillow-style price pills for every home the screen can label, dots for
+ * the rest, no count circles. Same-zip listings share a centroid, so `spreadPins` fans pins out
  * deterministically and the chip labels are FLOORED like live ($875K / $1.3M). */
 
 /** Props both map engines accept. `pins` seeds the first paint; `filtersQuery` (the same
@@ -172,54 +172,18 @@ export function popupPlacement(
   return spaceAbove >= POPUP_HEIGHT || spaceAbove >= spaceBelow ? "above" : "below";
 }
 
-/** Cluster bubble size/label tier — Zillow-style: the more homes inside it, the bigger the
- * bubble and the bigger its number, so the map's own density reads at a glance without opening
- * anything. Four tiers keep the largest bubble (a whole dense county at low zoom) readable
- * without swallowing the map. */
-export function clusterTier(count: number): { size: number; font: number } {
-  if (count < 10) return { size: 34, font: 12 };
-  if (count < 50) return { size: 42, font: 13 };
-  if (count < 200) return { size: 50, font: 14 };
-  return { size: 58, font: 15 };
+/** Dot colour language, mirroring the price chips so a dot reads as "the same thing, smaller":
+ * solid ink = for sale (defaults, nothing to override), hollow grey ring = already spoken for
+ * (Pending / Under Contract), hollow red ring = saved. Consumed by `.rlt-map-dot` in
+ * globals.css, which draws the mark itself (a 12px dot centred in a 24px hit target). */
+export function dotStyleVars(saved: boolean, spokenFor: boolean): string {
+  return saved ? "--dot-bg:#fff;--dot-ring:#ef4444" : spokenFor ? "--dot-bg:#fff;--dot-ring:#4a4a4a" : "";
 }
 
-/** Cluster count label — exact under 1,000 (supercluster's own tiles rarely exceed that per
- * bubble at a usable zoom), abbreviated to one decimal above it ("9.7k"), same floored-trim
- * spirit as chipPrice. */
-export function clusterLabel(count: number): string {
-  if (count < 1000) return String(count);
-  const k = count / 1000;
-  return `${k.toFixed(k < 10 ? 1 : 0).replace(/\.0$/, "")}k`;
-}
-
-/** The cluster bubble's shared visual language (monochrome ink circle, white border, one
- * shadow scale) as a standalone CSS string — `.rlt-cluster-bubble` in globals.css carries the
- * class-level rules (hover/focus, transition); this is only the per-bubble size that varies. */
-function clusterBubbleStyle(count: number): string {
-  const { size, font } = clusterTier(count);
-  return `width:${size}px;height:${size}px;font-size:${font}px`;
-}
-
-/** Real DOM node for a cluster bubble (GoogleMapView's OverlayView appends live elements). */
-export function buildClusterBubble(count: number, onClick: () => void): HTMLButtonElement {
-  const b = document.createElement("button");
-  b.type = "button";
-  b.className = "rlt-cluster-bubble";
-  b.setAttribute("aria-label", `${count} homes — click to zoom in`);
-  b.style.cssText = clusterBubbleStyle(count);
-  b.textContent = clusterLabel(count);
-  b.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onClick();
-  });
-  return b;
-}
-
-/** Same bubble as an HTML string (Leaflet's `divIcon` takes markup, not a live node — it builds
- * its own container and injects this). */
-export function clusterBubbleHtml(count: number): string {
-  return `<span class="rlt-cluster-bubble" style="${clusterBubbleStyle(count)}" role="button" aria-label="${count} homes — click to zoom in">${clusterLabel(count)}</span>`;
+/** The dot as an HTML string (Leaflet's `divIcon` takes markup, not a live node). The inline
+ * translate centres the mark on its point — same pattern as the Leaflet price chip. */
+export function dotHtml(opts: { label: string; saved: boolean; spokenFor: boolean }): string {
+  return `<span class="rlt-map-dot" style="display:grid;transform:translate(-50%,-50%);${dotStyleVars(opts.saved, opts.spokenFor)}" role="button" aria-label="${opts.label.replace(/"/g, "&quot;")}"></span>`;
 }
 
 /** Popup mini-card shared by both map engines, built as a real DOM node so the photo pager's
