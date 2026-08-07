@@ -82,22 +82,29 @@
 ## correct 3,000) — killed by port and restarted fresh. Check dev-vs-prod API answers before
 ## trusting a long-lived dev server.
 ##
-## ═══ ROUND 24 BRIEF ═══════════════════════════════════════════════════════════════════
-## 1. HIS RE-TEST of the map vs Zillow — expect notes on pill density, dot size, popup feel.
-##    The ratio probe (scripts/verify-map-markers.mjs) and popup probe (verify-map-popup.mjs) are
-##    the regression harness; run them BASE=production before and after any change.
-## 2. MOBILE MAP still does not render at 390 (pre-existing, documented r22+r23). His call
-##    whether phones get the map at all; if yes, that is the round.
-## 3. RAIL FOLLOW-THROUGH his taste calls: Plan in the header nav? Rail on /saved + /plan
-##    too? Updates tab unlocks when the CRM alert sender is live (saved-search criteria
-##    already travel with leads).
-## 4. SELECT_FIELDS additions when he approves a careful sync probe: PoolPrivateYN /
-##    FireplaceYN / AssociationFeeFrequency — unlocks pool, fireplace, Max-HOA filters.
-##    School district needs a dynamic values endpoint (suggest-index pattern).
-## 5. CARRIED, needs HIM: account wall (signup disabled — blocks launch), home-value copy in
-##    his voice, the hero, published-CMA enumeration + raw MediaURLs (paired CRM change),
-##    photo backfill (~384 stale rows; probe 12 first, any 429 = stop for the day).
-## 6. Design polish passes across the whole site if budget remains.
+## ═══ ROUND 24 BRIEF — HE ANSWERED 2026-08-07. READ docs/parity/HANDOFF-ROUND-24.md FIRST;
+## ═══ it carries his verbatim words, the measured root causes, and the running order.
+## SINGLE AGENT, ~700k, no subagents. "map looks gret at the momend" — protect it (the four
+## committed scripts/verify-*.mjs probes are the regression harness). The round:
+## 1. THE PREV/NEXT GAP, root-caused and ready: a map pin's home is often NOT in the grid's
+##    saved 150 (map draws from the 3,000-pin fetch), so ListingPager renders NOTHING on the
+##    listing page — his "click next or previous property it moves through them" does not
+##    work from the map. Fix = save the VIEWPORT pin order as the result set. TRAP: photo
+##    arrows ("Previous photo") false-positive naive pager probes; assert "Previous/Next
+##    LISTING" labels + set membership.
+## 2. Popup stress test with REPETITION (opened first try today; one wheel-zoom attempt
+##    earlier did not — chase it or close it).
+## 3. FILTERS: enumerate live realtylt.com's (Brivity) dropdowns AND Zillow's More panel,
+##    then build the honest bucket (heating/appliances/parking/exterior/interior values,
+##    Days on market from listed_at); school district needs a dynamic values source;
+##    pool/fireplace/HOA-frequency stay sync-gated. Validate via verify-facets-live.mjs +
+##    one onekeymls.com count.
+## 4. THE QUIZ (design centerpiece): Plan + rail become interactive — a step-by-step visual
+##    quiz of clickable illustrated option cards ("shapes") that tailors a plan on-page AND
+##    hands off a consent-safe lead. REUSE QualifyingWizard, priceForMonthly, the lead
+##    pipeline + LEAD-CONSENT-CONTRACT (consent is STRICT). Design doc committed BEFORE code.
+## 5. Carried (his): account wall, mobile map at 390, photo backfill (12-probe rule),
+##    home-value copy, hero, CMA enumeration + MediaURLs, Updates tab awaits the CRM sender.
 
 ## ═══ ROUND 22 — DONE 2026-08-06. Design + the owner's four live asks. Reasoning in
 ## ═══ docs/parity/DESIGN-ROUND22.md. 9 commits pushed to main.
