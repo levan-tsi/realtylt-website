@@ -170,7 +170,20 @@
 ##   · A new listing's chip shows "NEW" where the PRICE should be. Price must always show.
 ##   · Three pin renderings (price pill / dot / cluster) read as three unrelated states.
 ##     Zillow has two. Collapse toward that.
-## 1. BOROUGHS INTO THE DEFAULT — his decision, made. DEFAULT_COUNTY_SLUGS is the six HV
+## 1. THE LIST AND THE MAP ANSWER DIFFERENT QUESTIONS — a live defect, rank it high. The map
+##    is viewport-scoped now; the grid still pages 50 at a time over the UNBOUNDED county scope,
+##    so page 2 contradicts what the map is showing. He caught it. Fix: give /api/idx/search the
+##    same bbox /api/idx/pins takes, show the viewport's TRUE count ("150 homes in this area"),
+##    and keep paging only above a measured render cap — 3,000 cards cannot render, and Zillow
+##    paginates too ("1-40 of N"); what makes Zillow feel seamless is that the list is SCOPED TO
+##    THE VIEWPORT, not that pages were removed. His "save those 150 and let me go back and
+##    forth" is ALREADY BUILT: lib/idx/result-set.ts persists a set and computes prev/next, and
+##    ListingPager reads it — it just needs feeding the viewport set instead of the paged 50.
+## 1b. CLICKING A COUNTY SHOULD FRAME THE MAP to that county and reframe when another is picked.
+##    components/idx/county-bounds.ts already holds real extents and is wired in. Build this WITH
+##    the borough-scope change below — once NYC joins the default, click-to-zoom becomes the main
+##    way back to a sane zoom.
+## 2. BOROUGHS INTO THE DEFAULT — his decision, made. DEFAULT_COUNTY_SLUGS is the six HV
 ##    counties; he wants all five NYC boroughs in the default map/scope. That roughly DOUBLES
 ##    the set (11,611 -> ~25,156 on-market). Consequences: the "across the Hudson Valley" copy,
 ##    the map's initial frame, county-bounds, and the pin cap. lib/site.ts:54 still says "~7k

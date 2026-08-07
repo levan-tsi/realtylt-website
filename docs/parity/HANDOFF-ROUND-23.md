@@ -86,6 +86,61 @@ shipped a mobile map here.
 
 ---
 
+## 1b. THE LIST AND THE MAP ANSWER DIFFERENT QUESTIONS — this is a real bug
+
+> "on the page it still shows 50 listings to go forward or back and its not correct anymore with
+> logic, because I was looking at map and could zoom and go through all the listings and we still
+> have pages below which are 50 on each, and when I moved on 2nd page listings reduced and only
+> showed those 50"
+
+**He is right and this is a genuine defect, not a preference.** Round 22 made the MAP
+viewport-scoped (`/api/idx/pins`, bbox + cluster) but left the GRID paging through
+`/api/idx/search` with `pageSize=50` over the *unbounded* county scope. The two now answer
+different questions, so the list contradicts the map in front of the visitor.
+
+> "zillow shows in the listing count how much ever it can fit on the zoomed in area, so instead of
+> pages is not that better for the customer? and if you zoomed and there is 150 show 150 on the
+> list on the left, and if you click any it saves those 150 and lets you go back and forth. is
+> that hard to do?"
+
+**Answer: the hardest-sounding part is ALREADY BUILT.** `lib/idx/result-set.ts` already persists a
+result set and computes prev/next `neighbours()`; `components/listing/ListingPager.tsx` already
+reads it on the detail page; `SearchClient.tsx:458` already calls `saveResultSet`. It is currently
+fed the paginated 50. **Feed it the viewport set and his "go back and forth through those 150"
+works with no new mechanism.**
+
+**One correction so nobody builds the wrong thing: Zillow DOES still paginate.** It shows
+"1–40 of N" — what makes it feel seamless is that the list is SCOPED TO THE MAP VIEWPORT, not that
+pages were removed. So the target is:
+
+1. **Scope the grid to the map bounds.** Give `/api/idx/search` the same bbox `/api/idx/pins`
+   takes (`parseBounds` already exists and is shared), and refetch the grid on map settle with the
+   same debounce/race guard the pin fetcher uses.
+2. **Show the viewport's TRUE total** in the count line — "150 homes in this area", which is what
+   he is asking for.
+3. **Keep paging only above a render-safe cap.** 3,000 cards cannot render; measure and pick the
+   cap rather than guessing. Zillow caps too.
+4. **Feed `saveResultSet` the viewport set** so prev/next on a listing page walks the homes he was
+   actually looking at.
+
+Do NOT skip step 3 on the strength of "he asked for no pages" — his real ask is that the list and
+the map agree and that the count reflects what he can see. State the cap you chose and why.
+
+## 1c. CLICKING A COUNTY SHOULD FRAME THE MAP, Zillow-style
+
+> "when you click the county it kind of lines as the zillow and shows active listings or whatever
+> is selected on the map those listings. if you click other it will bring to other and line like
+> that. add that too"
+
+Clicking a county chip should **fly the map to that county's bounds** and show its listings;
+clicking a different county reframes to that one. `components/idx/county-bounds.ts` already holds
+real per-county extents and Fable wired it in during round 22 — this is mostly connecting the
+county chips to it, plus the viewport-scoped list above so the count follows.
+
+Interaction with §1: once the boroughs join the default scope, the initial frame has to hold
+Hudson Valley **and** NYC, and "click a county to zoom to it" becomes the primary way to get back
+to a sane zoom. These two features support each other — build them together.
+
 ## 2. FILTERS — expand, then PROVE against OneKey
 
 > "there is bunch of drop downs in more section on our page and zillow. work on filters, add
@@ -213,10 +268,14 @@ Sample **several random towns and criteria**, not one.
 
 1. **The map**, matching Zillow — pin/cluster ratio first, then the NEW-instead-of-price bug, then
    the three-renderings problem, then the popup once the ratio is fixed.
-2. **Boroughs into the default scope**, with the copy and framing consequences.
-3. **Filters** — add what matters, then validate against OneKey in several random ways.
-4. **Re-test everything two or three more times**, comparing against Zillow as you go.
-5. **Then, and only if there is budget left, polish the design.**
+2. **The list/map disagreement (§1b)** — this is a live defect a visitor can see today, so it
+   ranks above new work. Viewport-scope the grid, show the viewport's true count, feed
+   `saveResultSet` the viewport set, keep a measured render cap.
+3. **County click frames the map (§1c)** and **boroughs into the default scope (§1)** — build
+   these together, they support each other.
+4. **Filters** — add what matters, then validate against OneKey in several random ways.
+5. **Re-test everything two or three more times**, comparing against Zillow as you go.
+6. **Then, and only if there is budget left, polish the design.**
 
 His instruction if you do not finish: *"if it did not finish everything, polish map and everything
 one more time and then check if everything works properly compare to zillow too, and if still have
