@@ -129,11 +129,18 @@ export async function GET(req: Request) {
         }
         throw new Error("request kept failing after removing rejected fields");
       });
+      // ?media=1 (round 24c): return the first few RAW media records instead of only the
+      // count. Exists to diagnose the /images/undefined/ outage — the healthy URL shape is
+      // /images/<MediaKey>/<file>.jpeg, so seeing whether the feed still POPULATES MediaKey
+      // (while its own URL builder substitutes undefined) decides between a sync-side URL
+      // repair and an upstream ticket. Diagnostic-only, secret-gated, ≤3 records per row.
+      const withMedia = q.get("media") === "1";
       const out = rows.map(({ Media, ...rest }) => ({
         ...rest,
         mediaCount: (Media ?? []).filter(
           (m) => !!m.MediaURL && (!m.MediaCategory || m.MediaCategory === "Photo"),
         ).length,
+        ...(withMedia ? { media: (Media ?? []).slice(0, 3) } : {}),
       }));
       return NextResponse.json({
         ok: true, mode: "ids", requested: ids, found: out.length,
