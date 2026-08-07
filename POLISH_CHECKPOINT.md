@@ -1,5 +1,104 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 23 — DONE 2026-08-07. The map became the instrument. Reasoning in
+## ═══ docs/parity/DESIGN-ROUND23.md. 9 commits pushed to main, all re-verified on PRODUCTION.
+##
+## ── THE MARKER LANGUAGE: pills + dots, ZERO count circles ───────────────────────────
+## His complaint reproduced first: 6 price chips against 96 count bubbles one zoom in. Zillow
+## renders exactly two marker kinds and no counts, so supercluster is GONE (dependency
+## removed): components/idx/pin-thinning.ts does screen-space label thinning — stable priority
+## (selected > saved > Active > Pending, ties by id hash so the sample looks arbitrary but
+## never flickers), pills that fit, 12px dots in 24px hit targets for the rest, invisible
+## dots dropped and the banner reports what is DRAWN ("171 of 6,714 homes shown"). Planner
+## 3.93ms/draw over 3,000 pins, bench-guarded. Production after deploy: 19/57/78 pills across
+## three zooms, dots under them, no circles anywhere. The popup contract re-proven with real
+## mouse on BOTH kinds on production: hover previews, click pins + stays 2.7s, click never
+## navigates, Escape/outside close and STAY closed, zero page errors.
+## "NEW instead of price": no code path can do it — every marker label is chipPrice() — now
+## held by a test. Most plausible: he was describing Zillow's own pins.
+##
+## ── THE LIST AND THE MAP ANSWER ONE QUESTION ─────────────────────────────────────────
+## /api/idx/search takes the same bbox /api/idx/pins takes through ONE clause builder
+## (searchFilters). Map view scopes the grid to the settled viewport: count line "N homes in
+## this map area" (verified equal to the API's total for the identical box, on production:
+## 15,148 = 15,148), VIEWPORT_PAGE_SIZE=150 ("if there is 150 show 150"), saveResultSet gets
+## the whole viewport set (150 items verified), paging survives above 150 and page-2 carries
+## the same box. THE LOOP TRAP: refetch -> new pins -> refit -> idle -> refetch. Shut by
+## fitKey — the map refits ONLY when the results' PLACE (county|city|q|rental) changes,
+## stamped when that place's results LAND. A viewport box is tagged with its place; a
+## mismatched box goes unused (a Queens search can never be strangled by a Dutchess box).
+## Verified: 0 extra fetches in 6 idle seconds, 1 scoped fetch per pan. A moved viewport
+## resets to page 1. Grid view stays unscoped (JS-off + shared URLs).
+##
+## ── BOROUGHS IN THE DEFAULT + COUNTY FLY-TO ──────────────────────────────────────────
+## DEFAULT_COUNTY_SLUGS = all eleven areas. Default Active total 15,170 (was 6,729). Default
+## frame = SERVED_REGION; count copy "across the Hudson Valley and NYC"; chips NARROW rather
+## than gate. County click flies the map: Dutchess -> 1,139, Westchester -> 2,001, Queens ->
+## 5,471 (county Active is 5,479 — the fitted box clips edges). NYC sits at the frame's
+## bottom edge at region zoom — geometry (HV is 3x taller), not a bug; the capped pin fetch
+## is balanced (1,590 NYC / 1,410 HV of 3,000).
+##
+## ── CARDS -10%, MAP +10%, THREE FULL ROWS ────────────────────────────────────────────
+## At 1440x900: split 690/690 -> 621/759, card 334x282 -> 240 tall (photo share holds 59%),
+## THREE full rows where two fit. All trims are lg:; phones untouched. r22 clamp invariant
+## re-run: HELD (price top 2301 -> 2301 with 90-char address injected).
+##
+## ── FILTERS: THREE ADDED, TWO REFUSED, VALIDATED AS HE ASKED ─────────────────────────
+## Added (measured in-surface first): Washer/dryer hookup (2,585), Formal dining (3,264),
+## Municipal water and sewer (ONE toggle over BOTH generated columns — "no well, no septic").
+## Migration supabase/migrations/idx_round23_facet_columns.sql applied live (MCP times out on
+## the 171MB table rewrite; the timeout ROLLED BACK CLEAN — verified zero columns and zero
+## running ALTERs before retrying split: ALTER alone, then indexes. Remember this.)
+## REFUSED: Max HOA (AssociationFeeFrequency not in SELECT_FIELDS — monthly vs annual
+## unknowable, the filter would lie) and School district (79% fill, 135 clean values, but a
+## hardcoded select rots into dead options; needs a dynamic values source). Both recorded in
+## the migration header with unlock conditions.
+## VALIDATION: 8 seeded-random combos through the live API, every returned row's raw OneKey
+## jsonb re-checked per predicate — 328 row-predicate sets, ZERO violations
+## (scripts/_scratch-r23-facet-live.mjs). External: onekeymls.com shows 100 for Beacon; ours
+## 99 all-on-market — the gap is our $10k junk floor.
+##
+## ── THE RAIL + /plan (research FIRST, committed before code) ─────────────────────────
+## Zillow's five tabs researched (its 2026 Homebuyer Hub: BuyAbility = a lender funnel with
+## the numbers behind an account wall). Ours ships THREE items that all answer TODAY:
+## Search / Saved (live count, works signed-out) / Plan. Updates + Inbox deliberately absent
+## (nothing sends, nothing receives) — reasons in DESIGN-ROUND23.md §7 so the next round
+## inherits the thinking, not the temptation. /plan inverts the funnel: priceForMonthly =
+## binary search over calcMortgage ITSELF (cannot drift from /financing; round-trip test:
+## the answer's payment is the last $5k step that fits). $3,200/mo @20%/6% -> $585,000
+## (P&I $2,806 + NY tax est $373 = $3,179). Four NY stages + call/text block. Live.
+##
+## ── GATES ────────────────────────────────────────────────────────────────────────────
+## tsc clean. Tests 821 -> 840 (thinning 12, bounds 3, facets 6, bridge 5, minus cluster 7).
+## Overflow sweep on PRODUCTION: 7 routes x 390/320 = 14 checks, zero overflow. Real-Tab
+## focus: rail ring VISIBLE (pixels — note: getComputedStyle outlineColor reads currentColor
+## and LIES; the shipped CSS has the river rule and the pixels show it). Map markers still
+## not Tab-reachable within 250 presses — pre-existing r22 deferral, unchanged.
+##
+## ── THE DB WAS IO-STARVED MID-ROUND, AGAIN ───────────────────────────────────────────
+## Same signature as r22 (20-30s queries, TimeoutErrors, ACTIVE_HEALTHY). Drained, did not
+## chase; recovered to ~1s within the hour. ALSO: the long-running dev server on :3100 was
+## serving STALE route code (pre-r22 pin cap — returned 3,798 uncapped pins vs production's
+## correct 3,000) — killed by port and restarted fresh. Check dev-vs-prod API answers before
+## trusting a long-lived dev server.
+##
+## ═══ ROUND 24 BRIEF ═══════════════════════════════════════════════════════════════════
+## 1. HIS RE-TEST of the map vs Zillow — expect notes on pill density, dot size, popup feel.
+##    The ratio probe (scripts/_scratch-r23-mapratio.mjs) and popup probe (-popup.mjs) are
+##    the regression harness; run them BASE=production before and after any change.
+## 2. MOBILE MAP still does not render at 390 (pre-existing, documented r22+r23). His call
+##    whether phones get the map at all; if yes, that is the round.
+## 3. RAIL FOLLOW-THROUGH his taste calls: Plan in the header nav? Rail on /saved + /plan
+##    too? Updates tab unlocks when the CRM alert sender is live (saved-search criteria
+##    already travel with leads).
+## 4. SELECT_FIELDS additions when he approves a careful sync probe: PoolPrivateYN /
+##    FireplaceYN / AssociationFeeFrequency — unlocks pool, fireplace, Max-HOA filters.
+##    School district needs a dynamic values endpoint (suggest-index pattern).
+## 5. CARRIED, needs HIM: account wall (signup disabled — blocks launch), home-value copy in
+##    his voice, the hero, published-CMA enumeration + raw MediaURLs (paired CRM change),
+##    photo backfill (~384 stale rows; probe 12 first, any 429 = stop for the day).
+## 6. Design polish passes across the whole site if budget remains.
+
 ## ═══ ROUND 22 — DONE 2026-08-06. Design + the owner's four live asks. Reasoning in
 ## ═══ docs/parity/DESIGN-ROUND22.md. 9 commits pushed to main.
 ##
