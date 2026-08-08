@@ -1,5 +1,136 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 25 — 2026-08-08 NIGHT. Round 24/24b RE-VERIFIED on production, the photo
+## ═══ ladder's first two rungs done, six design/detail defects fixed, and THREE COMMITTED
+## ═══ GATES REPAIRED — two of which could not fail. 8 commits, all pushed to main.
+##
+## ── ROUND 24/24b RE-CHECKED FIRST, AS HE ASKED. All six hold on production ────────────
+## markers 25/72/92 with zero count-circles (was 25/73/92) · popup contract green on BOTH
+## pill and dot · viewport scope agrees with the API exactly (15,195) · pin walk PASS ·
+## quiz 19/19 · facets 361 row-predicate sets, 0 violations (was 362). The deltas are one
+## listing of churn each. Re-run AGAIN at the end, after my own changes: all still green.
+##
+## ── THE PHOTO LADDER ─────────────────────────────────────────────────────────────────
+## Rung 0 DONE: cause-2 (the dead service key) is CONFIRMED fixed, not assumed. In the 48h
+## before the fix, storage.objects took ZERO writes; at 17:15-17:17 UTC it took 168 objects
+## across 10 listings, all real JPEGs, avg 415KB, zero zero-byte. The mirror is alive.
+## Rung 1 DONE: backfill-photos.mjs retried the SAME url up to 4x. Their URLs are single-use
+## now, so every retry was guaranteed to fail and spent rate-limit budget against a host that
+## has suspended this key six times. One request per url; any failure is a SKIP and the
+## contiguous-prefix rule already made that the recovery path. NOT yet exercised against the
+## live host — the 12-listing probe (rung 2) IS its test, and that is HIS run with the
+## ANY-429-stops-the-day rule. Rungs 2-4 (probe, covers sweep, galleries) untouched.
+##
+## ── THE CACHE LEAK: the queued fix DOES NOT WORK, and the framing was overstated ──────
+## Queued was "UPDATE storage.objects metadata cacheControl". Tested on ONE object against
+## production as the checkpoint required: the DB row changes, the SERVED header does not.
+## Two more cheap repairs also disproved — REST copy INHERITS no-cache and ignores its
+## metadata argument, self-copy 409s. What works is an S3 CopyObject onto the same key with
+## metadata-directive REPLACE. scripts/fix-photo-cache-control.mjs does exactly that and is
+## READY TO RUN; it is gated on S3 access keys the OWNER must mint (Supabase → Project
+## Settings → Storage → S3 access keys; the service-role key cannot do this) and refuses
+## without them. Its dry run enumerates real object names from idx_listings, 8/8 verified
+## present in the bucket. Scale confirmed: 409,012 objects / 114 GB still serve no-cache
+## vs 1,200 correct.
+## TWO CORRECTIONS TO THE OLD FRAMING, both measured: `curl -I` LIED — Supabase's HEAD
+## returns no-cache unconditionally while a GET returns the truth, which is what made
+## sync-written objects look broken. And no-cache is not no-store: these objects revalidate
+## to 304 with ZERO bytes, so "114 GiB re-transferring on every view" is wrong. The real
+## cost is that the CDN never edge-caches them, so every FIRST view per visitor pulls full
+## bytes from origin. Worth fixing, not an emergency. New uploads are already correct:
+## backfill now sends the header the sync always sent.
+##
+## ── DESIGN + DETAIL, six fixed (reasoning: docs/parity/DESIGN-ROUND25.md) ─────────────
+## 1. ONE FACE, ONE TREATMENT. /images/levan-portrait.jpg renders on FIVE surfaces and only
+##    who-we-are desaturated it, so his own photograph was in COLOUR on the blog author
+##    card, the listing tour panel, the service lead panel and /connect — a few hundred px
+##    from its own greyscale copy in the booking panel. Greyscale on all five, verified by
+##    PIXEL (max channel spread 0, R==G==B), held by components/agent-portrait.test.ts.
+## 2. /home-value's hero subline was a FRAGMENT: "Join the homeowners across the Hudson
+##    Valley and NYC in finding your home's value", left when an unverifiable count was
+##    stripped. Now says what the page's own steps say: "Fifteen comparable sales, read by
+##    a person. Usually back within a day."
+## 3. iOS ZOOM ON THE PRIMARY SURFACE. globals.css floors controls at 16px below md because
+##    iOS zooms the page and never zooms back. One opt-out survived: the seven /search
+##    filter dropdowns, justified by a scrolling strip that round 24b REPLACED with a
+##    stacked grid. Re-measured at 390 AND 320: overflow 0, nothing clips, controls grow
+##    33→37px, the form costs 12px. Opt-out DELETED; nothing is exempt now.
+## 4. The /connect booking iframe was a flat 899px at every width. The embed itself needs
+##    1031px at 390 and 900 from 768 up, so the third card was sliced mid-sentence.
+## 5. /selling's trust row orphaned "Free Consultation" on its own line at 390 (three items
+##    measure ~423px against 358px). The rating takes the full row below sm, so the break
+##    is a decision: rating, then both claims together.
+## 6. THE MAP TOGGLE WAS DEAD ON A PHONE (his carried item). The map was never broken, it
+##    was UNREACHABLE: the default view is already "map", the branch deliberately puts
+##    listings above the map, so tapping MAP changed no state and the map sat 16,603px
+##    down. MAP now scrolls the map into view below lg. Measured: scrollY 0 → 16,603, map
+##    present, 462px tall, in viewport. Also: the mortgage calculator showed 10299000 and
+##    7920 as bare digit runs under a header rendering $10,299,000 — the four money fields
+##    now group while unfocused (caret never disturbed), and /plan's four stage links went
+##    from a 16px box to 24px.
+##
+## ── THREE COMMITTED GATES REPAIRED. TWO OF THEM COULD NOT FAIL ───────────────────────
+## · probe-reduced-motion.mjs was GREEN ON NOTHING. `.prose-custom section` matches ZERO now
+##   (the sections moved out; the class still exists, 9 of them, which hid the rot), and on
+##   an empty set "none hidden" and "none armed" are vacuously true. It also ignored BASE
+##   and went to a hardcoded localhost:3002. Now anchored to `article section` (15 live),
+##   BASE honoured, and ZERO SECTIONS IS A FAILURE. Proven both ways.
+## · verify-hero-contrast.mjs is NEW and replaces a suspicion with a measurement: scripts/
+##   contrast.mjs scores text against an ancestor background COLOUR, which over a hero photo
+##   is a colour nobody sees. This one shoots the page, sets the text transparent, shoots
+##   again, and reads the background ONLY where glyphs paint. Result: 173 painted runs
+##   across 8 pages, ZERO below floor — the hero small print needs no work. Its own first
+##   draft reported 24 failures, all instrument: oklab() parsed white as black, alpha was
+##   ignored, and box sampling caught borders (it scored the nav's #6f6f6f at 1.20:1 when
+##   the token file documents 5.02:1). It then CRIED WOLF intermittently on the home hero's
+##   white SEARCH button (true value 21:1) about one sweep in three, so it now waits for
+##   fonts+images and CONFIRMS a suspect on a second capture before reporting. Three
+##   consecutive clean sweeps; still fails an injected regression at 1.28:1.
+##
+## ── GATES AT CLOSE (production unless noted) ─────────────────────────────────────────
+## tsc clean · 871 tests / 63 files (baseline 869 + 2 new) · all six round-24 probes green
+## AFTER my changes · hero contrast 173 runs 0 below floor ×3 runs · JS DISABLED: 11/11
+## pages serve real text, links, forms and an h1 · reduced motion: 15 sections, none hidden
+## · NO horizontal overflow at 390 or 320 across 11 pages · focus rings: 64 keyboard-focused
+## controls, every one paints (the 2 apparent misses were the carousel moving between
+## measure and capture) · skip link 1x1 → 140x44 on Tab, measured not assumed.
+##
+## ═══ ROUND 26 BRIEF ══════════════════════════════════════════════════════════════════
+## 1. RE-VERIFY MY WORK FIRST, the way I was asked to re-verify 24's. Re-run: verify-map-
+##    markers/popup/viewport-scope/pin-walk/plan-quiz/facets-live, verify-hero-contrast,
+##    probe-reduced-motion (BASE= now works), and LOOK at /connect, /home-value, /selling
+##    and /search at 390.
+## 2. FOUND BUT NOT FIXED, with evidence, in DESIGN-ROUND25.md §"ranked":
+##    · The /search map's DEFAULT FRAME is mostly not the market — it opens Albany to
+##      Philadelphia to Hartford because the market is a north-south corridor squeezed into
+##      a wide panel. Pins hold ~a quarter of the page's most expensive surface. Fitting to
+##      a percentile instead of the extremes would crop outliers and CHANGE THE HEADLINE
+##      COUNT (15,195), so it is his call, not a patch.
+##    · The Google review badge is the ONLY colour on the site (/selling, loudest thing
+##      above the fold at 390). Google publishes an all-white variant for dark backgrounds.
+##      Left alone because recolouring a third-party mark is a brand-compliance question.
+##    · At 390 the map's legend card OVERLAPS the Google attribution bottom-left, which
+##      their terms require stay unobscured. Small fix, worth doing.
+##    · Below lg, MAP/GRID could show ONE surface each (how phone property apps behave).
+##      Wants the mobile arrival default flipped to grid — his call.
+##    · Three hero grammars across seven pages; the strongest (selling's asymmetric one) is
+##      used least. Deliberate choice needed, not a sweep.
+## 3. STILL HIS, unchanged: account wall (disable_signup) · CMA enumeration + raw MediaURLs
+##    (need a paired CRM change) · Updates tab awaits the CRM sender · SELECT_FIELDS sync
+##    batch needs his go-ahead + ONE careful probe · school district dynamic values ·
+##    launch switches (NEXT_PUBLIC_SITE_URL, apex, PRELAUNCH=1) are HIS, in that order.
+## 4. STANDING: single agent unless he grants subagents · commit with an explicit pathspec,
+##    never `git add -A` · block **/api/media/** in probes and NEVER add an MLS Grid DATA
+##    API call to a request path · **/api/lead posts to the LIVE CRM, intercept it.
+## 5. INSTRUMENTS LIED SEVEN TIMES THIS ROUND, in both directions. A media cap invented
+##    missing photos; a fullPage screenshot invented blank bands and a stat row of zeroes
+##    (the page is 7,529px, not the 15,058 it stitched; counters read 11/24h/100+/7 when
+##    actually scrolled); `curl -I` reported no-cache on objects serving a year; a regex
+##    read oklab() white as black; a focus probe blamed the site for a carousel that moved
+##    under it; a Next.js DEV indicator looked like a stray floating button; and a probe
+##    filtered on `name` when the value lived on `id`. Re-measure by a second means before
+##    reporting anything, and prefer a gate that has been SEEN to fail.
+
 ## ═══ ROUND 24d — 2026-08-08 EVENING: THE OUTAGE IS FIXED. TWO stacked causes, both OURS
 ## ═══ to fix, both shipped. READ docs/parity/PHOTO-BACKFILL-STATUS.md end to end — its
 ## ═══ final sections OVERRIDE everything below that says "only MLS Grid can fix it".

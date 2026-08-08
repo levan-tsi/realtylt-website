@@ -57,7 +57,24 @@ is about the gap between good and considered.
    an all-white logo variant for dark backgrounds, which this hero is, and that would be both
    permitted and far more elegant. Left alone because recolouring a third-party mark is a brand
    compliance question rather than a taste one, and it should be answered before it is shipped.
-7. **Three hero grammars across seven pages.** *(observation)* Home is left-aligned and full
+7. **The MAP toggle was dead on a phone.** *(fixed)* Tapping MAP at 390 turned the button black
+   and left the listing grid on screen. The map was never broken — it was unreachable. The
+   default view is already `map`, so an arriving phone visitor is in that branch with the toggle
+   already active, and the branch deliberately orders listings above the map so the first thing
+   seen is homes rather than pins. Both halves are reasonable; together they made a control that
+   promises a map and moves nothing, with the map **48,007px** further down on production. The
+   arrival order is kept and MAP now scrolls the map into view below `lg`.
+8. **The mortgage calculator showed raw digit runs.** *(fixed)* Seeded from a listing it read
+   `10299000` and `7920`, directly under a page header rendering `$10,299,000`. `type="number"`
+   cannot hold a comma, so the four money fields became text and group only while unfocused —
+   focusing shows the bare number, so separators never move under the caret.
+9. **Four `/plan` stage links were 16px tall.** *(fixed)* They clear WCAG 2.5.8 on the spacing
+   exception (211px to the nearest link), but the exception is about conformance and this is
+   about a thumb. `py-1` takes the box to 24px in space that was already empty.
+10. **The map legend overlaps the Google attribution at 390.** *(found, not fixed)* At that width
+    the FOR SALE / PENDING card sits over the "Google" wordmark bottom-left. Google's terms
+    require the attribution stay unobscured. Small fix, worth taking next round.
+11. **Three hero grammars across seven pages.** *(observation)* Home is left-aligned and full
    bleed; buying and home-value are centred and full height; who-we-are and connect are short
    centred banners; selling is the asymmetric one. Each is defensible alone. Together they mean
    the site does not have a hero language, and the strongest of them (selling) is the one used
