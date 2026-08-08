@@ -382,3 +382,18 @@ and storage.objects shows fresh uploads; 2) the standing 12-listing probe with
 in backfill-photos.mjs (skip on failure, never re-request a URL) BEFORE the sweep.
 Follow-up email drafted for the owner telling MLS Grid the trigger + suggesting their
 builder fall back to ResourceRecordKey before other consumers hit this on Sept 8.
+
+## Breakage #2, unmasked by fixing #1 (2026-08-08 ~17:20 UTC)
+
+The first post-fix sync tick (17:07) DOWNLOADED photos again — and failed every UPLOAD:
+storage answered `Invalid Compact JWS / AccessDenied` on all 28 attempts (Vercel runtime
+logs). The DEPLOYED `SUPABASE_SERVICE_ROLE_KEY` was stale/invalid; the local key passed an
+auth-proving test write (mime-rejection 415 = auth OK). The URL outage had been masking
+this completely — with every download 404ing, the upload step never ran.
+
+Fixed: production env var replaced with the verified local key (Vercel CLI, value never
+printed), redeployed via this commit. The sync reported `mirrorDebt: 82` — it tracks what
+it owes and catches up on subsequent ticks once uploads succeed. VERIFY after the next
+tick: `storage.objects` rows with `created_at` > deploy time, and the log line's
+`mirroredPhotos` > 0. If JWS errors persist, the key in Supabase itself was rotated again —
+mint a fresh service key in the dashboard and update BOTH .env.local and Vercel.
