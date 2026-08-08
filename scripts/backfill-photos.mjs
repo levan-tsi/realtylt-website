@@ -78,7 +78,11 @@ async function uploadPhoto(path, bytes, contentType) {
     try {
       const res = await fetch(`${SB_URL}/storage/v1/object/mls-photos/${path}`, {
         method: "POST",
-        headers: { apikey: SB_SERVICE, Authorization: `Bearer ${SB_SERVICE}`, "Content-Type": contentType, "x-upsert": "true" },
+        // Cache-Control matches lib/idx/storage.ts. Without it Supabase stores "no-cache" and every
+        // view of that photo re-transfers it from origin — the bucket is 114 GiB, so the omission
+        // was pure egress money. The objects this script already wrote are repaired by the
+        // metadata sweep in docs/parity/PHOTO-BACKFILL-STATUS.md.
+        headers: { apikey: SB_SERVICE, Authorization: `Bearer ${SB_SERVICE}`, "Content-Type": contentType, "x-upsert": "true", "Cache-Control": "public, max-age=31536000" },
         body: bytes,
         signal: AbortSignal.timeout(30000),
       });
@@ -120,31 +124,32 @@ let seen429 = 0;
 /** Thrown out of the worker pool to end the run — see MAX_429. */
 class RateLimited extends Error {}
 
+/** ONE request per URL, never a retry. MLS Grid's migrated media host issues SINGLE-USE signed
+ * URLs (docs read raw in round 24c): the first request consumes the signature, so a retry of the
+ * SAME url cannot succeed — it only burns rate-limit budget against a host that has already
+ * suspended this key six times. A failure is therefore a SKIP, not an error: the contiguous-prefix
+ * rule truncates that listing's mirrored count and the next slice re-fetches a FRESH url for it.
+ * That is why the caller's `if (!dl) continue` is the whole recovery path. */
 async function downloadPhoto(url) {
-  for (let attempt = 0; attempt <= 3; attempt++) {
-    await pace();
-    try {
-      const r = await fetch(url, { headers: { "User-Agent": MLS_TOKEN }, signal: AbortSignal.timeout(20000) });
-      if (r.ok) { bump("ok"); return { bytes: Buffer.from(await r.arrayBuffer()), contentType: r.headers.get("content-type") ?? "image/jpeg" }; }
-      if (r.status === 404 || r.status === 403) { bump(String(r.status)); return null; }
-      if (r.status === 429) {
-        if (++seen429 >= MAX_429) {
-          bump("429");
-          throw new RateLimited(`media.mlsgrid.com returned 429 ${seen429} times — stopping before the key is suspended`);
-        }
-        // Give the host real room, and slow every future request down too: being told to slow
-        // down once means the current rate is wrong, not that this one request was unlucky.
-        nextSlot = Math.max(nextSlot, Date.now() + Math.min(30000, 2000 * 2 ** attempt));
-        await sleep(Math.min(8000, 500 * 2 ** attempt));
+  await pace();
+  try {
+    const r = await fetch(url, { headers: { "User-Agent": MLS_TOKEN }, signal: AbortSignal.timeout(20000) });
+    if (r.ok) { bump("ok"); return { bytes: Buffer.from(await r.arrayBuffer()), contentType: r.headers.get("content-type") ?? "image/jpeg" }; }
+    bump(String(r.status));
+    if (r.status === 429) {
+      if (++seen429 >= MAX_429) {
+        throw new RateLimited(`media.mlsgrid.com returned 429 ${seen429} times — stopping before the key is suspended`);
       }
-      if (attempt === 3) bump(String(r.status));
-    } catch (e) {
-      if (e instanceof RateLimited) throw e;
-      if (attempt === 3) bump(e?.name === "TimeoutError" ? "timeout" : "neterr");
-      await sleep(500 * 2 ** attempt);
+      // Being told to slow down means the current rate is wrong, not that this request was
+      // unlucky — so every FUTURE start is pushed back, escalating with the count of 429s seen.
+      nextSlot = Math.max(nextSlot, Date.now() + Math.min(30000, 2000 * 2 ** Math.min(seen429 - 1, 4)));
     }
+    return null;
+  } catch (e) {
+    if (e instanceof RateLimited) throw e;
+    bump(e?.name === "TimeoutError" ? "timeout" : "neterr");
+    return null;
   }
-  return null;
 }
 
 // Prior mirror state (contiguous count + the modificationTimestamp it was built for), anon-read
