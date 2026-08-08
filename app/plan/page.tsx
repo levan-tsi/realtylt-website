@@ -87,7 +87,12 @@ export default function PlanPage() {
               <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">{s.body}</p>
               <Link
                 href={s.href}
-                className="mt-4 inline-block text-xs font-bold uppercase tracking-[0.14em] text-ink underline underline-offset-4 transition-colors hover:text-stone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                // py-1 lifts the box from 16px to 24px. These four clear WCAG 2.5.8 on the
+                // spacing exception alone (211px to the nearest other link at 390), but the
+                // exception is about conformance and this is about a thumb: 16px of uppercase
+                // 12px text is a fiddly thing to hit. The surrounding space is free, so the
+                // padding costs no layout and the underline stays on the text.
+                className="mt-3 inline-block py-1 text-xs font-bold uppercase tracking-[0.14em] text-ink underline underline-offset-4 transition-colors hover:text-stone focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 {s.label}
               </Link>
