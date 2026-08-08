@@ -344,3 +344,14 @@ any of their documentation. The ticket (Gmail draft, full un-redacted expired sp
 the cohort finding) is the fix. Untested long-shot noted for the owner only: the
 subscription page shows an unclicked "Accept AI Addendum" button — a legal agreement,
 HIS call, no evidence linking it to media.
+
+## Partial-backfill-now idea: tested and closed (2026-08-08, owner's suggestion)
+
+Reasonable theory — old listings' media might still mint healthy wave-1 URLs, letting the
+gallery gap finish now with new listings deferred. Measured (one paced probe, 3 random
+one-pic gallery-gap listings incl. one listed 2025-08-01): fresh pulls return
+/images/undefined/ on ALL their media, 3/3 listings, 60/60 photos. Minting is broken for
+everything it re-mints, old or new. The scattered healthy stored URLs belong to
+already-fully-mirrored listings (which is also why storage has zero uploads since Aug 5
+despite them). NO partial harvest exists — every cohort waits on MLS Grid's fix. Do not
+re-test this without new upstream evidence.
