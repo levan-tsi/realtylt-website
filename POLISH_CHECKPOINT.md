@@ -1,6 +1,42 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══ ROUND 24c — THE PHOTO SAGA, closed 2026-08-08 as far as OUR side can close it.
+## ═══ ROUND 24d — 2026-08-08 EVENING: THE OUTAGE IS FIXED. TWO stacked causes, both OURS
+## ═══ to fix, both shipped. READ docs/parity/PHOTO-BACKFILL-STATUS.md end to end — its
+## ═══ final sections OVERRIDE everything below that says "only MLS Grid can fix it".
+##
+## CAUSE 1 (the URL outage): the migrated feed builds MediaURL at RESPONSE TIME from the
+## PROJECTED document — SELECT_FIELDS lacked ListingKey → literal "undefined" in every
+## path since ~Aug 5. FIXED: ListingKey in SELECT_FIELDS (307458e), proven by $select A/B
+## (probe ?ids=…&media=1&fields=ListingKey), found by the adversarial second opinion
+## (docs/parity/PHOTO-OUTAGE-SECOND-OPINION.md) after 3 days of wrong upstream-only
+## diagnosis. Post-fix sync tick: 49/50 fresh rows healthy (2 stragglers carry stale
+## pre-fix arrays; they heal on their next feed touch).
+## CAUSE 2 (unmasked by fixing 1): the DEPLOYED SUPABASE_SERVICE_ROLE_KEY was dead —
+## every upload 400'd "Invalid Compact JWS" while downloads finally worked. FIXED:
+## production env var replaced with the locally-verified key (352303f redeployed it).
+## VERIFY FIRST THING NEXT SESSION: storage.objects has rows with created_at after
+## 2026-08-08 ~17:30 UTC and the idx-sync log line shows mirroredPhotos > 0 — if JWS
+## errors persist, mint a fresh service key in Supabase and update BOTH .env.local and
+## Vercel. The sync self-tracks mirrorDebt (82 at last look) and catches up hourly.
+##
+## ═══ THE RESTART LADDER (next session, in order) ══════════════════════════════════════
+## 0. Verify cause-2 fix (above). Gates green (tsc, 869 tests).
+## 1. backfill-photos.mjs FIRST GETS THE SINGLE-USE FIX: a failed download must SKIP (fresh
+##    URL next slice), never re-request the same URL (their URLs are single-use now).
+## 2. The standing 12-listing probe (--max-429 1). A 429 was seen on 08-08 — ANY 429 =
+##    stop for the day, no exceptions.
+## 3. Covers-only sweep (--covers-only --max-pages 999 --max-listings 999999 --max-429 1):
+##    ~1,300 covers ≈ 30-40 min paced — every listing visible in search after this.
+## 4. Galleries --cap 8: ~10k one-photo listings × ~7 photos ≈ 70k downloads ≈ 10-12h of
+##    paced 2/sec work. Resumable chunks; OR let the hourly sync's own mirror grind the
+##    tail over ~a week with zero sessions. Storage note: +~20 GB — do the covers-keep
+##    prune (round-24b decision, keeps photo 0 of off-market rows) to claw ~10 GB back.
+## 5. /api/media's stored-URL proxy fallback violates single-use — remove/gate before
+##    Sept 8. Cache-Control metadata sweep for the 410k no-cache objects still queued.
+## Owner's MLS Grid thread: outage report sent 08-08; "RESOLVED on our side" follow-up
+## draft is in his Gmail explaining the ListingKey trigger for their Sept 8 cutover.
+
+## ═══ ROUND 24c — THE PHOTO SAGA (superseded above; kept for the evidence trail).
 ## ═══ Full evidence: docs/parity/PHOTO-BACKFILL-STATUS.md (the runner's state + the
 ## ═══ confirmed diagnosis) and docs/parity/PHOTO-AUDIT-2026-08-07.md (the storage audit).
 ##
