@@ -280,21 +280,23 @@ body.rlt-quiz-open .rlt-panel {
    14px exactly. Selects are included so a form's dropdown does not end up visibly smaller
    than the inputs beside it.
 
-   Opt a control out with .rlt-compact-control when its size is load-bearing — the /search
-   filter row is a scrolling strip of slim uppercase dropdowns and 16px would blow it out.
+   There WAS one opt-out, .rlt-compact-control, held by the seven /search filter dropdowns
+   (BED, BATH, MIN/MAX PRICE, SQFT, TYPE, SORT) because that row used to be a horizontally
+   scrolling strip that 16px would have blown out. Round 24b rebuilt the row as a stacked
+   two-column grid, which retired the reason without retiring the rule — so the primary
+   surface's primary controls still zoomed the page on every tap on an iPhone. Re-measured at
+   16px on production at BOTH 390 and 320: horizontal overflow stays 0, no label clips
+   (scrollWidth never exceeds clientWidth), the controls grow 33px to 37px tall — a better tap
+   target — and the whole form costs 12px of extra height. So the opt-out is gone rather than
+   granted a new excuse, and no control on this site is exempt from the floor.
 
    These rules are deliberately unlayered: Tailwind utilities live in @layer utilities, and
-   unlayered styles win over layered ones, so `text-sm` on the element does not fight this.
-   The opt-out then uses revert-layer to hand the control back to whatever Tailwind class it
-   carries, rather than hard-coding a size here that would drift. */
+   unlayered styles win over layered ones, so `text-sm` on the element does not fight this. */
 @media (max-width: 767px) {
   input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="range"]),
   textarea,
   select {
     font-size: 16px;
-  }
-  .rlt-compact-control {
-    font-size: revert-layer;
   }
 }
 

@@ -385,9 +385,11 @@ const placeKey = (f: Filters) => `${f.county}|${f.city}|${f.q}|${f.rental}`;
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
-  // rlt-compact-control: keep the slim 12px size on a phone. The global mobile 16px floor
-  // (globals.css, iOS focus-zoom) would turn this scrolling strip into a wall.
-  "rlt-compact-control cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
+  // These take the global mobile 16px floor (globals.css) like every other control. They used
+  // to opt out of it via .rlt-compact-control, back when this row scrolled horizontally; since
+  // round 24b stacked it into a grid, 16px measures clean at 390 and 320 and the opt-out was
+  // only costing an iOS focus-zoom on every tap. Desktop still renders these at text-xs.
+  "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
