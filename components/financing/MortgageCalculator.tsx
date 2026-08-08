@@ -27,15 +27,23 @@ const DEFAULTS: MortgageInput = {
 
 // Input constraints match the live financing calculator: term 1-30, down 1-99% (step .125),
 // rate 1-10% (step .125), HOA/insurance/price/tax >= 0.
-const FIELDS: { key: keyof MortgageInput; label: string; step?: number; min?: number; max?: number }[] = [
-  { key: "price", label: "Price ($)", min: 0 },
-  { key: "annualTax", label: "Annual tax ($)", min: 0 },
+// `money` marks the fields that hold an amount rather than a rate or a count. Those are the
+// only ones that get thousands separators: seeded from a listing, Price reads 10299000, and at
+// eight digits nobody can tell that from 1029900 at a glance. Terms, percentages and small
+// monthly figures are legible bare and keep their native number spinners.
+const FIELDS: { key: keyof MortgageInput; label: string; step?: number; min?: number; max?: number; money?: boolean }[] = [
+  { key: "price", label: "Price ($)", min: 0, money: true },
+  { key: "annualTax", label: "Annual tax ($)", min: 0, money: true },
   { key: "termYears", label: "Loan term (years)", min: 1, max: 30 },
   { key: "downPct", label: "Down payment (%)", step: 0.125, min: 1, max: 99 },
   { key: "ratePct", label: "Interest rate (%)", step: 0.125, min: 1, max: 10 },
-  { key: "monthlyHoa", label: "Monthly HOA ($)", min: 0 },
-  { key: "monthlyInsurance", label: "Monthly insurance ($)", min: 0 },
+  { key: "monthlyHoa", label: "Monthly HOA ($)", min: 0, money: true },
+  { key: "monthlyInsurance", label: "Monthly insurance ($)", min: 0, money: true },
 ];
+
+/** Grouped for reading, e.g. 10299000 -> "10,299,000". No currency symbol: the label carries
+ * the ($) already, and a symbol inside the field would have to be typed around. */
+const grouped = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 2 });
 
 const money = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
@@ -46,6 +54,8 @@ export function MortgageCalculator({
 }: { initial?: Partial<MortgageInput>; variant?: "donut" | "bar" } = {}) {
   const seeded = { ...DEFAULTS, ...initial };
   const [values, setValues] = useState<MortgageInput>(seeded);
+  // Which money field is being edited, so only that one drops its separators.
+  const [focused, setFocused] = useState<keyof MortgageInput | null>(null);
   const r = calcMortgage(values);
 
   /* Live: monochrome breakdown — one hue (black) at graduating opacity. `stroke` draws the
@@ -82,17 +92,32 @@ export function MortgageCalculator({
               >
                 {f.label}
               </label>
+              {/* A money field is type=text because type=number cannot hold a comma. It shows
+                  grouped digits only while it is NOT focused, so the separators never appear or
+                  move under the caret mid-edit and there is no caret arithmetic to get wrong:
+                  focusing swaps to the bare number, blurring swaps back. */}
               <input
                 id={`calc-${f.key}`}
-                type="number"
+                type={f.money ? "text" : "number"}
                 inputMode="decimal"
-                min={f.min ?? 0}
-                max={f.max}
-                step={f.step ?? 1}
-                value={Number.isNaN(values[f.key]) ? "" : values[f.key]}
-                onChange={(e) =>
-                  setValues((v) => ({ ...v, [f.key]: e.target.value === "" ? NaN : Number(e.target.value) }))
+                {...(f.money
+                  ? {}
+                  : { min: f.min ?? 0, max: f.max, step: f.step ?? 1 })}
+                value={
+                  Number.isNaN(values[f.key])
+                    ? ""
+                    : f.money && focused !== f.key
+                      ? grouped(values[f.key])
+                      : values[f.key]
                 }
+                onFocus={f.money ? () => setFocused(f.key) : undefined}
+                onBlur={f.money ? () => setFocused(null) : undefined}
+                onChange={(e) => {
+                  // Strip anything that is not part of a non-negative number, so a pasted
+                  // "$1,250,000" lands as 1250000 and a typed "-" cannot get in.
+                  const raw = f.money ? e.target.value.replace(/[^\d.]/g, "") : e.target.value;
+                  setValues((v) => ({ ...v, [f.key]: raw === "" ? NaN : Number(raw) }));
+                }}
                 className="w-full border-0 border-b border-paper/40 bg-transparent px-0 py-1.5 text-sm text-paper transition-colors focus:border-paper focus:outline-none"
               />
             </div>
