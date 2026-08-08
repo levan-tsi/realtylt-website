@@ -308,3 +308,17 @@ again, then the 12-listing probe, then covers-only, then `--cap 8`, per the plan
 Separately recovered today with zero MLS traffic: 240 listings / 959 already-mirrored
 photos that were miscounted as unservable (photos_servable + photosMirrored reconciled
 against storage.objects; spot-verified serving deep gallery indexes on production).
+
+## Docs verbatim read (2026-08-08, owner asked): one new operational rule
+
+docs.mlsgrid.com "Media Files", read raw: URLs are **single-use** ("the URL may be used to
+download its image only once. A second request using the same URL will fail"), on top of
+signed + 1h expiry, and "any modification… will invalidate it" (their words for our 403
+test). Their migration paragraph directs CDN/transition issues to support@mlsgrid.com —
+the ticket's address is confirmed right.
+
+**For the restart:** backfill-photos.mjs retries a failed download with the SAME URL
+(the Cloudflare-socket retry loop). Under single-use, that retry burns a request to fail.
+Change before the next run: on download failure, skip the photo and let a later slice
+re-pull a fresh URL for it. Also confirms our architecture is the required one (mirror
+once, serve own copies, never hotlink) — nothing to change there.
