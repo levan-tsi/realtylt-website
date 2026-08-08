@@ -109,7 +109,11 @@ export default async function SellingPage() {
             {/* Trust bar: the Google wordmark image (self-hosted) + gold 5.0 stars, then
                 Fast Response / Free Consultation behind faint dividers (live parity). */}
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-paper/85">
-              <span className="flex items-center gap-2">
+              {/* The three items measure ~423px against 358px of usable width at 390, so one
+                  always wraps and it was "Free Consultation" landing alone on line two looking
+                  like a mistake. Giving the rating the full row below sm makes the break a
+                  decision instead: rating, then both claims together on one line. */}
+              <span className="flex basis-full items-center gap-2 sm:basis-auto">
                 <GoogleLogo height={20} className="translate-y-px" /> <Stars />{" "}
                 <strong className="text-paper">5.0</strong>
               </span>

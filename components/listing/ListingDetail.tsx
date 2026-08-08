@@ -440,7 +440,7 @@ export async function ListingDetail({ id }: { id: string }) {
                       alt="Levan Tsiklauri"
                       fill
                       sizes="56px"
-                      className="object-cover object-top"
+                      className="object-cover object-top grayscale"
                     />
                   </span>
                   <div>

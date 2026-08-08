@@ -25,7 +25,7 @@ export function AuthorCard({ author }: { author: string }) {
             alt={`${author}, RealtyLT`}
             fill
             sizes="64px"
-            className="object-cover"
+            className="object-cover grayscale"
           />
         </div>
         <div className="min-w-0">

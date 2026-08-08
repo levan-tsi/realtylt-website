@@ -31,7 +31,7 @@ export function ServiceLead({ service }: { service: Service }) {
                 alt=""
                 fill
                 sizes="64px"
-                className="object-cover object-top"
+                className="object-cover object-top grayscale"
               />
             </div>
             <div>

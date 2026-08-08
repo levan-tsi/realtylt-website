@@ -69,7 +69,7 @@ export default async function HomeValuePage({
             <HomeValueForm defaultAddress={address} />
           </div>
           <p className="mx-auto mt-6 max-w-xl text-[21px] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
-            Join the homeowners across the Hudson Valley and NYC in finding your home&rsquo;s value
+            Fifteen comparable sales, read by a person. Usually back within a day.
           </p>
         </div>
       </section>

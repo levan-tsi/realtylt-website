@@ -64,7 +64,11 @@ export default function ConnectPage() {
               // Next logged "width or height modified, but not the other" on every visit.
               width={300}
               height={400}
-              className="h-auto w-full max-w-[300px] rounded-2xl"
+              // Greyscale to match every other photograph on the site, including the SAME
+              // portrait on /who-we-are. In colour it was the one saturated image on a
+              // monochrome site, and it sat a few hundred pixels from its own desaturated
+              // copy in the booking panel.
+              className="h-auto w-full max-w-[300px] rounded-2xl grayscale"
             />
             <p className="t-h3 mt-5 text-ink">Levan Tsiklauri</p>
             <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
@@ -94,11 +98,15 @@ export default function ConnectPage() {
                 focusing it hands focus to the EMBEDDED document, so :focus-visible never
                 matches out here and we cannot style across the origin. The titled frame plus
                 the "Open the booking page directly" link below it are the way out. */}
+            {/* Height is per-width because the embed's own content is: measured by loading the
+                booking URL directly, it needs 1031px at 390 (the three appointment cards stack)
+                and 900px from 768 up. The old flat 899 clipped the third card mid-sentence on a
+                phone. It does scroll internally there, but a nested scroller inside a page is a
+                bad way to find out a card exists. */}
             <iframe
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"
-              className="w-full border-0"
-              style={{ height: 899 }}
+              className="h-[1040px] w-full border-0 md:h-[899px]"
               loading="lazy"
             />
             <p className="mt-3 text-xs text-stone">
