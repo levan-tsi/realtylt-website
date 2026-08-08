@@ -1,5 +1,54 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 24c — THE PHOTO SAGA, closed 2026-08-08 as far as OUR side can close it.
+## ═══ Full evidence: docs/parity/PHOTO-BACKFILL-STATUS.md (the runner's state + the
+## ═══ confirmed diagnosis) and docs/parity/PHOTO-AUDIT-2026-08-07.md (the storage audit).
+##
+## ── THE OUTAGE IS UPSTREAM AND ONLY MLS GRID CAN FIX IT ──────────────────────────────
+## Since ~Aug 5 every fresh MediaURL carries literal "undefined" where KEY<ResourceRecord-
+## Key> belongs → 404 NoSuchKey. Verified first-hand: our sync maps MediaURL VERBATIM
+## (plain $expand=Media, no inner $select); their media schema migrated (hex MediaKeys
+## appeared) and their URL builder reads a dead field; signatures BIND THE PATH (a
+## corrected path flips 404 → 403, tested once with a fresh token) so NO downstream repair
+## exists. Media Access setting is CORRECT ("Pulling photo URL") — a wrong claim that it
+## was unset is retracted in the status doc; do not chase it. Account Active, not
+## suspended. LAST CHECKED 2026-08-08 15:07 UTC: still broken (fresh probe, 3/3 undefined;
+## sync-hour trend ~88% malformed — the few healthy URLs are OLD media records, not a
+## rollout). THE TICKET IS WITH THE OWNER — draft handed to him 2026-08-07; confirm he
+## filed it before doing anything else photo-related.
+##
+## ── WHAT WAS RECOVERED WITHOUT MLS (done, verified) ──────────────────────────────────
+## · 240 listings / 959 ALREADY-DOWNLOADED photos were miscounted as unservable —
+##   photos_servable + listing.photosMirrored reconciled against storage.objects truth
+##   (contiguous-prefix rule); deep gallery indexes spot-verified serving real JPEGs on
+##   production (KEY1003981/25, KEY981324/47, KEY000018/40).
+## · The probe endpoint gained ?ids=…&media=1 (raw media records, ≤3/row, secret-gated) —
+##   the instrument for "what is the feed sending RIGHT NOW", one paced request.
+##
+## ── PHOTO WORK QUEUED FOR THE NEXT SESSION (no MLS traffic needed except the restart) ─
+## 1. CHECK UPSTREAM FIRST (zero downloads): `node scripts/backfill-photos.mjs --dry-run
+##    --max-pages 1 --max-listings 5` must show /images/KEY…/ paths. Only then: 12-listing
+##    probe → covers-only sweep → --cap 8 galleries (owner's depth). ALL standing rules:
+##    --max-429 1 = stop for the day, rps 2, ONE runner, watermark notes in the status doc.
+## 2. CACHE MONEY LEAK (auditor, do regardless of upstream): backfill-photos.mjs uploads
+##    send NO Cache-Control (lib/idx/storage.ts already sends public,max-age=31536000) —
+##    add the header to the script; then the 410k EXISTING objects serve cache-control:
+##    no-cache (verified on production fetches) — fix via storage.objects.metadata
+##    cacheControl update in SQL: TEST ON ONE OBJECT, verify the served header changes,
+##    then bulk. 114.79 GiB re-transferring on every view is real egress money.
+## 3. OWNER DECISIONS: prune 10.73 GiB of inactive-row photos (deletion — his call);
+##    storage is 114.79 GiB, past Pro's included 100 GB (overage running).
+## 4. Optional: 10 rows hold photos at idx≥1 with no cover (backfill fixes when upstream
+##    heals); 8,933 rows serve via the storage-probe branch (photosMirrored=0 in jsonb) —
+##    a jsonb reconcile would save a storage HEAD per photo request.
+##
+## ── LESSONS BANKED (brain repo) ──────────────────────────────────────────────────────
+## [[infra-mlsgrid-mediaurl-undefined-outage]] · [[verify-ui-state-needs-the-control-read]]
+## · [[verify-time-window-guard-fails-cross-env]] · [[verify-overlay-stacking-by-hit-test]]
+## The pattern the owner caught TWICE: an inference presented as an observation. Re-measure
+## before relaying any subagent claim, and never assert a UI control's state without
+## reading the control.
+
 ## ═══ ROUND 24b — DONE 2026-08-07 (same session as 24). His five follow-up notes, shipped
 ## ═══ and re-proven on PRODUCTION. 5 commits. READ THE ROUND-25 BRIEF AT THE BOTTOM OF THIS
 ## ═══ BLOCK — the owner's instruction is that the next agent CHECKS THIS ROUND'S WORK first.
