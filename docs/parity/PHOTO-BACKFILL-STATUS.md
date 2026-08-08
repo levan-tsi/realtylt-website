@@ -355,3 +355,30 @@ everything it re-mints, old or new. The scattered healthy stored URLs belong to
 already-fully-mirrored listings (which is also why storage has zero uploads since Aug 5
 despite them). NO partial harvest exists — every cohort waits on MLS Grid's fix. Do not
 re-test this without new upstream evidence.
+
+## ═══ RESOLVED ON OUR SIDE — 2026-08-08. The adversarial second opinion found it. ═══
+
+The three-day "only MLS Grid can fix it" conclusion was WRONG. Root cause: the migrated
+feed builds each MediaURL at RESPONSE TIME as /images/<ListingKey>/<file>, read from the
+PROJECTED Property document — and SELECT_FIELDS never included ListingKey, so every
+response since their early rollout (~Aug 5) carried "undefined" in the path. Proven by
+controlled A/B (same listing, seconds apart, only $select differing), replicated
+independently in the main session before shipping. Fix: "ListingKey" added to
+SELECT_FIELDS (commit 307458e). Stored ids unchanged. Full analysis:
+docs/parity/PHOTO-OUTAGE-SECOND-OPINION.md.
+
+Why every earlier pass missed it: "our request shape" was ELIMINATED BY READING DOCS
+(plain $expand=Media is documented as fine) instead of by EXPERIMENT. A response-time
+builder reading the projection is invisible to document reasoning; only the A/B could
+surface it. The reviewer also found: no collateral field damage from their migration
+(full jsonb key diff, fill rates flat), zero-photo growth is ~60/day not 150-250, and
+/api/media's stored-URL proxy fallback (route line ~176) violates the new single-use
+rule — REMOVE OR GATE IT BEFORE SEPT 8 (queued).
+
+RESTART LADDER (next session): the media host answered 429 to the reviewer's single byte
+fetch, so no downloads today. 1) confirm the hourly sync now stores /images/KEY…/ URLs
+and storage.objects shows fresh uploads; 2) the standing 12-listing probe with
+--max-429 1; 3) covers-only sweep; 4) --cap 8 galleries. Plus the single-use retry fix
+in backfill-photos.mjs (skip on failure, never re-request a URL) BEFORE the sweep.
+Follow-up email drafted for the owner telling MLS Grid the trigger + suggesting their
+builder fall back to ResourceRecordKey before other consumers hit this on Sept 8.
