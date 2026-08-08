@@ -114,8 +114,12 @@ export function MortgageCalculator({
                 onBlur={f.money ? () => setFocused(null) : undefined}
                 onChange={(e) => {
                   // Strip anything that is not part of a non-negative number, so a pasted
-                  // "$1,250,000" lands as 1250000 and a typed "-" cannot get in.
-                  const raw = f.money ? e.target.value.replace(/[^\d.]/g, "") : e.target.value;
+                  // "$1,250,000" lands as 1250000 and a typed "-" cannot get in. Only the
+                  // FIRST dot survives: without that, typing a second one makes Number()
+                  // return NaN and the field blanks itself under the caret.
+                  const raw = f.money
+                    ? e.target.value.replace(/[^\d.]/g, "").replace(/^(\d*\.?)|\./g, "$1")
+                    : e.target.value;
                   setValues((v) => ({ ...v, [f.key]: raw === "" ? NaN : Number(raw) }));
                 }}
                 className="w-full border-0 border-b border-paper/40 bg-transparent px-0 py-1.5 text-sm text-paper transition-colors focus:border-paper focus:outline-none"
