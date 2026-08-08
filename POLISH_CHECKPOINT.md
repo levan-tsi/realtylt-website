@@ -36,8 +36,14 @@
 ##    no-cache (verified on production fetches) — fix via storage.objects.metadata
 ##    cacheControl update in SQL: TEST ON ONE OBJECT, verify the served header changes,
 ##    then bulk. 114.79 GiB re-transferring on every view is real egress money.
-## 3. OWNER DECISIONS: prune 10.73 GiB of inactive-row photos (deletion — his call);
-##    storage is 114.79 GiB, past Pro's included 100 GB (overage running).
+## 3. PRUNE = KEEP COVERS, NOT FULL DELETE (owner decided 2026-08-08, CMA context): of the
+##    10.73 GiB of inactive-row photos, keep each listing's photo 0 (owner floated 1-5;
+##    start with 1) and delete the rest — sold comps in the CRM's CMA live link need a
+##    non-empty image, and [[cma-sold-photos-policy-not-bug]] is WHY they have none today.
+##    ALSO change cleanupOffMarketPhotos to keep photo 0 going forward (same reason).
+##    Compliance gate: the CRM session must confirm sold-photo DISPLAY is allowed on the
+##    shareable CMA link before it ships there. Storage is 114.79 GiB, past Pro's included
+##    100 GB — the covers-keep prune recovers most of the overage.
 ## 4. Optional: 10 rows hold photos at idx≥1 with no cover (backfill fixes when upstream
 ##    heals); 8,933 rows serve via the storage-probe branch (photosMirrored=0 in jsonb) —
 ##    a jsonb reconcile would save a storage HEAD per photo request.
