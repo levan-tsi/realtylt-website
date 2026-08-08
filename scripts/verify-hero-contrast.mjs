@@ -49,6 +49,22 @@ for (const path of PAGES) {
   const p = await c.newPage();
   await p.goto(base + path, { waitUntil: "domcontentloaded", timeout: 60000 });
   await p.waitForTimeout(4500);
+  // Settle the paint before measuring. A hero photo that has not decoded yet leaves the scrim
+  // over an empty box, and text scored against THAT is scored against a background the visitor
+  // never sees: one batch run flagged the home hero's white SEARCH button at 1.01:1, and two
+  // re-runs of the same page passed. Waiting for fonts and for every in-viewport image to
+  // report complete removes that whole class of false finding.
+  await p.evaluate(async () => {
+    await document.fonts.ready;
+    const imgs = [...document.images].filter((i) => {
+      const r = i.getBoundingClientRect();
+      return r.width > 0 && r.top < innerHeight && r.bottom > 0;
+    });
+    await Promise.all(
+      imgs.map((i) => (i.complete ? null : new Promise((res) => { i.addEventListener("load", res, { once: true }); i.addEventListener("error", res, { once: true }); }))),
+    );
+  });
+  await p.waitForTimeout(600);
 
   // SELF-TEST HOOK. A gate that has never been seen to fail is not evidence. BREAK_CSS injects a
   // deliberate regression so the probe can be shown catching one on demand, e.g.
@@ -97,21 +113,37 @@ for (const path of PAGES) {
     return out;
   }, H);
 
-  const withText = await p.screenshot();
-  await p.evaluate(() => {
-    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    const els = new Set();
-    for (let n = walk.nextNode(); n; n = walk.nextNode()) if (n.textContent.trim().length >= 2 && n.parentElement) els.add(n.parentElement);
-    for (const el of els) el.style.setProperty("color", "transparent", "important");
-  });
-  await p.waitForTimeout(500);
-  const noText = await p.screenshot();
+  /** One with-text / without-text pair. Repeatable, because a failure gets re-measured before
+   * it is believed: the elements this hides are tagged so the page can be put back exactly. */
+  const capturePair = async () => {
+    await p.evaluate(() => {
+      for (const el of document.querySelectorAll("[data-rlt-hidden]")) {
+        el.style.removeProperty("color");
+        el.removeAttribute("data-rlt-hidden");
+      }
+    });
+    await p.waitForTimeout(250);
+    const withText = await p.screenshot();
+    await p.evaluate(() => {
+      const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const els = new Set();
+      for (let n = walk.nextNode(); n; n = walk.nextNode()) if (n.textContent.trim().length >= 2 && n.parentElement) els.add(n.parentElement);
+      for (const el of els) { el.style.setProperty("color", "transparent", "important"); el.setAttribute("data-rlt-hidden", "1"); }
+    });
+    await p.waitForTimeout(500);
+    const noText = await p.screenshot();
+    return [
+      await sharp(withText).raw().toBuffer({ resolveWithObject: true }),
+      await sharp(noText).raw().toBuffer({ resolveWithObject: true }),
+    ];
+  };
 
-  const A = await sharp(withText).raw().toBuffer({ resolveWithObject: true });
-  const B = await sharp(noText).raw().toBuffer({ resolveWithObject: true });
+  let [A, B] = await capturePair();
   const { width: iw, channels: ch } = A.info;
 
-  for (const it of items) {
+  /** Score one text run against the current capture pair. Returns null when the run painted
+   * nothing visible (hidden or clipped text), which is how those drop out without a skip list. */
+  const measure = (it) => {
     const x1 = Math.min(A.info.width, it.box.x + it.box.w);
     const y1 = Math.min(A.info.height, it.box.y + it.box.h);
     const bgLums = [];
@@ -124,8 +156,7 @@ for (const path of PAGES) {
         if (d > 60) bgLums.push(lum(B.data[i], B.data[i + 1], B.data[i + 2]));
       }
     }
-    if (bgLums.length < 6) continue; // painted nothing visible -> not a real text run
-    measured++;
+    if (bgLums.length < 6) return null;
     bgLums.sort((a, z) => a - z);
     const pick = (q) => bgLums[Math.min(bgLums.length - 1, Math.floor(bgLums.length * q))];
     // Composite the (possibly translucent) text over the background, then score worst case.
@@ -138,10 +169,41 @@ for (const path of PAGES) {
     // Evaluate at both tails and keep the worse — correct whether the text is light or dark.
     const lo = pick(0.05), hi = pick(0.95);
     const toRGB = (l) => [Math.round(255 * l ** (1 / 2.2)), Math.round(255 * l ** (1 / 2.2)), Math.round(255 * l ** (1 / 2.2))];
-    const cr = Math.min(score(lo, toRGB(lo)), score(hi, toRGB(hi)));
+    return { cr: Math.min(score(lo, toRGB(lo)), score(hi, toRGB(hi))), bgLums };
+  };
+
+  const suspects = [];
+  for (const it of items) {
+    const m = measure(it);
+    if (!m) continue;
+    measured++;
+    if (m.cr < (it.large ? 3 : 4.5)) suspects.push(it);
+  }
+
+  // CONFIRM BEFORE REPORTING. A hero whose reveal or photo has not settled paints the text over
+  // the wrong background for a frame, and that produced an intermittent 1.0-1.2:1 on the home
+  // hero's WHITE search button — whose true value is 21:1 — on roughly one sweep in three,
+  // while the same page measured alone always passed. A gate that cries wolf gets ignored, so a
+  // suspect is re-captured after a further settle and only kept if it fails twice.
+  if (suspects.length) {
+    await p.waitForTimeout(2500);
+    [A, B] = await capturePair();
+  }
+  for (const it of suspects) {
+    const m = measure(it);
+    if (!m) continue;
+    const cr = m.cr;
+    const bgLums = m.bgLums;
     const floor = it.large ? 3 : 4.5;
     if (cr < floor) {
-      rows.push({ path, cr: Math.round(cr * 100) / 100, floor, size: Math.round(it.size), text: it.text, fg: it.fg });
+      rows.push({
+        path, cr: Math.round(cr * 100) / 100, floor, size: Math.round(it.size), text: it.text, fg: it.fg,
+        // Where and how much, so a failure can be re-cropped and looked at rather than argued
+        // about — a bare ratio cannot distinguish a real one from a paint race.
+        at: `${it.box.x},${it.box.y} ${Math.round(it.box.w)}x${Math.round(it.box.h)}`,
+        px: bgLums.length,
+        bg: `p05=${bgLums[Math.floor(bgLums.length * 0.05)].toFixed(3)} p95=${bgLums[Math.floor(bgLums.length * 0.95)].toFixed(3)}`,
+      });
     }
   }
   await c.close();
@@ -155,7 +217,7 @@ else {
   console.log(`${rows.length} BELOW their AA floor (worst first):\n`);
   for (const r of rows) {
     const fg = `rgba(${r.fg.r},${r.fg.g},${r.fg.b},${r.fg.a.toFixed(2)})`;
-    console.log(`${r.cr.toFixed(2)}:1 (needs ${r.floor})  ${r.path.padEnd(12)} ${(r.size + "px").padEnd(6)} ${fg.padEnd(24)} "${r.text}"`);
+    console.log(`${r.cr.toFixed(2)}:1 (needs ${r.floor})  ${r.path.padEnd(12)} ${(r.size + "px").padEnd(6)} ${fg.padEnd(24)} "${r.text}"  @${r.at} glyphpx=${r.px} bg ${r.bg}`);
   }
 }
 process.exit(rows.length ? 1 : 0);
