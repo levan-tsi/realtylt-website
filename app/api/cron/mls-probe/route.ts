@@ -130,10 +130,11 @@ export async function GET(req: Request) {
         throw new Error("request kept failing after removing rejected fields");
       });
       // ?media=1 (round 24c): return the first few RAW media records instead of only the
-      // count. Exists to diagnose the /images/undefined/ outage — the healthy URL shape is
-      // /images/<MediaKey>/<file>.jpeg, so seeing whether the feed still POPULATES MediaKey
-      // (while its own URL builder substitutes undefined) decides between a sync-side URL
-      // repair and an upstream ticket. Diagnostic-only, secret-gated, ≤3 records per row.
+      // count. Built to diagnose the /images/undefined/ outage, and it did — the healthy
+      // URL shape is /images/<ListingKey>/<file>.jpeg (NOT MediaKey, as this comment first
+      // claimed), built by the feed AT RESPONSE TIME from the projected Property document.
+      // Pair with ?fields=ListingKey for the A/B that found the fix: a $select without
+      // ListingKey gets "undefined" in every path. Diagnostic-only, secret-gated, ≤3/row.
       const withMedia = q.get("media") === "1";
       const out = rows.map(({ Media, ...rest }) => ({
         ...rest,

@@ -83,6 +83,14 @@ interface ResoProperty {
  * from zip centroids instead). fetchPage still self-heals if the subscription changes:
  * any $select field the API 400s on is dropped exactly as named and logged. */
 const SELECT_FIELDS = [
+  // ListingKey is LOAD-BEARING FOR PHOTOS since MLS Grid's media.mlsgrid.com migration
+  // (their early rollout hit this feed ~2026-08-05): the feed now builds each MediaURL AT
+  // RESPONSE TIME as /images/<ListingKey>/<file> read from the PROJECTED Property document,
+  // so a $select without ListingKey gets the literal string "undefined" in every photo path
+  // (404 NoSuchKey). Proven by controlled A/B — same listing, seconds apart, only $select
+  // differing — after three days of misdiagnosing it as an upstream-only defect. Stored ids
+  // are unaffected (mapProperty uses ListingId ?? ListingKey, and ListingId is present).
+  "ListingKey",
   "ListingId", "StreetNumber", "StreetDirPrefix", "StreetName", "StreetSuffix",
   "StreetDirSuffix", "UnitNumber", "City", "PostalCity", "StateOrProvince",
   "PostalCode", "CountyOrParish", "ListPrice", "BedroomsTotal", "BathroomsTotalInteger",
