@@ -436,6 +436,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // hovering/focusing a card highlights its chip. Shared so panel and map stay in sync.
   const [activeId, setActiveId] = useState<string | null>(null);
   const cardRefs = useRef<Map<string, HTMLLIElement | null>>(new Map());
+  // The map panel, so the MAP toggle can take a phone visitor to it — see the toggle's onClick.
+  const mapPanelRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLUListElement>(null); // the scrollable results column (map view)
   const resultsTopRef = useRef<HTMLDivElement>(null); // sentinel above the results
   // NYC boroughs sit behind a secondary expander so the default view stays scoped to the six
@@ -1261,7 +1263,23 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 key={v}
                 type="button"
                 aria-pressed={filters.view === v}
-                onClick={() => apply({ view: v, page: filters.page })}
+                onClick={() => {
+                  apply({ view: v, page: filters.page });
+                  // On a phone, MAP looked broken. The default view IS "map" already, and this
+                  // branch deliberately puts the listings above the map so an arriving visitor
+                  // sees homes rather than a field of pins — which means tapping MAP changed no
+                  // state and moved nothing, while the map sat ~150 cards further down. The
+                  // toggle promises a map, so it now delivers one. Desktop is untouched: there
+                  // the map is already beside the results.
+                  if (v !== "map" || typeof window === "undefined") return;
+                  if (!window.matchMedia("(max-width: 1023px)").matches) return;
+                  const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                  // A frame of slack so the panel exists when the view actually did change.
+                  setTimeout(
+                    () => mapPanelRef.current?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" }),
+                    60,
+                  );
+                }}
                 className={`px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
                   filters.view === v ? "bg-ink text-paper" : "bg-white text-stone hover:text-ink"
                 }`}
@@ -1353,7 +1371,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               map below the results too), so the first thing a phone visitor sees is homes rather
               than a field of pins. The view toggle is the map-first route. Desktop is unchanged:
               the map sticks beside the results column. */}
-          <div className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[84vh]">
+          <div
+            ref={mapPanelRef}
+            className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[84vh]"
+          >
             <MapView
               pins={mapPins}
               selectedId={activeId}
