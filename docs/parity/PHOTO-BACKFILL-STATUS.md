@@ -322,3 +322,25 @@ the ticket's address is confirmed right.
 Change before the next run: on download failure, skip the photo and let a later slice
 re-pull a fresh URL for it. Also confirms our architecture is the required one (mirror
 once, serve own copies, never hotlink) — nothing to change there.
+
+## Full docs sweep + mechanism proof (2026-08-08, owner asked for the no-stone-unturned pass)
+
+Read: llms.txt (complete page index), master.md Media Files (verbatim), the migration
+notice ("Upcoming Changes to Media Delivery", single hard cutover Sept 8 noon MT, no
+published early waves), "Changes to MLS Grid Media Access" (the June-1 User-Agent rule —
+we comply, proven by Aug 5's 25k downloads), the OneKey field-change notice (March 2025
+cosmetic renames — unrelated), api-version-2.0.md (only /v2 exists; "Prefixed KeyField
+Values" defines the KEY<native> scheme the URL segment uses; Media section: "media never
+updates and retains the original Media URL" — the PATH is minted once at media creation,
+only token/expires re-sign per response).
+
+That last sentence predicted the decisive split, and the DB confirmed it: listings that
+entered the market ON/AFTER Aug 5 are broken 383/383 in the last 24h; only pre-migration
+media still carries healthy original KEY paths. THE BUG IS THEIR URL MINTING FOR NEW
+MEDIA RECORDS. Eliminated by evidence: our request shape (plain $expand=Media), the
+User-Agent rule, API version, Media Access setting, payment/license status, any
+self-construction or rewrite (signature-bound, 403). No consumer-side remedy exists in
+any of their documentation. The ticket (Gmail draft, full un-redacted expired specimens +
+the cohort finding) is the fix. Untested long-shot noted for the owner only: the
+subscription page shows an unclicked "Accept AI Addendum" button — a legal agreement,
+HIS call, no evidence linking it to media.
