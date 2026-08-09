@@ -1,5 +1,70 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 26 — 2026-08-09. THE BACKFILL ROUND (his arg: "check if backfill is done and
+## ═══ finish if not"). It was NOT done — no rung had run since 24d. The ladder ran today:
+## ═══ probe green, covers swept EPOCH→2025-10-17, then a 429 invoked the day-stop rule.
+## ═══ Two real defects found and SHIPPED on the way. 3 commits, pushed, deploy verified.
+##
+## ── WHAT RAN (numbers measured, production) ──────────────────────────────────────────
+## Rung 0 re-verified before anything: 236/236 fresh rows carry /images/KEY…/ paths (zero
+## undefined) · storage took uploads in EVERY hour of the prior 24 (~5,400 objects) · both
+## pg_cron jobs green. Rung 2 probe: 272/272 photos on 12 listings, zero 429s. Rung 3
+## covers (--fresh, full feed): 3 slices, 1,061 listings, 1,043 covers, zero 429s — then
+## the RESUMED run 429'd in its first slice. STANDING RULE HONOURED: any 429 = stop for
+## the day, never "lower the rate and try again". Diagnosis recorded, not guessed: the
+## resume landed on the 17:07 sync tick's own media window (the hourly sync mirrors at the
+## same ~2/s against the SAME account cap); alternate = a longer-window quota. RESUME:
+## watermark 2025-10-17T07:01:36.797Z in scripts/.photo-backfill-watermark.local, do NOT
+## --fresh, launch ~:20 past the hour (quiet window), probe first. The visible zero-photo
+## count (1,139 at close) moves LATE in the sweep — the gap cohort is outage-era rows at
+## the feed's end.
+##
+## ── DEFECT 1, caught live: the covers sweep FLATTENED deep markers ───────────────────
+## Slice 1 read "skipped 0" on a band that should skip — that smell was the find of the
+## round. The skip keyed off photosMirroredTs (wiped on the old band), AND the rpc
+## write-back stamped the covers-cap outcome (1) onto EVERY slice listing through
+## idx_sync_apply's WHOLESALE jsonb replace: a skipped 42-deep listing → marker 1. 19,589
+## intact markers sat ahead of the watermark. Killed, fixed (740ceb0): a ts-matching
+## marker is the FLOOR the outcome never dips below, and only listings with queued work
+## are written at all. Dry-run proof both ways: the band that re-downloaded 353/353 before
+## now skips 40/40 with zero fetches. DB repaired directly by SQL: 8,652 markers restored
+## from STORAGE TRUTH (every object created AFTER the row's modification_ts), 206
+## overstating markers stripped. 23,304/26,628 servable actives now carry current markers;
+## 5,144 unprovable rows stay dead-marker ON PURPOSE (the sweep re-mirrors them honestly).
+##
+## ── DEFECT 2 retired early: the stored-URL proxy fallback (the Sept 8 item) ──────────
+## /api/media now GATES the upstream proxy on row freshness (156e39e): modification_ts
+## older than 3h = the single-use signed URL is dead by definition (capture ≤1h after
+## modification, expiry ~1h after capture) → same transient 503 contract, ZERO media-host
+## contact. Unknown ts = fresh, so snapshot fallback / db-down / new listings between
+## sync ticks keep today's behaviour. Verified ON PRODUCTION post-deploy: stale
+## KEY1000202/5 → 503 no-store "unavailable" in 1.4s with zero upstream log lines — and
+## the log instrument itself proven able to see media-route lines. 3 new tests pin it.
+##
+## ── GATES AT CLOSE ────────────────────────────────────────────────────────────────────
+## tsc clean · 874 tests / 63 files, foreground (baseline 871 + 3 new) · deploy
+## dpl_BcfgDokXEdGRFE8vUfeaSaMe52MN READY + behaviour-verified · no design work this round
+## (the arg scoped the round to the backfill) · rung 5b (cache-control S3 sweep) still
+## owner-gated: NO S3 keys in .env.local.
+##
+## ═══ ROUND 27 BRIEF ═══════════════════════════════════════════════════════════════════
+## 1. FINISH THE COVERS SWEEP (allowed the NEXT day): quiet window ~:20 past the hour,
+##    probe first (~250 photos, read the histogram), then
+##    `node scripts/backfill-photos.mjs --covers-only --max-pages 999 --max-listings
+##    999999 --max-429 1` (NO --fresh — EPOCH→2025-10-17 is done and skip-proven). Then
+##    rung 4 galleries `--cap 8`, same bounds — repaired markers mean only genuine gaps
+##    download. Storage +~20 GB; covers-keep prune decision stands.
+## 2. VERIFY after: inventory-health.mjs (zero-photo should fall from 1,139 toward the
+##    fresh-arrivals floor), photos_servable movement after the hourly refresh, marker-
+##    current count RISES from 23,304, spot-check served JPEGs on production.
+## 3. THEN the round-25 carried design list (map default frame = his call · Google badge
+##    white variant = brand question · legend overlaps Google attribution at 390, small
+##    fix · mobile arrival default = his call · hero grammar choice) and round-26 brief's
+##    re-verification set (the six round-24 probes, hero contrast, reduced motion).
+## 4. STANDING: single agent unless granted · explicit-pathspec commits, never add -A ·
+##    block **/api/media/** in probes · NEVER add MLS Grid DATA calls to a request path ·
+##    **/api/lead posts to the LIVE CRM — intercept in tests · launch switches are HIS.
+
 ## ═══ ROUND 25 — 2026-08-08 NIGHT. Round 24/24b RE-VERIFIED on production, the photo
 ## ═══ ladder's first two rungs done, six design/detail defects fixed, and THREE COMMITTED
 ## ═══ GATES REPAIRED — two of which could not fail. 8 commits, all pushed to main.
