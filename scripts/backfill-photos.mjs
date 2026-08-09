@@ -186,8 +186,12 @@ async function mirrorSlice(listings) {
     const photos = l.photos ?? [];
     const end = Math.min(photos.length, CAP);
     const p = prior.get(l.id);
-    const start = p && p.ts && iso(p.ts) === l.modificationTimestamp ? Math.min(p.mirrored, end) : 0;
-    return { id: l.id, start, end, photos };
+    // A ts-matching marker is the prior CURRENT contiguous prefix. Resume after it — and carry
+    // it, because the outcome below must never write a SMALLER number back: a covers-only pass
+    // (cap 1) over a 42-deep mirrored listing would otherwise flatten its marker 42 → 1.
+    const keep = p && p.ts && iso(p.ts) === l.modificationTimestamp ? p.mirrored : 0;
+    const start = Math.min(keep, end);
+    return { id: l.id, start, end, photos, keep };
   });
   const maxEnd = ranges.reduce((m, r) => Math.max(m, r.end), 0);
   const queue = [];
@@ -209,10 +213,12 @@ async function mirrorSlice(listings) {
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   // Contiguous prefix per listing — starts at the skipped prefix (already confirmed in storage).
+  // `touched` = this slice had queued work for the listing; untouched rows must not be written.
   const outcomes = ranges.map((r) => {
     let n = r.start;
     while (n < r.end && ok.has(`${r.id}:${n}`)) n++;
-    return { id: r.id, photosMirrored: n };
+    const photosMirrored = Math.max(n, r.keep);
+    return { id: r.id, photosMirrored, newly: photosMirrored - r.keep, touched: r.start < r.end };
   });
   const skipped = ranges.reduce((s, r) => s + r.start, 0);
   return { outcomes, fetched: queue.length, skipped, downloaded };
@@ -278,18 +284,24 @@ for (;;) {
 
   const { outcomes, fetched, skipped, downloaded } = await mirrorSlice(listings);
   const byId = new Map(outcomes.map((o) => [o.id, o]));
+  let sliceNew = 0;
   for (const l of listings) {
     const o = byId.get(l.id);
     l.photosMirrored = o?.photosMirrored ?? 0;
     l.photosMirroredTs = l.modificationTimestamp;
-    photosMirrored += l.photosMirrored;
+    sliceNew += o?.newly ?? 0;
   }
+  photosMirrored += sliceNew;
 
+  // Only listings this slice actually worked on get written back. idx_sync_apply replaces the
+  // row's jsonb WHOLESALE, so writing a skipped listing would stamp the covers-cap outcome over
+  // a deeper existing marker — and its fresh feed doc is the hourly sync's job anyway.
+  const dirty = listings.filter((l) => byId.get(l.id)?.touched);
   if (!DRY) {
-    for (let i = 0; i < listings.length; i += 50) await rpc({ _upserts: listings.slice(i, i + 50) });
+    for (let i = 0; i < dirty.length; i += 50) await rpc({ _upserts: dirty.slice(i, i + 50) });
   }
 
-  console.log(`slice: kept ${slice.kept}, took ${listings.length}, mirrored ${listings.reduce((s, l) => s + l.photosMirrored, 0)} photos (skipped ${skipped} already-mirrored, fetched ${fetched}, downloaded ${downloaded}), watermark ${slice.watermark}${slice.complete ? " — FEED COMPLETE" : ""}`);
+  console.log(`slice: kept ${slice.kept}, took ${listings.length}, mirrored ${sliceNew} new photos on ${dirty.length} listings (skipped ${skipped} already-mirrored, fetched ${fetched}, downloaded ${downloaded}), watermark ${slice.watermark}${slice.complete ? " — FEED COMPLETE" : ""}`);
   // The diagnosis behind the abort criterion (see downloadPhoto).
   if (fetched > downloaded) console.log(`  download failures by status: ${downloadReport()}`);
 
