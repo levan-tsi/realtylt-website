@@ -397,3 +397,65 @@ it owes and catches up on subsequent ticks once uploads succeed. VERIFY after th
 tick: `storage.objects` rows with `created_at` > deploy time, and the log line's
 `mirroredPhotos` > 0. If JWS errors persist, the key in Supabase itself was rotated again —
 mint a fresh service key in the dashboard and update BOTH .env.local and Vercel.
+
+## ═══ 2026-08-09 — THE LADDER RAN. Covers 27% swept, then a 429 stopped the day. ═══
+## ═══ Two real defects found and shipped on the way. Resume point is recorded. ═══
+
+RUNG 0 re-verified before anything: 236/236 rows modified in the prior 8h carry
+/images/KEY…/ paths (zero undefined); storage.objects took uploads in EVERY hour of the
+prior 24 (72-773/hr, ~5,400 objects); pg_cron `idx-hourly-sync` and
+`idx-photos-servable-refresh` both green. The dry-run upstream check makes ZERO media-host
+requests (verified in code: DRY short-circuits before downloadPhoto).
+
+RUNG 2 (12-listing probe, --max-429 1): 272/272 fetched, downloaded, mirrored. Zero 429s,
+zero failures.
+
+RUNG 3 (covers-only, full feed via --fresh): three slices ran EPOCH → 2025-10-17
+(1,061 listings, 1,043 covers, zero 429s) — and every slice read "skipped 0". That was a
+LATENT BUG CAUGHT LIVE, not a queue: mirrorSlice keyed skips off listing->photosMirroredTs,
+which is wiped/absent on the old band, and worse, the rpc write-back stamped the covers-cap
+outcome (1) onto EVERY slice listing through idx_sync_apply's wholesale jsonb replace — a
+skipped 42-deep listing would have been flattened to 1. 19,589 intact markers sat in the
+blast radius ahead of the watermark. Killed the run before it reached them.
+
+THE FIX, two halves, both verified:
+· Script (740ceb0): a ts-matching marker is now the FLOOR the outcome can never dip below,
+  and only listings with queued work are written back at all. Dry-run proof: the band that
+  re-downloaded 353/353 before the fix now reads "skipped 40/40, fetched 0, wrote 0".
+· DB repair (SQL, direct): 8,652 rows whose marker was absent/zero/mismatched while storage
+  PROVABLY holds current photos (every object's created_at AFTER the row's modification_ts —
+  computed via a scratch min(created_at)-per-listing table, since dropped) got
+  photosMirrored = photos_servable + matching ts. 206 markers claiming MORE than storage
+  holds were stripped for honest re-mirroring. marker-current rows: 23,304 of 26,628
+  servable actives. The 5,144 rows whose objects predate their modification stay dead-marker
+  ON PURPOSE — their photos cannot be vouched for and the sweep re-mirrors them honestly.
+
+THE 429 AND THE DAY-STOP: the resumed run 429'd inside its first slice (~17:15-17:20 UTC)
+and --max-429 1 killed it, as designed. Standing rule honoured: ANY 429 = STOP FOR THE DAY,
+never "lower the rate and try again". Diagnosis for the record: the hourly sync's tick
+started 17:07:00 UTC and its own mirror catch-up downloads at the same ~2/s against the
+SAME account cap — the first run coexisted with the 16:07 tick by luck; the resume landed
+square on the 17:07 tick's media window. Alternate: a longer-window quota counting the
+day's ~1,300 downloads. Indistinguishable without spending requests we may not spend.
+
+RUNG 5a SHIPPED (156e39e): the /api/media stored-URL proxy fallback is GATED on row
+freshness — modification_ts older than 3h means the signed URL is dead by definition
+(capture ≤1h after modification, expiry ~1h after capture), so the route now answers the
+same transient 503 with ZERO media-host contact. Unknown ts = fresh (snapshot fallback,
+failed DB reads, and test seeds keep old behaviour). The "remove/gate before Sept 8" item
+is RETIRED. Rung 5b (cache-control S3 sweep) still waits on owner-minted S3 keys —
+.env.local has none.
+
+## RESUME LADDER (next session — downloads allowed again the NEXT DAY, not sooner)
+1. Watermark stands at 2025-10-17T07:01:36.797Z in scripts/.photo-backfill-watermark.local.
+   DO NOT --fresh: the EPOCH→2025-10-17 band is done and skip-proven.
+2. LAUNCH IN THE SYNC'S QUIET WINDOW: the tick fires at :07 and its media work runs a few
+   minutes; start the runner at ~:20 past the hour. Expect the :07 window each hour —
+   at 2 rps the collision risk repeats hourly, and one 429 ends the day again.
+3. Probe first per the standing procedure (~250 photos, read the histogram), then:
+   node scripts/backfill-photos.mjs --covers-only --max-pages 999 --max-listings 999999 --max-429 1
+   The REAL gap cohort (outage-era zero-photo rows) lives at the END of the feed order, so
+   the visible zero-photo count (1,139 at close) moves late in the sweep, not early.
+4. Then rung 4 galleries: --cap 8 --max-pages 999 --max-listings 999999 --max-429 1.
+   With the repaired markers the skip math now starts from truth: only genuine gaps
+   download. Storage note (+~20 GB) and the covers-keep prune stand as before.
