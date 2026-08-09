@@ -47,7 +47,16 @@ const EMPTY_CACHE = "public, max-age=300, s-maxage=3000";
 // is a cheap cached HEAD against public Storage.
 const STORAGE_PROBE_MAX = 50;
 
-// Cover-substitute probe depth (round-7 cover-photo bug): when a card's cover (idx 0) object is
+// STALE-SOURCE GATE (single-use MediaURLs, 2026-08): the media host's signed URLs now expire
+// ~1h after the sync captures them AND die on first download. The sync captures a row's URLs
+// within an hour after its feed modification_ts, so any row whose modification_ts is older than
+// this window holds URLs that are dead BY DEFINITION — proxying them cannot succeed and only
+// burns rate-limit budget against a host that has suspended this key before. Rows younger than
+// the window (a brand-new listing between sync ticks) keep the proxy: that is the one case where
+// the stored URL can still be live and unconsumed (anything the mirror already downloaded is
+// served storage-first above and never reaches the proxy). Unknown modification_ts (snapshot
+// fallback, failed DB read) is treated as FRESH — the gate only acts on measured staleness.
+const STALE_SOURCE_MS = 3 * 60 * 60 * 1000;
 // missing but LATER photos mirrored, look this many indices ahead for a real photo to stand in as
 // the cover. Measured 2026-07-25: every affected listing's first present index was 1 or 2, so 3
 // covers them all with headroom. A tiny bounded, cached set of HEADs.
@@ -93,7 +102,7 @@ export async function GET(
   }
 
   // Photos + mirror state from the DB (snapshot fallback) — ZERO MLS Grid DATA-API calls.
-  const { photos, mirrored, dbOk } = await getListingMedia(id);
+  const { photos, mirrored, dbOk, modTs } = await getListingMedia(id);
 
   // STORAGE-FIRST: the first `mirrored` photos live PERMANENTLY in Supabase Storage. MLS Grid
   // MediaURLs are signed and expire ~1h after the sync captures them, so this is the only stable
@@ -171,6 +180,14 @@ export async function GET(
   // so the next view retries against a healthy DB.
   if (!url?.startsWith("https://")) {
     return dbOk ? placeholder(EMPTY_CACHE, "empty") : placeholder("no-store", "unavailable");
+  }
+
+  // Known-stale source URLs are dead (see STALE_SOURCE_MS) — skip straight to the transient
+  // placeholder with ZERO media-host contact. Same observable outcome as the doomed fetch
+  // (503 no-store → the tile retries, then drops), minus the wasted rate-limit spend. The
+  // NaN-from-unparseable case compares false → fresh, matching the unknown-is-fresh contract.
+  if (modTs !== null && Date.now() - Date.parse(modTs) > STALE_SOURCE_MS) {
+    return placeholder("no-store", "unavailable");
   }
 
   const primary = await proxyUpstream(url, id, n);

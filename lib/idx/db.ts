@@ -668,19 +668,21 @@ export const getAreaInsights = unstable_cache(
  * rows only). null = DB unavailable/unconfigured (caller should fall back). */
 export async function getDbListingMedia(
   id: string,
-): Promise<{ photos: string[]; mirrored: number; servable: number | null } | null> {
+): Promise<{ photos: string[]; mirrored: number; servable: number | null; modTs: string | null } | null> {
   if (!restConfig()) return null;
   try {
-    const { rows } = await rest<{ photos: unknown; mirrored: unknown; servable: unknown }>(
-      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos,mirrored:listing->photosMirrored,servable:photos_servable`,
+    const { rows } = await rest<{ photos: unknown; mirrored: unknown; servable: unknown; modTs: unknown }>(
+      `idx_listings?id=eq.${encodeURIComponent(id)}&select=photos:listing->photos,mirrored:listing->photosMirrored,servable:photos_servable,modTs:modification_ts`,
     );
     const photos = rows[0]?.photos;
     const mirrored = rows[0]?.mirrored;
     const servable = rows[0]?.servable;
+    const modTs = rows[0]?.modTs;
     return {
       photos: Array.isArray(photos) ? (photos as string[]) : [],
       mirrored: typeof mirrored === "number" && mirrored > 0 ? mirrored : 0,
       servable: typeof servable === "number" ? servable : null,
+      modTs: typeof modTs === "string" ? modTs : null,
     };
   } catch (e) {
     console.error(`[idx-db] media lookup (${id}) failed:`, e);

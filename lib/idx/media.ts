@@ -19,6 +19,8 @@ let index: Map<string, string[]> | null = null;
 const testSeed = new Map<string, string[]>();
 /** Test-only mirrored-count overrides (defaults to 0 → proxy path). */
 const testMirroredSeed = new Map<string, number>();
+/** Test-only modification_ts overrides (defaults to null = unknown → treated as fresh). */
+const testModTsSeed = new Map<string, string>();
 
 function ensureIndex(): Map<string, string[]> {
   if (!index) {
@@ -40,7 +42,7 @@ export function getSnapshotMediaUrls(id: string): string[] {
 
 /** id → {at, urls, mirrored, servable} — bounds repeat DB lookups from gallery bursts. The
  * /api/media route sits behind a long CDN cache, so this stays tiny; still capped as a safety valve. */
-const dbCache = new Map<string, { at: number; urls: string[]; mirrored: number; servable: number | null }>();
+const dbCache = new Map<string, { at: number; urls: string[]; mirrored: number; servable: number | null; modTs: string | null }>();
 const DB_CACHE_TTL_MS = 10 * 60 * 1000;
 const DB_CACHE_MAX = 2000;
 
@@ -57,26 +59,37 @@ export interface ListingMedia {
   /** False when the DB never answered (transient failure) — mirrored/photos are then only the
    * snapshot's guess, NOT authoritative. The route must not cache verdicts built on this. */
   dbOk: boolean;
+  /** idx_listings.modification_ts — when the feed last touched this row. The stored signed URLs
+   * were captured by the sync within an hour AFTER this, so it bounds how fresh they can be.
+   * null = unknown (test seed / snapshot fallback / DB miss) — callers must treat unknown as
+   * fresh, never as stale. */
+  modTs: string | null;
 }
 
 /** A listing's photos + mirrored count — Supabase idx_listings first (always current, active
  * rows only), committed snapshot as the fallback store. ZERO MLS Grid contact either way. The
  * snapshot fallback carries no mirror info (mirrored:0) — the route then proxies as before. */
 export async function getListingMedia(id: string): Promise<ListingMedia> {
-  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0, servable: null, dbOk: true };
+  if (!/^[A-Za-z0-9_-]{1,40}$/.test(id)) return { photos: [], mirrored: 0, servable: null, dbOk: true, modTs: null };
   if (testSeed.has(id)) {
-    return { photos: testSeed.get(id)!, mirrored: testMirroredSeed.get(id) ?? 0, servable: null, dbOk: true };
+    return {
+      photos: testSeed.get(id)!,
+      mirrored: testMirroredSeed.get(id) ?? 0,
+      servable: null,
+      dbOk: true,
+      modTs: testModTsSeed.get(id) ?? null,
+    };
   }
   const hit = dbCache.get(id);
   if (hit && Date.now() - hit.at < DB_CACHE_TTL_MS) {
-    return { photos: hit.urls, mirrored: hit.mirrored, servable: hit.servable, dbOk: true };
+    return { photos: hit.urls, mirrored: hit.mirrored, servable: hit.servable, dbOk: true, modTs: hit.modTs };
   }
   // A 36-tile page bursts this route; a fraction of PostgREST reads drop under contention.
   // One retry recovers most of those instead of demoting the tile to the mirror-less snapshot.
   let fromDb = await getDbListingMedia(id); // null = DB unavailable
   if (fromDb === null && isDbConfigured()) fromDb = await getDbListingMedia(id);
   if (fromDb && (fromDb.photos.length || fromDb.mirrored)) {
-    dbCache.set(id, { at: Date.now(), urls: fromDb.photos, mirrored: fromDb.mirrored, servable: fromDb.servable });
+    dbCache.set(id, { at: Date.now(), urls: fromDb.photos, mirrored: fromDb.mirrored, servable: fromDb.servable, modTs: fromDb.modTs });
     if (dbCache.size > DB_CACHE_MAX) dbCache.delete(dbCache.keys().next().value as string);
     return { ...fromDb, dbOk: true };
   }
@@ -87,6 +100,7 @@ export async function getListingMedia(id: string): Promise<ListingMedia> {
     mirrored: 0,
     servable: null,
     dbOk: fromDb !== null || !isDbConfigured(),
+    modTs: null,
   };
 }
 
@@ -137,12 +151,18 @@ export function resetMediaCacheForTests(): void {
   index = null;
   testSeed.clear();
   testMirroredSeed.clear();
+  testModTsSeed.clear();
   dbCache.clear();
 }
 
 /** Test hook — seed permanent MediaURLs for a listing id (stands in for the committed snapshot). */
 export function __seedSnapshotMediaForTests(id: string, urls: string[]): void {
   testSeed.set(id, urls);
+}
+
+/** Test hook — seed the feed modification_ts for a listing (drives the stale-source gate). */
+export function __seedModTsForTests(id: string, modTs: string): void {
+  testModTsSeed.set(id, modTs);
 }
 
 /** Test hook — seed how many of a listing's photos are mirrored to storage. */

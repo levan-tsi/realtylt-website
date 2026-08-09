@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   __seedMirroredForTests,
+  __seedModTsForTests,
   __seedSnapshotMediaForTests,
   resetMediaCacheForTests,
 } from "@/lib/idx/media";
@@ -363,6 +364,40 @@ describe("GET /api/media/[id]/[idx] — cover substitute (round-7 cover-photo bu
     stubHeadByIndex(() => false); // nothing in storage
     const res = await call("L1", "0");
     expect(res.headers.get("X-Media-Status")).toBe("empty"); // stable fact, not storage-cover-sub
+  });
+});
+
+describe("GET /api/media/[id]/[idx] — stale-source gate (single-use MediaURLs)", () => {
+  // The media host's signed URLs die ~1h after the sync captures them and are consumed by their
+  // first download. A row whose modification_ts is hours old cannot hold a live URL, so the route
+  // must not spend a media-host request per CDN miss discovering that — the host has suspended
+  // this key before over exactly this kind of guaranteed-useless traffic.
+  it("skips the media host ENTIRELY when the row is hours stale — 503 no-store, zero fetch spend", async () => {
+    __seedModTsForTests("L1", new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString());
+    const fetchMock = stubImage();
+    const res = await call("L1", "0");
+    expect(res.status).toBe(503);
+    expect(res.headers.get("Cache-Control")).toBe("no-store");
+    expect(res.headers.get("X-Media-Status")).toBe("unavailable");
+    // Not even the upstream cover substitute may fire (idx 1..3 would otherwise be tried).
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("still proxies a FRESH row — a new listing between sync ticks holds live, unconsumed URLs", async () => {
+    __seedModTsForTests("L1", new Date(Date.now() - 10 * 60 * 1000).toISOString());
+    const fetchMock = stubImage();
+    const res = await call("L1", "0");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("X-Media-Status")).toBe("ok");
+    expect(fetchMock.mock.calls.some(([u]) => String(u).includes("media.mlsgrid.com"))).toBe(true);
+  });
+
+  it("an UNKNOWN modification_ts is never stale (snapshot fallback / failed DB read keep the proxy)", async () => {
+    const fetchMock = stubImage(); // L1 seeded with no modTs → null
+    const res = await call("L1", "0");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("X-Media-Status")).toBe("ok");
+    expect(fetchMock).toHaveBeenCalled();
   });
 });
 
