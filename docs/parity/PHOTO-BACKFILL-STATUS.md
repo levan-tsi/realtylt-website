@@ -398,8 +398,10 @@ tick: `storage.objects` rows with `created_at` > deploy time, and the log line's
 `mirroredPhotos` > 0. If JWS errors persist, the key in Supabase itself was rotated again —
 mint a fresh service key in the dashboard and update BOTH .env.local and Vercel.
 
-## ═══ 2026-08-09 — THE LADDER RAN. Covers 27% swept, then a 429 stopped the day. ═══
-## ═══ Two real defects found and shipped on the way. Resume point is recorded. ═══
+## ═══ 2026-08-09 — THE LADDER RAN. Covers 22% downloaded (1,043 of 4,738 owed; the "27%"
+## ═══ first written here was an unfounded number — corrected). Two real defects shipped.
+## ═══ NOTE: the "429 = stop for the day" framing below is RETIRED — see the late-night
+## ═══ section: the official docs contain no such rule, it was ours. ═══
 
 RUNG 0 re-verified before anything: 236/236 rows modified in the prior 8h carry
 /images/KEY…/ paths (zero undefined); storage.objects took uploads in EVERY hour of the
@@ -459,3 +461,34 @@ is RETIRED. Rung 5b (cache-control S3 sweep) still waits on owner-minted S3 keys
 4. Then rung 4 galleries: --cap 8 --max-pages 999 --max-listings 999999 --max-429 1.
    With the repaired markers the skip math now starts from truth: only genuine gaps
    download. Storage note (+~20 GB) and the covers-keep prune stand as before.
+
+## ═══ 2026-08-09 LATE NIGHT — THE RULES RE-EXAMINED AGAINST THE OFFICIAL DOCS ═══
+## ═══ Owner's challenge: "double check with real docs... do not hallucinate." He was right
+## ═══ on the substance. The docs are now MIRRORED IN-REPO: docs/vendor/mlsgrid/ (39 pages,
+## ═══ scripts/mirror-mlsgrid-docs.mjs regenerates). Claims need citations from now on. ═══
+
+WHAT THEIR DOCS ACTUALLY SAY (docs/vendor/mlsgrid/README.md has the citation table):
+· Media URLs single-use + 1h expiry: CONFIRMED VERBATIM (api page lines 351-352). The
+  stale-source gate and single-request-per-URL rules stand on their words.
+· "Never a reason to download the same media more than once": their rule — our marker-aware
+  skip logic is compliance, not just thrift.
+· RATE LIMITS: THEIR PUBLIC DOCS CONTAIN NONE. No req/sec, no hourly/daily quota, no 429
+  policy, no suspension criteria. The only frequency rule is Lookup ≤ once/day. The
+  "2 req/sec" in our code comments is cited NOWHERE public — provenance unknown (possibly
+  DLA or support email). Keep it as OUR conservative pacer, labelled as such.
+· "ANY 429 = stop for the day" was OUR invention (written 2026-08-03 during an unstable
+  week). RETIRED. New policy: escalating backoff, stop the RUN after --max-429 strikes,
+  wait out a window (hours / next sync-quiet hour), probe small, continue.
+
+MEASURED CAPACITY (our own storage.objects — first-party): 215,269 photos mirrored on
+2026-07-18 alone; 33,839 on 07-17; 9-17k/day routine; 25,222 on 08-05. The July
+suspensions correlate with UNPACED bursts and retry storms, both since fixed. A paced
+2 rps runner is proven at 200k+/day scale.
+
+CORRECTED ACCOUNTING for today: covers done 1,043 of 4,738 owed (22%); feed scan 1,061 of
+~27,785 rows (3.8%); galleries owed ~95,590 at close of day. The earlier "27% swept" and
+"1-3 days" lines were not derived from these numbers and should not have been written.
+
+RESUMED TONIGHT under the new policy (~23:45 local): covers with --max-429 3, then
+galleries --cap 8 chained behind it. At 2 rps the remaining work is ~35 min covers +
+~13.2h galleries of download time plus ~80 feed pages of scan overhead.

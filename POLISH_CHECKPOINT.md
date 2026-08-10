@@ -1,5 +1,25 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 26b — 2026-08-09 LATE NIGHT. THE OWNER CHALLENGED THE RULES AND WAS RIGHT. ═══
+## The official MLS Grid docs are now MIRRORED IN-REPO (docs/vendor/mlsgrid/, 39 pages,
+## scripts/mirror-mlsgrid-docs.mjs regenerates, README.md holds the citation table). What
+## they verify: single-use + 1h-expiry MediaURLs (verbatim), User-Agent token rule, "never
+## re-download the same media", Lookup ≤ once/day. What they DO NOT contain: any req/sec
+## limit, any hourly/daily quota, any 429 policy, any suspension criteria — the "2 req/sec"
+## in our comments and the "ANY 429 = stop for the day" rule were OURS, uncited. The
+## day-stop rule is RETIRED (measured capacity: 215,269 photos mirrored on 2026-07-18
+## alone; 25,222 on 08-05). New policy: 2 rps pacer stays, escalating backoff, --max-429 3
+## per run, wait a window + probe on stop — and avoid the :07 sync tick's media minutes.
+## CORRECTIONS owed to honesty: "covers 27% swept" was an unfounded number — the derived
+## figures are 1,043/4,738 owed covers (22%) and 1,061/27,785 feed rows (3.8%). The
+## "1-3 days" estimate followed from the retired rule. Real remaining work at 2 rps:
+## ~35 min covers + ~13.2h galleries + ~80 pages of scan overhead. RESUMED TONIGHT
+## (~23:45): covers running with --max-429 3, galleries --cap 8 chains behind it.
+## STANDING LESSON (his words: "we have to learn from this and improve"): a vendor claim
+## needs a citation into docs/vendor/mlsgrid/ or a measured experiment — else it is a
+## hypothesis and must be said as one. The round-26 block below stands as the honest
+## record of the day, including the rule as it was enforced at the time.
+
 ## ═══ ROUND 26 — 2026-08-09. THE BACKFILL ROUND (his arg: "check if backfill is done and
 ## ═══ finish if not"). It was NOT done — no rung had run since 24d. The ladder ran today:
 ## ═══ probe green, covers swept EPOCH→2025-10-17, then a 429 invoked the day-stop rule.
