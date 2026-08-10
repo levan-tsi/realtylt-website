@@ -508,3 +508,17 @@ initial imports. Consequences for the plan:
 · backfill-photos.mjs gained --max-downloads N so every run carries an explicit budget;
   tonight's galleries run is budgeted ~28k, leaving sync headroom inside the rolling 24h.
 · A Grace Period request draft was prepared for the owner to send from his Gmail.
+
+## ═══ 2026-08-10 ~04:40 — NIGHT LEDGER: COVERS COMPLETE, GALLERIES 1/3 DONE ═══
+· Rung 3 COVERS: FEED COMPLETE. 26,716 listings / 89 pages scanned, 3,700 covers mirrored,
+  histogram ok:3700 429:1 (the one 429 absorbed by backoff mid-run — the rewritten policy
+  working as designed). Watermark file deleted by feed-complete, as the script defines.
+· VERIFIED on the committed gate: zero-photo live rows 1,139 → 45 (1 fresh + 8 <7d + 37
+  old rows the feed sends no photos for; those self-heal on their next feed touch).
+  27,731 of 27,776 live rows (99.84%) now show real photos.
+· Rung 4 GALLERIES first budgeted run: 28,509 photos on 6,405 listings, 20 pages, ZERO
+  failures, ZERO 429s, stopped cleanly at the 28k budget. Resume watermark
+  2026-06-01T19:14:36.633Z. photos_servable ≥5 moved 14,762 → 18,087.
+· Rolling-24h spend after the run: ~35k of the 40k cap — by design. Next windows: a small
+  morning top-up (~2-3k), then the big night runs. Galleries complete ~Aug 11 night /
+  Aug 12 early, inside the caps — or in one run if the Grace Period email is answered.
