@@ -1,20 +1,26 @@
 # Website polish checkpoint (read/updated by the /website command)
 
 ## ═══ ROUND 26b — 2026-08-09 LATE NIGHT. THE OWNER CHALLENGED THE RULES AND WAS RIGHT. ═══
-## The official MLS Grid docs are now MIRRORED IN-REPO (docs/vendor/mlsgrid/, 39 pages,
-## scripts/mirror-mlsgrid-docs.mjs regenerates, README.md holds the citation table). What
-## they verify: single-use + 1h-expiry MediaURLs (verbatim), User-Agent token rule, "never
-## re-download the same media", Lookup ≤ once/day. What they DO NOT contain: any req/sec
-## limit, any hourly/daily quota, any 429 policy, any suspension criteria — the "2 req/sec"
-## in our comments and the "ANY 429 = stop for the day" rule were OURS, uncited. The
-## day-stop rule is RETIRED (measured capacity: 215,269 photos mirrored on 2026-07-18
-## alone; 25,222 on 08-05). New policy: 2 rps pacer stays, escalating backoff, --max-429 3
-## per run, wait a window + probe on stop — and avoid the :07 sync tick's media minutes.
-## CORRECTIONS owed to honesty: "covers 27% swept" was an unfounded number — the derived
-## figures are 1,043/4,738 owed covers (22%) and 1,061/27,785 feed rows (3.8%). The
-## "1-3 days" estimate followed from the retired rule. Real remaining work at 2 rps:
-## ~35 min covers + ~13.2h galleries + ~80 pages of scan overhead. RESUMED TONIGHT
-## (~23:45): covers running with --max-429 3, galleries --cap 8 chains behind it.
+## The official MLS Grid docs are now MIRRORED IN-REPO: docs/vendor/mlsgrid/ — all 39
+## docs.mlsgrid.com pages as markdown (scripts/mirror-mlsgrid-docs.mjs regenerates) PLUS
+## the four official PDFs from mlsgrid.com/resources (Best Practices Guide, Developer
+## Checklist, IDX Rules, DLA). README.md there is the citation table. Verified verbatim:
+## single-use + 1h-expiry MediaURLs, User-Agent token rule, "never download the same media
+## more than once", Lookup ≤ once/day. THE REAL RATE LIMITS live in the Best Practices
+## Guide PDF (not the docs site): 2 RPS at all times · 7,200 req/hr · 4 GB/hr · 40,000
+## req per ROLLING 24h · 60 GB/24h. Suspensions are automatic and SELF-HEAL as the rolling
+## window drains; a "Grace Period" (email support@mlsgrid.com IN ADVANCE) legitimately
+## lifts the caps for an initial import — that is the sanctioned fast path.
+## RE-READINGS FORCED BY THE PDF: the 215k-photo day (2026-07-18) was 5x OVER the daily
+## cap — read it as the breach behind July's suspensions, not as capacity. The "ANY 429 =
+## stop for the day" rule stays RETIRED (their windows are rolling, not calendar days):
+## policy is 2 rps, escalating backoff, --max-429 3, budget every run with the new
+## --max-downloads flag so backfill + hourly sync stay under 40k/24h, avoid the :07 tick.
+## CORRECTIONS owed to honesty: "covers 27% swept" was unfounded — derived figures are
+## 1,043/4,738 owed covers (22%) and 1,061/27,785 feed rows (3.8%). Galleries (~92k
+## downloads) are QUOTA-bound, not speed-bound: ~3 days inside the cap, ~1 day with an
+## approved Grace Period. RESUMED TONIGHT (~23:45): covers running (--max-429 3), a
+## budgeted galleries run chains behind it (--max-downloads sized to the rolling window).
 ## STANDING LESSON (his words: "we have to learn from this and improve"): a vendor claim
 ## needs a citation into docs/vendor/mlsgrid/ or a measured experiment — else it is a
 ## hypothesis and must be said as one. The round-26 block below stands as the honest

@@ -492,3 +492,19 @@ CORRECTED ACCOUNTING for today: covers done 1,043 of 4,738 owed (22%); feed scan
 RESUMED TONIGHT under the new policy (~23:45 local): covers with --max-429 3, then
 galleries --cap 8 chained behind it. At 2 rps the remaining work is ~35 min covers +
 ~13.2h galleries of download time plus ~80 feed pages of scan overhead.
+
+## ═══ 2026-08-10 ~00:30 — THE BEST PRACTICES GUIDE PDF SETTLES THE LIMITS QUESTION ═══
+The late-night section above said "their public docs contain no rate limits" — true of
+docs.mlsgrid.com only. The API v2 BEST PRACTICES GUIDE (public PDF on mlsgrid.com/resources,
+NOW MIRRORED at docs/vendor/mlsgrid/MLS-Grid-Best-Practices-Guide-2.pdf with the DLA, IDX
+Rules and Developer Checklist) publishes the full caps: 2 RPS at all times · 7,200 req/hr ·
+4 GB/hr · 40,000 req per ROLLING 24h · 60 GB/24h. Suspensions self-heal as the rolling
+window drains. A "Grace Period" (email support@mlsgrid.com in advance) lifts the caps for
+initial imports. Consequences for the plan:
+· The 2026-07-18 bulk day (215,269 photos) was ~5x over the 24h cap — the likely cause of
+  July's suspensions. Never read it as capacity again.
+· Galleries (~92k downloads owed) are QUOTA-bound: ~3 days inside the caps (sync shares the
+  budget, ~2-6k/day), or ~1 day if the owner's Grace Period request is approved.
+· backfill-photos.mjs gained --max-downloads N so every run carries an explicit budget;
+  tonight's galleries run is budgeted ~28k, leaving sync headroom inside the rolling 24h.
+· A Grace Period request draft was prepared for the owner to send from his Gmail.

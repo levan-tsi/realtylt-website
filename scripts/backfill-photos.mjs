@@ -51,6 +51,12 @@ const RPS = Math.max(0.25, Number(opt("--rps", "2")) || 2);
  * request is not enough: the previous behaviour was to keep going, burn 4,017 rejected requests
  * in one slice, and report a number that looked like progress. */
 const MAX_429 = Math.max(1, Number(opt("--max-429", "25")) || 25);
+/** Download budget for THIS run. MLS Grid's Best Practices Guide (mirrored:
+ * docs/vendor/mlsgrid/MLS-Grid-Best-Practices-Guide-2.pdf) caps an account at 40,000 requests
+ * per ROLLING 24 HOURS (plus 7,200/hr, 4 GB/hr, 60 GB/24h, 2 RPS) — and the hourly sync spends
+ * from the same budget. Size this so backfill + sync stay under the day cap; exceeding it is
+ * exactly the "concerning behavior" their guide says triggers automatic temporary suspension. */
+const MAX_DOWNLOADS = Number(opt("--max-downloads", "")) || Infinity;
 if (flag("--fresh")) rmSync(RESUME_FILE, { force: true });
 const positional = argv.filter((a, i) => !a.startsWith("--") && argv[i - 1]?.startsWith("--") !== true);
 const base = (positional.find((a) => a.startsWith("http")) ?? "https://realtylt-website.vercel.app").replace(/\/+$/, "");
@@ -264,11 +270,12 @@ async function rpc(body) {
 // ── main loop ─────────────────────────────────────────────────────────────────────────────────
 let watermark = existsSync(RESUME_FILE) ? readFileSync(RESUME_FILE, "utf8").trim() : EPOCH;
 if (watermark !== EPOCH) console.log(`resuming from ${watermark} (${RESUME_FILE})`);
-console.log(`backfill-photos: ${DRY ? "DRY-RUN" : "LIVE"} cap=${CAP} maxPages=${MAX_PAGES} maxListings=${MAX_LISTINGS} concurrency=${CONCURRENCY} rps=${RPS} max429=${MAX_429} base=${base}`);
+console.log(`backfill-photos: ${DRY ? "DRY-RUN" : "LIVE"} cap=${CAP} maxPages=${MAX_PAGES} maxListings=${MAX_LISTINGS} concurrency=${CONCURRENCY} rps=${RPS} max429=${MAX_429} maxDownloads=${MAX_DOWNLOADS} base=${base}`);
 
 let pagesUsed = 0;
 let listingsSeen = 0;
 let photosMirrored = 0;
+let downloadsTotal = 0;
 
 for (;;) {
   if (pagesUsed >= MAX_PAGES || listingsSeen >= MAX_LISTINGS) { console.log(`bound reached (pages ${pagesUsed}/${MAX_PAGES}, listings ${listingsSeen}/${MAX_LISTINGS}) — stopping.`); break; }
@@ -309,6 +316,11 @@ for (;;) {
   if (slice.watermark === watermark) throw new Error("watermark did not advance — aborting");
   watermark = slice.watermark;
   writeFileSync(RESUME_FILE, watermark); // persisted in dry mode too (own file) so resume is testable
+  downloadsTotal += downloaded;
+  if (downloadsTotal >= MAX_DOWNLOADS) {
+    console.log(`download budget reached (${downloadsTotal}/${MAX_DOWNLOADS}) — stopping cleanly; the watermark file resumes the pass.`);
+    break;
+  }
   await sleep(1500); // gentle between endpoint calls
 }
 

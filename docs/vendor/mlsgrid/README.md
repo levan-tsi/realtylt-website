@@ -20,37 +20,51 @@ experiment — otherwise it is a hypothesis and must be labelled as one.**
 | S3 bucket-to-bucket transfer ends Sept 8, 2026 | migration doc | `upcoming-changes-to-media-delivery...md` |
 | Replication limits are QUERY limits | single OriginatingSystemName per request; limited filter fields; ≤5000 records/request (1000 with $expand); ≤5 `or` operators | `api-documentation--api-version-2.0.md:60` ("Limitations of Replication API") |
 
-## What their public docs DO NOT contain (checked 2026-08-09, keyword sweep over all 39 pages)
+## The RATE LIMITS live in the Best Practices Guide PDF, not the docs site
 
-- **No requests-per-second limit.** The "2 req/sec" figure in our code comments appears
-  NOWHERE in these docs. Its provenance is unwritten (possibly the Data License Agreement or
-  a support email). Treat it as OUR conservative pacing choice, not their rule.
-- **No hourly or daily request quota.**
-- **No 429 policy, no Retry-After contract, no suspension criteria.** The only
-  service-interruption language is the "inefficient usage practices" line attached to
-  polling Lookup more than daily.
-- The word "suspend" does not appear on the API page at all.
+First written here as "their docs contain no rate limit" — TRUE only of docs.mlsgrid.com.
+The **API Version 2 Best Practices Guide** (public, linked from mlsgrid.com/resources,
+mirrored here as `MLS-Grid-Best-Practices-Guide-2.pdf`) publishes the complete caps:
 
-## Measured reality (our own storage.objects, so first-party evidence)
+1. **No more than 7,200 requests in any given hour**
+2. **No more than 4 GB downloaded in any given hour**
+3. **No more than 2 requests per second (RPS) at all times**
+4. **No more than 40,000 requests in a ROLLING 24-hour period**
+5. **No more than 60 GB downloaded in a given 24-hour period**
 
-Paced downloads this feed has actually sustained without suspension:
-**215,269 photos on 2026-07-18** (the bulk backfill day), 33,839 on 07-17, 9k–17k/day
-routinely July 19–27, 25,222 on 2026-08-05. The six July suspensions correlate with
-UNPACED concurrency bursts (measured double-digit RPS before the pacer existed) and with
-retry storms against dead URLs — behaviours their docs do prohibit in spirit
-("never a reason to download the same media more than once"), and which our runner has
-since been fixed to avoid (single request per URL, skip on failure, marker-aware skips).
+Plus, verbatim consequences and remedies:
+- ">2 requests per second … may result in the MLS Grid placing a rate limit on your access
+  or suspending access temporarily."
+- Suspensions SELF-HEAL: "permissions for the token will be automatically reinstated once
+  sufficient time has passed to decrease the number of requests submitted or the amount of
+  data consumed to acceptable levels."
+- **Grace Period:** "When conducting your initial import of data please reach out to
+  support@mlsgrid.com in advance to request a 'Grace Period' to exceed normal rate limits
+  and data caps." ← the legitimate fast path for bulk backfills.
+- "DO NOT download the same media more than once." / "DO NOT link directly to the Media
+  URLs … store and post to Media locally on your end."
+
+The DLA, IDX Rules, and Developer Checklist PDFs are mirrored alongside.
+
+## Measured history, re-read against the published caps
+
+storage.objects shows 215,269 photos mirrored on 2026-07-18 and 33,839 on 07-17 — i.e. the
+July bulk runs ran FIVE TIMES over the published 40k/24h cap, which is the likely cause of
+that month's six suspensions (each self-healing per the guide's rolling-window model), not
+just the unpaced bursts. 9–17k/day (July 19–27) and 25k (Aug 5) sat within the caps.
+Do NOT read the 215k day as capacity; read it as the breach that proved the cap.
 
 ## Operational translation for scripts/backfill-photos.mjs
 
-- Keep the 2 rps pacer (proven to deliver 200k+/day; cheap insurance) and the User-Agent
-  token header.
+- 2 rps pacer and User-Agent token header: their rules, keep both.
+- **Budget every run**: `--max-downloads N`, sized so backfill + the hourly sync's own
+  media downloads stay under 40,000 requests per rolling 24h (sync spends ~2-6k/day).
+  At 2 rps × ~415 KB avg the hourly caps (7,200 req / 4 GB) hold with ~25% headroom.
 - Single request per URL, ever; a failed download is a SKIP (fresh URL next pass).
-- Never re-mirror media whose marker/storage state is current (their "never re-download"
-  rule — our skip logic is now compliance, not just thrift).
-- 429s: back off with escalation and stop the RUN after a few (`--max-429`); the
-  "one 429 = stop for the whole day" rule was OUR invention during an unstable week, is
-  cited nowhere in their docs, and is retired in favour of: stop the run, wait out the
-  window (hours, or the next sync-quiet hour), probe small, continue.
-- Avoid launching within the hourly sync's media window (tick at :07, media work for a few
-  minutes after) — two of OUR OWN writers otherwise stack on one account.
+- Never re-mirror media whose marker/storage state is current — compliance, not thrift.
+- 429s: escalating backoff, stop the RUN after `--max-429` strikes, wait out the rolling
+  window, probe small, continue. (The old "one 429 = stop for the whole day" rule was OUR
+  invention and is retired; their windows are rolling, not calendar days.)
+- Avoid launching within the hourly sync's media window (tick at :07, a few minutes of
+  media work after) — two of OUR OWN writers otherwise stack against one 2 RPS account cap.
+- For a bulk finish, the sanctioned route is the Grace Period email, in advance.
