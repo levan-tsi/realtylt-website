@@ -522,3 +522,11 @@ initial imports. Consequences for the plan:
 · Rolling-24h spend after the run: ~35k of the 40k cap — by design. Next windows: a small
   morning top-up (~2-3k), then the big night runs. Galleries complete ~Aug 11 night /
   Aug 12 early, inside the caps — or in one run if the Grace Period email is answered.
+
+## 2026-08-10 09:30 — morning check: window saturated BY DESIGN, no run until tonight
+Trailing-24h media spend 33,978 of the 40k cap → budget under the 3k floor → correctly NO
+morning run. No backfill runner live; gallery resume watermark 2026-06-01T19:14 intact.
+Gate: zero-photo holds at 45; ≥5-photo listings grew 18,087 → 18,941 overnight (sync
+deepening modified rows). MLS Grid has answered NONE of the owner's emails (both Aug 8
+outage reports sit unreplied; Grace Period draft still unsent in his Gmail). Next gallery
+run scheduled 00:26 tonight with a freshly measured budget (~28-30k as the window drains).
