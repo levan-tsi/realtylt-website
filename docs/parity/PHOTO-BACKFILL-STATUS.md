@@ -530,3 +530,10 @@ Gate: zero-photo holds at 45; ≥5-photo listings grew 18,087 → 18,941 overnig
 deepening modified rows). MLS Grid has answered NONE of the owner's emails (both Aug 8
 outage reports sit unreplied; Grace Period draft still unsent in his Gmail). Next gallery
 run scheduled 00:26 tonight with a freshly measured budget (~28-30k as the window drains).
+
+## 2026-08-11 ~08:30 — night-2 gallery ledger
+26,384 photos on 6,234 listings, 21 pages, zero failures, zero 429s; stopped at the 26k
+budget. Watermark 2026-06-01 → 2026-07-10. Cumulative galleries 54,893. MEASURED remaining
+(marker formula over live rows): 33,749 downloads — one more full window + a small tail.
+Gate: zero-photo 46 · ≥5 photos 22,205 (14,762 at round start) · ≥20 photos 8,758.
+Next window 2026-08-12 04:26 (~26k budget), tail top-up when the rolling window frees.
