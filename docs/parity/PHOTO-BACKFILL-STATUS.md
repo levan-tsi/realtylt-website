@@ -548,3 +548,15 @@ the same edge (7,200 × ~450 KB ≈ 3.2 GB + sync). NEW STANDING RATE for long r
 --rps 1.7 (≈6,120/hr, ≈2.7 GB/hr) — headroom under both hourly caps at any time of day.
 Relaunched 10:52 at 1.7 rps with the window's remaining 15.5k budget, watermark
 2026-07-30. Suspensions self-heal per their guide; both trips cost only minutes.
+
+## 2026-08-12 ~11:15 — the penalty decoded by A/B: leaky bucket, not a block
+While my local runner instant-429'd at 10:11 and 10:52, the 10:07 SYNC tick mirrored 582
+photos from Vercel — same token, different egress. Direct A/B from this machine (2 media
+requests + 2 paced probe calls): first fresh URL 500'd (edge flake), then 429, then TWO
+CLEAN 200s seconds apart. Verdict: a leaky-bucket limiter that was nearly drained — NOT a
+hard IP or account block. The morning's "instant triple-429s" were 4 concurrent workers
+hitting an almost-empty allowance in second one and burning --max-429 3 instantly; my +18
+and +40-minute relaunches were too eager and deepened nothing but wasted strikes. Policy
+refinement: after a RateLimited trip, the next attempt carries --max-429 6 (absorb
+residual drips with escalating backoff) and at least an hour of cool-off. Relaunched
+11:15, rps 1.7, 15.5k budget, watermark 2026-07-30.
