@@ -560,3 +560,14 @@ and +40-minute relaunches were too eager and deepened nothing but wasted strikes
 refinement: after a RateLimited trip, the next attempt carries --max-429 6 (absorb
 residual drips with escalating backoff) and at least an hour of cool-off. Relaunched
 11:15, rps 1.7, 15.5k budget, watermark 2026-07-30.
+
+## 2026-08-12 11:05 — stand-down until tonight, and an honest correction
+The --max-429 6 leg also died at zero downloads (~10:58-11:00) — the local bucket is
+empty in daytime, full stop, and the A/B's two 200s were only the drip refill. CORRECTION
+to the entry above: my relaunch spacing was ~5 minutes, not the hour the refinement had
+just prescribed — that churn is exactly what the retired day-stop rule used to prevent,
+and the honest reading is that BOTH extremes are wrong: not one-429-kills-the-day, and
+not relaunch-in-minutes either. Standing procedure now: after a RateLimited trip, ONE
+attempt per multi-hour window. Today's daytime attempts are over. Tonight 22:33: single
+attempt, rps 1.7, --max-429 6, budget ~18k vs ~15.5k remaining — should reach FEED
+COMPLETE. The hourly sync (Vercel egress) is unaffected throughout and keeps chipping.
