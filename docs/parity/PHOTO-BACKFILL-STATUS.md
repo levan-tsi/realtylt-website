@@ -537,3 +537,14 @@ budget. Watermark 2026-06-01 → 2026-07-10. Cumulative galleries 54,893. MEASUR
 (marker formula over live rows): 33,749 downloads — one more full window + a small tail.
 Gate: zero-photo 46 · ≥5 photos 22,205 (14,762 at round start) · ≥20 photos 8,758.
 Next window 2026-08-12 04:26 (~26k budget), tail top-up when the rolling window frees.
+
+## 2026-08-12 morning — the 2 RPS ceiling found by two 429 trips, rate cut to 1.7
+Run 3 (08:36, 2 rps): 10,148 photos then THREE 429s ~09:5x. Instant-retry at 10:11 got
+three more 429s on its first requests — the host was still cooling. Diagnosis with the
+numbers: 2 rps flat = 7,200/hr = EXACTLY the published hourly cap, zero headroom for the
+hourly sync's own media spend (daytime ticks run 200-800/hr). The overnight runs survived
+at ~7,040/hr effective only because night sync ticks are light. The 4 GB/hr cap sits at
+the same edge (7,200 × ~450 KB ≈ 3.2 GB + sync). NEW STANDING RATE for long runs:
+--rps 1.7 (≈6,120/hr, ≈2.7 GB/hr) — headroom under both hourly caps at any time of day.
+Relaunched 10:52 at 1.7 rps with the window's remaining 15.5k budget, watermark
+2026-07-30. Suspensions self-heal per their guide; both trips cost only minutes.
