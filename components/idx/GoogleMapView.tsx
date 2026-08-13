@@ -596,8 +596,16 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
   return (
     <div className="relative h-full min-h-96 w-full">
       {/* A distinction nobody can decode is decoration. The legend says what solid and hollow
-          mean, in the same breath as the existing accuracy disclaimer. */}
-      <div className="pointer-events-none absolute bottom-2 left-2 z-[5] flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+          mean, in the same breath as the existing accuracy disclaimer.
+          TOP-left, not bottom-left: Google draws its wordmark in the bottom-left corner and
+          its terms require the attribution unobscured — at bottom-2 this card covered the
+          logo by a measured 1,071px² at 1440 (round 25 first caught it at 390). The top-left
+          corner is the one map corner with no Google chrome (fullscreen sits top-right), and
+          it is where a map expects its key anyway. The phone-width max-w exists because the
+          full one-line legend is 348px wide and reached under the 40px fullscreen control at
+          390 (measured 1,600px² of overlap); reserving 80px makes the card wrap clear of it,
+          and ≥sm the map is wide enough that the cap has nothing to do. */}
+      <div className="pointer-events-none absolute left-2 top-2 z-[5] flex max-w-[calc(100%-80px)] flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:max-w-none">
         <span className="flex items-center gap-1.5">
           {/* @design-allow the swatch is a MINIATURE of the map's price chip, which is 8px at
               ~26px tall — so at 10px tall it is 3px. On the UI scale it would read as a pill. */}
@@ -612,12 +620,14 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         <span>Locations approximate</span>
       </div>
       {viewportTotal !== null && drawnCount !== null && viewportTotal > drawnCount && (
-        // bottom-12 on phones: at 390px this and the legend are wider than the map together,
-        // and both bottom-2 meant the banner sat ON the legend ("LOCATIONS APPROXIMATE" read
-        // "LOCA" — screenshotted). Stacked clear of it until sm, side by side after.
+        // bottom-9, one value at every width: Google's own copyright/Terms line owns the
+        // bottom-right corner (14px tall at 1440, taller when it wraps on phones) and at
+        // sm:bottom-2 this banner sat on it by a measured 605px². 36px clears the strip with
+        // margin, and with the legend now docked top-left the old phone-only bottom-14 fork
+        // (which existed to clear the legend) has nothing left to clear.
         // drawnCount (markers actually painted after thinning), not the fetch size — a
         // visitor can count what is on screen, so the banner reports exactly that.
-        <p className="pointer-events-none absolute bottom-14 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:bottom-2">
+        <p className="pointer-events-none absolute bottom-9 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
           {drawnCount.toLocaleString()} of {viewportTotal.toLocaleString()} homes shown. Zoom in for more
         </p>
       )}
