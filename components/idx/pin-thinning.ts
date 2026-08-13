@@ -48,6 +48,16 @@ export const MARKER_CAP = 600;
 const PILL_H = 18; // 11px/1 line + 3px vertical padding ×2, + a hair for the face's border ring
 const PILL_GAP = 3; // min air between two pills before one of them becomes a dot
 const DOT_CLEARANCE = 10; // a dot closer than this to an accepted dot is invisible — drop it
+/** Where the INK actually is, relative to the anchor. The chip button carries 4px of
+ * transparent padding whose bottom edge sits on the anchor, and that padding doubles as the
+ * teardrop tail's height — so the painted face runs from 4px above the anchor upward, NOT from
+ * the anchor upward. Measured on the rendered map (50/50 faces): 17px tall, and the width
+ * estimate above runs 1.8–3.8px wide of the real glyph box. The collision rect keeps using
+ * PILL_H: every rect there is shifted identically, so label-vs-label separation is unaffected,
+ * and it is deliberately the generous box. This one answers a different question — "is a home
+ * HIDDEN here" — and for that the box has to be where the ink is. */
+const PILL_TAIL = 4;
+const PILL_FACE_H = 17;
 /** Pins this far outside the viewport still plan — half a wide pill, so a chip whose anchor
  * sits just past the edge can still show its inner half instead of popping in mid-pan. */
 const EDGE_MARGIN = 48;
@@ -163,7 +173,7 @@ export function planMarkers(opts: {
     // point at — but its rect still registers so later pills keep clear of it.
     if (c.tier === 0 || !pills.collides(rect)) {
       pills.add(rect);
-      faces.add({ l: c.x - w / 2, r: c.x + w / 2, t: c.y - PILL_H, b: c.y });
+      faces.add({ l: c.x - w / 2, r: c.x + w / 2, t: c.y - PILL_TAIL - PILL_FACE_H, b: c.y - PILL_TAIL });
       out.push({ pin: c.pin, kind: "pill", x: c.x, y: c.y, label });
       continue;
     }
@@ -191,5 +201,12 @@ export function planMarkers(opts: {
     dots.add(dotRect);
     out.push({ pin: c.pin, kind: "dot", x: c.x, y: c.y, label });
   }
-  return out;
+  // The test above can only see the pills placed BEFORE this candidate, but priority order goes
+  // on accepting pills afterwards and both engines paint every dot UNDER every pill. So a pill
+  // taken later buries a dot the loop already approved, and that dot still counted itself in
+  // "N of M homes shown". Measured on the live map at mid zoom: 21 such dots across three
+  // markets, up to 96% of the mark covered. The face index is complete now, so one pass removes
+  // exactly the marks that are not there — the same question the loop asks, asked once the
+  // answer is knowable.
+  return out.filter((m) => m.kind === "pill" || !faces.collides({ l: m.x, r: m.x, t: m.y, b: m.y }));
 }

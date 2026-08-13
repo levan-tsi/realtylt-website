@@ -164,19 +164,31 @@ describe("planMarkers — Zillow-style label thinning (pills + dots, no count ci
     // visitor can see.
     //
     // Geometry: the anchor pill is at (x=0, y=0) in projected space. Its face for "$500K"
-    // (5 glyphs) is 5*7+12 = 47 wide and 18 tall, hanging ABOVE the anchor — so it covers
-    // x -23.5..23.5, y -18..0.
-    // The two homes below sit in the BAND THAT DISCRIMINATES — outside the painted face but
-    // inside the collision rect's 3px margin (plus the old test's own 2px slop). A first draft
-    // of this test placed them further out, where both rules agree, and passed against the
-    // defect it was written for: these coordinates are chosen so the old rule fails it.
+    // (5 glyphs) is 5*7+12 = 47 wide, so x -23.5..23.5.
+    //
+    // VERTICALLY the face is NOT flush to the anchor. The chip button carries 4px of
+    // transparent padding whose bottom edge sits on the anchor, and that padding doubles as the
+    // teardrop tail — so the ink runs y -21..-4. MEASURED on the rendered map, 50 of 50 chips:
+    // face top -21.00, face bottom -4.00, height 17.00, with no spread at all. The first
+    // version of this test used -18..0 and therefore placed `justAbove` at y -19.5, which is
+    // INSIDE the real face: it asserted that a home genuinely buried under the label should
+    // still be drawn. The band that discriminates is measured, not assumed.
+    //
+    // The three homes below sit OUTSIDE the painted face but INSIDE the old collision rect's
+    // 3px margin (plus that rule's own 2px slop), so the old rule drops each of them and the
+    // new one keeps the two that are visible. An earlier draft placed them where both rules
+    // agree and passed against the defect it was written for.
     const anchor = pin({ lat: 0, lng: 0, price: 500_000 });
     const behind = pin({ lat: -0.009, lng: 0.004, price: 500_000 }); // (4, -9): inside the face
-    const justBelow = pin({ lat: 0.002, lng: 0.004, price: 500_000 }); // (4, 2): 2px under the face
-    const justAbove = pin({ lat: -0.0195, lng: 0.004, price: 500_000 }); // (4, -19.5): 1.5px over it
+    const justBelow = pin({ lat: 0.002, lng: 0.004, price: 500_000 }); // (4, 2): 2px under the ink
+    const justAbove = pin({ lat: -0.022, lng: 0.004, price: 500_000 }); // (4, -22): 1px above the ink
+    // These two pin the face's REGISTRATION, and nothing else in the file does. Each is on the
+    // opposite side of the 4px the face is offset by, so a box modelled -18..0 gets both wrong:
+    const underInk = pin({ lat: -0.0195, lng: -0.014, price: 500_000 }); // (-14, -19.5): real ink covers it
+    const inTailGap = pin({ lat: -0.002, lng: 0.02, price: 500_000 }); // (20, -2): below the ink, beside the tail
     const view = { left: -200, right: 200, top: -200, bottom: 200 };
     const plan = planMarkers({
-      pins: [anchor, behind, justBelow, justAbove],
+      pins: [anchor, behind, justBelow, justAbove, underInk, inTailGap],
       project,
       viewport: view,
       selectedId: anchor.id, // the anchor takes the pill deterministically
@@ -189,6 +201,40 @@ describe("planMarkers — Zillow-style label thinning (pills + dots, no count ci
     // distance. The map must not delete a home to protect a margin.
     expect(kind(justBelow)).toBe("dot");
     expect(kind(justAbove)).toBe("dot");
+    // Registration: the ink sits 4px higher than a naive "flush to the anchor" box would put it.
+    expect(kind(underInk)).toBe("dropped");
+    expect(kind(inTailGap)).toBe("dot");
+  });
+
+  it("a dot buried by a pill accepted LATER is dropped, not counted as drawn", () => {
+    // Priority order accepts pills all the way down the candidate list, but a dot is only ever
+    // tested against the pills placed BEFORE it — and both engines paint every dot UNDER every
+    // pill. So a pill taken later buries a dot the planner already approved, and that dot went
+    // on counting itself in "N of M homes shown". Measured on the live map at mid zoom: 21 such
+    // dots across three markets, up to 96% of the mark covered by ink.
+    //
+    // Geometry (x = lng*1000, y = lat*1000; a face is 47 wide and spans y-21..y-4):
+    //   A (0,0)      selected -> tier 0 -> always a pill. Face x -23.5..23.5, y -21..-4.
+    //   B (30,0)     saved -> tier 1. Its pill rect overlaps A's, so it falls back to a DOT.
+    //                Not under A's face (x 30 is outside A's 23.5), so the loop approves it.
+    //   C (53.2,12)  tier 2, processed AFTER B. Its collision rect starts at x 26.7, clearing
+    //                A's 26.5 by a whisker, so C is accepted as a pill — and C's face spans
+    //                x 29.7..76.7, y -9..8, which swallows B at (30,0).
+    const a = pin({ lat: 0, lng: 0, price: 500_000 });
+    const b = pin({ lat: 0, lng: 0.03, price: 500_000, saved: true });
+    const c = pin({ lat: 0.012, lng: 0.0532, price: 500_000 });
+    const plan = planMarkers({
+      pins: [a, b, c],
+      project,
+      viewport: { left: -200, right: 200, top: -200, bottom: 200 },
+      selectedId: a.id,
+    });
+    const kind = (p: MapPin) => plan.find((m) => m.pin.id === p.id)?.kind ?? "dropped";
+    expect(kind(a)).toBe("pill");
+    expect(kind(c)).toBe("pill");
+    // Under the single-pass rule this was a "dot" — a mark the visitor could not see, inflating
+    // the count line. It is behind painted ink, so it is dropped like any other hidden home.
+    expect(kind(b)).toBe("dropped");
   });
 
   it("returns nothing for an empty viewport or an unprojectable set", () => {
