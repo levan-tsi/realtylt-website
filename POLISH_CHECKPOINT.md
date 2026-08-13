@@ -1,5 +1,52 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 28 — 2026-08-13. THE MAP ROUND: his "batched in circles / not showing listings
+## ═══ properly". Zoom ladder over 7 markets; 2 real defects fixed, 1 root cause found and
+## ═══ NOT fixed (owner call). 2 commits, NOT pushed. Full reasoning: docs/parity/MAP-ROUND28.md.
+##
+## THE COMPLAINT SPLIT INTO THREE, and each got its own answer:
+## 1. COUNT CIRCLES: there are none. 20 rungs x 7 markets, zero count bubbles, zero
+##    "[object". Round 23's pills+dots replacement is intact here AND on the deployment.
+## 2. "BATCHED IN CIRCLES" IS THE COORDINATE DATA, and it is a DATA fix, not a render fix.
+##    Verified by EXPERIMENT today (2 $select calls): the onekey2 feed still 400s on
+##    Latitude — "does not exist or is unable to be retrieved". So coordsOf places every
+##    listing at its zip centroid + a jitter of ±0.008°/±0.011° = a 1.77km x 1.86km box,
+##    THE SAME SIZE FOR EVERY ZIP. Measured: 14 Queens zips all span ~1.75 x 1.83km
+##    regardless of holding 58 or 177 listings. At z11 that is a 30x32px square per zip —
+##    the "batch". docs/map-r28/yonkers-r0.png is the exhibit. NOT FIXED: it needs a new
+##    coordsOf + a backfill of ~28k stored lat/lng (lib/idx sync was out of bounds), and
+##    re-placing pins in the map or API instead would break bbox agreement with the grid.
+##    TWO OPTIONS FOR THE OWNER, both in the doc: size the spread per zip from centroid
+##    spacing + a golden-angle lattice (one backfill, no new data), or geocode the street
+##    addresses once and store real coordinates (the only one that makes the map TRUE).
+## 3. "NOT SHOWING LISTINGS PROPERLY" WAS TWO REAL DEFECTS, both fixed:
+##    (a) THE TRAPDOOR: SearchClient tested listings.length===0 ABOVE the map branch, so
+##        zooming onto ground with nothing for sale DELETED THE MAP and blamed the
+##        visitor's filters. On the deployment this fires in FOUR OF FIVE markets within
+##        four zoom steps. Empty state now lives in the results column, map stays mounted,
+##        copy is viewport-aware ("No homes in this map area / Zoom out or move the map").
+##    (b) A 3px MARGIN WAS DELETING HOMES: pin-thinning asked "is this home hidden?"
+##        against the pill COLLISION rect (which carries PILL_GAP on all sides + a 2px
+##        slop box) instead of the painted FACE. Poughkeepsie z15: 15 homes in view, 9
+##        drawn, and all 6 missing sat OUTSIDE the neighbouring face. Now a point test on
+##        the dot's centre against the face. Coverage rose at every rung: Queens z11
+##        202->274, Yonkers z13 128->167, Poughkeepsie z15 9->14, Ulster z10 77->98 —
+##        with pill counts UNCHANGED, so no extra label clutter.
+## NEW COMMITTED GATE: scripts/verify-map-zoom-ladder.mjs (5 markets x 4 rungs, ~7 min).
+## Proven able to fail 3 ways by injection (BREAK=circles|map|orphans) AND against reality:
+## it reports 5 failures on the deployment and passes 20/20 here.
+## SIX INSTRUMENT FAULTS recorded in the doc — clipping to the window instead of the map
+## pane (invented "88 of 155"), clipping on a pill's box centre instead of its anchor
+## (invented a 157px orphan), one map box held for a whole ladder (invented a self-zooming
+## map), one page reused across markets, settling on "there are markers", and the location
+## dropdown that self-opens on ?city=/?q= deep links which is REACT STRICT MODE, DEV ONLY —
+## checked clean on the deployment. Shoot ?county= URLs for clean dev screenshots.
+## GATES: tsc clean · 877 tests / 64 files foreground (baseline 876 + 1 new) · ladder 20/20 ·
+## viewport-scope, map-popup, pin-walk, map-markers all green · empty state verified at
+## 1440/390/320, no overflow · recovery walk: emptied at step 3, map alive, zoomed back out
+## to 147 markers. ALSO FOUND NOT FIXED: the phone map sits ~48,000px down in map view;
+## tabbing between markers is swallowed by Google's own focus layer (same on production).
+
 ## ═══ ROUND 27 — 2026-08-13. THE DESIGN ROUND: the owner's three named defects, re-measured
 ## ═══ on this tree and fixed; one committed gate caught re-aiming; 5 commits, NOT pushed
 ## ═══ (main session reviews). Full reasoning: docs/parity/DESIGN-ROUND27.md.
