@@ -78,3 +78,58 @@ instinct is right about this tree too. The specifics are below, with measurement
 Moves 1-4 are executed this round; 5-8 are prepared for the owner; 9-10 fold into his calls.
 Every changed surface gets driven at 1440, 390 and 320, states checked, and the two committed
 gates re-run (`npx tsc --noEmit`, `npm test`, baseline 874).
+
+---
+
+## The record, written after the work
+
+**Move 1 (hero) — done, with one addition the gate demanded.** Scrim eased 88->68 / 50->38 /
+80%->68%. The first gate run caught the cost: the 11px eyebrow at 2.61:1 against bright photo
+patches the mid-gradient no longer covered. The fix that did not rebuild the slab is a left-edge
+vignette under the type column (`from-black/40` over the left 62%) plus the eyebrow at paper/85.
+Direct pixel measurement behind the glyphs: p95 luminance 0.061 with the vignette, 0.098
+without; white/85 reads about 8:1. Gate PASS at 1440 (all 8 pages, 172 runs) and at 390.
+
+**The instrument found lying, and re-aimed.** The gate's home verdict depended on which frame
+of the ambient Vimeo loop sat under the glyphs at screenshot time: p95 0.061 on the poster vs
+0.238 on a bright frame, minutes apart on the same tree. It now hides the video layer and
+scores the static poster (the visitor contract for reduced-motion, no-JS, phones, and
+blocked-autoplay profiles). Its BREAK_CSS self-test was re-proven after the change: an injected
+grey eyebrow reports 2.87:1. Lesson filed: a single-frame screenshot of a moving background is
+a lottery ticket, not a measurement.
+
+**Move 2 (instrument) — done at both call sites.** Home hero and `/home-value` now share:
+16px container, 8px inset, 8px gap, 8px button. Measured after: inset 9-10.8px, gap 8px, radii
+16/8. Real-Tab focus ring verified on the container and on the nested button; input font 16px.
+`components/search-instrument.test.ts` pins the two call sites to one geometry (874 -> 876
+tests), because their drifting apart is what happened between rounds 11 and 27.
+
+**Move 3 (footer) — done.** Intervals measured after at 390: block gap 64px > intra-reference
+seam 57px > logo step 36px. Order unchanged on purpose: form leads as the action, reference
+follows, DOM order = visual order. Before/after at `docs/design-r27/footer-390-*.png`.
+
+**Move 4 (map cards) — done, and it was bigger than carried.** At 1440 the legend covered the
+Google wordmark by 1,071px² and the count banner covered the Map data/Terms line by 605px².
+Legend docks top-left with a phone-width cap (the one-line card reached under the fullscreen
+control: 1,600px² measured, then zero); banner at bottom-9 every width, its phone-only fork
+retired. All intersections re-measured at 1440 and 390: zero.
+
+**Prepared for the owner, not decided** (visuals in `docs/design-r27/`):
+- `badge-1440-current.png` vs `badge-1440-white-mock.png` — the review badge as shipped and a
+  filter-approximated white-variant mock (Google publishes an official white wordmark; the mock
+  exists only to make the call, the real asset would be used if taken).
+- `map-frame-1440-current.png` — the arrival frame, Albany to Philadelphia, pins in about a
+  quarter of the panel. The candidate is a fit to roughly lat 40.49-42.09 / lng -74.47 to
+  -73.35 (the actual corridor); it was not rendered because the Maps API flapped in the probe
+  browser during capture, and because the decision is not visual anyway: a tighter frame
+  changes the viewport-scoped headline count, and that number is his.
+- Hero grammar and the mobile MAP/GRID arrival default: unchanged, as briefed; the grammar
+  comparison lives in the shots from this round's sweep and round 25's item 11.
+- Named, not touched: the chat launcher (`public/rlt-chat.js`, mirrored byte-exact from the
+  live site) is the loudest colour on every page and carries a green status dot the house
+  palette rules call a tell — it belongs to the chatbot project's owner call.
+
+**Gates at close:** tsc clean · 876 tests / 64 files, foreground (baseline 874 + 2 new) ·
+hero-contrast PASS 8 pages at 1440 + home at 390, self-test proven able to fail · no
+horizontal overflow at 390 or 320 on the changed pages · no-JS and reduced-motion drives
+show the photograph carrying the hero in both.

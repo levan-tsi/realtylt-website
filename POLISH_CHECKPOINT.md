@@ -1,5 +1,42 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 27 — 2026-08-13. THE DESIGN ROUND: the owner's three named defects, re-measured
+## ═══ on this tree and fixed; one committed gate caught re-aiming; 5 commits, NOT pushed
+## ═══ (main session reviews). Full reasoning: docs/parity/DESIGN-ROUND27.md.
+##
+## THE REFRAME: the owner's defect list describes production realtylt.com, which is STILL THE
+## OLD PHP SITE (nginx/PHP 8.4, raw Vimeo, links-then-form footer) — but fresh-eyes drives of
+## this tree showed each defect half-alive here too, so all three were fixed HERE:
+## 1. HERO "flat black" (8ff2edc): the from-black/88 x 80% scrim buried the photo below the
+##    headline in EVERY state (video/poster/no-JS/reduced — all four driven). Eased to
+##    68/38 x 68% + a left-edge vignette under the type column + eyebrow to paper/85 (the
+##    ease exposed the 11px eyebrow at 2.61:1; the vignette grades the type without
+##    rebuilding the slab). Poster p95 lum behind the glyphs 0.061; ~8:1 for the eyebrow.
+## 2. SEARCH INSTRUMENT (same commit): round 11's "4px breathing inset" measured 0px between
+##    field edge and button. Both call sites (home + /home-value, "the same instrument") now:
+##    16px container = 8px inset + 8px gap + 8px button. NEW TEST pins the two call sites to
+##    one geometry (components/search-instrument.test.ts) — they drifted once already.
+## 3. FOOTER 390 (0af6344): the ORDER he asked for existed since round 11; the SPACING said
+##    the opposite (intra-group seam 72px > between-block gap 56px). Now 64 > 57 > 36.
+## GATE RE-AIMED (473ab98): verify-hero-contrast scored whichever VIDEO FRAME the Vimeo loop
+## was on (p95 0.061 poster vs 0.238 bright frame, same tree) — pass at 14:00, fail at 14:03.
+## Now hides the video and scores the poster (the reduced-motion/no-JS/phone/blocked-autoplay
+## contract); BREAK_CSS self-test re-proven failing (2.87:1 on demand).
+## MAP CARDS (e4cf554): carried legend-over-attribution was WORSE than recorded — at 1440 the
+## legend covered the Google wordmark (1,071px²) AND the banner covered Map data/Terms
+## (605px²). Legend now top-left with a phone max-w cap (it reached under the fullscreen
+## control: 1,600px² measured, then 0); banner bottom-9 all widths, phone fork retired.
+## Intersections at 1440 + 390: ZERO.
+## OWNER CALLS PREPARED, NOT DECIDED (docs/design-r27/): google badge white-variant mock ·
+## map default frame current shot + candidate bounds (Maps API flapped ERR_FAILED in the
+## probe browser; the real decision is the headline count anyway) · hero grammar + mobile
+## arrival default unchanged · chat launcher (rlt-chat.js) named as the loudest colour on
+## every page (green-dot tell) — chatbot project's call.
+## GATES: tsc clean · 876 tests / 64 files foreground (874 + 2 new) · hero-contrast PASS
+## 8 pages @1440 + home @390 · overflow clean 390/320 · before/afters in docs/design-r27/.
+## STILL OPEN from round 26: covers-keep prune (~10 GB) · cache-control S3 sweep (owner's S3
+## keys) · round-26 brief's re-verification set (six round-24 probes at production).
+
 ## ═══ ROUND 26 FINAL — 2026-08-13 04:50. THE PHOTO BACKFILL IS FINISHED. ═══════════════
 ## FEED COMPLETE on the gallery pass; the watermark file is gone; nothing left to resume.
 ## Verified on the committed gate at close: zero-photo 45 of 27,750 live rows (round
