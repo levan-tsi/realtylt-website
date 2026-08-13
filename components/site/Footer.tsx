@@ -121,16 +121,30 @@ export function Footer() {
           because a real estate website is advertising, which is where HUD asks for it. The
           REALTOR® mark is set as a word mark in our own type — the form NAR states as
           preferred — and it is followed by the membership reference NAR's contextual-use rule
-          requires. See docs/parity/DESIGN-ROUND11.md §3 for the rules these follow. */}
+          requires. See docs/parity/DESIGN-ROUND11.md §3 for the rules these follow.
+
+          h-11, not h-8. Round 11 wrote the sizing rule down and then did not meet it: HUD's
+          advertising guidance is that where other logotypes appear, the Equal Housing mark is
+          "at least equal in size to the largest of the other logotypes". Measured in round 29,
+          the tallest other logotype on every page is the header wordmark — 43.0px between
+          640px and 1279px (w-52 on a 300x62 file), 40.5px above that, 36.4px below. The mark
+          was 32px on every page at every width, so it was the smallest logotype on the page it
+          is supposed to lead. 44px clears the tallest case with 1px to spare and needs no
+          responsive fork. The row's type steps up with it (12 -> 13px) so the mark labels
+          words of its own weight rather than towering over fine print. */}
       <div className="mx-auto max-w-[1250px] px-4 pb-10 lg:px-8">
         <div className="flex flex-col gap-5 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
           <div className="flex items-center gap-5">
-            <EqualHousingMark className="h-8 w-auto shrink-0 text-stone" />
-            <p className="text-xs leading-relaxed">
+            <EqualHousingMark className="h-11 w-auto shrink-0 text-stone" />
+            <p className="text-[13px] leading-relaxed">
               Equal Housing Opportunity. Member of the National Association of REALTORS&reg;.
             </p>
           </div>
-          <p className="text-xs leading-relaxed sm:max-w-md sm:text-right">
+          {/* max-w-xl, not max-w-md: at 1440 a 448px cap broke this 560px sentence one word
+              from the end, leaving "operated." alone on its own right-aligned line with ~300px
+              of empty row beside it. The wider cap lets it set on one line where there is room
+              and still wraps to two balanced lines when there is not. */}
+          <p className="text-[13px] leading-relaxed sm:max-w-xl sm:text-right">
             &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
           </p>
         </div>
