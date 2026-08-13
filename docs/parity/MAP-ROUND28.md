@@ -239,3 +239,73 @@ Recorded because each cost real time and each would recur.
   fetched. It changes nothing on screen (the blobs saturate at 274 markers long before the cap)
   and the banner reports the true total, so this is honest today. It would start to matter if §2
   were fixed and the pins spread out.
+
+---
+
+# Round 28, adversarial review
+
+A second pass whose brief was to refute the above. Markets round 28 never used
+(New Rochelle, Mount Vernon, Newburgh, Carmel, Suffern), a separately written probe, and the
+database instead of the doc. What follows is what changed; everything not listed here was
+re-measured and held.
+
+## Confirmed
+
+- **The trapdoor (§3a).** Five fresh markets, driven to an empty viewport by wheel (2–7 steps):
+  map alive every time, viewport-aware copy, no horizontal overflow, and zooming back out
+  repopulated both the map and the column in all five. The empty card was also checked at 1440,
+  390 and 320 by forcing the state with an impossible price floor: 193x44 button inside a 288px
+  card at 320, zero overflow at every width.
+- **The margin fix (§3b) — direction and size.** Re-derived as a true A/B: same tree, same data,
+  one line differing. Drawn markers rose at every rung that had dots (+3% to +43%), pill counts
+  were IDENTICAL at all eleven rungs, worst undrawn gap fell in every market, and the two >30px
+  gaps the old rule left in Mount Vernon went to zero.
+- **The gate can fail (§ committed gate).** Its three injections all exit 1, and with the exact
+  pre-round-28 planner restored it reports `poughkeepsie r1: only 9 of 15 homes drawn (60%)` —
+  reproducing the doc's own number independently.
+- **The coordinates (§2), from the DATABASE alone.** 283 zips with 20+ listings, 31,840 rows:
+  every row inside its own zip's box, none outside. Worst deviation 0.007996 lat / 0.010989 lng
+  against caps of 0.008 / 0.011. Real geography cannot do that. Separately, ONE MLS Grid request
+  returned `400 — The field 'Latitude' does not exist or is unable to be retrieved.`
+  Also: **60 rows carry no coordinates at all** (zip absent from the centroid table) and can
+  never appear on the map.
+
+## Corrected
+
+- **"The visibility test now runs against the pill's painted face" was not true.** The box was
+  modelled flush to the anchor (y-18..y). The chip button carries 4px of transparent padding
+  whose bottom edge sits on the anchor, and that padding doubles as the teardrop tail, so the
+  ink runs y-21..y-4 — measured on 50 of 50 rendered chips, no spread. The box was 4px off in a
+  17px element, and the new test's `justAbove` fixture had been placed at y-19.5, INSIDE the
+  real face: the suite was asserting that a home buried under a label should be drawn.
+- **A dot could still be buried.** A dot is tested only against pills placed BEFORE it, but
+  priority order keeps accepting pills afterwards and both engines paint every dot UNDER every
+  pill. 21 dots across three markets had their centre inside painted ink, up to 96% of the mark
+  covered, each counting itself in "N of M homes shown". Fixed; buried dots are now 0 at every
+  rung and the worst covered mark is 49%, which is what "half a dot is still visible" means.
+- **The trapdoor had a second door.** The `state === "error"` branch also sat above the map
+  branch, and in map view the grid refetches on EVERY settle — so one failed request during an
+  ordinary wheel-zoom deleted a working map drawn from a DIFFERENT endpoint. Reproduced with a
+  settled 77-marker map and a single aborted `/api/idx/search`. Fixed the same way.
+- **The keyboard finding's mechanism.** Tab from a marker does not land on "an unclassed div":
+  it lands in the popup that the focus opened (Close, Save, Prev, Next, View Listing), then in
+  Google's own controls, and never on another marker — 14 Tabs, confirmed. `Enter` on a focused
+  marker DOES open the popup, so that contract is intact. The deeper cause is that
+  `overlay.draw()` clears the container with `innerHTML = ""` and rebuilds every marker, so any
+  redraw destroys the focused node and focus falls to `<body>`. Still worth its own round: the
+  cheap repair is to remember the focused pin id across a draw and restore it, but that runs
+  straight through the popup's hard-won open/close guards and should not be bolted on at the
+  end of a review.
+
+## Open
+
+- **The gate's coverage rule has a blind band.** It only checks the drawn share when 20 or fewer
+  homes are in view. Carmel z14 draws 18 of 25 (72%) on the fixed tree and the gate says nothing;
+  with the old planner, White Plains z13 fell 105 -> 85 drawn and still passed. The 80%-at-20
+  threshold is fitted to observed data, not derived.
+- **`scripts/verify-map-markers.mjs` cannot fail.** 48 lines, no assertion, no `process.exit`,
+  always green. It is a round-23 diagnostic wearing a `verify-` name, and the zoom ladder now
+  covers what it was watching. It should be renamed to `_scratch-` or deleted.
+- **Dots may overlap each other.** `DOT_CLEARANCE` is 10px tested as a box, but the painted mark
+  is 12px inside a 2px ring, so two dots 11px apart both survive and their ink touches. Left
+  alone deliberately: tightening it would DELETE homes, which is the opposite of this round.
