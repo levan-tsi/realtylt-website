@@ -17,11 +17,18 @@ import { FOOTER_NAV, SITE } from "@/lib/site";
  * where to go next — is one contiguous reference block after it. Keeping one order at every
  * size also means the visual order and the DOM order never disagree, so keyboard focus and a
  * screen reader walk the footer in exactly the order the eye does.
+ *
+ * Round 27 fixed the SPACING that was contradicting that grouping. Measured at 390: the seam
+ * INSIDE the reference block (details to page links: 40px + hairline + 32px = 72px) was wider
+ * than the gap BETWEEN the form block and the reference block (56px), so proximity read the
+ * links as a third block drifting away from the details they belong with. Now the between-block
+ * gap (64px) is the widest interval in the footer and the intra-block seam (56px) sits inside
+ * it, wider than the logo-to-details step (36px): three intervals, one hierarchy.
  */
 export function Footer() {
   return (
     <footer className="border-t border-line bg-paper text-stone">
-      <div className="mx-auto grid max-w-[1250px] gap-14 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
+      <div className="mx-auto grid max-w-[1250px] gap-16 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
         <section aria-labelledby="footer-form-heading">
           <h2 id="footer-form-heading" className="t-h3 text-ink">
             Tell us what you&rsquo;re looking for
@@ -69,7 +76,11 @@ export function Footer() {
             </p>
           </address>
 
-          <nav aria-label="Footer" className="mt-10 border-t border-line pt-8">
+          {/* mt-7/pt-7, not mt-10/pt-8: this seam separates two halves of ONE reference block,
+              so it must read narrower than the 64px gap that separates the blocks (see the
+              header comment). The hairline stays — it marks the turn from "how to reach us"
+              to "where to go next" without breaking the group. */}
+          <nav aria-label="Footer" className="mt-7 border-t border-line pt-7">
             {/* inline-flex min-h-[24px]: text-sm links with no padding measured ~17px tall,
                 under the WCAG 2.5.8 (24px) pointer-target minimum. Height only. */}
             {/* gap-y-2.5, not 1: at 4px against 24px targets these read as a cramped list of
