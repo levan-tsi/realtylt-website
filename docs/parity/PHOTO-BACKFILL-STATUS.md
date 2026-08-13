@@ -571,3 +571,19 @@ not relaunch-in-minutes either. Standing procedure now: after a RateLimited trip
 attempt per multi-hour window. Today's daytime attempts are over. Tonight 22:33: single
 attempt, rps 1.7, --max-429 6, budget ~18k vs ~15.5k remaining — should reach FEED
 COMPLETE. The hourly sync (Vercel egress) is unaffected throughout and keeps chipping.
+
+## ═══ 2026-08-13 ~04:50 — BACKFILL FINISHED. FEED COMPLETE ON THE GALLERY PASS. ═══
+Tail run: 1,843 photos, 15 pages, zero failures, zero 429s, FEED COMPLETE — watermark
+deleted by the script, nothing left to resume. FINAL VERIFICATION (committed gate + SQL):
+· zero-photo live rows: 45 of 27,750 (round start: 1,139) — 5 arrived today, 36 are old
+  rows the feed sends no photos for; the hourly sync heals them on their next feed touch
+· ≥5 photos: 24,895 (round start: 14,762, +69%) · ≥20 photos: 9,008 · ≥1 photo: 99.84%
+· marker_current: 27,703 of 27,750 (99.8%; was 23,304 after the repair, rotten before)
+· remaining owed by the marker formula: 22 — pure churn, the hourly sync's normal job
+· storage.objects total: 459,899 (+~51k this round)
+Round total mirrored: ~88,900 photos (3,700 covers + 84,900 galleries + probe) across
+five night windows and one daytime lesson. From here the hourly sync alone keeps the
+mirror current — the one-time bulk pass this doc has tracked since July is CLOSED.
+Still open, unchanged: covers-keep prune (~10 GB reclaim, owner-decided policy, ready to
+run any time) · cache-control S3 sweep (needs owner-minted S3 keys) · Grace Period email
+never needed (draft can be discarded or kept for a future bulk need).
