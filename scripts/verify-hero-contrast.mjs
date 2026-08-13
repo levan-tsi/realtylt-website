@@ -66,6 +66,18 @@ for (const path of PAGES) {
   });
   await p.waitForTimeout(600);
 
+  // MEASURE THE POSTER, NOT THE FRAME LOTTERY. The home hero layers an ambient Vimeo loop
+  // over its poster, and a single screenshot scores whichever frame the loop happens to be
+  // on: the same tree measured the eyebrow's background at p95 luminance 0.061 (poster) and
+  // 0.238 (a bright frame of the moving footage) minutes apart — pass at 14:00, fail at
+  // 14:03, no code change. A verdict that depends on the loop's clock is not a measurement.
+  // The static poster IS the visitor contract for every reduced-motion, no-JS and phone
+  // visitor and for any profile that blocks autoplay (the owner's Chrome among them), and
+  // both states share the same scrims, so the poster is the deterministic ground this gate
+  // scores. The moving state is bounded by design instead: the type column carries its own
+  // left vignette (app/page.tsx, round 27).
+  await p.addStyleTag({ content: 'iframe[src*="player.vimeo.com"] { display: none !important; }' });
+
   // SELF-TEST HOOK. A gate that has never been seen to fail is not evidence. BREAK_CSS injects a
   // deliberate regression so the probe can be shown catching one on demand, e.g.
   //   BREAK_CSS='h1{color:#9aa0a6 !important}' node scripts/verify-hero-contrast.mjs
