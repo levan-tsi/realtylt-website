@@ -1,5 +1,25 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## === ROUND 28 - 2026-08-13 EVENING. THE MAP ROUND, built by one Opus agent and
+## === certified by an adversarial second. Six commits + hygiene, pushed after the main
+## === session re-ran every gate itself (tsc clean, 878 tests, zoom ladder 20/20).
+## THE OWNER'S "batched in circles" DECODED: not clustering (zero count circles at 20
+## rungs x 7 markets) - the COORDINATES are zip-centroid + jitter in a fixed 1.77x1.86km
+## box (proven from DB alone: 31,840 rows across 283 zips, every row inside its zip box;
+## Latitude is not $select-able, 400 re-proven three times). Map draws faithfully; the
+## positions are fake. OWNER DECISION OPEN: true geocoding backfill (~28k rows, the honest
+## fix, recommended) vs golden-angle lattice re-spread (cosmetic). 60 rows have no coords.
+## FIXED THIS ROUND: the trapdoor (results-empty branch unmounted the WHOLE map - fires in
+## 4/5 markets within 4 zoom steps on prod) AND its sibling the checker found (error branch
+## did the same on one aborted refetch mid-wheel); the 3px collision-margin bug hiding up
+## to 40% of dots at street zoom, then the checker's 4px face-box correction + buried-dot
+## rule (23 buried dots -> 0, gains +3..38% drawn at identical pill counts, orphans 0).
+## New committed gate scripts/verify-map-zoom-ladder.mjs (fails on prod's 5 defects,
+## proven able to fail by injection); verify-map-markers renamed _diag (cannot fail).
+## STILL OPEN: ladder coverage rule blind above 20-in-view - tighten next map round;
+## keyboard focus dies on overlay redraw (innerHTML="", worth its own round); empty-state
+## button says Clear All Filters while copy says zoom out (owner call); phone map depth.
+
 ## ═══ ROUND 28 — 2026-08-13. THE MAP ROUND: his "batched in circles / not showing listings
 ## ═══ properly". Zoom ladder over 7 markets; 2 real defects fixed, 1 root cause found and
 ## ═══ NOT fixed (owner call). 2 commits, NOT pushed. Full reasoning: docs/parity/MAP-ROUND28.md.
