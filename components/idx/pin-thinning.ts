@@ -141,6 +141,9 @@ export function planMarkers(opts: {
   candidates.sort((a, b) => a.tier - b.tier || a.hash - b.hash || (a.pin.id < b.pin.id ? -1 : 1));
 
   const pills = rectGrid(64);
+  // The pill FACES, with no separation margin — a different question from the one `pills`
+  // answers. See the dot test below.
+  const faces = rectGrid(64);
   const dots = rectGrid(32);
   const out: PlannedMarker[] = [];
   for (const c of candidates) {
@@ -148,6 +151,8 @@ export function planMarkers(opts: {
     const label = chipPrice(c.pin.price);
     const w = estimatePillWidth(label, c.saved);
     // A pill hangs above its anchor point, tip at (x, y) — same as the chips' -50%/-100%.
+    // Two boxes, because "may another LABEL go here" and "is a home HIDDEN here" are not the
+    // same question. This one carries PILL_GAP on every side so two labels never touch.
     const rect: Rect = {
       l: c.x - w / 2 - PILL_GAP,
       r: c.x + w / 2 + PILL_GAP,
@@ -158,18 +163,30 @@ export function planMarkers(opts: {
     // point at — but its rect still registers so later pills keep clear of it.
     if (c.tier === 0 || !pills.collides(rect)) {
       pills.add(rect);
+      faces.add({ l: c.x - w / 2, r: c.x + w / 2, t: c.y - PILL_H, b: c.y });
       out.push({ pin: c.pin, kind: "pill", x: c.x, y: c.y, label });
       continue;
     }
-    // Dot fallback: centred on the point. Dropped when invisible — under a pill already
-    // placed, or within DOT_CLEARANCE of an accepted dot.
+    // Dot fallback: centred on the point. Dropped only when it would be INVISIBLE — genuinely
+    // behind a pill's painted face, or on top of a dot already accepted.
+    //
+    // This test used to run against the pill COLLISION rect (the one above), so a home whose
+    // anchor merely grazed a neighbouring label's 3px breathing margin was deleted from the
+    // map outright. Measured at street zoom over Poughkeepsie: 15 homes in view, 9 drawn, and
+    // every one of the 6 missing was outside the pill's actual face — sitting in the margin,
+    // or below the face where a dot shows perfectly well. A separation margin exists to keep
+    // two labels from touching; it is not a claim about what the visitor can see.
+    //
+    // The face test is a POINT test on the dot's centre: a rect covers more than half of a
+    // dot exactly when it contains its centre, and half a dot is still a mark you can see and
+    // press (the hit target is 24px and reaches out from under any label).
+    if (faces.collides({ l: c.x, r: c.x, t: c.y, b: c.y })) continue;
     const dotRect: Rect = {
       l: c.x - DOT_CLEARANCE / 2,
       r: c.x + DOT_CLEARANCE / 2,
       t: c.y - DOT_CLEARANCE / 2,
       b: c.y + DOT_CLEARANCE / 2,
     };
-    if (pills.collides({ l: c.x - 2, r: c.x + 2, t: c.y - 2, b: c.y + 2 })) continue;
     if (dots.collides(dotRect)) continue;
     dots.add(dotRect);
     out.push({ pin: c.pin, kind: "dot", x: c.x, y: c.y, label });

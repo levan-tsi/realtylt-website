@@ -155,6 +155,42 @@ describe("planMarkers — Zillow-style label thinning (pills + dots, no count ci
       }
   });
 
+  it("a home beside a pill keeps its dot — only a home BEHIND the painted face is dropped", () => {
+    // The defect this pins: the dot test used to run against the pill's COLLISION rect, which
+    // carries a 3px separation margin on every side, so a home whose anchor merely grazed a
+    // neighbouring label's breathing room vanished from the map. Measured on the real map at
+    // street zoom over Poughkeepsie: 15 homes in view, 9 drawn, and all 6 missing were OUTSIDE
+    // the pill's painted face. A margin keeps two labels apart; it says nothing about what a
+    // visitor can see.
+    //
+    // Geometry: the anchor pill is at (x=0, y=0) in projected space. Its face for "$500K"
+    // (5 glyphs) is 5*7+12 = 47 wide and 18 tall, hanging ABOVE the anchor — so it covers
+    // x -23.5..23.5, y -18..0.
+    // The two homes below sit in the BAND THAT DISCRIMINATES — outside the painted face but
+    // inside the collision rect's 3px margin (plus the old test's own 2px slop). A first draft
+    // of this test placed them further out, where both rules agree, and passed against the
+    // defect it was written for: these coordinates are chosen so the old rule fails it.
+    const anchor = pin({ lat: 0, lng: 0, price: 500_000 });
+    const behind = pin({ lat: -0.009, lng: 0.004, price: 500_000 }); // (4, -9): inside the face
+    const justBelow = pin({ lat: 0.002, lng: 0.004, price: 500_000 }); // (4, 2): 2px under the face
+    const justAbove = pin({ lat: -0.0195, lng: 0.004, price: 500_000 }); // (4, -19.5): 1.5px over it
+    const view = { left: -200, right: 200, top: -200, bottom: 200 };
+    const plan = planMarkers({
+      pins: [anchor, behind, justBelow, justAbove],
+      project,
+      viewport: view,
+      selectedId: anchor.id, // the anchor takes the pill deterministically
+    });
+    const kind = (p: MapPin) => plan.find((m) => m.pin.id === p.id)?.kind ?? "dropped";
+    expect(kind(anchor)).toBe("pill");
+    // Genuinely hidden behind the painted face — dropping it is right, it could not be seen.
+    expect(kind(behind)).toBe("dropped");
+    // Half of each of these dots is on screen, beside a label that is merely keeping its
+    // distance. The map must not delete a home to protect a margin.
+    expect(kind(justBelow)).toBe("dot");
+    expect(kind(justAbove)).toBe("dot");
+  });
+
   it("returns nothing for an empty viewport or an unprojectable set", () => {
     expect(planMarkers({ pins: [], project, viewport: VIEW })).toEqual([]);
     expect(
