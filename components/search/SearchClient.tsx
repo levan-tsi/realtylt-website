@@ -1314,9 +1314,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       )}
 
       {/* ── Results */}
-      {state === "error" ? (
+      {state === "error" && filters.view !== "map" ? (
         // role=alert so the failure is announced; the status strip above stays blank rather
         // than repeating the message to screen readers twice.
+        // MAP VIEW TAKES THE OTHER ROUTE (below, in the results column). This branch sat above
+        // the map branch too, and it is the SAME trapdoor the empty state had: in map view the
+        // grid refetches on every settle, so one failed request during an ordinary wheel-zoom
+        // replaced the whole split — deleting a working map, drawn from its OWN endpoint
+        // (/api/idx/pins), because a different endpoint failed. Reproduced with a settled
+        // 77-marker map and a single aborted refetch.
         <div role="alert" className="mt-10 rounded-2xl border border-red-500/40 bg-red-500/5 p-10 text-center">
           <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
           <p className="mt-2 text-sm text-stone">
@@ -1367,7 +1373,20 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             // the ring whole. gap-y-4: denser rows, more listings in the first viewport.
             className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
-            {listings.length === 0 ? (
+            {state === "error" ? (
+              // THE MAP STAYS, part two. The failure belongs to the results column, not to the
+              // page: the map draws from /api/idx/pins and is still holding a good viewport and
+              // a good pin set, so deleting it because /api/idx/search returned nothing leaves
+              // the visitor with no instrument AND no way to retry except a reload. Panning or
+              // zooming re-fires the scoped fetch, which is the actual recovery.
+              <li role="alert" className="col-span-full rounded-2xl border border-red-500/40 bg-red-500/5 p-8 text-center">
+                <p className="text-lg font-light text-ink">The list is temporarily unavailable.</p>
+                <p className="mt-2 text-sm text-stone">
+                  The map is still live. Move it to try again, or call us at{" "}
+                  <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run the search for you.
+                </p>
+              </li>
+            ) : listings.length === 0 ? (
               // THE MAP STAYS. This branch used to live above the map view and replaced the
               // whole split with a "No homes match those filters" panel — so zooming into any
               // patch of ground with nothing for sale (a park, a reservoir, one block too far)
