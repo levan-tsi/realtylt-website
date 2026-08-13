@@ -68,14 +68,28 @@ export default async function HomePage() {
           {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
           <HomeHeroVideo />
           {/* Scrim, two layers. A light overall wash keeps the picture readable as a picture;
-              the bottom gradient is what the type actually sits on. Round 12 eased it (85%->80%,
-              92->88, 58->50): the control stack is half its former height, so the gradient can
-              hand the mid-frame back to the photograph. Floors re-measured after the ease with
-              scripts/_scratch-r12-contrast.mjs — every hero text target clears with margin. */}
+              the bottom gradient is what the type actually sits on. Round 12 eased it once
+              (85%->80%, 92->88, 58->50). Round 27 eased it again, harder (80%->68%, 88->68,
+              50->38), because the owner named the result: below the headline the photograph
+              died into a flat black slab, in every render state — video, poster, no-JS and
+              reduced motion were each driven and shot. The search instrument carries its own
+              ground (bg-black/45 + blur), so the gradient only has to hold the eyebrow, the
+              headline and the two outline pills. Floors re-proven after the ease with the
+              committed scripts/verify-hero-contrast.mjs gate at 1440 and 390. */}
           <div aria-hidden className="absolute inset-0 bg-black/20" />
           <div
             aria-hidden
-            className="absolute inset-x-0 bottom-0 h-[80%] bg-gradient-to-t from-black/88 via-black/50 to-transparent"
+            className="absolute inset-x-0 bottom-0 h-[68%] bg-gradient-to-t from-black/68 via-black/38 to-transparent"
+          />
+          {/* Third layer, added WITH the round-27 ease: a left-edge vignette under the type
+              column only. Easing the bottom gradient exposed bright photo patches behind the
+              11px eyebrow (the gate measured it at 2.61:1 against a 4.5 floor), and the wrong
+              fix was re-darkening the whole frame — that rebuilds the slab. Light falling off
+              toward the title side is how a photograph grades itself; the subject side of the
+              picture stays open. Measured back over the floor by the same gate at 1440 and 390. */}
+          <div
+            aria-hidden
+            className="absolute inset-y-0 left-0 w-[62%] bg-gradient-to-r from-black/40 to-transparent"
           />
         </div>
 
@@ -97,23 +111,27 @@ export default async function HomePage() {
               instead of the photograph is the whole reason this costs nothing.
               Reduced motion is covered by the global block at the foot of globals.css, which
               collapses every animation to 0.01ms — so those visitors get the finished hero. */}
-          <p className="t-eyebrow rise text-paper/70">Hudson Valley &amp; New York City</p>
+          {/* text-paper/85, not /70: at 11px over live photography, 30% translucency was the
+              margin the AA floor could not spare once the scrim eased. */}
+          <p className="t-eyebrow rise text-paper/85">Hudson Valley &amp; New York City</p>
           <h1 id="home-hero" className="t-display rise rise-2 mt-5 text-paper">
             Let&rsquo;s Find <strong>Home</strong>
           </h1>
 
-          {/* One instrument, two quiet paths. The owner rejected both prior states of this
-              control — input and button butted together (pre-11) and separated by a gap (11).
-              The third reading is the right one: they share a single container, connected
-              because they share a body, breathing because of the 4px inset. The two secondary
-              CTAs lost their boxes entirely: four floating rectangles covered the picture,
-              and the picture is the luxury. Radii stay concentric on the site scale —
-              container 12px = button 8px + 4px inset. */}
+          {/* One instrument, two quiet paths. The owner rejected the butted-together control
+              twice now — pre-round-11, and again reviewing this round: round 11's "4px inset"
+              measured 0px between the input's edge and the button's, so the white button read
+              as bricked into the bar. Round 27 gives the control the geometry the /home-value
+              instrument already proves out: one shared body, real air on every side of the
+              action. Radii stay concentric on the site scale — container 16px (the panel step,
+              which this ~64px object is) = button 8px + 8px inset, with an explicit 8px gap
+              so input text can never touch the button. The two secondary CTAs keep no boxes:
+              the picture is the luxury. */}
           <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
             <form
               action="/search"
               role="search"
-              className="search-instrument relative flex w-full max-w-[560px] items-center rounded-xl border border-paper/30 bg-black/45 p-1 backdrop-blur-[2px] transition-colors focus-within:bg-black/55 hover:border-paper/45"
+              className="search-instrument relative flex w-full max-w-[600px] items-center gap-2 rounded-2xl border border-paper/30 bg-black/45 p-2 backdrop-blur-[2px] transition-colors focus-within:bg-black/55 hover:border-paper/45"
             >
               <label htmlFor="home-search" className="sr-only">
                 Search for homes by town, zip, or address

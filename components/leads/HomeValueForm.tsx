@@ -152,17 +152,17 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   }
 
   return (
-    /* THE SAME INSTRUMENT AS THE HOME HERO. This bar was the one control on the site still
-       built the way the owner rejected in round 11 — input and button butted straight together,
-       three pieces pretending to be one. Round 12 settled the right answer on the home page and
-       left this as a named candidate: the fields and the action share ONE container, connected
-       because they share a body and breathing because of the 4px inset, with the radii concentric
-       on the site scale (container 12px = nested button 8px + 4px). The .search-instrument class
-       is load-bearing, not cosmetic: the global unlayered :focus-visible ring would otherwise draw
-       a hard rectangle inside the rounded shell, and that rule moves it onto the container. */
+    /* THE SAME INSTRUMENT AS THE HOME HERO — and it moves when that one moves. Round 27
+       re-measured round 11's "breathing" inset at 0px between field edge and button, and the
+       owner rejected the butted reading a second time, so both instruments now share the round-27
+       geometry: one body, an 8px inset and an 8px gap around the action, radii concentric on the
+       site scale (container 16px, the panel step = nested button 8px + 8px inset). The
+       .search-instrument class is load-bearing, not cosmetic: the global unlayered :focus-visible
+       ring would otherwise draw a hard rectangle inside the rounded shell, and that rule moves it
+       onto the container. */
     <form
       onSubmit={onFindOut}
-      className="search-instrument mx-auto flex w-full max-w-2xl items-center rounded-xl border border-white bg-white p-1"
+      className="search-instrument mx-auto flex w-full max-w-2xl items-center gap-2 rounded-2xl border border-white bg-white p-2"
     >
       <label htmlFor="hv-address" className="sr-only">
         Home address
