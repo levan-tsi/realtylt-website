@@ -171,12 +171,21 @@ export default async function BuyingPage() {
                 <h3 className="text-3xl font-light md:text-4xl">
                   Get <strong className="font-bold">Listing Alerts</strong>
                 </h3>
+                {/* The claim this block used to make was "delivered straight to your inbox the
+                    moment they go up for sale" — an automated, real-time promise. Nothing sends
+                    automatically: the account-side alerts flag is unreachable (sign-up is closed)
+                    and, even reachable, it stores a flag no job acts on. What DOES work, driven
+                    end to end this round, is the two-step path below — save on the device, then
+                    ask us on /saved, which posts the searches (label, query and validated
+                    criteria) to the CRM for a person to set up. So the copy describes THAT, in
+                    the order the visitor does it, and drops the word "moment". */}
                 <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
-                  Be the first to know when a property hits the market
+                  Tell us what to watch for and we will watch it
                 </p>
                 <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
-                  When you save a search on our site, any new homes matching your wish list criteria
-                  will be delivered straight to your inbox the moment they go up for sale.
+                  Save a search on this site and it keeps every filter you set, on this device, with
+                  no account needed. Ask us to watch it from your saved searches and we will email
+                  you as new homes come on that match it.
                 </p>
                 <div className="mt-6">
                   <Button href="/search" variant="outline-light">Save a Search</Button>
@@ -344,32 +353,37 @@ function AlertsMock({ listings }: { listings: Listing[] }) {
         </div>
       </Phone>
 
-      {/* Overlapping "Save a Search" panel (decorative) */}
+      {/* Overlapping save-a-search panel (decorative). It is a MINIATURE OF OUR OWN DIALOG,
+          not the vendor's: this used to draw a "Save the Search / References" tab pair over
+          editable Price and Beds fields, which is the old IDX panel and a product we do not
+          ship. `components/search/SaveSearchDialog.tsx` has a title, one line of help, the
+          applied filters as read-only chips, a SEARCH NAME field and Cancel / Save Search.
+          Drawing something else here is the same fault round 11 fixed on the home carousel:
+          showing a competitor's demo as though it were ours. */}
       <div
         aria-hidden
         className="absolute bottom-0 right-0 w-[230px] rounded-2xl border border-line bg-white p-4 text-ink shadow-float sm:w-[260px]"
       >
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-ink">Save a Search</p>
-        <div className="mt-3 flex gap-1 border-b border-line pb-2 text-[10px] font-bold uppercase tracking-wide">
-          <span className="border-b-2 border-porchlight pb-1 text-ink">Save the Search</span>
-          <span className="pb-1 text-stone">References</span>
+        <p className="font-display text-[15px] leading-tight text-ink">Save this search</p>
+        <p className="mt-1 text-[10px] leading-snug text-stone">
+          Name it and we&rsquo;ll keep these filters.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-1">
+          {["Beacon", "3+ bd", "under $600K"].map((chip) => (
+            <span key={chip} className="rounded-lg bg-mist px-1.5 py-0.5 text-[9px] text-stone">
+              {chip}
+            </span>
+          ))}
         </div>
-        <p className="mt-3 text-[10px] uppercase tracking-[0.12em] text-stone">Search name</p>
-        <div className="mt-1 h-7 rounded-lg border border-line bg-mist px-2 text-[11px] leading-7 text-stone">
-          Beacon · 3+ bd · under $600K
+        <p className="mt-3 text-[9px] font-bold uppercase tracking-[0.14em] text-stone">Search name</p>
+        <div className="mt-1 h-7 rounded-xl border border-line px-2 text-[11px] leading-7 text-ink">
+          Beacon &middot; 3+ bd &middot; under $600K
         </div>
-        <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
-          <div>
-            <p className="uppercase tracking-[0.12em] text-stone">Price</p>
-            <div className="mt-1 h-6 rounded-lg border border-line bg-mist" />
-          </div>
-          <div>
-            <p className="uppercase tracking-[0.12em] text-stone">Beds</p>
-            <div className="mt-1 h-6 rounded-lg border border-line bg-mist" />
-          </div>
-        </div>
-        <div className="mt-4 rounded-lg bg-ink py-2 text-center text-[11px] font-bold uppercase tracking-wide text-paper">
-          Save the Search
+        <div className="mt-4 flex items-center justify-end gap-3">
+          <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-stone">Cancel</span>
+          <span className="rounded-lg bg-ink px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-paper">
+            Save search
+          </span>
         </div>
       </div>
     </figure>

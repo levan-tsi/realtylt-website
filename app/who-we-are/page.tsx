@@ -4,8 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { COUNTY_CONTENT } from "@/content/counties";
-import { SERVED_AREAS, SITE } from "@/lib/site";
+import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Who We Are | Levan Tsiklauri, United Real Estate",
@@ -121,23 +120,47 @@ export default function WhoWeArePage() {
           <h2 id="serve-heading" className="t-h3 text-ink">
             Where We Work
           </h2>
-          <ul className="mt-6 flex flex-wrap justify-center gap-2">
-            {SERVED_AREAS.map((c) => (
-              <li key={c.slug}>
-                <Link
-                  // Boroughs have no editorial /top-areas page yet — send them to search.
-                  href={
-                    COUNTY_CONTENT.some((k) => k.slug === c.slug)
-                      ? `/top-areas/${c.slug}`
-                      : `/search?county=${c.slug}`
-                  }
-                  className="inline-block rounded-xl border border-line-strong bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:text-ink"
-                >
-                  {c.name}
-                </Link>
-              </li>
+          {/* TOP_AREA_GROUPS, not a flat SERVED_AREAS loop, for three reasons found by driving
+              this page in round 29.
+
+              (1) THE DESTINATIONS WERE WRONG. The branch this replaces sent every borough to
+              `/search?county=<slug>` on the note that "boroughs have no editorial /top-areas
+              page yet". They have had one for several rounds: /top-areas/the-bronx, /brooklyn,
+              /manhattan, /queens and /staten-island all render real editorial pages. So the
+              same five labels led somewhere different here than in the nav flyout and the home
+              areas strip, and this page's version was the poorer one. It also missed that the
+              Bronx's page slug is `the-bronx` while its area slug is `bronx` — a mapping
+              lib/site.ts already owns and this file was reimplementing inline.
+
+              (2) IT MIXED TWO KINDS OF PLACE in one centre-justified bag: six counties and five
+              boroughs, undifferentiated, wrapping wherever the width happened to break. That is
+              exactly what round 11 fixed on the home areas strip; this page kept the old shape.
+              The grouping is the business's real footprint, so the structure should carry it.
+
+              (3) Sharing the constant means this strip, the nav flyout and the home strip can
+              never drift again. The layout stays CENTRED, because this page is centred. */}
+          <div className="mt-8 space-y-6">
+            {TOP_AREA_GROUPS.map((group) => (
+              <div key={group.id}>
+                <h3 className="t-eyebrow text-stone">{group.label}</h3>
+                <ul className="mt-3 flex flex-wrap justify-center gap-2">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        // The SAME pill the home areas strip draws, character for character.
+                        // These are the same eleven links; two shapes for one set of objects is
+                        // the drift that reads as unconsidered.
+                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
           <p className="mt-6 text-sm text-stone">
             Based at {SITE.address.street}, {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
           </p>

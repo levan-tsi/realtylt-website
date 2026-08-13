@@ -90,6 +90,7 @@ export function LeadForm({
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
   const successRef = useRef<HTMLDivElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
 
   // Submitting destroys the button that had focus, which drops focus to <body> — a keyboard
   // visitor's next Tab restarts at the top of the document and they never hear the outcome.
@@ -97,8 +98,18 @@ export function LeadForm({
   // On /selling, /financing and /home-value the qualifying wizard mounts in the same commit
   // and its own effect runs later (it is rendered after {children} in the provider), so the
   // dialog still wins the focus, which is what should happen.
+  //
+  // THE ERROR PATH HAD THE SAME HOLE and only the success path was plugged. Driven in round 29
+  // with a real Tab and a real Enter on /who-we-are against a 500: focus ended on <body> and the
+  // next Tab landed on the phone number in the HEADER — the visitor is thrown from the bottom of
+  // a form they just filled in back to the top of the page. The alert announces itself either
+  // way (role="alert" is an assertive live region), but announcing is not the same as being
+  // somewhere. The button survives an error, so it would be a legitimate landing spot too; the
+  // alert is better, because it puts the reason and the phone number to call next in the tab
+  // order rather than behind it.
   useEffect(() => {
     if (status === "success") successRef.current?.focus();
+    else if (status === "error") errorRef.current?.focus();
   }, [status]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -245,7 +256,12 @@ export function LeadForm({
       <ConsentCheckbox dark={dark} />
 
       {status === "error" && (
-        <p role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
+        <p
+          ref={errorRef}
+          role="alert"
+          tabIndex={-1}
+          className="rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500 outline-none"
+        >
           {error}
         </p>
       )}
