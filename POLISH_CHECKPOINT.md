@@ -1,5 +1,20 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══ ROUND 26 FINAL — 2026-08-13 04:50. THE PHOTO BACKFILL IS FINISHED. ═══════════════
+## FEED COMPLETE on the gallery pass; the watermark file is gone; nothing left to resume.
+## Verified on the committed gate at close: zero-photo 45 of 27,750 live rows (round
+## start 1,139) — 5 arrived today, 36 are rows the feed sends no photos for, self-healing
+## on their next feed touch · ≥5 photos 24,895 (start 14,762) · ≥20 photos 9,008 ·
+## marker_current 27,703 (99.8%) · remaining-owed 22 = pure churn, the hourly sync's
+## normal job from here. Round total ~88,900 photos mirrored over five night windows.
+## The operational law that got it done, all cited in docs/vendor/mlsgrid/README.md +
+## docs/parity/PHOTO-BACKFILL-STATUS.md ledgers: night windows at rps 1.7 with
+## --max-downloads budgets sized off trailing-24h storage counts; ONE attempt per window;
+## daytime is the sync's territory. STILL OPEN for future rounds: covers-keep prune
+## (~10 GB), cache-control S3 sweep (owner's S3 keys), the round-25 carried DESIGN list
+## (which round 26 never reached — the arg scoped it to the backfill), and the round-26
+## brief's re-verification set. Round 27 should start there.
+
 ## ═══ ROUND 26b — 2026-08-09 LATE NIGHT. THE OWNER CHALLENGED THE RULES AND WAS RIGHT. ═══
 ## The official MLS Grid docs are now MIRRORED IN-REPO: docs/vendor/mlsgrid/ — all 39
 ## docs.mlsgrid.com pages as markdown (scripts/mirror-mlsgrid-docs.mjs regenerates) PLUS
