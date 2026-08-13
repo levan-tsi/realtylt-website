@@ -383,6 +383,13 @@ function apiFilterParams(f: Filters): URLSearchParams {
  * `rental` is here because For Rent is a different universe whose extent can differ entirely. */
 const placeKey = (f: Filters) => `${f.county}|${f.city}|${f.q}|${f.rental}`;
 
+/** Everything "Clear all filters" resets. Shared because the empty state exists in two places
+ * now — the grid's full-width panel and the map view's results column, which keeps its map. */
+const CLEARED_FILTERS = {
+  q: "", city: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
+  sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
+};
+
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
 const selectCls =
   // These take the global mobile 16px floor (globals.css) like every other control. They used
@@ -1330,18 +1337,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             </li>
           ))}
         </ul>
-      ) : listings.length === 0 ? (
+      ) : listings.length === 0 && filters.view !== "map" ? (
         <div className="mt-10 rounded-2xl border border-dashed border-line-strong p-12 text-center">
           <p className="text-xl font-light text-ink">No homes match those filters.</p>
           <p className="mt-2 text-sm text-stone">Try widening a range or clearing a filter.</p>
           <button
             type="button"
-            onClick={() =>
-              apply({
-                q: "", city: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
-                sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
-              })
-            }
+            onClick={() => apply(CLEARED_FILTERS)}
             className="mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             Clear All Filters
@@ -1365,7 +1367,36 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             // the ring whole. gap-y-4: denser rows, more listings in the first viewport.
             className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
-            {listings.map(renderCard)}
+            {listings.length === 0 ? (
+              // THE MAP STAYS. This branch used to live above the map view and replaced the
+              // whole split with a "No homes match those filters" panel — so zooming into any
+              // patch of ground with nothing for sale (a park, a reservoir, one block too far)
+              // deleted the map mid-gesture and left the visitor with no way back out: the
+              // instrument you need to fix the situation is the one that was removed. The empty
+              // state belongs in the RESULTS column; the map keeps drawing, keeps its viewport,
+              // and one scroll-back-out is the whole recovery.
+              <li className="col-span-full rounded-2xl border border-dashed border-line-strong p-8 text-center">
+                <p className="text-lg font-light text-ink">
+                  {activeViewportQs ? "No homes in this map area." : "No homes match those filters."}
+                </p>
+                <p className="mt-2 text-sm text-stone">
+                  {activeViewportQs
+                    ? "Zoom out or move the map to see more homes."
+                    : "Try widening a range or clearing a filter."}
+                </p>
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    onClick={() => apply(CLEARED_FILTERS)}
+                    className="mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
+                  >
+                    Clear All Filters
+                  </button>
+                )}
+              </li>
+            ) : (
+              listings.map(renderCard)
+            )}
           </ul>
           {/* Phone order matches live: the LISTINGS lead and the map follows them (live puts its
               map below the results too), so the first thing a phone visitor sees is homes rather
