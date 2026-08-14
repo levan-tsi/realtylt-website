@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { TrackedButton } from "@/components/leads/TrackedButton";
 import { Reveal } from "@/components/ui/Reveal";
@@ -182,10 +183,21 @@ export default async function BuyingPage() {
                 <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
                   Tell us what to watch for and we will watch it
                 </p>
+                {/* "your saved searches" is the link, not a second button. The copy describes a
+                    two-step path and the second step lived nowhere on this page — a visitor who
+                    had already saved one had no route to the place that takes the request. An
+                    inline link inside the sentence that names it costs no layout and adds no
+                    competing CTA. */}
                 <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
                   Save a search on this site and it keeps every filter you set, on this device, with
-                  no account needed. Ask us to watch it from your saved searches and we will email
-                  you as new homes come on that match it.
+                  no account needed. Ask us to watch it from{" "}
+                  <Link
+                    href="/saved"
+                    className="font-bold text-paper underline decoration-paper/40 underline-offset-4 transition-colors hover:decoration-paper"
+                  >
+                    your saved searches
+                  </Link>{" "}
+                  and we will email you as new homes come on that match it.
                 </p>
                 <div className="mt-6">
                   <Button href="/search" variant="outline-light">Save a Search</Button>
