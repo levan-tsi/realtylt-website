@@ -1,5 +1,52 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## === ROUND 29 - 2026-08-13 NIGHT. THE EIGHT PAGES, DRIVEN. 5 commits, NOT pushed.
+## === Full record: docs/parity/PAGES-ROUND29.md. Gates: tsc clean, 885 tests / 66 files
+## === foreground (baseline 878 + 7 new), 0 overflow / 0 bad glyphs / 0 gradient controls /
+## === 0 focus stops without a ring, across 8 pages x 1440/390/320.
+##
+## TWO OF THE THREE CARRIED ITEMS WERE ALREADY DONE and the brief was stale. Verified, not
+## assumed: the six unlicensed vendor photographs went in round 16, hero/hom.png does not
+## exist, and all 45 files under public/images carry a licence row that a test enforces in
+## BOTH directions. The Equal Housing and REALTOR(R) marks went in round 11. What round 11
+## did NOT do is the sizing rule it wrote down itself: HUD asks the Equal Housing mark to be
+## at least the size of the largest other logotype, and it shipped at 32px against a 43.0px
+## header wordmark - 48 of 48 page/width runs failed. Now 44px, 48/48 pass, and
+## components/site/legal-marks.test.ts does the arithmetic from source (proven able to fail).
+## THE THIRD, listing-alert honesty, was driven end to end as an anonymous visitor: the CRM
+## receives the label, the query AND validated criteria including booleans, so the capture is
+## real. /buying was the surface making the untrue claim ("delivered straight to your inbox
+## the moment they go up for sale") and now describes the two steps that exist.
+##
+## TWO DEFECTS ON EVERY PAGE, found by driving: (1) six surfaces draw a card as an
+## overflow-hidden article with an inset-0 overlay link, so the focus ring was painted exactly
+## on the clip boundary and deleted - 8 of 11 area cards on /top-areas changed ZERO pixels on
+## a real Tab while reporting a 2px navy outline; the card carries it now. /home-value's FIND
+## OUT had a white ring on a white bar inside a bg-ink hero. (2) every lead form dropped
+## keyboard focus to <body> on an error, so the next Tab landed on the HEADER phone number;
+## the success path had been fixed in round 22 and the error path never was.
+## ALSO: /who-we-are sent all five boroughs to /search on a stale "no editorial page yet"
+## note and reimplemented a slug mapping lib/site.ts owns; it shares TOP_AREA_GROUPS now.
+##
+## FOR THE OWNER, researched and NOT patched (all in the round doc with citations):
+## NY RPL 442-h requires an associated agent's website to carry the BROKER's standardized
+## operating procedures or a direct link to them. realtylt.com carries neither, and neither
+## does the old PHP site. Needs United Real Estate's SOP URL - inventing one is not an option.
+## The REALTOR(R) line is a membership claim only a member may make. "No cost to buyers, Ever"
+## and "guaranteed cash offer in 24 hours" are commercial claims with a post-settlement edge.
+## /selling's "92% of buyers who search online" has no source (NAR's own figure is 95%).
+## Two /top-areas county photographs show Cold Spring, which is in Putnam, one of them
+## labelled Orange County. The Google Calendar embed on /connect is the loudest colour on
+## that page - same class of call as the Google review badge round 27 prepared.
+##
+## INSTRUMENT FAULTS WORTH REMEMBERING: Playwright's fill() writes past a formatted input's
+## own formatter and invented a $2.4bn mortgage payment on /financing (typing it properly
+## gives correct numbers). A focus walk keyed on tag+text stops at the first duplicate label
+## and silently tests a third of the page. A "logotype" regex matching /images/mls/ made a
+## 447px coming-soon TILE the page's largest logo. And Windows PowerShell 5.1 Get-Content /
+## Set-Content round-tripping mangled every non-ASCII character in globals.css - caught in the
+## diff, restored from git, re-applied with the Edit tool. Never edit a UTF-8 source that way.
+
 ## === ROUND 28 - 2026-08-13 EVENING. THE MAP ROUND, built by one Opus agent and
 ## === certified by an adversarial second. Six commits + hygiene, pushed after the main
 ## === session re-ran every gate itself (tsc clean, 878 tests, zoom ladder 20/20).
