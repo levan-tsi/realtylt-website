@@ -215,6 +215,41 @@ body {
   outline: none;
 }
 
+/* ...but the ring's colour has to be judged against the surface it LANDS ON, not the section
+ * it belongs to. Round 27 gave /home-value the same instrument, and there the bar is solid
+ * white inside a `bg-ink` hero — so the override above painted a WHITE ring, at a 2px offset,
+ * on white, around the FIND OUT button nested in the bar. Driven with a real Tab in round 29
+ * and shot: the button is focused and there is nothing to see. (The home hero's copy of the
+ * instrument is fine: its container is bg-black/45, so the white ring lands on dark.) The
+ * container's own ring is unaffected — it is drawn OUTSIDE the white bar, on the dark hero. */
+.search-instrument.bg-white :focus-visible {
+  outline-color: var(--color-ink);
+}
+
+/* WHOLE-CARD LINKS. Six surfaces draw a card as <article class="overflow-hidden"> with one
+ * <a class="absolute inset-0"> over its face. An outline is painted OUTSIDE the element's
+ * border box, and that link's border box IS the parent's clip boundary — so every one of
+ * those rings was clipped to nothing. Measured in round 29 by tabbing to them for real and
+ * diffing the pixels: 8 of the 11 area cards on /top-areas and a listing card on home changed
+ * ZERO pixels on focus while reporting `outline: 2px solid rgb(16,44,84)`. A computed style
+ * is not a ring.
+ *
+ * The card carries it instead. An element's own outline is not clipped by its own overflow,
+ * it follows the card's radius, and it lands on the page rather than on the photograph, which
+ * is where it has contrast. The link's clipped ring is switched off so the two cannot double
+ * up on a card that is not clipped. */
+:has(> a.absolute.inset-0:focus-visible) {
+  outline: 2px solid var(--color-river);
+  outline-offset: 2px;
+}
+.bg-ink :has(> a.absolute.inset-0:focus-visible),
+.bg-ink-soft :has(> a.absolute.inset-0:focus-visible) {
+  outline-color: var(--color-paper);
+}
+a.absolute.inset-0:focus-visible {
+  outline: none;
+}
+
 /* The plan quiz focuses its question heading on every step change so screen readers announce
  * the new question. A heading is not an interactive target, so the global ring above stays
  * off it — specificity (1,1,1) beats the unlayered (0,1,0) rule. The quiz's buttons and
