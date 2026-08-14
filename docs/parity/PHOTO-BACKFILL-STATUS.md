@@ -587,3 +587,8 @@ mirror current — the one-time bulk pass this doc has tracked since July is CLO
 Still open, unchanged: covers-keep prune (~10 GB reclaim, owner-decided policy, ready to
 run any time) · cache-control S3 sweep (needs owner-minted S3 keys) · Grace Period email
 never needed (draft can be discarded or kept for a future bulk need).
+
+## 2026-08-14 ~02:15 — cap-20 deepening, night 1 of ~3
+21,879 photos on 4,850 listings, 15 pages, zero failures, zero 429s at rps 1.7; stopped at
+the 21.8k budget. Watermark 2026-05-17. Remaining of the measured 78,964: ~57k — two more
+night windows. Next: 2026-08-14 22:33.
