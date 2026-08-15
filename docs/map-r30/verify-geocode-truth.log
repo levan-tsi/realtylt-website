@@ -1,0 +1,24 @@
+active listings on a measured coordinate: 27242
+sampling 60 of them, cross-checking each against an independent geocoder
+
+distance between our stored coordinate and an independent geocode
+  <=   25m   16  ################ (27% cumulative)
+  <=   50m   24  ######################## (67% cumulative)
+  <=  100m    7  ####### (78% cumulative)
+  <=  150m    7  ####### (90% cumulative)
+  <=  300m    4  #### (97% cumulative)
+  <=  600m    2  ## (100% cumulative)
+  <= 1200m    0  
+  > 1200m    0  
+
+  n=60  median 32m  p90 161m  max 433m
+  0 skipped (no independent building-grade answer)
+
+2 beyond 300m — each one investigated by hand in the round doc:
+     379m  KEY1035237  10 Pheasant Crossing Lane, Brewster 10509 (putnam) via google/ROOFTOP
+     433m  KEY1015138  34 Palmer Circle, Poughquag 12570 (dutchess) via google/ROOFTOP
+
+KEY918376  7 Ferris Lane, Poughkeepsie: 51m from an independent rooftop geocode  OK
+addrKey contract: 12 rows compared JS vs SQL, 0 mismatches
+
+PASS: median 32m (limit 150m), KEY918376 ok, addrKey agrees
