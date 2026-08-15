@@ -58,13 +58,27 @@ export function chipPrice(n: number): string {
   return `$${Math.floor(n / 1000)}K`;
 }
 
-/** Deterministic golden-angle spiral so listings sharing a zip-centroid don't stack into
- * one unclickable chip. Coordinates are approximate (zip-centroid) already, so a small fan
- * out is honest; the "Locations approximate" badge stays. Single-occupant coordinates are
- * returned untouched. Offsets are seeded by stable id order, so they never jitter between
- * renders. */
+/** Deterministic golden-angle spiral so listings sharing ONE coordinate don't stack into a
+ * single unclickable chip. Single-occupant coordinates are returned untouched, and offsets are
+ * seeded by stable id order so they never jitter between renders.
+ *
+ * THE STEP SHRANK BY 23x IN ROUND 30, and the reason it was ever large is gone. When every
+ * coordinate was a zip centroid, pins sharing one were just "somewhere in this zip", so fanning
+ * them 175m apart cost nothing that was not already lost. Now 98.2% of homes stand on their own
+ * geocoded street address, measured to a median of 38m against an independent geocoder — and at
+ * 175m per √ring the fan-out became the LARGEST error in the pin's position, five times the
+ * geocoding error it sat on top of. A 67-unit co-op (the biggest coincident group in live data)
+ * sprawled 1.4km across its neighbourhood: the same lie this round was spent removing, in
+ * miniature.
+ *
+ * Coincident coordinates are now genuinely coincident — 6,605 pins in 1,967 groups, averaging
+ * 3.4, which is condos and co-ops sharing one rooftop. So the fan only has to keep them
+ * separately clickable, not visually separate: the collision thinning already stops chips from
+ * overlapping. 7.8m per √ring keeps even that 67-unit building inside a 63m radius — its own
+ * footprint — while a typical 3-home group spreads 11m, which is 9px at street zoom and 37px
+ * at the zoom where a visitor is actually picking between them. */
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5)); // ≈ 2.39996 rad
-const SPIRAL_STEP_DEG = 0.0016; // ≈ 175m per √ring at NY latitude — inside a zip's footprint
+const SPIRAL_STEP_DEG = 0.00007; // ≈ 7.8m per √ring at NY latitude — inside a building's footprint
 
 export function spreadPins(pins: MapPin[]): MapPin[] {
   const groups = new Map<string, MapPin[]>();

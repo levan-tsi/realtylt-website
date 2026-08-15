@@ -83,6 +83,9 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
   // Markers actually DRAWN this frame (pills + dots after thinning) — what the "zoom in for
   // more" banner reports, because a visitor can count what is on screen.
   const [drawnCount, setDrawnCount] = useState<number | null>(null);
+  // Starts TRUE: until a draw has measured the pins on screen, the honest thing to say is the
+  // cautious thing. A caveat that appears after the fact is worse than one that disappears.
+  const [someApproximate, setSomeApproximate] = useState(true);
   const fetcherRef = useRef<ReturnType<typeof createPinFetcher> | null>(null);
   // Spread pins, cached by the RAW pin-array reference (draw() runs on every idle AND every
   // selectedId change — re-fanning 3,000 same-centroid stacks on a mere card hover would be
@@ -332,6 +335,9 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             isSaved: (p) => !!p.saved || favSet.has(p.id),
           });
           setDrawnCount(plan.length);
+          // Is anything ON SCREEN still on its zip centroid? Measured over what was actually
+          // planned, not the whole fetch, so the caveat tracks what the visitor can see.
+          setSomeApproximate(plan.some((m) => !m.pin.geocoded));
 
           // Dots paint first so every pill sits above every dot — DOM order is z-order here.
           const frag = document.createDocumentFragment();
@@ -617,7 +623,14 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-white ring-[1.5px] ring-[#4a4a4a]" />
           Pending
         </span>
-        <span>Locations approximate</span>
+        {/* Shown only while something on screen really is approximate. Round 30 gave 98.2% of
+            active homes their own geocoded street address (median 38m against an independent
+            geocoder), so an unconditional "Locations approximate" now understates the map on
+            almost every view — while staying exactly true for the ~500 homes, mostly vacant
+            land and lot numbers, that no geocoder can place and which still sit on their zip
+            centroid. Absent `geocoded` counts as approximate: never claim precision we have
+            not measured. */}
+        {someApproximate && <span>Some locations approximate</span>}
       </div>
       {viewportTotal !== null && drawnCount !== null && viewportTotal > drawnCount && (
         // bottom-9, one value at every width: Google's own copyright/Terms line owns the
