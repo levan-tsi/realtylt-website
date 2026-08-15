@@ -592,3 +592,10 @@ never needed (draft can be discarded or kept for a future bulk need).
 21,879 photos on 4,850 listings, 15 pages, zero failures, zero 429s at rps 1.7; stopped at
 the 21.8k budget. Watermark 2026-05-17. Remaining of the measured 78,964: ~57k — two more
 night windows. Next: 2026-08-14 22:33.
+
+## 2026-08-15 ~05:45 — cap-20 night 2 (two legs)
+Leg 1 (22:35): 6,603 photos / 1,209 listings. Leg 2 (02:27): 21,077 photos / 3,898
+listings. Night total 27,680, zero failures, zero 429s at rps 1.7. Watermark 2026-07-01.
+Cumulative cap-20: 49,559 of the measured 78,964 (63%). Final window tonight 22:33
+(~29k remaining, budget ~20k + the leg pattern) — FEED COMPLETE expected tonight or the
+following early morning.
