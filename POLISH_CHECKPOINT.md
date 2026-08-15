@@ -1,5 +1,58 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## === ROUND 30 - 2026-08-15. TRUE COORDINATES + a motion slice. 5 commits, NOT pushed.
+## === Full records: docs/parity/MAP-ROUND30.md and docs/parity/DESIGN-ROUND30.md.
+## === Gates: tsc clean, 920 tests / 68 files foreground (baseline 885 + 35 new), zoom ladder
+## === 20/20, viewport-scope + pin-walk + map-popup PASS, 2 new committed geocode gates PASS.
+##
+## MISSION A - the owner's "all listings exactly where they have to be, no cramped-down
+## circles" is DONE. 27,242 of 27,741 active listings (98.2%) now stand on their own geocoded
+## street address. His example KEY918376 / 7 Ferris Lane moved from 729m WRONG to 51m against
+## an independent rooftop geocode. Rows with NO coordinate at all: 60 -> 10.
+## VERIFIED against a DIFFERENT geocoder than the one that produced each value (checking the
+## backfill against its own geocoder only proves the copy worked): n=60, median 32m, p90 161m,
+## max 433m, 0 skipped. Both >300m outliers investigated - in each our value IS the Census
+## answer exactly and Census/Google disagree on a rural lane. Zero MLS Grid calls this round.
+##
+## 24,007 geocodes came FREE from listing_geocodes - the CRM had already run this same Census
+## pipeline against THIS table (same Supabase project). Not trusted blindly: same quality gate
+## as a fresh row, and source_address had to still match the address the listing carries today
+## (43 had drifted). Paid Google fallback $10.83 total, ceiling was $20.
+##
+## THE DURABILITY RULE IS THE LOAD-BEARING PART. idx_listings.lat/lng are GENERATED from the
+## JSONB and idx_sync_apply does a full JSONB REPLACE, so a geocode written into the row alone
+## reverts at that listing's next feed touch - silently, nothing fails. Geocodes live in
+## idx_geocodes (RLS on, NO policies: only definer RPCs touch it) and the upsert MERGES them,
+## in the one write path every producer goes through. verify-geocode-durability.mjs proves it
+## WITH A CONTROL (a non-geocoded listing that must move, else the attack is not landing).
+## New listings are geocoded by the hourly cron, last, after the watermark, in its own try.
+##
+## FOR THE OWNER: two FAKE TEST LISTINGS are live inventory - KEY1037844 + KEY1037856, both
+## "9876 Test Listing Road, Nyack" 12345. Also a handful of feed rows carry wrong zips (a
+## Kingston home stamped 43164 = Ohio; a Carmel one stamped 14477 = Albion) - worked around
+## for geocoding, but they still DISPLAY wrong. 499 homes stay on their zip centroid, mostly
+## vacant land with no house number, and the map now says "Some locations approximate" only
+## when one is actually on screen.
+##
+## MISSION B - a small finished motion slice, not a large rough one. The site's curve
+## (cubic-bezier(0.22,1,0.36,1), hardcoded 13x) is now --ease-out. Button: transition-all was
+## also transitioning the FOCUS RING, so a Tab faded its own ring in over 200ms; now 4 named
+## properties at 150ms with a real active:scale-[0.97] press (the old press only cancelled a
+## hover lift, i.e. did nothing on touch). Measured 159.9 -> 155.1px, and correctly 1:1 under
+## reduced motion. Tailwind v4 emits translate/scale as their OWN properties - a transition
+## naming only `transform` animates neither.
+##
+## FOUND BY MEASURING, WORTH ITS OWN ROUND: hovering ONE map price chip destroys and rebuilds
+## ALL 62 markers (0 DOM removals idle, 62 removals + 62 additions on one hover). A press
+## state was written for chips/dots and REMOVED because the pressed node is gone before
+## :active could paint. Very likely the same root cause as round 28's open "keyboard focus
+## dies on overlay redraw", and it blocks every future map micro-interaction. Fix = diff the
+## plan against the drawn set and mutate in place instead of rebuilding.
+##
+## NOT DONE: /review-animations (owner-invocation only - worth running on this diff); the
+## search page's own controls still have no press feedback (ordinary DOM, Button treatment
+## applies cleanly, obvious next slice); popup enter/exit origin, blocked behind the rebuild.
+
 ## === ROUND 29 - 2026-08-13 NIGHT. THE EIGHT PAGES, DRIVEN. 5 commits, NOT pushed.
 ## === Full record: docs/parity/PAGES-ROUND29.md. Gates: tsc clean, 885 tests / 66 files
 ## === foreground (baseline 878 + 7 new), 0 overflow / 0 bad glyphs / 0 gradient controls /
