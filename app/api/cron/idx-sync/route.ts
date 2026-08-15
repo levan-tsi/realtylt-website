@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { applyIdxSync, getMirrorState, getSyncWatermark } from "@/lib/idx/db";
+import { applyGeocodes, applyIdxSync, getMirrorState, getSyncWatermark, listPendingGeocodes } from "@/lib/idx/db";
+import { censusCsvRow, parseCensusBatch, withoutUnit, type GeocodeRow } from "@/lib/idx/geocode";
+import { geocodePending } from "@/lib/idx/geocode-runner";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
 import { mirrorPhotos, preservedMarker, type MirrorDeps } from "@/lib/idx/photo-mirror";
@@ -67,6 +69,39 @@ const MIRROR_PHOTO_CAP = Math.max(1, Math.min(50, Number(process.env.MIRROR_PHOT
 const MIRROR_PHOTO_BUDGET = Math.max(1, Number(process.env.MIRROR_PHOTO_BUDGET) || 1200);
 const MIRROR_CONCURRENCY = Math.max(1, Math.min(8, Number(process.env.MIRROR_CONCURRENCY) || 4));
 const MIRROR_WALL_MS = 270_000; // mirror + DB writes must finish under maxDuration (300s)
+
+// GEOCODING BOUNDS. A typical hour brings well under a hundred new listings, and the Census
+// batch endpoint answers 1,000 addresses in about 7 seconds, so 300 is generous headroom that
+// still cannot run away with the invocation after a long outage. The wall is what actually
+// protects maxDuration; the count just keeps one payload small.
+const GEOCODE_BUDGET = Math.max(0, Number(process.env.GEOCODE_BUDGET) || 300);
+const GEOCODE_WALL_MS = 25_000;
+
+/** The U.S. Census Bureau's batch geocoder: free, keyless, no account, and NOT MLS Grid — this
+ * adds no load to the feed's rate limits. Unit numbers get one retry on the building. */
+async function censusGeocode(rows: readonly GeocodeRow[], wallMs: number, streetOnly = false):
+  Promise<{ hits: ReturnType<typeof parseCensusBatch>["hits"]; misses: GeocodeRow[] }> {
+  const fd = new FormData();
+  const lines = rows.map((r) => censusCsvRow(r, streetOnly ? withoutUnit(r.address) : r.address));
+  fd.append("addressFile", new Blob([lines.join("\n") + "\n"], { type: "text/csv" }), "a.csv");
+  fd.append("benchmark", "Public_AR_Current");
+  const res = await fetch("https://geocoding.geo.census.gov/geocoder/locations/addressbatch", {
+    method: "POST",
+    body: fd,
+    signal: AbortSignal.timeout(wallMs),
+  });
+  if (!res.ok) throw new Error(`census ${res.status}`);
+  const { hits, misses } = parseCensusBatch(await res.text(), rows);
+  if (!streetOnly && misses.length) {
+    const retryable = misses.filter((r) => withoutUnit(r.address) && withoutUnit(r.address) !== r.address);
+    if (retryable.length) {
+      const second = await censusGeocode(retryable, wallMs, true).catch(() => ({ hits: [], misses: retryable }));
+      const placed = new Set(second.hits.map((h) => h.id));
+      return { hits: [...hits, ...second.hits], misses: misses.filter((m) => !placed.has(m.id)) };
+    }
+  }
+  return { hits, misses };
+}
 
 /** Supabase-backed deps for the off-market photo cleanup. Service-role only, server-side only.
  * Every call is scoped to ONE listing's own prefix — there is no path here that can address the
@@ -286,8 +321,27 @@ export async function GET(req: Request) {
       }
     }
 
+    // GEOCODING for listings that arrived since the last tick. The feed serves no coordinates,
+    // so a new home lands on its zip centroid; this gives it its own street address instead.
+    // Runs LAST, after the watermark, inside its own try — same rule as the cleanup below: a
+    // free geocoder having a bad minute must never be able to cost us a sync.
+    let geocoded = { considered: 0, placed: 0, unplaced: 0, rejected: 0 };
+    try {
+      geocoded = await geocodePending(
+        {
+          listPending: (n) => listPendingGeocodes(n),
+          geocode: (rows) => censusGeocode(rows, GEOCODE_WALL_MS),
+          apply: (hits, misses) => applyGeocodes(secret, hits, misses),
+        },
+        GEOCODE_BUDGET,
+      );
+    } catch (e) {
+      console.error("[idx-sync] geocoding failed (data sync unaffected):", e);
+    }
+
     const summary = {
       ok: true,
+      geocoded,
       scanned: delta.scanned,
       pages: delta.pages,
       upserted,

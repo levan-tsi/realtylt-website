@@ -23,6 +23,7 @@ import { ReplicatedIdxClient } from "./replicated";
 import { DEFAULT_COUNTY_SLUGS } from "@/lib/site";
 import { MIN_CITY_ACTIVES, pickAreaInsights, type AreaInsights, type InsightRow } from "@/lib/reports/insights";
 import { interleaveByBand, pickPriceSpread } from "./price-spread";
+import type { GeocodeHit, GeocodeRow } from "./geocode";
 
 interface SyncState {
   watermark: string;
@@ -519,7 +520,10 @@ export class DbIdxClient implements IdxClient {
     // storage", which is the popup pager's contract, and the SAME number the card and the
     // listing page print. It used to ride listing->photosMirrored, which the sync's full-JSONB
     // upsert wipes: 9,186 active listings therefore showed a popup with NO photo at all.
-    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,status,office:listing->>listOfficeName,photoCount:photos_servable";
+    // `geocoded` is the generated boolean column, not a JSONB probe — the map needs to know
+    // whether a pin is a measured address or the zip-centroid fallback, and reading it out of
+    // the JSONB would de-TOAST every candidate row on the hottest query the site has.
+    const sel = "select=id,price,lat,lng,address,city,zip,beds,baths,status,office:listing->>listOfficeName,photoCount:photos_servable,geocoded";
 
     if (bounds) {
       // One bbox builder: searchFilters owns the box clauses now (round 23 gave the grid the
@@ -775,6 +779,39 @@ export async function applyIdxSync(args: IdxSyncApplyArgs): Promise<{ upserted: 
   });
   if (!res.ok) throw new Error(`idx_sync_apply ${res.status}: ${(await res.text()).slice(0, 200)}`);
   return (await res.json()) as { upserted: number; deactivated: number };
+}
+
+/** Active listings still standing on the feed's zip-centroid fallback that nothing has tried to
+ * geocode yet. `geocoded` and the geocodeTried marker are both set by idx_geocode_apply; the
+ * marker keeps each hourly tick spending its budget on listings nobody has asked about instead
+ * of re-asking the ~500 addresses no geocoder can place. */
+export async function listPendingGeocodes(limit: number): Promise<GeocodeRow[]> {
+  const { rows } = await rest<{ id: string; address: string; city: string | null; zip: string | null }>(
+    `idx_listings?is_active=eq.true&geocoded=is.null&listing->>geocodeTried=is.null` +
+      `&address=not.is.null&select=id,address,city,zip&order=id.asc&limit=${Math.max(1, Math.floor(limit))}`,
+  );
+  return rows
+    .filter((r) => !!r.address)
+    .map((r) => ({ id: r.id, address: r.address, city: r.city ?? "", state: "NY", zip: r.zip ?? "" }));
+}
+
+/** Store geocodes and project them onto their listings, via the secret-gated RPC.
+ * Nothing writes idx_geocodes any other way. */
+export async function applyGeocodes(
+  secret: string,
+  hits: readonly GeocodeHit[],
+  misses: ReadonlyArray<{ id: string; addrKey: string }>,
+): Promise<{ saved: number; applied: number; missed: number }> {
+  const cfg = restConfig();
+  if (!cfg) throw new Error("Supabase is not configured");
+  const res = await fetch(`${cfg.base}/rpc/idx_geocode_apply`, {
+    method: "POST",
+    headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ _secret: secret, _rows: hits, _misses: misses }),
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!res.ok) throw new Error(`idx_geocode_apply ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return (await res.json()) as { saved: number; applied: number; missed: number };
 }
 
 /** Current sync watermark (for the cron's delta query). */

@@ -120,6 +120,11 @@ export interface MapPin {
   office: string;
   /** How many photos /api/media/{id}/{n} can serve — the popup pager's bound (0 = none). */
   photoCount: number;
+  /** True when this pin stands on the home's own geocoded street address rather than the
+   * feed's zip-centroid fallback. The map's "Locations approximate" caveat is shown only
+   * while something on screen is still approximate — it was on every view unconditionally,
+   * which is now untrue for 98.2% of homes. */
+  geocoded?: boolean;
   /** On-market status, so the map can tell a home you can still buy from one that is already
    * spoken for. Without it every chip looked identical and 4,775 Pending listings were
    * indistinguishable from 6,763 Active ones. */
