@@ -59,6 +59,24 @@
      needs to read as a separate plane. Folding it into `panel` would add a drop shadow that
      was never there. White on purpose — it is a highlight, so the one-hue rule excludes it. */
   --shadow-edge: inset 0 1px 0 rgb(255 255 255 / 0.07);
+
+  /* ── One curve. The site had already converged on cubic-bezier(0.22, 1, 0.36, 1) — thirteen
+     hardcoded copies across this file, in the hero, the reveals, the sheet, the heart pop —
+     which is a system that exists but has no name, so nothing new can be built to match it
+     except by copying a magic number. Naming it makes it a decision instead of a habit.
+
+     It is a STRONG ease-out: almost all of the distance is covered in the first third, so the
+     interface answers the instant you touch it and then settles. Tailwind's built-in `ease-out`
+     is far weaker and reads as mush next to this; overriding the token rather than adding a
+     new name means `ease-out` in a class list now means the site's curve, everywhere, and the
+     two existing call sites get the better one.
+
+     `ease-move` is for things travelling ACROSS the screen rather than entering or leaving —
+     acceleration at both ends is what makes a move look deliberate instead of yanked. Entering
+     and exiting elements must never use it: starting slow wastes the moment the eye is most
+     attentive, which is exactly why ease-in is banned here. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /* ── The mouse must say "this is clickable".
@@ -280,8 +298,8 @@ body.rlt-quiz-open .rlt-panel {
   opacity: 0;
   translate: 0 16px;
   transition:
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.5s var(--ease-out),
+    translate 0.5s var(--ease-out);
   transition-delay: var(--reveal-delay, 0s);
 }
 .reveal.is-visible {
@@ -376,7 +394,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .svc-ping {
-  animation: svc-ping 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: svc-ping 2.6s var(--ease-out) infinite;
 }
 
 /* ── "Live in production" eyebrow dot — a slow porchlight breath + halo. */
@@ -398,15 +416,15 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 /* ── Card hover lift + slow photo scale */
 .lift {
   transition:
-    translate 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    translate 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out);
 }
 .lift:hover {
   translate: 0 -4px;
   box-shadow: var(--shadow-lift);
 }
 .photo-zoom img {
-  transition: scale 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: scale 1.2s var(--ease-out);
 }
 .photo-zoom:hover img {
   scale: 1.045;
@@ -422,7 +440,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .hero-zoom {
-  animation: hero-zoom 8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-zoom 8s var(--ease-out) both;
 }
 
 /* ── Saving a home. The fill already cross-fades; this gives the act a beat of weight so it
@@ -441,7 +459,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .heart-pop {
-  animation: heart-pop 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: heart-pop 0.26s var(--ease-out);
   transform-origin: center;
 }
 
@@ -476,7 +494,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .rise {
-  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 0.7s var(--ease-out) both;
 }
 .rise-2 {
   animation-delay: 0.08s;
@@ -498,8 +516,8 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   opacity: 0;
   translate: 0 24px;
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.7s var(--ease-out),
+    translate 0.7s var(--ease-out);
 }
 .prose-custom .will-reveal.is-revealed {
   opacity: 1;
@@ -516,7 +534,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .toc-sheet {
-  animation: sheet-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: sheet-up 0.32s var(--ease-out) both;
 }
 
 /* ── Qualifying wizard (selling): backdrop fade + panel pop. The global reduced-motion
@@ -543,7 +561,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   }
 }
 .rlt-pop-in {
-  animation: rlt-pop-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rlt-pop-in 0.3s var(--ease-out) both;
 }
 
 /* ── Results-map price chips (the Leaflet fallback and the Google view share this class).
@@ -565,7 +583,9 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   border: 0;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.12s ease;
+  /* The site curve, not bare `ease`. At 120ms the difference between the two is small but
+     it is the difference between a chip that answers and one that eases into answering. */
+  transition: transform 0.12s var(--ease-out);
 }
 .rlt-chip-face {
   position: relative;
@@ -573,7 +593,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   padding: 3px 6px;
   border-radius: 8px;
   white-space: nowrap;
-  transition: box-shadow 0.12s ease;
+  transition: box-shadow 0.12s var(--ease-out);
 }
 /* Downward pointer tail → a live-parity teardrop pin whose tip sits on the listing's spot.
    Colour follows the chip via --chip-bg (black normally, azure when active), set inline by
@@ -592,6 +612,13 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   transform: translate(-50%, -100%) scale(1.12) !important;
   z-index: 1200 !important;
 }
+/* NO PRESS STATE HERE, AND IT IS NOT AN OVERSIGHT. Round 30 wrote one, measured it, and took
+   it back out: hovering a single chip destroys and rebuilds EVERY marker in the layer
+   (measured on /search?county=dutchess — 0 DOM removals while idle, then 62 removals and 62
+   additions from one hover). The node the browser is pressing no longer exists by the time
+   `:active` would paint, so the rule is dead CSS that reads as a working feature. The redraw
+   is the thing to fix — see docs/parity/DESIGN-ROUND30.md — and a press state is worth adding
+   the moment a hover stops rebuilding the layer. */
 /* !important: each face carries an inline box-shadow that a plain class rule can't beat. */
 .rlt-price-chip:hover .rlt-chip-face {
   box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
@@ -616,7 +643,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   border: 0;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.12s ease;
+  transition: transform 0.12s var(--ease-out);
 }
 .rlt-map-dot::before {
   content: "";
@@ -633,6 +660,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   transform: translate(-50%, -50%) scale(1.35) !important;
   z-index: 1200 !important;
 }
+/* No press state, same reason as the chip above: the marker layer is rebuilt on hover. */
 .rlt-map-dot:focus-visible {
   outline: none;
 }
