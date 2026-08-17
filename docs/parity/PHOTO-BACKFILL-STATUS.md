@@ -755,3 +755,27 @@ BUDGET RULE, CORRECTED — a run needs BOTH doors open:
 A window that ran hard in the last hour must WAIT ~1h even when the day looks wide open.
 This is the same class of error as the Aug-12 daytime trip (2 rps flat = exactly 7,200/hr):
 the hourly cap is the one that bites first, and it is invisible in a 24h count.
+
+## 2026-08-17 16:25 — the hour was not the whole answer either: THE PENALTY IS MULTI-HOUR
+The corrected both-doors rule sized the next window to the HOURLY allowance (4,548, with
+the trailing hour at 1,452 and the day at 14,862). It tripped six 429s in SIX SECONDS
+again, downloading 5. So the media host's limiter is NOT a simple refilling hourly bucket:
+after an hour that spent ~6,000 downloads, it stays punitive well beyond that hour, and a
+relaunch 50 minutes after a trip is still inside the penalty.
+
+This is the Aug-12 lesson repeating, and I broke my own rule to learn it twice: "after a
+RateLimited trip, ONE attempt per MULTI-HOUR window, and at least an hour of cool-off — not
+minutes." On Aug 12 the instant retries at +18min and +40min both failed and the night
+window ran 18,775 clean. Same shape here.
+
+THE RULE, now stated so it cannot be misread as arithmetic:
+  1. Both doors (day AND hour) must be open — necessary, NOT sufficient.
+  2. After ANY RateLimited trip, the next attempt is at least 4 HOURS later. No exceptions,
+     no matter how good the counters look. Counters measure OUR spend; they cannot see the
+     host's penalty state.
+  3. A big window (>4k downloads) earns the same 4-hour gap before the next one.
+  4. Night windows have never failed at rps 1.7. Daytime succeeds only when the account has
+     been quiet for hours (proven once, Aug 16, 18,775 clean).
+A recurring 70-minute scheduler was created on the strength of the arithmetic and DELETED
+after this trip: a scheduler that relaunches inside the penalty is the churn the Aug-12
+entry already named as wrong.
