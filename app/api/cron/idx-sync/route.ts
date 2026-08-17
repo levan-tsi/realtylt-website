@@ -110,10 +110,15 @@ function cleanupDeps(cfg: StorageWriteConfig, restBase: string): CleanupDeps {
   const h = { apikey: cfg.key, Authorization: `Bearer ${cfg.key}`, "Content-Type": "application/json" };
   return {
     async findStale(limit) {
-      // is_active=false is the database's own verdict that this home is off the market, and
-      // photos_servable is computed FROM storage.objects, so >0 means the files really exist.
+      // idx_photo_cleanup_queue is idx_listings filtered to is_active=false (the database's own
+      // verdict that this home is off the market) with photos_servable>0 (computed FROM
+      // storage.objects, so >0 means the files really exist) — MINUS every row that appears in
+      // idx_sold. The sold exclusion has to happen in the query rather than in the loop below:
+      // a sale is off-market-with-photos for ever and its updated_at stops moving, so it would
+      // sit at the head of this updated_at-ascending queue permanently and starve the 60-row
+      // budget of the withdrawn and expired rows that are the real work.
       const r = await fetch(
-        `${restBase}/idx_listings?is_active=eq.false&photos_servable=gt.0&select=id,photos_servable&order=updated_at.asc&limit=${limit}`,
+        `${restBase}/idx_photo_cleanup_queue?select=id,photos_servable&order=updated_at.asc&limit=${limit}`,
         { headers: h, signal: AbortSignal.timeout(15_000) },
       );
       if (!r.ok) return [];
@@ -121,6 +126,18 @@ function cleanupDeps(cfg: StorageWriteConfig, restBase: string): CleanupDeps {
         id: x.id,
         servable: x.photos_servable,
       }));
+    },
+    async soldIds(ids) {
+      // The second guard. THROWS rather than returning an empty set on failure: an empty set
+      // reads as "none of these are sales", which is the one wrong answer that costs photographs.
+      const safe = ids.filter((id) => /^[A-Za-z0-9_-]{1,40}$/.test(id));
+      if (!safe.length) return new Set<string>();
+      const r = await fetch(
+        `${restBase}/idx_sold?listing_id=in.(${safe.join(",")})&select=listing_id`,
+        { headers: h, signal: AbortSignal.timeout(15_000) },
+      );
+      if (!r.ok) throw new Error(`sold lookup: ${r.status}`);
+      return new Set(((await r.json()) as Array<{ listing_id: string }>).map((x) => x.listing_id));
     },
     async listObjects(id) {
       const r = await fetch(`${cfg.base}/object/list/${PHOTO_BUCKET}`, {
@@ -311,7 +328,7 @@ export async function GET(req: Request) {
     //
     // Runs LAST, after the watermark is safely written, and inside its own try — this is the only
     // destructive path in the route and it must never be able to cost us a sync. Bounded per run.
-    let cleanup = { listings: 0, objects: 0, markersCleared: 0, failed: 0 };
+    let cleanup = { listings: 0, objects: 0, markersCleared: 0, failed: 0, soldExempt: 0 };
     const restBase = `${process.env.SUPABASE_URL?.trim().replace(/\/+$/, "")}/rest/v1`;
     if (cfg) {
       try {

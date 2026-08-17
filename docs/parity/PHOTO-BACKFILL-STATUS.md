@@ -624,3 +624,87 @@ clean) · every stop is resumable, nothing is ever lost.
 REMAINING PHOTO WORK (owner-gated, not blocking): covers-keep prune (~10 GB reclaim) ·
 cache-control S3 sweep (needs owner-minted S3 keys) · sold-photo private prefix (ON HOLD
 by owner's order, 2026-08-10).
+
+═══ 2026-08-17 — THE SOLD-PHOTO MIRROR (a new project, opened by the owner) ═══
+"Brivity shows these, so we should too." The CMA's closed comparables had no photographs at
+all. Diagnosed, fixed at the policy level, and the historical backfill started.
+
+WHY THERE WERE NONE — measured, not assumed. ZERO of the 49,311 sales closed in the last
+twelve months held a single object in mls-photos, in EVERY cohort including sales closed in
+the last seven days. Not a gap in the mirror: `cleanupOffMarketPhotos` was doing its job.
+Closing is how a sale leaves the market, so the cleanup deleted exactly the pictures the CMA
+needed — and they had already been paid for in MLS Grid requests.
+
+THE POLICY FIX (owner, 2026-08-17): "if they transfer we would not download, they just move
+from active or pending to sold instead of deleting or downloading again — new logic should be
+proper so we don't have any data loss." A closed sale is now EXEMPT from cleanup outright: it
+keeps its FULL mirrored set, no delete, no marker clear, no re-download ever. Withdrawn /
+expired / cancelled are unchanged — everything still goes. Two independent guards, because
+this is the only destructive path in the sync and a wrong delete is unrecoverable:
+ 1. `public.idx_photo_cleanup_queue` — the work queue, with idx_sold rows excluded IN THE
+    QUERY. This is not belt-and-braces, it fixes a separate STARVATION bug: a sale is
+    off-market-with-photos for ever and its updated_at stops moving, so it would sit at the
+    head of the updated_at-ascending queue permanently and spend the whole 60-row budget on
+    rows it must not touch, leaving genuine withdrawals never reclaimed.
+ 2. `cleanupOffMarketPhotos`'s `soldIds` dep — unit-tested, and it THROWS rather than guessing
+    if the lookup fails. An empty set would read as "none of these are sales", the one wrong
+    answer that costs photographs.
+
+THE STORAGE KEY: `mls-photos/<idx_sold.listing_key>/<i>.jpg`. Decided by measurement, not
+taste. (a) The CMA already reads exactly that path — `sold-comps.ts` maps `listingKey:
+row.listing_key`, `sold-provider.ts` carries it as `mlsNumber`, and the report surfaces call
+`mirroredPhotoUrls(comp.mlsNumber, …)`. (b) It cannot collide: `listing_key` ∩ `idx_listings.id`
+= 0 across all 52,595 sold rows and ∩ the bucket's 27,644 folders = 0, because listing_key is
+the ListingKey (KEY424858527) and listing_id the ListingId (KEY998053). Writing under
+listing_id WOULD collide — 1,968 sold rows share one with an idx_listings row. (c) A `sold/`
+prefix is unservable: both readers guard the key with /^[A-Za-z0-9_-]{1,40}$/, which a slash
+fails. (d) It matches the feed's own /images/<ListingKey>/ media path.
+
+RESUME IS A COLUMN, NOT A FILE: `idx_sold.photos_mirrored_at` stamps each finished row and
+`photos_mirrored` carries the contiguous count — which is also the CMA's `photosServable` for
+a sold comp. Every batch asks for the newest UNSTAMPED rows, so an interrupted run resumes
+exactly where it stopped and can never re-download a row already paid for.
+
+WHY THE RUNNER CALLS THE DATA API DIRECTLY: /api/cron/sync-mls walks the ACTIVE feed and
+cannot see a closed listing; /api/cron/mls-probe?ids=…&media=1 does return closed rows with
+healthy media but hard-codes Media.slice(0,3) — three photos where the owner asked for five,
+and raising it needs a deploy. So the DATA read lives in the CLI runner, which is what the ban
+actually protects (no MLS from a PAGE OR REQUEST PATH). It is also strictly safer on pacing:
+DATA and media share ONE pacer here, where splitting them stacks two rates against one 2 RPS
+account cap.
+
+SCOPE / COST / TIME — the owner's decision table (all figures MEASURED, 2026-08-17).
+Downloads = sum(least(photos_count,5)) over the cohort, computed on the whole population, not
+extrapolated. Realized yield in the live run tracked it closely (~4.9 photos/listing). Storage
+uses the measured mean of 424 KB/photo (10-object sample: 185 KB - 761 KB). A "day" is one
+budgeted window of ~24,000 requests — what the 40,000/rolling-24h cap leaves after the hourly
+sync's ~10,000/day and a safety margin — which is ~3.9 hours of runner time at 1.7 rps.
+
+  cohort        listings   downloads   window-days   storage
+  0-30 days        4,632      22,617          0.9      9.2 GB
+  0-90 days       13,240      64,703          2.7     26.2 GB
+  0-6 months      23,119     112,815          4.7     45.7 GB
+  0-12 months     49,311     240,437         10.0     97.3 GB   (the full ask)
+
+RECOMMENDED STAGING — and the reason is the product's own rule, not a guess. The CMA searches
+a FLAT TWELVE-MONTH sold window (`lib/cma/sold-window.ts`, SOLD_WINDOW_MONTHS = 12) and marks
+every comp older than six months with a "6M+" dated chip. So six months is the boundary the
+product itself draws between current and dated evidence:
+  · Stage 1 — 0-90 days (2.7 window-days, 26 GB). The comps an agent reaches for first.
+  · Stage 2 — to 6 months (another 2.0 window-days, +20 GB). Completes every comp that renders
+    WITHOUT the dated chip. This is the recommended stopping point to review.
+  · Stage 3 — to 12 months (another 5.3 window-days, +52 GB). Worth doing only if dated comps
+    turn out to be picked often; the 6M+ chip already tells the client they are dated.
+Storage is not the binding constraint at Supabase Pro rates (~$0.021/GB/month puts the full
+12 months at roughly $2/month). MLS REQUEST QUOTA is. Nothing here needs a Grace Period email:
+every stage fits inside the normal caps, it just takes the number of nights shown.
+
+VERIFIED BY EXPERIMENT, not by reasoning (each of these could have broken the project):
+· The CRM's sold cron upserts idx_sold with onConflict=listing_key. A partial-payload upsert
+  was run against a stamped row: photos_mirrored and photos_mirrored_at SURVIVED untouched.
+  PostgREST only SETs the columns present in the payload, so the mirror state is safe.
+· The bucket-internal copy path (the zero-MLS route for future sales) works: copy → 200, read
+  back 865,827 B, magic ffd8ff, and it INHERITS Cache-Control. Scratch object removed.
+· The deployed /api/media already serves a sold key with no code change — `storage-probe`
+  302s to the object, and index 9 (past the mirrored prefix) correctly returns the
+  coming-soon placeholder rather than a broken tile.
