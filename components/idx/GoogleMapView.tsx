@@ -453,6 +453,12 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             top: Math.max(mapRect.top, 0),
             bottom: Math.min(mapRect.bottom, window.innerHeight),
           });
+          // ORIGIN-AWARE ENTRANCE. The card grows from the edge nearest its own marker, so the
+          // motion says which home it belongs to — the only question worth answering on a map
+          // holding hundreds of pins. Only this code knows which way popupPlacement went, so
+          // the origin is written here and the animation itself lives in globals.css.
+          node.classList.add("rlt-map-pop");
+          node.style.setProperty("--pop-origin", placement === "above" ? "50% 100%" : "50% 0%");
           info.setOptions({
             // Above: 26px clears a pill hanging over its anchor; a dot only rises 12px from
             // its centre, so 16px clears it without leaving a moat. Below: the tip lands
