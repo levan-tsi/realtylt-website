@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PRESS } from "@/components/ui/Button";
 import type { Listing } from "@/lib/idx/types";
 import { ListingCard } from "./ListingCard";
 import { ResultSetScope } from "./ResultSetScope";
@@ -75,7 +76,7 @@ export function RailPager({
             type="button"
             onClick={() => setPage((p) => (p - 1 + pageCount) % pageCount)}
             aria-label="Previous listings"
-            className="grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink transition-colors hover:bg-ink hover:text-paper"
+            className={`grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink ${PRESS} hover:bg-ink hover:text-paper`}
           >
             <Chevron dir="left" />
           </button>
@@ -86,7 +87,7 @@ export function RailPager({
             type="button"
             onClick={() => setPage((p) => (p + 1) % pageCount)}
             aria-label="Next listings"
-            className="grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink transition-colors hover:bg-ink hover:text-paper"
+            className={`grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink ${PRESS} hover:bg-ink hover:text-paper`}
           >
             <Chevron dir="right" />
           </button>

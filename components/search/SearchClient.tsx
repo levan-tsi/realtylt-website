@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ListingCard } from "@/components/idx/ListingCard";
+import { PRESS, PRESS_GROUP } from "@/components/ui/Button";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { SaveSearchDialog } from "@/components/search/SaveSearchDialog";
@@ -396,11 +397,11 @@ const selectCls =
   // to opt out of it via .rlt-compact-control, back when this row scrolled horizontally; since
   // round 24b stacked it into a grid, 16px measures clean at 390 and 320 and the opt-out was
   // only costing an iOS focus-zoom on every tap. Desktop still renders these at text-xs.
-  "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
+  "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
-  "min-w-0 flex-1 cursor-pointer rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
+  "min-w-0 flex-1 cursor-pointer rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
 
 export function SearchClient({ initial = null }: { initial?: SearchPayload | null }) {
   const searchParams = useSearchParams();
@@ -683,7 +684,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           type="button"
           aria-pressed={active}
           onClick={() => apply({ county: active ? "" : slug })}
-          className={`rounded-xl px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`rounded-xl px-3.5 py-2 text-[13px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             active ? "bg-ink text-paper" : "bg-mist text-[#555555] hover:bg-[#e2e6ea] hover:text-ink"
           }`}
         >
@@ -777,7 +778,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       >
         {/* For Sale / For Rent — the two are separate universes (rentals never mix into for-sale
             counts). Switching clears the price + sale-type filters since their ladders differ. */}
-        <div role="group" aria-label="Sale or rent" className="flex shrink-0 overflow-hidden rounded-xl border border-line">
+        <div role="group" aria-label="Sale or rent" className={`flex shrink-0 overflow-hidden rounded-xl border border-line ${PRESS_GROUP}`}>
           {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
             const active = filters.rental === isRent;
             return (
@@ -802,7 +803,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                             : filters.homeType,
                       })
                 }
-                className={`min-h-6 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
+                className={`min-h-6 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-[color,border-color,background-color] duration-150 ease-out focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
                   active ? "bg-ink text-white" : "bg-white text-stone hover:text-ink"
                 }`}
               >
@@ -826,7 +827,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             key={filters.city || filters.q}
             defaultValue={filters.city || filters.q}
             placeholder="Find a Place"
-            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
             /* PICKING a place is a different act from typing one. A county picks its first-class
                filter, a city picks an exact city, and a ZIP stays free text (search_hay covers
                it exactly anyway). Each clears the other two so the three can never stack. */
@@ -908,7 +909,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           aria-expanded={moreOpen}
           aria-controls="more-panel"
           onClick={() => setMoreOpen((o) => !o)}
-          className={`inline-flex items-center gap-1.5 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`inline-flex items-center gap-1.5 py-2 text-xs font-bold uppercase tracking-[0.12em] ${PRESS} focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             moreOpen || moreCount > 0 ? "text-ink" : "text-stone hover:text-ink"
           }`}
         >
@@ -932,14 +933,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             "Clear All Filters" already uses. */}
         <button
           type="submit"
-          className="grow rounded-xl border-2 border-ink bg-ink px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0"
+          className={`grow rounded-xl border-2 border-ink bg-ink px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper ${PRESS} hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0`}
         >
           Search
         </button>
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+          className={`inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
         >
           {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
               for new matches, which is what a bell reads as (the heart means "favorite"
@@ -972,7 +973,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               <button
                 type="button"
                 onClick={clearMore}
-                className="text-xs font-bold uppercase tracking-[0.12em] text-stone underline underline-offset-4 transition-colors hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="text-xs font-bold uppercase tracking-[0.12em] text-stone underline underline-offset-4 transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Reset advanced
               </button>
@@ -1078,7 +1079,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   onBlur={(e) => {
                     if (e.target.value !== filters.keywords) apply({ keywords: e.target.value });
                   }}
-                  className="min-w-0 flex-1 rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-colors placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+                  className="min-w-0 flex-1 rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
                 />
               </div>
             </div>
@@ -1114,7 +1115,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <button
               type="button"
               onClick={() => setMoreOpen(false)}
-              className="rounded-xl bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              className={`rounded-xl bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper ${PRESS} hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             >
               {state === "ready" && result ? `View ${result.total.toLocaleString()} results` : "View results"}
             </button>
@@ -1133,7 +1134,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               aria-expanded={showBoroughs}
               aria-controls="borough-chips"
               onClick={() => setBoroughsOpen((o) => !o)}
-              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[13px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                 boroughActive
                   ? "bg-ink text-paper"
                   : "border border-line-strong bg-white text-stone hover:border-ink hover:text-ink"
@@ -1211,7 +1212,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 type="button"
                 aria-pressed={filters.quick === val}
                 onClick={() => apply({ quick: val })}
-                className={`px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                className={`px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                   filters.quick === val
                     ? "text-ink underline decoration-2 underline-offset-4"
                     : "text-stone hover:text-ink"
@@ -1228,7 +1229,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <span aria-hidden className="hidden h-4 w-px bg-line-strong sm:block" />
           <Link
             href="/saved"
-            className="relative inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className={`relative inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -1242,7 +1243,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </Link>
           <Link
             href="/plan?quiz=1"
-            className="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className={`inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <circle cx="6" cy="19" r="2" />
@@ -1264,7 +1265,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
-          <div role="group" aria-label="View" className="flex overflow-hidden rounded-xl border border-line-strong">
+          <div role="group" aria-label="View" className={`flex overflow-hidden rounded-xl border border-line-strong ${PRESS_GROUP}`}>
             {(["grid", "map"] as const).map((v) => (
               <button
                 key={v}
@@ -1287,7 +1288,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                     60,
                   );
                 }}
-                className={`px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${
+                className={`px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-[color,border-color,background-color] duration-150 ease-out ${
                   filters.view === v ? "bg-ink text-paper" : "bg-white text-stone hover:text-ink"
                 }`}
               >
@@ -1350,7 +1351,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <button
             type="button"
             onClick={() => apply(CLEARED_FILTERS)}
-            className="mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
+            className={`mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper`}
           >
             Clear All Filters
           </button>
@@ -1371,7 +1372,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             // pl/pt-1: the panel scroll-clips at its own edge, and the active card's 2px ring was
             // losing its left side and top line (owner-reported) — 4px of breathing room keeps
             // the ring whole. gap-y-4: denser rows, more listings in the first viewport.
-            className={`grid content-start gap-5 sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
+            // The refetch dim used to SNAP to 60% and snap back — a state change announced by a
+            // hard cut. rlt-view-in is the arrival from the GRID/MAP switch (globals.css); the
+            // opacity transition is what makes "searching" read as the list waiting rather than
+            // as the page flickering.
+            className={`rlt-view-in grid content-start gap-5 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {state === "error" ? (
               // THE MAP STAYS, part two. The failure belongs to the results column, not to the
@@ -1407,7 +1412,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   <button
                     type="button"
                     onClick={() => apply(CLEARED_FILTERS)}
-                    className="mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-paper"
+                    className={`mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper`}
                   >
                     Clear All Filters
                   </button>
@@ -1442,7 +1447,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         <ul
           aria-label="Search results"
           aria-busy={state === "loading"}
-          className={`mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}
+          className={`rlt-view-in mt-8 grid gap-6 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}
         >
           {listings.map(renderCard)}
         </ul>
@@ -1464,7 +1469,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className={`rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Previous page"
           >
             «
@@ -1489,7 +1494,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               // Three states that cannot be mistaken for each other: a white box with a hairline
               // (clickable), a grey fill with a black edge (under the cursor), solid black
               // (where you are).
-              className={`min-w-9 rounded-lg border px-2.5 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
+              className={`min-w-9 rounded-lg border px-2.5 py-2 text-sm ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === filters.page
                   ? "border-ink bg-ink font-bold text-paper"
                   : "border-line bg-white text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
@@ -1502,7 +1507,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className="rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone transition-colors hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className={`rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Next page"
           >
             »

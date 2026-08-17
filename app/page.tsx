@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Button, PRESS } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
@@ -148,7 +148,7 @@ export default async function HomePage() {
                   container carry the focus state. */}
               <button
                 type="submit"
-                className="shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-mist"
+                className={`shrink-0 rounded-lg bg-paper px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-mist`}
               >
                 Search
               </button>
@@ -161,13 +161,13 @@ export default async function HomePage() {
             <div className="flex items-center gap-x-3">
               <Link
                 href="/selling"
-                className="inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                className={`inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper ${PRESS} hover:border-paper hover:bg-paper hover:text-ink`}
               >
                 Sell Your Home
               </Link>
               <Link
                 href="/home-value"
-                className="inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+                className={`inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper ${PRESS} hover:border-paper hover:bg-paper hover:text-ink`}
               >
                 See Home Value
               </Link>
@@ -333,7 +333,7 @@ export default async function HomePage() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone transition-colors hover:border-ink hover:bg-ink hover:text-paper"
+                        className={`inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
                       >
                         {item.label}
                       </Link>

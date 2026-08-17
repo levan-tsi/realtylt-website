@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PRESS } from "@/components/ui/Button";
 import { useSaved } from "@/components/auth/SavedProvider";
 
 /** Heart toggle — saves to the client's account when signed in, otherwise to this device.
@@ -43,7 +44,7 @@ export function FavoriteButton({
       }}
       className={`${
         showLabel ? "inline-flex h-9 items-center gap-1.5 rounded-xl px-3" : "grid h-9 w-9 place-items-center rounded-full"
-      } transition-all focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
+      } ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
         onLight
           ? "text-stone hover:bg-mist hover:text-ink focus-visible:outline-river"
           : "bg-ink/55 backdrop-blur hover:bg-ink/75 focus-visible:outline-paper"

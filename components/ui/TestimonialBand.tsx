@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PRESS } from "./Button";
 import { Stars } from "@/components/ui/Stars";
 import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import type { Testimonial } from "@/content/testimonials";
@@ -19,7 +20,7 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           type="button"
           aria-label="Previous review"
           onClick={() => step(-1)}
-          className="absolute left-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone transition-colors hover:text-ink lg:left-6"
+          className={`absolute left-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone ${PRESS} hover:text-ink lg:left-6`}
         >
           ‹
         </button>
@@ -37,7 +38,7 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           type="button"
           aria-label="Next review"
           onClick={() => step(1)}
-          className="absolute right-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone transition-colors hover:text-ink lg:right-6"
+          className={`absolute right-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone ${PRESS} hover:text-ink lg:right-6`}
         >
           ›
         </button>

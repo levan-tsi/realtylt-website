@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { PRESS } from "@/components/ui/Button";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { wrapIndex } from "@/lib/carousel";
 
@@ -136,7 +137,7 @@ export function WhyCarousel() {
           type="button"
           onClick={prev}
           aria-label="Previous slide"
-          className="absolute left-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-raise ring-1 ring-black/10 transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist md:-left-3 lg:-left-6"
+          className={`absolute left-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-raise ring-1 ring-black/10 ${PRESS} hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist md:-left-3 lg:-left-6`}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="m15 18-6-6 6-6" />
@@ -146,7 +147,7 @@ export function WhyCarousel() {
           type="button"
           onClick={next}
           aria-label="Next slide"
-          className="absolute right-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-raise ring-1 ring-black/10 transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist md:-right-3 lg:-right-6"
+          className={`absolute right-0 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-raise ring-1 ring-black/10 ${PRESS} hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist md:-right-3 lg:-right-6`}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="m9 18 6-6-6-6" />
@@ -168,11 +169,11 @@ export function WhyCarousel() {
             onClick={() => go(i)}
             aria-label={`Show slide ${i + 1} of ${N}`}
             aria-current={i === index ? "true" : undefined}
-            className="grid h-6 w-6 place-items-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist"
+            className={`grid h-6 w-6 place-items-center rounded-full ${PRESS} focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist`}
           >
             <span
               aria-hidden
-              className={`block h-2 rounded-full transition-all ${
+              className={`block h-2 rounded-full transition-[width,background-color] duration-150 ease-out ${
                 i === index ? "w-6 bg-ink" : "w-2 bg-ink/25 hover:bg-ink/50"
               }`}
             />

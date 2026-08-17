@@ -77,6 +77,34 @@
      attentive, which is exactly why ease-in is banned here. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+  /* And the site's curve is now the DEFAULT curve. Tailwind's own, cubic-bezier(0.4, 0, 0.2, 1),
+     was what every un-suffixed `transition-*` on the site was using — a weaker curve applied by
+     default to everything nobody had thought about, which is most things. A control nobody
+     styled now moves the way this site moves, and any call site that names a curve still wins. */
+  --default-transition-timing-function: var(--ease-out);
+}
+
+/* ── A FOCUS RING MUST NEVER ANIMATE, and `transition-colors` was animating every one on the
+   site that was not a <Button>.
+   Round 30 found this on <Button>, where `transition-all` was fading the outline in over 200ms,
+   and fixed it there. Tailwind's `transition-colors` carries the same defect by design: its
+   property list includes `outline-color`. Measured on the header nav — the ring walked through
+   TEN distinct colours in 260ms, starting at rgb(111,111,111), a mid grey, and only reaching
+   the intended navy rgb(31,55,88) after ~90ms. The site's own rule is focus-visible ≥ 3:1, and
+   for the first tenth of a second after a Tab it was not.
+
+   Fixed at the DEFINITION, not at ~60 call sites, so it cannot rot the way sixty edited class
+   strings can. The list is Tailwind's own, minus `outline-color`, and nothing else changes.
+
+   Unlayered on purpose, and it has to be: `@utility transition-colors` emits into the same
+   layer as the core utility and Tailwind's own copy is written after it, so it simply won
+   (verified by reading the served stylesheet — two rules, theirs last). Unlayered CSS beats
+   layered CSS whatever the specificity, which is the same trick the mobile 16px floor below
+   uses. Only `transition-property` is set here: `duration-*` and `ease-*` at a call site must
+   still work. Proven by components/ui/motion.test.ts. */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+    --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
 }
 
 /* ── The mouse must say "this is clickable".
@@ -414,20 +442,46 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 
 /* ── Card hover lift + slow photo scale */
+/* 350ms was a card thinking about it. A hover is the fastest, most repeated interaction on the
+   results grid — a visitor crosses a dozen of them looking for one home — and at 350ms the lift
+   was still arriving after the eye had moved on. 220ms on this curve covers most of the 4px in
+   the first 70ms, so the card answers the pointer and then settles. */
 .lift {
   transition:
-    translate 0.35s var(--ease-out),
-    box-shadow 0.35s var(--ease-out);
+    translate 0.22s var(--ease-out),
+    scale 0.22s var(--ease-out),
+    box-shadow 0.22s var(--ease-out);
 }
-.lift:hover {
-  translate: 0 -4px;
-  box-shadow: var(--shadow-lift);
+/* A HOVER STATE ON A TOUCH DEVICE NEVER RELEASES. Measured at 390 with touch emulation: tapping
+   a card set `translate: 0 -4px` and left it there — the card the visitor last touched stayed
+   raised for the rest of the session, and the photograph it holds stayed zoomed. Tailwind v4
+   already gates its own `hover:` variants this way; these hand-written rules did not, so they
+   are the only ones on the site that could do it. Focus and press states stay outside the query:
+   a keyboard and a finger both work on a phone. */
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover {
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lift);
+  }
+}
+/* A CARD IS A CONTROL AND IT ANSWERED NOTHING. Every card on this site is a link — the whole
+   surface is one, via an inset-0 overlay anchor — and pressing it did exactly nothing until the
+   next page began to load, which on a slow connection is a long time to wonder whether you hit
+   it. The card settles back toward the page instead of scaling like a button: it is a large
+   surface carrying a photograph, and 0.97 on a 380px card is a 12px lurch. -4px to -1px plus a
+   half-percent is felt without ever reading as the layout moving. :active matches ancestors of
+   the activated element, which is what makes this work through the overlay link. */
+.lift:active {
+  translate: 0 -1px;
+  scale: 0.995;
 }
 .photo-zoom img {
   transition: scale 1.2s var(--ease-out);
 }
-.photo-zoom:hover img {
-  scale: 1.045;
+@media (hover: hover) and (pointer: fine) {
+  .photo-zoom:hover img {
+    scale: 1.045;
+  }
 }
 
 /* ── Hero slow zoom */
@@ -564,6 +618,25 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   animation: rlt-pop-in 0.3s var(--ease-out) both;
 }
 
+/* ── /search: GRID <-> MAP. The two views replace each other's entire results region, and the
+   swap was a hard cut — the same set of homes, redrawn without a word about what just happened.
+   6px and 200ms is not decoration: it says "this region is the thing that changed", which is
+   the one fact the visitor needs. Applied to the RESULTS LIST only, never to the map, whose
+   arrival frame is the owner's decision and is not this round's to touch. */
+@keyframes rlt-view-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.rlt-view-in {
+  animation: rlt-view-in 0.2s var(--ease-out) both;
+}
+
 /* ── Results-map price chips (the Leaflet fallback and the Google view share this class).
    Hover/focus lifts a chip above any overlapping neighbours so its price stays readable, and
    a keyboard-focused chip shows a high-contrast ring. The look stays a live-parity black
@@ -607,7 +680,15 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   border: 4px solid transparent;
   border-top-color: var(--chip-bg, #000);
 }
-.rlt-price-chip:hover,
+/* Split from :focus-visible on purpose — see the .lift note above. A pin that a finger tapped
+   must not stay enlarged, but a pin a keyboard reached must still show where it is, on any
+   device. Same reason the press below is not gated either. */
+@media (hover: hover) and (pointer: fine) {
+  .rlt-price-chip:hover {
+    transform: translate(-50%, -100%) scale(1.12) !important;
+    z-index: 1200 !important;
+  }
+}
 .rlt-price-chip:focus-visible {
   transform: translate(-50%, -100%) scale(1.12) !important;
   z-index: 1200 !important;
@@ -616,10 +697,26 @@ input[type="search"]::-webkit-search-cancel-button:hover {
    chip destroyed and rebuilt EVERY marker in the layer — the node being pressed was gone
    before `:active` could paint. Round 31 fixed the draw path (the markers are reconciled now,
    see GoogleMapView), and `scripts/verify-marker-reconcile.mjs` holds that open by asserting a
-   chip really does paint `:active` while pressed. The press state itself lives below. */
+   chip really does paint `:active` while pressed.
+
+   A PIN GROWS ON PRESS WHERE A BUTTON SHRINKS, and that is deliberate rather than a drift from
+   the site's press. A button is under a cursor; a map pin is under a FINGER, which covers it
+   completely — shrinking it on press hides the only confirmation the visitor has that they hit
+   the home they aimed at. So the pin settles from its hovered 1.12 down to 1.04, which reads as
+   pushed-in on a mouse, and rises from 1.00 to 1.04 on a touch, which reads as picked-up. Both
+   answer instantly, which is the part that matters. Must come after :hover to win. */
+.rlt-price-chip:active {
+  transform: translate(-50%, -100%) scale(1.04) !important;
+  z-index: 1200 !important;
+}
 /* !important: each face carries an inline box-shadow that a plain class rule can't beat. */
-.rlt-price-chip:hover .rlt-chip-face {
-  box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
+@media (hover: hover) and (pointer: fine) {
+  .rlt-price-chip:hover .rlt-chip-face {
+    box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
+  }
+}
+.rlt-price-chip:active .rlt-chip-face {
+  box-shadow: 0 0 0 2px #fff, 0 1px 4px rgb(0 0 0 / 0.5) !important;
 }
 .rlt-price-chip:focus-visible {
   outline: none;
@@ -652,18 +749,54 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   border: 2px solid var(--dot-ring, #fff);
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
 }
-.rlt-map-dot:hover,
+@media (hover: hover) and (pointer: fine) {
+  .rlt-map-dot:hover {
+    /* !important: each dot carries an inline transform for its own centring. */
+    transform: translate(-50%, -50%) scale(1.35) !important;
+    z-index: 1200 !important;
+  }
+}
 .rlt-map-dot:focus-visible {
-  /* !important: each dot carries an inline transform for its own centring. */
   transform: translate(-50%, -50%) scale(1.35) !important;
   z-index: 1200 !important;
 }
-/* No press state, same reason as the chip above: the marker layer is rebuilt on hover. */
+/* Same press as the chip, same reasoning (a finger covers a 12px dot even more completely than
+   it covers a price pill), scaled to the dot's own hover of 1.35. */
+.rlt-map-dot:active {
+  transform: translate(-50%, -50%) scale(1.2) !important;
+  z-index: 1200 !important;
+}
 .rlt-map-dot:focus-visible {
   outline: none;
 }
 .rlt-map-dot:focus-visible::before {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a;
+}
+
+/* THE PREVIEW ARRIVES FROM THE PIN IT BELONGS TO.
+   Google's InfoWindow simply appears, which loses the one piece of information the motion could
+   carry: which home this card is about. On a map holding 300 pins that is the whole question.
+   The card now grows from the marker's own edge — the anchor side, set inline by the engine
+   because only it knows whether popupPlacement put the card above the pin or below it. 0.96
+   rather than 0, because nothing real appears out of nothing, and 180ms because a preview that
+   answers a hover has to be finished before the eye has finished arriving.
+   No exit animation, and that is a decision rather than an omission: every dismissal guard in
+   GoogleMapView (Escape, outside press, the pointer leaving) is built on info.close() being
+   synchronous with the state flags, and deferring the close to play an exit would put a live
+   timer between "the visitor dismissed this" and "it is gone". */
+@keyframes rlt-map-pop {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+.rlt-map-pop {
+  transform-origin: var(--pop-origin, 50% 100%);
+  animation: rlt-map-pop 0.18s var(--ease-out) both;
 }
 
 /* Map popup chrome, both engines — the shared mini-card (map-shared popupNode) deserves the
@@ -833,6 +966,35 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   .prose-custom .will-reveal {
     opacity: 1;
     translate: 0 0;
+  }
+  /* THE BLOCK ABOVE ONLY SHORTENS DURATIONS — it does not remove a transform, so every
+     movement on this site still HAPPENS under reduced motion, instantly. An instant 4px jump
+     is not a gentler version of a 4px glide; it is a worse one. These are the surfaces that
+     move on hover or press, and here they stay still. Round 30 established this for the
+     Button's press (motion-reduce:active:scale-100 in the class itself); these are the ones
+     written in CSS rather than in Tailwind, so they need saying here.
+     Colour, shadow and opacity changes are deliberately left alone: they carry the state and
+     cause nobody motion sickness. */
+  .lift:hover,
+  .lift:active {
+    translate: 0 0;
+    scale: 1;
+  }
+  .rlt-price-chip:hover,
+  .rlt-price-chip:focus-visible,
+  .rlt-price-chip:active {
+    transform: translate(-50%, -100%) !important;
+  }
+  .rlt-map-dot:hover,
+  .rlt-map-dot:focus-visible,
+  .rlt-map-dot:active {
+    transform: translate(-50%, -50%) !important;
+  }
+  .rlt-map-pop {
+    animation: none;
+  }
+  .photo-zoom:hover img {
+    scale: 1;
   }
 }
 
