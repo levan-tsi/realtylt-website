@@ -599,3 +599,28 @@ listings. Night total 27,680, zero failures, zero 429s at rps 1.7. Watermark 202
 Cumulative cap-20: 49,559 of the measured 78,964 (63%). Final window tonight 22:33
 (~29k remaining, budget ~20k + the leg pattern) — FEED COMPLETE expected tonight or the
 following early morning.
+
+## ═══ 2026-08-17 06:30 — CAP-20 DEEPENING COMPLETE (the photo project closes) ═══
+The last leg tripped the 6-strike 429 guard with the work already done: the marker
+formula reports **36 downloads remaining** at cap 20 — ordinary churn the hourly sync
+absorbs, not a gap. Watermark had reached 2026-08-16T20:39 (yesterday's feed).
+
+FINAL STATE (committed gate + SQL, 27,705 live rows):
+· zero-photo 47 (4 arrived today, 35 older rows the feed sends no photos for)
+· ≥1 photo 27,656 (99.83%) · ≥5 photos 24,918 · ≥10 photos 21,787 · ≥20 photos 13,848
+· Half the inventory now carries a FULL 20-photo gallery; 79% carries 10+.
+
+CAP-20 PHASE TOTAL: ~113,700 photos over 8 legs across 4 nights + one proven daytime run.
+PROJECT TOTAL (since 2026-08-09): ~202,600 photos mirrored — covers pass, gallery pass to
+8, then deepening to 20 — from a start of 1,139 photo-less listings and rotten markers.
+
+THE OPERATING LAW THAT DID IT (all cited in docs/vendor/mlsgrid/README.md):
+rps 1.7 (2.0 flat = exactly their 7,200/hr cap, zero headroom for the sync) · budget every
+run with --max-downloads sized from a MEASURED trailing-24h storage count against the
+40k/rolling-24h cap · ONE attempt per window after a RateLimited trip · night windows
+preferred, but 2026-08-16 proved daytime works at 1.7 when the quota has room (18,775
+clean) · every stop is resumable, nothing is ever lost.
+
+REMAINING PHOTO WORK (owner-gated, not blocking): covers-keep prune (~10 GB reclaim) ·
+cache-control S3 sweep (needs owner-minted S3 keys) · sold-photo private prefix (ON HOLD
+by owner's order, 2026-08-10).
