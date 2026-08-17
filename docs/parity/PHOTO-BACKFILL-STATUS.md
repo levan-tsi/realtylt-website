@@ -708,3 +708,34 @@ VERIFIED BY EXPERIMENT, not by reasoning (each of these could have broken the pr
 · The deployed /api/media already serves a sold key with no code change — `storage-probe`
   302s to the object, and index 9 (past the mirrored prefix) correctly returns the
   coming-soon placeholder rather than a broken tile.
+
+WINDOW 1 — 2026-08-17, 18:27-19:27 UTC (daytime, launched at :27 past the hour, clear of the
+hourly sync's :07 media window).
+  budget: trailing-24h storage count measured at 9,659 → 36,000 - 9,659 - 2,000 = 24,341
+          allowed. Run budgeted at 6,000 downloads, well inside it.
+  result: 1,232 sold listings · 6,003 photos · 6,005 downloads · 61 DATA requests · ~61 min
+  outcomes: ok 6,003 · timeout 2 · 429s ZERO · HTTP errors ZERO · upload failures ZERO
+  depth: 1,181 listings at the full 5 · 51 partial (the feed served fewer) · 0 at zero
+  reach: close dates 2026-08-16 back to 2026-08-07 — the ten freshest days of sales, which is
+         exactly what close_date DESC is for.
+
+The run was KILLED by the harness at 59.7 minutes, ~45 downloads short of its budget. It is
+worth recording what that cost, because the answer is nothing: the resume marker is a column
+stamped per batch, so every completed batch was already durable and the batch in flight simply
+stayed unstamped and pending. Verified after the kill — 1,232 stamped rows, 6,003 recorded
+photos, 6,003 objects in the bucket, 1,232 rows where the recorded count EQUALS the object
+count, 0 disagreements, 0 rows stamped with no objects behind them. The 2 timeouts account for
+the 2-photo gap against 6,005 downloads exactly. A timeout is a SKIP, never a retry: the URL
+is spent, and a later pass gets a fresh one.
+
+VERIFICATION BY SAMPLING (two independent samples, 20 objects total):
+· 20/20 fetched back from the public bucket as REAL JPEGs — HTTP 200, magic ffd8ff, sizes
+  120 KB - 761 KB, mean ~424 KB. No truncation, no HTML error body wearing a .jpg name.
+· OWNERSHIP, the check that matters: for 10 listings the feed was re-asked for its own record
+  and ITS media path segment compared to the folder we wrote. 10/10 MATCH. The photographs are
+  under the listing they belong to, not merely under a plausible-looking key.
+
+REMAINING IN THE 12-MONTH WINDOW: 48,079 listings / ~234,400 downloads. Budget left in today's
+rolling window after this run: ~18,275 requests. The next window resumes with no flags beyond
+the budget — the column knows where it stopped:
+  node scripts/backfill-sold-photos.mjs --max-downloads 18000
