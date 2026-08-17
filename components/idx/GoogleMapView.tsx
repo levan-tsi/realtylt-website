@@ -14,7 +14,7 @@ import {
   type MapViewProps,
 } from "./map-shared";
 import { saveResultSet } from "@/lib/idx/result-set";
-import { planMarkers } from "./pin-thinning";
+import { planMarkers, type PlannedMarker } from "./pin-thinning";
 import { loadMaps } from "@/lib/idx/maps-loader";
 import type { MapBounds, MapPin } from "@/lib/idx/types";
 
@@ -291,11 +291,268 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
               if (disposed) return;
               fetchedPinsRef.current = p;
               setViewportTotal(total);
-              overlay?.draw?.();
+              overlay?.settle?.();
             },
           });
           requestViewport();
         }
+
+        // ── THE DRAWN MARKER LAYER, KEYED BY LISTING.
+        //
+        // `draw()` is not a per-settle callback: Google calls it on every projection change,
+        // which means every frame of a pan or a zoom, and again whenever anything is added to
+        // the overlay panes — including opening an InfoWindow. The old body opened with
+        // `container.innerHTML = ""` and rebuilt every marker, so:
+        //   · hovering ONE chip opened the popup, the popup repainted the pane, and all 37
+        //     markers were destroyed and recreated — round 30's finding, root cause here;
+        //   · one wheel zoom cost a measured 512 node teardowns and 492 creations;
+        //   · the node under the pointer no longer existed by the time `:active` would paint,
+        //     and keyboard focus was thrown to <body> on every redraw (round 28's open item).
+        //
+        // Reconciling instead: a marker's DOM node lives as long as its listing stays planned,
+        // only what changed is touched, and hover / press / focus survive a redraw.
+        type MarkerRec = {
+          el: HTMLButtonElement;
+          /** The pill's visible box. A dot hides it rather than doing without one: thinning
+           * flips a home between pill and dot as the zoom crosses a density threshold, and if
+           * the two were different ELEMENTS every flip would be a teardown — measured at 356
+           * of the 1,000 node operations in a single zoom step, every one of them a home that
+           * never left the screen. One element, two costumes. */
+          face: HTMLSpanElement;
+          kind: "pill" | "dot";
+          /** Current data for this node. Listeners read the RECORD, never a captured pin, so a
+           * reused node can never act on the listing it was created for. */
+          pin: MapPin;
+          x: number;
+          y: number;
+          /** Everything that decides how the marker is inked. Repainting is gated on it, so a
+           * pan only writes left/top. */
+          look: string;
+          /** 0 while planned; otherwise the settle generation this marker dropped out at. */
+          hidden: number;
+        };
+        const drawn = new Map<string, MarkerRec>();
+
+        /** RETIRE LATE, NOT MID-GESTURE. Thinning is a pixel calculation and the pin set is
+         * refetched as the viewport moves, so a home can leave the plan on one frame and be
+         * back on the next: measured 35 of 101 homes that were on screen before AND after a
+         * single zoom step losing their node purely to intermediate spacing. Draws Google
+         * drives (every animation frame) only HIDE a marker that left the plan; the draws WE
+         * drive — a settle, a landed pin fetch, a filter change — call settle(), and a marker
+         * has to be missing across TWO of those before it is deleted. One generation of grace
+         * is what covers the common case, a home dropped by one fetch and restored by the
+         * next; two settles absent and it has genuinely gone. */
+        let settleGen = 0;
+        const sweep = () => {
+          for (const [key, rec] of drawn) {
+            if (!rec.hidden || rec.hidden >= settleGen) continue;
+            rec.el.remove();
+            drawn.delete(key);
+          }
+        };
+
+        /** Write the state-dependent ink and the position together. Rewrites the whole inline
+         * style, which is fine because `look` gates it to the draws where something changed. */
+        const paint = (rec: MarkerRec, m: PlannedMarker, active: boolean, saved: boolean, spokenFor: boolean) => {
+          const p = m.pin;
+          rec.el.setAttribute("aria-label", spokenFor ? `${m.label} — ${p.address} — ${p.status}` : `${m.label} — ${p.address}`);
+          rec.kind = m.kind;
+          if (m.kind === "dot") {
+            // A dot is the same home wearing less ink — same colour language, same interaction
+            // contract. z-index 1 against the pills' 2: pills used to sit above dots because
+            // dots were appended first and DOM order is paint order, and a reconciled node
+            // keeps its creation order forever, so the rule that used to come free is stated.
+            rec.el.className = "rlt-map-dot";
+            rec.el.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-50%);z-index:1;${dotStyleVars(saved, spokenFor)}`;
+            rec.face.style.cssText = "display:none";
+          } else {
+            const st = chipStateStyles({ active, saved, spokenFor });
+            rec.el.className = "rlt-price-chip";
+            // Base z-index FIRST so chipStateStyles' own (500 saved, 1000 active) still wins,
+            // as does the :hover/:focus-visible 1200 in globals.css.
+            rec.el.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-100%);z-index:2;${st.outer}`;
+            rec.face.style.cssText = `${st.face};font:700 11px/1 ${MAP_FONT}`;
+            rec.face.textContent = "";
+            if (saved) {
+              const heart = document.createElement("span");
+              heart.style.color = "#ef4444";
+              heart.textContent = "♥ ";
+              rec.face.appendChild(heart);
+              rec.face.appendChild(document.createTextNode(m.label));
+            } else {
+              rec.face.textContent = m.label;
+            }
+          }
+          rec.x = m.x;
+          rec.y = m.y;
+        };
+
+        // HOVER PREVIEWS, CLICK PINS (owner: "when you bring mouse to the price it should
+        // show the pic and info like when you click it… it should still have click function
+        // to keep it there").
+        //
+        // The trap this avoids is the one that broke the Top Areas caret: a handler must
+        // never ask "is it open right now" when the pointer arriving is exactly what opened
+        // it. So hover and pin are SEPARATE state — `pinnedRef` is owned by click alone, and
+        // hover only ever acts when nothing is pinned. Leaving a chip therefore cannot close
+        // a popup the visitor deliberately kept, and clicking a second chip re-pins cleanly.
+        const openPopup = (rec: MarkerRec, pinned: boolean, takeFocus = false) => {
+          const p = rec.pin;
+          cancelClose();
+          // IDEMPOTENT for the pin already showing: a redundant re-open restarts Google's
+          // open pipeline and (via synthetic boundary events under a stationary pointer)
+          // can loop it forever — see shownForId above. Pinning an already-previewed home
+          // only needs the pin recorded, not a re-render.
+          if (popupOpen && shownForId === p.id) {
+            if (pinned) pinnedRef.current = p.id;
+            return;
+          }
+          const node = popupNode(p, {
+            onClose: () => {
+              pinnedRef.current = null;
+              popupOpen = false;
+              shownForId = null;
+              info.close();
+            },
+            onToggleSave: (id) => onToggleSaveRef.current?.(id),
+            // View Listing pressed: the walk the listing page offers is THE HOMES THIS MAP
+            // IS SHOWING — the viewport pin fetch, which holds up to PIN_CAP homes the
+            // grid's saved page never did (the grid's own save covers only its 150).
+            onNavigate: () => {
+              const set = pinResultSet(activeSource(), window.location.pathname + window.location.search);
+              if (set) saveResultSet(set);
+            },
+          });
+          // The popup must be part of its own hover target. Without this, moving the pointer
+          // off the chip and ONTO the preview closes the thing you were reaching for, and
+          // its heart and X are unreachable unless you click first.
+          node.addEventListener("mouseenter", cancelClose);
+          node.addEventListener("mouseleave", () => scheduleClose());
+          // Measure the card's REAL height before opening. An InfoWindow body always
+          // renders ABOVE its anchor + pixelOffset tip, so "open below the chip" needs the
+          // tip pushed a full card-height down — the earlier +26 nudged it 52px and the
+          // card still ran off the top of the map (verified live: only the VIEW LISTING
+          // button survived the clip). Heights genuinely vary (pager row, status badge).
+          node.style.cssText += ";position:absolute;visibility:hidden;left:-9999px;top:0";
+          document.body.appendChild(node);
+          const measured = node.offsetHeight || 300;
+          node.remove();
+          node.style.position = "relative";
+          node.style.visibility = "";
+          node.style.left = "";
+          node.style.top = "";
+          info.setContent(node);
+          // Stay within the MAP BOX instead of always opening the same direction. The
+          // InfoWindow is clipped by the map container (overflow-hidden), so the room that
+          // matters is the intersection of the map's rect and the window — a chip just
+          // under the map's top edge can have a whole page of window above it and still
+          // no room at all.
+          const chipRect = rec.el.getBoundingClientRect();
+          const mapRect = el.getBoundingClientRect();
+          const placement = popupPlacement(chipRect, {
+            top: Math.max(mapRect.top, 0),
+            bottom: Math.min(mapRect.bottom, window.innerHeight),
+          });
+          info.setOptions({
+            // Above: 26px clears a pill hanging over its anchor; a dot only rises 12px from
+            // its centre, so 16px clears it without leaving a moat. Below: the tip lands
+            // measured+40 under the anchor, so the body (whose bottom sits a tail's height
+            // above the tip) starts just beneath the marker instead of overlapping it.
+            pixelOffset: new google.maps.Size(0, placement === "above" ? (rec.kind === "dot" ? -16 : -26) : measured + 40),
+            // A PINNED popup may pan the map to keep itself fully in view — the flip
+            // handles the common top-edge case without motion, the pan covers everything
+            // else (horizontal edges included). A passing hover must never lurch the map,
+            // so previews keep the pan disabled. The redraw a pan triggers is safe now
+            // that dismissal is the document-level authority (onDocMove), not a per-chip
+            // mouseleave that a rebuilt chip would orphan.
+            disableAutoPan: !pinned,
+          });
+          info.setPosition(new google.maps.LatLng(p.lat, p.lng));
+          // shouldFocus IS THE FIX FOR A LOOP, not a preference. Left unset, Google decides for
+          // itself and moves focus into the window — so focusing a marker opened the preview,
+          // the preview took focus, the marker's `blur` scheduled a close, the close handed
+          // focus back to the marker (Google restores it), and the marker's `focus` handler
+          // opened the preview again: a cycle measured at ~190ms, running forever. It only
+          // stayed hidden before round 31 because the redraw destroyed the marker each pass.
+          // A preview is not a dialog: hovering or tabbing to a home must leave the visitor's
+          // focus exactly where they put it. Deliberate keyboard activation (Enter/Space) DOES
+          // move focus in, because that is where the popup's heart, close and link live.
+          info.open({ map, shouldFocus: takeFocus });
+          popupOpen = true;
+          shownForId = p.id;
+          if (pinned) pinnedRef.current = p.id;
+        };
+
+        /** Build a marker node once, with its listeners. Everything state-dependent is left to
+         * paint(); everything here is true for the life of the node. */
+        const createMarker = (m: PlannedMarker, frag: DocumentFragment): MarkerRec => {
+          // Two boxes since round 24b (owner: the black box should be "just the size of the
+          // price"): the button is a transparent hit shell keeping the 24px tap floor
+          // (globals.css .rlt-price-chip / .rlt-map-dot both hold that floor), .rlt-chip-face
+          // is the visible box hugging the glyphs. Geometry lives in globals.css; state ink in
+          // chipStateStyles, shared with the Leaflet engine. paint() decides which costume.
+          const el = document.createElement("button");
+          el.type = "button";
+          const face = document.createElement("span");
+          face.className = "rlt-chip-face";
+          el.appendChild(face);
+          const rec: MarkerRec = { el, face, kind: m.kind, pin: m.pin, x: NaN, y: NaN, look: "", hidden: 0 };
+          el.addEventListener("mouseenter", (e) => {
+            cancelClose();
+            if (pinnedRef.current) return; // a deliberate choice outranks a passing pointer
+            // A redraw under a STATIONARY pointer must not undo the Escape the visitor just
+            // pressed. Reconciliation removes the old route to this (a rebuilt node fired a
+            // synthetic mouseenter at the same coordinates), but a genuine relayout — the map
+            // panning under a still hand — can still deliver one, so the guard stays. It is
+            // positional, not a time window: dev's fast fetch landed inside every window
+            // tried, production's slow one landed after (reproduced both ways, 2026-08-07).
+            if (closedAt && Math.hypot(e.clientX - closedAt.x, e.clientY - closedAt.y) <= 4) return;
+            openPopup(rec, false);
+          });
+          // Keyboard parity: the markers are real buttons, so tabbing to one previews it too.
+          // Guarded to keyboard focus only — a mouse press also focuses, and re-opening the
+          // popup mid-press was part of what was eating the click. Also guarded against the
+          // reopen race a deliberate close (Escape/outside-click, above) can trigger.
+          el.addEventListener("focus", (e) => {
+            if (!(e.target as HTMLElement).matches(":focus-visible")) return;
+            if (Date.now() < suppressReopenUntil) return;
+            cancelClose();
+            if (!pinnedRef.current) openPopup(rec, false);
+          });
+          el.addEventListener("blur", (e) => {
+            // Focus moving INTO the preview is not focus leaving the home — it is the visitor
+            // reaching for the heart or the link. Scheduling a close there is the second half
+            // of the loop described at shouldFocus above.
+            if ((e.relatedTarget as Element | null)?.closest?.(".gm-style-iw")) return;
+            scheduleClose();
+          });
+          // PIN ON THE PRESS, not on the click. A click event only fires when mousedown and
+          // mouseup land on the SAME element, and before reconciliation a redraw between the
+          // press and the release silently swallowed the click so the popup was never pinned.
+          // Pressing is also the honest moment: that is when the visitor chose this home.
+          el.addEventListener("pointerdown", () => {
+            cancelClose();
+            pinnedRef.current = rec.pin.id;
+            openPopup(rec, true);
+            onSelectRef.current?.(rec.pin.id);
+          });
+          // Keyboard pinning. Enter/Space on a button fires only `click` — never pointerdown
+          // — so a keyboard user could preview a home (focus, above) but never PIN it, and
+          // tabbing onward closed the popup before its links were reachable. detail === 0
+          // is the keyboard-activation signature; mouse clicks (detail ≥ 1) already pinned
+          // on the press and are ignored here.
+          el.addEventListener("click", (e) => {
+            if (e.detail !== 0) return;
+            cancelClose();
+            pinnedRef.current = rec.pin.id;
+            // The ONE path that takes focus: the visitor pressed Enter or Space on this home,
+            // so the popup's own controls are what they asked for next.
+            openPopup(rec, true, true);
+            onSelectRef.current?.(rec.pin.id);
+          });
+          frag.appendChild(el);
+          return rec;
+        };
 
         // HTML marker overlay — a price pill for every home the screen can label, a small dot
         // for the rest (planMarkers), in the current viewport at the current zoom.
@@ -306,11 +563,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         };
         overlay.onRemove = function () {
           this.container?.remove();
+          drawn.clear();
         };
         overlay.draw = function () {
           const container: HTMLDivElement = this.container;
           if (!container) return;
-          container.innerHTML = "";
           const proj = this.getProjection();
           const gb = map.getBounds();
           if (!proj || !gb) return; // before the first idle there is nothing to place against
@@ -339,11 +596,12 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           // planned, not the whole fetch, so the caveat tracks what the visitor can see.
           setSomeApproximate(plan.some((m) => !m.pin.geocoded));
 
-          // Dots paint first so every pill sits above every dot — DOM order is z-order here.
+          // ── RECONCILE. One pass over the plan, keyed by listing id: reuse, repaint only
+          // what changed, then retire whatever left the plan.
           const frag = document.createDocumentFragment();
-          for (const m of [...plan.filter((x) => x.kind === "dot"), ...plan.filter((x) => x.kind === "pill")]) {
+          const live = new Set<string>();
+          for (const m of plan) {
             const p = m.pin;
-            const pos = new google.maps.LatLng(p.lat, p.lng);
             const active = p.id === sel;
             // Hearted listings read differently at a glance — white chip, red heart, same
             // red as the card's FavoriteButton (owner's ask: saved homes visible ON the map).
@@ -351,179 +609,61 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             // Contract). Deliberately NOT a new hue: the site runs monochrome with one accent.
             const spokenFor = p.status === "Pending" || p.status === "Under Contract";
             const saved = !!p.saved || favSet.has(p.id);
-            const label = spokenFor ? `${m.label} — ${p.address} — ${p.status}` : `${m.label} — ${p.address}`;
-
-            let marker: HTMLButtonElement;
-            if (m.kind === "dot") {
-              // A dot is the same home wearing less ink — same colour language, same
-              // interaction contract (hover previews, press pins). 24px hit target around a
-              // 12px mark (globals.css .rlt-map-dot) keeps the tap-target gate honest.
-              marker = document.createElement("button");
-              marker.type = "button";
-              marker.className = "rlt-map-dot";
-              marker.setAttribute("aria-label", label);
-              marker.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-50%);${dotStyleVars(saved, spokenFor)}`;
-            } else {
-              // Two boxes since round 24b (owner: the black box should be "just the size of
-              // the price"): the button is a transparent hit shell keeping the 24px tap
-              // floor, .rlt-chip-face is the visible box hugging the glyphs. Geometry lives
-              // in globals.css; state ink in chipStateStyles, shared with the Leaflet engine.
-              const chip = document.createElement("button");
-              chip.type = "button";
-              chip.className = "rlt-price-chip";
-              chip.setAttribute("aria-label", label);
-              const st = chipStateStyles({ active, saved, spokenFor });
-              chip.style.cssText = `position:absolute;left:${m.x}px;top:${m.y}px;transform:translate(-50%,-100%);${st.outer}`;
-              const face = document.createElement("span");
-              face.className = "rlt-chip-face";
-              face.style.cssText = `${st.face};font:700 11px/1 ${MAP_FONT}`;
-              if (saved) {
-                const heart = document.createElement("span");
-                heart.style.color = "#ef4444";
-                heart.textContent = "♥ ";
-                face.appendChild(heart);
-                face.appendChild(document.createTextNode(m.label));
-              } else {
-                face.textContent = m.label;
-              }
-              chip.appendChild(face);
-              marker = chip;
+            // Two rows sharing an id would silently orphan the first one's node in a keyed
+            // map — it would never be retired and never move again. Suffixing keeps identity
+            // stable in the normal case and merely correct in the pathological one.
+            let key = p.id;
+            for (let n = 1; live.has(key); n++) key = `${p.id}#${n}`;
+            live.add(key);
+            const look = `${m.kind}|${active}|${saved}|${spokenFor}|${m.label}|${p.address}|${p.status ?? ""}`;
+            let rec = drawn.get(key);
+            if (!rec) {
+              rec = createMarker(m, frag);
+              drawn.set(key, rec);
             }
-            // HOVER PREVIEWS, CLICK PINS (owner: "when you bring mouse to the price it should
-            // show the pic and info like when you click it… it should still have click function
-            // to keep it there").
-            //
-            // The trap this avoids is the one that broke the Top Areas caret: a handler must
-            // never ask "is it open right now" when the pointer arriving is exactly what opened
-            // it. So hover and pin are SEPARATE state — `pinnedRef` is owned by click alone, and
-            // hover only ever acts when nothing is pinned. Leaving a chip therefore cannot close
-            // a popup the visitor deliberately kept, and clicking a second chip re-pins cleanly.
-            const openPopup = (pinned: boolean) => {
-              cancelClose();
-              // IDEMPOTENT for the pin already showing: a redundant re-open restarts Google's
-              // open pipeline and (via synthetic boundary events under a stationary pointer)
-              // can loop it forever — see shownForId above. Pinning an already-previewed home
-              // only needs the pin recorded, not a re-render.
-              if (popupOpen && shownForId === p.id) {
-                if (pinned) pinnedRef.current = p.id;
-                return;
-              }
-              const node = popupNode(p, {
-                onClose: () => {
-                  pinnedRef.current = null;
-                  popupOpen = false;
-                  shownForId = null;
-                  info.close();
-                },
-                onToggleSave: (id) => onToggleSaveRef.current?.(id),
-                // View Listing pressed: the walk the listing page offers is THE HOMES THIS MAP
-                // IS SHOWING — the viewport pin fetch, which holds up to PIN_CAP homes the
-                // grid's saved page never did (the grid's own save covers only its 150).
-                onNavigate: () => {
-                  const set = pinResultSet(activeSource(), window.location.pathname + window.location.search);
-                  if (set) saveResultSet(set);
-                },
-              });
-              // The popup must be part of its own hover target. Without this, moving the pointer
-              // off the chip and ONTO the preview closes the thing you were reaching for, and
-              // its heart and X are unreachable unless you click first.
-              node.addEventListener("mouseenter", cancelClose);
-              node.addEventListener("mouseleave", () => scheduleClose());
-              // Measure the card's REAL height before opening. An InfoWindow body always
-              // renders ABOVE its anchor + pixelOffset tip, so "open below the chip" needs the
-              // tip pushed a full card-height down — the earlier +26 nudged it 52px and the
-              // card still ran off the top of the map (verified live: only the VIEW LISTING
-              // button survived the clip). Heights genuinely vary (pager row, status badge).
-              node.style.cssText += ";position:absolute;visibility:hidden;left:-9999px;top:0";
-              document.body.appendChild(node);
-              const measured = node.offsetHeight || 300;
-              node.remove();
-              node.style.position = "relative";
-              node.style.visibility = "";
-              node.style.left = "";
-              node.style.top = "";
-              info.setContent(node);
-              // Stay within the MAP BOX instead of always opening the same direction. The
-              // InfoWindow is clipped by the map container (overflow-hidden), so the room that
-              // matters is the intersection of the map's rect and the window — a chip just
-              // under the map's top edge can have a whole page of window above it and still
-              // no room at all.
-              const chipRect = marker.getBoundingClientRect();
-              const mapRect = el.getBoundingClientRect();
-              const placement = popupPlacement(chipRect, {
-                top: Math.max(mapRect.top, 0),
-                bottom: Math.min(mapRect.bottom, window.innerHeight),
-              });
-              info.setOptions({
-                // Above: 26px clears a pill hanging over its anchor; a dot only rises 12px from
-                // its centre, so 16px clears it without leaving a moat. Below: the tip lands
-                // measured+40 under the anchor, so the body (whose bottom sits a tail's height
-                // above the tip) starts just beneath the marker instead of overlapping it.
-                pixelOffset: new google.maps.Size(0, placement === "above" ? (m.kind === "dot" ? -16 : -26) : measured + 40),
-                // A PINNED popup may pan the map to keep itself fully in view — the flip
-                // handles the common top-edge case without motion, the pan covers everything
-                // else (horizontal edges included). A passing hover must never lurch the map,
-                // so previews keep the pan disabled. The redraw a pan triggers is safe now
-                // that dismissal is the document-level authority (onDocMove), not a per-chip
-                // mouseleave that a rebuilt chip would orphan.
-                disableAutoPan: !pinned,
-              });
-              info.setPosition(pos);
-              info.open({ map });
-              popupOpen = true;
-              shownForId = p.id;
-              if (pinned) pinnedRef.current = p.id;
-            };
-            marker.addEventListener("mouseenter", (e) => {
-              cancelClose();
-              if (pinnedRef.current) return; // a deliberate choice outranks a passing pointer
-              // draw() rebuilding this marker under a STATIONARY pointer fires a synthetic
-              // mouseenter at the same coordinates, and that must not undo the Escape the
-              // visitor just pressed (reproduced: Escape during post-zoom settle, pin fetch
-              // lands, popup back). The guard is positional, not a time window — dev's fast
-              // fetch landed inside every window tried, production's slow one landed after.
-              // closedAt clears on the first REAL pointer movement (onDocMove, 4px leash),
-              // so an actual re-approach previews exactly as before.
-              if (closedAt && Math.hypot(e.clientX - closedAt.x, e.clientY - closedAt.y) <= 4) return;
-              openPopup(false);
-            });
-            // Keyboard parity: the markers are real buttons, so tabbing to one previews it too.
-            // Guarded to keyboard focus only — a mouse press also focuses, and re-opening the
-            // popup mid-press was part of what was eating the click. Also guarded against the
-            // reopen race a deliberate close (Escape/outside-click, above) can trigger.
-            marker.addEventListener("focus", (e) => {
-              if (!(e.target as HTMLElement).matches(":focus-visible")) return;
-              if (Date.now() < suppressReopenUntil) return;
-              cancelClose();
-              if (!pinnedRef.current) openPopup(false);
-            });
-            marker.addEventListener("blur", () => scheduleClose());
-            // PIN ON THE PRESS, not on the click. A click event only fires when mousedown and
-            // mouseup land on the SAME element, and overlay.draw() rebuilds every marker on each
-            // map idle — so a redraw between press and release silently swallowed the click and
-            // the popup was never pinned. Pressing is also the honest moment: that is when the
-            // visitor chose this home.
-            marker.addEventListener("pointerdown", () => {
-              cancelClose();
-              pinnedRef.current = p.id;
-              openPopup(true);
-              onSelectRef.current?.(p.id);
-            });
-            // Keyboard pinning. Enter/Space on a button fires only `click` — never pointerdown
-            // — so a keyboard user could preview a home (focus, above) but never PIN it, and
-            // tabbing onward closed the popup before its links were reachable. detail === 0
-            // is the keyboard-activation signature; mouse clicks (detail ≥ 1) already pinned
-            // on the press and are ignored here.
-            marker.addEventListener("click", (e) => {
-              if (e.detail !== 0) return;
-              cancelClose();
-              pinnedRef.current = p.id;
-              openPopup(true);
-              onSelectRef.current?.(p.id);
-            });
-            frag.appendChild(marker);
+            rec.pin = p; // listeners read the record: a reused node never serves a stale listing
+            if (rec.hidden) {
+              // Back in the plan. paint() rewrites cssText wholesale, which is what clears the
+              // display:none — so force it rather than trusting `look` to have changed.
+              rec.hidden = 0;
+              rec.look = "";
+            }
+            if (rec.look !== look) {
+              paint(rec, m, active, saved, spokenFor);
+              rec.look = look;
+            } else if (rec.x !== m.x || rec.y !== m.y) {
+              // The pan/zoom path, and the only one that runs at frame rate.
+              rec.el.style.left = `${m.x}px`;
+              rec.el.style.top = `${m.y}px`;
+              rec.x = m.x;
+              rec.y = m.y;
+            }
           }
-          container.appendChild(frag);
+          for (const [key, rec] of drawn) {
+            if (live.has(key) || rec.hidden) continue;
+            if (rec.el === document.activeElement) {
+              // THE FOCUSED HOME IS ALWAYS DRAWN. `display:none` on the element that holds
+              // focus hands focus straight to <body>, so a zoom threw a keyboard visitor off
+              // the map — and it flapped run to run, because whether it happened depended on
+              // whether thinning dropped that particular pin on one intermediate frame.
+              // Keeping it is one extra projection, not a re-plan.
+              const pt = proj.fromLatLngToDivPixel(new google.maps.LatLng(rec.pin.lat, rec.pin.lng));
+              rec.el.style.left = `${pt.x}px`;
+              rec.el.style.top = `${pt.y}px`;
+              rec.x = pt.x;
+              rec.y = pt.y;
+              continue;
+            }
+            rec.hidden = settleGen;
+            rec.el.style.display = "none"; // out of the plan, out of hit-testing and the tab order
+          }
+          if (frag.childNodes.length) container.appendChild(frag);
+        };
+        /** draw() plus the retirement sweep — every caller that is a SETTLED moment. */
+        overlay.settle = function () {
+          settleGen++;
+          this.draw();
+          sweep();
         };
         overlay.setMap(map);
         overlayRef.current = overlay;
@@ -531,7 +671,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // (when opted in) fetch the new viewport's pins, and report the settled box so the
         // results grid can scope itself to it.
         map.addListener("idle", () => {
-          overlay.draw();
+          overlay.settle();
           requestViewport();
           const settled = toBounds(map.getBounds());
           if (settled) onBoundsChangeRef.current?.(settled);
@@ -570,12 +710,12 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
       onData: (p, total) => {
         fetchedPinsRef.current = p;
         setViewportTotal(total);
-        overlayRef.current?.draw?.();
+        overlayRef.current?.settle?.();
       },
     });
     const b = toBounds(map.getBounds());
     if (b) fetcherRef.current.request(b);
-    overlayRef.current?.draw?.();
+    overlayRef.current?.settle?.();
   }, [filtersQuery]);
 
   // New seed pins: redraw (an idle won't fire on its own without a user move), and refit ONLY
@@ -590,13 +730,13 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
       lastFitKeyRef.current = fitKey;
       fitToPins(map, spreadPins(pins.filter((p) => p.lat && p.lng)), initialBounds);
     }
-    overlayRef.current?.draw?.();
+    overlayRef.current?.settle?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pins, initialBounds, fitKey]);
 
   // A card hover/focus highlights the matching chip — redraw with the new active id.
   useEffect(() => {
-    overlayRef.current?.draw?.();
+    overlayRef.current?.settle?.();
   }, [selectedId]);
 
   return (

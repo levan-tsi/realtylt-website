@@ -612,13 +612,11 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   transform: translate(-50%, -100%) scale(1.12) !important;
   z-index: 1200 !important;
 }
-/* NO PRESS STATE HERE, AND IT IS NOT AN OVERSIGHT. Round 30 wrote one, measured it, and took
-   it back out: hovering a single chip destroys and rebuilds EVERY marker in the layer
-   (measured on /search?county=dutchess — 0 DOM removals while idle, then 62 removals and 62
-   additions from one hover). The node the browser is pressing no longer exists by the time
-   `:active` would paint, so the rule is dead CSS that reads as a working feature. The redraw
-   is the thing to fix — see docs/parity/DESIGN-ROUND30.md — and a press state is worth adding
-   the moment a hover stops rebuilding the layer. */
+/* Round 30 wrote a press state here, measured it, and took it back out, because hovering one
+   chip destroyed and rebuilt EVERY marker in the layer — the node being pressed was gone
+   before `:active` could paint. Round 31 fixed the draw path (the markers are reconciled now,
+   see GoogleMapView), and `scripts/verify-marker-reconcile.mjs` holds that open by asserting a
+   chip really does paint `:active` while pressed. The press state itself lives below. */
 /* !important: each face carries an inline box-shadow that a plain class rule can't beat. */
 .rlt-price-chip:hover .rlt-chip-face {
   box-shadow: 0 0 0 2px #fff, 0 4px 14px rgb(0 0 0 / 0.45) !important;
