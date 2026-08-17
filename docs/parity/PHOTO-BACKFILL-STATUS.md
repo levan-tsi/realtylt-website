@@ -739,3 +739,19 @@ REMAINING IN THE 12-MONTH WINDOW: 48,079 listings / ~234,400 downloads. Budget l
 rolling window after this run: ~18,275 requests. The next window resumes with no flags beyond
 the budget — the column knows where it stopped:
   node scripts/backfill-sold-photos.mjs --max-downloads 18000
+
+## 2026-08-17 16:20 — the budget formula gains its missing half: check the HOUR
+Sold window 2 was launched immediately after window 1 finished, on a trailing-24h of
+15,233 (budget 18,000 — correct against the 40k/rolling-24h cap). It took SIX 429s in six
+seconds and stopped, having downloaded 5. The 24h number was never the binding constraint:
+window 1 had just spent 6,003 downloads inside the previous HOUR, and the cap that bit is
+7,200/hr (measured at the moment of failure: 5,766 in the trailing hour, plus the sync's
+own share). Cost: nothing — resume state is a column, and the guard stopped it in seconds.
+
+BUDGET RULE, CORRECTED — a run needs BOTH doors open:
+  trailing_24h  = objects created in the last 24h   → daily budget  = 36,000 - trailing_24h - 2,000
+  trailing_1h   = objects created in the last hour  → hourly budget = 6,000 - trailing_1h
+  launch only if BOTH > 3,000; size --max-downloads to the SMALLER of the two.
+A window that ran hard in the last hour must WAIT ~1h even when the day looks wide open.
+This is the same class of error as the Aug-12 daytime trip (2 rps flat = exactly 7,200/hr):
+the hourly cap is the one that bites first, and it is invisible in a 24h count.
