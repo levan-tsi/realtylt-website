@@ -1,5 +1,66 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## === ROUND 31 - 2026-08-17. THE MARKER LAYER, AND THE MOTION IT WAS BLOCKING.
+## === 5 commits, NOT pushed. Full record: docs/parity/DESIGN-ROUND31.md.
+## === NOTE FOR THE PUSHING SESSION: `next build` was NOT run - a dev server holds :3100 and
+## === CLAUDE.md forbids building alongside one. Run it before pushing; it is the last gate.
+## === Gates: tsc clean, 939 tests / 69 files foreground (baseline 920 + 19 new), zoom ladder
+## === 20/20, map-popup + viewport-scope + pin-walk + geocode-truth PASS, 2 NEW committed gates
+## === (verify-marker-reconcile 11/11, verify-press-feedback 15/15).
+##
+## ROUND 30'S BLOCKER IS FIXED AND THE CAUSE WAS NOT WHAT THE SYMPTOM LOOKED LIKE. draw() is
+## not a per-settle callback: Google calls it on EVERY projection change - every frame of a pan
+## or zoom - and again whenever anything joins the overlay panes, which is what opening an
+## InfoWindow does. So hovering a chip opened the preview, the preview repainted the pane, and
+## `container.innerHTML = ""` took the whole layer with it. Named by wrapping the innerHTML
+## setter and capturing the stack (a MutationObserver callback is async and carries none).
+## Markers are RECONCILED now, keyed by listing. Same server, same gestures:
+##   pan 30 steps: 21,660 DOM node ops -> 2   |  p95 frame 33.3ms -> 16.7ms (a dropped frame
+##   hover one chip: 570 -> 0                 |  every other frame, to a solid 60fps)
+##   zoom in x3: 1,781 -> 373
+## Pill and dot are ONE element in two costumes (a thinning flip was 356 of 1,000 node ops in a
+## zoom step, every one a home that never left the screen); a marker that leaves the plan is
+## HIDDEN and only deleted if it is still gone two settles later; the FOCUSED marker is always
+## drawn, because display:none on it hands focus to <body>.
+## UNBLOCKED: a pin paints :active (round 30 measured false); keyboard focus survives a redraw
+## - round 28's open item, same root cause as predicted. AND it exposed a latent FOCUS LOOP the
+## rebuild had been hiding: the preview took focus, blur scheduled a close, the close handed
+## focus back, the focus handler reopened it - ~190ms, forever. A preview is not a dialog, so
+## it opens with shouldFocus:false; only Enter/Space moves focus in.
+## GATE: verify-marker-reconcile.mjs tests node IDENTITY, not count (a rebuild gives the same
+## count). Stamps every marker, gestures, requires every home still on screen to carry its own
+## stamp. Against the pre-round-31 file: 0% survival, 6 of 10 checks FAIL.
+##
+## THE PRESS, EVERYWHERE ELSE. PRESS is exported from Button and Button is built from it - one
+## press, not twenty copies. Three deliberate variants, each measured not argued: a SEGMENTED
+## control dips as a WHOLE (scaling one half opens a pale sliver inside the parent's clip -
+## photographed both ways; 130.9 -> 126.9px); a MAP PIN GROWS on press (a finger covers it, so
+## shrinking hides the confirmation: rest 64.61 -> hover 72.36 -> press 67.19); a CARD settles
+## back toward the page (0.97 on a 380px card is a 12px lurch), and its hover went 350 -> 220ms.
+##
+## FOCUS RINGS WERE FADING IN ON ~60 CONTROLS. Tailwind's `transition-colors` lists
+## outline-color. Measured on the header nav: TEN colours over 260ms, starting mid-grey
+## rgb(111,111,111), reaching the navy only after ~90ms - under the site's own 3:1 floor for the
+## first tenth of a second after a Tab. Fixed at the DEFINITION with an unlayered
+## .transition-colors (it must be unlayered: @utility emits into the same layer and Tailwind
+## writes its copy last). Now one value at 3ms, on all 10 pages driven.
+## The site's curve is also --default-transition-timing-function now.
+##
+## THE ADVERSARIAL PASS CAUGHT A REAL ONE: on a phone a TAP LEFT THE CARD STUCK LIFTED
+## (translate 0 -4px, permanently, photo stuck zoomed). A hand-written :hover is gated by
+## nothing. All four are behind @media (hover: hover) now, with :focus-visible and :active
+## OUTSIDE it - a keyboard and a finger both work on a phone. Both a source test and a rendered
+## gate hold it. Reduced motion checked 1:1: the global block only shortens DURATIONS, so every
+## movement still happened, instantly.
+##
+## NOT DONE / FOUND NOT FIXED: /review-animations is owner-invocation only and cannot be
+## triggered from a session (round 30 hit the same wall) - the checklist was run by hand as
+## measurements instead. The chat widget's Send/Reset/Close have NO transition at all and are
+## excluded from both gates by selector. prefers-reduced-transparency and prefers-contrast are
+## unhandled site-wide. Header/footer nav links got the ring fix but no press (a scale on a bare
+## text link reads as a wobble - the right treatment is a drawn underline, a typography call).
+## Zoom still costs 373 node ops; the last ~2% are homes genuinely absent for two settles.
+
 ## === ROUND 30 - 2026-08-15. TRUE COORDINATES + a motion slice. 5 commits, NOT pushed.
 ## === Full records: docs/parity/MAP-ROUND30.md and docs/parity/DESIGN-ROUND30.md.
 ## === Gates: tsc clean, 920 tests / 68 files foreground (baseline 885 + 35 new), zoom ladder
