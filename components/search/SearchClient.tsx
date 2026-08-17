@@ -1188,6 +1188,22 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   {activeViewportQs ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
                 </span>
                 {!hasActiveFilters && !activeViewportQs && <span>across the Hudson Valley and NYC</span>}
+                {/* The map draws every home in view; the list carries a page of them. Without
+                    this the two disagree in silence — the count says 400, the column holds 150,
+                    and paging looks like it repeats the same homes. Naming the slice is the
+                    whole fix: it says which homes these are and what the next page is for.
+                    Only shown when there IS a remainder, so the common case stays quiet. */}
+                {result && result.listings.length < result.total && (() => {
+                  // The page SIZE, not this page's length — the last page is short, and using
+                  // its length would slide the whole range backwards.
+                  const size = activeViewportQs ? VIEWPORT_PAGE_SIZE : SEARCH_PAGE_SIZE;
+                  const first = (result.page - 1) * size + 1;
+                  return (
+                    <span className="text-stone">
+                      · showing {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
+                    </span>
+                  );
+                })()}
               </>
             )}
           </p>
