@@ -26,6 +26,15 @@ export function StatCounter({
     if (!el) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return; // already showing the final value
+    // NEVER SHOW A NUMBER THAT IS NOT TRUE. This used to reset to 0 on mount
+    // unconditionally, so between hydration and the observer firing the page
+    // stated "0 counties & boroughs served" and "0 days a week we answer" — the
+    // four worst sentences on the site, and reachable by anyone whose viewport
+    // already held the block or who arrived deeper in the page. A count-up is
+    // only honest for a stat the visitor has not seen yet, so the zero is only
+    // ever written while the block is still below the fold.
+    const box = el.getBoundingClientRect();
+    if (box.top < window.innerHeight) return; // already on screen: it stays true
     setDisplay(0);
     const io = new IntersectionObserver(
       (entries) => {

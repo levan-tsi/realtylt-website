@@ -131,7 +131,19 @@ export default async function HomePage() {
             <form
               action="/search"
               role="search"
-              className="search-instrument relative flex w-full max-w-[600px] items-center gap-2 rounded-2xl border border-paper/30 bg-black/45 p-2 backdrop-blur-[2px] transition-colors focus-within:bg-black/55 hover:border-paper/45"
+              /* THE FRONT DOOR'S PRIMARY CONTROL HAD ALMOST NO FOCUS STATE. The input
+                 carries `focus:outline-none` and hands its focus state to this container,
+                 which answered with `bg-black/45 -> /55`: measured over the hero photograph
+                 that is a shift of about 4 in 255 per channel, under 0.4% of the pixels in
+                 the field's own box. The site's stated floor is focus-visible >= 3:1, and a
+                 keyboard visitor arriving at the one control the page is built around got
+                 essentially nothing.
+                 The ring is drawn on the INSTRUMENT, not the input, because the input has no
+                 edges of its own — and it is scoped with `has-[input:focus-visible]` rather
+                 than `focus-within` so that tabbing on to the Search button shows that
+                 button's own ring instead of two rings at once. White, because on a
+                 photograph the site's navy ring would be the invisible option. */
+              className="search-instrument relative flex w-full max-w-[600px] items-center gap-2 rounded-2xl border border-paper/30 bg-black/45 p-2 backdrop-blur-[2px] transition-colors focus-within:bg-black/55 hover:border-paper/45 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-paper"
             >
               <label htmlFor="home-search" className="sr-only">
                 Search for homes by town, zip, or address

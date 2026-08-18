@@ -236,13 +236,38 @@ const COLLECT = () => {
   };
   const controls = [...document.querySelectorAll(SEL)].filter(vis).map((el, i) => {
     const r = el.getBoundingClientRect();
+    // THE TAP TARGET IS WHAT A THUMB CAN HIT, not the painted control. A 16px
+    // checkbox inside a padded <label> row has a 400px target — the consent
+    // checkbox says so in its own source — and scoring the input's box called
+    // two correct controls a failure.
+    const lab = el.closest("label");
+    const tr = lab && lab !== el ? lab.getBoundingClientRect() : r;
     const cs = getComputedStyle(el);
     el.setAttribute("data-r32", String(i));
-    const name = (el.getAttribute("aria-label") || el.getAttribute("title") || el.textContent || el.getAttribute("alt") || "").replace(/\s+/g, " ").trim();
+    // THE ACCESSIBLE NAME, resolved the way a screen reader resolves it. Reading
+    // only aria-label/textContent reports every correctly-labelled <input> on the
+    // site as nameless, because an input's name comes from its associated
+    // <label for>, which is not its text content. That cost every page 1.5 points
+    // for markup that was already right.
+    const byId = el.id ? document.querySelector(`label[for="${CSS.escape(el.id)}"]`) : null;
+    const wrap = el.closest("label");
+    const ref = el.getAttribute("aria-labelledby");
+    const refEl = ref ? document.getElementById(ref.split(/\s+/)[0]) : null;
+    const name = (
+      el.getAttribute("aria-label") ||
+      (refEl && refEl.textContent) ||
+      (byId && byId.textContent) ||
+      (wrap && wrap !== el && wrap.textContent) ||
+      el.getAttribute("title") ||
+      el.textContent ||
+      el.getAttribute("alt") ||
+      ""
+    ).replace(/\s+/g, " ").trim();
     const bgc = parseRGB(cs.backgroundColor);
     return {
       i, tag: el.tagName, name: name.slice(0, 50), hasName: name.length > 0,
       w: Math.round(r.width), h: Math.round(r.height), x: Math.round(r.left), y: Math.round(r.top),
+      tw: Math.round(tr.width), th: Math.round(tr.height),
       aboveFold: r.top < fold && r.bottom > 0, fontSize: Math.round(parseFloat(cs.fontSize) * 10) / 10,
       transProp: cs.transitionProperty, transDur: cs.transitionDuration, transEase: cs.transitionTimingFunction,
       isInput: ["INPUT", "SELECT", "TEXTAREA"].includes(el.tagName),
@@ -454,7 +479,24 @@ async function run() {
     const key = info.tag + "|" + info.name + "|" + Math.round(info.x) + "," + Math.round(info.y);
     if (stops.some((s) => s.key === key)) break;
     if (!info.inView) { await page.evaluate(() => document.activeElement.scrollIntoView({ block: "center", behavior: "instant" })); await page.waitForTimeout(150); }
-    const pre = await page.evaluate(() => ({ y: window.scrollY, r: (() => { const r = document.activeElement.getBoundingClientRect(); return { x: Math.max(0, r.x - 8), y: Math.max(0, r.y - 8), width: Math.min(r.width + 16, 1400), height: Math.min(r.height + 16, 800) }; })() }));
+    // THE RING IS NOT ALWAYS ON THE FOCUSED ELEMENT. The hero search input carries
+    // `focus:outline-none` and hands its focus state to the instrument around it,
+    // whose ring lands ~12px outside the input's own box — so an 8px clip
+    // photographed the one place the ring is guaranteed not to be, and reported the
+    // site's primary control as ringless. Clip to whichever ancestor actually draws
+    // an outline while this element holds focus.
+    const pre = await page.evaluate(() => {
+      let el = document.activeElement, drawn = el;
+      for (let n = el, i = 0; n && i < 4; n = n.parentElement, i++) {
+        const cs = getComputedStyle(n);
+        if (cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0) { drawn = n; break; }
+      }
+      const r = drawn.getBoundingClientRect();
+      const pad = 14;
+      return { y: window.scrollY, onAncestor: drawn !== el, r: {
+        x: Math.max(0, r.x - pad), y: Math.max(0, r.y - pad),
+        width: Math.min(r.width + pad * 2, 1400), height: Math.min(r.height + pad * 2, 800) } };
+    });
     const box = pre.r;
     if (box.width < 4 || box.height < 4) continue;
     const withFocus = await page.screenshot({ clip: box });
@@ -472,7 +514,7 @@ async function run() {
     });
     const diff = await pixelDiff(withFocus, without);
     const moved = Math.abs(post - pre.y) > 1;
-    stops.push({ ...info, key, diffPct: moved ? -1 : diff.pct, ringContrast: moved ? 0 : diff.contrast, ring: diff.ring, invalid: moved });
+    stops.push({ ...info, key, diffPct: moved ? -1 : diff.pct, ringContrast: moved ? 0 : diff.contrast, ring: diff.ring, invalid: moved, ringOnAncestor: pre.onAncestor });
     if (i < 3 || diff.pct < 0.4) {
       fs.writeFileSync(path.join(SHOTDIR, `focus-${i}-${info.tag}.png`), withFocus);
     }
@@ -488,6 +530,15 @@ async function run() {
     .filter((c) => c.aboveFold && c.w >= 40 && c.h >= 20 && !c.clipped)
     .sort((a, b) => (b.filled ? 1e9 : 0) + b.area - ((a.filled ? 1e9 : 0) + a.area))
     .slice(0, 8);
+  // Pressing a control means mouse-down AND mouse-up on it, which on an <a> is a
+  // click — the probe navigated away mid-run and the next lookup died with
+  // "Execution context was destroyed". Activation is suppressed in the capture
+  // phase so :active still paints and nothing follows the href.
+  await page.evaluate(() => {
+    window.__r32NoNav = (e) => { e.preventDefault(); e.stopPropagation(); };
+    document.addEventListener("click", window.__r32NoNav, true);
+    document.addEventListener("submit", window.__r32NoNav, true);
+  });
   const inter = [];
   for (const c of ctlProbe) {
     const sel = `[data-r32="${c.i}"]`;
@@ -510,6 +561,10 @@ async function run() {
     inter.push({ name: c.name || c.tag, hoverPct: (await pixelDiff(rest, hov)).pct, pressPct: (await pixelDiff(hov, press)).pct, filled: c.filled });
   }
   ev.inter = inter;
+  await page.evaluate(() => {
+    document.removeEventListener("click", window.__r32NoNav, true);
+    document.removeEventListener("submit", window.__r32NoNav, true);
+  });
 
   // reduced motion: every movement must be GONE, not merely fast
   const rmCtx = await newCtx({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
@@ -773,7 +828,7 @@ function score(out, ev) {
   {
     const of390 = ev.of390 || {}, of320 = ev.of320 || {};
     const over390 = of390.scrollW > of390.clientW + 1, over320 = of320.scrollW > of320.clientW + 1;
-    const small = M.controls.filter((c) => (c.w < 24 || c.h < 24) && c.w > 0 && !c.clipped);
+    const small = M.controls.filter((c) => (c.tw < 24 || c.th < 24) && c.tw > 0 && !c.clipped);
     const tinyText = M.type.filter((t) => t.size < 16 && t.words >= 8);
     const tinySamples = tinyText.slice(0, 6).map((t) => `${t.size}px "${t.text.slice(0, 34)}"`);
     const tinyInputs = M.controls.filter((c) => c.isInput && c.fontSize < 16);
@@ -786,7 +841,7 @@ function score(out, ev) {
     S.D9 = clamp5(v);
     ev.D9 = { over390: of390.scrollW + "/" + of390.clientW, over320: of320.scrollW + "/" + of320.clientW,
       offenders390: (of390.bad || []).slice(0, 3), offenders320: (of320.bad || []).slice(0, 3),
-      smallTargets: small.slice(0, 5).map((c) => `${c.tag}"${c.name}" ${c.w}x${c.h}`), tinyText: tinyText.length, tinySamples, tinyInputs: tinyInputs.length };
+      smallTargets: small.slice(0, 5).map((c) => `${c.tag}"${c.name}" target ${c.tw}x${c.th}`), tinyText: tinyText.length, tinySamples, tinyInputs: tinyInputs.length };
   }
 
   // D10 — ACCESSIBILITY FLOORS

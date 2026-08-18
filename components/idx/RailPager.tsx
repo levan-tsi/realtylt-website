@@ -23,6 +23,8 @@ export function RailPager({
   eager?: boolean;
 }) {
   const [page, setPage] = useState(0);
+  /** True once the visitor has actually paged: the arrival is for a swap, not for arriving. */
+  const [swapped, setSwapped] = useState(false);
   const track = useRef<HTMLUListElement>(null);
   const pageCount = Math.max(1, Math.ceil(listings.length / PER_PAGE));
 
@@ -58,9 +60,19 @@ export function RailPager({
           page keeps walking the rail past the page boundary the visitor never chose. Scoped per
           rail because the home page renders two of them. */}
       <ResultSetScope listings={listings} backHref="/">
+        {/* PAGING REPLACED EIGHT CARDS AS A HARD CUT. `shown` is a slice, so pressing Next
+            swapped the entire grid with nothing said about what changed — the same defect
+            round 31 fixed for /search's GRID <-> MAP swap, and it reuses that exact arrival
+            (`.rlt-view-in`, 6px / 200ms) rather than inventing a second vocabulary.
+            `key={page}` is what replays the animation; `swapped` is what stops it playing on
+            first paint, where the section's own `.reveal` is already doing the arriving and
+            two entrances stacked read as fussy. */}
         <ul
+          key={page}
           ref={track}
-          className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4"
+          className={`mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-4 ${
+            swapped ? "rlt-view-in" : ""
+          }`}
         >
           {shown.map((l, i) => (
             <li key={l.id} className="w-[85%] shrink-0 snap-center sm:w-auto">
@@ -74,7 +86,7 @@ export function RailPager({
         <div className="mt-7 flex items-center justify-center gap-4">
           <button
             type="button"
-            onClick={() => setPage((p) => (p - 1 + pageCount) % pageCount)}
+            onClick={() => { setSwapped(true); setPage((p) => (p - 1 + pageCount) % pageCount); }}
             aria-label="Previous listings"
             className={`grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink ${PRESS} hover:bg-ink hover:text-paper`}
           >
@@ -85,7 +97,7 @@ export function RailPager({
           </span>
           <button
             type="button"
-            onClick={() => setPage((p) => (p + 1) % pageCount)}
+            onClick={() => { setSwapped(true); setPage((p) => (p + 1) % pageCount); }}
             aria-label="Next listings"
             className={`grid h-10 w-10 place-items-center rounded-full border border-ink/25 text-ink ${PRESS} hover:bg-ink hover:text-paper`}
           >
