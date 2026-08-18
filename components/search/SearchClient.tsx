@@ -685,7 +685,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           aria-pressed={active}
           onClick={() => apply({ county: active ? "" : slug })}
           className={`rounded-xl px-3.5 py-2 text-[13px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
-            active ? "bg-ink text-paper" : "bg-mist text-[#555555] hover:bg-[#e2e6ea] hover:text-ink"
+            // Three raw literals lived here — #555555 and #e2e6ea — and they were the only
+            // off-token colour the rubric found painted on /search (D5, x6). `stone` is the
+            // site's secondary-text token and was picked precisely so it clears AA on mist
+            // (4.60:1, see the @theme note); `line` is the next step down the neutral ramp and
+            // gives the hover a definite change rather than a near-miss of mist. The hover pairs
+            // it with ink, which is 15.3:1 on line — stone on line would not have cleared AA.
+            active ? "bg-ink text-paper" : "bg-mist text-stone hover:bg-line hover:text-ink"
           }`}
         >
           {area.name}, NY
@@ -778,7 +784,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       >
         {/* For Sale / For Rent — the two are separate universes (rentals never mix into for-sale
             counts). Switching clears the price + sale-type filters since their ladders differ. */}
-        <div role="group" aria-label="Sale or rent" className={`flex shrink-0 overflow-hidden rounded-xl border border-line ${PRESS_GROUP}`}>
+        {/* `rlt-seg`: the group's own overflow clip eats its segments' focus rings — see the
+            measurement in globals.css. The class moves each ring inside its segment. */}
+        <div role="group" aria-label="Sale or rent" className={`rlt-seg flex shrink-0 overflow-hidden rounded-xl border border-line ${PRESS_GROUP}`}>
           {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
             const active = filters.rental === isRent;
             return (
@@ -1281,7 +1289,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
-          <div role="group" aria-label="View" className={`flex overflow-hidden rounded-xl border border-line-strong ${PRESS_GROUP}`}>
+          <div role="group" aria-label="View" className={`rlt-seg flex overflow-hidden rounded-xl border border-line-strong ${PRESS_GROUP}`}>
             {(["grid", "map"] as const).map((v) => (
               <button
                 key={v}

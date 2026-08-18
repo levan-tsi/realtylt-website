@@ -314,10 +314,53 @@ body {
  *
  * DESCENDANTS ONLY, deliberately. The side tiles ARE the `.photo-zoom` element and their rings
  * already land on the black band between tiles, measured at 18:1 — pulling those inside would
- * move a ring that works onto the photograph and break it. */
+ * move a ring that works onto the photograph and break it.
+ *
+ * ...AND THE COLOUR IS A VARIABLE, because `.photo-zoom` is not only the listing gallery.
+ * It is also the photo frame on every listing CARD (components/idx/ListingCard.tsx), on
+ * /top-areas and on the blog — and a card's pager arrows are `bg-white/90`, the opposite body
+ * from the gallery's `bg-ink/55..70`. So round 33's fix, correct where it was written, shipped a
+ * WHITE ring drawn INSIDE a WHITE pill everywhere else. Measured in round 34 by tabbing with real
+ * keys on /search and isolating the ring's own pixels (scripts/_scratch-r34-rings.mjs): the
+ * computed style on a card arrow was `outline: solid 2px rgb(255,255,255)` at `-2px` over
+ * `rgb(255 255 255 / 0.9)`, and the rubric walked 36 such stops.
+ *
+ * The INSET is right for both — a ring belongs on the control's own body, never on somebody's
+ * photograph. Only the colour depends on how dark that body is, and only the control knows.
+ * Default stays paper, so the gallery is byte-for-byte unchanged; a light-bodied control answers
+ * with `--rlt-ring-on-photo`. Ink on `bg-white/90` is >=15:1 over ANY photograph the feed can
+ * hand us, because the 0.9 alpha bounds the worst case at rgb(230). */
 .photo-zoom :focus-visible {
-  outline-color: var(--color-paper);
+  outline-color: var(--rlt-ring-on-photo, var(--color-paper));
   outline-offset: -2px;
+}
+
+/* ── A SEGMENTED CONTROL CLIPS ITS OWN FOCUS RING.
+ *
+ * Round 31 made the group `flex overflow-hidden rounded-xl border` deliberately and photographed
+ * why: the PARENT owns the radius and the border, so the press scales the whole toggle instead of
+ * opening a pale sliver along one half's straight edge. That decision stands.
+ *
+ * What it also does is eat the focus ring. An outline is painted OUTSIDE the border box, the
+ * segments fill the group edge to edge, so three sides of every segment's outline land outside
+ * the clip — and the fourth side, the one facing the neighbour, is painted over by that
+ * neighbour's opaque background, which comes later in paint order. Measured on /search in round
+ * 34 by counting river-coloured pixels in a clipped shot after a real Tab:
+ *
+ *     FOR SALE   0 ring pixels        GRID   0 ring pixels
+ *     FOR RENT  68 ring pixels, all of them on the black FOR SALE segment -> 1.51:1
+ *     MAP       68 ring pixels, on the white GRID segment                 -> 13.9:1
+ *
+ * So the site's two primary mode toggles had no usable keyboard indicator at all, and the one
+ * sliver that did paint was under the site's own 3:1 floor. Same answer as the photograph above:
+ * the ring goes INSIDE the segment, where nothing can clip it and no sibling can paint over it,
+ * and its colour follows the surface it now lands on. `aria-pressed` is the semantic name for
+ * "this half is the black one", so the colour follows the state rather than a utility class. */
+.rlt-seg :focus-visible {
+  outline-offset: -2px;
+}
+.rlt-seg [aria-pressed="true"]:focus-visible {
+  outline-color: var(--color-paper);
 }
 
 /* WHOLE-CARD LINKS. Six surfaces draw a card as <article class="overflow-hidden"> with one

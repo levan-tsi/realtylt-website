@@ -36,11 +36,17 @@ export function CardPhotos({
   const go = (step: number) => setI((cur) => (((cur + step) % n) + n) % n);
   const src = i === 0 ? cover : `/api/media/${id}/${i}`;
 
+  // `--rlt-ring-on-photo` answers globals.css's `.photo-zoom :focus-visible`. That rule pulls a
+  // control's ring inside its own body so it never lands on somebody's photograph, and defaults
+  // the colour to PAPER because it was written for the listing gallery, whose controls are
+  // `bg-ink/55..70`. This arrow is the opposite body — `bg-white/90` — so the default drew a white
+  // ring inside a white pill: 36 invisible focus stops on /search, measured in round 34. Ink here
+  // is >=15:1 over any photograph, because the 0.9 alpha floors the pill at rgb(230).
   const arrowCls =
     "absolute top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full " +
     "bg-white/90 text-ink shadow-raise ring-1 ring-black/10 transition-opacity " +
     "opacity-0 group-hover:opacity-100 focus-visible:opacity-100 [@media(pointer:coarse)]:opacity-100 " +
-    "hover:bg-white";
+    "hover:bg-white [--rlt-ring-on-photo:var(--color-ink)]";
 
   return (
     <>
