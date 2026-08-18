@@ -69,18 +69,25 @@ const clamp5 = (n) => Math.max(0, Math.min(5, Math.round(n * 4) / 4));
 
 // The stylesheet that must make the score collapse. Each rule is aimed at one
 // dimension, so a dimension that does NOT drop is a dimension that cannot fail.
+// A BREAK MUST BE ADDITIVE. The first version of this stylesheet set `p{13px}`,
+// `li{15px}`, `span{14.5px}` across the whole document, which HOMOGENISED the six
+// real body sizes the home page runs (12/13/14/16/17/18) down to four and CANCELLED
+// the very deduction D2 exists to take — the broken page scored a full point HIGHER
+// than the clean one. A rule that removes variety cannot test a rule that punishes
+// variety, and a rule that deletes declarations (`transition:none`) cannot test D7,
+// every one of whose checks looks for a bad declaration's PRESENCE.
+//
+// So: injected defects are ADDED, on nodes this file appends, and the page's own
+// type, motion and headings are left exactly as they are. The only blanket rules
+// left are the ones whose defect genuinely IS a removal (D6's missing ring, D1's
+// shrunken headline).
 const BREAK_CSS = `
   /* D1 — collapse the hierarchy: the headline stops being the biggest thing */
   h1{font-size:19px !important}
-  /* D2 — five off-scale heading sizes and a positive display tracking */
-  h2{font-size:37px !important;letter-spacing:0.04em !important}
-  h3{font-size:29px !important} h4{font-size:23px !important} h5{font-size:21px !important}
-  p{font-size:13px !important;line-height:1.15 !important}
-  li{font-size:15px !important} span{font-size:14.5px !important} div>strong{font-size:17.5px !important}
   /* D3 — off the rhythm scale and asymmetric */
   section{padding-top:37px !important;padding-bottom:23px !important}
   /* D6 — no ring, no hover, no press */
-  a,button{outline:none !important;transition:none !important}
+  a,button{outline:none !important}
   a:focus-visible,button:focus-visible{outline:none !important;box-shadow:none !important}
   .lift:hover{translate:0 0 !important}
   /* D5 — a gradient control in two off-token colours */
@@ -89,20 +96,64 @@ const BREAK_CSS = `
   img{object-fit:fill !important}
   /* D9 — something wider than the phone */
   body::after{content:"";display:block;width:520px;height:8px;background:#f107a3}
+
+  /* D2 — off-scale headings, tight body leading, extra body sizes, loose display
+     tracking. All scoped to the injected block, so they ADD to the page's own set. */
+  #r32-break h2{font-size:37px !important;letter-spacing:0.04em !important}
+  #r32-break h3{font-size:29px !important} #r32-break h4{font-size:23px !important}
+  #r32-break h5{font-size:21px !important}
+  #r32-break .r32-lead{font-size:48px !important;letter-spacing:0.05em !important}
+  #r32-break .r32-b1{font-size:13px !important;line-height:1.12 !important}
+  #r32-break .r32-b2{font-size:15px !important;line-height:1.18 !important}
+  #r32-break .r32-b3{font-size:19px !important;line-height:1.2 !important}
+
+  /* D7 — REAL motion defects, which the old sheet contained none of: an over-budget
+     interactive transition, on a layout property, on a banned curve, plus an infinite
+     animation that must not survive reduced motion. */
+  @keyframes r32-break-throb{0%{opacity:1}50%{opacity:.35}100%{opacity:1}}
+  #r32-break button, #r32-break a{transition:width 900ms ease-in, background-color 900ms ease-in !important}
+  #r32-break .r32-throb{animation:r32-break-throb 1.4s ease-in infinite !important}
 `;
-// D8 and D12 are content defects, not CSS defects — a stylesheet cannot create an
-// em dash or delete the server-rendered copy. The break run injects them into the
-// DOM so those two checks are proven able to fail as well.
+// D8, D10 and D12 are content defects, not CSS defects — a stylesheet cannot create
+// an em dash, a heading skip, a second h1 or a nameless control. The break run
+// injects them into the DOM so those checks are proven able to fail too.
 const BREAK_DOM = () => {
-  const p = document.createElement("p");
-  p.textContent = "We are a world-class team — seamlessly unlocking unparalleled value.";
-  document.body.appendChild(p);
-  const a = document.createElement("a");
-  a.href = "#"; a.textContent = "Learn more →";
-  document.body.appendChild(a);
-  const b = document.createElement("a");
-  b.href = "#"; b.textContent = "Get started";
-  document.body.appendChild(b);
+  const box = document.createElement("div");
+  box.id = "r32-break";
+  // D8 — hype, an em dash, an arrow CTA and a vague label
+  box.innerHTML = `
+    <p>We are a world-class team — seamlessly unlocking unparalleled value.</p>
+    <a href="#">Learn more →</a>
+    <a href="#">Get started</a>
+    <div class="r32-lead">Ag</div>
+    <h2>Injected heading two</h2><h3>Injected heading three</h3>
+    <h4>Injected heading four</h4><h5>Injected heading five</h5>
+    <p class="r32-b1">one two three four five six seven eight nine ten eleven</p>
+    <p class="r32-b2">one two three four five six seven eight nine ten eleven</p>
+    <p class="r32-b3">one two three four five six seven eight nine ten eleven</p>
+    <button class="r32-throb">Throbbing control</button>`;
+  document.body.appendChild(box);
+
+  // D10 — a second h1, a heading-level skip, two controls with no accessible name,
+  // and four text runs under the AA floor on a RESOLVED (non-gradient) background,
+  // since the contrast walk delegates anything over media to verify-hero-contrast.
+  const h1 = document.createElement("h1");
+  h1.textContent = "A second h1";
+  box.appendChild(h1);
+  const skip = document.createElement("h6");
+  skip.textContent = "A level six straight after a level one";
+  box.appendChild(skip);
+  for (let i = 0; i < 2; i++) {
+    const nameless = document.createElement("button");
+    nameless.style.cssText = "width:44px;height:44px;display:block";
+    box.appendChild(nameless);
+  }
+  for (let i = 0; i < 4; i++) {
+    const faint = document.createElement("p");
+    faint.style.cssText = "color:rgb(226,226,226);background-color:rgb(255,255,255)";
+    faint.textContent = "this run of text sits far below the AA contrast floor for its size";
+    box.appendChild(faint);
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -458,7 +509,13 @@ async function run() {
   //    outlineColor lies; a programmatic .focus() is not a focus-visible)
   const stops = [];
   await page.evaluate(() => { document.body.setAttribute("tabindex", "-1"); document.body.focus(); });
-  const MAXSTOPS = 26;
+  // 26 was the cap, not the wrap. The home page carries 135 focusable elements and the
+  // walk stopped at exactly 26 every time, always the same 26 — five utility links, the
+  // nav, the hero and three form inputs. NOTHING below the first screen and a half had
+  // ever been focus-tested: not a listing card, not a rail arrow, not the footer, not a
+  // single control on any page's second half. A focus regression in any of them shipped
+  // green. 120 covers the whole document on every page in this campaign.
+  const MAXSTOPS = 120;
   for (let i = 0; i < MAXSTOPS; i++) {
     await page.keyboard.press("Tab");
     const info = await page.evaluate(() => {
@@ -466,18 +523,22 @@ async function run() {
       if (!el || el === document.body) return null;
       const r = el.getBoundingClientRect();
       if (r.width < 2 || r.height < 2) return null;
-      el.setAttribute("data-r32-focus", "1");
       const cs = getComputedStyle(el);
+      // THE WRAP IS AN ELEMENT WE HAVE ALREADY STOOD ON, not a string that looks
+      // familiar. The old key was `tag|name|rounded x,y`, and two adjacent listing
+      // cards each carry a "Save this home" button at the same document Y — an
+      // identical key — so on any page with a repeated card control the walk ended
+      // early and reported a healthy partial page as a complete one. Element
+      // identity cannot collide with itself.
+      const seen = el.hasAttribute("data-r32-focus");
+      el.setAttribute("data-r32-focus", "1");
       return { tag: el.tagName, name: (el.getAttribute("aria-label") || el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40),
         x: r.x, y: r.y, w: r.width, h: r.height, inView: r.top >= -2 && r.bottom <= innerHeight + 2,
-        outlineW: parseFloat(cs.outlineWidth) || 0, outlineC: cs.outlineColor };
+        seen, outlineW: parseFloat(cs.outlineWidth) || 0, outlineC: cs.outlineColor };
     });
     if (!info) break;
-    // THE WALK LOOPS. The first version of this probe reported 26 stops on a page
-    // with 13, because focus fell back to <body> and Tab restarted. A repeat of
-    // the first stop is the wrap, not a new control.
+    if (info.seen) break; // the walk has come back round to a control it already graded
     const key = info.tag + "|" + info.name + "|" + Math.round(info.x) + "," + Math.round(info.y);
-    if (stops.some((s) => s.key === key)) break;
     if (!info.inView) { await page.evaluate(() => document.activeElement.scrollIntoView({ block: "center", behavior: "instant" })); await page.waitForTimeout(150); }
     // THE RING IS NOT ALWAYS ON THE FOCUSED ELEMENT. The hero search input carries
     // `focus:outline-none` and hands its focus state to the instrument around it,
@@ -514,12 +575,33 @@ async function run() {
     });
     const diff = await pixelDiff(withFocus, without);
     const moved = Math.abs(post - pre.y) > 1;
-    stops.push({ ...info, key, diffPct: moved ? -1 : diff.pct, ringContrast: moved ? 0 : diff.contrast, ring: diff.ring, invalid: moved, ringOnAncestor: pre.onAncestor });
+    // A RING IS A THIN ANNULUS. With no upper bound, any page-state change that
+    // happens to be triggered by focus was being graded as a ring: on production,
+    // focusing the Top Areas nav link OPENED THE MEGAMENU, changed 99.75% of the clip,
+    // and scored 5.26:1 — an excellent focus indicator, according to an instrument
+    // that had just photographed a menu. The skip link appearing scored 57.83% the
+    // same way. Past this much change the clip is no longer showing a ring around a
+    // control, so the stop is recorded as unmeasurable and graded neither way rather
+    // than being counted as a healthy ring.
+    const RING_MAX_PCT = 40;
+    const stateChanged = !moved && diff.pct > RING_MAX_PCT;
+    stops.push({ ...info, key, diffPct: moved ? -1 : diff.pct, ringContrast: moved || stateChanged ? 0 : diff.contrast,
+      ring: diff.ring, invalid: moved, stateChanged, ringOnAncestor: pre.onAncestor });
     if (i < 3 || diff.pct < 0.4) {
       fs.writeFileSync(path.join(SHOTDIR, `focus-${i}-${info.tag}.png`), withFocus);
     }
   }
   ev.focusStops = stops;
+  // BACK TO THE TOP BEFORE THE NEXT DIMENSION USES THE PAGE. The walk scrolls each stop
+  // into view, and widening it from 26 stops to 120 meant it now ends deep in the
+  // document instead of just past the hero. The hover/press probe that runs next reads
+  // `aboveFold` coordinates captured at scroll 0 and skips any control whose clip falls
+  // outside the 900px viewport — so on the first widened run it probed almost nothing and
+  // charged the home page 2.5 points for controls that answer both a hover and a press.
+  // A dimension must not inherit the page state the previous dimension left behind.
+  // (memory: verify-scorer-run-order-pollution)
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(350);
 
   // ── HOVER + PRESS on the primary controls, judged in pixels.
   //    The first version took the first 8 above-fold controls in DOM order and
@@ -571,6 +653,10 @@ async function run() {
   const rmPage = await rmCtx.newPage();
   await rmPage.goto(BASE + PATHNAME, { waitUntil: "domcontentloaded", timeout: 60000 });
   await rmPage.waitForTimeout(1500);
+  // The break has to reach THIS context too. Reduced motion runs in its own browser
+  // context that `settle()` never touches, so D7's "infinite animation survives
+  // reduced motion" rule had no way to fail — the injection simply never arrived here.
+  if (BREAK) { await rmPage.addStyleTag({ content: BREAK_CSS }); await rmPage.evaluate(BREAK_DOM); await rmPage.waitForTimeout(200); }
   ev.reducedMotion = await rmPage.evaluate(() => {
     const moving = [];
     for (const el of document.querySelectorAll("body *")) {
@@ -760,7 +846,12 @@ function score(out, ev) {
 
   // D6 — STATE COMPLETENESS
   {
-    const stops = (ev.focusStops || []).filter((s) => !s.invalid);
+    const all = (ev.focusStops || []).filter((s) => !s.invalid);
+    // Stops whose clip changed past the ring bound are page-state changes, not rings.
+    // They are neither credited nor penalised, and they are COUNTED so a page that
+    // hides its focus problems behind opening menus is visible in the evidence.
+    const stops = all.filter((s) => !s.stateChanged);
+    const unmeasurable = all.filter((s) => s.stateChanged);
     const noRing = stops.filter((s) => s.diffPct >= 0 && s.diffPct < 0.4);
     const weakRing = stops.filter((s) => s.diffPct >= 0.4 && s.ringContrast > 0 && s.ringContrast < 3);
     const hovered = (ev.inter || []).filter((i) => i.hoverPct >= 0.25);
@@ -773,7 +864,9 @@ function score(out, ev) {
     v -= pen("D6 controls that ignore a press", (ev.inter || []).length > 0 && pressed.length === 0, 1.5);
     v -= pen("D6 no control claims a press transition", claimPress === 0, 0.5);
     S.D6 = clamp5(v);
-    ev.D6 = { stops: stops.length, noRing: noRing.map((s) => `${s.tag}"${s.name}"@${Math.round(s.x)},${Math.round(s.y)} ${Math.round(s.w)}x${Math.round(s.h)}`),
+    ev.D6 = { stops: stops.length, walked: all.length,
+      unmeasurable: unmeasurable.map((s) => `${s.tag}"${s.name}" changed ${s.diffPct}% of the clip`),
+      noRing: noRing.map((s) => `${s.tag}"${s.name}"@${Math.round(s.x)},${Math.round(s.y)} ${Math.round(s.w)}x${Math.round(s.h)}`),
       ringContrast: { min: stops.length ? Math.min(...stops.filter((s) => s.ringContrast > 0).map((s) => s.ringContrast)) : 0, under3: weakRing.map((s) => `${s.tag}:${s.name}@${s.ringContrast}`) },
       hovered: hovered.length, pressed: pressed.length, probed: (ev.inter || []).length, claimPress };
   }

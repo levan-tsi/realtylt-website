@@ -41,11 +41,11 @@ export function MarketInsights({
     <section
       id="market-insights"
       aria-labelledby="market-insights-heading"
-      className="scroll-mt-16 border-t border-ink/10 bg-paper py-12 md:py-16"
+      className="sec-sm scroll-mt-16 border-t border-ink/10 bg-paper"
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone">Market Insights</p>
-        <h2 id="market-insights-heading" className="mt-2 font-display text-2xl text-ink md:text-3xl">
+        <p className="t-eyebrow text-stone">Market Insights</p>
+        <h2 id="market-insights-heading" className="mt-2 t-h3 text-ink">
           The market around {insights?.scope === "county" ? countyName : `${city}, NY`}
         </h2>
 

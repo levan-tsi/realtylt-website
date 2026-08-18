@@ -1,69 +1,53 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
-/** Animated count-up stat (mono). Counts when scrolled into view; instant under reduced motion. */
+/** Four facts about the business, stated. No count-up.
+ *
+ * THE COUNT-UP IS GONE, AND THE COMPONENT'S OWN RULE IS WHY. This file has said "NEVER SHOW A
+ * NUMBER THAT IS NOT TRUE" since round 32, when it was found resetting to 0 on mount and printing
+ * "0 counties & boroughs served" to anyone whose viewport already held the block. That fix guarded
+ * the zero behind a below-the-fold check, and it worked — but it treated the symptom. Two things
+ * an adversarial review then measured on production:
+ *
+ *   • the observer fired at `threshold: 0.5`, so the row still printed "0 / 0h / 0+ / 0" from the
+ *     moment its top edge entered the viewport until it was HALF visible — photographed at 1440
+ *     with a 40px slice of zeros on screen;
+ *   • and the count itself displays false numbers for the whole 1,400ms it runs — captured
+ *     mid-count at 44px: "7 / 16h / 66+ / 5". Every one of those is a untrue statement about the
+ *     business, at the largest type size on that block, for longer than it takes to read.
+ *
+ * There is no threshold that fixes the second one. A count-up cannot satisfy "never show a number
+ * that is not true", because displaying wrong numbers on the way to the right one is the entire
+ * mechanism. So the choice is to keep the animation and drop the rule, or keep the rule and drop
+ * the animation, and the rule is worth more: these are the only four numbers the front door states
+ * about the business.
+ *
+ * Nothing is lost visually. The block already arrives inside the section's `.reveal` (opacity and
+ * a 16px rise), which is honest motion — it animates the block's ARRIVAL and never its VALUE. What
+ * goes away with the count is a client component, an IntersectionObserver, a requestAnimationFrame
+ * loop, three pieces of state and a whole class of hydration-timing bug. The file's own round-11
+ * note already observed that four bold numerals over four grey captions is the most templated block
+ * on the web and that what was worth changing is the setting, not the content; the count-up was the
+ * last piece of that template still running.
+ *
+ * No "use client": with nothing to animate this renders on the server, so the true values are in
+ * the HTML for every visitor, every crawler, and every scripting-off reader by construction rather
+ * than by a guard that has to be got right. */
 export function StatCounter({
   value,
   prefix = "",
   suffix = "",
   label,
-  durationMs = 1400,
 }: {
   value: number;
   prefix?: string;
   suffix?: string;
   label: string;
-  durationMs?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  // Server-render the FINAL value — no-JS visitors and crawlers must never see "0".
-  // The effect resets to 0 and counts up only when motion is allowed.
-  const [display, setDisplay] = useState(value);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return; // already showing the final value
-    // NEVER SHOW A NUMBER THAT IS NOT TRUE. This used to reset to 0 on mount
-    // unconditionally, so between hydration and the observer firing the page
-    // stated "0 counties & boroughs served" and "0 days a week we answer" — the
-    // four worst sentences on the site, and reachable by anyone whose viewport
-    // already held the block or who arrived deeper in the page. A count-up is
-    // only honest for a stat the visitor has not seen yet, so the zero is only
-    // ever written while the block is still below the fold.
-    const box = el.getBoundingClientRect();
-    if (box.top < window.innerHeight) return; // already on screen: it stays true
-    setDisplay(0);
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
-        io.disconnect();
-        const start = performance.now();
-        const tick = (t: number) => {
-          const p = Math.min(1, (t - start) / durationMs);
-          const eased = 1 - (1 - p) ** 3;
-          setDisplay(Math.round(value * eased));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      },
-      { threshold: 0.5 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [value, durationMs]);
-
   return (
-    <div ref={ref}>
+    <div>
       {/* The number carries the display face at its lightest weight and the label drops to the
-          eyebrow style. Four bold numerals over four grey captions is the most templated block
-          on the web; the facts are true and worth keeping, so what round 11 changed is the
-          setting, not the content. */}
+          eyebrow style. */}
       <p className="t-h1 text-ink">
         {prefix}
-        {display.toLocaleString("en-US")}
+        {value.toLocaleString("en-US")}
         {suffix}
       </p>
       <p className="t-eyebrow mt-3 text-stone">{label}</p>

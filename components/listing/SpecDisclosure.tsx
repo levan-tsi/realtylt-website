@@ -33,7 +33,7 @@ export function SpecDisclosure({
       <input id={inputId} type="checkbox" className="peer sr-only md:hidden" />
       <h2
         id={id}
-        className="scroll-mt-16 font-display text-2xl text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-river peer-checked:[&_svg]:rotate-180"
+        className="scroll-mt-16 t-h3 text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-river peer-checked:[&_svg]:rotate-180"
       >
         <label
           htmlFor={inputId}

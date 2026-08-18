@@ -1350,7 +1350,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       ) : state === "loading" && !result ? (
         <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
           {Array.from({ length: 6 }).map((_, i) => (
-            <li key={i} className="animate-pulse overflow-hidden rounded-2xl border border-line">
+            <li key={i} className="rlt-skeleton overflow-hidden rounded-2xl border border-line motion-reduce:animate-none">
               <div className="aspect-[3/2] bg-mist" />
               <div className="space-y-2 p-4">
                 <div className="h-5 w-28 rounded-full bg-mist" />

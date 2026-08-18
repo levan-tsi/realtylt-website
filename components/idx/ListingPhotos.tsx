@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { bandShape, heroAt, sideSources, survivingPhotos, viewAllLabel } from "@/lib/idx/photo-band";
 import { FavoriteButton } from "./FavoriteButton";
+import { PRESS } from "@/components/ui/Button";
 import { isLiveMlsPhoto, NoPhoto } from "./ListingCard";
 import { ListingGallery } from "./ListingGallery";
 import { MlsImage } from "./MlsImage";
@@ -195,10 +196,15 @@ export function ListingPhotos({
       <Image key={src} src={src} alt={alt} fill sizes={sizes} priority={opts.priority} className="object-cover" />
     );
 
-  const overlayBtn =
-    "grid h-9 min-w-10 place-items-center rounded-xl bg-ink/70 px-2.5 text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
-  const arrowBtn =
-    "absolute top-1/2 z-[7] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-paper backdrop-blur transition-colors hover:bg-ink/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper";
+  // PRESS, not `transition-colors`. Round 31 named the site's press and put it on every control
+  // it could reach; the gallery's own chrome was not one of them, so the eight controls a buyer
+  // touches most — both arrows, the three view modes, the view-all pill — answered a finger with
+  // nothing at all. (The pixels a probe sees when it presses one of these are the 1200ms
+  // `photo-zoom` still running underneath, not a press: the source carried no `:active` state.)
+  // `-translate-y-1/2` on the arrows is a transform, and PRESS transitions `translate` and
+  // `scale` separately, so the centring is untouched by the dip.
+  const overlayBtn = `grid h-9 min-w-10 place-items-center rounded-xl bg-ink/70 px-2.5 text-paper backdrop-blur ${PRESS} hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`;
+  const arrowBtn = `absolute top-1/2 z-[7] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink/60 text-paper backdrop-blur ${PRESS} hover:bg-ink/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`;
 
   return (
     <ListingGallery photos={available} address={address} mapQuery={mapQuery} onUnavailable={drop}>
@@ -243,7 +249,14 @@ export function ListingPhotos({
               type="button"
               data-lightbox-index={hero}
               aria-label={`Open the photo viewer for ${addressShort}`}
-              className="absolute inset-0 z-[5] cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper"
+              // The one control here with no body of its own: it IS the picture, so an inside
+              // ring still lands on the photograph (measured 1.00:1 on a bright hero). On a
+              // keyboard focus the tile dims instead, which gives the white ring a known surface
+              // AND says plainly that the photograph is the button. Mouse users never see it.
+              // /55 is chosen from the worst case rather than by eye: a blown-out white sky is
+              // 255, 255 x 0.45 = 115, and white on 115 is 3.66:1 — over the 3:1 floor for ANY
+              // photograph the feed can hand us. At /45 a white sky lands at 2.9:1.
+              className="absolute inset-0 z-[5] cursor-zoom-in transition-colors duration-150 focus-visible:bg-ink/55 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper motion-reduce:transition-none"
             />
           )}
 
@@ -294,7 +307,7 @@ export function ListingPhotos({
               <button
                 type="button"
                 data-lightbox-index={hero}
-                className="absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-xl bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur transition-colors hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+                className={`absolute bottom-3 right-3 z-[7] inline-flex h-9 items-center gap-2 rounded-xl bg-ink/70 px-3.5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur ${PRESS} hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
@@ -308,13 +321,18 @@ export function ListingPhotos({
         {/* Side column — live's 1 wide + 2 half at 4+, shrinking cleanly at 3 and 2. */}
         {sides.length > 0 && (
           <div className="hidden h-full grid-cols-2 grid-rows-2 gap-4 md:grid">
+            {/* THE PICTURE, THEN A BUTTON OVER IT — the hero's own pattern, which these tiles
+                were not following. They were a <button class="photo-zoom"> wrapping the photo,
+                and that one difference cost two things. The photo's deliberate 1200ms zoom lived
+                INSIDE a control, so it read as 1200ms of UI feedback rather than as decoration
+                (the identical zoom on the hero and on every ListingCard is never read that way,
+                because there the photo is a sibling of the link rather than its child). And the
+                tile had no way to carry the hero's focus treatment. Same markup as the hero now,
+                so both say the same thing: the photograph is the button. */}
             {sides.map((src, slot) => (
-              <button
+              <div
                 key={src}
-                type="button"
-                data-lightbox-index={available.indexOf(src)}
-                aria-label={`View photo ${available.indexOf(src) + 1} full screen`}
-                className={`photo-zoom relative cursor-zoom-in overflow-hidden rounded-2xl focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-paper ${
+                className={`photo-zoom relative overflow-hidden rounded-2xl ${
                   shape === "one-side" || sides.length === 1
                     ? "col-span-2 row-span-2"
                     : sides.length === 2
@@ -325,7 +343,13 @@ export function ListingPhotos({
                 }`}
               >
                 {tile(src, `${addressShort}, photo ${available.indexOf(src) + 1}`, "30vw")}
-              </button>
+                <button
+                  type="button"
+                  data-lightbox-index={available.indexOf(src)}
+                  aria-label={`View photo ${available.indexOf(src) + 1} full screen`}
+                  className="absolute inset-0 z-[5] cursor-zoom-in transition-colors duration-150 focus-visible:bg-ink/55 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-paper motion-reduce:transition-none"
+                />
+              </div>
             ))}
           </div>
         )}

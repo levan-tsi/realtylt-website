@@ -223,9 +223,13 @@ export default async function HomePage() {
               <p
                 key={i}
                 className={
+                  // Two paragraphs of one block were set at two sizes AND two leadings —
+                  // 17px/1.7 then 16px/1.75. Nobody decides that; 17px is not a step on this
+                  // site's scale and a 1px difference is not a decision, it is drift. One size
+                  // and one leading now, with the colour still carrying the lead-in.
                   i === 0
-                    ? "mt-7 max-w-md text-[17px] leading-[1.7] text-ink-soft"
-                    : "mt-5 max-w-md leading-[1.75] text-stone"
+                    ? "mt-7 max-w-md leading-[1.7] text-ink-soft"
+                    : "mt-5 max-w-md leading-[1.7] text-stone"
                 }
               >
                 {p}
