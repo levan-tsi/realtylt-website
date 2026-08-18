@@ -118,7 +118,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
 
       {/* ── Local knowledge (counties only — boroughs stay short + factual per spec) */}
       {c && (
-        <section className="bg-paper py-16 md:py-24" aria-labelledby="local-heading">
+        <section className="sec bg-paper" aria-labelledby="local-heading">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <Reveal>
               <SectionHeading as="h2">
@@ -143,7 +143,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
             <div className="mt-12 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
               <Reveal>
                 <div className="h-full rounded-2xl bg-mist p-7">
-                  <h3 className="text-xl font-bold text-ink">Why buy here</h3>
+                  <h3 className="t-title text-ink">Why buy here</h3>
                   <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                     {c.whyBuy.map((w) => (
                       <li key={w} className="flex items-start gap-2 text-sm text-ink-soft">
@@ -155,7 +155,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
               </Reveal>
               <Reveal delay={120}>
                 <div className="h-full rounded-2xl border border-line bg-white p-7">
-                  <h3 className="text-xl font-bold text-ink">Towns we work</h3>
+                  <h3 className="t-title text-ink">Towns we work</h3>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {c.towns.map((t) => (
                       <li key={t}>
@@ -176,7 +176,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
       )}
 
       {/* ── Pre-filtered listings */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="county-listings">
+      <section className="sec-sm bg-mist" aria-labelledby="county-listings">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -215,9 +215,9 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
       </section>
 
       {/* ── Area CTA */}
-      <section className="bg-ink py-14 text-paper" aria-label={`Work with us in ${name}`}>
+      <section className="sec-sm bg-ink text-paper" aria-label={`Work with us in ${name}`}>
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 px-4 text-center lg:px-8">
-          <p className="max-w-2xl text-2xl font-light md:text-3xl">
+          <p className="t-lead max-w-2xl">
             Buying or selling in {short}? We know these {c ? "roads" : "neighborhoods"}.
           </p>
           <div className="flex flex-wrap justify-center gap-3">

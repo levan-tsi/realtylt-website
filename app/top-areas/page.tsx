@@ -43,7 +43,7 @@ export default function TopAreasPage() {
       </section>
 
       {/* ── County cards */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="county-cards">
+      <section className="sec bg-paper" aria-labelledby="county-cards">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -68,7 +68,7 @@ export default function TopAreasPage() {
                     </span>
                   </div>
                   <div className="p-5">
-                    <h3 className="text-xl font-bold text-ink">{c.name}</h3>
+                    <h3 className="t-title text-ink">{c.name}</h3>
                     <p className="mt-1 text-sm text-stone">{c.tagline}</p>
                     <p className="mt-3 text-xs uppercase tracking-[0.12em] text-stone">
                       {c.towns.slice(0, 4).join(" · ")}
@@ -98,7 +98,7 @@ export default function TopAreasPage() {
                 <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
                   <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${b.name}`} />
                   <div className="flex items-center justify-between bg-ink px-5 py-4">
-                    <h3 className="text-lg font-bold text-paper">{b.name}</h3>
+                    <h3 className="t-title text-paper">{b.name}</h3>
                     <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-paper/60">New York City</span>
                   </div>
                   <div className="p-5">
@@ -115,9 +115,9 @@ export default function TopAreasPage() {
       </section>
 
       {/* ── CTA */}
-      <section className="bg-mist py-14" aria-label="Get local advice">
+      <section className="sec-sm bg-mist" aria-label="Get local advice">
         <div className="mx-auto flex max-w-[1250px] flex-col items-center gap-5 px-4 text-center lg:px-8">
-          <p className="max-w-xl text-2xl font-light text-ink">
+          <p className="t-lead max-w-xl text-ink">
             Not sure which county fits? That&rsquo;s literally our job.
           </p>
           <div className="flex flex-wrap justify-center gap-3">

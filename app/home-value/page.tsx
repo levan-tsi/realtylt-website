@@ -75,7 +75,7 @@ export default async function HomeValuePage({
       </section>
 
       {/* ── How it works */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="hv-how">
+      <section className="sec bg-paper" aria-labelledby="hv-how">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -87,7 +87,7 @@ export default async function HomeValuePage({
               <Reveal key={s.title} as="li" delay={i * 120}>
                 <div className="h-full rounded-2xl border border-line bg-white p-7">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Step {i + 1} of 3</p>
-                  <h3 className="mt-2 text-xl font-bold text-ink">{s.title}</h3>
+                  <h3 className="t-title mt-2 text-ink">{s.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-stone">{s.body}</p>
                 </div>
               </Reveal>
@@ -95,7 +95,7 @@ export default async function HomeValuePage({
           </ol>
           <Reveal className="mt-12">
             <aside className="rounded-2xl bg-mist px-6 py-8 text-center md:px-12">
-              <p className="text-xl font-light text-ink">
+              <p className="t-lead text-ink">
                 Thinking cash offer instead?{" "}
                 <a href="/selling" className="font-bold underline underline-offset-4 hover:text-stone">
                   Compare both paths on the selling page

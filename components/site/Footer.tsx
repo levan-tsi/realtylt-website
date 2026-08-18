@@ -33,7 +33,10 @@ export function Footer() {
           <h2 id="footer-form-heading" className="t-h3 text-ink">
             Tell us what you&rsquo;re looking for
           </h2>
-          <p className="mt-3 max-w-md text-sm leading-relaxed">
+          {/* The words here are the owner's and the best writing on the site; only the SIZE
+              changes. `.t-small` reads at 16px on a phone, where this paragraph is the first
+              thing anyone reaching the footer form actually reads. */}
+          <p className="t-small mt-3 max-w-md">
             A house, a neighborhood, a number you need to hit. We read every message and answer
             seven days a week.
           </p>

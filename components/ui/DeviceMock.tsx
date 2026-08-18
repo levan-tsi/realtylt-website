@@ -98,7 +98,12 @@ export function Laptop({
       </div>
       {/* hinge / base */}
       <div className="mx-auto h-3 w-[94%] rounded-b-[10px] bg-gradient-to-b from-[#cfd3d9] to-[#a7adb6]" />
-      <div className="mx-auto h-1.5 w-[22%] rounded-b-[8px] bg-[#9aa1ab]" />
+      {/* `line-strong`, not a fourth grey. This foot was `#9aa1ab` — a literal, and the only
+          off-token colour the rubric found painted on /selling apart from the Google gold star
+          (rgb(154 161 171) x3, one per laptop on the page). The device BODY has its own token,
+          `graphite`, precisely because a material used more than once is a token; a lighter
+          aluminium sliver is the neutral ramp's next step up, which is `line-strong`. */}
+      <div className="mx-auto h-1.5 w-[22%] rounded-b-[8px] bg-line-strong" />
     </div>
   );
 }

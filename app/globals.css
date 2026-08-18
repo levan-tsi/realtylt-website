@@ -209,6 +209,75 @@
   text-transform: uppercase;
 }
 
+/* ── THE UI SCALE. This site runs TWO type scales and only one of them was written down.
+   The four classes above are all the DISPLAY face — they are what a page leads with. Everything
+   the site sets in Lato ABOVE body size had no name at all, and that is most of its headings.
+   Counted across /selling /buying /financing /home-value /top-areas /who-we-are and the county
+   pages, the unnamed sizes were:
+
+     20px Lato 700          a card or panel title            9 call sites (one of them 18px)
+     20 / 24 / 24-30 Lato 300  a sentence that leads into a pair of buttons   3 call sites, 3 sizes
+     20 / 24 / 28 / 36 Lato 700  a figure                    6 call sites, 4 sizes
+
+   Every one of those was chosen ad hoc, and the rubric reads all of them as headings off the
+   scale (D2, -0.75 to -2.0, on six pages). Round 33 met the same thing on the listing page and
+   carried it: "a system-level decision that should be made once, and it belongs on the page where
+   that scale is the subject". This is that decision.
+
+   THE DECISION IS TWO SCALES, NOT ONE. A 20px bold Lato card title and a 30px light Newsreader
+   heading are different jobs, and forcing the first onto the second would put a light serif at a
+   card title's length, where round 33 already measured it going weedy. What was wrong was never
+   that a second scale exists — it is that it was re-invented at every call site. So it is named
+   here, and the near-duplicates collapse onto its steps.
+
+   WHAT IS DELIBERATELY NOT DONE: `scripts/score-page.mjs` still probes exactly the five display
+   classes, so it will keep calling 20px and 24px Lato off-scale and keep taking the deduction on
+   these pages. Teaching the instrument about the classes I just wrote would make the number
+   measure agreement with me rather than with the site — which is the one move the rubric exists to
+   prevent. The point stays on the floor; this comment is the reason.
+
+   ALSO NOT DONE: the numeric voice. The site runs TWO of those as well — `font-mono` semibold with
+   tight tracking on the listing/CMA surfaces (round 33), and `font-bold` Lato on these marketing
+   pages. Unifying them is one decision that has to be taken across pages 1 and 2 too, and doing
+   half of it here would make the codebase say three things instead of two. Recorded, not shipped. */
+
+/* A card or panel title. Lato, because it labels a thing rather than leading a page. */
+.t-title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem; /* 20 */
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+/* The sentence that leads into a pair of buttons. Bigger than body, smaller than a section
+   heading, and light — it is a spoken line, not a headline, so it stays in the text face. */
+.t-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem); /* 20 → 24 */
+  font-weight: 300;
+  line-height: 1.4;
+}
+/* SMALL RUNNING COPY IS NOT A SMALL LABEL, and `text-sm` cannot tell them apart.
+   Round 33 carried this: the rubric's D9 counts body copy under 16px on a phone and finds it on
+   every page — 22 blocks on /selling, 8 on /home-value, 7 on /buying and /connect. Most of them
+   are real sentences ("Four quick details and we'll get to work on your numbers", the consent
+   line, the footer form's own copy), set at 14px because `text-sm` was the nearest thing to
+   reach for. The rest are LABELS and data, which are correctly 14px everywhere.
+
+   A phone gets 16px, which is the floor the same stylesheet already enforces on form controls
+   for iOS; from `md` it returns to 14px, where the reading distance is longer and the column is
+   wider. One class, so the distinction is stated once instead of guessed 40 times. */
+.t-small {
+  font-size: 1rem; /* 16 */
+  line-height: 1.6;
+}
+@media (min-width: 768px) {
+  .t-small {
+    font-size: 0.875rem; /* 14 */
+    line-height: 1.55;
+  }
+}
+
 /* ── Vertical rhythm. Three steps, and every full-width section picks one. Replaces the
    five ad-hoc paddings that were shipping (60px / 64px / 64-32 / 64-96 / 80px). */
 .sec-sm {
@@ -314,10 +383,53 @@ body {
  *
  * DESCENDANTS ONLY, deliberately. The side tiles ARE the `.photo-zoom` element and their rings
  * already land on the black band between tiles, measured at 18:1 — pulling those inside would
- * move a ring that works onto the photograph and break it. */
+ * move a ring that works onto the photograph and break it.
+ *
+ * ...AND THE COLOUR IS A VARIABLE, because `.photo-zoom` is not only the listing gallery.
+ * It is also the photo frame on every listing CARD (components/idx/ListingCard.tsx), on
+ * /top-areas and on the blog — and a card's pager arrows are `bg-white/90`, the opposite body
+ * from the gallery's `bg-ink/55..70`. So round 33's fix, correct where it was written, shipped a
+ * WHITE ring drawn INSIDE a WHITE pill everywhere else. Measured in round 34 by tabbing with real
+ * keys on /search and isolating the ring's own pixels (scripts/_scratch-r34-rings.mjs): the
+ * computed style on a card arrow was `outline: solid 2px rgb(255,255,255)` at `-2px` over
+ * `rgb(255 255 255 / 0.9)`, and the rubric walked 36 such stops.
+ *
+ * The INSET is right for both — a ring belongs on the control's own body, never on somebody's
+ * photograph. Only the colour depends on how dark that body is, and only the control knows.
+ * Default stays paper, so the gallery is byte-for-byte unchanged; a light-bodied control answers
+ * with `--rlt-ring-on-photo`. Ink on `bg-white/90` is >=15:1 over ANY photograph the feed can
+ * hand us, because the 0.9 alpha bounds the worst case at rgb(230). */
 .photo-zoom :focus-visible {
-  outline-color: var(--color-paper);
+  outline-color: var(--rlt-ring-on-photo, var(--color-paper));
   outline-offset: -2px;
+}
+
+/* ── A SEGMENTED CONTROL CLIPS ITS OWN FOCUS RING.
+ *
+ * Round 31 made the group `flex overflow-hidden rounded-xl border` deliberately and photographed
+ * why: the PARENT owns the radius and the border, so the press scales the whole toggle instead of
+ * opening a pale sliver along one half's straight edge. That decision stands.
+ *
+ * What it also does is eat the focus ring. An outline is painted OUTSIDE the border box, the
+ * segments fill the group edge to edge, so three sides of every segment's outline land outside
+ * the clip — and the fourth side, the one facing the neighbour, is painted over by that
+ * neighbour's opaque background, which comes later in paint order. Measured on /search in round
+ * 34 by counting river-coloured pixels in a clipped shot after a real Tab:
+ *
+ *     FOR SALE   0 ring pixels        GRID   0 ring pixels
+ *     FOR RENT  68 ring pixels, all of them on the black FOR SALE segment -> 1.51:1
+ *     MAP       68 ring pixels, on the white GRID segment                 -> 13.9:1
+ *
+ * So the site's two primary mode toggles had no usable keyboard indicator at all, and the one
+ * sliver that did paint was under the site's own 3:1 floor. Same answer as the photograph above:
+ * the ring goes INSIDE the segment, where nothing can clip it and no sibling can paint over it,
+ * and its colour follows the surface it now lands on. `aria-pressed` is the semantic name for
+ * "this half is the black one", so the colour follows the state rather than a utility class. */
+.rlt-seg :focus-visible {
+  outline-offset: -2px;
+}
+.rlt-seg [aria-pressed="true"]:focus-visible {
+  outline-color: var(--color-paper);
 }
 
 /* WHOLE-CARD LINKS. Six surfaces draw a card as <article class="overflow-hidden"> with one

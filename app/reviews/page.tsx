@@ -16,7 +16,7 @@ export default function ReviewsPage() {
   return (
     <>
       {/* ── Hero */}
-      <section className="bg-ink py-16 text-paper md:py-20" aria-labelledby="reviews-hero">
+      <section className="sec-sm bg-ink text-paper" aria-labelledby="reviews-hero">
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
           <h1 id="reviews-hero" className="t-h1 mx-auto max-w-2xl">
             What Our <strong>Clients Say</strong>
@@ -39,7 +39,7 @@ export default function ReviewsPage() {
       </section>
 
       {/* ── Testimonials */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="quotes-heading">
+      <section className="sec bg-paper" aria-labelledby="quotes-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">

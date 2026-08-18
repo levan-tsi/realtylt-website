@@ -168,7 +168,7 @@ export default function ServicesIndexPage() {
       </section>
 
       {/* ── Flagship */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="flagship-heading">
+      <section className="sec bg-paper" aria-labelledby="flagship-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading eyebrow="Start here" as="h2">
@@ -194,7 +194,7 @@ export default function ServicesIndexPage() {
       </section>
 
       {/* ── Core */}
-      <section className="bg-mist py-16 md:py-24" aria-labelledby="core-heading">
+      <section className="sec bg-mist" aria-labelledby="core-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading eyebrow="The hub" as="h2">
@@ -215,7 +215,7 @@ export default function ServicesIndexPage() {
       </section>
 
       {/* ── More */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="more-heading">
+      <section className="sec-sm bg-paper" aria-labelledby="more-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading eyebrow="And the quiet ones" as="h2">
@@ -259,7 +259,7 @@ export default function ServicesIndexPage() {
       </section>
 
       {/* ── Close */}
-      <section className="bg-ink py-16 text-paper md:py-20" aria-labelledby="close-heading">
+      <section className="sec-sm bg-ink text-paper" aria-labelledby="close-heading">
         <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center lg:px-8">
           <Reveal>
             <h2 id="close-heading" className="t-h2">

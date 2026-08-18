@@ -144,8 +144,8 @@ export default async function SellingPage() {
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
             <div id="offer-form" className="scroll-mt-28 rounded-2xl border border-paper/20 bg-black/55 p-6 shadow-float backdrop-blur md:p-8">
-              <h2 className="text-xl font-bold text-paper">Get Your Cash Offer &amp; Home Value</h2>
-              <p className="mb-5 mt-1 text-sm text-paper/70">
+              <h2 className="t-title text-paper">Get Your Cash Offer &amp; Home Value</h2>
+              <p className="t-small mb-5 mt-1 text-paper/70">
                 Four quick details and we&rsquo;ll get to work on your numbers.
               </p>
               <LeadForm
@@ -170,7 +170,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Two paths */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="paths-heading">
+      <section className="sec bg-paper" aria-labelledby="paths-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -215,7 +215,7 @@ export default async function SellingPage() {
               <p className="text-lg font-bold uppercase tracking-wide">
                 Not sure which option is best? We&rsquo;ll show you both, no pressure.
               </p>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-paper/70">
+              <p className="t-small mx-auto mt-2 max-w-2xl text-paper/70">
                 Tell us about your property and we&rsquo;ll give you honest advice on which path
                 works best for your situation.
               </p>
@@ -225,7 +225,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Testimonials — live: white, small bold uppercase heading */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="clients-heading">
+      <section className="sec-sm bg-paper" aria-labelledby="clients-heading">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <Reveal>
             <h2 id="clients-heading" className="text-center text-xl font-bold uppercase tracking-[0.14em] text-ink">
@@ -253,7 +253,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Pricing strategy (15 comps) */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="pricing-heading">
+      <section className="sec bg-ink text-paper" aria-labelledby="pricing-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
@@ -318,7 +318,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Making your listing shine — text left, laptop tour right */}
-      <section className="relative isolate overflow-hidden bg-paper py-16 md:py-24" aria-labelledby="shine-heading">
+      <section className="sec relative isolate overflow-hidden bg-paper" aria-labelledby="shine-heading">
         {/* Parallax backdrop at 0.25 — fixed on desktop, static on mobile and under reduced
             motion. The vendor's sell-img-4.jpg had no licence record; this is a house we
             already hold a licence for, which is also a better subject for a section about
@@ -376,7 +376,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Internet marketing — text left, device collage right */}
-      <section className="bg-mist py-16 md:py-24" aria-labelledby="marketing-heading">
+      <section className="sec bg-mist" aria-labelledby="marketing-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading as="h2">
@@ -406,7 +406,7 @@ export default async function SellingPage() {
       </section>
 
       {/* ── Stay in the loop — text left, seller-portal laptop right */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="loop-heading">
+      <section className="sec bg-ink text-paper" aria-labelledby="loop-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <SectionHeading dark as="h2">
@@ -500,7 +500,7 @@ function PathCard({
           translucent top border, all on black */}
       <div className="rounded-t-2xl bg-ink px-6 pb-6 pt-11 text-center">
         <h3 className="text-xl font-bold uppercase tracking-wide text-paper">{title}</h3>
-        <p className="mx-auto mt-2 max-w-xs text-sm text-paper/70">{subtitle}</p>
+        <p className="t-small mx-auto mt-2 max-w-xs text-paper/70">{subtitle}</p>
         <p className="mt-5 border-t border-white/30 pt-4 text-sm font-bold uppercase tracking-wide text-paper">
           {banner}
         </p>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
+import { TrackedButton } from "@/components/leads/TrackedButton";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -46,6 +47,26 @@ export default function ConnectPage() {
           <h1 id="connect-hero" className="t-h1 mt-5 text-paper">
             Contact Us <strong>Anytime</strong>
           </h1>
+          {/* THE CONTACT PAGE HAD NOTHING TO CONTACT ANYONE WITH ON ITS FIRST SCREEN.
+              Measured: 34 words above the fold and ZERO controls the rubric could probe for a
+              press, because the hero is an eyebrow and a headline and then it stops — the phone
+              number and the email are ~400px further down, inside the sticky rail beside the
+              booking embed. Every other hero on the site that asks for a call carries this exact
+              button (/selling, /buying), so this is the site's own pattern arriving on the one
+              page whose entire job is the thing it does. No new copy: it is the number already in
+              SITE, in the component already used for it. */}
+          <TrackedButton
+            href={SITE.phoneHref}
+            variant="outline-light"
+            gaCategory="Phone"
+            gaLabel="connect-hero"
+            className="mt-7"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
+            </svg>
+            {SITE.phone}
+          </TrackedButton>
         </div>
       </section>
 

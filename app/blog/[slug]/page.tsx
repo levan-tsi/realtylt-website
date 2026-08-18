@@ -313,7 +313,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* ── Related */}
         {related.length > 0 && (
-          <section className="bg-mist py-16 md:py-20" aria-labelledby="related-heading">
+          <section className="sec-sm bg-mist" aria-labelledby="related-heading">
             <div className="mx-auto max-w-6xl px-4 lg:px-8">
               <h2
                 id="related-heading"
@@ -350,7 +350,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {/* ── Ask us. Suppressed on the flagship, where scene 9 IS the close: two dark
             call-to-action bands in a row cancel each other out. */}
         {!flagship && (
-        <section className="bg-ink py-16 text-center text-paper md:py-20">
+        <section className="sec-sm bg-ink text-center text-paper">
           <div className="mx-auto max-w-2xl px-4">
             <p className="text-2xl font-light leading-snug md:text-3xl">
               Have a question this post did not answer?

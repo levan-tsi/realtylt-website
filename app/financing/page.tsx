@@ -62,7 +62,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Get pre-approval — live: black section, white letter card */}
-      <section className="relative isolate overflow-hidden bg-ink py-16 text-paper md:py-24" aria-labelledby="preapproval-heading">
+      <section className="sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="preapproval-heading">
         {/* Parallax backdrop — live's lending-stats.jpg at 0.45 (fixed desktop, static mobile /
             reduced-motion). Self-hosted from images.brivityidx.com/.../uploads/219/lending-stats.jpg. */}
         <div
@@ -136,7 +136,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Calculator — live: black inputs panel + light results panel */}
-      <section className="bg-paper py-16 md:py-20" aria-labelledby="calc-heading">
+      <section className="sec-sm bg-paper" aria-labelledby="calc-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             {/* Financing uses the source's segmented-bar layout; the donut stays on listings. */}
@@ -193,7 +193,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Application & processing — live: light gray, text LEFT + browser mockup RIGHT */}
-      <section className="bg-mist py-16 md:py-24" aria-labelledby="apply-heading">
+      <section className="sec bg-mist" aria-labelledby="apply-heading">
         <div className="mx-auto grid max-w-[1250px] items-center gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="apply-heading" className="t-h2 text-ink">
@@ -218,7 +218,7 @@ export default function FinancingPage() {
       </section>
 
       {/* ── Closing — live: black section */}
-      <section className="relative isolate overflow-hidden bg-ink py-16 text-paper md:py-24" aria-labelledby="closing-heading">
+      <section className="sec relative isolate overflow-hidden bg-ink text-paper" aria-labelledby="closing-heading">
         {/* Parallax backdrop — live's Financing-closing-the-deal.jpg at 0.45 (fixed desktop,
             static mobile / reduced-motion). Self-hosted from uploads/4595/. */}
         <div
