@@ -190,3 +190,163 @@ Rejected, with the gate question that killed each:
 The one genuine motion *defect* on the page is not an opportunity but a rule break:
 `WhyCarousel.tsx:176` transitions `width` on the slide dots — a layout property, and the single
 D7 deduction.
+
+### Round B/C — what changed, and why each was the highest-ROI move
+
+Provenance is tagged. Where a change came from my own judgement rather than a skill, it says so.
+
+**1. The stats stopped lying.** `StatCounter.tsx` — the zero is now only written while the block
+is still below the fold. Highest ROI on the page because it is the only defect that makes the
+business look like it has done nothing, and it says so in four sentences at once.
+*Provenance: my own judgement, found by driving the page; `emil-design-eng` supplied the frame
+("handle edge cases invisibly" — the counter's initial state is an edge case that was reaching
+visitors).*
+
+**2. A placeholder is not a label.** `Field.tsx` — every `hideLabel` field now floats its label
+instead of hiding it: identical at rest, rises and shrinks on focus or fill. Pure CSS
+(`:placeholder-shown` + `:focus`), no JS, works with scripting off. It affects both forms on this
+page and every form on the site.
+*Provenance: `frontend-design`'s writing section ("a label labels, an example demonstrates, and
+nothing quietly does double duty"); `apple-design` §16 on grouping and mapping; the
+scale-by-transform technique and the reduced-motion reasoning from `animate` / `emil-design-eng`.*
+Measured, before and after:
+
+```
+before  the label is sr-only; typing leaves six anonymous boxes
+after   rest    label translate 0 15px  scale 1     field h=50
+        focus   label translate 0 6px   scale 0.78  transition translate,scale,color 0.15s
+        filled  label translate 0 6px   scale 0.78
+```
+
+The first attempt measured `transform: none` and a 6px teleport: Tailwind v4 emits `translate`
+and `scale` as their own properties, so `transition-[transform]` animates neither. Round 30 lost
+half a day to the same trap on the Button's press.
+
+**3. The hero search field had almost no focus state.** `app/page.tsx` — the input carries
+`focus:outline-none` and hands its focus state to the instrument, which answered with
+`bg-black/45 → /55`: over the photograph that is about **4 in 255 per channel**, under **0.4%** of
+the pixels in the field's own box, against the site's own `focus-visible ≥ 3:1` floor. The
+instrument now takes a white ring, scoped `has-[input:focus-visible]` so tabbing on to Search
+shows one ring rather than two. Measured after: `outline 2px solid rgb(255,255,255) offset 2px`.
+*Provenance: my own judgement, found by the rubric's Tab walk.*
+
+**4. The page's only layout-property transition.** `WhyCarousel.tsx` transitioned `width` on the
+slide dots. The dot is a full 24px pill at all times now and its shape is carried by `clip-path`
+(composited), with `round 4px` keeping the ends round through the transition — a `scaleX` would
+have flattened the circle into a bar.
+*Provenance: `emil-design-eng` / `animate` hard rule (transform and opacity only; `clip-path` is
+the sanctioned fourth).*
+
+**5. Paging a rail swapped eight cards as a hard cut.** `RailPager.tsx` — reuses round 31's
+`.rlt-view-in` (6px, 200ms), replayed by `key={page}` and gated by `swapped` so it stays silent on
+first paint, where the section's own `.reveal` is already arriving.
+*Provenance: `find-animation-opportunities` (row 2), executed against the site's existing
+vocabulary.*
+
+**6. The success panel.** `LeadForm.tsx` — arrives with `.rlt-pop-in`, the entrance the qualifying
+wizard already uses. The visitor has just handed over a phone number; a jump cut was the interface
+saying nothing at the one moment it should.
+*Provenance: `find-animation-opportunities` (row 1) — rare/first-time tier, where the delight
+budget legitimately lives.*
+
+### Round C — refused, with the evidence
+
+**The mobile hero's empty sky. Not fixable in CSS, and the measurement that said otherwise was
+wrong.** On a phone the first screen is roughly 700px of featureless grey. The source is
+`valley-aerial.jpg` at **1024×682**; a phone hero box is narrower than the photo's aspect, so
+`object-cover` always scales by height and shows the photo's *full* height — the sky is 30% of the
+picture and no `object-position` can crop it away. Horizontally there is a choice, and measuring
+the 37.6% slice a phone actually sees pointed hard to the right-hand side on all three criteria at
+once: detail 66.8 → 91.1, the bottom 45% darker (mean 82.6 → 49.6, more contrast headroom under
+the type) and quieter (sd 52.3 → 44.4). **Rendering both crops disproved it**
+(`docs/r32/home/crop-compare.png`): at 85% the extra "detail" is a blown highlight beside dark
+foliage and the ridge line goes flat, while the centre crop keeps the diagonal sweep and the
+foreground rock. Kept `object-center`. Fixing this properly needs a different photograph — an
+owner decision, alongside the licence note already in `app/page.tsx`.
+
+**The two secondary hero CTAs.** They read as a segmented control offering alternatives rather
+than two destinations, which was on my list until I read the source: they are **owner-directed**,
+twice in one day ("give it a box or proper recognizable CTA", then "similar box shape type as
+search but see through background"). Settled decision, not re-litigated.
+
+**The "For sellers" copy.** Template filler by any writing standard, and marked in the source as
+**the owner's own words, verbatim**. Untouched. A prepared alternative for him to accept or
+reject, built only from facts the site already states elsewhere:
+
+> Selling starts with knowing the number. We work 11 counties and boroughs, we can put a cash
+> offer in front of you inside 24 hours, and your listing reaches over 100 sites. Tell us the
+> address and we will come back with what your home is worth and what we would do to sell it.
+
+**The consent checkbox.** Scored as a 16px tap target; the source already documents that the
+padded `<label>` row carries the target. The instrument was wrong, not the page.
+
+### Re-score — **48.25 → 51.75 / 60**
+
+The before figure is **not** the 46 first measured. The instrument changed materially during the
+round (accessible names resolved from `<label for>`, tap targets measured on the wrapping label,
+focus rings followed to whichever ancestor draws them), so the pre-round-32 tree was re-scored
+with the **final** instrument by restoring the five source files from `60c0921` and running it
+again. Comparing a before taken with one instrument against an after taken with another is how a
+round invents its own improvement.
+
+| D | before | after | what moved |
+| --- | --- | --- | --- |
+| D1 hierarchy | 5.0 | 5.0 | — |
+| D2 type | 2.25 | 2.25 | untouched this round (see carried list) |
+| D3 spacing | 4.0 | 4.0 | — |
+| D4 photography | 4.0 | 4.0 | — |
+| D5 colour | 4.5 | 4.5 | — |
+| D6 states | 5.0 | 4.5 | see note |
+| D7 motion | 3.0 | **4.5** | the layout-property transition is gone |
+| D8 copy | 5.0 | 5.0 | — |
+| D9 mobile | 4.0 | **5.0** | tap targets clean once measured on the real target |
+| D10 a11y | 5.0 | 5.0 | — |
+| D11 performance | 1.5 | 4.0 | see note — this dimension flaps on a dev server |
+| D12 JS off | 5.0 | 5.0 | — |
+| **total** | **48.25** | **51.75** | **+3.5** |
+
+Three honest notes on that table:
+
+* **D6 went DOWN 0.5, and the rubric is right to say so.** Before, the hero search stop registered
+  as "has a ring" only because the enlarged clip caught the form's background wash; after, the
+  form draws a real ring and one *other* stop now measures a ring contrast under 3:1. The page is
+  better and the score is lower — that is the instrument working, and the sub-3:1 stop is carried
+  below rather than papered over.
+* **D11 flaps run to run on the dev server** (1.5 / 3.0 / 4.0 / 4.0 across four runs of the same
+  tree; LCP 1448–2324ms, one dropped scroll frame appearing and disappearing). Its movement here
+  is **noise, not a gain**, and I am not claiming it.
+* Without D11's noise the honest movement is **+1.0 measured (D7 +1.5, D9 +1.0, D6 −0.5)** plus
+  three defects the rubric does not score at all: the stats that read zero, the labels that
+  vanished on typing, and the two hard cuts.
+
+### Carried on HOME, not done
+
+* **D2, 2.25/5 — the biggest remaining number on this page.** 24px card prices sit off the type
+  scale; 27 body blocks run at line-height under 1.45 (card addresses at `18px/1.38`); six
+  distinct body sizes (12/13/14/16/17/18). This is `ListingCard`, shared with /search and the
+  listing detail, so it belongs to page 2 or 3 rather than being patched twice.
+* **18 body blocks under 16px on a phone** (D9's remaining deduction) — same `ListingCard` origin.
+* **12 unsized images** (D4, CLS risk).
+* **8 distinct text left edges** at 1440 (D3) — the "For sellers" column floating in ~290px of
+  white is the visible symptom.
+* **One focus stop under 3:1** (D6).
+* **The Top Areas block**: eleven hairline pills ending at x≈950 of 1440, no heading, on the
+  page's only statement of where this business works. Real design work, not a patch.
+* **The Google badge** (`rgb(251 188 4)` ×11, the page's only off-token colour) — owner-decision
+  item, untouched.
+
+---
+
+## Handoff
+
+**Done:** the rubric and its instrument (`scripts/score-page.mjs`), and **page 1 of 10 (HOME)**
+through Round A → B → C with a before and after measured by the same instrument.
+
+**Not started:** pages 2–10 — listing detail, search, selling, home value, buying, connect, top
+areas + a county page, who we are, financing.
+
+A successor starts by running `node scripts/score-page.mjs <path> --label <name>` against a dev
+server on :3100 and reading the deductions. The instrument faults recorded above are all fixed, so
+the next page's first run should be trustworthy — but treat it as a shakedown anyway and check
+each deduction against the real DOM before assigning blame. `--break` re-proves the instrument can
+fail before you trust any number.
