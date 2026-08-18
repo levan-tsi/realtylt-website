@@ -803,3 +803,17 @@ sync spends 12-15k/day of the same budget, leaving ~23-25k for the sold pass.
 REACH RATE, measured rather than guessed: ~4.5 days of sales per 5,800-download window
 (08-16 → 07-20 in four windows). Six months back is 2026-02-18, so ~33 more windows ≈ 5-6
 nights. Newest-first throughout, so every window adds the comps most likely to be picked.
+
+## 2026-08-18 14:30 — sold window 6: four perfect windows in a row, and the day-cap binds
+Window 6: 921 sales / 4,500 photos / 45.1 min — ok:4,500, zero failures. Sized to the
+DAILY door (4,674) rather than the hourly (5,692) for the first time, which is the rolling
+24h cap taking over as the constraint.
+CUMULATIVE: 5,671 sales carry photographs, 27,702 objects, reach 2026-08-16 → 2026-07-14.
+Four consecutive clean windows (5,599 / 5,800 / 5,800 / 4,500 = 21,699 downloads, ZERO
+429s and 1 timeout in total) since both-doors + the 4-hour penalty gap were adopted.
+Trailing-24h now 33,875 of 40k: the daily door is shut until the overnight spend rolls off,
+so the next check should POSTPONE, not force. Steady state ~4 windows/day.
+RATE HOLDS: 33 days of sales covered in 6 windows ≈ 4.6 days per ~5,000-download window,
+matching the 4.5 estimate. Target 2026-02-18 (six months) is ~32 windows out ≈ 8 days at
+4/day — slower than the 5-6 nights first projected, because the day cap binds sooner than
+the hour did. Newest-first throughout: the comps most likely to be picked are already done.
