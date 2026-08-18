@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PRESS } from "@/components/ui/Button";
 import {
   calcMortgage,
   donutArcs,
@@ -134,7 +135,11 @@ export function MortgageCalculator({
         <button
           type="button"
           onClick={() => setValues(seeded)}
-          className="mt-6 inline-flex min-h-6 items-center gap-2 py-1 text-xs font-bold uppercase tracking-[0.14em] text-paper/80 transition-colors hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+          // The site's own press, not a new one. `find-animation-opportunities` cleared this
+          // page of every candidate except two pressable controls that answered nothing — this
+          // and the rate rows below. Both are Feedback at the occasional/rare tier, and round 31
+          // already exported the answer, so this is a consistency repair rather than motion.
+          className={`mt-6 inline-flex min-h-6 items-center gap-2 py-1 text-xs font-bold uppercase tracking-[0.14em] text-paper/80 ${PRESS} hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper`}
         >
           <svg
             width="14"
@@ -266,7 +271,7 @@ export function MortgageCalculator({
                     type="button"
                     onClick={() => setValues((v) => ({ ...v, termYears: term, ratePct: rate }))}
                     aria-pressed={active}
-                    className={`flex min-h-11 w-full items-center justify-between gap-3 py-1 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                    className={`flex min-h-11 w-full items-center justify-between gap-3 py-1 text-sm ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                       active ? "font-semibold text-ink" : "text-ink-soft hover:text-ink"
                     }`}
                   >
