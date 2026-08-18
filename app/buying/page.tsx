@@ -134,7 +134,7 @@ export default async function BuyingPage() {
       </section>
 
       {/* ── Steps 1–2 — live: black band, light+bold headings, white outline CTAs */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="steps-heading">
+      <section className="sec bg-ink text-paper" aria-labelledby="steps-heading">
         <div className="mx-auto max-w-[1250px] space-y-20 px-4 lg:px-8">
           <h2 id="steps-heading" className="sr-only">
             From search to keys
@@ -212,7 +212,7 @@ export default async function BuyingPage() {
       </section>
 
       {/* ── Step 3 — live: white section, octagon ornament behind copy, tour-scheduler card */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="save-heading">
+      <section className="sec bg-paper" aria-labelledby="save-heading">
         <div className="mx-auto grid max-w-[1250px] items-center gap-10 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <div className="relative">
@@ -254,7 +254,7 @@ export default async function BuyingPage() {
       </section>
 
       {/* ── Step 4 — live: black section */}
-      <section className="bg-ink py-16 text-paper md:py-24" aria-labelledby="close-heading">
+      <section className="sec bg-ink text-paper" aria-labelledby="close-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">

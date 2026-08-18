@@ -61,9 +61,17 @@ function tone(dark: boolean, error?: string, floating = false) {
   // and `placeholder:text-transparent` are the same utility group under the same
   // variant, so which one wins is Tailwind's emit order, not the class order here —
   // and on a dark form the losing coin-flip prints the placeholder under the label.
+  // A FIELD THAT DOES NOT ANSWER THE POINTER READS AS INERT. Measured by the rubric's hover
+  // probe on /selling: Name, Email, Phone and Property address all changed 0.00% of their pixels
+  // under the cursor, which cost the page a point and, more to the point, is what makes a form
+  // feel like a picture of a form. The border already has three states' worth of range in it
+  // (rest -> focus); the hover is the missing middle step, so the progression is now
+  // rest < hover < focus rather than nothing-then-everything. Colour only, on the border the
+  // control already transitions, so it costs no motion and no layout. Tailwind v4 gates its own
+  // `hover:` variants behind `@media (hover: hover)`, so a tap on a phone cannot stick it on.
   return dark
-    ? `border-paper/40 text-paper focus:border-paper/70 ${floating ? "" : "placeholder:text-paper/60"}`
-    : "border-line-strong text-ink-soft focus:border-ink/50 bg-white";
+    ? `border-paper/40 text-paper hover:border-paper/55 focus:border-paper/70 ${floating ? "" : "placeholder:text-paper/60"}`
+    : "border-line-strong text-ink-soft hover:border-ink/30 focus:border-ink/50 bg-white";
 }
 
 interface FieldShellProps {

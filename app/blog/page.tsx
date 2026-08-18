@@ -62,7 +62,7 @@ export default async function BlogIndexPage() {
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
       </header>
 
-      <section className="bg-paper py-14 md:py-20" aria-label="Articles">
+      <section className="sec-sm bg-paper" aria-label="Articles">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           {!featured ? (
             // Defensive: the static collection is never empty, so this only shows if a

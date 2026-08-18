@@ -30,7 +30,13 @@ export function ConsentCheckbox({ dark = false }: { dark?: boolean }) {
         className="mt-0.5 h-4 w-4 shrink-0 accent-porchlight-deep"
       />
       <span className="min-w-0">
-        <span className={`block text-sm font-medium ${dark ? "text-paper" : "text-ink"}`}>
+        {/* `.t-small`, not `text-sm`: this is a sentence somebody has to READ and agree to, and
+            it is the one piece of copy on the site whose comprehension is legally load-bearing.
+            14px on a phone is the wrong place to be small — the same stylesheet already floors
+            form controls at 16px there for exactly this reason. From `md` it returns to 14px.
+            The DISCLOSURE below stays 12px: three lines of small print is a real convention, and
+            the sentence that needs reading is this one. */}
+        <span className={`t-small block font-medium ${dark ? "text-paper" : "text-ink"}`}>
           {CONSENT_LABEL}
         </span>
         <span className={`mt-1 block text-xs leading-[1.6] ${dark ? "text-paper/60" : "text-stone"}`}>

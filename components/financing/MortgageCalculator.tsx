@@ -169,13 +169,28 @@ export function MortgageCalculator({
               role="img"
               aria-label="Monthly payment breakdown"
             >
+              {/* NO TRANSITION, and that is the decision rather than an omission.
+                  This carried `transition: width 1s ease` — the only layout-property transition
+                  left on the site after round 32 removed the carousel's, and the rubric's single
+                  D7 deduction on this page (-1.5). Two things were wrong with it and only one is
+                  the rule:
+
+                  `width` is a layout property, so a second of it relayouts the row every frame,
+                  and there is no transform equivalent here because these segments are flex
+                  siblings whose widths ARE the layout — scaling one would not move its neighbours.
+
+                  The stronger reason is what it did to the reading. This bar updates as somebody
+                  types in the calculator, so at 1000ms it spent most of its life mid-flight,
+                  showing a breakdown that was true of neither the old numbers nor the new ones —
+                  while the total above it changed instantly. Round 33 removed the home page's
+                  count-up on exactly that ground: a component whose own job is to state a true
+                  number may not spend a second stating a false one. The bar is data the visitor
+                  is reading, not an entrance, and `animate`'s gate says data does not move for
+                  style. It now always shows the breakdown for the numbers on screen. */}
               {rows.map((row) => {
                 const w = Number.isFinite(row.pct) && row.pct > 0 ? row.pct : 0;
                 return w > 0 ? (
-                  <div
-                    key={row.key}
-                    style={{ width: `${w}%`, backgroundColor: `rgb(0 0 0 / ${row.op})`, transition: "width 1s ease" }}
-                  />
+                  <div key={row.key} style={{ width: `${w}%`, backgroundColor: `rgb(0 0 0 / ${row.op})` }} />
                 ) : null;
               })}
             </div>

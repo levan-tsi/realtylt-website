@@ -53,7 +53,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── Agent card — live: circular B/W portrait, name, CALL + CONTACT */}
-      <section className="bg-paper py-16 md:py-24" aria-labelledby="agent-heading">
+      <section className="sec bg-paper" aria-labelledby="agent-heading">
         <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
           <Reveal>
             <span className="mx-auto block h-56 w-56 overflow-hidden rounded-full">
@@ -94,7 +94,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── Values */}
-      <section className="bg-mist py-16 md:py-20" aria-labelledby="values-heading">
+      <section className="sec-sm bg-mist" aria-labelledby="values-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -105,7 +105,7 @@ export default function WhoWeArePage() {
             {VALUES.map((v, i) => (
               <Reveal key={v.title} as="li" delay={i * 110}>
                 <div className="h-full rounded-2xl border border-line bg-white p-7">
-                  <h3 className="text-xl font-bold text-ink">{v.title}</h3>
+                  <h3 className="t-title text-ink">{v.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-stone">{v.body}</p>
                 </div>
               </Reveal>
@@ -115,7 +115,7 @@ export default function WhoWeArePage() {
       </section>
 
       {/* ── Where we work */}
-      <section className="bg-paper py-14" aria-labelledby="serve-heading">
+      <section className="sec-sm bg-paper" aria-labelledby="serve-heading">
         <div className="mx-auto max-w-[1250px] px-4 text-center lg:px-8">
           <h2 id="serve-heading" className="t-h3 text-ink">
             Where We Work
