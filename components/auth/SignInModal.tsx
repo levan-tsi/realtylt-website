@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { SITE } from "@/lib/site";
 
 type Notice = { kind: "error" | "info"; text: string } | null;
 
@@ -12,6 +13,8 @@ export function SignInModal() {
   const {
     modalOpen,
     modalMode,
+    signupOpen,
+    googleEnabled,
     closeSignIn,
     openSignIn,
     signInWithPassword,
@@ -26,7 +29,11 @@ export function SignInModal() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
-  const isSignup = modalMode === "signup";
+  // Sign-up is a door the project can have shut (lib/auth/doors.ts). Fold the mode down here,
+  // in ONE place, so every existing openSignIn("signup") call site — the saved nudge, the
+  // portal wall, the save-search dialog — degrades to the sign-in form it can actually honour
+  // instead of a form that answers every press with a refusal.
+  const isSignup = modalMode === "signup" && signupOpen;
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Reset transient state each time the modal opens or switches mode.
@@ -184,6 +191,11 @@ export function SignInModal() {
             : "We've missed you! Sign in to your saved homes and searches."}
         </p>
 
+        {/* Only offered when the provider is actually configured. supabase-js redirects the
+            browser to /authorize before anything can be validated, so an unconfigured provider
+            does not surface as an error we could phrase — it dumps the visitor on a Supabase
+            JSON page. A button that cannot work is worse than no button. */}
+        {googleEnabled && (
         <button
           type="button"
           onClick={onGoogle}
@@ -198,14 +210,17 @@ export function SignInModal() {
           </svg>
           Continue with Google
         </button>
+        )}
 
-        <div className="my-4 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
-          <span className="h-px flex-1 bg-line" />
-          or
-          <span className="h-px flex-1 bg-line" />
-        </div>
+        {googleEnabled && (
+          <div className="my-4 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
+            <span className="h-px flex-1 bg-line" />
+            or
+            <span className="h-px flex-1 bg-line" />
+          </div>
+        )}
 
-        <form onSubmit={onSubmit} className="space-y-3">
+        <form onSubmit={onSubmit} className={googleEnabled ? "space-y-3" : "mt-5 space-y-3"}>
           {isSignup && (
             <Input
               autoFocus
@@ -278,16 +293,32 @@ export function SignInModal() {
           </Button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-stone">
-          {isSignup ? "Already have an account? " : "Don't have an account? "}
-          <button
-            type="button"
-            onClick={() => openSignIn(isSignup ? "signin" : "signup")}
-            className="font-bold text-porchlight-deep hover:underline"
-          >
-            {isSignup ? "Sign in" : "Sign up"}
-          </button>
-        </p>
+        {signupOpen ? (
+          <p className="mt-4 text-center text-sm text-stone">
+            {isSignup ? "Already have an account? " : "Don't have an account? "}
+            <button
+              type="button"
+              onClick={() => openSignIn(isSignup ? "signin" : "signup")}
+              className="font-bold text-porchlight-deep hover:underline"
+            >
+              {isSignup ? "Sign in" : "Sign up"}
+            </button>
+          </p>
+        ) : (
+          // Sign-up is switched off at the project. Say so here, where a visitor is deciding,
+          // rather than after they have typed a name, an email and a password into a form that
+          // was always going to refuse them. Same sentence the refusal used to give them.
+          <p className="mt-4 text-center text-sm text-stone">
+            New accounts aren&rsquo;t open yet. Call or text{" "}
+            <a
+              href={SITE.phoneHref}
+              className="whitespace-nowrap font-bold text-porchlight-deep hover:underline"
+            >
+              {SITE.phone}
+            </a>{" "}
+            and we&rsquo;ll set one up for you.
+          </p>
+        )}
 
         <p className="mt-4 text-center text-[11px] leading-relaxed text-stone">
           By continuing you agree to our{" "}

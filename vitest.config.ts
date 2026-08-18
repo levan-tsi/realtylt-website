@@ -3,7 +3,11 @@ import path from "node:path";
 
 export default defineConfig({
   resolve: {
-    alias: { "@": path.resolve(__dirname) },
+    alias: {
+      "@": path.resolve(__dirname),
+      // Next resolves this one itself; node cannot. See test/server-only-stub.ts.
+      "server-only": path.resolve(__dirname, "test/server-only-stub.ts"),
+    },
   },
   // tsconfig says jsx:"preserve" (Next compiles it) — vitest has to transform the JSX in
   // lib/blog/markdown.tsx itself, so tell esbuild to emit the automatic runtime.

@@ -7,6 +7,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { searchCriteria } from "@/lib/idx/criteria";
+import { SITE } from "@/lib/site";
 
 export function SavedClient({
   fixtureMode,
@@ -16,7 +17,7 @@ export function SavedClient({
   dataLastUpdated: string;
 }) {
   const { favorites, searches, removeSearch, ready, signedIn } = useSaved();
-  const { enabled, openSignIn } = useAuth();
+  const { enabled, signupOpen, openSignIn } = useAuth();
 
   const empty = ready && favorites.length === 0 && searches.length === 0;
 
@@ -31,18 +32,35 @@ export function SavedClient({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-      {/* Signed-out nudge: your saves live on this device — make an account to sync + get alerts */}
+      {/* Signed-out nudge: your saves live on this device. What we offer next depends on whether
+          the project is taking new accounts — offering a "Create account" button that the auth
+          server refuses is the one thing this strip must not do. */}
       {enabled && ready && !signedIn && !empty && (
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-ink/10 bg-mist px-5 py-4">
           <p className="text-sm text-ink-soft">
-            These saves are on <strong>this device</strong>. Create a free account to sync them
-            everywhere and get new-listing alerts.
+            These saves are on <strong>this device</strong>.{" "}
+            {signupOpen ? (
+              <>Create a free account to sync them everywhere and get new-listing alerts.</>
+            ) : (
+              <>
+                New accounts aren&rsquo;t open yet. Call or text{" "}
+                <a
+                  href={SITE.phoneHref}
+                  className="whitespace-nowrap font-bold text-ink underline underline-offset-2"
+                >
+                  {SITE.phone}
+                </a>{" "}
+                and we&rsquo;ll set one up so they follow you everywhere.
+              </>
+            )}
           </p>
           <div className="flex gap-2">
-            <Button size="md" onClick={() => openSignIn("signup")}>
-              Create account
-            </Button>
-            <Button variant="ghost" size="md" onClick={() => openSignIn("signin")}>
+            {signupOpen && (
+              <Button size="md" onClick={() => openSignIn("signup")}>
+                Create account
+              </Button>
+            )}
+            <Button variant={signupOpen ? "ghost" : "primary"} size="md" onClick={() => openSignIn("signin")}>
               Sign in
             </Button>
           </div>
