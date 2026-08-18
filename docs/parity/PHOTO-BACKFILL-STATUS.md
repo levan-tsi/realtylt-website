@@ -779,3 +779,13 @@ THE RULE, now stated so it cannot be misread as arithmetic:
 A recurring 70-minute scheduler was created on the strength of the arithmetic and DELETED
 after this trip: a scheduler that relaunches inside the penalty is the churn the Aug-12
 entry already named as wrong.
+
+## 2026-08-17 23:35 — sold window 3 (first under the corrected rules): 5,599 clean
+Sized to the HOURLY door (5,600 of a 5,682 allowance) with the daily door wide open at
+17,937, and launched six hours after the 16:25 trip. Result: 1,146 sales, 5,599 photos,
+56 minutes, outcomes ok:5,599 / timeout:1 / 429:0. The both-doors rule plus the four-hour
+penalty gap is the first pairing that has produced a full clean window since the sold pass
+began.
+CUMULATIVE: 2,378 sales carry photographs, 11,602 objects, close dates 2026-07-31 →
+2026-08-16 (17 days of sales deep). Target is six months, so the reach is the number to
+watch — it moves ~8 days per clean window at this size.
