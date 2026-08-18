@@ -77,6 +77,26 @@
      attentive, which is exactly why ease-in is banned here. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* ── SMALL TEXT MUST BREATHE, and Tailwind's defaults have it backwards.
+     Body copy on this site is 16px/1.72 (matched to live). Tailwind then hands 14px a
+     line-height of 1.4286 and 12px a line-height of 1.333 — leading that gets TIGHTER as the
+     type gets smaller, which is the opposite of what small type needs. The rubric measured the
+     result: 27 blocks under 1.45 on the home page, 12 on the listing page, and every one of
+     them was a `text-sm` or `text-xs` sentence that had never been styled — nobody chose 1.43,
+     it was simply what the framework handed out.
+
+     A 1.5 floor is still tighter than the 16px body's 1.72, so the density hierarchy survives:
+     a caption is still visibly denser than a paragraph, it is just no longer cramped.
+
+     Measured blast radius before shipping (scripts/_scratch-r33-lh.mjs): document height
+     +26px on listing / +16px on home / +10px on search at 1440, zero horizontal overflow at
+     1440, 390 or 320, and the search card — whose geometry is the owner's own "2+2+2" density
+     target — goes 240px to 241px with the photo band's share holding at 59%. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
   /* And the site's curve is now the DEFAULT curve. Tailwind's own, cubic-bezier(0.4, 0, 0.2, 1),
      was what every un-suffixed `transition-*` on the site was using — a weaker curve applied by
      default to everything nobody had thought about, which is most things. A control nobody
@@ -270,6 +290,34 @@ body {
  * container's own ring is unaffected — it is drawn OUTSIDE the white bar, on the dark hero. */
 .search-instrument.bg-white :focus-visible {
   outline-color: var(--color-ink);
+}
+
+/* ...and the same rule, applied to the one surface that had been getting it wrong: a control
+ * sitting ON A PHOTOGRAPH.
+ *
+ * The listing gallery is `<section class="bg-ink">`, so the dark-surface rule above painted every
+ * one of its controls a WHITE ring — correct for the section, wrong for the place the ring lands,
+ * which is the photograph. A photograph is not a surface you can pick a ring colour against.
+ * Tab-walked with real keys on two listings, ring judged in clipped pixels
+ * (scripts/_scratch-r33-gallery.mjs):
+ *
+ *     rich (KEY1002622)   heart 1.10 · whole tile 1.00 · prev 2.43 · next 1.90
+ *                         photos 1.74 · street 1.84 · map 1.73 · view-all 1.59
+ *     poor (KEY1039608)   heart 1.36 · whole tile 1.01 · photos 1.83 · street 1.72
+ *                         map 1.78 · view photo 1.80
+ *
+ * Fourteen of fourteen under the site's own 3:1 floor, on the page a buyer spends the most time
+ * on. The fix is not a different colour — no colour survives an arbitrary photograph — it is to
+ * stop drawing the ring on the photograph. These controls all carry their own `bg-ink/55..70`
+ * body, so the ring moves INSIDE it: white on the control's own dark pill, which is ~9:1 over a
+ * bright photo and ~18:1 over a dark one, whatever the picture does.
+ *
+ * DESCENDANTS ONLY, deliberately. The side tiles ARE the `.photo-zoom` element and their rings
+ * already land on the black band between tiles, measured at 18:1 — pulling those inside would
+ * move a ring that works onto the photograph and break it. */
+.photo-zoom :focus-visible {
+  outline-color: var(--color-paper);
+  outline-offset: -2px;
 }
 
 /* WHOLE-CARD LINKS. Six surfaces draw a card as <article class="overflow-hidden"> with one
@@ -635,6 +683,27 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 .rlt-view-in {
   animation: rlt-view-in 0.2s var(--ease-out) both;
+}
+
+/* ── The loading skeleton, on the site's own curve.
+   `animate-pulse` was the last motion on the site nobody had chosen: Tailwind runs it on
+   cubic-bezier(0.4, 0, 0.6, 1), which is the only curve on the listing and search pages
+   outside the two tokens. The breathe itself is right — a photo slot that is waiting should
+   say so — it just needed naming. `--ease-move` is the site's symmetric curve, and a
+   symmetric loop is exactly what it is for: this is not something entering or leaving.
+   Opacity only, so it composites; reduced motion is handled by the global block below, which
+   collapses durations, plus the `motion-reduce:animate-none` at each call site. */
+@keyframes rlt-skeleton {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.rlt-skeleton {
+  animation: rlt-skeleton 2s var(--ease-move) infinite;
 }
 
 /* ── Results-map price chips (the Leaflet fallback and the Google view share this class).

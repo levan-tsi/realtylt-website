@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PRESS } from "@/components/ui/Button";
 import { ShareButton } from "@/components/idx/ShareButton";
 import { FavoriteButton } from "@/components/idx/FavoriteButton";
 
@@ -130,7 +131,7 @@ export function ListingSubNav({
           <button
             type="button"
             onClick={() => window.dispatchEvent(new CustomEvent("listing:make-offer"))}
-            className="inline-flex min-h-6 items-center gap-1.5 rounded-xl bg-ink px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+            className={`inline-flex min-h-6 items-center gap-1.5 rounded-xl bg-ink px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-paper ${PRESS} hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />

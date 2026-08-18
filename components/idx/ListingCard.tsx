@@ -144,8 +144,11 @@ export function ListingCard({
           ) : (
             <NoPhoto />
           )}
+          {/* gap-0.5, not gap-px: 1px was the only gap on the listing and search pages off the
+              2px grid the rest of the site is built on, and two stacked chips read identically
+              at 2px. */}
           {chips.length > 0 && (
-            <div className="absolute left-0 top-3 flex gap-px">
+            <div className="absolute left-0 top-3 flex gap-0.5">
               {chips.map((c) => (
                 <span
                   key={c}
@@ -168,7 +171,12 @@ export function ListingCard({
             <p className="text-xl font-bold leading-7 text-ink lg:text-lg lg:leading-6">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
-          <p className="mt-1 truncate text-sm italic text-ink-soft lg:mt-0.5 lg:text-[13px]">
+          {/* `lg:text-[13px]` is gone. It was a one-off size sitting between the two real steps
+              (12 and 14), and with two more one-offs elsewhere it made SIX distinct body sizes on
+              the home page — 12/13/14/16/17/18 — which is drift, not a scale. It also costs
+              nothing to remove: `text-sm` carries the line-height, so the line BOX is unchanged
+              and only the glyphs go from 13px to 14px. */}
+          <p className="mt-1 truncate text-sm italic text-ink-soft lg:mt-0.5">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
@@ -241,7 +249,12 @@ export function ListingCard({
               "144 Cream Street, Poughkeepsie (Town), NY 12601") pushed one card's price up
               exactly one line — price tops across that row read -1199/-1223/-1199/-1199, so
               three of four aligned and one did not, which reads as a bug rather than a rhythm. */}
-          <p className="mt-1 line-clamp-2 min-h-[2lh] text-lg font-medium leading-snug">
+          {/* leading-normal, not leading-snug. This one class was SIXTEEN of the home page's
+              remaining sub-1.45 blocks: an 18px two-line address at 1.375, set over a photograph
+              where it needs more air, not less. `min-h-[2lh]` still reserves exactly two lines,
+              so every card in a rail grows by the same 4.5px and the price tops stay level —
+              which is the whole reason this block is reserved in the first place. */}
+          <p className="mt-1 line-clamp-2 min-h-[2lh] text-lg font-medium leading-normal">
             {l.address}, {l.city}, {l.state} {l.zip}
           </p>
           {/* ALWAYS rendered, even when the feed carries no beds/baths/sqft (land, commercial,

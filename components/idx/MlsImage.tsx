@@ -111,7 +111,7 @@ export function MlsImage({
     <>
       {/* Skeleton shimmer while queued and until the first byte lands (and between silent
           retries) — never a flash of the placeholder. Static block for reduced-motion users. */}
-      {!loaded && <div className="absolute inset-0 animate-pulse bg-mist motion-reduce:animate-none" aria-hidden />}
+      {!loaded && <div className="rlt-skeleton absolute inset-0 bg-mist motion-reduce:animate-none" aria-hidden />}
       {/* Held tiles stay mounted behind `display:none` rather than unmounting: the element (and so
           the page's photo count) is real, but a lazy image that is never displayed never fetches. */}
       <div className={admitted ? "absolute inset-0" : "hidden"}>

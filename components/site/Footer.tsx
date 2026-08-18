@@ -136,7 +136,12 @@ export function Footer() {
         <div className="flex flex-col gap-5 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
           <div className="flex items-center gap-5">
             <EqualHousingMark className="h-11 w-auto shrink-0 text-stone" />
-            <p className="text-[13px] leading-relaxed">
+            {/* text-sm, not an arbitrary text-[13px]: this is running prose, and 13px is not a
+                step this site's theme defines. 14px is the size next to it on the scale, it is
+                one pixel more legible, and it removes one of the six distinct body sizes the
+                rubric was counting on every page. (The 13px LABELS in the header nav and the
+                filter chips are a different thing and are left alone.) */}
+            <p className="text-sm leading-relaxed">
               Equal Housing Opportunity. Member of the National Association of REALTORS&reg;.
             </p>
           </div>
@@ -144,7 +149,7 @@ export function Footer() {
               from the end, leaving "operated." alone on its own right-aligned line with ~300px
               of empty row beside it. The wider cap lets it set on one line where there is room
               and still wraps to two balanced lines when there is not. */}
-          <p className="text-[13px] leading-relaxed sm:max-w-xl sm:text-right">
+          <p className="text-sm leading-relaxed sm:max-w-xl sm:text-right">
             &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
           </p>
         </div>

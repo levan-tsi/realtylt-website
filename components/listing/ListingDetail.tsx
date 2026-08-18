@@ -16,7 +16,6 @@ import { MarketInsights } from "@/components/listing/MarketInsights";
 import { ClampedDescription, SpecDisclosure } from "@/components/listing/SpecDisclosure";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 import { getAreaInsights } from "@/lib/idx/db";
-import { Reveal } from "@/components/ui/Reveal";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import type { Listing } from "@/lib/idx/types";
 import { getProxiedPhotoPaths } from "@/lib/idx/media";
@@ -277,9 +276,18 @@ export async function ListingDetail({ id }: { id: string }) {
               <ListingPager id={l.id} />
             </div>
             <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
-              <h1 className="font-display text-3xl font-semibold tracking-tight text-ink md:text-4xl">
-                {l.address}
-              </h1>
+              {/* THE ADDRESS IS THE HEADLINE, AND IT WAS NOT LEADING. `text-3xl md:text-4xl`
+                  put it at 36px beside a 30px price — a ratio of 1.20, which the rubric reads as
+                  a flat hierarchy and the eye reads as two competing bold blocks. It was also
+                  36px on a scale whose steps are 76/56/44/30/11, i.e. a size the design system
+                  does not have. `.t-h2` is the committed step (30 -> 44 fluid): ratio 1.47.
+
+                  font-normal is a deliberate half-step off the scale's own 300, and it was
+                  rendered four ways before choosing (docs/r33/listing/h1-compare.png). At 300 a
+                  fourteen-character address goes weedy next to a bold price and the price
+                  becomes the headline; 600 is blunt at 44px. The scale's 300 is calibrated for
+                  long marketing headlines, not for a three-word title. */}
+              <h1 className="t-h2 font-normal text-ink">{l.address}</h1>
               <div className="text-right">
                 <p className="font-mono text-3xl font-semibold tracking-tight text-ink">{priceLabel(l)}</p>
                 {/* The "Est. $/mo" seed is a mortgage estimate — meaningless for a rental (whose
@@ -332,7 +340,9 @@ export async function ListingDetail({ id }: { id: string }) {
             {/* Body sections collapse at 390 only (pure CSS, no JS) so a phone visitor reaches the
                 payment calculator without scrolling thousands of pixels of spec lists. Desktop is
                 unchanged: everything open, no controls. */}
-            <h2 className="mt-8 font-display text-2xl text-ink">About this home</h2>
+            {/* All five body headings on this page were an ad-hoc 24px, a size the type scale
+                does not contain. `.t-h3` is the step that exists (22 -> 30). */}
+            <h2 className="mt-8 t-h3 text-ink">About this home</h2>
             <ClampedDescription text={l.description} />
 
             <SpecDisclosure title="Highlights">
@@ -416,9 +426,21 @@ export async function ListingDetail({ id }: { id: string }) {
             />
           </div>
 
-          {/* Contact CTA */}
-          <Reveal delay={100}>
-            <aside className="lg:sticky lg:top-24">
+          {/* Contact CTA.
+              NOT scroll-revealed, deliberately. This column was wrapped in <Reveal delay={100}>,
+              and on the photo-rich listing that left Request a Tour, Make an Offer, the agent
+              card and the lead form at opacity 0 on first paint — an empty white column beside
+              the facts (measured: wrapper `class="reveal"`, opacity 0, at 1440x900). Reveal's
+              rule is fixed separately and correctly, but the deeper answer is that this is the
+              wrong thing to gate on scroll: a reveal earns its place when something arrives, and
+              this column is simply there, next to the facts, from the moment the page loads. The
+              only thing the fade could add was a way for it to be missing. */}
+            {/* self-start is load-bearing now that the Reveal wrapper is gone: this <aside> is
+                the grid item itself, a grid item stretches to the row's height by default, and a
+                `position: sticky` box that already spans its whole row has nothing to travel
+                through — measured 836px tall inside the old wrapper, 1941px as a stretched cell,
+                which silently turned the sticky contact card into an ordinary scrolling one. */}
+            <aside className="self-start lg:sticky lg:top-24">
               <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-float md:p-7">
                 {/* Primary conversion CTAs (live parity): tour + offer, each a bottom-sheet modal. */}
                 <ListingLeadCTAs
@@ -478,7 +500,6 @@ export async function ListingDetail({ id }: { id: string }) {
                 </div>
               </div>
             </aside>
-          </Reveal>
         </div>
       </section>
 
@@ -498,7 +519,13 @@ export async function ListingDetail({ id }: { id: string }) {
 
       {/* ── Never miss a property (live parity): black band → the existing save-search flow,
           prefilled from this listing's county. */}
-      <section className="bg-ink py-12 text-paper md:py-16" aria-labelledby="never-miss-heading">
+      {/* THE VERTICAL RHYTHM IS A COMMITTED SCALE AND THIS PAGE WAS THE ONE IGNORING IT. Every
+          other page picks sec-sm/sec/sec-lg (80/112/144 at desktop); the listing page's three
+          marketing bands were an ad-hoc py-12 md:py-16 (48/64), which is why three consecutive
+          full-width bands read cramped against the same bands on /buying and /financing. The
+          facts section above deliberately keeps its tighter 40px top — it sits directly under
+          the photo band and 80px there pushes the price out of the first viewport. */}
+      <section className="sec-sm bg-ink text-paper" aria-labelledby="never-miss-heading">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
             <h2 id="never-miss-heading" className="t-h2 text-paper">
@@ -529,10 +556,10 @@ export async function ListingDetail({ id }: { id: string }) {
 
       {/* ── Similar homes */}
       {similar.length > 0 && (
-        <section className="border-t border-ink/10 bg-paper py-12 md:py-16" aria-labelledby="similar-heading">
+        <section className="sec-sm border-t border-ink/10 bg-paper" aria-labelledby="similar-heading">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
-              <h2 id="similar-heading" className="font-display text-2xl text-ink md:text-3xl">
+              <h2 id="similar-heading" className="t-h3 text-ink">
                 Similar homes in {county?.name ?? "the area"}
               </h2>
               {similarTotal > similar.length && (

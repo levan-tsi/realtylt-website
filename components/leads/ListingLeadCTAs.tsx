@@ -1,5 +1,6 @@
 "use client";
 
+import { PRESS } from "@/components/ui/Button";
 import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -169,12 +170,17 @@ function InlineTourCard({
   const maxOffset = Math.max(0, days.length - WINDOW);
   const visible = days.slice(offset, offset + WINDOW);
 
+  // PRESS on the tour strip. The SELECTED day chip is the case that gave this away: it paints
+  // `border-ink bg-ink text-paper` and has no hover variant, so a probe found it answering a
+  // pointer with 0% of its pixels — the one control in the conversion card a visitor has already
+  // chosen, and touching it did nothing. Hover is the wrong repair (a selected chip has nowhere
+  // to go on hover, and half of these visitors are on a phone with no hover at all); a press is
+  // the right one, and it is the site's own.
   const tabCls = (active: boolean) =>
-    `min-h-11 flex-1 px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+    `min-h-11 flex-1 px-3 py-2.5 text-sm font-medium ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
       active ? "border-b-2 border-ink text-ink" : "border-b-2 border-transparent text-stone hover:text-ink"
     }`;
-  const arrowCls =
-    "grid h-11 w-8 shrink-0 place-items-center rounded-xl text-ink transition-colors hover:bg-mist disabled:cursor-not-allowed disabled:text-stone/40 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river";
+  const arrowCls = `grid h-11 w-8 shrink-0 place-items-center rounded-xl text-ink ${PRESS} hover:bg-mist disabled:cursor-not-allowed disabled:text-stone/40 disabled:hover:bg-transparent disabled:active:scale-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`;
 
   return (
     <div>
@@ -208,7 +214,7 @@ function InlineTourCard({
                   type="button"
                   aria-pressed={date === d.key}
                   onClick={() => setDate(d.key)}
-                  className={`flex min-h-11 flex-col items-center rounded-xl border px-1 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                  className={`flex min-h-11 flex-col items-center rounded-xl border px-1 py-2 ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                     date === d.key ? "border-ink bg-ink text-paper" : "border-line text-ink hover:border-ink"
                   }`}
                 >

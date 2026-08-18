@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PRESS } from "@/components/ui/Button";
 
 /** Share the listing — native share sheet where the platform has one, clipboard fallback.
  * Quiet chip styled to sit beside the breadcrumb row on the detail page. */
@@ -31,7 +32,7 @@ export function ShareButton({ title }: { title: string }) {
     <button
       type="button"
       onClick={share}
-      className="inline-flex min-h-6 items-center gap-1.5 rounded-xl border border-ink/15 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-ink/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      className={`inline-flex min-h-6 items-center gap-1.5 rounded-xl border border-ink/15 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink ${PRESS} hover:border-ink/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink`}
       aria-live="polite"
     >
       <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
