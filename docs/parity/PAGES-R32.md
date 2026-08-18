@@ -50,9 +50,27 @@ D12 JS off      5.0     5.0    (unreachable by injection — see below)
 TOTAL          46      19.25
 ```
 
-Eleven of twelve collapse. **D12 cannot be broken by injection** because the JS-off render runs
-in its own browser context the injection never reaches; it is proven able to fail empirically
-instead, on a client-rendered page (recorded per page below).
+**This table is SUPERSEDED and the claim above it was wrong. See `docs/parity/PAGES-R33.md` §1.**
+
+An adversarial review re-ran the pair against the committed instrument and got **eight** of twelve
+collapsing, not eleven: D7 and D10 were never attacked by the injection at all, and **D2 went UP by
+a full point** because the blanket `p{13px} / li{15px} / span{14.5px}` rules homogenised the page's
+six real body sizes down to four and cancelled the deduction D2 exists to take. A rule that removes
+variety cannot test a rule that punishes variety.
+
+Worse, the numbers above were **stale when they were published**: `home-BROKEN/score.json` is
+stamped 23:27 and `home-after/score.json` 00:03, so the proof was run 36 minutes before the
+instrument was materially changed and was never re-run. The round record correctly re-measured the
+page's *before* with the final instrument and then forgot to re-measure the *instrument's own*
+proof.
+
+Round 33 rewrote `BREAK_CSS`/`BREAK_DOM` to be **additive** and re-proved it. The current numbers
+live in PAGES-R33.md; the rule now is that the break is re-run after every instrument edit, in the
+same session, and the timestamps must post-date the edit.
+
+**D12 still cannot be broken by injection** because the JS-off render runs in its own browser
+context the injection never reaches; it is proven able to fail empirically instead, on a
+client-rendered page (recorded per page below).
 
 ### Six ways this instrument lied on its first run
 
@@ -299,11 +317,29 @@ round invents its own improvement.
 | D6 states | 5.0 | 4.5 | see note |
 | D7 motion | 3.0 | **4.5** | the layout-property transition is gone |
 | D8 copy | 5.0 | 5.0 | — |
-| D9 mobile | 4.0 | **5.0** | tap targets clean once measured on the real target |
+| D9 mobile | 4.0 | 4.0 | — (corrected: see the note below this table) |
 | D10 a11y | 5.0 | 5.0 | — |
 | D11 performance | 1.5 | 4.0 | see note — this dimension flaps on a dev server |
 | D12 JS off | 5.0 | 5.0 | — |
 | **total** | **48.25** | **51.75** | **+3.5** |
+
+**Correction, made in round 33 after an adversarial review, verified against
+`docs/r32/home-after/score.json` and `docs/r32/home-before-final/score.json`.** Three numbers in
+this section were transcribed by hand and three of them were wrong:
+
+* The after-table printed **D9 = 5.0** with the note "tap targets clean once measured on the real
+  target". Both JSON files say **D9 = 4.0**. D9 did not move during round 32 at all — the 3.0 → 4.0
+  it appeared to gain happened between the first run and the re-baseline and was caused by the
+  *instrument* change (tap targets measured on the wrapping label), not by any change to the page.
+  The table above is corrected.
+* With the wrong D9 the after column **summed to 52.75 while reporting 51.75**. With the real 4.0 it
+  sums to 51.75, which was right all along; the table was the error, not the total.
+* The decomposition below read "+1.0 measured (D7 +1.5, D9 +1.0, D6 −0.5)", which sums to **+2.0**.
+  The headline +1.0 is correct; the attribution was not. It is **D7 +1.5, D6 −0.5, D9 0.0**.
+* The table also contradicted its own carried list, which said "18 body blocks under 16px on a phone
+  (D9's remaining deduction)". A dimension cannot be full marks and carry a deduction.
+
+The lesson is mechanical, not moral: **generate these tables from `score.json`, never by hand.**
 
 Three honest notes on that table:
 
@@ -315,7 +351,7 @@ Three honest notes on that table:
 * **D11 flaps run to run on the dev server** (1.5 / 3.0 / 4.0 / 4.0 across four runs of the same
   tree; LCP 1448–2324ms, one dropped scroll frame appearing and disappearing). Its movement here
   is **noise, not a gain**, and I am not claiming it.
-* Without D11's noise the honest movement is **+1.0 measured (D7 +1.5, D9 +1.0, D6 −0.5)** plus
+* Without D11's noise the honest movement is **+1.0 measured (D7 +1.5, D6 −0.5, D9 0.0)** plus
   three defects the rubric does not score at all: the stats that read zero, the labels that
   vanished on typing, and the two hard cuts.
 
