@@ -789,3 +789,17 @@ began.
 CUMULATIVE: 2,378 sales carry photographs, 11,602 objects, close dates 2026-07-31 →
 2026-08-16 (17 days of sales deep). Target is six months, so the reach is the number to
 watch — it moves ~8 days per clean window at this size.
+
+## 2026-08-18 04:30 — sold windows 4 and 5: two more perfect runs, and the daily door closes
+Window 4: 1,187 sales / 5,800 photos / 58.2 min — ok:5,800, ZERO failures of any kind.
+Window 5: 1,185 sales / 5,800 photos / 57.9 min — ok:5,800, ZERO failures of any kind.
+Three consecutive clean windows under both-doors + the 4-hour penalty gap.
+CUMULATIVE: 4,750 sales carry photographs, 23,202 objects, reach 2026-08-16 → 2026-07-20.
+
+THE CADENCE IS NOW DAILY-BOUND, and this is the rule working, not a fault. Trailing-24h is
+30,480 of the 40k cap, so the daily door (36,000 - trailing - 2,000) sits near zero and the
+next check will POSTPONE rather than run. Steady state is ~4 windows per night: the hourly
+sync spends 12-15k/day of the same budget, leaving ~23-25k for the sold pass.
+REACH RATE, measured rather than guessed: ~4.5 days of sales per 5,800-download window
+(08-16 → 07-20 in four windows). Six months back is 2026-02-18, so ~33 more windows ≈ 5-6
+nights. Newest-first throughout, so every window adds the comps most likely to be picked.
