@@ -171,10 +171,19 @@ export function WhyCarousel() {
             aria-current={i === index ? "true" : undefined}
             className={`grid h-6 w-6 place-items-center rounded-full ${PRESS} focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-mist`}
           >
+            {/* The dot was transitioning WIDTH — the one layout-property transition left on
+                the home page, and the single deduction the round-32 motion dimension took.
+                Every dot is now a full 24px pill at all times and the shape is carried by
+                `clip-path`, which is composited: at rest an 8px inset on each side leaves the
+                8px circle exactly where it was, and the active dot releases to the full pill.
+                `round 4px` keeps the ends round through the whole transition, which a scaleX
+                could not do — it would flatten the circle into a bar. */}
             <span
               aria-hidden
-              className={`block h-2 rounded-full transition-[width,background-color] duration-150 ease-out ${
-                i === index ? "w-6 bg-ink" : "w-2 bg-ink/25 hover:bg-ink/50"
+              className={`block h-2 w-6 rounded-full transition-[clip-path,background-color] duration-150 ease-out ${
+                i === index
+                  ? "[clip-path:inset(0_round_4px)] bg-ink"
+                  : "[clip-path:inset(0_8px_round_4px)] bg-ink/25 hover:bg-ink/50"
               }`}
             />
           </button>

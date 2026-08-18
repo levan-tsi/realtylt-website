@@ -166,7 +166,14 @@ export function LeadForm({
         ref={successRef}
         role="status"
         tabIndex={-1}
-        className={`rounded-2xl border p-6 text-center outline-none ${
+        /* THE ONE MOMENT ON THIS PAGE WORTH A BEAT. The visitor has just handed over a phone
+           number and the form vanished and a panel appeared, as a jump cut — the interface
+           answering the most committed thing anyone does on this site with nothing at all.
+           This is the rare/first-time tier, which is where a delight budget legitimately
+           lives, and it reuses `.rlt-pop-in` (0.3s, 14px, scale 0.98) — the panel entrance
+           the qualifying wizard already uses — rather than adding a curve or a duration.
+           The global reduced-motion block collapses it to an instant appearance. */
+        className={`rlt-pop-in rounded-2xl border p-6 text-center outline-none ${
           dark ? "border-paper/30 bg-white/5" : "border-line-strong bg-mist"
         }`}
       >
