@@ -57,17 +57,29 @@ describe("a placeholder is not a label", () => {
 });
 
 describe("a stat counter must never state a number that is not true", () => {
-  it("only writes the zero while the block is still below the fold", () => {
-    expect(stat).toMatch(/getBoundingClientRect\(\)[\s\S]{0,120}box\.top < window\.innerHeight[\s\S]{0,40}return/);
-    // and the zero must come after that guard, never before it
-    const guard = stat.indexOf("box.top < window.innerHeight");
-    const zero = stat.indexOf("setDisplay(0)");
-    expect(guard).toBeGreaterThan(-1);
-    expect(zero).toBeGreaterThan(guard);
+  /** These cases used to assert the GUARD on the count-up: that the zero was only written while
+   * the block was below the fold. That guard was real and it worked, but it was the wrong thing to
+   * hold. A review measured the count still printing "0 / 0h / 0+ / 0" between the block's top edge
+   * entering the viewport and it becoming half visible (the observer's threshold was 0.5), and
+   * printing "7 / 16h / 66+ / 5" mid-count for the full 1,400ms it ran. No threshold fixes the
+   * second one: showing wrong numbers on the way to the right one IS a count-up.
+   *
+   * So the assertion moved from the mechanism to the property. There is no count, therefore there
+   * is no frame in which a wrong number can be on screen. */
+  // Assert on CODE, not on prose. The first version of these cases scanned the whole file and
+  // failed on the comment above them, which explains at length which mechanisms were removed and
+  // therefore names every one of them.
+  const statCode = stat.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+
+  it("does not animate the value at all — no timer, no observer, no interim state", () => {
+    for (const banned of ["requestAnimationFrame", "IntersectionObserver", "setDisplay", "useState", "durationMs"]) {
+      expect(statCode, `StatCounter must not reintroduce ${banned}`).not.toMatch(new RegExp(banned));
+    }
   });
 
-  it("still server-renders the final value for no-JS visitors", () => {
-    expect(stat).toMatch(/useState\(value\)/);
+  it("renders the true value directly, and on the server", () => {
+    expect(statCode).toMatch(/\{value\.toLocaleString\("en-US"\)\}/);
+    expect(statCode, 'a stat with nothing to animate needs no "use client"').not.toMatch(/"use client"/);
   });
 });
 
