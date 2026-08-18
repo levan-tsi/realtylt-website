@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { SITE } from "@/lib/site";
 
 const TABS = [
   { href: "/portal", label: "Overview" },
@@ -17,7 +18,7 @@ const TABS = [
 /** Auth-gated shell for every /portal page: dark header band + tab nav, with a sign-in
  * prompt when logged out and a graceful "accounts unavailable" state. */
 export function PortalShell({ children }: { children: ReactNode }) {
-  const { enabled, ready, user, profile, openSignIn } = useAuth();
+  const { enabled, signupOpen, ready, user, profile, openSignIn } = useAuth();
   const pathname = usePathname();
 
   const firstName = (profile?.fullName || user?.email || "").split(" ")[0];
@@ -80,10 +81,25 @@ export function PortalShell({ children }: { children: ReactNode }) {
             </p>
             <div className="mt-6 flex justify-center gap-2">
               <Button onClick={() => openSignIn("signin")}>Sign in</Button>
-              <Button variant="outline" onClick={() => openSignIn("signup")}>
-                Create account
-              </Button>
+              {signupOpen && (
+                <Button variant="outline" onClick={() => openSignIn("signup")}>
+                  Create account
+                </Button>
+              )}
             </div>
+            {/* The portal is real and works; the front door is what is shut. Say which. */}
+            {!signupOpen && (
+              <p className="mt-4 text-sm text-stone">
+                New accounts aren&rsquo;t open yet. Call or text{" "}
+                <a
+                  href={SITE.phoneHref}
+                  className="whitespace-nowrap font-bold text-ink underline underline-offset-2"
+                >
+                  {SITE.phone}
+                </a>{" "}
+                and we&rsquo;ll set one up for you.
+              </p>
+            )}
           </div>
         ) : (
           children

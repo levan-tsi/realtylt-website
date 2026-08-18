@@ -34,6 +34,11 @@ interface Result {
 interface AuthContextValue {
   /** Supabase is configured (env present). When false the whole account layer is inert. */
   enabled: boolean;
+  /** The project accepts NEW accounts today. False until confirmed — never advertise a door
+   * we have not checked. Read live from Supabase; see lib/auth/doors.ts. */
+  signupOpen: boolean;
+  /** Google OAuth is configured on the project. Same rule: false until confirmed. */
+  googleEnabled: boolean;
   /** Initial session check finished. */
   ready: boolean;
   user: User | null;
@@ -74,6 +79,8 @@ function redirectTo(): string {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [supabase, setSupabase] = useState<SupabaseBrowserClient | null>(null);
   const [enabled, setEnabled] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
+  const [googleEnabled, setGoogleEnabled] = useState(false);
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<PortalProfile | null>(null);
@@ -94,11 +101,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true;
     fetch("/api/auth/config")
       .then((r) => r.json())
-      .then((cfg: { enabled?: boolean; url?: string; anonKey?: string }) => {
+      .then((cfg: { enabled?: boolean; url?: string; anonKey?: string; signupOpen?: boolean; google?: boolean }) => {
         if (!active) return;
         if (cfg.enabled && cfg.url && cfg.anonKey) {
           setSupabase(createBrowserSupabase(cfg.url, cfg.anonKey));
           setEnabled(true);
+          setSignupOpen(cfg.signupOpen === true);
+          setGoogleEnabled(cfg.google === true);
         } else {
           setReady(true); // accounts disabled — nothing to load
         }
@@ -218,15 +227,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = useCallback<AuthContextValue["signInWithGoogle"]>(async () => {
     if (!supabase) return { ok: false, error: "Accounts are unavailable right now." };
+    // signInWithOAuth does NOT round-trip the provider first: it builds the /authorize URL and
+    // hands the browser to it. So a disabled provider is not an error we can catch and phrase —
+    // measured 2026-08-18, the visitor simply LANDS on Supabase showing
+    //   {"code":400,"error_code":"validation_failed","msg":"Unsupported provider: …"}
+    // on a domain that is not ours. That is why the button is only rendered when
+    // `googleEnabled` says the provider actually exists; this guard is the second lock.
+    if (!googleEnabled) {
+      return { ok: false, error: authErrorMessage({ code: "provider_disabled" }) };
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: redirectTo() },
     });
-    // On success the browser redirects; an error means the provider isn't enabled yet.
-    return error
-      ? { ok: false, error: "Google sign-in isn't enabled yet. Use email instead." }
-      : { ok: true };
-  }, [supabase]);
+    return error ? { ok: false, error: authErrorMessage(error) } : { ok: true };
+  }, [supabase, googleEnabled]);
 
   const signOut = useCallback(async () => {
     if (!supabase) return;
@@ -278,6 +293,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AuthContextValue>(
     () => ({
       enabled,
+      signupOpen,
+      googleEnabled,
       ready,
       user,
       session,
@@ -297,6 +314,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }),
     [
       enabled,
+      signupOpen,
+      googleEnabled,
       ready,
       user,
       session,
