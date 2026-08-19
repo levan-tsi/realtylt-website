@@ -834,3 +834,14 @@ TARGET 2026-02-18 is ~20 windows out.
 THE REFUTED IDEA, recorded: "push harder and the limit may rise" — their notice says the
 opposite, and names the sanctioned alternative (a Grace Period requested IN ADVANCE). The
 speedup came from reading their enforcement schedule, not from testing it.
+
+## 2026-08-19 03:20 — windows 9 and 10 at rps 2.0: eight clean in a row
+Window 9: 1,227 sales / 6,000 photos / 51.2 min — ok:6,000, zero failures.
+Window 10: 1,230 sales / 6,000 photos / 51.1 min — ok:6,000, zero failures.
+EIGHT consecutive clean windows since the corrected rules: 45,299 downloads, ZERO 429s,
+one network timeout in the whole series.
+CUMULATIVE: 10,489 sales illustrated, 51,302 objects, reach 2026-08-16 → 2026-06-15.
+Two months of closings now carry photographs; 10,489 of the ~49,300 twelve-month cohort.
+Daily trailing 34,364 of the 38,000 target — the day door closes now, reopens as the
+overnight spend rolls off. Pace steady at ~6.4 days of sales per window; target
+2026-02-18 is ~18 windows out.
