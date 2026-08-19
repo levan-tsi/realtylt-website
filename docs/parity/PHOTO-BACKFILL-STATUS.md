@@ -817,3 +817,20 @@ RATE HOLDS: 33 days of sales covered in 6 windows ≈ 4.6 days per ~5,000-downlo
 matching the 4.5 estimate. Target 2026-02-18 (six months) is ~32 windows out ≈ 8 days at
 4/day — slower than the 5-6 nights first projected, because the day cap binds sooner than
 the hour did. Newest-first throughout: the comps most likely to be picked are already done.
+
+## 2026-08-19 00:50 — window 8: the corrected rate proves out. 2.0 rps, 6,000 clean.
+The owner produced the 07/15 suspension email, which publishes the REAL enforcement tiers
+(now in docs/vendor/mlsgrid/README.md): warning at 4 RPS / 7,200 req/hr / 3,072 MB/hr /
+40k per 24h; suspension at 6 RPS / 18,000/hr / 60k per 24h. We had been running at 1.7 rps
+— below even the documented 2 — out of caution added after the 08-12 trips.
+Window 8 at rps 2.0, 6,000 downloads: 1,221 sales, 51.2 minutes, ok:6,000, ZERO failures.
+Six consecutive clean windows now (33,299 downloads, zero 429s). Hourly data ~2.5 GB
+against the 3,072 MB warning; daily 33,798 against the 40,000 warning. No warning tier
+entered.
+CUMULATIVE: 8,032 sales illustrated, 39,302 objects, reach 2026-08-16 → 2026-06-29
+(7 weeks of sales). Rate: ~6.4 days of sales per 6,000-download window at the new pace —
+better than the 5.3 at 1.7 rps, because window size rose AND older weeks close fewer sales.
+TARGET 2026-02-18 is ~20 windows out.
+THE REFUTED IDEA, recorded: "push harder and the limit may rise" — their notice says the
+opposite, and names the sanctioned alternative (a Grace Period requested IN ADVANCE). The
+speedup came from reading their enforcement schedule, not from testing it.
