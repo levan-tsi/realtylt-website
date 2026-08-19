@@ -68,3 +68,44 @@ Do NOT read the 215k day as capacity; read it as the breach that proved the cap.
 - Avoid launching within the hourly sync's media window (tick at :07, a few minutes of
   media work after) — two of OUR OWN writers otherwise stack against one 2 RPS account cap.
 - For a bulk finish, the sanctioned route is the Grace Period email, in advance.
+
+## ═══ THE ACTUAL ENFORCEMENT THRESHOLDS — from a real suspension email (owner, 07/15/2026)
+## ═══ This supersedes guesswork. It is MORE specific than the Best Practices Guide. ═══
+
+The guide publishes ONE number (2 RPS). The suspension notice publishes TWO TIERS:
+
+**WARNING limits** — exceed these and they warn:
+1. 7,200 requests per hour
+2. 3,072 MB downloaded per hour
+3. **4 requests per second at all times**
+4. 40,000 requests per rolling 24 hours
+5. 40 GB per 24 hours
+
+**TEMPORARY SUSPENSION limits** — exceed these and access is cut:
+1. 18,000 requests per hour
+2. 4,096 MB per hour
+3. **6 requests per second**
+4. **60,000 requests per rolling 24 hours**
+5. 60 GB per 24 hours
+
+The suspension that produced this notice fired at **8.0 RPS** — above the 6 RPS suspension
+tier. Their words: "permissions for the token will be automatically reinstated once
+sufficient time has passed to decrease the number of requests submitted or the amount of
+data consumed to acceptable levels." And again: "In cases where it may be necessary to
+exceed these limits please contact support@mlsgrid.com IN ADVANCE for guidance."
+
+WHAT THIS CHANGES FOR US — we have been running well under even the WARNING tier:
+· rps 1.7 against a documented rule of 2 and a warning threshold of 4.
+· ~5,800 requests/hour against a 7,200 warning threshold.
+· ~34,000/24h against a 40,000 warning threshold (and a 60,000 suspension threshold).
+· Data: at ~415 KB/photo, 5,800/hr ≈ 2.4 GB/hr against a 3,072 MB/hr warning threshold —
+  THIS is the tightest of the hourly three, and it caps us near 7,200 photos/hour no
+  matter what the request count allows.
+
+STANDING DECISION (2026-08-18): move to **rps 2.0** — the guide's own documented limit,
+which we were sitting below out of caution — and raise the daily target from ~34k to
+~38k, still inside the warning tier. Do NOT operate in the 4-6 RPS band or above 40k/day:
+that is the band where warnings are generated, and a pattern of warnings is what precedes
+a suspension. Never approach the 60k/6 RPS suspension tier deliberately.
+"Push harder to see if the limit rises" is REFUTED by this notice: exceeding does not
+raise a cap, it triggers enforcement. The sanctioned way to exceed is the advance email.
