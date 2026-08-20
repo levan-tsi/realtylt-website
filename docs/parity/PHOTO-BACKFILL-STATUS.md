@@ -866,3 +866,13 @@ Instead read the profile —
 door gains, and their timestamps + 24h are when. Subtract ~500/hr of sync. Predicted 5,000
 for this window against an actual 5,827, after a first use that predicted 30,300 trailing
 against an actual 30,284. Two for two.
+
+## 2026-08-20 00:30 — a correction to the step-timing technique: buckets drain GRADUALLY
+The 08-19 04:00 UTC hour held 5,626 downloads, so the door was predicted near 5,300 once it
+"aged out" at 04:20 UTC. Actual door at that moment: 3,505. The prediction assumed an hour
+bucket leaves the rolling window as a block; it does not — a 04:00-05:00 bucket ages out
+CONTINUOUSLY across 04:00-05:00 the next day, so at 04:25 only about a quarter of it has
+cleared. Schedule for the END of the bucket's hour (05:25 here), not its start, or accept a
+partial door and run smaller. Window 13 took the 3,400 that was genuinely free rather than
+idling for the rest. The technique still beats blind waiting; it just needs the right edge
+of the bucket.
