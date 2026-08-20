@@ -26,10 +26,12 @@
 ##      ~4-5 windows/day is the ceiling. Do not fight it.
 ##   4. ANY 429 → drop to --rps 1.7, stop, wait >= 4 HOURS (not minutes; that rule cost two
 ##      lessons). Ledger every ~3 windows, explicit-pathspec commit on MAIN, push.
-##   STATE AT HANDOFF: window 16 was mid-flight (~4,600 of 6,000 done). 16,071 sales
-##   illustrated before it, ~78,500 objects, reach 2026-04-30. THIRTEEN consecutive clean
-##   windows, 72,499 downloads, ZERO 429s. TARGET reach 2026-02-18 (six months) ≈ 10 more
-##   windows ≈ 2-3 days. When the reach passes it: final numbers, STOP scheduling, done.
+##   STATE AT HANDOFF (window 16 finished clean after the block below was first written):
+##   17,311 sales illustrated · 84,506 photographs · reach 2026-04-20 — FOURTEEN consecutive
+##   clean windows, 78,499 downloads, ZERO 429s, two timeouts in the whole series. Trailing
+##   24h was 34,345 at handoff, so the door is shut: the next window is the END of a big
+##   bucket, not "now". TARGET reach 2026-02-18 (six months) ≈ 9-10 more windows ≈ 2-3 days.
+##   When the reach passes it: final numbers, STOP scheduling, done.
 ##
 ## ── ITEM 2: THE CMA SOLD-PHOTO WIRING IS DONE ON BOTH SIDES. IT NEEDS A CRM DEPLOY. ─────
 ## The CRM session said this was the website's job. It is not, and here is the proof:
