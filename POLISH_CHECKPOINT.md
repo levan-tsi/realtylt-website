@@ -1,5 +1,90 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## ═══════════ HANDOFF 2026-08-20 — READ THIS FIRST, THEN ACT ON ITEM 1 ═══════════════════
+##
+## ── ITEM 1: THE SOLD-PHOTO LOOP IS RUNNING AND ITS SCHEDULER DIED WITH THE LAST SESSION ─
+## Session-only cron jobs do NOT survive a new session. Nothing is lost — every stop is
+## resumable because the resume marker is a DB column — but nobody is driving it until you
+## start. RESUME IT AS THE FIRST ACT OF THE ROUND, then keep it cycling in the background
+## while you do everything else.
+##   THE LOOP (full law: docs/vendor/mlsgrid/README.md "ACTUAL ENFORCEMENT THRESHOLDS",
+##   plus the 2026-08-17/18/20 entries in docs/parity/PHOTO-BACKFILL-STATUS.md):
+##   1. Check no runner is live: Get-CimInstance Win32_Process matching 'sold-photos'.
+##   2. Measure BOTH doors from storage.objects (project wpfmhmnceflfruhssqqb, bucket
+##      mls-photos): daily = 38000 - trailing24h - 1500; hourly = min(6000, 7000 - trailing1h).
+##      Launch only if BOTH > 3000, sized to the SMALLER:
+##      node scripts/backfill-sold-photos.mjs --max-downloads <N> --rps 2.0 >> scripts/.backfill-sold-r28.log
+##   3. TIME THE NEXT WINDOW FROM THE HOUR PROFILE, never a blind wait — and schedule for a
+##      bucket's END, because an hour bucket drains CONTINUOUSLY across the same hour the
+##      next day (scheduling at its start caught 3,505 of a predicted 5,300):
+##        select date_trunc('hour', created_at) as hr, count(*) from storage.objects
+##        where bucket_id='mls-photos' and created_at > now() - interval '25 hours'
+##        group by 1 order by 1 limit 12;
+##      STEADY STATE: the door only really reopens when one of OUR OWN past windows ages
+##      out, because the hourly sync eats ~500/hr and the small daytime buckets shed about
+##      the same. So each window run today creates tomorrow's window at the same hour;
+##      ~4-5 windows/day is the ceiling. Do not fight it.
+##   4. ANY 429 → drop to --rps 1.7, stop, wait >= 4 HOURS (not minutes; that rule cost two
+##      lessons). Ledger every ~3 windows, explicit-pathspec commit on MAIN, push.
+##   STATE AT HANDOFF: window 16 was mid-flight (~4,600 of 6,000 done). 16,071 sales
+##   illustrated before it, ~78,500 objects, reach 2026-04-30. THIRTEEN consecutive clean
+##   windows, 72,499 downloads, ZERO 429s. TARGET reach 2026-02-18 (six months) ≈ 10 more
+##   windows ≈ 2-3 days. When the reach passes it: final numbers, STOP scheduling, done.
+##
+## ── ITEM 2: THE CMA SOLD-PHOTO WIRING IS DONE ON BOTH SIDES. IT NEEDS A CRM DEPLOY. ─────
+## The CRM session said this was the website's job. It is not, and here is the proof:
+##  · WEBSITE SIDE — VERIFIED LIVE 2026-08-20: /api/media/<idx_sold.listing_key>/<i> serves
+##    sold photos as real JPEGs off production (KEY425218452 idx 0/1/4 → 200 image/jpeg,
+##    875 KB / 924 KB / 241 KB). No website change is needed or wanted.
+##  · CRM SIDE — the three edits that carry photos_mirrored through to the comp are ALREADY
+##    COMMITTED in /root/crm-prod-0805 as 3201891 (sold-comps.ts select + toSoldComp,
+##    sold-provider.ts photoCount), verified end-to-end there against the live bucket, plus
+##    later sold-photo work in f9a2b82.
+##  · WHAT IS ACTUALLY MISSING: a CRM PRODUCTION DEPLOY. Its own handoff (8aa9719) says
+##    production was rolled back on purpose. Until the CRM ships, the photos exist and
+##    serve but no report displays them. That is the CRM lane's call, not this repo's.
+##
+## ── ITEM 3: WHAT ELSE IS OPEN ───────────────────────────────────────────────────────────
+## OWNER DECISIONS (nothing moves without him):
+##  · MANHATTAN IS A 55% MARKET. Measured against OneKey's own portal: we hold 25,023 of
+##    25,275 across eleven counties (99.0%), but Manhattan 494/891 and Brooklyn 1,584/1,778.
+##    ~590 listings are absent from the feed ENTIRELY (probed with every filter stripped,
+##    controls passing), so it is upstream suppression, not our bug. ONE EMAIL to MLS Grid
+##    decides whether Manhattan is recoverable. Full evidence: docs/parity/INVENTORY-GAP-2026-08-18.md
+##  · ACCOUNTS: registration and Google sign-in are shut. docs/accounts/OWNER-RUNBOOK.md has
+##    the exact steps. TWO PREREQUISITES IN IT: (a) handle_new_user files any account without
+##    account_type='portal' as CRM STAFF, and Google cannot carry that marker — enabling
+##    Google as-is turns every visitor into a CRM agent (proven with throwaway accounts);
+##    (b) SMTP must be settled or every registrant is stranded. A registration DOES reach the
+##    CRM as a contact (proven by creating and deleting a real account) but notifies nobody.
+##  · GRACE PERIOD EMAIL to support@mlsgrid.com is drafted and unsent — it would collapse the
+##    remaining photo windows into one run. Optional; the loop finishes without it.
+##  · Design calls prepared but not decided: Google review badge variant, map arrival frame,
+##    hero-grammar consolidation, mobile MAP/GRID default, the mobile hero's photograph.
+## ENGINEERING, READY TO PICK UP:
+##  · DESIGN CAMPAIGN pages 3-10 had ONE scored pass each (round 34, +11.25 across nine).
+##    The adversarial review's verdict governs: the scorer is a REGRESSION GATE, not a design
+##    score — nine of twelve dimensions are floors a competitor's theme clears untouched, so
+##    ~50/60 means "nothing broken", not "good". The owner's ask is elevation, and it wants
+##    ONE page taken seriously over 2-3 passes with his eye on previews, not another sweep.
+##    Records: docs/parity/PAGES-R32/R33/R34.md + DESIGN-REVIEW-R32.md.
+##  · CARRIED DEFECTS, measured and unfixed: /search puts the first home 942px down a phone
+##    (all three bands are owner-directed, so it is his call); the chat widget is a foreign
+##    object on every page and covers the footer form's Message box on a phone (another
+##    project owns it); ListingDetail.tsx:546 has a "Sign Up" link that goes to a saved-search
+##    URL; "Forgot password" says a reset was emailed for addresses with no account (that one
+##    is deliberate anti-enumeration — leave it).
+##  · Photo housekeeping still owner-gated: covers-keep prune (~10 GB), cache-control S3
+##    sweep (needs S3 keys he must mint).
+## GATES AT HANDOFF: tsc clean · npm test 1006 · next build clean · all committed probes
+## green (zoom-ladder, marker-reconcile, press-feedback, hero-contrast, reduced-motion,
+## map-popup, viewport-scope, pin-walk, saved-flow, geocode-truth).
+## STANDING RULES THAT EARNED THEMSELVES: verify a subagent's "done" by re-running the gate
+## yourself; a claim about MLS Grid cites docs/vendor/mlsgrid/ or is a hypothesis; run
+## `npm run build` before any push (a green suite has shipped a non-compiling tree before);
+## commit with explicit pathspecs, never `git add -A`; ONE dev server; block **/api/media/**
+## in probes; **/api/lead posts to the LIVE CRM — intercept it.
+
 ## === ROUND 31 - 2026-08-17. THE MARKER LAYER, AND THE MOTION IT WAS BLOCKING.
 ## === 5 commits, NOT pushed. Full record: docs/parity/DESIGN-ROUND31.md.
 ## === NOTE FOR THE PUSHING SESSION: `next build` was NOT run - a dev server holds :3100 and
