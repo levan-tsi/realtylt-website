@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { SearchClient, type SearchPayload } from "@/components/search/SearchClient";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { parseSearchRequest } from "@/lib/idx/query";
-import { SITE } from "@/lib/site";
 
 type RawParams = Record<string, string | string[] | undefined>;
 
@@ -66,19 +65,14 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <>
       {/* Live search page has no hero band — filters start right under the nav. */}
       <h1 className="sr-only">Search Listings: Hudson Valley homes for sale</h1>
-      {/* The results and the filter bar are real HTML now, so a no-JS visitor gets homes rather
-          than a dead end. What they cannot do is CHANGE the search — every control is React —
-          so point them at the pages that work without it. */}
-      <noscript>
-        <div className="mx-auto max-w-[1400px] px-4 pt-10 text-sm text-stone lg:px-8">
-          Filtering, the map and saved searches need JavaScript. The homes below are today&rsquo;s
-          Hudson Valley listings; browse them by{" "}
-          <a href="/top-areas" className="font-bold text-ink underline underline-offset-2">area</a>{" "}
-          or call us at{" "}
-          <a href={SITE.phoneHref} className="font-bold text-ink underline underline-offset-2">{SITE.phone}</a>{" "}
-          and we&rsquo;ll run a search for you.
-        </div>
-      </noscript>
+      {/* THE NO-JS MESSAGE MOVED TO loading.tsx, and it had to. A <noscript> here read "The homes
+          below are today's Hudson Valley listings" — but loading.tsx wraps this route in a Suspense
+          boundary, so everything this file returns is STREAMED into `<div hidden id="S:0">` and
+          revealed by an inline `$RC(...)` call. Without scripting nothing reveals it, so that
+          message sat in a hidden div and never reached one of the visitors it was written for,
+          promising homes that were not on screen. The route's fallback IS in the shell, which is
+          the part that renders without JavaScript, so the message lives there now. Full
+          measurements in loading.tsx. */}
       {/* The route is dynamic, so this boundary never fires on a fresh load — SearchClient's
           useSearchParams resolves during the server pass and the real UI is in the HTML. It
           still covers a client-side navigation INTO /search, where the RSC payload is in
