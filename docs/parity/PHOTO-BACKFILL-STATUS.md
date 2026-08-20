@@ -845,3 +845,24 @@ Two months of closings now carry photographs; 10,489 of the ~49,300 twelve-month
 Daily trailing 34,364 of the 38,000 target — the day door closes now, reopens as the
 overnight spend rolls off. Pace steady at ~6.4 days of sales per window; target
 2026-02-18 is ~18 windows out.
+
+## 2026-08-19 21:25 — windows 11-12, and the scheduling技 that removed the guesswork
+Window 11: 1,233 sales / 6,000 photos / 51.4 min — ok:6,000, zero failures.
+Window 12: launched at 5,800 (daily door 5,827, hourly 6,000).
+NINE consecutive clean windows before 12: 51,299 downloads, ZERO 429s, one timeout total.
+CUMULATIVE at window 11: 11,722 sales illustrated, 57,302 objects, reach 2026-08-16 →
+2026-06-04 — about 24% of the ~49,300 twelve-month cohort, and the whole window most CMAs
+draw their strongest comps from.
+
+TIMING THE REOPENING — a technique worth keeping. The rolling 24h budget does NOT drain
+smoothly; it opens in STEPS as each past hour ages out exactly 24h later, while the hourly
+sync keeps adding ~500/hr against it. Blind "check in 2-3 hours" waits either idle a usable
+window or find the door still shut (observed twice: 34,242 → 34,554 RISING between checks).
+Instead read the profile —
+  select date_trunc('hour', created_at) as hr, count(*) from storage.objects
+  where bucket_id='mls-photos' and created_at > now() - interval '25 hours'
+  group by 1 order by 1 limit 6;
+— the earliest hours listed are exactly what rolls off next, their counts are how much the
+door gains, and their timestamps + 24h are when. Subtract ~500/hr of sync. Predicted 5,000
+for this window against an actual 5,827, after a first use that predicted 30,300 trailing
+against an actual 30,284. Two for two.
