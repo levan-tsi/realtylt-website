@@ -876,3 +876,23 @@ cleared. Schedule for the END of the bucket's hour (05:25 here), not its start, 
 partial door and run smaller. Window 13 took the 3,400 that was genuinely free rather than
 idling for the rest. The technique still beats blind waiting; it just needs the right edge
 of the bucket.
+
+## 2026-08-20 07:05 — windows 13-14, and the first photos that cost no MLS request
+Window 13: 694 sales / 3,400 photos / 29.5 min — ok:3,400, zero failures (ran the partial
+door rather than idling; see the timing correction above).
+Window 14: 1,228 sales / 6,005 photos / 51.1 min — ok:6,000, **copied:5**, zero failures.
+TWELVE consecutive clean windows: 66,499 downloads, ZERO 429s, one timeout in the series.
+CUMULATIVE: 14,837 sales illustrated, ~72,500 objects, reach 2026-08-16 → 2026-05-12.
+Three months of closings carry photographs; ~30% of the ~49,300 twelve-month cohort.
+
+**copied:5 is the keep-on-transition design paying out for the first time.** Those five
+photographs were taken by the bucket-internal COPY path — a sale that still held the
+photos it earned during its active life, so the mirror moved them instead of re-downloading
+from MLS Grid. Zero requests, zero quota. The share stays small on the HISTORICAL tail
+(those sales closed before we mirrored actives) but it is the whole story going forward:
+every future closing arrives already illustrated at no cost, which is exactly what the
+owner's rule bought — "they just move from active or pending to sold instead of deleting or
+downloading again".
+ALSO LIVE as of 2026-08-20: sold-comp GEOCODING is wired into the hourly sync (merged
+4054259), so new sales place themselves on CMA and market-report maps within the hour.
+Recent-30-day sold geocode coverage: 4,287 of 4,862 (88%); 49,600 sold geocodes total.
