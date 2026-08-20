@@ -62,7 +62,12 @@
 //                                         [--concurrency 4] [--dry-run]
 // --max-downloads is REQUIRED and is a budget of MEDIA downloads for this run.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
+/** The marker paths and the liveness check live in one place so a writer and a reader cannot
+ *  drift apart. Until PENALTY_FILE existed the 4-hour rule was a sentence in a console message:
+ *  this script printed "STOPPED" and then exited 0 like a clean finish, so neither an operator
+ *  nor a loop could tell the difference. scripts/sold-window.mjs reads both. */
+import { isRunnerAlive, PENALTY_FILE, pidAlive, RUNNER_LOCK } from "../lib/idx/media-window.mjs";
 
 // ── args ──────────────────────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
@@ -303,7 +308,25 @@ console.log(
 let downloads = 0;
 let listingsDone = 0;
 let photosLanded = 0;
+let penalised = false;
 const started = Date.now();
+
+// ONE media runner ever — the 2 RPS / 7,200-per-hour / 40,000-per-24h caps are the ACCOUNT's, and
+// the hourly sync is already spending against them. A second runner is how a key gets suspended,
+// so refuse here rather than trusting whoever invoked this to have checked first.
+if (!DRY) {
+  if (isRunnerAlive((f) => readFileSync(f, "utf8"), pidAlive)) {
+    throw new Error(
+      `another sold-photo runner is live (${RUNNER_LOCK}) — ONE runner ever. Wait for it, or if ` +
+      `you are certain it is dead, delete that file.`,
+    );
+  }
+  writeFileSync(RUNNER_LOCK, `${process.pid}\n${new Date().toISOString()}\n`, "utf8");
+  // Released however this process ends, including an uncaught throw, so a crash cannot leave a
+  // lock that blocks every later window. A hard kill still can, which is why the reader checks
+  // the pid rather than trusting the file's presence.
+  process.on("exit", () => { try { rmSync(RUNNER_LOCK, { force: true }); } catch {} });
+}
 
 try {
   for (;;) {
@@ -399,11 +422,25 @@ try {
     if (DRY) { console.log("dry run: one batch only."); break; }
   }
 } catch (e) {
-  if (e instanceof RateLimited) console.error(`STOPPED: ${e.message}`);
-  else throw e;
+  if (e instanceof RateLimited) {
+    console.error(`STOPPED: ${e.message}`);
+    penalised = true;
+  } else throw e;
 }
 
 console.log(
   `\nDONE ${DRY ? "(dry)" : ""} listings=${listingsDone} photos=${photosLanded} downloads=${downloads}` +
   ` minutes=${((Date.now() - started) / 60000).toFixed(1)}\noutcomes: ${report()}`,
 );
+
+if (penalised && !DRY) {
+  // A stamped marker and a distinct exit code, because "STOPPED" on stderr is invisible to the
+  // caller. 42 is not 0 and not 1: a supervising loop must be able to tell a rate-limit stop
+  // from a clean finish AND from a crash, since only the first one owes four hours.
+  writeFileSync(PENALTY_FILE, `${new Date().toISOString()}\n`, "utf8");
+  console.error(
+    `RATE-LIMIT PENALTY recorded in ${PENALTY_FILE}. The next window waits 4 HOURS (not minutes)\n` +
+    `and comes back at --rps 1.7. scripts/sold-window.mjs enforces both; do not delete the marker.`,
+  );
+  process.exitCode = 42;
+}
