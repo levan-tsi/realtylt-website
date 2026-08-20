@@ -10,10 +10,16 @@
 ##   THE LOOP (full law: docs/vendor/mlsgrid/README.md "ACTUAL ENFORCEMENT THRESHOLDS",
 ##   plus the 2026-08-17/18/20 entries in docs/parity/PHOTO-BACKFILL-STATUS.md):
 ##   1. Check no runner is live: Get-CimInstance Win32_Process matching 'sold-photos'.
-##   2. Measure BOTH doors from storage.objects (project wpfmhmnceflfruhssqqb, bucket
-##      mls-photos): daily = 38000 - trailing24h - 1500; hourly = min(6000, 7000 - trailing1h).
-##      Launch only if BOTH > 3000, sized to the SMALLER:
-##      node scripts/backfill-sold-photos.mjs --max-downloads <N> --rps 2.0 >> scripts/.backfill-sold-r28.log
+##   2. THE WHOLE DECISION IS NOW ONE COMMAND — use it, do not hand-roll the arithmetic:
+##        node scripts/sold-window.mjs              (measures both doors, launches if open)
+##        node scripts/sold-window.mjs --dry-run    (decides and prints, launches nothing)
+##      It sizes the run to the SMALLER door (daily = 38000 - trailing24h - 1500;
+##      hourly = min(6000, 7000 - trailing1h)), passes --rps 2.0, refuses below a 3,000 floor,
+##      and when the door is shut it prints exactly how to find the next good moment. It reads
+##      its own spend via public.media_spend() (migration media_spend_readonly_counter: two
+##      integers, service-role only) because PostgREST does not expose the storage schema.
+##      The underlying runner still enforces its own guards and REFUSES to run without an
+##      explicit --max-downloads, so nothing can run away even if invoked by hand.
 ##   3. TIME THE NEXT WINDOW FROM THE HOUR PROFILE, never a blind wait — and schedule for a
 ##      bucket's END, because an hour bucket drains CONTINUOUSLY across the same hour the
 ##      next day (scheduling at its start caught 3,505 of a predicted 5,300):
