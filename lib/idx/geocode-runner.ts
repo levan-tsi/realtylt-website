@@ -16,6 +16,7 @@
  */
 import ZIP_CENTROIDS from "./zip-centroids.json";
 import { addrKey, rejectReason, type GeocodeHit, type GeocodeRow } from "./geocode";
+import type { SoldGeocodeRecord } from "./db";
 
 export interface GeocodeDeps {
   /** Active listings still standing on a zip centroid that nothing has tried yet. */
@@ -70,4 +71,63 @@ export async function geocodePending(deps: GeocodeDeps, limit: number): Promise<
 
   await deps.apply(accepted, unplaced);
   return { considered: pending.length, placed: accepted.length, unplaced: unplaced.length, rejected };
+}
+
+// ── Sold-comp variant ────────────────────────────────────────────────────────────────────────
+//
+// The closed-sale twin of geocodePending. Same free Census geocoder, same believability gate — but
+// it writes the sold_geocodes store (keyed by listing_key) and records NO misses: a sold row has no
+// "tried" marker, so an address Census cannot place is simply retried on a later tick. That retry
+// is free and self-heals if Census later gains the address; the caller's budget + newest-first
+// ordering keep the re-ask set tiny. Like geocodePending it never throws into the sync's happy path.
+
+export interface SoldGeocodeDeps {
+  /** Closed sales with no sold_geocodes entry yet (id === listing_key). */
+  listPending(limit: number): Promise<GeocodeRow[]>;
+  /** Ask the geocoder. Rows it cannot place come back as misses (which are simply dropped). */
+  geocode(rows: readonly GeocodeRow[]): Promise<{ hits: GeocodeHit[]; misses: GeocodeRow[] }>;
+  /** Upsert accepted geocodes into sold_geocodes; returns how many rows were written. */
+  apply(records: readonly SoldGeocodeRecord[]): Promise<number>;
+}
+
+/** The address string a sold geocode was measured FOR — the CRM's stored shape (`street, city,
+ * ST zip`), so a future re-seed can verify the coordinate still fits the row. */
+function soldSourceAddress(row: GeocodeRow): string {
+  return `${row.address}, ${row.city ?? ""}, ${row.state ?? "NY"} ${row.zip}`.replace(/\s+/g, " ").trim();
+}
+
+export async function geocodeSoldPending(deps: SoldGeocodeDeps, limit: number): Promise<GeocodeRunResult> {
+  const empty: GeocodeRunResult = { considered: 0, placed: 0, unplaced: 0, rejected: 0 };
+  if (limit <= 0) return empty;
+
+  const pending = await deps.listPending(limit);
+  if (!pending.length) return empty;
+
+  const { hits } = await deps.geocode(pending);
+  const byId = new Map(pending.map((r) => [r.id, r]));
+
+  const records: SoldGeocodeRecord[] = [];
+  let rejected = 0;
+  for (const h of hits) {
+    const row = byId.get(h.id);
+    if (!row) continue; // a hit for a row we did not ask about — ignore
+    if (rejectReason(h, centroidOf(row.zip))) {
+      rejected++;
+      continue;
+    }
+    records.push({
+      listing_key: h.id,
+      lat: h.lat,
+      lng: h.lng,
+      source: h.source,
+      precision: h.precision,
+      matched_address: h.matchedAddress,
+      source_address: soldSourceAddress(row),
+    });
+  }
+
+  const placed = await deps.apply(records);
+  // Everything not written this tick is unplaced (geocoder misses + gate rejections). Misses are
+  // NOT persisted, so the next tick asks again — bounded by the budget and newest-first ordering.
+  return { considered: pending.length, placed, unplaced: pending.length - placed, rejected };
 }
