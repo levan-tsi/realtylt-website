@@ -518,7 +518,12 @@ export async function ListingDetail({ id }: { id: string }) {
       )}
 
       {/* ── Never miss a property (live parity): black band → the existing save-search flow,
-          prefilled from this listing's county. */}
+          prefilled from this listing's county.
+          THE ACTION IS NAMED FOR WHAT IT DOES. This said "Sign Up", which promised an account and
+          delivered a dialog titled "Save this search" — and with accounts shut (accountsEnabled
+          false) that dialog hides both of its sign-in affordances, so the one thing the label
+          named was the one thing that could not happen. An action keeps a single name through the
+          whole flow; the band's heading and the bell already carry the alerting promise. */}
       {/* THE VERTICAL RHYTHM IS A COMMITTED SCALE AND THIS PAGE WAS THE ONE IGNORING IT. Every
           other page picks sec-sm/sec/sec-lg (80/112/144 at desktop); the listing page's three
           marketing bands were an ad-hoc py-12 md:py-16 (48/64), which is why three consecutive
@@ -543,7 +548,7 @@ export async function ListingDetail({ id }: { id: string }) {
               <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
               <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
             </svg>
-            Sign Up
+            Save this search
           </Link>
         </div>
       </section>
