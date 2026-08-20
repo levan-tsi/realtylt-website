@@ -32,8 +32,21 @@ import sharp from "sharp";
 
 const base = (process.env.BASE ?? "http://localhost:3100").replace(/\/+$/, "");
 const PAGES = (process.env.PAGES ?? "/,/buying,/selling,/financing,/connect,/who-we-are,/home-value,/top-areas").split(",");
-const W = Number(process.env.W ?? 1440);
-const H = Number(process.env.H ?? 900);
+
+/** EVERY WIDTH, NOT JUST THE DESKTOP ONE. This gate ran at 1440 by default and was reported
+ *  PASSING for rounds, while /connect's 11px eyebrow sat at 4.14:1 on a phone and 3.66:1 at 320,
+ *  and /selling's reassurance line at 4.32:1 at 320. Nothing was wrong with the measurement — it
+ *  was simply never asked the question, because a scrim gradient covers a different share of a
+ *  narrow viewport than a wide one, so the pixels behind the same text are not the same pixels.
+ *  A contrast gate with one viewport is a contrast gate for one viewport.
+ *  W/H still override for a single-size run: `W=320 H=800 node scripts/verify-hero-contrast.mjs`. */
+const VIEWPORTS = process.env.W
+  ? [{ w: Number(process.env.W), h: Number(process.env.H ?? 900) }]
+  : [
+      { w: 1440, h: 900 },
+      { w: 390, h: 844 },
+      { w: 320, h: 800 },
+    ];
 
 const chan = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
 const lum = (r, g, b) => 0.2126 * chan(r) + 0.7152 * chan(g) + 0.0722 * chan(b);
@@ -43,6 +56,7 @@ const b = await chromium.launch();
 const rows = [];
 let measured = 0;
 
+for (const { w: W, h: H } of VIEWPORTS) {
 for (const path of PAGES) {
   const c = await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   await c.route("**/api/media/**", (r) => r.continue());
@@ -209,7 +223,7 @@ for (const path of PAGES) {
     const floor = it.large ? 3 : 4.5;
     if (cr < floor) {
       rows.push({
-        path, cr: Math.round(cr * 100) / 100, floor, size: Math.round(it.size), text: it.text, fg: it.fg,
+        path, vp: `${W}x${H}`, cr: Math.round(cr * 100) / 100, floor, size: Math.round(it.size), text: it.text, fg: it.fg,
         // Where and how much, so a failure can be re-cropped and looked at rather than argued
         // about — a bare ratio cannot distinguish a real one from a paint race.
         at: `${it.box.x},${it.box.y} ${Math.round(it.box.w)}x${Math.round(it.box.h)}`,
@@ -220,16 +234,20 @@ for (const path of PAGES) {
   }
   await c.close();
 }
+}
 await b.close();
 
 rows.sort((a, z) => a.cr - z.cr);
-console.log(`measured ${measured} painted text runs across ${PAGES.length} pages at ${W}x${H}\n`);
+const sizes = VIEWPORTS.map((v) => `${v.w}x${v.h}`).join(", ");
+console.log(`measured ${measured} painted text runs across ${PAGES.length} pages at ${sizes}\n`);
 if (!rows.length) console.log("PASS — every painted text run clears its AA floor against the pixels behind it.");
 else {
   console.log(`${rows.length} BELOW their AA floor (worst first):\n`);
   for (const r of rows) {
     const fg = `rgba(${r.fg.r},${r.fg.g},${r.fg.b},${r.fg.a.toFixed(2)})`;
-    console.log(`${r.cr.toFixed(2)}:1 (needs ${r.floor})  ${r.path.padEnd(12)} ${(r.size + "px").padEnd(6)} ${fg.padEnd(24)} "${r.text}"  @${r.at} glyphpx=${r.px} bg ${r.bg}`);
+    // The VIEWPORT is part of the finding, not context for it: the same run passes at 1440 and
+    // fails at 320, so a row without its width cannot be reproduced.
+    console.log(`${r.cr.toFixed(2)}:1 (needs ${r.floor})  ${r.vp.padEnd(9)} ${r.path.padEnd(12)} ${(r.size + "px").padEnd(6)} ${fg.padEnd(24)} "${r.text}"  @${r.at} glyphpx=${r.px} bg ${r.bg}`);
   }
 }
 process.exit(rows.length ? 1 : 0);

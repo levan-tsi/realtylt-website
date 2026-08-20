@@ -43,7 +43,12 @@ export default function ConnectPage() {
             goes white. It was text-ink-soft over a washed-out light band; against a dark hero
             that is dark-on-dark and unreadable. */}
         <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-28 lg:px-8">
-          <p className="t-eyebrow text-paper/70">Seven days a week</p>
+          {/* /85, not /70: at 11px over live photography, 30% translucency is more margin than
+              the AA floor can spare. The home hero learned this in round 11 and sits at /85; this
+              band kept /70 and nobody caught it because scripts/verify-hero-contrast.mjs had only
+              ever been run at its 1440 default, where the scrim is deep enough to carry it.
+              Measured here at 390 it was 4.14:1 and at 320 3.66:1, against a 4.5 floor. */}
+          <p className="t-eyebrow text-paper/85">Seven days a week</p>
           <h1 id="connect-hero" className="t-h1 mt-5 text-paper">
             Contact Us <strong>Anytime</strong>
           </h1>

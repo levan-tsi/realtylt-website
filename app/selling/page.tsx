@@ -123,7 +123,11 @@ export default async function SellingPage() {
               <span className="sm:border-l sm:border-paper/25 sm:pl-8">Fast Response</span>
               <span className="sm:border-l sm:border-paper/25 sm:pl-8">Free Consultation</span>
             </div>
-            <p className="mt-4 text-xs tracking-wide text-paper/60">
+            {/* /80, not /60. Same lesson as the /connect eyebrow, one size up: 12px at 40%
+                translucency over a photograph measured 4.32:1 at 320 against a 4.5 floor. The
+                twin line on /buying carries the same words in the same role and moved with it,
+                so the two cannot drift into different answers to one question. */}
+            <p className="mt-4 text-xs tracking-wide text-paper/80">
               No obligation • Zero pressure • Honest advice
             </p>
             {/* Ghost phone pill with the accent-blue phone icon; fires a gtag Phone click and

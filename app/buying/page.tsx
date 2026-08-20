@@ -100,7 +100,11 @@ export default async function BuyingPage() {
               Book Free Consultation
             </TrackedButton>
           </div>
-          <p className="mt-5 text-xs tracking-wide text-paper/60">
+          {/* /80 to match /selling's twin line. This one measured ABOVE the floor at every width
+              — its photograph is simply darker behind the text — but two identical reassurance
+              lines answering to different alphas is how the next photo swap becomes a silent AA
+              failure on whichever page nobody re-measured. */}
+          <p className="mt-5 text-xs tracking-wide text-paper/80">
             Available 7 days a week • Fast response • No obligation
           </p>
         </div>
