@@ -846,7 +846,7 @@ Daily trailing 34,364 of the 38,000 target — the day door closes now, reopens 
 overnight spend rolls off. Pace steady at ~6.4 days of sales per window; target
 2026-02-18 is ~18 windows out.
 
-## 2026-08-19 21:25 — windows 11-12, and the scheduling技 that removed the guesswork
+## 2026-08-19 21:25 — windows 11-12, and the scheduling technique that removed the guesswork
 Window 11: 1,233 sales / 6,000 photos / 51.4 min — ok:6,000, zero failures.
 Window 12: launched at 5,800 (daily door 5,827, hourly 6,000).
 NINE consecutive clean windows before 12: 51,299 downloads, ZERO 429s, one timeout total.
