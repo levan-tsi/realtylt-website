@@ -1,6 +1,73 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══════════ HANDOFF 2026-08-20 — READ THIS FIRST, THEN ACT ON ITEM 1 ═══════════════════
+## ═══════════ HANDOFF 2026-08-20 (ROUND 35) — READ THIS FIRST ════════════════════════════
+## Full record: docs/parity/DESIGN-ROUND35.md. Single agent, 8 commits, pushed to main.
+##
+## ── ITEM 1: THE SOLD-PHOTO LOOP. RESUME IT FIRST, AS ALWAYS. ────────────────────────────
+## Unchanged in substance — the loop below the round-34 block still governs and is still the
+## first act of any round. What changed is that the two rules that had been PROSE are now
+## CODE, so the one command is safe to leave cycling unattended:
+##   · A 429 stamps scripts/.media-penalty.local and the runner exits 42 (not 0 — it used to
+##     print STOPPED and exit like a clean finish, so nothing could tell the difference).
+##     sold-window.mjs refuses until the 4 hours are served (exit 5) and comes back at 1.7.
+##   · The runner takes scripts/.media-runner.local (its pid) and refuses to start beside a
+##     live one; sold-window.mjs reports that as exit 4. Stale locks are ignored by pid.
+##   · The judgement moved to lib/idx/media-window.mjs, under test (21 cases). Both incidents
+##     from the ledger are reconstructed as tests.
+##   EXIT CODES: 0 ran · 3 doors shut · 4 runner live · 5 penalty · 42 stopped on a 429.
+##   STATE AT HANDOFF (2026-08-20 23:10 UTC): trailing 34,368 in 24h, door SHUT (2,132 of a
+##   3,000 floor). Projected to open ~02:00 UTC 08-21 as the 4,751 bucket from 08-20 01:00
+##   ages out, worth ~5,700. The hourly sync is running quiet (223/hr, not the ~500/hr the
+##   projection assumes), so it may open earlier and larger. Reach was 2026-04-20; TARGET
+##   2026-02-18. A session-scoped loop drove it this round and DIED WITH THE SESSION — start
+##   `node scripts/sold-window.mjs` on a 15-minute cycle again.
+##
+## ── ITEM 2: WHAT ROUND 35 CHANGED ───────────────────────────────────────────────────────
+##  · /search NOW WORKS WITHOUT JAVASCRIPT — the biggest find. loading.tsx wraps the route in
+##    a Suspense boundary, so the page is STREAMED into `<div hidden id="S:0">` and revealed
+##    by an inline $RC() call. Production build: 50 articles in the DOM, 0 visible. page.tsx's
+##    own <noscript> was inside that hidden div, so its "the homes below are today's listings"
+##    was addressed to readers who could never see it. The block lives in loading.tsx now (the
+##    shell) and offers the eleven area pages, which WERE driven with JS off first.
+##    NOTE THE TRADE: the real grid still cannot reach a no-JS visitor. Undoing that means
+##    dropping loading.tsx, which exists for a measured owner complaint. Owner's call.
+##  · The listing "Never miss a property" CTA said "Sign Up" and opened a dialog titled "Save
+##    this search" — while accounts are shut, so it named the one thing that could not happen.
+##  · TWO AA FAILURES THAT ONLY EXISTED ON PHONES (/connect 3.66:1 @320, /selling 4.32:1 @320).
+##    verify-hero-contrast.mjs had only ever run at 1440. IT NOW SWEEPS 1440 + 390 + 320.
+##  · NEW GATE scripts/verify-focus-paint.mjs — screenshots each control, focuses it, diffs.
+##    Result: the site PASSES 182/182. Carries a BREAK_CSS negative control.
+##  · CONSENT BOX, owner's direct instruction mid-round: smaller box and text everywhere.
+##    390 heights: /selling 162 -> 137, /connect 143 -> 100. One component, six call sites.
+##
+## ── ITEM 3: THE HOME PAGE — ASSESSED, AND DELIBERATELY MOSTLY UNCHANGED ─────────────────
+## The round's plan was PAGES-R34.md's four unowned home-page defects. THREE ARE DOCUMENTED
+## DECISIONS, not drift, and DESIGN-ROUND35.md §1 has the table: the heading alignment is a
+## stated rule (centre only over a symmetric grid), the seller block's balance is what
+## `lg:items-center` was added to produce, and the 1x1px "Areas we serve" h2 is sr-only doing
+## its job. The FOURTH is real and is the OWNER'S: the phone gets a different hero photograph
+## because the desktop frame `hero-vimeo-frame.jpg` carries NO LICENCE RECORD. Do not swap the
+## phone onto it without his decision. The round-11-era brief's "search strip is butted
+## together" complaint was fixed in round 27 — measured 600x66 with an 8px gap.
+## NOT CHANGED, recorded for a future round: the stat row is the templated "big number + caps
+## label" device; the areas strip leaves ~360px of empty container to its right at 1440; the
+## MLS disclaimer runs ~138 characters per line at 11px.
+##
+## ── ITEM 4: THE REUSABLE LESSON ─────────────────────────────────────────────────────────
+## SIX of this round's apparent findings were the INSTRUMENT, not the site (DESIGN-ROUND35.md
+## §4): a mutation test that mutated nothing because the file is CRLF; a retry that mutated my
+## own comment instead of the label; a hand-rolled contrast probe scoring 1.00:1 by ignoring
+## alpha; three honeypots flagged as focus failures (tabIndex -1, unreachable); a WORKING focus
+## ring called dead because the crop cut it off; and a failure counter that could not count,
+## because vitest puts ANSI codes between the whitespace and the `×`. Two dev-server A/B tests
+## were also invalid — DEV ALWAYS STREAMS, so only a production build answers a streaming
+## question. Watch every gate FAIL before believing it passed.
+##
+## GATES AT HANDOFF: tsc clean · npm test 1037 / 79 files (baseline was 1006) · npm run build
+## clean 81/81 · verify-hero-contrast PASS 315 runs at 1440+390+320 · verify-focus-paint PASS
+## 182/182 · probe-reduced-motion PASS · verify-press-feedback PASS 15/15.
+##
+## ═══════════ PREVIOUS HANDOFF 2026-08-20 (round 34 era) ═════════════════════════════════
 ##
 ## ── ITEM 1: THE SOLD-PHOTO LOOP IS RUNNING AND ITS SCHEDULER DIED WITH THE LAST SESSION ─
 ## Session-only cron jobs do NOT survive a new session. Nothing is lost — every stop is
