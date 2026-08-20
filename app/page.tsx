@@ -331,8 +331,12 @@ export default async function HomePage() {
           doing it. Sharing TOP_AREA_GROUPS also means this strip and the nav flyout can never
           drift, and it retires the borough-slug branch this file was reimplementing inline.
 
-          Left-aligned on purpose: every other section below the hero centres its heading, and
-          uniform centring is what makes the page read as one repeated shape. */}
+          Left-aligned on purpose — but NOT for the reason this comment used to give. It said
+          "every other section below the hero centres its heading", and that stopped being true
+          when New Listings was deliberately made the quiet one and moved its heading left. The
+          page's actual rule is the one Featured states: a heading centres only where it sits over
+          a symmetric grid, and reads left everywhere else. This strip is a left label against a
+          ragged row of pills, so it reads left. */}
       <section className="bg-paper pb-20 md:pb-28" aria-labelledby="areas-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <h2 id="areas-heading" className="sr-only">
