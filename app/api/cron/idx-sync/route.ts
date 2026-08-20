@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { applyGeocodes, applyIdxSync, getMirrorState, getSyncWatermark, listPendingGeocodes } from "@/lib/idx/db";
+import { applyGeocodes, applyIdxSync, applySoldGeocodes, getMirrorState, getSyncWatermark, listPendingGeocodes, listPendingSoldGeocodes } from "@/lib/idx/db";
 import { censusCsvRow, parseCensusBatch, withoutUnit, type GeocodeRow } from "@/lib/idx/geocode";
-import { geocodePending } from "@/lib/idx/geocode-runner";
+import { geocodePending, geocodeSoldPending } from "@/lib/idx/geocode-runner";
 import { runInRefreshContext } from "@/lib/idx/mls-fetch";
 import { MlsGridClient } from "@/lib/idx/mls-grid";
 import { mirrorPhotos, preservedMarker, type MirrorDeps } from "@/lib/idx/photo-mirror";
@@ -76,6 +76,14 @@ const MIRROR_WALL_MS = 270_000; // mirror + DB writes must finish under maxDurat
 // protects maxDuration; the count just keeps one payload small.
 const GEOCODE_BUDGET = Math.max(0, Number(process.env.GEOCODE_BUDGET) || 300);
 const GEOCODE_WALL_MS = 25_000;
+
+// SOLD-COMP GEOCODING. idx_sold rows arrive with no lat/lng, so a closed comp maps only once its
+// address is geocoded into sold_geocodes (which the CMA / market-report maps read). Same free
+// Census geocoder and the same bounds shape as the active-listing step; newest sales first so a new
+// closing is placed within the hour. Writing needs the service-role key (the store is not
+// visitor-writable), so this whole step is a clean no-op when that key is absent — exactly like
+// photo mirroring. The historical backlog is filled by scripts/backfill-sold-geocodes.mjs.
+const SOLD_GEOCODE_BUDGET = Math.max(0, Number(process.env.SOLD_GEOCODE_BUDGET) || 300);
 
 /** The U.S. Census Bureau's batch geocoder: free, keyless, no account, and NOT MLS Grid — this
  * adds no load to the feed's rate limits. Unit numbers get one retry on the building. */
@@ -356,9 +364,31 @@ export async function GET(req: Request) {
       console.error("[idx-sync] geocoding failed (data sync unaffected):", e);
     }
 
+    // SOLD-COMP GEOCODING — the closed-sale twin of the step above. idx_sold rows land with no
+    // coordinate; this geocodes the newest still-ungeocoded sales into sold_geocodes so CMA and
+    // market-report maps can place recent comps. Service-role only (the store is not
+    // visitor-writable), so it no-ops when SUPABASE_SERVICE_ROLE_KEY is absent — same gate as
+    // mirroring. Best effort inside its own try: a free geocoder's bad minute must never cost a sync.
+    let soldGeocoded = { considered: 0, placed: 0, unplaced: 0, rejected: 0 };
+    if (cfg) {
+      try {
+        soldGeocoded = await geocodeSoldPending(
+          {
+            listPending: (n) => listPendingSoldGeocodes(n),
+            geocode: (rows) => censusGeocode(rows, GEOCODE_WALL_MS),
+            apply: (records) => applySoldGeocodes(restBase, cfg.key, records),
+          },
+          SOLD_GEOCODE_BUDGET,
+        );
+      } catch (e) {
+        console.error("[idx-sync] sold geocoding failed (data sync unaffected):", e);
+      }
+    }
+
     const summary = {
       ok: true,
       geocoded,
+      soldGeocoded,
       scanned: delta.scanned,
       pages: delta.pages,
       upserted,

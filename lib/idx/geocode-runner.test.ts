@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { geocodePending, type GeocodeDeps } from "./geocode-runner";
+import { geocodePending, geocodeSoldPending, type GeocodeDeps, type SoldGeocodeDeps } from "./geocode-runner";
+import type { SoldGeocodeRecord } from "./db";
 import type { GeocodeHit, GeocodeRow } from "./geocode";
 
 const row = (id: string, zip = "12601"): GeocodeRow => ({
@@ -111,5 +112,60 @@ describe("geocodePending", () => {
       geocode: async () => ({ hits: [hit("A", GOOD.lat, GOOD.lng, "Non_Exact")], misses: [] }),
     });
     expect((await geocodePending(d, 10)).placed).toBe(0);
+  });
+});
+
+function soldDeps(over: Partial<SoldGeocodeDeps> = {}): SoldGeocodeDeps & { written: SoldGeocodeRecord[] } {
+  const written: SoldGeocodeRecord[] = [];
+  return {
+    written,
+    listPending: async () => [row("KEY1")],
+    geocode: async () => ({ hits: [hit("KEY1", GOOD.lat, GOOD.lng)], misses: [] }),
+    apply: async (records) => {
+      written.push(...records);
+      return records.length;
+    },
+    ...over,
+  };
+}
+
+describe("geocodeSoldPending", () => {
+  it("writes a believable coordinate with the CRM's source_address shape", async () => {
+    const d = soldDeps();
+    const out = await geocodeSoldPending(d, 10);
+    expect(out).toEqual({ considered: 1, placed: 1, unplaced: 0, rejected: 0 });
+    expect(d.written).toEqual([
+      {
+        listing_key: "KEY1",
+        lat: GOOD.lat,
+        lng: GOOD.lng,
+        source: "census",
+        precision: "Exact",
+        matched_address: null,
+        source_address: "KEY1 Ferris Lane, Poughkeepsie, NY 12601",
+      },
+    ]);
+  });
+
+  it("does not write a coordinate the quality gate rejects", async () => {
+    const d = soldDeps({ geocode: async () => ({ hits: [hit("KEY1", FAR.lat, FAR.lng, "Non_Exact")], misses: [] }) });
+    const out = await geocodeSoldPending(d, 10);
+    expect(out).toEqual({ considered: 1, placed: 0, unplaced: 1, rejected: 1 });
+    expect(d.written).toHaveLength(0);
+  });
+
+  it("records NO misses — an unplaceable sale is retried next tick, never marked", async () => {
+    const d = soldDeps({ geocode: async () => ({ hits: [], misses: [row("KEY1")] }) });
+    const out = await geocodeSoldPending(d, 10);
+    expect(out).toEqual({ considered: 1, placed: 0, unplaced: 1, rejected: 0 });
+    expect(d.written).toHaveLength(0);
+  });
+
+  it("asks for nothing and writes nothing when the budget is zero", async () => {
+    const listPending = vi.fn();
+    await expect(geocodeSoldPending(soldDeps({ listPending }), 0)).resolves.toEqual({
+      considered: 0, placed: 0, unplaced: 0, rejected: 0,
+    });
+    expect(listPending).not.toHaveBeenCalled();
   });
 });

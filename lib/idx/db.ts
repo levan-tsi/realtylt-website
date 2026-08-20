@@ -845,6 +845,77 @@ export async function applyGeocodes(
   return (await res.json()) as { saved: number; applied: number; missed: number };
 }
 
+// ── Sold-comp geocoding ──────────────────────────────────────────────────────────────────
+//
+// idx_sold rows arrive with NO lat/lng (the feed serves no coordinates), so a closed comp can be
+// mapped only once its address is geocoded. The store is `sold_geocodes` (PK listing_key), which
+// the CMA / market-report maps read; idx_sold's own lat/lng stay null. There is deliberately no
+// sold twin of idx_geocode_apply — unlike idx_listings, a sold row needs no durability merge: the
+// CRM's sold cron upserts idx_sold on listing_key and never touches sold_geocodes, so a coordinate
+// written here survives every future sold refresh. Reads are anon; the write is service-role.
+
+/** Closed sales that have no sold_geocodes entry yet — newest close_date first, so a fresh closing
+ * is never starved behind an older backlog. Anti-joined in application code (there is no FK to
+ * embed and no sold-geocode RPC): pull the newest candidates, then drop the ones already geocoded.
+ * The CMA maps recent comps, so a bounded newest-first window is exactly the set worth keeping
+ * current; the full historical gap is filled by scripts/backfill-sold-geocodes.mjs. */
+export async function listPendingSoldGeocodes(limit: number): Promise<GeocodeRow[]> {
+  const n = Math.max(1, Math.floor(limit));
+  const { rows } = await rest<{ listing_key: string; address: string; city: string | null; state: string | null; zip: string | null }>(
+    `idx_sold?address=not.is.null&select=listing_key,address,city,state,zip&order=close_date.desc.nullslast&limit=${n}`,
+  );
+  if (!rows.length) return [];
+  const have = new Set<string>();
+  const CHUNK = 150; // keep the id=in.() URL short
+  for (let i = 0; i < rows.length; i += CHUNK) {
+    const keys = rows.slice(i, i + CHUNK).map((r) => encodeURIComponent(r.listing_key));
+    const { rows: g } = await rest<{ listing_key: string }>(
+      `sold_geocodes?listing_key=in.(${keys.join(",")})&select=listing_key`,
+    );
+    for (const x of g) have.add(x.listing_key);
+  }
+  return rows
+    .filter((r) => !!r.address && !have.has(r.listing_key))
+    .map((r) => ({ id: r.listing_key, address: r.address, city: r.city ?? "", state: r.state ?? "NY", zip: r.zip ?? "" }));
+}
+
+/** One row for the sold_geocodes store. `source_address` mirrors the CRM's stored shape
+ * (`street, city, ST zip`) so a future re-seed can verify the coordinate still fits the row. */
+export interface SoldGeocodeRecord {
+  listing_key: string;
+  lat: number;
+  lng: number;
+  source: string;
+  precision: string | null;
+  matched_address: string | null;
+  source_address: string;
+}
+
+/** Upsert geocodes into sold_geocodes (service-role, server-side only — the store is not
+ * visitor-writable). Merge-duplicates on the listing_key PK so a re-run is idempotent. Returns the
+ * number of rows written. */
+export async function applySoldGeocodes(
+  restBase: string,
+  serviceKey: string,
+  records: readonly SoldGeocodeRecord[],
+): Promise<number> {
+  if (!records.length) return 0;
+  const now = new Date().toISOString();
+  const res = await fetch(`${restBase.replace(/\/+$/, "")}/sold_geocodes`, {
+    method: "POST",
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      "Content-Type": "application/json",
+      Prefer: "resolution=merge-duplicates,return=minimal",
+    },
+    body: JSON.stringify(records.map((r) => ({ ...r, created_at: now, updated_at: now }))),
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!res.ok) throw new Error(`sold_geocodes upsert ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return records.length;
+}
+
 /** Current sync watermark (for the cron's delta query). */
 export async function getSyncWatermark(): Promise<{ watermark: string; baselineComplete: boolean }> {
   const { rows } = await rest<SyncState>("idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at");
