@@ -17,6 +17,11 @@ export function GoogleLogo({ height = 24, className = "" }: { height?: number; c
       alt="Google"
       width={width}
       height={height}
+      // eager, not lazy (round 36): this 3KB wordmark sits in the ABOVE-FOLD trust bar on
+      // /selling (and in review-card headers below the fold elsewhere), and next/image's
+      // default lazy was deferring a fold-visible brand mark for no saving worth having.
+      // Plain eager rather than priority: one tiny cached PNG needs no preload hint.
+      loading="eager"
       className={className}
       style={{ height, width }}
     />
