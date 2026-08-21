@@ -145,9 +145,16 @@ for (const [path, names] of Object.entries(COVERAGE)) {
   console.log("\nTOUCH — a tap must not leave a hover state behind (390)");
   await page.goto(BASE + "/", { waitUntil: "domcontentloaded", timeout: 90000 });
   await page.waitForTimeout(6000);
-  const card = page.locator("article.lift").first();
+  // NOT a card inside the drifting rail. Round 35 set the Featured rail in permanent motion,
+  // and this leg — written three days earlier — was still tapping `article.lift` FIRST, which
+  // is now a marquee card whose bounding box never goes stable: scrollIntoViewIfNeeded waits
+  // out its whole 30s actionability budget and the gate dies on a TimeoutError that looks like
+  // a product failure. The sticky-hover defect this leg watches for lives on `.lift` itself,
+  // so any resting .lift card exercises it; the New Listings pager card is the same component
+  // on the same page, just not mid-animation.
+  const card = page.locator("article.lift:not(.rlt-drift *)").first();
   if (!(await card.count())) {
-    check(false, "no .lift card on the home page — cannot test");
+    check(false, "no .lift card outside the drift rail on the home page — cannot test");
   } else {
     await card.scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
