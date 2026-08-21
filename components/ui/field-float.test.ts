@@ -15,7 +15,6 @@ import { join } from "node:path";
 const root = join(__dirname, "..", "..");
 const read = (...p: string[]) => readFileSync(join(root, ...p), "utf8");
 const field = read("components", "ui", "Field.tsx");
-const stat = read("components", "ui", "StatCounter.tsx");
 const why = read("components", "home", "WhyCarousel.tsx");
 const rail = read("components", "idx", "RailPager.tsx");
 const lead = read("components", "leads", "LeadForm.tsx");
@@ -56,30 +55,30 @@ describe("a placeholder is not a label", () => {
   });
 });
 
-describe("a stat counter must never state a number that is not true", () => {
-  /** These cases used to assert the GUARD on the count-up: that the zero was only written while
-   * the block was below the fold. That guard was real and it worked, but it was the wrong thing to
-   * hold. A review measured the count still printing "0 / 0h / 0+ / 0" between the block's top edge
-   * entering the viewport and it becoming half visible (the observer's threshold was 0.5), and
-   * printing "7 / 16h / 66+ / 5" mid-count for the full 1,400ms it ran. No threshold fixes the
-   * second one: showing wrong numbers on the way to the right one IS a count-up.
+describe("a stated number must never be a number that is not true", () => {
+  /** This block guarded StatCounter, whose whole history was the count-up defect: a review
+   * measured it printing "0 / 0h / 0+ / 0" while below half-visibility and "7 / 16h / 66+ / 5"
+   * mid-count for the full 1,400ms the animation ran. The fix was the property, not a guard:
+   * no count, therefore no frame in which a wrong number is on screen.
    *
-   * So the assertion moved from the mechanism to the property. There is no count, therefore there
-   * is no frame in which a wrong number can be on screen. */
-  // Assert on CODE, not on prose. The first version of these cases scanned the whole file and
-  // failed on the comment above them, which explains at length which mechanisms were removed and
-  // therefore names every one of them.
-  const statCode = stat.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+   * Round 36 replaced the four-across stat grid with the fact LEDGER in app/page.tsx (each
+   * number is a hairline row: numeral, claim, action), and StatCounter — its only consumer
+   * gone — was deleted. The property it existed to hold did not go with it: the ledger's
+   * numbers live in a SERVER component as literals, so the guard now reads the page and holds
+   * the same two lines — no animation machinery around the numbers, and no "use client" in
+   * the file that states them. */
+  const page = read("app", "page.tsx");
+  const pageCode = page.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\{\/\*[\s\S]*?\*\/\}/g, "").replace(/^\s*\/\/.*$/gm, "");
 
-  it("does not animate the value at all — no timer, no observer, no interim state", () => {
-    for (const banned of ["requestAnimationFrame", "IntersectionObserver", "setDisplay", "useState", "durationMs"]) {
-      expect(statCode, `StatCounter must not reintroduce ${banned}`).not.toMatch(new RegExp(banned));
+  it("does not animate the stated numbers — no timer, no observer, no interim state", () => {
+    for (const banned of ["requestAnimationFrame", "IntersectionObserver", "setDisplay", "durationMs", "StatCounter"]) {
+      expect(pageCode, `the home page must not reintroduce ${banned}`).not.toMatch(new RegExp(banned));
     }
   });
 
-  it("renders the true value directly, and on the server", () => {
-    expect(statCode).toMatch(/\{value\.toLocaleString\("en-US"\)\}/);
-    expect(statCode, 'a stat with nothing to animate needs no "use client"').not.toMatch(/"use client"/);
+  it("states the numbers on the server, as literals", () => {
+    expect(pageCode, "the ledger's facts are literals in the page").toMatch(/n: "24h"/);
+    expect(pageCode, 'a number with nothing to animate needs no "use client"').not.toMatch(/"use client"/);
   });
 });
 

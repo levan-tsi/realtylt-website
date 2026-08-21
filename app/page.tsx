@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button, PRESS } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StatCounter } from "@/components/ui/StatCounter";
 import { TestimonialBand } from "@/components/ui/TestimonialBand";
 import { ScrollCue } from "@/components/ui/ScrollCue";
 import { LeadForm } from "@/components/leads/LeadForm";
@@ -15,7 +14,7 @@ import { HomeHeroVideo } from "@/components/home/HomeHeroVideo";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
-import { TOP_AREA_GROUPS } from "@/lib/site";
+import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -223,17 +222,20 @@ export default async function HomePage() {
             <SectionHeading as="h2" eyebrow="For sellers">
               <span id="value-heading">Find Your Home Value</span>
             </SectionHeading>
-            {/* The owner's own words, verbatim — his copy, not ours to rewrite. What round 11
-                changed was the SETTING: the opening paragraph reads a size up in the darker ink
-                so the block has an entry point, the measure is tighter (~62 characters rather
-                than 90), and the paragraphs are spaced further apart.
-                Round 19 moved his THIRD paragraph out of here and onto the form. It is an
-                instruction — "Enter your information on this page" — and it was sitting at the
-                bottom of a text column on the far side of the page from the thing it instructs.
-                Not a rewrite: the same sentence, next to what it is about. */}
+            {/* REWRITTEN IN ROUND 36. This block carried the previous vendor's seller pitch
+                verbatim for 35 rounds ("So, you're ready to sell your home! Congratulations…",
+                "impeccable customer service", "we demand excellence") — superlatives with
+                nothing behind them, and an exclamation mark. The round-36 assessment named the
+                copy as the fastest way this site still reads templated, and the replacement
+                follows the writing rules stated there: plain verbs, sentence case, claims the
+                site itself already makes elsewhere (real comps drive the estimate — the Why
+                carousel's own caption; the 24h cash offer; the 100+ syndication sites; seven
+                days a week), no superlatives, no exclamation marks, no em dashes. Round 11's
+                SETTING decisions are untouched: lead-in a shade darker, ~62ch measure, spaced
+                paragraphs. */}
             {[
-              "So, you're ready to sell your home! Congratulations, you've come to the right place. We belong to one of the strongest real estate brokerages in the area. We have great confidence in our brand and you can, too. We demand excellence throughout the home-selling process.",
-              "We have established a solid reputation for impeccable customer service and marketing strategies. When you entrust the sale of your home to us, you are putting your faith in our entire network of experts in Real estate sales, Real estate purchases, Loan processing and Marketing.",
+              "Selling starts with one number: what your home is worth today. We price against real sales in your county rather than a formula, and we tell you what we would list at and why.",
+              "From there, you set the pace. List with us and your home reaches more than a hundred search sites, or take a written cash offer inside twenty-four hours and skip the showings. Either way, a person answers seven days a week.",
             ].map((p, i) => (
               <p
                 key={i}
@@ -259,10 +261,12 @@ export default async function HomePage() {
                 the large-feature-panel step, which is what this is. */}
             <div className="rounded-3xl border border-line bg-mist p-6 md:p-8 lg:p-10">
               <h3 className="t-h3 text-ink">Tell Us About Your Home</h3>
+              {/* One sentence, rewritten with the seller block (round 36): the old vendor line
+                  promised "experts in every area that have access to the resources needed",
+                  which is a paragraph about nothing. Say what happens instead. */}
               <p className="mb-7 mt-3 max-w-md leading-[1.7] text-stone">
-                Enter your information on this page to discover what your home is worth. We have
-                experts in every area that have access to the resources needed to provide an
-                accurate estimate.
+                Tell us where the home is and how to reach you, and we&rsquo;ll come back with a
+                number built from recent sales near you.
               </p>
               {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
                   Message stacked single-column (no interest dropdown). Wiring/validation/
@@ -382,14 +386,28 @@ export default async function HomePage() {
                     </li>
                   ))}
                 </ul>
+                {/* The row's terminal (round 36). At 1440 the pills ended ~360px short of the
+                    container and the strip read as if it had run out of content rather than
+                    finished — an index row with no terminal. The count is the terminal: it
+                    states something true (the footprint's size), it brackets the pills between
+                    two labels the way the left one opens them, and it is derived from the data
+                    so it can never drift from the pill count. md+ only; stacked phone rows
+                    need no balancing. */}
+                <p aria-hidden className="t-eyebrow ml-auto hidden shrink-0 text-stone md:block md:pt-2.5">
+                  {["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"][group.items.length]}{" "}
+                  {group.id === "nyc" ? "boroughs" : "counties"}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Why work with us — live: light gray section, centered heading */}
-      <section className="sec-lg bg-mist" aria-labelledby="why-heading">
+      {/* ── Why work with us — live: light gray section, centered heading.
+          .sec, not .sec-lg (round 36): the closing band used to trail ~200px of empty mist
+          under TALK TO US — the largest padding step wrapped around the page's least dense
+          block. The ledger gives the section real mass, so it takes the middle step. */}
+      <section className="sec bg-mist" aria-labelledby="why-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
             <SectionHeading align="center" as="h2">
@@ -402,19 +420,62 @@ export default async function HomePage() {
               <WhyCarousel />
             </div>
           </Reveal>
+          {/* "From the best tools and technology… we're the top choice for buyers and sellers"
+              was the last vendor sentence on the page — a superlative with nothing behind it,
+              sitting over the most templated block on the web: four big numbers, four small
+              caps labels ("11 / 24h / 100+ / 7"), four across. Round 36 replaced the device
+              with a LEDGER: each fact is a hairline-ruled row — the number in the display
+              face, the claim as a sentence, and the thing a visitor can DO about it — because
+              the assessment's rule was that a number that stays must be one a visitor can act
+              on. "11 counties & boroughs" is gone as a numeral: the areas strip above states
+              it by name, interactively, which is a better version of the same fact.
+              The numbers still render on the SERVER with no count-up, no observer and no
+              interim state — StatCounter's "never show a number that is not true" rule carries
+              over by construction, and components/ui/field-float.test.ts now guards it here. */}
           <Reveal>
             <p className="mx-auto mt-10 max-w-xl text-center leading-[1.75] text-stone">
-              From the best tools and technology to transparency throughout the entire process,
-              we&rsquo;re the top choice for buyers and sellers.
+              Every screen above is our own product, running on live MLS data. The rest of the
+              case is three numbers.
             </p>
           </Reveal>
-          <div className="mt-20 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-line pt-12 text-center md:grid-cols-4">
-            <StatCounter value={11} label="Counties & boroughs served" />
-            <StatCounter value={24} suffix="h" label="Cash offer turnaround" />
-            <StatCounter value={100} suffix="+" label="Sites your listing reaches" />
-            <StatCounter value={7} label="Days a week we answer" />
-          </div>
-          <div className="mt-14 text-center">
+          <Reveal>
+            <ul className="mt-16 border-t border-line">
+              {[
+                {
+                  n: "24h",
+                  claim: "A written cash offer on your home, inside twenty-four hours.",
+                  act: "See your number",
+                  href: "/home-value",
+                },
+                {
+                  n: "100+",
+                  claim: "Search sites your listing reaches when we take it to market.",
+                  act: "How we sell",
+                  href: "/selling",
+                },
+                {
+                  n: "7",
+                  claim: "Days a week a person answers the phone.",
+                  act: `Call ${SITE.phone}`,
+                  href: SITE.phoneHref,
+                },
+              ].map((f) => (
+                <li
+                  key={f.n}
+                  className="flex flex-col gap-2 border-b border-line py-7 md:grid md:grid-cols-[7rem_1fr_auto] md:items-baseline md:gap-x-8"
+                >
+                  <span className="t-h3 text-ink">{f.n}</span>
+                  <p className="leading-[1.7] text-stone">{f.claim}</p>
+                  {/* self-start: in the stacked phone row the Button would stretch and centre
+                      its text against an otherwise left-aligned ledger. */}
+                  <Button href={f.href} variant="ghost" className="self-start">
+                    {f.act}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <div className="mt-12 text-center">
             <Button href="/connect">Talk To Us</Button>
           </div>
         </div>
