@@ -67,6 +67,13 @@ for (const path of PAGES) {
       // defect: that is exactly how the spam honeypots are built (off-screen, aria-hidden,
       // tabIndex -1). Counting them as failures was this probe's own false positive.
       if (e.tabIndex < 0) return null;
+      // An INERT subtree is unfocusable by design, and `tabIndex` does not report it — the
+      // attribute lives on an ancestor and the child keeps tabIndex 0. Calling focus() there
+      // silently does nothing, so the before/after frames are identical and the element reads as
+      // "paints no focus state". That is the gate describing a working guard as a defect: the
+      // drifting listing rail duplicates its cards for a seamless loop and marks the copy inert
+      // precisely so a keyboard meets each home once.
+      if (e.closest("[inert]")) return null;
       // Anything parked off-screen is hidden ON PURPOSE by the same trick.
       if (r.right < 0 || r.bottom < 0 || r.left > innerWidth) return null;
       return {

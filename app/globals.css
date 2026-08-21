@@ -797,6 +797,63 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   animation: rlt-view-in 0.2s var(--ease-out) both;
 }
 
+/* ── The drifting listing rail (components/idx/DriftRail.tsx).
+   Linear, not eased: this is ambient motion with no beginning or end, and any easing curve would
+   make the loop visibly "breathe" at the seam. The track holds the set TWICE and travels exactly
+   -50%, so the moment it lands it is pixel-identical to where it started and the restart cannot
+   be seen. Only `transform` moves, so it stays on the compositor.
+   Duration comes from the component as a custom property, scaled by card count, so a rail of four
+   homes and a rail of eight drift at the same speed rather than the same tempo. */
+@keyframes rlt-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+/* `auto`, NOT `hidden`. Hidden was the obvious choice and it was wrong: eight 340px cards are
+   ~2,800px of track, so past the fourth card the rail clips them — and a keyboard tabbing along
+   the row would land focus on a card nobody can see, with no way to bring it into view. Pausing
+   on :focus-within does not help if the thing you focused is off-screen. Caught by
+   scripts/verify-focus-paint.mjs, which measured 0.00% change on exactly those clipped cards.
+   Scrollable means the browser scrolls a focused card into view by itself, and it hands touch
+   users a rail they can flick. The animation still does the drifting; the scroll port only moves
+   when something asks it to. */
+.rlt-drift {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.rlt-drift::-webkit-scrollbar {
+  display: none;
+}
+.rlt-drift-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: rlt-drift var(--drift-duration, 56s) linear infinite;
+}
+/* Nobody should have to read a moving target, or chase a button walking away from the cursor. */
+.rlt-drift:hover .rlt-drift-track,
+.rlt-drift:focus-within .rlt-drift-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rlt-drift-track {
+    animation: none;
+  }
+  /* Killing the animation alone would strand every home past the fold behind `overflow:hidden`,
+     so the rail becomes an ordinary scroller instead. Reduced motion means less movement, not
+     less content. */
+  .rlt-drift {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .rlt-drift-track > ul > li {
+    scroll-snap-align: center;
+  }
+}
+
 /* ── The loading skeleton, on the site's own curve.
    `animate-pulse` was the last motion on the site nobody had chosen: Tailwind runs it on
    cubic-bezier(0.4, 0, 0.6, 1), which is the only curve on the listing and search pages

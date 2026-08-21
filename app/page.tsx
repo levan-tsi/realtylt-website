@@ -7,6 +7,7 @@ import { StatCounter } from "@/components/ui/StatCounter";
 import { TestimonialBand } from "@/components/ui/TestimonialBand";
 import { ScrollCue } from "@/components/ui/ScrollCue";
 import { LeadForm } from "@/components/leads/LeadForm";
+import { DriftRail } from "@/components/idx/DriftRail";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
@@ -280,10 +281,13 @@ export default async function HomePage() {
               <span id="featured-heading">Featured Listings</span>
             </SectionHeading>
           </Reveal>
-          {/* Mobile: swipeable card rail; ≥sm a 4-col grid — paged 8 at a time */}
-          <div className="mt-10">
-            <RailPager listings={featured} ariaLabel="Featured listings" eager />
-          </div>
+          {/* FEATURED DRIFTS, NEW LISTINGS DOES NOT, and that asymmetry is the point. Round 31
+              made these two sections differ in WEIGHT so a visitor can tell they have moved:
+              Featured is the loud one (centred heading over a symmetric set), New Listings is
+              deliberately quiet. Giving both of them ambient motion would collapse that back into
+              one repeated shape, which is the exact defect that decision fixed. The showcase
+              moves; the quiet one stays a paged grid. */}
+          <DriftRail listings={featured} ariaLabel="Featured listings" />
           <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
           <div className="mt-10 text-center">
             <Button href="/search" variant="outline">See More Listings</Button>
