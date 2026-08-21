@@ -137,3 +137,28 @@ test that reads the BUILT html rather than the dev server's.
 `og:url` is absent site-wide for the same underlying reason worth noting here: the root
 `openGraph` block sets no `url`, so Next emits none. Mirroring the canonical there would inherit
 the same `/index` bug, so it waits for the same fix.
+
+## 6. Three whole-site sweeps, run against PRODUCTION, all clean
+
+Run against the deployed site rather than `:3100` on purpose. `**/api/media/**` blocked absolutely
+in the browser sweep, because a sold-photo window was due to open while these ran.
+
+**JavaScript disabled, 18 routes.** Every one returns 200 with exactly one `<h1>` and real visible
+text (2,165 to 7,269 characters of it), and 60+ working links. Only `/search` degrades, and it
+degrades ON PURPOSE and well: 8,285 characters sit stranded inside five hidden streaming shells
+(`<div hidden id="S:n">`), and what a no-JS visitor actually reads instead is
+
+> Search needs JavaScript. The filters, the map and saved searches all run in the browser. Every
+> area we cover has its own page that works without them, with homes listed on it.
+
+followed by all twelve area links and the phone number. That is the documented round-35 trade,
+now quantified rather than described. Nothing new was found.
+
+**Every sitemap URL: 61 checked, 61 return 200.**
+
+**Internal links: 149 distinct targets harvested from 19 seed pages, 149 return 200.** No
+redirects, no 404s. This matters because the last launch note records that eight of the OLD site's
+twenty published paths had no route here; the new site's own graph is whole.
+
+The one thing these sweeps DID surface is in section 5 — the home page's canonical, which is the
+only URL on the site that points somewhere other than itself.
