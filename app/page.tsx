@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   title: "RealtyLT | Hudson Valley & NYC Homes for Sale",
   description:
     "Let's find home. Search homes for sale across the Hudson Valley and all five NYC boroughs, or get your home's value and a cash offer in 24 hours.",
+  // EXPLICIT, because the self-canonical idiom inherited from app/layout.tsx resolves to `/index`
+  // HERE and nowhere else. In a production build the root page is prerendered to index.html, so a
+  // relative canonical resolves against the pathname `/index`, and `/index` 308-redirects to `/`.
+  // Production was telling Google that the canonical version of its most important page is a
+  // redirect, while the sitemap listed `/`. Dev cannot see it: dev does not prerender, and the same
+  // page on :3100 renders clean. Verified against `next build` output. Guarded by app/canonical.test.ts.
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {
