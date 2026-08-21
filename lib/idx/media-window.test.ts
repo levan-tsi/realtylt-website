@@ -26,8 +26,8 @@ describe("the two doors", () => {
     // while the HOUR was already spent.
     const d = windowDecision({ ...quiet, last1h: 6_000, last24h: 0 });
     expect(d.daily).toBe(36_500); // 38,000 - 0 - 1,500
-    expect(d.hourly).toBe(1_000); // 7,000 - 6,000
-    expect(d.size).toBe(1_000);
+    expect(d.hourly).toBe(300); // 7,000 - 6,000 - 700 reserve
+    expect(d.size).toBe(300);
     expect(d.launch).toBe(false);
     expect(d.reason).toBe("shut");
   });
@@ -35,6 +35,20 @@ describe("the two doors", () => {
   it("holds the hourly cap even when the hour is untouched", () => {
     const d = windowDecision(quiet);
     expect(d.size).toBe(RULES.HOURLY_CAP);
+  });
+
+  it("keeps hourly headroom for the sync and the site's own photo proxy", () => {
+    // The 2026-08-21 429: the window was sized to the whole remaining hour and run at 2.0/s,
+    // which is 7,200 requests an hour — the account cap exactly, with nothing left for the
+    // hourly sync or for visitors loading listing photos through /api/media/.
+    const d = windowDecision({ ...quiet, last1h: 2_000 });
+    expect(d.hourly).toBe(7_000 - 2_000 - RULES.HOURLY_RESERVE);
+    expect(d.rps).toBe(1.7); // never 2.0 again: 1.7/s is 6,120/hr and leaves ~1,000 spare
+  });
+
+  it("retreats BELOW the normal rate after a 429, not to the same number", () => {
+    const cooling = windowDecision({ ...quiet, penaltyAt: NOW - 5 * HOUR });
+    expect(cooling.rps).toBeLessThan(RULES.NORMAL_RPS);
   });
 
   it("keeps the daily reserve for the hourly sync's own media work", () => {

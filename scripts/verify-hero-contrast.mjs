@@ -59,7 +59,15 @@ let measured = 0;
 for (const { w: W, h: H } of VIEWPORTS) {
 for (const path of PAGES) {
   const c = await b.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
-  await c.route("**/api/media/**", (r) => r.continue());
+  // BLOCKED, and it used to be `continue()`. This gate measures text against the pixels behind
+  // it, and every hero photograph it cares about is a static file under /images/ — it never
+  // needed a listing photo. But /api/media/ is storage-first with a PROXY FALLBACK to the media
+  // host for anything not yet mirrored, so allowing it meant each run of this gate (8-11 pages x
+  // 3 viewports, with two listing rails on the home page alone) spent against the same account
+  // cap a photo window is sized against. On 2026-08-21 a window 429'd while these were running.
+  // The rule was already written down in CLAUDE.md: block it unless a screenshot genuinely needs
+  // photos. This one does not.
+  await c.route("**/api/media/**", (r) => r.abort());
   const p = await c.newPage();
   await p.goto(base + path, { waitUntil: "domcontentloaded", timeout: 60000 });
   await p.waitForTimeout(4500);

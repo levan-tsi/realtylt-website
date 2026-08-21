@@ -5,6 +5,7 @@ export interface WindowRules {
   DAILY_RESERVE: number;
   HOURLY_CAP: number;
   HOURLY_TARGET: number;
+  HOURLY_RESERVE: number;
   FLOOR: number;
   PENALTY_HOURS: number;
   COOLING_RPS: number;
