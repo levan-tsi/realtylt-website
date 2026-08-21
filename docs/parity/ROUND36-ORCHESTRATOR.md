@@ -306,3 +306,49 @@ Three things follow, and round 37 should take all three:
 The committed driver still earns its place — a scheduler with a home on disk beats a shell loop in
 a temp directory whether or not the shell loop survives. But it was built on a wrong reading, and a
 record that quietly kept the wrong reason would be worth less than no record.
+
+## 10. The chat, proved end to end
+
+The owner authorised one real message. Sent through the widget on the deployed site at 14:43 UTC:
+
+- `POST /api/chat/agent` -> **HTTP 200**, no CSP refusal in the console.
+- Session `4e5bc02a-4dbe-4d15-ba2b-781d3d6ea8d1`.
+- The agent replied in the transcript, in character, under the "RealtyLT · Levan Tsiklauri,
+  REALTOR®" frame.
+
+So the path is: widget -> CRM `/api/chat/agent` -> agent -> transcript, working. **That conversation
+is real and is in the CRM**, labelled as an automated test, and can be deleted.
+
+## 11. The card focus ring: diagnosed precisely, and deliberately NOT changed
+
+The rubric penalises home's D6 for "focus ring under 3:1" on every listing card (1.33 to 1.96). The
+design agent called the whole D6 deduction scorer noise from the moving marquee. **Half of that is
+right and half is not**, and the difference took a pixel measurement to settle.
+
+- The "focus stops with no visible ring" half IS an artifact: the element it names sits at
+  **x = -124**, a rail card that had drifted out of frame. A card outside the viewport cannot paint
+  a visible ring. Freezing the marquee removes it.
+- The "ring under 3:1" half is NOT noise, but the scorer's number is still wrong. Measured from the
+  actual pixels with the drift frozen: the ring is `rgb(16,44,84)` against `rgb(255,255,255)` and
+  `rgb(243,245,248)`, which is **12.73:1 to 13.90:1** — four times the 3:1 floor. The scorer appears
+  to sample the ring against the card's dark interior rather than the page it is drawn on.
+
+**What IS real, and it is small.** Scanning the left edge column by column: the ring paints at
+y=14 (the top run) and is absent at y=40, 80, 120, 160, 195. The cause is geometry, not colour:
+`div.rlt-drift` clips at `overflow: auto` and spans x=127 to x=1313, and the first card sits at
+**left=127, flush with the clipper**. Its ring at `outline-offset: 2px` would need x=123-125, which
+is outside the clip. Cards at 487, 847 and 550 are clear of both edges and ring on all four sides.
+
+So exactly one card position loses one side of its ring, while the other three sides paint at
+12.73:1. The site's rule — focus-visible >= 3:1 — is met; the indicator is present and strong.
+
+**Left for round 37 rather than fixed, on purpose.** The fix is one line
+(`padding-inline: 4px; margin-inline: -4px` on `.rlt-drift`, which widens the clipping box without
+moving the content), but it moves a rail whose geometry was measured this round to the pixel — the
+card pair, the 90vh panel pair, the 320 overflow floors. Trading a verified layout for a cosmetic
+edge case at the end of a round is the wrong trade. It is written down with the diagnosis so it is
+a ten-minute job for whoever picks it up.
+
+One thing the same measurement CONFIRMED, which the agent claimed and I checked: the edge mask does
+stand down on `:focus-within` (`maskImage: none` while a card holds focus), so a focused card is
+never dimmed by it.
