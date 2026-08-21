@@ -15,6 +15,22 @@
 ##   · The judgement moved to lib/idx/media-window.mjs, under test (21 cases). Both incidents
 ##     from the ledger are reconstructed as tests.
 ##   EXIT CODES: 0 ran · 3 doors shut · 4 runner live · 5 penalty · 42 stopped on a 429.
+##   *** A REAL 429 HAPPENED AT 01:48 UTC 2026-08-21. READ THIS BEFORE THE NEXT WINDOW. ***
+##   CAUSE, and it was a number not a fluke: sold-window.mjs had always passed --rps 2.0, while
+##   backfill-sold-photos.mjs has defaulted to 1.7 since 2026-08-12 with the comment "two 429 trips
+##   found the real ceiling below the published 2 RPS". The wrapper was overriding the value the
+##   ledger had already paid for twice, and round 35 moved that 2.0 into NORMAL_RPS without
+##   questioning it. 2.0/s sustained is 7,200 req/hr, which IS the account cap — nothing left for
+##   the hourly sync or for the site serving its own photos. Measured: ~117 photos/min for eleven
+##   minutes, degrading to 84 and 91, stopped at six 429s with 1,579 landed.
+##   FIXED (ab49d85): NORMAL_RPS 1.7, COOLING_RPS 1.4 (it was 1.7 = the old normal, so the
+##   post-429 "retreat" went nowhere), HOURLY_RESERVE 700 (the hourly door had no reserve while
+##   the daily door always had one). ALSO: verify-hero-contrast.mjs was ALLOWING **/api/media/**
+##   and spending the same cap on every run — that route is storage-first with a PROXY FALLBACK to
+##   the media host. It is blocked now. CLAUDE.md already said to block it.
+##   THE GUARD HELD: runner stopped itself, stamped the marker, released the lock, exited 42; the
+##   wrapper refuses with exit 5 and a direct runner invocation refuses with exit 1. The penalty
+##   clears 05:48 UTC — DO NOT relaunch before then, and expect the first run back at 1.4.
 ##   STATE AT HANDOFF (2026-08-20 23:10 UTC): trailing 34,368 in 24h, door SHUT (2,132 of a
 ##   3,000 floor). Projected to open ~02:00 UTC 08-21 as the 4,751 bucket from 08-20 01:00
 ##   ages out, worth ~5,700. The hourly sync is running quiet (223/hr, not the ~500/hr the
