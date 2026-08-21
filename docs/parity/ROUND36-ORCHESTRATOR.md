@@ -226,3 +226,38 @@ seven pages. They ask different questions: does a ring PAINT at all, versus is i
 surround. Same shape for `verify-hero-contrast.mjs` (hero text over photographs) against D10 (all
 text). Complementary scopes, both owed. Recorded here because a future round WILL read these two
 outputs side by side and think one of them is lying.
+
+## 8. The chat break, and what it says about the whole class
+
+Recorded in full in commit `ce227cb`. The short version: last night's cutover pointed the widget at
+the CRM and the CSP never followed, so the browser refused every message. Fixed, guarded by
+`lib/chat-csp.test.ts`, deployed, and re-measured on production afterwards:
+
+- `connect-src` now contains `https://realtylt-crm-web.vercel.app` — confirmed in the live response
+  header.
+- The same probe that produced a CSP refusal before the deploy now produces **none**. It still
+  reports "Failed to fetch", and that is the probe's own fault rather than a residual break: the
+  path it uses does not exist on the CRM and a 404 there carries no CORS header. A GET against the
+  REAL `/api/chat/agent` behaves the same way for the same reason — the endpoint advertises
+  `POST, OPTIONS` only. **No CSP refusal is the signal; the fetch failure is the probe.**
+- `/thank-you` now serves `Thanks | Your Request Is In | RealtyLT` on production.
+
+**What is still unproven, stated plainly: nobody has sent a real message through the fixed path.**
+Doing that creates a live CRM conversation and, per the cutover commit, a handoff in the chat emails
+the owner a deep link. That is an outward-facing action and it is the owner's call, not mine. What
+is proven is that the browser no longer refuses the request and that the CRM answers a preflight
+from both our origins with the right methods and headers.
+
+### The generalisation, and its limit
+
+A CSP refusal is silent. Nothing in the build, the test suite or any gate noticed that a shipped
+feature had been unreachable for eleven hours; the widget still opened, still accepted typing, still
+looked alive. So the obvious move is to sweep for other silently-blocked resources, and that was
+done: **16 pages driven on production reading every console message — no CSP violations at all.**
+
+But that sweep is weaker than it sounds, and the weakness is the whole lesson. It can only catch
+violations that happen ON LOAD. The chat's violation only happens when a visitor SENDS something,
+which is exactly why it survived eleven hours and would have survived this sweep too. A passive
+console sweep is worth running and worth nothing on interaction-triggered paths. What actually
+catches this class is the unit test: two files in different directories that must agree, held
+together by something that fails.
