@@ -162,3 +162,67 @@ twenty published paths had no route here; the new site's own graph is whole.
 
 The one thing these sweeps DID surface is in section 5 — the home page's canonical, which is the
 only URL on the site that points somewhere other than itself.
+
+## 7. A measured BEFORE baseline, from the committed rubric
+
+`scripts/score-page.mjs` is the R32 twelve-dimension instrument (60 points, media blocked by
+default, `--break` negative control). It was run against PRODUCTION, which is the state before
+this round's design work, so the after-comparison is like for like.
+
+**The instrument was proved able to fail first.** `--break` on the home page collapses it from
+53.5 to **20.5 / 60** across nineteen injected penalties. A score from an instrument that has never
+failed is not evidence.
+
+**Before baseline, 8 pages, mean 53.81 / 60:**
+
+| page | score |
+|---|---|
+| /thank-you | 57.5 |
+| /connect | 56.8 |
+| /who-we-are | 55.3 |
+| /home-value | 54.0 |
+| / | 53.5 |
+| /selling | 51.5 |
+| /buying | 51.0 |
+| /financing | 51.0 |
+
+**Penalties pooled across all eight pages, ranked.** This is where the points actually are, and it
+independently confirms the assessment's ranking rather than restating it:
+
+| pool | penalty | where |
+|---|---|---|
+| D2 off-scale heading sizes | 8.0 | 6 pages |
+| D9 body copy under 16px on mobile | 8.0 | all 8 pages |
+| D3 more than 4 distinct text left edges | 5.0 | 5 pages |
+| D6 controls that ignore a press | 4.5 | /financing, /home-value, /who-we-are |
+| D6 focus ring under 3:1 | 4.0 | 7 pages |
+| D1 heading-to-body ratio under 1.35 | 3.0 | /buying, /financing |
+| D1 more than 90 words above the fold | 3.0 | /buying, /financing, /selling |
+| D4 lazy image above the fold | 3.0 | /connect, /selling, /who-we-are |
+| D5 radii outside the scale | 2.5 | /buying, /financing, /selling |
+| D4 unsized images (CLS risk) | 2.0 | /, /buying |
+| D2 more than 4 distinct body sizes | 2.0 | /buying, /selling |
+
+### The sub-16px finding, verified by hand rather than taken from the scorer
+
+Computed font sizes measured on real text nodes at 390 on production. Two of these are not
+judgement calls:
+
+- **10px** — the broker attribution on the LISTING CARD (`p.min-w-0.line-clamp-2.min-h-[2lh]`),
+  "Listed With United RE Hudson Valley Edge". Ten pixels, on a phone, on **required IDX
+  attribution**. Legibility and compliance at once.
+- **11px** — the consent disclosure under every form: "Includes automated and recorded calls and
+  texts. Optional, and never required to buy or sell a home. Reply STOP any time." Eleven pixels on
+  a legal disclosure the visitor is being asked to agree to.
+
+The tail is judgement and should stay judgement: an 11px MLS disclaimer, 12px microcopy, a 14px
+consent label, a 15px testimonial. A disclaimer is conventionally smaller than body copy, and
+blanket-16px would be its own kind of wrong.
+
+### Two instruments that look like they disagree, and do not
+
+`verify-focus-paint.mjs` passes 182/182 while the rubric's D6 penalises "focus ring under 3:1" on
+seven pages. They ask different questions: does a ring PAINT at all, versus is it 3:1 against its
+surround. Same shape for `verify-hero-contrast.mjs` (hero text over photographs) against D10 (all
+text). Complementary scopes, both owed. Recorded here because a future round WILL read these two
+outputs side by side and think one of them is lying.
