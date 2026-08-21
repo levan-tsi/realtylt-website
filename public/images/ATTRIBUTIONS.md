@@ -36,6 +36,9 @@ below as unresolved rather than quietly omitted.
 | File | Title | Creator | License | Source |
 |---|---|---|---|---|
 | public/images/hero/hero-vimeo-frame.jpg | First frame of the live site's ambient hero clip | Unknown (old IDX vendor) | UNRESOLVED — see above | [source](https://vimeo.com/398379426) |
+| public/images/hero/hero-cand-olana.jpg | View of Hudson and Catskills from Olana — ROUND-36 CANDIDATE to replace the unresolved frame above; not wired in until the owner chooses | Ed from Queens, USA | BY 2.0 | [source](https://commons.wikimedia.org/wiki/File:View_of_Hudson_and_Catskills_from_Olana.jpg) |
+| public/images/hero/hero-cand-breakneck-south.jpg | Hudson Highlands view south from Breakneck Ridge — ROUND-36 CANDIDATE, same ridge the phone hero shows | ScubaBear68 | BY 2.0 | [source](https://commons.wikimedia.org/wiki/File:Hudson_Highlands_view_south_from_Breakneck_Ridge.jpg) |
+| public/images/hero/hero-cand-bear-mountain.jpg | Bear Mountain Bridge and Popolopen Creek, Anthony's Nose — ROUND-36 CANDIDATE | Reconrabbit | CC0 | [source](https://commons.wikimedia.org/wiki/File:Bear_Mountain_Bridge_and_Popolopen_Creek,_Anthony%27s_Nose.jpg) |
 | public/images/hero/millerton-night.jpg | Millerton Business District at Night | FromTheTron | CC0 | [source](https://commons.wikimedia.org/wiki/File:Millerton_Business_District_at_Night.jpg) |
 | public/images/hero/hudson-twilight.jpg | Sky of West Point Evening | Wei Zhang@Hudson | BY 2.0 | [source](https://www.flickr.com/photos/28121863@N07/3224727572) |
 | public/images/hero/valley-aerial.jpg | Breakneck Ridge II | Jeff Pang | BY 2.0 | [source](https://www.flickr.com/photos/29069842@N02/4784280225) |
