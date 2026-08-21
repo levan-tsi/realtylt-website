@@ -1,6 +1,115 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## ═══════════ HANDOFF 2026-08-20 (ROUND 35) — READ THIS FIRST ════════════════════════════
+## == HANDOFF 2026-08-21 (ROUND 36) - READ THIS FIRST ====================================
+## Full records: docs/parity/DESIGN-ROUND36.md (the design assessment + the ranked twelve) and
+## docs/parity/ROUND36-ORCHESTRATOR.md (everything else, measured). 27 commits, pushed to main.
+## Shape: Opus 5 orchestrating + ONE Fable 5 design subagent (the owner's call this session).
+##
+## -- ITEM 0: THE BRIEF ITSELF IS STALE. VERIFY BEFORE YOU BUILD. ------------------------
+## SEVEN of the /website command's EIGHT named items were already done, some rounds ago. The
+## table is at the top of DESIGN-ROUND36.md; do not re-fix these:
+##   - search strip "butted together"    -> fixed round 27, 600x66 with an 8px gap
+##   - hero "on a flat black background" -> it is not; desktop and phone both carry photographs
+##   - mobile footer order               -> already regrouped (form, then details + links together)
+##   - listing alerts                    -> claim restored AND the CRM hand-off verified in prod
+##   - Equal Housing + REALTOR marks     -> shipped, with legal-marks.test.ts guarding them
+##   - unlicensed stock photography      -> all replaced with recorded CC/CC0 work; hom.png gone
+##   - LAUNCH SWITCH 1                   -> DONE 2026-07-31. 61 sitemap entries and every
+##     canonical are on realtylt.com already. The brief still claims they point at the
+##     vercel.app host. They do not.
+## What is ACTUALLY left of the launch: the apex DNS (switch 2), then PRELAUNCH=1 (switch 3).
+##
+## -- ITEM 1: THE SOLD-PHOTO LOOP -------------------------------------------------------
+## Unchanged in substance and still the first act of any round. What changed: the scheduler now
+## has a home on disk. Start it ONCE per round, detached, and it outlives the session:
+##   powershell -Command "Start-Process node -ArgumentList 'scripts/sold-loop.mjs' -WindowStyle Hidden"
+## It decides nothing - every 15 minutes it runs scripts/sold-window.mjs and appends the result
+## and exit code to scripts/.sold-loop.log (gitignored). EXIT CODES: 0 ran - 3 doors shut -
+## 4 runner live - 5 penalty - 42 stopped on a 429.
+##   TWO CLEAN WINDOWS THIS ROUND, ~7,245 photographs, no 429. 3,662 at 10:36 UTC and 3,583 at
+##   13:38 UTC, both at the post-429 cooling rate of 1.4, peak ~84/min = 5,040/hr against a
+##   7,200 warning. The 01:48 UTC 2026-08-21 penalty stamp is STILL ON DISK on purpose and still
+##   holds the rate at 1.4 for the cooling day.
+##   *** READ ITEM 5 BEFORE YOU TRUST A "NO PROCESS FOUND" ANSWER. I ran two schedulers for four
+##   hours because a process check lied to me. ***
+##
+## -- ITEM 2: WHAT ROUND 36 CHANGED - TWO PRODUCTION DEFECTS FIRST ----------------------
+##  - THE CHAT HAD BEEN DEAD SINCE THE NIGHT BEFORE. 115ec56 moved the widget's WEBHOOK_URL to
+##    the CRM's /api/chat/agent and next.config.ts still listed only the n8n host in connect-src,
+##    so the browser refused every message before it left the page. Nothing failed loudly: the
+##    bubble opened, accepted typing, looked alive. The CRM side was already correct (preflight
+##    204, allow-origin for both hosts, POST/OPTIONS, x-rlt-chat-token). One exact origin added.
+##    lib/chat-csp.test.ts now fails if the widget's URL and the CSP ever drift apart again.
+##    PROVED END TO END with the owner's permission: POST -> 200, agent replied, session
+##    4e5bc02a-4dbe-4d15-ba2b-781d3d6ea8d1 is a real (test-labelled) conversation in the CRM.
+##  - THE HOME PAGE'S CANONICAL POINTED AT A REDIRECT. Production served
+##    https://realtylt.com/index, which 308s to /, while the sitemap listed /. app/layout.tsx's
+##    self-canonical idiom resolves against the prerender pathname /index for the ROOT route only.
+##    DEV CANNOT SEE IT - dev does not prerender. app/page.tsx now states its own canonical;
+##    app/canonical.test.ts guards source AND built html.
+##  - /thank-you served "Thanks | RealtyLT | RealtyLT" (app/titles.test.ts now walks every route).
+##  - THE DESIGN WORK (Fable 5, 14 commits, all verified by me): the listing card rebuilt against
+##    measured data - address is a two-line lockup that never truncates (street p99 = 32 chars
+##    over all 27,719 active rows), the "View" chip gone, the broker credit one line in a fixed
+##    position at 12px, and a NEW committed gate scripts/verify-card-scrim.mjs proving the scrim
+##    over a constructed white worst-case photograph (25 runs, 1440/390/320, fails under both
+##    FALSIFY and BREAK_CSS). Drift rail gets an edge mask so cards leave the frame instead of
+##    being guillotined. Phone hero recomposed. Stat row -> a three-row fact ledger with an action
+##    per row. Vendor copy swept off home/buying/financing. Consent is a quiet row, disclosure
+##    11 -> 12px. Type scale collapsed to a closed set. Press states on 11 header controls.
+##    TWO REAL DEFECTS IT FOUND UNPROMPTED: every listing card's focus ring was clipped dead by
+##    its own overflow-hidden, and the press gate's touch leg had been un-runnable since r35.
+##
+## -- ITEM 3: THE MEASURED RESULT -------------------------------------------------------
+## scripts/score-page.mjs (the R32 rubric) run against PRODUCTION before and after, same 8 pages,
+## same instrument, negative control proved first (--break collapses home 53.5 -> 20.5/60):
+##   MEAN 53.81 -> 55.00 (+1.19). No page below its baseline.
+##   who-we-are +2.00 - home-value +2.00 - selling +2.00 - financing +1.50 - buying +1.00 -
+##   connect +1.00 - home 0.00 - thank-you 0.00
+## Home is FLAT and its twelve dimensions are byte-identical before and after. That is honest,
+## not a measurement error: its remaining penalties (off-scale headings, >4 text left edges,
+## unsized carousel images, sub-16px small print) all live in chrome the round did not touch, and
+## D8 copy was already 5/5 so the rewrite could not show. The card, the ledger and the copy are
+## visibly better and the rubric does not see it. Do not chase this number by editing the rubric.
+## OTHER GATES, all foreground, all re-run by me rather than taken on trust: tsc clean -
+## npm test 1052 / 83 files (baseline was 1045/81) - verify-card-scrim PASS 25 - verify-hero-
+## contrast PASS 315 - verify-focus-paint PASS 419 - verify-press-feedback PASS 15/15 -
+## probe-reduced-motion PASS - no horizontal overflow in 32 page/width combinations at 390+320 -
+## 18 routes work with JavaScript off - 61/61 sitemap URLs 200 - 149/149 internal links 200.
+##
+## -- ITEM 4: WHAT IS OPEN, AND THE OWNER'S DECISIONS -----------------------------------
+##  1. HERO PHOTOGRAPH - HIS CHOICE, NOTHING SWITCHED. hero-vimeo-frame.jpg (a vintage
+##     convertible) is the last asset on the site with no licence record, and it is off-subject.
+##     Three licensed candidates are committed and rendered behind the real headline at 1440+390:
+##     docs/design-r36/shots/hero-cand-{current,breakneck-south,olana,bear-mountain}-{1440,390}.png
+##     RECOMMENDATION (mine and the agent's, independently): breakneck-south - it is the view FROM
+##     the ridge the phone hero already shows, so desktop and phone finally tell one story.
+##  2. THE CHAT TEST CONVERSATION can be deleted from the CRM whenever he likes.
+##  3. FIRST JOB FOR ROUND 37, fully diagnosed in ROUND36-ORCHESTRATOR.md section 11: the leftmost
+##     drift card loses ONE SIDE of its focus ring, because div.rlt-drift clips at overflow:auto
+##     from x=127 and that card sits flush at left=127. The ring measures 12.73-13.90:1 where it
+##     paints, so the >=3:1 rule IS met - this is cosmetic. Fix is one line (padding-inline: 4px;
+##     margin-inline: -4px on .rlt-drift) but it moves a rail measured to the pixel this round, so
+##     re-run overflow at 390+320, verify-card-scrim and verify-focus-paint after it.
+##  4. NOT VERIFIED BY THE AGENT, stated plainly: it could not run `next build` beside the dev
+##     server, so its streaming/no-JS claims were dev-only. My production sweep covers it now.
+##  5. Still owner-decisions, unchanged: published-CMA enumeration and raw MLS MediaURLs.
+##
+## -- ITEM 5: THE REUSABLE LESSON - A NEGATIVE RESULT NEEDS THE SAME PROOF AS A POSITIVE -
+## I checked for a running loop with `tasklist /FI "IMAGENAME eq bash.exe" 2>/dev/null | head`.
+## In git-bash MSYS rewrites the leading-slash argument - /FI becomes C:/Program Files/Git/FI -
+## and tasklist ERRORS. 2>/dev/null swallowed the error, so an empty stdout reached me and read
+## exactly like "no such process". I believed it, started a second scheduler, and wrote the wrong
+## reason into a commit message and a memory. Both corrected in place (724d336).
+##   - Never send a probe's stderr to /dev/null. It turns "the instrument failed" into "the answer
+##     is none", and empty is the most believable wrong answer there is.
+##   - MSYS_NO_PATHCONV=1 applies to WINDOWS tools' flags too, not just node/Playwright paths.
+##   - Use Get-CimInstance Win32_Process with CommandLine - it gives you the parent and the args.
+## And a second one, same family: app/canonical.test.ts's FIRST version matched the string
+## `canonical: "./"` inside the COMMENT written directly above the real value, and failed on the
+## fix it exists to protect. Round 35 catalogued this exact shape. Strip comments before matching.
+##
+## == PREVIOUS HANDOFF 2026-08-20 (ROUND 35) =============================================
 ## Full record: docs/parity/DESIGN-ROUND35.md. Single agent, 8 commits, pushed to main.
 ##
 ## ── ITEM 1: THE SOLD-PHOTO LOOP. RESUME IT FIRST, AS ALWAYS. ────────────────────────────
