@@ -239,7 +239,17 @@
    ALSO NOT DONE: the numeric voice. The site runs TWO of those as well — `font-mono` semibold with
    tight tracking on the listing/CMA surfaces (round 33), and `font-bold` Lato on these marketing
    pages. Unifying them is one decision that has to be taken across pages 1 and 2 too, and doing
-   half of it here would make the codebase say three things instead of two. Recorded, not shipped. */
+   half of it here would make the codebase say three things instead of two. Recorded, not shipped.
+
+   ROUND 36 AUDIT — the scale is now a closed set, checked rather than assumed. Every arbitrary
+   text size in app/ and components/ was inventoried. Four were drift and were collapsed onto
+   steps: 21px (/home-value subhead -> t-lead), 17px x2 (/buying, /financing lead paragraphs ->
+   16px body, same collapse the home seller block got), 15px (testimonial quote -> 16px body),
+   12px (a chip written as text-[12px] -> text-xs). Everything that remains off the two scales
+   has a documented home: 10/11/13px small-print tiers, the blog scenes' own 34/38px display
+   (a separate designed surface), the numeric voice's 28/40px figures (the decision recorded
+   above), and miniature aria-hidden artwork that draws UI at reduced scale. A new size that
+   fits none of those is drift by definition. */
 
 /* A card or panel title. Lato, because it labels a thing rather than leading a page. */
 .t-title {

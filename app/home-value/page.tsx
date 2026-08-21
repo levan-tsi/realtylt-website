@@ -68,7 +68,11 @@ export default async function HomeValuePage({
           <div className="mt-8">
             <HomeValueForm defaultAddress={address} />
           </div>
-          <p className="mx-auto mt-6 max-w-xl text-[21px] text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
+          {/* t-lead, not text-[21px] (round 36, move 8): 21px was a size that exists nowhere
+              else on the site — not a step, a guess. This is exactly the job the UI scale's
+              t-lead names ("the sentence that leads into" the thing below), so it takes that
+              step. Contrast over the photograph re-proven by verify-hero-contrast. */}
+          <p className="t-lead mx-auto mt-6 max-w-xl text-paper [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
             Fifteen comparable sales, read by a person. Usually back within a day.
           </p>
         </div>

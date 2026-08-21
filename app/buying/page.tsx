@@ -120,7 +120,9 @@ export default async function BuyingPage() {
             </SectionHeading>
           </Reveal>
           <Reveal delay={100}>
-            <div className="max-w-[62ch] space-y-5 text-[17px] leading-[1.75] text-stone">
+            {/* 16px body, not text-[17px] (round 36, move 8): 17px is not a step on this
+                site's scale — the same drift the home seller block shed a round ago. */}
+            <div className="max-w-[62ch] space-y-5 leading-[1.75] text-stone">
               <p>
                 Buying a home is a big step! Whether you&rsquo;re buying your first home, your
                 dream home, or your tenth investment property, yours will be a big investment. We

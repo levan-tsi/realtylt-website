@@ -16,7 +16,10 @@ export function TestimonialCard({ t, dark = false }: { t: Testimonial; dark?: bo
         <Stars />
       </div>
       <blockquote className="mt-4 grow">
-        <p className={`text-[15px] leading-relaxed ${dark ? "text-paper/85" : "text-ink-soft"}`}>
+        {/* text-base, not text-[15px] (round 36, move 8): a testimonial quote is running copy
+            a reader gets through — body — and 15px was both a one-off size and under the 16px
+            mobile body floor. */}
+        <p className={`text-base leading-relaxed ${dark ? "text-paper/85" : "text-ink-soft"}`}>
           &ldquo;{t.quote}&rdquo;
         </p>
       </blockquote>

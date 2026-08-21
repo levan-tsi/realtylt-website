@@ -49,7 +49,9 @@ export default function FinancingPage() {
             </SectionHeading>
           </Reveal>
           <Reveal delay={100}>
-            <p className="max-w-[62ch] text-[17px] leading-[1.75] text-stone">
+            {/* 16px body, not text-[17px] (round 36, move 8): 17px is not a step on this
+                site's scale — the same drift the home seller block shed a round ago. */}
+            <p className="max-w-[62ch] leading-[1.75] text-stone">
               If you haven&rsquo;t experienced it before, the home loan process can feel
               overwhelming, but our agents will help you stay informed throughout the process, from
               pre-approval to closing. The first thing to do is consult with a mortgage specialist

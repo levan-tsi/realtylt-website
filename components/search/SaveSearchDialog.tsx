@@ -162,7 +162,7 @@ export function SaveSearchDialog({
             {summary.length > 0 && (
               <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Filters in this search">
                 {summary.map((s) => (
-                  <li key={s} className="rounded-full bg-mist px-2.5 py-1 text-[12px] text-ink-soft">
+                  <li key={s} className="rounded-full bg-mist px-2.5 py-1 text-xs text-ink-soft">
                     {s}
                   </li>
                 ))}
