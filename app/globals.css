@@ -827,6 +827,32 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .rlt-drift::-webkit-scrollbar {
   display: none;
 }
+/* The edge treatment the motion was missing: cards used to be cut dead at the container edge,
+   mid-address, on both sides — motion without an edge reads as broken layout rather than
+   movement. The mask dissolves a card over the last stretch of the frame, so it LEAVES the
+   composition instead of being guillotined by it. Scoped to motion-on visitors only: under
+   reduced motion the rail is an ordinary scroller, and a scroller whose first card fades at
+   scrollLeft 0 would be claiming content to the left that does not exist. clamp() keeps the
+   fade from eating a meaningful share of a 78vw phone card while giving the 1250px container
+   a real dissolve. */
+@media (prefers-reduced-motion: no-preference) {
+  .rlt-drift {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 clamp(28px, 5vw, 72px),
+      #000 calc(100% - clamp(28px, 5vw, 72px)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 clamp(28px, 5vw, 72px),
+      #000 calc(100% - clamp(28px, 5vw, 72px)),
+      transparent
+    );
+  }
+}
 .rlt-drift-track {
   display: flex;
   width: max-content;
