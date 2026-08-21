@@ -68,7 +68,7 @@ export default async function BuyingPage() {
           </p>
           <p className="mx-auto mt-4 max-w-xl text-paper/85">
             We&rsquo;ll help you navigate the market, find homes that match your criteria, and
-            negotiate the best deal. No pressure, no obligation, just expert guidance.
+            negotiate on your behalf. No pressure and no obligation.
           </p>
           {/* Live: phone icon in the owner's accent blue (#3b82f6); both CTAs fire a gtag
               click (categories Phone / Booking). Mobile: buttons stack full-width (max 350px)
@@ -270,8 +270,8 @@ export default async function BuyingPage() {
                   We&rsquo;re with you till the end
                 </p>
                 <p className="mt-4 max-w-xl leading-relaxed text-paper/75">
-                  When you find a home you love, our team will help you submit an offer. We are
-                  skilled negotiators who know how to get you the best price and value possible.
+                  When you find a home you love, our team will help you submit an offer and
+                  negotiate price and terms on your behalf.
                   Once an offer has been accepted we&rsquo;ll help you navigate through inspections,
                   appraisals, and closing in a stress-free way. We do all of these at no cost to
                   you, the buyer, as we are compensated by the sellers.

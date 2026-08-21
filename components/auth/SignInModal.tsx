@@ -183,7 +183,7 @@ export function SignInModal() {
           id="auth-modal-title"
           className="text-2xl font-bold text-ink-soft"
         >
-          {isSignup ? "Sign up for free" : "Welcome back!"}
+          {isSignup ? "Sign up for free" : "Welcome back."}
         </h2>
         <p className="mt-1.5 text-sm text-stone">
           {isSignup

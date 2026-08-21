@@ -53,9 +53,8 @@ export default function FinancingPage() {
               If you haven&rsquo;t experienced it before, the home loan process can feel
               overwhelming, but our agents will help you stay informed throughout the process, from
               pre-approval to closing. The first thing to do is consult with a mortgage specialist
-              (or two). If you don&rsquo;t already have someone in mind, we partner with some of
-              the best lenders in the industry, and we&rsquo;d be happy to introduce you, so
-              you&rsquo;ll be taken care of.
+              (or two). If you don&rsquo;t already have someone in mind, we work with local
+              lenders we trust and we&rsquo;d be glad to introduce you.
             </p>
           </Reveal>
         </div>
@@ -150,15 +149,15 @@ export default function FinancingPage() {
         <div className="mx-auto grid max-w-[1250px] items-start gap-12 px-4 lg:grid-cols-2 lg:px-8">
           <Reveal>
             <h2 id="loan-heading" className="t-h2 text-ink">
-              Helping You Get The Best <strong>Loan</strong>
+              Find The Right <strong>Loan</strong>
             </h2>
             <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
               Start the process
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
-              We&rsquo;ll help you find the best local loan officer to get you competitive rates
-              and the programs that best fit your individual needs. Fill out this form and
-              we&rsquo;ll connect you with a lender today!
+              We&rsquo;ll connect you with a local loan officer, competitive rates, and programs
+              that fit how you&rsquo;re buying. Fill out this form and we&rsquo;ll make the
+              introduction today.
             </p>
             <ul className="mt-6 space-y-2 text-sm text-ink-soft">
               {[
@@ -238,9 +237,10 @@ export default function FinancingPage() {
               Don&rsquo;t be surprised if you&rsquo;re asked for additional documentation or
               clarification throughout the process. Once your loan is approved, don&rsquo;t forget
               to set up homeowners insurance. Your documents will be sent to the title company,
+              {/* "Congratulations, happy homeowner!" is gone (round 36): the keys ARE the
+                  moment, and an exclamation mark on top of them is the old vendor's voice. */}
               where you&rsquo;ll sign for the new home and pay any remaining costs. Then, the loan
-              is recorded and you get the keys.{" "}
-              <strong className="font-bold text-paper">Congratulations, happy homeowner!</strong>
+              is recorded and you get the keys.
             </p>
             <div className="mt-7">
               <Button href="/buying" variant="outline-light">See The Full Buying Process</Button>
