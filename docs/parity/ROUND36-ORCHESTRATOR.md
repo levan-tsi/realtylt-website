@@ -29,10 +29,11 @@ the gate is off.
 
 ## 2. The sold-photo loop
 
-**The scheduler problem is fixed rather than re-diagnosed.** Round 34 lost it to a session-scoped
-cron job, round 35 lost a completion report to restarting it mid-window, and this round a nohup'd
-shell loop died within seconds because the harness takes its process group with it. It is now
-`scripts/sold-loop.mjs`, started detached and confirmed alive:
+**The scheduler problem is fixed — but read the correction in section 9 first, because the
+diagnosis that produced this fix was WRONG.** Round 34 lost the scheduler to a session-scoped cron
+job and round 35 lost a completion report to restarting it mid-window, so a committed driver was
+worth building regardless. What was not true is the reason I gave for building it: the nohup'd
+shell loop had not died. It is now `scripts/sold-loop.mjs`, started detached and confirmed alive:
 
     powershell -Command "Start-Process node -ArgumentList 'scripts/sold-loop.mjs' -WindowStyle Hidden"
 
@@ -261,3 +262,47 @@ which is exactly why it survived eleven hours and would have survived this sweep
 console sweep is worth running and worth nothing on interaction-triggered paths. What actually
 catches this class is the unit test: two files in different directories that must agree, held
 together by something that fails.
+
+## 9. CORRECTION: the loop I said had died was running the whole time
+
+I wrote, in a commit message and in section 2 above, that a `nohup`'d shell loop "was gone within
+seconds, because the harness takes its process group with it". **That is false.** The design agent
+traced the 10:36 window launch back to it and was right; I checked and it was still running, pid
+3764, started 09:51:19 UTC, ticking at :51/:06/:21/:36 out of the scratchpad. So for about four
+hours this box ran TWO schedulers, mine at :07/:22/:37 and that one a minute ahead of it.
+
+**No harm reached the account, and the reason is the apparatus, not luck.** One media runner ever
+is enforced by a pid lock, and the lock did its job: the 10:36:25 tick launched, and my loop's
+10:37:26 tick printed "A RUNNER IS ALREADY LIVE" and exited 4. The window was correctly sized
+(3,662) and correctly rated (1.4, the post-429 cooling rate). A second scheduler was untidy, not
+dangerous.
+
+**How I got it wrong — and this is the part worth keeping.** I checked with
+
+    tasklist /FI "IMAGENAME eq bash.exe" 2>/dev/null | head
+
+In git-bash, MSYS rewrites the leading-slash argument: `/FI` becomes `C:/Program Files/Git/FI`, and
+tasklist exits with `ERROR: Invalid argument/option`. I had redirected stderr to `/dev/null`, so the
+error vanished and what reached me was an empty stdout — which reads exactly like "no such process".
+**`2>/dev/null` on a probe converts "the instrument failed" into "the answer is none",** and an
+empty result is the most believable wrong answer there is, because it is what you expect when a
+thing is absent.
+
+`MSYS_NO_PATHCONV=1 tasklist /FI "IMAGENAME eq node.exe"` lists processes correctly. The repo's own
+CLAUDE.md warns about MSYS path conversion; I applied it to node and Playwright arguments and did
+not think of it as applying to a Windows tool's flag.
+
+Three things follow, and round 37 should take all three:
+
+1. **Never silence stderr on a probe.** If the output matters, the failure matters more. The whole
+   round-35 lesson was that instruments lie; this is an instrument that was allowed to lie silently.
+2. **A negative result deserves the same proof as a positive one.** "No process found" should have
+   been checked against a process I knew existed before I acted on it. The tripwire assertion
+   already in `probe-media-safety.test.ts` and `titles.test.ts` — *the scan must find something* —
+   is the same idea, and I did not apply it to myself.
+3. The duplicate loop has been stopped (pid 3764 killed). One scheduler now runs,
+   `scripts/sold-loop.mjs` pid 23860, and it is the committed one.
+
+The committed driver still earns its place — a scheduler with a home on disk beats a shell loop in
+a temp directory whether or not the shell loop survives. But it was built on a wrong reading, and a
+record that quietly kept the wrong reason would be worth less than no record.
