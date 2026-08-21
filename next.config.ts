@@ -53,7 +53,17 @@ const CSP = [
   // stats.g.doubleclick.net, www.google.com/ccm) — i.e. the owner's Google Ads conversion
   // tracking and part of GA4 were being dropped site-wide. Every scratch probe had been
   // filtering these out as third-party "noise", which is why it went unnoticed.
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com",
+  // 2026-08-21: `https://realtylt-crm-web.vercel.app` added because the chat cutover (115ec56,
+  // the night before) moved the widget's WEBHOOK_URL from the n8n webhook to the CRM's
+  // /api/chat/agent and nothing here followed. Measured on production before changing anything:
+  // a fetch to that origin from the site's own page context returns "Failed to fetch" and the
+  // console reads "Refused to connect because it violates the document's Content Security
+  // Policy" — so every chat message a visitor sent was being dropped in the browser. The CRM
+  // side was already correct (OPTIONS preflight returns 204 with
+  // access-control-allow-origin for both realtylt.com and the temp host, methods POST/OPTIONS,
+  // header x-rlt-chat-token). One exact origin, no wildcard; `lib/chat-csp.test.ts` now fails if
+  // the widget's URL and this list ever drift apart again.
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
