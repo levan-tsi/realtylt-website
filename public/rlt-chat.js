@@ -5,7 +5,13 @@
   // CONFIG - edit these
   // ============================================================
   const CONFIG = {
-    WEBHOOK_URL: 'https://n8n.srv1017745.hstgr.cloud/webhook/realtylt-chat',
+    // CUTOVER 2026-08-20 (owner's call: "make it our own chat and fully test in production").
+    // The CRM's own agent speaks the widget's exact contract (proven by the CRM's
+    // chat-compat-harness against this very function). Rollback = put the n8n line back:
+    // 'https://n8n.srv1017745.hstgr.cloud/webhook/realtylt-chat' — the workflow stays
+    // published and untouched. The vercel host is deliberate: app.realtylt.com DNS still
+    // points at the old server.
+    WEBHOOK_URL: 'https://realtylt-crm-web.vercel.app/api/chat/agent',
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
     BRAND_NAME: 'Levan Tsiklauri',
