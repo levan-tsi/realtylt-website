@@ -3,11 +3,15 @@ import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
 /** Route-level pending state for /search — and the only thing on this route a visitor without
  * JavaScript ever sees.
  *
- * THE PENDING STATE. The owner reported "search listings is not doing anything when I click". It
- * was navigating — just slowly, and silently. Measured on production, clicking SEARCH LISTINGS
- * from /buying: the URL committed after 590ms, 599ms, 1,604ms and 6,890ms across four runs. A
- * twelve-fold spread with nothing on screen acknowledging the click, so on a slow run the link
- * reads as dead.
+ * THE PENDING STATE — a FIXED problem, and this file is the fix. Do not read the next paragraph
+ * as an open complaint; Search Listings works, and it works because this file exists. The history
+ * is kept only so nobody deletes it and quietly brings the problem back.
+ *
+ * In round 7533ca7 (2026-08-06) the owner reported "search listings is not doing anything when I
+ * click". It was navigating — just slowly, and silently. Measured on production at the time,
+ * clicking SEARCH LISTINGS from /buying: the URL committed after 590ms, 599ms, 1,604ms and
+ * 6,890ms across four runs. A twelve-fold spread with nothing on screen acknowledging the click,
+ * so on a slow run the link read as dead. Adding this file is what closed it.
  *
  * The page already has a Suspense boundary whose comment claims it "covers a client-side
  * navigation INTO /search, where the RSC payload is in flight". It cannot. On a client

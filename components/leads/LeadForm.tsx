@@ -3,7 +3,7 @@
 import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
 import { useQualifyingWizard } from "@/components/leads/QualifyingWizard";
@@ -47,6 +47,7 @@ export function LeadForm({
   qualifier,
   addressValue,
   savedSearches,
+  redirectOnSuccess = false,
 }: {
   dark?: boolean;
   withAddress?: boolean;
@@ -74,6 +75,20 @@ export function LeadForm({
   source?: string;
   namePlaceholder?: string;
   addressPlaceholder?: string;
+  /** Land on /thank-you instead of answering in place.
+   *
+   * OFF by default, and that default is the decision. Every form on this site used to answer
+   * inline, which is better for a visitor but leaves nothing to measure: the URL never changed,
+   * so Google Ads and GA4 had no page view to count as a conversion. A destination fixes the
+   * measurement, so the primary funnels opt in.
+   *
+   * It must stay opt-in, because for three kinds of form a redirect is actively wrong:
+   *  · the LISTING modals — navigating away from the home someone is looking at to say "thanks"
+   *    loses their place for our convenience;
+   *  · the FOOTER form, which people use mid-browse and expect to stay put;
+   *  · /selling, whose success handler opens the qualifying wizard — a redirect unmounts it and
+   *    throws away the qualifying answers, which are worth more than the page view. */
+  redirectOnSuccess?: boolean;
   /** Structured intent to attach to this submission — the same `qualifier` field the listing
    * tour/offer sheets send. parseLead normalizes it (flat, short strings) and folds it into the
    * message so it is readable even in a plain CRM view. */
@@ -86,6 +101,7 @@ export function LeadForm({
   savedSearches?: SavedSearchRequest[];
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { openWizard } = useQualifyingWizard();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
@@ -142,6 +158,13 @@ export function LeadForm({
         return;
       }
       setStatus("success");
+      if (redirectOnSuccess) {
+        // The lead is already saved, so the visitor can leave safely. `from` carries which form
+        // it was, so one conversion page can still be attributed per funnel.
+        form.reset();
+        router.push(`/thank-you?from=${encodeURIComponent(source ?? pathname)}`);
+        return;
+      }
       // On /selling this opens the qualifying wizard; everywhere else it is a no-op.
       const name =
         (data.name ?? "").trim() ||
