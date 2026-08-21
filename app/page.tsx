@@ -184,7 +184,11 @@ export default async function HomePage() {
                 through background" — so they share the search instrument's geometry now:
                 12px corners, outlined, transparent fill with the photo showing through.
                 Compact (40px) so they never re-become the big boxes that covered the video. */}
-            <div className="flex items-center gap-x-3">
+            {/* flex-wrap + gap-y-2 (round 36): at 320 the two pills shared a row 4px too
+                narrow for them, so each wrapped its own LABEL to two lines — "SELL YOUR /
+                HOME" — which reads as a broken control. Wrapping the ROW instead keeps every
+                label on one line at every width; above 320 nothing changes. */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
               <Link
                 href="/selling"
                 className={`inline-flex min-h-[40px] items-center rounded-xl border border-paper/60 px-5 text-[11px] font-bold uppercase tracking-[0.14em] text-paper ${PRESS} hover:border-paper hover:bg-paper hover:text-ink`}

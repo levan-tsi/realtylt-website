@@ -28,7 +28,12 @@ export function listingStats(
   // Only fall back to acreage when there is nothing else to show (Land, raw lots) — a home that
   // already lists beds/baths/sqft keeps its normal stat line.
   if (parts.length === 0 && l.lotAcres && l.lotAcres > 0) {
-    parts.push(`${l.lotAcres} ${l.lotAcres === 1 ? units.acreOne : units.acre}`);
+    // Feed precision is survey precision, not display precision: a card printed "0.0449 Acres"
+    // (round 36). Two decimals under ten acres, one at ten and over — the difference a buyer
+    // cares about shrinks as the lot grows — with trailing zeros dropped by Number(). A value
+    // that rounds to nothing prints nothing rather than "0 Acres".
+    const acres = Number(l.lotAcres.toFixed(l.lotAcres < 10 ? 2 : 1));
+    if (acres > 0) parts.push(`${acres} ${acres === 1 ? units.acreOne : units.acre}`);
   }
   return parts;
 }

@@ -59,6 +59,17 @@ describe("listingStats — Land/lot fallback to acreage", () => {
     expect(listingStats({ beds: 0, baths: 0, sqft: 0, propertyType: "Land" }, units)).toEqual([]);
   });
 
+  it("rounds feed-precision acreage to something a person would say (round 36: a card printed '0.0449 Acres')", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 0.0449, propertyType: "Land" }, units)).toEqual(["0.04 Acres"]);
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 686.62, propertyType: "Land" }, units)).toEqual(["686.6 Acres"]);
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 23.1, propertyType: "Land" }, units)).toEqual(["23.1 Acres"]);
+  });
+
+  it("treats acreage that rounds to one as one, and acreage that rounds to nothing as nothing", () => {
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 1.004, propertyType: "Land" }, units)).toEqual(["1 Acre"]);
+    expect(listingStats({ beds: 0, baths: 0, sqft: 0, lotAcres: 0.004, propertyType: "Land" }, units)).toEqual([]);
+  });
+
   it("keeps a commercial building's sqft (no acreage fallback needed)", () => {
     expect(listingStats({ beds: 0, baths: 0, sqft: 6000, lotAcres: 1.5, propertyType: "Commercial" }, units)).toEqual([
       "6,000 Sq. Ft.",
