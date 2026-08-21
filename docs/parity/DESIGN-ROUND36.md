@@ -88,8 +88,11 @@ the reason is stated so a later round can disagree with the reason rather than g
     `title.template` appends the brand, and this page's own title appends it a second time. Every
     other route follows the "Topic | phrase" convention. Confirmed live in production, not only
     in dev (the GA payload carries `dt=Thanks%20%7C%20RealtyLT%20%7C%20RealtyLT`).
-11. **`public/images/levan-portrait.jpg` is 1.1 MB**, by an order of magnitude the heaviest
-    asset in `public/`.
+11. ~~`public/images/levan-portrait.jpg` is 1.1 MB~~ — **withdrawn on inspection.** It is the
+    heaviest file in `public/`, but every one of its five call sites renders it through
+    `next/image`, so a visitor is served a derivative sized to the box and never the 3024x4032
+    original. Repo weight, not a page-weight defect. Left here rather than deleted, so the next
+    round does not "find" it again.
 12. **The consent box is a bordered box inside a bordered panel** on every form.
 
 ## 4. Guardrails for this round

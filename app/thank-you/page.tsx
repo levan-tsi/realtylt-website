@@ -26,7 +26,9 @@ import { SITE } from "@/lib/site";
  * dominant hue (amber on navy) is a restraint, not a decoration.
  */
 export const metadata: Metadata = {
-  title: "Thanks | RealtyLT",
+  // The root layout's `title.template` already appends "| RealtyLT". Every other route names a
+  // topic and a phrase and lets the template add the brand once; this one was adding it twice.
+  title: "Thanks | Your Request Is In",
   description: "We have your request and someone from our team will be in touch shortly.",
   robots: { index: false, follow: true },
 };
