@@ -156,19 +156,88 @@ All foreground, on this tree.
 
 ```
 npx tsc --noEmit           clean
-npm test                   1037 passed / 79 files   (baseline 1006 + 31 new)
+npm test                   1040 passed / 79 files   (baseline 1006 + 34 new)
 npm run build              clean, 81/81 static pages (dev server killed first)
-verify-hero-contrast       PASS 315 runs / 8 pages at 1440 AND 390 AND 320
+verify-hero-contrast       PASS / 8 pages at 1440 AND 390 AND 320
                            negative control: 3 failures, 2.03 @320 / 2.18 @390 / 2.64 @1440
-verify-focus-paint         PASS 182/182   (negative control exits 1)
+verify-focus-paint         PASS 415/415 across 7 pages   (negative control exits 1)
 probe-reduced-motion       PASS (15 sections, 0 hidden, 0 reveals armed)
 verify-press-feedback      PASS 15/15
 no-JS sweep, production    6 pages; /search now serves a real page
 ```
 
+Two of those numbers were WRONG in the first version of this doc and are corrected above:
+focus-paint said 182, which was `CAP 26 x 7 pages` — a capped sample presented as coverage. The
+real figure is 415. Contrast said 315 runs where the reviewer measured 314; same verdict, but the
+number was never re-read after the gate changed.
+
 ---
 
-## 6. Carried, not done
+## 6. What the round did after this doc was first written
+
+### 6a. An adversarial review, and the three things it was right about
+A Fable 5 reviewer was asked to falsify every claim above. Verdict **PROGRESSED** — all six
+survived, both gates reproduced with negative controls that genuinely fail. It also found four
+real problems, three of them fixable and fixed (`c95943a`):
+
+1. **The 4-hour penalty was only in the wrapper.** `backfill-sold-photos.mjs` imported
+   `PENALTY_FILE` to WRITE it and never read it, so the rule bound `sold-window.mjs` and nothing
+   else — while that script prints its own launch line, putting the exact bypass in an operator's
+   scrollback. The runner serves the penalty itself now, before taking the lock.
+2. **A corrupt stamp erased the penalty.** `readPenaltyAt` returned null for a missing marker AND
+   an unreadable one, and the comment congratulated itself for not returning epoch 0 — missing
+   that null and epoch-0 produce the same outcome, which is that the window launches.
+   `readPenaltyState` reports `present` separately now, and unreadable is served as a penalty.
+3. **The focus gate's coverage claim.** §5 above.
+4. **A false evidence claim in `729a0a4`**, which said the contrast gate re-proved the consent box
+   "at every width". It cannot have: that gate discards anything below the fold and never scrolls,
+   and the box sits 1,049-9,376px down at 390/320. The box is very likely fine (~4.8:1 light,
+   ~7:1 dark by calculation); the EVIDENCE was wrong, which is the part that matters.
+
+### 6b. Two things built on the owner's direction
+* **`/thank-you`** (`667f703`). Every form answered in place, so there was no page view to count as
+  a conversion and no such route existed. The picture is Millerton at dusk with the lights on —
+  the real-estate answer to the black hole he sent as a reference for /ai: one warm source that
+  OFFERS light rather than swallowing it, already CC0 in the repo. `redirectOnSuccess` is opt-in,
+  because a redirect is wrong for the listing modals, the footer form, and /selling's wizard.
+  The conversion fires from `window.location.search`, NOT `useSearchParams` — which suspends, and
+  would have rebuilt the exact `<div hidden>` bug §2b describes on the page built to measure.
+* **The drifting Featured rail** (`0ea3daf`). He asked for a 3D cylinder carousel and agreed to try
+  this first: a listing card is not a photograph, and rotating price/address/button in 3D costs
+  readability. Pure CSS, moves with JS off, pauses on hover and focus, and under reduced motion
+  stops AND becomes a scroller. Featured drifts; New Listings stays a paged grid, because round 31
+  made them differ in weight deliberately. Three defects the probes caught: `inert` silently not
+  rendering (16 tabbable links inside an `aria-hidden` block), `overflow:hidden` stranding keyboard
+  focus on clipped cards, and then the focus gate reporting the working `inert` guard as broken.
+
+### 6c. A real 429, and the number behind it
+**2026-08-21 01:48 UTC.** The loop opened a window, ran clean for eleven minutes, then took six
+429s and stopped itself.
+
+The cause was not a fluke. `sold-window.mjs` had always passed `--rps 2.0`, while
+`backfill-sold-photos.mjs` has defaulted to **1.7** since 2026-08-12 carrying the comment "two 429
+trips found the real ceiling below the published 2 RPS". The wrapper was overriding the one value
+the ledger had already paid for twice, and this round moved that 2.0 into `NORMAL_RPS` without
+questioning it. **2.0/s sustained is 7,200 req/hr, which IS the account cap** — nothing left for
+the hourly sync or for the site serving its own photos through `/api/media/`, which is
+storage-first with a proxy fallback to the media host.
+
+Measured from `storage.objects`: ~117 photos/min (7,020/hr) for eleven minutes, degrading to 84
+and 91 as the backoff engaged, stopping with **1,579 landed**.
+
+Fixed in `ab49d85`: `NORMAL_RPS` 1.7, `COOLING_RPS` 1.4 (it had been 1.7, equal to the old normal,
+so the post-429 retreat went nowhere), `HOURLY_RESERVE` 700 (the hourly door had none while the
+daily door always had its equivalent). And `verify-hero-contrast.mjs` was ALLOWING
+`**/api/media/**`, spending the same cap on every run of 8-11 pages x 3 viewports while the window
+was live — blocked now, still PASS. CLAUDE.md already said to block it.
+
+**The guard held**, which is why this cost a stopped run rather than a suspended key: the runner
+stopped itself, stamped, released its lock and exited 42; the wrapper refuses with exit 5 and a
+direct invocation refuses with exit 1 — the second only true because 6a.1 landed an hour earlier.
+
+---
+
+## 7. Carried, not done
 
 * **The phone hero photograph.** Owner decision, gated on the licence for
   `hero-vimeo-frame.jpg` (§1).
