@@ -1400,7 +1400,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             // hard cut. rlt-view-in is the arrival from the GRID/MAP switch (globals.css); the
             // opacity transition is what makes "searching" read as the list waiting rather than
             // as the page flickering.
-            className={`rlt-view-in grid content-start gap-5 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:max-h-[84vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
+            // 90vh, moved up from 84vh in round 36 and the number is the owner's "2+2+2": the
+            // panel must show three FULL card rows beside the map at 1440x900. The card gained
+            // its city line (the two-line address lockup that ended mid-word ellipsis), which
+            // took a row from 243px to 259px — measured, 3 x 259 + 2 x 12 gap + panel padding
+            // = 809px = 90vh of a 900 viewport. The map below carries the same value so the two
+            // panels keep sharing one bottom edge.
+            className={`rlt-view-in grid content-start gap-5 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:max-h-[90vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {state === "error" ? (
               // THE MAP STAYS, part two. The failure belongs to the results column, not to the
@@ -1452,7 +1458,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               the map sticks beside the results column. */}
           <div
             ref={mapPanelRef}
-            className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[84vh]"
+            className="relative h-[55vh] overflow-hidden rounded-2xl border border-line lg:sticky lg:top-4 lg:h-[90vh]"
           >
             <MapView
               pins={mapPins}

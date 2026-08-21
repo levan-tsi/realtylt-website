@@ -71,10 +71,34 @@ export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   );
 }
 
-/** IDX listing card matched to live realtylt.com (Brivity) tiles: near-square photo,
- * dark bottom gradient with white price / address / beds|baths|sqft, "Listed With
- * <office>" (compliance) and a black View chip. Heart save + status badge on top.
- * Whole card links to the listing. */
+/** The listing card — the most repeated object on the site (home page twice, /search, all
+ * eleven area pages, beside every listing detail), redesigned in round 36 against MEASURED
+ * data instead of the IDX-vendor default it started as.
+ *
+ * THE ADDRESS IS A TWO-LINE LOCKUP, NOT A COMMA RUN. Street on its own line, "City, NY zip"
+ * under it. The old single string ("506 Southview Drive, Poughkeepsie, NY 12601") either
+ * ellipsized (plain variant, `truncate`) or wrapped at an arbitrary comma (overlay,
+ * line-clamp-2) — and an address is the one thing on a listing card that must never be cut
+ * mid-word. Measured across all 27,719 active rows (scripts/_scratch-r36-measure-addresses.mjs):
+ * street p99 = 32 chars, "City, NY zip" max = 30 chars — each fits its line at these sizes in
+ * the narrowest card this component renders into. No clamp, no reserve games: every row of the
+ * block is one line for effectively every listing, so price tops stay level across a rail
+ * without reserving blank lines.
+ *
+ * THE "VIEW" CHIP IS GONE. The whole card is a link (inset-0 overlay anchor) with lift, press
+ * and photo-zoom states; a button-shaped chip on top of that promised a second control that
+ * did not exist.
+ *
+ * THE BROKER CREDIT IS OFFICE-ONLY AND ONE LINE. MLS Grid IDX Rules §22 (docs/vendor/mlsgrid/
+ * MLS-Grid-IDX-Rules.pdf) requires the listing BROKERAGE name; the agent name is a
+ * per-MLS extra (SCKMLS, IRMLS — not OneKey) and lives on the listing page. With the agent
+ * included the credit ran to 80 chars and truncated on effectively every search card, which is
+ * worse attribution than a complete office name (office max = 32 chars, fits). Fixed position:
+ * bottom-anchored in both variants, so cards stop shifting relative to one another.
+ *
+ * The scrim on the overlay variant is MEASURED, not hoped at — scripts/verify-card-scrim.mjs
+ * drives the rendered card with photos blocked (worst case: white text over the light bg-mist
+ * fallback) and reads the actual pixels behind every text line. */
 export function ListingCard({
   listing,
   priority = false,
@@ -110,10 +134,11 @@ export function ListingCard({
           className="absolute inset-0 z-10"
           aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
         />
-        {/* 2:1 on phones; 21:10 from lg, where the owner's density target is three FULL rows
-            beside the map ("2+2+2") — the height comes out of the photo band + body padding,
-            not the type: measured at 1440, card 282 -> 240 while the photo's share of it
-            holds at 59% (the body gives up as much as the band does). */}
+        {/* 2:1 on phones; 21:10 from lg. The owner's density target is three FULL rows beside
+            the map ("2+2+2") — round 23 tuned the card 282 -> 240 for it; round 36's two-line
+            address lockup put a real city line back (243 -> 259 measured at 1440) and the
+            search panel pair moved 84vh -> 90vh to keep holding exactly three rows, so the
+            photo band did not have to pay for the type (see SearchClient's panel comment). */}
         <div className="photo-zoom relative aspect-[2/1] overflow-hidden bg-mist lg:aspect-[21/10]">
           {l.photos[0] ? (
             isLiveMlsPhoto(l.photos[0]) ? (
@@ -171,27 +196,26 @@ export function ListingCard({
             <p className="text-xl font-bold leading-7 text-ink lg:text-lg lg:leading-6">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
-          {/* `lg:text-[13px]` is gone. It was a one-off size sitting between the two real steps
-              (12 and 14), and with two more one-offs elsewhere it made SIX distinct body sizes on
-              the home page — 12/13/14/16/17/18 — which is drift, not a scale. It also costs
-              nothing to remove: `text-sm` carries the line-height, so the line BOX is unchanged
-              and only the glyphs go from 13px to 14px. */}
-          <p className="mt-1 truncate text-sm italic text-ink-soft lg:mt-0.5">
-            {l.address}, {l.city}, {l.state} {l.zip}
+          {/* The two-line address lockup (see the component comment). Street carries the weight;
+              the city line drops a step and a shade, so the pair reads as one object with a
+              hierarchy instead of a comma run that used to ellipsize mid-word. Not italic:
+              italic small print was the vendor look this card is leaving behind. No truncate on
+              the street — measured p99 = 32 chars fits this line; the one-in-a-thousand lot
+              bundle wraps, and a wrapped word beats a swallowed one. */}
+          <p className="mt-1 text-sm font-medium leading-snug text-ink-soft lg:mt-0.5">{l.address}</p>
+          <p className="text-xs text-stone">
+            {l.city}, {l.state} {l.zip}
           </p>
-          {/* Live's bottom row: "Listed with <agent> of <office>" left, outline heart right. */}
+          {/* Bottom row, bottom-anchored: the broker credit as a quiet one-line caption
+              (office-only — the comment up top has the rule and the numbers), heart right. */}
           <div className="mt-auto flex items-end justify-between gap-2 pt-1.5 lg:pt-1">
-            {/* min-w-0 + break-words: a flex item is min-width:auto, so a long office name
-                would push this row wider than the card instead of wrapping inside it. */}
-            <p className="min-w-0 truncate text-[11px] leading-snug text-stone">
-              Listed with{" "}
-              {l.listAgentName ? (
-                <>
-                  <span className="font-bold text-ink-soft">{l.listAgentName}</span> of {l.listOfficeName}
-                </>
-              ) : (
-                <span className="font-bold text-ink-soft">{l.listOfficeName}</span>
-              )}
+            {/* min-w-0: a flex item is min-width:auto, so a long office name would push this row
+                wider than the card. text-xs (12px), not 10px: sub-legible attribution was a
+                measured round-36 finding, and at 12px every office in the data but one all-caps
+                outlier fits this line (canvas-measured over 1,977 distinct offices); truncate is
+                the belt for that one. */}
+            <p className="min-w-0 truncate text-xs text-stone">
+              Listed with {l.listOfficeName}
             </p>
             <FavoriteButton id={l.id} tone="onLight" className="group relative z-20 -mb-1 -mr-1 shrink-0" />
           </div>
@@ -243,42 +267,38 @@ export function ListingCard({
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
           <p className="text-2xl font-bold leading-tight">{priceLabel(l)}</p>
-          {/* Clamped AND reserved at two lines, for the same reason the stats line below is
-              always rendered: this block is anchored to the card's bottom, so anything that
-              changes its height moves the price. A three-line address (measured on production:
-              "144 Cream Street, Poughkeepsie (Town), NY 12601") pushed one card's price up
-              exactly one line — price tops across that row read -1199/-1223/-1199/-1199, so
-              three of four aligned and one did not, which reads as a bug rather than a rhythm. */}
-          {/* leading-normal, not leading-snug. This one class was SIXTEEN of the home page's
-              remaining sub-1.45 blocks: an 18px two-line address at 1.375, set over a photograph
-              where it needs more air, not less. `min-h-[2lh]` still reserves exactly two lines,
-              so every card in a rail grows by the same 4.5px and the price tops stay level —
-              which is the whole reason this block is reserved in the first place. */}
-          <p className="mt-1 line-clamp-2 min-h-[2lh] text-lg font-medium leading-normal">
-            {l.address}, {l.city}, {l.state} {l.zip}
+          {/* The two-line address lockup (component comment): street, then "City, NY zip" a
+              step down. Every line of this block is single-line for effectively every listing
+              (measured over 27,719 active rows), so nothing here is clamped or reserved and
+              the price tops across a rail stay level by construction rather than by blank-line
+              reserve. The one-in-a-thousand lot-bundle street wraps and moves only its own
+              card's price — a wrapped word beats a swallowed one on the line that identifies
+              the product. */}
+          <p className="mt-1.5 text-base font-medium leading-normal">{l.address}</p>
+          <p className="text-sm leading-normal text-white/90">
+            {l.city}, {l.state} {l.zip}
           </p>
           {/* ALWAYS rendered, even when the feed carries no beds/baths/sqft (land, commercial,
               some multi-family). This block is anchored to the bottom of the card, so dropping
               the line pushed the price and address 20px DOWN — measured across a home rail, a
               row of four cards sat on three different baselines. The empty line is invisible
               against the gradient and simply holds the position. */}
-          <p className="mt-1 text-xs italic" aria-hidden={!statsShort}>
+          <p className="mt-1 text-xs text-white/90" aria-hidden={!statsShort}>
             {statsShort || " "}
           </p>
-          <div className="mt-2 flex items-end justify-between gap-3">
-            {/* Second source of the same drift, and the collision the eye actually catches: a
-                long office name wrapped to two lines and ran under the View button, while a
-                short one stayed on one — so the row's height, and therefore the price above it,
-                depended on the brokerage. Reserved at two lines like the address. Not truncated:
-                at 10px in ~180px of usable width, one line clips "United RE Hudson Valley Edge"
-                mid-word, and this is attribution. */}
-            <p className="min-w-0 line-clamp-2 min-h-[2lh] break-words text-[10px] italic leading-tight text-white/85">
-              Listed With {l.listOfficeName}
-            </p>
-            <span className="shrink-0 rounded-lg bg-ink px-4 py-1 text-sm text-paper transition-colors group-hover:bg-ink-soft">
-              View
-            </span>
-          </div>
+          {/* The broker credit as a quiet caption on its own hairline-ruled baseline: a fixed
+              caption band rather than a line competing with the listing facts. text-xs, not the
+              10px it wore for rounds — ten pixels on a phone for required IDX attribution was
+              measured and called out in round 36: quiet has to come from tone and position, not
+              from sub-legible size. At 12px the credit fits one line for 1,976 of the 1,977
+              distinct offices in the data at the 390 rail width (the one all-caps outlier clips
+              by 9px; at the 320 rail ~13% lose their last word) — with the full attribution one
+              click away on the listing page, truncate is the belt for those. Not italic: italic
+              small print over a photograph was the vendor look. The "View" chip that used to
+              share this row is gone — the whole card is the link. */}
+          <p className="mt-2.5 truncate border-t border-white/20 pt-2 text-xs text-white/85">
+            Listed with {l.listOfficeName}
+          </p>
         </div>
       </div>
     </article>
