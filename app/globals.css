@@ -404,6 +404,37 @@ body {
   outline-offset: -2px;
 }
 
+/* ── A CARD'S OWN RING WAS BEING EATEN BY ITS OWN CLIP.
+ *
+ * Every listing card is one link: an inset-0 overlay anchor inside an `overflow-hidden
+ * rounded-2xl` article. The anchor's box IS the article's box, so its focus outline at +2px
+ * falls entirely outside the article — and an ancestor's overflow:hidden clips a descendant's
+ * painting, outline included. The R32 rubric measured the consequence on the home rail: card
+ * links "ringing" at 1.02-1.6:1, which is noise, not an indicator. verify-focus-paint passed
+ * because focusing a rail card also scrolls and pauses the rail, and THAT paints.
+ *
+ * Same answer as the search instrument above: the CONTAINER carries the ring. An element's own
+ * outline is drawn outside its border box and is not subject to its own overflow clip, so the
+ * article rings where the link cannot — and the ring lands on the page ground (paper or mist,
+ * both known), never on the photograph, following its own rounded-2xl. River on paper is
+ * ~13:1; the .bg-ink override above keeps the colour answer right if a card ever sits on ink. */
+article.lift:has(> a:focus-visible) {
+  outline: 2px solid var(--color-river);
+  outline-offset: 2px;
+}
+article.lift > a:focus-visible {
+  outline: none;
+}
+
+/* And while a keyboard is INSIDE the drifting rail, the edge fade stands down: the rail is
+ * paused on focus-within (nothing is moving, so there is no motion to edge-treat), and a card
+ * scrolled against the container edge would otherwise sit in the fade with its text and its
+ * ring dimmed for exactly the visitor who cannot hover. */
+.rlt-drift:focus-within {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
 /* ── A SEGMENTED CONTROL CLIPS ITS OWN FOCUS RING.
  *
  * Round 31 made the group `flex overflow-hidden rounded-xl border` deliberately and photographed
