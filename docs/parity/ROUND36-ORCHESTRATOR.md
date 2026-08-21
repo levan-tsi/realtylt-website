@@ -96,8 +96,44 @@ so the thing behind it was checked in production Postgres, not in the doc that d
 - 0 saved searches in production, 0 with alerts on, and therefore **0 subscriptions carrying a null
   `criteria`**, which is the corruption the doc warns about.
 
+
 And one thing nobody had checked, which is the reason to look at all: the view carries
 `security_invoker=true`, and RLS is enabled on BOTH underlying tables (`portal_clients` has 3
 policies). Without that option a view runs with its owner's rights and `authenticated:SELECT` would
 have exposed every subscriber's name, email and phone to any signed-in visitor. It does not. This
 is a clean bill of health, not a repair.
+
+## 5. THE HOME PAGE'S CANONICAL POINTS AT A REDIRECT — and only production can see it
+
+Found while checking a different claim, which is usually how these turn up.
+
+**The launch checklist in the `/website` brief is wrong about switch 1.** It says "every canonical
+and all 58 sitemap entries currently point at the temp vercel.app host". Measured on production
+just now: **61 sitemap entries, all 61 on `https://realtylt.com`**, and every page's canonical on
+the apex too. `NEXT_PUBLIC_SITE_URL` was cleared from Vercel back on 2026-07-31 and the site was
+redeployed. Switch 1 is DONE. The remaining launch work is the apex DNS and then `PRELAUNCH=1`.
+
+**But the home page's canonical is `https://realtylt.com/index`, and `/index` 308-redirects to
+`/`.** Every other route is correct (`/search`, `/buying`, `/selling`, `/connect`, `/who-we-are`,
+`/thank-you`, `/top-areas/dutchess`, `/blog` all measured). The sitemap lists the home page as
+`https://realtylt.com/`. So the two strongest signals we send about the most important page on the
+site disagree, and the canonical is the one pointing at a redirect.
+
+Cause: `app/layout.tsx` sets `alternates: { canonical: "./" }`, which Next resolves per route
+against `metadataBase`. For the root route in a PRODUCTION build the prerender pathname is
+`/index` (the static output is `index.html`), so `"./"` resolves to `/index`.
+
+**Dev cannot see this.** Measured on `:3100` the same moment: dev home canonical is
+`https://realtylt-website.vercel.app` with no `/index`. This is round 35's lesson wearing a
+different hat — dev always streams, dev does not prerender, and only a production build answers a
+production question. Any fix must be verified with `next build` output or on the deployed site,
+never on the dev server.
+
+**Held, not fixed, and deliberately so:** the fix belongs in `app/page.tsx`, which the design agent
+is editing this round. Editing the same file from two sessions is how work gets lost
+(`infra-shared-repo-two-sessions`). It is queued for after the agent reports, together with a guard
+test that reads the BUILT html rather than the dev server's.
+
+`og:url` is absent site-wide for the same underlying reason worth noting here: the root
+`openGraph` block sets no `url`, so Next emits none. Mirroring the canonical there would inherit
+the same `/index` bug, so it waits for the same fix.
