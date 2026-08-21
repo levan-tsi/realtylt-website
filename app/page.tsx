@@ -62,15 +62,19 @@ export default async function HomePage() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              /* object-[50%_68%] below lg (round 36, move 4): at phone aspect the centered crop
-                 put the ridge line dead across the middle with ~450px of flat sky above it —
-                 half the first viewport carrying nothing. Sitting the view lower lifts the
-                 ridge toward the top third, so the textured hillside fills the middle where
-                 the type sits and the sky becomes a band instead of a hemisphere. Compared
-                 against 58% and 78% in renders (docs/design-r36/shots/hero-crop-390-*.png);
-                 78% is bottom-clamped and identical to 68%. lg keeps center: the desktop
-                 sources are different photographs with their own compositions. */
-              className="hero-zoom absolute inset-0 h-full w-full object-cover object-[50%_68%] grayscale lg:object-center"
+              /* object-[50%_68%] from 360px to lg (round 36, move 4): at phone aspect the
+                 centered crop put the ridge line dead across the middle with ~450px of flat
+                 sky above it — half the first viewport carrying nothing. Sitting the view
+                 lower lifts the ridge toward the top third, so the textured hillside fills
+                 the middle where the type sits and the sky becomes a band instead of a
+                 hemisphere. Compared against 58% and 78% in renders (docs/design-r36/shots/
+                 hero-crop-390-*.png); 78% is bottom-clamped and identical to 68%. The
+                 NARROWEST tier keeps the centered crop: at 320 the 68% view runs its bright
+                 fog-lit hillside straight through the eyebrow's line and the committed
+                 contrast gate measured 2.7:1 there — the centered crop is the one that holds
+                 its floors at that width, and the composition win is marginal on a 320 slice.
+                 lg keeps center: the desktop sources are different photographs. */
+              className="hero-zoom absolute inset-0 h-full w-full object-cover object-center grayscale min-[360px]:object-[50%_68%] lg:object-center"
             />
           </picture>
           {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
@@ -85,9 +89,15 @@ export default async function HomePage() {
               headline and the two outline pills. Floors re-proven after the ease with the
               committed scripts/verify-hero-contrast.mjs gate at 1440 and 390. */}
           <div aria-hidden className="absolute inset-0 bg-black/20" />
+          {/* h-[78%] below md, 68% from md (round 36): letting the 320 pills row wrap raised
+              the whole type block, and the committed gate measured the eyebrow at 2.33:1 over
+              a bright patch of hillside at 320 — the gradient stopped where the type now
+              starts. Same densities, earlier start, phones only; the round-27 anti-slab
+              easing stands untouched at md+. Re-proven by verify-hero-contrast at 1440, 390
+              and 320 after the change. */}
           <div
             aria-hidden
-            className="absolute inset-x-0 bottom-0 h-[68%] bg-gradient-to-t from-black/68 via-black/38 to-transparent"
+            className="absolute inset-x-0 bottom-0 h-[78%] bg-gradient-to-t from-black/68 via-black/38 to-transparent md:h-[68%]"
           />
           {/* Third layer, added WITH the round-27 ease: a left-edge vignette under the type
               column only. Easing the bottom gradient exposed bright photo patches behind the
@@ -127,7 +137,13 @@ export default async function HomePage() {
               collapses every animation to 0.01ms — so those visitors get the finished hero. */}
           {/* text-paper/85, not /70: at 11px over live photography, 30% translucency was the
               margin the AA floor could not spare once the scrim eased. */}
-          <p className="t-eyebrow rise text-paper/85">Hudson Valley &amp; New York City</p>
+          {/* max-w at the narrowest tier (round 36): at 320 this line spans the whole frame
+              and its right half crosses open sky — measured 2.7:1 by the committed gate, and
+              no scrim short of a slab holds an 11px line against sky. So the type conforms to
+              the frame instead: under 360px the eyebrow wraps to two lines over the dark
+              hillside, the same way the headline under it already breaks. 390 and up is one
+              line, unchanged. */}
+          <p className="t-eyebrow rise max-w-[150px] text-paper/85 min-[360px]:max-w-none">Hudson Valley &amp; New York City</p>
           <h1 id="home-hero" className="t-display rise rise-2 mt-5 text-paper">
             Let&rsquo;s Find <strong>Home</strong>
           </h1>
@@ -141,7 +157,11 @@ export default async function HomePage() {
               which this ~64px object is) = button 8px + 8px inset, with an explicit 8px gap
               so input text can never touch the button. The two secondary CTAs keep no boxes:
               the picture is the luxury. */}
-          <div className="rise rise-3 mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-8">
+          {/* mt-8 under 360px: at 320 the pills row wraps to two lines, and the full mt-12
+              pause on top of that lifted the eyebrow onto a bright patch the scrim does not
+              hold (gate-measured 2.33:1). The pause is a 390-and-up luxury; the narrowest
+              phones keep the tighter stack and the type stays on held ground. */}
+          <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 min-[360px]:mt-12 md:mt-8">
             <form
               action="/search"
               role="search"
