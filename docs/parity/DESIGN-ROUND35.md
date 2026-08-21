@@ -214,22 +214,43 @@ real problems, three of them fixable and fixed (`c95943a`):
 **2026-08-21 01:48 UTC.** The loop opened a window, ran clean for eleven minutes, then took six
 429s and stopped itself.
 
-The cause was not a fluke. `sold-window.mjs` had always passed `--rps 2.0`, while
-`backfill-sold-photos.mjs` has defaulted to **1.7** since 2026-08-12 carrying the comment "two 429
-trips found the real ceiling below the published 2 RPS". The wrapper was overriding the one value
-the ledger had already paid for twice, and this round moved that 2.0 into `NORMAL_RPS` without
-questioning it. **2.0/s sustained is 7,200 req/hr, which IS the account cap** — nothing left for
-the hourly sync or for the site serving its own photos through `/api/media/`, which is
-storage-first with a proxy fallback to the media host.
+**The cause is NOT established, and my first write-up of it was wrong.** I blamed `--rps 2.0` and
+committed that explanation to three places before checking it against the repo's own vendor
+documentation. It does not survive:
 
-Measured from `storage.objects`: ~117 photos/min (7,020/hr) for eleven minutes, degrading to 84
-and 91 as the backoff engaged, stopping with **1,579 landed**.
+* `docs/vendor/mlsgrid/README.md`, transcribed from the owner's real suspension notice, publishes
+  two tiers: **warning at 7,200 req/hr AND 4 RPS**; suspension at 18,000/hr and 6 RPS. The
+  suspension that produced that notice fired at **8.0 RPS**. So 2.0 is *half* the warning rate.
+* `f394376` adopted 2.0 deliberately off that notice and `b24aed5` plus **fourteen consecutive
+  clean windows** followed. It is not an untested number.
+* My arithmetic ("2.0/s = 7,200/hr = the cap") only holds for a **sustained** hour, and a window
+  bounded at `HOURLY_CAP` 6,000 never sustains one. At the 429 the run had done ~1,579 requests in
+  fourteen minutes — nowhere near 7,200/hr. **Request count was never the binding constraint.**
+* Nor was data volume: 1,579 x ~415 KB is ~655 MB against a 3,072 MB/hr warning.
 
-Fixed in `ab49d85`: `NORMAL_RPS` 1.7, `COOLING_RPS` 1.4 (it had been 1.7, equal to the old normal,
-so the post-429 retreat went nowhere), `HOURLY_RESERVE` 700 (the hourly door had none while the
-daily door always had its equivalent). And `verify-hero-contrast.mjs` was ALLOWING
-`**/api/media/**`, spending the same cap on every run of 8-11 pages x 3 viewports while the window
-was live — blocked now, still PASS. CLAUDE.md already said to block it.
+Measured shape, from `storage.objects`: ~117 photos/min for eleven clean minutes, degrading to 84
+then 91 as the backoff engaged, stopping at six 429s with **1,579 landed**.
+
+**The leading hypothesis is my own tooling**, because it is the one variable those fourteen clean
+windows did not have. `verify-hero-contrast.mjs` was calling `route("**/api/media/**", r.continue())`,
+and that route is storage-first with a **proxy fallback to the media host**. I ran it repeatedly
+(8-11 pages x 3 viewports, two listing rails on the home page alone) while the window was live.
+That is a hypothesis, not a measurement — the per-request attribution is gone.
+
+`ab49d85` therefore contains one correction and two precautions, and the doc should say which:
+* **The correction:** the gate now BLOCKS `**/api/media/**`. It measures text against hero
+  photographs, which are static files under `/images/`; it never needed a listing photo, and
+  CLAUDE.md already said to block that route.
+* **Precaution:** `NORMAL_RPS` 2.0 -> 1.7. Defensible after a real 429 on a suspension-sensitive
+  account, but not proven to fix anything, and it costs ~13% throughput.
+* **Housekeeping, valid regardless:** `COOLING_RPS` 1.7 -> 1.4 (at 1.7 it equalled the old normal,
+  so the post-429 retreat went nowhere) and `HOURLY_RESERVE` 700 (the hourly door had none while
+  the daily door always had its equivalent).
+
+The lesson is the round's own lesson turned on me: I diagnosed from arithmetic I found persuasive
+instead of from the vendor file sitting in this repo, and wrote it into a commit message, a
+checkpoint and a memory before checking. **[[verify-eliminate-by-experiment-not-docs]] has a
+sibling: do not eliminate by arithmetic either.**
 
 **The guard held**, which is why this cost a stopped run rather than a suspended key: the runner
 stopped itself, stamped, released its lock and exited 42; the wrapper refuses with exit 5 and a

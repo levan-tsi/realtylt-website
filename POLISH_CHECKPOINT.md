@@ -16,18 +16,37 @@
 ##     from the ledger are reconstructed as tests.
 ##   EXIT CODES: 0 ran · 3 doors shut · 4 runner live · 5 penalty · 42 stopped on a 429.
 ##   *** A REAL 429 HAPPENED AT 01:48 UTC 2026-08-21. READ THIS BEFORE THE NEXT WINDOW. ***
-##   CAUSE, and it was a number not a fluke: sold-window.mjs had always passed --rps 2.0, while
-##   backfill-sold-photos.mjs has defaulted to 1.7 since 2026-08-12 with the comment "two 429 trips
-##   found the real ceiling below the published 2 RPS". The wrapper was overriding the value the
-##   ledger had already paid for twice, and round 35 moved that 2.0 into NORMAL_RPS without
-##   questioning it. 2.0/s sustained is 7,200 req/hr, which IS the account cap — nothing left for
-##   the hourly sync or for the site serving its own photos. Measured: ~117 photos/min for eleven
-##   minutes, degrading to 84 and 91, stopped at six 429s with 1,579 landed.
-##   FIXED (ab49d85): NORMAL_RPS 1.7, COOLING_RPS 1.4 (it was 1.7 = the old normal, so the
-##   post-429 "retreat" went nowhere), HOURLY_RESERVE 700 (the hourly door had no reserve while
-##   the daily door always had one). ALSO: verify-hero-contrast.mjs was ALLOWING **/api/media/**
-##   and spending the same cap on every run — that route is storage-first with a PROXY FALLBACK to
-##   the media host. It is blocked now. CLAUDE.md already said to block it.
+##   CAUSE: NOT ESTABLISHED. My first write-up blamed --rps 2.0 and that DOES NOT SURVIVE THE
+##   EVIDENCE — correcting it here so round 36 does not inherit a wrong lesson.
+##    · docs/vendor/mlsgrid/README.md, from the owner's real suspension notice: the WARNING tier is
+##      7,200 req/hr AND 4 RPS; SUSPENSION is 18,000/hr and 6 RPS; the suspension that produced
+##      that notice fired at 8.0 RPS. So 2.0 rps is HALF the warning rate, not "the cap".
+##    · f394376 moved to 2.0 deliberately off that notice, and b24aed5 plus fourteen consecutive
+##      clean windows followed. 2.0 is not an untested number.
+##    · The arithmetic I used ("2.0/s = 7,200/hr = the cap") only holds for a SUSTAINED hour, and a
+##      window bounded at HOURLY_CAP 6,000 never sustains one. At the 429 the run had done ~1,579
+##      requests in 14 minutes. Nowhere near 7,200/hr. Request count was never the binding constraint.
+##    · Data volume was not it either: 1,579 x ~415 KB is ~655 MB against a 3,072 MB/hr warning.
+##   THE ONE GENUINELY NEW VARIABLE vs those fourteen clean windows was MY OWN TOOLING:
+##   verify-hero-contrast.mjs was calling route(**/api/media/**, r.continue()), and that route is
+##   storage-first with a PROXY FALLBACK to the media host. I ran it repeatedly (8-11 pages x 3
+##   viewports, two listing rails on the home page) WHILE the window was live. That is the leading
+##   hypothesis and it is a hypothesis, not a measurement — the per-request attribution is gone.
+##   Measured shape of the failure: ~117 photos/min for eleven minutes, degrading to 84 and 91,
+##   stopped at six 429s with 1,579 landed.
+##   CHANGED (ab49d85), and read these as PRECAUTION, not as "the fix" — only the last one
+##   addresses the leading hypothesis:
+##    · verify-hero-contrast.mjs now BLOCKS **/api/media/**. This is the real correction. That gate
+##      measures text against hero photographs, which are static files under /images/; it never
+##      needed a listing photo, and CLAUDE.md already said to block that route.
+##    · NORMAL_RPS 2.0 -> 1.7 and COOLING_RPS 1.7 -> 1.4. Defensible conservatism after a real 429
+##      on a suspension-sensitive account, and COOLING had to move regardless (at 1.7 it equalled
+##      the old normal, so the post-429 "retreat" went nowhere). But 1.7 is NOT proven to fix
+##      anything, and it costs ~13% throughput (6,120/hr vs 7,020). If round 36 wants the speed
+##      back, going to 2.0 with the media gate now blocked is a REASONABLE experiment — run one
+##      window and watch it, do not just flip it and walk away.
+##    · HOURLY_RESERVE 700: the hourly door had none while the daily door always had its
+##      equivalent. Good practice independent of this incident.
 ##   THE GUARD HELD: runner stopped itself, stamped the marker, released the lock, exited 42; the
 ##   wrapper refuses with exit 5 and a direct runner invocation refuses with exit 1. The penalty
 ##   clears 05:48 UTC — DO NOT relaunch before then, and expect the first run back at 1.4.
