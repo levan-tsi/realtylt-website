@@ -63,7 +63,15 @@ export default async function HomePage() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="hero-zoom absolute inset-0 h-full w-full object-cover object-center grayscale"
+              /* object-[50%_68%] below lg (round 36, move 4): at phone aspect the centered crop
+                 put the ridge line dead across the middle with ~450px of flat sky above it —
+                 half the first viewport carrying nothing. Sitting the view lower lifts the
+                 ridge toward the top third, so the textured hillside fills the middle where
+                 the type sits and the sky becomes a band instead of a hemisphere. Compared
+                 against 58% and 78% in renders (docs/design-r36/shots/hero-crop-390-*.png);
+                 78% is bottom-clamped and identical to 68%. lg keeps center: the desktop
+                 sources are different photographs with their own compositions. */
+              className="hero-zoom absolute inset-0 h-full w-full object-cover object-[50%_68%] grayscale lg:object-center"
             />
           </picture>
           {/* Desktop-only ambient Vimeo background video, faded in over the poster. */}
@@ -99,8 +107,14 @@ export default async function HomePage() {
             ended mid-screen — the photograph should own the first phone viewport the way it
             owns the desktop one. max() keeps 540px as the floor for short/landscape phones. */}
         {/* pb tightened round 13 ("could be a little lower"): the group hangs closer to the
-            section's bottom edge, and the scroll cue's own block below shrank to match. */}
-        <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-3 pt-24 md:min-h-[660px] md:pb-4 lg:px-16">
+            section's bottom edge, and the scroll cue's own block below shrank to match. That
+            note was written for the desktop composition and it stands there (md:pb-4). Round
+            36 re-spaced the PHONE, where the assessment measured the whole stack — eyebrow,
+            headline, search, two pills, cue — crammed into the bottom 280px of an 844px
+            viewport: pb-8 lifts the group off the edge, and the search instrument's md-scoped
+            mt below opens a real pause after the headline, so the block reads as unit (place +
+            promise), pause, cluster (the instruments) instead of one compressed slab. */}
+        <div className="relative mx-auto flex min-h-[max(540px,82svh)] max-w-[1250px] flex-col justify-end px-4 pb-8 pt-24 md:min-h-[660px] md:pb-4 lg:px-16">
           {/* THE ARRIVAL. The hero is the page's thesis and it was landing all at once, fully
               formed, like a printed slide. Now the photograph settles (hero-zoom, 8s, 1.08 -> 1)
               while the words arrive in the order you would read them: place, promise, then the
@@ -128,7 +142,7 @@ export default async function HomePage() {
               which this ~64px object is) = button 8px + 8px inset, with an explicit 8px gap
               so input text can never touch the button. The two secondary CTAs keep no boxes:
               the picture is the luxury. */}
-          <div className="rise rise-3 mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div className="rise rise-3 mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-8">
             <form
               action="/search"
               role="search"
