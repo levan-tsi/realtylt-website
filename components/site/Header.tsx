@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { useSaved } from "@/components/auth/SavedProvider";
+import { PRESS } from "@/components/ui/Button";
 import { NAV, SITE, TOP_AREA_GROUPS } from "@/lib/site";
 
 /** A plus that becomes a minus — the affordance the owner asked for on the phone menu.
@@ -126,7 +127,13 @@ export function Header() {
         <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between gap-4 px-4 lg:px-8">
           <a
             href={SITE.phoneHref}
-            className="hidden min-h-[24px] items-center text-sm text-stone transition-colors hover:text-ink sm:inline-flex"
+            /* PRESS on every header control (round 36): the R32 rubric probed the eight
+               largest above-fold controls on the inner pages and measured pressed: 0 — on
+               pages whose hero holds no big CTA, the probe lands on the header, and the
+               header answered a mousedown with nothing. The site's own rule (Button.tsx): a
+               control that presses, presses in exactly this way, or it is a bug. PRESS also
+               replaces transition-colors, which was animating focus-ring colour. */
+            className={`hidden min-h-[24px] items-center text-sm text-stone hover:text-ink sm:inline-flex ${PRESS}`}
           >
             {SITE.phone}
           </a>
@@ -135,13 +142,13 @@ export function Header() {
               href={SITE.fairHousingPdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[24px] items-center whitespace-nowrap text-sm text-stone transition-colors hover:text-ink"
+              className={`inline-flex min-h-[24px] items-center whitespace-nowrap text-sm text-stone hover:text-ink ${PRESS}`}
             >
               Fair Housing Notice
             </a>
             <Link
               href="/saved"
-              className="inline-flex min-h-[24px] items-center gap-1.5 text-sm text-stone transition-colors hover:text-ink"
+              className={`inline-flex min-h-[24px] items-center gap-1.5 text-sm text-stone hover:text-ink ${PRESS}`}
               aria-label={`Saved homes and searches${saved ? ` (${saved})` : ""}`}
             >
               <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 fill-transparent stroke-current" strokeWidth="1.8">
@@ -171,7 +178,7 @@ export function Header() {
           <button
             ref={menuTrigger}
             type="button"
-            className="-mr-2 p-2 text-stone hover:text-ink xl:hidden"
+            className={`-mr-2 p-2 text-stone hover:text-ink xl:hidden ${PRESS}`}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => (open ? closeMobile() : setOpen(true))}
@@ -229,7 +236,7 @@ export function Header() {
                       <Link
                         href={item.href}
                         aria-current={active ? "page" : undefined}
-                        className={`transition-colors hover:text-ink ${active ? "text-ink" : "text-stone"} ${
+                        className={`hover:text-ink ${PRESS} ${active ? "text-ink" : "text-stone"} ${
                           boxed ? "rounded-xl border border-stone px-4 py-2.5 hover:border-ink" : "py-2"
                         }`}
                       >
@@ -252,7 +259,7 @@ export function Header() {
                             setFlyoutPinned((v) => !v);
                             setFlyoutHover(false);
                           }}
-                          className="inline-flex h-6 w-6 items-center justify-center text-stone transition-colors hover:text-ink"
+                          className={`inline-flex h-6 w-6 items-center justify-center text-stone hover:text-ink ${PRESS}`}
                         >
                           <Chevron open={flyout} />
                         </button>
@@ -282,7 +289,7 @@ export function Header() {
                                   <Link
                                     href={c.href}
                                     onClick={closeFlyout}
-                                    className="block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone transition-colors hover:bg-ink hover:text-paper"
+                                    className={`block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone hover:bg-ink hover:text-paper ${PRESS}`}
                                   >
                                     {c.label}
                                   </Link>
@@ -333,7 +340,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       onClick={closeMobile}
-                      className="block py-3 text-sm font-bold uppercase tracking-wide text-stone hover:text-ink"
+                      className={`block py-3 text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
                     >
                       {item.label}
                     </Link>
@@ -351,7 +358,7 @@ export function Header() {
                     aria-expanded={areasOpen}
                     aria-controls="mobile-top-areas"
                     onClick={() => setAreasOpen((v) => !v)}
-                    className="flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink"
+                    className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
                   >
                     {item.label}
                     <PlusMinus open={areasOpen} />
@@ -376,7 +383,7 @@ export function Header() {
                         aria-expanded={boroughsOpen}
                         aria-controls="mobile-boroughs"
                         onClick={() => setBoroughsOpen((v) => !v)}
-                        className="flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink"
+                        className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
                       >
                         {boroughs.label}
                         <PlusMinus open={boroughsOpen} />

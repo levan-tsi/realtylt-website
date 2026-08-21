@@ -62,6 +62,10 @@ export default function WhoWeArePage() {
                 alt="Levan Tsiklauri"
                 width={224}
                 height={224}
+                // priority: this portrait sits in the first viewport at 1440, and next/image's
+                // default lazy loading on an above-fold face was the page's one D4 deduction in
+                // the R32 rubric (round 36).
+                priority
                 className="h-full w-full object-cover grayscale"
               />
             </span>

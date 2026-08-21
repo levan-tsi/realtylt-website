@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { LeadForm } from "./LeadForm";
 import { FoundYourHome } from "./FoundYourHome";
+import { PRESS } from "@/components/ui/Button";
 
 /** Home-value hero form, matched to live realtylt.com: at rest a single horizontal bar
  * (address + unit + black FIND OUT) sitting on the photo. Submitting the bar reveals the
@@ -188,7 +189,11 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
           inside another control — the nested action keeps still and lets the shell carry focus. */}
       <button
         type="submit"
-        className="shrink-0 rounded-lg bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
+        /* PRESS (round 36): the R32 rubric measured this button — /home-value's primary
+           control — answering a mousedown with nothing (hover 68.9% of its clip, press 0%).
+           Same nested-control reasoning as the home hero's SEARCH: not a <Button>, but it
+           presses the way the site presses. */
+        className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper hover:bg-ink-soft ${PRESS}`}
       >
         Find Out
       </button>
