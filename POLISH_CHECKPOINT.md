@@ -50,12 +50,24 @@
 ##   THE GUARD HELD: runner stopped itself, stamped the marker, released the lock, exited 42; the
 ##   wrapper refuses with exit 5 and a direct runner invocation refuses with exit 1. The penalty
 ##   clears 05:48 UTC — DO NOT relaunch before then, and expect the first run back at 1.4.
-##   STATE AT HANDOFF (2026-08-20 23:10 UTC): trailing 34,368 in 24h, door SHUT (2,132 of a
-##   3,000 floor). Projected to open ~02:00 UTC 08-21 as the 4,751 bucket from 08-20 01:00
-##   ages out, worth ~5,700. The hourly sync is running quiet (223/hr, not the ~500/hr the
-##   projection assumes), so it may open earlier and larger. Reach was 2026-04-20; TARGET
-##   2026-02-18. A session-scoped loop drove it this round and DIED WITH THE SESSION — start
-##   `node scripts/sold-window.mjs` on a 15-minute cycle again.
+##   STATE AT HANDOFF (2026-08-21 08:22 UTC), measured, not projected:
+##     19,616 sales illustrated · 95,775 sold photographs · reach 2026-03-31 · 33,868 still pending
+##     TARGET reach 2026-02-18. Trailing 24h 36,427 against a 38,000 target, so the door is SHUT
+##     (daily 73) and correctly so — it reopens as today's big buckets age out.
+##   THE LOOP PROVED ITSELF END TO END ON A REAL INCIDENT, which is worth more than the numbers:
+##   door opened -> launched -> took a 429 -> stopped itself, stamped, released its lock, exit 42
+##   -> refused for exactly 4h from BOTH the wrapper and a direct invocation -> relaunched
+##   unattended 41 seconds after the penalty cleared, at the COOLING rate, correctly sized
+##   (--max-downloads 6000 --rps 1.4) -> ran TWO clean windows back to back, ~10,400 photos, zero
+##   429s, peak hour 5,070 against the 7,200 warning. The penalty stamp is still on disk on
+##   purpose: it holds the rate at 1.4 for the full cooling day rather than snapping back.
+##   A session-scoped loop drove all of this and DIES WITH THE SESSION — restart
+##   `node scripts/sold-window.mjs` on a ~15-minute cycle.
+##   ONE LOSS WORTH KNOWING: restarting the monitor mid-window orphaned the "WINDOW COMPLETE"
+##   report, because the loop instance that LAUNCHED the runner was the one stopped. The runner
+##   itself survived (it is a separate process holding its own pid lock) and finished clean, but
+##   the completion had to be reconstructed from storage.objects. Do not restart the loop while a
+##   runner is live unless you are willing to lose that report.
 ##
 ## ── ITEM 2: WHAT ROUND 35 CHANGED ───────────────────────────────────────────────────────
 ##  · /search NOW WORKS WITHOUT JAVASCRIPT — the biggest find. loading.tsx wraps the route in
