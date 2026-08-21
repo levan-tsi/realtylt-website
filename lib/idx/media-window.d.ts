@@ -46,6 +46,11 @@ export declare const PENALTY_FILE: string;
 export declare const RUNNER_LOCK: string;
 
 /** `readFile` throwing means "no marker", which is the normal case. */
+export declare function readPenaltyState(
+  readFile: (file: string) => string | Buffer,
+  file?: string,
+): { present: boolean; at: number | null };
+
 export declare function readPenaltyAt(
   readFile: (file: string) => string | Buffer,
   file?: string,

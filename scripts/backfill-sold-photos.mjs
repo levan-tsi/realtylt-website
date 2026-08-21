@@ -67,7 +67,15 @@ import { readFileSync, rmSync, writeFileSync } from "node:fs";
  *  drift apart. Until PENALTY_FILE existed the 4-hour rule was a sentence in a console message:
  *  this script printed "STOPPED" and then exited 0 like a clean finish, so neither an operator
  *  nor a loop could tell the difference. scripts/sold-window.mjs reads both. */
-import { isRunnerAlive, PENALTY_FILE, pidAlive, RUNNER_LOCK } from "../lib/idx/media-window.mjs";
+import {
+  isRunnerAlive,
+  minutesUntil,
+  PENALTY_FILE,
+  pidAlive,
+  readPenaltyState,
+  RULES,
+  RUNNER_LOCK,
+} from "../lib/idx/media-window.mjs";
 
 // ── args ──────────────────────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
@@ -315,6 +323,28 @@ const started = Date.now();
 // the hourly sync is already spending against them. A second runner is how a key gets suspended,
 // so refuse here rather than trusting whoever invoked this to have checked first.
 if (!DRY) {
+  // THE PENALTY IS ENFORCED HERE, not only in the wrapper. It used to live only in
+  // sold-window.mjs — which WRITES this file but never read it — so the four-hour rule bound the
+  // one command and nothing else. That is a thin guard: sold-window.mjs prints its full launch
+  // line ("LAUNCHING: node scripts/backfill-sold-photos.mjs --max-downloads N --rps X"), which
+  // puts the exact bypass in an operator's scrollback. Re-running it from history twenty minutes
+  // after a 429 is precisely the mistake the rule exists to stop, and it would have worked.
+  const penalty = readPenaltyState((f) => readFileSync(f, "utf8"));
+  if (penalty.present) {
+    // A stamp that exists but will not parse is evidence of a 429 whose record got damaged, so it
+    // is served as a fresh penalty rather than ignored. Treating unreadable as "no penalty" is
+    // the same outcome as having no guard at all.
+    const at = penalty.at ?? Date.now();
+    const clearsAt = at + RULES.PENALTY_HOURS * 3_600_000;
+    if (Date.now() < clearsAt) {
+      throw new Error(
+        `a 429 was recorded in ${PENALTY_FILE}${penalty.at === null ? " (UNREADABLE — treated as just now)" : ""}. ` +
+        `Wait ${minutesUntil(clearsAt)} more minutes, then come back at --rps ${RULES.COOLING_RPS}. ` +
+        `The counters measure OUR spend, not the host's penalty state, so green counters are not permission to resume.`,
+      );
+    }
+  }
+
   if (isRunnerAlive((f) => readFileSync(f, "utf8"), pidAlive)) {
     throw new Error(
       `another sold-photo runner is live (${RUNNER_LOCK}) — ONE runner ever. Wait for it, or if ` +

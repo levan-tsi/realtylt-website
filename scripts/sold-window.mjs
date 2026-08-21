@@ -20,13 +20,13 @@
 //    bucket drains CONTINUOUSLY across that hour — so the next good moment is a bucket's END.
 
 import { execFile } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import {
   isRunnerAlive,
   minutesUntil,
   PENALTY_FILE,
   pidAlive,
-  readPenaltyAt,
+  readPenaltyState,
   RULES,
   windowDecision,
 } from "../lib/idx/media-window.mjs";
@@ -74,10 +74,24 @@ async function spend() {
 
 const readFile = (f) => readFileSync(f, "utf8");
 const { last1h, last24h } = await spend();
+
+// A stamp that exists but cannot be parsed is evidence of a 429 whose record got damaged. Reading
+// it as "no penalty" is the same outcome as having no guard, so it is restamped as a penalty
+// starting NOW and served in full. Restamping rather than refusing on sight matters: a corrupt
+// file that is only ever READ would refuse for ever and silently stall the loop, which looks
+// identical to a permanently shut door.
+const penalty = readPenaltyState(readFile);
+let penaltyAt = penalty.at;
+if (penalty.present && penalty.at === null) {
+  penaltyAt = Date.now();
+  writeFileSync(PENALTY_FILE, `${new Date(penaltyAt).toISOString()}\n`, "utf8");
+  console.log(`penalty marker was UNREADABLE — restamped as now and serving the full ${RULES.PENALTY_HOURS} hours.`);
+}
+
 const d = windowDecision({
   last1h,
   last24h,
-  penaltyAt: readPenaltyAt(readFile),
+  penaltyAt,
   runnerAlive: isRunnerAlive(readFile, pidAlive),
 });
 const { daily, hourly, size } = d;

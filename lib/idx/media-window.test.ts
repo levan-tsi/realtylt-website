@@ -3,6 +3,7 @@ import {
   isRunnerAlive,
   minutesUntil,
   readPenaltyAt,
+  readPenaltyState,
   RULES,
   windowDecision,
 } from "./media-window";
@@ -129,11 +130,21 @@ describe("reading the penalty marker", () => {
     expect(readPenaltyAt(serving(null))).toBeNull();
   });
 
-  it("reads a corrupt marker as no penalty rather than as epoch 0", () => {
-    // Date.parse("") is NaN and Number(NaN||0) would be 0 — a penalty "served" in 1970, which
-    // would wave every future window through while looking like the guard was working.
-    expect(readPenaltyAt(serving("not a date"))).toBeNull();
-    expect(readPenaltyAt(serving(""))).toBeNull();
+  it("separates a MISSING marker from an UNREADABLE one, because they must not decide alike", () => {
+    // The first version returned null for both and the comment congratulated itself for not
+    // returning epoch 0. Wrong thing to be proud of: null and epoch-0 have the SAME outcome, the
+    // window launches. A stamp that exists but is garbled is evidence of a 429 whose record got
+    // damaged, so the callers serve it as a penalty. `present` is what lets them tell.
+    expect(readPenaltyState(serving(null))).toEqual({ present: false, at: null });
+    expect(readPenaltyState(serving("not a date"))).toEqual({ present: true, at: null });
+    expect(readPenaltyState(serving(""))).toEqual({ present: true, at: null });
+    expect(readPenaltyState(serving("1755691200000"))).toEqual({ present: true, at: null });
+  });
+
+  it("still parses a well-formed stamp through either reader", () => {
+    const iso = "2026-08-20T21:34:00.000Z";
+    expect(readPenaltyState(serving(iso)).at).toBe(Date.parse(iso));
+    expect(readPenaltyAt(serving(iso))).toBe(Date.parse(iso));
   });
 
   it("feeds windowDecision a real block when the marker is fresh", () => {

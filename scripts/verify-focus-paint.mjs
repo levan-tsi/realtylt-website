@@ -31,7 +31,11 @@ await mkdir(OUT, { recursive: true });
 const PAGES = (process.env.PAGES ?? "/,/buying,/selling,/connect,/home-value,/financing,/who-we-are").split(",");
 const W = Number(process.env.W ?? 1440);
 const H = Number(process.env.H ?? 900);
-const CAP = Number(process.env.CAP ?? 26);
+/** Effectively "all of them". This was 26, and 26 x 7 pages is exactly the 182 that got reported
+ *  as "every focusable element on seven pages" — a capped sample in DOM order, which is mostly the
+ *  same header nav seven times, while footers, below-fold forms and every consent checkbox went
+ *  unchecked. A coverage claim has to be allowed to cost what coverage costs. */
+const CAP = Number(process.env.CAP ?? 500);
 
 const browser = await chromium.launch();
 const dead = [];
@@ -121,7 +125,7 @@ for (const path of PAGES) {
 }
 await browser.close();
 
-console.log(`checked ${checked} focusable elements across ${PAGES.length} pages at ${W}x${H}`);
+console.log(`checked ${checked} focusable elements across ${PAGES.length} pages at ${W}x${H}${CAP < 500 ? ` (CAPPED at ${CAP}/page — NOT full coverage)` : ""}`);
 if (!dead.length) console.log("PASS — every one of them paints something when a keyboard reaches it.");
 else {
   console.log(`\n${dead.length} paint NOTHING on focus:\n`);
