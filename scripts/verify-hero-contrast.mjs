@@ -31,7 +31,10 @@ import { chromium } from "playwright";
 import sharp from "sharp";
 
 const base = (process.env.BASE ?? "http://localhost:3100").replace(/\/+$/, "");
-const PAGES = (process.env.PAGES ?? "/,/buying,/selling,/financing,/connect,/who-we-are,/home-value,/top-areas").split(",");
+// /thank-you joined the default list in round 37: it carries white text over the ONE colour
+// photograph on the site and had never been measured — the round-36 phone rendering ("a dark
+// brown smear") shipped precisely because no instrument was looking at this hero.
+const PAGES = (process.env.PAGES ?? "/,/buying,/selling,/financing,/connect,/who-we-are,/home-value,/top-areas,/thank-you").split(",");
 
 /** EVERY WIDTH, NOT JUST THE DESKTOP ONE. This gate ran at 1440 by default and was reported
  *  PASSING for rounds, while /connect's 11px eyebrow sat at 4.14:1 on a phone and 3.66:1 at 320,
