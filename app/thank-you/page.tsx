@@ -133,11 +133,13 @@ export default function ThankYouPage() {
 
       <section className="sec bg-paper" aria-labelledby="ty-next-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            <h2 id="ty-next-heading" className="t-h2 text-ink">
-              What happens next
-            </h2>
-          </Reveal>
+          {/* NOT wrapped in <Reveal>, deliberately: at 1440x900 this heading sits ~845px down,
+              on screen at load but 25px below the observer's -80px trigger line, so a wrapped
+              version renders the first viewport with an empty white band where the section
+              title should be. The rows below it carry the motion; the anchor stays put. */}
+          <h2 id="ty-next-heading" className="t-h2 text-ink">
+            What happens next
+          </h2>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-10">
             {/* THE LEDGER, NOT THE NUMBERED CARDS. The old section was three identical
