@@ -203,8 +203,14 @@ export function SignInModal() {
             JSON page. A button that cannot work is worse than no button. Apple joined Google
             here on 2026-08-22; both appear the moment the project reports them, and neither
             appears before. */}
+        {/* `mt-5` down to `mt-4` and the divider to `my-3` when BOTH providers are offered.
+            Measured at 320x568, the smallest phone we support: with Google and Apple stacked, the
+            primary "Sign in" button's bottom landed at 569px in a 568px viewport. The overlay does
+            scroll and the button IS reachable (proved with a wheel and with focus), so this was
+            never a trap — but the primary action sitting one pixel below the fold at rest, on the
+            device where scrolling is least discoverable, is not a thing to ship on a technicality. */}
         {socialShown && (
-          <div className="mt-5 space-y-2.5">
+          <div className="mt-4 space-y-2.5">
             {googleEnabled && (
               <button
                 type="button"
@@ -242,7 +248,7 @@ export function SignInModal() {
         )}
 
         {socialShown && (
-          <div className="my-4 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
+          <div className="my-3 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
             <span className="h-px flex-1 bg-line" />
             or
             <span className="h-px flex-1 bg-line" />
