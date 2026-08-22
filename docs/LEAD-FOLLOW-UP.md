@@ -68,7 +68,13 @@ the alerts claim.
 
 The page reads `?c=1` / `?c=0` from the redirect (set in `components/leads/LeadForm.tsx`) so it can
 tell each visitor the truth about which of them applies to them. When the workflow goes live, the
-page's follow-up copy is switched on in ONE place — see the constant in `app/thank-you/page.tsx`.
+page's follow-up copy is switched on in ONE place:
+
+    app/thank-you/page.tsx
+    const OUTBOUND_FOLLOW_UP_LIVE = false;
+
+That is the whole switch. Both sides of it are written and both are honest; flipping it changes
+which set of sentences a visitor reads, nothing else.
 
 **Order of operations when the owner is ready:** fill the Vapi body, bind the credential, point the
 trigger, run it once against a test lead of his own, activate, and only then flip the page's
