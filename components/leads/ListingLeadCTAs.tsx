@@ -1,7 +1,7 @@
 "use client";
 
 import { PRESS } from "@/components/ui/Button";
-import { ConsentCheckbox } from "./ConsentCheckbox";
+import { ConsentChoice } from "./ConsentChoice";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { SITE } from "@/lib/site";
@@ -518,7 +518,7 @@ function TourModal({
           </div>
 
             <div className="mt-4">
-              <ConsentCheckbox />
+              <ConsentChoice />
             </div>
 
           <ErrorNote show={state === "error"} />
@@ -666,7 +666,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           </div>
 
             <div className="mt-4">
-              <ConsentCheckbox />
+              <ConsentChoice />
             </div>
 
           {/* Live parity: the two questions that tell us how strong an offer is. They travel in the

@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { parseLead } from "./index";
 import {
   buildConsent,
+  CONSENT_DECLINE_LABEL,
   CONSENT_DISCLOSURE,
   CONSENT_LABEL,
   CONSENT_TEXT,
@@ -111,9 +112,9 @@ describe("consent — every form that takes a phone number actually asks", () =>
    * explicitly named fields, so the field was silently dropped on the way to the server: the
    * box ticked, the lead sent, and no consent recorded anywhere. Caught once; guarded now. */
   it.each(["components/leads/LeadForm.tsx", "components/leads/ListingLeadCTAs.tsx"])(
-    "%s renders the checkbox",
+    "%s renders the consent choice",
     (file) => {
-      expect(read(file)).toContain("<ConsentCheckbox");
+      expect(read(file)).toContain("<ConsentChoice");
     },
   );
 
@@ -131,14 +132,59 @@ describe("consent — every form that takes a phone number actually asks", () =>
     expect(read("components/leads/LeadForm.tsx")).toMatch(/\.\.\.data,/);
   });
 
-  /** Never pre-ticked: consent that is the default is not consent, and PEWC needs agreeing to
-   * be genuinely optional. */
-  it("the box is never checked by default and never required", () => {
-    // Read only what ships: the doc comment above the component explains WHY it must not be
-    // required, and a naive substring match reads that sentence as the violation.
-    const src = read("components/leads/ConsentCheckbox.tsx").replace(/\/\*[\s\S]*?\*\//g, "");
+  /** THE ASK IS UNSKIPPABLE, AND DECLINING IS FREE. Those two have to hold together.
+   *
+   * The owner asked (2026-08-22) for a required box because the form was submitting with the
+   * question untouched. A required box would be a forced yes, and a forced yes is not prior
+   * express written consent — it is a stored string that proves nothing while authorising real
+   * automated calls. So the question became a two-option choice that must be answered, where
+   * BOTH answers submit.
+   *
+   * The dangerous regression is not someone deleting `required`. It is someone deleting the
+   * DECLINE option and leaving a single required radio, which reads like a tidy-up and is a
+   * forced yes. That is what the count below exists to catch.
+   *
+   * Comments are stripped before matching: the doc comment above the component explains why a
+   * required box would be wrong, and a naive substring match reads that explanation as the
+   * violation. This test learned that the hard way once already. */
+  const consentSrc = () =>
+    read("components/leads/ConsentChoice.tsx")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+
+  it("never pre-selects an answer", () => {
+    const src = consentSrc();
     expect(src).not.toMatch(/\bdefaultChecked\b/);
     expect(src).not.toMatch(/\bchecked[=\s]/);
-    expect(src).not.toMatch(/\brequired\b/);
+  });
+
+  it("offers exactly two answers, so declining is a real option and not an omission", () => {
+    const src = consentSrc();
+    const yes = (src.match(/value="true"/g) ?? []).length;
+    const no = (src.match(/value="false"/g) ?? []).length;
+    expect(yes, "the agree option").toBe(1);
+    expect(no, "the decline option — without it, a required group is a forced yes").toBe(1);
+    expect((src.match(/name="consentToContact"/g) ?? []).length).toBe(2);
+  });
+
+  it("requires an answer, so the question cannot be scrolled past", () => {
+    const src = consentSrc();
+    // Both members of a radio group carry `required`; the browser then demands one of them.
+    expect((src.match(/\brequired\b/g) ?? []).length).toBe(2);
+  });
+
+  it("declining is stored as an explicit refusal, not as an absence", () => {
+    const c = lead({ phone: "917-555-0142", consentToContact: "false" }).consent;
+    expect(c).toBeDefined();
+    expect(c?.granted).toBe(false);
+    expect(c?.text).toBe(CONSENT_TEXT);
+  });
+
+  /** The decline label has to read as a genuine, unpunished choice. If it ever becomes a
+   * discouraging sentence, the yes beside it stops being freely given. */
+  it("the decline option is plain and carries no penalty language", () => {
+    expect(CONSENT_DECLINE_LABEL.length).toBeLessThanOrEqual(60);
+    expect(CONSENT_DECLINE_LABEL.toLowerCase()).not.toMatch(/unable|cannot help|won't be able|slower|delay/);
+    expect(CONSENT_DECLINE_LABEL).not.toMatch(/[—–]/);
   });
 });

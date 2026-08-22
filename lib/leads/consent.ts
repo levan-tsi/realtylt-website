@@ -37,6 +37,22 @@ export const CONSENT_VERSION = "2026-08-03.v2";
 export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
 
 /**
+ * The other answer, and it has to exist.
+ *
+ * 2026-08-22: the owner reported that the form submits without the box being touched, and asked
+ * for it to be required. A REQUIRED box is not consent at all — PEWC is invalid the moment
+ * agreeing becomes a condition — so the box did not become required. It became UNSKIPPABLE
+ * instead: two options, neither pre-selected, both submit, and the form will not go until one is
+ * chosen. That gets him what he was actually after (an explicit answer on every lead, so the
+ * dialer and the AI caller know where they stand) without turning the stored consent into a
+ * record that proves nothing.
+ *
+ * Declining has to be a real, equal, unpunished choice, or the yes beside it is worth nothing.
+ * It also has to be honest about what still happens: they asked us a question, so we answer it.
+ */
+export const CONSENT_DECLINE_LABEL = "No thanks. Email me instead.";
+
+/**
  * The fine print. Deliberately short, and the owner asked for it to be as unintimidating as it
  * can be without failing the requirement (2026-08-03): "if we don't need to mention AI calls
  * let's not". Cut from 60 words to 28. What went, and what could not:

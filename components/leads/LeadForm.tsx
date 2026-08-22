@@ -1,6 +1,6 @@
 "use client";
 
-import { ConsentCheckbox } from "./ConsentCheckbox";
+import { ConsentChoice } from "./ConsentChoice";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -283,7 +283,7 @@ export function LeadForm({
 
       {/* Permission to call or text. Sits directly under the fields and above the submit, so
           it is read as part of agreeing rather than as small print after the fact. */}
-      <ConsentCheckbox dark={dark} />
+      <ConsentChoice dark={dark} />
 
       {status === "error" && (
         <p
