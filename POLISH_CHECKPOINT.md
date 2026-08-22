@@ -1,6 +1,116 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## == HANDOFF 2026-08-21 (ROUND 36) - READ THIS FIRST ====================================
+## == HANDOFF 2026-08-22 (ROUND 37) - READ THIS FIRST ====================================
+## Full records: docs/parity/ROUND37-ORCHESTRATOR.md and docs/parity/DESIGN-ROUND37.md.
+## Shape: Opus 5 orchestrating + ONE Fable 5 design subagent. All pushed and deployed.
+##
+## -- ITEM 0: THE SOLD-PHOTO LOOP ------------------------------------------------------
+## Unchanged and still the first act of any round. scripts/sold-loop.mjs, started detached:
+##   powershell -Command "Start-Process node -ArgumentList 'scripts/sold-loop.mjs' -WindowStyle Hidden"
+## It survived 25+ hours this round. Door legitimately SHUT most of the day (trailing 24h still
+## carrying the two windows from 2026-08-21). No new 429; the 01:48 UTC 2026-08-21 penalty stamp
+## is still on disk on purpose and still holds the rate at 1.4.
+##
+## -- ITEM 1: THE OWNER'S FOUR ASKS, AND WHAT HAPPENED TO EACH -------------------------
+##  1. "Featured moving, should New Listings move too?" -> ANSWERED, NO, and the reasoning is in
+##     ROUND37-ORCHESTRATOR.md section 1. The two rails were given different WEIGHT on purpose
+##     (round 31); they are different gestures (browse-past vs scan-and-choose); and motion
+##     everywhere becomes wallpaper. Do not "finish" this by animating the second rail.
+##  2. "The consent box must be a MUST box" -> HE IS RIGHT ABOUT THE PROBLEM AND I DID NOT SHIP
+##     THE LITERAL FIX. A required box is not consent: PEWC is invalid the moment agreeing is a
+##     condition (47 CFR 64.1200(f)(9)), so forcing the tick converts every stored record from
+##     evidence into decoration WHILE authorising real automated calls, against a New York
+##     exposure of $20,000 per call. Shipped UNSKIPPABLE instead: two radios, neither
+##     pre-selected, BOTH submit, form will not go until one is chosen.
+##     *** READ THIS BEFORE "FIXING" IT. The guard that matters is not "required is present",
+##     it is "the DECLINE option still exists" — deleting it leaves a single required radio,
+##     which looks like a tidy-up and is a forced yes. lib/leads/consent.test.ts counts both. ***
+##     He was told plainly and offered the hard-required version if he still wants it. If he
+##     REAFFIRMS, ship it — that is his call and his risk.
+##  3. "The thank-you page was really bad" -> REBUILT (Fable 5). It now SAYS THANK YOU, which it
+##     never did. See ITEM 2.
+##  4. "Open registration + Google + Apple sign-in, test properly" -> THE SITE IS READY AND
+##     PROVED; THE SWITCHES ARE HIS. See ITEM 3.
+##
+## -- ITEM 2: THE THANK-YOU PAGE -------------------------------------------------------
+##  · The h1 is "Thank you". The old page's headline was "The lights are on" and the word thank
+##    appeared nowhere, which is exactly what he complained about.
+##  · 01/02/03 cards -> a TIME LEDGER (Already done / Usually within the hour / When we talk /
+##    Always) in one bordered document. The eyebrows now encode time, which is real information,
+##    instead of decorative numbering.
+##  · The 390 hero is legible: crop to the lit shopfronts, wash /55 -> /30 on mobile. It used to
+##    read as a dark brown smear. verify-hero-contrast now COVERS /thank-you (it did not before)
+##    and the first run FAILED 3 runs before the fix; now PASS across 9 pages.
+##  · PERSONALISED BY CONSENT. LeadForm redirects with &c=1 or &c=0 and the page tells each
+##    visitor the truth. Read via window.location.search, NOT useSearchParams — that suspends,
+##    which would put the route behind a Suspense boundary and break it with JS off (the exact
+##    /search bug round 35 found).
+##  · HONESTY MACHINERY, and this is the load-bearing part. NOTHING calls or emails a lead today.
+##    lib/thank-you-copy.ts holds BOTH copy sets and app/thank-you/page.tsx line ~56 holds
+##    `const OUTBOUND_FOLLOW_UP_LIVE = false`. lib/thank-you-copy.test.ts asserts BOTH sets
+##    unconditionally: the today-set never mentions an assistant or an email on its way, and the
+##    DECLINED branch never promises a call under EITHER set. I planted two violations myself and
+##    watched it fail on both.
+##
+## -- ITEM 3: ACCOUNTS — WHAT IS DONE AND WHAT IS HIS ----------------------------------
+## Measured from the project's own /auth/v1/settings: disable_signup TRUE, external.google FALSE,
+## external.apple FALSE. The site was never hiding working buttons.
+## DONE HERE: Apple added on the same rule Google already used (the project decides, not a
+## constant); signInWithGoogle generalised to signInWithOAuth(provider); a ratchet that parses the
+## OAuthProvider union and fails if any provider lacks a door; the modal re-spaced so the primary
+## action clears the fold at 320x568 with both providers on (it landed at 569px in a 568px
+## viewport).
+## HIS: docs/parity/OPENING-ACCOUNTS.md is the click-by-click runbook.
+## *** THE TRAP IS EMAIL. mailer_autoconfirm is false and Supabase's built-in mailer is
+## rate-limited to a handful an hour, so opening signup without SMTP works perfectly while he
+## tests it and fails silently from about the third real person. Deal with that FIRST. ***
+## NOT VERIFIED, plainly: nobody has completed a real OAuth round trip. That needs a real Google
+## or Apple account consenting to a real screen. Offer to drive it the day he turns them on.
+##
+## -- ITEM 4: THE ASSISTANT CALL AND THE THANK-YOU EMAIL -------------------------------
+## He asked for both. NEITHER HAPPENS TODAY — the only active lead workflow in n8n is the
+## chatbot's capture. Built and left OFF: n8n workflow rzI7WIQhRKfrhJxH, verified active:false,
+## triggerCount:0, never run, nobody called.
+##   Website Lead -> Normalize -> May We Call Them? (consent.granted AND phone)
+##                                  true  -> Vapi verify/book -> "we will call" email
+##                                  false ->                     "email only" email
+## Deliberately blank rather than invented: the Vapi assistantId and phoneNumberId, the trigger
+## wiring (the site posts to the CRM, not n8n), the Vapi credential binding.
+## ORDER OF OPERATIONS, and getting it backwards is the failure mode: fill the body, bind the
+## credential, point the trigger, run it once against his own test lead, ACTIVATE, and only THEN
+## flip OUTBOUND_FOLLOW_UP_LIVE. Full contract: docs/LEAD-FOLLOW-UP.md.
+##
+## -- ITEM 5: SCROLL TRANSITIONS — ASKED FOR, AND THE ANSWER IS NO ---------------------
+## He asked about "transitions when you scroll down" and said not to add anything just to add it.
+## Measured: 11 content routes already carry 65 Reveal blocks, blog has its own system, heroes
+## rise, controls press. The system exists. What was missing was /thank-you, which now runs it.
+## Parallax, animation-timeline and pinning were REJECTED: layout movement, browser dependence,
+## and they fight the editorial stillness rounds 31-36 built. Do not revisit without a reason.
+##
+## -- ITEM 6: GATES AT HANDOFF, all foreground, all re-run by me rather than taken on trust ---
+## tsc clean · npm test 1070 / 85 files (round opened at 1056/83) · verify-hero-contrast PASS
+## 358 runs across 9 pages at 1440+390+320 · verify-focus-paint PASS 429, plus 47 on /thank-you ·
+## verify-press-feedback PASS 15/15 · probe-reduced-motion PASS · no horizontal overflow in 32
+## page/width combinations, nor on /thank-you at 320/390/1440 in either consent branch ·
+## no CSP violations across 16 pages · JS OFF on the DEPLOYED build: /thank-you renders
+## h1 "Thank you", 2,625 readable characters, the ledger, ZERO content stranded in a hidden
+## streaming shell, and no branch promising a call.
+##
+## -- ITEM 7: THE LESSON OF THIS ROUND — SUSPECT THE INSTRUMENT FIRST ------------------
+## SIX instrument errors across the two rounds, against zero product defects found by those same
+## probes. Mine: a DOM-wide radio count that reported "radios=4 FAIL" on a page with two forms
+## (HTML scopes a radio group by its FORM OWNER — settled by checking one in each form and
+## confirming the first survived); an "open state still shows the closed notice at 390" that was
+## sampling before the runtime config fetch landed; a "modal cannot scroll" read off the dialog
+## instead of the overlay that actually scrolls; a press-feedback FAIL that was the shared dev
+## server mid-recompile while the other agent edited; and pointing probe-reduced-motion, which
+## selects `article section`, at a page that has no article. The agent's: a guard that matched its
+## own explanatory comment, and a reveal probe tripped by translate 1.77636e-15px.
+## RULES THAT FALL OUT: never send a probe's stderr to /dev/null; prove a NEGATIVE result the way
+## you would prove a positive one; group form controls by r.form; do not trust gates run against a
+## dev server another session is editing; and when a probe shouts, check the probe first.
+##
+## == PREVIOUS HANDOFF 2026-08-21 (ROUND 36) ===============================================
 ## Full records: docs/parity/DESIGN-ROUND36.md (the design assessment + the ranked twelve) and
 ## docs/parity/ROUND36-ORCHESTRATOR.md (everything else, measured). 27 commits, pushed to main.
 ## Shape: Opus 5 orchestrating + ONE Fable 5 design subagent (the owner's call this session).
