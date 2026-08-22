@@ -22,17 +22,37 @@ import { describe, expect, it } from "vitest";
 const read = (f: string) => fs.readFileSync(path.join(process.cwd(), f), "utf8");
 
 describe("no account door is offered before it opens", () => {
-  it("the Google button renders only when the provider is enabled", () => {
+  it.each([
+    ["google", "{googleEnabled && (", "Continue with Google"],
+    ["apple", "{appleEnabled && (", "Continue with Apple"],
+  ])("the %s button renders only when the provider is enabled", (_p, gate, label) => {
     const src = read("components/auth/SignInModal.tsx");
-    expect(src).toContain("{googleEnabled && (");
+    expect(src).toContain(gate);
     // and the button itself is inside that branch
-    const gate = src.indexOf("{googleEnabled && (");
-    expect(src.indexOf("Continue with Google")).toBeGreaterThan(gate);
+    expect(src.indexOf(label)).toBeGreaterThan(src.indexOf(gate));
   });
 
-  it("signInWithGoogle refuses before it can redirect off-site", () => {
+  it("signInWithOAuth refuses before it can redirect off-site, for every provider", () => {
     const src = read("components/auth/AuthProvider.tsx");
-    expect(src).toContain("if (!googleEnabled)");
+    // The guard is per-provider now: whichever one was asked for has to be the one checked.
+    expect(src).toContain('provider === "google" ? googleEnabled : appleEnabled');
+    expect(src).toContain("if (!configured)");
+  });
+
+  /** The whole point of the pattern: adding a provider to the union must not be enough to make
+   * it appear. If someone adds one here without a door to gate it, this notices. */
+  it("every provider in the union has a door reported by the config route", () => {
+    const provider = read("components/auth/AuthProvider.tsx");
+    const union = provider.match(/export type OAuthProvider = ([^;]+);/);
+    expect(union).not.toBeNull();
+    const names = [...union![1].matchAll(/"([a-z]+)"/g)].map((m) => m[1]);
+    expect(names.length).toBeGreaterThan(1);
+    const route = read("app/api/auth/config/route.ts");
+    const doors = read("lib/auth/doors.ts");
+    for (const n of names) {
+      expect(doors, `lib/auth/doors.ts must read ${n}`).toContain(`${n}: s.external?.${n} === true`);
+      expect(route, `the config route must carry ${n}`).toContain(`${n}: doors.${n}`);
+    }
   });
 
   it("the sign-up form cannot be reached while sign-up is shut", () => {
@@ -64,6 +84,7 @@ describe("no account door is offered before it opens", () => {
     expect(src).toContain("getAuthDoors");
     expect(src).toContain("signupOpen: doors.signupOpen");
     expect(src).toContain("google: doors.google");
+    expect(src).toContain("apple: doors.apple");
   });
 
   it("the provider defaults both doors to shut, so an unanswered config hides them", () => {
@@ -71,5 +92,6 @@ describe("no account door is offered before it opens", () => {
     expect(src).toContain("useState(false)");
     expect(src).toContain("setSignupOpen(cfg.signupOpen === true)");
     expect(src).toContain("setGoogleEnabled(cfg.google === true)");
+    expect(src).toContain("setAppleEnabled(cfg.apple === true)");
   });
 });

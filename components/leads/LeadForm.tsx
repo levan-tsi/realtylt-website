@@ -162,7 +162,16 @@ export function LeadForm({
         // The lead is already saved, so the visitor can leave safely. `from` carries which form
         // it was, so one conversion page can still be attributed per funnel.
         form.reset();
-        router.push(`/thank-you?from=${encodeURIComponent(source ?? pathname)}`);
+        // `c` carries the consent ANSWER, not the phone number, so the thank-you page can tell a
+        // visitor the truth about what happens next: someone who agreed to a call is going to be
+        // called, and someone who declined must not be told they will be. It is a single
+        // character and it is not evidence of anything — the record that matters was stamped
+        // server-side at submission (lib/leads/consent.ts). This only decides which sentence a
+        // person reads on the next screen.
+        const consented = data.consentToContact === "true";
+        router.push(
+          `/thank-you?from=${encodeURIComponent(source ?? pathname)}&c=${consented ? "1" : "0"}`,
+        );
         return;
       }
       // On /selling this opens the qualifying wizard; everywhere else it is a no-op.

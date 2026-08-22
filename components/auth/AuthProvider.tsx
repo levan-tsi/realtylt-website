@@ -31,6 +31,11 @@ interface Result {
   needsConfirm?: boolean;
 }
 
+/** The social providers this site knows how to offer. Adding one here is not enough to make it
+ * appear: the button is gated on the project actually having it configured, read live from
+ * Supabase's own /auth/v1/settings (lib/auth/doors.ts). */
+export type OAuthProvider = "google" | "apple";
+
 interface AuthContextValue {
   /** Supabase is configured (env present). When false the whole account layer is inert. */
   enabled: boolean;
@@ -39,6 +44,8 @@ interface AuthContextValue {
   signupOpen: boolean;
   /** Google OAuth is configured on the project. Same rule: false until confirmed. */
   googleEnabled: boolean;
+  /** Apple OAuth is configured on the project. Same rule: false until confirmed. */
+  appleEnabled: boolean;
   /** Initial session check finished. */
   ready: boolean;
   user: User | null;
@@ -49,7 +56,9 @@ interface AuthContextValue {
   signInWithPassword(email: string, password: string): Promise<Result>;
   signUpWithPassword(args: SignUpArgs): Promise<Result>;
   sendMagicLink(email: string): Promise<Result>;
-  signInWithGoogle(): Promise<Result>;
+  /** One call for every social provider. Which ones are OFFERED is decided by the
+   *  `*Enabled` flags above, which come from the project's own /auth/v1/settings. */
+  signInWithOAuth(provider: OAuthProvider): Promise<Result>;
   signOut(): Promise<void>;
   updateProfile(fields: { fullName?: string; phone?: string }): Promise<Result>;
 
@@ -81,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [googleEnabled, setGoogleEnabled] = useState(false);
+  const [appleEnabled, setAppleEnabled] = useState(false);
   const [ready, setReady] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<PortalProfile | null>(null);
@@ -101,13 +111,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true;
     fetch("/api/auth/config")
       .then((r) => r.json())
-      .then((cfg: { enabled?: boolean; url?: string; anonKey?: string; signupOpen?: boolean; google?: boolean }) => {
+      .then((cfg: { enabled?: boolean; url?: string; anonKey?: string; signupOpen?: boolean; google?: boolean; apple?: boolean }) => {
         if (!active) return;
         if (cfg.enabled && cfg.url && cfg.anonKey) {
           setSupabase(createBrowserSupabase(cfg.url, cfg.anonKey));
           setEnabled(true);
           setSignupOpen(cfg.signupOpen === true);
           setGoogleEnabled(cfg.google === true);
+          setAppleEnabled(cfg.apple === true);
         } else {
           setReady(true); // accounts disabled — nothing to load
         }
@@ -225,23 +236,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [supabase],
   );
 
-  const signInWithGoogle = useCallback<AuthContextValue["signInWithGoogle"]>(async () => {
-    if (!supabase) return { ok: false, error: "Accounts are unavailable right now." };
-    // signInWithOAuth does NOT round-trip the provider first: it builds the /authorize URL and
-    // hands the browser to it. So a disabled provider is not an error we can catch and phrase —
-    // measured 2026-08-18, the visitor simply LANDS on Supabase showing
-    //   {"code":400,"error_code":"validation_failed","msg":"Unsupported provider: …"}
-    // on a domain that is not ours. That is why the button is only rendered when
-    // `googleEnabled` says the provider actually exists; this guard is the second lock.
-    if (!googleEnabled) {
-      return { ok: false, error: authErrorMessage({ code: "provider_disabled" }) };
-    }
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: redirectTo() },
-    });
-    return error ? { ok: false, error: authErrorMessage(error) } : { ok: true };
-  }, [supabase, googleEnabled]);
+  const signInWithOAuth = useCallback<AuthContextValue["signInWithOAuth"]>(
+    async (provider) => {
+      if (!supabase) return { ok: false, error: "Accounts are unavailable right now." };
+      // signInWithOAuth does NOT round-trip the provider first: it builds the /authorize URL and
+      // hands the browser to it. So a disabled provider is not an error we can catch and phrase --
+      // measured 2026-08-18, the visitor simply LANDS on Supabase showing
+      //   {"code":400,"error_code":"validation_failed","msg":"Unsupported provider: ..."}
+      // on a domain that is not ours. That is why a button is only rendered when the matching
+      // flag says the provider actually exists; this guard is the second lock, and it is now
+      // per-provider rather than Google-only.
+      const configured = provider === "google" ? googleEnabled : appleEnabled;
+      if (!configured) {
+        return { ok: false, error: authErrorMessage({ code: "provider_disabled" }) };
+      }
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: redirectTo() },
+      });
+      return error ? { ok: false, error: authErrorMessage(error) } : { ok: true };
+    },
+    [supabase, googleEnabled, appleEnabled],
+  );
 
   const signOut = useCallback(async () => {
     if (!supabase) return;
@@ -295,6 +311,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       enabled,
       signupOpen,
       googleEnabled,
+      appleEnabled,
       ready,
       user,
       session,
@@ -303,7 +320,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInWithPassword,
       signUpWithPassword,
       sendMagicLink,
-      signInWithGoogle,
+      signInWithOAuth,
       signOut,
       updateProfile,
       track,
@@ -316,6 +333,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       enabled,
       signupOpen,
       googleEnabled,
+      appleEnabled,
       ready,
       user,
       session,
@@ -324,7 +342,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInWithPassword,
       signUpWithPassword,
       sendMagicLink,
-      signInWithGoogle,
+      signInWithOAuth,
       signOut,
       updateProfile,
       track,

@@ -7,9 +7,11 @@ export interface AuthDoors {
   signupOpen: boolean;
   /** Google OAuth is configured on the project. */
   google: boolean;
+  /** Apple OAuth is configured on the project. */
+  apple: boolean;
 }
 
-const SHUT: AuthDoors = { signupOpen: false, google: false };
+const SHUT: AuthDoors = { signupOpen: false, google: false, apple: false };
 
 /** Cache the answer for a minute. It changes about once a year, and the header waits on this
  * call before it can render an honest control, so paying a round trip per page load would be
@@ -47,6 +49,12 @@ export async function getAuthDoors(): Promise<AuthDoors> {
     const doors: AuthDoors = {
       signupOpen: s.disable_signup === false,
       google: s.external?.google === true,
+      // Apple joined 2026-08-22 on the owner's ask. Same rule as Google and for the same measured
+      // reason: `/auth/v1/settings` lists every provider the project knows about with a boolean,
+      // so this is the project's own answer rather than a constant that rots when he flips a
+      // dashboard toggle. Measured that day: disable_signup true, external.google false,
+      // external.apple false — so the site correctly showed neither button and no signup.
+      apple: s.external?.apple === true,
     };
     cache = { at: Date.now(), doors };
     return doors;

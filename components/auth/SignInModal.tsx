@@ -15,12 +15,13 @@ export function SignInModal() {
     modalMode,
     signupOpen,
     googleEnabled,
+    appleEnabled,
     closeSignIn,
     openSignIn,
     signInWithPassword,
     signUpWithPassword,
     sendMagicLink,
-    signInWithGoogle,
+    signInWithOAuth,
     supabase,
   } = useAuth();
 
@@ -108,13 +109,18 @@ export function SignInModal() {
     closeSignIn();
   }
 
-  async function onGoogle() {
+  // At least one social provider is live, so the stack and its "or" divider have something
+  // to separate. With none configured the form simply starts where the copy ends.
+  const socialShown = googleEnabled || appleEnabled;
+
+  async function onOAuth(provider: "google" | "apple") {
     setBusy(true);
     setNotice(null);
-    const res = await signInWithGoogle();
+    const res = await signInWithOAuth(provider);
     if (!res.ok) {
       setBusy(false);
-      setNotice({ kind: "error", text: res.error ?? "Google sign-in is unavailable." });
+      const name = provider === "google" ? "Google" : "Apple";
+      setNotice({ kind: "error", text: res.error ?? `${name} sign-in is unavailable.` });
     }
     // On success the browser redirects away.
   }
@@ -188,31 +194,54 @@ export function SignInModal() {
         <p className="mt-1.5 text-sm text-stone">
           {isSignup
             ? "Create an account to save homes, get new-listing alerts, and view market reports."
-            : "We've missed you! Sign in to your saved homes and searches."}
+            : "Sign in to your saved homes and searches."}
         </p>
 
         {/* Only offered when the provider is actually configured. supabase-js redirects the
             browser to /authorize before anything can be validated, so an unconfigured provider
             does not surface as an error we could phrase — it dumps the visitor on a Supabase
-            JSON page. A button that cannot work is worse than no button. */}
-        {googleEnabled && (
-        <button
-          type="button"
-          onClick={onGoogle}
-          disabled={busy}
-          className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
-        >
-          <svg aria-hidden viewBox="0 0 48 48" className="h-[18px] w-[18px]">
-            <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.3 13.3 17.6 9.5 24 9.5z" />
-            <path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9.1h12.4c-.5 2.9-2.1 5.3-4.6 7l7.1 5.5c4.2-3.8 6.6-9.5 6.6-16z" />
-            <path fill="#FBBC05" d="M10.5 28.6c-.5-1.5-.8-3-.8-4.6s.3-3.1.8-4.6l-7.9-6.2C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.2z" />
-            <path fill="#34A853" d="M24 48c6.4 0 11.9-2.1 15.9-5.8l-7.1-5.5c-2 1.3-4.5 2.1-8.8 2.1-6.4 0-11.7-3.8-13.5-9.2l-7.9 6.2C6.5 42.6 14.6 48 24 48z" />
-          </svg>
-          Continue with Google
-        </button>
+            JSON page. A button that cannot work is worse than no button. Apple joined Google
+            here on 2026-08-22; both appear the moment the project reports them, and neither
+            appears before. */}
+        {socialShown && (
+          <div className="mt-5 space-y-2.5">
+            {googleEnabled && (
+              <button
+                type="button"
+                onClick={() => onOAuth("google")}
+                disabled={busy}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+              >
+                <svg aria-hidden viewBox="0 0 48 48" className="h-[18px] w-[18px]">
+                  <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.3 13.3 17.6 9.5 24 9.5z" />
+                  <path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9.1h12.4c-.5 2.9-2.1 5.3-4.6 7l7.1 5.5c4.2-3.8 6.6-9.5 6.6-16z" />
+                  <path fill="#FBBC05" d="M10.5 28.6c-.5-1.5-.8-3-.8-4.6s.3-3.1.8-4.6l-7.9-6.2C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.2z" />
+                  <path fill="#34A853" d="M24 48c6.4 0 11.9-2.1 15.9-5.8l-7.1-5.5c-2 1.3-4.5 2.1-8.8 2.1-6.4 0-11.7-3.8-13.5-9.2l-7.9 6.2C6.5 42.6 14.6 48 24 48z" />
+                </svg>
+                Continue with Google
+              </button>
+            )}
+            {appleEnabled && (
+              /* Apple's own guidance: the mark is solid black on a light ground, is not
+                 recoloured, and the label reads "Continue with Apple" when it sits beside other
+                 continue buttons. Same geometry as the Google button so the pair reads as one
+                 stack rather than two visitors from different design systems. */
+              <button
+                type="button"
+                onClick={() => onOAuth("apple")}
+                disabled={busy}
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+              >
+                <svg aria-hidden viewBox="0 0 384 512" className="h-[18px] w-[18px]" fill="currentColor">
+                  <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                </svg>
+                Continue with Apple
+              </button>
+            )}
+          </div>
         )}
 
-        {googleEnabled && (
+        {socialShown && (
           <div className="my-4 flex items-center gap-3 text-xs uppercase tracking-wider text-stone">
             <span className="h-px flex-1 bg-line" />
             or
@@ -220,7 +249,7 @@ export function SignInModal() {
           </div>
         )}
 
-        <form onSubmit={onSubmit} className={googleEnabled ? "space-y-3" : "mt-5 space-y-3"}>
+        <form onSubmit={onSubmit} className={socialShown ? "space-y-3" : "mt-5 space-y-3"}>
           {isSignup && (
             <Input
               autoFocus

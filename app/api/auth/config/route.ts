@@ -17,7 +17,14 @@ export async function GET() {
   if (!cfg) return NextResponse.json({ enabled: false }, { headers: { "cache-control": "no-store" } });
   const doors = await getAuthDoors();
   return NextResponse.json(
-    { enabled: true, url: cfg.url, anonKey: cfg.anonKey, signupOpen: doors.signupOpen, google: doors.google },
+    {
+      enabled: true,
+      url: cfg.url,
+      anonKey: cfg.anonKey,
+      signupOpen: doors.signupOpen,
+      google: doors.google,
+      apple: doors.apple,
+    },
     { headers: { "cache-control": "no-store" } },
   );
 }
