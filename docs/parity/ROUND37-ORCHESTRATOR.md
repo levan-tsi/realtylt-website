@@ -123,3 +123,28 @@ tsc clean · npm test **1059 / 83 files** (baseline entering the round was 1056/
 verify-focus-paint PASS 429 (was 419; the consent radios added ten) · verify-press-feedback 15/15 ·
 verify-hero-contrast PASS · no horizontal overflow in 32 page/width combinations at 390 and 320 ·
 no CSP violations across 16 pages.
+
+## 6. What the account surfaces look like the moment registration opens
+
+Worth checking now rather than after he flips the toggle, because `/saved`, `/portal` and
+`/portal/searches` change state the minute he does and nobody has driven them recently. Again by
+intercepting only `/api/auth/config`; the project was not touched.
+
+Both states, both widths, all three routes: **200, exactly one `<h1>`, the phone number always
+reachable.** Closed shows "Accounts aren't open yet" plus a way to reach a person. Open drops that
+notice and offers **SIGN IN / CREATE ACCOUNT** with the provider buttons above it.
+
+### And a third instrument error, same session, same shape
+
+The first run of that sweep reported the OPEN state at 390 still showing the closed notice, with a
+word count identical to the closed state, on `/portal` and `/portal/searches`. That reads like a
+real responsive bug.
+
+It was my wait. The doors arrive from a runtime `fetch("/api/auth/config")`, so the page renders its
+default (everything shut, deliberately) and re-renders when the answer lands. Sampling 1800ms after
+`domcontentloaded` caught the default. Re-run with `networkidle` plus 4s and confirmed the config
+was served exactly once: **closed notice gone, signup offered, at 390 and 1440 alike.**
+
+That is three instrument errors this round — the `radios=4` count, this one, and round 36's test
+matching its own comment — against zero product defects found by the same probes. The ratio is the
+thing to remember: **when a probe reports something alarming, suspect the probe first.**
