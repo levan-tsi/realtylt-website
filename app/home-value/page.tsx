@@ -92,7 +92,7 @@ export default async function HomeValuePage({
                 <div className="h-full rounded-2xl border border-line bg-white p-7">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Step {i + 1} of 3</p>
                   <h3 className="t-title mt-2 text-ink">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-stone">{s.body}</p>
+                  <p className="t-small mt-3 text-stone">{s.body}</p>
                 </div>
               </Reveal>
             ))}
