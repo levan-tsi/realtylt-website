@@ -1,6 +1,121 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## == HANDOFF 2026-08-22 (ROUND 37) - READ THIS FIRST ====================================
+## == HANDOFF 2026-08-23 -> ROUND 38. READ ALL OF THIS BEFORE TOUCHING ANYTHING =========
+## Written to be the seed of a FRESH session. The owner is clearing the chat and restarting with
+## ONE FABLE ORCHESTRATOR + ONE OPUS BUILDER. Everything below is measured, not remembered.
+## Deep detail: docs/parity/ROUND38-BRIEF.md. Prior rounds: ROUND37-ORCHESTRATOR.md, DESIGN-ROUND37.md.
+##
+## -- ITEM 0: THE TARGET HE STATED -----------------------------------------------------
+## "IS EVERYTHING READY TO LAUNCH NEXT WEEK." He wants to go live by next weekend.
+## MY HONEST ANSWER, and round 38 should give him the same one rather than a comfortable one:
+##   THE SITE can launch next week. It is built, audited, and gated on three switches that are
+##   HIS: (1) NEXT_PUBLIC_SITE_URL - ALREADY DONE 2026-07-31, all 61 canonicals and sitemap
+##   entries are on realtylt.com; (2) point the apex DNS at Vercel (A 76.76.21.21 for realtylt.com
+##   and www, zone is at NAMECHEAP, do NOT move nameservers - app.realtylt.com lives there);
+##   (3) remove PRELAUNCH=1. In that order.
+##   THE BLOG BACKLOG CANNOT. ~20 unpublished posts at the flagship's quality standard is not a
+##   one-week job, and saying otherwise would be the kind of promise this repo has had to walk
+##   back before. Recommend to him: LAUNCH THE SITE next week with the 16 posts that exist, and
+##   run the blog backlog as a continuing project after. Do not hold the launch for it.
+##
+## -- ITEM 1: THE SOLD-PHOTO LOOP. FIRST ACT OF EVERY ROUND. ---------------------------
+##   powershell -Command "Start-Process node -ArgumentList 'scripts/sold-loop.mjs' -WindowStyle Hidden"
+## Detached, survives the session, logs each tick + exit code to scripts/.sold-loop.log
+## (gitignored). EXIT: 0 ran - 3 doors shut - 4 runner live - 5 penalty - 42 stopped on a 429.
+## It decides nothing; scripts/sold-window.mjs owns the doors, sizing, pid lock and rate penalty.
+## The 2026-08-21 01:48 UTC penalty stamp is still on disk ON PURPOSE and holds the rate at 1.4.
+## NEVER add an MLS DATA-API call to a page. In probes ALWAYS block **/api/media/**.
+##
+## -- ITEM 2: WHAT HE ASKED FOR ON 2026-08-23, ITEM BY ITEM ----------------------------
+##  1. CONSENT BOX -> DONE AND PUSHED. He reversed my two-option design, twice, explicitly:
+##     "no send me email instead has to be removed, only yes text and call me option check box
+##     which is must." Shipped: ONE required checkbox, no decline option.
+##     *** DO NOT RE-OPEN THIS. I argued the legal side twice and he decided. The argument is
+##     preserved in components/leads/ConsentCheckbox.tsx and lib/leads/consent.ts, including the
+##     part that cuts against us. It is his business and his risk. ***
+##  2. "THE FOOTER FORM DID NOTHING" -> HIS BUG REPORT WAS RIGHT AND IT WAS MINE. The mandatory
+##     version used native `required`, which on that form produced no message, no scroll and no
+##     posted lead. Reproduced on production, then fixed: the FORM validates in JS and shows a
+##     visible role=alert error, and scrolls the box into view. The consent input deliberately
+##     carries NO `required` attribute and the test asserts its ABSENCE. Verified after: without
+##     ticking, the page scrolls 6265 -> 6437 and says "Please tick the box above..."; with it,
+##     the lead posts and "Message sent." appears.
+##  3. THANK-YOU PAGE PICTURE -> STILL OPEN. He wants it better, and wants the emil-design-eng
+##     and apple-design skills applied. The page itself was rebuilt on 2026-08-22 (it now says
+##     "Thank you", has a time ledger, is consent-aware) but the PHOTOGRAPH is his complaint now.
+##  4. /CONNECT NEEDS A FORM -> STILL OPEN. Measured: the page body has NO lead form, only a phone
+##     number, an email and the booking. He wants a CLICKABLE POPUP form as an alternative for
+##     people who do not want the Gmail booking. The modal pattern already exists in
+##     components/leads/ListingLeadCTAs.tsx - reuse it, do not invent one.
+##  5. "APPLY emil-design-eng + apple-design TO ALL PAGES" -> STILL OPEN, and it is the round's
+##     design spine. Both skills are installed. Use them as the lens on every page, not as a
+##     sprinkle.
+##  6. GOOGLE + APPLE LOGIN, "take over Supabase and Google Cloud" -> BLOCKED ON ACCESS, NOT ON
+##     CODE. The site side is DONE and proved (both buttons render the moment the project reports
+##     them; a ratchet fails if a provider lacks a door). Measured on the project TODAY:
+##     disable_signup TRUE, external.google FALSE, external.apple FALSE.
+##     There is NO Supabase management token on this box and no Google Cloud credential.
+##     *** ROUND 38 SHOULD TRY THE BROWSER. Claude-in-Chrome tools are available and his Chrome
+##     profile is likely signed in to both Supabase and Google Cloud. That is the one untried
+##     route to actually "take over" as he asked. Ask him to confirm before changing project
+##     settings, and NEVER weaken a security control. docs/parity/OPENING-ACCOUNTS.md is the
+##     click-by-click runbook if he does it himself. ***
+##     THE TRAP: mailer_autoconfirm is FALSE and Supabase's built-in mailer is rate-limited to a
+##     handful an hour. Opening signup without SMTP works while he tests it and fails silently
+##     from about the third real person. Deal with email FIRST.
+##  7. THE BLOG -> THE BIGGEST PIECE OF WORK. See ITEM 3.
+##
+## -- ITEM 3: THE BLOG, WITH THE GAP MEASURED ------------------------------------------
+## HIS WORDS: the flagship post is the standard, the Drive folder holds the texts, the facts need
+## checking, the posts should be interactive and teach like the /ai page, internally linked, with
+## SOURCES LINKED for authority, and built for SEO/GEO so AI agents can read and recommend them.
+## MEASURED 2026-08-23:
+##   - 16 posts published, and ALL 16 ARE LINKED from /blog. The index is not dropping anything.
+##   - The Drive folder (1BvHZ53fworCeYxUx60c9HPmTVotvMxDg) holds ~35 UNIQUE .docx drafts across
+##     5 category folders, so roughly 20 ARE WRITTEN BUT NEVER PUBLISHED. That is his "you can't
+##     find all of our blogs" - they were never built, not lost.
+##   - Drive has categories 1, 2, 3, 8, 9 only. FOLDERS 4, 5, 6 AND 7 DO NOT EXIST. Ask him.
+##   - Duplicates exist ACROSS folders 2 and 3 (First-Time Buyer, Down Payment, Closing Costs,
+##     Home Inspection appear in both). Do not publish the same post twice under two categories.
+##   - "Blog plan.docx" (226 KB) in the Drive root is the master plan. READ IT FIRST.
+##   - The flagship standard he named:
+##     /blog/ai-chat-assistant-real-estate-website - study it before writing any template.
+##     docs/blog-flagship/ and the `blog` slash-command brief carry its history.
+## RECOMMENDED SHAPE: template first, from the flagship. Then publish in small batches with the
+## facts checked and the sources LINKED. Volume at low quality is worse than 16 good posts,
+## especially for the GEO goal - an AI agent that finds a wrong number stops recommending you.
+##
+## -- ITEM 4: STATE AT HANDOFF, all measured -------------------------------------------
+## HEAD a02e1bc, pushed, deployed, production alias serving it.
+## tsc clean - npm test 1070 / 85 files - verify-hero-contrast PASS (358 runs, 9 pages,
+## 1440+390+320) - verify-focus-paint PASS 419 - verify-press-feedback PASS 15/15 -
+## probe-reduced-motion PASS - no horizontal overflow in 32 page/width combinations -
+## no CSP violations across 16 pages - 61/61 sitemap URLs 200 - 149/149 internal links 200 -
+## 18 routes work with JavaScript OFF.
+## OPEN OWNER DECISIONS CARRIED FORWARD: the home hero photograph (three licensed candidates
+## rendered at docs/design-r36/shots/hero-cand-*; my pick is breakneck-south, the view from the
+## ridge his phone hero already shows) and the still-unlicensed hero-vimeo-frame.jpg it replaces.
+##
+## -- ITEM 5: THE FOLLOW-UP FLOW IS BUILT AND OFF --------------------------------------
+## n8n workflow rzI7WIQhRKfrhJxH, verified active:false, triggerCount:0, never run, nobody called.
+## Website Lead -> Normalize -> May We Call Them? -> Vapi verify/book + "we will call" email, or
+## "email only" email. Vapi assistantId/phoneNumberId and the trigger wiring deliberately blank.
+## ORDER: fill the body, bind the credential, point the trigger, run once against his own test
+## lead, ACTIVATE, and only THEN flip OUTBOUND_FOLLOW_UP_LIVE in app/thank-you/page.tsx.
+## Full contract: docs/LEAD-FOLLOW-UP.md.
+##
+## -- ITEM 6: HOW TO RUN ROUND 38 ------------------------------------------------------
+## He asked for ONE FABLE ORCHESTRATOR + ONE OPUS BUILDER. One subagent at a time on this box -
+## the freeze is real. Orchestrator scopes, verifies and pushes; the builder builds and reports.
+## Subagents NEVER push and NEVER touch RLS/auth/CSP/security controls.
+## SHARED REPO: explicit pathspecs, never `git add -A`. ONE dev server on :3100.
+## AND THE LESSON THAT COST THE MOST TIME ACROSS ROUNDS 36-37: SIX instrument errors against ZERO
+## product defects found by those same probes. Never send a probe's stderr to /dev/null; prove a
+## NEGATIVE result the way you would prove a positive one; group form controls by r.form; do not
+## trust gates run against a dev server another session is editing; strip comments before matching
+## source; and when a probe shouts, CHECK THE PROBE FIRST.
+##
+## == PREVIOUS HANDOFF 2026-08-22 (ROUND 37) ===============================================
 ## Full records: docs/parity/ROUND37-ORCHESTRATOR.md and docs/parity/DESIGN-ROUND37.md.
 ## Shape: Opus 5 orchestrating + ONE Fable 5 design subagent. All pushed and deployed.
 ##
