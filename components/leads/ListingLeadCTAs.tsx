@@ -295,13 +295,66 @@ function SuccessBody({ title, body, onClose }: { title: string; body: string; on
   );
 }
 
-function ErrorNote({ show }: { show: boolean }) {
+function ErrorNote({
+  show,
+  message,
+  innerRef,
+}: {
+  show: boolean;
+  message?: string;
+  innerRef?: React.Ref<HTMLParagraphElement>;
+}) {
   if (!show) return null;
   return (
-    <p role="alert" className="mt-3 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-sm text-red-500">
-      We couldn&rsquo;t send that. Try again, or call {SITE.phone}.
+    <p
+      ref={innerRef}
+      role="alert"
+      tabIndex={-1}
+      className="t-small mt-3 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-red-500 outline-none"
+    >
+      {message ?? `We couldn’t send that. Try again, or call ${SITE.phone}.`}
     </p>
   );
+}
+
+/** CONSENT IS REQUIRED AND ITS REFUSAL IS LOUD — on these two sheets as well, from round 38.
+ *
+ * THE BUG THIS CLOSES. Both sheets read `consentToContact` straight out of the FormData and handed
+ * it to postLead(). An unticked box therefore posted a real lead to the live CRM and showed "Tour
+ * requested." — the visitor is told they will be called, having explicitly not agreed to be. It is
+ * the same silent refusal the owner reported on the footer form ("when I filled it up nothing
+ * happened"), still live on the listing page, which is the flagship conversion path.
+ *
+ * WHY A HOOK AND NOT A `required` ATTRIBUTE. The native attribute is exactly what failed silently
+ * before, and the tests assert its absence on this input. So the check lives in JavaScript and
+ * produces the same three things LeadForm.tsx has produced since round 29: the box marked invalid,
+ * a visible role="alert" in the place the form already shows errors, and the box scrolled into
+ * view. Focus lands on the alert rather than the box, because the alert carries the reason.
+ *
+ * One hook, two callers, so the tour and offer sheets cannot drift from each other — and the
+ * wording is LeadForm's wording, so none of the three drift from the footer either. */
+const CONSENT_ERROR = "Please tick the box above so we can call or text you about your request.";
+
+function useConsentGuard() {
+  const [invalid, setInvalid] = useState(false);
+  const alertRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (invalid) alertRef.current?.focus();
+  }, [invalid]);
+  /** True when the box is unticked: the caller must return without posting anything. */
+  function refused(form: HTMLFormElement, data: Record<string, string>) {
+    if (data.consentToContact === "true") {
+      setInvalid(false);
+      return false;
+    }
+    setInvalid(true);
+    form.querySelector<HTMLInputElement>("[data-consent-input]")?.scrollIntoView({
+      block: "center",
+      behavior: "smooth",
+    });
+    return true;
+  }
+  return { invalid, alertRef, refused };
 }
 
 // Hidden honeypot — bots fill it, humans never see it (matches the site-wide LeadForm).
@@ -332,12 +385,16 @@ function TourModal({
   const [time, setTime] = useState("Morning");
   const [hp, setHp] = useState("");
   const [state, setState] = useState<LeadState>("idle");
+  const consent = useConsentGuard();
   const submitted = useRef(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (submitted.current) return;
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string, string>;
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    // Before anything is marked submitted or sent: no tick, no lead.
+    if (consent.refused(form, data)) return;
     submitted.current = true;
     setState("submitting");
     const day = days.find((d) => d.key === date);
@@ -432,10 +489,14 @@ function TourModal({
           </div>
 
             <div className="mt-4">
-              <ConsentCheckbox />
+              <ConsentCheckbox invalid={consent.invalid} />
             </div>
 
-          <ErrorNote show={state === "error"} />
+          <ErrorNote
+            show={consent.invalid || state === "error"}
+            message={consent.invalid ? CONSENT_ERROR : undefined}
+            innerRef={consent.alertRef}
+          />
           <button
             type="submit"
             disabled={state === "submitting"}
@@ -495,6 +556,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
   const [seenInPerson, setSeenInPerson] = useState<string>(SEEN_HOME_ANSWERS[0]);
   const [hp, setHp] = useState("");
   const [state, setState] = useState<LeadState>("idle");
+  const consent = useConsentGuard();
   const submitted = useRef(false);
 
   const offerNum = Number(offer) || 0;
@@ -503,7 +565,10 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (submitted.current) return;
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string, string>;
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    // Before anything is marked submitted or sent: no tick, no lead.
+    if (consent.refused(form, data)) return;
     submitted.current = true;
     setState("submitting");
     const ok = await postLead({
@@ -580,7 +645,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           </div>
 
             <div className="mt-4">
-              <ConsentCheckbox />
+              <ConsentCheckbox invalid={consent.invalid} />
             </div>
 
           {/* Live parity: the two questions that tell us how strong an offer is. They travel in the
@@ -606,7 +671,11 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
             <textarea className={`${fieldCls} min-h-20 resize-y`} name="message" placeholder="Anything we should know? (optional)" aria-label="Message" />
           </div>
 
-          <ErrorNote show={state === "error"} />
+          <ErrorNote
+            show={consent.invalid || state === "error"}
+            message={consent.invalid ? CONSENT_ERROR : undefined}
+            innerRef={consent.alertRef}
+          />
           <button
             type="submit"
             disabled={state === "submitting"}
@@ -614,7 +683,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           >
             {state === "submitting" ? "Sending…" : "Submit Offer"}
           </button>
-          <p className="mt-3 text-xs leading-relaxed text-stone">
+          <p className="t-fine mt-3 text-stone">
             Sending an offer starts a conversation with our team. It isn&rsquo;t a binding contract.
           </p>
         </form>
