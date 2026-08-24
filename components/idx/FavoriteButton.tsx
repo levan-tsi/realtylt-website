@@ -47,7 +47,7 @@ export function FavoriteButton({
       } ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
         onLight
           ? "text-stone hover:bg-mist hover:text-ink focus-visible:outline-river"
-          : "bg-ink/55 backdrop-blur hover:bg-ink/75 focus-visible:outline-paper"
+          : "rlt-ring-onmedia bg-ink/55 backdrop-blur hover:bg-ink/75"
       } ${className}`}
     >
       <svg

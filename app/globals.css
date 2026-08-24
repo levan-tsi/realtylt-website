@@ -381,6 +381,30 @@ body {
   outline-color: var(--color-paper);
 }
 
+/* A RING ON A PHOTOGRAPH CANNOT BE ONE COLOUR.
+ *
+ * The rule above picks a ring colour from the SURFACE a control belongs to, and that works
+ * everywhere the surface is a known token. It cannot work for a control sitting on listing
+ * photography, because the pixels behind the ring are whatever the seller's camera saw. The save
+ * heart on a listing card is the case: its own chip is bg-ink/55, so the ICON always has contrast,
+ * but `outline-offset: 2px` puts the RING outside that chip, on bare photo. Measured on the home
+ * page, round 38: white ring, backdrop rgb(192 192 194) where that card's photo happens to be
+ * bright, 1.24:1 against the 3:1 floor WCAG 1.4.11 sets for a non-text indicator. On a dark photo
+ * the same ring measures fine, which is exactly why it survived this long.
+ *
+ * So the ring carries BOTH tones and stops depending on the photograph: 2px of paper hugging the
+ * control (box-shadow, which follows the border radius), then 2px of ink outside it (the outline
+ * at its 2px offset). Against a bright frame the ink half carries it; against a dark frame the
+ * paper half does. One of the two always clears 3:1, whatever is behind it.
+ *
+ * Unlayered and placed after the surface rule above so it wins on order at equal specificity —
+ * the same reason the rest of this block is unlayered rather than a Tailwind utility. */
+.rlt-ring-onmedia:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--color-paper);
+}
+
 /* Composed search instrument (home hero): the input lives INSIDE a rounded container, so the
  * global ring above would draw a hard rectangle inside the pill. The container carries the
  * ring instead — same 2px/2px geometry, same paper colour (the instrument only exists on the
