@@ -1,120 +1,81 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## == HANDOFF 2026-08-23 -> ROUND 38. READ ALL OF THIS BEFORE TOUCHING ANYTHING =========
-## Written to be the seed of a FRESH session. The owner is clearing the chat and restarting with
-## ONE FABLE ORCHESTRATOR + ONE OPUS BUILDER. Everything below is measured, not remembered.
-## Deep detail: docs/parity/ROUND38-BRIEF.md. Prior rounds: ROUND37-ORCHESTRATOR.md, DESIGN-ROUND37.md.
+## == HANDOFF 2026-08-24 -> ROUND 39. ROUND 38 IS DONE AND PUSHED. ======================
+## Round 38 ran the full chain the owner asked for: Fable orchestrator -> Opus builder ->
+## Opus adversarial tester -> Opus fixer, one sub at a time, everything re-verified by the
+## orchestrator's own runs. The pre-round brief is preserved in docs/parity/ROUND38-BRIEF.md;
+## the round's reasoning in DESIGN-ROUND38.md; blog in BLOG-INVENTORY-R38.md; accounts in
+## ACCOUNTS-RECON-R38.md.
 ##
-## -- ITEM 0: THE TARGET HE STATED -----------------------------------------------------
-## "IS EVERYTHING READY TO LAUNCH NEXT WEEK." He wants to go live by next weekend.
-## MY HONEST ANSWER, and round 38 should give him the same one rather than a comfortable one:
-##   THE SITE can launch next week. It is built, audited, and gated on three switches that are
-##   HIS: (1) NEXT_PUBLIC_SITE_URL - ALREADY DONE 2026-07-31, all 61 canonicals and sitemap
-##   entries are on realtylt.com; (2) point the apex DNS at Vercel (A 76.76.21.21 for realtylt.com
-##   and www, zone is at NAMECHEAP, do NOT move nameservers - app.realtylt.com lives there);
-##   (3) remove PRELAUNCH=1. In that order.
-##   THE BLOG BACKLOG CANNOT. ~20 unpublished posts at the flagship's quality standard is not a
-##   one-week job, and saying otherwise would be the kind of promise this repo has had to walk
-##   back before. Recommend to him: LAUNCH THE SITE next week with the 16 posts that exist, and
-##   run the blog backlog as a continuing project after. Do not hold the launch for it.
+## -- WHAT SHIPPED (21 commits, all gates re-run by the orchestrator) ------------------
+## 1. CONSENT ENFORCED EVERYWHERE (launch blocker, found by the test pass): the listing
+##    Tour and Offer sheets posted leads with the box UNTICKED and showed success. Now one
+##    useConsentGuard() runs before the POST on all three LeadSheet modals; the design
+##    itself (one required box, no `required` attr, no decline) is UNTOUCHED, owner-decided.
+##    verify-lead-modal.mjs now drives ALL THREE modals at 1440/390/320: 111/111.
+## 2. The emil+apple design sweep: mobile 16px body floor site-wide (8 scored pages by the
+##    builder + 62 swaps/31 files by the fixer; /blog 16->1, /search 36->36 but the 31 left
+##    are the ListingCard stat strip, a recorded deliberate data-label exception).
+## 3. Heroes: /buying "We find the home. We negotiate the price." /financing "Know what the
+##    loan costs before you sign it." /selling "We price your home two ways. You decide."
+##    All own the fold; above-fold words 62/57/121 (selling's floor is the hero form, 37 of
+##    its words the untouchable consent pair).
+## 4. /connect popup form (reuses the footer's LeadForm via extracted LeadSheet), thank-you
+##    photograph now hudson-olana.jpg in grayscale (licensed CC BY 2.0, in ATTRIBUTIONS.md),
+##    focus rings incl. a two-tone on-media ring + booking-iframe blur-listener ring (13.9:1),
+##    drift-rail keyboard focus stops the animation, one aria-live per gallery (/search had
+##    146), suggest counts scoped to Active (Beacon 116=116; was promising 128, landing 75).
+## 5. SCORES (same instrument, warm): buying 50->53.5+, financing 51->54+, connect ->57.75-59,
+##    selling ->53, thank-you ->55.5. ~+1-3.5 of any day-vs-day delta is dev-server noise
+##    (a one-character control moved +3.5); trust the per-fix measurements, not the totals.
+## GATES at handoff, ALL run by the orchestrator in the foreground: tsc 0 - npm test
+## 1100/1100, 88 files (baseline was 1070/85, only goes UP) - verify-lead-modal 111/111 -
+## hero-contrast/focus-paint/press-feedback/reduced-motion PASS - 320 overflow 0 on 14 pages.
 ##
-## -- ITEM 1: THE SOLD-PHOTO LOOP. FIRST ACT OF EVERY ROUND. ---------------------------
-##   powershell -Command "Start-Process node -ArgumentList 'scripts/sold-loop.mjs' -WindowStyle Hidden"
-## Detached, survives the session, logs each tick + exit code to scripts/.sold-loop.log
-## (gitignored). EXIT: 0 ran - 3 doors shut - 4 runner live - 5 penalty - 42 stopped on a 429.
-## It decides nothing; scripts/sold-window.mjs owns the doors, sizing, pid lock and rate penalty.
-## The 2026-08-21 01:48 UTC penalty stamp is still on disk ON PURPOSE and holds the rate at 1.4.
-## NEVER add an MLS DATA-API call to a page. In probes ALWAYS block **/api/media/**.
+## -- OWNER-URGENT, FOUND ON HIS OWN DASHBOARDS (ACCOUNTS-RECON-R38.md) ----------------
+## 1. The RealtyLT Pro Supabase org EXCEEDED ITS QUOTA; projects restricted from 22 Sep 2026
+##    if still over; grace period started 2026-08-23. Billing decision, his.
+## 2. Four CRITICAL security advisors (security-definer views on chatbot_* + zip_centroids).
+##    Needs a paired review with the CRM project; do not patch from here.
+## 3. Custom SMTP is OFF + confirm-email ON: opening signup without SMTP fails silently at
+##    volume. EMAIL FIRST, then Google OAuth (no client exists yet, console is signed in,
+##    click-path written), then enable signup. ~10 min in his browser once he says go.
 ##
-## -- ITEM 2: WHAT HE ASKED FOR ON 2026-08-23, ITEM BY ITEM ----------------------------
-##  1. CONSENT BOX -> DONE AND PUSHED. He reversed my two-option design, twice, explicitly:
-##     "no send me email instead has to be removed, only yes text and call me option check box
-##     which is must." Shipped: ONE required checkbox, no decline option.
-##     *** DO NOT RE-OPEN THIS. I argued the legal side twice and he decided. The argument is
-##     preserved in components/leads/ConsentCheckbox.tsx and lib/leads/consent.ts, including the
-##     part that cuts against us. It is his business and his risk. ***
-##  2. "THE FOOTER FORM DID NOTHING" -> HIS BUG REPORT WAS RIGHT AND IT WAS MINE. The mandatory
-##     version used native `required`, which on that form produced no message, no scroll and no
-##     posted lead. Reproduced on production, then fixed: the FORM validates in JS and shows a
-##     visible role=alert error, and scrolls the box into view. The consent input deliberately
-##     carries NO `required` attribute and the test asserts its ABSENCE. Verified after: without
-##     ticking, the page scrolls 6265 -> 6437 and says "Please tick the box above..."; with it,
-##     the lead posts and "Message sent." appears.
-##  3. THANK-YOU PAGE PICTURE -> STILL OPEN. He wants it better, and wants the emil-design-eng
-##     and apple-design skills applied. The page itself was rebuilt on 2026-08-22 (it now says
-##     "Thank you", has a time ledger, is consent-aware) but the PHOTOGRAPH is his complaint now.
-##  4. /CONNECT NEEDS A FORM -> STILL OPEN. Measured: the page body has NO lead form, only a phone
-##     number, an email and the booking. He wants a CLICKABLE POPUP form as an alternative for
-##     people who do not want the Gmail booking. The modal pattern already exists in
-##     components/leads/ListingLeadCTAs.tsx - reuse it, do not invent one.
-##  5. "APPLY emil-design-eng + apple-design TO ALL PAGES" -> STILL OPEN, and it is the round's
-##     design spine. Both skills are installed. Use them as the lens on every page, not as a
-##     sprinkle.
-##  6. GOOGLE + APPLE LOGIN, "take over Supabase and Google Cloud" -> BLOCKED ON ACCESS, NOT ON
-##     CODE. The site side is DONE and proved (both buttons render the moment the project reports
-##     them; a ratchet fails if a provider lacks a door). Measured on the project TODAY:
-##     disable_signup TRUE, external.google FALSE, external.apple FALSE.
-##     There is NO Supabase management token on this box and no Google Cloud credential.
-##     *** ROUND 38 SHOULD TRY THE BROWSER. Claude-in-Chrome tools are available and his Chrome
-##     profile is likely signed in to both Supabase and Google Cloud. That is the one untried
-##     route to actually "take over" as he asked. Ask him to confirm before changing project
-##     settings, and NEVER weaken a security control. docs/parity/OPENING-ACCOUNTS.md is the
-##     click-by-click runbook if he does it himself. ***
-##     THE TRAP: mailer_autoconfirm is FALSE and Supabase's built-in mailer is rate-limited to a
-##     handful an hour. Opening signup without SMTP works while he tests it and fails silently
-##     from about the third real person. Deal with email FIRST.
-##  7. THE BLOG -> THE BIGGEST PIECE OF WORK. See ITEM 3.
+## -- OWNER CALLS CARRIED ---------------------------------------------------------------
+## 1. County hero says 3,991 "homes on market", the landing /search says 1,958 active - same
+##    class as the fixed suggest bug but scoping it changes which homes the county page
+##    features. RECOMMEND doing it; needs his nod.
+## 2. /connect hero still uses millerton-night.jpg (the photo he disliked on thank-you).
+##    Reads better as a short grayscale band; swap or keep = his call.
+## 3. Home hero photo decision still open from r36 (pick: breakneck-south; the current
+##    hero-vimeo-frame.jpg poster remains unlicensed). Thank-you's ideal "warm residential
+##    arrival" photo does not exist in the licensed library - needs licensing if he wants it.
+## 4. THE LAUNCH SWITCHES, in order, all his: (1) SITE_URL done 07-31; (2) Namecheap apex
+##    A realtylt.com + www -> 76.76.21.21 (do NOT move nameservers, app.realtylt.com lives
+##    in that zone); (3) remove PRELAUNCH=1 last. The blog backlog does NOT gate launch.
 ##
-## -- ITEM 3: THE BLOG, WITH THE GAP MEASURED ------------------------------------------
-## HIS WORDS: the flagship post is the standard, the Drive folder holds the texts, the facts need
-## checking, the posts should be interactive and teach like the /ai page, internally linked, with
-## SOURCES LINKED for authority, and built for SEO/GEO so AI agents can read and recommend them.
-## MEASURED 2026-08-23:
-##   - 16 posts published, and ALL 16 ARE LINKED from /blog. The index is not dropping anything.
-##   - The Drive folder (1BvHZ53fworCeYxUx60c9HPmTVotvMxDg) holds ~35 UNIQUE .docx drafts across
-##     5 category folders, so roughly 20 ARE WRITTEN BUT NEVER PUBLISHED. That is his "you can't
-##     find all of our blogs" - they were never built, not lost.
-##   - Drive has categories 1, 2, 3, 8, 9 only. FOLDERS 4, 5, 6 AND 7 DO NOT EXIST. Ask him.
-##   - Duplicates exist ACROSS folders 2 and 3 (First-Time Buyer, Down Payment, Closing Costs,
-##     Home Inspection appear in both). Do not publish the same post twice under two categories.
-##   - "Blog plan.docx" (226 KB) in the Drive root is the master plan. READ IT FIRST.
-##   - The flagship standard he named:
-##     /blog/ai-chat-assistant-real-estate-website - study it before writing any template.
-##     docs/blog-flagship/ and the `blog` slash-command brief carry its history.
-## RECOMMENDED SHAPE: template first, from the flagship. Then publish in small batches with the
-## facts checked and the sources LINKED. Volume at low quality is worse than 16 good posts,
-## especially for the GEO goal - an AI agent that finds a wrong number stops recommending you.
+## -- THE BLOG (BLOG-INVENTORY-R38.md is the measured plan) ----------------------------
+## 26 unpublished drafts (10 investing, 9 buyer, 5 seller, 2 homeownership), counted against
+## Drive. Buyer-first batch order recommended. Facts + linked primary sources are the gate.
+## Ask him: categories 4/5/6/7/10 were never written - write fresh from the plan's titles?
+## The flagship template generalisation belongs to the /blog loop, not this one.
 ##
-## -- ITEM 4: STATE AT HANDOFF, all measured -------------------------------------------
-## HEAD a02e1bc, pushed, deployed, production alias serving it.
-## tsc clean - npm test 1070 / 85 files - verify-hero-contrast PASS (358 runs, 9 pages,
-## 1440+390+320) - verify-focus-paint PASS 419 - verify-press-feedback PASS 15/15 -
-## probe-reduced-motion PASS - no horizontal overflow in 32 page/width combinations -
-## no CSP violations across 16 pages - 61/61 sitemap URLs 200 - 149/149 internal links 200 -
-## 18 routes work with JavaScript OFF.
-## OPEN OWNER DECISIONS CARRIED FORWARD: the home hero photograph (three licensed candidates
-## rendered at docs/design-r36/shots/hero-cand-*; my pick is breakneck-south, the view from the
-## ridge his phone hero already shows) and the still-unlicensed hero-vimeo-frame.jpg it replaces.
+## -- ROUND 39 CANDIDATES ---------------------------------------------------------------
+## County count fix (after his nod) - /plan BudgetBridge H2 off the serif scale (real, small)
+## - /search D12 0/5 is structural (client-only map app, no h1 without JS) - n8n follow-up
+## flow stays parked until he supplies Vapi IDs and a live test (OUTBOUND_FOLLOW_UP_LIVE
+## false) - blog batch 1 via the /blog loop.
 ##
-## -- ITEM 5: THE FOLLOW-UP FLOW IS BUILT AND OFF --------------------------------------
-## n8n workflow rzI7WIQhRKfrhJxH, verified active:false, triggerCount:0, never run, nobody called.
-## Website Lead -> Normalize -> May We Call Them? -> Vapi verify/book + "we will call" email, or
-## "email only" email. Vapi assistantId/phoneNumberId and the trigger wiring deliberately blank.
-## ORDER: fill the body, bind the credential, point the trigger, run once against his own test
-## lead, ACTIVATE, and only THEN flip OUTBOUND_FOLLOW_UP_LIVE in app/thank-you/page.tsx.
-## Full contract: docs/LEAD-FOLLOW-UP.md.
-##
-## -- ITEM 6: HOW TO RUN ROUND 38 ------------------------------------------------------
-## He asked for ONE FABLE ORCHESTRATOR + ONE OPUS BUILDER. One subagent at a time on this box -
-## the freeze is real. Orchestrator scopes, verifies and pushes; the builder builds and reports.
-## Subagents NEVER push and NEVER touch RLS/auth/CSP/security controls.
-## SHARED REPO: explicit pathspecs, never `git add -A`. ONE dev server on :3100.
-## AND THE LESSON THAT COST THE MOST TIME ACROSS ROUNDS 36-37: SIX instrument errors against ZERO
-## product defects found by those same probes. Never send a probe's stderr to /dev/null; prove a
-## NEGATIVE result the way you would prove a positive one; group form controls by r.form; do not
-## trust gates run against a dev server another session is editing; strip comments before matching
-## source; and when a probe shouts, CHECK THE PROBE FIRST.
-##
+## -- INSTRUMENT LESSONS THAT COST TIME THIS ROUND (both in memory INDEX-verify) -------
+## 1. A probe that WRITES INTO THE WATCHED TREE manufactures the 500s it then reports (the
+##    watcher recompiles between requests; mid-compile reads = "Unexpected end of JSON
+##    input"). Probes write to temp, copy in after. verify-lead-modal does this now.
+## 2. An inverted javaScriptEnabled flag faked a ten-page JS-off launch-blocker. Prove every
+##    environment toggle with a positive control before believing a sweeping negative.
+## 3. My own: running gates while still cd'd into the MEMORY repo scored the wrong tree
+##    (tsc exit 1, 0 unpushed commits). cd first, then gate.
+## ONE sold-loop runner only: the 08-21 process SURVIVES SESSIONS - check before starting
+## another (this round found two and killed the newcomer). Penalty stamp holds rate 1.4.
 ## == PREVIOUS HANDOFF 2026-08-22 (ROUND 37) ===============================================
 ## Full records: docs/parity/ROUND37-ORCHESTRATOR.md and docs/parity/DESIGN-ROUND37.md.
 ## Shape: Opus 5 orchestrating + ONE Fable 5 design subagent. All pushed and deployed.
