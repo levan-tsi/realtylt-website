@@ -22,7 +22,10 @@ const OWNED_MODALS = [
   "components/blog/ArticleToc.tsx",
   "components/blog/FlagshipToc.tsx",
   "components/idx/ListingGallery.tsx",
-  "components/leads/ListingLeadCTAs.tsx",
+  // Round 38: the shell the listing tour/offer sheets AND the /connect modal now share. It was
+  // a private `Sheet` inside ListingLeadCTAs until /connect needed the same thing; this list
+  // follows the contract, not the filename it used to live in.
+  "components/leads/LeadSheet.tsx",
   "components/leads/QualifyingWizard.tsx",
   "components/search/SaveSearchDialog.tsx",
   "components/services/ServiceToc.tsx",
@@ -83,7 +86,7 @@ describe("focus is handed back when a modal closes", () => {
     "components/search/SaveSearchDialog.tsx",
     "components/leads/QualifyingWizard.tsx",
     "components/idx/ListingGallery.tsx",
-    "components/leads/ListingLeadCTAs.tsx",
+    "components/leads/LeadSheet.tsx",
   ])("%s remembers the element it opened from", (file) => {
     expect(read(file)).toMatch(/document\.activeElement as HTMLElement \| null/);
   });

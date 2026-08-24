@@ -2,8 +2,8 @@
 
 import { PRESS } from "@/components/ui/Button";
 import { ConsentCheckbox } from "./ConsentCheckbox";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { LeadSheet } from "./LeadSheet";
+import { useEffect, useId, useRef, useState } from "react";
 import { SITE } from "@/lib/site";
 import {
   formatOffer,
@@ -262,95 +262,9 @@ function InlineTourCard({
   );
 }
 
-/** Shared bottom-sheet shell — focus trap, Esc, restore focus, body-scroll lock. */
-function Sheet({
-  titleId,
-  onClose,
-  wide = false,
-  children,
-}: {
-  titleId: string;
-  onClose: () => void;
-  /** Roomier panel for the offer sheet, whose two qualifying questions sit side by side. */
-  wide?: boolean;
-  children: React.ReactNode;
-}) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const restoreRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    restoreRef.current = document.activeElement as HTMLElement | null;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    panelRef.current?.querySelector<HTMLElement>("input,select,textarea,button")?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-      restoreRef.current?.focus?.();
-    };
-  }, []);
-
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.stopPropagation();
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab") return;
-      const f = panelRef.current?.querySelectorAll<HTMLElement>(
-        'a[href],button:not([disabled]),textarea,input:not([disabled]),select,[tabindex]:not([tabindex="-1"])',
-      );
-      if (!f || f.length === 0) return;
-      const first = f[0];
-      const last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    },
-    [onClose],
-  );
-
-  // Portal to <body> so the sheet escapes the sticky right-rail's stacking context — otherwise its
-  // z-index can't beat the photo lightbox (which is why "In Person Tour" from the gallery appeared
-  // BEHIND the photos). At <body> level, z-[1000001] correctly sits above the gallery's z-[1000000].
-  if (typeof document === "undefined") return null;
-  return createPortal(
-    <div
-      className="rlt-fade-in fixed inset-0 z-[1000001] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        onKeyDown={onKeyDown}
-        className={`rlt-pop-in relative max-h-[90vh] w-full overflow-y-auto rounded-2xl bg-paper text-ink shadow-float ${
-          wide ? "max-w-xl" : "max-w-md"
-        }`}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute right-2 top-2 z-10 grid h-11 w-11 place-items-center text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
-        </button>
-        {children}
-      </div>
-    </div>,
-    document.body,
-  );
-}
+/* The bottom-sheet shell that used to live here moved to ./LeadSheet in round 38, unchanged, so
+ * that /connect could open the same modal instead of growing a second one. See that file for the
+ * focus-trap / Escape / scroll-lock contract these two sheets rely on. */
 
 const fieldCls =
   "w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40";
@@ -451,7 +365,7 @@ function TourModal({
   }
 
   return (
-    <Sheet titleId={titleId} onClose={onClose}>
+    <LeadSheet titleId={titleId} onClose={onClose}>
       {state === "success" ? (
         <SuccessBody
           title="Tour requested."
@@ -531,7 +445,7 @@ function TourModal({
           </button>
         </form>
       )}
-    </Sheet>
+    </LeadSheet>
   );
 }
 
@@ -618,7 +532,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
   }
 
   return (
-    <Sheet titleId={titleId} onClose={onClose} wide>
+    <LeadSheet titleId={titleId} onClose={onClose} wide>
       {state === "success" ? (
         <SuccessBody
           title="Offer started."
@@ -705,6 +619,6 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           </p>
         </form>
       )}
-    </Sheet>
+    </LeadSheet>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { TrackedButton } from "@/components/leads/TrackedButton";
+import { ConnectFormModal } from "@/components/leads/ConnectFormModal";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -113,10 +114,18 @@ export default function ConnectPage() {
                 {SITE.address.postalCode}
               </p>
             </address>
+            {/* ROUND 38 — THE SECOND DOOR. This paragraph named the moment a visitor decides not
+                to use the booking grid and then handed them nothing to press: the page body's only
+                lead path was the Gmail iframe, and everything else was a phone number, an email
+                address and a scroll to the footer. The button opens the SAME modal the listing
+                pages use and the SAME LeadForm the footer runs, so the consent contract is the one
+                the owner decided rather than a second copy of it. The call/text line stays: this
+                is an additional way in, not a replacement for one. */}
             <p className="mt-6 max-w-[300px] border-t border-line pt-6 t-small text-stone">
               Would rather not pick a slot? Call or text and we&rsquo;ll find a time. Evenings and
               weekends included.
             </p>
+            <ConnectFormModal />
           </Reveal>
 
           <div>
