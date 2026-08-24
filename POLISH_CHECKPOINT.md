@@ -32,6 +32,35 @@
 ## 1100/1100, 88 files (baseline was 1070/85, only goes UP) - verify-lead-modal 111/111 -
 ## hero-contrast/focus-paint/press-feedback/reduced-motion PASS - 320 overflow 0 on 14 pages.
 ##
+## -- DAY 2 (2026-08-24): THE OWNER CAME BACK AND THE CHAIN RAN AGAIN ----------------
+## Five more commits, all verified by the orchestrator and pushed:
+## 1. /connect REDESIGNED to his spec: photo hero gone, "Call, email, or book a time.",
+##    portrait card + tel:/mailto: rows (68px, PRESS states), booking in the first screen
+##    at 1440 AND 390, fallbacks moved below the calendar. Score 59/60. The BookingFrame
+##    focus ring was intermittently broken (blur-vs-focusout timing) and is fixed + probed.
+## 2. County pages count ACTIVE only (Westchester 1,957=search, Dutchess 1,151=search);
+##    featured-home selection deliberately unscoped, 6 tests hold both sides.
+## 3. FAVICON: app/icon.png + app/apple-icon.png from his B18 logo (the square RT mark).
+## 4. GOOGLE SIGN-IN IS LIVE END TO END: he pasted the client into Supabase; the
+##    orchestrator finished branding, PUBLISHED the OAuth app to production, and turned
+##    "Allow new users to sign up" ON (measured: google:true, disable_signup:false). The
+##    site's button opens Google's chooser on production. HIS first sign-in still pending.
+##    CAVEAT: email+password signups ride the built-in mailer until SMTP exists. SMTP
+##    stays on the before-launch list. OAuth client lives in HIS Google Cloud project
+##    astute-zephyr-410321 (account ltsiklauri95@gmail.com), app name RealtyLT.
+## 5. BILLING ANSWERED: the overage is Storage (192.49/100 GB, the photo mirror),
+##    $0.0213/GB => ~$1.97/mo now, ~$5-7/mo when the sold backfill completes. The fix is
+##    the org's "Disable spend cap" button -- HIS click (authorizes charges); otherwise
+##    restriction lands 22 Sep. Sold backfill measured ~30% of the 12-month cohort, one
+##    runner live, weeks of night windows remain by design.
+## FINAL SWEEP (fresh agent, adversarial, 22 routes): ZERO product defects; 172/172
+## links, JS-off 22/22, overflow 0 at 320/390, consent manually re-proven on all three
+## modals, gates all exit 0, tests 1106/89. Its one overreach (recoloring the porchlight
+## phone-icon accent as "Tailwind drift") was caught by the repo's own parity records and
+## reverted -- that accent is the OWNER'S choice; do not "fix" it again.
+## STILL OPEN AFTER DAY 2: his spend-cap click - his first Google sign-in - SMTP -
+## megamenu DUTCHESS ring 2.85:1 (needs its own cross-page pass) - /plan BudgetBridge h2
+## - blog slider hit-areas (the /blog loop owns it) - /search third-party static-map img.
 ## -- OWNER-URGENT, FOUND ON HIS OWN DASHBOARDS (ACCOUNTS-RECON-R38.md) ----------------
 ## 1. The RealtyLT Pro Supabase org EXCEEDED ITS QUOTA; projects restricted from 22 Sep 2026
 ##    if still over; grace period started 2026-08-23. Billing decision, his.
