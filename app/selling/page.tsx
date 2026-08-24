@@ -323,7 +323,11 @@ export default async function SellingPage() {
 
               <div className="mt-7 border-t border-line pt-5">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Suggested list price</p>
-                <p className="mt-1 text-2xl font-bold text-ink md:text-[28px]">$465,000 - $510,000</p>
+                {/* text-2xl flat. md:text-[28px] was an arbitrary one-off - 28px is a step nothing else on
+                    this site uses - and it read as a third off-scale heading size on this page beside
+                    the 20px card titles. At 24px it lands on a size the page already sets, and the
+                    figure loses nothing: it is still the largest thing in its own card. */}
+                <p className="mt-1 text-2xl font-bold text-ink">$465,000 - $510,000</p>
                 <p className="t-fine mt-1 text-stone">Illustrative range from a 15-comparable analysis.</p>
               </div>
             </figure>
