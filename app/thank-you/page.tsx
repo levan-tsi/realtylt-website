@@ -67,26 +67,53 @@ export default function ThankYouPage() {
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="ty-heading">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element -- one static art-directed hero */}
+          {/* ROUND 38 — THE PHOTOGRAPH THE OWNER ASKED TO HAVE CHANGED.
+              It was millerton-night.jpg, and he was right about it: a night street with power
+              lines crossing the frame at three angles, two blown streetlamp flares (one of them
+              directly behind the headline), parked cars filling the foreground and a heavy
+              brown-orange sodium cast. Nothing in it says "you are in good hands".
+
+              It was also off-system twice over. Every other hero on this site is GRAYSCALE
+              (/buying, /financing, /selling all carry `grayscale`), and the black-and-white
+              treatment with the ink/paper palette is the thing the design review keeps naming as
+              what already reads well here. The night shot was the one full-colour hero, and the
+              colour it brought was orange.
+
+              WHAT REPLACED IT, and the honest limit of the choice: the brief asked for arrival —
+              warm, calm, residential. There is no residential arrival photograph in the licensed
+              library. Round 36 left three candidates on disk; breakneck-south is reserved for the
+              home hero, bear-mountain is a suspension bridge over a rail line (infrastructure,
+              not a home), and this one — the valley from Olana — is the only unreserved frame
+              that is calm, has no wires, no cars and no flares, and still reads through the
+              scrims this page already tunes. Rendered at 1440 and 390 against the other two
+              before choosing; the frames are in docs/design-r38/thankyou-cand-*.
+              A genuinely residential arrival image would have to be licensed new, and that is the
+              owner's call rather than something to fake with a worse fit.
+
+              object-center at both widths now: the 26% offset existed only to find the lit
+              shopfront in the old frame, and this photograph's subject is its centre. */}
           <img
-            src="/images/hero/millerton-night.jpg"
+            src="/images/hero/hudson-olana.jpg"
             alt=""
             fetchPriority="high"
             decoding="async"
-            // A phone crops this 3:2 frame to a ~1:2 column, and object-center serves it the
-            // emptiest slice of the photograph: bare street, a streetlamp flare, no lit
-            // windows. 26% from the left is the string-lit shopfront block — the actual
-            // subject. Desktop keeps the centred street receding into the hills.
-            className="absolute inset-0 h-full w-full object-cover object-[26%_50%] md:object-center"
+            className="absolute inset-0 h-full w-full object-cover object-center grayscale"
           />
           {/* Scrims, graded per viewport. Round 36 measured the phone rendering as "a dark
               brown smear": three scrims tuned on a 1440 frame were stacking on a 390 crop that
-              is mostly shopfront, and the photograph stopped reading as a street. On a phone
-              the wash drops to /30 so the windows actually glow, and the left vignette (which
-              exists to hold a dark column under DESKTOP copy while the right of the frame
-              stays open) switches off entirely — at 390 it was covering the whole image. The
-              bottom gradient is the one carrying the type, so it stays at full strength
-              everywhere; scripts/verify-hero-contrast.mjs measures the result from pixels. */}
-          <div aria-hidden className="absolute inset-0 bg-ink/30 md:bg-ink/55" />
+              is mostly shopfront, and the photograph stopped reading as a street. The left
+              vignette (which exists to hold a dark column under DESKTOP copy while the right of
+              the frame stays open) switches off entirely below md — at 390 it was covering the
+              whole image. The bottom gradient is the one carrying the type, so it stays at full
+              strength everywhere; scripts/verify-hero-contrast.mjs measures the result in pixels.
+
+              ROUND 38: the phone wash went /30 -> /42 WITH THE PHOTOGRAPH, not instead of it.
+              The /30 existed for one reason, written down above — to let the night shot's lit
+              shopfront windows glow through — and that photograph is gone. What replaced it is a
+              bright overcast sky, and the gate measured the consequence immediately: the
+              "Request received" eyebrow fell to 4.35:1 at 320x800 against a 4.5 floor. This is
+              the number that fixes it, re-measured rather than guessed. */}
+          <div aria-hidden className="absolute inset-0 bg-ink/42 md:bg-ink/55" />
           {/* On a phone the content block's TOP sits at mid-viewport, so a gradient that only
               climbs 78% of the frame leaves the eyebrow on nearly bare photograph — measured
               at 2.50:1 over the lit shopfronts at 320. Full-height with a /55 midpoint keeps
@@ -227,7 +254,7 @@ export default function ThankYouPage() {
             </Reveal>
           </div>
 
-          <p className="mt-12 text-sm text-stone">
+          <p className="t-small mt-12 text-stone">
             Sent this by mistake, or need something sooner? Call{" "}
             <a
               href={SITE.phoneHref}
