@@ -87,7 +87,17 @@ export function CardPhotos({
           >
             {i + 1} / {n}
           </span>
-          <span className="sr-only" aria-live="polite">
+          {/* NOT a live region, and that is the fix.
+              /search mounts 145 of these cards, so `aria-live="polite"` here made 145 live
+              regions on one page; a listing detail's similar-homes rail made three, and a screen
+              reader read out "Photo 1 of 28" and "Photo 1 of 50" about two different houses with
+              nothing to say which was which. A live region is a promise that what it announces is
+              what just changed on the page, and 145 of them cannot keep it — the announcements
+              queue behind each other and the one the visitor actually caused is buried.
+              The ONE gallery that owns the page owns the announcement (ListingGallery), and these
+              stay as plain sr-only text, which is what a screen reader reads when the visitor
+              browses to the card or tabs into its arrows. */}
+          <span className="sr-only">
             Photo {i + 1} of {n}
           </span>
         </>

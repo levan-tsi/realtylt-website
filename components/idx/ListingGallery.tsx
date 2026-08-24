@@ -239,10 +239,19 @@ function Lightbox({
           {tabBtn("map", "Map View")}
         </div>
         <div className="flex items-center gap-3">
+          {/* THE PAGE'S ONE PHOTO LIVE REGION. The search cards' pagers gave theirs up in round
+              38 so this one means something: when it speaks, it is about the gallery the visitor
+              is looking at. The visible mark stays "3 / 44" because that is what a counter looks
+              like; the announcement is a sentence, because "3 slash 44" is not one. */}
           {tab === "photos" && (
-            <span className="font-mono text-sm tabular-nums text-paper/80" aria-live="polite">
-              {index + 1} / {count}
-            </span>
+            <>
+              <span aria-hidden className="font-mono text-sm tabular-nums text-paper/80">
+                {index + 1} / {count}
+              </span>
+              <span className="sr-only" aria-live="polite">
+                Photo {index + 1} of {count}
+              </span>
+            </>
           )}
           <button
             ref={closeRef}
