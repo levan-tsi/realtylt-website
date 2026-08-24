@@ -1,6 +1,6 @@
 "use client";
 
-import { ConsentChoice } from "./ConsentChoice";
+import { ConsentCheckbox } from "./ConsentCheckbox";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -105,6 +105,10 @@ export function LeadForm({
   const { openWizard } = useQualifyingWizard();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
+  // The consent box is required by the owner's decision, and refusing must be VISIBLE.
+  // Native `required` produced no message, no scroll and no lead on the footer form —
+  // "when I filled it up nothing happened", reproduced on production 2026-08-23.
+  const [consentInvalid, setConsentInvalid] = useState(false);
   const successRef = useRef<HTMLDivElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
 
@@ -132,6 +136,22 @@ export function LeadForm({
     e.preventDefault();
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+
+    // CONSENT IS REQUIRED AND ITS REFUSAL IS LOUD. Checked here rather than by the `required`
+    // attribute so the visitor gets the same styled, focusable, screen-reader-announced error
+    // every other failure on this form gets, in the same place, instead of a native bubble that
+    // can render off-screen or not at all.
+    if (data.consentToContact !== "true") {
+      setConsentInvalid(true);
+      setStatus("error");
+      setError("Please tick the box above so we can call or text you about your request.");
+      const box = form.querySelector<HTMLInputElement>("[data-consent-input]");
+      box?.scrollIntoView({ block: "center", behavior: "smooth" });
+      box?.focus();
+      return;
+    }
+    setConsentInvalid(false);
+
     setStatus("submitting");
     setError("");
     try {
@@ -292,7 +312,7 @@ export function LeadForm({
 
       {/* Permission to call or text. Sits directly under the fields and above the submit, so
           it is read as part of agreeing rather than as small print after the fact. */}
-      <ConsentChoice dark={dark} />
+      <ConsentCheckbox dark={dark} invalid={consentInvalid} />
 
       {status === "error" && (
         <p

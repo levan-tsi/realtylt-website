@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 import { parseLead } from "./index";
 import {
   buildConsent,
-  CONSENT_DECLINE_LABEL,
   CONSENT_DISCLOSURE,
   CONSENT_LABEL,
   CONSENT_TEXT,
@@ -112,9 +111,9 @@ describe("consent — every form that takes a phone number actually asks", () =>
    * explicitly named fields, so the field was silently dropped on the way to the server: the
    * box ticked, the lead sent, and no consent recorded anywhere. Caught once; guarded now. */
   it.each(["components/leads/LeadForm.tsx", "components/leads/ListingLeadCTAs.tsx"])(
-    "%s renders the consent choice",
+    "%s renders the consent box",
     (file) => {
-      expect(read(file)).toContain("<ConsentChoice");
+      expect(read(file)).toContain("<ConsentCheckbox");
     },
   );
 
@@ -132,59 +131,60 @@ describe("consent — every form that takes a phone number actually asks", () =>
     expect(read("components/leads/LeadForm.tsx")).toMatch(/\.\.\.data,/);
   });
 
-  /** THE ASK IS UNSKIPPABLE, AND DECLINING IS FREE. Those two have to hold together.
+  /** THE BOX IS REQUIRED, AND REFUSING IT MUST BE LOUD.
    *
-   * The owner asked (2026-08-22) for a required box because the form was submitting with the
-   * question untouched. A required box would be a forced yes, and a forced yes is not prior
-   * express written consent — it is a stored string that proves nothing while authorising real
-   * automated calls. So the question became a two-option choice that must be answered, where
-   * BOTH answers submit.
+   * The owner decided this twice (2026-08-22, then again on 2026-08-23 after seeing the
+   * two-option version): one tickable box, mandatory, no decline option. The argument against
+   * lives in components/leads/ConsentCheckbox.tsx and lib/leads/consent.ts and is not re-run here.
    *
-   * The dangerous regression is not someone deleting `required`. It is someone deleting the
-   * DECLINE option and leaving a single required radio, which reads like a tidy-up and is a
-   * forced yes. That is what the count below exists to catch.
+   * WHAT THESE GUARD IS THE BUG HE ACTUALLY HIT. The first mandatory version used the browser's
+   * native `required`, and on the footer form that produced no message, no scroll and no posted
+   * lead: "when I filled it up nothing happened." Reproduced on production. So the rule is now
+   * inverted from what you would expect — the input must NOT carry `required`, because the FORM
+   * owns the check and renders a visible error. Putting `required` back would silently restore
+   * the exact failure he reported.
    *
-   * Comments are stripped before matching: the doc comment above the component explains why a
-   * required box would be wrong, and a naive substring match reads that explanation as the
-   * violation. This test learned that the hard way once already. */
+   * Comments are stripped before matching: the doc comment above the component explains the
+   * history, and a naive substring match reads the explanation as the violation. */
   const consentSrc = () =>
-    read("components/leads/ConsentChoice.tsx")
+    read("components/leads/ConsentCheckbox.tsx")
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/^\s*\/\/.*$/gm, "");
 
-  it("never pre-selects an answer", () => {
+  it("is one tickable box, never pre-ticked", () => {
     const src = consentSrc();
-    expect(src).not.toMatch(/\bdefaultChecked\b/);
-    expect(src).not.toMatch(/\bchecked[=\s]/);
+    expect((src.match(/type="checkbox"/g) ?? []).length).toBe(1);
+    expect((src.match(/name="consentToContact"/g) ?? []).length).toBe(1);
+    expect(src).not.toMatch(/defaultChecked/);
+    expect(src).not.toMatch(/checked[=\s]/);
   });
 
-  it("offers exactly two answers, so declining is a real option and not an omission", () => {
-    const src = consentSrc();
-    const yes = (src.match(/value="true"/g) ?? []).length;
-    const no = (src.match(/value="false"/g) ?? []).length;
-    expect(yes, "the agree option").toBe(1);
-    expect(no, "the decline option — without it, a required group is a forced yes").toBe(1);
-    expect((src.match(/name="consentToContact"/g) ?? []).length).toBe(2);
+  it("does NOT use the native required attribute, because that failure was silent", () => {
+    expect(
+      consentSrc(),
+      "native `required` gave no message, no scroll and no lead on the footer form; the form must own this check",
+    ).not.toMatch(/required/);
   });
 
-  it("requires an answer, so the question cannot be scrolled past", () => {
-    const src = consentSrc();
-    // Both members of a radio group carry `required`; the browser then demands one of them.
-    expect((src.match(/\brequired\b/g) ?? []).length).toBe(2);
+  it("the form refuses to submit without it, and says so where a person will see it", () => {
+    const form = read("components/leads/LeadForm.tsx");
+    expect(form).toContain('data.consentToContact !== "true"');
+    // The refusal has to reach the same visible error channel every other failure uses.
+    expect(form).toMatch(/setStatus\("error"\)/);
+    expect(form).toMatch(/setError\("Please tick the box/);
+    // ...and put the visitor next to the control that stopped them.
+    expect(form).toContain("[data-consent-input]");
+    expect(form).toMatch(/scrollIntoView/);
   });
 
-  it("declining is stored as an explicit refusal, not as an absence", () => {
-    const c = lead({ phone: "917-555-0142", consentToContact: "false" }).consent;
+  it("the box carries a hook the form can find it by", () => {
+    expect(consentSrc()).toContain("data-consent-input");
+  });
+
+  it("an unticked box is still stored as an explicit refusal, not as an absence", () => {
+    const c = lead({ phone: "917-555-0142" }).consent;
     expect(c).toBeDefined();
     expect(c?.granted).toBe(false);
     expect(c?.text).toBe(CONSENT_TEXT);
-  });
-
-  /** The decline label has to read as a genuine, unpunished choice. If it ever becomes a
-   * discouraging sentence, the yes beside it stops being freely given. */
-  it("the decline option is plain and carries no penalty language", () => {
-    expect(CONSENT_DECLINE_LABEL.length).toBeLessThanOrEqual(60);
-    expect(CONSENT_DECLINE_LABEL.toLowerCase()).not.toMatch(/unable|cannot help|won't be able|slower|delay/);
-    expect(CONSENT_DECLINE_LABEL).not.toMatch(/[—–]/);
   });
 });

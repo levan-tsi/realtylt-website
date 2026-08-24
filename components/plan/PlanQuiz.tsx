@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ConsentChoice } from "@/components/leads/ConsentChoice";
+import { ConsentCheckbox } from "@/components/leads/ConsentCheckbox";
 import {
   CEILING_ASSUMPTIONS,
   MONTHLY_OPTIONS,
@@ -750,7 +750,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
       </div>
       <input type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       <div className="mt-3">
-        <ConsentChoice />
+        <ConsentCheckbox />
       </div>
       <div className="mt-4 flex items-center gap-4">
         <button

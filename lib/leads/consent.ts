@@ -22,11 +22,24 @@
  *   keeps telling its members cold calling is still prohibited. Penalties run to $20,000 per
  *   call, each call a separate violation. Consent is precisely what makes a call solicited.
  *
- * TWO TIERS, DELIBERATELY. Filling in a form asking us about a house is itself a request to be
- * contacted about that house. Agreeing to automated calls and marketing texts is a different
- * thing, so it is a separate, optional, never-pre-ticked box. The form must submit perfectly
- * well without it — PEWC requires that agreeing is not a condition, and a checkbox you cannot
- * decline is not consent.
+ * THE BOX IS MANDATORY, BY THE OWNER'S DECISION (2026-08-22, restated 2026-08-23). This section
+ * used to say the opposite, and the change is recorded rather than quietly rewritten.
+ *
+ * What it said before: agreeing must not be a condition, so the box is optional and the form
+ * submits without it. That is what point (b) above asks for, and it is why the earlier design
+ * offered a decline option.
+ *
+ * What he decided, after being shown that argument twice: "no send me email instead has to be
+ * removed, only yes text and call me option check box which is must." His stated reason is the
+ * one this file was built to serve — the CRM's dialer and AI caller are pointed at these numbers
+ * and a lead without permission is a lead he cannot work.
+ *
+ * SO READ THE RECORDS ACCORDINGLY. Every `granted: true` stored from this date carries the fact
+ * that ticking was required to submit, which is exactly the circumstance (b) warns about. The
+ * disclosure below still says "never required" because removing that sentence would fail the
+ * PEWC wording test outright; that tension is real and it is his to carry, not something a later
+ * round should "fix" by re-opening the decision. If the exposure ever matters, the fix is to
+ * restore an equal, unpunished decline option, not to reword the disclosure.
  */
 
 /** Bump when the wording changes. Stored on every lead so a record can be read back years
@@ -35,22 +48,6 @@ export const CONSENT_VERSION = "2026-08-03.v2";
 
 /** The clickable line. Plain, warm, and about THEIR request rather than our marketing. */
 export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
-
-/**
- * The other answer, and it has to exist.
- *
- * 2026-08-22: the owner reported that the form submits without the box being touched, and asked
- * for it to be required. A REQUIRED box is not consent at all — PEWC is invalid the moment
- * agreeing becomes a condition — so the box did not become required. It became UNSKIPPABLE
- * instead: two options, neither pre-selected, both submit, and the form will not go until one is
- * chosen. That gets him what he was actually after (an explicit answer on every lead, so the
- * dialer and the AI caller know where they stand) without turning the stored consent into a
- * record that proves nothing.
- *
- * Declining has to be a real, equal, unpunished choice, or the yes beside it is worth nothing.
- * It also has to be honest about what still happens: they asked us a question, so we answer it.
- */
-export const CONSENT_DECLINE_LABEL = "No thanks. Email me instead.";
 
 /**
  * The fine print. Deliberately short, and the owner asked for it to be as unintimidating as it
