@@ -66,6 +66,25 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
   const result = await getIdxClient().search({ county: areaSlug, pageSize: 6 });
   const fixture = isSampleData();
 
+  /** THE NUMBER PRINTED HERE MUST BE THE NUMBER THE VISITOR LANDS ON.
+   *
+   * `result.total` counts every on-market status the table holds for this area — Active, Coming
+   * Soon, Pending and Under Contract — because `search()` only narrows by status when it is
+   * asked to. Both places this page printed it lead to `/search?county=<slug>`, and /search
+   * defaults to `quick=active` (lib/idx/query.ts, the owner's call on 2026-08-06: 41% of the
+   * default scope was Pending and nothing on the page said so). Measured on 2026-08-24 against
+   * this dev server: Westchester's hero promised 3,989 "homes on market here" and the page it
+   * opens showed 1,954; Dutchess promised 1,708 and showed 1,150. Same class of defect as the
+   * suggest dropdown's "128 homes / 116 shown", fixed the same way.
+   *
+   * Scoped for the DISPLAYED COUNT ONLY. `result` still drives which six homes are featured
+   * below and the empty state, exactly as before — the owner's carried note was explicit that
+   * the selection must not move, only the number. One extra count query per ISR revalidation
+   * (600s), against our own replicated table; nothing here ever reaches MLS Grid.
+   */
+  const onMarket = (await getIdxClient().search({ county: areaSlug, status: "Active", pageSize: 1 }))
+    .total;
+
   // Median: counties carry a curated figure; boroughs compute a REAL median from the active
   // DB set (same slim-rows + computeMarketStats pattern the market-report API uses).
   let medianPrice = c?.medianPrice ?? 0;
@@ -110,7 +129,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
               <dt className="text-xs font-bold uppercase tracking-[0.18em] text-paper/60">
                 {b ? "Homes on market" : "Homes on market here"}
               </dt>
-              <dd className="mt-1 text-2xl font-bold text-paper">{result.total.toLocaleString("en-US")}</dd>
+              <dd className="mt-1 text-2xl font-bold text-paper">{onMarket.toLocaleString("en-US")}</dd>
             </div>
           </dl>
         </div>
@@ -207,7 +226,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
           )}
           <div className="mt-8 text-center">
             <Button href={`/search?county=${areaSlug}`} variant="outline">
-              See All {result.total.toLocaleString("en-US")} Listings
+              See All {onMarket.toLocaleString("en-US")} Listings
             </Button>
           </div>
           <MlsAttribution dataLastUpdated={result.dataLastUpdated} fixtureMode={fixture} className="mt-8" />
