@@ -23,7 +23,8 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: "Sell Your Home | 24-Hour Cash Offer or Listing",
   description:
-    "See your home's cash value vs market list price. Get a guaranteed cash offer in 24 hours, or list with RealtyLT for maximum profit. You compare, you decide.",
+    // Tracks the subhead: "for maximum profit" came out of the page, so it comes out of here too.
+    "See your home's cash value vs market list price. Get a guaranteed cash offer in 24 hours, or list with RealtyLT. You see both numbers and decide.",
 };
 
 // Live's exact 6-item checklists + "perfect if" lists, in live's order (source verbatim).
@@ -102,9 +103,12 @@ export default async function SellingPage() {
               See Your Home&rsquo;s <strong>Cash Value</strong> vs{" "}
               <strong>Market List Price</strong>
             </h1>
+            {/* "for maximum profit" was a promise nobody can keep and the page does not try to
+                keep it anywhere below the fold — what it actually delivers is the two numbers
+                side by side, which is what this now says. */}
             <p className="mt-5 max-w-xl text-lg text-paper/85">
-              Get a guaranteed fair cash offer in 24 hours, or list with us for maximum profit. You
-              compare, you decide.
+              A guaranteed cash offer in 24 hours, or a full listing. You see both numbers and
+              decide.
             </p>
             {/* Trust bar: the Google wordmark image (self-hosted) + gold 5.0 stars, then
                 Fast Response / Free Consultation behind faint dividers (live parity). */}
@@ -127,8 +131,14 @@ export default async function SellingPage() {
                 translucency over a photograph measured 4.32:1 at 320 against a 4.5 floor. The
                 twin line on /buying carries the same words in the same role and moved with it,
                 so the two cannot drift into different answers to one question. */}
+            {/* ROUND 38: this line and its /buying twin moved together, exactly as the note above
+                requires. "No obligation • Zero pressure • Honest advice" was the third promise of
+                the same thing in this column — "Free Consultation" sits two lines above it and the
+                form closes on "Takes less than 60 seconds" — and "honest advice" is the kind of
+                claim a visitor cannot check. Seven-day availability is a fact, and it is the one
+                both heroes now carry. */}
             <p className="mt-4 text-xs tracking-wide text-paper/80">
-              No obligation • Zero pressure • Honest advice
+              Available seven days a week
             </p>
             {/* Ghost phone pill with the accent-blue phone icon; fires a gtag Phone click and
                 gently pulses on mobile (motion-safe) where calling is the primary action. */}
@@ -263,7 +273,7 @@ export default async function SellingPage() {
             <SectionHeading dark as="h2">
               <span id="pricing-heading">Our <strong className="font-bold">Pricing Strategy</strong></span>
             </SectionHeading>
-            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
+            <p className="t-lead mt-4 max-w-lg text-paper">
               We use the most accurate method to price your home
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
@@ -272,7 +282,7 @@ export default async function SellingPage() {
               active, five pending, five sold) so your home hits the market at the number that
               sells, and you get the price you deserve.
             </p>
-            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
+            <p className="t-lead mt-4 max-w-lg text-paper">
               Want to know what your home is worth?
             </p>
             <div className="mt-7">
@@ -314,7 +324,7 @@ export default async function SellingPage() {
               <div className="mt-7 border-t border-line pt-5">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone">Suggested list price</p>
                 <p className="mt-1 text-2xl font-bold text-ink md:text-[28px]">$465,000 - $510,000</p>
-                <p className="mt-1 text-xs text-stone">Illustrative range from a 15-comparable analysis of your home.</p>
+                <p className="t-fine mt-1 text-stone">Illustrative range from a 15-comparable analysis.</p>
               </div>
             </figure>
           </Reveal>
@@ -337,7 +347,7 @@ export default async function SellingPage() {
             <SectionHeading as="h2">
               <span id="shine-heading">Making Your Listing <strong className="font-bold">Shine</strong></span>
             </SectionHeading>
-            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+            <p className="t-lead mt-4 max-w-lg text-ink-soft">
               Photographs, virtual tours, 3D walkthroughs and videos
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
@@ -386,7 +396,7 @@ export default async function SellingPage() {
             <SectionHeading as="h2">
               <span id="marketing-heading">Innovative <strong className="font-bold">Internet Marketing</strong></span>
             </SectionHeading>
-            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+            <p className="t-lead mt-4 max-w-lg text-ink-soft">
               We know how to reach the 92% of buyers who search online
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
@@ -416,7 +426,7 @@ export default async function SellingPage() {
             <SectionHeading dark as="h2">
               <span id="loop-heading">Stay in the Loop, <strong className="font-bold">Every Step of the Way</strong></span>
             </SectionHeading>
-            <p className="mt-4 max-w-lg text-sm font-bold uppercase tracking-[0.12em] text-paper">
+            <p className="t-lead mt-4 max-w-lg text-paper">
               Real-time updates until your home is sold
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
@@ -429,7 +439,7 @@ export default async function SellingPage() {
               <ScrollToFormButton variant="light">Get Your Free Cash Offer &amp; Analysis</ScrollToFormButton>
             </div>
             <p className="mt-3 text-xs tracking-wide text-paper/60">
-              Takes less than 60 seconds · No obligation
+              Takes under a minute. No obligation.
             </p>
           </Reveal>
           <Reveal delay={150}>
@@ -522,7 +532,7 @@ function PathCard({
         </ul>
         <div className="mt-6 border-t border-line pt-5">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone">{fitsLabel}</p>
-          <p className="mt-2 text-sm leading-relaxed text-stone">{fits.join(" • ")}</p>
+          <p className="t-small mt-2 text-stone">{fits.join(" • ")}</p>
         </div>
         <div className="mt-auto pt-7">
           <ScrollToFormButton variant="outline">{cta}</ScrollToFormButton>

@@ -16,7 +16,9 @@ import { SITE } from "@/lib/site";
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Buying | Ready to Find Your Dream Home?",
+  // Tracks the H1. A page title that promises a different headline than the page shows is the
+  // kind of small mismatch that costs trust in a search result.
+  title: "Buying | We find the home, we negotiate the price",
   description:
     "Free buyer consultation with our Hudson Valley specialists: home search, listing alerts, tours, offers, and closing. Buyers never pay a cent to work with us.",
 };
@@ -59,16 +61,28 @@ export default async function BuyingPage() {
               sky through the trees sitting directly behind centred type. 56% clears both. */}
           <div className="absolute inset-0 bg-black/56" />
         </div>
-        <div className="relative mx-auto max-w-[1250px] px-4 py-28 text-center md:py-[154px] lg:px-8">
+        {/* ROUND 38 — THE HERO NOW OWNS THE FIRST SCREEN. It used to stop 187px short of a
+            900px fold, which put the next section's 44px heading and two paragraphs inside the
+            first impression: the rubric read the largest-to-second ratio as 1.27 (floor 1.35)
+            and counted 136 words above the fold (ceiling 90) because it was measuring two
+            sections at once. min-h is expressed against the viewport rather than as a fixed
+            pixel height so the hero still owns the fold on a 1080px screen, where a fixed
+            number would let the same heading back in. The 780px floor keeps it from collapsing
+            on a short laptop. Home's hero states its height the same way (app/page.tsx). */}
+        <div className="relative mx-auto flex min-h-[max(560px,78svh)] max-w-[1250px] flex-col justify-center px-4 py-24 text-center md:min-h-[max(780px,calc(100svh-7rem))] lg:px-8">
+          {/* The headline is a plain statement of what we do, not a title-case question. It
+              says the two halves of the job in the order they happen, which is also what the
+              subhead and the two CTAs are about. */}
           <h1 id="buying-hero" className="t-h1 mx-auto max-w-3xl text-paper">
-            Ready to Find Your Dream Home?
+            We find the home. <strong className="font-bold">We negotiate the price.</strong>
           </h1>
-          <p className="mt-4 text-base font-bold uppercase tracking-[0.12em] text-paper md:text-lg">
-            Get a free consultation with our buyer specialists
-          </p>
-          <p className="mx-auto mt-4 max-w-xl text-paper/85">
-            We&rsquo;ll help you navigate the market, find homes that match your criteria, and
-            negotiate on your behalf. No pressure and no obligation.
+          {/* The shouted line that used to sit here ("GET A FREE CONSULTATION WITH OUR BUYER
+              SPECIALISTS") is gone. A 49-character sentence set in bold uppercase at 0.12em is
+              a label's styling worn by a sales line; the offer it made survives verbatim on the
+              CTA beside it, so nothing was lost but the shouting. */}
+          <p className="mx-auto mt-5 max-w-xl text-paper/85">
+            Homes that match what you asked for, and a straight answer on what each one is
+            actually worth.
           </p>
           {/* Live: phone icon in the owner's accent blue (#3b82f6); both CTAs fire a gtag
               click (categories Phone / Booking). Mobile: buttons stack full-width (max 350px)
@@ -103,9 +117,15 @@ export default async function BuyingPage() {
           {/* /80 to match /selling's twin line. This one measured ABOVE the floor at every width
               — its photograph is simply darker behind the text — but two identical reassurance
               lines answering to different alphas is how the next photo swap becomes a silent AA
-              failure on whichever page nobody re-measured. */}
-          <p className="mt-5 text-xs tracking-wide text-paper/80">
-            Available 7 days a week • Fast response • No obligation
+              failure on whichever page nobody re-measured.
+              ROUND 38: shortened from "Available 7 days a week • Fast response • No obligation".
+              That was the FOURTH promise of the same thing in one hero — after the old caps
+              line's "free consultation", the subhead's "No pressure and no obligation" and the
+              CTA's own "Book Free Consultation" — and the page closes on a fifth ("No cost to
+              buyers · Ever"). Seven-day availability is the one fact in it that is not said
+              anywhere else in the hero, so that is the part that stayed. */}
+          <p className="mt-6 text-xs tracking-wide text-paper/80">
+            Available seven days a week
           </p>
         </div>
       </section>
@@ -123,11 +143,14 @@ export default async function BuyingPage() {
             {/* 16px body, not text-[17px] (round 36, move 8): 17px is not a step on this
                 site's scale — the same drift the home seller block shed a round ago. */}
             <div className="max-w-[62ch] space-y-5 leading-[1.75] text-stone">
+              {/* ROUND 38 voice pass. "an army of experts" was the one piece of hype left on this
+                  page, and the exclamation mark and "the perfect property for your unique
+                  circumstances" were doing the same job more quietly. What replaced them says
+                  something a visitor can check: who we bring in, and when. */}
               <p>
-                Buying a home is a big step! Whether you&rsquo;re buying your first home, your
-                dream home, or your tenth investment property, yours will be a big investment. We
-                know how important this is to you, and we have an army of experts to make sure we
-                find the perfect property for your unique circumstances.
+                Buying a home is a big commitment, whether it is your first or your tenth. We
+                work the search with you, tell you what a house is worth before you offer on it,
+                and bring in the inspector, attorney and lender the job needs.
               </p>
               <p>
                 Finding the perfect property is just one way we can help you with your real estate
@@ -150,10 +173,10 @@ export default async function BuyingPage() {
           <Reveal>
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
-                <h3 className="text-3xl font-light md:text-4xl">
+                <h3 className="t-h2">
                   Start Your <strong className="font-bold">Home Search</strong>
                 </h3>
-                <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
+                <p className="t-lead mt-3 text-paper">
                   Search for homes wherever you are
                 </p>
                 <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
@@ -175,7 +198,7 @@ export default async function BuyingPage() {
           <Reveal>
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
-                <h3 className="text-3xl font-light md:text-4xl">
+                <h3 className="t-h2">
                   Get <strong className="font-bold">Listing Alerts</strong>
                 </h3>
                 {/* The claim this block used to make was "delivered straight to your inbox the
@@ -186,7 +209,7 @@ export default async function BuyingPage() {
                     ask us on /saved, which posts the searches (label, query and validated
                     criteria) to the CRM for a person to set up. So the copy describes THAT, in
                     the order the visitor does it, and drops the word "moment". */}
-                <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
+                <p className="t-lead mt-3 text-paper">
                   Tell us what to watch for and we will watch it
                 </p>
                 {/* "your saved searches" is the link, not a second button. The copy describes a
@@ -235,10 +258,10 @@ export default async function BuyingPage() {
                 <polygon points="38,14 62,14 86,38 86,62 62,86 38,86 14,62 14,38" />
               </svg>
               <div className="relative">
-                <h3 id="save-heading" className="text-3xl font-light text-ink md:text-4xl">
+                <h3 id="save-heading" className="t-h2 text-ink">
                   Save and <strong className="font-bold">See Listings</strong>
                 </h3>
-                <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+                <p className="t-lead mt-3 text-ink-soft">
                   Favorite properties and tour homes
                 </p>
                 <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -265,10 +288,10 @@ export default async function BuyingPage() {
           <Reveal>
             <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
               <div>
-                <h3 id="close-heading" className="text-3xl font-light md:text-4xl">
+                <h3 id="close-heading" className="t-h2">
                   Making An <strong className="font-bold">Offer And Closing</strong>
                 </h3>
-                <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
+                <p className="t-lead mt-3 text-paper">
                   We&rsquo;re with you till the end
                 </p>
                 <p className="mt-4 max-w-xl leading-relaxed text-paper/75">

@@ -8,7 +8,8 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { MortgageCalculator } from "@/components/financing/MortgageCalculator";
 
 export const metadata: Metadata = {
-  title: "Financing | The Home Loan Process, Demystified",
+  // Tracks the H1, same as /buying.
+  title: "Financing | Know what the loan costs before you sign it",
   description:
     "Understand the home loan process from pre-approval to closing, estimate your monthly payment with our calculator, and connect with trusted local lenders.",
 };
@@ -31,10 +32,27 @@ export default function FinancingPage() {
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
-        <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-[192px] lg:px-8">
-          <h1 id="financing-hero" className="t-h1 text-paper">
-            The Home Loan <strong>Process</strong>
+        {/* ROUND 38 — same fold fix as /buying. This hero stopped 343px short of a 900px fold, so
+            the "Demystifying Home Loans" heading (44px) and its whole 62ch paragraph sat inside
+            the first impression: ratio measured 1.27 against a 1.35 floor and 96 words against a
+            90 ceiling, both of them describing the SECOND section rather than this one.
+
+            THE SUBHEAD IS NOT DECORATION. The hero carried a headline and nothing else, and a
+            fold containing exactly one type size has no hierarchy to read: the rubric's ratio is
+            largest-over-next-largest, so an H1 alone scores 1.00, worse than the 1.27 it was
+            getting from a heading that belonged to another section. A hero needs a second voice
+            under the first, which is also why /buying and /selling both have one. */}
+        <div className="relative mx-auto flex min-h-[max(560px,78svh)] max-w-[1250px] flex-col justify-center px-4 py-24 text-center md:min-h-[max(780px,calc(100svh-7rem))] lg:px-8">
+          <h1 id="financing-hero" className="t-h1 mx-auto max-w-3xl text-paper">
+            Know what the loan costs <strong>before you sign it.</strong>
           </h1>
+          <p className="mx-auto mt-5 max-w-xl text-paper/85">
+            Pre-approval, the rate, the monthly payment and the closing costs, in plain numbers
+            you can check against any lender.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button href="/connect" variant="light">Book Free Consultation</Button>
+          </div>
         </div>
       </section>
 
@@ -153,7 +171,7 @@ export default function FinancingPage() {
             <h2 id="loan-heading" className="t-h2 text-ink">
               Find The Right <strong>Loan</strong>
             </h2>
-            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+            <p className="t-lead mt-3 text-ink-soft">
               Start the process
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -200,7 +218,7 @@ export default function FinancingPage() {
             <h2 id="apply-heading" className="t-h2 text-ink">
               Application &amp; <strong>Processing</strong>
             </h2>
-            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-ink-soft">
+            <p className="t-lead mt-3 text-ink-soft">
               What happens when a loan goes &ldquo;live&rdquo;
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -232,7 +250,7 @@ export default function FinancingPage() {
             <h2 id="closing-heading" className="t-h2">
               <strong>Closing</strong>
             </h2>
-            <p className="mt-3 text-sm font-bold uppercase tracking-[0.12em] text-paper">
+            <p className="t-lead mt-3 text-paper">
               Signing and finalizing the deal
             </p>
             <p className="mt-4 max-w-2xl leading-relaxed text-paper/75">
