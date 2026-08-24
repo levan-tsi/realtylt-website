@@ -34,9 +34,23 @@ async function buildIndex(): Promise<void> {
   if (!url || !key) return;
   const cities = new Map<string, number>();
   const zips = new Map<string, { city: string; count: number }>();
-  for (let page = 0; page < 20; page++) {
+  // ACTIVE ONLY, because that is the question /search answers.
+  //
+  // This index counted every row of every status, and the dropdown printed that number as
+  // "128 homes" next to a town the results page then showed 75 of. /search defaults to
+  // quick=active (lib/idx/query.ts, owner's call 2026-08-06, because 41% of the default scope
+  // was Pending and nothing on the page said so). A suggestion that promises a bigger number
+  // than the page it leads to is a suggestion that makes the page look broken. Measured today:
+  // 27,632 rows in the table, 17,727 of them Active; Beacon 158 against 116.
+  //
+  // It closes a second hole for free. The 20-page cap silently truncated at 20,000 of 27,632
+  // rows in id.asc order, so every town late in that order was undercounted as well as
+  // over-counted — Beacon suggested 128 rather than either true figure. Active fits in 18
+  // pages, and the cap is now 40 so it keeps fitting; the loop still stops on the first short
+  // page, so the extra headroom costs nothing until the inventory needs it.
+  for (let page = 0; page < 40; page++) {
     const res = await fetch(
-      `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&order=id.asc&limit=1000&offset=${page * 1000}`,
+      `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&status=eq.Active&order=id.asc&limit=1000&offset=${page * 1000}`,
       {
         headers: { apikey: key, Authorization: `Bearer ${key}` },
         signal: AbortSignal.timeout(10_000),
