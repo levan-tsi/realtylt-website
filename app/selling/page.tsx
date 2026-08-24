@@ -21,7 +21,9 @@ import { SITE } from "@/lib/site";
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "Sell Your Home | 24-Hour Cash Offer or Listing",
+  // Tracks the H1, the way /buying's does. A page title that promises a different headline than
+  // the page shows is the kind of small mismatch that costs trust in a search result.
+  title: "Selling | We price your home two ways, you decide",
   description:
     // Tracks the subhead: "for maximum profit" came out of the page, so it comes out of here too.
     "See your home's cash value vs market list price. Get a guaranteed cash offer in 24 hours, or list with RealtyLT. You see both numbers and decide.",
@@ -99,16 +101,24 @@ export default async function SellingPage() {
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 md:py-28 lg:min-h-[780px] lg:grid-cols-[1.15fr_1fr] lg:px-8">
           <div className="self-center">
+            {/* A plain statement, sentence case, the way /buying ("We find the home. We
+                negotiate the price.") and /financing ("Know what the loan costs before you sign
+                it.") say it. The title-case "See Your Home's Cash Value vs Market List Price"
+                shipped in the same commit as those two and did not get the same pass: it is a
+                label construction, not a sentence, and "vs" makes the seller do the work of
+                turning it into one. This says what we do and what they do, in that order. */}
             <h1 id="selling-hero" className="t-h1 text-paper">
-              See Your Home&rsquo;s <strong>Cash Value</strong> vs{" "}
-              <strong>Market List Price</strong>
+              We price your home two ways.{" "}
+              <strong className="font-bold">You decide.</strong>
             </h1>
             {/* "for maximum profit" was a promise nobody can keep and the page does not try to
                 keep it anywhere below the fold — what it actually delivers is the two numbers
-                side by side, which is what this now says. */}
+                side by side, which is what this now says. The second sentence went with the
+                headline rewrite: "You see both numbers and decide" is what "You decide." already
+                says one line above, and the hero was 139 words above the fold against a 90-word
+                budget. This line's only job now is naming the two ways. */}
             <p className="mt-5 max-w-xl text-lg text-paper/85">
-              A guaranteed cash offer in 24 hours, or a full listing. You see both numbers and
-              decide.
+              A guaranteed cash offer in 24 hours, or a full listing.
             </p>
             {/* Trust bar: the Google wordmark image (self-hosted) + gold 5.0 stars, then
                 Fast Response / Free Consultation behind faint dividers (live parity). */}
@@ -158,10 +168,11 @@ export default async function SellingPage() {
 
           <Reveal className="lg:justify-self-end lg:w-full lg:max-w-md" delay={150}>
             <div id="offer-form" className="scroll-mt-28 rounded-2xl border border-paper/20 bg-black/55 p-6 shadow-float backdrop-blur md:p-8">
-              <h2 className="t-title text-paper">Get Your Cash Offer &amp; Home Value</h2>
-              <p className="t-small mb-5 mt-1 text-paper/70">
-                Four quick details and we&rsquo;ll get to work on your numbers.
-              </p>
+              {/* The line that sat here — "Four quick details and we'll get to work on your
+                  numbers" — said the same thing as the footnote the form already ends on ("Takes
+                  less than 60 seconds"), eleven words higher up and above the fold. The form is
+                  four visible fields; a person can see that. */}
+              <h2 className="t-title mb-5 text-paper">Get Your Cash Offer &amp; Home Value</h2>
               <LeadForm
                 dark
                 compact
