@@ -72,10 +72,19 @@ describe("the /connect modal is wired into the page where the copy invites it", 
   });
 
   /** The owner asked for the popup as an ADDITION. The call/text line and the booking embed
-   * both stay. */
+   * both stay. The line is no longer one flat string — round 39 made its own three words the
+   * tel: control, because above lg the sticky card answers "call or text" and on a phone the
+   * number it recommends was about 1,900px above it — so the assertion reads the sentence as a
+   * range and requires the words, the rest of the sentiment, AND the number behind them. */
   it("keeps the booking embed and the call/text line", () => {
     expect(page).toContain("BOOKING_EMBED_URL");
-    expect(page).toMatch(/Call or text and we/);
+    const line = page.slice(
+      page.indexOf("Would rather not pick a slot?"),
+      page.indexOf("<ConnectFormModal />"),
+    );
+    expect(line).toContain("Call or text");
+    expect(line).toContain("and we&rsquo;ll find a time");
+    expect(line, "the words that name the action must BE the call control").toContain("SITE.phoneHref");
   });
 });
 

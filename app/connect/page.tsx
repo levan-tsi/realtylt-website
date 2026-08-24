@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Reveal } from "@/components/ui/Reveal";
-import { TrackedButton } from "@/components/leads/TrackedButton";
 import { ConnectFormModal } from "@/components/leads/ConnectFormModal";
 import { BookingFrame } from "@/components/site/BookingFrame";
+import { ContactRow } from "@/components/site/ContactRow";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -21,134 +20,161 @@ const BOOKING_EMBED_URL =
 const BOOKING_URL =
   "https://calendar.google.com/calendar/appointments/AcZssZ17rnRAzaLIa9wbntOvOoEdcIGj3zkYtItVqMM=";
 
+const PHONE_ICON = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
+  </svg>
+);
+
+const MAIL_ICON = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2" />
+    <path d="m3.2 6.2 7.9 5.4a1.6 1.6 0 0 0 1.8 0l7.9-5.4" />
+  </svg>
+);
+
+/* ── THE PHOTO HERO IS GONE, and this is the reason (owner-directed, 2026-08-24).
+ *
+ * What was here: a full-bleed grayscale photograph of Millerton after dark under a black/55
+ * scrim, an eyebrow, a headline, and an outline phone button — 500px tall at 1440 and the WHOLE
+ * fold at 390. It was the same photograph the owner had already rejected on /thank-you, and it
+ * cost this page the only thing it is for. Measured on the page it replaced: at 390 the portrait
+ * did not begin until roughly 1,000px down and the booking calendar not until roughly 2,400px. A
+ * visitor on a phone travelled three screens to reach the calendar, on the page whose job is
+ * "reach Levan, now".
+ *
+ * What replaces it is not a smaller hero. It is the page's own content, raised: who he is, the
+ * two contacts, and the calendar, inside the first screen at every width. The apple-design lens
+ * names each move:
+ *
+ *  - HIERARCHY FROM ORDER, SPACING AND CONTRAST, not from a photograph. The h1 is the largest
+ *    thing on the page; the two contacts are the largest CONTROLS; everything else is quiet.
+ *  - GROUPING AND MAPPING: a control sits next to what it affects. The headline names three
+ *    things in the order you meet them ("Call, email, or book a time"); the two contact rows are
+ *    directly under it; the calendar carries its own visible heading; and the two fallbacks (the
+ *    embed failed / I do not want a slot) sit UNDER the calendar, which is where a person who has
+ *    decided against it actually is. The message trigger used to sit above the calendar, where
+ *    nobody had yet formed the opinion it answers.
+ *  - SIMPLICITY, NOT MINIMALISM. Nothing was removed except the photograph and its scrim. The
+ *    portrait, the name, the credential, the number, the email, the office address, the
+ *    call-or-text sentiment, the modal, the direct booking link and the frame's own focus ring
+ *    are all still here.
+ *  - RESTRAINT. Paper and ink, one photograph (his), one hairline, no translucency, no new
+ *    colour. The controls are bordered paper that fill with mist under the cursor.
+ *
+ * NO REVEAL ON THIS BLOCK, deliberately. .reveal starts at opacity 0 and waits for an
+ * IntersectionObserver; that is right for a section you scroll to and wrong for the first screen
+ * of a contact page, where it puts the phone number behind JavaScript for no gain.
+ */
 export default function ConnectPage() {
   return (
-    <>
-      {/* ── Hero. Millerton after dark: a real Dutchess County main street, CC0. What was
-          here before was an unlicensed stock photograph of a woman with a coffee, washed out
-          to about 30% contrast — the weakest hero on the site and the least like this
-          business. Now a dark band like every other hero, so /connect stops being the one
-          page in a different world. */}
-      <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="connect-hero">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero/millerton-night.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center grayscale"
-          />
-          <div className="absolute inset-0 bg-black/55" />
-        </div>
-        {/* The band carries a photograph now, so it gets the height to be one — and the title
-            goes white. It was text-ink-soft over a washed-out light band; against a dark hero
-            that is dark-on-dark and unreadable. */}
-        <div className="relative mx-auto max-w-[1250px] px-4 py-24 text-center md:py-28 lg:px-8">
-          {/* /85, not /70: at 11px over live photography, 30% translucency is more margin than
-              the AA floor can spare. The home hero learned this in round 11 and sits at /85; this
-              band kept /70 and nobody caught it because scripts/verify-hero-contrast.mjs had only
-              ever been run at its 1440 default, where the scrim is deep enough to carry it.
-              Measured here at 390 it was 4.14:1 and at 320 3.66:1, against a 4.5 floor. */}
-          <p className="t-eyebrow text-paper/85">Seven days a week</p>
-          <h1 id="connect-hero" className="t-h1 mt-5 text-paper">
-            Contact Us <strong>Anytime</strong>
-          </h1>
-          {/* THE CONTACT PAGE HAD NOTHING TO CONTACT ANYONE WITH ON ITS FIRST SCREEN.
-              Measured: 34 words above the fold and ZERO controls the rubric could probe for a
-              press, because the hero is an eyebrow and a headline and then it stops — the phone
-              number and the email are ~400px further down, inside the sticky rail beside the
-              booking embed. Every other hero on the site that asks for a call carries this exact
-              button (/selling, /buying), so this is the site's own pattern arriving on the one
-              page whose entire job is the thing it does. No new copy: it is the number already in
-              SITE, in the component already used for it. */}
-          <TrackedButton
-            href={SITE.phoneHref}
-            variant="outline-light"
-            gaCategory="Phone"
-            gaLabel="connect-hero"
-            className="mt-7"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" />
-            </svg>
-            {SITE.phone}
-          </TrackedButton>
-        </div>
-      </section>
+    <section className="sec-sm bg-paper" aria-labelledby="connect-hero">
+      <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+        <p className="t-eyebrow text-stone">Seven days a week</p>
+        {/* A statement in the house voice, sentence case, and a map of the page: the three things
+            it names are the three things beneath it, in that order. */}
+        <h1 id="connect-hero" className="t-h1 mt-4 text-ink">
+          Call, email, or <strong>book a time</strong>.
+        </h1>
 
-      {/* ── Agent + appointments: portrait left, booking embed right. The left column is
-          sticky above lg because the calendar is 899px tall and the column is about half
-          that — it used to leave a 400px hole beside the embed, and it now keeps the phone
-          number and email in view for the whole length of the booking flow instead. */}
-      <section className="sec bg-paper" aria-labelledby="appointments-heading">
-        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-[300px_1fr] lg:gap-16 lg:px-8">
-          <Reveal className="lg:sticky lg:top-8 lg:self-start">
-            <Image
-              src="/images/levan-portrait.jpg"
-              alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
-              // The file is 3024x4032 (a true 3:4). Declaring 300x380 reserved a box 20px
-              // shorter than the image `h-auto` then painted, so the page shifted on load and
-              // Next logged "width or height modified, but not the other" on every visit.
-              width={300}
-              height={400}
-              // priority: the portrait leads the page's first viewport, and lazy-loading it
-              // was the R32 rubric's D4 deduction here (round 36).
-              priority
-              // Greyscale to match every other photograph on the site, including the SAME
-              // portrait on /who-we-are. In colour it was the one saturated image on a
-              // monochrome site, and it sat a few hundred pixels from its own desaturated
-              // copy in the booking panel.
-              className="h-auto w-full max-w-[300px] rounded-2xl grayscale"
-            />
-            <p className="t-h3 mt-5 text-ink">Levan Tsiklauri</p>
-            <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
-            <address className="t-small mt-5 space-y-1 not-italic text-stone">
-              <p>
-                <a href={SITE.phoneHref} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.phone}</a>
-              </p>
-              <p>
-                <a href={`mailto:${SITE.email}`} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.email}</a>
-              </p>
-              <p>
+        <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-[minmax(0,360px)_1fr] lg:gap-16">
+          {/* The left column is sticky above lg because the calendar is 899px tall and this
+              column is about half that. It used to leave a 400px hole beside the embed, and it
+              keeps the number and the email in view for the whole length of the booking flow
+              instead. */}
+          <div className="lg:sticky lg:top-8 lg:self-start">
+            {/* A BUSINESS CARD, AT EVERY WIDTH — portrait beside the name, not above it.
+                Two reasons, one of them only visible once the page was rendered and looked at:
+                the stacked version put a large greyscale portrait and "Levan Tsiklauri" directly
+                beside the Google embed's OWN circular colour portrait and its own "Levan
+                Tsiklauri" heading, at the same altitude, so the fold showed his face twice and
+                his name twice. Beside each other as one compact object, this reads as the card it
+                is and the scheduler's header reads as the scheduler's. The second reason is the
+                phone: stacked, the portrait alone cost 224px of the first screen and pushed the
+                two contacts under the fold, which is the defect this round exists to fix. */}
+            <div className="flex items-center gap-5">
+              <Image
+                src="/images/levan-portrait.jpg"
+                alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
+                // The file is a true 3:4 (3024x4032) and both rendered boxes are 3:4, so the
+                // intrinsic ratio is honoured at either size and nothing is stretched. Declaring
+                // both dimensions is what reserves the box before the bytes arrive.
+                width={336}
+                height={448}
+                // priority: this is inside the first viewport at every width now.
+                priority
+                // Greyscale to match every other photograph on the site, including the SAME
+                // portrait on /who-we-are.
+                // 96x128 on a phone and 132x176 from sm up. Both are exactly 3:4, and the smaller
+                // one is not a taste call: at 320 the name block beside it needs about 170px for
+                // "INVESTOR & REALTOR®" at the eyebrow's tracking, and 96 + 20 + 170 is the whole
+                // 288px column.
+                className="h-32 w-24 shrink-0 rounded-2xl object-cover grayscale sm:h-44 sm:w-[132px]"
+              />
+              <div>
+                <p className="t-h3 text-ink">Levan Tsiklauri</p>
+                <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
+              </div>
+            </div>
+
+            <address className="mt-8 not-italic">
+              <ContactRow
+                href={SITE.phoneHref}
+                label="Call or text"
+                value={SITE.phone}
+                gaCategory="Phone"
+                gaLabel="connect-top"
+                icon={PHONE_ICON}
+              />
+              <div className="mt-3">
+                <ContactRow
+                  href={`mailto:${SITE.email}`}
+                  label="Email"
+                  value={SITE.email}
+                  gaCategory="Email"
+                  gaLabel="connect-top"
+                  icon={MAIL_ICON}
+                />
+              </div>
+              <p className="t-small mt-4 text-stone">
                 {SITE.address.street}, {SITE.address.locality}, {SITE.address.region}{" "}
                 {SITE.address.postalCode}
               </p>
             </address>
-            {/* ROUND 38 — THE SECOND DOOR. This paragraph named the moment a visitor decides not
-                to use the booking grid and then handed them nothing to press: the page body's only
-                lead path was the Gmail iframe, and everything else was a phone number, an email
-                address and a scroll to the footer. The button opens the SAME modal the listing
-                pages use and the SAME LeadForm the footer runs, so the consent contract is the one
-                the owner decided rather than a second copy of it. The call/text line stays: this
-                is an additional way in, not a replacement for one. */}
-            <p className="mt-6 max-w-[300px] border-t border-line pt-6 t-small text-stone">
-              Would rather not pick a slot? Call or text and we&rsquo;ll find a time. Evenings and
-              weekends included.
-            </p>
-            <ConnectFormModal />
-          </Reveal>
+          </div>
 
           <div>
-            <h2 id="appointments-heading" className="sr-only">
-              Book an appointment
+            {/* Visible now, where it was sr-only. The calendar arrives as a blank white box while
+                the third-party embed loads, and a heading is the only thing that says what is
+                about to appear there. NOT "Book a time": that is the h1's third clause, sitting
+                one column to the left at three times the size, and a fold that says it twice in a
+                row is a fold that says it once and wastes the second. "Pick a slot" is the word
+                the page's own fallback already uses ("Would rather not pick a slot?"), so the
+                decline directly under the calendar now names the thing it is declining. */}
+            <h2 id="appointments-heading" className="t-h3 text-ink">
+              Pick a slot
             </h2>
-            {/* An iframe is a tab stop with no ring of its own, and the platform will not give
-                it one: focusing it hands focus to the EMBEDDED document, so neither
-                :focus-visible nor :focus-within ever matches out here. BookingFrame carries the
-                measurement and draws the site's ring around the frame instead. The titled frame
-                and the "Open the booking page directly" link below it stay. */}
+            {/* An iframe is a tab stop with no ring of its own, and the platform will not give it
+                one: focusing it hands focus to the EMBEDDED document, so neither :focus-visible
+                nor :focus-within ever matches out here. BookingFrame carries the measurement and
+                draws the site's ring around the frame instead. */}
             {/* Height is per-width because the embed's own content is: measured by loading the
                 booking URL directly, it needs 1031px at 390 (the three appointment cards stack)
                 and 900px from 768 up. The old flat 899 clipped the third card mid-sentence on a
-                phone. It does scroll internally there, but a nested scroller inside a page is a
-                bad way to find out a card exists. */}
+                phone. */}
             <BookingFrame
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"
-              className="block h-[1040px] w-full border-0 md:h-[899px]"
+              className="mt-5 block h-[1040px] w-full border-0 md:h-[899px]"
             />
-            <p className="mt-3 text-xs text-stone">
+
+            {/* THE TWO FALLBACKS, both after the thing they are a fallback FOR. The first answers
+                "the embed is broken"; the second answers "I do not want to pick a slot", which is
+                an opinion a visitor forms by looking at the grid rather than before seeing it.
+                The button opens the SAME modal the listing pages use and the SAME LeadForm the
+                footer runs, so the consent contract is the one the owner decided rather than a
+                second copy of it. */}
+            <p className="t-fine mt-4 text-stone">
               Trouble with the calendar?{" "}
               <a
                 href={BOOKING_URL}
@@ -160,9 +186,29 @@ export default function ConnectPage() {
               </a>
               .
             </p>
+            <div className="mt-8 border-t border-line pt-8">
+              {/* THE SENTENCE'S OWN WORDS ARE THE CONTROL. Above lg the contact card is sticky,
+                  so "call or text" points at a phone number still on screen; on a phone it does
+                  not, and this line sat about 1,900px below the number it was recommending. The
+                  three words that name the action carry it instead — no new control, no second
+                  copy of the number, and the tightest mapping available. Deliberately NOT
+                  gtag-tracked: the two rows at the top already fire the "Phone" event, and a
+                  third entry point would count one visitor's single intent twice. */}
+              <p className="t-small max-w-[46ch] text-stone">
+                Would rather not pick a slot?{" "}
+                <a
+                  href={SITE.phoneHref}
+                  className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                >
+                  Call or text
+                </a>{" "}
+                and we&rsquo;ll find a time. Evenings and weekends included.
+              </p>
+              <ConnectFormModal />
+            </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
