@@ -171,7 +171,7 @@ export default function FinancingPage() {
             <h2 id="loan-heading" className="t-h2 text-ink">
               Find The Right <strong>Loan</strong>
             </h2>
-            <p className="t-lead mt-3 text-ink-soft">
+            <p className="t-lead mt-2 text-ink-soft">
               Start the process
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -218,7 +218,7 @@ export default function FinancingPage() {
             <h2 id="apply-heading" className="t-h2 text-ink">
               Application &amp; <strong>Processing</strong>
             </h2>
-            <p className="t-lead mt-3 text-ink-soft">
+            <p className="t-lead mt-2 text-ink-soft">
               What happens when a loan goes &ldquo;live&rdquo;
             </p>
             <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -250,7 +250,7 @@ export default function FinancingPage() {
             <h2 id="closing-heading" className="t-h2">
               <strong>Closing</strong>
             </h2>
-            <p className="t-lead mt-3 text-paper">
+            <p className="t-lead mt-2 text-paper">
               Signing and finalizing the deal
             </p>
             <p className="mt-4 max-w-2xl leading-relaxed text-paper/75">

@@ -273,7 +273,7 @@ export default async function SellingPage() {
             <SectionHeading dark as="h2">
               <span id="pricing-heading">Our <strong className="font-bold">Pricing Strategy</strong></span>
             </SectionHeading>
-            <p className="t-lead mt-4 max-w-lg text-paper">
+            <p className="t-lead mt-3 max-w-lg text-paper">
               We use the most accurate method to price your home
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">
@@ -282,7 +282,7 @@ export default async function SellingPage() {
               active, five pending, five sold) so your home hits the market at the number that
               sells, and you get the price you deserve.
             </p>
-            <p className="t-lead mt-4 max-w-lg text-paper">
+            <p className="t-lead mt-3 max-w-lg text-paper">
               Want to know what your home is worth?
             </p>
             <div className="mt-7">
@@ -351,7 +351,7 @@ export default async function SellingPage() {
             <SectionHeading as="h2">
               <span id="shine-heading">Making Your Listing <strong className="font-bold">Shine</strong></span>
             </SectionHeading>
-            <p className="t-lead mt-4 max-w-lg text-ink-soft">
+            <p className="t-lead mt-3 max-w-lg text-ink-soft">
               Photographs, virtual tours, 3D walkthroughs and videos
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
@@ -400,7 +400,7 @@ export default async function SellingPage() {
             <SectionHeading as="h2">
               <span id="marketing-heading">Innovative <strong className="font-bold">Internet Marketing</strong></span>
             </SectionHeading>
-            <p className="t-lead mt-4 max-w-lg text-ink-soft">
+            <p className="t-lead mt-3 max-w-lg text-ink-soft">
               We know how to reach the 92% of buyers who search online
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-stone">
@@ -430,7 +430,7 @@ export default async function SellingPage() {
             <SectionHeading dark as="h2">
               <span id="loop-heading">Stay in the Loop, <strong className="font-bold">Every Step of the Way</strong></span>
             </SectionHeading>
-            <p className="t-lead mt-4 max-w-lg text-paper">
+            <p className="t-lead mt-3 max-w-lg text-paper">
               Real-time updates until your home is sold
             </p>
             <p className="mt-5 max-w-lg leading-relaxed text-paper/75">

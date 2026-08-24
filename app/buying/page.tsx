@@ -176,7 +176,7 @@ export default async function BuyingPage() {
                 <h3 className="t-h2">
                   Start Your <strong className="font-bold">Home Search</strong>
                 </h3>
-                <p className="t-lead mt-3 text-paper">
+                <p className="t-lead mt-2 text-paper">
                   Search for homes wherever you are
                 </p>
                 <p className="mt-4 max-w-lg leading-relaxed text-paper/75">
@@ -209,7 +209,7 @@ export default async function BuyingPage() {
                     ask us on /saved, which posts the searches (label, query and validated
                     criteria) to the CRM for a person to set up. So the copy describes THAT, in
                     the order the visitor does it, and drops the word "moment". */}
-                <p className="t-lead mt-3 text-paper">
+                <p className="t-lead mt-2 text-paper">
                   Tell us what to watch for and we will watch it
                 </p>
                 {/* "your saved searches" is the link, not a second button. The copy describes a
@@ -261,7 +261,7 @@ export default async function BuyingPage() {
                 <h3 id="save-heading" className="t-h2 text-ink">
                   Save and <strong className="font-bold">See Listings</strong>
                 </h3>
-                <p className="t-lead mt-3 text-ink-soft">
+                <p className="t-lead mt-2 text-ink-soft">
                   Favorite properties and tour homes
                 </p>
                 <p className="mt-4 max-w-lg leading-relaxed text-stone">
@@ -291,7 +291,7 @@ export default async function BuyingPage() {
                 <h3 id="close-heading" className="t-h2">
                   Making An <strong className="font-bold">Offer And Closing</strong>
                 </h3>
-                <p className="t-lead mt-3 text-paper">
+                <p className="t-lead mt-2 text-paper">
                   We&rsquo;re with you till the end
                 </p>
                 <p className="mt-4 max-w-xl leading-relaxed text-paper/75">
