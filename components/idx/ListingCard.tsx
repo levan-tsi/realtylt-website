@@ -124,7 +124,9 @@ export function ListingCard({
   // Feed rows without beds/baths/sqft (multi-family, land) drop those parts — never "0 Bed";
   // Land/lots surface acreage instead so the stat line isn't blank.
   const statsLong = listingStats(l, { bed: "Bed", bath: "Bath", sqft: "Sq. Ft.", acre: "Acres", acreOne: "Acre" }).join(" • ");
-  const statsShort = listingStats(l, { bed: "bd", bath: "ba", sqft: "sqft", acre: "ac", acreOne: "ac" }).join(" | ");
+  // "·", not "|". The pipe was the only one on any visitor-facing surface of the site; the middot
+  // is what every other list of small facts here is joined with (68 uses against 19 bullets).
+  const statsShort = listingStats(l, { bed: "bd", bath: "ba", sqft: "sqft", acre: "ac", acreOne: "ac" }).join(" · ");
 
   if (variant === "plain") {
     return (

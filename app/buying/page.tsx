@@ -444,7 +444,8 @@ function TourSchedulerCard({
   const bedBathParts: string[] = [];
   if (listing && listing.beds > 0) bedBathParts.push(`${listing.beds} Bed`);
   if (listing && listing.baths > 0) bedBathParts.push(`${listing.baths} Bath`);
-  const bedBath = bedBathParts.join(" | ") || "3 Bed | 2 Bath";
+  // Same separator as the real listing cards this mockup is a picture of (ListingCard.tsx).
+  const bedBath = bedBathParts.join(" · ") || "3 Bed · 2 Bath";
   const addr = listing ? `${listing.address}, ${listing.city}` : "89641 SW Sunny St.";
   const src = listing?.photos[0];
 

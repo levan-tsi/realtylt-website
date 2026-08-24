@@ -261,9 +261,16 @@ export default function ThankYouPage() {
 
           <p className="t-small mt-12 text-stone">
             Sent this by mistake, or need something sooner? Call{" "}
+            {/* The one phone number on this page a thumb has to hit inside a sentence. As plain
+                inline text its tap area was the line box, about 26px tall — over the rubric's
+                24px floor and well under the 44px a phone number deserves, on the page a visitor
+                reaches precisely when something has gone wrong and they want to call. py-2 with a
+                matching -my-2 grows the hit box to about 42px without moving a pixel of the
+                paragraph: inline-block takes the padding into the box, the negative margin takes
+                it back out of the line. */}
             <a
               href={SITE.phoneHref}
-              className="font-bold text-ink underline underline-offset-2 hover:text-porchlight-deep"
+              className="-my-2 inline-block py-2 font-bold text-ink underline underline-offset-2 hover:text-porchlight-deep"
             >
               {SITE.phone}
             </a>{" "}
