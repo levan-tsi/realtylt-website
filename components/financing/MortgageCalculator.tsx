@@ -84,7 +84,7 @@ export function MortgageCalculator({
         <h2 id="calc-heading" className="t-h3">
           Estimate Your Monthly Payment
         </h2>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-paper/70">
+        <p className="t-small mt-3 max-w-md text-paper/70">
           Estimate your mortgage payment, including the principal and interest, taxes, insurance,
           HOA, and Private Mortgage Insurance.
         </p>
@@ -284,7 +284,7 @@ export function MortgageCalculator({
               );
             })}
           </ul>
-          <p className="mt-3 text-xs leading-relaxed text-stone">
+          <p className="t-fine mt-3 text-stone">
             Representative rates only, indicative for comparison. Edit the interest rate for your own
             quote; your lender&rsquo;s numbers vary with credit, points, and insurance.
           </p>

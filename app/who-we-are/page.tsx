@@ -110,7 +110,7 @@ export default function WhoWeArePage() {
               <Reveal key={v.title} as="li" delay={i * 110}>
                 <div className="h-full rounded-2xl border border-line bg-white p-7">
                   <h3 className="t-title text-ink">{v.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-stone">{v.body}</p>
+                  <p className="t-small mt-3 text-stone">{v.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -165,7 +165,7 @@ export default function WhoWeArePage() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-sm text-stone">
+          <p className="t-small mt-6 text-stone">
             Based at {SITE.address.street}, {SITE.address.locality}, {SITE.address.region} {SITE.address.postalCode}
           </p>
         </div>

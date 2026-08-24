@@ -143,8 +143,10 @@ export function Footer() {
                 step this site's theme defines. 14px is the size next to it on the scale, it is
                 one pixel more legible, and it removes one of the six distinct body sizes the
                 rubric was counting on every page. (The 13px LABELS in the header nav and the
-                filter chips are a different thing and are left alone.) */}
-            <p className="text-sm leading-relaxed">
+                filter chips are a different thing and are left alone.)
+                ROUND 38: and now t-small rather than text-sm, so the same prose reaches the 16px
+                mobile floor. It reads at 14px from md exactly as it did before. */}
+            <p className="t-small">
               Equal Housing Opportunity. Member of the National Association of REALTORS&reg;.
             </p>
           </div>
@@ -152,7 +154,7 @@ export function Footer() {
               from the end, leaving "operated." alone on its own right-aligned line with ~300px
               of empty row beside it. The wider cap lets it set on one line where there is room
               and still wraps to two balanced lines when there is not. */}
-          <p className="text-sm leading-relaxed sm:max-w-xl sm:text-right">
+          <p className="t-small sm:max-w-xl sm:text-right">
             &copy; {new Date().getFullYear()} {SITE.legalName}. {SITE.disclaimer}
           </p>
         </div>

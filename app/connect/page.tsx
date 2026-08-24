@@ -101,7 +101,7 @@ export default function ConnectPage() {
             />
             <p className="t-h3 mt-5 text-ink">Levan Tsiklauri</p>
             <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
-            <address className="mt-5 space-y-1 text-sm not-italic text-stone">
+            <address className="t-small mt-5 space-y-1 not-italic text-stone">
               <p>
                 <a href={SITE.phoneHref} className="inline-flex min-h-6 items-center transition-colors hover:text-ink">{SITE.phone}</a>
               </p>
@@ -113,7 +113,7 @@ export default function ConnectPage() {
                 {SITE.address.postalCode}
               </p>
             </address>
-            <p className="mt-6 max-w-[300px] border-t border-line pt-6 text-sm leading-relaxed text-stone">
+            <p className="mt-6 max-w-[300px] border-t border-line pt-6 t-small text-stone">
               Would rather not pick a slot? Call or text and we&rsquo;ll find a time. Evenings and
               weekends included.
             </p>

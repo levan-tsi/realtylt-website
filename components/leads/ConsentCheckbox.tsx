@@ -41,10 +41,14 @@ export function ConsentCheckbox({ dark = false, invalid = false }: { dark?: bool
         }`}
       />
       <span className="min-w-0">
-        <span className={`block text-sm font-medium leading-[1.45] ${dark ? "text-paper" : "text-ink"}`}>
+        {/* t-small / t-fine, not text-sm / text-xs: both of these are sentences, and at 14px and
+            12px they were the two body-copy nodes the mobile floor caught on EVERY page of the
+            site, this component being on every form. The pair keeps a full size step at both
+            widths, so the label still leads the disclosure. */}
+        <span className={`t-small block font-medium ${dark ? "text-paper" : "text-ink"}`}>
           {CONSENT_LABEL}
         </span>
-        <span id="consent-disclosure" className={`mt-1 block text-xs ${dark ? "text-paper/60" : "text-stone"}`}>
+        <span id="consent-disclosure" className={`t-fine mt-1 block ${dark ? "text-paper/60" : "text-stone"}`}>
           {CONSENT_DISCLOSURE}
         </span>
       </span>
