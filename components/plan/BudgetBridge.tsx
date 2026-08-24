@@ -28,7 +28,7 @@ export function BudgetBridge() {
       {/* Inputs — the calculator's ink panel, three questions only. */}
       <div className="bg-ink p-6 text-paper md:p-10">
         <h2 className="text-2xl font-bold uppercase tracking-wide">What feels comfortable each month?</h2>
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-paper/70">
+        <p className="mt-3 max-w-md t-small leading-relaxed text-paper/70">
           Start from the payment, not the price. We turn your monthly number into a price range
           you can shop with today. Nothing to sign up for, nothing saved.
         </p>
@@ -82,7 +82,7 @@ export function BudgetBridge() {
             />
           </div>
         </div>
-        <p className="mt-6 max-w-md text-xs leading-relaxed text-paper/60">
+        <p className="mt-6 max-w-md t-fine leading-relaxed text-paper/60">
           Assumes a 30-year loan and NY-style property taxes that scale with the price. Under 20%
           down, mortgage insurance is counted automatically. Your lender&rsquo;s exact numbers
           will vary; the range is for shopping, not for underwriting.
@@ -103,7 +103,7 @@ export function BudgetBridge() {
             See homes under {priceLabel}
           </Link>
         ) : (
-          <p className="mt-6 max-w-xs text-sm text-stone">
+          <p className="mt-6 max-w-xs t-small text-stone">
             Raise the monthly number a little and a price range will appear here.
           </p>
         )}

@@ -183,7 +183,7 @@ function CmaBody({ report }: { report: PortalReport }) {
               <p className="mt-2 text-sm text-paper/70">
                 Range {usd(estimate.low)} – {usd(estimate.high)}
               </p>
-              <p className="mt-4 border-t border-paper/15 pt-4 text-xs text-paper/60">
+              <p className="mt-4 border-t border-paper/15 pt-4 t-fine text-paper/60">
                 Based on {estimate.compCount} comparable active {estimate.compCount === 1 ? "listing" : "listings"} at a
                 median of ${estimate.medianPricePerSqft}/sq ft
                 {conditionPct !== 0 && `, condition ${conditionPct > 0 ? "+" : ""}${conditionPct}%`}.
@@ -196,7 +196,7 @@ function CmaBody({ report }: { report: PortalReport }) {
       {/* Recalculate */}
       <section aria-labelledby="recalc-heading" className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
         <h2 id="recalc-heading" className="font-display text-xl text-ink">Fine-tune your estimate</h2>
-        <p className="mt-1 text-sm text-stone">
+        <p className="mt-1 t-small text-stone">
           Include the comps that best match your home and nudge for condition. The value updates live.
         </p>
 
@@ -297,7 +297,7 @@ function CmaBody({ report }: { report: PortalReport }) {
           )}
         </div>
 
-        <p className="mt-6 text-xs leading-relaxed text-stone">
+        <p className="mt-6 t-fine leading-relaxed text-stone">
           This is an automated estimate from comparable homes <strong>currently for sale</strong>, not a
           formal appraisal. For a precise analysis using recently <strong>sold</strong> comps, raise your
           hand and Levan will prepare a full CMA.

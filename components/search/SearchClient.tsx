@@ -1350,7 +1350,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         // 77-marker map and a single aborted refetch.
         <div role="alert" className="mt-10 rounded-2xl border border-red-500/40 bg-red-500/5 p-10 text-center">
           <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
-          <p className="mt-2 text-sm text-stone">
+          <p className="mt-2 t-small text-stone">
             Try again in a moment, or call us at{" "}
             <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run it for you.
           </p>
@@ -1371,7 +1371,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       ) : listings.length === 0 && filters.view !== "map" ? (
         <div className="mt-10 rounded-2xl border border-dashed border-line-strong p-12 text-center">
           <p className="text-xl font-light text-ink">No homes match those filters.</p>
-          <p className="mt-2 text-sm text-stone">Try widening a range or clearing a filter.</p>
+          <p className="mt-2 t-small text-stone">Try widening a range or clearing a filter.</p>
           <button
             type="button"
             onClick={() => apply(CLEARED_FILTERS)}
@@ -1416,7 +1416,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               // zooming re-fires the scoped fetch, which is the actual recovery.
               <li role="alert" className="col-span-full rounded-2xl border border-red-500/40 bg-red-500/5 p-8 text-center">
                 <p className="text-lg font-light text-ink">The list is temporarily unavailable.</p>
-                <p className="mt-2 text-sm text-stone">
+                <p className="mt-2 t-small text-stone">
                   The map is still live. Move it to try again, or call us at{" "}
                   <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run the search for you.
                 </p>
@@ -1433,7 +1433,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 <p className="text-lg font-light text-ink">
                   {activeViewportQs ? "No homes in this map area." : "No homes match those filters."}
                 </p>
-                <p className="mt-2 text-sm text-stone">
+                <p className="mt-2 t-small text-stone">
                   {activeViewportQs
                     ? "Zoom out or move the map to see more homes."
                     : "Try widening a range or clearing a filter."}

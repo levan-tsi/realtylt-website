@@ -72,7 +72,7 @@ export function SavedClient({
       ) : empty ? (
         <div className="rounded-2xl border border-dashed border-ink/20 p-14 text-center">
           <p className="font-display text-2xl text-ink">Nothing saved yet.</p>
-          <p className="mx-auto mt-2 max-w-md text-sm text-stone">
+          <p className="mx-auto mt-2 max-w-md t-small text-stone">
             Tap the heart on any listing to keep it here, or save a search and come back to it
             anytime.
           </p>
@@ -150,7 +150,7 @@ export function SavedClient({
               <h2 id="alerts-heading" className="t-h3 text-ink">
                 Want new matches by email?
               </h2>
-              <p className="mt-2 max-w-lg text-sm text-stone">
+              <p className="mt-2 max-w-lg t-small text-stone">
                 Leave your details and we&rsquo;ll set up listing alerts for the{" "}
                 {searches.length === 1 ? "search" : `${searches.length} searches`} above, and email
                 you when new homes match.

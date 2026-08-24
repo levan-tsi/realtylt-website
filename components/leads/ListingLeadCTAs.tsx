@@ -246,7 +246,7 @@ function InlineTourCard({
         </div>
       ) : (
         <div className="pt-4">
-          <p className="text-sm leading-relaxed text-stone">
+          <p className="t-small leading-relaxed text-stone">
             Have a question about this home? Send a note and we&rsquo;ll get back to you shortly.
           </p>
           <button
@@ -278,7 +278,7 @@ function SuccessBody({ title, body, onClose }: { title: string; body: string; on
         </svg>
       </span>
       <h2 className="t-h3 mt-4 text-ink">{title}</h2>
-      <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-stone">{body}</p>
+      <p className="mx-auto mt-2 max-w-xs t-small leading-relaxed text-stone">{body}</p>
       <div className="mt-6 flex items-center justify-center gap-3">
         <button
           type="button"

@@ -198,7 +198,7 @@ export function ReportGenerator() {
   return (
     <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
       <h3 className="font-display text-xl text-ink">Run a new report</h3>
-      <p className="mt-1 text-sm text-stone">
+      <p className="mt-1 t-small text-stone">
         Instant, from live Hudson Valley listings. Then fine-tune it or hand it to your agent.
       </p>
 
@@ -261,7 +261,7 @@ export function ReportGenerator() {
             {/* Say where the number came from. A prefilled field that does not explain itself
                 is a guess wearing the visitor's clothes. */}
             {sqftSeeded && (
-              <p className="mt-1.5 text-xs leading-[1.5] text-stone">
+              <p className="mt-1.5 t-fine leading-[1.5] text-stone">
                 Typical for homes near you. Change it to yours for a closer estimate.
               </p>
             )}

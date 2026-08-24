@@ -63,7 +63,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         {!enabled ? (
-          <p className="py-16 text-center text-sm text-stone">
+          <p className="py-16 text-center t-small text-stone">
             Accounts aren&rsquo;t available right now. Your saved homes are kept on this device.
             Visit{" "}
             <Link href="/saved" className="inline-flex min-h-6 items-center font-bold text-river underline">
@@ -76,7 +76,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
         ) : !user ? (
           <div className="mx-auto max-w-md rounded-2xl border border-ink/10 bg-mist p-10 text-center">
             <p className="font-display text-2xl text-ink">Sign in to your portal</p>
-            <p className="mt-2 text-sm text-stone">
+            <p className="mt-2 t-small text-stone">
               Save homes, save searches, and get new-listing alerts, synced across your devices.
             </p>
             <div className="mt-6 flex justify-center gap-2">
@@ -89,7 +89,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             </div>
             {/* The portal is real and works; the front door is what is shut. Say which. */}
             {!signupOpen && (
-              <p className="mt-4 text-sm text-stone">
+              <p className="mt-4 t-small text-stone">
                 New accounts aren&rsquo;t open yet. Call or text{" "}
                 <a
                   href={SITE.phoneHref}

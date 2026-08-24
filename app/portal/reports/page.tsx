@@ -75,7 +75,7 @@ export default function ReportsPage() {
         <h2 id="reports-heading" className="font-display text-2xl text-ink">
           My reports
         </h2>
-        <p className="mt-1 text-sm text-stone">
+        <p className="mt-1 t-small text-stone">
           Home-value estimates and Hudson Valley market reports. Run your own in seconds, or open
           the ones your agent prepared for you.
         </p>
@@ -101,7 +101,7 @@ export default function ReportsPage() {
         {reports === null ? (
           <p className="mt-4 text-sm text-stone">Loading…</p>
         ) : myReports.length === 0 ? (
-          <p className="mt-4 text-sm text-stone">
+          <p className="mt-4 t-small text-stone">
             You haven&rsquo;t run a report yet. Start one below.
           </p>
         ) : (

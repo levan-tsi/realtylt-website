@@ -51,7 +51,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
             className="group rounded-xl border border-line bg-mist/60 p-4 text-left transition-colors hover:border-ink hover:bg-mist"
           >
             <span className="block font-bold text-ink">See what it&rsquo;s worth</span>
-            <span className="mt-1 block text-sm leading-[1.6] text-stone">
+            <span className="mt-1 block t-small leading-[1.6] text-stone">
               A market report built from active, pending and sold comps near you. Yours in a
               minute, and it stays in your account.
             </span>
@@ -62,7 +62,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
             className="group rounded-xl border border-line bg-mist/60 p-4 text-left transition-colors hover:border-ink hover:bg-mist"
           >
             <span className="block font-bold text-ink">I&rsquo;m thinking about selling</span>
-            <span className="mt-1 block text-sm leading-[1.6] text-stone">
+            <span className="mt-1 block t-small leading-[1.6] text-stone">
               Send us the details and we&rsquo;ll come back with your list price and a cash offer,
               side by side.
             </span>
@@ -93,7 +93,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
     return (
       <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
         <h2 className="t-h3 text-ink">Your market report</h2>
-        <p className="mt-2 text-sm leading-[1.6] text-stone">
+        <p className="mt-2 t-small leading-[1.6] text-stone">
           We build it from our own live inventory: active, pending and sold homes near{" "}
           <strong className="text-ink">{confirmedAddress}</strong>. Sign in and it saves to your account so
           you can come back to it.
@@ -118,7 +118,7 @@ export function HomeValueForm({ defaultAddress }: { defaultAddress?: string } = 
   if (address !== null) {
     return (
       <div className="mx-auto w-full max-w-lg rounded-2xl bg-white p-6 text-left shadow-float md:p-7">
-        <p className="text-sm leading-relaxed text-stone">
+        <p className="t-small leading-relaxed text-stone">
           Almost there. Tell us where to send the numbers for{" "}
           <strong className="text-ink">{confirmedAddress}</strong>.
         </p>

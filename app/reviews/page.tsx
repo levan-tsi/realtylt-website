@@ -57,7 +57,7 @@ export default function ReviewsPage() {
           <Reveal className="mt-12">
             <aside className="bg-mist px-6 py-10 text-center md:px-12">
               <p className="text-2xl font-light text-ink">Worked with us? Tell the next family.</p>
-              <p className="mx-auto mt-2 max-w-md text-sm text-stone">
+              <p className="mx-auto mt-2 max-w-md t-small text-stone">
                 A two-minute Google review is the biggest compliment we can get, and the most
                 useful thing a future buyer or seller can read.
               </p>

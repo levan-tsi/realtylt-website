@@ -74,7 +74,7 @@ export function TalkToAgent({
         <h3 id="talk-heading" className="t-h3 mt-2">
           Have a question, or ready to make a move?
         </h3>
-        <p className="mt-2 max-w-xl text-sm text-paper/70">
+        <p className="mt-2 max-w-xl t-small text-paper/70">
           Levan reviews every report personally. Raise your hand and he&rsquo;ll reach out, or
           send a note and start the conversation right here.
         </p>

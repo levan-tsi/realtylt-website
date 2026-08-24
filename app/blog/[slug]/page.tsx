@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const endCap = (
     <div className="mt-16 border-t border-line pt-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-stone sm:max-w-[19rem]">
+        <p className="t-small text-stone sm:max-w-[19rem]">
           {flagship
             ? "Know somebody who would argue with this? Send it to them."
             : "Found this useful? Send it to someone who is buying, selling, or moving."}
@@ -277,7 +277,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
               {post.placeholder && (
                 <aside
-                  className="mx-auto mt-8 flex max-w-[44rem] items-start gap-3 rounded-r-2xl border-l-2 border-porchlight bg-mist px-5 py-4 text-sm text-ink-soft"
+                  className="mx-auto mt-8 flex max-w-[44rem] items-start gap-3 rounded-r-2xl border-l-2 border-porchlight bg-mist px-5 py-4 t-small text-ink-soft"
                   role="note"
                 >
                   <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Draft stub</span>

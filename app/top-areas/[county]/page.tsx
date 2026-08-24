@@ -146,7 +146,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
                   <h3 className="t-title text-ink">Why buy here</h3>
                   <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                     {c.whyBuy.map((w) => (
-                      <li key={w} className="flex items-start gap-2 text-sm text-ink-soft">
+                      <li key={w} className="flex items-start gap-2 t-small text-ink-soft">
                         <span aria-hidden className="mt-0.5 font-bold">✓</span> {w}
                       </li>
                     ))}
@@ -184,7 +184,7 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
             </SectionHeading>
           </Reveal>
           {result.listings.length === 0 ? (
-            <p className="mt-8 rounded-2xl border border-dashed border-line-strong p-10 text-center text-sm text-stone">
+            <p className="mt-8 rounded-2xl border border-dashed border-line-strong p-10 text-center t-small text-stone">
               Nothing on the market right this moment. Save a search and we&rsquo;ll flag new
               {" " + short} listings for you.
             </p>

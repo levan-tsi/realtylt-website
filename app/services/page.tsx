@@ -249,7 +249,7 @@ export default function ServicesIndexPage() {
                     <span className="block text-base font-bold leading-snug text-ink-soft transition-colors group-hover:text-ink group-hover:underline group-hover:underline-offset-4">
                       {s.name}
                     </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-stone">{s.title}</span>
+                    <span className="mt-1 block t-small leading-relaxed text-stone">{s.title}</span>
                   </span>
                 </Link>
               </Reveal>

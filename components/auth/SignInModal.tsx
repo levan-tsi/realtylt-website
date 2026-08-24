@@ -191,7 +191,7 @@ export function SignInModal() {
         >
           {isSignup ? "Sign up for free" : "Welcome back."}
         </h2>
-        <p className="mt-1.5 text-sm text-stone">
+        <p className="mt-1.5 t-small text-stone">
           {isSignup
             ? "Create an account to save homes, get new-listing alerts, and view market reports."
             : "Sign in to your saved homes and searches."}
@@ -343,7 +343,7 @@ export function SignInModal() {
           // Sign-up is switched off at the project. Say so here, where a visitor is deciding,
           // rather than after they have typed a name, an email and a password into a form that
           // was always going to refuse them. Same sentence the refusal used to give them.
-          <p className="mt-4 text-center text-sm text-stone">
+          <p className="mt-4 text-center t-small text-stone">
             New accounts aren&rsquo;t open yet. Call or text{" "}
             <a
               href={SITE.phoneHref}

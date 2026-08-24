@@ -38,13 +38,13 @@ export default function ReportDetailPage() {
   }, [supabase, user, id]);
 
   if (state === "loading") {
-    return <p className="py-16 text-center text-sm text-stone">Loading your report…</p>;
+    return <p className="py-16 text-center t-small text-stone">Loading your report…</p>;
   }
   if (state === "missing" || !report) {
     return (
       <div className="rounded-2xl border border-dashed border-ink/20 p-10 text-center">
         <p className="font-display text-xl text-ink">Report not found.</p>
-        <p className="mt-2 text-sm text-stone">
+        <p className="mt-2 t-small text-stone">
           It may have been removed, or belongs to another account.
         </p>
         <Link

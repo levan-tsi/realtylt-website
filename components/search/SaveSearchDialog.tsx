@@ -124,7 +124,7 @@ export function SaveSearchDialog({
               </svg>
             </span>
             <h2 id={titleId} className="t-h3 mt-4 text-ink">Search saved.</h2>
-            <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-stone">
+            <p className="mx-auto mt-2 max-w-xs t-small leading-relaxed text-stone">
               {signedIn
                 ? "It's on your account — we'll alert you when new homes match."
                 : "It's saved to this device. Sign in to sync it everywhere and get email alerts."}
@@ -155,7 +155,7 @@ export function SaveSearchDialog({
         ) : (
           <form onSubmit={submit} className="px-6 pb-7 pt-9 sm:px-8">
             <h2 id={titleId} className="t-h3 text-ink">Save this search</h2>
-            <p className="mt-1.5 text-sm text-stone">
+            <p className="mt-1.5 t-small text-stone">
               Name it and we&rsquo;ll keep these filters so you can rerun them in one tap.
             </p>
 

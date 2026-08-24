@@ -24,7 +24,7 @@ export function Teardown() {
           <h2 className="mt-6 max-w-3xl text-2xl font-light leading-[1.25] tracking-[-0.015em] text-ink md:text-[34px]">
             Watch it handle the 11:40pm question.
           </h2>
-          <p className="mt-5 max-w-xl text-sm text-stone">
+          <p className="mt-5 max-w-xl t-small text-stone">
             The pattern, not a transcript from a real client.
           </p>
         </Reveal>

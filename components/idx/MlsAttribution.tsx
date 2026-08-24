@@ -42,7 +42,7 @@ export function MlsAttribution({
 
   return (
     <div
-      className={`flex items-start gap-3 text-[11px] leading-relaxed ${dark ? "text-paper/50" : "text-stone"} ${className}`}
+      className={`flex items-start gap-3 t-fine ${dark ? "text-paper/50" : "text-stone"} ${className}`}
     >
       <Image
         src={dark ? "/images/mls/onekey-mls-on-dark.svg" : "/images/mls/onekey-mls.svg"}

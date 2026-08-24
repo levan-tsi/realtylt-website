@@ -54,7 +54,7 @@ export default function PlanPage() {
           <h1 className="t-h1 mt-2">
             Start from the payment, <strong>not the price</strong>
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-paper/70">
+          <p className="mt-2 max-w-xl t-small text-paper/70">
             A plan you can use in two minutes: what your monthly budget buys, the four stages
             between here and keys, and a person who answers seven days a week.
           </p>
@@ -84,7 +84,7 @@ export default function PlanPage() {
             <li key={s.title} className="border-t border-line-strong pt-5">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-stone">Stage {i + 1}</p>
               <h3 className="t-h3 mt-2 text-ink">{s.title}</h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-soft">{s.body}</p>
+              <p className="mt-3 max-w-md t-small leading-relaxed text-ink-soft">{s.body}</p>
               <Link
                 href={s.href}
                 // py-1 lifts the box from 16px to 24px. These four clear WCAG 2.5.8 on the
@@ -106,7 +106,7 @@ export default function PlanPage() {
           <h2 id="talk-heading" className="t-h2 text-ink">
             Or just <strong>talk it through</strong>
           </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
+          <p className="mt-3 max-w-xl t-small leading-relaxed text-ink-soft">
             No portal, no marketplace, no hand-off. Call or text and you get us, seven days a
             week, whether you are two years out or two weeks out.
           </p>

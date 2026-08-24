@@ -34,7 +34,7 @@ export function WhatItIs({ service }: { service: Service }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 text-xs leading-relaxed text-stone">
+            <p className="mt-5 t-fine leading-relaxed text-stone">
               Built on the tools you already run, not instead of them.
             </p>
           </aside>

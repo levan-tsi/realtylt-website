@@ -42,7 +42,7 @@ export async function RelatedPosts({ service }: { service: Service }) {
                   <h3 className="mt-2 text-base font-bold leading-snug text-ink-soft group-hover:text-ink">
                     {p.title}
                   </h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-stone">{p.excerpt}</p>
+                  <p className="mt-2 line-clamp-2 t-small leading-relaxed text-stone">{p.excerpt}</p>
                 </div>
               </article>
             </Reveal>

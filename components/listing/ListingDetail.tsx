@@ -509,7 +509,7 @@ export async function ListingDetail({ id }: { id: string }) {
           <div className="mx-auto max-w-7xl px-4 lg:px-8">
             <MortgageCalculator initial={mortgageSeed} />
             {!l.taxAnnual && (
-              <p className="mt-3 text-xs text-stone">
+              <p className="mt-3 t-fine text-stone">
                 Taxes are estimated; the listing office didn't report an annual tax figure.
               </p>
             )}

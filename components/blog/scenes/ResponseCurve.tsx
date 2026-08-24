@@ -82,7 +82,7 @@ export function ResponseCurve() {
               })}
             </svg>
 
-            <p className="mt-8 text-sm leading-relaxed text-stone">
+            <p className="mt-8 t-small leading-relaxed text-stone">
               Odds are indexed to the after-24-hours case. Source:{" "}
               <a
                 href={sourceHref}

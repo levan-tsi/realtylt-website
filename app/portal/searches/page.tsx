@@ -12,7 +12,7 @@ export default function SearchesPage() {
       <h2 id="searches-heading" className="font-display text-2xl text-ink">
         Saved searches
       </h2>
-      <p className="mt-1 text-sm text-stone">
+      <p className="mt-1 t-small text-stone">
         Your saved filters. Turn on alerts to hear about new matches by email.
       </p>
 
@@ -21,7 +21,7 @@ export default function SearchesPage() {
       ) : searches.length === 0 ? (
         <div className="mt-8 rounded-2xl border border-dashed border-ink/20 p-10 text-center">
           <p className="font-display text-xl text-ink">No saved searches yet.</p>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-stone">
+          <p className="mx-auto mt-2 max-w-sm t-small text-stone">
             Run a search, tune the filters, and hit <strong>Save search</strong> to keep it here.
           </p>
           <Button href="/search" size="lg" className="mt-6">

@@ -214,7 +214,7 @@ export function PlanQuizHost() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-6 lg:px-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-stone">Two minutes, seven questions</p>
-            <p className="mt-1 max-w-lg text-sm text-ink-soft">
+            <p className="mt-1 max-w-lg t-small text-ink-soft">
               Answer a few questions and this page becomes your plan: your price ceiling, your
               areas with live counts, and your next concrete step.
             </p>
@@ -427,7 +427,7 @@ function QuizTakeover({
                     </button>
                   ))}
                 </div>
-                <p className="mt-3 text-xs text-stone">
+                <p className="mt-3 t-fine text-stone">
                   We turn this into a price ceiling at {CEILING_ASSUMPTIONS}. Adjust any of it later on the financing page.
                 </p>
               </>
@@ -494,7 +494,7 @@ function QuizTakeover({
                     );
                   })}
                 </div>
-                <p className="mt-3 text-xs text-stone">
+                <p className="mt-3 t-fine text-stone">
                   Everything here is a real filter the search obeys. Nothing is offered that the search cannot find.
                 </p>
                 <button
@@ -553,7 +553,7 @@ function AreasStep({
           </button>
         ))}
       </div>
-      <p className="mt-3 text-xs text-stone">Pick as many as you like. Your plan shows live counts for each.</p>
+      <p className="mt-3 t-fine text-stone">Pick as many as you like. Your plan shows live counts for each.</p>
       <button
         type="button"
         onClick={onContinue}
@@ -707,7 +707,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
 
   if (state === "sent") {
     return (
-      <p role="status" className="mt-8 max-w-xl rounded-2xl border border-line-strong bg-mist p-5 text-sm text-ink">
+      <p role="status" className="mt-8 max-w-xl rounded-2xl border border-line-strong bg-mist p-5 t-small text-ink">
         Plan sent. We will follow up with homes that match it, and this page stays yours to
         keep using in the meantime.
       </p>
@@ -718,7 +718,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
     <form onSubmit={onSubmit} className="mt-8 max-w-xl">
       <p className="text-xs font-bold uppercase tracking-[0.24em] text-stone">Optional</p>
       <h3 className="t-h3 mt-2 text-ink">Want this plan and matching homes sent to you?</h3>
-      <p className="mt-2 text-sm text-ink-soft">
+      <p className="mt-2 t-small text-ink-soft">
         Skip this and everything above stays right here — nothing you answered leaves the page.
       </p>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -761,7 +761,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
           {state === "sending" ? "Sending…" : "Send my plan"}
         </button>
         {state === "error" && (
-          <p role="alert" className="text-sm text-ink">
+          <p role="alert" className="t-small text-ink">
             That did not go through. Try again, or call {SITE.phone}.
           </p>
         )}

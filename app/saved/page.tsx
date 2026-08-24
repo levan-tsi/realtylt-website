@@ -24,7 +24,7 @@ export default async function SavedPage() {
           <h1 className="t-h1 mt-2">
             Your <strong>Homes &amp; Searches</strong>
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-paper/70">
+          <p className="mt-2 max-w-xl t-small text-paper/70">
             Saved on this device, no account needed. Turn on email alerts below and we&rsquo;ll
             watch the market for you.
           </p>
@@ -38,7 +38,7 @@ export default async function SavedPage() {
           <p className="text-xl font-light text-ink">
             Your saved homes are kept in this browser, which needs JavaScript turned on.
           </p>
-          <p className="mt-2 text-sm text-stone">
+          <p className="mt-2 t-small text-stone">
             Turn it on to see them again, or call us at{" "}
             <a href={SITE.phoneHref} className="font-bold text-ink underline underline-offset-2">
               {SITE.phone}

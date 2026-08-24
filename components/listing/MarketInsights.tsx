@@ -76,7 +76,7 @@ export function MarketInsights({
             </p>
           </>
         ) : (
-          <p className="mt-6 rounded-2xl border border-dashed border-ink/15 bg-white px-5 py-8 text-center text-sm text-stone">
+          <p className="mt-6 rounded-2xl border border-dashed border-ink/15 bg-white px-5 py-8 text-center t-small text-stone">
             {fixtureMode
               ? "Market insights use live OneKey MLS data, which isn't loaded in this preview."
               : "Market insight data is unavailable right now. Please check back shortly."}

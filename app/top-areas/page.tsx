@@ -69,7 +69,7 @@ export default function TopAreasPage() {
                   </div>
                   <div className="p-5">
                     <h3 className="t-title text-ink">{c.name}</h3>
-                    <p className="mt-1 text-sm text-stone">{c.tagline}</p>
+                    <p className="mt-1 t-small text-stone">{c.tagline}</p>
                     <p className="mt-3 text-xs uppercase tracking-[0.12em] text-stone">
                       {c.towns.slice(0, 4).join(" · ")}
                     </p>
@@ -102,7 +102,7 @@ export default function TopAreasPage() {
                     <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-paper/60">New York City</span>
                   </div>
                   <div className="p-5">
-                    <p className="text-sm leading-relaxed text-stone">{b.tagline}</p>
+                    <p className="t-small leading-relaxed text-stone">{b.tagline}</p>
                     <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-ink underline decoration-ink/20 underline-offset-4 transition-colors group-hover:decoration-ink">
                       See homes for sale
                     </p>
