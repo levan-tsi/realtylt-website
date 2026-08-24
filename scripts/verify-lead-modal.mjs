@@ -77,7 +77,16 @@ console.log(`listing under test: ${listingPath}\n`);
  * largest laid-out match instead: the control a visitor at this width would actually press. */
 async function pressable(page, name) {
   const all = page.getByRole("button", { name });
-  await all.first().waitFor({ state: "attached", timeout: 30000 });
+  try {
+    await all.first().waitFor({ state: "attached", timeout: 30000 });
+  } catch {
+    // Nine page loads into a run, a dev server that is also recompiling can hand back a document
+    // with nothing rendered on it. That is the instrument's problem, not the site's, and it cost
+    // three runs of this gate before it was named. One reload separates it from a trigger that
+    // has genuinely gone missing — if the button is really absent, this still fails.
+    await page.reload({ waitUntil: "networkidle", timeout: 90000 });
+    await all.first().waitFor({ state: "attached", timeout: 30000 });
+  }
   const n = await all.count();
   let best = null, bestArea = 0;
   for (let i = 0; i < n; i++) {
