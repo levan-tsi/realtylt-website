@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { TrackedButton } from "@/components/leads/TrackedButton";
 import { ConnectFormModal } from "@/components/leads/ConnectFormModal";
+import { BookingFrame } from "@/components/site/BookingFrame";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -132,20 +133,20 @@ export default function ConnectPage() {
             <h2 id="appointments-heading" className="sr-only">
               Book an appointment
             </h2>
-            {/* An iframe is a tab stop with no ring of its own, and it cannot be given one:
-                focusing it hands focus to the EMBEDDED document, so :focus-visible never
-                matches out here and we cannot style across the origin. The titled frame plus
-                the "Open the booking page directly" link below it are the way out. */}
+            {/* An iframe is a tab stop with no ring of its own, and the platform will not give
+                it one: focusing it hands focus to the EMBEDDED document, so neither
+                :focus-visible nor :focus-within ever matches out here. BookingFrame carries the
+                measurement and draws the site's ring around the frame instead. The titled frame
+                and the "Open the booking page directly" link below it stay. */}
             {/* Height is per-width because the embed's own content is: measured by loading the
                 booking URL directly, it needs 1031px at 390 (the three appointment cards stack)
                 and 900px from 768 up. The old flat 899 clipped the third card mid-sentence on a
                 phone. It does scroll internally there, but a nested scroller inside a page is a
                 bad way to find out a card exists. */}
-            <iframe
+            <BookingFrame
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"
-              className="h-[1040px] w-full border-0 md:h-[899px]"
-              loading="lazy"
+              className="block h-[1040px] w-full border-0 md:h-[899px]"
             />
             <p className="mt-3 text-xs text-stone">
               Trouble with the calendar?{" "}
