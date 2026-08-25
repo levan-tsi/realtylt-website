@@ -49,6 +49,7 @@ export const POSTS = [
   "local-seo-real-estate-map-pack-google-business-profile",
   "geo-landing-pages-real-estate-doorway-pages",
   "crm-sync-real-estate-duplicate-contact-records",
+  "ai-agent-workforce-real-estate-assistants",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */

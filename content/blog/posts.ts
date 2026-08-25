@@ -5,6 +5,7 @@
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
 import {
+  AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
@@ -16,6 +17,7 @@ import {
   REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { AGENT_WORKFORCE_FLAGSHIP } from "./agent-workforce-scenes";
 import { CRM_SYNC_FLAGSHIP } from "./crm-sync-scenes";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
 import { BOOKING_FLAGSHIP } from "./booking-scenes";
@@ -68,6 +70,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "ai-agent-workforce-real-estate-assistants",
+    title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 10 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce actually is, why an assistant that is right most of the time is a different product from one that is right every time, where multi-agent systems really fail, and who is accountable when one of them is wrong.",
+    seoDescription:
+      "What an AI agent workforce does, why reliability across repeated runs matters more than a single success rate, where multi-agent systems fail, and what supervising them costs.",
+    cover: "/images/hero/hero-cand-bear-mountain.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_AGENT_WORKFORCE_POST,
+    flagship: AGENT_WORKFORCE_FLAGSHIP,
+  },
   {
     slug: "crm-sync-real-estate-duplicate-contact-records",
     title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",

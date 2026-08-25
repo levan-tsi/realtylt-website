@@ -9,6 +9,220 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly, which is not laziness. It is what anybody does with something that has been right nine times.
+
+On the tenth morning it confirmed a Thursday walkthrough to a buyer's agent. You had moved that walkthrough to Friday the previous evening, in a text message, from the car. The assistant read the calendar, and the calendar said Thursday, because the calendar was where the walkthrough had been before you moved it.
+
+The draft went out at 6:40am, in your voice, from your address, and it was polite and well written and completely wrong.
+
+Nothing malfunctioned. The assistant was not confused and did not hallucinate anything. It read what it had access to, did the job it was given, and produced a piece of work indistinguishable in tone from the nine that were correct. That last part is the whole subject of this article, because it is the reason nobody caught it.
+
+[[scene:in-short]]
+
+## What an agent workforce actually is, and what it is not
+
+The pitch is easy to say and it is broadly true. Instead of one general chatbot you have to brief every time, you set up several assistants, each pointed at one recurring job, each with access to the systems that job needs. One reads the overnight email and drafts replies. One pulls comps and builds the deck for tomorrow's listing appointment. One watches every open file for the signature nobody chased. They run at the same time, they do not stop at five o'clock, and adding another one is a configuration change rather than a hire.
+
+What that description leaves out is the second half of the sentence, and the second half is where all the money and all the risk are. You have not removed work. You have changed what kind of work it is. Producing has become reviewing, and reviewing four streams of output is a real job with real hours in it, done by you, in the morning, before anything else.
+
+That is not an argument against doing this. It is an argument for knowing what you are buying, and it is the thing every page in this category, including our own, has historically been vague about.
+
+[[scene:not-a-chatbot]]
+
+## Right once and right every time are different products
+
+Here is the distinction that reorganises the whole subject, and it comes from the best public measurement of this that exists.
+
+In June 2024 a team at Sierra and Princeton published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a simulated business with a real database, a set of tools that can change that database, and a written policy it has to follow, and then has a second language model play a customer who wants something. Two domains: a retail one with five hundred customers, a thousand orders and a hundred and fifteen tasks, and an airline one with three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the actual state of the database against the one correct outcome. Not the transcript, not the tone. What ended up in the system.
+
+The authors also proposed a measurement that nobody had been using, and it is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked instead how often an agent succeeds at the same task every single time it is attempted, and they named it pass hat k: the chance that all k independent attempts are successful, averaged across tasks.
+
+Read that against your own morning. You do not need an assistant that can draft a good reply. You need one that drafts a good reply on Monday and Tuesday and Wednesday and the Thursday you were in the car.
+
+## What happens when you run the same job twenty times
+
+The best model in that paper solved more than sixty percent of the retail tasks on a single attempt. Run the same tasks eight times each and require all eight to be right, and the paper reports that the figure drops below twenty five percent.
+
+Sit with the shape of that rather than the numbers, because the numbers are from June 2024 and the models have moved since. Something that succeeds most of the time on any given morning succeeds every morning far less often than most of the time, and the gap widens the more mornings you ask about. That is not a flaw anybody introduced. It is what happens when you multiply a probability by itself, and it is the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
+
+The same paper is worth reading for one more reason: it looked at what the failures actually were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal, not an error message, not an apology. The correct action, confidently, on the wrong record. Which is what happened at 6:40 on the tenth morning.
+
+## Where these systems actually go wrong, and it is mostly not the model
+
+The other paper worth your time is more recent and it is about exactly the thing the service page is selling, which is several agents working at once.
+
+A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks, built a taxonomy of what went wrong by having six human experts read a hundred and fifty of those traces closely, and then checked that the taxonomy was reliable by having independent annotators apply it and measuring how often they agreed. Their agreement measure came out at 0.88, which is high, and it matters because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+
+Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you: across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
+
+[[scene:where-fail]]
+
+The chart is the finding. The largest group is not the model being stupid. It is system design: the job being specified badly, the agent repeating a step it had already done, the agent not knowing when it was finished. Their single most common individual mode, at 15.7 percent of everything, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
+
+None of those are fixed by a better model, and all of them are fixed by somebody thinking harder about the instructions and the checks. The paper's own observation about this is the practical one: the systems in their sample that had explicit verification steps built into them showed fewer failures overall.
+
+## The brief is the product
+
+The tau-bench authors ran one more experiment which almost nobody talks about, and it is the single most useful result in either paper for somebody about to pay for this.
+
+They took the written policy out of the agent's instructions and ran everything again. In the simple domain, where the rules are close to common sense, performance fell from 61.2 to 56.8 percent, which is barely anything. In the complicated domain, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
+
+[[scene:rules-removed]]
+
+Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document: the description of the job, the rules, the exceptions, the things that must never happen. The model is a commodity and it improves every few months without you doing anything. The brief is yours, it is specific to your business, and nobody else can write it.
+
+This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation, and it is a two hour one, because most recurring jobs have never been written down and the first hour is spent discovering the exceptions that live only in somebody's head.
+
+[[scene:plate]]
+
+## Why the second assistant costs more than the first
+
+Everything above is about one assistant. Running several is not the same thing repeated, and the difference is worth being clear about because it is the difference the word "workforce" hides.
+
+Two assistants that never touch each other are genuinely just two assistants, and the cost is roughly double the cost of one. That describes a lot of useful setups and there is nothing wrong with it.
+
+But the moment one assistant's output becomes another assistant's input, you have built a system, and the Berkeley taxonomy has a whole category for what goes wrong there: information one agent held and did not pass on, an agent carrying on with an assumption instead of asking, an agent quietly drifting off the task it was given. Almost a third of everything they classified sat in that group. A handover between two pieces of software is not free, and it is exactly the place where an error stops being visible, because the second agent receives a confident summary rather than the thing itself.
+
+The practical rule that falls out of this is dull and it is worth more than any feature list. Keep the assistants independent unless there is a specific reason not to, and where one has to feed another, make the handover something a person can read.
+
+[[scene:agent-path]]
+
+## Where the money actually goes when you run several
+
+The cost of running an agent is not what you would guess, and the tau-bench paper measured it, which almost nobody does.
+
+For each task their best setup handled, the agent cost 38 cents and the simulated customer on the other side cost 23 cents. That is not your price list and it should not be read as one. The number underneath it is the one that transfers: of what the agent cost, the input took 95.9 percent and everything the agent actually wrote took 4.1 percent.
+
+In plain terms, almost the entire running cost of an assistant is it re-reading its own instructions, its tool definitions and the conversation so far, over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
+
+That has three consequences you can act on. A longer brief costs money every time the assistant runs, so the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation gets more expensive with every turn, which is why a job that ends is cheaper than a job that lingers.
+
+[[scene:agent-calculator]]
+
+[[scene:pull-quote]]
+
+## What a person costs, and why you cannot divide by it
+
+Every page in this category eventually reaches for a salary, and ours did too. So here is a real one, from the only source for it that publishes its method.
+
+The United States Bureau of Labor Statistics reports that the median annual wage for [secretaries and administrative assistants was $47,460 in May 2024](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), which is $22.82 an hour. Median means what the Bureau says it means and it is worth quoting, because half of this category's arithmetic depends on people not knowing: the median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. For context, [the median for real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) was $56,320 over the same period, and the median for all occupations was $49,500.
+
+Now the part where the arithmetic stops. That $47,460 buys something with properties an assistant does not have. It answers the phone when the caller is upset. It notices that the job it was given last March is no longer the job that needs doing. It can be told once. It can be held responsible. And it is a whole person rather than a set of tasks, so removing four tasks from that job does not remove four quarters of the salary.
+
+There is also a number in the same table that nobody selling this will mention. The Bureau's projection for that occupation between 2024 and 2034 is zero percent growth, a change of minus 12,400 jobs out of roughly three and a half million. Not a collapse. Essentially flat, in the published forecast of the agency whose job is forecasting it.
+
+So this page will not divide one of those numbers by the other. The honest comparison is not assistant against employee, because they are not substitutes. It is your morning with the assistants against your morning without them, which is a question about your own time and not about anybody's salary, and it is the question the calculator above is asking.
+
+## Who is responsible when an assistant is wrong
+
+The email that went out at 6:40 was signed with your name. Everything else follows from that.
+
+This industry is unusual in having already written down what happens when work is delegated, because the delegation of licensed work has been regulated in New York for the better part of a century. It is worth reading two provisions in [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law), because neither is about artificial intelligence and both are about you.
+
+Section 442-c deals with what a salesperson's misconduct means for the broker. A broker is not automatically on the hook for what an associate did. But there are two ways they become so, and the second is the one to read twice: a broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
+
+Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. It is not a list a piece of software is on, and nothing here is a prediction about future law. It is a description of the present one, and the description is that when an assistant working for you says something to a client, there is exactly one licensed party in the conversation and it is you.
+
+## What supervision looks like when the thing you are supervising is software
+
+There is a second document worth borrowing, and this one is borrowed openly as an analogy rather than applied as a rule. It is about supervising people and it says nothing whatever about software.
+
+Section 175.21 of the Secretary of State's regulations defines what supervising a salesperson actually consists of, and rather than leaving it to judgement it writes it down: regular, frequent and consistent personal guidance, instruction, oversight and superintendence, with respect to the brokerage business and all matters relating to it. The next paragraph requires written records of what the salesperson actually did.
+
+Nobody is claiming that provision governs an inbox assistant. What it does is describe, in a document your regulator wrote, the standard this industry already applies to work done in your name by somebody who is not you. Regular. Frequent. Consistent. Written down.
+
+Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest specification for what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+
+## What it costs, and how long it takes
+
+There is no price on this page, and the reason is that three separate things drive it and only one of them is the software.
+
+The first is the brief, and it is the slow part. Writing down a job properly, with its exceptions, takes an hour or two per assistant with somebody arguing with you about it, and the tau-bench ablation is the argument for spending that time rather than skipping it.
+
+The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot, and the work is connecting it safely: the right permissions, nothing wider than the job needs, and a way to switch it off.
+
+The third is the running cost, which is usage rather than a seat, tracks how much the assistant has to read rather than how much it writes, and is genuinely small per task and genuinely unbounded if nobody watches it.
+
+What we will not print is a per-model price. The published pricing for every major model renders its numbers in JavaScript rather than in the page, so they cannot be read from the source and checked later, and a price that cannot be verified is worse on a page like this than no price at all. What can be said is the shape: the cost per piece of work is in cents rather than dollars, it is dominated by the length of the instructions rather than by the length of the answer, and the honest budget line is the review time above it rather than the compute.
+
+## What it does not do, and should not pretend to
+
+It does not take responsibility. An assistant cannot be told off, cannot learn from being told off in any way that persists unless somebody edits the brief, and cannot be the person a client complains to. Every consequence lands on a licensed human being, and that human being is you.
+
+It does not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your listing emails for a year will eventually say that the market has moved and the second paragraph now reads badly. An assistant will produce that second paragraph forever, with perfect consistency, until somebody rewrites the brief.
+
+It does not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, fluent, plausible output that is subtly not what you wanted, and you find out three weeks later from a client.
+
+It does not remove the reading. Anything that reaches a client should be read by a person first, an assistant that drafts is worth more than one that sends, and the review is not a temporary safety measure for the first month. It is the job now.
+
+And it does not scale the way the word workforce suggests. Four independent assistants are four times the review. Four assistants feeding each other are four times the review plus a category of failure that only exists because they are connected, and the published taxonomy has six named modes inside it.
+
+[[scene:plate-two]]
+
+[[scene:wasted]]
+
+## How to test one assistant before you run four
+
+Do this with one assistant, on one job, before anybody builds you a set of them. It takes an afternoon spread over a fortnight and it will tell you more than any demonstration.
+
+Pick the dullest job you have that repeats, and write the brief before you look at any software. Include the exceptions. If you cannot write it, you have learned the most useful thing available today, which is that the job is not yet delegable to anybody, software or human.
+
+Then run it against work you have already done. Take ten pieces of last month's output that you produced by hand, give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
+
+Then run the same task ten times and count how many times all ten are right. Not the average. All ten. That is the pass hat k measurement from the research above, done by hand, and it is the single number that predicts whether you will still be reading the output in week six.
+
+Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that guesses when it should have asked will eventually guess in front of a client, in writing, at a time of its own choosing.
+
+Last, put a time in your diary. Fifteen minutes, the same slot every week, to read a sample of what it produced and check it against what you asked for. If you cannot find that slot for one assistant, you have your answer about four.
+
+## Common questions, answered honestly
+
+### What is an AI agent workforce, in plain terms?
+
+It is a set of AI assistants, each configured for one recurring job and each connected to the systems that job needs. Rather than one general chatbot you brief from scratch every session, you have several that already know your business and their own task, and they run in parallel, on a schedule or a trigger, without you opening anything.
+
+### How is this different from workflow automation?
+
+Workflow automation connects the software you already pay for so that finishing one step starts the next, and most of the steps in a good automation have no judgement in them at all. An agent is what you use when a step genuinely needs a decision made from context. They are usually built with the same tools and they answer different questions, and a business that puts an agent where an if statement would have done has bought unpredictability it did not need.
+
+### How is this different from just using ChatGPT?
+
+Three things, and the second is the one that matters most. A general chat session starts empty and cannot reach your systems. An assistant carries a written brief for one job, which the research above suggests is where most of its usable ability comes from. And it runs on a trigger rather than waiting for you to remember it, which is the difference between a tool and a member of staff.
+
+### How many assistants can I actually run at once?
+
+Technically as many as you have jobs for, because they do not queue behind each other. Practically the limit is not the software, it is how many streams of output one person can review before the reviewing stops happening. Most people find that number is smaller than they expected, and the calculator above is there to let you find yours before you commit to it.
+
+### Do I need technical skills?
+
+No, and the skill you do need is not technical. You need to be able to describe a job precisely, including what should happen in the cases that are not the normal case. That is a writing and thinking exercise rather than a software one, and it is the part that cannot be outsourced, because the exceptions live in your head.
+
+### What happens when one of them is wrong?
+
+It produces something wrong that reads exactly like everything it produced when it was right, which is why the answer has to be structural rather than attentive. A build that is serious about this stops and asks rather than guessing on anything ambiguous, keeps a readable record of what it did and why, drafts rather than sends anything client-facing, and has a review step somebody actually performs.
+
+### Is it cheaper than hiring somebody?
+
+That is the wrong comparison and we are not going to make it. The published median wage for an administrative assistant buys accountability, judgement and somebody who notices when the job changes, and an assistant provides none of those. The comparison that is real is your own week with and without, including the review time, which is what the calculator above works out.
+
+### How do I know it is working after the first month?
+
+Not from a dashboard. Count how many pieces of its output you actually read last week and be honest about it, because the review is the control and a review nobody performs is not one. Then take a sample and check it against the brief rather than against your impression, and every quarter re-read the brief itself and ask whether it still describes the job you have now.
+
+## What to do about it
+
+Go and read yesterday's output. Not the summary of it, the actual pieces, all of them, one after the other, with the brief open beside you. It takes twenty minutes and it is the only way to find out whether you have four assistants or four unread inboxes.
+
+Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document, and the document is the part nobody else can write, and you can write it today for nothing.
+
+You can see the assistants on [the RealtyLT AI page](/ai#agents), and what each one is pointed at is on the [AI agent workforce page](/services/ai-agent-workforce). If you would rather somebody sat with you and worked out which of your recurring jobs are actually delegable, that is what the [AI audit](/services/ai-audit) is: we take one real job, write the brief with you, and build that one first.
+
+The individual jobs are written up on their own: [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
+
+Nine good mornings are not a track record. They are nine mornings.
+
+[[scene:funnel]]`;
+
 export const CRM_SYNC_POST = `In March a woman filled in the home valuation form on your website. She typed her name the way she says it out loud, so the record in your CRM says Kathy Brown.
 
 In June she rang the office about a different house. Whoever picked up did everything right: took the details, typed them in properly, spelled the name the way it appears on a deed. Katherine Brown. A work email rather than the personal one, and the mobile she actually answers.

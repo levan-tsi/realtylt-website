@@ -47,6 +47,7 @@ const SLUGS = args.length
       "local-seo-real-estate-map-pack-google-business-profile",
       "geo-landing-pages-real-estate-doorway-pages",
       "crm-sync-real-estate-duplicate-contact-records",
+      "ai-agent-workforce-real-estate-assistants",
     ];
 
 const browser = await chromium.launch();
