@@ -6,12 +6,16 @@ import { QUALIFY_FLAGSHIP } from "@/content/blog/qualify-scenes";
 import { WORKFLOW_FLAGSHIP } from "@/content/blog/workflow-scenes";
 import { REVIEW_FLAGSHIP } from "@/content/blog/review-scenes";
 import { BOOKING_FLAGSHIP } from "@/content/blog/booking-scenes";
+import { LOCAL_SEO_FLAGSHIP } from "@/content/blog/local-seo-scenes";
+import { GEO_PAGES_FLAGSHIP } from "@/content/blog/geo-pages-scenes";
 import {
   AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
+  GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
+  LOCAL_SEO_POST,
   REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
@@ -125,6 +129,58 @@ describe("flagshipToc", () => {
     ]);
   });
 
+  /** And the same freeze for topic 8. */
+  it("derives exactly the rail the local SEO post shipped with", () => {
+    const localOutline = parseOutline(LOCAL_SEO_POST);
+    expect(flagshipToc(localOutline, LOCAL_SEO_FLAGSHIP)).toEqual([
+      { id: "the-search-that-already-happened-and-why-you-cannot-see-it", label: "The search" },
+      { id: "what-google-actually-publishes-about-this", label: "What Google says" },
+      { id: "scene-ranking-factors", label: "The three", scene: true },
+      { id: "the-input-you-cannot-do-anything-about", label: "Distance" },
+      { id: "why-the-top-of-a-very-short-list-is-worth-more-than-it-should-be", label: "The top slot" },
+      { id: "scene-trust-bias", label: "The top slot", scene: true },
+      { id: "what-prominence-is-made-of-and-what-it-is-not", label: "Prominence" },
+      { id: "the-profile-rules-that-decide-whether-you-can-have-one-at-all", label: "The rules" },
+      { id: "scene-profile-rules", label: "The rules", scene: true },
+      { id: "what-local-seo-actually-does-week-to-week", label: "What it does" },
+      { id: "scene-the-work", label: "The work", scene: true },
+      { id: "scene-local-calculator", label: "Your numbers", scene: true },
+      { id: "what-renting-the-same-attention-costs", label: "Renting it" },
+      { id: "scene-paid-search", label: "The experiment", scene: true },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "how-to-find-out-where-you-actually-stand-in-ten-minutes", label: "How to check" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
+  /** And the same freeze for topic 9. */
+  it("derives exactly the rail the area pages post shipped with", () => {
+    const geoOutline = parseOutline(GEO_LANDING_PAGES_POST);
+    expect(flagshipToc(geoOutline, GEO_PAGES_FLAGSHIP)).toEqual([
+      { id: "why-a-page-and-not-a-profile", label: "Why a page" },
+      { id: "what-googles-spam-policy-actually-names", label: "The policy" },
+      { id: "scene-two-names", label: "The policy", scene: true },
+      { id: "the-example-that-is-about-the-thing-we-sell", label: "About us" },
+      { id: "what-separates-a-real-area-page-from-a-doorway", label: "The line" },
+      { id: "scene-the-test", label: "The questions", scene: true },
+      { id: "repetition-is-measurable-and-somebody-measured-it", label: "Sameness" },
+      { id: "scene-redundancy", label: "Sameness", scene: true },
+      { id: "what-actually-goes-on-a-page-that-is-about-somewhere", label: "What goes on it" },
+      { id: "scene-page-path", label: "The page", scene: true },
+      { id: "scene-geo-calculator", label: "Your numbers", scene: true },
+      { id: "the-part-that-is-regulated-and-it-is-not-the-search-engine", label: "The regulation" },
+      { id: "scene-complaints", label: "The complaints", scene: true },
+      { id: "what-an-area-page-may-and-may-not-say", label: "May and may not" },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "how-to-test-whether-a-page-is-about-anywhere-in-twenty-minutes", label: "How to test one" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
   it("skips scenes that declare no label, because not every scene is a destination", () => {
     const rows = flagshipToc(outline, AI_CHAT_FLAGSHIP);
     for (const key of ["pull-quote", "funnel", "in-short", "response-curve", "failure-modes"]) {
@@ -163,6 +219,8 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["workflow automation", WORKFLOW_AUTOMATION_POST, WORKFLOW_FLAGSHIP],
   ["review automation", REVIEW_AUTOMATION_POST, REVIEW_FLAGSHIP],
   ["ai appointment booking", AI_APPOINTMENT_BOOKING_POST, BOOKING_FLAGSHIP],
+  ["local seo", LOCAL_SEO_POST, LOCAL_SEO_FLAGSHIP],
+  ["geo landing pages", GEO_LANDING_PAGES_POST, GEO_PAGES_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

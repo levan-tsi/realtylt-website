@@ -89,12 +89,14 @@ const DISOWNED =
  * Read from the directory rather than listed, so service number twenty-one is covered on the
  * day somebody writes it. */
 const SOURCES = [
-  "content/blog/ai-posts.ts",
-  "content/blog/ai-chat-scenes.ts",
-  "content/blog/voice-agent-scenes.ts",
-  "content/blog/reactivation-scenes.ts",
-  "content/blog/qualify-scenes.ts",
-  "content/blog/workflow-scenes.ts",
+  // content/blog was a hand-written list of six files until 2026-08-25, and it had already
+  // rotted: Round B added review-scenes.ts and booking-scenes.ts and neither was on it, so two
+  // whole flagships of scene copy were outside the guard. That is the same failure the services
+  // comment below describes, and it has the same fix. Read from the directory instead.
+  ...fs
+    .readdirSync(path.join(ROOT, "content/blog"))
+    .filter((f) => f.endsWith(".ts") && !f.endsWith(".test.ts"))
+    .map((f) => `content/blog/${f}`),
   ...fs
     .readdirSync(path.join(ROOT, "components/blog/scenes"))
     .filter((f) => f.endsWith(".tsx"))
@@ -139,6 +141,9 @@ describe("retracted claims stay retracted", () => {
     // And it is actually pointed at the commercial surface, not only at the blog. A glob that
     // silently matches nothing is the same beautiful pass wearing a directory read.
     expect(SOURCES.filter((f) => f.startsWith("content/services/")).length).toBe(20);
+    // And every scene file, which is where a retracted number can keep talking in twenty point
+    // type. Nine flagships, nine scene files, plus posts.ts and ai-posts.ts.
+    expect(SOURCES.filter((f) => f.startsWith("content/blog/")).length).toBeGreaterThanOrEqual(11);
   });
 
   for (const file of SOURCES) {

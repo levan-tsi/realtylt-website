@@ -44,6 +44,8 @@ const SLUGS = args.length
       "workflow-automation-real-estate-business",
       "automated-google-review-requests-real-estate",
       "ai-appointment-booking-no-shows-real-estate",
+      "local-seo-real-estate-map-pack-google-business-profile",
+      "geo-landing-pages-real-estate-doorway-pages",
     ];
 
 const browser = await chromium.launch();

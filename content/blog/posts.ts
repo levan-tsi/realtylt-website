@@ -9,12 +9,16 @@ import {
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
+  GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
+  LOCAL_SEO_POST,
   REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
 import { BOOKING_FLAGSHIP } from "./booking-scenes";
+import { LOCAL_SEO_FLAGSHIP } from "./local-seo-scenes";
+import { GEO_PAGES_FLAGSHIP } from "./geo-pages-scenes";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
@@ -62,6 +66,40 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "geo-landing-pages-real-estate-doorway-pages",
+    title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 and 7 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "A page for every town you serve is the oldest tactic in local marketing, and Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway actually falls, how cheap sameness is to measure, and the fair housing rule nobody selling this will mention.",
+    seoDescription:
+      "What Google's spam policy actually says about location pages, what separates a real area page from a doorway, and the fair housing rules that govern advertising an area.",
+    cover: "/images/counties/orange.jpg",
+    body: [],
+    placeholder: false,
+    markdown: GEO_LANDING_PAGES_POST,
+    flagship: GEO_PAGES_FLAGSHIP,
+  },
+  {
+    slug: "local-seo-real-estate-map-pack-google-business-profile",
+    title: "Three Businesses Show Up. Yours Is Not One of Them.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason as the post above. */
+    excerpt:
+      "Somebody nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list, one of the three inputs is a fact about you that nothing can change, and the rules for whether you may even have a profile name this industry by name.",
+    seoDescription:
+      "What Google publishes about local ranking, the profile rules that name real estate agents specifically, and what an experiment found about paid search traffic.",
+    cover: "/images/hero/hudson-olana.jpg",
+    body: [],
+    placeholder: false,
+    markdown: LOCAL_SEO_POST,
+    flagship: LOCAL_SEO_FLAGSHIP,
+  },
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
     title: "You Booked the Showing for Nine Days Out. Nobody Came.",

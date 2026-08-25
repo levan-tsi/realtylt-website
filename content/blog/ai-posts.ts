@@ -9,6 +9,398 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Somebody points out that you could have a page for each of the other eight by Friday, and they are right, because a machine will write eight pages about eight towns in the time it takes to make coffee.
+
+So the pages get made. Then, a few weeks later, you open two of them side by side to check something, and you read them properly for the first time.
+
+Page four and page five have the same four paragraphs in the same order. The same sentence about the character of the housing stock. The same promise about local expertise. The same three questions and the same three answers underneath them. The only thing that changed between the two is the name of the town, and it changed six times.
+
+Nobody did anything wrong here. Every one of those pages is grammatical, on brand and technically correct. And a person who lives in either of those towns would put the page down after two sentences, which is the same conclusion a search engine is going to reach by a different route.
+
+[[scene:in-short]]
+
+## Why a page and not a profile
+
+It is worth being clear about what this is for, because the obvious alternative is free and most agents should do that one first.
+
+The short list of businesses at the top of a local search, the one with the map above it, ranks businesses rather than pages, and one of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office and no amount of work moves it. Which means there is a hard edge to it: past a certain distance you are competing against somebody who is simply closer, and they win.
+
+A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it, which is why one page per area is the oldest tactic in local marketing and why every agency in the world offers it. It is also the reason this article exists, because the tactic has a well-known failure mode with a name, and the name is in Google's published policy rather than in somebody's blog post.
+
+There is a second reason worth naming and it is newer. A growing share of these questions never reach a list of links at all: somebody asks an assistant which agents work in a particular town and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly on a page that is genuinely about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable, which is convenient, and it is the only part of this whole subject where the two audiences want exactly the same thing.
+
+## What Google's spam policy actually names
+
+Most of what is written about location pages cites a Google policy that has since been rewritten. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name this tactic in two separate entries, and the second one did not exist when most of the advice you will find was published.
+
+The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Read the mechanism rather than the label: the thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
+
+The second is scaled content abuse, defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords, and stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
+
+Both entries are worth reading in full because of what they do not say. Neither one says a business may not have a page for each place it works. They describe pages that pass you along and pages that say nothing, which is a judgement about quality rather than about structure.
+
+[[scene:two-names]]
+
+## The example that is about the thing we sell
+
+There is a sentence in the scaled content entry that anybody selling this service should be made to read out loud. The first illustration Google gives is using generative AI tools or other similar tools to generate many pages without adding value for users.
+
+That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact product, and there is a version of ours that would fit it perfectly: hand over a list of towns, generate a page for each, publish. If somebody offers you that, the policy has already named it, and the fact that the pages were written by a good model rather than a bad one changes nothing, because the phrase in the policy is not about how the words were produced. It is about whether anything was added.
+
+Google has said the same thing in plainer language elsewhere. Its guidance on helpful content is explicit that using automation is not the problem in itself, and the questions it tells creators to ask themselves are about the output rather than the tool. That is the honest position, and it is also ours: a draft written in ninety seconds is fine. A page published in ninety seconds is not, and the difference between them is a person who knows the place reading it before it goes live.
+
+[[scene:plate]]
+
+## What separates a real area page from a doorway
+
+Google publishes a self-assessment for exactly this question and almost nobody in this category has read it. Its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a list of questions to ask about your own work, and three of them land directly on area pages.
+
+The first is whether the content clearly demonstrates first-hand expertise and a depth of knowledge, and the example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. It is the whole test, sitting in a parenthesis, and it cannot be written around, because what is being asked for is not a style of prose. It is a fact about whether you have been there.
+
+The second is a pair of warning signs: whether you are producing lots of content on many different topics in the hope that some of it might perform well, and whether you are using extensive automation to produce content on many topics. Answer yes to either and the document's own conclusion is that you are making search-engine-first content. Note what the suggested remedy is not. It is not better writing.
+
+The third is the one that quietly explains why every thin location page in this industry looks the same. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one, and then answers itself in a bracket: no, we do not. Somewhere a long time ago a number got into circulation and the whole category has been padding to reach it since.
+
+[[scene:the-test]]
+
+## Repetition is measurable, and somebody measured it
+
+There is a temptation to treat all of this as a matter of taste, as if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure, and there is a paper that shows how cheap.
+
+In 2006 four researchers at Microsoft took a crawl of 105 million pages, drew a uniform random sample of 17,168 English pages out of it, and classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf): 2,364 of the pages, 13.8%, were judged to be spam.
+
+Then they went looking for properties that predicted it, and one of the properties is the interesting one here. They compressed every page and measured the compression ratio, on the reasoning that a page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
+
+The honest limits are large and worth stating before anybody quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page, and a set of near-identical town pages is repetition across pages, which is a different measurement that nobody has published a figure for. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too, which is exactly why the authors treat it as one signal among nine rather than as a rule.
+
+What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and about four seconds.
+
+[[scene:redundancy]]
+
+## What actually goes on a page that is about somewhere
+
+The useful question is not what to avoid. It is what a page has on it that a template cannot produce, and the answer is short enough to be uncomfortable, because everything on the list has to come from you.
+
+It has the work you actually did there. A closing on a named street, a rental you managed, a listing that sat and then did not, a buyer who wanted one thing and bought another. Specific, checkable, and about a real transaction rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in, which is why the honest version of this project starts with a list of areas that is shorter than the one you wanted.
+
+It has the questions people actually ask about that place, answered in the first sentence rather than in the fourth paragraph. What the taxes are like compared to the next town. Whether the trains are any good. Which streets flood. What the difference is between the village and the town of the same name, which in this valley is a real question with a real answer and one that catches people out.
+
+It has something a person who lives there would recognise. Not scenery. The thing everybody who lives there knows and nobody writes down: where the traffic actually backs up, which side of the road the good light is on in the afternoon, what happens to the main street in the third week of September.
+
+And it has one way to get in touch that belongs to you. A form on your own page rather than a link into somebody else's directory, so that the person who read all of that arrives in your records rather than in a list you rent back later.
+
+[[scene:page-path]]
+
+[[scene:geo-calculator]]
+
+## The part that is regulated, and it is not the search engine
+
+Everything above is a commercial question. This section is not, and it is the one nobody selling area pages will raise with you.
+
+An area page is an advertisement, and it is an advertisement about a community rather than about a house. The regulations under the Fair Housing Act are specific about both halves of that, and they are older than any of this technology.
+
+The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect: the prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling, and written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
+
+Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act, which is a different and more uncomfortable statement, and it means the reason for the list has to be a business reason you could say out loud.
+
+The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices, and two of its examples are written as if somebody had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
+
+Sit with the second one, because it is not the one people expect. Failing to inform. A set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones is a set of pages that describes some communities as more desirable than others, and it did that through effort rather than through a sentence anybody wrote.
+
+[[scene:complaints]]
+
+[[scene:pull-quote]]
+
+## What an area page may and may not say
+
+The practical line is easier to hold than the regulation makes it sound, and it comes down to what the sentence is about.
+
+Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time, what a survey usually turns up on older properties in that part of the county, what you have actually sold there. Every one of those is a fact about property, it is checkable, and it is what somebody reading an agent's area page came for.
+
+Do not write about the people. This is the whole line and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere, who a place is suited to, what kind of family would be comfortable, which community a neighbourhood belongs to: none of that is about the housing, all of it is about the residents, and it is the exact territory the steering rule covers.
+
+Two habits deserve naming because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects, and if you publish them you have made a statement about desirability using somebody else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph, and the honest move is to say where to look rather than to characterise a community.
+
+And treat the areas evenly. Not identically, because identical is the failure this whole article is about, but evenly: comparable effort, comparable honesty about the drawbacks, comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set rather than about any one page in it, and the shape of the set is a thing only you can see.
+
+## What it costs, and how long it takes
+
+The software is not the line that matters here. What the bill tracks is how much of the material has to be extracted from you, because you are the only place it exists.
+
+An agent with a tidy record of what they have closed, where, and for whom is a fast project: the facts are already written down and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one, and most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
+
+There is a smaller ongoing cost that everybody forgets to budget for, which is going back. The proof on these pages ages: the closing was three years ago, the listing sold, the tax figure moved, the shop you mentioned closed. Two or three of them will need half an hour a year, and the ones that earn their keep will need more, and a set of area pages that nobody revisits becomes a public record of when you stopped paying attention.
+
+The one thing we will not quote is a traffic estimate, and it is worth saying why rather than leaving a gap. Nobody publishes the number of people searching for your service in your particular town with a stated method; the figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
+
+[[scene:plate-two]]
+
+[[scene:offer]]
+
+## What it does not do, and should not pretend to
+
+It does not rank a place you do not work. There is nothing true to put on that page, both a reader and a search engine notice, and the pages you cannot fill are the ones that make the whole set look like a template.
+
+It does not put you into an AI answer on request. Nobody controls what an assistant quotes and anybody who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+
+It does not replace the rest of local search. A page for each area is one surface. The Business Profile, the reviews and the mentions on other people's websites are another, they are decided by different machinery, and the profile is usually the cheaper thing to fix first.
+
+It does not survive being left alone. Every fact on these pages has a date attached whether or not you print one, and the difference between a page that earns attention for years and a page that quietly embarrasses you is somebody going back to it.
+
+And it does not make the list of towns longer than it is. This is the one people find hardest, because the whole appeal of the tactic is scale. The number of areas you can write honestly about is a fact about your career so far, and no tool changes it.
+
+[[scene:wasted]]
+
+## How to test whether a page is about anywhere, in twenty minutes
+
+Four checks. All of them are free, none of them need a tool, and any page in this industry can be run through them tonight.
+
+Delete the town name from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer, and so does everybody else. This is the single most useful thing in this article and it takes ninety seconds per page.
+
+Open two of your pages side by side and read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
+
+Count the checkable facts on the page: a street, a price, a date, a number, a name of something that exists. Then count the sentences that could have been written by somebody who has never been there. A page where the second number is larger than the first is a page you have not written yet.
+
+Then hand it to somebody who lives there and watch their face. Not for approval, for recognition. The moment worth waiting for is the small one where they say that is true, or better, where they correct you, because a correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+
+## Common questions, answered honestly
+
+### What are GEO or area landing pages, in plain terms?
+
+They are ordinary pages on your own website, one for each place you work, written so that somebody searching for your service in that place finds a page that is genuinely about it rather than a page listing every town you cover. GEO now carries a second meaning as well, generative engine optimisation, which is the practice of writing pages that an AI assistant can quote when it answers a question. In practice the two want the same thing: direct answers to real questions, on a page that has something on it only somebody who works there would know.
+
+### How is this different from local SEO?
+
+They compete on different surfaces and are decided by different things. Local SEO is about your Business Profile and the short list of businesses at the top of a nearby search, where Google publishes three inputs and one of them is how far away the searcher is. Area pages are ordinary web pages competing on what is written on them, which is why they can reach places your profile cannot. Most businesses should finish the profile first, because it is cheaper, faster and does not carry the risk described in the rest of this article.
+
+### Are location pages considered doorway pages by Google?
+
+They are if they behave like doorways. The policy defines doorway abuse as pages created to rank for specific, similar queries which lead users to intermediate pages that are not as useful as the final destination, and it names pages targeted at specific regions or cities that funnel users to one page. A page that answers the question it was found for, on its own, is not doing that. A page whose only purpose is to catch the query and push the reader somewhere else is, whatever it looks like.
+
+### Is it against the rules to use AI to write them?
+
+Not in itself, and Google says so directly in its guidance on helpful content, which frames automation as a question about the output rather than about the tool. What is named in the spam policy is using generative AI tools to generate many pages without adding value for users. The distinction is whether anything was added between the draft and the publication, and in practice that means a person who knows the place read it and changed it. A page nobody read is the case the policy is describing.
+
+### How many pages should I have?
+
+As many as you have something true to say about, which is almost always fewer than the list you started with. There is no threshold at which a set of pages becomes spam and no number that makes it safe. The calculator above is deliberately built on the only two things anybody can honestly supply, which are how many areas are on your list and how many of them you have actually worked in.
+
+### Can I write a page for a town I want to work in but have not yet?
+
+You can, and it will be the weakest page in the set, and it is worth being deliberate about it rather than pretending otherwise. If you do, write it as what it is: a page about that market from somebody who works one town over, with the facts you can genuinely stand behind and no invented familiarity. That is a defensible page. A page claiming years of local expertise you do not have is not, and it is the kind of claim a person who lives there will spot in a sentence.
+
+### What about fair housing? Is any of this risky?
+
+The advertising rules apply to a web page exactly as they apply to a flyer, and the regulation is explicit that written statements include any documents used with respect to the sale of a dwelling. Two things follow. Write about the housing and the transaction, not about who lives somewhere or who a place would suit. And treat your areas evenly, because the rules name both selecting where to advertise in a way that denies parts of the market information, and discouraging somebody by failing to inform them of the desirable features of a neighbourhood. Uneven effort across a set of area pages is a real exposure and it is invisible from inside any single page.
+
+### Will this get me quoted in ChatGPT or an AI answer?
+
+Sometimes, and nobody can promise it. What gets quoted is a passage that answers a question directly, in plain language, on a page an assistant can read. That means a real question as a heading and the answer in the sentence underneath it, rather than three paragraphs of positioning followed by the fact. It is worth doing because the same format is the one that works for a human being in a hurry, which means nothing here asks you to write worse in order to be quoted more.
+
+## What to do about it
+
+Take the list of areas you want pages for and put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
+
+That shorter list is the project. It is probably half of what you wrote down, and it beats the long version outright, because every page on it can carry something checkable and every page you left off would have been the one that made a reader stop trusting the rest.
+
+Then take the two pages you already have that you are least sure about, delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this article in four minutes, and you have also found the first two pages worth rewriting.
+
+[[scene:funnel]]`;
+
+export const LOCAL_SEO_POST = `On a Tuesday in February a woman sat in her car outside a school with eleven minutes to fill. Her sister had sold a house badly the year before, and that morning, in the way people actually decide things, she had decided she was going to get this right. She typed four words into her phone.
+
+Three businesses came back, with a small map above them and a row of stars under each name. She read them for about as long as it takes to read three names, tapped the second one, and left a voicemail.
+
+You were not on that screen. You have never known this happened and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
+
+The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it, in a paragraph almost nobody in this industry has read, and one of the three things it names is a fact about you that no amount of money or effort will change.
+
+[[scene:in-short]]
+
+## The search that already happened, and why you cannot see it
+
+Every other way a client finds you leaves a trace. A referral comes with a name attached. A portal inquiry arrives with a timestamp. Even the person who does nothing at all with your open house has stood in a room you were in.
+
+Local search leaves nothing. A person types a phrase into a phone, three businesses appear, they choose one, and the two they did not choose are never told. There is no impression count on a search you lost, no notification, no weekly digest of the times your name was not in the list. This is the only meaningful channel in the business where the failures are completely silent, and silence is why it is so easy to believe nothing is happening.
+
+Something is happening. What you can see of it is one screen: the Business Profile's own performance report, which tells you how many people rang from the listing, how many asked for directions, how many tapped through to the website, and which searches surfaced you. It is not the whole picture and it is not a ranking report. It is the only genuinely first-party number in this entire subject, it is free, and in most small businesses nobody has opened it in a year.
+
+It is worth separating two things that get called the same name. There is the map pack, which is the short list of businesses with the map above it, and there is the ordinary run of blue links underneath. They are ranked by different machinery and they are won in different ways. This article is about the first one, because it sits above everything else and because the person in the car never scrolled far enough to reach the second.
+
+## What Google actually publishes about this
+
+Most of what is written about local rankings is somebody's inference from watching results move. The document underneath it is short, public and free, and it is worth reading rather than reading about.
+
+Google's [page on improving your local ranking](https://support.google.com/business/answer/7091) opens the section on ranking with a warning rather than a technique. There is no way to request or pay for a better local ranking on Google, it says, and it says the algorithm details are kept confidential to make the ranking system as fair as possible for everyone. Anybody offering to place you is either selling something that does not exist or selling something Google would suspend you for.
+
+Then comes the sentence the whole industry is built on top of. Local results, the page says, are mainly based on relevance, distance and popularity. Underneath, the three subheadings read Relevance, Distance and Prominence, and the third one has quietly changed names between the summary and the detail. That is a small thing, but it is the kind of small thing worth noticing on a page this heavily quoted, because the word people repeat is prominence and the word in the sentence is popularity, and neither one is defined anywhere with a number.
+
+Relevance is described as how well a Business Profile matches what someone is searching for, and the advice for improving it is to provide complete and detailed business information. Distance is how far each business is from the customer who is searching, and when the customer has not said where they are, Google uses what it already knows about their location. Prominence is how well known a business is, and the page says it is based on information like how many websites link to your business and how many reviews you have.
+
+That is the whole published model. Three inputs, no weights, no thresholds, and one sentence saying the details are deliberately withheld.
+
+[[scene:ranking-factors]]
+
+## The input you cannot do anything about
+
+Distance is the one that changes how you should think about all of this, and it is the one nobody selling local search wants to dwell on.
+
+Your presence on the map has a shape. It is roughly centred on the address you verified, it fades as you move away from it, and it is competing against a different set of businesses in every direction. The person in the car was ranked against whoever was near that school. Fifteen minutes north, the same search produces a different three, and one of them may well be somebody you have beaten on service every time you have met them.
+
+Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) put a number on the outer edge of this, and it is the only number in the whole subject that is stated plainly. The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from where the business is based. That is generous, and it is also a hard statement that a service area is not a marketing decision. It is a description of where you are.
+
+So there is a limit built into this work, and it is honest to say it early. Local search will help you win the ground around you. It will not put you on the map in a town twenty-five minutes away where somebody else's office actually sits, because the thing being ranked is a business with an address and the address is one of the three inputs. That is a real gap, and the answer to it is a different surface entirely, which is an indexable page for each area you genuinely serve. That has its own rules, its own risks and its own article.
+
+[[scene:plate]]
+
+## Why the top of a very short list is worth more than it should be
+
+There is an assumption underneath everything written about ranking, which is that being first is worth more than being third for the sensible reason that people compare the options and the first one is usually the best. It is worth knowing that somebody tested that, and that it is only partly true.
+
+In 2004 a group at Cornell put 22 people in front of Google with an eye tracker running, and put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched, some got the top two results swapped, and some got the whole page reversed. Nobody was told, and the paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anybody had clicked.
+
+The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf) reports the result as counts because the counts are small, and they are worth reading in that form. When the reader clicked exactly one of the top two links and the judges had rated the first one better, the click went to the top link nineteen times out of twenty, which is what you would hope. When the judges had rated the second one better, the click still went to the top link five times out of seven. And in the group where the pair had been secretly swapped, so the link on top was there for no reason at all, the click still went to the top link ten times out of seventeen.
+
+The authors call this a trust bias and their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first, and that share is not earned in any sense a person would recognise as merit. It is an inheritance.
+
+[[scene:trust-bias]]
+
+## What prominence is made of, and what it is not
+
+Here the industry consensus and the document disagree with each other, and there is no polite way to put it, particularly since this website was on the wrong side of the disagreement until this article was written.
+
+Ask anybody what moves the map pack and you will get three things: a complete profile, consistent name, address and phone details everywhere you appear online, and recent reviews. The middle item is the one that funds an entire category of software. It is not in Google's document. What the document names under prominence is how many websites link to your business and how many reviews you have.
+
+That does not make directory tidying worthless. A phone number that is wrong in four places is wrong for the people who ring it, which is reason enough, and links and directory entries are not always separable. It does mean that a plan built mostly on submitting your details to ninety directories is a plan built on something the ranking document does not mention, while the two things it does mention are the two that are hardest to buy: somebody else choosing to link to you, and clients choosing to write about you.
+
+That is an uncomfortable answer for a service page and it is the true one. The prominence half of local search is mostly a consequence of being genuinely present somewhere, and the work that produces it looks like sponsoring the thing your town does in September, being the person a local reporter calls, and asking every single client for a review rather than the pleased ones. Software can keep all of that current. It cannot manufacture any of it.
+
+## The profile rules that decide whether you can have one at all
+
+Before ranking is worth thinking about, there is a shorter question that most agents have never checked, which is whether the profile they have is one they are allowed to have.
+
+The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners, which is the category that gets a profile of its own. In the next breath the guidelines say that sales associates or lead generation agents for corporations are not individual practitioners and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work rather than about what your card says.
+
+The rest of the rules are the sort that get broken by somebody being clever. A practitioner is told not to hold several profiles to cover different specialisations. Where several public-facing practitioners share a location, the organisation gets its own profile and the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile rather than start a competing one. And an address has to be an address: a rented mailing address you do not operate from is a virtual office and is not eligible, while a desk in a co-working space needs signage, staff during business hours and the ability to receive customers.
+
+None of this is exotic and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it, and the appeal is a form.
+
+[[scene:profile-rules]]
+
+## What local SEO actually does, week to week
+
+Under the category name it is four unglamorous jobs, and the AI part is not the clever part. It is the part that does not get bored.
+
+The first job is finishing the profile, which almost nobody has. Categories, every service written out, the service area drawn honestly, the hours including the strange ones, the address, the attributes, real photographs of a real place. Google's own advice for the relevance half is simply to provide complete and detailed information, which is an unsatisfying instruction precisely because there is no trick in it.
+
+The second is keeping it true, which is where this decays. Businesses change quietly. A number moves, a service stops, an office is left, a holiday changes the hours, and none of those events tell the profile about themselves. A profile is at its most accurate on the day somebody fills it in and gets worse every day after that.
+
+The third is feeding the two inputs the document actually names, which means a steady flow of reviews and the slow accumulation of other people's pages mentioning yours. The fourth is reading the report: how many calls, how many direction requests, which searches, this month against last. That last one is the difference between a service you can judge and a service you have to trust.
+
+[[scene:the-work]]
+
+[[scene:local-calculator]]
+
+[[scene:pull-quote]]
+
+## What renting the same attention costs
+
+The obvious alternative to all of this is to buy the position, and the honest comparison is not that ads are bad. It is that almost nobody has measured what their ads are actually adding, and the one organisation that ran the experiment properly got an answer that surprised everybody.
+
+In March 2012 eBay stopped bidding on search queries containing its own name on two search engines, while continuing to buy exactly the same terms on a third. That third one is the control, which is the whole point: without it you are comparing this month against last month and calling seasonality a result. Three economists then wrote up what happened in a [working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) that was later published in Econometrica.
+
+The naive comparison, before and after, said click volume was 5.6% lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529% of the click traffic was actually lost, so 99.5% of it was retained. The people were still coming. They were simply arriving through the unpaid result sitting directly underneath the advert instead of through the advert.
+
+The paper then does the same thing to the return on investment, and this is the number worth carrying out of it. Using ordinary regression on the observational data, the return came out at over 4,100% without controls and over 1,400% with time and geographic controls. Using the experiment, it came out at negative 63%, with a confidence interval that rejects the possibility of the channel yielding positive returns at all.
+
+Be careful with this. It is eBay, a name tens of millions of people type deliberately, and the queries were ones containing that name. Nobody is typing your name, which is exactly why the brand-keyword half does not transfer. What does transfer is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and no amount of dashboard staring will reveal that, because the dashboard is built from the observational data that produced the 4,100%.
+
+[[scene:paid-search]]
+
+## What it costs, and how long it takes
+
+The first month is mostly repair, and repair is priced by how wrong things currently are. A single profile that is two thirds filled in, one address, one set of hours and a handful of reviews is a short piece of work. Three agents, an office profile and two practitioner profiles that disagree with each other, a phone number that changed in 2023 and a service area drawn around a wish is a longer one, and most of the time in it goes on finding out what is true rather than on typing it in.
+
+After that the cost is a monthly rhythm rather than a project, and what drives it is how many surfaces have to stay current and how much of the review asking you want handled rather than remembered. There is no software licence here that dwarfs the rest. The recurring number tracks attention.
+
+The honest answer on time is that the two halves move at different speeds. Fixing a profile changes what people see immediately, because the profile is a record rather than a ranking, and an accurate record with real photographs and current hours converts better on the day it goes up. Position is slower and it is not promised by anybody, including us, for the reason printed at the top of Google's own page.
+
+There is one cost that never appears on a quote and it is the one that decides the outcome. Reviews arrive because somebody asks, every time, including on the deals that went sideways. If nobody in the business is willing to do that, the plan is missing one of the two inputs Google actually names, and no amount of profile maintenance replaces it.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it does not do, and should not pretend to
+
+It does not buy a position, and this is not a disclaimer, it is a quotation. Google's page says in bold that there is no way to request or pay for a better local ranking. Any proposal that includes a promised position is either untrue or is describing something that will get the profile suspended.
+
+It does not move you closer to anybody. Distance is one of the three published inputs and it is a physical fact. A business on the eastern edge of a county will lose searches on the western edge to somebody who is simply standing there, and the correct response to that is a different tactic rather than a better profile.
+
+It does not survive a business that will not ask for reviews. Reviews are one of two things named in the ranking document, they cannot be bought without breaking policy, and the asking has to be systematic to produce a recent history rather than a cluster from 2023.
+
+It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail, and the guidelines are explicit that a practitioner should be contactable at the verified location during the hours stated.
+
+And it does not stay done. Everything above decays, quietly, in the direction of being wrong, and a profile nobody maintains is a profile slowly becoming a liability rather than an asset.
+
+[[scene:wasted]]
+
+## How to find out where you actually stand, in ten minutes
+
+All of this is checkable tonight, for nothing, and the checking is more useful than any report anybody will sell you.
+
+Open a browser you are not signed into, on a phone that is not yours if you can borrow one, and search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market and write down the three that come back there. The difference between the two lists is distance doing its work, and it is the single most useful thing you will learn all week.
+
+Then open your own Business Profile and read the performance screen. Calls, direction requests, website taps, and the searches that surfaced you, this month against a year ago. If you have never seen it, the number will either be higher than you expected, which means something is already working, or close to nothing, which means the listing is not finished.
+
+Then go through the profile as if you were an inspector rather than the owner. Is the primary category the one a stranger would choose. Are all of your services written out. Are the hours right this week. Is the address one you actually sit in. Is the most recent review from this quarter or from two years ago.
+
+Finally, count the reviews and count the closings you had last year, and put the two numbers beside each other. Most agents in this business are asking a small fraction of their clients, usually the ones who were already delighted, and the gap between those two numbers is the clearest picture of the prominence half you will ever get.
+
+## Common questions, answered honestly
+
+### What is local SEO for a real estate agent, in plain terms?
+
+It is the work of being the business that comes up when somebody nearby searches for what you do. Most of it is not writing. It is a Google Business Profile that is complete, correctly categorised and actually true, a steady flow of recent reviews, other people's websites mentioning yours, and real pages for the places and services you cover. The AI part is maintenance rather than magic: keeping the profile current, keeping the review requests going out, and watching what the profile's own report says, which are the three things that stop happening the moment a human gets busy.
+
+### How is this different from getting my website to rank?
+
+They are two different competitions and they are decided by different things. The map pack ranks businesses, and the inputs Google publishes for it are relevance, distance and popularity, one of which is where the searcher is standing. The blue links below it rank pages, and distance is not one of the inputs in the same way. Practically, that means your website can be excellent and you can still be missing from the short list at the top, and your profile can be perfect and your website can still be invisible for everything except your own name. Most agents need both. Finishing the listing is normally the smaller job of the two.
+
+### How do I get into the map pack?
+
+Nobody can tell you how, because Google says out loud that it keeps the details confidential and that there is no way to request or pay for a place. What is known is the list of inputs it publishes. Finish the profile so relevance has something to work with, accept that distance is fixed, and work on the two things named under prominence, which are reviews and other websites linking to yours. Anybody giving you a more specific recipe than that is describing their own inference and should say so.
+
+### How long does it take?
+
+The accuracy half changes the day you do it: a finished profile with the right categories, real photographs and current hours is immediately more convincing to the person reading it, whatever it does to position. The position half is slow and is not guaranteed by anybody. The honest framing is that you are not buying a date, you are removing the reasons you are currently not eligible for a place, and then continuing to be the sort of business that accumulates reviews and mentions.
+
+### Can I rank in a town my office is not in?
+
+In the map pack, not really, and the reason is the distance input rather than any failing on your part. The other route is a normal web page, on your own site, covering what you have genuinely done in that town, because a page is judged by what is written on it. That is a separate piece of work carrying a separate risk, since a set of thin pages with the town name swapped is something Google's spam policy names specifically. Our article on area pages covers it properly instead of glossing it here.
+
+### Do citations and directory listings still matter?
+
+They matter for being correct and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence, and does not mention directory consistency at all. Keeping your details right everywhere is still worth doing, because a wrong phone number is a wrong phone number, and because some of those entries are links. What is not defensible is a plan whose main activity is submitting your details to a long list of directories while the two published inputs go untouched.
+
+### Is this better than running Google ads?
+
+They do different jobs and the honest comparison needs a measurement most people have never made. Ads deliver traffic the day you turn them on and nothing the day you turn them off. A ranking arrives slowly and keeps working. What the eBay experiment shows is not that ads do not work, it is that the returns most businesses believe they are getting come from observational data that overstates them by an enormous factor, and the only way to find out what yours are worth is to turn them off in one place and leave them on in another.
+
+### Can anybody guarantee me a position?
+
+No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking on Google. What can be guaranteed is the work. A finished profile, a review request that actually goes out every time, the mentions that come from being present somewhere, and a report you can read every month. Position is the outcome of those, not a product anybody can sell you.
+
+## What to do about it
+
+Go and be the woman in the car for ten minutes.
+
+Borrow a phone, stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back and at how little information she had to choose between them. Then open your own profile beside it and see whether the thing she would have read is finished, current and honest.
+
+If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning, and it is not that you are worse than the second business she called. It is that a screen you have never looked at is answering a question about you eleven times a week, and nobody has been checking the answer.
+
+[[scene:funnel]]`;
+
 export const AI_APPOINTMENT_BOOKING_POST = `On a Sunday evening in June somebody messaged about a house on Delavan. They wanted to see it. You were at dinner, you saw the message at nine, and you did the right thing: you called back first thing on Monday and had a good conversation.
 
 Then the two of you looked for a time. Your Tuesday was gone, Wednesday they were away, Thursday you had a closing, and the first slot that worked for both of you cleanly was the following week. Thursday the ninth, half past six. You wrote it down. They sounded delighted.
