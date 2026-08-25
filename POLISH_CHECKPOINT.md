@@ -1,5 +1,70 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == HANDOFF 2026-08-25 MORNING -> NEXT SESSION (ROUND 41). READ ALL BEFORE TOUCHING ======
+## The owner reviewed round 39 in the morning and a short session closed his notes. Same
+## workstyle as r39/r40: single Fable agent unless he grants subs, everything measured,
+## commit page-scoped, push deploys the private site.
+##
+## -- WHAT THE MORNING SESSION SETTLED (all verified, no code changes needed) --------------
+## 1. HIS TWO COMPLAINTS WERE A STALE URL: his screenshot showed
+##    realtylt-website-1x19kzu9x-levans-projects-*.vercel.app - an OLD PREVIEW deployment
+##    (pre-round-39 build: connect cards low, no FAQs). The LIVE site
+##    https://realtylt-website.vercel.app has the level /connect (measured again at 1920:
+##    portrait 553 vs cards ~547) and the FAQs on /buying /selling /financing (bottom of
+##    each page, 5 questions, first one open). ALWAYS check which URL he is on before
+##    treating a report as a defect - and give him realtylt-website.vercel.app.
+## 2. SIGN-UP IS NOW INSTANT, LIKE BRIVITY (his ask): "Confirm email" toggled OFF in
+##    Supabase (Sign In/Providers -> User Signups), saved, and PROVEN twice: API signup
+##    returns a session immediately (user auto-confirmed), and a signup through the site's
+##    own modal on production closes the modal straight into a signed-in header chip, no
+##    "check your email" state. The modal's needsConfirm branch stays in code as a guard
+##    if the toggle ever returns.
+## 3. THE AUTH EMAIL ARCHITECTURE, FINALLY MAPPED (explains every r38/r39 confusion):
+##    Supabase custom SMTP is OFF. A **Send Email hook** (Auth Hooks, ENABLED) posts every
+##    auth email to the CRM: https://realtylt-crm-web.vercel.app/api/auth/email-hook,
+##    which sends through his connected Gmail - that is why everything arrives "from
+##    levan@realtylt.com" with a Gmail SENT label and the CRM's own template. Sender and
+##    template changes are therefore CRM-SIDE builds, not website ones.
+## 4. POSTHOG DOUBLE-CONFIRMED: Web analytics shows real aggregates (4 visitors, 7
+##    pageviews, 4 sessions, 2m27s, bounce 50%, per-path table, recordings linked) and the
+##    Activity feed shows Pageview + autocapture + Pageleave from the production host.
+##
+## -- ROUND 41 WORK LIST (his asks from the morning review) --------------------------------
+## 1. EMAIL ADDRESSING PLAN (his words, recorded verbatim in intent):
+##      - noreply@realtylt.com  -> ALL auth/transactional mail (signup-era mail, password
+##        reset, magic links). "those type should be with noreply"
+##      - levan@realtylt.com    -> personal/CRM one-to-one sends only
+##      - info@realtylt.com     -> CMA + market-report emails (alias already created,
+##        connected to his Gmail; replies land in his inbox)
+##    IMPLEMENTATION ORDER, and who owns each step:
+##      a. HIS ~3 min: Gmail (as levan@) -> Settings -> Accounts -> "Send mail as" -> add
+##         noreply@realtylt.com. If the alias does not receive mail yet, first create it
+##         as a Workspace group/alias that delivers to him (same place info@ was made).
+##         Without this, Gmail REWRITES any From back to levan@ and the CRM change is moot.
+##      b. CRM SESSION: /api/auth/email-hook - send auth mail as noreply@realtylt.com,
+##         and restyle the templates ("similar to Brivity" - if he forwards a Brivity
+##         email, match its layout; otherwise clean branded HTML: wordmark, one button,
+##         quiet footer). CMA/report senders -> info@realtylt.com in the same pass.
+##      c. Website has NOTHING to change for senders. Do not add SMTP here; the hook owns
+##         auth mail.
+## 2. TEST-ACCOUNT CLEANUP (one click each, Supabase dashboard -> Auth -> Users; dashboard
+##    delete handles cascades, never raw SQL): levan+r39test@, levan+r40test@,
+##    levan+r40ui@realtylt.com. Their sign-up notification emails in his inbox are the
+##    feature working, not spam.
+## 3. POSTHOG HYGIENE: his own browsing + our probes pollute stats. Set up "Filter out
+##    internal and test users" in PostHog (filter on his IPs / distinct_ids / the
+##    r39/r40 probe ids) so launch-week numbers are clean.
+## 4. CARRIED, unchanged from the r39 block below: spend-cap click - launch switches -
+##    megamenu DUTCHESS ring - /plan BudgetBridge h2 - county-count owner nod - blog
+##    backlog - /search D12 - profile change-password card (one import away) - OAuth
+##    consent-screen naming (post-launch).
+##
+## -- DO NOT UNDO / STANDING (all r39 rules below still bind) ------------------------------
+## Confirm-email stays OFF (owner's call, 2026-08-25). The Send Email hook stays ENABLED.
+## Site URL + redirect allowlist untouched. One dev server :3100. Explicit-pathspec
+## commits. Probes write outside the tree. realtylt-website.vercel.app is the URL to
+## check and to give him - never a hash preview URL.
+
 ## == HANDOFF 2026-08-25 -> ROUND 40. ROUND 39 IS DONE, PUSHED, AND VERIFIED ON PRODUCTION ==
 ## Shape: SINGLE Fable agent (per-session grant absent, so no subs). Every item of the round-39
 ## brief below closed, every claim below MEASURED on the deployed site unless marked otherwise.
