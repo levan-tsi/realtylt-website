@@ -1,6 +1,61 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## == HANDOFF 2026-08-25 MORNING -> NEXT SESSION (ROUND 41). READ ALL BEFORE TOUCHING ======
+## == HANDOFF 2026-08-25 AFTERNOON -> ROUND 41. THE LEAD-FLOW ROUND IS DONE AND LIVE =======
+## The owner's second morning list, every item closed and PROVEN on production. Same
+## workstyle: single Fable agent, measure everything, explicit-pathspec commits.
+##
+## -- WHAT SHIPPED (f81d42d + n8n/env changes outside the repo) ----------------------------
+## 1. PHONE REQUIRED on every lead surface (his words: "number has to be requirement for
+##    all the ctas" - the footer had let him submit without one; the CRM alert read "Phone
+##    Not provided"). Both LeadForm variants + both listing sheets; requirePhone prop
+##    removed; a no-phone submit posts NOTHING (driven).
+## 2. ONE CONVERSION URL: every successful lead submit lands on /thank-you?from&c - footer,
+##    heroes, /connect modal, listing tour/offer, and every EXIT of the qualifying wizard
+##    (Done/X/Esc/backdrop). redirectOnSuccess is gone as a concept. verify-lead-modal
+##    asserts the new contract: 111/111.
+## 3. HIS QUESTION "are we getting those questions with answers in crm?" - YES, PROVEN:
+##    the wizard fires a second /api/lead POST with qualifier
+##    {intent, sellTimeline/buyTimeline, mortgage/choice, callTimes}; driven end to end
+##    (2 posts observed, second carried the answers; parseLead folds them into message).
+## 4. /thank-you SAYS THE FLOW (his direction): OUTBOUND_FOLLOW_UP_LIVE=true. Consented
+##    visitors read: AI assistant calls first from (917) 905-7923 to confirm it is really
+##    you and set the exact day; questions transfer to Levan on the same call; otherwise
+##    you meet at the time you chose. DECLINED branch still never promises a call
+##    (measured both branches; lib/thank-you-copy.test.ts holds the honesty rules).
+## 5. LEAD THANK-YOU EMAIL, LIVE: lib/leads fires n8n "Website Lead Thank-You"
+##    (gKA4YoMDx5ADd8Dx) after every CRM-accepted lead. Consent-aware copy, 1h per-address
+##    throttle (workflow static data) so the wizard's follow-up POST can never double-send.
+##    Env: LEAD_THANKYOU_WEBHOOK/SECRET in Vercel production + .env.local. PROVEN: a real
+##    production lead (levan+r40lead@) got the email seconds later.
+## 6. REGISTRATION WELCOME EMAIL, LIVE (his "like brivity" ask): second Gmail node on the
+##    sign-up workflow (3RLrnY2SMcZ5ZMDL) - "Your RealtyLT account is ready", Brivity's
+##    Registration Confirmation mirrored in the house voice. PROVEN: levan+r40w@ signup
+##    got it in seconds. Levan's own notification email unchanged.
+## 7. BRIVITY HARVESTED (his ask; probe account levan+brivity1@ now exists on the OLD
+##    realtylt.com): their welcome = support@brivity.com "Registration Confirmation" (save
+##    favorites / new-listing alerts / monthly market reports + agent signature). Their
+##    signup pattern: email -> Full Name + "Mobile Number (Used as Password)" - phone IS
+##    the password, no confirmation. Their post-signup wizard = same 3 questions ours asks.
+##    Observation for a future round: phone-as-password is a lower-friction signup than our
+##    email+password; owner may want it someday (needs custom auth, not stock Supabase).
+##
+## -- THE DEPENDENCY THIS ROUND CREATED (CRM loop, urgent-ish) -----------------------------
+## The page AND the thank-you email now promise: "a quick call from my AI assistant...
+## confirms it is really you and sets the exact day." That call is the CRM's Vapi build and
+## it does NOT run yet. The owner directed the promise ahead of go-live; the CRM flow going
+## live is now the thing that makes the site fully honest. If it stalls more than a few
+## days, weaken the copy (flip OUTBOUND_FOLLOW_UP_LIVE=false, one line).
+##
+## -- PROBE ARTIFACTS TO KNOW ABOUT --------------------------------------------------------
+## Auth users: levan+r39test, +r40test, +r40ui, +r40w @realtylt.com (delete via dashboard
+## if unwanted). CRM leads: his two morning tests + "Round Forty Probe" (levan+r40lead@,
+## message says safe to delete). Old-site Brivity account: levan+brivity1@ (his cell as
+## password). All emails involved are in his inbox as the features working.
+## Email sender NOTE: welcome + thank-you emails currently send from levan@realtylt.com via
+## his Gmail (the only wired credential). When noreply@ exists (round-41 item 1 below), point
+## BOTH n8n Gmail nodes and the CRM email-hook at it in one pass.
+##
+## == HANDOFF 2026-08-25 MORNING (superseded items marked; email plan still stands) ========
 ## The owner reviewed round 39 in the morning and a short session closed his notes. Same
 ## workstyle as r39/r40: single Fable agent unless he grants subs, everything measured,
 ## commit page-scoped, push deploys the private site.
