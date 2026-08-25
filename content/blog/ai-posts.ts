@@ -9,6 +9,251 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people, and it was a decent piece of work. Median price in three towns, what had actually closed against what had been asked, and two sentences at the bottom in your own voice about the inspection that had fallen through on Elm.
+
+Nobody complained. Five people pressed one button, which is a different thing from complaining, because pressing it takes under a second and produces no conversation and you never hear about it.
+
+The following month's note went to the same fourteen hundred people. Your software reported that it had been sent to fourteen hundred people, because that is what your software can see. Some number smaller than fourteen hundred received it, and a smaller number than that ever saw it in the place where a person actually reads things.
+
+You did not find out. There is nothing to find out with. The gap between what you sent and what was read is the subject of this article, and almost nothing written about marketing automation is about it at all.
+
+[[scene:in-short]]
+
+[[scene:not-the-others]]
+
+## What marketing automation actually is, once you take the busywork out of it
+
+Three articles on this site are next door to this one and between them they have taken most of the obvious ground, which is useful, because what is left is the part that actually decides whether any of this works.
+
+Marketing automation, described plainly, is a standing instruction about people you are not currently talking to. Not a task that runs itself, and not a message you decide to send. It is a rule you wrote once about who should hear from you, what they should hear, and when, which then runs for years without anybody looking at it.
+
+That is worth saying slowly because it changes what the risks are. A workflow that copies a name into a second system either works or does not, and you find out on the day. A rule about who deserves a message from you keeps running while the people it describes change, and you find out never.
+
+[[scene:four-decisions]]
+
+The fourth card is the whole article. The first three are decisions you make; the fourth is a decision made about you, on the basis of the first three, by an organisation that will not tell you the result.
+
+## The law that governs your email does not require permission
+
+Start with the legal position, because most people have it backwards and the correction is genuinely useful.
+
+Almost everybody assumes American email marketing law works like a consent regime: you may not email somebody unless they agreed. That is the European position and it is not the American one. The [CAN-SPAM Act at 15 U.S.C. 7704](https://www.law.cornell.edu/uscode/text/15/7704) sets conditions on the message rather than on the relationship, and there is no clause anywhere in it requiring prior permission to send a commercial message.
+
+What it does require is worth knowing precisely, because three of the four requirements are things a normal marketing tool does not do for you automatically.
+
+The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed" that a recipient can use to ask not to receive future messages, and that mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality, it is the thing the statute names.
+
+Once somebody uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline: it becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight, and it is generous by the standards of anything else in this area, which is exactly why people trip over it. A fortnight is long enough for a sequence somebody is already inside to fire once more.
+
+And [section 7704(a)(5)](https://www.law.cornell.edu/uscode/text/15/7704) requires three things in the message itself: "clear and conspicuous identification that the message is an advertisement or solicitation", clear notice of the opportunity to decline further messages, and "a valid physical postal address of the sender". A real street address, in the footer, of a real place.
+
+There is a rule underneath the statute that is more practical than the statute, and it is the one to check your own tooling against. Under [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5), neither a sender nor anybody acting for them "may require that any recipient pay any fee, provide any information other than the recipient's electronic mail address and opt-out preferences, or take any other steps except sending a reply electronic mail message or visiting a single Internet Web page" in order to opt out or to have that opt out honoured.
+
+Read that against the last preference centre you were sent to. A single web page. No login. No survey about why you are leaving. No account.
+
+## Whether your market note is an advertisement is decided by its subject line
+
+There is one more piece of the rule that matters specifically to the way real estate agents write, and almost nobody in the industry has read it.
+
+The obligations above attach to a "commercial electronic mail message", and the natural instinct is to think a market update is not one. It contains data. It is useful. It is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided, and the test is not what you intended.
+
+Where a message carries both promotional content and other content, the primary purpose is deemed commercial if "a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message contains the commercial advertisement or promotion of a commercial product or service", or if the transactional or relationship content does not appear "in whole or in substantial part, at the beginning of the body of the message".
+
+The subject line. A stranger's reading of it. That is the test.
+
+So a genuinely useful market note with a subject line about the market is one thing, and the same note with a subject line about booking a valuation is another, and the difference is decided by somebody who has never met you. The practical upshot is simple and it is not a burden: put the physical address and the unsubscribe in everything, and stop trying to work out which of your emails count.
+
+[[scene:plate]]
+
+## The companies that actually decide whether your mail arrives
+
+Now the part that actually governs your business, and it is not a law at all.
+
+Between your sending tool and the person you are writing to sits a mailbox provider. In practice, for a consumer list in the United States, that means Google or Yahoo for most addresses. They have no agreement with you, you are not their customer, and they publish the rules they apply. Almost nobody reads them.
+
+You have no way to appeal, no support line, and no notification. The whole relationship is one way, it is governed by a document on a help site, and the document is not long.
+
+[[scene:email-path]]
+
+## The requirement everybody files under bulk sending, and where it actually sits
+
+Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into two lists, and the split is the single most misreported thing in this entire subject. There is a section headed "Requirements for all senders", and a separate one for senders of "5,000 or more messages per day".
+
+Almost every article you will read about this treats the whole page as a bulk sender rule and concludes that a small business is exempt. Go and look at which list the important items are in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
+
+The 0.3 percent is in the all senders list. A one person brokerage sending twice a month is inside it.
+
+The larger list adds the things that genuinely are about volume: SPF and DKIM together rather than either, a published DMARC policy, alignment between the domain in your From header and the authenticated domain, and one-click unsubscribe. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) states the same requirements in its own words, with two details Google's page does not spell out: "honor unsubscribes within 2 days", and an unsubscribe process that is obvious, visible and "doesn't require users to log in".
+
+[[scene:deadlines]]
+
+The regulator is not the binding constraint here and it has not been for some time. One more line from Google's own page is worth sitting with, because it is advice no platform priced per contact will ever give you: "Consider unsubscribing recipients who don't open or read your messages."
+
+## What SPF, DKIM and DMARC assert, in their own words
+
+Those three acronyms are sold as a deliverability package, and every provider will offer to set them up for you, which is worth paying for. What is worth understanding is what each one actually claims, because their own specifications are unusually clear about it and the clarity is not flattering to the way they are marketed.
+
+SPF is [RFC 7208](https://www.rfc-editor.org/rfc/rfc7208.txt), and its abstract says what it is for: existing protocols "place no restriction on what a sending host can use as the MAIL FROM of a message", and SPF is the mechanism by which a domain owner "can explicitly authorize the hosts that are allowed to use their domain names, and a receiving host can check such authorization". It authorises machines. It says nothing about the message.
+
+DKIM is [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376.txt), and it "permits a person, role, or organization that owns the signing domain to claim some responsibility for a message by associating the domain with the message". Claim responsibility. Not vouch for, not certify, not recommend. It is a signature, and a signature on a bad letter is still a signature.
+
+DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt), which ties the two together and tells a receiver what to do when neither passes. Its abstract contains one sentence that ought to be printed on every deliverability invoice ever issued.
+
+[[scene:pull-quote]]
+
+That is the specification saying, in its own summary, that doing all of this correctly buys you nothing in the way of preferential treatment. What it buys is the absence of a penalty, and the ability of a receiver to tell the difference between you and somebody forging your domain.
+
+Which means all three of these are necessary and none of them is the work. They establish who is speaking. Whether what you said was wanted is a completely separate judgement, made afterwards, on evidence you supply every time you send.
+
+## What one-click unsubscribe actually is, and why it protects you
+
+One-click unsubscribe is the thing in the bulk sender list that sounds like a concession to the recipient, and it is worth understanding because it is not one. It is the mechanism that protects your reputation from the people who want to leave.
+
+It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt), and the reasoning is written down in the introduction rather than left to be inferred. The problem it solves is technical: anti-spam software often fetches every link in a message's headers automatically, so a plain unsubscribe link in a header could be triggered by a machine rather than a person. Senders responded by putting a confirmation page behind it, "and that makes the unsubscription process more complex than a single click".
+
+Then the specification explains why that mattered, and this is the sentence to take away:
+
+> Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer arrives.
+
+That is an internet standards document stating the business case for a frictionless exit, on the sender's behalf. Every extra step between somebody deciding to leave and being gone is a step during which their alternative is the button that costs you three tenths of a percent.
+
+There is one detail with a practical consequence. Section 4 of the same document requires that the message carry a valid DKIM signature covering the unsubscribe headers, and says that without it "the mail receiver SHOULD NOT offer a one-click unsubscribe for that message". So the authentication work in the previous section is not a separate project from the unsubscribe work. Get the signature wrong and the safest exit route is quietly not offered to your recipients at all.
+
+## Three tenths of one percent, and why you cannot work out your own
+
+Here is the number, and here is the reason you cannot check yourself against it.
+
+Both providers publish the same ceiling. Yahoo puts it as a heading: "Keep your spam rate below 0.3%". Google puts it in the all senders list. On a list of a thousand people that is three complaints. Not three unsubscribes, which are a healthy sign and cost you nothing. Three people pressing the button that says this should not be here.
+
+[[scene:complaint-calculator]]
+
+Now the honest part, and it is the reason the calculator above computes a ceiling rather than a rate.
+
+Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox, keep this in mind when referencing." Read that carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
+
+That has an uncomfortable consequence. As your reputation falls, more of your mail is filtered, which shrinks the denominator, which raises the rate computed from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to be stable, and there is no version of the arithmetic you can do at your own end that reproduces it.
+
+Google publishes yours to you through Postmaster Tools, which is free and takes about ten minutes to set up if you control your sending domain's DNS. That is the single most useful concrete thing in this article. It is also, for most small senders, the only actual measurement of their own reputation that exists anywhere, and almost none of them have looked at it.
+
+## What an open actually measures
+
+The other half of the reporting problem is the number everybody does look at.
+
+An open is not an event. Nobody tells your software that a message was read. What happens is that the message contains a small image hosted on the sender's server, and if the recipient's mail client fetches that image, the fetch is recorded and reported to you as an open. That mechanism has two well known failure modes in opposite directions: clients that block remote images never register an open for a message somebody read carefully, and clients that fetch images automatically register one for a message somebody deleted from the preview pane.
+
+That much is widely understood. What is less widely understood is what else is in there, and there is a measurement of it.
+
+[[scene:tracking]]
+
+Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, that page loads resources from other companies, and the sender did not add most of them and in many cases does not know they are there. The researchers listed exactly that as an open question at the end of their own paper: when a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
+
+For a business whose entire product is trust, that is worth ten minutes. Send yourself a campaign, open it in a browser with the developer tools showing, and look at which domains the message contacts. It is not a research project. It is a list, and it is your list, going to those companies, with your name on it.
+
+[[scene:plate-two]]
+
+## Why the second campaign is harder than the first
+
+There is a mechanism running underneath all of this that explains why people's experience of marketing automation gets worse rather than better, and it is not fatigue and it is not the copy going stale.
+
+Everything in the sections above compounds in one direction. The judgement a mailbox provider makes about your next message is formed from how people reacted to your last one. So the first send to a list that has never heard from you is the easiest one you will ever do, and every send after it is graded against a record you are writing as you go.
+
+Three consequences follow, and none of them are obvious from inside a dashboard.
+
+The first is that mistakes are paid for later and somewhere else. A badly aimed send in March does not cost you March. It costs you a fraction of the delivery of the April message, to the people who were pleased to hear from you, and nothing in your reporting will connect the two events.
+
+The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you, and the ones who never open anything are the ones most likely to eventually press the wrong button.
+
+The third is the one that changes behaviour, and it is why the close of this article is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list, because a shorter list of people who want the message improves the one input you actually control, and it improves it on every future send rather than on this one.
+
+## What it costs and how long it takes
+
+There is no price on this page, and the reason is that the expensive part of this one is not software at all.
+
+Three things are being paid for. The sending platform is a subscription priced per contact by whoever you use, and it is the smallest number in the project by a distance. Then the configuration: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data actually lives. Then the item nobody quotes, which is getting your sending domain into a state where the three records above are correct and the address in your From line is aligned with them.
+
+That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has historically gone out from three different tools under two different subdomains configured by people who have left, it becomes an archaeology project, and the honest sequencing is to finish it before writing a single campaign rather than after.
+
+The other real cost is a person. Audiences rot, and they rot silently, so somebody has to own the rules and look at them on a schedule. That is not a big job and it is nobody's job by default, which is how the segment that includes your past clients survives for two years.
+
+Before spending anything, run the audit below. It is free, it takes an afternoon, and it settles the only question that decides the shape of the project, which is whether your domain is already in good order or has been quietly accumulating configuration for six years.
+
+## What it does not do, and should not pretend to
+
+It does not create demand. Every mechanism described here assumes somebody who already has a reason to hear from you. A cadence does not turn a person who is not moving into a person who is, and pointing one at people who never asked is a different activity with a different risk profile.
+
+It does not get your mail delivered. Authentication removes a reason to reject you. Delivery is a judgement made by somebody else on the basis of how the people you sent to reacted last time, and the only lever you have on it is who you send to and how often.
+
+It does not tell you whether anybody read anything. Opens are a proxy with known failure modes in both directions and clicks are a proxy for interest in one link. Neither is a measurement of attention, and a dashboard built out of them can look healthy while the mail is being filtered.
+
+It does not fix a message that should not be sent. Behaviour triggers change when something arrives, not whether it should. A poorly judged email delivered at the perfect moment is a poorly judged email that arrives faster, and relevance in the timing does not buy forgiveness for the content.
+
+It does not survive being aimed at everybody. This is the limit that costs the most and the one people resist, because a bigger list looks like a bigger asset. Every send to somebody who did not want it is evidence handed to a filtering system, it is scored against your domain, and the damage lands on the next message you send to the people who did want it.
+
+[[scene:wasted]]
+
+[[scene:offer]]
+
+## How to audit your own sending in an afternoon
+
+Nothing here needs a consultant and none of it needs access to anything you do not already have.
+
+1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries and anybody can read them, including you. If nobody in your business knows whether they exist, that is the finding, and it is the one to fix first because everything else depends on it.
+
+2. **Check the From line against them.** Both providers require the domain in your From header to be aligned with the domain that authenticated the message. If your mail says it is from you but is signed by your mailing tool's own domain, you are failing a published requirement that you can see.
+
+3. **Set up Google Postmaster Tools.** It is free, it requires a DNS record, and it will show you the one number in this article you cannot otherwise obtain, which is your own spam rate as Google computes it.
+
+4. **Send yourself a campaign and try to unsubscribe from it.** Time it. Count the pages. If it asks you to log in, asks you why, or takes more than one page, it does not meet the rule at 16 CFR 316.5 and it is also quietly converting people who would have left politely into people who press the other button.
+
+5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here and there is definitely a wrong one, which is not knowing.
+
+6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise somebody who bought through you, somebody who told you they were staying put, or somebody who is now a competitor, your audience rule has no exit condition and it has not had one for a while.
+
+7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Most people are surprised by this number, and it is the input with the largest effect on everything above.
+
+## Common questions, answered honestly
+
+### What is real estate marketing automation, in plain terms?
+
+It is a standing instruction about people you are not currently talking to: a rule, written once, about who hears from you, what they hear and when. The software part is a scheduler and a mail sender. The part that decides whether it works is the audience rule, because that rule keeps running for years against a database of people whose circumstances keep changing.
+
+### Do I need permission to email somebody in the United States?
+
+Not under the federal statute, which is the thing that surprises people. CAN-SPAM regulates the message: it must identify itself as an advertisement, carry a real postal address, and offer a working exit that survives at least thirty days, with the opt out honoured within ten business days. Permission is required in practice for a different reason. Mailbox providers judge you on how the people you email react, and mail to people who did not ask is what generates the reactions that get you filtered.
+
+### How is this different from workflow automation?
+
+Workflow automation is about work: a step somebody used to do by hand now happening on its own, and you find out on the day if it breaks. This is about judgement at scale: who deserves a message, what it says, when it lands. They are usually built with the same tools and they fail in completely different ways, which is why [the workflow article](/blog/workflow-automation-real-estate-business) is a separate read rather than a section of this one.
+
+### Is this the same as reactivating an old database?
+
+No, and the difference is the consent question. Reactivating a list of people who contacted you years ago and went quiet raises questions about permission that has gone stale, and those rules have dates in them. [That article](/blog/database-reactivation-old-real-estate-leads) covers them properly. This one assumes current permission and asks a harder question about what you do with it week after week.
+
+### Will automated marketing annoy my leads?
+
+Some of them, and the number that matters is much smaller than the number who are annoyed. Both major providers publish the same ceiling of three tenths of one percent for how often people may report you as spam, which on a list of a thousand is three people. Unsubscribes are not the problem and are a sign of a healthy list. The button next to it is the problem, and irrelevance is what makes people press it.
+
+### Why did my open rate drop?
+
+Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image, so clients that block or proxy remote images distort the count in both directions and the mix of clients on your list changes over time. And separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate, and it is the one almost nobody looks at.
+
+### How often should I send?
+
+There is no published number for this that is worth quoting, and any article that gives you one has made it up. What is defensible is the direction: every send is evidence handed to a filtering system, so the cost of one more message is not zero even when nobody replies. Send to fewer people more carefully and the frequency question mostly answers itself.
+
+### What is the one thing to fix first?
+
+Whatever your sending domain currently publishes about itself. Not the copy, not the cadence, not the segments. If your authentication is wrong or your From line is not aligned with it, you are failing a requirement that both major providers have published in plain English, and every improvement you make above that layer is being applied to mail that may not arrive.
+
+## What to do about it
+
+The uncomfortable idea in this article is that the most effective thing available to you is to send less.
+
+That runs against how this category is sold, because a platform priced per contact has no reason to suggest a smaller list, and a dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute and it is published by the people who run it. Your ability to reach the people who want to hear from you is a function of how the people who did not want to hear from you reacted. There is no other input you control.
+
+[[scene:funnel]]
+`;
+
 export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town, every one of them owned by somebody who does not live there, and for a little over half of them a mobile phone number sitting in the next column along.
 
 You worked down it the way anybody would. No answer. No answer. A voicemail. A man who was perfectly pleasant and said no. Then a woman picked up on the fourth ring, listened to the first two sentences, and asked a question in the middle of an ordinary reply.
@@ -143,7 +388,7 @@ The same order carries a scale figure, and the honest way to quote it is with th
 
 That is a regulator publishing a number, saying somebody has challenged it, and saying nobody offered anything better. It is a more useful thing to know than the number itself, and it is the reason this article puts it in a paragraph rather than in a chart. A figure the publishing body has flagged as contested is not a measurement, and drawing a bar for it would turn a caveat into a fact.
 
-What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large, and the enrichment file that told you this number belongs to that owner was assembled at a moment in the past. When a stranger answers and says you have the wrong person, that is not a defect in the vendor. That is the system working exactly as described.
+What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large, and the enrichment file that told you this number belongs to that owner was assembled at a moment that has already passed. So a stranger answering and telling you it is the wrong person is not the vendor failing. It is the arrangement behaving exactly as everybody involved has described it.
 
 [[scene:trace-path]]
 
@@ -159,11 +404,11 @@ Put them in the build and they cost you almost nothing. A source field on every 
 
 ## What it costs and how long it takes
 
-There is no price on this page, and the reason is that the cost of this one is dominated by a per record charge you pay to somebody else rather than by anything we build.
+No figure is quoted here, and the reason is specific to this service: the dominant cost is a per record charge paid to somebody else, so most of what you would spend never passes through us at all.
 
-The shape of the bill has three parts. There is enrichment, which is priced per record by whichever provider you use and which is the only part that scales with volume. There is the build, which is the pipeline that pulls the properties, runs them through, validates and deduplicates the results, writes them where they need to go, and enforces the suppression check. And there is the part almost nobody budgets for, which is the fields and the process: a source and a date on every row, a purpose on file, an owned suppression list, and somebody whose job it is to keep them.
+Three things are being paid for. Enrichment is priced per record by whichever provider you use, and it is the only part that scales with volume. The pipeline pulls the properties, runs them through, validates and deduplicates what comes back, writes it where it needs to go and enforces the suppression check. And then the item almost nobody budgets for, which is the fields and the habit around them: a source and a date on every row, a purpose on file, an owned suppression list, and a person responsible for all three.
 
-Two things drive the enrichment bill and neither of them is negotiable by us. The first is how many properties you run, and the second is that you pay for attempts rather than for successes with most providers, so a low resolve rate in your area costs money without producing anything. That is why the calculator above asks you for the resolve rate instead of telling you one, and why the single most valuable thing you can do before signing anything is to ask a provider to run two hundred addresses from your actual farm area and report what came back.
+Two things drive the enrichment bill and neither is ours to negotiate. One is how many properties you run. The other is that most providers charge for attempts rather than for successes, so a low resolve rate in your area spends money without producing anything. The second slider in the calculator is therefore yours to fill in rather than ours to assert, and the most valuable half hour available before you sign anything is asking a provider to run two hundred addresses from your own farm and report what came back.
 
 On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a conversation rather than a configuration: deciding what your suppression rules are, agreeing where the source and purpose fields live, and getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup, which is a real cost and is better discovered before the work starts than after.
 
@@ -223,7 +468,7 @@ Nobody publishes a figure with a method under it, and we are not going to invent
 
 ### How is this different from buying a lead list?
 
-A purchased list was compiled at some point in the past and sold to everybody who paid for it, so the same owners take the same call from several agents in the same fortnight. A trace is run on demand for the area you are actually working. The difference that matters for this article is not freshness though: it is that when you build the list yourself you are the person who obtained the information, which means the questions in this article are yours to answer and yours to be able to answer.
+A purchased list was assembled on some date nobody tells you and sold to everybody who paid, so the same owners take the same call from several agents in the same fortnight. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though: it is that building the list yourself makes you the person who obtained the information, so every question in this article becomes yours to answer and yours to be able to answer.
 
 ### What is the difference between skip tracing and data enrichment?
 
@@ -241,7 +486,7 @@ Four questions, all short, all answerable. Which permitted purpose is our accoun
 
 Everything in this article comes back to one sentence you should be able to say without hesitating, to a stranger, on a Tuesday morning, about any row on any list in your business.
 
-That sentence is not a legal formula and it does not need to be. It is something like: this came from a provider we have a written agreement with, under a purpose they have on file, and we checked it against the do not call registry before I rang you. Every part of that is arrangeable, none of it is expensive, and all of it has to be arranged before the first call rather than after the first complaint.
+It is not a legal formula and nobody is asking for one. It runs something like: this came from a provider we have a written agreement with, under a purpose they have on file, and we checked it against the do not call registry before I rang you. Every part of that is arrangeable, none of it is expensive, and all of it has to be arranged before the first call rather than after the first complaint.
 
 [[scene:funnel]]
 `;

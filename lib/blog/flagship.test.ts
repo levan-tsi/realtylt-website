@@ -10,6 +10,8 @@ import { LOCAL_SEO_FLAGSHIP } from "@/content/blog/local-seo-scenes";
 import { GEO_PAGES_FLAGSHIP } from "@/content/blog/geo-pages-scenes";
 import { CRM_SYNC_FLAGSHIP } from "@/content/blog/crm-sync-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "@/content/blog/agent-workforce-scenes";
+import { SKIP_TRACING_FLAGSHIP } from "@/content/blog/skip-tracing-scenes";
+import { MARKETING_AUTOMATION_FLAGSHIP } from "@/content/blog/marketing-automation-scenes";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -20,7 +22,9 @@ import {
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
   LOCAL_SEO_POST,
+  MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
+  SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
 import { flagshipToc, type FlagshipContent } from "./flagship";
@@ -288,6 +292,8 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["geo landing pages", GEO_LANDING_PAGES_POST, GEO_PAGES_FLAGSHIP],
   ["crm sync", CRM_SYNC_POST, CRM_SYNC_FLAGSHIP],
   ["ai agent workforce", AI_AGENT_WORKFORCE_POST, AGENT_WORKFORCE_FLAGSHIP],
+  ["skip tracing", SKIP_TRACING_POST, SKIP_TRACING_FLAGSHIP],
+  ["marketing automation", MARKETING_AUTOMATION_POST, MARKETING_AUTOMATION_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

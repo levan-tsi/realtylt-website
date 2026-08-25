@@ -50,6 +50,8 @@ export const POSTS = [
   "geo-landing-pages-real-estate-doorway-pages",
   "crm-sync-real-estate-duplicate-contact-records",
   "ai-agent-workforce-real-estate-assistants",
+  "skip-tracing-real-estate-legal-owner-phone-numbers",
+  "marketing-automation-real-estate-email-deliverability",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */

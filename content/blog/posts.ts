@@ -14,10 +14,12 @@ import {
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
   LOCAL_SEO_POST,
+  MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
 import { SKIP_TRACING_FLAGSHIP } from "./skip-tracing-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "./agent-workforce-scenes";
 import { CRM_SYNC_FLAGSHIP } from "./crm-sync-scenes";
@@ -72,6 +74,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "marketing-automation-real-estate-email-deliverability",
+    title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 12 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button, and the next month's note reached fewer people for reasons nothing in your software will ever show you. What marketing automation actually decides on your behalf, the ceiling Google and Yahoo both publish, and why you cannot work out your own.",
+    seoDescription:
+      "What real estate marketing automation actually decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
+    cover: "/images/editorial/notice-board.jpg",
+    body: [],
+    placeholder: false,
+    markdown: MARKETING_AUTOMATION_POST,
+    flagship: MARKETING_AUTOMATION_FLAGSHIP,
+  },
   {
     slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
     title: "You Have Her Number. She Never Gave It to You.",
