@@ -63,7 +63,7 @@ None of those are fixed by a better model, and all of them are fixed by somebody
 
 ## The brief is the product
 
-The tau-bench authors ran one more experiment which almost nobody talks about, and it is the single most useful result in either paper for somebody about to pay for this.
+The tau-bench authors ran one more experiment which almost nobody talks about, and for a reader about to pay for any of this it is the result in either paper that matters most.
 
 They took the written policy out of the agent's instructions and ran everything again. In the simple domain, where the rules are close to common sense, performance fell from 61.2 to 56.8 percent, which is barely anything. In the complicated domain, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
 
@@ -135,9 +135,9 @@ Set that beside four assistants running overnight with nobody reading the output
 
 ## What it costs, and how long it takes
 
-There is no price on this page, and the reason is that three separate things drive it and only one of them is the software.
+Nobody can quote this from an article, because three separate things drive the cost and only one of them is the software.
 
-The first is the brief, and it is the slow part. Writing down a job properly, with its exceptions, takes an hour or two per assistant with somebody arguing with you about it, and the tau-bench ablation is the argument for spending that time rather than skipping it.
+The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, runs to an hour or two per assistant, and it goes faster when a second person keeps pushing back on the first version you offer. The tau-bench ablation is the argument for spending that time rather than skipping it.
 
 The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot, and the work is connecting it safely: the right permissions, nothing wider than the job needs, and a way to switch it off.
 
@@ -171,7 +171,7 @@ Then run it against work you have already done. Take ten pieces of last month's 
 
 Then run the same task ten times and count how many times all ten are right. Not the average. All ten. That is the pass hat k measurement from the research above, done by hand, and it is the single number that predicts whether you will still be reading the output in week six.
 
-Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that guesses when it should have asked will eventually guess in front of a client, in writing, at a time of its own choosing.
+Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the ambiguous cases rather than stopping will go on deciding, and one of those decisions reaches somebody outside your office before you have seen it.
 
 Last, put a time in your diary. Fifteen minutes, the same slot every week, to read a sample of what it produced and check it against what you asked for. If you cannot find that slot for one assistant, you have your answer about four.
 
@@ -183,7 +183,7 @@ It is a set of AI assistants, each configured for one recurring job and each con
 
 ### How is this different from workflow automation?
 
-Workflow automation connects the software you already pay for so that finishing one step starts the next, and most of the steps in a good automation have no judgement in them at all. An agent is what you use when a step genuinely needs a decision made from context. They are usually built with the same tools and they answer different questions, and a business that puts an agent where an if statement would have done has bought unpredictability it did not need.
+Workflow automation joins the software you already pay for, so the end of one step is what begins the next, and most of the steps in a good automation carry no judgement in them at all. An agent is what you reach for when a step genuinely needs a decision made from context. Both are often assembled from the same parts, and putting an agent where a simple rule would have done buys unpredictability nobody asked for.
 
 ### How is this different from just using ChatGPT?
 
@@ -215,7 +215,7 @@ Go and read yesterday's output. Not the summary of it, the actual pieces, all of
 
 Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document, and the document is the part nobody else can write, and you can write it today for nothing.
 
-You can see the assistants on [the RealtyLT AI page](/ai#agents), and what each one is pointed at is on the [AI agent workforce page](/services/ai-agent-workforce). If you would rather somebody sat with you and worked out which of your recurring jobs are actually delegable, that is what the [AI audit](/services/ai-audit) is: we take one real job, write the brief with you, and build that one first.
+The assistants are listed on [the RealtyLT AI page](/ai#agents); what each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs are genuinely delegable is what the [AI audit](/services/ai-audit) does: we take one real job, write the brief with you, and build that one first.
 
 The individual jobs are written up on their own: [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
 
@@ -223,7 +223,7 @@ Nine good mornings are not a track record. They are nine mornings.
 
 [[scene:funnel]]`;
 
-export const CRM_SYNC_POST = `In March a woman filled in the home valuation form on your website. She typed her name the way she says it out loud, so the record in your CRM says Kathy Brown.
+export const CRM_SYNC_POST = `In March a woman asked your website what her house was worth. She typed her name the way she says it out loud, so the record in your CRM says Kathy Brown.
 
 In June she rang the office about a different house. Whoever picked up did everything right: took the details, typed them in properly, spelled the name the way it appears on a deed. Katherine Brown. A work email rather than the personal one, and the mobile she actually answers.
 
@@ -357,9 +357,9 @@ And it documents what survives a merge, which is the detail that tells you the v
 
 ## What it costs, and how long it takes
 
-There is no price on this page, and the reason is not coyness. The cost is driven by four things nobody can guess from an article: how many systems have to be connected, whether each of them exposes an interface a program can actually use, how many fields have to be mapped by hand rather than by name, and whether the records already in there have to be reconciled before anything is switched on. The fourth is the one that moves the number the most and the one that is never in the quote.
+This article will not quote you a number, and not out of coyness. Four things drive the cost and none of them can be guessed from a distance: how many systems have to be joined, whether each of them exposes an interface a program can actually use, how many fields have to be mapped by hand rather than by name, and whether the records already in there have to be reconciled before anything is switched on. The fourth moves the total more than the other three and it is never in the quote.
 
-What can be said honestly is the shape. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project, and most of the work in it is not the connecting. It is somebody going through a list of fields with you and asking what each one means, which is slow because half the answers are "I think that was Dave's".
+The shape of it can be described without a number. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project, and the connecting is the smaller half of it. Most of the time goes on somebody sitting with you over a list of fields and asking what each one is for, which is slow because half the answers turn out to be "I think that was Dave's".
 
 Then there is the recurring cost, which is a person's attention. A sync is software, it will break the week a vendor renames a field, and something has to notice. And the middle band from the matching model never goes away: if you want fewer wrong merges, more pairs land in front of a human, and that is a standing few minutes a week rather than a one-off.
 
@@ -401,7 +401,7 @@ It means information travels in both directions between your CRM and the other s
 
 ### How is this different from workflow automation?
 
-Workflow automation is about work moving between systems: a form is submitted, so a task is created and a reply goes out. Sync is about one fact being true in more than one place at the same time. They are usually built with the same tools and they answer different questions, and you can have either without the other. A business with beautiful automation and no sync sends perfectly timed messages to the wrong version of a person.
+Workflow automation is about work moving between systems: a form is submitted, so a task is created and a reply goes out. Sync is about one fact being true in more than one place at the same time. The tooling underneath is often identical and the question being answered is not, so a business can have either one without the other. A business with beautiful automation and no sync sends perfectly timed messages to the wrong version of a person.
 
 ### Will it create duplicate contacts?
 
@@ -433,7 +433,7 @@ Search your own name in your own CRM. That is the whole assignment, it costs not
 
 If more than one of you comes back, you already know what the automated message going out on Tuesday is addressed to. And you know something else, which is that it was never a discipline problem, because nobody typed anything wrong. Two systems were separately right about the same person, and nothing in the building had the job of noticing.
 
-You can see how the pieces connect on [the RealtyLT AI page](/ai#crmsync), and what writes back to what is on the [two-way CRM sync page](/services/crm-sync). If you would rather somebody went through your fields with you and told you honestly which parts of this are a week and which parts are an afternoon, that is what the [AI audit](/services/ai-audit) is for.
+The pieces are drawn on [the RealtyLT AI page](/ai#crmsync); what writes back to what is set out on the [two-way CRM sync page](/services/crm-sync). Should you prefer somebody to go through your fields alongside you and say honestly which parts of this are a week and which are an afternoon, the [AI audit](/services/ai-audit) is exactly that hour.
 
 The other half of this story is the systems doing the writing: [what happens when the phone rings and nobody picks up](/blog/ai-voice-agent-missed-calls-real-estate), [what a website conversation at midnight produces](/blog/ai-chat-assistant-real-estate-website), and [the busywork the wiring between them removes](/blog/workflow-automation-real-estate-business).
 
