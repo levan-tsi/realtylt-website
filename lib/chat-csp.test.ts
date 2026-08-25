@@ -18,12 +18,18 @@ import { describe, expect, it } from "vitest";
  */
 const ROOT = path.resolve(__dirname, "..");
 
-function widgetEndpointOrigin(): string {
+function widgetEndpointOrigins(): string[] {
   const js = fs.readFileSync(path.join(ROOT, "public", "rlt-chat.js"), "utf8");
-  // The live value, not the commented-out rollback line above it.
-  const m = js.match(/^\s*WEBHOOK_URL:\s*['"]([^'"]+)['"]/m);
-  if (!m) throw new Error("rlt-chat.js: no WEBHOOK_URL found");
-  return new URL(m[1]).origin;
+  // Every host the widget fetches from must clear the CSP, not only the message endpoint. Since
+  // 2026-08-24 the widget also POSTs SESSION_URL to mint its session id + ownership token (C1);
+  // if that host is not allowed, the widget cannot start a session and silently falls back to a
+  // memoryless local id. Both live values, not the commented-out rollback line above WEBHOOK_URL.
+  const keys = ["WEBHOOK_URL", "SESSION_URL"];
+  return keys.map((k) => {
+    const m = js.match(new RegExp("^\\s*" + k + ":\\s*['\"]([^'\"]+)['\"]", "m"));
+    if (!m) throw new Error(`rlt-chat.js: no ${k} found`);
+    return new URL(m[1]).origin;
+  });
 }
 
 function connectSrc(): string[] {
@@ -49,16 +55,20 @@ function allows(sources: string[], origin: string): boolean {
 
 describe("the chat widget and the site's CSP", () => {
   it("reads both files at all (the scan must not silently match nothing)", () => {
-    expect(widgetEndpointOrigin()).toMatch(/^https:\/\//);
+    const origins = widgetEndpointOrigins();
+    expect(origins).toHaveLength(2);
+    origins.forEach((o) => expect(o).toMatch(/^https:\/\//));
     expect(connectSrc().length).toBeGreaterThan(5);
   });
 
-  it("allows the origin the widget actually posts to", () => {
-    const origin = widgetEndpointOrigin();
-    expect(
-      allows(connectSrc(), origin),
-      `connect-src does not allow ${origin}, so the browser refuses every chat message`,
-    ).toBe(true);
+  it("allows every origin the widget posts to (message endpoint AND session mint)", () => {
+    const sources = connectSrc();
+    for (const origin of widgetEndpointOrigins()) {
+      expect(
+        allows(sources, origin),
+        `connect-src does not allow ${origin}, so the browser refuses the widget's request to it`,
+      ).toBe(true);
+    }
   });
 
   it("recognises a wildcard source, so the matcher is not accidentally exact-only", () => {

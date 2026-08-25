@@ -12,6 +12,10 @@
     // published and untouched. The vercel host is deliberate: app.realtylt.com DNS still
     // points at the old server.
     WEBHOOK_URL: 'https://realtylt-crm-web.vercel.app/api/chat/agent',
+    // The CRM mints the session id and a signed ownership token here (C1, 2026-08-24). Asking
+    // for the id server-side — instead of minting one in the browser — is what stops a stranger
+    // who guesses a session id from reading the conversation back through the assistant.
+    SESSION_URL: 'https://realtylt-crm-web.vercel.app/api/chat/session',
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
     BRAND_NAME: 'Levan Tsiklauri',
@@ -31,10 +35,20 @@
   window.__realtyltChatLoaded = true;
 
   // ============================================================
-  // SESSION ID - persist across page loads
+  // SESSION - server-minted id + ownership token (C1, 2026-08-24)
   // ============================================================
+  // The CRM mints the session id and signs a token that proves THIS browser owns the
+  // conversation. We ask for both once (SESSION_URL), carry the token on every turn
+  // (x-rlt-chat-token), and refresh it from each reply. Guessing someone's session id no
+  // longer buys their transcript: without the token the CRM answers statelessly.
+  //
+  // GRACEFUL FALLBACK. If the CRM has no signing key yet, or the mint call fails, we fall back
+  // to a locally-minted id with no token. The assistant still answers — just without memory
+  // across turns — which is exactly how this widget behaved before tokens existed. So this is
+  // safe to ship ahead of the CRM's CHAT_SESSION_SECRET; it upgrades itself the moment that
+  // key is set.
   function uuid() {
-    // RFC4122-ish v4
+    // RFC4122-ish v4 - only used when the server mint is unavailable.
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random() * 16 | 0;
       const v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -42,19 +56,63 @@
     });
   }
 
-  function getSessionId() {
+  // { id, token } for this tab. Held in memory and mirrored to sessionStorage.
+  let _session = null;
+
+  function readStoredSession() {
     try {
-      // sessionStorage: new session per tab, persists across navigations within same tab
-      let id = sessionStorage.getItem(CONFIG.SESSION_KEY);
-      if (!id) {
-        id = uuid();
-        sessionStorage.setItem(CONFIG.SESSION_KEY, id);
+      const raw = sessionStorage.getItem(CONFIG.SESSION_KEY);
+      if (!raw) return null;
+      // JSON is the current shape; a bare string is a session id from an older widget.
+      if (raw.charAt(0) === '{') {
+        const o = JSON.parse(raw);
+        if (o && o.id) return { id: o.id, token: o.token || null };
+        return null;
       }
-      return id;
-    } catch (e) {
-      if (!window.__rltSessionId) window.__rltSessionId = uuid();
-      return window.__rltSessionId;
-    }
+      return { id: raw, token: null };
+    } catch (e) { return null; }
+  }
+
+  function writeStoredSession(s) {
+    try { sessionStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(s)); }
+    catch (e) { /* private mode: memory-only for this tab */ }
+  }
+
+  // Resolve the session once, then reuse it. Asks the CRM to mint an id + token; falls back to
+  // a local id if that is unavailable.
+  async function ensureSession() {
+    if (_session && _session.id) return _session;
+    const stored = readStoredSession();
+    if (stored) { _session = stored; return _session; }
+    try {
+      const resp = await fetch(CONFIG.SESSION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}'
+      });
+      if (resp.ok) {
+        const d = await resp.json();
+        if (d && d.sessionId) {
+          _session = { id: d.sessionId, token: d.token || null };
+          writeStoredSession(_session);
+          return _session;
+        }
+      }
+    } catch (e) { /* fall through to a local id */ }
+    _session = { id: uuid(), token: null };
+    writeStoredSession(_session);
+    return _session;
+  }
+
+  // Each agent reply carries a fresh token; keep the newest so the session stays owned.
+  function updateToken(token) {
+    if (token && _session) { _session.token = token; writeStoredSession(_session); }
+  }
+
+  function getSessionId() {
+    if (_session && _session.id) return _session.id;
+    const s = readStoredSession();
+    return s ? s.id : null;
   }
 
   function loadHistory() {
@@ -76,6 +134,9 @@
       sessionStorage.removeItem(CONFIG.HISTORY_KEY);
       sessionStorage.removeItem(CONFIG.SESSION_KEY);
     } catch (e) {}
+    // Drop the in-memory session too, so Reset genuinely starts a new conversation (a fresh
+    // server-minted id) rather than re-using the one held in this closure.
+    _session = null;
   }
 
   // ============================================================
@@ -543,11 +604,16 @@
     const timeout = setTimeout(function() { controller.abort(); }, CONFIG.REQUEST_TIMEOUT);
 
     try {
+      const sess = await ensureSession();
+      const headers = { 'Content-Type': 'application/json' };
+      // The token proves ownership of this session; without it the CRM answers statelessly.
+      if (sess.token) headers['x-rlt-chat-token'] = sess.token;
+
       const resp = await fetch(CONFIG.WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: headers,
         body: JSON.stringify({
-          sessionId: getSessionId(),
+          sessionId: sess.id,
           message: message,
           userMeta: {
             page: location.pathname,
@@ -565,6 +631,8 @@
         throw new Error('Server returned ' + resp.status);
       }
       const data = await resp.json();
+      // The reply carries a refreshed token; keep the newest so the session stays owned.
+      if (data && data.sessionToken) updateToken(data.sessionToken);
       return data;
     } catch (err) {
       clearTimeout(timeout);
