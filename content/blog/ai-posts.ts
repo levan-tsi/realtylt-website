@@ -37,7 +37,7 @@ The first is doorway abuse. The policy defines it as sites or pages created to r
 
 The second is scaled content abuse, defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords, and stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
 
-Both entries are worth reading in full because of what they do not say. Neither one says a business may not have a page for each place it works. They describe pages that pass you along and pages that say nothing, which is a judgement about quality rather than about structure.
+Both entries are worth reading in full, because between them they put four questions to anybody who is about to build a set of these.
 
 [[scene:two-names]]
 
@@ -67,13 +67,13 @@ The third is the one that quietly explains why every thin location page in this 
 
 There is a temptation to treat all of this as a matter of taste, as if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure, and there is a paper that shows how cheap.
 
-In 2006 four researchers at Microsoft took a crawl of 105 million pages, drew a uniform random sample of 17,168 English pages out of it, and classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf): 2,364 of the pages, 13.8%, were judged to be spam.
+In 2006 four researchers, three of them at Microsoft Research and one at UCLA, took a crawl of 105 million pages, drew a uniform random sample of 17,168 English pages out of it, and classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf): 2,364 of the pages, 13.8%, were judged to be spam.
 
 Then they went looking for properties that predicted it, and one of the properties is the interesting one here. They compressed every page and measured the compression ratio, on the reasoning that a page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
 
-The honest limits are large and worth stating before anybody quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page, and a set of near-identical town pages is repetition across pages, which is a different measurement that nobody has published a figure for. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too, which is exactly why the authors treat it as one signal among nine rather than as a rule.
+The honest limits are large and worth stating before anybody quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page, and a set of near-identical town pages is repetition across pages, which is a different measurement that nobody has published a figure for. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too, which is exactly why the authors test ten different content heuristics and treat this as one of them rather than as a rule.
 
-What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and about four seconds.
+What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and a few seconds.
 
 [[scene:redundancy]]
 
@@ -129,7 +129,7 @@ The software is not the line that matters here. What the bill tracks is how much
 
 An agent with a tidy record of what they have closed, where, and for whom is a fast project: the facts are already written down and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one, and most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
 
-There is a smaller ongoing cost that everybody forgets to budget for, which is going back. The proof on these pages ages: the closing was three years ago, the listing sold, the tax figure moved, the shop you mentioned closed. Two or three of them will need half an hour a year, and the ones that earn their keep will need more, and a set of area pages that nobody revisits becomes a public record of when you stopped paying attention.
+There is a smaller ongoing cost that everybody forgets to budget for, which is going back. The proof on these pages ages: the closing was three years ago, the listing sold, the tax figure moved, the shop you mentioned closed. Most of them need a short sitting once a year, the ones that earn their keep need more than that, and a set of area pages nobody revisits becomes a public record of when you stopped paying attention.
 
 The one thing we will not quote is a traffic estimate, and it is worth saying why rather than leaving a gap. Nobody publishes the number of people searching for your service in your particular town with a stated method; the figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
 
@@ -257,9 +257,9 @@ So there is a limit built into this work, and it is honest to say it early. Loca
 
 There is an assumption underneath everything written about ranking, which is that being first is worth more than being third for the sensible reason that people compare the options and the first one is usually the best. It is worth knowing that somebody tested that, and that it is only partly true.
 
-In 2004 a group at Cornell put 22 people in front of Google with an eye tracker running, and put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched, some got the top two results swapped, and some got the whole page reversed. Nobody was told, and the paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anybody had clicked.
+A group at Cornell put 22 people in front of Google with an eye tracker running, and put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched, some got the top two results swapped, and some got the whole page reversed. Nobody was told, and the paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anybody had clicked.
 
-The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf) reports the result as counts because the counts are small, and they are worth reading in that form. When the reader clicked exactly one of the top two links and the judges had rated the first one better, the click went to the top link nineteen times out of twenty, which is what you would hope. When the judges had rated the second one better, the click still went to the top link five times out of seven. And in the group where the pair had been secretly swapped, so the link on top was there for no reason at all, the click still went to the top link ten times out of seventeen.
+The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf), published in 2005, reports the result as counts because the counts are small, and they are worth reading in that form. When the reader clicked exactly one of the top two links and the judges had rated the first one better, the click went to the top link nineteen times out of twenty, which is what you would hope. When the judges had rated the second one better, the click still went to the top link five times out of seven. And in the group where the pair had been secretly swapped, so the link on top was there for no reason at all, the click still went to the top link ten times out of seventeen.
 
 The authors call this a trust bias and their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first, and that share is not earned in any sense a person would recognise as merit. It is an inheritance.
 
@@ -397,7 +397,7 @@ Go and be the woman in the car for ten minutes.
 
 Borrow a phone, stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back and at how little information she had to choose between them. Then open your own profile beside it and see whether the thing she would have read is finished, current and honest.
 
-If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning, and it is not that you are worse than the second business she called. It is that a screen you have never looked at is answering a question about you eleven times a week, and nobody has been checking the answer.
+If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning, and it is not that you are worse than the second business she called. It is that a screen you have never opened is answering a question about you, over and over, to people you will never meet, and nobody has been checking the answer.
 
 [[scene:funnel]]`;
 

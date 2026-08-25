@@ -63,25 +63,30 @@ export const IN_SHORT: string[] = [
  *
  * THE WORDING HAS CHANGED and it is worth recording. The policy used to be headed "doorway
  * pages"; the current text calls it doorway abuse, and scaled content abuse is the entry that
- * did not exist when most advice about location pages was written. The fourth card is the one
- * that keeps this honest in the other direction: neither entry forbids having a page per area,
- * and saying so is part of reading the document rather than the summaries of it. */
+ * did not exist when most advice about location pages was written.
+ *
+ * THE CARDS DISTIL, THEY DO NOT QUOTE, and the first draft did the opposite. It repeated both
+ * definitions and both example lists word for word, which the prose section immediately above it
+ * also quotes, so a reader met the same two sentences twice inside one screen. A scene REPLACES
+ * the prose it stages. The body carries the citation; this carries the four questions the two
+ * entries actually put to a buyer, and the fourth card is the paragraph that used to close that
+ * body section and has been deleted from it. */
 export const TWO_NAMES: GridItem[] = [
   {
-    lead: "Doorway abuse is about where the page sends you.",
-    body: "The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Its own list of examples names pages targeted at specific regions or cities that funnel users to one page. The failure is the funnel: the page exists to catch a query and pass the person along.",
+    lead: "Where does the page send them?",
+    body: "The doorway entry turns on the handover rather than on the writing. If an area page is a landing strip whose job is to move somebody along to a general enquiry form or to one master page, the reader got an intermediate step instead of the thing they searched for. If the page answers the question on its own and somebody could stop there satisfied, it is not doing what that entry describes.",
   },
   {
-    lead: "Scaled content abuse is about how many and how empty.",
-    body: "Defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. The examples name creating many pages where the content makes little or no sense to a reader but contains search keywords, and stitching content from different pages together without adding value. The failure here is not the count. It is the emptiness at that count.",
+    lead: "What is on it at that number?",
+    body: "The other entry is about volume without substance, and the volume by itself is not the part being named. Twenty pages each carrying a closing, a street and a real answer are twenty pages. Twenty pages carrying the same four paragraphs are one page with twenty addresses, and changing the adjectives does not change which of those you have.",
   },
   {
-    lead: "One example is about the tool we sell.",
-    body: "The first illustration under scaled content abuse is using generative AI tools or other similar tools to generate many pages without adding value for users. That sentence is aimed squarely at the cheapest version of this service, including a version of ours, and pretending otherwise on a page selling it would be the exact dishonesty the rest of this article is about.",
+    lead: "Who read it before it went live?",
+    body: "The line runs through what was added between the generating and the publishing, which makes it a question about your process rather than about your software. What gets added, in practice, is a person who knows the place reading the page and changing it. If nobody in the chain has been there, nothing was added and the entry is describing you.",
   },
   {
-    lead: "And neither entry forbids a page per area.",
-    body: "This matters as much as the two above. Nothing in the policy says a business may not have one page for each place it works. Both entries describe pages that pass the reader along or say nothing, which is a description of quality rather than of structure. The structure is fine. The usual execution is what gets named.",
+    lead: "And nobody is telling you not to do this.",
+    body: "Nothing in the policy says a business may not have one page for each place it works. Both entries describe pages that hand the reader on or say nothing, which is a judgement about quality rather than about structure. The structure is fine. The usual execution is the thing with a name.",
   },
 ];
 
@@ -117,8 +122,8 @@ export const THE_TEST: GridItem[] = [
     body: "Two of the warning-sign questions are whether you are producing lots of content on many topics in the hope some of it performs, and whether you are using extensive automation to produce content on many topics. Answering yes to either is the document's own description of search-engine-first content, and the fix it suggests is not better writing. It is fewer pages.",
   },
   {
-    lead: "Are you writing to a word count.",
-    body: "The list asks whether you are writing to a particular word count because you have heard Google has a preferred one, and then answers itself in a bracket: no, we do not. Every thin area page in this industry is six hundred words long for a reason that Google has explicitly denied in print, and the six hundred words are what makes them read as filler.",
+    lead: "Are you writing to a length.",
+    body: "One of the warning signs on the list is writing to a word count, and Google answers it in the same breath: it has no preferred one. That matters more here than anywhere else, because a target length is the only thing that can make a page about a town you know inside out and a page about a town you have never visited come out the same size.",
   },
 ];
 
@@ -156,10 +161,10 @@ export const REDUNDANCY = {
   basis:
     "The share of pages a person judged to be spam. The sample is 17,168 English pages drawn uniformly at random from a 105 million page crawl and inspected one at a time; 2,364 of them were labelled spam. The second bar is the subset whose compression ratio was at least four, which is a machine's way of saying the page says the same thing several times.",
   sourceText:
-    "Alexandros Ntoulas, Marc Najork, Mark Manasse and Dennis Fetterly, Detecting Spam Web Pages through Content Analysis, WWW 2006, pages 83-92, Microsoft Research.",
+    "Alexandros Ntoulas (UCLA), Marc Najork, Mark Manasse and Dennis Fetterly (Microsoft Research), Detecting Spam Web Pages through Content Analysis, WWW 2006, pages 83-92.",
   sourceHref:
     "https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf",
-  note: "This is the web of 2005 and a search engine that no longer exists under that name, and spam here means what four researchers judged it to be. Two limits matter more than the age. The paper measures repetition inside a single page, and a set of near-identical town pages is repetition across pages, which is a different thing that nobody has published a figure for. And an entirely honest page with a large navigation, a footer and a repeated call to action also compresses well, which is why the authors treat compressibility as one signal among nine rather than as a rule. What it is worth carrying is the cheapness of the observation: sameness is the easiest quality in the world for a machine to measure.",
+  note: "This is the web of 2005 and a search engine that no longer exists under that name, and spam here means what four researchers judged it to be. Two limits matter more than the age. The paper measures repetition inside a single page, and a set of near-identical town pages is repetition across pages, which is a different thing that nobody has published a figure for. And an entirely honest page with a large navigation, a footer and a repeated call to action also compresses well, which is why the authors treat compressibility as one heuristic among the ten they test rather than as a rule. What it is worth carrying is the cheapness of the observation: sameness is the easiest quality in the world for a machine to measure.",
 };
 
 /** SCENE copy — the complaints. Cited data graphic TWO.

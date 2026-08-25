@@ -128,7 +128,7 @@ export const TRUST_BIAS = {
   sourceText:
     "Thorsten Joachims, Laura Granka, Bing Pan, Helene Hembrooke and Geri Gay, Accurately Interpreting Clickthrough Data as Implicit Feedback, SIGIR 2005, Cornell University.",
   sourceHref: "https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf",
-  note: "Sixteen undergraduates in a laboratory in 2004, on ten blue links, twenty years before the results page looked anything like it looks now. Nobody has run this experiment on a map pack and these percentages are not a benchmark for one. What transfers is the mechanism, and it is uncomfortable: a share of the clicks at the top of a list are going there because the list said so, not because the reader compared anything. The paper was written to work out whether clicks can be trusted as feedback for a search engine, which is a different question from the one this article is asking, and its authors make no marketing claim anywhere in it.",
+  note: "Sixteen undergraduates in a laboratory, published in 2005, on ten blue links, twenty years before the results page looked anything like it looks now. Nobody has run this experiment on a map pack and these percentages are not a benchmark for one. What transfers is the mechanism, and it is uncomfortable: a share of the clicks at the top of a list are going there because the list said so, not because the reader compared anything. The paper was written to work out whether clicks can be trusted as feedback for a search engine, which is a different question from the one this article is asking, and its authors make no marketing claim anywhere in it.",
 };
 
 /** SCENE copy — the eligibility rules. Cited from the primary.
@@ -185,7 +185,7 @@ export const PROFILE_RULES: GridItem[] = [
 export const THE_WORK: GridItem[] = [
   {
     lead: "It finishes the profile, which is duller than it sounds.",
-    body: "Primary category and the secondary ones, every service written out, the service area drawn, the hours including the odd ones, the address, the attributes. Google's own advice for the relevance half is simply to provide complete and detailed information, and most profiles in this industry are about two thirds filled in.",
+    body: "Primary category and the secondary ones, every service written out, the service area drawn, the hours including the odd ones, the address, the attributes. Google's own advice for the relevance half is simply to provide complete and detailed information, and the reason that instruction is so unsatisfying is that there is no trick hiding inside it.",
   },
   {
     lead: "It keeps the profile true when the business changes.",
@@ -429,7 +429,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       band: "dark",
       field: "river",
       tone: "quote",
-      text: "A local ranking is not a position on a page. It is a standing answer to a question somebody asks about eleven times a year, in a moment you will never see, about a decision you were not invited to.",
+      text: "A local ranking is not a position on a page. It is a standing answer, given on your behalf, in a moment you will never see, to a decision you were not invited to.",
     },
     "paid-search": {
       /** Dark for the reason given on `trust-bias` above. Rendered and read at 1440 and 390
@@ -458,7 +458,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       // pots with it. Same class of defect as the three Round B found, caught the same way.
       alt: "The front of a white-painted stone house with black shutters and a dark panelled front door, a mass of white flowering shrub arching over the entrance, and a white lattice fence above clipped box hedges across the foreground",
       caption:
-        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for four seconds, reads the name, the hours and the last few things people said, and decides whether to knock. Everything in this article is about that doorstep rather than about your website.",
+        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment, reads the name, the hours and the last few things other people said, and decides whether to knock. Everything in this article is about that doorstep rather than about your website.",
       credit: "Photograph by Wonderlane, CC BY 2.0.",
       ariaLabel: "The front door somebody arrives at",
     },

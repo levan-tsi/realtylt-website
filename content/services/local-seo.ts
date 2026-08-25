@@ -68,7 +68,7 @@ export const localSeo: Service = {
   howItWorks: [
     {
       title: "Fix the profile properly",
-      body: "Categories, service areas, hours, and photos, correct and complete. Google's own advice for the relevance half is to provide complete and detailed information, and most profiles are about two thirds filled in.",
+      body: "Categories, service areas, hours, and photos, correct and complete. Google's own advice for the relevance half is to provide complete and detailed business information, and there is no trick hiding inside that instruction.",
     },
     {
       title: "Feed the two things Google names",
