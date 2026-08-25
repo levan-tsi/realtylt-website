@@ -123,6 +123,8 @@ a new one · every claim either carries a primary source or the site already mak
   themselves asserting an unverified fact as the stated grounds for refusing a figure. If the
   reason is "we followed them and they all led to vendors", follow them.
 - **Photographs: two plates per post, judged at the 21:9 crop, licence read on the source page**
-  (Round E). Five unspent plates are in `public/images/editorial/`; the three scratch scripts that
-  source a new one are documented in ROUND-E-LOG.md E0. CC BY-SA is forbidden and there is a
-  committed test for it.
+  (Round E). Five unspent plates are in `public/images/editorial/`, and the pipeline is now
+  COMMITTED rather than scratch: `find-plates.mjs`, `fetch-plates.mjs`, `plate-swatch.mjs`,
+  `check-plate-licence.mjs`. CC BY-SA is forbidden and there is a committed test for it.
+  **`scripts/fetch-images.mjs` is marked DO NOT RUN**: its failure path writes an empty
+  ATTRIBUTIONS.md, which would delete the whole licence record.

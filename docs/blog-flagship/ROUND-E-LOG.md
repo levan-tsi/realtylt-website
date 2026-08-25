@@ -2,17 +2,27 @@
 
 **Built 2026-08-25.** Scope: the editorial photography problem that was blocking topics 12 to 20,
 then `skip-tracing-lead-generation` and `marketing-automation` written to the flagship standard,
-their service pages synced, and the claims the research killed on the way. Six commits on `main`,
-**not pushed**: the orchestrator verifies and pushes.
+their service pages synced, and the claims the research killed on the way. Eight commits on
+`main`, **not pushed**: the orchestrator verifies and pushes.
 
 ```
-0e0b022  E0  eleven new editorial plates, every licence read on its own source page
-abfb37f  E1  topic 12, skip tracing, argued as an acquisition rather than as a lookup
-308dcb1  E2  topic 13, marketing automation, argued as distribution you do not control
-5940b8d  E3  the two service pages synced, and eight claims that did not survive the research
-0ad4b35  E4  the second pass, and a REASON that was wrong
-c2b8647  E5  the round log, every source's operative sentence, and the photograph ledger
+0e0b022  E0   eleven new editorial plates, every licence read on its own source page
+abfb37f  E1   topic 12, skip tracing, argued as an acquisition rather than as a lookup
+308dcb1  E2   topic 13, marketing automation, argued as distribution you do not control
+5940b8d  E3   the two service pages synced, and eight claims that did not survive the research
+0ad4b35  E4   the second pass, and a REASON that was wrong
+c2b8647  E5   the round log, every source's operative sentence, and the photograph ledger
+16a6aae  E5a  the log's own commit list was wrong
+51e38a7  E6   the plate pipeline committed, because it has now been rebuilt twice
 ```
+
+**E6 is the one a future round will care about most.** Every tool that finds, licence-checks and
+judges a photograph lived in the gitignored `scripts/_scratch-*` namespace, which is why session
+15 wrote a plate swatch and this round's brief was not sure it still existed. They are now
+`scripts/find-plates.mjs`, `fetch-plates.mjs`, `check-plate-licence.mjs` and `plate-swatch.mjs`,
+all smoke-tested under those names. `scripts/fetch-images.mjs` is left in place and marked **DO
+NOT RUN**: its failure path writes an `ATTRIBUTIONS.md` with no rows in it, which would delete the
+entire licence record. No credential is committed anywhere.
 
 **E0 landed eleven photographs and E1 landed three more.** The pipeline was still warm after the
 first eleven were installed, so three additional unspent plates were sourced, verified and
@@ -98,11 +108,18 @@ minute job with the tooling in place.
 **Two plates is enough.** Round D's posts carry two each and measure `bodyImages: 7`; the floor
 is 6 and four images arrive free on every post (the author portrait plus the three "keep reading"
 cards, plus the cold-open field). So a topic needs **two photographs of its own**, not six. Five
-unspent covers two and a half more topics; after that, run the three scratch scripts in order:
-`_scratch-e-photohunt.mjs` (search) then `_scratch-e-photoget.mjs` (download and re-encode, and
-it stages into `public/_ecand/` rather than `public/images/`, because the licence test fails on
-any unrecorded file under `public/images` and twenty candidates there turns the suite red for
-the length of the round) then `_scratch-plateswatch.mjs` (judge at the real 21:9 crop).
+unspent covers two and a half more topics; after that, run the committed scripts in order:
+
+```
+node scripts/find-plates.mjs "rural mailboxes" "storefront" ...     # needs OPENVERSE_TOKEN
+node scripts/fetch-plates.mjs name=<flickr photo page url> ...      # stages into public/_ecand/
+node scripts/plate-swatch.mjs out.png /_ecand/name.jpg ...          # judge at the real 21:9 crop
+node scripts/check-plate-licence.mjs <flickr photo page url> ...    # before anything ships
+```
+
+`fetch-plates.mjs` stages into `public/_ecand/` rather than `public/images/` on purpose: the
+licence test fails on any unrecorded file under `public/images`, so twenty candidates dropped
+there would turn the suite red for the length of the round.
 
 ### Five photographs rejected, and the reason is the interesting part
 
