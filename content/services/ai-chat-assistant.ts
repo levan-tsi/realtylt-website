@@ -1,6 +1,29 @@
 import type { Service } from "./types";
 
-/** COPY key `chat` on realtylt.com/ai. Deep link: /ai#chat */
+/** COPY key `chat` on realtylt.com/ai. Deep link: /ai#chat
+ *
+ * THE 78% IS GONE FROM THIS PAGE (2026-08-25, SERVICES-CRITIQUE.md §2a). It was asserted
+ * three times here, in `why`, in `stat` and in an FAQ, while `relatedPosts` pointed at
+ * /blog/ai-chat-assistant-real-estate-website, whose entire second section proves the figure
+ * has no published report, no stated sample and no methodology behind it and ends "So this
+ * article does not use it." The page's own recommended reading was the rebuttal of the page's
+ * own hero statistic.
+ *
+ * What replaced it is what the post actually rests on, and it can be checked. Harvard
+ * Business Review, "The Short Life of Online Sales Leads" (2011), by James Oldroyd, Kristina
+ * McElheran and David Elkington:
+ *   - an audit of 2,241 US companies, a test inquiry submitted through each company's own
+ *     website: 23% never replied at all, and among those that replied inside thirty days the
+ *     average took 42 hours;
+ *   - a separate study of 1.25 million sales leads at 29 B2C and 13 B2B companies: firms
+ *     contacting within an hour were "nearly seven times" as likely to qualify the lead,
+ *     which they defined as a meaningful conversation with a key decision maker, as firms
+ *     contacting an hour later.
+ * It is cross-industry work from 2011, not a real estate study, and the FAQ says so rather
+ * than letting the number travel without its caveat.
+ *
+ * lib/blog/zombie-claims.test.ts now reads content/services/**, so the 78% cannot come back
+ * onto this surface without failing a test. */
 export const aiChatAssistant: Service = {
   slug: "ai-chat-assistant",
   aiKey: "chat",
@@ -11,7 +34,7 @@ export const aiChatAssistant: Service = {
   title: "The assistant your visitors actually talk to",
   lede: "Real text chat on Claude. It searches your MLS live, texts matching listings over Twilio SMS, hands off to a Vapi voice call, and captures the lead before it bounces. This is the one you can touch right now.",
   specs: ["Claude", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
-  why: "78% of leads close with whoever responds first, yet most sites answer in hours. This replies in seconds, qualifies, and books, so no inquiry dies overnight.",
+  why: "Harvard Business Review timed a test inquiry to 2,241 US companies, and nearly a quarter of them never replied at all. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
   keywords: [
     "ai chatbot for real estate website",
     "real estate website assistant",
@@ -27,8 +50,8 @@ export const aiChatAssistant: Service = {
   },
 
   stat: {
-    value: "78%",
-    label: "of leads close with whoever responds first",
+    value: "23%",
+    label: "of the 2,241 US companies audited never answered a website inquiry at all",
   },
 
   figure: {
@@ -102,7 +125,7 @@ export const aiChatAssistant: Service = {
     },
     {
       q: "How fast does an AI assistant reply to a website lead?",
-      a: "In seconds, at any hour. That matters because roughly 78% of leads close with whoever responds first, and most real estate websites answer in hours, if at all. The assistant is the difference between a lead you contacted and a lead your competitor contacted.",
+      a: "In seconds, at any hour. The research worth quoting here is Harvard Business Review's 2011 study of 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead, which the researchers defined as a real conversation with somebody who could decide, than firms that waited one more hour. That is cross-industry work rather than a real estate study, so what carries over is the shape rather than the multiple. Most real estate websites answer in hours or never, which makes the assistant the difference between a lead you talked to and a lead your competitor talked to.",
     },
     {
       q: "Will visitors know they are talking to an AI?",
