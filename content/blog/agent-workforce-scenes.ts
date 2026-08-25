@@ -58,14 +58,18 @@ export const TENTH_TURNS: ConversationTurn[] = [
   { who: "them", at: "Wed 5:12pm", text: "Confirming we are on for the walkthrough. What time works Thursday?" },
   { who: "us", at: "Wed 9:40pm", text: "You, by text, from the car: Thursday is out, let us do Friday morning instead." },
   { who: "them", at: "Thu 6:31am", text: "Just checking, are we all set? My clients are driving up." },
-  { who: "us", at: "Thu 6:40am", text: "The draft, sent in your name: Confirmed for today at 11. Looking forward to meeting them." },
+  { who: "us", at: "Thu 6:40am", text: "Sent in your name: Confirmed for today at 11. Looking forward to meeting them." },
 ];
 
 export const TENTH_EVENTS: ConversationEvent[] = [
-  { at: "6:38am", label: "Read the thread", detail: "Four messages, none of which mention Friday, because the change was made in a different channel." },
-  { at: "6:39am", label: "Read the calendar", detail: "One event, Thursday 11am, unchanged. The evening's text message never reached it." },
+  // FOUND BY READING THE RENDERED SCENE: the first version said "Four messages, none of which
+  // mention Friday", and the panel beside it shows four turns of which one is the text about
+  // Friday and one is the assistant's own reply. Two of them are the thread. The count was
+  // wrong and the sentence contradicted the turn directly above it.
+  { at: "6:38am", label: "Read the thread", detail: "The two emails in the thread, and neither of them mentions Friday. The change was made by text, in another app, and it never arrived here." },
+  { at: "6:39am", label: "Read the calendar", detail: "One event, Thursday at 11, unchanged. The message from the car never reached it either." },
   { at: "6:39am", label: "Checked the brief", detail: "Confirm known appointments. Escalate anything ambiguous. Nothing here looked ambiguous." },
-  { at: "6:40am", label: "Reported success", detail: "One draft produced, one thread handled, no warnings, no flags. The run log is green and accurate." },
+  { at: "6:40am", label: "Reported success", detail: "One reply sent, one thread closed, no warnings and no flags. The run log is green and it is accurate." },
 ];
 
 /** SCENE copy — what it is, and the half the pitch leaves out.
@@ -249,7 +253,10 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       note: "Staged for illustration. No real client, no real address and no real transcript: this is the shape of the failure, written out so the two tracks can be read side by side.",
       themLabel: "The buyer's agent",
       usLabel: "Your side",
-      turnsHeading: "The thread",
+      // NOT "The thread". Found by looking: the column carries four bubbles and one of them is
+      // the text message from the car, which is the whole point of the scene precisely because
+      // it was NOT in the thread. Calling the column the thread contradicted the event beside it.
+      turnsHeading: "The morning, in order",
       eventsHeading: "What the assistant did",
       turns: TENTH_TURNS,
       events: TENTH_EVENTS,
@@ -280,9 +287,9 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 21:9 CROP, not from the catalogue title. Checked against the plate
       // swatch: the chalkboard list, the beams, the orange bar front and the stools are all
       // inside the crop. The six items are read off the board rather than assumed.
-      alt: "An open plan room with exposed dark ceiling beams, a long polished wooden dining table on the left and an orange fronted kitchen bar with metal stools on the right, and in the centre a tall cabinet faced with a black chalkboard carrying a handwritten list in white chalk reading milk, dog food, coffee, bread, cheese and soap",
+      alt: "An open plan room with exposed timber ceiling beams, a long polished wooden dining table on the left and an orange fronted kitchen bar with metal stools on the right, and in the centre a tall cabinet faced with a black chalkboard carrying a handwritten list in white chalk reading milk, dog food, coffee, bread, cheese and soap",
       caption:
-        "Six words on a board and anybody in this house can do the shopping without asking a question. That is what a brief is, and it is the entire difference between an assistant that is useful and one that is fast and plausible and slightly wrong. Nobody can write yours except you.",
+        "Six lines on a board and anybody in this house can do the shopping without asking a question. That is what a brief is, and it is the entire difference between an assistant that is useful and one that is fast and plausible and slightly wrong. Nobody can write yours except you.",
       credit: "Photograph by Jeremy Levine Design, CC BY 2.0.",
       ariaLabel: "The list on the board",
     },

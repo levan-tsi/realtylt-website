@@ -53,11 +53,15 @@ export const IN_SHORT: string[] = [
  * that could be checked against a person. */
 export const TWO_OF_HER: GridItem[] = [
   {
-    lead: "Created 14 March, by your website",
-    body: "Kathy Brown. A personal email address. A mobile number typed into a phone with one thumb, on a valuation form, at a quarter past ten at night. Source: home valuation. No owner, because nobody had picked it up yet. Everything on it is exactly what she typed, which is what a form is for.",
+    // The dates and the source lines are the story three paragraphs above this scene, in the
+    // shape a record actually takes. The first draft said "Created 14 March" and "a quarter past
+    // ten at night", neither of which is in the article: invented precision in a scene whose
+    // whole argument is that the details on a record came from somewhere real.
+    lead: "Created in March, by your website",
+    body: "Kathy Brown. A personal email address. A mobile number typed into a phone with one thumb, on a valuation form, late in the evening. Source: home valuation. No owner, because nobody had picked it up yet. Everything on it is exactly what she typed, which is what a form is for.",
   },
   {
-    lead: "Created 2 June, by whoever answered",
+    lead: "Created in June, by whoever answered",
     body: "Katherine Brown. A work email. A different mobile, the one she actually answers. Source: inbound call. Owner: the person who took it. Everything on it is exactly what she said out loud to somebody who was writing it down, which is a different question and gets a different answer.",
   },
   {
@@ -267,7 +271,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       // the crop; there is no lawn and no full view of either roof.
       alt: "A red clapboard house in snow with white window frames, an oval plaque reading 1820 on the wall and the number 279 painted beside a dark teal front door hung with a red berried wreath under a green garland, with a second, weathered red building standing behind it to the left and snow laden bare branches crossing the top of the frame",
       caption:
-        "The date on the plaque and the number beside the door are there because a description of this house does not find it. Red, clapboard, gable end, two windows upstairs: so is the building behind it. The number is the only part of that wall which means one house and not another, and a contact record works the same way.",
+        "The date on the plaque and the number beside the door are there because a description of this house does not find it. Red, gable end, snow on the roof: so is the building behind it. The number is the only thing on that wall which means one house and not another, and a contact record works exactly the same way.",
       credit: "Photograph by Muffet, CC BY 2.0.",
       ariaLabel: "The number beside the door",
     },
@@ -366,12 +370,12 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
         { label: "Contacts in the database", by: { from: "input", id: "contacts" }, format: "count", unit: "contacts" },
         { label: "Who could have arrived more than once", by: { from: "input", id: "routes" }, format: "count", unit: "possible pairs" },
         { label: "Where the details would not match exactly", by: { from: "input", id: "differ" }, format: "count", unit: "pairs to settle" },
-        { label: "At your reading speed", by: { from: "input", id: "minutes" }, format: "count", unit: "minutes" },
+        { label: "At your deciding time", by: { from: "input", id: "minutes" }, format: "count", unit: "minutes" },
         { label: "In hours", by: { from: "rate", value: 1 / 60, display: "60 minutes in an hour" }, format: "hours", unit: "hours of somebody's attention" },
       ],
       headline: 2,
       resultLabel: "Pairs a computer should not settle on its own",
-      note: "The headline is the middle row rather than the hours, because the hours are the easy half: the number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person, and that is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing; read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely and every one traced back to a company selling data cleaning software, quoting its own customers, with no published sample and no method, so the three shares above are yours to supply and the third has a hint under it pointing at the one measurement that does have a method behind it. There is also no row for what a stale record costs in commission, and there was never going to be one: the email that went to the wrong version of somebody is real, and nobody can show you the arithmetic that turns it into money.",
+      note: "The headline is the middle row rather than the hours, because the hours are the easy half: the number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person, and that is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing; read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely and every one traced back to a company selling data cleaning software, quoting its own customers, with no published sample and no method, so both of the shares above are yours to supply and the second of them carries a hint pointing at the one measurement in this subject that does have a method behind it. There is also no row for what a stale record costs in commission, and there was never going to be one: the email that went to the wrong version of somebody is real, and nobody can show you the arithmetic that turns it into money.",
       action: { label: "See how it is built", href: "/services/crm-sync" },
       secondary: { label: "Ask us what your fields do", href: "/connect" },
     },
@@ -395,12 +399,16 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-09.jpg",
-      // WRITTEN FROM THE 21:9 CROP. The crop begins below the main roofline and ends at the
-      // picket fence, so the full house is not in it; what is in it is the stone wall, the
-      // number set into the stones, the planted roof and the flower bed.
-      alt: "A low wall faced in rounded river stones with the number 1734 set into it in pale pebbles, its flat roof planted as a garden of red, orange and yellow tulips and daffodils in front of a pale grey house, with more tulips in a bed along the wall and a white picket fence at the bottom edge",
+      // WRITTEN FROM THE 21:9 CROP AS RENDERED, and the first version was wrong in three ways
+      // that only appeared once the real plate was photographed. It called the structure "a low
+      // wall": it is a stone-faced building front with a small gable and a garage opening, and
+      // the number sits high up on that gable rather than at eye level. It said the number was
+      // "set into it in pale pebbles", which the picture does not support: the digits are picked
+      // out in the stonework and are not obviously paler. And it attributed the planted roof to
+      // the wall, when the garden is on the flat roof running off to the right of the gable.
+      alt: "A building front faced in rounded river stones with the number 1734 picked out in the stonework of its small gable and a dark open garage doorway beneath, the flat roof running off to the right planted as a garden of red, orange and yellow tulips and daffodils, a pale house rising behind it, a bed of tulips at ground level and a white picket fence at each end",
       caption:
-        "Somebody set the number into the stones one at a time. That is the whole of what a good record is: one deliberate, unambiguous piece of information that means this and nothing else, put there on purpose by a person who knew it would matter later to somebody looking for the place.",
+        "The number is built into the stonework of that gable, which is a great deal more trouble than a plaque. That is the whole of what a good record is: one deliberate, unambiguous piece of information that means this and nothing else, put there on purpose by a person who knew it would matter later to somebody looking for the place.",
       credit: "Photograph by pnwra, CC BY 2.0.",
       ariaLabel: "The number set into the wall",
     },

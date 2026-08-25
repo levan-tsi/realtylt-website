@@ -135,6 +135,8 @@ Nobody is claiming that provision governs an inbox assistant. What it does is de
 
 Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest specification for what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
 
+[[scene:plate-two]]
+
 [[scene:offer]]
 
 ## What it costs, and how long it takes
@@ -160,8 +162,6 @@ It does not do a job nobody has written down. A vague brief does not produce vag
 It does not remove the reading. Anything that reaches a client should be read by a person first, an assistant that drafts is worth more than one that sends, and the review is not a temporary safety measure for the first month. It is the job now.
 
 And it does not scale the way the word workforce suggests. Four independent assistants are four times the review. Four assistants feeding each other are four times the review plus a category of failure that only exists because they are connected, and the published taxonomy has six named modes inside it.
-
-[[scene:plate-two]]
 
 [[scene:wasted]]
 
@@ -371,6 +371,8 @@ Then there is the recurring cost, which is a person's attention. A sync is softw
 
 Here is the number we cannot give you, and it is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly and every one traced back to a company that sells data cleaning software, quoting its own customers, with no published sample and no method. There is no independent study of duplicate rates in small business CRMs, in this industry or any other. The calculator above therefore asks you for the inputs rather than assuming them, and the honest first step of any real project is measuring your own file instead of accepting somebody's average.
 
+[[scene:plate-two]]
+
 ## What it does not do, and should not pretend to
 
 It does not clean what is already in there. Keeping two systems in step from today onward and reconciling nine years of accumulated records are two different jobs with two different price tags, and a sync switched on over an unreconciled database will faithfully propagate every mess in it to a second system.
@@ -382,8 +384,6 @@ It does not open a system that will not open. Most modern CRMs expose an interfa
 It does not make anybody use the CRM. A record that is finally true is worth nothing at all if the appointment still lives on a sticky note, and there is no integration that can reach into a notebook.
 
 And it will not tell you which of the two records is the real one, in the cases that matter. It will tell you they are probably the same person. Which email she reads, which number she answers, and which of the two histories is the one you should have in front of you before you ring her: that is judgement, and it belongs to whoever knows her.
-
-[[scene:plate-two]]
 
 [[scene:wasted]]
 
