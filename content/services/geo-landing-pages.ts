@@ -95,4 +95,11 @@ export const geoLandingPages: Service = {
       a: "Answer the question directly, in plain language, on a real page that an assistant can read. Structured data helps a machine understand the page, and a clear question-and-answer format is what gets quoted. Vague marketing copy does not get cited because there is nothing in it to quote.",
     },
   ],
+
+  /** This page had no related reading at all (SERVICES-CRITIQUE.md §5) and its own post does not
+   * exist yet; it arrives in a later round. Workflow automation was considered and rejected:
+   * nothing on this page is about wiring tools together, so that link would have been filler.
+   * The chat post earns it, because howItWorks[2] here sells lead capture on your own ground
+   * and that post is about what happens to the person who lands on it at 11:40pm. */
+  relatedPosts: ["ai-chat-assistant-real-estate-website"],
 };

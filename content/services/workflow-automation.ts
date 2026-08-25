@@ -43,12 +43,17 @@ export const workflowAutomation: Service = {
   whatItIs: [
     "It is the plumbing between the tools you already pay for. Your CRM, your calendar, your email, your forms, your invoicing, and your documents all hold pieces of the same job, and the gap between them is where the hours go: copying a number from one tab to another, remembering to send the thing, retyping what a system already knows.",
     "We wire those tools together with Make, n8n, or Zapier, and we put AI in the loop where a decision has to be made rather than just a field copied. A new lead, a paid invoice, or a signed form triggers everything that should follow it, end to end, in seconds, at any hour.",
+    "The cost is not the ninety seconds of typing. In a 2005 field study at UC Irvine, twenty four desk workers were shadowed with a stopwatch, and the average time to get back to a piece of work after an interruption was twenty five minutes and twenty six seconds. Those were software people rather than agents, so read that as what interruption does to concentrated work rather than as a number about your week. The point stands either way: a step that fires by itself does not pull you out of anything.",
   ],
 
   howItWorks: [
     {
       title: "Map what actually happens today",
       body: "We follow one real job through your business and write down every manual step. The list is always longer than people expect, and the worst offenders are usually invisible because everyone has stopped noticing them.",
+    },
+    {
+      title: "Start with the boring one",
+      body: "Rank that list by how often the step happens and how little judgment it needs, and build the top of it first. The interesting problem is the one with judgment in it, which is also the one most likely to be wrong in front of a client. Trust gets earned by something whose failure costs an apology.",
     },
     {
       title: "Wire the chain",
@@ -67,11 +72,19 @@ export const workflowAutomation: Service = {
     },
     {
       title: "The transaction checklist that runs itself",
-      body: "A signed contract fires the inspection reminder, the document requests, and the key-date calendar entries automatically, so a deadline never depends on somebody remembering it.",
+      body: "A signed contract fires the inspection reminder, the document requests, and the key-date calendar entries automatically, so a deadline stops depending on somebody remembering it.",
     },
     {
       title: "No more copy-paste between tabs",
       body: "The data a system already holds stops being retyped into the next system. That is where most of the reclaimed hours come from, and most of the eliminated mistakes.",
+    },
+    {
+      title: "The step nobody notices is missing",
+      body: "Write a third column beside your list: who notices when this step does not happen. If the answer is nobody, you have found something more useful than a time saving. You have found a step that has already been skipped, and nobody knows on which deals.",
+    },
+    {
+      title: "The chain that fails quietly",
+      body: "A chain failing nineteen times in twenty gets switched off and you find out, because the work visibly stops. One failing once in twenty stays green and does the right thing ninety five percent of the time. Over forty leads a month that is two people who wrote to you and got nothing, which is why an error path that tells a human is part of every build here.",
     },
   ],
 
@@ -100,6 +113,10 @@ export const workflowAutomation: Service = {
     {
       q: "What happens when an automation breaks?",
       a: "It alerts, it logs what failed and why, and it does not silently drop the work. Chains are versioned so a bad change can be rolled back, and steps that genuinely need human judgment are built to stop and ask rather than guess.",
+    },
+    {
+      q: "Is workflow automation worth it for a one-person business?",
+      a: "Often more, not less. A one-person business has nobody to absorb the busywork, so every manual step comes out of the only calendar there is. Start with a single chain at the top of the frequency list rather than with a platform, and judge it after a month against how many times you still touched that job by hand.",
     },
     {
       q: "How long does it take to automate a workflow?",

@@ -96,4 +96,11 @@ export const localSeo: Service = {
       a: "Profile and citation fixes can move things in weeks. Ranking properly for competitive terms takes months, and anyone promising otherwise is selling something. The compounding is the point: the position you earn keeps paying.",
     },
   ],
+
+  /** This page had no related reading at all (SERVICES-CRITIQUE.md §5) and its own post does not
+   * exist yet; it arrives in a later round. One honest link rather than a filler pair: this
+   * page's argument is that the agent they call is the one they find first, and the chat post's
+   * argument is that being first buys you the conversation. Same claim, one step apart. The
+   * reader who ranks and then answers the next morning has solved half a problem. */
+  relatedPosts: ["ai-chat-assistant-real-estate-website"],
 };

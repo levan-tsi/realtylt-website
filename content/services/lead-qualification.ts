@@ -69,6 +69,10 @@ export const leadQualification: Service = {
       title: "It routes and it ranks",
       body: "Hot goes to a person, immediately. Everything else goes to the nurture track that suits it, and the pipeline stays ordered by who to call now.",
     },
+    {
+      title: "It shows its working",
+      body: "Every score points at a sentence the lead actually wrote. You can open any lead and read the words that produced the number, which is what makes it correctable when it is wrong and explainable when somebody asks you about it.",
+    },
   ],
 
   useCases: [
@@ -83,6 +87,14 @@ export const leadQualification: Service = {
     {
       title: "The right agent on the right lead",
       body: "Routing by area, price band, or specialty, automatically, instead of by whoever happened to grab it. Area routing is also the classic fair housing proxy, so it is allowed to decide which agent picks up and never how fast, how fully, or whether anybody answers at all.",
+    },
+    {
+      title: "The date with a reason behind it",
+      body: "Spring is not a timeline. A lease ending in March is a timeline. The reason is what makes the date real, and when somebody volunteers it unprompted they have told you they are not browsing. That sentence never appears on a form.",
+    },
+    {
+      title: "The report almost nobody runs",
+      body: "Take the leads scored low last quarter and check what they actually received: answers, listings, a person on the phone. If the low group got less of your time, the ranking did its job. If they got less of your service, it stopped being a ranking, and no audit of the inputs would have caught it.",
     },
   ],
 
@@ -110,13 +122,21 @@ export const leadQualification: Service = {
       a: "No. It means the lead goes to a nurture track instead of your call list. Most leads are not ready today and are ready in six months, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when you call. It never changes what that person can see, ask, or be told.",
     },
     {
+      q: "Can the score be wrong?",
+      a: "Regularly, and in both directions. A cautious person underplays their timeline and scores low. Somebody who talks a good game scores high and never moves. Treat the ranking as a sort order that saves you from starting at a random point rather than as a verdict, and read the transcript before you dial either way.",
+    },
+    {
       q: "Is it legal to score and route leads with software?",
       a: "Scoring your own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. The Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not, so a system built to the federal floor is not automatically built to the standard you already agreed to. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. That is the same standard you are held to in person. None of this is legal advice.",
     },
   ],
 
+  /** Own flagship FIRST, the way ai-chat-assistant and ai-voice-agents already do it. This page
+   * had a 3,653-word researched post with four primary sources sitting behind it and did not
+   * link to it, while recommending two siblings. Two cards, because RelatedPosts is a
+   * two-column grid and an odd count leaves a visible empty cell. */
   relatedPosts: [
-    "ai-voice-agent-missed-calls-real-estate",
+    "ai-lead-qualification-real-estate-scoring",
     "ai-chat-assistant-real-estate-website",
   ],
 };
