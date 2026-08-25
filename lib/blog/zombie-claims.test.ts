@@ -54,7 +54,17 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
 const DISOWNED =
   /unsourc|declines? to use|does not use|cannot be sourced|nobody can (check|source|produce)|no published|no stated sample|no methodology|slogan wearing|deliberately not|not built on|refus|belongs to a different statute|is not the (TCPA|figure)|the real figure|wrong statute/i;
 
-/** Every file where copy that a reader will SEE can live. */
+/** Every file where copy that a reader will SEE can live.
+ *
+ * content/services/** was added 2026-08-25, and it should have been here from the start. The
+ * blog killed the 78% on 2026-08-02 and wrote this test on 2026-08-03; the chat SERVICE page
+ * went on asserting it three times for another three weeks, in `why`, in `stat` and in an FAQ,
+ * while linking to the post that debunks it (SERVICES-CRITIQUE.md §2a). A retraction that
+ * covers the article and not the page selling the thing has retracted nothing: the commercial
+ * surface is the one that ranks and the one an AI answer lifts from.
+ *
+ * Read from the directory rather than listed, so service number twenty-one is covered on the
+ * day somebody writes it. */
 const SOURCES = [
   "content/blog/ai-posts.ts",
   "content/blog/ai-chat-scenes.ts",
@@ -70,6 +80,10 @@ const SOURCES = [
     .readdirSync(path.join(ROOT, "components/blog/scenes/primitives"))
     .filter((f) => f.endsWith(".tsx"))
     .map((f) => `components/blog/scenes/primitives/${f}`),
+  ...fs
+    .readdirSync(path.join(ROOT, "content/services"))
+    .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "types.ts")
+    .map((f) => `content/services/${f}`),
 ];
 
 /** Comments are where the HISTORY of a killed number is written down, and that history is the
@@ -99,6 +113,9 @@ describe("retracted claims stay retracted", () => {
     // A probe that finds no targets reports a beautiful pass.
     expect(SOURCES.length).toBeGreaterThan(10);
     for (const f of SOURCES) expect(fs.existsSync(path.join(ROOT, f)), f).toBe(true);
+    // And it is actually pointed at the commercial surface, not only at the blog. A glob that
+    // silently matches nothing is the same beautiful pass wearing a directory read.
+    expect(SOURCES.filter((f) => f.startsWith("content/services/")).length).toBe(20);
   });
 
   for (const file of SOURCES) {
