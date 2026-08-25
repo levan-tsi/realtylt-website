@@ -506,6 +506,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
     "what-database-reactivation-actually-does": "What it does",
     "the-part-nobody-selling-you-this-will-mention": "The rules",
     "what-it-costs-when-it-goes-wrong": "What it costs",
+    "what-to-ask-before-you-let-anybody-text-that-list": "What to ask",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
     "where-it-goes-wrong": "Where it fails",
     "common-questions-answered-honestly": "Common questions",

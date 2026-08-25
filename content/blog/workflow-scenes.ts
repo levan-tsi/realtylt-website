@@ -471,6 +471,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
     "how-to-find-your-own-version-of-this": "Find yours",
     "the-failure-nobody-warns-you-about": "When it goes quiet",
     "what-it-costs-and-how-long-it-takes": "Cost and time",
+    "the-first-month-and-the-two-things-to-do-in-it": "The first month",
     "what-it-does-not-do-and-should-not-pretend-to": "What it will not do",
     "common-questions-answered-honestly": "Common questions",
     "what-to-do-about-it": "What to do",

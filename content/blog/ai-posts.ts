@@ -403,6 +403,18 @@ The second cost is less dramatic and far more likely, and it has a threshold you
 
 Both of those costs are avoidable, and both of them are avoided in the same place: before the first message goes out, not after the first complaint.
 
+## What to ask before you let anybody text that list
+
+Everything above is theory until you are sitting across from somebody who wants the export. Four questions separate the people who have done this properly from the people who are about to use your database as their sandbox, and none of them require you to know anything technical.
+
+Show me the consent evidence for one specific record. Pick a name yourself, at random, and ask what date that person gave permission, through what form, and where that date is stored. If the answer is a general assurance about the CRM rather than a date on a screen, nothing has been checked and the first message is a guess.
+
+What happens to a message that would land at nine at night. You want to hear a rule that is enforced by the system, not a promise about scheduling discipline. Ask what happens when somebody replies at 9:40pm, too, because the answer to that one is usually more revealing.
+
+Show me a real opt-out, end to end. Have somebody send stop from a phone in the room, and then try to send that number another message. If the second message goes out, the suppression list is decoration. This takes four minutes and almost nobody asks for it.
+
+Whose number is it. If the campaign runs from a number the vendor owns, then the replies, the reputation attached to it and the ability to keep using it all belong to the vendor, and moving to anybody else means starting again. That is not a reason to say no. It is a reason to know before you sign rather than after.
+
 [[scene:offer]]
 
 [[scene:pull-quote]]
@@ -717,6 +729,16 @@ There is no honest price on this page, because the number depends on three thing
 What can be said honestly is the shape of it. The platforms themselves are the cheap part and are billed by how often your chains run, so a small business pays a subscription rather than a project. Simple chains, like intake and an instant reply, are typically live in days. Multi-system workflows with real branching take longer, and the slow part is almost never the building. It is mapping what your business actually does today, which is the hour with the piece of paper, done properly and with somebody arguing with you about it.
 
 The recurring cost people forget is ownership. A chain is software. It will break the day a vendor renames a field, and somebody has to be the person who notices. Budget for that, or the chain quietly becomes one of the mistakes it was built to remove.
+
+## The first month, and the two things to do in it
+
+Nearly every chain that dies quietly dies in its first four weeks, and it dies because the go-live was treated as the finish. Two habits in that first month are worth more than anything you can specify beforehand, and both are free.
+
+The first is to open the run history in week one and read it, line by line, for one chain. Not to check whether it worked. To check whether what it did matches what you thought you asked for. This is the week you discover that a duplicate record is being created rather than matched, or that the reply going out in your name says something you would never say, or that the step you assumed ran on every lead is only running on the ones that came through the website. None of that shows up as a failure. It shows up as a green run doing the wrong thing politely.
+
+The second is to break it on purpose. Put a deliberately bad value into one chain, or switch off a credential for ten minutes, and then sit and wait to find out whether anybody is actually told. If nothing arrives, you have learned the most important fact about your own system before it mattered, and you have learned it on a test record instead of on a client. That is the whole argument of the section above, run once, in the only way that proves it.
+
+After the first month, put a repeating reminder in your own calendar to open the run history once a quarter. It takes ten minutes and it is the difference between a system you own and a system that owns a corner of your business without telling you what it is doing in there.
 
 ## What it does not do, and should not pretend to
 
