@@ -170,7 +170,14 @@ export function ServiceToc({ items }: { items: ServiceTocItem[] }) {
         {open && (
           <div
             ref={sheetRef}
-            className="fixed inset-0 z-[70]"
+            // z-[1000000], not z-[70]. The chat launcher injected by /rlt-chat.js is
+            // position:fixed at z-index 999998, so on a 390px phone its 60x60 button painted
+            // on top of the bottom-right corner of this open dialog and covered navigation
+            // rows. The rest of the site already knows this: ListingGallery and
+            // QualifyingWizard use z-[1000000], ListingLeadCTAs uses z-[1000001], and the two
+            // blog rails had the identical bug and were fixed to this value on 2026-08-03.
+            // Services was the third. See SERVICES-CRITIQUE.md §5.
+            className="fixed inset-0 z-[1000000]"
             role="dialog"
             aria-modal="true"
             aria-label="On this page"
