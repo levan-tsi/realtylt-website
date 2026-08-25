@@ -2,7 +2,7 @@
 
 **Built 2026-08-25.** Scope: the editorial photography problem that was blocking topics 12 to 20,
 then `skip-tracing-lead-generation` and `marketing-automation` written to the flagship standard,
-their service pages synced, and the claims the research killed on the way. Five commits on `main`,
+their service pages synced, and the claims the research killed on the way. Six commits on `main`,
 **not pushed**: the orchestrator verifies and pushes.
 
 ```
@@ -11,7 +11,13 @@ abfb37f  E1  topic 12, skip tracing, argued as an acquisition rather than as a l
 308dcb1  E2  topic 13, marketing automation, argued as distribution you do not control
 5940b8d  E3  the two service pages synced, and eight claims that did not survive the research
 0ad4b35  E4  the second pass, and a REASON that was wrong
+c2b8647  E5  the round log, every source's operative sentence, and the photograph ledger
 ```
+
+**E0 landed eleven photographs and E1 landed three more.** The pipeline was still warm after the
+first eleven were installed, so three additional unspent plates were sourced, verified and
+committed alongside topic 12 rather than left for a later round to re-derive the tooling. The
+ledger below is all fourteen.
 
 **Two posts, ZERO new components.** Thirteen topics on the template now and twelve in a row that
 add none. The bespoke-component hatch was not opened and did not need the calculator-lesson test.
