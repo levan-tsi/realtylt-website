@@ -9,6 +9,243 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town, every one of them owned by somebody who does not live there, and for a little over half of them a mobile phone number sitting in the next column along.
+
+You worked down it the way anybody would. No answer. No answer. A voicemail. A man who was perfectly pleasant and said no. Then a woman picked up on the fourth ring, listened to the first two sentences, and asked a question in the middle of an ordinary reply.
+
+"Can I ask where you got this number?"
+
+You did not know. Not in the sense of not remembering, in the sense that there was nobody in the chain you could have asked. It came off the list. The list came out of a tool. The tool got it from somewhere. You said something about public records, which was probably half true, and she thanked you and hung up, and the call had been over for some time before the phone went down.
+
+That question is the subject of this article. Not because it is awkward, although it is. Because it is the same question two federal statutes ask, and they ask it of you rather than of the tool.
+
+[[scene:in-short]]
+
+[[scene:where-from]]
+
+## What skip tracing is, and why it is a chain rather than a lookup
+
+Skip tracing is old and it has a plain meaning. It is the work of finding somebody who cannot be reached at the address you have for them. The name comes from debt collection, where the person had skipped, and the tracer's job was to find where they had gone. In real estate it does something narrower and less dramatic: you have a property, you want to speak to whoever owns it, and the public record gives you a name and a mailing address that may be years out of date and almost never gives you a telephone number.
+
+The modern version is sold as a lookup. You put an address in and a name, a phone number and an email address come out, and the whole thing takes under a second, which makes it feel like consulting a directory. It is not a directory. Underneath, it is a chain of joins between files that were each assembled for their own reasons: a deed office, a credit bureau's identity records, a telephone carrier's assignments, an aggregator that bought some of them and licensed the rest.
+
+Two things follow from that shape, and both of them matter more than the accuracy question everybody asks first.
+
+The first is that the answer is a guess with a confidence attached, and the confidence is invisible. Every join in that chain is a decision about whether two records describe the same person, and those decisions are made by a system that has never met either of them. We have written about the arithmetic of that decision at length in [the article on two way CRM sync](/blog/crm-sync-real-estate-duplicate-contact-records), because it is the same problem, and the thing worth carrying over here is that a system tuned to return an answer for as many rows as possible is tuned to merge more aggressively, and merging more aggressively means more of the answers are the wrong person.
+
+The second is that every link in that chain is a place where somebody, at some point, had to have a reason to release the information. The law that governs that is not the law everybody in this trade talks about. It is not about the call at all. It is about the acquisition.
+
+## The record is not stale because anybody was careless
+
+Before the law, the reason the trade exists, because it is worth being precise about what is actually broken.
+
+The county knows who owns the house because somebody recorded a deed. That record is durable and it is nobody's job to keep it current beyond ownership: it tells you who holds title, and if the owner moved out of state six years ago the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
+
+Meanwhile the person moved.
+
+[[scene:movers]]
+
+The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county, which is the situation that produces the hardest version of this problem: the record is wrong, the person is still local, and there are other people in the same county with the same surname. That is the exact condition under which an automated match is most confident and least reliable.
+
+There is a second thing in that chart that most articles on this subject get backwards, and it is in the note under it. A move breaks an address. It usually does not break a phone number, because mobile numbers have been portable between carriers for years and people carry them across a move, a marriage and three jobs. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons, at completely different rates, and a provider that quotes you one accuracy figure for both is quoting you a number that does not describe anything.
+
+[[scene:plate]]
+
+## Where the number came from decides what you may do with it
+
+Here is the reframe that reorganises the whole subject, and it is why the legality question everybody asks has the wrong shape.
+
+The question is almost always put as "is skip tracing legal", and the answer that comes back is almost always "yes, it uses public records". Both halves of that exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use, and American law treats those as separate questions with separate rules and separate people liable.
+
+The acquisition is governed by rules about where the underlying information came from and what purpose it was released under. The use is governed by rules about consent and about calling. Almost everything written for real estate agents about this is about the second half, and almost nothing is about the first, which is unfortunate, because the first half is where the liquidated damages are and it is the half a tool cannot handle for you.
+
+Two federal statutes govern the acquisition side. Neither of them is mentioned on a single competitor page we could find.
+
+## The statute nobody selling this will name
+
+The [Driver's Privacy Protection Act](https://www.law.cornell.edu/uscode/text/18/2721), 18 U.S.C. 2721 to 2725, exists because state motor vehicle departments were selling their files. It applies to personal information that came out of a motor vehicle record, and the definition of personal information at [18 U.S.C. 2725(3)](https://www.law.cornell.edu/uscode/text/18/2725) is deliberately wide. It "means information that identifies an individual, including an individual's photograph, social security number, driver identification number, name, address (but not the 5-digit zip code), telephone number, and medical or disability information".
+
+Name. Address. Telephone number. Those are the three fields a skip trace returns.
+
+The structure of the statute is the part worth understanding, because it is the opposite of how most people assume privacy law works. It does not list forbidden uses. It lists the permitted ones, fourteen of them, and everything not on the list is not permitted. [Section 2722(a)](https://www.law.cornell.edu/uscode/text/18/2722) then makes the consequence explicit: "It shall be unlawful for any person knowingly to obtain or disclose personal information, from a motor vehicle record, for any use not permitted under section 2721(b) of this title."
+
+Read the list and three of the fourteen look, at a glance, as though they might cover a prospecting call. None of them does.
+
+[[scene:three-exceptions]]
+
+The teeth are in [section 2724](https://www.law.cornell.edu/uscode/text/18/2724), and this is the one figure in this article that is fixed by Congress rather than estimated by anybody. A person who knowingly obtains, discloses or uses that information for a purpose the chapter does not permit "shall be liable to the individual to whom the information pertains, who may bring a civil action in a United States district court". The court may award "actual damages, but not less than liquidated damages in the amount of $2,500", plus punitive damages on proof of willful or reckless disregard, plus attorneys' fees.
+
+Note what that sentence does and does not say. It is a private right of action, brought by the individual, not a regulator's fine. The floor is per person, not per call. And a court "may" award it, which is not the same as "will", so this is an exposure rather than an invoice. Those distinctions matter and they are the reason the figure at the top of this page is written as a floor for one person rather than as a total for a list.
+
+None of this means a traced number came out of a motor vehicle record. Most of them almost certainly did not. It means that if any link in the chain behind your list touched one, the obligation attaches to whoever obtained it, and the length of the chain is not a defence. Which brings us to the clause everybody points at.
+
+## What a licence actually buys, and it is not a new permission
+
+If you have ever asked a data provider about this you will have been told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
+
+Read the last seven words again.
+
+[[scene:pull-quote]]
+
+The clause is a loop. It says that a licensed agency may use the information for a purpose that the same subsection already permits. It does not add a fifteenth purpose called investigation. So the licence answers the question of who may act. The question of what for is still open, and it has to be closed by finding a purpose somewhere else on the same list of fourteen.
+
+That is not a technicality and it is not a gotcha. It is the whole design. A licence is an accountability mechanism: it means there is a regulator, a record and something to lose. It was never intended to be a key, and reading it as one is the single most common mistake in this entire category.
+
+There is a practical consequence and it is a good one. [Section 2721(c)](https://www.law.cornell.edu/uscode/text/18/2721) requires that any authorised recipient who resells or rediscloses this information "must keep for a period of 5 years records identifying each person or entity that receives information and the permitted purpose for which the information will be used and must make such records available to the motor vehicle department upon request."
+
+Somebody wrote down a purpose. It exists. You are entitled to ask your provider what purpose your account was established under, and a provider who cannot answer that in a business day is telling you something useful about themselves.
+
+[[scene:plate-two]]
+
+## The second statute turns on your purpose, not on the data
+
+The [Fair Credit Reporting Act](https://www.law.cornell.edu/uscode/text/15/1681b) is the other one, and it works in a way that surprises almost everybody, including people who have dealt with it before.
+
+Most people assume the FCRA covers credit reports, meaning documents with credit scores in them, and that a name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
+
+The operative words are "which is used or expected to be used". The status is conferred by the purpose, not by the fields. The same file can be an ordinary commercial record in one transaction and a consumer report in the next, and what moves it across the line is what the person receiving it intends to do with it.
+
+That has a specific consequence for real estate that is worth stating plainly, because it is the boundary that decides whether this whole subject is simple or complicated for you.
+
+Building a list of owners in order to introduce yourself and ask whether they are thinking of selling is not, on its face, an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, and the filtering decides who gets an offer and who does not, the purpose has changed shape and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
+
+[15 U.S.C. 1681b(f)](https://www.law.cornell.edu/uscode/text/15/1681b) is the prohibition and it is short: "A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the consumer report is authorized to be furnished under this section; and (2) the purpose is certified in accordance with section 1681e of this title by a prospective user of the report through a general or specific certification."
+
+Look at the permissible purposes at [1681b(a)(3)](https://www.law.cornell.edu/uscode/text/15/1681b) and the one a business would reach for is (F)(i): a legitimate business need for the information "in connection with a business transaction that is initiated by the consumer". That phrase is the whole answer, and it is the reason cold prospecting does not fit. A person who has never heard of you has not initiated anything.
+
+We are not your lawyers and this article cannot be legal advice for your business. What it can do is tell you the two questions to put in writing to any provider, because both of them have short answers that a serious company will give you: which permitted purpose is our account established under, and does anything you supply us derive from a consumer reporting agency.
+
+## Two hundred and fifty four million standing refusals
+
+Now the use side, briefly, because most of it belongs to a different article on this site.
+
+If you are working an old database of people who once contacted you, the rules about consent windows, autodialers and revocation are the subject of [the piece on database reactivation](/blog/database-reactivation-old-real-estate-leads), which carries the regulations and the dates in them and will not be repeated here. That article is about permission that may have gone stale. This one is about the situation where there was never any permission at all, and there is one thing about that situation which the other article does not cover.
+
+The National Do Not Call Registry is a list of numbers whose owners have said, in advance and in writing, that they do not want telemarketing calls. The [Federal Trade Commission's Data Book for 2024](https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf) states its size directly: "As of September 30, 2024, there were 254 million active registrations."
+
+That is not a count of people, and the Commission says why in the same document: active registrations are those a consumer has placed and not deleted, the FTC removes numbers that have been disconnected and reassigned, and "numbers that have been disconnected but not reassigned remain on the registry". One person can register several numbers. So treat it as an order of magnitude rather than a headcount, and the order of magnitude is the point.
+
+A traced number is a number you have never spoken to. You have no idea whether it is on that list until you check, and checking is a mechanical step that costs almost nothing and is skipped constantly.
+
+[[scene:complaints]]
+
+The chart is deliberately not the one everybody draws. The conversation about unwanted calls is almost entirely a conversation about robots, and the second bar is three quarters of a million complaints in one year about a human being dialling. That is what a prospecting list is. It is not a robocall problem, it is not somebody else's problem, and the people making those complaints were, in every case, doing exactly what the registry told them to do.
+
+[[scene:plate-three]]
+
+## The number itself does not stay still
+
+There is one more thing about a traced number that nobody selling you one will bring up, and it is not about the law.
+
+Telephone numbers get recycled. A person cancels a line, the number goes back into a pool, and after a waiting period the carrier assigns it to somebody new. The Federal Communications Commission built a national database to deal with the consequences of this, and the [order that created it](https://docs.fcc.gov/public/attachments/FCC-18-177A1.pdf) explains the mechanism in a sentence: "Once a consumer disconnects a number, he or she might not update all parties who have called in the past. When the old number is eventually reassigned, callers may inadvertently reach the new consumer who now has the reassigned number."
+
+The same order carries a scale figure, and the honest way to quote it is with the Commission's own footnote attached. The text says "Approximately 35 million numbers are disconnected and made available for reassignment to new consumers each year". The footnote says where that came from and then, remarkably, undercuts it: the figure is an average of the North American Numbering Plan Administrator's utilisation reports for 2013 to 2016, and "while a number of parties have cited this figure, we note that at least one party has questioned whether the figure accurately reflects the volume of number reassignments. In the Reassigned Numbers NOI we sought comment on whether this number accurately reflects the volume of number reassignments, but received no other credible estimate."
+
+That is a regulator publishing a number, saying somebody has challenged it, and saying nobody offered anything better. It is a more useful thing to know than the number itself, and it is the reason this article puts it in a paragraph rather than in a chart. A figure the publishing body has flagged as contested is not a measurement, and drawing a bar for it would turn a caveat into a fact.
+
+What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large, and the enrichment file that told you this number belongs to that owner was assembled at a moment in the past. When a stranger answers and says you have the wrong person, that is not a defect in the vendor. That is the system working exactly as described.
+
+[[scene:trace-path]]
+
+## What a trace is actually made of
+
+The diagram above is the honest version of the pipeline, and the two hops that decide whether any of this is safe are the fourth and the fifth. Everything else is engineering.
+
+Most vendor descriptions of skip tracing have four steps and they are all on the left of that diagram: pull the properties, resolve the owner, append a number, clean the file. Those steps are real, they work, and they are not where anything goes wrong. What is missing is any account of where the appended number came from and under what purpose it was released, which is precisely the pair of facts that the two statutes above turn on.
+
+Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start, and adding it to a database with a hundred thousand rows of unknown provenance is a genuinely miserable job.
+
+[[scene:trace-calculator]]
+
+## What it costs and how long it takes
+
+There is no price on this page, and the reason is that the cost of this one is dominated by a per record charge you pay to somebody else rather than by anything we build.
+
+The shape of the bill has three parts. There is enrichment, which is priced per record by whichever provider you use and which is the only part that scales with volume. There is the build, which is the pipeline that pulls the properties, runs them through, validates and deduplicates the results, writes them where they need to go, and enforces the suppression check. And there is the part almost nobody budgets for, which is the fields and the process: a source and a date on every row, a purpose on file, an owned suppression list, and somebody whose job it is to keep them.
+
+Two things drive the enrichment bill and neither of them is negotiable by us. The first is how many properties you run, and the second is that you pay for attempts rather than for successes with most providers, so a low resolve rate in your area costs money without producing anything. That is why the calculator above asks you for the resolve rate instead of telling you one, and why the single most valuable thing you can do before signing anything is to ask a provider to run two hundred addresses from your actual farm area and report what came back.
+
+On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a conversation rather than a configuration: deciding what your suppression rules are, agreeing where the source and purpose fields live, and getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup, which is a real cost and is better discovered before the work starts than after.
+
+The one honest way to size any of it is the audit further down this page. It takes twenty minutes, it costs nothing, and it will tell you which of those two situations you are in.
+
+## What it does not do, and should not pretend to
+
+It does not give you a match rate in advance. Rates vary by area, by how much public record sits behind a property and by how long ago the owner acquired it, and every published figure we tried to follow led back to a company selling the service quoting its own results. Your own provider can measure this for your own area in an afternoon and that measurement is worth more than any industry average.
+
+It does not tell you the number is current. Enrichment reports the best answer in the file at the moment it is asked. Whether that number still reaches that person is a separate fact that nobody in the chain has checked, which is the reassignment problem above and is not something better software fixes.
+
+It does not resolve a legal question about your own use. The two statutes in this article attach to the person who obtains and uses the information. A provider's terms of service allocate risk between you and them; they do not answer the question a court would ask, which is what purpose you had.
+
+It does not confer permission to call. That is a separate body of rules with its own dates and its own private right of action, and honouring a do not call registration is a step in your process rather than a property of the data. It stays your obligation regardless of what the list cost.
+
+It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. The signal, if there is one, was in the public record you started from, and it is usually discarded by the time the list reaches the phone.
+
+[[scene:wasted]]
+
+[[scene:offer]]
+
+## How to audit your own list in twenty minutes
+
+Nothing here needs a tool, a consultant or a new subscription. Do it on the list you already have.
+
+1. **Pick one row at random.** Not the first one, not one you remember. Scroll and stop. This matters, because a list is only as defensible as its worst row and the worst row is never at the top.
+
+2. **Ask where that number came from.** Not "from public records". Which file, supplied by whom, under which account. If the answer takes longer than a business day to arrive, you have learned the important thing already.
+
+3. **Ask what purpose the account was established under.** Providers who resell information covered by the DPPA are required to keep exactly this, for five years. It is a normal question with a normal answer and asking it is not an accusation.
+
+4. **Ask whether anything they supply derives from a consumer reporting agency.** This is a yes or no question and it changes what you are allowed to do with the file. A vendor who does not understand the question is answering it.
+
+5. **Look for the source and date fields in your own CRM.** Open a contact that came off a purchased or traced list and one that came off your own website form. If the record does not tell you which is which, then your consent position for the whole database is currently unknowable, and that is a bigger problem than any list.
+
+6. **Find your suppression list and find out who owns it.** Not the CRM's built in unsubscribe flag. The list of people who have said no to your business, in any channel, held somewhere that survives changing software. If nobody owns it, nobody is maintaining it.
+
+7. **Ring one number yourself and listen for the question.** The one at the top of this article. If you cannot answer it in a sentence you would be comfortable having read back to you, that is the actual finding, and it is worth more than the rest of the audit put together.
+
+## Common questions, answered honestly
+
+### What is skip tracing in real estate, in plain terms?
+
+It is the work of turning a property into a person you can contact. Public records tell you who owns a house and where they get their post; they almost never tell you a phone number. Skip tracing is the set of joins between other files that produces a current telephone number and email address for that owner. In prospecting it is what turns a map into a list you can work.
+
+### Is skip tracing legal?
+
+The honest answer is that it is not one thing, so it does not have one answer. Looking up a deed or a tax roll is unambiguously fine; those records are public because a legislature said so. The part that carries rules is the appended contact information, and the two statutes that govern it are the Driver's Privacy Protection Act, which permits release of motor vehicle record information only for listed purposes, and the Fair Credit Reporting Act, which turns on what you use the information for rather than on what it contains. Both attach to the person obtaining and using the data. Neither is answered by a provider's terms of service, and this article is not legal advice for your business.
+
+### Can I call a number I got from skip tracing?
+
+Getting a number and being allowed to ring it are separate questions with separate rules. Checking the national do not call registry before you dial is a mechanical step and it is not optional. The consent rules for calls and texts, including what an established business relationship is worth and how long it lasts, are covered in detail in [our article on database reactivation](/blog/database-reactivation-old-real-estate-leads). The short version for this article is that a traced number is the case with the least protection available to you, because there is no prior relationship of any kind to rely on.
+
+### How accurate is automated skip tracing?
+
+Nobody publishes a figure with a method under it, and we are not going to invent one. What is measurable is your own resolve rate in your own area, which a provider can produce by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And a system tuned to answer more rows is a system tuned to guess more often, so a headline match rate that sounds impressive may be describing a file with more wrong people in it, not fewer.
+
+### How is this different from buying a lead list?
+
+A purchased list was compiled at some point in the past and sold to everybody who paid for it, so the same owners take the same call from several agents in the same fortnight. A trace is run on demand for the area you are actually working. The difference that matters for this article is not freshness though: it is that when you build the list yourself you are the person who obtained the information, which means the questions in this article are yours to answer and yours to be able to answer.
+
+### What is the difference between skip tracing and data enrichment?
+
+Skip tracing starts from a property and works towards a person who has never contacted you. Data enrichment starts from a person who is already in your database, usually because they contacted you, and fills in what you do not know about them. They use overlapping technology and they sit in completely different places legally, because one of them has a prior relationship behind it and the other has nothing at all.
+
+### Does a licensed provider make this safe?
+
+It makes it accountable, which is not the same thing and is still worth having. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose that the statute does not list, because the clause that grants investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question and then ask the purpose question, in that order, and do not let the first answer stand in for the second.
+
+### What should I ask a provider before I sign anything?
+
+Four questions, all short, all answerable. Which permitted purpose is our account established under. Does anything you supply derive from a consumer reporting agency. What is the measured resolve rate on two hundred addresses from our own area. And what happens on your side when somebody asks not to be contacted again. A company that answers all four in writing in a business day is a different proposition from one that sends a brochure.
+
+## What to do about it
+
+Everything in this article comes back to one sentence you should be able to say without hesitating, to a stranger, on a Tuesday morning, about any row on any list in your business.
+
+That sentence is not a legal formula and it does not need to be. It is something like: this came from a provider we have a written agreement with, under a purpose they have on file, and we checked it against the do not call registry before I rang you. Every part of that is arrangeable, none of it is expensive, and all of it has to be arranged before the first call rather than after the first complaint.
+
+[[scene:funnel]]
+`;
+
 export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly, which is not laziness. It is what anybody does with something that has been right nine times.
 
 On the tenth morning it confirmed a Thursday walkthrough to a buyer's agent. You had moved that walkthrough to Friday the previous evening, in a text message, from the car. The assistant read the calendar, and the calendar said Thursday, because the calendar was where the walkthrough had been before you moved it.

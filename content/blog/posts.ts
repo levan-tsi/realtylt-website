@@ -15,8 +15,10 @@ import {
   LEAD_QUALIFICATION_POST,
   LOCAL_SEO_POST,
   REVIEW_AUTOMATION_POST,
+  SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { SKIP_TRACING_FLAGSHIP } from "./skip-tracing-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "./agent-workforce-scenes";
 import { CRM_SYNC_FLAGSHIP } from "./crm-sync-scenes";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
@@ -70,6 +72,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
+    title: "You Have Her Number. She Never Gave It to You.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 11 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing actually is, what the law permits, and the four questions to put to a provider in writing.",
+    seoDescription:
+      "What skip tracing does in real estate, what the Driver's Privacy Protection Act and the Fair Credit Reporting Act actually say about it, and what to ask a provider.",
+    cover: "/images/editorial/mailboxes-receding.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SKIP_TRACING_POST,
+    flagship: SKIP_TRACING_FLAGSHIP,
+  },
   {
     slug: "ai-agent-workforce-real-estate-assistants",
     title: "Four Assistants Ran Overnight. Nobody Read What They Did.",

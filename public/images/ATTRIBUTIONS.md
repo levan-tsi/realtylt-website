@@ -30,7 +30,11 @@ Two rules that go with it, both earned in round E:
   being looked at there. See `docs/blog-flagship/ROUND-E-LOG.md` for what was rejected and why,
   including the one that illustrated its article best and was rejected because of it.
 
-Rows marked **UNSPENT** are not on any page yet and are there for the rounds after E.
+Fourteen files landed in round E and nine of them shipped immediately. Rows marked **UNSPENT**
+are on no page at all and exist for the rounds after E; the suggestion beside each one is a
+suggestion, not a reservation. A plate has to earn its band in the article it lands in, so if
+none of the five carries an argument for topic 13, source a new one rather than using a spare
+because it is there.
 
 ## Two folders that are NOT stock photography
 
@@ -89,17 +93,20 @@ below as unresolved rather than quietly omitted.
 | public/images/listings/house-16.jpg | kitchen | Midtown Crossing at Turner Park | BY 2.0 | [source](https://www.flickr.com/photos/30032090@N04/3007704037) |
 | public/images/listings/house-17.jpg | Sustainable Kitchen | Jeremy Levine Design | BY 2.0 | [source](https://www.flickr.com/photos/25186605@N04/15606512391) |
 | public/images/listings/house-18.jpg | apartment - dining room | Cubosh | BY 2.0 | [source](https://www.flickr.com/photos/39427725@N00/2609949336) |
-| public/images/editorial/mailboxes-row.jpg | Rural mailboxes — three boxes on one weathered rack above an autumn valley, two of them numbered. ROUND E, unused until then. Every row below was verified by opening its own Flickr photo page and reading the licence there, not by trusting a search index | _Imaji_ | BY 2.0 | [source](https://www.flickr.com/photos/76612814@N00/62469472) |
-| public/images/editorial/mailboxes-receding.jpg | Mailboxes — a long receding rank of rusted boxes, one number legible. ROUND E | sf-dvs | BY 2.0 | [source](https://www.flickr.com/photos/46207792@N00/253452403) |
-| public/images/editorial/mailbox-mist.jpg | Rural Mailbox — one box numbered 1801 against a field in fog. ROUND E, UNSPENT | Michele Dorsey Walfred | BY 2.0 | [source](https://www.flickr.com/photos/97485958@N02/41814676714) |
-| public/images/editorial/mailbox-road.jpg | Rural Mailbox — a single box far down a wet road in bare woods. ROUND E, UNSPENT | Bob | BY 2.0 | [source](https://www.flickr.com/photos/12463666@N03/32252608421) |
-| public/images/editorial/no-solicitation.jpg | no solicitation — a red warning sign, salesman pictogram in a triangle. ROUND E | upyernoz | BY 2.0 | [source](https://www.flickr.com/photos/48600082269@N01/4183433578) |
-| public/images/editorial/post-office-boxes.jpg | Post Office Boxes - Boonville, MO — a wall of numbered boxes in a small-town post office. ROUND E, UNSPENT | Robert Stinnett | BY 2.0 | [source](https://www.flickr.com/photos/93732749@N00/5701673909) |
-| public/images/editorial/flyer-kiosk.jpg | Flyer Kiosk — overlapping notices, none of them addressed to anybody. ROUND E | Richard Ha | BY 2.0 | [source](https://www.flickr.com/photos/45561728@N06/4433739626) |
-| public/images/editorial/notice-board.jpg | flyers — a community board layered with notices. ROUND E | Joel Kramer | BY 2.0 | [source](https://www.flickr.com/photos/75001512@N00/3448923996) |
-| public/images/editorial/index-drawers.jpg | file cabinets — a wall of wooden index drawers with hand-written labels. ROUND E, UNSPENT | waferboard | BY 2.0 | [source](https://www.flickr.com/photos/60944931@N00/4137041591) |
-| public/images/editorial/ledger-names.jpg | Very Old payroll Journal — names and dates entered by hand in ruled columns. ROUND E | peagreengirl | BY 2.0 | [source](https://www.flickr.com/photos/95652992@N00/396463634) |
-| public/images/editorial/tool-wall.jpg | The Garage — hand tools hung in order on a workshop wall. ROUND E, UNSPENT | huw-ogilvie | BY 2.0 | [source](https://www.flickr.com/photos/97438202@N00/28135419) |
+| public/images/editorial/mailboxes-row.jpg | Rural mailboxes — four boxes on one weathered rack above an autumn valley, two of them numbered. SPENT: plate one of the skip-tracing flagship. Every row in this block was verified by opening its own Flickr photo page and reading the licence there, not by trusting a search index | _Imaji_ | BY 2.0 | [source](https://www.flickr.com/photos/76612814@N00/62469472) |
+| public/images/editorial/mailboxes-receding.jpg | Mailboxes — a long receding rank of rusted boxes, one number legible. SPENT: cover of the skip-tracing flagship | sf-dvs | BY 2.0 | [source](https://www.flickr.com/photos/46207792@N00/253452403) |
+| public/images/editorial/mailbox-road.jpg | Rural Mailbox — a single box far down a wet road in bare woods. SPENT: cold-open field of the skip-tracing flagship | Bob | BY 2.0 | [source](https://www.flickr.com/photos/12463666@N03/32252608421) |
+| public/images/editorial/ledger-names.jpg | Very Old payroll Journal — names and dates entered by hand in ruled columns. SPENT: plate two of the skip-tracing flagship | peagreengirl | BY 2.0 | [source](https://www.flickr.com/photos/95652992@N00/396463634) |
+| public/images/editorial/no-solicitation.jpg | no solicitation — a red warning sign, a figure in a hat striding away with a case inside a triangle. SPENT: plate three of the skip-tracing flagship | upyernoz | BY 2.0 | [source](https://www.flickr.com/photos/48600082269@N01/4183433578) |
+| public/images/editorial/flyer-kiosk.jpg | Flyer Kiosk — overlapping notices, none of them addressed to anybody. SPENT: plate one of the marketing-automation flagship | Richard Ha | BY 2.0 | [source](https://www.flickr.com/photos/45561728@N06/4433739626) |
+| public/images/editorial/index-drawers.jpg | file cabinets — a wall of wooden index drawers, labelled by hand with ranges of surnames. SPENT: plate two of the marketing-automation flagship | waferboard | BY 2.0 | [source](https://www.flickr.com/photos/60944931@N00/4137041591) |
+| public/images/editorial/notice-board.jpg | flyers — a community board layered with notices. SPENT: cover of the marketing-automation flagship | Joel Kramer | BY 2.0 | [source](https://www.flickr.com/photos/75001512@N00/3448923996) |
+| public/images/editorial/post-office-boxes.jpg | Post Office Boxes - Boonville, MO — a wall of numbered boxes in a small-town post office. SPENT: cold-open field of the marketing-automation flagship | Robert Stinnett | BY 2.0 | [source](https://www.flickr.com/photos/93732749@N00/5701673909) |
+| public/images/editorial/mailbox-mist.jpg | Rural Mailbox — one box numbered 1801 against a field in fog. **UNSPENT** | Michele Dorsey Walfred | BY 2.0 | [source](https://www.flickr.com/photos/97485958@N02/41814676714) |
+| public/images/editorial/tool-wall.jpg | The Garage — hand tools hung in order on a workshop wall. **UNSPENT**, suggested for custom-automation | huw-ogilvie | BY 2.0 | [source](https://www.flickr.com/photos/97438202@N00/28135419) |
+| public/images/editorial/clock-not-in-use.jpg | Worcester Shrub Hill Station - clock not in use — a station clock with a notice over its face telling you to read the electronic displays instead. **UNSPENT**, suggested for ai-scheduling | Elliott Brown | BY 2.0 | [source](https://www.flickr.com/photos/39415781@N06/6365953749) |
+| public/images/editorial/office-stamps.jpg | Rubber stamp stash — a rack of office stamps reading SURFACE MAIL, PROFORMA, DUPLICATE, TRIPLICATE, INSURED, COPY. **UNSPENT**, suggested for document-processing | mpclemens | BY 2.0 | [source](https://www.flickr.com/photos/24364103@N04/5483313713) |
+| public/images/editorial/register-keys.jpg | Cash Register — the keys of an antique register, one of them reading RECEIPT. **UNSPENT**, suggested for invoicing-and-payments | Steve Snodgrass | BY 2.0 | [source](https://www.flickr.com/photos/10710442@N08/4034636727) |
 | public/images/levan-portrait.jpg | Levan Tsiklauri portrait | Levan Tsiklauri | Owner's own photograph | [source](https://realtylt.com/who-we-are) |
 | public/images/google-logo.png | Google mark, shown beside real Google reviews | Google LLC | Trademark, nominative use | [source](https://about.google/brand-resource-center/) |
 | public/images/why/our-search.webp | RealtyLT search page | RealtyLT | Our own screenshot | [source](https://github.com/levan-tsi/realtylt-website) |
