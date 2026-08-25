@@ -6,7 +6,7 @@ import type { FormEvent } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
-import { useQualifyingWizard } from "@/components/leads/QualifyingWizard";
+import { useQualifyingWizard, wizardOpensOn } from "@/components/leads/QualifyingWizard";
 import { INTEREST_REASONS, SITE } from "@/lib/site";
 import type { SavedSearchRequest } from "@/lib/leads/types";
 
@@ -20,7 +20,10 @@ type Status = "idle" | "submitting" | "success" | "error";
  * layout — a single "Full Name", then Email + Phone 2-up, then a full-width address (parsed
  * server-side into first/last + street/city/state/zip); `fullWidthSubmit` stretches the CTA;
  * `splitName` swaps the single name field for First/Last (the footer/contact form);
- * `requirePhone` makes phone mandatory; `footnote` prints small print under the button.
+ * `footnote` prints small print under the button. Phone is REQUIRED on every variant —
+ * the owner's rule (2026-08-25) after the footer form accepted a lead without a number:
+ * the whole follow-up flow starts with the assistant's call, so a lead without a phone
+ * is a lead the system cannot serve.
  * With no `interestReason` in the body, parseLead files the lead under "Other reason to
  * contact an agent"; `hideReason` + `defaultReason` sends the reason via a hidden input so
  * intent still reaches the CRM without showing the dropdown. */
@@ -34,7 +37,6 @@ export function LeadForm({
   fullWidthSubmit = false,
   splitName = false,
   stackAddressRow = false,
-  requirePhone = false,
   defaultReason,
   defaultAddress,
   footnote,
@@ -47,7 +49,6 @@ export function LeadForm({
   qualifier,
   addressValue,
   savedSearches,
-  redirectOnSuccess = false,
 }: {
   dark?: boolean;
   withAddress?: boolean;
@@ -62,7 +63,6 @@ export function LeadForm({
   /** Force the phone/address pair onto their own rows (single column) while leaving the
    * First/Last name pair 2-up — matches the live home-page form's stacking. */
   stackAddressRow?: boolean;
-  requirePhone?: boolean;
   defaultReason?: (typeof INTEREST_REASONS)[number];
   /** Prefill for the address field (home-value two-step flow). */
   defaultAddress?: string;
@@ -75,20 +75,6 @@ export function LeadForm({
   source?: string;
   namePlaceholder?: string;
   addressPlaceholder?: string;
-  /** Land on /thank-you instead of answering in place.
-   *
-   * OFF by default, and that default is the decision. Every form on this site used to answer
-   * inline, which is better for a visitor but leaves nothing to measure: the URL never changed,
-   * so Google Ads and GA4 had no page view to count as a conversion. A destination fixes the
-   * measurement, so the primary funnels opt in.
-   *
-   * It must stay opt-in, because for three kinds of form a redirect is actively wrong:
-   *  · the LISTING modals — navigating away from the home someone is looking at to say "thanks"
-   *    loses their place for our convenience;
-   *  · the FOOTER form, which people use mid-browse and expect to stay put;
-   *  · /selling, whose success handler opens the qualifying wizard — a redirect unmounts it and
-   *    throws away the qualifying answers, which are worth more than the page view. */
-  redirectOnSuccess?: boolean;
   /** Structured intent to attach to this submission — the same `qualifier` field the listing
    * tour/offer sheets send. parseLead normalizes it (flat, short strings) and folds it into the
    * message so it is readable even in a plain CRM view. */
@@ -178,34 +164,36 @@ export function LeadForm({
         return;
       }
       setStatus("success");
-      if (redirectOnSuccess) {
-        // The lead is already saved, so the visitor can leave safely. `from` carries which form
-        // it was, so one conversion page can still be attributed per funnel.
-        form.reset();
-        // `c` carries the consent ANSWER, not the phone number, so the thank-you page can tell a
-        // visitor the truth about what happens next: someone who agreed to a call is going to be
-        // called, and someone who declined must not be told they will be. It is a single
-        // character and it is not evidence of anything — the record that matters was stamped
-        // server-side at submission (lib/leads/consent.ts). This only decides which sentence a
-        // person reads on the next screen.
-        const consented = data.consentToContact === "true";
-        router.push(
-          `/thank-you?from=${encodeURIComponent(source ?? pathname)}&c=${consented ? "1" : "0"}`,
-        );
+      form.reset();
+      // `c` carries the consent ANSWER, not the phone number, so the thank-you page can tell a
+      // visitor the truth about what happens next: someone who agreed to a call is going to be
+      // called, and someone who declined must not be told they will be. It is a single
+      // character and it is not evidence of anything — the record that matters was stamped
+      // server-side at submission (lib/leads/consent.ts). This only decides which sentence a
+      // person reads on the next screen.
+      const consented = data.consentToContact === "true";
+      // EVERY successful submit ends on /thank-you (owner's rule, 2026-08-25: one URL every
+      // conversion lands on, so Ads/GA4/PostHog all count the same event). The qualifying
+      // wizard intercepts on its allow-listed pages — the answers are worth more than an
+      // immediate page view — and the wizard itself now ends on /thank-you, so the rule
+      // holds there too.
+      if (wizardOpensOn(pathname)) {
+        const name =
+          (data.name ?? "").trim() ||
+          [data.firstName, data.lastName].filter(Boolean).join(" ").trim();
+        openWizard({
+          name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          source: source ?? pathname,
+          consented,
+        });
         return;
       }
-      // On /selling this opens the qualifying wizard; everywhere else it is a no-op.
-      const name =
-        (data.name ?? "").trim() ||
-        [data.firstName, data.lastName].filter(Boolean).join(" ").trim();
-      openWizard({
-        name,
-        email: data.email,
-        phone: data.phone,
-        address: data.address,
-        source: source ?? pathname,
-      });
-      form.reset();
+      router.push(
+        `/thank-you?from=${encodeURIComponent(source ?? pathname)}&c=${consented ? "1" : "0"}`,
+      );
     } catch {
       setError(`We couldn't reach the server. Check your connection and try again, or call ${SITE.phone}.`);
       setStatus("error");
@@ -258,7 +246,7 @@ export function LeadForm({
           <Input label="Name" name="name" autoComplete="name" required dark={dark} hideLabel placeholder={namePlaceholder} />
           <div className="grid gap-4 sm:grid-cols-2">
             <Input label="Email" name="email" type="email" autoComplete="email" required dark={dark} hideLabel placeholder="Email Address" />
-            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
+            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required dark={dark} hideLabel placeholder="Phone Number" />
           </div>
           {withAddress && (
             <Input label="Property address" name="address" autoComplete="street-address" required dark={dark} hideLabel placeholder={addressPlaceholder} defaultValue={defaultAddress} />
@@ -281,7 +269,7 @@ export function LeadForm({
             </div>
           )}
           <div className={`grid gap-4 ${withAddress && !stack && !stackAddressRow ? "sm:grid-cols-2" : ""}`}>
-            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required={requirePhone} dark={dark} hideLabel placeholder="Phone Number" />
+            <Input label="Phone" name="phone" type="tel" autoComplete="tel" required dark={dark} hideLabel placeholder="Phone Number" />
             {withAddress && (
               <Input
                 label="Property address"

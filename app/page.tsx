@@ -302,15 +302,11 @@ export default async function HomePage() {
               {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
                   Message stacked single-column (no interest dropdown). Wiring/validation/
                   honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
-              {/* redirectOnSuccess: this is the home page's primary conversion, and it had no
-                  page view behind it to count. The inline success stays the default everywhere
-                  a redirect would cost more than it measures (see LeadForm's prop comment). */}
               <LeadForm
                 splitName
                 withAddress
                 stackAddressRow
                 hideReason
-                redirectOnSuccess
                 defaultReason="I'm interested in selling a home"
                 submitLabel="Send Message"
                 successTitle="Got it. Thanks."

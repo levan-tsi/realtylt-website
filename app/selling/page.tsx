@@ -182,7 +182,6 @@ export default async function SellingPage() {
                 emailPhone2up
                 fullWidthSubmit
                 withAddress
-                requirePhone
                 hideReason
                 defaultReason="I'm interested in selling a home"
                 namePlaceholder="Full Name"

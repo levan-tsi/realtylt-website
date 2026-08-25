@@ -41,19 +41,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-/** THE ONE SWITCH between the page that is true today and the page for the day the follow-up
- * runs (docs/LEAD-FOLLOW-UP.md points here). The sending side already exists as n8n workflow
- * `rzI7WIQhRKfrhJxH` ("[DRAFT] Website Lead Follow-up") and is INACTIVE: verified 2026-08-22
- * as `active: false`, `triggerCount: 0` — no call has ever been placed, no email ever sent, so
- * the page promises neither.
+/** THE ONE SWITCH between the "person follows up" page and the AI-assistant-flow page
+ * (docs/LEAD-FOLLOW-UP.md points here).
  *
- * FLIP TO true ONLY WHEN, for a lead submitted through this site's forms:
- *   1. that workflow (or its successor) is ACTIVE, places the assistant's verification call
- *      for consented leads (?c=1) and sends the follow-up email for both branches, and
- *   2. both have been WATCHED happening on a real test lead, not inferred from configuration.
- * Nothing else changes: followUpCopy() selects the vetted copy set, and
- * lib/thank-you-copy.test.ts holds both sets to the honesty rules either way. */
-const OUTBOUND_FOLLOW_UP_LIVE = false;
+ * FLIPPED TO true 2026-08-25 ON THE OWNER'S EXPLICIT DIRECTION — his words: the page should
+ * say the AI assistant calls first to confirm it is a real person and set the exact date,
+ * then his own call / a live transfer / the meeting itself. State of the two promises at
+ * flip time, measured:
+ *   - the thank-you EMAIL: sent by n8n "Website Lead Thank-You" on every website lead
+ *     (fired from /api/lead, consent-aware), watched landing on a real test lead 2026-08-25;
+ *   - the assistant's CALL: the CRM's build (Vapi), promised here AHEAD of go-live at the
+ *     owner's instruction — the handoff carries the dependency, and the CRM flow is the
+ *     next thing his loop turns on.
+ * lib/thank-you-copy.test.ts still holds both copy sets to the honesty rules (the declined
+ * branch never promises a call under either set). */
+const OUTBOUND_FOLLOW_UP_LIVE = true;
 
 const { heroNote, nextSteps } = followUpCopy(OUTBOUND_FOLLOW_UP_LIVE);
 

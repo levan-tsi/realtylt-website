@@ -30,9 +30,8 @@ import { LeadSheet } from "./LeadSheet";
  *    scrolled into view and focused when it is the reason the submit failed. If that contract ever
  *    changes it changes in one file, and this modal changes with it.
  *
- * redirectOnSuccess is off. LeadForm's own note gives the rule: a redirect is wrong for a form
- * someone opened mid-page, because navigating away to say "thanks" loses their place for our
- * convenience. The sheet shows its success panel and the visitor closes it when they are ready.
+ * On success LeadForm navigates to /thank-you like every other form (owner's rule,
+ * 2026-08-25: one conversion URL). The sheet unmounts with the navigation.
  */
 export function ConnectFormModal() {
   const [open, setOpen] = useState(false);

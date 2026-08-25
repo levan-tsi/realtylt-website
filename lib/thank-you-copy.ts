@@ -78,7 +78,7 @@ export const NEXT_STEPS_TODAY: NextStep[] = [
 
 export const HERO_NOTE_WHEN_LIVE: ConsentCopySet = {
   agreed:
-    "A thank-you note is on its way to your inbox, and a short call is coming to confirm a day that works for you.",
+    "A thank-you note is on its way to your inbox, and our AI assistant will call you first: a short call to confirm it is really you and set the exact day for your appointment.",
   declined:
     "A thank-you note is on its way to your inbox, and everything stays in email, as you asked.",
   unknown: "A thank-you note is on its way to your inbox, and someone on our team will be in touch soon.",
@@ -99,9 +99,12 @@ export const NEXT_STEPS_WHEN_LIVE: NextStep[] = [
     when: "Usually within the hour",
     title: "We set a day that works",
     body: {
-      agreed: `Our assistant calls from ${SITE.phone} to confirm your request and find a day that works around your schedule. Levan takes it from there.`,
+      // The owner's flow, in his words (2026-08-25): the AI assistant calls first to confirm
+      // it is a real person and set the exact date; his own call, or a live transfer, or the
+      // meeting itself comes after — whichever the visitor chose.
+      agreed: `Our AI assistant calls first from ${SITE.phone}: a short call that confirms it is really you and sets the exact day for your appointment. Questions the assistant cannot answer go straight to Levan on the same call; otherwise you meet him at the time you chose, by phone or in person.`,
       declined: `We will not call, because you asked us not to. The day for your appointment gets worked out over email, and if you change your mind, ${SITE.phone} reaches us any day.`,
-      unknown: "We confirm your request and find a day that works around your schedule. Levan takes it from there.",
+      unknown: "We confirm your request and set the exact day for your appointment, and Levan takes it from there.",
     },
   },
   {

@@ -21,7 +21,8 @@
  *   - the consent input carries NO native `required` attribute (the tests assert its ABSENCE
  *     elsewhere; this asserts it on the rendered page)
  *   - submitting WITHOUT ticking shows a visible role=alert error AND posts NOTHING
- *   - ticking it posts EXACTLY ONE lead and shows the success panel in place, without navigating
+ *   - ticking it posts EXACTLY ONE lead and lands the visitor on /thank-you with from+c
+ *     (round 40: the in-place success panel gave way to one conversion URL, owner's rule)
  *
  * Plus, once per width on /connect, the shell battery — Escape closes and restores focus, focus
  * stays trapped over 22 tabs, a backdrop click closes. All three modals render through the same
@@ -107,7 +108,6 @@ const MODALS = [
     label: "/connect message",
     url: "/connect",
     trigger: "Message us instead",
-    success: /message sent/i,
     shell: true,
   },
   {
@@ -115,14 +115,12 @@ const MODALS = [
     label: "listing tour",
     url: listingPath,
     trigger: /^(in person tour|schedule a tour)$/i,
-    success: /tour requested/i,
   },
   {
     key: "offer",
     label: "listing offer",
     url: listingPath,
     trigger: /^make an offer$/i,
-    success: /offer started/i,
   },
 ];
 
@@ -178,17 +176,31 @@ for (const W of [1440, 390, 320]) {
     ok(`${tag}: form stays open after the refusal`, (await page.locator('[role="dialog"] button[type="submit"]').count()) === 1);
     await page.screenshot({ path: path.join(OUT, `${M.key}-consent-error-${W}.png`) });
 
-    // tick it, submit, and the lead goes
+    // tick it, submit, and the lead goes — then the page LANDS ON /thank-you. The in-place
+    // success panel is gone by design (owner's rule 2026-08-25: every conversion ends on
+    // ONE url so Ads/GA4/PostHog all count the same page view).
     await page.locator('[role="dialog"] [data-consent-input]').check();
     await page.locator('[role="dialog"] button[type="submit"]').click();
-    await page.waitForTimeout(900);
+    await page.waitForURL("**/thank-you**", { timeout: 15000 }).catch(() => {});
     ok(`${tag}: ticking consent posts exactly one lead`, leadPosts === 1, `posts=${leadPosts}`);
-    const success = await page.locator('[role="dialog"] [role="status"]').first().textContent().catch(() => null);
-    ok(`${tag}: success panel shown in place`, !!success && M.success.test(success), String(success).slice(0, 40));
-    ok(`${tag}: did not navigate away`, new URL(page.url()).pathname === M.url, page.url());
-    await page.screenshot({ path: path.join(OUT, `${M.key}-success-${W}.png`) });
+    const landed = new URL(page.url());
+    ok(`${tag}: lands on /thank-you`, landed.pathname === "/thank-you", page.url());
+    ok(
+      `${tag}: /thank-you carries from + consent params`,
+      landed.searchParams.get("c") === "1" && !!landed.searchParams.get("from"),
+      landed.search,
+    );
+    await page.screenshot({ path: path.join(OUT, `${M.key}-thankyou-${W}.png`) });
 
     if (M.shell) {
+      // The shell behaviors (Escape, focus restore, trap, backdrop) are properties of an
+      // OPEN dialog — the successful submit now navigates away, so test them on a fresh one.
+      await page.goto("http://localhost:3100" + M.url, { waitUntil: "networkidle", timeout: 90000 });
+      const trigger2 = await pressable(page, M.trigger);
+      await trigger2.waitFor({ state: "visible", timeout: 30000 });
+      await trigger2.click();
+      await page.getByRole("dialog").waitFor({ state: "visible", timeout: 10000 });
+
       // Escape closes, and focus returns to the trigger
       await page.keyboard.press("Escape");
       await page.waitForTimeout(400);
@@ -197,7 +209,7 @@ for (const W of [1440, 390, 320]) {
       ok(`${tag}: focus restored to the trigger`, /message us instead/i.test(restored), restored);
 
       // focus trap: reopen and Tab a full lap without escaping the dialog
-      await trigger.click();
+      await trigger2.click();
       await page.getByRole("dialog").waitFor({ state: "visible", timeout: 10000 });
       let escaped = false;
       for (let i = 0; i < 22; i++) {

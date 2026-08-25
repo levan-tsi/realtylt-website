@@ -4,6 +4,7 @@ import { PRESS } from "@/components/ui/Button";
 import { ConsentCheckbox } from "./ConsentCheckbox";
 import { LeadSheet } from "./LeadSheet";
 import { useEffect, useId, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SITE } from "@/lib/site";
 import {
   formatOffer,
@@ -386,6 +387,7 @@ function TourModal({
   const [hp, setHp] = useState("");
   const [state, setState] = useState<LeadState>("idle");
   const consent = useConsentGuard();
+  const router = useRouter();
   const submitted = useRef(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -414,8 +416,16 @@ function TourModal({
         time,
       }),
     });
-    if (ok) setState("success");
-    else {
+    if (ok) {
+      // The panel shows for the beat the navigation takes; then /thank-you, like every
+      // form on the site (owner's rule, 2026-08-25: ONE conversion URL to measure).
+      setState("success");
+      router.push(
+        `/thank-you?from=${encodeURIComponent(`/listing/${listing.id}`)}&c=${
+          data.consentToContact === "true" ? "1" : "0"
+        }`,
+      );
+    } else {
       submitted.current = false;
       setState("error");
     }
@@ -485,7 +495,7 @@ function TourModal({
           <div className="mt-4 grid gap-3">
             <input className={fieldCls} name="name" required autoComplete="name" placeholder="Your name" aria-label="Your name" />
             <input className={fieldCls} name="email" type="email" required autoComplete="email" placeholder="Email address" aria-label="Email address" />
-            <input className={fieldCls} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
+            <input className={fieldCls} name="phone" type="tel" required autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
           </div>
 
             <div className="mt-4">
@@ -557,6 +567,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
   const [hp, setHp] = useState("");
   const [state, setState] = useState<LeadState>("idle");
   const consent = useConsentGuard();
+  const router = useRouter();
   const submitted = useRef(false);
 
   const offerNum = Number(offer) || 0;
@@ -589,8 +600,16 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
         seenInPerson,
       }),
     });
-    if (ok) setState("success");
-    else {
+    if (ok) {
+      // The panel shows for the beat the navigation takes; then /thank-you, like every
+      // form on the site (owner's rule, 2026-08-25: ONE conversion URL to measure).
+      setState("success");
+      router.push(
+        `/thank-you?from=${encodeURIComponent(`/listing/${listing.id}`)}&c=${
+          data.consentToContact === "true" ? "1" : "0"
+        }`,
+      );
+    } else {
       submitted.current = false;
       setState("error");
     }
@@ -641,7 +660,7 @@ function OfferModal({ listing, onClose }: { listing: ListingIntent; onClose: () 
           <div className="mt-4 grid gap-3">
             <input className={fieldCls} name="name" required autoComplete="name" placeholder="Your name" aria-label="Your name" />
             <input className={fieldCls} name="email" type="email" required autoComplete="email" placeholder="Email address" aria-label="Email address" />
-            <input className={fieldCls} name="phone" type="tel" autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
+            <input className={fieldCls} name="phone" type="tel" required autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
           </div>
 
             <div className="mt-4">

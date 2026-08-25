@@ -27,6 +27,9 @@ export interface WizardPrefill {
   phone?: string;
   address?: string;
   source?: string;
+  /** The consent answer from the form that opened this wizard — travels to /thank-you as
+   * `?c=` so the page never tells a person who declined calls that their phone will ring. */
+  consented?: boolean;
 }
 
 const WizardContext = createContext<{ openWizard: (p: WizardPrefill) => void }>({
@@ -43,6 +46,12 @@ export function useQualifyingWizard() {
  * attaches this popup to every lead form site-wide; we enable it deliberately, page by
  * page, so the copy stays appropriate. Any page not listed here gets the plain form. */
 const WIZARD_PATHS = new Set(["/selling", "/financing", "/home-value"]);
+
+/** Whether a submit on this path opens the wizard — LeadForm asks before deciding to
+ * redirect: on wizard pages the wizard runs first and ends on /thank-you itself. */
+export function wizardOpensOn(pathname: string): boolean {
+  return WIZARD_PATHS.has(pathname);
+}
 
 /** Mounted once in the root layout (wraps <main> and <Footer> so both the hero form and
  * the footer form can trigger it). The modal only opens on the allow-listed pages. */
@@ -226,6 +235,17 @@ function QualifyingWizard({
     [prefill],
   );
 
+  // Every wizard exit except the /home-value handoff lands on /thank-you: the lead behind
+  // this dialog is already saved, and the owner's rule (2026-08-25) is ONE conversion URL,
+  // however the dialog ends — finished, X, Esc, or a click on the backdrop. `c` carries the
+  // consent answer through, same contract as LeadForm's own redirect.
+  const finish = useCallback(() => {
+    const from = encodeURIComponent(prefill.source ?? "/selling");
+    const c = prefill.consented === undefined ? "" : `&c=${prefill.consented ? "1" : "0"}`;
+    router.push(`/thank-you?from=${from}${c}`);
+    onClose();
+  }, [onClose, prefill.consented, prefill.source, router]);
+
   const advance = useCallback(
     (stepId: WizardStepId, value: string) => {
       const key = STEP_ANSWER_KEY[stepId];
@@ -241,14 +261,14 @@ function QualifyingWizard({
         return;
       }
       if (res.type === "done") {
-        onClose();
+        finish();
         return;
       }
       if (res.step === "confirm") submitQualifier(newAnswers);
       setHistory((h) => [...h, stepId]);
       setCurrent(res.step);
     },
-    [answers, onClose, prefill.address, router, submitQualifier],
+    [answers, finish, onClose, prefill.address, router, submitQualifier],
   );
 
   const goBack = useCallback(() => {
@@ -291,7 +311,7 @@ function QualifyingWizard({
     (e: React.KeyboardEvent) => {
       if (e.key === "Escape") {
         e.stopPropagation();
-        onClose();
+        finish();
         return;
       }
       if (e.key !== "Tab") return;
@@ -312,7 +332,7 @@ function QualifyingWizard({
         first.focus();
       }
     },
-    [onClose],
+    [finish],
   );
 
   const ui = STEP_UI[current];
@@ -338,7 +358,7 @@ function QualifyingWizard({
     <div
       className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        if (e.target === e.currentTarget) finish();
       }}
     >
       <div
@@ -359,7 +379,7 @@ function QualifyingWizard({
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={finish}
           aria-label="Close"
           className="absolute right-2 top-3 grid h-11 w-11 place-items-center text-stone transition-colors hover:text-ink"
         >
@@ -395,7 +415,7 @@ function QualifyingWizard({
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  onClick={onClose}
+                  onClick={finish}
                   className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft"
                 >
                   Done
