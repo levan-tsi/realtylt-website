@@ -87,7 +87,7 @@ export const localSeo: Service = {
     },
     {
       title: "Every town you actually serve",
-      body: "One page listing eight towns ranks for none of them. A page for each one ranks for each one.",
+      body: "One page that lists eight towns in a sentence belongs to none of them. A page written about one place has something to compete with, which is the other half of this work.",
     },
     {
       title: "Traffic that is not rented",

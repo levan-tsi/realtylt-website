@@ -111,10 +111,15 @@ export const THREE_FACTORS: GridItem[] = [
 export const TRUST_BIAS = {
   eyebrow: "The evidence",
   caption: "Where the click went when a reader picked one of the top two results",
+  /** LABELS KEPT SHORT ON PURPOSE. A bar label is SVG text at a fixed size in user units, so at
+   * 390 it renders at roughly two thirds the size of the body copy whatever it says, and a
+   * long one is a full-width line of small type. Shot beside the shipped booking chart at 390
+   * to set the length: its longest label is 42 characters, and the first draft of the third bar
+   * here was 86. */
   bars: [
-    { label: "Shown first, and judged the better of the two", value: 95, display: "19 of 20" },
-    { label: "Shown first, and judged the worse of the two", value: 71, display: "5 of 7" },
-    { label: "Shown first only because the pair was secretly swapped, and judged the worse of the two", value: 59, display: "10 of 17" },
+    { label: "On top, judged the better of the two", value: 95, display: "19 of 20" },
+    { label: "On top, judged the worse of the two", value: 71, display: "5 of 7" },
+    { label: "On top only after a secret swap, judged worse", value: 59, display: "10 of 17" },
   ],
   max: 100,
   lit: 2,
@@ -224,20 +229,24 @@ export const THE_WORK: GridItem[] = [
  * 95% confidence interval of [-124%, -3%], rejecting the hypothesis that the channel yields
  * positive returns at all."
  *
- * NO `max` HERE, deliberately, and it is the opposite call from the chart above. These are not
- * shares of one whole, they are two estimates of the same quantity, and the whole finding is the
- * RATIO between them. Pinning the axis to 100 would draw both bars as slivers against an empty
- * track and hide the only thing worth seeing. */
+ * THE AXIS IS PINNED TO 10, which is neither of the two obvious answers, and the first draft got
+ * it wrong in a way that only looking found. Left to scale itself the chart drew a 5.6% LOSS as
+ * a full-width bar, which reads as everything and is the exact defect the Round B log records
+ * against the Luca chart. Pinned to 100, both bars are slivers and the ratio that is the whole
+ * finding disappears. Ten per cent is a stated ceiling with no natural meaning, so the basis line
+ * says out loud that it was chosen, the same way the voice post's turn-gap chart declares its
+ * one-second axis. */
 export const PAID_SEARCH = {
   eyebrow: "The evidence",
   caption: "Clicks eBay lost when it stopped paying for its own name, measured two ways",
   bars: [
-    { label: "Comparing the weeks before with the weeks after", value: 5.6, display: "5.6%" },
-    { label: "Compared against a search engine where the same ads kept running", value: 0.529, display: "0.5%" },
+    { label: "Before and after, on the same engine", value: 5.6, display: "5.6%" },
+    { label: "Against an engine where the ads kept running", value: 0.529, display: "0.5%" },
   ],
+  max: 10,
   lit: 1,
   basis:
-    "The share of click traffic that did not arrive after eBay stopped bidding on queries containing its own name in March 2012. The first bar is a before-and-after comparison on one search engine. The second is a difference-in-differences estimate using a second search engine, where eBay kept buying the same terms, as the control for seasonality.",
+    "The share of click traffic that did not arrive after eBay stopped bidding on queries containing its own name in March 2012. The first bar is a before-and-after comparison on one search engine. The second is a difference-in-differences estimate using a second search engine, where eBay kept buying the same terms, as the control for seasonality. The axis runs to ten per cent, which is a ceiling we chose: neither figure has a natural maximum, and letting the chart scale itself would draw a 5.6% loss at full width.",
   sourceText:
     "Thomas Blake, Chris Nosko and Steven Tadelis, Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER Working Paper 20171, published in Econometrica 2015;83(1):155-174.",
   sourceHref: "https://www.nber.org/system/files/working_papers/w20171/w20171.pdf",
@@ -353,7 +362,11 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
           min: 0,
           max: 120,
           step: 1,
-          initial: 14,
+          /** THE DEFAULTS ARE DELIBERATELY MODEST, and the first draft's were not. It opened on
+           * 14 calls, 55% real and an 8% close rate, which produced $66,528 before the reader
+           * had touched anything, on a page arguing that nobody can promise you a ranking. A
+           * default is a claim: it is the number a reader who drags nothing takes away. */
+          initial: 9,
           format: "count",
           width: "w-[4.5rem]",
         },
@@ -365,7 +378,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
           min: 10,
           max: 100,
           step: 5,
-          initial: 55,
+          initial: 50,
           format: "percent",
           width: "w-[4.5rem]",
         },
@@ -375,9 +388,13 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
           label: "Share of those that eventually became a client",
           hint: "Your own rate on a stranger who found you cold, which is usually lower than your rate on a referral.",
           min: 1,
-          max: 40,
+          /** Capped at 25 rather than 40. A quarter of cold callers becoming clients is already
+           * at the top of anything anybody in this business would claim, and a slider that can
+           * be dragged to 40 invites a reader to build a number out of the top of every range at
+           * once. */
+          max: 25,
           step: 1,
-          initial: 8,
+          initial: 5,
           format: "percent",
           width: "w-[4.5rem]",
         },
@@ -435,7 +452,11 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-02.jpg",
-      alt: "The front of a white-painted stone house with black shutters and a black double door, a mass of white flowering shrub arching over the entrance, clipped box hedges and a white lattice fence across the foreground, with two terracotta pots of red geraniums either side of the step",
+      // WRITTEN FROM THE CROP, not from the file. The first version ended "with two terracotta
+      // pots of red geraniums either side of the step", which is in the photograph and is not on
+      // the page: the plate's 21:9 crop cuts the bottom of the frame and takes the step and both
+      // pots with it. Same class of defect as the three Round B found, caught the same way.
+      alt: "The front of a white-painted stone house with black shutters and a dark panelled front door, a mass of white flowering shrub arching over the entrance, and a white lattice fence above clipped box hedges across the foreground",
       caption:
         "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for four seconds, reads the name, the hours and the last few things people said, and decides whether to knock. Everything in this article is about that doorstep rather than about your website.",
       credit: "Photograph by Wonderlane, CC BY 2.0.",

@@ -149,7 +149,7 @@ export const REDUNDANCY = {
   caption: "How often a page that repeats itself turned out to be spam",
   bars: [
     { label: "Every page in the hand-classified sample", value: 13.8, display: "13.8%" },
-    { label: "Pages that compressed to a quarter of their size or better", value: 70, display: "70%" },
+    { label: "Pages that compress to a quarter or better", value: 70, display: "70%" },
   ],
   max: 100,
   lit: 1,
@@ -190,12 +190,16 @@ export const REDUNDANCY = {
  * applies at the same strength either way. */
 export const COMPLAINTS = {
   eyebrow: "The evidence",
-  caption: "Housing discrimination complaints in 2024, by what the transaction was",
+  /** THE EXCLUSION IS IN THE TITLE, not only in the basis line. Found by looking: with rental
+   * off the chart, the 815 harassment bar fills its track, and a full-width bar reads as most of
+   * everything. It is not: rental is 27,007 of the 32,321. A reader who takes only the chart
+   * title away has to take the omission with it. */
+  caption: "Housing discrimination complaints in 2024, by transaction, with rental left off",
   bars: [
     { label: "Harassment", value: 815, display: "815" },
     { label: "Real estate sales", value: 659, display: "659" },
     { label: "Homeowner or condominium associations", value: 203, display: "203" },
-    { label: "Discriminatory advertising by housing providers", value: 108, display: "108" },
+    { label: "Discriminatory advertising", value: 108, display: "108" },
     { label: "Appraisal", value: 39, display: "39" },
   ],
   lit: 3,
@@ -286,7 +290,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
        * on its plates and grids. Same primitives, different page. */
       band: "dark",
       src: "/images/listings/house-06.jpg",
-      alt: "A green and teal painted Queen Anne Victorian with a pointed turret, arched windows lit warm from inside, a first-floor balcony strung with small pennant bunting and a tall pink banner hanging beside the entrance, set against a steep bank of dense conifers",
+      alt: "A green and teal painted Queen Anne Victorian with a pointed turret, tall arched windows hung with warm orange curtains, a first-floor balcony strung with small pennant bunting and a tall pink banner beside the entrance, standing against a bank of dark conifers",
       caption:
         "Somebody in this town knows why there is bunting on that balcony this week. That is the whole difference between a page about a place and a page with a place name in it, and it is not a writing problem. It is a question of whether you have ever been there on a Saturday.",
       credit: "Photograph by Kathleen Tyler Conklin, CC BY 2.0.",
@@ -333,7 +337,11 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
           min: 1,
           max: 40,
           step: 1,
-          initial: 14,
+          /** 15 rather than 14 so the default lands on a whole page. Found by driving the
+           * sliders: 14 areas at 40% renders "5.6 pages" in the headline, and six tenths of a
+           * page is not a thing. The note says what a fractional answer means, because dragging
+           * will still produce one. */
+          initial: 15,
           format: "count",
           width: "w-[4.5rem]",
         },
@@ -369,7 +377,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Pages that would actually be about somewhere",
-      note: "This is the shortest calculator on this website and there is a reason for the length: there are only three numbers in this subject that anybody can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one. Nobody publishes the search volume for a service in your particular town with a stated method, Google publishes no model of how much traffic a page receives, and the only figures circulating in this category come from tools that estimate them and do not say how. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler, and it is almost always smaller than the number in the first meeting.",
+      note: "When the middle row lands between two whole numbers, read it as between two whole numbers rather than as a fraction of a page: five and a half means five you are sure of and one you are arguing with yourself about. This is the shortest calculator on this website and there is a reason for the length: there are only three numbers in this subject that anybody can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one. Nobody publishes the search volume for a service in your particular town with a stated method, Google publishes no model of how much traffic a page receives, and the only figures circulating in this category come from tools that estimate them and do not say how. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler, and it is almost always smaller than the number in the first meeting.",
       action: { label: "See how it is built", href: "/services/geo-landing-pages" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -399,9 +407,12 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-04.jpg",
-      alt: "A large white Victorian house with a conical turret roof, two red brick chimneys and a wraparound porch with turned posts, standing on a mown green lawn under a deep blue sky, with a utility pole and wires at the left edge of the frame",
+      // WRITTEN FROM THE CROP. The first version had it "standing on a mown green lawn" with a
+      // utility pole at the left edge, both of which are in the photograph and neither of which
+      // survives the plate's 21:9 crop: it cuts at the porch rail.
+      alt: "A large white Victorian house with a conical turret roof, two brick chimneys and a wraparound porch carried on turned posts with scrollwork brackets, photographed from below against a deep blue sky, with a tall dark cypress at the right edge",
       caption:
-        "One page, about one place, with the name of a street on it and something on it that only somebody who has stood here would write. That is the entire product. Everything else in this article is about the twenty-one pages you should not publish in order to have this one.",
+        "One page, about one place, with the name of a street on it and something on it that only somebody who has stood here would write. That is the entire product. Everything else in this article is about the pages you should not publish in order to have this one.",
       credit: "Photograph by Jan Tik, CC BY 2.0.",
       ariaLabel: "The one page worth publishing",
     },
