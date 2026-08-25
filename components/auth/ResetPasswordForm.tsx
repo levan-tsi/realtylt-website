@@ -48,7 +48,13 @@ export function ResetPasswordForm() {
   // The session is still being read from cookies; a blink of the wrong state here would
   // flash "link expired" at every visitor with a perfectly good link.
   if (!ready) {
-    return <p className="t-small text-stone">Checking your reset link&hellip;</p>;
+    // id="reset-loading": the page's <noscript> hides this line when scripting is off,
+    // where it would otherwise sit under the "needs JavaScript" message forever.
+    return (
+      <p id="reset-loading" className="t-small text-stone">
+        Checking your reset link&hellip;
+      </p>
+    );
   }
 
   if (done) {
