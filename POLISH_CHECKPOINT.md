@@ -1,5 +1,72 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == HANDOFF 2026-08-24 EVENING -> ROUND 39 (AUTH + POLISH). READ ALL BEFORE TOUCHING ==
+## Shape the owner asked for, verbatim rule: ONE FABLE ORCHESTRATOR + ONE OPUS SUBAGENT at a
+## time on this box. Orchestrator scopes/verifies/pushes; the sub builds and reports; subs
+## never push, never touch RLS/auth-security/CSP/consent design. All round-38 records below
+## still bind (instrument lessons, do-not-undo list, environment rules).
+##
+## -- STATE: round 38 + day 2 are PUSHED AND SERVING (HEAD 05671d3 deployed, verified).
+## Gates at handoff: tsc 0 - npm test 1106/1106, 89 files - verify-lead-modal 111/111 -
+## hero-contrast/focus-paint/press-feedback/reduced-motion PASS - 172/172 links - JS-off
+## 22/22 - overflow 0 at 320/390 on 22 routes.
+##
+## -- ROUND 39 WORK, IN ORDER --------------------------------------------------------------
+## 1. /CONNECT SYMMETRY (owner, verbatim intent): "texts are one in the middle one starts
+##    from the left" and "bring google appointments higher... my picture next to google
+##    in-person strategy session text same level." The Google embed centers its own content;
+##    our "Pick a slot" h2 is left-aligned, and the calendar's cards sit lower than the
+##    portrait card. Make the two columns read as ONE composition: his portrait row and the
+##    calendar's session cards on the same optical level, text alignment consistent.
+##    Screenshot before/after at 1440+390; the round-38 shots are docs/design-r38/connect2/.
+## 2. THE AUTH ROUND (his asks, all measured today):
+##    a. FIXED ALREADY, verify it held: Google login used to land on the CRM with a demo
+##       account because the SHARED Supabase project's Site URL is the CRM
+##       (https://realtylt-crm-web.vercel.app) and the allowlist lacked the website. On
+##       2026-08-24 the orchestrator ADDED https://realtylt-website.vercel.app/**,
+##       https://realtylt.com/**, https://www.realtylt.com/** to Redirect URLs (Site URL and
+##       CRM entries untouched -- NEVER remove them, the CRM depends on them). Verify a
+##       fresh Google sign-in now returns to the website signed in.
+##    b. POST-LOGIN LANDING: decide + build where a signed-in user lands (/saved is the
+##       natural home: their hearts + searches) with ONE clear first action stated (the
+##       reel's item 03). Today the modal just closes in place.
+##    c. SMTP FIRST (blocks c-e): pick Resend (free 3k/mo) or similar; domain realtylt.com
+##       needs SPF/DKIM records at NAMECHEAP (owner holds DNS; prepare exact records for
+##       him). Then Supabase Auth > Emails > SMTP Settings ON. WITHOUT THIS, confirmation
+##       and password-reset emails ride the built-in mailer (a handful/hour, silent fails).
+##    d. REGISTRATION + PASSWORD RESET END TO END: the modal has Sign up and "Forgot your
+##       password?" -- the reset link needs a page to land on that takes the new password.
+##       Build/verify the full loop with a real mailbox once SMTP is on: sign up -> confirm
+##       -> sign out -> forgot -> reset -> sign in. Reset URLs must be in the allowlist.
+##    e. LOGIN AWARENESS (his question "do you send email notifications when they log in?"
+##       -- today: NO, nothing fires, and signing in does NOT create a lead; leads (forms)
+##       and site accounts (auth users) are separate tables, so no duplicate lead ever).
+##       Build: Supabase Auth Hook or a lightweight check -> n8n -> email to Levan on new
+##       SIGN-UPS at minimum. The auth-user <-> existing-lead linking (match by email, show
+##       in CRM "this lead has a site account, logged in at X") is a CRM-SIDE build --
+##       record the contract here, implement with the CRM project, do not bolt it on.
+## 3. POSTHOG (owner registered an account; recommendation: YES, install). From the reel's
+##    checklist (danielwelsh_routiq: preview image / app subdomain / first action /
+##    PostHog+banner / sitemap): items 2+5 are already true here, 1 needs a 3-page og:image
+##    re-verify, 3 is item 2b above, 4 is this. Plan: JS snippet with cookieless
+##    (memory/localStorage persistence) so NO cookie banner is needed; proxy ingestion
+##    through a Next rewrite (/relay-ph -> PostHog cloud) so the CSP change is one
+##    self-origin path (next.config.ts CSP is guarded -- MEASURE the change, smallest
+##    possible allowlist addition); session replay ON with input masking ON; keep the
+##    existing GA/gtag (it feeds his ads remarketing; two tools, two jobs). Free tier: 1M
+##    events + 5k replays/mo, far above pre-launch traffic. His login: he registered
+##    himself; get the project API key from him or his dashboard in-browser.
+## 4. CARRIED, unchanged: his spend-cap click (~$2/mo vs 22 Sep restriction) - his first
+##    Google sign-in (post-fix) - megamenu DUTCHESS ring 2.85:1 (own cross-page pass) -
+##    /plan BudgetBridge h2 - blog backlog (the /blog loop; 26 drafts) - launch switches
+##    (Namecheap A-records -> remove PRELAUNCH=1) + Search Console sitemap submit at launch.
+##
+## -- WHAT ROUND 39 MUST NOT DO ------------------------------------------------------------
+## Do not change the Supabase Site URL or remove ANY allowlist entry (CRM breaks). Do not
+## re-open the consent design. Do not recolor the porchlight phone-icon accent (owner's
+## choice, a sweep already tried). Do not add any MLS call to a page path. Probes write
+## OUTSIDE the tree. One dev server on :3100. Explicit-pathspec commits, never add -A.
+
 ## == HANDOFF 2026-08-24 -> ROUND 39. ROUND 38 IS DONE AND PUSHED. ======================
 ## Round 38 ran the full chain the owner asked for: Fable orchestrator -> Opus builder ->
 ## Opus adversarial tester -> Opus fixer, one sub at a time, everything re-verified by the
