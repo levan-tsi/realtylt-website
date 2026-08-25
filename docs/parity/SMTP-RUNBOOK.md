@@ -1,6 +1,6 @@
 # SMTP for Supabase Auth — the runbook (round 39, 2026-08-24)
 
-## RESOLVED MID-ROUND: custom SMTP is ALREADY ON — proven by experiment, not settings
+## RESOLVED, then CORRECTED (r40 morning): auth email is a SEND EMAIL HOOK, not SMTP
 
 The r38 handoff said "Custom SMTP is OFF + confirm-email ON". Measured 2026-08-24 evening by
 a REAL sign-up (levan+r39test@realtylt.com through the live auth API): the confirmation email
@@ -88,3 +88,19 @@ on its side, matching by email:
   body; rotate both together if ever needed.
 - The CRM must NOT remove or replace that trigger; if the CRM later wants richer routing,
   point the n8n workflow somewhere new instead of touching auth schema again.
+
+## CORRECTION (2026-08-25 morning) — the mechanism behind the r39 measurement
+
+The r39 conclusion "custom SMTP is ON via his Workspace" was the right observation with the
+wrong mechanism. Seen in the dashboard: **Enable custom SMTP is OFF**; an **Auth Send Email
+hook is ENABLED**, endpoint `https://realtylt-crm-web.vercel.app/api/auth/email-hook`. The
+CRM receives every auth email event and sends through his connected Gmail — which is exactly
+why messages arrive from levan@realtylt.com with a Gmail SENT label and the CRM's template.
+Everything else in this doc (DNS truth, the verified loops) stands. Consequences:
+- Sender/template changes for auth mail = CRM-side (`/api/auth/email-hook`), never here.
+- The addressing plan (owner, 2026-08-25): noreply@realtylt.com for auth/transactional,
+  levan@ for personal CRM sends, info@ for CMA/market reports. Gmail must first hold
+  noreply@ as a "Send mail as" alias or it rewrites the From.
+- Do not enable Supabase SMTP on top of the hook; the hook owns auth mail.
+- "Confirm email" is OFF as of 2026-08-25 (owner's call): signup returns a session
+  instantly; proven via API and the production modal.
