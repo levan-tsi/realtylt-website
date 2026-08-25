@@ -53,6 +53,7 @@ export const leadQualification: Service = {
   whatItIs: [
     "It is the difference between a list of leads and a ranked pipeline. Every inbound lead looks the same on a form. What separates them is what they say next, and that is where the intent, the budget, and the timeline actually live.",
     "Claude reads the conversation, the chat, or the call transcript, scores the lead on those three things, and routes it: to you if it is hot, to a nurture track if it is not. The list you look at in the morning is ordered by who is worth calling.",
+    "There is a line under all of this and it belongs on the page that sells it: change your order, never their access. Qualification decides who you call first. It must never decide who gets to see a listing, who gets a straight answer, or who is allowed to reach a human being. The Fair Housing Act, at 42 U.S.C. 3604, contains no software exemption, and Article 10 of the NAR Code of Ethics is broader still. So the score reads the plan and never the person: timeline, financing status, whether there is a house to sell, what they asked about, and never a name, a photograph, a language or a neighborhood. Every score points at a sentence the lead actually wrote, which is what makes it explainable, correctable, and defensible.",
   ],
 
   howItWorks: [
@@ -81,7 +82,7 @@ export const leadQualification: Service = {
     },
     {
       title: "The right agent on the right lead",
-      body: "Routing by area, price band, or specialty, automatically, instead of by whoever happened to grab it.",
+      body: "Routing by area, price band, or specialty, automatically, instead of by whoever happened to grab it. Area routing is also the classic fair housing proxy, so it is allowed to decide which agent picks up and never how fast, how fully, or whether anybody answers at all.",
     },
   ],
 
@@ -96,7 +97,11 @@ export const leadQualification: Service = {
     },
     {
       q: "Does a low score mean the lead is dropped?",
-      a: "No. It means the lead goes to a nurture track instead of your call list. Most leads are not ready today and are ready in six months, and the point of scoring is to stop those two groups getting the same treatment.",
+      a: "No. It means the lead goes to a nurture track instead of your call list. Most leads are not ready today and are ready in six months, and the point of scoring is to stop those two groups getting the same treatment. A low score changes when you call. It never changes what that person can see, ask, or be told.",
+    },
+    {
+      q: "Is it legal to score and route leads with software?",
+      a: "Scoring your own time is not the risk. The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of service on the back of it. The Fair Housing Act, at 42 U.S.C. 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which the federal statute does not, so a system built to the federal floor is not automatically built to the standard you already agreed to. Keep the inputs to the plans people describe, keep every score traceable to their own words, and never let the ranking change what anybody is allowed to see or ask. That is the same standard you are held to in person. None of this is legal advice.",
     },
   ],
 
