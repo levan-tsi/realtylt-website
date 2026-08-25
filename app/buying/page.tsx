@@ -11,6 +11,9 @@ import { isLiveMlsPhoto, formatPrice } from "@/components/idx/ListingCard";
 import { getIdxClient } from "@/lib/idx";
 import type { Listing } from "@/lib/idx/types";
 import { SITE } from "@/lib/site";
+import { PageFaq } from "@/components/site/PageFaq";
+import { BUYING_FAQS, pageFaqJsonLd } from "@/lib/page-faqs";
+import { jsonLdScript } from "@/lib/jsonld";
 
 // Keep the real listing tiles in the mockups fresh in live mode.
 export const revalidate = 600;
@@ -317,6 +320,14 @@ export default async function BuyingPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Visible FAQ + FAQPage schema (round 39): the services pages already answer
+          questions this way; the three core marketing pages now do too. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageFaqJsonLd(BUYING_FAQS, "/buying")) }}
+      />
+      <PageFaq topic="buying with us" faqs={BUYING_FAQS} />
     </>
   );
 }

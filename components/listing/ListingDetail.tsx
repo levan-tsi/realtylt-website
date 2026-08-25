@@ -22,7 +22,7 @@ import { getProxiedPhotoPaths } from "@/lib/idx/media";
 import { listingPath } from "@/lib/idx/listing-url";
 import { calcMortgage } from "@/lib/mortgage";
 import { SERVED_AREAS, SITE } from "@/lib/site";
-import { jsonLdScript } from "@/lib/jsonld";
+import { breadcrumbsJsonLd, jsonLdScript } from "@/lib/jsonld";
 
 // generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
 // Exported so the /listing/[id] redirect stub and the /homes-for-sale slug route share it.
@@ -211,9 +211,20 @@ export async function ListingDetail({ id }: { id: string }) {
     },
   };
 
+  // The schema twin of the visible "Search / County" trail below (round 39). Home first —
+  // conventional for BreadcrumbList — and the listing itself last, name-only per Google's
+  // guidance for the current page.
+  const breadcrumbLd = breadcrumbsJsonLd(SITE.url, [
+    { name: "Home", path: "/" },
+    { name: "Search", path: "/search" },
+    ...(county ? [{ name: county.name, path: `/top-areas/${county.slug}` }] : []),
+    { name: `${l.address}, ${l.city}` },
+  ]);
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbLd) }} />
       <TrackView
         listingId={l.id}
         meta={{ address: l.address, city: l.city, price: l.price, beds: l.beds }}

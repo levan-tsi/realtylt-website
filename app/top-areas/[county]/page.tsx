@@ -15,6 +15,7 @@ import { getIdxClient, isSampleData } from "@/lib/idx";
 import { getCountyActiveSlim } from "@/lib/idx/db";
 import { computeMarketStats } from "@/lib/reports/market";
 import { SITE, type CountySlug } from "@/lib/site";
+import { breadcrumbsJsonLd, jsonLdScript } from "@/lib/jsonld";
 
 export function generateStaticParams() {
   return [
@@ -95,6 +96,20 @@ export default async function AreaPage({ params }: { params: Promise<{ county: s
 
   return (
     <>
+      {/* The schema twin of the hero's visible "Top Areas / {short}" trail (round 39) —
+          same BreadcrumbList shape services and blog already emit. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbsJsonLd(SITE.url, [
+              { name: "Home", path: "/" },
+              { name: "Top Areas", path: "/top-areas" },
+              { name: name },
+            ]),
+          ),
+        }}
+      />
       {/* ── Hero — counties use their landscape photo; boroughs use a clean flat-ink band
           (no fabricated borough imagery), same title + stats + breadcrumb. */}
       <section className="relative isolate overflow-hidden bg-ink" aria-labelledby="county-hero">

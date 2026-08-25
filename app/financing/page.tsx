@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { PageFaq } from "@/components/site/PageFaq";
+import { FINANCING_FAQS, pageFaqJsonLd } from "@/lib/page-faqs";
+import { jsonLdScript } from "@/lib/jsonld";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -268,6 +271,14 @@ export default function FinancingPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Visible FAQ + FAQPage schema (round 39): the services pages already answer
+          questions this way; the three core marketing pages now do too. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageFaqJsonLd(FINANCING_FAQS, "/financing")) }}
+      />
+      <PageFaq topic="financing a home" faqs={FINANCING_FAQS} />
     </>
   );
 }

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { PageFaq } from "@/components/site/PageFaq";
+import { SELLING_FAQS, pageFaqJsonLd } from "@/lib/page-faqs";
+import { jsonLdScript } from "@/lib/jsonld";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { BrowserChrome, Laptop, MockCard, MockChip, Phone } from "@/components/ui/DeviceMock";
@@ -488,6 +491,14 @@ export default async function SellingPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Visible FAQ + FAQPage schema (round 39): the services pages already answer
+          questions this way; the three core marketing pages now do too. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageFaqJsonLd(SELLING_FAQS, "/selling")) }}
+      />
+      <PageFaq topic="selling with us" faqs={SELLING_FAQS} />
     </>
   );
 }
