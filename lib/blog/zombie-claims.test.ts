@@ -114,6 +114,51 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /usually the channel that gets opened/i,
     why: "a comparative claim about channel performance with no published measurement behind it. The marketing automation flagship shows that an open is not even a reliable measurement within one channel, let alone across two",
   },
+  // ── Round F, 2026-08-25. Six claims killed while writing the document processing and data
+  // enrichment flagships. Two of them are the first FABRICATED SPECIFICS in this table: an
+  // invented person with an invented telephone number, on the page whose own flagship argues
+  // that an appended value is somebody else's claim. Round E found three fabricated street
+  // addresses on the skip-tracing page and the same class was live one page over.
+  {
+    name: "one purchase agreement, thirty seconds",
+    pattern: /one purchase agreement,?\s*thirty seconds/i,
+    why: "a duration printed beside an illustration reads as a measurement, and nobody has timed this on these documents. The document processing flagship quotes what published research measured on real scanned forms and none of it is a stopwatch figure",
+  },
+  {
+    name: "the deadline that slips is almost never the one somebody knew about",
+    pattern: /deadline that slips is almost never/i,
+    why: "an unsourced claim about which deadlines are missed, in a field where nobody has published a study of missed deadlines. The page now says what the illustration is actually showing, which is that an unresolvable value is held back rather than guessed at",
+  },
+  {
+    name: "it reliably extracts structured facts",
+    pattern: /reliably extracts structured facts/i,
+    why: "'reliably' is doing work the published measurements do not support. On 199 real scanned forms at around 100 dpi, the FUNSD paper measured a commercial engine at 94.4 percent Levenshtein similarity when it was given the position of every word and 76.4 when it had to find them, and its entity-linking baseline scored 0.04. How well this works depends on the page far more than on the software",
+  },
+  {
+    name: "a third of the numbers are dead",
+    pattern: /a third of the (phone )?numbers are dead/i,
+    why: "written as a measurement and never was one, and it is the same shape as the 40% this table already carries from Round B. There is no published dead-number rate for enriched or bought lists with a stated sample behind it",
+  },
+  {
+    name: "enrichment lifts the connect rate",
+    pattern: /lifting the connect rate/i,
+    why: "an outcome claim with nothing under it, on the one page in the set whose own flagship argues that an appended value is a claim with an age rather than a fact. A hit rate and a connect rate are different quantities and neither has a published figure for this trade",
+  },
+  {
+    name: "every record in your pipeline is actually reachable",
+    pattern: /every record in your pipeline is (actually )?reachable/i,
+    why: "an absolute the same page contradicts four fields later in its own limits: it does not guarantee a match. A promise a page disowns on itself is worse than no promise",
+  },
+  {
+    name: "the cheapest optimisation available to any outbound effort",
+    pattern: /cheapest optimisation available/i,
+    why: "an unsourced superlative comparing this against every other thing a business could do to its outbound, with no measurement of any of them",
+  },
+  {
+    name: "the invented contact on the enrichment page",
+    pattern: /J\.\s?Kowalski|\(845\)\s?555[\s-]?0188/i,
+    why: "a made-up surname and a made-up telephone number marked 'verified', attached to a first name from an open house, on the page about buying assertions concerning real people. STANDARD.md: a fabricated specific on a page whose argument is that the details are checkable destroys the argument. Same class as the three fabricated street addresses Round E removed from the skip-tracing page",
+  },
 ];
 
 /** Words that mean the sentence is refusing the number rather than resting on it. */
