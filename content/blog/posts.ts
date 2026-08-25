@@ -8,6 +8,7 @@ import {
   AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
+  CRM_SYNC_POST,
   DATABASE_REACTIVATION_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
@@ -15,6 +16,7 @@ import {
   REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { CRM_SYNC_FLAGSHIP } from "./crm-sync-scenes";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
 import { BOOKING_FLAGSHIP } from "./booking-scenes";
 import { LOCAL_SEO_FLAGSHIP } from "./local-seo-scenes";
@@ -66,6 +68,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "crm-sync-real-estate-duplicate-contact-records",
+    title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 9 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync actually decides on your behalf, why the published model for matching records has three answers rather than two, and the one field in your setup that every duplicate you have ever had came from.",
+    seoDescription:
+      "What two-way CRM sync actually does about duplicate contacts, why record matching has three outcomes rather than two, and the four ways a sync quietly damages a record.",
+    cover: "/images/listings/house-11.jpg",
+    body: [],
+    placeholder: false,
+    markdown: CRM_SYNC_POST,
+    flagship: CRM_SYNC_FLAGSHIP,
+  },
   {
     slug: "geo-landing-pages-real-estate-doorway-pages",
     title: "Nine Town Pages. The Only Thing That Changed Was the Town.",

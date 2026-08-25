@@ -46,6 +46,7 @@ const SLUGS = args.length
       "ai-appointment-booking-no-shows-real-estate",
       "local-seo-real-estate-map-pack-google-business-profile",
       "geo-landing-pages-real-estate-doorway-pages",
+      "crm-sync-real-estate-duplicate-contact-records",
     ];
 
 const browser = await chromium.launch();

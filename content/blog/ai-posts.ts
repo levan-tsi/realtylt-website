@@ -9,6 +9,224 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const CRM_SYNC_POST = `In March a woman filled in the home valuation form on your website. She typed her name the way she says it out loud, so the record in your CRM says Kathy Brown.
+
+In June she rang the office about a different house. Whoever picked up did everything right: took the details, typed them in properly, spelled the name the way it appears on a deed. Katherine Brown. A work email rather than the personal one, and the mobile she actually answers.
+
+In August she listed with you. In September she went under contract.
+
+And on the Tuesday three days before her closing, an automated email went out asking Kathy whether she was still thinking about selling this year.
+
+Nothing broke. Every part of that ran exactly the way it was built to run. Your website did its job, the person who answered the phone did theirs, and the campaign that sent the email was pointed at exactly the segment it was supposed to be pointed at. The system was working. It just did not know that the two women in it were one woman.
+
+[[scene:in-short]]
+
+## Why there are two of her, and it is not carelessness
+
+A contact record is created by whichever system meets somebody first. Your website makes one when a form is submitted. Your phone system makes one when a number it does not recognise rings in. The portal makes one when a lead is bought. The open house sheet makes one on Monday morning when somebody types up the clipboard. Every one of those routes is doing the correct thing, and none of them can see the others.
+
+That is the whole mechanism, and it matters because the usual explanation is wrong. Duplicate records are almost never the product of somebody being sloppy. They are the product of two systems being separately right about the same human being, at two different moments, using whatever she told each of them at the time. She was in a hurry in March and typed the short version of her name. In June she was talking to a person and gave the formal version, because that is what you give a person who is writing something down.
+
+The reason this is worth understanding rather than just fixing is that it tells you what the fix has to be. If the problem were carelessness, the answer would be training. It is not carelessness, so the answer is not training. The answer is a rule about identity that lives somewhere outside all of those systems and is applied every time any of them creates a record.
+
+[[scene:two-of-her]]
+
+## What the same person means to a computer
+
+You looked at those two records and knew instantly. A computer does not have the thing you just used. What it has is two strings, and a way of asking how similar they are.
+
+This is the part of the subject that has actually been studied, and it has a name that nobody in software sales ever uses: record linkage. The clearest published overview is [by William Winkler of the United States Census Bureau](https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf), written for the Bureau's own research report series, because the Census has the hardest version of this problem in the country and has been working on it since the 1950s. It is worth reading the whole thing if you ever have an afternoon, and one paragraph in it is worth reading now.
+
+Winkler is describing what counts as a "typographical error" between two records that genuinely belong to the same person, and he gives four examples of first name pairs: Bill and William, Mr and William, William and James, William and Willam. Look at the third one. William and James are not a misspelling of each other. They are different names, and the paper counts the pair anyway, because the definition it is working to is any difference in the way corresponding fields are written between two records that are in fact a match. Middle names get used as first names. People go by their second name for forty years. The record is not wrong; it just does not look like the other one.
+
+How often does that happen? Winkler cites his own earlier measurement: even high quality files might contain more than 20 percent error in first name pairs and more than 10 percent error in last name pairs among pairs that are true matches. Read that twice, because it is the number that decides everything downstream. In a file that somebody had already taken care over, one in five pairs of records that describe the same person disagreed about her first name.
+
+[[scene:surnames]]
+
+## A name is not an identifier, and this is how far from one it is
+
+The other half of the problem is the opposite of the first. Names disagree when they should agree, and they also agree when they mean nothing at all.
+
+The Census Bureau publishes the count of every surname that occurred at least 100 times in the 2010 Census: 162,253 of them. Brown was carried by 1,437,026 people. So a matching rule that treats a surname as evidence is not wrong, exactly, but it is worth almost nothing on its own, and it is worth a wildly different amount depending on which surname it is. Winkler makes the same point with two examples of his own, noting that a relatively rarer last name string such as Zabrinsky has more distinguishing power than a string such as Smith.
+
+There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is fifty million pairs, and the overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking: only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer and it has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
+
+## Somebody solved this properly, and the answer has three outcomes
+
+In 1969 Ivan Fellegi and Alan Sunter published a formal mathematical model for ideas Howard Newcombe had introduced ten years earlier, and it is still the model underneath every serious matching system in the world. Winkler's overview restates it, and the restatement is the part a business owner should actually read.
+
+You take a pair of records and you look at the pattern of what agrees and what does not: same last name, different first name, same street number, no email on one side. Then you ask a ratio. How likely is that exact pattern among pairs that really are the same person, against how likely it is among pairs that really are not? A high ratio means the agreements are the kind that only matches produce. A low one means they are the kind that strangers produce by coincidence.
+
+Then comes the decision rule, and it is quoted here almost exactly as Winkler writes it. If the ratio is above an upper threshold, designate the pair a match. If it is between the two thresholds, designate it a possible match and hold it for clerical review. If it is below the lower threshold, designate it a nonmatch.
+
+[[scene:three-answers]]
+
+## The third answer is a person, and it is the one nobody sells you
+
+Almost every product in this category describes two outcomes: it finds duplicates, or it does not. The model that actually works has three, and the middle one is a queue of pairs that a human being looks at. Winkler's own name for that band is the no-decision region.
+
+The reason it exists is the sentence right underneath the rule, and it is the honest centre of this whole article. The two thresholds are set from error bounds you choose in advance, on false matches and on false nonmatches. You get to pick how often the system is allowed to merge two people who are not the same person, and how often it is allowed to leave one person sitting in the database twice. You do not get to pick zero for both. Moving one threshold to make one of those numbers smaller makes the other one bigger, and the only place the pressure can go instead is into the middle band, which is a person's afternoon.
+
+That is not a limitation of the software you were quoted. It is a property of the problem, published in 1969, and any vendor whose answer to "how accurate is your deduplication" is a single percentage has either not read this or is hoping you have not.
+
+What it looks like at scale is worth seeing, because the trade is real and so is the payoff. Winkler records what the computerised procedures did to one of the largest matching operations ever run in the United States, the 1990 Decennial Census: they reduced the need for clerks and field follow-up from an estimated 3,000 individuals over 3 months to 200 individuals over 6 weeks.
+
+[[scene:census-clerks]]
+
+And then he says why the 200 were still needed, which is the part that never gets quoted. Both first name and age were missing from a small proportion of the Census forms and the survey forms being matched against them. Not wrong. Missing. There is no algorithm for a blank field, there was not one in 1990 and there is not one now, and the strongest matching system ever built for the American population still ended with two hundred people in a room deciding.
+
+## What a sync is actually made of
+
+Strip the word "sync" off it and there are only three questions, and every argument you will ever have about a CRM integration is one of them wearing a costume.
+
+Which record is this. That is the whole of the section above, and it is settled before anything else can happen, because a piece of information cannot be written to a contact until somebody has decided which contact it belongs to.
+
+Which fields move. Your phone system knows a call happened, its length and its outcome. Your CRM has somewhere to put a call, and it also has thirty other fields the phone system has never heard of. Somebody has to sit down and say that this field over here becomes that field over there, and that the ones with no partner stay where they are.
+
+Which direction. A field can be written one way, written the other way, or written both ways, and the third of those is the only one that deserves the name two-way sync, and it is the one that creates every hard problem in the rest of this article.
+
+[[scene:sync-path]]
+
+## The field that gets erased
+
+Here is a failure that looks like data loss and is actually a design decision somebody made without noticing.
+
+The web has two ways of changing something that already exists, and they are not variations on a theme. The older one is a replace, and [the specification for it](https://www.rfc-editor.org/rfc/rfc9110.html#name-put) says that the sender is requesting that the stored version be replaced. [The other one](https://www.rfc-editor.org/rfc/rfc5789.html), defined in 2010 in a document whose introduction says in its first paragraph that a new method was necessary to improve interoperability and prevent errors, sends a set of instructions describing how the thing currently stored should be modified to produce a new version.
+
+In plain terms: one of them says "here is the contact, make it look like this", and the other says "change these two fields and leave everything else alone".
+
+If your sync uses the first one and the sending system has an empty box where the receiving system has a mobile number somebody typed in by hand two years ago, the mobile number is gone. Nobody deleted it. The sending system simply described the whole contact, and in its description that field was empty, and the receiving system did what it was asked. This is the single most common way a sync destroys information, and the tell is always the same: the missing data is missing from exactly the fields the other system does not have.
+
+The specification for the second method has a rule about this that is worth holding a vendor to. The server must apply the entire set of changes atomically and must never provide a partially modified representation, and if the whole patch cannot be applied then it must apply none of it. All of it or none of it. A half-updated contact is not a smaller version of a successful update. It is a record in a state that was never intended by anybody, and the standard says it must not be allowed to exist.
+
+## The same update, arriving twice
+
+Networks fail in the middle. That is not an edge case, it is a Tuesday, and every sync you will ever own has to decide what to do about it.
+
+[The current HTTP specification](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods) has a precise word for the property that decides the answer. A request method is idempotent if the intended effect on the server of multiple identical requests is the same as the effect of a single one. The specification is explicit about why it bothers to define this: idempotent requests can be repeated automatically if a communication failure happens before the sender learns whether the first one worked.
+
+Apply that to your contact record and it stops being computer science. "Set this contact's stage to Under Contract" is idempotent. Send it five times and the stage is Under Contract. "Add a note to this contact" is not. Send it five times and there are five notes, and the person who opens that record on Thursday sees the same message from you five times and draws a conclusion about you.
+
+The specification also says what a careful system does about it: a client should not automatically retry a request that is not idempotent unless it has some way of knowing that the request is safe to repeat, or some way of detecting that the original never landed. And then it says, drily, that some clients take a riskier approach and attempt to guess when an automatic retry is possible. That sentence describes a large amount of the integration software currently running inside small businesses, and the symptom is duplicate activity on a contact record rather than an error anybody sees.
+
+## When both sides changed at once
+
+The last hard problem is the one with the best name. You open the contact in the CRM and change the phone number. At the same moment an automation, acting on what it read a second earlier, writes the whole contact back. Your change is gone, no error was raised, and nothing anywhere records that there was ever a disagreement.
+
+The specification calls this [the lost update problem](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match), names it in exactly those words, and describes the mechanism that exists to prevent it: a conditional request. The sender includes a marker for the version it last saw, and the receiving system is required not to perform the change if that marker no longer matches, refusing with a status code that exists for nothing else. The specification for partial updates goes further, warning that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need to start from a known base point or they will corrupt what they are changing.
+
+None of that is exotic. All of it is thirty years old, written down, free to read, and absent from most small business integrations, because the cheap way to build a sync is to write the newest thing you have and not ask what was there before. That is a choice with a name, last write wins, and it is a perfectly respectable choice for some fields and a disaster for others. The point is that somebody has to make it deliberately, field by field, and be able to tell you what they picked.
+
+[[scene:crm-calculator]]
+
+[[scene:pull-quote]]
+
+## Which side is right, and why somebody has to say it out loud
+
+Every two way sync eventually receives two different answers to the same question and has to pick one. There is no clever way out of this and there is no default that is correct for every field, so the build either contains a decision or it contains an accident.
+
+A rule that works for a lot of small businesses is that the most recently changed value wins for anything factual, such as a phone number or an address, and the CRM wins for anything about the relationship, such as the stage of the deal or the owner of the contact. A rule that works for others is that anything a human being typed beats anything a machine wrote, always, on the grounds that the human was looking at the person while they typed it.
+
+Neither is right. What matters is that your rule is written down somewhere you can read it, that it was chosen by somebody who understood what each field is for, and that you can find out what it is without opening a support ticket. The service page for this says plainly that the sync does not decide which side is right and that the conflict rules get agreed when it is built. That is not a caveat. It is the most important half hour of the project.
+
+## What the identity field actually is, in your CRM
+
+There is a specific thing to go and check, and it is checkable today, for free, in about ten minutes.
+
+Somewhere in your setup there is one field that decides whether an incoming record is a new person or an existing one. [HubSpot's own developer documentation](https://developers.hubspot.com/docs/guides/api/crm/objects/contacts) is unusually direct about this. Its combined create-and-update endpoint asks you to name the property you are identifying people by, and it says that you can use email or a custom unique identifier property, and that following the request, if the contacts already exist they will be updated, and if the contacts do not exist they will be created. One field, nominated by whoever built your integration, and every duplicate you have ever had is downstream of it.
+
+The same page carries a warning that most people find out about by hitting it. Partial upserts are not supported when using email as the identifying property for contacts, which means that on that path you are back to describing the whole contact, which is the erasing behaviour two sections up.
+
+And it documents what survives a merge, which is the detail that tells you the vendors have thought about this harder than the resellers have. When two contacts are combined, the loser's email address does not evaporate; it is kept as an additional email on the surviving record, and those additional addresses are still unique identifiers, so no other contact can take them. Your database remembers that Kathy existed. It has to, because the next time a message comes in from that address, something has to know where to put it.
+
+[[scene:offer]]
+
+## What it costs, and how long it takes
+
+There is no price on this page, and the reason is not coyness. The cost is driven by four things nobody can guess from an article: how many systems have to be connected, whether each of them exposes an interface a program can actually use, how many fields have to be mapped by hand rather than by name, and whether the records already in there have to be reconciled before anything is switched on. The fourth is the one that moves the number the most and the one that is never in the quote.
+
+What can be said honestly is the shape. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project, and most of the work in it is not the connecting. It is somebody going through a list of fields with you and asking what each one means, which is slow because half the answers are "I think that was Dave's".
+
+Then there is the recurring cost, which is a person's attention. A sync is software, it will break the week a vendor renames a field, and something has to notice. And the middle band from the matching model never goes away: if you want fewer wrong merges, more pairs land in front of a human, and that is a standing few minutes a week rather than a one-off.
+
+Here is the number we cannot give you, and it is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly and every one traced back to a company that sells data cleaning software, quoting its own customers, with no published sample and no method. There is no independent study of duplicate rates in small business CRMs, in this industry or any other. The calculator above therefore asks you for the inputs rather than assuming them, and the honest first step of any real project is measuring your own file instead of accepting somebody's average.
+
+## What it does not do, and should not pretend to
+
+It does not clean what is already in there. Keeping two systems in step from today onward and reconciling nine years of accumulated records are two different jobs with two different price tags, and a sync switched on over an unreconciled database will faithfully propagate every mess in it to a second system.
+
+It does not remove the human decision. That is the entire point of the three way rule, and any build that reports a hundred percent automatic resolution has quietly widened its match threshold and is merging people. The failure mode of an over-eager deduplicator is worse than the one it fixes: two separated records are an embarrassment, and two people fused into one is a stranger reading somebody else's conversation history.
+
+It does not open a system that will not open. Most modern CRMs expose an interface built for exactly this, and a platform that does not is not going to be talked round. Screen scraping something with no interface is not a sync, it is a liability with a schedule.
+
+It does not make anybody use the CRM. A record that is finally true is worth nothing at all if the appointment still lives on a sticky note, and there is no integration that can reach into a notebook.
+
+And it will not tell you which of the two records is the real one, in the cases that matter. It will tell you they are probably the same person. Which email she reads, which number she answers, and which of the two histories is the one you should have in front of you before you ring her: that is judgement, and it belongs to whoever knows her.
+
+[[scene:plate-two]]
+
+[[scene:wasted]]
+
+## How to find out how bad yours is, in twenty minutes
+
+Nobody needs a consultant for the first pass, and you should do this before anybody quotes you, because the quote is worth more when you have the answer.
+
+Take the last ten deals you closed. For each of those people, search your CRM for the surname on its own, then the first name on its own, then the email domain. Count the records that come back and are plainly the same human being. Ten is a small sample and it is not meant to be a statistic; it is meant to tell you whether the answer is roughly zero or roughly everywhere, and that is the only resolution the decision needs.
+
+Then do the same for yourself. Put your own name into your CRM, your marketing tool, and your phone system in turn, and see what each of them thinks it knows about you. People are startled by this one, because your own record is the one you can audit instantly.
+
+Third, find out what your automated messages are addressed off. Open the last one that went out and look at whether the name in the greeting comes from a field a person typed or a field a form captured. Kathy is in that email because of which field somebody chose, and that choice was made once, quickly, by whoever set it up.
+
+Last, ask whoever built your current integration one question: what happens if the same webhook arrives twice. If the answer is a shrug, you have learned something more useful than any audit, and it cost you a sentence.
+
+## Common questions, answered honestly
+
+### What is two-way CRM sync, in plain terms?
+
+It means information travels in both directions between your CRM and the other systems you use. Activity from calls, texts, bookings and automations writes into the CRM, and changes made inside the CRM flow back out to the systems that act on them. One-way sync means one of the two sides is always working from a copy that is out of date, and it is usually the side doing the automated messaging.
+
+### How is this different from workflow automation?
+
+Workflow automation is about work moving between systems: a form is submitted, so a task is created and a reply goes out. Sync is about one fact being true in more than one place at the same time. They are usually built with the same tools and they answer different questions, and you can have either without the other. A business with beautiful automation and no sync sends perfectly timed messages to the wrong version of a person.
+
+### Will it create duplicate contacts?
+
+A correctly built sync exists to prevent them, using a nominated identity field and a matching rule agreed when it is built, so an inbound record matching an existing contact updates that contact rather than creating a second one. What no honest build will promise is that the matching is never wrong in either direction, because the published model that everything in this field rests on says you choose between two kinds of error and cannot have zero of both.
+
+### Does it work with Follow Up Boss, kvCORE or HubSpot?
+
+Yes, along with most CRMs that expose a documented interface for software to use. The orchestration sits outside the CRM rather than being a fixed integration, so the answer is not limited to a supported list. The right question to ask about any specific platform is narrower than "is it supported": ask which field identifies a person, whether updates can change named fields rather than replacing the whole record, and whether the same message arriving twice creates one thing or two.
+
+### What happens to the data that is already in there?
+
+Nothing, until somebody decides what should happen. Reconciling an existing database is a separate exercise from syncing it forward, and doing them in the wrong order is how a project doubles in cost. The sensible sequence is to measure what is in there, agree the identity rule, reconcile the obvious matches, put the genuinely ambiguous pairs in front of a person, and only then switch the ongoing sync on.
+
+### Can it merge records automatically?
+
+Some of them, and the share depends on a threshold somebody sets. That threshold is the honest conversation to have before the build starts, because it is the dial between a system that leaves work for you and a system that occasionally fuses two people together. The safe default on a first build is to automate only the pairs that are not in any doubt, put everything else in a review queue, and widen it later once you have watched what the queue actually contains.
+
+### Is this worth it for a one-person business?
+
+Often more than for a large one, and for a reason that has nothing to do with efficiency. In a big office a duplicate is caught because several people touch a record. On your own you are the only person who would ever notice, you are noticing while doing something else, and the message that goes to the wrong version of somebody goes out under your own name.
+
+### How do I know it is working after it goes live?
+
+Watch the review queue rather than the dashboard. A queue that is empty in week one usually means the matching is too confident rather than that your data is clean, and a queue nobody opens is the same as no matching at all. The other check takes a minute: pick a contact, change one field in each system in turn, and see what the other side says afterwards.
+
+## What to do about it
+
+Search your own name in your own CRM. That is the whole assignment, it costs nothing, and it settles in one screen an argument that people have in meetings for months.
+
+If more than one of you comes back, you already know what the automated message going out on Tuesday is addressed to. And you know something else, which is that it was never a discipline problem, because nobody typed anything wrong. Two systems were separately right about the same person, and nothing in the building had the job of noticing.
+
+You can see how the pieces connect on [the RealtyLT AI page](/ai#crmsync), and what writes back to what is on the [two-way CRM sync page](/services/crm-sync). If you would rather somebody went through your fields with you and told you honestly which parts of this are a week and which parts are an afternoon, that is what the [AI audit](/services/ai-audit) is for.
+
+The other half of this story is the systems doing the writing: [what happens when the phone rings and nobody picks up](/blog/ai-voice-agent-missed-calls-real-estate), [what a website conversation at midnight produces](/blog/ai-chat-assistant-real-estate-website), and [the busywork the wiring between them removes](/blog/workflow-automation-real-estate-business).
+
+Katherine is one person. Your database is entitled to know that.
+
+[[scene:funnel]]`;
+
 export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Somebody points out that you could have a page for each of the other eight by Friday, and they are right, because a machine will write eight pages about eight towns in the time it takes to make coffee.
 
 So the pages get made. Then, a few weeks later, you open two of them side by side to check something, and you read them properly for the first time.

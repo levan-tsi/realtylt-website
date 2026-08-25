@@ -48,6 +48,7 @@ export const POSTS = [
   "ai-appointment-booking-no-shows-real-estate",
   "local-seo-real-estate-map-pack-google-business-profile",
   "geo-landing-pages-real-estate-doorway-pages",
+  "crm-sync-real-estate-duplicate-contact-records",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */
