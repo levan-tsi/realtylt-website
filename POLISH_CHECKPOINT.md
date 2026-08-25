@@ -56,6 +56,14 @@
 ##    existing GA/gtag (it feeds his ads remarketing; two tools, two jobs). Free tier: 1M
 ##    events + 5k replays/mo, far above pre-launch traffic. His login: he registered
 ##    himself; get the project API key from him or his dashboard in-browser.
+## 3b. LAUNCH-LIST QUICK WINS (owner's second reel, yatesvids "20 things", scored
+##    2026-08-24: 15 done, 3 partial, 2 deliberate skips). The three partials, all small:
+##    office address on /connect becomes a tappable Google-Maps directions link; visible
+##    FAQ blocks (with FAQPage schema, the lib already builds it) on /buying /selling
+##    /financing in the house voice; visible breadcrumbs on listing + county pages (schema
+##    exists on services/blog, extend the pattern). SKIPPED on merit, do not add blind:
+##    sticky mobile CTA (fights the chat bubble; decide from PostHog replays post-launch)
+##    and case studies (post-launch blog-loop content, needs his client permissions).
 ## 4. CARRIED, unchanged: his spend-cap click (~$2/mo vs 22 Sep restriction) - his first
 ##    Google sign-in (post-fix) - megamenu DUTCHESS ring 2.85:1 (own cross-page pass) -
 ##    /plan BudgetBridge h2 - blog backlog (the /blog loop; 26 drafts) - launch switches
