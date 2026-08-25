@@ -86,6 +86,14 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   // A stray lockfile in the user home dir makes Next infer the wrong workspace root
   outputFileTracingRoot: path.join(__dirname),
+  // posthog-js posts events to trailing-slash paths (/relay-ph/e/). Next's automatic 308
+  // normalization breaks those POSTs in the browser (measured: fetch throws "Failed to
+  // fetch" on the 308 hop; without the slash the same POST returns {"status":"Ok"}).
+  // MEASURED before shipping the flag: with it on, /buying/ serves the same 200 content
+  // /buying does instead of redirecting; every page declares a canonical URL, so the
+  // duplicate form is harmless to SEO, and no redirects[] entry depends on slash
+  // normalization. Middleware is not needed.
+  skipTrailingSlashRedirect: true,
   images: {
     // Live-mode listing photos are external MLS Grid CDN URLs; without an allowed host
     // every next/image render throws. The optimizer (/_next/image?url=…) will only ever
@@ -156,6 +164,14 @@ const nextConfig: NextConfig = {
     // are proxied too. These are afterFiles rewrites — real routes and /public files
     // (images/, og.png) always win; the marketing site must not claim these paths.
     return [
+      // PostHog ingestion + assets, proxied under our own origin (round 39). The browser
+      // only ever talks to /relay-ph, so the CSP above needed no new origins — 'self'
+      // already covers script/connect/worker. posthog-js requests trailing-slash paths
+      // (/relay-ph/e/?...); Next's 308 normalization preserves method+body, measured on
+      // the dev server before shipping. lib/posthog-proxy.test.ts pins these two rewrites
+      // to the init component's api_host.
+      { source: "/relay-ph/static/:path*", destination: "https://us-assets.i.posthog.com/static/:path*" },
+      { source: "/relay-ph/:path*", destination: "https://us.i.posthog.com/:path*" },
       { source: "/ai", destination: `${AI_PAGE_URL}/` },
       { source: "/ai/:path*", destination: `${AI_PAGE_URL}/:path*` },
       { source: "/styles.css", destination: `${AI_PAGE_URL}/styles.css` },

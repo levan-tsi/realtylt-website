@@ -19,6 +19,7 @@
     "@supabase/supabase-js": "^2.110.3",
     "leaflet": "^1.9.4",
     "next": "^15.3.3",
+    "posthog-js": "^1.418.16",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-leaflet": "^5.0.0",
