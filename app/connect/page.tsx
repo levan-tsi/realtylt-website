@@ -83,16 +83,47 @@ export default function ConnectPage() {
               keeps the number and the email in view for the whole length of the booking flow
               instead. */}
           <div className="lg:sticky lg:top-8 lg:self-start">
-            {/* A BUSINESS CARD, AT EVERY WIDTH — portrait beside the name, not above it.
-                Two reasons, one of them only visible once the page was rendered and looked at:
-                the stacked version put a large greyscale portrait and "Levan Tsiklauri" directly
-                beside the Google embed's OWN circular colour portrait and its own "Levan
-                Tsiklauri" heading, at the same altitude, so the fold showed his face twice and
-                his name twice. Beside each other as one compact object, this reads as the card it
-                is and the scheduler's header reads as the scheduler's. The second reason is the
-                phone: stacked, the portrait alone cost 224px of the first screen and pushed the
-                two contacts under the fold, which is the defect this round exists to fix. */}
-            <div className="flex items-center gap-5">
+            {/* ROUND 39, the owner's two sentences: "texts are one in the middle one starts from
+                the left" and "bring google appointments higher... my picture next to google
+                in-person strategy session text same level." The embed centers everything and
+                cannot be restyled; cropping its list-view header off is not safe either, because
+                the SECOND screen (the date picker) puts the session title and details in that
+                same top band (measured 2026-08-24 by driving the booking URL directly). So the
+                column reorders instead:
+                 - The two contact rows come FIRST. The h1 directly above reads "Call, email, or
+                   book a time" — the two controls now sit under the two words that name them,
+                   and the third clause maps to the calendar column beside them.
+                 - The portrait card moves DOWN to the level the embed's own header forces on its
+                   session cards: mt-16 puts the portrait top at ~216px from the column top, which
+                   is where "In-Person Real Estate Strategy Session" renders (header ≈ 200px +
+                   16px card padding, measured against the live embed). His picture and the
+                   session cards now share one optical band, his verbatim ask.
+                 - His face still appears twice (ours + Google's small avatar) but no longer at
+                   the same altitude, which was the r38 objection to the stacked card. */}
+            <address className="not-italic">
+              <ContactRow
+                href={SITE.phoneHref}
+                label="Call or text"
+                value={SITE.phone}
+                gaCategory="Phone"
+                gaLabel="connect-top"
+                icon={PHONE_ICON}
+              />
+              <div className="mt-3">
+                <ContactRow
+                  href={`mailto:${SITE.email}`}
+                  label="Email"
+                  value={SITE.email}
+                  gaCategory="Email"
+                  gaLabel="connect-top"
+                  icon={MAIL_ICON}
+                />
+              </div>
+            </address>
+
+            {/* mt-16 only above lg, where it is the level-tuning constant; on a phone the column
+                is a stack and every spare pixel above the calendar costs a thumb-scroll. */}
+            <div className="mt-8 flex items-center gap-5 lg:mt-16">
               <Image
                 src="/images/levan-portrait.jpg"
                 alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
@@ -117,41 +148,32 @@ export default function ConnectPage() {
               </div>
             </div>
 
-            <address className="mt-8 not-italic">
-              <ContactRow
-                href={SITE.phoneHref}
-                label="Call or text"
-                value={SITE.phone}
-                gaCategory="Phone"
-                gaLabel="connect-top"
-                icon={PHONE_ICON}
-              />
-              <div className="mt-3">
-                <ContactRow
-                  href={`mailto:${SITE.email}`}
-                  label="Email"
-                  value={SITE.email}
-                  gaCategory="Email"
-                  gaLabel="connect-top"
-                  icon={MAIL_ICON}
-                />
-              </div>
-              <p className="t-small mt-4 text-stone">
+            {/* The office address is now a DIRECTIONS link (launch-list quick win, 2026-08-24):
+                on a phone it opens the Maps app pointed at the office instead of being four
+                dead words. Same quiet voice as the page's other text links. */}
+            <p className="t-small mt-6 text-stone">
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  `${SITE.address.street}, ${SITE.address.locality}, ${SITE.address.region} ${SITE.address.postalCode}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-6 items-center underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+              >
                 {SITE.address.street}, {SITE.address.locality}, {SITE.address.region}{" "}
                 {SITE.address.postalCode}
-              </p>
-            </address>
+              </a>
+            </p>
           </div>
 
           <div>
-            {/* Visible now, where it was sr-only. The calendar arrives as a blank white box while
-                the third-party embed loads, and a heading is the only thing that says what is
-                about to appear there. NOT "Book a time": that is the h1's third clause, sitting
-                one column to the left at three times the size, and a fold that says it twice in a
-                row is a fold that says it once and wastes the second. "Pick a slot" is the word
-                the page's own fallback already uses ("Would rather not pick a slot?"), so the
-                decline directly under the calendar now names the thing it is declining. */}
-            <h2 id="appointments-heading" className="t-h3 text-ink">
+            {/* Back to sr-only (round 39). Visible, this left-aligned serif heading sat directly
+                against the embed's centered sans header — the owner's "texts are one in the
+                middle one starts from the left". The embed's own header labels the calendar the
+                moment it paints, the h1's third clause already says "book a time", and removing
+                the visible line lifts the appointments ~48px at every width, which was his other
+                ask. The heading itself stays for document structure. */}
+            <h2 id="appointments-heading" className="sr-only">
               Pick a slot
             </h2>
             {/* An iframe is a tab stop with no ring of its own, and the platform will not give it
@@ -165,7 +187,7 @@ export default function ConnectPage() {
             <BookingFrame
               src={BOOKING_EMBED_URL}
               title="Book an appointment with Levan Tsiklauri (Google Calendar)"
-              className="mt-5 block h-[1040px] w-full border-0 md:h-[899px]"
+              className="block h-[1040px] w-full border-0 md:h-[899px]"
             />
 
             {/* THE TWO FALLBACKS, both after the thing they are a fallback FOR. The first answers
