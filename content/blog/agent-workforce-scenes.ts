@@ -142,9 +142,10 @@ export const WHERE_FAIL = {
 
 /** SCENE copy — what happens when the written rules are taken away. Cited data graphic TWO.
  *
- * Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan (Sierra; Narasimhan also
- * Princeton), "tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
- * arXiv:2406.12045, 17 June 2024. Read in the arXiv PDF with pdftotext.
+ * Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, "tau-bench: A Benchmark for
+ * Tool-Agent-User Interaction in Real-World Domains", arXiv:2406.12045, 17 June 2024. Read in
+ * the arXiv PDF with pdftotext. THE AUTHOR BLOCK NAMES ONE AFFILIATION, Sierra, and the first
+ * draft of the body said "a team at Sierra and Princeton". Princeton is not on the paper.
  *
  * The ablation, quoted from the paper: "we perform an ablation study by removing the domain
  * policy from the FC agent system prompt... in tau-retail where rules are simpler and closer to

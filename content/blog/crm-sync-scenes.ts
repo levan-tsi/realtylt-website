@@ -104,7 +104,7 @@ export const THREE_ANSWERS: GridItem[] = [
   },
   {
     lead: "In the middle: ask somebody",
-    body: "Enough agrees to be interesting and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides in about two seconds, because a person has context that is not in either row. This band is the price of the other two being right, and every product that advertises full automation has quietly abolished it.",
+    body: "Enough agrees to be interesting and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides, usually at a glance, because a person has context that is not in either row. This band is the price of the other two being right, and every product that advertises full automation has quietly abolished it.",
   },
   {
     lead: "Below the line: leave them alone",
@@ -198,7 +198,7 @@ export const CENSUS_CLERKS = {
 export const WASTED: GridItem[] = [
   {
     lead: "The review queue nobody opens",
-    body: "The middle band only works if a person actually goes there. A queue with four hundred pairs in it and no owner is not a safety mechanism, it is a filing cabinet, and the pairs in it are the exact records most likely to be the ones you care about. Ten minutes on a Friday is the whole job. Nobody schedules it, because the day it is set up it is empty.",
+    body: "The middle band only works if a person actually goes there. A queue nobody owns is not a safety mechanism, it is a filing cabinet, and the pairs sitting in it are the exact records most likely to be the ones you care about. A short slot on a Friday is the whole job. Nobody schedules it, because on the day it is set up it is empty.",
   },
   {
     lead: "Fields that were never agreed, only defaulted",
@@ -375,7 +375,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Pairs a computer should not settle on its own",
-      note: "The headline is the middle row rather than the hours, because the hours are the easy half: the number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person, and that is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing; read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely and every one traced back to a company selling data cleaning software, quoting its own customers, with no published sample and no method, so both of the shares above are yours to supply and the second of them carries a hint pointing at the one measurement in this subject that does have a method behind it. There is also no row for what a stale record costs in commission, and there was never going to be one: the email that went to the wrong version of somebody is real, and nobody can show you the arithmetic that turns it into money.",
+      note: "The headline is the middle row rather than the hours, because the hours are the easy half: the number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person, and that is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing; read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely, usually somewhere between ten and forty percent, and the ones we followed led either to a company selling deduplication software quoting its own customers or to an analyst rule of thumb with no report behind it, so both of the shares above are yours to supply and the second of them carries a hint pointing at the one measurement in this subject that does state a method. There is also no row for what a stale record costs in commission, and there was never going to be one: the email that went to the wrong version of somebody is real, and nobody can show you the arithmetic that turns it into money.",
       action: { label: "See how it is built", href: "/services/crm-sync" },
       secondary: { label: "Ask us what your fields do", href: "/connect" },
     },

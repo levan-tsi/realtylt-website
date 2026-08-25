@@ -35,7 +35,7 @@ That is not an argument against doing this. It is an argument for knowing what y
 
 Here is the distinction that reorganises the whole subject, and it comes from the best public measurement of this that exists.
 
-In June 2024 a team at Sierra and Princeton published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a simulated business with a real database, a set of tools that can change that database, and a written policy it has to follow, and then has a second language model play a customer who wants something. Two domains: a retail one with five hundred customers, a thousand orders and a hundred and fifteen tasks, and an airline one with three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the actual state of the database against the one correct outcome. Not the transcript, not the tone. What ended up in the system.
+In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a simulated business with a real database, a set of tools that can change that database, and a written policy it has to follow, and then has a second language model play a customer who wants something. Two domains: a retail one with five hundred customers, a thousand orders and a hundred and fifteen tasks, and an airline one with three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the actual state of the database against the one correct outcome. Not the transcript, not the tone. What ended up in the system.
 
 The authors also proposed a measurement that nobody had been using, and it is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked instead how often an agent succeeds at the same task every single time it is attempted, and they named it pass hat k: the chance that all k independent attempts are successful, averaged across tasks.
 
@@ -53,7 +53,7 @@ The same paper is worth reading for one more reason: it looked at what the failu
 
 The other paper worth your time is more recent and it is about exactly the thing the service page is selling, which is several agents working at once.
 
-A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks, built a taxonomy of what went wrong by having six human experts read a hundred and fifty of those traces closely, and then checked that the taxonomy was reliable by having independent annotators apply it and measuring how often they agreed. Their agreement measure came out at 0.88, which is high, and it matters because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks, built a taxonomy of what went wrong by having six human experts read a hundred and fifty traces closely, and then checked that the taxonomy was reliable by having independent annotators apply it and measuring how often they agreed. Their agreement measure came out at 0.88, which is high, and it matters because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
 
 Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you: across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
 
@@ -119,7 +119,7 @@ So this page will not divide one of those numbers by the other. The honest compa
 
 The email that went out at 6:40 was signed with your name. Everything else follows from that.
 
-This industry is unusual in having already written down what happens when work is delegated, because the delegation of licensed work has been regulated in New York for the better part of a century. It is worth reading two provisions in [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law), because neither is about artificial intelligence and both are about you.
+This industry is unusual in having already written down what happens when work is delegated, because delegating licensed work is already a regulated activity in New York. It is worth reading two provisions in [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law), because neither is about artificial intelligence and both are about you.
 
 Section 442-c deals with what a salesperson's misconduct means for the broker. A broker is not automatically on the hook for what an associate did. But there are two ways they become so, and the second is the one to read twice: a broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
 
@@ -143,13 +143,13 @@ Set that beside four assistants running overnight with nobody reading the output
 
 Nobody can quote this from an article, because three separate things drive the cost and only one of them is the software.
 
-The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, runs to an hour or two per assistant, and it goes faster when a second person keeps pushing back on the first version you offer. The tau-bench ablation is the argument for spending that time rather than skipping it.
+The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, is a sitting rather than a message, and it goes faster when a second person keeps pushing back on the first version you offer. The tau-bench ablation is the argument for spending that time rather than skipping it.
 
 The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot, and the work is connecting it safely: the right permissions, nothing wider than the job needs, and a way to switch it off.
 
 The third is the running cost, which is usage rather than a seat, tracks how much the assistant has to read rather than how much it writes, and is genuinely small per task and genuinely unbounded if nobody watches it.
 
-What we will not print is a per-model price. The published pricing for every major model renders its numbers in JavaScript rather than in the page, so they cannot be read from the source and checked later, and a price that cannot be verified is worse on a page like this than no price at all. What can be said is the shape: the cost per piece of work is in cents rather than dollars, it is dominated by the length of the instructions rather than by the length of the answer, and the honest budget line is the review time above it rather than the compute.
+What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published, they are readable, and you can look them up in a minute. It is that they are quoted per million tokens, which means nothing until somebody knows how many tokens your job takes; that they change several times a year; and that which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was, and it would not have answered the question you asked. What can be said is the shape: the cost per piece of work is in cents rather than dollars, it is driven by the length of the instructions rather than the length of the answer, and the honest budget line is the review time above it rather than the compute.
 
 ## What it does not do, and should not pretend to
 
@@ -167,7 +167,7 @@ And it does not scale the way the word workforce suggests. Four independent assi
 
 ## How to test one assistant before you run four
 
-Do this with one assistant, on one job, before anybody builds you a set of them. It takes an afternoon spread over a fortnight and it will tell you more than any demonstration.
+Do this with one assistant, on one job, before anybody builds you a set of them. It runs over a couple of weeks, it costs you nothing but attention, and it will tell you more than any demonstration.
 
 Pick the dullest job you have that repeats, and write the brief before you look at any software. Include the exceptions. If you cannot write it, you have learned the most useful thing available today, which is that the job is not yet delegable to anybody, software or human.
 
@@ -195,7 +195,7 @@ Three things, and the second is the one that matters most. A general chat sessio
 
 ### How many assistants can I actually run at once?
 
-Technically as many as you have jobs for, because they do not queue behind each other. Practically the limit is not the software, it is how many streams of output one person can review before the reviewing stops happening. Most people find that number is smaller than they expected, and the calculator above is there to let you find yours before you commit to it.
+Technically as many as you have jobs for, because they do not queue behind each other. Practically the limit is not the software, it is how many streams of output one person can review before the reviewing stops happening. It is a number worth working out rather than assuming, and the calculator above is there to let you find yours before you commit to it.
 
 ### Do I need technical skills?
 
@@ -267,13 +267,13 @@ The other half of the problem is the opposite of the first. Names disagree when 
 
 The Census Bureau publishes the count of every surname that occurred at least 100 times in the 2010 Census: 162,253 of them. Brown was carried by 1,437,026 people. So a matching rule that treats a surname as evidence is not wrong, exactly, but it is worth almost nothing on its own, and it is worth a wildly different amount depending on which surname it is. Winkler makes the same point with two examples of his own, noting that a relatively rarer last name string such as Zabrinsky has more distinguishing power than a string such as Smith.
 
-There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is fifty million pairs, and the overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking: only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer and it has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
+There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is just under fifty million pairs, and the overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking: only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer and it has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
 
 [[scene:plate]]
 
 ## Somebody solved this properly, and the answer has three outcomes
 
-In 1969 Ivan Fellegi and Alan Sunter published a formal mathematical model for ideas Howard Newcombe had introduced ten years earlier, and it is still the model underneath every serious matching system in the world. Winkler's overview restates it, and the restatement is the part a business owner should actually read.
+In 1969 Fellegi and Sunter published a formal mathematical model for ideas Newcombe had introduced ten years earlier, and it is still the model underneath every serious matching system in the world. Winkler's overview restates it, and the restatement is the part a business owner should actually read.
 
 You take a pair of records and you look at the pattern of what agrees and what does not: same last name, different first name, same street number, no email on one side. Then you ask a ratio. How likely is that exact pattern among pairs that really are the same person, against how likely it is among pairs that really are not? A high ratio means the agreements are the kind that only matches produce. A low one means they are the kind that strangers produce by coincidence.
 
@@ -289,7 +289,7 @@ The reason it exists is the sentence right underneath the rule, and it is the ho
 
 That is not a limitation of the software you were quoted. It is a property of the problem, published in 1969, and any vendor whose answer to "how accurate is your deduplication" is a single percentage has either not read this or is hoping you have not.
 
-What it looks like at scale is worth seeing, because the trade is real and so is the payoff. Winkler records what the computerised procedures did to one of the largest matching operations ever run in the United States, the 1990 Decennial Census: they reduced the need for clerks and field follow-up from an estimated 3,000 individuals over 3 months to 200 individuals over 6 weeks.
+What it looks like at scale is worth seeing, because the trade is real and so is the payoff. Winkler records what the computerised procedures did to what he calls a very large 1990 Decennial Census application: they reduced the need for clerks and field follow-up from an estimated 3,000 individuals over 3 months to 200 individuals over 6 weeks.
 
 [[scene:census-clerks]]
 
@@ -355,7 +355,7 @@ There is a specific thing to go and check, and it is checkable today, for free, 
 
 Somewhere in your setup there is one field that decides whether an incoming record is a new person or an existing one. [HubSpot's own developer documentation](https://developers.hubspot.com/docs/guides/api/crm/objects/contacts) is unusually direct about this. Its combined create-and-update endpoint asks you to name the property you are identifying people by, and it says that you can use email or a custom unique identifier property, and that following the request, if the contacts already exist they will be updated, and if the contacts do not exist they will be created. One field, nominated by whoever built your integration, and every duplicate you have ever had is downstream of it.
 
-The same page carries a warning that most people find out about by hitting it. Partial upserts are not supported when using email as the identifying property for contacts, which means that on that path you are back to describing the whole contact, which is the erasing behaviour two sections up.
+The same page carries a warning that most people find out about by hitting it. Partial upserts are not supported when using email as the identifying property for contacts, and the documented remedy is to identify people by a custom property of your own instead. Which is worth knowing before the build rather than after, because the path that does not support a partial update is the path where you end up describing the whole contact, and that is the erasing behaviour two sections up.
 
 And it documents what survives a merge, which is the detail that tells you the vendors have thought about this harder than the resellers have. When two contacts are combined, the loser's email address does not evaporate; it is kept as an additional email on the surviving record, and those additional addresses are still unique identifiers, so no other contact can take them. Your database remembers that Kathy existed. It has to, because the next time a message comes in from that address, something has to know where to put it.
 
@@ -367,9 +367,9 @@ This article will not quote you a number, and not out of coyness. Four things dr
 
 The shape of it can be described without a number. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project, and the connecting is the smaller half of it. Most of the time goes on somebody sitting with you over a list of fields and asking what each one is for, which is slow because half the answers turn out to be "I think that was Dave's".
 
-Then there is the recurring cost, which is a person's attention. A sync is software, it will break the week a vendor renames a field, and something has to notice. And the middle band from the matching model never goes away: if you want fewer wrong merges, more pairs land in front of a human, and that is a standing few minutes a week rather than a one-off.
+Then there is the recurring cost, which is a person's attention. A sync is software, it will break the week a vendor renames a field, and something has to notice. And the middle band from the matching model never goes away: if you want fewer wrong merges, more pairs land in front of a human, and that is a standing item on somebody's week rather than a one-off.
 
-Here is the number we cannot give you, and it is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly and every one traced back to a company that sells data cleaning software, quoting its own customers, with no published sample and no method. There is no independent study of duplicate rates in small business CRMs, in this industry or any other. The calculator above therefore asks you for the inputs rather than assuming them, and the honest first step of any real project is measuring your own file instead of accepting somebody's average.
+Here is the number we cannot give you, and it is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly, usually in a band somewhere between ten and forty percent, and the ones we followed led either to a company that sells deduplication software quoting its own customers or to an analyst rule of thumb with no report behind it. Not one of them states a sample or a method, which is the same shape as every figure this website has had to retract. The calculator above therefore asks you for the inputs rather than assuming them, and the honest first step of any real project is measuring your own file instead of accepting somebody's average.
 
 [[scene:plate-two]]
 
@@ -393,7 +393,7 @@ Nobody needs a consultant for the first pass, and you should do this before anyb
 
 Take the last ten deals you closed. For each of those people, search your CRM for the surname on its own, then the first name on its own, then the email domain. Count the records that come back and are plainly the same human being. Ten is a small sample and it is not meant to be a statistic; it is meant to tell you whether the answer is roughly zero or roughly everywhere, and that is the only resolution the decision needs.
 
-Then do the same for yourself. Put your own name into your CRM, your marketing tool, and your phone system in turn, and see what each of them thinks it knows about you. People are startled by this one, because your own record is the one you can audit instantly.
+Then do the same for yourself. Put your own name into your CRM, your marketing tool, and your phone system in turn, and see what each of them thinks it knows about you. Your own record is the one you can audit instantly and argue with nobody about, which is what makes it the useful place to start.
 
 Third, find out what your automated messages are addressed off. Open the last one that went out and look at whether the name in the greeting comes from a field a person typed or a field a form captured. Kathy is in that email because of which field somebody chose, and that choice was made once, quickly, by whoever set it up.
 

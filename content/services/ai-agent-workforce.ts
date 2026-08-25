@@ -116,7 +116,7 @@ export const aiAgentWorkforce: Service = {
       // ROUND D: the second half is new. The technical answer was true and incomplete: they do
       // not queue behind each other, and the limit that actually binds is how much output one
       // person can review before the reviewing stops happening.
-      a: "Technically as many as you have jobs for, because they run in parallel and the inbox assistant does not queue behind the CMA assistant. Practically the limit is not the software, it is how many streams of output one person can read before the reading quietly stops. That number is usually smaller than people expect, and it is the one worth working out before you commit.",
+      a: "Technically as many as you have jobs for, because they run in parallel and the inbox assistant does not queue behind the CMA assistant. Practically the limit is not the software, it is how many streams of output one person can read before the reading quietly stops. It is a number worth working out rather than assuming, and it is the one to settle before you commit.",
     },
     {
       q: "What happens when one of them gets something wrong?",
