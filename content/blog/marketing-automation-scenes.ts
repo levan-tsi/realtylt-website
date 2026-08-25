@@ -76,7 +76,7 @@ export const NOT_THE_OTHERS: GridItem[] = [
 export const FOUR_DECISIONS: GridItem[] = [
   {
     lead: "Who it goes to",
-    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The person who bought last spring is still matching the buyer segment because nobody wrote the rule that takes them out of it. Almost every campaign that embarrasses somebody is an audience problem rather than a copy problem.",
+    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The person who bought last spring is still matching the buyer segment because nobody wrote the rule that takes them out of it. When a campaign embarrasses somebody it is far more often because of who it reached than because of what it said, and the audience is the half nobody opens again.",
   },
   {
     lead: "What it says",
@@ -84,7 +84,7 @@ export const FOUR_DECISIONS: GridItem[] = [
   },
   {
     lead: "When it arrives",
-    body: "Behaviour triggers move this from a calendar to a reaction, which is a genuine improvement and is also where the strangeness comes from. Somebody looks at three listings on a Sunday evening, and what arrives on Monday tells them exactly how closely they are being watched. The right delay is a design decision and it is almost never made deliberately.",
+    body: "Behaviour triggers move this from a calendar to a reaction, which is a genuine improvement and is also where the strangeness comes from. Somebody looks at three listings on a Sunday evening, and what arrives on Monday tells them exactly how closely they are being watched. How long to wait is a design decision, and it is a decision whether or not anybody makes it on purpose.",
   },
   {
     lead: "Whether it arrives at all",
@@ -168,9 +168,14 @@ export const DEADLINES = {
   ],
   lit: 1,
   basis:
-    "Two deadlines for the same act, each taken from the document that sets it. The statute makes a further commercial message unlawful more than ten business days after the request; Yahoo's published sender requirements say to honor unsubscribes within two days.",
-  sourceText:
-    "15 U.S.C. 7704(a)(4) and Yahoo Sender Best Practices. Google's sender guidelines state no deadline in days.",
+    "Two deadlines for the same act, each taken from the document that sets it. 15 U.S.C. 7704(a)(4), linked in the section above, makes a further commercial message unlawful more than ten business days after the request. Yahoo's published sender requirements, linked below, say to honor unsubscribes within two days.",
+  /** SOURCE TEXT IS THE THING THE LINK POINTS AT, and nothing else. The first version read
+   * "15 U.S.C. 7704(a)(4) and Yahoo Sender Best Practices. Google's sender guidelines state no
+   * deadline in days." Rendered, the whole string is one hyperlink to Yahoo, so a sentence
+   * making a claim about Google's page was underlined and pointing somewhere else. Found by
+   * looking at the shipped chart rather than by reading the payload. The statement about
+   * Google belongs in the note, where it already is. */
+  sourceText: "Yahoo Sender Best Practices, honor unsubscribes within 2 days.",
   sourceHref: "https://senders.yahooinc.com/best-practices/",
   note: "The two bars are not in the same unit, and the difference runs in the safe direction: ten business days covers a longer stretch of calendar than ten days does, so the drawn gap is smaller than the real one rather than larger. There is no third bar for Google, and that is a checked absence rather than an omission: their sender guidelines page carries no figure in days anywhere on it. Read this as which document is actually setting your deadline, not as a scale of penalties. The statute is enforceable and the requirement is not, and the requirement is still the one that will change what happens to your mail.",
 };
@@ -348,7 +353,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "covered",
           label: "Share whose mailbox is at a provider that publishes a ceiling",
-          hint: "Gmail and Yahoo both publish the same figure, and between them they carry most consumer addresses. Look at the domains in your own list rather than guessing.",
+          hint: "Gmail and Yahoo both publish the same figure. Count the domains in your own list rather than guessing at this one: it is an afternoon's work and it decides how much of this section applies to you.",
           min: 20,
           max: 100,
           step: 5,
@@ -375,13 +380,17 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
           label: "Whose provider publishes a ceiling",
           by: { from: "input", id: "covered" },
           format: "count",
-          unit: "messages the published rule covers",
+          /** SHORT ON PURPOSE. This read "messages the published rule covers" and pushed the
+           * document to 352px at a 320 viewport, because a chain unit renders inside a
+           * `shrink-0` cell and cannot wrap. Named by scripts/_scratch-e-overflow.mjs. The
+           * explanation lives in the row LABEL on the left, which does wrap. */
+          unit: "covered messages",
         },
         {
           label: "At the published ceiling",
           by: { from: "rate", value: 0.003, display: "0.3%, the figure Google and Yahoo both publish" },
           format: "count",
-          unit: "complaints in a single send",
+          unit: "complaints in one send",
         },
         { label: "Across a month of sending", by: { from: "input", id: "sends" }, format: "count", unit: "complaints a month" },
         { label: "Across a year", by: { from: "rate", value: 12, display: "12 months" }, format: "count", unit: "complaints a year" },

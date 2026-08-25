@@ -53,7 +53,7 @@ Read that against the last preference centre you were sent to. A single web page
 
 ## Whether your market note is an advertisement is decided by its subject line
 
-There is one more piece of the rule that matters specifically to the way real estate agents write, and almost nobody in the industry has read it.
+There is one more piece of the rule that matters specifically to the way real estate agents write, and it is not the part anybody quotes.
 
 The obligations above attach to a "commercial electronic mail message", and the natural instinct is to think a market update is not one. It contains data. It is useful. It is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided, and the test is not what you intended.
 
@@ -69,7 +69,7 @@ So a genuinely useful market note with a subject line about the market is one th
 
 Now the part that actually governs your business, and it is not a law at all.
 
-Between your sending tool and the person you are writing to sits a mailbox provider. In practice, for a consumer list in the United States, that means Google or Yahoo for most addresses. They have no agreement with you, you are not their customer, and they publish the rules they apply. Almost nobody reads them.
+Between your sending tool and the person you are writing to sits a mailbox provider. Two of them, Google and Yahoo, publish the rules they apply to incoming mail in plain English on a public page, which is more than most parties to your business do. They have no agreement with you, you are not their customer, and there is no appeal. The proportion of your own list sitting behind those two is a thing you can count in an afternoon, and it is worth counting before you decide how much of this applies to you.
 
 You have no way to appeal, no support line, and no notification. The whole relationship is one way, it is governed by a document on a help site, and the document is not long.
 
@@ -79,7 +79,7 @@ You have no way to appeal, no support line, and no notification. The whole relat
 
 Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into two lists, and the split is the single most misreported thing in this entire subject. There is a section headed "Requirements for all senders", and a separate one for senders of "5,000 or more messages per day".
 
-Almost every article you will read about this treats the whole page as a bulk sender rule and concludes that a small business is exempt. Go and look at which list the important items are in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
+The whole thing is widely referred to as the bulk sender requirements, and if that is the phrase you have heard then the natural conclusion is that a small business is exempt from all of it. Go and look at which list the important items are actually in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
 
 The 0.3 percent is in the all senders list. A one person brokerage sending twice a month is inside it.
 
@@ -87,7 +87,7 @@ The larger list adds the things that genuinely are about volume: SPF and DKIM to
 
 [[scene:deadlines]]
 
-The regulator is not the binding constraint here and it has not been for some time. One more line from Google's own page is worth sitting with, because it is advice no platform priced per contact will ever give you: "Consider unsubscribing recipients who don't open or read your messages."
+The regulator is not the binding constraint here and it has not been for some time. One more line from Google's own page is worth sitting with, and notice who is giving it: not a party whose revenue rises with the size of your list. "Consider unsubscribing recipients who don't open or read your messages."
 
 ## What SPF, DKIM and DMARC assert, in their own words
 
@@ -133,7 +133,7 @@ Yahoo states how the figure is derived: "Spam rate is calculated in our system b
 
 That has an uncomfortable consequence. As your reputation falls, more of your mail is filtered, which shrinks the denominator, which raises the rate computed from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to be stable, and there is no version of the arithmetic you can do at your own end that reproduces it.
 
-Google publishes yours to you through Postmaster Tools, which is free and takes about ten minutes to set up if you control your sending domain's DNS. That is the single most useful concrete thing in this article. It is also, for most small senders, the only actual measurement of their own reputation that exists anywhere, and almost none of them have looked at it.
+Google publishes yours to you through Postmaster Tools, which is free and takes about ten minutes to set up if you control your sending domain's DNS. That is the most concretely useful thing in this article. It is also, for a sender without an enterprise deliverability contract, the only measurement of their own reputation available to them anywhere, which makes it worth ten minutes whatever else you take from this.
 
 ## What an open actually measures
 
@@ -145,9 +145,9 @@ That much is widely understood. What is less widely understood is what else is i
 
 [[scene:tracking]]
 
-Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, that page loads resources from other companies, and the sender did not add most of them and in many cases does not know they are there. The researchers listed exactly that as an open question at the end of their own paper: when a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
+Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, and that page loads resources from other companies. How many of those a sender put there deliberately is exactly what the researchers could not resolve, and they listed it as an open question at the end of their own paper: when a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
 
-For a business whose entire product is trust, that is worth ten minutes. Send yourself a campaign, open it in a browser with the developer tools showing, and look at which domains the message contacts. It is not a research project. It is a list, and it is your list, going to those companies, with your name on it.
+Be careful about what that does and does not license you to say. The same paper reports that the majority of the address leaks it found, 62 percent by its own heuristics, were intentional on the sender's part, so this is not a story in which senders are uniformly innocent. What it is is a strong argument for finding out which case you are in, and that takes ten minutes rather than a project. Send yourself a campaign, open it in a browser with the developer tools showing, and read the list of domains the message contacts. It is your list, going to those companies, with your name on it, and right now you probably do not know whether it is three or thirty.
 
 [[scene:plate-two]]
 
@@ -173,7 +173,7 @@ Three things are being paid for. The sending platform is a subscription priced p
 
 That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has historically gone out from three different tools under two different subdomains configured by people who have left, it becomes an archaeology project, and the honest sequencing is to finish it before writing a single campaign rather than after.
 
-The other real cost is a person. Audiences rot, and they rot silently, so somebody has to own the rules and look at them on a schedule. That is not a big job and it is nobody's job by default, which is how the segment that includes your past clients survives for two years.
+The other real cost is a person. Audiences rot, and they rot silently, so somebody has to own the rules and look at them on a schedule. That is not a big job and it is nobody's job by default, which is how a segment defined once outlives everybody's memory of what it was for.
 
 Before spending anything, run the audit below. It is free, it takes an afternoon, and it settles the only question that decides the shape of the project, which is whether your domain is already in good order or has been quietly accumulating configuration for six years.
 
@@ -209,7 +209,7 @@ Nothing here needs a consultant and none of it needs access to anything you do n
 
 6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise somebody who bought through you, somebody who told you they were staying put, or somebody who is now a competitor, your audience rule has no exit condition and it has not had one for a while.
 
-7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Most people are surprised by this number, and it is the input with the largest effect on everything above.
+7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Count it before you guess it. It is the input with the largest effect on everything above, and it is the one people carry the vaguest idea of.
 
 ## Common questions, answered honestly
 
@@ -235,7 +235,7 @@ Some of them, and the number that matters is much smaller than the number who ar
 
 ### Why did my open rate drop?
 
-Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image, so clients that block or proxy remote images distort the count in both directions and the mix of clients on your list changes over time. And separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate, and it is the one almost nobody looks at.
+Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image, so clients that block or proxy remote images distort the count in both directions and the mix of clients on your list changes over time. And separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate, and unlike the open rate it is measured by the party whose opinion decides whether your mail arrives.
 
 ### How often should I send?
 
@@ -284,15 +284,19 @@ The second is that every link in that chain is a place where somebody, at some p
 
 Before the law, the reason the trade exists, because it is worth being precise about what is actually broken.
 
-The county knows who owns the house because somebody recorded a deed. That record is durable and it is nobody's job to keep it current beyond ownership: it tells you who holds title, and if the owner moved out of state six years ago the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
+The county knows who owns the house because somebody recorded a deed. That record is durable and it is nobody's job to keep it current beyond ownership: it tells you who holds title, and if the owner moved out of state years ago the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
 
 Meanwhile the person moved.
 
 [[scene:movers]]
 
-The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county, which is the situation that produces the hardest version of this problem: the record is wrong, the person is still local, and there are other people in the same county with the same surname. That is the exact condition under which an automated match is most confident and least reliable.
+The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county, which produces the hardest version of this problem: the record is wrong, the person is still local, and there are other people in the same county with the same surname. Think about what that does to a matching system. The candidate and the target now agree on surname, on county and on a good deal else, which is a great deal of agreement without any of it being evidence that they are the same person.
 
-There is a second thing in that chart that most articles on this subject get backwards, and it is in the note under it. A move breaks an address. It usually does not break a phone number, because mobile numbers have been portable between carriers for years and people carry them across a move, a marriage and three jobs. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons, at completely different rates, and a provider that quotes you one accuracy figure for both is quoting you a number that does not describe anything.
+There is a second thing in that chart, and it is in the note under it. A move breaks an address. It does not automatically break a phone number, and the reason is worth stating carefully because the usual explanation is wrong.
+
+People say numbers survive a move because numbers are portable. That is not what portability means. The regulatory definition at [47 CFR 52.21(m)](https://www.law.cornell.edu/cfr/text/47/52.21) is that number portability is "the ability of users of telecommunications services to retain, at the same location, existing telecommunications numbers without impairment of quality, reliability, or convenience when switching from one telecommunications carrier to another". At the same location. Portability is about changing carrier, not about changing address.
+
+The actual reason is simpler and it is a fact about mobile service rather than about the rules: a mobile number was never attached to a building in the first place, so moving out of one does not disturb it. Which means the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons, at completely different rates, and a provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
 
 [[scene:plate]]
 
@@ -300,7 +304,7 @@ There is a second thing in that chart that most articles on this subject get bac
 
 Here is the reframe that reorganises the whole subject, and it is why the legality question everybody asks has the wrong shape.
 
-The question is almost always put as "is skip tracing legal", and the answer that comes back is almost always "yes, it uses public records". Both halves of that exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use, and American law treats those as separate questions with separate rules and separate people liable.
+The question usually gets put as "is skip tracing legal", and the answer that comes back is usually "yes, it uses public records". That was the answer on our own service page until this article was researched, and both halves of the exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use, and American law treats those as separate questions with separate rules and separate people liable.
 
 The acquisition is governed by rules about where the underlying information came from and what purpose it was released under. The use is governed by rules about consent and about calling. Almost everything written for real estate agents about this is about the second half, and almost nothing is about the first, which is unfortunate, because the first half is where the liquidated damages are and it is the half a tool cannot handle for you.
 
@@ -322,7 +326,7 @@ The teeth are in [section 2724](https://www.law.cornell.edu/uscode/text/18/2724)
 
 Note what that sentence does and does not say. It is a private right of action, brought by the individual, not a regulator's fine. The floor is per person, not per call. And a court "may" award it, which is not the same as "will", so this is an exposure rather than an invoice. Those distinctions matter and they are the reason the figure at the top of this page is written as a floor for one person rather than as a total for a list.
 
-None of this means a traced number came out of a motor vehicle record. Most of them almost certainly did not. It means that if any link in the chain behind your list touched one, the obligation attaches to whoever obtained it, and the length of the chain is not a defence. Which brings us to the clause everybody points at.
+None of this means a traced number came out of a motor vehicle record. We have no way of knowing what share of them did, and the honest position is that nobody outside the compilers does. What it means is that if any link in the chain behind your list touched one, the obligation attaches to whoever obtained it, and the length of the chain is not a defence. Which brings us to the clause the trade points at.
 
 ## What a licence actually buys, and it is not a new permission
 
@@ -334,7 +338,7 @@ Read the last seven words again.
 
 The clause is a loop. It says that a licensed agency may use the information for a purpose that the same subsection already permits. It does not add a fifteenth purpose called investigation. So the licence answers the question of who may act. The question of what for is still open, and it has to be closed by finding a purpose somewhere else on the same list of fourteen.
 
-That is not a technicality and it is not a gotcha. It is the whole design. A licence is an accountability mechanism: it means there is a regulator, a record and something to lose. It was never intended to be a key, and reading it as one is the single most common mistake in this entire category.
+That is not a technicality and it is not a gotcha. It is the whole design. A licence is an accountability mechanism: it means there is a regulator, a record and something to lose. It was never intended to be a key, and reading it as one turns an answer about who may act into an answer about what for, which are the two halves the statute deliberately keeps apart.
 
 There is a practical consequence and it is a good one. [Section 2721(c)](https://www.law.cornell.edu/uscode/text/18/2721) requires that any authorised recipient who resells or rediscloses this information "must keep for a period of 5 years records identifying each person or entity that receives information and the permitted purpose for which the information will be used and must make such records available to the motor vehicle department upon request."
 
@@ -396,9 +400,9 @@ What you can take from it is the direction. Numbers move between people, at a sc
 
 The diagram above is the honest version of the pipeline, and the two hops that decide whether any of this is safe are the fourth and the fifth. Everything else is engineering.
 
-Most vendor descriptions of skip tracing have four steps and they are all on the left of that diagram: pull the properties, resolve the owner, append a number, clean the file. Those steps are real, they work, and they are not where anything goes wrong. What is missing is any account of where the appended number came from and under what purpose it was released, which is precisely the pair of facts that the two statutes above turn on.
+Our own service page described this in four steps until this article was written, and all four are on the left of that diagram: pull the properties, resolve the owner, append a number, clean the file. Those steps are real, they work, and they are not where anything goes wrong. What was missing was any account of where the appended number came from and under what purpose it was released, which is precisely the pair of facts the two statutes above turn on. It has a fifth step now, and that is what this article changed about the way we describe our own work.
 
-Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start, and adding it to a database with a hundred thousand rows of unknown provenance is a genuinely miserable job.
+Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start, and retrofitting it onto a database whose rows arrived from four places over six years is a genuinely miserable job.
 
 [[scene:trace-calculator]]
 
@@ -408,7 +412,7 @@ No figure is quoted here, and the reason is specific to this service: the domina
 
 Three things are being paid for. Enrichment is priced per record by whichever provider you use, and it is the only part that scales with volume. The pipeline pulls the properties, runs them through, validates and deduplicates what comes back, writes it where it needs to go and enforces the suppression check. And then the item almost nobody budgets for, which is the fields and the habit around them: a source and a date on every row, a purpose on file, an owned suppression list, and a person responsible for all three.
 
-Two things drive the enrichment bill and neither is ours to negotiate. One is how many properties you run. The other is that most providers charge for attempts rather than for successes, so a low resolve rate in your area spends money without producing anything. The second slider in the calculator is therefore yours to fill in rather than ours to assert, and the most valuable half hour available before you sign anything is asking a provider to run two hundred addresses from your own farm and report what came back.
+Two things drive the enrichment bill and neither is ours to negotiate. One is how many properties you run. The other is whether you are charged for attempts or for successes, which varies by provider and is a question with a one word answer that you should ask before signing rather than discover on an invoice: if it is attempts, a low resolve rate in your area spends money without producing anything. The second slider in the calculator is yours to fill in rather than ours to assert, and the most valuable half hour available before you sign anything is asking a provider to run two hundred addresses from your own farm and report what came back.
 
 On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a conversation rather than a configuration: deciding what your suppression rules are, agreeing where the source and purpose fields live, and getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup, which is a real cost and is better discovered before the work starts than after.
 
@@ -416,7 +420,9 @@ The one honest way to size any of it is the audit further down this page. It tak
 
 ## What it does not do, and should not pretend to
 
-It does not give you a match rate in advance. Rates vary by area, by how much public record sits behind a property and by how long ago the owner acquired it, and every published figure we tried to follow led back to a company selling the service quoting its own results. Your own provider can measure this for your own area in an afternoon and that measurement is worth more than any industry average.
+It does not give you a match rate in advance. Rates vary by area, by how much public record sits behind a property and by how long ago the owner acquired it. Figures do circulate, and we went and followed them rather than asserting that they cannot be sourced. What is out there is bands rather than measurements, usually 70 to 90 percent, and the pages carrying them are companies that sell skip tracing, pages ranking those companies, or in one case a skip-tracing company publishing a ranking of its own category with itself in it. One of them credits a trade association study by name and links to no report. None of them states a sample.
+
+There is a second number under those bands and it is the one worth carrying away, because a vendor put it on its own page: a phone hit rate and a connect rate are different quantities, and the second is much lower than the first. A match rate tells you how often a number came back. It does not tell you how often the number reached the person, and those two get quoted interchangeably. Your own provider can measure both for your own area in an afternoon, and that measurement is worth more than any band.
 
 It does not tell you the number is current. Enrichment reports the best answer in the file at the moment it is asked. Whether that number still reaches that person is a separate fact that nobody in the chain has checked, which is the reassignment problem above and is not something better software fixes.
 
@@ -424,7 +430,7 @@ It does not resolve a legal question about your own use. The two statutes in thi
 
 It does not confer permission to call. That is a separate body of rules with its own dates and its own private right of action, and honouring a do not call registration is a step in your process rather than a property of the data. It stays your obligation regardless of what the list cost.
 
-It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. The signal, if there is one, was in the public record you started from, and it is usually discarded by the time the list reaches the phone.
+It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. Whatever signal there was came from the public record you started with, and if the pipeline does not carry it forward alongside the number then it has been thrown away, which is worth checking on your own output rather than assuming either way.
 
 [[scene:wasted]]
 
@@ -464,11 +470,11 @@ Getting a number and being allowed to ring it are separate questions with separa
 
 ### How accurate is automated skip tracing?
 
-Nobody publishes a figure with a method under it, and we are not going to invent one. What is measurable is your own resolve rate in your own area, which a provider can produce by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And a system tuned to answer more rows is a system tuned to guess more often, so a headline match rate that sounds impressive may be describing a file with more wrong people in it, not fewer.
+Figures circulate, and we followed them: they are bands of roughly 70 to 90 percent, published by companies that sell the service or by pages ranking those companies, and none of the ones we opened states a sample. So there is no independent measurement to quote and we are not going to invent one. What is measurable is your own resolve rate in your own area, which a provider can produce by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And because a matching system decides between merging and leaving alone by where a threshold sits, moving that threshold to return an answer for more rows necessarily returns the wrong person for more of them, so a headline match rate that sounds impressive may be describing a file with more wrong people in it rather than fewer.
 
 ### How is this different from buying a lead list?
 
-A purchased list was assembled on some date nobody tells you and sold to everybody who paid, so the same owners take the same call from several agents in the same fortnight. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though: it is that building the list yourself makes you the person who obtained the information, so every question in this article becomes yours to answer and yours to be able to answer.
+A purchased list was assembled on some date nobody tells you and sold to everybody who paid for it, which means the households on it can be worked by several people who have no idea about each other. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though: it is that building the list yourself makes you the person who obtained the information, so every question in this article becomes yours to answer and yours to be able to answer.
 
 ### What is the difference between skip tracing and data enrichment?
 

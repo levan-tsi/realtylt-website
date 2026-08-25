@@ -153,7 +153,13 @@ export const MOVERS = {
     "U.S. Census Bureau, Current Population Survey Annual Social and Economic Supplement, Table A-1, Annual Geographic Mobility Rates by Type of Movement, 1948 to 2023.",
   sourceHref:
     "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/historic.html",
-  note: "This counts people, not records, and the distinction matters more here than anywhere else in this article. A move breaks an address. It usually does not break a mobile number, because numbers have been portable between carriers for years and people keep them across a move and across a job. So read the first bar as the reason a mailing address goes wrong, not as a rate at which phone numbers go wrong, and treat the two as separate problems with separate answers. The Bureau also states that estimates may not sum to totals due to rounding, and that this is a survey rather than a count, so these are estimates with sampling error around them rather than exact figures.",
+  /** THE PORTABILITY REASON IN THIS NOTE WAS WRONG and it was checked in the second pass. It
+   * said a move does not break a number "because numbers have been portable between carriers for
+   * years". Portability is defined at 47 CFR 52.21(m) as retaining a number "at the same
+   * location" when switching CARRIER, so it is not about moving house at all. The true reason is
+   * that a mobile number is not attached to a building. Recorded because giving a wrong REASON
+   * for a right conclusion is the exact defect Round D's second pass caught twice. */
+  note: "This counts people, not records, and the distinction matters more here than anywhere else in this article. A move breaks an address. It does not automatically break a mobile number, because a mobile number was never attached to a building. So read the first bar as the reason a mailing address goes wrong, not as a rate at which phone numbers go wrong, and treat the two as separate problems with separate answers. The Bureau also states that estimates may not sum to totals due to rounding, and that this is a survey rather than a count, so these are estimates with sampling error around them rather than exact figures.",
 };
 
 /** SCENE copy — who people complained about. Cited data graphic TWO.
@@ -212,7 +218,7 @@ export const WASTED: GridItem[] = [
   },
   {
     lead: "Volume standing in for a reason to ring",
-    body: "The pipeline makes it cheap to produce three hundred numbers, and cheap production quietly changes the question from who should I speak to into how many can I get through. A traced number carries no signal at all about whether that person is thinking of moving. Everything you might have known about that is in the public record you started from, and it is usually thrown away by the time the list arrives.",
+    body: "The pipeline makes it cheap to produce three hundred numbers, and cheap production quietly changes the question from who should I speak to into how many can I get through. A traced number carries no signal at all about whether that person is thinking of moving. Whatever you might have known about that came from the public record you started from, and whether the pipeline carries it forward alongside the number is a thing to check on your own output rather than to assume.",
   },
   {
     lead: "A file with no memory of where it came from",
@@ -411,7 +417,13 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
           label: "Numbers that come back",
           by: { from: "input", id: "resolve" },
           format: "count",
-          unit: "numbers whose source you would have to be able to name",
+          /** SHORT ON PURPOSE, and it was not. This unit read "numbers whose source you would
+           * have to be able to name", which is 302px of text inside a `shrink-0` cell: at 390
+           * it pushed the document to 456px and the whole article scrolled sideways by 66px.
+           * Measured with scripts/_scratch-e-overflow.mjs, which named this exact span. The
+           * long phrasing survives where it belongs, in `resultLabel` above the big number,
+           * which wraps. Chain units are cells and have to stay short. */
+          unit: "numbers to account for",
         },
         {
           label: "Numbers you would actually ring",
@@ -434,7 +446,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Numbers whose source you would have to be able to name",
-      note: "The headline is the second row rather than the hours, because the hours are the easy half and everybody already knows roughly what they are. The number that matters is how many records you would be holding, because each one of them is a thing somebody could ask you about, and the answer has to be the same for the first as for the last. Two things this deliberately will not do. It will not tell you a match rate: the second slider is yours to set, every published figure we could follow traced back to a company selling the service quoting its own results, and your own provider can measure it for your own area in an afternoon. And there is no row that turns calls into appointments or appointments into commission. Nobody has published a rate for cold outreach to traced numbers in this industry with a method under it, and inventing one here would undo the only argument this article is making.",
+      note: "The headline is the second row rather than the hours, because the hours are the easy half and everybody already knows roughly what they are. The number that matters is how many records you would be holding, because each one of them is a thing somebody could ask you about, and the answer has to be the same for the first as for the last. Two things this deliberately will not do. It will not tell you a match rate. The second slider is yours to set, and that is a checked refusal rather than a shrug: the circulating figures were followed, they are bands of roughly 70 to 90 percent, every page carrying one is a company that sells skip tracing or a page ranking such companies, and none of the ones opened states a sample. Your own provider can measure it for your own area in an afternoon, which is worth more than any band. And there is no row that turns calls into appointments or appointments into commission. Nobody has published a rate for cold outreach to traced numbers in this industry with a method under it, and inventing one here would undo the only argument this article is making.",
       action: { label: "See how it is built", href: "/services/skip-tracing-lead-generation" },
       secondary: { label: "Ask us what your list would need", href: "/connect" },
     },

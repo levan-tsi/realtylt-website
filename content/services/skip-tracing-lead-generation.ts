@@ -153,7 +153,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       q: "How accurate is automated skip tracing?",
-      a: "Match rates vary by area and by how much public record exists behind the property, and no honest provider promises 100%. What matters more than the headline rate is what happens to the misses: this pipeline validates numbers, collapses duplicates, and flags a row as partial or unreachable rather than handing you a dead number dressed up as a lead.",
+      a: "Match rates vary by area and by how much public record exists behind the property, and no honest provider promises 100%. Figures do circulate, usually as bands of 70 to 90 percent, and the pages carrying them are companies that sell skip tracing or pages ranking those companies; none we opened states a sample, so there is no independent measurement to quote you. Two things matter more than the headline rate. A phone hit rate and a connect rate are different quantities and the second is much lower, so ask which one you are being quoted. And what happens to the misses: this pipeline validates numbers, collapses duplicates, and flags a row as partial or unreachable rather than handing you a dead number dressed up as a lead.",
     },
     {
       q: "Can I find a property owner's phone number from just the address?",
