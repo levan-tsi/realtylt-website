@@ -30,9 +30,12 @@ export function PostHogInit() {
     posthog.init(POSTHOG_KEY, {
       api_host: "/relay-ph",
       ui_host: "https://us.posthog.com",
+      // PostHog's own recommended baseline (their Next.js guide). MEASURED before this:
+      // hand-setting capture_pageview: "history_change" on 1.418 sent $pageleave but never
+      // an initial-load $pageview — the Activity feed showed leaves with no views. The
+      // dated preset carries the corrected pageview semantics.
+      defaults: "2025-05-24",
       persistence: "localStorage",
-      // SPA-aware pageviews: fire on history changes, not only the first load.
-      capture_pageview: "history_change",
       capture_pageleave: true,
       session_recording: {
         maskAllInputs: true,
