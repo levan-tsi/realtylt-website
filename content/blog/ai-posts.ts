@@ -9,6 +9,249 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const DOCUMENT_PROCESSING_POST = `The rider came in on a Sunday evening as a photograph. Somebody had put the page on a kitchen table and held a phone over it, so the top edge of the paper is wider than the bottom edge, there is a shadow across the lower third, and the whole thing is very slightly out of focus in one corner.
+
+Two of the printed lines have been struck through and rewritten by hand, and there are initials in the margin beside each change. One of the changes is a date.
+
+You forwarded it. The reader pulled out every date on the page and wrote them where they were supposed to go, and one of them landed on your calendar with a reminder attached. Everybody stopped thinking about it, which is exactly what the system is for.
+
+Three weeks later somebody asks whether that contingency has expired, and it turns out there are two defensible answers, and the difference between them is four days.
+
+Nothing malfunctioned. The characters were read correctly, the handwriting was read correctly, the date on the calendar is the date on the page. What went wrong is not on the page at all, and that is what this article is about.
+
+[[scene:in-short]]
+
+[[scene:not-the-work]]
+
+## What document processing actually is, and why the reading is the easy half
+
+Three articles on this site sit near this one, and it is worth putting them out of the way first, because most of what people assume this subject is turns out to belong to one of them.
+
+Document processing, described plainly, is turning a page into fields. A purchase agreement, a disclosure, a lease or an addendum goes in, and what comes out is a set of named values: these are the parties, this is the price, these are the dates, this signature block is empty. The output is data rather than a document, which is the point of it, because a date sitting in a field can be put on a calendar and a date sitting in a PDF cannot.
+
+That description makes it sound like one job. It is at least four, they fail differently, and only the first two are what anybody demonstrates.
+
+The first is finding the writing. On a page, ink is just dark pixels, and before anything can be read something has to decide which clumps of dark pixels are words and where each one starts and stops.
+
+The second is reading it: turning those pixels into characters.
+
+The third is deciding what each piece of text is for. This string is a heading, this one is a label, this one is the value that belongs to that label. A form is not a paragraph, and the meaning is carried by the layout as much as by the words.
+
+The fourth is the one nobody counts as part of the job, and it is where this article ends up. A value can be correct, correctly labelled, correctly filed, and still be the wrong answer, because what it counts from is not printed anywhere on the page.
+
+## The original is not a document, it is a photograph of one
+
+Every demonstration of this technology uses a clean, born digital PDF, and on a clean born digital PDF the first two problems barely exist: the text is already text and the software can simply ask for it. That is a real and common case and if all your paperwork is like that, most of what follows is easier for you than it is for other people.
+
+It usually is not like that. Real estate paperwork has a long life outside computers. It gets printed to be signed at a kitchen table, signed with a pen, scanned on an office machine at whatever setting was last used, emailed, printed again by the other side, initialled again, and photographed on a phone in a car. Every one of those passes is a copy of a copy.
+
+[[scene:unreliable-original]]
+
+[[scene:plate]]
+
+## What was actually measured, on forms that look like yours
+
+There is a published measurement of this, on real scanned forms rather than on clean ones, and it is worth reading carefully because the two halves of it point in opposite directions.
+
+In 2019 three researchers at EPFL and Istanbul Technical University published [FUNSD](https://arxiv.org/abs/1905.13538), a dataset built specifically to test form understanding on bad originals. Their description of it is one sentence: "The dataset comprises 199 real, fully annotated, scanned forms. The documents are noisy and vary widely in appearance."
+
+Where those forms came from matters more than the number 199. They are drawn from a large collection of business documents from the nineteen eighties and nineties which, in the authors' own words, "have a low resolution of around 100 dpi" and "are also of low quality with various types of noise added by successive scanning and printing procedures". So the corpus is not a stress test somebody built by degrading good scans. It is what happens to paperwork when it lives in the world.
+
+There is a detail in how they built it that is worth having. They started from 25,000 images in the form category, and: "We discarded unreadable and similar forms, resulting in 3,200 eligible documents, out of which we randomly sampled 199 to annotate." Two things were thrown out together there, the unreadable and the near duplicates, and the paper does not separate them, so it would be wrong to say that most of the 25,000 could not be read. What can be said is that a research team looking for scanned forms good enough to annotate by hand kept about one in eight of what they had.
+
+[[scene:reading]]
+
+The two bars are the same commercial vision engine on the same pages. Given the location of every word, it reproduced the characters almost exactly. Made to find the words itself, it lost about a quarter of them.
+
+That gap is the whole reason a photograph is a different problem from a file. Nothing about the second measurement is a failure of reading. It is a failure of finding, and the finding happens first, so everything after it is working from a partial transcript without being told which parts are missing.
+
+The paper's other engine, an open source one, scored 7.3 and 3.4 on those same two measures, and it would be dishonest to draw that as a bar. The authors explain it in the same paragraph: "The Tesseract OCR engine performs poorly on the FUNSD dataset, which can be explained by the fact that the minimum quality of 300 dpi needed by Tesseract is not met in the FUNSD dataset." A tool used below its own published minimum tells you about the pages, not about tools.
+
+## Finding a word and knowing what it is for are two different problems
+
+Now the half of the same paper that almost nobody quotes, and it is the half that should change how you buy this.
+
+The authors also measured two harder tasks. One is labelling: given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking: given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value, and the only thing that makes them a fact is the line drawn between them.
+
+[[scene:understanding]]
+
+Read the second bar again, and then read the condition attached to both of them, which the authors state plainly: "Note that we test the algorithms by assuming that we know the optimal word grouping, word location, and textual content. In this way, we only assess the specific task."
+
+Both numbers were produced with the reading already done perfectly. The hard part is not the part that looks hard.
+
+The composition of that second score is worth a sentence of its own, because it is a shape you will meet again in any tool you buy. Recall was 99.2 and precision was 2.1. In plain terms, the method found almost every genuine connection on the page and it also proposed an enormous number of connections that were not there. A system tuned that way has certainly found your closing date. It has also found thirty other things and called them your closing date, and you would have no way of telling from the output which one it meant.
+
+These are the authors' own simple baselines, published in 2019 so that other people could beat them, and other people have. Do not take 0.04 as a description of a product you could buy this year. Take the ordering, because the ordering has not moved: reading is mostly solved, and knowing what you read is where the difficulty lives.
+
+## A person is not perfect at this either, and somebody published the number
+
+Almost every conversation about automating paperwork is implicitly a comparison against a person who never makes a mistake. That person has been measured and does not exist.
+
+[DocVQA](https://arxiv.org/abs/2007.00398), published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona, is a set of 50,000 questions asked about 12,767 document images, drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones: what is the total, what is the date on this document, who is this letter addressed to.
+
+Then they had people answer them.
+
+[[scene:human-ceiling]]
+
+94.36 percent. Volunteers, working carefully, with no client on the phone and no other file open, reading a document and answering a factual question about it, were wrong about one time in eighteen.
+
+That number is the most useful thing in this article for deciding anything, and it cuts both ways. It means the honest question is never whether a document reader is perfect. It is whether it is better or worse than a tired person at four in the afternoon, and on which kinds of value, and what happens to the ones it is unsure about. It also means that a process which depends on nobody ever misreading a date has already failed, today, with no software involved at all.
+
+The other two bars in that chart are not scores. They are ceilings. They measure how often the right answer was even present in the text the reading step managed to produce, computed two ways: loosely, at 87 percent, and strictly, at 77 percent. Whatever sits on top of the reading, however clever it becomes, it cannot answer from text that was never recovered.
+
+## The date is not the deadline
+
+Everything so far has been about getting a value off a page. This is the part where a value that came off the page perfectly turns out to be the wrong answer, and it is the part our own service page did not say enough about.
+
+Take the plainest possible field: a deadline expressed as a number of days. Three business days. A machine reads "three business days" with complete accuracy. To put a date on your calendar it now needs two things that are not written next to those words: what the count starts from, and what a day is.
+
+Neither of those is a trick question, and in the one part of a real estate transaction where the federal government has written the rules down, both have published answers that surprise people.
+
+The mortgage disclosure rules in [Regulation Z at 12 CFR 1026.19](https://www.law.cornell.edu/cfr/text/12/1026.19) run several deadlines through a real estate closing. The lender must "ensure that the consumer receives the disclosures required under paragraph (f)(1)(i) of this section no later than three business days before consummation". For certain transactions the creditor must deliver early estimates "not later than the seventh business day before consummation of the transaction", and if a figure becomes inaccurate, "the consumer must receive the corrected disclosures no later than three business days before consummation".
+
+Those are the lender's obligations rather than yours, and nothing here is advice about how to meet them. They are quoted because they are the clearest published example of the thing this whole topic turns on: a deadline written on a document whose meaning lives somewhere else.
+
+[[scene:pull-quote]]
+
+## The same three words mean two different things in one regulation
+
+Here is the part that is genuinely startling the first time you read it, and it is sitting in the definitions section, [12 CFR 1026.2](https://www.law.cornell.edu/cfr/text/12/1026.2).
+
+"Business day means a day on which the creditor's offices are open to the public for carrying on substantially all of its business functions."
+
+That is the general definition, and it depends on a fact about a particular company's opening hours. Then the same paragraph continues: "However, for purposes of rescission under 1026.15 and 1026.23, and for purposes of 1026.19(a)(1)(ii), 1026.19(a)(2), 1026.19(e)(1)(iii)(B), 1026.19(e)(1)(iv), 1026.19(e)(2)(i)(A), 1026.19(e)(4)(ii), 1026.19(f)(1)(ii), 1026.19(f)(1)(iii), 1026.20(e)(5), 1026.31, and 1026.46(d)(4), the term means all calendar days except Sundays and the legal public holidays specified in 5 U.S.C. 6103(a)".
+
+One phrase, two meanings, and which one applies is decided by a list of paragraph numbers. Under the second definition a Saturday counts, Sunday does not, and the eleven days named in [5 U.S.C. 6103](https://www.law.cornell.edu/uscode/text/5/6103) do not. Under the first, a Saturday probably does not count and a company holiday might not either.
+
+Now put a document reader in front of a page that says "three business days". It can read those words at any accuracy you like. It cannot know which of those two definitions the drafter had in mind, because that information was never on the page. Somebody has to decide, once, in writing, what rule your system applies, and that decision is a piece of your business rather than a setting in a piece of software.
+
+The same section carries a second one of these, and it is the reason for the line held on its own above. Consummation is not closing. It is defined as the moment the buyer becomes contractually obligated on the credit transaction, which is a different event from the day everybody signs the deed and gets the keys, and in some states it falls on a different date. A reader that finds "closing date" on a page and treats it as consummation has made a substitution nobody asked it to make, and it will not tell you it did.
+
+## A wrong date costs more than a missing one
+
+This is the asymmetry that should decide how the whole thing is built, and it runs the opposite way to most people's instinct.
+
+A missing value is loud. The field is empty, somebody notices, somebody opens the document. It costs a few minutes and it costs them at a moment when they are paying attention.
+
+A wrong value is silent, and it is worse than silent, because it is now wearing your system's authority. It is on the calendar. It has a reminder attached. Everybody downstream treats it as settled, and the specific thing that will not happen is anybody going back to the page, because the reason the system exists is so that nobody has to.
+
+That has a direct consequence for how a document reader should behave, and most products are tuned the other way. A reader that returns an answer for every field looks better in a demonstration and is worse in a business. What you want is a reader that abstains, that says nothing rather than guessing, and that puts the abstentions somewhere a person will actually look. Our own service page has said for a while that anything it is not confident about goes to a human rather than being filed quietly, and that is the right design. This article is the argument for why, and the argument is arithmetic rather than caution: a blank costs minutes, a confident wrong date costs a deal.
+
+[[scene:doc-path]]
+
+## What the extracted copy is, and what it is not
+
+One more thing that is worth knowing before you build any of this, because it decides what you have to keep.
+
+American law is comfortable with electronic records. [15 U.S.C. 7001](https://www.law.cornell.edu/uscode/text/15/7001), the ESIGN Act, opens by saying that "a signature, contract, or other record relating to such transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form". That settles the old anxiety about whether a digitally signed contract counts, and it is the half everybody already knows.
+
+The half worth knowing is the retention rule at 7001(d). Where a law requires that a contract be retained, the requirement is met by keeping an electronic record which "accurately reflects the information set forth in the contract or other record" and which "remains accessible to all persons who are entitled to access by statute, regulation, or rule of law, for the period required by such statute, regulation, or rule of law, in a form that is capable of being accurately reproduced for later reference, whether by transmission, printing, or otherwise".
+
+Read what that asks for. Not the facts from the contract. The information as set forth in it, reproducible later.
+
+A row of extracted fields is not that. It is a reading of the document, made by a particular system, on a particular day, and it drops everything the reader did not think to look for: the strike through, the initials in the margin, the handwritten note at the bottom that changes what a printed clause means. Extraction is a convenience layer over a document that has to keep existing, and any build that treats the fields as the record has quietly thrown away the thing the fields were about.
+
+The practical version of this is dull and cheap. Keep the original, keep it findable, and store with every extracted value which document it came from and which page. That last habit costs nothing at build time and is the difference between a disagreement that takes ninety seconds to settle and one that takes an afternoon.
+
+[[scene:check-calculator]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+No price is quoted here, and the reason is that the software is the smallest of the three things you would be paying for.
+
+The first is the reading itself, which is charged by the page by whichever engine sits underneath, and it is the cheap part and the part that scales predictably. The second is the setup, and it is priced per DOCUMENT TYPE rather than per document: a purchase agreement, a disclosure form, a lease and an addendum are four different sets of expectations about where things are and what they mean, and adding the fourth one is not much cheaper than adding the first. The third is the part almost nobody budgets for, which is deciding what the values mean. What a deadline counts from. Which calendar rule applies. Which of two contradictory pages wins. Those are conversations rather than configuration, they are the ones that decide whether the output is trustworthy, and they take longer than the build.
+
+Two things move the bill more than anything else. One is whether your originals are files or photographs of paper, which is worth finding out before anybody quotes you rather than after. The other is how many document types you genuinely need, as opposed to how many you can name, and those two numbers are usually very different.
+
+On time, a single document type with clean originals and one place for the output to go is a short piece of work. What extends it has nothing to do with reading or with page counts. It is discovering, in week two, that there is nowhere for the output to land: no field in the CRM, no calendar anybody shares, no agreed owner for the exceptions. If those already exist, this moves quickly. If they do not, what you have bought is a systems project wearing a document reader's clothes, and that is worth knowing on day one rather than in week two.
+
+## What it does not do, and should not pretend to
+
+It does not guarantee a date, and no honest version of this ever will. Misreading a line on a scanned rider is the failure mode of the whole category, which is why anything the system is not confident about should be flagged for a person rather than filed silently. That is a design choice you should confirm is being made, not something you get automatically.
+
+It does not know what a value means. It reads what the page says. What the page says is a number of days, and turning that into a date on a calendar requires a rule about counting that lives in your business and not in the document. If nobody has written that rule down, the software has invented one on your behalf.
+
+It does not replace the document. The extracted fields are a reading, the original is the record, and the retention rule quoted above asks for something that accurately reflects the contract rather than a summary of it. Any build that deletes the source once the fields are populated has destroyed the only thing that can settle an argument.
+
+It does not give a legal opinion, and it should not. It surfaces what a document says and what is missing from it, so somebody qualified can act on that. The distance between "the page says thirty days" and "your contingency expires on the fourteenth" contains at least one legal judgement and it is not the software's to make.
+
+It does not fix a document. A missing signature is found, not solved. Chasing it is a person's work. The whole benefit is that the gap is found on the day the document arrives instead of the week it matters, which is a narrower promise than this category normally makes and is the one that survives a real transaction.
+
+And it does not measure its own reliability in any way you can bank. Every one of these tools will show you a confidence score. That number was produced by a model about its own output, on some distribution of documents, and it is not a probability that the value is correct on your paperwork. Ask what it was measured on and what threshold the build uses. A vendor who can answer that in two sentences is telling you something good about themselves.
+
+[[scene:wasted]]
+
+[[scene:offer]]
+
+## How to test a document reader on ten of your own files
+
+This takes an afternoon, needs no subscription, and will tell you more than any demonstration.
+
+1. **Pull ten real files, not ten good ones.** Include the two that were a mess. Include the one where the addendum arrived as a photograph. A reader is only as useful as its behaviour on your worst week, and your worst week is not going to be in anybody's sample pack.
+
+2. **Write down the five values you actually want.** Before you look at any output. Five, by name. This is harder than it sounds and it is the most valuable ten minutes of the exercise, because at least one of the five will turn out not to be printed on the page at all.
+
+3. **For each of the five, write where it comes from.** A fixed box on a standard form is one thing. A number written into a blank is another. A value that has to be derived from a date plus a counting rule is a third, and that third kind is where every expensive mistake in this subject lives.
+
+4. **Run the ten and score by value, not by document.** Fifty values. Mark each one right, wrong or missing. Keep wrong and missing in separate columns, because they are different failures and only one of them is dangerous.
+
+5. **Count the wrongs that would have been believed.** Of the ones it got wrong, how many looked plausible enough that nobody would have questioned them. That is the real error rate for your purposes, and it is usually much lower than the raw wrong count, which is good news, and it is never zero.
+
+6. **Take the ugliest page and make it uglier.** Photograph the printout at an angle, in poor light. Run it again. What you are looking for is not whether the score drops, because it will. You are looking at what the system does when it drops: does it go quiet, or does it keep answering.
+
+7. **Ask what happens to a low confidence value.** Where does it go, who sees it, and what does the queue look like on a Friday. If the answer is that it gets written anyway with a flag, you have learned the most important thing about the build, and you have learned it before it is running your calendar.
+
+## Common questions, answered honestly
+
+### What is document processing in real estate, in plain terms?
+
+It is software that reads transaction paperwork and turns it into fields. A contract, disclosure, lease or addendum goes in, and the parties, prices, dates and missing signatures come out as structured data that can be written to a CRM, a transaction folder and a calendar, rather than staying inside a PDF that somebody has to open. The reading is the visible half. The half that decides whether it is worth having is what happens to the values it is not sure about.
+
+### Can AI read a scanned contract, or a photograph of one?
+
+Usually yes for the printed text, often yes for handwriting, and the accuracy depends far more on the page than on the software. The published measurement on real scanned forms above is the honest picture: on documents at around a hundred dots per inch with real scanning noise, a commercial engine recovered the characters nearly exactly when it was told where the words were, and lost about a quarter of them when it had to find them itself. A born digital PDF is a much easier case than either, because the text is already text.
+
+### What happens when it gets something wrong?
+
+That depends entirely on how it was built, and it is the question to ask first. The behaviour you want is abstention: a value the system is not confident about is left blank and put in front of a person, rather than written with a flag that nobody reads. A blank field is noticed. A wrong date that looks right is not, and it inherits the authority of your calendar, which is what makes it the expensive failure rather than the annoying one.
+
+### How is this different from workflow automation?
+
+[Workflow automation](/blog/workflow-automation-real-estate-business) is about steps of work a person used to do by hand, and its argument is what an interruption costs. This is about one value on one page and whether the claim made about it is true. The same engineers build both, using much the same parts, and they solve different problems. A document reader with nowhere to send its output is a common and expensive way of finding out that you needed the other one first.
+
+### Does it replace a transaction coordinator?
+
+No, and the reason is in the section above about what a date means. It removes the re-keying and it surfaces the deadlines and the gaps on the day a document arrives. What it does not do is decide what a deadline counts from, chase a missing signature, or notice that the other side has gone quiet. The mechanical part of that job is what this touches. The part that is judgement, chasing and relationship is not.
+
+### Is the extracted data the legal record?
+
+No. The retention rule in the ESIGN Act asks for a record that accurately reflects the information set forth in the contract and can be accurately reproduced later, and a row of fields is a reading of the document rather than the document. Keep the original, keep it findable, and store the source document and page number alongside every extracted value. That last part is a five minute decision at build time and it is what makes a disagreement quick to settle.
+
+### Can it read handwriting?
+
+Often, and the honest answer has a shape to it. Printed and typed text is the reliable case. Neat handwriting in a box designed for it is usually fine. What is genuinely hard is exactly what matters most in real estate paperwork: a figure written over a struck through one, a date altered in a margin, initials that are not meant to be legible even to a person. Those are the marks that carry the most meaning and the least information, so they are the ones a build should be designed to flag rather than to guess at.
+
+### What should I ask a vendor before I buy one?
+
+Five short questions, all with short answers. What does the confidence score mean and what was it measured on. What does the system do when it falls below the threshold, and where does that value go. Does it store which document and which page each value came from. How many document types are included and what does adding one cost. And what happens on a photograph of a page rather than a PDF. Somebody who answers all five in plain sentences is worth taking seriously. Somebody who offers to show you a demonstration instead has answered a sixth question you did not ask.
+
+## What to do about it
+
+There is one piece of homework under all of this and it is not a software decision.
+
+Somewhere in your business there is a set of counting rules that everybody uses and nobody has written down. Which day a period starts on. Whether Saturday counts. What happens when a deadline lands on a holiday. Which of two contradictory pages wins. Those rules are currently held in one or two people's heads, they are the thing that makes an extracted value into a deadline, and until they exist on paper you cannot automate this and you also cannot train anybody into it.
+
+Writing them down is free, it takes an afternoon, and it is worth doing whether or not you ever buy any of this.
+
+Where this sits among everything else we build is on [the RealtyLT AI page](/ai#docs); the fields it pulls and the places it writes them are on the [document processing page](/services/document-processing). If you would rather have somebody go through one real file with you and mark up which values are printed, which are handwritten and which are derived, that is the [AI audit](/services/ai-audit).
+
+The paperwork is not going to get cleaner. The rules about what its dates mean are the part you can fix this week.
+
+[[scene:funnel]]
+`;
+
 export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people, and it was a decent piece of work. Median price in three towns, what had actually closed against what had been asked, and two sentences at the bottom in your own voice about the inspection that had fallen through on Elm.
 
 Nobody complained. Five people pressed one button, which is a different thing from complaining, because pressing it takes under a second and produces no conversation and you never hear about it.

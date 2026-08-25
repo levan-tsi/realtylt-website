@@ -11,6 +11,7 @@ import {
   AI_VOICE_AGENTS_POST,
   CRM_SYNC_POST,
   DATABASE_REACTIVATION_POST,
+  DOCUMENT_PROCESSING_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
   LOCAL_SEO_POST,
@@ -19,6 +20,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { DOCUMENT_PROCESSING_FLAGSHIP } from "./document-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
 import { SKIP_TRACING_FLAGSHIP } from "./skip-tracing-scenes";
 import { AGENT_WORKFORCE_FLAGSHIP } from "./agent-workforce-scenes";
@@ -74,6 +76,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "document-processing-real-estate-contract-deadlines",
+    title: "It Read the Date Correctly. The Date Was Not the Deadline.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 13 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "The rider arrived as a photograph taken over a kitchen table, with two handwritten changes and a date among them. Everything was read correctly and the answer was still wrong, because what a deadline counts from is not printed on the page. What was actually measured on real scanned forms, what a person scores on the same task, and the phrase one regulation defines twice.",
+    seoDescription:
+      "What AI document processing does with real estate contracts, what research measured on noisy scanned forms, and why a correct date can still be the wrong deadline.",
+    cover: "/images/editorial/signature-ink.jpg",
+    body: [],
+    placeholder: false,
+    markdown: DOCUMENT_PROCESSING_POST,
+    flagship: DOCUMENT_PROCESSING_FLAGSHIP,
+  },
   {
     slug: "marketing-automation-real-estate-email-deliverability",
     title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",

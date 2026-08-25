@@ -50,6 +50,7 @@ const SLUGS = args.length
       "ai-agent-workforce-real-estate-assistants",
       "skip-tracing-real-estate-legal-owner-phone-numbers",
       "marketing-automation-real-estate-email-deliverability",
+      "document-processing-real-estate-contract-deadlines",
     ];
 
 const browser = await chromium.launch();

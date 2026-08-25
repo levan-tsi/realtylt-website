@@ -52,6 +52,7 @@ export const POSTS = [
   "ai-agent-workforce-real-estate-assistants",
   "skip-tracing-real-estate-legal-owner-phone-numbers",
   "marketing-automation-real-estate-email-deliverability",
+  "document-processing-real-estate-contract-deadlines",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */
