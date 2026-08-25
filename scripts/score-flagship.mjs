@@ -71,7 +71,17 @@ const m = await page.evaluate(() => {
     ).length,
     authorPageLink: links.some((h) => /\/about|\/who-we-are|\/author|\/team/i.test(h)),
     clusterLinks: [...new Set(links.filter((h) => /^\/(services|ai|blog)/.test(h)))].length,
-    visibleUpdated: /updated/i.test(txt),
+    // The rendered "Updated <time>" line, not the WORD anywhere in the article.
+    // Until 2026-08-25 this was `/updated/i.test(txt)` over the whole body, so a post that
+    // merely used the word in prose reported visible=true: the CRM-sync flagship has a
+    // section called "The same update, arriving twice" and was credited with a revision
+    // line it does not carry. D5 still failed there, on the dates, which is exactly why an
+    // instrument that lies in its DIAGNOSTIC survives — the verdict was right for the wrong
+    // reason, and the next post it lies about might be one where the dates agree.
+    // ColdOpen.tsx renders the real thing as `Updated <time datetime=...>`.
+    visibleUpdated: [...document.querySelectorAll("time[datetime]")].some((t) =>
+      /\bupdated\b/i.test(t.parentElement?.textContent ?? ""),
+    ),
     datePublished: dated.datePublished || null,
     dateModified: dated.dateModified || null,
     summaryBlock: !!art.querySelector("section[aria-label='In short'], [data-summary]"),
