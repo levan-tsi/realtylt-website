@@ -152,7 +152,7 @@ export const YELP_LIFT = {
   sourceText:
     "Michael Luca, Reviews, Reputation, and Revenue: The Case of Yelp.com, Harvard Business School Working Paper 12-016. Yelp reviews matched to Washington State Department of Revenue records for every restaurant in Seattle, January 2003 to October 2009.",
   sourceHref: "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
-  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on real estate agents and nobody should pretend the multiplier transfers: a restaurant is chosen dozens of times a year by people spending forty dollars, and an agent is chosen once by somebody spending the largest sum of their life. What does transfer is the direction and the shape of the mechanism, including the part that is genuinely useful to a small business: the effect showed up for independents and not for chains, because a brand name already answers the question that reviews answer.",
+  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on real estate agents and nobody should pretend the multiplier transfers: a restaurant is chosen dozens of times a year by people spending forty dollars, and an agent is chosen once by somebody spending the largest sum of their life. What does transfer is the direction and the shape of the mechanism, including the part that is genuinely useful to a small business: the effect showed up for independents and not for chains, and a one-office brokerage is a great deal closer to the first of those than to the second.",
 };
 
 /** SCENE copy — the four moves.
@@ -310,7 +310,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       // same place. A rail with two rows a thumb apart that land on the same content is a
       // longer rail, not a better one.
       eyebrow: "What actually gets read",
-      heading: "The fifteen second scan, in order.",
+      heading: "The scan, in the order it happens.",
       columns: 2,
       glow: true,
       items: PROFILE_SCAN,

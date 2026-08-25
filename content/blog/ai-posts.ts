@@ -25,7 +25,7 @@ The part worth knowing is that this outcome was more likely than you think on th
 
 Every business with a calendar in it tracks two things: how many inquiries came in, and how much work came out. Almost nobody tracks the distance between them, which is the number of days between the moment somebody asked for your time and the moment that time actually arrives.
 
-That number has a name in the scheduling literature, lead time, and there is a study that measures what it does. Michael McMullen and Peter Netland pulled every appointment out of the scheduling database at the University of Virginia Eye Clinic for a twelve month period, 51,529 of them, and sorted them by how far in advance each had been booked. Their [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/) reports two clinics separately, one run by residents and one by faculty, whose baseline no-show rates differ by more than a factor of three.
+That number has a name in the scheduling literature, lead time, and there is a study that measures what it does. Michael McMullen and Peter Netland pulled every appointment out of the scheduling database at the University of Virginia Eye Clinic for a twelve month period, 51,529 of them, and sorted them by how far in advance each had been booked. Their [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/) reports two clinics separately, one run by residents and one by faculty. Across the whole year the resident clinic missed 21.7% of its appointments and the faculty clinic 6.6%, which is a useful reminder before any of the rest of it: the level is a property of who your customers are.
 
 Both curves point the same way and neither is subtle. In the resident clinic, appointments made nought to two weeks ahead were missed 9.1% of the time and appointments made six months ahead were missed 38.3% of the time. In the faculty clinic, whose patients miss far fewer appointments to begin with, the same comparison runs from 2.4% to 6.9%. The authors also ran the arithmetic the other way and estimated that if every appointment in the resident clinic had been booked within two weeks, the overall no-show rate would fall by nearly sixty percent.
 
@@ -99,7 +99,7 @@ So the question to ask a vendor is not whether it sends a confirmation. It is wh
 
 Even with the shortest lead times and the best reminders, some proportion of appointments will not happen, and the difference between businesses is almost entirely in what happens in the following hour rather than in the rate itself.
 
-The hour after is the whole opportunity. Somebody who missed a six thirty is, at seven, aware they have missed it and mildly embarrassed about it, and a short message that offers a new time without a shred of reproach in it converts at a rate that would surprise anybody who has not tried it. Leave that until the next morning and you are competing with everything else in their inbox and with their own reluctance to reopen the subject.
+The hour after is the whole opportunity. Somebody who missed a six thirty is, at seven, aware they have missed it and mildly embarrassed about it, and a short message offering a new time with no reproach anywhere in it is the cheapest recovery available to you. Leave it until the next morning and you are competing with everything else in their inbox and with their own reluctance to reopen the subject.
 
 Write the message so it assumes something got in the way, because usually something did. Two lines, one new time, and nothing that requires an apology to answer. Any system that can book can also do this, and most of the ones on the market do not, because the feature nobody demos is the recovery.
 
@@ -150,6 +150,10 @@ And it does not repair a calendar you do not trust. If you already override the 
 ### What is AI appointment booking, in plain terms?
 
 It is software that answers a request for your time straight away, offers times that are genuinely free by reading your calendar, writes the chosen slot onto both calendars while the conversation is still happening, and then sends the confirmation and the reminder. The AI part is only the conversation: understanding a message written the way people actually write, and holding a short exchange about times without sounding like a form. The booking underneath it is ordinary and unglamorous software, which is a good thing, because ordinary software is the kind that runs at nine on a Sunday.
+
+### How is this different from sending somebody a booking link?
+
+A booking link, of the kind most calendar products now offer, moves the work to the other person. They open a page, look at a grid of times, and choose one. That is a genuine improvement on phone tag, and it is also where a share of people quietly stop, because opening a link and reading a grid is a task and answering a message is not. What changes here is that the times arrive inside the conversation the person is already in, in the thread they were already typing in, and the answer is a word rather than a form. The two also fail differently, which is the more useful distinction. A link cannot notice that somebody asked for a Saturday you do not work. A conversation can notice, and can say so, and can offer the nearest thing you do have.
 
 ### Will it reduce no-shows?
 
@@ -209,7 +213,7 @@ One thing has to be said out loud about the survey before it is used. BrightLoca
 
 ## What a stranger actually does with your profile
 
-Nobody reads your reviews. They scan them, once, for about fifteen seconds, on a phone, usually while doing something else, and then they either call you or they do not.
+Nobody reads your reviews. They scan them, once, for a few seconds, on a phone, usually while doing something else, and then they either call you or they do not.
 
 That scan has a shape, and it is not the one most businesses optimise for. Almost everybody who worries about reviews is worrying about the average. The average is the least interesting thing on the page after the first two seconds, because everybody in your market has a good one. What separates two agents with 4.7 stars is everything underneath the number.
 
@@ -315,9 +319,9 @@ What happens to the reply. Somebody replies to your review request, because peop
 
 We do not print a figure for this, and the reason is the one that keeps a figure off every other page in this series: what it costs depends on what has to be connected to what. What can be said is where the money actually goes, and it is not where most people expect.
 
-The software is the cheap part. The recurring cost is the messaging, because the ask is a text message and text messages are billed per message by the carriers, so the bill tracks your volume of finished jobs and nothing else. For most small businesses that is a number in the tens of dollars a month, not the hundreds, and it is the one line that scales with success.
+The software is the cheap part. What actually recurs is the messaging: the ask goes out as a text, carriers charge for texts, and so the bill rises and falls with how many jobs you finished last month. Nothing else on it moves. A quiet month is a cheap month, which is an unusual and rather pleasant property for a marketing line to have.
 
-The setup is short, and the reason is that this is the least complicated automation in the category: one trigger, one message, one link, one alert. The work is not building it, it is deciding two things. What event counts as finished, which is a genuine business question and usually takes longer to settle than the build. And what the message actually says, which has to sound like a person and is the difference between a 4% response and a real one.
+The setup is short, and the reason is that this is the least complicated automation in the category: one trigger, one message, one link, one alert. The work is not building it, it is deciding two things. What event counts as finished, which is a genuine business question and usually takes longer to settle than the build. And what the message actually says, which has to sound like you rather than like a survey vendor, and which is the difference between a message people answer and one they delete.
 
 The cost that never appears on any quote is the replying. Budget fifteen minutes a week for it, permanently, in your own name. If nobody in the business is going to do that, the honest advice is to not switch the asking on, because a growing pile of unanswered reviews is a worse profile than a small quiet one.
 
@@ -340,6 +344,10 @@ And it does not fix the service. A steady flow of honest reviews of an experienc
 ### What is review automation, in plain terms?
 
 It is a small piece of software that watches for the moment a job is finished in a system you already use, and sends that customer a short message asking how it went, with a direct link to your public review page. Everybody gets the same link whatever they answer. If the answer is a low score, you personally get told at the same moment, with their words and their name, so you can call them the same day. That is the whole product. It is not clever and it does not need to be, because the problem it solves is consistency rather than difficulty.
+
+### Is this different from the review tool my CRM already has?
+
+Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job, and the mechanics are the same everywhere: a trigger, a message, a link. There is very little proprietary technology in this category and a great deal of variation in what the default settings do. So the two questions worth asking about whichever one you already own are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
 
 ### Is it against Google's rules to automate review requests?
 
