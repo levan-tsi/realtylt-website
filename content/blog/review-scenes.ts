@@ -218,7 +218,7 @@ export const GATING_LINE: GridItem[] = [
   },
   {
     lead: "Not allowed: telling them what to say, or standing over them.",
-    body: "The policy says merchants should not pressure people to write a review while on the premises, and should not ask for specific content to be included. Asking a client to mention your name, or to mention the neighbourhood you want to rank for, is the example the policy itself gives.",
+    body: "The policy says merchants should not pressure people to write a review while on the premises, and should not ask for specific content to be included. Asking a client to mention your name, or the town you would like to rank for, is a request for specific content. The policy's own example of that is a merchant asking staff to solicit reviews naming a particular member of staff.",
   },
 ];
 
@@ -244,7 +244,7 @@ export const THE_ASK = {
     { who: "us" as const, at: "4:12 pm", text: "Hi Marcus, congratulations on closing today. One question while it is fresh: how did we do, one to five?" },
     { who: "them" as const, at: "4:31 pm", text: "4. Honestly you were great, the lender just took three weeks to send the clear to close and nobody told me it was normal." },
     { who: "us" as const, at: "4:31 pm", text: "That is fair and it is useful, thank you. I have sent the lender point straight to Levan and he will call you today. Here is the Google link as well, if you want to put that in your own words: [link]" },
-    { who: "them" as const, at: "4:40 pm", text: "Will do. Say the same thing there probably." },
+    { who: "them" as const, at: "4:40 pm", text: "Will do. Probably say the same thing there." },
     { who: "us" as const, at: "4:40 pm", text: "Please do. A four that says what actually happened is worth more to the next person than a five that says nothing." },
   ],
   events: [
@@ -310,7 +310,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       // same place. A rail with two rows a thumb apart that land on the same content is a
       // longer rail, not a better one.
       eyebrow: "What actually gets read",
-      heading: "Four moves, in this order, on a phone.",
+      heading: "The fifteen second scan, in order.",
       columns: 2,
       glow: true,
       items: PROFILE_SCAN,
@@ -325,13 +325,24 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-10.jpg",
-      alt: "A terrace of near-identical nineteenth century row houses on Q Street in Washington DC, each with the same steps, the same railings and the same bay window",
+      // THE FIRST ALT AND CAPTION HERE DESCRIBED A PHOTOGRAPH THAT IS NOT THIS ONE. They were
+      // written from the file's catalogue title ("Houses . Logan Circle . 1500 block of Q
+      // Street") as "a terrace of near-identical row houses ... every front is the same", and
+      // the picture is two visibly different houses behind heavy planting. Only looking at the
+      // image found it, which is the standing lesson about this class of defect: an alt text is
+      // a factual claim about a picture, and on a page arguing that the details are checkable a
+      // wrong one is not cosmetic.
+      alt: "Two adjoining houses on a city block in late summer, one grey with a mansard roof and one red brick, both well kept, seen from the pavement through heavy planting",
       caption:
-        "This is what a page of nothing but fives looks like to somebody who has never met you. Every front is in good order, every front is the same, and there is no information in the row at all. The profile that tells a stranger something is the one with a four in it and an answer underneath.",
+        "Two houses on the same block, both in good order, and nothing on either front tells you which one has a wet basement. That is the position a stranger is in with your business, and your reviews are the only part of the picture you did not write yourself. Which is exactly why a page of nothing but fives stops being information.",
       credit: "Photograph by Elvert Barnes, CC BY 2.0.",
-      ariaLabel: "A row of identical fronts",
+      ariaLabel: "Two fronts, nothing to choose between them",
     },
-    "four-moves": {
+    /** KEY IS "three-moves", NOT "four-moves", and the rename was found by reading the
+     * rendered aria-labels rather than the source. components/blog/scenes/registry.tsx keeps a
+     * GRID_LABELS map with a hardcoded entry for "four-moves", so a three-item grid on this key
+     * announced itself to a screen reader as "The four moves". */
+    "three-moves": {
       kind: "grid",
       band: "light",
       eyebrow: "The mechanic, in three parts",
@@ -435,7 +446,11 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
     },
     "failure-modes": {
       kind: "grid",
-      band: "light",
+      /** DARK, and it is a rhythm decision measured rather than guessed. On the light band this
+       * post ran 7,296px (28% of the article) in one unbroken light tone from the bad-review
+       * section through the cost section to the end of the FAQ, against 24% on the worst shipped
+       * post. Flipping this one band splits that run and takes the worst to 18%. */
+      band: "dark",
       eyebrow: "Three ways it is wasted",
       heading: "None of them are the software.",
       columns: 3,

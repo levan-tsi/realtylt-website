@@ -304,9 +304,13 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/listings/house-05.jpg",
-      alt: "An empty clapboard house with a covered porch and bare windows, photographed from the front path in flat afternoon light with nobody in the frame",
+      // Alt and caption rewritten after LOOKING at the file rather than at its catalogue title:
+      // the first version said "bare windows" and "flat afternoon light" and had the lights on
+      // inside, and the photograph is an ornate Victorian in bright daylight with curtains in
+      // every window. Same class of defect as the plate on topic 6, found the same way.
+      alt: "An ornate yellow and maroon Victorian house with a wide covered porch and a turret, curtains in every window, photographed from the street in bright daylight with nobody in the frame",
       caption:
-        "This is the six thirty that nobody came to. The house was open, the lights were on, and the cost had already been paid: the drive out, the forty minutes, and the Saturday slot that was quietly given away nine days earlier to hold this one.",
+        "This is the six thirty that nobody came to. Nobody is in the frame, which is the entire subject: the drive out, the forty minutes on the porch, and the Saturday slot quietly given away nine days earlier in order to hold this one.",
       credit: "Photograph by Jimmy_Joe, CC BY 2.0.",
       ariaLabel: "The appointment nobody kept",
     },
@@ -410,15 +414,18 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-13.jpg",
-      alt: "A weathered saltbox house with a long sloping rear roof, seen across a lawn in autumn with the front door standing open",
+      alt: "A red-painted saltbox house with a steep roof and small-paned windows, each hung with a Christmas wreath, photographed from the road below under a grey winter sky",
       caption:
-        "And this is the whole point of the machinery: one ordinary weekday evening on which two people stand in a house at the time they said they would. Nothing about that afternoon is impressive. Everything expensive in this article happens because it did not.",
+        "And this is the whole point of the machinery: one ordinary day on which two people stand in a house at the time they said they would. Nothing about that hour is impressive. Everything expensive in this article happens because it did not.",
       credit: "Photograph by CityLimitsJunction, CC BY 4.0.",
       ariaLabel: "The appointment that happened",
     },
     "failure-modes": {
       kind: "grid",
-      band: "light",
+      /** DARK for the same measured reason as topic 6: on light, the cost section, this grid
+       * and the FAQ ran 5,001px (20% of the article) in one tone. Flipping this band takes the
+       * worst run to 13%. */
+      band: "dark",
       eyebrow: "Three ways it is wasted",
       heading: "None of them are the booking software.",
       columns: 3,
