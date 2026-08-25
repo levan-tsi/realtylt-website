@@ -19,6 +19,8 @@ Nothing malfunctioned. The assistant was not confused and did not hallucinate an
 
 [[scene:in-short]]
 
+[[scene:tenth-morning]]
+
 ## What an agent workforce actually is, and what it is not
 
 The pitch is easy to say and it is broadly true. Instead of one general chatbot you have to brief every time, you set up several assistants, each pointed at one recurring job, each with access to the systems that job needs. One reads the overnight email and drafts replies. One pulls comps and builds the deck for tomorrow's listing appointment. One watches every open file for the signature nobody chased. They run at the same time, they do not stop at five o'clock, and adding another one is a configuration change rather than a hire.
@@ -132,6 +134,8 @@ Section 175.21 of the Secretary of State's regulations defines what supervising 
 Nobody is claiming that provision governs an inbox assistant. What it does is describe, in a document your regulator wrote, the standard this industry already applies to work done in your name by somebody who is not you. Regular. Frequent. Consistent. Written down.
 
 Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest specification for what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+
+[[scene:offer]]
 
 ## What it costs, and how long it takes
 
@@ -264,6 +268,8 @@ The other half of the problem is the opposite of the first. Names disagree when 
 The Census Bureau publishes the count of every surname that occurred at least 100 times in the 2010 Census: 162,253 of them. Brown was carried by 1,437,026 people. So a matching rule that treats a surname as evidence is not wrong, exactly, but it is worth almost nothing on its own, and it is worth a wildly different amount depending on which surname it is. Winkler makes the same point with two examples of his own, noting that a relatively rarer last name string such as Zabrinsky has more distinguishing power than a string such as Smith.
 
 There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is fifty million pairs, and the overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking: only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer and it has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
+
+[[scene:plate]]
 
 ## Somebody solved this properly, and the answer has three outcomes
 

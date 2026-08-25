@@ -82,7 +82,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce actually is, why an assistant that is right most of the time is a different product from one that is right every time, where multi-agent systems really fail, and who is accountable when one of them is wrong.",
     seoDescription:
-      "What an AI agent workforce does, why reliability across repeated runs matters more than a single success rate, where multi-agent systems fail, and what supervising them costs.",
+      "What an AI agent workforce does, why being right every time matters more than a single success rate, where multi-agent systems fail, and what supervising them costs.",
     cover: "/images/hero/hero-cand-bear-mountain.jpg",
     body: [],
     placeholder: false,

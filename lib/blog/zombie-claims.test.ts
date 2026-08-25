@@ -71,6 +71,24 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /\b40\s?(%|percent) of the (phone )?numbers/i,
     why: "written as a measurement and never was one. Nobody publishes a dead-number rate for bought lists",
   },
+  // ── Round D, 2026-08-25. Three claims killed on the services surface while writing the CRM
+  // sync and agent workforce flagships. None of the three had a primary; two of them are the
+  // same shape as figures this repo has already retracted.
+  {
+    name: "a fifth assistant costs a conversation, not a salary",
+    pattern: /costs? a conversation,? not a salary/i,
+    why: "the same comparative-salary claim Round B killed on the voice page ('a fraction of that [an ISA salary]'). The BLS Occupational Outlook Handbook puts the 2024 median for a secretary or administrative assistant at $47,460, and that wage buys accountability, judgement and somebody who notices the job has changed. The agent workforce flagship refuses the division out loud and this page may not make it sideways",
+  },
+  {
+    name: "deals lost to a stale CRM",
+    pattern: /deals? (are )?lost to a stale CRM/i,
+    why: "asserts that deals are lost, as a fact, with nothing under it. The CRM sync flagship refuses to price a stale record because no arithmetic turning a misdirected message into commission can be shown",
+  },
+  {
+    name: "a large share of admin hours",
+    pattern: /large share of admin hours/i,
+    why: "an unsourced quantity about where a business's hours go, on a page that has never measured anybody's hours",
+  },
 ];
 
 /** Words that mean the sentence is refusing the number rather than resting on it. */

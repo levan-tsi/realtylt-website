@@ -26,6 +26,20 @@ export const aiAgentWorkforce: Service = {
       "Run a staff of task-tuned AI assistants in parallel. One drafts emails, one preps CMAs, one chases paperwork. Always on, plugged into the tools you already use.",
   },
 
+  /** ROUND D: `stat` added, carrying the finding that decides how this should be built rather
+   * than a number that flatters it. Across 1,642 annotated multi-agent runs, the largest share
+   * of failures came from how the system and its instructions were specified, not from the
+   * model. That is the argument for spending an hour writing each brief properly, which is the
+   * part of this service that is actually hard. External figure, so it carries its source. */
+  stat: {
+    value: "44.2%",
+    label: "of failures in 1,642 annotated multi-agent runs came from how the system and its instructions were specified, not from the model",
+    source: {
+      text: "M. Cemri et al. (UC Berkeley), Why Do Multi-Agent LLM Systems Fail?, arXiv:2503.13657, 2025",
+      href: "https://arxiv.org/abs/2503.13657",
+    },
+  },
+
   figure: {
     kind: "flow",
     caption: "Four assistants, one morning, nobody hired",
@@ -36,7 +50,13 @@ export const aiAgentWorkforce: Service = {
       { label: "Paperwork agent", note: "Chases the two signatures still missing on the Beacon file." },
       { label: "Follow-up agent", note: "Works the leads that went quiet and reports who re-engaged." },
     ],
-    footnote: "They run at the same time, and adding a fifth costs a conversation, not a salary.",
+    // ROUND D: was "They run at the same time, and adding a fifth costs a conversation, not a
+    // salary." That is the same comparative-salary claim Round B killed on the voice page, and
+    // the flagship post for this service now explains at length why the division is invalid:
+    // the published median wage for an administrative assistant buys accountability, judgement
+    // and somebody who notices the job has changed, and none of those are on offer here.
+    // Guarded in lib/blog/zombie-claims.test.ts.
+    footnote: "They run at the same time. What grows with each one you add is not the payroll, it is the amount of output somebody has to read.",
   },
 
   whatItIs: [
@@ -50,8 +70,12 @@ export const aiAgentWorkforce: Service = {
       body: "We start with the tasks that repeat: the emails you draft from the same template, the comps you pull the same way, the document you chase every deal. Repetition is what makes a job delegable.",
     },
     {
-      title: "Tune an assistant to it",
-      body: "Each assistant is an LLM agent given the task, the tools, and the standard you want. It gets access to the systems it needs and nothing else, and it is tested against work you have already done by hand.",
+      title: "Write the brief, then tune an assistant to it",
+      // ROUND D: "write the brief" added to the title and the first sentence, because the
+      // research this page now cites puts most of an agent's usable ability in that document.
+      // Removing the written policy from one benchmark agent took it from 33.2% to 10.8% on
+      // the domain whose rules were specific rather than commonsense.
+      body: "The document comes before the software: the task, the rules, and what should happen in the cases that are not the normal case. Each assistant is an LLM agent given that brief and the tools it needs and nothing else, and it is tested against work you have already done by hand.",
     },
     {
       title: "Run as many as you need, always on",
@@ -79,6 +103,7 @@ export const aiAgentWorkforce: Service = {
     "It is not a hire. There is nobody to take responsibility, notice that the job has changed, or tell you the process itself is wrong.",
     "It does not remove the review. Anything that reaches a client should be read by a person first, and an assistant that drafts is worth more than one that sends.",
     "It does not fix a job nobody has written down. If the task lives only in your head and changes every time, describing it is the first piece of work, not building it.",
+    "It does not scale the way the word workforce suggests. Four assistants are four times the output somebody has to read, and chaining one into the next adds a whole category of failure that separate assistants do not have.",
   ],
 
   faqs: [
@@ -88,7 +113,14 @@ export const aiAgentWorkforce: Service = {
     },
     {
       q: "How many AI assistants can I run at once?",
-      a: "As many as you have jobs for. They run in parallel, so the inbox assistant and the CMA assistant do not queue behind each other, and adding one more is a configuration change rather than a hire.",
+      // ROUND D: the second half is new. The technical answer was true and incomplete: they do
+      // not queue behind each other, and the limit that actually binds is how much output one
+      // person can review before the reviewing stops happening.
+      a: "Technically as many as you have jobs for, because they run in parallel and the inbox assistant does not queue behind the CMA assistant. Practically the limit is not the software, it is how many streams of output one person can read before the reading quietly stops. That number is usually smaller than people expect, and it is the one worth working out before you commit.",
+    },
+    {
+      q: "What happens when one of them gets something wrong?",
+      a: "It produces something wrong that reads exactly like everything it produced when it was right, which is why the answer has to be structural rather than a matter of paying attention. Anything ambiguous should stop and ask rather than decide, anything client-facing should be drafted rather than sent, there should be a readable record of what each assistant did, and somebody should actually read a sample of the output on a fixed day each week.",
     },
     {
       q: "Do I need technical skills to use them?",
@@ -100,5 +132,9 @@ export const aiAgentWorkforce: Service = {
     },
   ],
 
-  relatedPosts: ["workflow-automation-real-estate-business"],
+  relatedPosts: [
+    "ai-agent-workforce-real-estate-assistants",
+    "crm-sync-real-estate-duplicate-contact-records",
+    "workflow-automation-real-estate-business",
+  ],
 };

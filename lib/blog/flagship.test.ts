@@ -8,10 +8,14 @@ import { REVIEW_FLAGSHIP } from "@/content/blog/review-scenes";
 import { BOOKING_FLAGSHIP } from "@/content/blog/booking-scenes";
 import { LOCAL_SEO_FLAGSHIP } from "@/content/blog/local-seo-scenes";
 import { GEO_PAGES_FLAGSHIP } from "@/content/blog/geo-pages-scenes";
+import { CRM_SYNC_FLAGSHIP } from "@/content/blog/crm-sync-scenes";
+import { AGENT_WORKFORCE_FLAGSHIP } from "@/content/blog/agent-workforce-scenes";
 import {
+  AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
+  CRM_SYNC_POST,
   DATABASE_REACTIVATION_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
@@ -181,6 +185,67 @@ describe("flagshipToc", () => {
     ]);
   });
 
+  /** And the same freeze for topic 10. A rail that silently loses a row is the defect this
+   * exists to catch, and it can only be caught by writing down what shipped. */
+  it("derives exactly the rail the CRM sync post shipped with", () => {
+    const crmOutline = parseOutline(CRM_SYNC_POST);
+    expect(flagshipToc(crmOutline, CRM_SYNC_FLAGSHIP)).toEqual([
+      { id: "why-there-are-two-of-her-and-it-is-not-carelessness", label: "Why two" },
+      { id: "scene-two-of-her", label: "The two records", scene: true },
+      { id: "what-the-same-person-means-to-a-computer", label: "The same person" },
+      { id: "scene-surnames", label: "The surname", scene: true },
+      { id: "a-name-is-not-an-identifier-and-this-is-how-far-from-one-it-is", label: "Names" },
+      { id: "somebody-solved-this-properly-and-the-answer-has-three-outcomes", label: "The model" },
+      { id: "scene-three-answers", label: "Three answers", scene: true },
+      { id: "the-third-answer-is-a-person-and-it-is-the-one-nobody-sells-you", label: "The third answer" },
+      { id: "scene-census-clerks", label: "What is left", scene: true },
+      { id: "what-a-sync-is-actually-made-of", label: "What a sync is" },
+      { id: "scene-sync-path", label: "The path", scene: true },
+      { id: "the-field-that-gets-erased", label: "The erased field" },
+      { id: "the-same-update-arriving-twice", label: "Arriving twice" },
+      { id: "when-both-sides-changed-at-once", label: "Both sides" },
+      { id: "scene-crm-calculator", label: "Your numbers", scene: true },
+      { id: "which-side-is-right-and-why-somebody-has-to-say-it-out-loud", label: "Which side wins" },
+      { id: "what-the-identity-field-actually-is-in-your-crm", label: "The identity field" },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "how-to-find-out-how-bad-yours-is-in-twenty-minutes", label: "How to check yours" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
+  /** And the same freeze for topic 11. */
+  it("derives exactly the rail the agent workforce post shipped with", () => {
+    const agentOutline = parseOutline(AI_AGENT_WORKFORCE_POST);
+    expect(flagshipToc(agentOutline, AGENT_WORKFORCE_FLAGSHIP)).toEqual([
+      { id: "scene-tenth-morning", label: "The tenth morning", scene: true },
+      { id: "what-an-agent-workforce-actually-is-and-what-it-is-not", label: "What it is" },
+      { id: "scene-not-a-chatbot", label: "What it is", scene: true },
+      { id: "right-once-and-right-every-time-are-different-products", label: "Right every time" },
+      { id: "what-happens-when-you-run-the-same-job-twenty-times", label: "Running it again" },
+      { id: "where-these-systems-actually-go-wrong-and-it-is-mostly-not-the-model", label: "Where it fails" },
+      { id: "scene-where-fail", label: "Where it fails", scene: true },
+      { id: "the-brief-is-the-product", label: "The brief" },
+      { id: "scene-rules-removed", label: "The brief", scene: true },
+      { id: "why-the-second-assistant-costs-more-than-the-first", label: "The second one" },
+      { id: "scene-agent-path", label: "One assistant", scene: true },
+      { id: "where-the-money-actually-goes-when-you-run-several", label: "Where money goes" },
+      { id: "scene-agent-calculator", label: "Your numbers", scene: true },
+      { id: "what-a-person-costs-and-why-you-cannot-divide-by-it", label: "What a person costs" },
+      { id: "who-is-responsible-when-an-assistant-is-wrong", label: "Who is responsible" },
+      {
+        id: "what-supervision-looks-like-when-the-thing-you-are-supervising-is-software",
+        label: "Supervision",
+      },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "how-to-test-one-assistant-before-you-run-four", label: "How to test one" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
   it("skips scenes that declare no label, because not every scene is a destination", () => {
     const rows = flagshipToc(outline, AI_CHAT_FLAGSHIP);
     for (const key of ["pull-quote", "funnel", "in-short", "response-curve", "failure-modes"]) {
@@ -221,6 +286,8 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["ai appointment booking", AI_APPOINTMENT_BOOKING_POST, BOOKING_FLAGSHIP],
   ["local seo", LOCAL_SEO_POST, LOCAL_SEO_FLAGSHIP],
   ["geo landing pages", GEO_LANDING_PAGES_POST, GEO_PAGES_FLAGSHIP],
+  ["crm sync", CRM_SYNC_POST, CRM_SYNC_FLAGSHIP],
+  ["ai agent workforce", AI_AGENT_WORKFORCE_POST, AGENT_WORKFORCE_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {
