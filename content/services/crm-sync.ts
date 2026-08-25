@@ -74,6 +74,13 @@ export const crmSync: Service = {
     },
   ],
 
+  limits: [
+    "It does not clean the data already in there. Sync keeps both sides in step. Years of half-finished records are a separate job, and enrichment is the service for it.",
+    "It does not decide which side is right. Conflict rules get agreed when it is built, and the rule that suits your team has to be chosen rather than assumed.",
+    "It does not open a system that will not open. Most CRMs expose an API and this is orchestrated in n8n rather than limited to a fixed list, but a closed platform stays closed.",
+    "It does not make anybody use the CRM. A record that is finally true is worth nothing if the team is still working out of a notebook.",
+  ],
+
   faqs: [
     {
       q: "What is two-way CRM sync?",

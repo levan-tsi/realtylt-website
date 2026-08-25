@@ -75,6 +75,15 @@ export const workflowAutomation: Service = {
     },
   ],
 
+  /** Lifted from this service's own flagship post (content/blog/ai-posts.ts). The third entry
+   * argues against the word "AI" on a page that sells AI, which is exactly why it stays. */
+  limits: [
+    "It does not fix a bad process. If the manual version loses leads, the automated version loses them faster, at three in the morning, with a log entry saying it worked.",
+    "It does not remove judgment. Every chain worth building has a step where a person would have paused, and the right behavior at that step is to stop and ask rather than guess.",
+    "It is mostly not artificial intelligence, whatever it gets sold as. Most of the hops are a field moving from one place to another with no cleverness in them at all, and they are more reliable for it.",
+    "It does not hand you back a day. It hands back an afternoon a month and removes a category of mistake. That is a duller claim than the usual one and it is the one that survives contact with a real business.",
+  ],
+
   faqs: [
     {
       q: "What is workflow automation?",

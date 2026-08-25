@@ -74,6 +74,13 @@ export const customAutomation: Service = {
     },
   ],
 
+  limits: [
+    "It does not build what you cannot describe. The honest test is whether you could explain the task to a competent new hire, and if you cannot, deciding how the work should run is the first job.",
+    "It does not replace your stack. Automation sits between the systems you already run and connects them, so nothing here is a reason to migrate your CRM.",
+    "It does not survive a process that keeps changing. A chain wired to a workflow redrawn every month spends its life being rewired, and that cost is real.",
+    "It does not take the person out of the steps that need one. A step built to guess where it should have asked will eventually guess wrong in front of a client, in writing.",
+  ],
+
   faqs: [
     {
       q: "What can actually be automated?",

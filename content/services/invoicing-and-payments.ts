@@ -74,6 +74,13 @@ export const invoicingAndPayments: Service = {
     },
   ],
 
+  limits: [
+    "It does not collect a debt. After the sequence it hands the situation back to you with the full history, and a client who will not pay is still a conversation you have to have.",
+    "It does not decide your terms. What you charge, what you ask for up front and how long you wait are your calls. This only makes sure they happen on schedule.",
+    "It does not replace your accounting. It connects to the invoicing and accounting tools you already run so the record of who owes what stays in one place.",
+    "It does not chase forever, on purpose. A reminder that never stops costs you the client as well as the invoice.",
+  ],
+
   faqs: [
     {
       q: "How do I get clients to pay faster?",

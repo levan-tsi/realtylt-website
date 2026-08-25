@@ -110,6 +110,14 @@ export const reviewAutomation: Service = {
     },
   ],
 
+  limits: [
+    "It does not choose who gets asked. Everyone does, whatever they scored, because selectively soliciting the people you expect to be kind is the practice Google's policy rules out.",
+    "It does not remove a review. A published review belongs to the customer. The only things that change it are you answering it and you fixing what is behind it.",
+    "It does not make anybody leave one. It removes the friction and the forgetting. The customer still has to want to.",
+    "It does not present a selection as your whole reputation. Reviews pulled through to your own site are labelled a selection of recent reviews, for the reason in the FAQ below.",
+    "It does not fix the service. A steady flow of honest reviews of a bad experience is simply a faster way to find out.",
+  ],
+
   faqs: [
     {
       q: "How do I get more Google reviews?",

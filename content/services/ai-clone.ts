@@ -74,6 +74,13 @@ export const aiClone: Service = {
     },
   ],
 
+  limits: [
+    "It does not speak for anyone but you. The likeness and the voice are yours, used only on your own content, and it never impersonates another person.",
+    "It does not say anything you have not already stood behind. The scripts come from your own knowledge base, so what it can say is bounded by what you put in it.",
+    "It does not belong in the moments that need you. A twin scales the greeting, the walkthrough and the follow-up. The listing appointment and the hard conversation are still yours.",
+    "It is not a secret. We recommend being straightforward that a video was made with an AI avatar, and a twin that has to be hidden is being used for the wrong thing.",
+  ],
+
   faqs: [
     {
       q: "What is an AI clone for a real estate agent?",

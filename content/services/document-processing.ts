@@ -92,6 +92,13 @@ export const documentProcessing: Service = {
     },
   ],
 
+  limits: [
+    "It does not guarantee a date. Misreading a line on a scanned rider is the failure mode of this whole category, which is why anything it is not confident about is flagged for a person rather than filed quietly.",
+    "It does not give a legal opinion, and it should not. It surfaces what the document says and what is missing, so somebody qualified can act on it.",
+    "It does not replace reading the contract. It puts the dates on the calendar and the fields in the CRM. Understanding the deal is still the job.",
+    "It does not fix a document. A missing signature gets flagged, not solved, and chasing it is a person's work.",
+  ],
+
   faqs: [
     {
       q: "Can AI read a real estate contract?",

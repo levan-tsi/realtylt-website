@@ -85,6 +85,13 @@ export const dataEnrichment: Service = {
     },
   ],
 
+  limits: [
+    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable, because a dead number that looks live costs you more than a blank field.",
+    "It does not guarantee a match. How much resolves depends on the area and on how much public record sits behind the address, and no honest provider quotes a rate before seeing the list.",
+    "It does not make a list callable in the legal sense. Do-not-call registrations and consent rules apply to an enriched record exactly as they do to any other.",
+    "It does not tell you anybody is interested. Enrichment makes a record reachable. Whether that person wants to hear from you is a different question.",
+  ],
+
   faqs: [
     {
       q: "What is data enrichment?",

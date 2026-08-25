@@ -86,6 +86,16 @@ export const leadQualification: Service = {
     },
   ],
 
+  /** Lifted from this service's own flagship post (content/blog/ai-posts.ts). The last entry is
+   * the same rule as the fair housing paragraph in `whatItIs`, said from the product's side:
+   * scoring suggests an order and never decides an outcome. */
+  limits: [
+    "It is not a prediction about a person. It is a guess about a date, made from limited evidence, and it will be wrong regularly. Somebody twelve months out calls you in March because their landlord sold the building.",
+    "It does not replace reading. The score is a sort order, not a summary, and calling the top of the list without opening the transcript underneath it is a faster way to be unprepared.",
+    "It does not work on nothing. A lead who filled in a form, said no more and never replied has given the system exactly what they gave you. No model extracts intent from silence.",
+    "It does not decide anything. Every score is a suggestion about the order of your afternoon. Nobody is refused and nothing is closed off, and if it is ever doing more than suggesting, it has been built wrong.",
+  ],
+
   faqs: [
     {
       q: "How does AI qualify a real estate lead?",

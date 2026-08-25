@@ -74,6 +74,13 @@ export const aiAppointmentBooking: Service = {
     },
   ],
 
+  limits: [
+    "It does not make anybody turn up. Confirmations and reminders are the most reliable thing anyone has for attendance, and they are still only reminders.",
+    "It does not create availability. If the week is full it books nothing, and it will never offer a slot you have blocked out.",
+    "It does not qualify the appointment for you. Booking fast puts more of your week in front of people, including the ones who were never going to buy.",
+    "It does not handle the conversation that follows. It gets the time on the calendar. What happens in that meeting is the part you are paid for.",
+  ],
+
   faqs: [
     {
       q: "What is an AI appointment setter?",

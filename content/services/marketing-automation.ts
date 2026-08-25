@@ -74,6 +74,13 @@ export const marketingAutomation: Service = {
     },
   ],
 
+  limits: [
+    "It does not create demand. It keeps you present for people who already raised their hand, and no cadence turns somebody who is not moving into somebody who is.",
+    "It does not fix a bad message. Sending the wrong thing at the right moment is still the wrong thing, and behavior triggers only make it arrive faster.",
+    "It does not override an opt-out. A person who asks to stop hearing from you stops hearing from you, and the cadence backs off on silence as well as on refusal.",
+    "It does not replace you calling anyone. A sequence keeps a lead warm. It does not build a relationship, and the leads worth having can tell the difference.",
+  ],
+
   faqs: [
     {
       q: "What is real estate marketing automation?",

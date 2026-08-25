@@ -74,6 +74,17 @@ export const databaseReactivation: Service = {
     },
   ],
 
+  /** Lifted from this service's own flagship post, "What it does not do, and should not pretend
+   * to" (content/blog/ai-posts.ts). The "not a subscription" entry is the one worth keeping
+   * whatever else changes: it is the sentence a competitor selling this will not say. */
+  limits: [
+    "It does not manufacture intent. Most of that list will say no again, because most of them meant it. What changes is that somebody finally asked, and the few whose situation moved get found in the week it moved.",
+    "It does not fix a list with no consent behind it. If the records carry no date and no source, the honest first project is a cleanup, not a campaign.",
+    "It is not a subscription. A database is finite: you work it once, and the same list is a year away from being worth working again. Reactivation is a harvest, not a lead source.",
+    "It does not replace calling the people who actually matter. Your past clients, and anybody whose relationship is the real asset, are your calls. A machine reintroducing itself to them is worse than no contact at all.",
+    "It does not close. It finds the conversation. Everything after somebody says yes to a Thursday is the reason you have a job.",
+  ],
+
   faqs: [
     {
       q: "What is database reactivation?",

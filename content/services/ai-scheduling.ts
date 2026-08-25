@@ -73,6 +73,13 @@ export const aiScheduling: Service = {
     },
   ],
 
+  limits: [
+    "It does not create time. It reads your live calendar and can only offer what is genuinely free, so a full week books nothing.",
+    "It does not know which meetings are worth having. It books what the conversation asked for, and deciding who gets your Saturday is still yours.",
+    "It does not stop a no-show. Reminders and an easy reschedule remove the common reasons for one, and some people still will not turn up.",
+    "It does not replace the calendar you already use. It reads and writes Google or Outlook rather than asking you to move to something new.",
+  ],
+
   faqs: [
     {
       q: "How does AI scheduling avoid double-booking?",

@@ -85,6 +85,13 @@ export const aiAudit: Service = {
     },
   ],
 
+  limits: [
+    "It does not decide anything for you. The output is a ranked list and a plan, and what your business actually changes stays your call.",
+    "It cannot rank what nobody will say out loud. The map is only as honest as the description of how the work really happens, including the parts everyone quietly works around.",
+    "It does not produce a saving on paper. Every hour on the list is an hour you still have to choose to spend on something else.",
+    "It is not a strategy document. It ends with one automation built and running, and anything past that first build is a separate decision.",
+  ],
+
   faqs: [
     {
       q: "What is an AI audit?",

@@ -74,6 +74,14 @@ export const localSeo: Service = {
     },
   ],
 
+  limits: [
+    "It does not buy you a position. Rankings are earned over months, and anybody promising otherwise is selling something.",
+    "It does not work faster than Google. Profile and citation fixes can move things in weeks; competitive terms take longer, and the compounding is the whole point.",
+    "It does not replace ads while it is still arriving. A ranking keeps paying after you stop spending, and until it exists it is delivering nothing.",
+    "It does not manufacture reviews. Recent reviews move the map pack, and getting them means asking every customer, which is review automation rather than this.",
+    "It does not stay done. Local rankings decay when the posts stop and a citation somewhere still lists an old phone number, which is why the maintenance is the work.",
+  ],
+
   faqs: [
     {
       q: "How do real estate agents rank in Google Maps?",

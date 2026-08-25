@@ -15,12 +15,13 @@ const fakeVideo: ServiceVideo = {
 };
 
 describe("serviceTocItems", () => {
-  it("lists the five fixed sections, in document order, when there is no video", () => {
+  it("lists the six fixed sections, in document order, when there is no video", () => {
     const noVideo: Service = { ...base, video: undefined };
     expect(serviceTocItems(noVideo).map((i) => i.id)).toEqual([
       "what-it-is",
       "how-it-works",
       "use-cases",
+      "limits",
       "see-it-live",
       "faq",
     ]);
@@ -32,6 +33,7 @@ describe("serviceTocItems", () => {
       "what-it-is",
       "how-it-works",
       "use-cases",
+      "limits",
       "see-it-live",
       "watch-it",
       "faq",
@@ -44,12 +46,15 @@ describe("serviceTocItems", () => {
     expect(new Set(items.map((i) => i.id)).size).toBe(items.length);
   });
 
-  it("holds for every real service in the registry (no video today = five rows)", () => {
+  it("holds for every real service in the registry (no video today = six rows)", () => {
     for (const s of SERVICES) {
       const ids = serviceTocItems(s).map((i) => i.id);
       expect(ids[0]).toBe("what-it-is");
       expect(ids[ids.length - 1]).toBe("faq");
       expect(ids).toContain("see-it-live");
+      // The row is only honest if the section behind it has something in it.
+      expect(ids, s.slug).toContain("limits");
+      expect(s.limits.length, s.slug).toBeGreaterThan(0);
     }
   });
 });

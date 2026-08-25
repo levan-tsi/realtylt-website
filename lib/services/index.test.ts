@@ -32,6 +32,7 @@ function copyOf(s: Service): string[] {
     ...s.whatItIs,
     ...s.howItWorks.flatMap((h) => [h.title, h.body]),
     ...s.useCases.flatMap((u) => [u.title, u.body]),
+    ...s.limits,
     ...s.faqs.flatMap((f) => [f.q, f.a]),
     ...figureCopy(s),
   ];
@@ -108,6 +109,20 @@ describe("content quality gates", () => {
       expect(s.useCases.length, s.slug).toBeGreaterThanOrEqual(3);
       expect(s.faqs.length, s.slug).toBeGreaterThanOrEqual(3);
       expect(s.keywords.length, s.slug).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  /** SERVICES-CRITIQUE.md §4. The type makes `limits` required, which stops a page shipping
+   * without the field; this stops it shipping with the field present and empty, or filled with
+   * three-word non-answers. Three is the floor because two limits is a hedge and one is a
+   * disclaimer. Nothing here can check whether a limit is TRUE — that is what reading is for. */
+  it("tells every visitor where the service stops, in sentences", () => {
+    for (const s of SERVICES) {
+      expect(s.limits.length, s.slug).toBeGreaterThanOrEqual(3);
+      for (const limit of s.limits) {
+        expect(limit.length, `${s.slug}: "${limit}"`).toBeGreaterThan(40);
+        expect(limit.trim(), `${s.slug}: "${limit}"`).toMatch(/[.?]$/);
+      }
     }
   });
 

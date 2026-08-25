@@ -108,6 +108,23 @@ export interface Service {
   whatItIs: string[];
   howItWorks: { title: string; body: string }[];
   useCases: { title: string; body: string }[];
+
+  /** "What it does not do." REQUIRED, and required is the whole point.
+   *
+   * The flagship blog standard makes a limits section mandatory for every post, because a
+   * business owner's fourth question is "what will it not do, where does this break"
+   * (docs/blog-flagship/STANDARD.md §1). The commercial surface, which is the one that ranks
+   * and the one an AI answer lifts from, had no such structure, and five of twenty pages
+   * carried no limiting language anywhere at all. The voice page proved the value by doing it
+   * inside prose and is the most convincing page in the set as a result. It was just not a
+   * field, so nineteen pages did not have to meet it. Now they do.
+   *
+   * Three to five short entries, each a sentence a person would say out loud. Every one has to
+   * be grounded in a claim this page already makes or in a plain product truth: a limits list
+   * is not a licence to assert a NEW fact about the product from the negative side. If a
+   * limit cannot be stated without inventing something, write fewer of them. */
+  limits: string[];
+
   faqs: FaqItem[];
 
   /** HeyGen / Higgsfield walkthrough. Absent until one is recorded; the VideoObject

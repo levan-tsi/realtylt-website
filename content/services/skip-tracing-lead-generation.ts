@@ -95,6 +95,14 @@ export const skipTracingLeadGeneration: Service = {
     },
   ],
 
+  limits: [
+    "It does not promise a match rate. Rates vary by area and by how much public record sits behind the property, and no honest provider quotes 100%.",
+    "It does not resolve everything cleanly. Trusts, LLCs, and recently transferred properties come back flagged as partial or unreachable rather than padded out with a guess.",
+    "It does not give you permission to call. Do-not-call registrations and opt-out requests apply to these results exactly as they apply to any other list you dial.",
+    "It does not make the calls. A callable list only pays if something calls it, which is why the handoff to a sequence or a voice agent is part of the build rather than an afterthought.",
+    "It does not give anybody a reason to sell. A fresh list of owners is a starting position, and what you say when they pick up is still the whole job.",
+  ],
+
   faqs: [
     {
       q: "What is skip tracing in real estate?",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Faq } from "@/components/services/Faq";
 import { HowItWorks } from "@/components/services/HowItWorks";
+import { Limits } from "@/components/services/Limits";
 import { MoreServices } from "@/components/services/MoreServices";
 import { Outcome } from "@/components/services/Outcome";
 import { RelatedPosts } from "@/components/services/RelatedPosts";
@@ -91,6 +92,10 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       <WhatItIs service={service} />
       <HowItWorks service={service} />
       <UseCases service={service} />
+      {/* The honest half of the sale, and it goes BEFORE the call to action rather than after
+          it: a reader who has just been shown where this breaks and is still reading is the
+          reader "see it live" is for. */}
+      <Limits service={service} />
       <SeeItLive service={service} nodeIndex={nodeIndex} />
       <VideoBlock service={service} />
       <Faq service={service} />

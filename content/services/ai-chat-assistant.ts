@@ -118,6 +118,16 @@ export const aiChatAssistant: Service = {
     },
   ],
 
+  /** Lifted from this service's own flagship post, "What it does not do, and should not
+   * pretend to" (content/blog/ai-posts.ts). Already researched, already audited, already
+   * argued with. Moving it is cheaper and truer than writing a second version. */
+  limits: [
+    "It does not close. It does not read a room, it does not know when a seller is lying about their timeline, and it has no instinct for what is really going on in a divorce sale. Those are the reasons you have a job.",
+    "It does not answer what it cannot verify. Asked whether a seller will take a contingency, the honest answer is that nobody knows until it is asked, so it says so and books you the call.",
+    "It does not invent a listing, a price, or a legal opinion. Anything outside what it can check against the MLS or your own knowledge base becomes a booked call rather than a confident wrong answer.",
+    "It does not pretend to be a person. It introduces itself as an assistant, and in practice nobody minds. What people mind is waiting.",
+  ],
+
   faqs: [
     {
       q: "Can an AI chatbot actually search the MLS?",

@@ -74,6 +74,13 @@ export const aiAgentWorkforce: Service = {
     },
   ],
 
+  limits: [
+    "It does not think for you. An assistant does one job the way you described it, so a vague brief produces output that is fast, consistent and useless.",
+    "It is not a hire. There is nobody to take responsibility, notice that the job has changed, or tell you the process itself is wrong.",
+    "It does not remove the review. Anything that reaches a client should be read by a person first, and an assistant that drafts is worth more than one that sends.",
+    "It does not fix a job nobody has written down. If the task lives only in your head and changes every time, describing it is the first piece of work, not building it.",
+  ],
+
   faqs: [
     {
       q: "What is an AI agent workforce?",

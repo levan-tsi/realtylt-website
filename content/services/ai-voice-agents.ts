@@ -92,6 +92,20 @@ export const aiVoiceAgents: Service = {
     },
   ],
 
+  /** These were already the best writing on the services surface. They were just buried inside
+   * three FAQ answers and a whatItIs paragraph, where a reader has to go looking for them and
+   * an AI answer will not lift them. Promoted, plus the fourth one from this service's own
+   * flagship post. SERVICES-CRITIQUE.md §4 named this page as the proof the section was worth
+   * building: "That is the standard. It is just not a field, so nineteen pages do not have to
+   * meet it." */
+  limits: [
+    "It does not close, and on the phone the reason is specific. Half of what a good agent hears in a first call is not in the words, and a transcript records none of it.",
+    "It does not replace an experienced agent on a listing appointment. It replaces the mechanical part of the ISA role: picking up, qualifying on budget, area and timeline, and booking the next step.",
+    "It will not invent a price, a legal position, or a fact about a property. Anything it cannot verify becomes a booked call, which is the honest outcome and the higher-converting one.",
+    "It does not pretend to be a specific human being. The agent identifies itself as an assistant, and we do not build ones that do otherwise.",
+    "It does not replace ringing back the people who matter. If the caller is a past client or your seller's neighbor, the agent's job is to hold the door open for twenty minutes, not to be the relationship.",
+  ],
+
   faqs: [
     {
       q: "Can an AI voice agent replace an ISA?",

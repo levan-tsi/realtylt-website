@@ -20,6 +20,10 @@ export function serviceTocItems(service: Service): ServiceTocItem[] {
     { id: "what-it-is", label: "What it is" },
     { id: "how-it-works", label: "How it works" },
     { id: "use-cases", label: "Use cases" },
+    // "What it does not do" is exactly the section a reader navigates BACK to, which is the
+    // test the rows on this list have to pass. It earns a row for the same reason the section
+    // exists (SERVICES-CRITIQUE.md §4).
+    { id: "limits", label: "Limits" },
     { id: "see-it-live", label: "See it live" },
   ];
   if (service.video) items.push({ id: "watch-it", label: "Watch it" });

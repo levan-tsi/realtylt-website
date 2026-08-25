@@ -74,6 +74,13 @@ export const geoLandingPages: Service = {
     },
   ],
 
+  limits: [
+    "It is not a template with the town name swapped. Google treats thin location pages as doorway pages, and the only thing separating the two is real, area-specific content.",
+    "It does not rank a place you do not serve. A page for an area you have never worked has nothing true to put on it, and both a reader and an engine notice.",
+    "It does not put you in an AI answer on request. Nobody controls what an assistant quotes. Writing a page that is quotable is the only lever there is.",
+    "It does not replace the rest of local search. A page for each area is one input. The Google Business Profile, the citations and the reviews are the others.",
+  ],
+
   faqs: [
     {
       q: "What are GEO landing pages?",
