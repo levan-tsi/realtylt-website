@@ -9,6 +9,257 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const DATA_ENRICHMENT_POST = `You ran the pass because two thirds of the database had no phone number in it. That is a real problem and enrichment is a real answer to it, and by the afternoon most of those blanks were full.
+
+Somewhere in the middle of the file is a woman you sold a house to three years ago. She gave you that number herself, standing in her own kitchen, and you have texted her on it since.
+
+Her record now has a different number in it.
+
+Nobody decided that. The pass filled in what was empty, and where a field was not empty it wrote anyway, because that is what the default was and nobody was asked. There is nothing in the row that says what used to be there, nothing that says where the new one came from, and nothing that says when either of them was true.
+
+The blanks getting filled is the part everybody talks about. The overwrite is the part nobody does, and it is the more expensive half.
+
+[[scene:in-short]]
+
+[[scene:not-the-neighbours]]
+
+## What data enrichment actually is, and what it is not
+
+Three articles on this site are neighbours to this one and one of them is very close indeed, so it is worth drawing the lines before anything else.
+
+Data enrichment is the pass that completes and corrects records you already hold. A contact came in with a first name and an email and no phone. Another has a mailing address and no idea which property behind it they own. A third is the same person as a record you took two years ago under a different email. Enrichment sends what you have to an outside provider and writes back what comes home: a number, an email, the property detail behind the address, a merge.
+
+Two words in that description are doing all the work, and almost nothing written about this subject examines either of them. "Corrects" assumes the outside answer is better than yours. "Writes back" assumes there was nothing there.
+
+The narrow thing worth understanding is that enrichment is not a lookup and it is not a fix. It is the arrival of an assertion from a company you have never spoken to, about a person you have, into a system where it will be indistinguishable from something you knew.
+
+## What comes back is a claim rather than a fact
+
+Think about what actually has to happen for a phone number to appear in that column.
+
+You send an identifier: a name, an address, an email. Somebody else's system then decides which of its own records describes the same human being, on partial information, with no way to ask anybody. Then it returns the value it holds against whichever record it picked.
+
+So the number in your CRM is the end of a chain of at least two guesses: this record is about your person, and this number belongs to that record. Neither guess is shown to you. What arrives is a bare string in a field, formatted exactly like the numbers your clients typed in themselves.
+
+That matching problem has its own long piece on this site, [the one about keeping two systems in step](/blog/crm-sync-real-estate-duplicate-contact-records), and it is worth reading because the published model for it has a third outcome that most builds throw away. One difference changes the whole picture here. In a sync, both systems belong to you and you can open both. In an enrichment response the other system is a black box, and the threshold it used, the fields it weighed and the confidence it settled on are all facts about a company you are merely a customer of.
+
+[[scene:what-a-field-asserts]]
+
+[[scene:plate]]
+
+## Where an appended field actually comes from
+
+There is one primary document on this and it has held up for twelve years because of how it was made.
+
+In December 2012 the Federal Trade Commission issued compulsory orders under section 6(b) of the FTC Act to nine named data brokers, requiring them to file special reports on where their data comes from, what they do with it and what rights consumers have over it. The resulting report, [Data Brokers: A Call for Transparency and Accountability](https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf), was published in May 2014 and covers their practices from January 2010. Nine companies, named, under compulsion, describing themselves to a regulator. There is nothing else like it in this subject and everything written since leans on it.
+
+[[scene:broker-sources]]
+
+The finding that reorganises how you should think about an enrichment response is the middle bar. These are not nine companies each independently observing the world. They are, to a substantial degree, one market trading the same records among themselves, and the Commission states the consequence plainly: the nine "obtain most of their data from other data brokers rather than directly from an original source", and one of them draws consumers' contact information "from twenty different sources".
+
+That is the honest picture behind the field in your CRM. Not a company that knows something about your client, but the last company in a queue, passing on what it was passed.
+
+[[scene:pull-quote]]
+
+Read that as a statement about you rather than about consumers. If the person the record is about cannot retrace it, neither can you, and you are the one who is going to be asked.
+
+## Observation and inference arrive in the same column
+
+The same report describes two different kinds of content in these files, and it is the distinction that should change what you do with the output.
+
+There is raw data, which the report describes as things "such as a person's name, address, home ownership status, or age". And there is derived data, "which they infer about consumers". The report gives its own examples of how inference works: a data broker "might infer that an individual with a boating license has an interest in boating, that a consumer has a technology interest based on the purchase of a 'Wired' magazine subscription, or that a consumer who has bought two Ford cars has loyalty to that brand".
+
+Those are marketing categories rather than contact details, and it would be a mistake to say your appended phone number is an inference. What is not a mistake, and is the point, is that both kinds of value come back through the same interface, in the same shape, with no marking to say which is which. A file that contains observations and guesses in the same schema, sold through one API, will land both of them in your database as facts, because a field has no way of holding the difference.
+
+The practical version of this is a question with a short answer, and it is worth putting in writing to whoever supplies you: for each field you buy, is this something the source observed or something the source concluded. A provider who can answer that field by field is telling you a great deal about how carefully the product was built.
+
+## The same file, sold under three different names
+
+There is a second finding in that report, about what the same nine companies sell, and it is the one that connects this subject to the law.
+
+[[scene:product-lines]]
+
+One set of underlying records, three shopfronts. The identity check and the marketing list and the people search page are built out of the same material, and what separates them is the purpose the buyer had.
+
+American law works the same way round, and this is where this article stops and hands you to a different one. Two federal statutes decide what may be done with contact information about a person, they turn on where it came from and on what you intend it for rather than on which fields are in the file, and the liability lands on the buyer rather than on the seller. All of that is worked through at length in [the article on skip tracing](/blog/skip-tracing-real-estate-legal-owner-phone-numbers), including the questions to put to any provider in writing, and none of it is repeated here.
+
+What belongs in this article is the narrower half: the same data, relabelled at the point of sale, and a label that is a fact about the transaction rather than about the record.
+
+## Nobody has published an honest decay rate, and we went and looked
+
+Every page selling this quotes a figure for how fast contact data goes bad. Thirty percent a year is the usual one. We did not want to assert that those figures are unsourced, because asserting a reason without checking it is a mistake this project has made before, so this round the trail got followed.
+
+Here is where it goes.
+
+The most prominent recent version of the thirty percent claim is a press release from a company that sells contact data, carried on a newspaper's website under a notice stating that it is "press release content distributed by XPR Media" and that the paper's editorial staff "were not involved in the creation of this content". No sample, no method, no population.
+
+Below that are vendor blog posts. Data quality companies and enrichment providers, each stating a rate, none stating what was measured or on how many records. The most useful thing on any of them is not a statistic: one recommends taking a random sample of a hundred to two hundred of your own oldest contacts and verifying them by hand, which is the correct answer and is the one thing on the page that nobody is charging for.
+
+Below those are the aggregator pages, which cite each other and eventually cite a benchmark attributed to a marketing research publisher whose original study is not linked from any of them.
+
+And the spread is the finding. The same claim, about the same thing, is quoted at twenty two and a half percent, at twenty to thirty percent, at thirty to forty percent, and at seventy percent for email addresses specifically. Those are not measurements that disagree. They are a number that has come loose from whatever produced it and is now being cited by people who are quoting each other.
+
+So there is no decay rate in this article, none in the calculator, and none on our service page. There is something better, which is the reason a rate cannot be a single number in the first place.
+
+## A rate is a property of the people, not of the data
+
+Contact details do not rot on their own. They stop being true when something happens to a person: a move, a job change, a marriage, a new phone, a business closing. So the speed at which a field goes wrong is the speed at which that thing happens to the people in your database, and different people are not the same.
+
+There is one measurement in this whole subject that names its survey, its sample and its definition, and it is about employment rather than about phone numbers.
+
+[[scene:tenure]]
+
+The Bureau of Labor Statistics runs a tenure supplement to the Current Population Survey, a monthly sample of about sixty thousand households, and [its release for January 2024](https://www.bls.gov/news.release/tenure.nr0.htm) states that "the median number of years that wage and salary workers had been with their current employer was 3.9 years", the lowest since 2002. Table 1 breaks that down by age, and the spread is the point: the median for people in their late twenties and early thirties is 2.7 years, and for people in their late fifties it is 9.6.
+
+Now imagine both of those people in one database, with a work email address each, and imagine one percentage covering them both.
+
+That is the argument, and it transfers even though the measurement does not. An agent's CRM is mostly personal mobile numbers and personal email addresses rather than work ones, and there is no public measurement of how fast those go wrong. The absence is itself worth knowing, because every circulating decay statistic is presented as though somebody had done that study, and nobody has.
+
+What you can do instead takes an afternoon and produces a number that is actually about you: take two hundred records at random from the part of your database you would actually work, and check them. That number is worth more than any benchmark, because it is measured on your own people, in your own market, at their own ages.
+
+## What to do when two sources disagree
+
+This is the question the whole subject turns on and almost nothing written about it addresses, so it is worth being concrete.
+
+A pass runs. For a given contact, your record says one thing and the response says another. There are only four possible behaviours and every build picks one, usually without anybody being asked.
+
+The first is that the newest value wins. This is the most common default and it is the worst one, because "newest" means the moment the file was queried rather than the moment the fact was true. A number confirmed by the client last month will be replaced by a number a provider has held since some unrecorded date, purely because your query happened today.
+
+The second is that yours wins and the response is discarded. Safe, and it quietly turns enrichment into a fill-the-blanks exercise, which is often exactly what you wanted and should be a decision rather than an accident.
+
+The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the honest answer for most businesses and it costs one extra column.
+
+The fourth is a review queue: disagreements go to a short list and a person settles them. That is right when the field matters and the volume is small, and it is worth knowing that it is the same shape as the clerical review step in the published record-linkage model that the CRM sync article covers, which exists for exactly this reason.
+
+Whichever you pick, one habit does more than the choice itself. Write down, on every enriched row, where the value came from and when it was written. Not in a log somewhere. In the record, beside the value, where the person about to dial it can see it. That single column is the difference between "I do not know where that number came from" and a one sentence answer, and it costs nothing on the day the build is done.
+
+[[scene:plate-two]]
+
+## The one law that describes this is about whoever holds the data
+
+There is one place where a legislature has written down what happens when a business is holding something wrong about a person, and it is not a federal statute and it probably does not apply to you. It is worth knowing anyway, because it says whose problem this is.
+
+California's consumer privacy law, at [Civil Code 1798.106](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.106), gives a consumer "the right to request a business that maintains inaccurate personal information about the consumer to correct that inaccurate personal information, taking into account the nature of the personal information and the purposes of the processing". A business receiving such a request "shall use commercially reasonable efforts to correct the inaccurate personal information as directed by the consumer".
+
+Read who that is addressed to. Not the data broker. The business that maintains the information, which in the scenario at the top of this article is you.
+
+Whether it applies to you specifically is a different question and for most brokerages the answer is no. The same law defines a covered business at [Civil Code 1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140) as one doing business in California that also meets one of three thresholds: annual gross revenues over twenty five million dollars, or annually buying, selling or sharing the personal information of a hundred thousand or more consumers or households, or deriving half or more of its revenue from selling or sharing personal information. A real estate business in New York clears none of those on an ordinary year.
+
+So this is not a compliance obligation for most readers of this page. It is a description of the right shape, written by people who thought hard about it, and it says two things worth adopting whether or not anybody is making you. The duty attaches to whoever holds the record rather than to whoever supplied it. And answering it requires knowing where a value came from, which is the column this article keeps coming back to.
+
+The same FTC report is blunt about how rarely that is possible today. Of the nine companies studied, it found that "only two of the data brokers allow consumers to correct their personal information for marketing purposes". The report's sentence does not make its denominator explicit, so it is quoted rather than drawn as a chart, and the direction of it is not in doubt.
+
+## What New York's law actually covers, and it is not this
+
+People reach for New York's SHIELD Act here, and it is worth saying plainly why it does not cover most of what an enrichment pass adds.
+
+The [New York Attorney General's own description](https://ag.ny.gov/resources/organizations/data-breach-reporting/shield-act) of the law it enforces says the Act requires "any person or business that maintains private information to adopt administrative, technical, and physical safeguards", with no revenue threshold attached, which is a genuinely wide obligation. But "private information" is a defined and narrow term. On the Attorney General's page, it means personal information combined with a Social Security number, a driver's licence number, or an account number with its security code, and the Act extended it to biometric information and to a username or email address together with a password.
+
+A telephone number is not on that list. A mailing address is not on that list. An email address on its own is not on that list.
+
+So the New York statute people mention in this context is about security and breach notification for a specific set of high risk identifiers, and it is mostly not about the fields enrichment appends. That is a checked absence rather than an omission, and it is here because the alternative is a page implying a duty that does not exist.
+
+We could not read the statute text itself. The New York Senate's website refuses programmatic requests, so nothing in this article is asserted from the statute, only from the Attorney General's published summary of it, and that distinction is deliberate.
+
+[[scene:enrich-path]]
+
+[[scene:overwrite-calculator]]
+
+## What it costs, and how long it takes
+
+The largest line on this bill is not ours and never passes through us. A supplier charges for each record it is asked about, so that part of the spend rises directly with how many rows you hand over.
+
+Which makes the first cost decision the one nobody treats as a decision: how many records to run. The default is the whole database, because it is one click, and most databases contain a large majority of rows that nobody is ever going to work. Running a tenth of it, chosen deliberately, usually produces more conversations for a tenth of the money, and choosing that tenth is an hour of somebody's thinking rather than a purchase.
+
+The second thing to settle before signing is whether the charge lands on every record you submit or only on the ones that come back with something. That distinction changes the arithmetic completely, and in an area where not much resolves, the first arrangement can spend a budget and leave you with almost nothing to show for it.
+
+What we would build around that is the smaller half and it is where the value is. Deciding which records qualify. Writing the source and the date onto every enriched row. Making the disagreement behaviour explicit rather than inherited. Putting the flagged rows somewhere a person will look. Every one of those is cheap and dull, and they get skipped because nobody puts them on the list at the beginning.
+
+On time, running a pass is fast. What takes the time is the conversation about the four disagreement behaviours above and about which fields you actually want touched, and that conversation is worth having before the first record moves, because retrofitting provenance onto a database that has already been enriched twice is a genuinely miserable job. If your contact records already carry a source and a date, this is straightforward. If they do not, adding that column is the project, and the enrichment is the easy part bolted on afterwards.
+
+## What it does not do, and should not pretend to
+
+It does not verify a person. Verification, in this industry, usually means the number is well formed, is in service and is not a duplicate. Those are useful checks and none of them is the check people assume: that this number reaches this person. Our own service page uses the word "verified" and this is the sentence that qualifies it.
+
+It does not tell you how old a value is unless the provider is asked for it and passes it through. Freshness is the single most useful attribute an appended field could carry and it is the one most commonly absent from the response. Ask whether it is available, and if it is, store it.
+
+It does not promise a match, and a rate quoted before anybody has seen your list is a rate about somebody else. How much resolves varies with the town, with how thin the county file is behind a given address, and with how recently anybody moved. Two hundred of your own rows, run as a sample, settles the question for your own book in half a day.
+
+It does not make a record legal to contact. Do-not-call registrations and consent rules attach to the call rather than to the data, they are not affected by how the number was obtained, and they are covered in detail in [the article on reactivating an old database](/blog/database-reactivation-old-real-estate-leads) and in the skip tracing article above.
+
+It does not tell you anybody wants to hear from you. A complete record is a reachable record. Interest is a different question, it is not in any file anybody can sell you, and a pass that makes four thousand people reachable has not produced four thousand conversations or any evidence about whether they would be welcome.
+
+And it does not clean up after itself. If a pass writes a value that turns out to be wrong, the wrongness is now yours, sitting in your system of record with your business's authority behind it, and the provider's involvement ended at the response.
+
+[[scene:wasted]]
+
+[[scene:offer]]
+
+## How to find out what your last pass actually did
+
+Twenty minutes, on the database you already have. No tool and no subscription.
+
+1. **Open five contacts you personally remember.** People you have spoken to. Not the first five, and not the ones you have been working this week.
+
+2. **For each one, ask where the phone number came from.** Not whether it is right. Where it came from. If the record cannot tell you, you have already found the finding, and you have found it on the five people you know best.
+
+3. **Look for a date beside any enriched value.** Anything at all: an appended-on date, a source field, a note. If there is nothing, then every value in the database is the same age as every other value, which is to say unknown.
+
+4. **Find a contact you know moved.** Somebody who sold and left the area. Look at what the record says now, and decide whether the record knows they moved or is quietly still describing the person who lived there.
+
+5. **Sort by the phone column and look at the gaps.** Count how many rows are empty. That number is the actual size of the problem enrichment solves, and for most people it is much smaller than the whole database they were about to run.
+
+6. **Ring one number that you did not put there yourself.** Not to sell anything. Just to find out who answers. One call tells you more about your own data than any report, and if the answer surprises you, that is the finding.
+
+7. **Ask whoever ran the last pass what happened to fields that already had values.** If nobody can answer, the answer is that they were overwritten, because that is what every default does.
+
+## Common questions, answered honestly
+
+### What is data enrichment, in plain terms?
+
+It is a pass over contact records you already hold, which sends what you know to an outside provider and writes back what it holds: a missing phone number or email, the property detail behind an address, a merge of two records that turn out to be one person. It is sold as completing your database. What it actually does is add somebody else's assertions to your database, which is a genuinely useful thing and is not the same thing.
+
+### How is enrichment different from skip tracing?
+
+One begins at an address and works towards a stranger. The other begins at somebody already sitting in your database and completes what you hold about them. The suppliers overlap and the technology is the same. What separates them is whether there was ever a relationship, that is the half carrying the legal weight, and it is set out in the [skip tracing article](/blog/skip-tracing-real-estate-legal-owner-phone-numbers) rather than here.
+
+### Will enrichment overwrite the data I already have?
+
+That depends entirely on how the pass is configured, and the common default is that the newer value wins. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, insist that the previous value, the source and the date are written to the record, because without those there is no way back from a bad pass.
+
+### How accurate is appended contact data?
+
+Nobody can tell you honestly before running your list, and the figures that circulate do not survive being followed, which is worked through above. What you can do is measure it: take two hundred records where you already know the answer, run them, and count how many agree, disagree and come back empty. That takes an afternoon and it is a number about your own market rather than somebody's benchmark.
+
+### How fast does contact data go stale?
+
+There is no published rate worth quoting. The circulating figures range from twenty two to seventy percent for the same claim and trace back to press releases and vendor pages rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
+
+### Does an enriched list mean I can call it?
+
+No, and the two questions are entirely separate. Whether a record is reachable is a data question. Whether you may contact it is a rules question with dates and registries in it, and the answer does not change because the number was appended rather than volunteered. Both of the neighbouring articles on this site cover that ground properly.
+
+### What should I ask a provider before signing?
+
+Five short questions. Does the charge land on every record submitted or only on the ones that resolve. Does the response carry a date or an age for each value. For each field, is it observed or inferred. If a person tells you never to contact them again, what changes in your system. And will you run two hundred records from my own area before I commit to anything. Written answers to all five tell you what kind of company you are dealing with. A rate card tells you nothing.
+
+### What is the one thing that makes all of this manageable?
+
+A source column and a date column on every contact record, filled in from the day the record is created, whether the value came from a form on your website, a conversation, or a pass. It costs nothing to add before you have data and it is close to impossible to reconstruct afterwards. Every hard question in this article becomes easy once those two columns exist.
+
+## What to do about it
+
+Nothing in this article argues against enrichment. Two thirds of a database with no phone number in it is a real problem, and there is no version of solving it that does not involve buying somebody else's assertions.
+
+What it argues is that the assertion should arrive wearing a label. Where it came from. When. What it landed on. Those three facts turn an appended value from something you have to trust into something you can weigh, and they cost one afternoon of build time to capture and are unrecoverable once a pass has run without them.
+
+This sits beside everything else we build, on [the RealtyLT AI page](/ai#enrich); what actually gets appended and checked is on the [data enrichment page](/services/data-enrichment). If you would rather somebody looked at what your existing records already say about themselves before anything is bought, that is the [AI audit](/services/ai-audit).
+
+A fuller database is easy. A database that can tell you where it got something is the one worth having.
+
+[[scene:funnel]]
+`;
+
 export const DOCUMENT_PROCESSING_POST = `The rider came in on a Sunday evening as a photograph. Somebody had put the page on a kitchen table and held a phone over it, so the top edge of the paper is wider than the bottom edge, there is a shadow across the lower third, and the whole thing is very slightly out of focus in one corner.
 
 Two of the printed lines have been struck through and rewritten by hand, and there are initials in the margin beside each change. One of the changes is a date.

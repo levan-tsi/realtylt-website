@@ -13,6 +13,7 @@ import { AGENT_WORKFORCE_FLAGSHIP } from "@/content/blog/agent-workforce-scenes"
 import { SKIP_TRACING_FLAGSHIP } from "@/content/blog/skip-tracing-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "@/content/blog/marketing-automation-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "@/content/blog/document-scenes";
+import { DATA_ENRICHMENT_FLAGSHIP } from "@/content/blog/enrichment-scenes";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -20,6 +21,7 @@ import {
   AI_VOICE_AGENTS_POST,
   CRM_SYNC_POST,
   DATABASE_REACTIVATION_POST,
+  DATA_ENRICHMENT_POST,
   DOCUMENT_PROCESSING_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
@@ -297,6 +299,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["skip tracing", SKIP_TRACING_POST, SKIP_TRACING_FLAGSHIP],
   ["marketing automation", MARKETING_AUTOMATION_POST, MARKETING_AUTOMATION_FLAGSHIP],
   ["document processing", DOCUMENT_PROCESSING_POST, DOCUMENT_PROCESSING_FLAGSHIP],
+  ["data enrichment", DATA_ENRICHMENT_POST, DATA_ENRICHMENT_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

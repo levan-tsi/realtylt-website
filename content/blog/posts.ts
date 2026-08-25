@@ -11,6 +11,7 @@ import {
   AI_VOICE_AGENTS_POST,
   CRM_SYNC_POST,
   DATABASE_REACTIVATION_POST,
+  DATA_ENRICHMENT_POST,
   DOCUMENT_PROCESSING_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
@@ -20,6 +21,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { DATA_ENRICHMENT_FLAGSHIP } from "./enrichment-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "./document-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
 import { SKIP_TRACING_FLAGSHIP } from "./skip-tracing-scenes";
@@ -76,6 +78,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "data-enrichment-real-estate-stale-contact-records",
+    title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 14 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Most of the blanks came back full, which is what you paid for. In one record the number a client gave you herself had been replaced, and nothing in the row said what was there before, where the new one came from, or when either was true. What an appended field actually asserts, why no honest decay rate exists, and the two columns that make all of it manageable.",
+    seoDescription:
+      "What real estate data enrichment actually appends, what the FTC found when it ordered nine data brokers to explain themselves, and why no honest data decay rate exists.",
+    cover: "/images/editorial/ghost-signs-layered.jpg",
+    body: [],
+    placeholder: false,
+    markdown: DATA_ENRICHMENT_POST,
+    flagship: DATA_ENRICHMENT_FLAGSHIP,
+  },
   {
     slug: "document-processing-real-estate-contract-deadlines",
     title: "It Read the Date Correctly. The Date Was Not the Deadline.",

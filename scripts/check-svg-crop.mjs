@@ -51,6 +51,7 @@ const SLUGS = args.length
       "skip-tracing-real-estate-legal-owner-phone-numbers",
       "marketing-automation-real-estate-email-deliverability",
       "document-processing-real-estate-contract-deadlines",
+      "data-enrichment-real-estate-stale-contact-records",
     ];
 
 const browser = await chromium.launch();
