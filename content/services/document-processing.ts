@@ -1,6 +1,13 @@
 import type { Service } from "./types";
 
-/** COPY key `docs` on realtylt.com/ai. Deep link: /ai#docs */
+/** COPY key `docs` on realtylt.com/ai. Deep link: /ai#docs
+ *
+ * NO "NEVER" ON THIS PAGE (2026-08-25, SERVICES-CRITIQUE.md §5). `why` used to end
+ * "so deadlines never slip through a PDF", and useCases[0] was titled "The deadline that
+ * never slips". Misreading a date on a scanned rider is the entire failure mode of this
+ * category, so a guarantee is the one thing a document reader cannot offer, and this is a
+ * page about contract deadlines. Both now promise what the product actually does: the
+ * deadline is FLAGGED the day the contract lands, not the week it expires. */
 export const documentProcessing: Service = {
   slug: "document-processing",
   aiKey: "docs",
@@ -11,7 +18,7 @@ export const documentProcessing: Service = {
   title: "Contracts and disclosures, read in seconds",
   lede: "Drop in a purchase agreement, disclosure, or lease and the AI extracts the terms, dates, and parties, flags what's missing, and files the structured data into your CRM and transaction folder. No manual re-keying of the same fields ten times.",
   specs: ["contract + disclosure parsing", "key-date extraction", "missing-field flags", "auto-filed to CRM"],
-  why: "Transaction paperwork is a slow, error-prone tax on every deal. Automated extraction pulls the critical dates and terms instantly, so deadlines never slip through a PDF.",
+  why: "Transaction paperwork is a slow, error-prone tax on every deal. Automated extraction pulls the critical dates and terms out on the way in, so a deadline is flagged the day the contract lands, not the week it expires.",
   keywords: [
     "real estate document processing ai",
     "contract data extraction real estate",
@@ -72,7 +79,7 @@ export const documentProcessing: Service = {
 
   useCases: [
     {
-      title: "The deadline that never slips",
+      title: "The deadline you saw on day one",
       body: "Key dates get onto the calendar the moment the contract is signed rather than when someone gets round to reading page nine.",
     },
     {
