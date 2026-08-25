@@ -11,7 +11,10 @@ export const skipTracingLeadGeneration: Service = {
   title: "Raw addresses become reachable people",
   lede: "Scrape owner leads from Google Maps and Places, then enrich each address into a verified phone and email through BatchData skip-trace, automatically, at scale. A cold map becomes a callable pipeline.",
   specs: ["Google Maps / Places", "BatchData enrichment", "verified phone + email", "at scale"],
-  why: "Lists are the lifeblood of prospecting, and buying them is expensive and stale. This builds fresh, owner-direct lists on demand, at a fraction of vendor pricing.",
+  // "at a fraction of vendor pricing" was here and is gone (Round B, 2026-08-25). It is a
+  // comparative price claim with nothing under it, and the rollout's standing rule is that a
+  // vendor price we cannot read in a published document is a number the page refuses.
+  why: "Lists are the lifeblood of prospecting, and buying them is expensive and stale. This builds fresh, owner-direct lists on demand, for the area you are working, on the day you work it.",
   keywords: [
     "real estate skip tracing software",
     "real estate lead generation automation",
@@ -68,7 +71,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       title: "Validate and clean before you call",
-      body: "Numbers are checked, duplicates are collapsed, and anything that came back thin is flagged rather than padded out. A list where 40% of the numbers are dead is worse than no list, because it burns the hours you spend dialing it.",
+      body: "Numbers are checked, duplicates are collapsed, and anything that came back thin is flagged rather than padded out. A list with a lot of dead numbers in it is worse than no list, because it burns the hours you spend dialing it. Nobody publishes an honest figure for how many of them are dead, which is the argument for checking before you dial rather than guessing after.",
     },
     {
       title: "Hand it to whatever works it",
@@ -122,7 +125,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       q: "How is this different from buying a lead list?",
-      a: "A bought list is old and shared. It was compiled at some point in the past and sold to everyone who paid, so the same owners get the same calls from several agents in the same week. This builds the list on demand, for the area you are working, on the day you work it, and it costs a fraction of vendor pricing because you are paying for enrichment rather than for a middleman's margin.",
+      a: "A bought list is old and shared. It was compiled at some point in the past and sold to everyone who paid, so the same owners get the same calls from several agents in the same week. This builds the list on demand, for the area you are working, on the day you work it, and you pay for the enrichment itself rather than for a middleman's margin on a file that was already resold. What that saves against any particular list vendor depends on the vendor and the volume, so this page does not print a multiple it cannot show you the working for.",
     },
     {
       q: "How many records can it process?",

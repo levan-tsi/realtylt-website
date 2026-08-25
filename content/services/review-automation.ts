@@ -34,7 +34,15 @@ export const reviewAutomation: Service = {
   title: "More 5-star reviews, without the awkward ask",
   lede: "The moment a job wraps, the AI texts the customer and walks them one tap to your Google review page. No chasing, no forgetting. Everyone gets the same link, whatever they scored, because asking only the people you expect to be kind is review gating and Google's policy rules it out. A low score gets the link and a private message from you as well, so you hear about a problem the day it happens instead of reading it later.",
   specs: ["auto-request at job end", "one-tap Google reviews", "the same link for everyone", "a low score reaches you too"],
-  why: "73% of customers read reviews before they book, and the business with the most recent reviews wins the call. This asks every customer at the moment the work is fresh in their mind, which is the only moment the ask actually works.",
+  // THE 73% IS DEAD (Round B, 2026-08-25). "73% of customers read reviews before they book"
+  // sat here, in `stat` and in an FAQ, with no source. It was hunted for: BrightLocal's Local
+  // Consumer Review Survey is the only annually repeated primary survey of this behaviour, its
+  // 2026 edition publishes its method (a representative panel of 1,002 US adult consumers via
+  // SurveyMonkey), and 73 is not a figure in it. What is in it is 97% who read reviews for
+  // local businesses at all, 41% who "always" do, and, most usefully for THIS page, 74% who
+  // seek reviews written in the last three months. So the number here is now that one, quoted
+  // as written, with the survey named beside it.
+  why: "Reviews are read before they are ever mentioned, and the ones people read are the recent ones. This asks every customer at the moment the work is fresh in their mind, which is the only moment the ask actually works, and a steady trickle is worth more than a good year three years ago.",
   keywords: [
     "automated review requests",
     "get more google reviews",
@@ -50,8 +58,12 @@ export const reviewAutomation: Service = {
   },
 
   stat: {
-    value: "73%",
-    label: "of customers read reviews before they book",
+    value: "74%",
+    label: "of consumers look for reviews written in the last three months",
+    source: {
+      text: "BrightLocal, Local Consumer Review Survey 2026. A representative panel of 1,002 US adult consumers, and a survey run by a company that sells review software.",
+      href: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+    },
   },
 
   figure: {
@@ -121,7 +133,7 @@ export const reviewAutomation: Service = {
   faqs: [
     {
       q: "How do I get more Google reviews?",
-      a: "Ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. The reason most businesses have few reviews is not that customers are unwilling, it is that the ask is inconsistent and late. Around 73% of customers read reviews before they book, so recency and volume both compound.",
+      a: "Ask every customer, by text, at the moment the job finishes, and make it one tap to the review page. The reason most businesses have few reviews is not that customers are unwilling, it is that the ask is inconsistent and late. Volume and recency both matter: in BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer than 20 reviews and 74% said they look for reviews written in the last three months. That is a survey by a company that sells review software, so treat it as what people say they do rather than as a measurement of what they did.",
     },
     {
       q: "Is it against Google's policy to automate review requests?",

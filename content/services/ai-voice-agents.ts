@@ -43,7 +43,10 @@ export const aiVoiceAgents: Service = {
   whatItIs: [
     "It is a voice on the phone, running on Vapi, that can hold a real conversation. It answers your inbound calls when you cannot, and it dials your new leads back before they move on to the next agent. It listens, it answers, it asks the questions that qualify a person, and it books the next step on your calendar.",
     "Sub-second latency is the reason it works. The gap between a person finishing their sentence and the agent starting its reply is short enough that the conversation feels like a conversation. Long pauses are what make people hang up on a phone bot, and the whole design goes after that one problem.",
-    "It runs in both directions. Inbound, it is the receptionist who never misses a call at 9pm on a Sunday. Outbound, it is the follow-up caller who reaches a new lead in seconds rather than the industry-standard hours, and keeps calling the ones who do not answer the first time.",
+    // "rather than the industry-standard hours" was here until 2026-08-25 and had no industry
+    // and no standard behind it. Replaced with the figure this repo has actually read in the
+    // primary document, carrying its own caveat, the way the chat page carries the same study.
+    "It runs in both directions. Inbound, it is the receptionist who never misses a call at 9pm on a Sunday. Outbound, it is the follow-up caller who reaches a new lead within seconds of the inquiry landing, and keeps calling the ones who do not answer the first time. For a sense of the gap that closes: when Harvard Business Review audited 2,241 US companies in 2011 by submitting an inquiry through each firm's own website, the companies that replied at all took an average of 42 hours. That is cross-industry work about web forms rather than phone calls, so read it as the shape of the problem and not as a real estate benchmark.",
   ],
 
   howItWorks: [
@@ -88,7 +91,9 @@ export const aiVoiceAgents: Service = {
     },
     {
       title: "The ISA you did not hire",
-      body: "An inside sales agent costs a salary, needs training, and works a shift. The voice agent runs every hour of every day at a fraction of that, and it never has a bad morning on the phones.",
+      // "at a fraction of that" was an unsourced cost comparison against a salary nobody here
+      // has measured. Removed 2026-08-25; what is left is true and checkable.
+      body: "An inside sales agent costs a salary, needs training, and works a shift. The voice agent runs every hour of every day, it does not need a rota, and it never has a bad morning on the phones. What it costs tracks how many calls it takes rather than how many people you employ.",
     },
   ],
 

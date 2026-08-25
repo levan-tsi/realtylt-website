@@ -48,6 +48,29 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /\$\s?16,?000\s*(per|a)\s*(text|message)/i,
     why: "a real number from the FTC's civil penalties, not from the TCPA claim an individual can bring, which is $500",
   },
+  // ── Round B, 2026-08-25. Four claims killed on the services surface, three of them dollar
+  // or share claims with nothing under them and one a comparative price. Each was hunted for
+  // a primary document first; none has one.
+  {
+    name: "the unsourced 73% who read reviews before booking",
+    pattern: /(seventy[ -]three percent|\b73\s?(%|percent))/i,
+    why: "no primary survey states it. BrightLocal's Local Consumer Review Survey 2026 (panel of 1,002 US adults) reports 97% who read reviews for local businesses, 41% who always do, and 74% who look for reviews from the last three months. 73 is not in it",
+  },
+  {
+    name: "tens of thousands in unworked commission",
+    pattern: /tens of thousands in unworked/i,
+    why: "an unsourced dollar claim about a database nobody has measured, on the one topic whose own flagship post refuses to state a rate because no independent study of cold database response exists",
+  },
+  {
+    name: "a fraction of vendor pricing",
+    pattern: /fraction of vendor pricing/i,
+    why: "a comparative price claim against prices we have not read in a published document. The standing rule is that such a number is refused out loud, not printed",
+  },
+  {
+    name: "40% of the numbers are dead",
+    pattern: /\b40\s?(%|percent) of the (phone )?numbers/i,
+    why: "written as a measurement and never was one. Nobody publishes a dead-number rate for bought lists",
+  },
 ];
 
 /** Words that mean the sentence is refusing the number rather than resting on it. */

@@ -99,8 +99,15 @@ export interface Service {
 
   seo: { title: string; description: string };
 
-  /** Only when the number is one we already state and can stand behind. */
-  stat?: { value: string; label: string };
+  /** Only when the number is one we already state and can stand behind.
+   *
+   * `source` was added 2026-08-25 (Round B) after `review-automation` carried "73% of customers
+   * read reviews before they book" for the life of the page with nothing under it. Making the
+   * field EXIST is what turns "where did this come from" from a question nobody asks into a
+   * blank in the object. It is optional rather than required because two of the numbers on this
+   * surface are our own product facts and have no external document to point at; a number that
+   * comes from outside this business has no excuse. */
+  stat?: { value: string; label: string; source?: { text: string; href: string } };
 
   figure: Figure;
 

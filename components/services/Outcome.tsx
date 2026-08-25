@@ -23,6 +23,21 @@ export function Outcome({ service }: { service: Service }) {
             </p>
             <span aria-hidden className="mt-5 block h-[3px] w-12 rounded-full bg-porchlight" />
             <p className="mt-4 max-w-[16rem] text-sm leading-snug text-stone">{stat.label}</p>
+            {/* The derivation, beside the number rather than in a footnote nobody scrolls to.
+                A figure this size is the most quoted thing on the page, so it is the one that
+                most needs to say where it came from. */}
+            {stat.source && (
+              <p className="mt-3 max-w-[16rem] text-xs leading-snug text-stone/80">
+                <a
+                  href={stat.source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-ink/20 underline-offset-2 hover:decoration-ink/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                >
+                  {stat.source.text}
+                </a>
+              </p>
+            )}
           </Reveal>
         )}
 
