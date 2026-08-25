@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useSaved } from "@/components/auth/SavedProvider";
+import { Button } from "@/components/ui/Button";
 import type { PortalActivityRow } from "@/lib/portal/types";
 
 const ACTIVITY_LABEL: Record<string, string> = {
@@ -81,6 +82,36 @@ export default function PortalOverview() {
   }, [supabase, user]);
 
   const views = (activity ?? []).filter((a) => a.type === "view_listing").length;
+
+  // THE FIRST SCREEN OF A NEW ACCOUNT (round 39). Every fresh sign-up lands here — the
+  // OAuth callback, the confirmation email, and the magic link all default to /portal — and
+  // until now the welcome was four zero tiles and an empty activity list: a report on what
+  // the visitor does not have. A first screen's job is the first action, singular. The
+  // tiles come back the moment there is anything to count. `activity !== null` keeps this
+  // from flashing during the initial load; reportsCount has no loaded flag, but an account
+  // with reports and no logged activity cannot exist (running a report logs one).
+  const fresh =
+    activity !== null &&
+    activity.length === 0 &&
+    favorites.length === 0 &&
+    searches.length === 0 &&
+    reportsCount === 0;
+  if (fresh) {
+    return (
+      <section aria-label="Get started">
+        <p className="max-w-[46ch] text-xl font-light text-ink">
+          Your account is ready. Homes you heart, searches you save, and market reports you
+          run will all live on this page.
+        </p>
+        <p className="mt-3 t-small text-stone">
+          Start with the search. Heart a home and it stays.
+        </p>
+        <Button href="/search" className="mt-6">
+          Search homes
+        </Button>
+      </section>
+    );
+  }
 
   return (
     <div className="space-y-10">

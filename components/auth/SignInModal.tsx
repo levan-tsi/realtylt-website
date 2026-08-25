@@ -149,8 +149,11 @@ export function SignInModal() {
     if (!supabase) return;
     setBusy(true);
     setNotice(null);
+    // /auth/reset is the page built to TAKE the new password. This used to aim at
+    // /portal/profile, which had no password field — the link worked, the landing was a
+    // dead end (round 39).
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/portal/profile`,
+      redirectTo: `${window.location.origin}/auth/callback?next=/auth/reset`,
     });
     setBusy(false);
     setNotice(
