@@ -89,6 +89,31 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /large share of admin hours/i,
     why: "an unsourced quantity about where a business's hours go, on a page that has never measured anybody's hours",
   },
+  // ── Round E, 2026-08-25. Four claims killed while writing the skip tracing and marketing
+  // automation flagships. Two of them are flat legal or behavioural conclusions, which is the
+  // shape this guard has not carried before: every earlier entry is a NUMBER. A wrong number is
+  // easier to spot than a wrong assertion, and on the legally heaviest page in the set the
+  // assertion is the more expensive of the two.
+  {
+    name: "skip tracing is legal and standard practice",
+    pattern: /skip tracing[^.]{0,80}is legal and standard practice/i,
+    why: "a flat legal conclusion with nothing under it, on the page with the most legal exposure on the site. The acquisition side is governed by 18 U.S.C. 2721 to 2725, which permits release of motor vehicle record information only for a listed set of purposes, and by 15 U.S.C. 1681b, which turns on the purpose the information is used for. Both attach to the person obtaining and using the data. The page now says what the two statutes are and what to ask a provider",
+  },
+  {
+    name: "a listing that expired is a seller who still wants to sell",
+    pattern: /expired is a seller who still wants to sell/i,
+    why: "an absolute about a group of people. Plenty of households that took a listing off the market have decided to stay, and the same page's own limits say the service gives nobody a reason to sell",
+  },
+  {
+    name: "the owners most likely to sell are the ones who do not live there",
+    pattern: /owners most likely to sell/i,
+    why: "a claim about who transacts, with nothing under it, on a page whose own flagship spends a section refusing to invent rates for this trade",
+  },
+  {
+    name: "SMS is usually the channel that gets opened",
+    pattern: /usually the channel that gets opened/i,
+    why: "a comparative claim about channel performance with no published measurement behind it. The marketing automation flagship shows that an open is not even a reliable measurement within one channel, let alone across two",
+  },
 ];
 
 /** Words that mean the sentence is refusing the number rather than resting on it. */
