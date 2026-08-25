@@ -5,6 +5,7 @@
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
 import {
+  AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
@@ -13,6 +14,7 @@ import {
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import { REVIEW_FLAGSHIP } from "./review-scenes";
+import { BOOKING_FLAGSHIP } from "./booking-scenes";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
@@ -60,6 +62,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "ai-appointment-booking-no-shows-real-estate",
+    title: "You Booked the Showing for Nine Days Out. Nobody Came.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topic 6 carries none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "You answered, you were pleasant, you agreed on a time that suited everybody, and nobody came. What AI appointment booking actually does about the gap between the ask and the day, what 51,529 appointments say about booking too far ahead, and the one reminder with a randomised trial behind it.",
+    seoDescription:
+      "What AI appointment booking does about no-shows, what 51,529 appointments say about lead time, and why a calendar invitation is not the same as a text message.",
+    cover: "/images/counties/rockland.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_APPOINTMENT_BOOKING_POST,
+    flagship: BOOKING_FLAGSHIP,
+  },
   {
     slug: "automated-google-review-requests-real-estate",
     title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",

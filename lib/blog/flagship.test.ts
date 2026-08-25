@@ -5,7 +5,9 @@ import { REACTIVATION_FLAGSHIP } from "@/content/blog/reactivation-scenes";
 import { QUALIFY_FLAGSHIP } from "@/content/blog/qualify-scenes";
 import { WORKFLOW_FLAGSHIP } from "@/content/blog/workflow-scenes";
 import { REVIEW_FLAGSHIP } from "@/content/blog/review-scenes";
+import { BOOKING_FLAGSHIP } from "@/content/blog/booking-scenes";
 import {
+  AI_APPOINTMENT_BOOKING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
@@ -99,6 +101,30 @@ describe("flagshipToc", () => {
     ]);
   });
 
+  /** And the same freeze for topic 7. */
+  it("derives exactly the rail the appointment booking post shipped with", () => {
+    const bookingOutline = parseOutline(AI_APPOINTMENT_BOOKING_POST);
+    expect(flagshipToc(bookingOutline, BOOKING_FLAGSHIP)).toEqual([
+      { id: "the-gap-nobody-measures-because-it-does-not-look-like-a-loss", label: "The gap" },
+      { id: "scene-lead-time", label: "The lead time", scene: true },
+      { id: "why-distance-kills-an-appointment", label: "Why it dies" },
+      { id: "the-second-half-which-is-the-reminder", label: "The second half" },
+      { id: "scene-reminders", label: "The trial", scene: true },
+      { id: "what-ai-appointment-booking-actually-does", label: "What it does" },
+      { id: "scene-the-booking", label: "The booking", scene: true },
+      { id: "what-reading-your-calendar-should-actually-mean", label: "Your calendar" },
+      { id: "what-a-booking-is-technically-and-why-most-of-them-are-not-one", label: "What a booking is" },
+      { id: "scene-booking-path", label: "The path", scene: true },
+      { id: "scene-booking-calculator", label: "Your numbers", scene: true },
+      { id: "what-to-do-about-the-ones-who-still-do-not-turn-up", label: "When they miss" },
+      { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
   it("skips scenes that declare no label, because not every scene is a destination", () => {
     const rows = flagshipToc(outline, AI_CHAT_FLAGSHIP);
     for (const key of ["pull-quote", "funnel", "in-short", "response-curve", "failure-modes"]) {
@@ -136,6 +162,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["lead qualification", LEAD_QUALIFICATION_POST, QUALIFY_FLAGSHIP],
   ["workflow automation", WORKFLOW_AUTOMATION_POST, WORKFLOW_FLAGSHIP],
   ["review automation", REVIEW_AUTOMATION_POST, REVIEW_FLAGSHIP],
+  ["ai appointment booking", AI_APPOINTMENT_BOOKING_POST, BOOKING_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

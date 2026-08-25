@@ -45,6 +45,7 @@ export const POSTS = [
   "ai-lead-qualification-real-estate-scoring",
   "workflow-automation-real-estate-business",
   "automated-google-review-requests-real-estate",
+  "ai-appointment-booking-no-shows-real-estate",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */

@@ -9,6 +9,178 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const AI_APPOINTMENT_BOOKING_POST = `On a Sunday evening in June somebody messaged about a house on Delavan. They wanted to see it. You were at dinner, you saw the message at nine, and you did the right thing: you called back first thing on Monday and had a good conversation.
+
+Then the two of you looked for a time. Your Tuesday was gone, Wednesday they were away, Thursday you had a closing, and the first slot that worked for both of you cleanly was the following week. Thursday the ninth, half past six. You wrote it down. They sounded delighted.
+
+Nine days later you drove out, put the lights on, and waited twenty minutes on the porch with the front door open.
+
+Nothing about that story is a failure of service. You answered, you were pleasant, you were flexible, and you lost the afternoon anyway. In the CRM it will be logged as an appointment, and if anybody counts appointments this month it will be counted.
+
+The part worth knowing is that this outcome was more likely than you think on the day you agreed to it, and that the reason has been measured. Not by anybody in real estate.
+
+[[scene:in-short]]
+
+## The gap nobody measures, because it does not look like a loss
+
+Every business with a calendar in it tracks two things: how many inquiries came in, and how much work came out. Almost nobody tracks the distance between them, which is the number of days between the moment somebody asked for your time and the moment that time actually arrives.
+
+That number has a name in the scheduling literature, lead time, and there is a study that measures what it does. Michael McMullen and Peter Netland pulled every appointment out of the scheduling database at the University of Virginia Eye Clinic for a twelve month period, 51,529 of them, and sorted them by how far in advance each had been booked. Their [paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/) reports two clinics separately, one run by residents and one by faculty, whose baseline no-show rates differ by more than a factor of three.
+
+Both curves point the same way and neither is subtle. In the resident clinic, appointments made nought to two weeks ahead were missed 9.1% of the time and appointments made six months ahead were missed 38.3% of the time. In the faculty clinic, whose patients miss far fewer appointments to begin with, the same comparison runs from 2.4% to 6.9%. The authors also ran the arithmetic the other way and estimated that if every appointment in the resident clinic had been booked within two weeks, the overall no-show rate would fall by nearly sixty percent.
+
+A patient is not a buyer and an eye clinic is not a brokerage, and the percentages above are not a benchmark for anything you do. The direction is what should worry you, because the direction is a property of people rather than of ophthalmology, and because the most natural, most polite, most accommodating thing you do all week is push an appointment out until it suits everybody.
+
+[[scene:lead-time]]
+
+## Why distance kills an appointment
+
+The chart measures the effect and does not explain it, so it is worth being honest about which parts of the explanation are evidenced and which are just how people work. The first reason below is the one the data supports directly. The other three are mechanisms, offered as mechanisms.
+
+What they have in common is that none of them is about the person being unreliable, which matters because the instinct after an empty afternoon is to decide something about the character of the people who did not come. They were not being rude. They made a plan while they were motivated, the plan sat outside for a week and a half, and the weather got to it.
+
+[[scene:why-they-drop]]
+
+[[scene:plate]]
+
+## The second half, which is the reminder
+
+Of those four, exactly one can be fixed by software on its own, and it happens to be the one with the best evidence behind it anywhere in this article.
+
+In 2007 four researchers at Sir Run Run Shaw Hospital in Hangzhou took 1,859 people with booked appointments at a health check-up centre and randomly assigned them into three groups. One group got a text message 72 hours before their appointment. One got a phone call at the same interval, with the same content. The third got nothing, which was the normal practice. 1,848 of them were analysed.
+
+The [result](https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/) is one of the plainest numbers in this whole series. Attendance was 80.5% with no reminder, 87.5% with a text and 88.3% with a call. Both reminder groups beat the control by a margin the paper reports as statistically significant, and the difference between the text and the call was not significant at all. The text cost less: 0.31 Yuan per person who turned up against 0.48 for the phone calls.
+
+Read that as a shape rather than as a promise. Nobody has run this trial on people going to look at a house, the population in Hangzhou had already paid for the appointment they were being reminded about, and 2007 was a different century for text messaging. What survives the translation is the least glamorous sentence in this article. One reminder, sent automatically, is the highest return per unit of effort of anything on this page, and it is also the first thing people switch off because it feels like nagging.
+
+[[scene:reminders]]
+
+## What AI appointment booking actually does
+
+Under the category name it is four small things in a row, and only the last one has a trial behind it.
+
+It answers immediately, which is the part that gets sold. It offers times, which is where the real judgement lives, because a system that lists a fortnight of availability has handed the reader the choice that the evidence above says will hurt them. It writes the slot down in both places. And then it reminds.
+
+Notice what is not on that list. It does not persuade, it does not qualify, and it does not have a personality. The value is not in any single step but in the fact that all four happen every time, at nine on a Sunday evening as reliably as at eleven on a Tuesday morning, which is the one thing a person with a phone and a full week genuinely cannot do.
+
+[[scene:four-moves]]
+
+[[scene:the-booking]]
+
+## What reading your calendar should actually mean
+
+Every product in this category says it reads your calendar. That sentence covers two quite different levels of access and it is worth knowing which one you are being asked for, because one of them is a great deal more intrusive than the other and most buyers never ask.
+
+The narrow version is a free and busy query. Google's Calendar API has a specific endpoint for it, and the [documentation](https://developers.google.com/workspace/calendar/api/v3/reference/freebusy/query) describes exactly what comes back: it returns free and busy information for a set of calendars, and each calendar's answer is a list of the time ranges during which it should be regarded as busy. That is all. Not the titles, not the attendees, not the notes, not the address of the appraisal you are driving to. A wall of blocks.
+
+The wide version is full read access to the events themselves, which some products want because it lets them do cleverer things, and which means the vendor's systems can see who you are meeting and what about. That may be a perfectly reasonable trade. It is not a reasonable thing to agree to without noticing, particularly in a business where a calendar entry can reveal that a client is selling before anybody else knows it.
+
+There is a second half to this that nobody markets, and it is the writing rather than the reading. A system that can only read is a system that cannot hold a slot, which means two people asking at the same time can be offered the same six thirty. The slot has to be written the moment somebody takes it, not at the end of the conversation and not in a nightly sync.
+
+## What a booking is, technically, and why most of them are not one
+
+Here is a distinction that sounds pedantic and is the difference between an appointment that happens and one that does not.
+
+When a booking system tells you it has confirmed the appointment, it has done one of three things. It may have sent a text message that contains a date and a time, which is a sentence. It may have attached a calendar file, which is a document. Or it may have sent an actual invitation, which is a transaction with a reply.
+
+The format underneath all of this is iCalendar, defined in [RFC 5545](https://www.rfc-editor.org/rfc/rfc5545.html), and the specification is unusually clear about the difference. A calendar object carries a property called METHOD, and the standard says that if that property is absent then a scheduling transaction must not be assumed, and the object is merely being used to transport a snapshot of some calendar information without the intention of conveying a scheduling semantic. In plainer words: an attachment with no method on it is a picture of an appointment. It may land nicely on a phone and it may not, and nothing comes back to tell you either way.
+
+The same specification defines an alarm component, which is the reminder that lives on their device rather than on your server. It costs nothing, it does not depend on a text message arriving, and it fires whether or not your system is having a good day.
+
+So the question to ask a vendor is not whether it sends a confirmation. It is whether the person on the other end gets something their calendar treats as an invitation, with an alarm attached, and whether you find out when they accept it. The three answers are visibly different on a phone, and one of them is a booking.
+
+[[scene:booking-path]]
+
+[[scene:booking-calculator]]
+
+[[scene:pull-quote]]
+
+## What to do about the ones who still do not turn up
+
+Even with the shortest lead times and the best reminders, some proportion of appointments will not happen, and the difference between businesses is almost entirely in what happens in the following hour rather than in the rate itself.
+
+The hour after is the whole opportunity. Somebody who missed a six thirty is, at seven, aware they have missed it and mildly embarrassed about it, and a short message that offers a new time without a shred of reproach in it converts at a rate that would surprise anybody who has not tried it. Leave that until the next morning and you are competing with everything else in their inbox and with their own reluctance to reopen the subject.
+
+Write the message so it assumes something got in the way, because usually something did. Two lines, one new time, and nothing that requires an apology to answer. Any system that can book can also do this, and most of the ones on the market do not, because the feature nobody demos is the recovery.
+
+Then count them. Not to punish anybody, and not as a metric anybody is judged on, but because a business that does not know its own attendance rate has no way to tell whether any of this worked. The number you want is simple: of the last twenty appointments you agreed, how many happened. Almost nobody in this industry can answer that from memory, and the answer is usually a few points worse than the guess.
+
+## How to test one before you buy it
+
+Four questions, and every one of them can be answered inside a demo without knowing anything technical.
+
+Book yourself an appointment from your own phone, in front of them. Watch what arrives. If it is a text message with a time in it, that is a sentence, not an invitation. Open whatever it sends and see whether your own calendar offers you the option to accept it and whether it sets a reminder by itself.
+
+Ask which times it offered you, and why those. If it offered you the next ten openings in a list, ask what happens if you change it to offer the soonest two. A product that cannot answer that has not thought about the only part of this that the research is actually about.
+
+Ask what access it needs to your calendar, in the vendor's own words, and whether free and busy access is enough. If the answer is that it needs to read the events themselves, ask what it does with them and where those events are stored. There may be a perfectly good answer. There should be an answer.
+
+Ask what happens when two people take the same slot within a minute of each other, and then ask them to demonstrate it. This is the failure that embarrasses you in front of a client rather than in front of a log file, and the honest vendors will already have a story about the time it happened to them.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+The software is the smaller line and it is not usually the thing that decides the bill. What decides the bill is how many places have to agree about your availability. One calendar and one channel is a short project. Three agents, two shared calendars, a portal that also takes bookings and a phone line that books through the voice agent is a different exercise, and most of the work in it is not the building.
+
+The recurring cost that does scale is messaging, because confirmations and reminders go by text and text messages are billed one at a time. It is a small number per appointment and it is the one line on the invoice that grows when things go well, which is the right shape for a cost to have.
+
+Setup is short for the same reason it is short on any of these: the machinery is standard and the decisions are not. The decisions that take the time are what the appointment types actually are, how long each one really needs including the drive, what hours you are honestly willing to be booked into, and what the system should do when somebody asks for a Sunday. Every one of those is a question about your business, and every one of them will still be true if you never automate anything.
+
+The cost nobody puts on a quote is the discipline of keeping the calendar true. A booking system is only as good as the availability it can see, and a business where half the commitments live in somebody's head will get exactly the reliability that implies. That is not a reason to skip it. It is the first month of work, and it is worth doing whether the software arrives or not.
+
+## What it does not do, and should not pretend to
+
+It does not make anybody turn up. Reminders are the most reliable thing anybody has measured for attendance and they are still only reminders. Somewhere in your year is a person who confirmed twice and went to the beach.
+
+It does not decide who is worth an appointment. This is the limit that costs real money and it is worth sitting with, because a system that fills your week faster will fill it with whoever asked. Booking speed and lead quality are separate problems with separate answers, and putting a booking assistant in front of an unfiltered inbox turns a quiet Saturday into a busy one without turning it into a better one.
+
+It does not create time. If the week is genuinely full, the honest output is a longer lead time or a refusal, and both of those are worse than they sound given everything above. The uncomfortable version of this article's argument is that some inquiries are better served by somebody saying, plainly, that the soonest real slot is a fortnight away and asking whether that still works.
+
+It does not run the appointment. It gets two people to the same address at the same time with the address written down. What happens in the next forty minutes is the part nobody has automated and the part you are actually paid for.
+
+And it does not repair a calendar you do not trust. If you already override the calendar three times a week because it is wrong, a machine reading it will be wrong three times a week too, in public, to strangers.
+
+[[scene:failure-modes]]
+
+## Common questions, answered honestly
+
+### What is AI appointment booking, in plain terms?
+
+It is software that answers a request for your time straight away, offers times that are genuinely free by reading your calendar, writes the chosen slot onto both calendars while the conversation is still happening, and then sends the confirmation and the reminder. The AI part is only the conversation: understanding a message written the way people actually write, and holding a short exchange about times without sounding like a form. The booking underneath it is ordinary and unglamorous software, which is a good thing, because ordinary software is the kind that runs at nine on a Sunday.
+
+### Will it reduce no-shows?
+
+Two parts of it will, and it is worth knowing which. The reminder is the part with real evidence: a randomised trial of 1,848 appointments found attendance of 80.5% with no reminder against 87.5% with a single text sent three days ahead. The other part is less obvious and possibly larger, which is that booking inside the first conversation tends to produce a much shorter gap between the ask and the appointment, and shorter gaps are associated with far better attendance in the clinic study above. Neither of those figures is from real estate, and anybody quoting you a no-show reduction for your business is quoting you a number nobody has measured.
+
+### How does it know when I am free?
+
+It queries your calendar. There are two levels of access and the difference matters: a free and busy query returns only the time ranges you are busy, with none of the contents, while full access lets a system read the events themselves. Ask which one a vendor wants. For pure booking, free and busy plus permission to create an event is enough, and anything beyond that should come with a reason.
+
+### Can it book on the phone as well as by text?
+
+Yes, and it is the same booking layer underneath. A caller can be booked mid-conversation by the voice agent exactly as a website visitor can be booked mid-chat, which matters mostly because it means one calendar rather than two and no chance of the two channels selling the same six thirty.
+
+### What if somebody wants a time I do not have?
+
+Then it should say so and offer the nearest alternatives, which is the boring correct answer, and it should never offer a slot you have blocked out. The more interesting question is what you want it to do with a request for a Sunday, or for eight in the morning, and that is a decision about your life rather than a setting. Decide it deliberately, because a booking system will enforce whatever you tell it with a consistency you would never manage yourself.
+
+### Is a shorter lead time always better?
+
+Not always, and the study is about attendance rather than about revenue. An appointment two days out is more likely to happen and it also gives somebody less time to arrange finance, get a partner to come, or organise childcare, and for some appointments those things matter more than attendance does. The finding is not that everything should be tomorrow. It is that the fortnight you drifted into because it suited the calendar has a cost, and now you know roughly which direction that cost runs in.
+
+## What to do about it
+
+Do the count, tonight, on paper. It takes ten minutes and it costs nothing.
+
+Open your calendar and scroll back through the last twenty appointments you agreed with somebody outside the business. For each one write two numbers: how many days there were between the conversation and the slot, and whether it happened. Then work out the median of the first column and the share of the second.
+
+That pair of numbers is the whole of this article in your own handwriting. If the median is under three days you are already doing the important thing and you do not need us. If it is nine, you now know what the empty porch on the ninth was, and it was not the person who did not come.
+
+[[scene:funnel]]`;
+
 export const REVIEW_AUTOMATION_POST = `Last Tuesday a woman in Beacon stood in her kitchen with a phone in one hand and two names on the screen. Both had been recommended by somebody she trusted. She had about ten minutes before she had to leave for the pool.
 
 She tapped the first name. Twelve reviews, every single one of them five stars, and the most recent was from 2023.

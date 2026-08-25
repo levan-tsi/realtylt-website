@@ -43,6 +43,7 @@ const SLUGS = args.length
       "ai-lead-qualification-real-estate-scoring",
       "workflow-automation-real-estate-business",
       "automated-google-review-requests-real-estate",
+      "ai-appointment-booking-no-shows-real-estate",
     ];
 
 const browser = await chromium.launch();
