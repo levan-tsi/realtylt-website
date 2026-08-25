@@ -49,13 +49,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
   }));
 
-  // Static stubs + everything published from the CRM (docs/BLOG-CMS.md).
-  const posts: MetadataRoute.Sitemap = (await getArticles()).map((p) => ({
-    url: `${base}/blog/${p.slug}`,
-    priority: 0.5,
-    changeFrequency: "monthly",
-    lastModified: new Date(p.date),
-  }));
+  // Everything published from the CRM (docs/BLOG-CMS.md), plus the static posts that are
+  // real articles. The seeded stubs are EXCLUDED: `placeholder` means the body is
+  // "[Placeholder draft…]", and submitting a thin page for indexing is asking for the
+  // whole directory to be judged by it. They are noindex per-post in app/blog/[slug],
+  // so the sitemap and the page agree. Publishing the real article from the CRM under the
+  // same slug clears `placeholder` and the URL returns here on its own.
+  const posts: MetadataRoute.Sitemap = (await getArticles())
+    .filter((p) => !p.placeholder)
+    .map((p) => ({
+      url: `${base}/blog/${p.slug}`,
+      priority: 0.5,
+      changeFrequency: "monthly",
+      lastModified: new Date(p.date),
+    }));
 
   // Listing URLs only in fixture mode are stable enough to publish; the live feed
   // rotates, so keep the sitemap to evergreen pages when the real MLS is connected.

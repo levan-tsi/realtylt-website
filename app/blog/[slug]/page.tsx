@@ -50,6 +50,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     authors: [{ name: post.author }],
+    // A seeded stub renders "[Placeholder draft…]" where the article should be. That is a
+    // thin page, and a thin page in the index costs the whole /blog directory rather than
+    // just itself. `follow` stays on so the crawler still walks to the real posts linked
+    // from it. This is PER-POST and deliberately independent of the site-wide PRELAUNCH
+    // disallow in app/robots.ts, which the owner removes at launch: the day that flips,
+    // these ten must still be out. They also drop out of app/sitemap.ts.
+    ...(post.placeholder ? { robots: { index: false, follow: true } } : {}),
     alternates: { canonical: url },
     openGraph: {
       title,
