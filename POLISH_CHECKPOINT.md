@@ -64,6 +64,9 @@
 ##    exists on services/blog, extend the pattern). SKIPPED on merit, do not add blind:
 ##    sticky mobile CTA (fights the chat bubble; decide from PostHog replays post-launch)
 ##    and case studies (post-launch blog-loop content, needs his client permissions).
+##    OG PREVIEW IMAGES: verified 2026-08-24 -- og:image URLs point at the canonical
+##    realtylt.com (correct), files serve 200 from OUR build, but return 410 today because
+##    the apex still serves the old vendor. SELF-HEALS at DNS flip; re-test previews then.
 ## 4. CARRIED, unchanged: his spend-cap click (~$2/mo vs 22 Sep restriction) - his first
 ##    Google sign-in (post-fix) - megamenu DUTCHESS ring 2.85:1 (own cross-page pass) -
 ##    /plan BudgetBridge h2 - blog backlog (the /blog loop; 26 drafts) - launch switches
