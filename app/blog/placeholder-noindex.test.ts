@@ -53,4 +53,18 @@ describe("placeholder posts stay out of the index", () => {
       expect(urls.some((u) => u.endsWith(`/blog/${p.slug}`)), p.slug).toBe(true);
     }
   });
+
+  /** And the half of the problem noindex cannot touch: a PERSON on /blog.
+   *
+   * Ten of the twenty cards on the index led to a page whose visible body reads
+   * "[Placeholder draft...]". Search engines were settled by the robots directive above;
+   * a visitor who clicks is not. app/blog/page.tsx filters `placeholder` out of the list.
+   * Asserted on the same predicate the page uses, so a stub can never be listed again,
+   * and asserted POSITIVELY as well: a filter that hides everything also passes. */
+  it("the index lists the real articles and none of the stubs", () => {
+    const listed = POSTS.filter((p) => !p.placeholder);
+    expect(listed.length).toBeGreaterThanOrEqual(9);
+    expect(listed.some((p) => p.slug === REAL_SLUG)).toBe(true);
+    expect(listed.some((p) => p.placeholder)).toBe(false);
+  });
 });

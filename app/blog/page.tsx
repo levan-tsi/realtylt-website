@@ -24,7 +24,13 @@ const minutes = (a: Article) =>
   readingTime(a.body.kind === "markdown" ? a.body.markdown : a.body.paragraphs.join(" "));
 
 export default async function BlogIndexPage() {
-  const articles = await getArticles();
+  // Placeholder stubs are not listed. They were noindexed and dropped from the sitemap on
+  // 2026-08-25, which settles the search engines and does nothing for a person: ten of the
+  // twenty cards here led to a page whose visible body reads "[Placeholder draft...]".
+  // The URLs still resolve, so nothing already shared breaks, and the migration path is
+  // untouched: publishing a real article from the CRM under the same slug clears
+  // `placeholder` and the card returns here on its own.
+  const articles = (await getArticles()).filter((a) => !a.placeholder);
   const [featured, ...rest] = articles;
 
   return (
