@@ -8,8 +8,11 @@
 | B | topics 6-7: **review automation**, **AI appointment booking** · the unsourceable 73% killed, 74% sourced in its place · 5 more unsourced claims dead · `stat.source` rendered | VERIFIED, LIVE |
 | C | topics 8-9: **local SEO**, **geo/area pages** · argued as two different products (overlap 0 across all 9) · 10 more claims killed incl. the citations-drive-map-pack myth · zombie guard rotted list replaced with a directory read | VERIFIED, LIVE |
 | — | the blog INDEX stops listing the ten stubs (noindex settled Google; a person clicking still landed on "[Placeholder draft...]") | VERIFIED, LIVE |
-| D | topics 10-11: **CRM sync**, **AI agent workforce** · 6 unsourced service claims killed · 9 defects found by looking | building |
-| E | **the photograph shortage solved**: 14 new CC BY editorial plates, 5 unspent · topics 12-13: **skip tracing** (DPPA + FCRA, the legally heaviest page in the set), **marketing automation** (CAN-SPAM, the 0.3% ceiling, the three RFCs) · 8 more service claims killed incl. **three fabricated Hudson Valley addresses** live on the skip-tracing page · a wrong REASON caught in the second pass | building |
+| D | topics 10-11: **CRM sync**, **AI agent workforce** · 6 unsourced service claims killed · 9 defects found by looking | VERIFIED, LIVE |
+| E | **the photograph shortage solved**: 14 new CC BY editorial plates, 5 unspent · topics 12-13: **skip tracing** (DPPA + FCRA, the legally heaviest page in the set), **marketing automation** (CAN-SPAM, the 0.3% ceiling, the three RFCs) · 8 more service claims killed incl. **three fabricated Hudson Valley addresses** live on the skip-tracing page · a wrong REASON caught in the second pass | VERIFIED, LIVE |
+| — | **D5 stopped lying**: `visibleUpdated` was /updated/i over the whole body, so a post that used the word in prose was credited with a revision line it did not carry. It still failed on the dates, which is why the lie survived four rounds. Now reads the rendered `time[datetime]`; proved both ways | VERIFIED, LIVE |
+| — | **the /ai page stopped disagreeing with the services surface** on seven claims (ai-page repo, LOCAL, awaiting the owner's deploy go): the reviews panel literally described REVIEW GATING, plus the dead 73%, "fraction of vendor pricing", "tens of thousands in unworked commission", "never slip through a PDF", "unlimited parallel agents", and CRM-sync's absolutes | LOCAL, owner-gated |
+| F | topics 14-15: document processing, data enrichment | building |
 
 **Standing cohort state:** 13 flagship posts, all green on `flagship-standard.mjs`, sibling
 overlap 0 across the whole cohort, zero new scene components in twelve consecutive topics, 1231
