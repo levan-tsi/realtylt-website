@@ -1,6 +1,27 @@
 // Download license-safe imagery (Openverse API → CC0/CC-BY photos) into public/images
 // and record every source + license in public/images/ATTRIBUTIONS.md.
 // Usage: node scripts/fetch-images.mjs
+//
+// ⚠ THIS SCRIPT NO LONGER WORKS AS WRITTEN, measured 2026-08-25 (round E). The Openverse
+// endpoint it calls now answers 401 to an ANONYMOUS request: four queries were run and all four
+// came back 401, and `searchOpenverse` reports that as `SEARCH FAIL` and then quietly writes an
+// ATTRIBUTIONS.md with no rows in it, which would delete the entire licence record.
+// DO NOT RUN IT until the auth below is added.
+//
+// What works instead, all four proven in round E and committed beside this file:
+//   scripts/find-plates.mjs          search, with a bearer token from OPENVERSE_TOKEN
+//   scripts/fetch-plates.mjs         download at the largest Flickr size, re-encode, stage
+//   scripts/check-plate-licence.mjs  read the licence off the photo page itself
+//   scripts/plate-swatch.mjs         judge a candidate at the real 21:9 plate crop
+//
+// A token comes from registering a throwaway application anonymously:
+//   POST https://api.openverse.org/v1/auth_tokens/register/   {name, description, email}
+//   POST https://api.openverse.org/v1/auth_tokens/token/      grant_type=client_credentials
+// Keep the credential OUT of this repository; find-plates.mjs reads it from the environment.
+//
+// One more trap this file would hit: Flickr records in that catalogue carry NULL width and
+// height in the search response, so the `usable` filter below rejects every Flickr result and
+// looks exactly like an empty catalogue. See docs/blog-flagship/ROUND-E-LOG.md, section E0.
 import fs from "node:fs";
 import path from "node:path";
 
