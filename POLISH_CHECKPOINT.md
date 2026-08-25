@@ -1,5 +1,84 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == HANDOFF 2026-08-25 -> ROUND 40. ROUND 39 IS DONE, PUSHED, AND VERIFIED ON PRODUCTION ==
+## Shape: SINGLE Fable agent (per-session grant absent, so no subs). Every item of the round-39
+## brief below closed, every claim below MEASURED on the deployed site unless marked otherwise.
+##
+## -- WHAT SHIPPED (9 commits, dfb1861..25eabe8) -------------------------------------------
+## 1. /CONNECT SYMMETRY (his verbatim asks): contacts first (the h1 "Call, email, or book a
+##    time" is now a left-to-right map of the page), portrait card dropped to the session
+##    cards' level (measured delta 6px at 1440), "Pick a slot" back to sr-only (it was the
+##    left-aligned serif against Google's centered sans), appointments up ~48px everywhere,
+##    office address = Google Maps DIRECTIONS link. Cropping the embed's header was ruled
+##    out by measurement: the date-picker screen puts the session title in that same band.
+##    Before/after: docs/design-r39/connect/. Seen live on production in his Chrome.
+## 2. AUTH, all five: (a) GOOGLE SIGN-IN VERIFIED END TO END ON PRODUCTION and HIS FIRST
+##    SIGN-IN IS DONE - completed with levan@realtylt.com in his Chrome, landed on /portal
+##    signed in, device saves synced (3). The consent screen names the supabase.co domain
+##    instead of RealtyLT - cosmetic, needs Google app verification or a custom auth
+##    domain, post-launch owner call. (b) POST-LOGIN LANDING: /portal is canonical (all
+##    email/OAuth flows already default there); a brand-new account now gets ONE action
+##    ("Search homes") instead of four zero tiles; in-modal sign-in still closes in place
+##    on purpose (mid-task context is worth more than a bounce). (c) SMTP: the r38 "OFF"
+##    was STALE - a real signup proved custom SMTP is ON via his Workspace (sender
+##    levan@realtylt.com, Gmail SENT label, house-voice template). docs/parity/
+##    SMTP-RUNBOOK.md holds the measurement + fallback options + the DNS truth (SPF/DMARC/
+##    DKIM all live now, SendGrid domain auth intact). (d) FULL REGISTRATION + RESET LOOP
+##    PROVEN ON PRODUCTION: sign up -> confirm -> sign in; forgot (from the modal) ->
+##    email -> /auth/reset (NEW page, one field, expired state, JS-off honest) -> new
+##    password -> old rejected 400 / new 200. reset-flow.test.ts pins the 3-file chain.
+##    (e) SIGN-UP AWARENESS LIVE: trigger trg_notify_site_signup on auth.users -> pg_net
+##    -> n8n "Website Sign-up Notification" (3RLrnY2SMcZ5ZMDL) -> email to Levan, proven
+##    with a real signup (email landed in his inbox 1s after the API call). The function
+##    swallows exceptions BY DESIGN - a dead webhook can never block a signup. CRM linking
+##    contract recorded in SMTP-RUNBOOK.md (match by email, CRM-side build).
+## 3. POSTHOG LIVE ON PRODUCTION (project 575246, us cloud): posthog-js from npm,
+##    localStorage persistence (NO cookie -> no banner), proxied via /relay-ph rewrites so
+##    the guarded CSP needed ZERO changes, replay ON project-side with maskAllInputs.
+##    skipTrailingSlashRedirect:true was REQUIRED (posthog posts to /e/ with a slash; the
+##    308 broke the POST in-browser) and its side effects were measured first: /buying/
+##    serves 200 like /buying (canonicals make it harmless), redirects[] still fire.
+##    capture_pageview:"history_change" hand-set LOST the initial pageview on 1.418 -
+##    defaults:"2025-05-24" fixed it, re-verified in Activity: Pageview + autocapture +
+##    Pageleave + form events all arriving. lib/posthog-proxy.test.ts pins the contract.
+##    GA/gtag untouched (his Ads conversions).
+## 4. LAUNCH-LIST PARTIALS CLOSED: visible FAQs (services-page pattern, native <details>,
+##    first row open, FAQPage schema from the SAME list, phone-answer voice, claims match
+##    each page's own) on /buying /selling /financing; BreadcrumbList schema added to
+##    listing + county pages (visible trails already existed). lib/page-faqs.test.ts holds
+##    voice + list-to-schema agreement.
+##
+## -- GATES AT HANDOFF (all foreground, all this tree) -------------------------------------
+## tsc 0 - npm test 1118/1118, 92 files (baseline 1106/89; only goes UP) - verify-lead-modal
+## 111/111 - hero-contrast 370 runs/9 pages PASS - focus-paint 422/7 PASS - press-feedback
+## 15/15 - reduced-motion PASS - overflow 0 at 1440/390/320 on every changed page.
+##
+## -- THINGS ROUND 40 MUST KNOW ------------------------------------------------------------
+## 1. TEST ACCOUNT levan+r39test@realtylt.com exists in auth (confirmed, portal-typed,
+##    password known only to the r39 session). Keep as probe or delete via Supabase Auth UI
+##    (dashboard delete handles cascades; do NOT raw-SQL it). His own account
+##    levan@realtylt.com (google) also exists now; his browser was left SIGNED OUT.
+## 2. Sign-up notification emails now hit his inbox ("New site account: ..."); two probe
+##    ones from r39 are in there.
+## 3. RESET-LINK TRAP (memory: verify-supabase-reset-flows): a recovery initiated OUTSIDE
+##    the site (raw /auth/v1/recover, no PKCE) produces an implicit #fragment link the
+##    site's PKCE client IGNORES - the page then shows whatever session is already in
+##    cookies. The product's own modal path is PKCE and correct. If a user reports "reset
+##    showed the wrong account", they used a link minted by some other client.
+## 4. The other session pushed 5f2f601 (chat widget token-aware session) mid-round; linear
+##    history, no conflict. dev :3100 runs THIS tree with the new next.config (restarted).
+## 5. PostHog dashboard: his login; "Record user sessions" toggle is ON (I set it).
+##    Replays will accumulate from real visitors once launched; input masking is on.
+##
+## -- ROUND 40 CANDIDATES ------------------------------------------------------------------
+## Owner clicks still pending: spend-cap (~$2/mo, restriction 22 Sep) - launch switches.
+## Carried build items: megamenu DUTCHESS ring 2.85:1 (cross-page pass) - /plan BudgetBridge
+## h2 off the serif scale - county-count owner nod (hero 3,991 vs /search 1,958) - blog
+## backlog via /blog loop - /search D12 structural (client-only map, no h1 without JS).
+## New from r39: consider a "change password" card on /portal/profile (the reset page's
+## form is one import away) - PostHog: after some traffic, look at replays before deciding
+## the sticky-mobile-CTA question the reel raised.
+
 ## == HANDOFF 2026-08-24 EVENING -> ROUND 39 (AUTH + POLISH). READ ALL BEFORE TOUCHING ==
 ## Shape the owner asked for, verbatim rule: ONE FABLE ORCHESTRATOR + ONE OPUS SUBAGENT at a
 ## time on this box. Orchestrator scopes/verifies/pushes; the sub builds and reports; subs
