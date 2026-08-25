@@ -9,8 +9,10 @@ import {
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
   LEAD_QUALIFICATION_POST,
+  REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { REVIEW_FLAGSHIP } from "./review-scenes";
 import { AI_CHAT_FLAGSHIP, FILM } from "./ai-chat-scenes";
 import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
@@ -58,6 +60,26 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "automated-google-review-requests-real-estate",
+    title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
+    date: "2026-08-25",
+    /** NO `updated`, deliberately, and it costs this post D5 on scripts/score-flagship.mjs.
+     * A post written and shipped inside one day has not been revised, and the check wants
+     * dateModified later than datePublished. Topic 4 shipped 18/19 for this exact reason and
+     * the handoff records the rule: set `updated` when the article takes its first real
+     * revision, never to satisfy a gate. Combined with the absent film (C3), this slug scores
+     * 17/19 on the day it ships, and both reds are true statements. */
+    excerpt:
+      "Twelve five-star reviews, the newest from 2023, and the client who never told you she looked. What review automation actually does, exactly where Google's line between asking and gating falls, and what one extra star was worth in the one study that measured money instead of opinion.",
+    seoDescription:
+      "What automated Google review requests do, where Google's policy draws the line on review gating, and the FTC rule that governs reviews on your own website.",
+    cover: "/images/lifestyle/selling.jpg",
+    body: [],
+    placeholder: false,
+    markdown: REVIEW_AUTOMATION_POST,
+    flagship: REVIEW_FLAGSHIP,
+  },
   /* ── The AI exemplars. Real articles, full markdown bodies, not stubs. They are the long
      form behind /services/ai-voice-agents, /services/ai-chat-assistant and
      /services/workflow-automation, and those pages link back to them. The first two are

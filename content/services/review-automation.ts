@@ -153,5 +153,11 @@ export const reviewAutomation: Service = {
     },
   ],
 
-  relatedPosts: ["workflow-automation-real-estate-business"],
+  /** Own flagship first, then the sibling, which is the pattern the other posted services
+   * follow. Two cards and not three because RelatedPosts is a two-column grid and an odd count
+   * leaves a visible empty cell. */
+  relatedPosts: [
+    "automated-google-review-requests-real-estate",
+    "workflow-automation-real-estate-business",
+  ],
 };

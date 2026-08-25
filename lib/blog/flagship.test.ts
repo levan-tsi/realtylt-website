@@ -4,11 +4,13 @@ import { AI_VOICE_FLAGSHIP } from "@/content/blog/voice-agent-scenes";
 import { REACTIVATION_FLAGSHIP } from "@/content/blog/reactivation-scenes";
 import { QUALIFY_FLAGSHIP } from "@/content/blog/qualify-scenes";
 import { WORKFLOW_FLAGSHIP } from "@/content/blog/workflow-scenes";
+import { REVIEW_FLAGSHIP } from "@/content/blog/review-scenes";
 import {
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   DATABASE_REACTIVATION_POST,
   LEAD_QUALIFICATION_POST,
+  REVIEW_AUTOMATION_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
 import { flagshipToc, type FlagshipContent } from "./flagship";
@@ -67,6 +69,36 @@ describe("flagshipToc", () => {
     ]);
   });
 
+  /** The same freeze for topic 6. One frozen rail proved its worth on 2026-08-02, when a
+   * renamed heading left its short label pointing at a dead anchor and the rail printed the
+   * full 58-character heading instead of "The number". That failure mode is per-post, so the
+   * guard has to be per-post: the table-driven contract below checks that every label points
+   * at a heading that EXISTS, and only a freeze like this one checks that the rail a reader
+   * actually sees is the rail somebody intended. */
+  it("derives exactly the rail the review automation post shipped with", () => {
+    const reviewOutline = parseOutline(REVIEW_AUTOMATION_POST);
+    expect(flagshipToc(reviewOutline, REVIEW_FLAGSHIP)).toEqual([
+      { id: "the-number-this-is-usually-sold-on-and-why-it-is-not-in-here", label: "The number" },
+      { id: "scene-thresholds", label: "What they need", scene: true },
+      { id: "what-a-stranger-actually-does-with-your-profile", label: "The scan" },
+      { id: "what-one-extra-star-was-worth-in-the-only-study-that-measured-money", label: "The one study" },
+      { id: "scene-yelp-lift", label: "The money", scene: true },
+      { id: "why-the-ask-does-not-happen", label: "Why nobody asks" },
+      { id: "what-review-automation-actually-does", label: "What it does" },
+      { id: "scene-the-ask", label: "The four", scene: true },
+      { id: "the-line-you-may-not-cross-and-exactly-where-it-is", label: "The line" },
+      { id: "scene-gating-line", label: "Both sides", scene: true },
+      { id: "the-federal-half-which-is-about-your-own-website", label: "Your own site" },
+      { id: "scene-review-calculator", label: "Your numbers", scene: true },
+      { id: "what-to-do-when-the-review-is-genuinely-bad", label: "The bad one" },
+      { id: "how-to-test-one-before-you-buy-it", label: "How to test one" },
+      { id: "what-it-costs-and-how-long-it-takes", label: "Cost and time" },
+      { id: "what-it-does-not-do-and-should-not-pretend-to", label: "What it will not do" },
+      { id: "common-questions-answered-honestly", label: "Common questions" },
+      { id: "what-to-do-about-it", label: "What to do" },
+    ]);
+  });
+
   it("skips scenes that declare no label, because not every scene is a destination", () => {
     const rows = flagshipToc(outline, AI_CHAT_FLAGSHIP);
     for (const key of ["pull-quote", "funnel", "in-short", "response-curve", "failure-modes"]) {
@@ -103,6 +135,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["database reactivation", DATABASE_REACTIVATION_POST, REACTIVATION_FLAGSHIP],
   ["lead qualification", LEAD_QUALIFICATION_POST, QUALIFY_FLAGSHIP],
   ["workflow automation", WORKFLOW_AUTOMATION_POST, WORKFLOW_FLAGSHIP],
+  ["review automation", REVIEW_AUTOMATION_POST, REVIEW_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

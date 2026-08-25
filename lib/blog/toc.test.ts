@@ -56,11 +56,13 @@ describe("extractToc", () => {
     expect(extractToc(AI_CHAT_ASSISTANT_POST).filter((t) => t.depth === 3)).toHaveLength(7);
     expect(extractToc(AI_CHAT_ASSISTANT_POST)).toHaveLength(17);
     // The workflow post was rebuilt as a flagship on 2026-08-01 and gained a "Common questions"
-    // section: 9 top-level sections plus 6 questions. Same shape of assertion as above, so a
+    // section: 9 top-level sections plus 6 questions. On 2026-08-25 it gained a tenth, "The
+    // first month, and the two things to do in it", when the standard ratcheted to 19 sections
+    // and the honest way to close that was to write one. Same shape of assertion as above, so a
     // heading going missing still fails rather than being absorbed by a looser number.
-    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(9);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth <= 2)).toHaveLength(10);
     expect(extractToc(WORKFLOW_AUTOMATION_POST).filter((t) => t.depth === 3)).toHaveLength(6);
-    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(15);
+    expect(extractToc(WORKFLOW_AUTOMATION_POST)).toHaveLength(16);
     // ids are unique and non-empty
     for (const post of [AI_CHAT_ASSISTANT_POST, WORKFLOW_AUTOMATION_POST]) {
       const ids = extractToc(post).map((t) => t.id);

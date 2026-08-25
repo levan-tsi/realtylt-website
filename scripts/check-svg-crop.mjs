@@ -42,6 +42,7 @@ const SLUGS = args.length
       "database-reactivation-old-real-estate-leads",
       "ai-lead-qualification-real-estate-scoring",
       "workflow-automation-real-estate-business",
+      "automated-google-review-requests-real-estate",
     ];
 
 const browser = await chromium.launch();
