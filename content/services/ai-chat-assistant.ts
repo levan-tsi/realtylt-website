@@ -34,7 +34,7 @@ export const aiChatAssistant: Service = {
   title: "The assistant your visitors actually talk to",
   lede: "Real text chat on Claude. It searches your MLS live, texts matching listings over Twilio SMS, hands off to a Vapi voice call, and captures the lead before it bounces. This is the one you can touch right now.",
   specs: ["Claude", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
-  why: "Harvard Business Review timed a test inquiry to 2,241 US companies, and nearly a quarter of them never replied at all. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
+  why: "Harvard Business Review found that contacting a lead inside the hour made a firm nearly seven times likelier to reach a decision maker than waiting one more hour. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
   keywords: [
     "ai chatbot for real estate website",
     "real estate website assistant",
@@ -51,7 +51,7 @@ export const aiChatAssistant: Service = {
 
   stat: {
     value: "23%",
-    label: "of the 2,241 US companies audited never answered a website inquiry at all",
+    label: "of 2,241 US companies never answered a website inquiry at all",
   },
 
   figure: {
