@@ -62,6 +62,44 @@ than 3, and six carry fewer than 8 FAQ questions). Closing it honestly is a six-
 not a flag flip, **and the gap grows with every round that ships a long post.** Worth doing
 deliberately in a round with room for it.
 
+## THE RATCHET, DECIDED (2026-08-25, orchestrator) — six rounds declined it; here is the answer
+
+Measured across all 17 posts with `--measure`. The cohort splits into two populations, and that
+is the whole point:
+
+| | the five originals (chat, voice, reactivation, lead, workflow) | the twelve rollout posts |
+|---|---|---|
+| proseWords | 3,587 - 3,675 | 4,674 - 6,710 |
+| sections | 19 - 21 | 21 - 24 |
+| citations | 4 - 6 | 4 - 10 |
+| faqQuestions | 5 - 7 | 7 - 8 |
+| dataGraphics | 2 - 3 | 2 - 4 |
+
+**Do NOT ratchet `proseWords`, now or later.** `available` is 5,725, which would demand ~2,100
+new words on each of the five originals. The metric's own comment in `flagship-standard.mjs`
+says why that is wrong: *"word count is padding-gameable. It is here because a post a third the
+length of its siblings is a real signal, not because long is good."* The originals are at 60% of
+the newer median, not a third. The newer posts are longer because DPPA, RESPA and CAN-SPAM need
+more room than a chat widget does, not because they are better. Ratcheting this metric buys a
+green light with padding, which is the one thing the metric exists to prevent.
+
+**DO ratchet the four that are real quality and genuinely closable** — at the START of the round
+that closes them, never before (ratcheting opens a gap by construction, and a red carried across
+rounds is the thing this repo refuses):
+
+| metric | 4 -> | posts owing | the work per post |
+|---|---|---|---|
+| citations | 5 | chat, reactivation, lead, workflow, review, booking, local-seo | one more primary, read in the primary document |
+| faqQuestions | 8 | voice, reactivation, lead (5), workflow (6), chat, review, booking (7) | 1-3 more questions people actually type |
+| dataGraphics | 3 | chat, reactivation, lead, workflow, review, local-seo | one more cited chart |
+| bodyImages | 7 | chat, voice, reactivation, lead, review | one more plate (cheap now the pipeline exists) |
+
+`sections` 19 -> 22 follows the same shape and is a consequence of the other four rather than a
+target of its own. **This is ROUND I's brief**: ratchet those four, then close them by writing.
+It is roughly a five-post job concentrated on the five ORIGINAL posts, which are also the five
+that predate every lesson this rollout learned — so the work is worth doing on its own merits,
+not merely to turn a gate green.
+
 **The order:** blogs + services for all ~20 topics in this repo. The AI Chat Assistant post is the
 design standard. Videos untouched ("leave videos alone for now"). Workflow: Opus 5 subagents build
 one round at a time; the Fable orchestrator verifies every round with its own gate runs and renders;
