@@ -183,7 +183,7 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   {
     name: "most late payments are forgotten rather than refused",
     pattern: /most late (invoices|payments) are (forgotten|simple forgetfulness)|late invoices are forgotten, not refused/i,
-    why: "no published measurement exists for any industry, let alone this one. The figures in circulation come from survey products published by companies selling collections and invoicing software, none of which states a sample for this claim. It was load-bearing on four surfaces of one page",
+    why: "the claim is about WHY a payment is late, and nothing published measures that. Followed in round G's second pass rather than assumed: figures for HOW MANY invoices are late do exist and the most prominent of them states a sample, the QuickBooks Small Business Late Payments Report describing itself as based on a 2025 survey of more than two thousand small businesses, published by a company that sells invoicing software. That is a count, not a reason, and none of it is about a brokerage. The claim was load-bearing on four surfaces of one page",
   },
   {
     name: "a reminder recovers the majority of late payments",

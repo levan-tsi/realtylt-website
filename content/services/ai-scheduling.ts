@@ -61,7 +61,7 @@ export const aiScheduling: Service = {
   whatItIs: [
     "It is the scheduling layer under the chat and the voice agent. When a conversation reaches the point where someone wants to see a property or sit down with you, the AI reads that intent and books it there and then, from your live Google or Outlook calendar.",
     "It handles the rest of the lifecycle too: the confirmation, the reminders that decide whether they show up, and the reschedule request that would otherwise cost you two phone calls.",
-    "Where the appointment needs a permission that is not yours, which covers most showings on somebody else's listing, the same layer sends the request, records who has actually replied, holds your own side while it waits, and confirms to your client once rather than twice.",
+    "Where the appointment needs a permission that is not yours, which covers any showing on a listing somebody else holds, the same layer sends the request, records who has actually replied, holds your own side while it waits, and confirms to your client once rather than twice.",
   ],
 
   howItWorks: [

@@ -9,7 +9,8 @@
  *
  * SOURCE OF TRUTH for what the product does is content/services/invoicing-and-payments.ts, which
  * was rewritten in the same round because six of its claims were about a majority of late
- * payments and nobody has published one.
+ * payments being forgotten rather than refused, which is a claim about a reason and nothing
+ * published measures one.
  *
  * THE TRAP THIS TOPIC IS SET UP TO FALL INTO, and the whole file is organised around not falling
  * into it. The generic version of this article is "send invoices faster and chase them harder",
@@ -500,7 +501,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Chargeable events a year your office hears about late",
-      note: "The headline is the third row rather than the hours, and the hours row is doing deliberate work underneath it. At the settings this opens with, the reconstruction adds up to a number of hours that would not survive a budget meeting, and that is the point: the cost of this is not the time. It is that some of those events carried a fee and the fee was never raised, and there is no way to work out from a spreadsheet which ones. Shares produce fractions, and half an event is not a thing, so read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no dollar value per event, because it depends entirely on which kind of event it was. There is no share of invoices that go unpaid, because the figures in circulation for that are survey products from companies selling collections software and none of them is about this industry. There is no recovery rate for a reminder sequence, for the same reason. And there is no row for your commission, because this article does not claim to know how that arrives where you are.",
+      note: "The headline is the third row rather than the hours, and the hours row is doing deliberate work underneath it. At the settings this opens with, the reconstruction adds up to a number of hours that would not survive a budget meeting, and that is the point: the cost of this is not the time. It is that some of those events carried a fee and the fee was never raised, and there is no way to work out from a spreadsheet which ones. Shares produce fractions, and half an event is not a thing, so read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no dollar value per event, because it depends entirely on which kind of event it was. There is no share of invoices that go unpaid, and the reason is narrower than it first looked. Figures for that do exist and the most prominent of them does state a sample: the QuickBooks Small Business Late Payments Report describes itself as based on a 2025 survey of more than two thousand small businesses, published by a company that sells invoicing software. What none of them measures is WHY, which is the thing this page needed and the thing the old version of this service page asserted. There is no recovery rate for a reminder sequence for the same reason, and none of it is about a brokerage. And there is no row for your commission, because this article does not claim to know how that arrives where you are.",
       action: { label: "See how it is built", href: "/services/invoicing-and-payments" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -521,9 +522,9 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop carries the
       // row of small round keys along the bottom and more of the machine's scrolled iron frame,
       // neither of which is in the 21:9 slice. Only legible markings are named.
-      alt: "A close view of the keys of an antique cash register, round enamelled key tops on brass stalks standing above a polished wooden case, several of them numbered 90, 80, 70, 9 and 8 in dark blue on white, two red keys reading $8 and $9 at the left, and in the middle a knurled brass key with RECEIPT printed across its white top",
+      alt: "A close view of the keys of an antique cash register, round enamelled key tops on brass stalks standing above a polished wooden case, several of them numbered 90, 80, 70, 9 and 8 in dark blue on white, three red keys at the left reading $9, $8 and a 7 cut off by the frame edge, a knurled brass key in the middle with RECEIPT printed across its white top, and a small glass display window at the top right corner showing the letters Cen",
       caption:
-        "Every round key on this machine sets an amount, and one of them does something else entirely: it prints the evidence. On a hundred year old register, entering the figure and producing the receipt are two separate actions, deliberately, because a number somebody typed and a record somebody can hold are different objects. A payments build that closes a receivable on the strength of an email has collapsed those two back into one.",
+        "Every round key on this machine sets an amount, and one of them does something else entirely: it prints the evidence. On a mechanical register, entering the figure and producing the receipt are two separate actions, deliberately, because a number somebody typed and a record somebody can hold are different objects. A payments build that closes a receivable on the strength of an email has collapsed those two back into one.",
       credit: "Photograph by Steve Snodgrass, CC BY 2.0.",
       ariaLabel: "The keys of an antique cash register",
     },

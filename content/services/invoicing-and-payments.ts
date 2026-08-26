@@ -3,10 +3,13 @@ import type { Service } from "./types";
 /** COPY key `pay` on realtylt.com/ai. Deep link: /ai#pay
  *
  * SYNCED WITH THE FLAGSHIP in round G. Six of this page's claims rested on a majority of late
- * payments being forgetfulness rather than refusal, and nobody has published a measurement of
- * that for any industry, let alone this one. The figures in circulation are survey products
- * from companies selling collections software. Every one of those claims is listed with its
- * replacement in docs/blog-flagship/ROUND-G-LOG.md and guarded in lib/blog/zombie-claims.test.ts.
+ * payments being forgetfulness rather than refusal. That is a claim about WHY a payment is
+ * late, and the round G second pass went and followed it: figures for HOW MANY invoices are
+ * late do exist and the most prominent states a sample (the QuickBooks Small Business Late
+ * Payments Report, a 2025 survey of more than two thousand small businesses, published by a
+ * company that sells invoicing software), but a count is not a reason and none of it is about
+ * a brokerage. Every one of the killed claims is listed with its replacement in
+ * docs/blog-flagship/ROUND-G-LOG.md and guarded in lib/blog/zombie-claims.test.ts.
  *
  * The page also had an audience problem the post fixed. Written for a tradesman finishing a job,
  * it read as though a brokerage's main receivable were an invoice it sends. It is not: the
@@ -71,7 +74,7 @@ export const invoicingAndPayments: Service = {
   howItWorks: [
     {
       title: "It asks whether the event happened",
-      body: "For anything that becomes due because of somebody else's closing, a standing job checks in on a schedule rather than waiting for a person to remember. This is the step most invoicing tools do not have and the one that matters most here.",
+      body: "For anything that becomes due because of somebody else's closing, a standing job checks in on a schedule rather than waiting for a person to remember. This is the step an ordinary invoicing tool has no reason to include, and it is the one that matters most here.",
     },
     {
       title: "The deposit is asked for up front",

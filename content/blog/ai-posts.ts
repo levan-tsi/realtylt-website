@@ -15,7 +15,7 @@ Their deal closed in July.
 
 Nothing happened at your end in July, or in August, and the reason is worth being precise about, because it is not that anybody behaved badly. The event that created the charge happened in a building you have never been to, in a file you cannot see, and the only person who knew about it had a closing of their own to get through that afternoon. Telling you was nobody's job. There was no invoice sitting unpaid in anybody's system, because there was no invoice.
 
-That is the shape of the money problem in this business, and it is almost the exact opposite of the problem every article about invoicing is written to solve. The standard advice is about the last mile: send it sooner, chase it politely, escalate on a schedule. All of that is real and this article gets to it. But the expensive part in a brokerage happens four months earlier, when something you should have charged for occurred somewhere you were not looking.
+That is the shape of the money problem in this business, and it is close to the opposite of the problem the standard advice about invoicing is written to solve. The standard advice is about the last mile: send it sooner, chase it politely, escalate on a schedule. All of that is real and this article gets to it. But the expensive part in a brokerage happens four months earlier, when something you should have charged for occurred somewhere you were not looking.
 
 [[scene:in-short]]
 
@@ -31,7 +31,7 @@ Four kinds of money come into a business like this one, and the distinctions bet
 
 Here is the refusal, stated in the open rather than buried, because a business owner opening a page about invoicing will look for their commission first.
 
-This article does not describe how a commission is documented, requested or disbursed at a closing. Not because it is unimportant, obviously, but because it varies by state, by whether there is an attorney at the table, by which closing agent is running it and by what your brokerage agreement says, and no primary source states it in a way that would be true for every reader of this page. Every version of that paragraph I could have written would have been a plausible generalisation, and a plausible generalisation about how your largest payment arrives is worse than nothing.
+This article does not describe how a commission is documented, requested or disbursed at a closing. Not because it is unimportant, but because it varies by state, by whether there is an attorney at the table, by which closing agent is running it and by what your brokerage agreement says. The federal statutes that govern a settlement are quoted further down this page, and what they cover is the disclosure a buyer receives and the payments businesses may make to each other. None of them describes how a brokerage gets paid its own commission. Any version of that paragraph we could have written would have been a plausible generalisation, and a plausible generalisation about how your largest payment arrives is worse than nothing.
 
 What can be established, and what the rest of this article is built on, is narrower and more useful than a generalisation would have been. Federal law states clearly who you are allowed to pay and be paid by in a transaction with a mortgage on it. Federal regulation states exactly when money that has reached your bank becomes money you can spend. And New York statute states what you may add to a price when somebody pays you by card. Those three are checkable, they are the same for everybody in this state, and each one has a real consequence for how a brokerage should run.
 
@@ -47,7 +47,7 @@ The Real Estate Settlement Procedures Act is best known for the disclosures a bu
 
 Two things about those sentences matter more than the summaries of them do.
 
-The first is the scope. Both prohibitions attach to a transaction involving a federally related mortgage loan, and that term is defined in [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) as, broadly, a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That is nearly every ordinary purchase mortgage and it is not a cash sale, which is a distinction worth holding rather than assuming either way.
+The first is the scope. Both prohibitions attach to a transaction involving a federally related mortgage loan, and that term is defined in [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) as, broadly, a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That definition reaches most ordinary purchase mortgages and it does not reach a cash sale, which is a distinction worth holding rather than assuming either way.
 
 The second is the exception list, and one item on it is the reason the story at the top of this page describes a lawful arrangement rather than an unlawful one. Subsection (c)(3) permits payments pursuant to cooperative brokerage and referral arrangements or agreements between real estate agents and brokers. Congress named your trade specifically. A referral fee from one brokerage to another is not the thing this statute exists to stop, and the same subsection separately permits a bona fide salary or compensation or other payment for goods or facilities actually furnished or for services actually performed.
 
@@ -67,13 +67,13 @@ That third day is not a matter of your bank's mood. It is regulated. [Regulation
 
 For an electronic payment, which covers a wire and an ACH credit, the rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. There is a definition attached to "received" that is worth reading twice: the payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when the receiving bank has both halves, not when somebody at the other end pressed send.
 
-For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. And then there is the exception that applies to this industry more than to almost any other.
+For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. And then there is the exception a brokerage runs into as a matter of routine.
 
 [[scene:availability]]
 
 [229.13(b)](https://www.law.cornell.edu/cfr/text/12/229.13) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that the aggregate is in excess of $6,725 on any one banking day. And 229.13(h) allows the bank, where an exception applies, to extend the schedule by a reasonable period, which the same subsection then defines as up to five business days for the class of cheque covered by 229.12(b).
 
-Six thousand seven hundred and twenty five dollars is not an unusual amount in this business. It is a routine one. Which means the two day availability schedule stops applying to the ordinary case in this business, and the outside limit on the part above the threshold is the second business day plus up to five more.
+Look at the last cheque your business deposited and ask whether it was above six thousand seven hundred and twenty five dollars. If it was, the two day schedule was never the one that applied to the whole of it, and the outside limit on the part above that figure is the second business day plus up to five more.
 
 There is nothing sinister in that. Banks carry the risk on a cheque until it clears and the regulation is what balances that risk against your access to your own money. The practical consequence is simply that a brokerage which pays people out of an amount it received by cheque is exposed to a schedule it did not set and may not have read.
 
@@ -85,7 +85,7 @@ Four rails carry the money in a small property business, and which one a given p
 
 The one with a rule attached that is specific to this state is the card. New York [General Business Law 518](https://www.nysenate.gov/legislation/laws/GBS/518), in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a customer who elects to use a credit card shall clearly and conspicuously post the total price for using a credit card, inclusive of the surcharge. It then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company for such credit card use, and the final sales price inclusive of the surcharge shall not amount to a price greater than the posted price.
 
-Two practical readings of that. You may not round up. Whatever the processor charges you is the ceiling on what you may add, so a flat three percent applied because it is a round number is a problem if your actual cost is lower. And the obligation is about posting: the price a customer sees has to be the total they will pay by card. The statute also expressly preserves two tier pricing, defined in it as posting a cash price alongside a credit card price inclusive of any surcharge, which is the version of this the statute explicitly protects. Violations carry a civil penalty of up to five hundred dollars each.
+Two practical readings of that. You may not round up. Whatever the processor charges you is the ceiling on what you may add, so a flat three percent applied because it is a round number is a problem if your actual cost is lower. And the obligation is about posting: the price a customer sees has to be the total they will pay by card. The statute also expressly preserves two tier pricing, which it defines as posting two prices where the credit card price, inclusive of any surcharge, sits alongside the cash price. Violations carry a civil penalty of up to five hundred dollars each.
 
 The other rail worth a second look is ACH, because the ceiling on what a single same day payment can carry has moved twice, and the second move is recent enough that a lot of habits predate it.
 
@@ -107,7 +107,7 @@ The operational lesson is small, free and entirely about people. A change to pay
 
 Strip out everything that is really about a plumber invoicing for a boiler and four things remain, and only one of them is the reminder sequence.
 
-It can go and ask. This is the one that is worth the most and gets built the least: a standing job that asks, on a schedule, whether the events that create your charges have happened yet. Referrals you sent out, transactions somebody else is closing, work that gets billed when something lands. Nobody at the other end is going to remember, and the asking is cheap and unlimited and does not get embarrassed.
+It can go and ask. This is the one that is worth the most and gets built the least: a standing job that asks, on a schedule, whether the events that create your charges have happened yet. Referrals you sent out, transactions somebody else is closing, work that gets billed when something lands. Nobody at the other end has any reason to remember, and the asking is cheap and unlimited and does not get embarrassed.
 
 It can raise the charge against the agreement rather than against a conversation. What makes a referral fee collectable is the document you both signed, and the invoice that quotes it will be paid by somebody who was not part of the exchange that produced it.
 
@@ -125,7 +125,7 @@ It is worth being blunt about this because it is where the category sells itself
 
 A reminder sequence works on invoices that exist. It sends them earlier than a person would, it sends the second and third messages a person finds uncomfortable, and it keeps a timestamped record of both. For rental fees, management charges and any work you bill directly, that is a real improvement and it costs almost nothing to set up.
 
-It does nothing whatsoever about a charge that was never raised, and it cannot, because there is nothing in the system to remind anybody about. The unraised charge is invisible to every dashboard you will ever be shown, and it is invisible in a specific and cruel way: your accounts receivable report will look excellent, because everything in it is being handled beautifully. What is missing is not late. It is absent.
+It does nothing whatsoever about a charge that was never raised, and it cannot, because there is nothing in the system to remind anybody about. The unraised charge is invisible to every dashboard by construction, and it is invisible in a specific and cruel way: your accounts receivable report will look excellent, because everything in it is being handled beautifully. What is missing is not late. It is absent.
 
 That asymmetry decides what to ask a vendor before anything else, and it is not about how the reminders are worded. Ask what causes an invoice to come into existence at all, and whether the cause is an event or a person remembering.
 
@@ -137,7 +137,7 @@ Four questions, none of them technical.
 
 Ask what creates an invoice. Watch carefully for whether the answer is a person marking something complete. If it is, then the automation begins after the hard part is over, and the demonstration you are watching starts at the wrong place.
 
-Ask what happens when a payment arrives that does not match anything. A part payment, a payment with no reference, two invoices settled in one transfer. That happens most weeks in a working business, and the answer tells you whether anybody who built the product has ever sat down with a live bank statement.
+Ask what happens when a payment arrives that does not match anything. A part payment, a payment with no reference, two invoices settled in one transfer. Every one of those is ordinary rather than exotic, and the answer tells you whether anybody who built the product has ever sat down with a live bank statement.
 
 Ask how it decides something was paid. If any part of that answer involves reading a message from the person who owes you, that is the wrong answer, and it is worth asking twice because the first answer is often about the bank feed and the second one is about the email.
 
@@ -151,11 +151,11 @@ Ask what it does about the money that is not yours. The correct answer is that i
 
 This one divides cleanly into two halves with completely different prices, and the halves get sold as one thing.
 
-The ordinary invoicing half is short and cheap. Your accounting package almost certainly issues invoices and sends reminders already, and the work is connecting it to whatever creates the charge and agreeing the wording and the timings. That is days rather than weeks, and a meaningful share of it is deciding rather than building.
+The ordinary invoicing half is short and cheap. Your accounting package probably issues invoices and sends reminders already, and the work is connecting it to whatever creates the charge and agreeing the wording and the timings. That is days rather than weeks, and a meaningful share of it is deciding rather than building.
 
-The other half is the asking, and its price is set entirely by who you have to ask and how they answer. A handful of brokerages you deal with constantly, all of whom reply to a text, is one project. Two management companies with portals, an attorney's office that works by email and a title company that answers the phone is a different one, and the price sits in getting hold of them rather than in the logic.
+The other half is the asking, and its price is set entirely by who you have to ask and how they answer. A handful of brokerages you deal with constantly, all of whom reply to a text, is one project. Two management companies with portals, an attorney's office that works by email and a title company that answers the phone is a different one, and the price sits in getting hold of them rather than in the logic of it.
 
-Recurring cost is small on this topic compared with the others on this site, because the volume is low. A brokerage sends far fewer of these messages in a month than it sends appointment reminders in a week, and the ongoing bill reflects that.
+Recurring cost is small on this topic because the volume is low. These are not high frequency messages, a business raises and chases a small number of charges a month rather than hundreds, and the ongoing bill reflects that.
 
 The part with a genuine ongoing cost is the reconciliation, and the cost is attention rather than money. Somebody has to look at the exceptions the matching could not resolve, and if nobody is named for that job it will not be done, and everything above it becomes decoration.
 
@@ -201,7 +201,7 @@ Telephone them on a number you already had before that email existed, and confir
 
 ### Is it worth this for a one or two person brokerage?
 
-The reminder half, probably not, because at that size you know every invoice you have out and sending it yourself takes minutes. The asking half is worth it at any size, because it does not scale with how big you are, it scales with how many arrangements you are a party to, and a two person brokerage can easily have a dozen referrals out with other firms.
+The reminder half, probably not, because at that size you know every invoice you have out and sending it yourself takes minutes. The asking half is worth it at any size, because it does not scale with how big you are, it scales with how many arrangements you are a party to, and that number is not a function of headcount.
 
 ### What is the first thing to fix?
 
@@ -219,7 +219,7 @@ That last line is where the money is, and the fix for it does not start with buy
 
 [[scene:funnel]]`;
 
-export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday and it was not your listing. For it to happen at all, three people who do not work for you had to be willing: the agent who holds the listing, whoever has to be out of the house that morning, and whoever controls how the front door opens.
+export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday and it was not your listing. Three people had to be willing for it to happen at all: you, the agent who holds the listing, and whoever has to be out of the house that morning. Two of the three do not work for you and had not been asked yet.
 
 You sent the request on Thursday afternoon. On Thursday evening you told the buyer that Saturday at eleven was confirmed, and you were not being careless when you said it. You had proposed a time, nobody had objected to it, and there it was in bold on your own calendar looking exactly like every appointment that has ever happened.
 
@@ -243,7 +243,7 @@ So the unit of this article is not the appointment. It is the agreement you do n
 
 ## The part nobody automates is the part that is other people
 
-Almost everything published about scheduling software is written by the people selling it, which makes the exceptions worth reading carefully. There is one study of a real scheduling assistant, running for real people, that published what actually went wrong, and it is the most useful document in this whole subject.
+There is one study of a real scheduling assistant, running for real people, that published what actually went wrong. It is the most useful document in this whole subject and it is not from a vendor.
 
 Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads and the assistant took over: it proposed times from the subscriber's calendar, negotiated with the invitees, and put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails, and it publishes the reasons the machine had to give up and hand a request to a trained human being, which is the part of this subject nothing else we could find puts a number on.
 
@@ -259,7 +259,7 @@ Read that chart carefully, because there is an honest reading and a flattering o
 
 ## Who has to say yes before a showing is real
 
-The number of separate permissions an appointment needs is the single best predictor of how hard it will be, and it is the thing least likely to be written down anywhere at the moment somebody agrees to it. It is worth counting them deliberately, because they are not all people and they do not all fail the same way. Three of the four below can say no to you, and the fourth one cannot say anything at all, which is exactly why it is the one that gets forgotten.
+How hard an appointment is to arrange tracks the number of separate permissions it needs, and that number is the thing least likely to be written down anywhere at the moment somebody agrees to it. It is worth counting them deliberately, because they are not all people and they do not all fail the same way. Three of the four below can say no to you. The fourth cannot say anything at all, and being silent is precisely how it stays off the list.
 
 [[scene:who-agrees]]
 
@@ -273,7 +273,7 @@ The protocol is called iTIP, and it is [RFC 5546](https://www.rfc-editor.org/rfc
 
 The sentence worth knowing is this one, from section 2.1.1: when an organiser issues the initial object, attendee status is typically unknown, and the organiser specifies this by setting the participation status to NEEDS-ACTION. Each attendee then changes their own status to something else as part of a reply sent back to the organiser.
 
-In other words, the standard that runs the world's calendars starts every single invitation in a state that means nobody has answered, and the only thing that moves it out of that state is a message coming back. Not time passing. Not the absence of an objection. Not the appointment being written in bold. A reply, from that person, arriving.
+In other words, the protocol written so that different calendaring systems can schedule with each other starts every single invitation in a state that means nobody has answered, and the only thing that moves it out of that state is a message coming back. Not time passing. Not the absence of an objection. Not the appointment being written in bold. A reply, from that person, arriving.
 
 [[scene:states]]
 
@@ -281,7 +281,7 @@ There is one more method in the same specification that is worth knowing by name
 
 ## Moving the time throws away every yes you had
 
-This is the part that surprised me most while reading, and it is the strongest practical argument in the article.
+This is the least obvious thing in either specification, and it is the strongest practical argument on this page.
 
 There is a second specification, [RFC 6638](https://www.rfc-editor.org/rfc/rfc6638.txt), which defines how a calendar server does scheduling automatically on your behalf. Section 3.2.8 sets out what a server has to do when the appointment moves, and it is not a suggestion.
 
@@ -289,11 +289,11 @@ There is a second specification, [RFC 6638](https://www.rfc-editor.org/rfc/rfc66
 
 Read that in plain language. If the start time, the end time or the duration of an appointment changes, every attendee's answer is deleted and set back to unanswered, on every affected occurrence, and it applies to everybody except the organiser. The standard treats a rescheduled appointment as a new question, because that is what it is. Nobody agreed to Saturday at two. They agreed to Saturday at eleven, and Saturday at eleven no longer exists.
 
-That has a consequence for how you run a week, and no piece of software is what makes it true. Every time you move an appointment involving other people, you are spending all of their agreements at once and you have to buy them back. A build that moves an appointment and does not re-ask is not saving anybody a message. It is carrying forward a set of confirmations that the standard, and common sense, both say are void.
+That has a consequence for how you run a week, and it holds whether or not any software is involved. Every time you move an appointment involving other people, you are spending all of their agreements at once and you have to buy them back. A build that moves an appointment and does not re-ask is not saving anybody a message. It is carrying forward a set of confirmations that the standard, and common sense, both say are void.
 
 ## Your own system knows whether the message arrived
 
-Here is a small thing that turns out to be worth a great deal, and almost nothing in this market surfaces it.
+Here is a small thing that turns out to be worth a great deal, and it is not on anybody's feature list.
 
 The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment, saying what happened to the message the server sent them. There are eight published codes, and the reason there are eight rather than two is that the standard takes seriously how many different ways a message can fail to reach a calendar. They collapse into three states a person can act on.
 
@@ -315,7 +315,7 @@ And it can re-ask when the time moves, for the reason the specification gives ab
 
 There is one more thing worth knowing about, because a major vendor already returns it and you will not see it in a demonstration. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability, and every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
 
-So one of the two calendar platforms your business probably runs on will hand a scheduling system a confidence figure per proposed time, and the overwhelming majority of what gets built on top of it throws that number away and prints the time on its own. The same page carries a caveat worth quoting too, which is that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
+So one of the two calendar platforms this product connects to will hand a scheduling system a confidence figure for every time it proposes. Whatever is built on top of that is free to throw the number away and print the time on its own, which is what has happened any time you are shown a list of times with nothing attached to them. The same page carries a caveat worth quoting too, which is that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
 
 [[scene:the-request]]
 
@@ -341,9 +341,9 @@ Ask them to show you what the person on the other end receives before anybody ha
 
 Ask what happens to your own calendar while a proposal is outstanding, and then ask what happens to it when the proposal dies. Both halves. A system that blocks and never releases will look immaculate for a fortnight and then start telling people you are busy on days you are free.
 
-Ask what it does with a counter. Somebody has replied that eleven is impossible but two might work, in a text message, in lower case, with no punctuation. That reply is neither a yes nor a no and it is the most common thing that will ever happen to this system. Watch where it lands.
+Ask what it does with a counter. Somebody has replied that eleven is impossible but two might work, in a text message, in lower case, with no punctuation. That reply is neither a yes nor a no, and the chart on this page says some version of it was the single biggest reason a real scheduling agent had to call in a person. Watch where it lands.
 
-Ask how you find out that an invitation was never delivered. There is a real answer to this, it is in the standard, and a vendor who has thought about scheduling for more than a fortnight will know what you are asking about.
+Ask how you find out that an invitation was never delivered. There is a real answer to this and it is in the standard, so a vendor who has built on a calendar server will recognise the question.
 
 [[scene:offer]]
 
