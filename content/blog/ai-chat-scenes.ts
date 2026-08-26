@@ -456,7 +456,7 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
         { label: "See how it is built", href: "/services/ai-chat-assistant", variant: "outline-light" },
       ],
       footnote:
-        "Ask it something hard. It will either answer, or tell you it cannot and offer to book a call.",
+        "Ask it the thing you think would catch it out. The answer you want is either a real one or an honest no.",
     },
   },
 

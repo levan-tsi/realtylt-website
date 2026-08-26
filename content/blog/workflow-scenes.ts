@@ -204,7 +204,7 @@ export const WATCHABLE: GridItem[] = [
   },
   {
     lead: "Anything genuinely ambiguous stops and asks.",
-    body: "A system that guesses when it should have asked will eventually guess wrong in front of a client, in writing. The line is easy to find: any step where a person would have hesitated is a step the machine should hand back.",
+    body: "The line is easy to find: any step where a person would have hesitated is a step the machine should hand back. Hesitation is information, and it is the only signal you get before the mistake.",
   },
 ];
 
@@ -220,7 +220,7 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "It automates a bad process, faster.",
-    body: "If the manual version loses leads, the automated version loses them at three in the morning, at scale, with a log entry saying it worked. Wiring makes a process consistent, and consistency is only an improvement when the process was right.",
+    body: "If the manual version loses leads, the automated version loses them at three in the morning, at scale, with a log entry saying it worked. Fix the process on paper first, while it is still cheap to argue with.",
   },
   {
     lead: "Nobody owns it.",

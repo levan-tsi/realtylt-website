@@ -395,4 +395,54 @@ describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) =
       expect(echoes, `scene ${key} repeats the body verbatim`).toEqual([]);
     }
   });
+
+  /** The same rule, everywhere the copy actually lives.
+   *
+   * The check above has guarded `statement` scenes since 2026-08-03, and only their `text`.
+   * Rounds F, G and H then found TWENTY-THREE echoes it could not see, every one of them in a
+   * chart `note`, a grid card `body`, a caption or a footnote — and each round's log recommended
+   * building this and moved on, four times. Round H's log put it plainly: "the test to catch
+   * them has been recommended four times and never built."
+   *
+   * So it walks every string in every scene rather than one field of one kind. Identifiers and
+   * asset fields are skipped (see SKIP): a `src` or a licence name is not prose about the
+   * subject and can legitimately repeat anything.
+   *
+   * The threshold is EIGHT words, not the five above. A grid card's label is short and shares
+   * the topic's vocabulary by design, so five words produces false positives on exactly the
+   * fields this is meant to cover; eight words is a sentence somebody wrote twice. That is the
+   * same distinction the sibling-overlap metric had to learn: repeating a SENTENCE is the
+   * failure, repeating a NOUN is not.
+   *
+   * Proved on the real cohort before it was trusted: it found 4 surviving echoes across the
+   * twenty posts (chat's funnel footnote, two workflow card bodies, one clone summary claim),
+   * all four were genuine, and all four were rewritten rather than excluded. */
+  it("never repeats a body sentence anywhere inside a scene payload", () => {
+    const SKIP = new Set(["kind", "src", "href", "id", "key", "icon", "slug", "alt",
+      "photographer", "licence", "license", "sourceUrl", "ariaLabel", "credit", "sourceHref"]);
+    const flat = body.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ");
+    const walk = (node: unknown, path: string, out: [string, string][]) => {
+      if (typeof node === "string") return void out.push([path, node]);
+      if (Array.isArray(node)) return void node.forEach((v, i) => walk(v, `${path}[${i}]`, out));
+      if (node && typeof node === "object") {
+        for (const [k, v] of Object.entries(node)) {
+          if (SKIP.has(k)) continue;
+          walk(v, path ? `${path}.${k}` : k, out);
+        }
+      }
+    };
+    for (const [key, scene] of Object.entries(content.scenes)) {
+      const strs: [string, string][] = [];
+      walk(scene, "", strs);
+      const echoes = strs.flatMap(([path, str]) =>
+        str
+          .split(/(?<=[.!?])\s+/)
+          .map((s) => s.trim())
+          .filter((s) => s.split(/\s+/).length >= 8)
+          .filter((s) => flat.includes(s.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim()))
+          .map((s) => `${key}.${path}: ${s.slice(0, 80)}`),
+      );
+      expect(echoes, `scene ${key} repeats a body sentence`).toEqual([]);
+    }
+  });
 });
