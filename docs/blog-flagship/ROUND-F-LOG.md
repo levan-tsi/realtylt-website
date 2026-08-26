@@ -2,17 +2,23 @@
 
 **Built 2026-08-25.** Scope: seven new editorial plates, then `document-processing` and
 `data-enrichment` written to the flagship standard, their service pages synced, and the claims
-the research killed on the way. Six commits on `main`, **not pushed**: the orchestrator verifies
+the research killed on the way. Eight commits on `main`, **not pushed**: the orchestrator verifies
 and pushes.
 
 ```
-cea03ad  F0  seven new editorial plates, every licence read on its own source page
-e557649  F1  topic 14, document processing, argued as extraction from an unreliable original
-38d6716  F2  topic 15, data enrichment, argued as a claim with an age rather than a lookup
-6a332a9  F3  the two service pages synced, and eight claims that did not survive the research
-ec0f3f9  F4  defects found by LOOKING, including a rule this repo had half right
-e54fcfb  F5  the second pass, and the unchecked reason it caught was the article's spine
+cea03ad  F0   seven new editorial plates, every licence read on its own source page
+e557649  F1   topic 14, document processing, argued as extraction from an unreliable original
+38d6716  F2   topic 15, data enrichment, argued as a claim with an age rather than a lookup
+6a332a9  F3   the two service pages synced, and eight claims that did not survive the research
+ec0f3f9  F4   defects found by LOOKING, including a rule this repo had half right
+e54fcfb  F5   the second pass, and the unchecked reason it caught was the article's spine
+4b47352  F6   the round log, every source's operative sentence, and the corrected plate rule
+         F6a  the log's own commit list was wrong: eight, not six
 ```
+
+**F6a exists because Round E's log made the same mistake and had to be corrected the same way.** A
+commit list written before the last commits are made will always be short by the commits that
+carry it. Count them afterwards rather than predicting them.
 
 **Two posts, ZERO new components.** Fifteen topics on the template now and fourteen in a row that
 add none. The bespoke-component hatch was not opened and did not need the calculator-lesson test.
