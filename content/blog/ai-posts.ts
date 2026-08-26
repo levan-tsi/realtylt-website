@@ -9,6 +9,240 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const AI_CLONE_POST = `On Tuesday afternoon fourteen short videos went out, one to each person who had asked about the new listing on the ridge. Every one of them opened with that person's name. Every one of them was in your face and your voice, standing in a room you have been in, saying things you would say.
+
+You were at a closing in Poughkeepsie for most of the afternoon and you have not watched any of them.
+
+Nothing went wrong. That is worth sitting with for a second, because the thing that makes this topic difficult is not the disaster, it is the ordinary Tuesday. Fourteen statements were published in your name, to fourteen people who now believe you said them, and the only person who could have caught a wrong one was in a title company's conference room signing things.
+
+This article is about what a digital twin is allowed to do, which turns out to be a much more useful question than what it is able to do. The ability is not in doubt any more. Whether a particular use of somebody's face is lawful, whether the viewer has to be told, and who is left holding it when a sentence is wrong, are all questions with actual answers, and most of them are shorter than you would expect.
+
+[[scene:in-short]]
+
+## What a digital twin actually is, and the line everything rests on
+
+A digital twin is two separate things sold as one word. There is a model of a face, built from a recording of somebody sitting still and talking, that can afterwards be made to say new words. And there is a model of a voice, built the same way from speech, that can afterwards read a script that person never read. Both are ordinary technology now, both are available to anybody, and neither is interesting on its own.
+
+What is interesting is the second word. A twin of WHOM.
+
+Almost every difficult question in this subject collapses into that one, and it separates cleanly into four cases that behave completely differently in law and in practice. Confusing them is how a business acquires a problem it cannot buy its way out of, because the cheap version and the illegal version look identical from the outside and come out of exactly the same software.
+
+[[scene:two-halves]]
+
+## The oldest statute of its kind in the country, and it is a criminal one
+
+New York got here before anybody else, and it got here because of a photograph.
+
+The right of publicity in this state is not judge made and it is not recent. It sits in [Civil Rights Law section 50](https://www.nysenate.gov/legislation/laws/CVR/50), enacted after a young woman's picture was used on flour advertisements without her knowledge and the courts of the day found she had no remedy. The legislature supplied one, and it is short enough to read in a breath.
+
+[[scene:pull-quote]]
+
+[[scene:plate]]
+
+Three words in that sentence do the work, and every summary of it softens at least one of them.
+
+The consent has to be WRITTEN. Not implied by a working relationship, not implied by somebody having been happy about it last year, not implied by an email that says sure. A written permission is the only kind this section recognises, and the reason that matters for a twin is that a twin is a thing you keep. Permission given for one video is not permission for a model that can make a thousand.
+
+The consent has to be obtained FIRST. You do not get to let the video go out on Tuesday and have the paperwork catch up on Friday, because the offence is complete at the moment of the use.
+
+And the section is CRIMINAL. It says guilty of a misdemeanour, which is not how most people picture a marketing dispute. The civil half sits next door in [section 51](https://www.nysenate.gov/legislation/laws/CVR/51), which lets the person go to the supreme court of this state for an injunction and for damages, and adds that where the use was knowing, the jury in its discretion may award exemplary damages. Knowing is not a hard standard to meet when the whole product is a deliberate reproduction of a specific person.
+
+Two practical readings for somebody running a brokerage. If the face is yours, this section is a paperwork exercise you do once and file, and the paperwork is worth having anyway because it forces the questions about scope that nobody asks otherwise. If the face belongs to anybody else in your office, it is the same exercise with a second signature on it, and it should say what happens to the model when they leave, because section 50 does not stop applying on the day somebody changes firms.
+
+Nothing in this article is legal advice, and this is exactly the paragraph to take to somebody whose advice it is.
+
+## What happens to a likeness after the person has died
+
+The assumption is that death ends it. In New York the opposite is closer to true, and the statute that says so is recent enough that most people have never heard of it.
+
+[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) was added in 2020 and is titled, plainly, right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness, defining a deceased personality as a person domiciled in this state at death whose likeness had commercial value at the time of, or because of, their death. And it does something the older sections never had to: it defines the thing this article is about.
+
+A digital replica, in the statute's own words, is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition and the second half is the part people miss. Altering what somebody actually said, past the point where it is still their performance, is inside the definition as surely as inventing it from nothing.
+
+The mechanics are worth knowing even if you never touch them, because they show what a mature version of this looks like. The rights are property, so they pass by will or by the intestacy rules, and they can be sold and licensed. Anybody claiming to hold them can register that claim with the secretary of state on a public register, and the statute adds that a successor who has not registered cannot sue over a use that happened before they did. Damages start at two thousand dollars or the actual loss, whichever is greater, plus profits, with punitive damages available. And the right runs out forty years after the death.
+
+There are broad exemptions, and they are the reason a documentary or a satire is not caught: works of political or newsworthy value, parody, satire, commentary, criticism, biographical work with some degree of fictionalisation. What is not exempted is the case that would tempt a business, which is using a likeness to sell something.
+
+So the honest summary for a brokerage is short. A dead person's face is not free, in this state it is somebody's property for forty years, there is a register you could check, and none of that is a project you want to be near.
+
+## The federal rule that covers businesses and does not yet cover people
+
+There is a federal rule about impersonation and it is newer than most of the software. It is also narrower than almost everybody assumes, and the gap is worth knowing precisely rather than roughly.
+
+[16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) took effect in March 2024, under the title Rule on Impersonation of Government and Businesses. It has three short sections. It makes it an unfair or deceptive act to materially and falsely pose as a government entity or officer, or as a business or officer of one, in or affecting commerce, and equally to materially misrepresent affiliation with, endorsement by or sponsorship by either. Its definitions section is where the reach is: officer includes executives, officials, employees, and agents.
+
+Read that against your own trade for a moment. A video that appears to be an agent of a brokerage, made by somebody who is not, is already within the plain words of this rule, because an agent of a business is an officer of it for these purposes.
+
+What the rule does not cover is an individual, and that is not an oversight. On the same day the final rule was published, the Commission published a [supplementary notice of proposed rulemaking](https://www.federalregister.gov/documents/2024/03/01/2024-03793/trade-regulation-rule-on-impersonation-of-government-and-businesses) proposing to add exactly that. The proposal would rename the rule to cover individuals, define an individual as a person, entity or party, whether real or fictitious, other than a business or government, and add a new section making it a violation to materially and falsely pose as an individual in or affecting commerce.
+
+The second half of that proposal is the one this business has to read carefully, because it is about us rather than about you. The Commission also proposed a means and instrumentalities section: that it would be a violation to provide goods or services with knowledge or reason to know that those goods or services will be used to impersonate. A rule in those terms would put the people who build a likeness inside the same rule as the people who publish one, and the standard is not intent, it is reason to know.
+
+One thing has to be said plainly because it is the sort of claim that ages badly on a website. As of this writing, that proposal is still a proposal. The text in force at [16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) today is the three sections about government and businesses, and it has no section 461.4 in it. That was checked against the Code of Federal Regulations itself rather than against an article about it, and it is the kind of thing that could change between this being written and you reading it.
+
+## Nobody can reliably tell, and that is measured rather than assumed
+
+There is a comfortable belief in this industry that a client would know. It is the belief that most of the informal ethics of AI video quietly rests on, and it has been tested.
+
+Two researchers at Lancaster University and the University of California, Berkeley ran a set of perceptual studies with real participants and published them in the Proceedings of the National Academy of Sciences in 2022. They took four hundred synthesised faces and matched each one to a real photograph of a similar person, then asked people to sort them.
+
+[[scene:tell-apart]]
+
+The result is not that people are bad at this. It is that there is nothing there to be good at. The trained group had been shown what to look for and were told after every single answer whether they had got it right, which is the most favourable condition anybody has ever tested this under, and they ended the session no better than they started it. The paper attributes that to some of the synthetic faces simply containing no perceptible artefact to find.
+
+The natural response is that a machine should do the checking instead. That has been tested too, at a scale no individual company could manage.
+
+In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips made from three thousand four hundred and twenty six paid actors, and ran a public competition on it. The dataset is worth a sentence of its own for a reason that belongs on this page: the authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it, which is not something most datasets in this field can say. Two thousand one hundred and fourteen teams entered.
+
+[[scene:detector]]
+
+The organisers explain why they report precision rather than accuracy, and their reason is the useful part for a business. In realistic distributions, they write, the ratio of faked videos to real ones may be less than one in a million. When almost everything is genuine, a detector that is very accurate still produces far more false alarms than real catches, because there is so much more innocent material for it to be wrong about. That is a permanent property of the arithmetic rather than a temporary weakness in the models.
+
+Put the two studies together and one conclusion falls out that nothing since has softened. Neither the audience nor the software can be relied upon to work out what a video is. Which leaves exactly one party who reliably knows.
+
+## So the telling has to come from you
+
+Once you accept that the viewer cannot tell, the disclosure question stops being a matter of taste and starts being the only mechanism there is. The good news is that it is cheap. The interesting news is that there is a technical standard for the durable version of it, and reading what that standard says about itself is more instructive than reading anything written about it.
+
+The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html) for attaching signed, tamper evident provenance to a media file. In its vocabulary the signed bundle is a manifest, the friendly name for it is a Content Credential, and one of the things a manifest can record is that a file was produced by a generative model, using a specific machine readable value rather than a phrase somebody typed.
+
+[[scene:credentials]]
+
+The passage that matters most is in the specification's own scope section, quoting its guiding principles: that the specifications should not provide value judgments about whether a given set of provenance data is good or bad, merely whether the assertions included within can be validated as associated with the underlying asset, correctly formed, and free from tampering. The basis of trust, it says elsewhere, is the identity of the signer.
+
+That is an honest standard describing its own limits, and it is the reason the technical answer and the practical answer are different. The technical answer is a credential nobody will look at. The practical answer is a sentence at the start of the video in which a person says, in their own words, that this was recorded once and assembled by software. It costs four seconds, it cannot be stripped, and it converts the entire problem from something a viewer might discover into something you told them.
+
+## What we will and will not build
+
+Everything above is about the world. This section is about us, and it is the one thing on this page that needs no citation because it is a commitment rather than a claim.
+
+[[scene:promise]]
+
+The /ai page already says that we do not build agents that pretend to be a specific human being, and that was written about voice on a telephone. It applies with more force to a face. A likeness of the person who sat in front of the camera and agreed in writing is a tool. A likeness of anybody else is the thing four separate bodies of law are pointed at, and no amount of the client being a good one moves that answer.
+
+What that means concretely is a short list of things that are not negotiable. There is one consent per person and it is written and specific about what may be made. The recording and the model belong to the person in them, are not licensed on, and stop being used when they say so. Nothing is produced about a third party's likeness at all. And a person, not a workflow, decides which sentences the twin is allowed to say.
+
+[[scene:consent-path]]
+
+## What a twin honestly does for a brokerage
+
+Strip out the excitement and there are three real jobs, and they are smaller and more specific than the category is usually sold on.
+
+It removes the recording session from things that were always scripted anyway. A market note, a new listing walkthrough, a short explanation of what happens after an offer is accepted. These are things where the words matter and the performance does not, which is exactly the case where a twin loses nothing.
+
+It makes an individually addressed version affordable. Not better than a personal video, just possible at a count where a personal video is not. This is the honest version of the pitch: fourteen people get something with their own name in it instead of one blast, and the alternative was never fourteen real recordings, it was one email.
+
+And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read, and everybody in this trade already knows that, which is why they feel guilty about not recording more.
+
+What none of those three needs is for anybody to be deceived. Every one of them survives being labelled, which is a good test of whether a use is a legitimate one: if telling the viewer would ruin it, the use was never about saving you a recording session.
+
+## The cost nobody quotes, which is watching them
+
+Here is the part that does not appear in any pitch, and it is the reason the fourteen videos at the top of this page are the story rather than an anecdote.
+
+A twin does not reduce the amount of judgment a business has to apply. It moves that judgment from before the recording to after it. When you record something yourself, the checking happens automatically, because you cannot say a sentence without hearing it. When a script is generated and a model reads it, nothing about the process forces anybody to listen to the result, and the volume that makes the thing worth having is precisely the volume that makes reviewing it feel disproportionate.
+
+[[scene:videos-calculator]]
+
+That number is small, and small is the point. Nobody is going to tell you that reviewing your own videos is unaffordable. What actually happens is quieter: it gets done for the first fortnight, then it gets done sometimes, then somebody says the last forty were all fine. The failure is not a decision anybody made.
+
+The fix is not technology and it is not a bigger budget. It is naming a person and a moment. Somebody watches, before it sends. Where no one has been given that duty by name, the honest response is to produce fewer videos rather than to pretend the watching is happening.
+
+## What nobody has measured, and what this page will not print because of it
+
+Every article about personalised video carries a number about how much better it performs. This one does not, and the absence is deliberate enough to be worth explaining.
+
+The figures in circulation for what a personalised or AI generated video does to a reply rate, a click rate or a conversion rate come, without exception among the ones that could be traced, from companies that sell video software, and none of them states a sample, a method or a control. That is the same pattern as the data broker figures another article on this site had to refuse, and the same answer applies: a number with no method behind it is not a small number, it is not a number.
+
+There is a second gap and it is more specific. The perceptual research quoted above measures whether people can sort synthetic faces from real ones. It does not measure whether your own clients, who have met you, would recognise a video of you as synthetic. Familiarity is a different task and it might cut either way. Nobody has published it, so this page says nothing about it.
+
+And there is a third thing this article deliberately does not describe, which is how any particular avatar is produced, what software makes it, or how convincing the result is. Those are questions about a specific build rather than about the subject, and an article that answered them would be a product sheet wearing an argument.
+
+## How to test one before you commission it
+
+Four questions, none of them technical, and the first two are about paper.
+
+Ask to see the consent document. Not a description of it, the document. It should name the person, say what may be made from the recording, say how long that permission lasts, and say what happens when they revoke it. If the answer is that consent is handled in the terms of service of a tool, that is not a consent document, that is a company protecting itself.
+
+Ask what happens when somebody leaves. A brokerage that builds twins of four agents has built four assets that belong to four people, and two of those people will work somewhere else within a few years. The right answer involves deletion and it involves somebody being responsible for it.
+
+Ask who decides what it is allowed to say. Watch for whether the answer describes a person or a prompt. Both are real answers, but only one of them is a person, and the sentences that get a brokerage in trouble are about schools, boundaries, taxes and permits rather than about anything the model would consider risky.
+
+Ask how the viewer finds out. The correct answer is a sentence in the video. Anything about metadata or credentials as the primary mechanism is a description of something no viewer will ever see.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+This divides into a part that is easy to quote and a part that decides whether the money was well spent, and only the first part ever appears in a proposal.
+
+The predictable half is the recording session and the model. It is a short session, it happens once, and the ongoing cost is a per minute or per video charge from whichever platform renders the result. Vendor prices in this category move quickly and are quoted per product tier, so no figure is printed here, and what actually drives yours is volume and length rather than anything clever.
+
+The unpredictable half is everything either side of it. Deciding what the twin may say, writing the script boundaries so they hold up when a listing has something unusual about it, and building the review step into the day so it survives month three. That work is a conversation rather than a build, and it decides whether you end up with a library of useful videos or a library nobody has watched.
+
+The recurring cost that is genuinely easy to underestimate is attention, and the calculator above is the honest way to size it. Everything else in this topic scales with volume and gets cheaper. That one scales with volume and does not.
+
+## What it does not do, and should not pretend to
+
+It does not make you present. A twin can deliver information and it cannot notice that somebody is worried, which is most of what an agent is actually for in the moments that matter.
+
+It does not speak for anybody who has not agreed in writing. That is a legal boundary in this state before it is a policy of ours, and the statute attached to it is a criminal one.
+
+It does not decide what is safe to say. The sentences that create liability in a property transaction look completely ordinary, and no model has a sense of which ones those are.
+
+It does not remove the need for somebody to watch what goes out. It increases that need, because it increases the volume, and a build that is working perfectly goes wrong here more often than it goes wrong anywhere else.
+
+And it does not stay honest by itself. A twin used with a sentence of disclosure is a tool. The same twin without that sentence is the same object doing something else entirely, and nothing in the software knows the difference.
+
+[[scene:wasted]]
+
+## Common questions, answered honestly
+
+### What is an AI clone for a real estate agent?
+
+It is a model of your face and a model of your voice, built from a recording of you, that can afterwards deliver new scripts as video without you being in front of a camera. It exists to remove the recording session from material that was always going to be scripted anyway. What it does not do is give you a second person: everything it says still has to be decided, bounded and checked by you.
+
+### Is it legal to use an AI video of myself in my marketing?
+
+Yes, and the paperwork is worth doing properly anyway. New York Civil Rights Law section 50 requires written consent obtained in advance before a living person's likeness or voice is used for advertising or trade, and when the person is you that is a document you sign once. Do it properly rather than informally, because a consent for one video is not a consent for a model that can produce a thousand, and the useful part of the exercise is being forced to write down what may be made.
+
+### Do I have to tell people the video was made with AI?
+
+Treat it as required regardless of what any particular rule says today, because the research is clear that the viewer cannot work it out. A single spoken sentence at the start costs four seconds and converts something a person could discover into something you told them. There are technical provenance standards for marking a file as machine generated, and they are useful, but they are not a substitute: no client is going to inspect a credential.
+
+### Can I use a video of an agent after they have left my brokerage?
+
+Ask, and get the answer in writing before you need it. Their likeness is theirs, not the firm's, and section 50 keeps applying after they change firms. The practical version is that the consent document should have said what happens on departure, and if it did not, the safe assumption is that the permission ended with the relationship.
+
+### What about a testimonial in a client's voice or face?
+
+A real client, recorded with their written permission, is ordinary marketing. A synthesised version of a client, or words they did not say assembled into their voice, is not a grey area in this state. The digital replica definition in section 50-f explicitly covers materially altering a performance somebody actually gave, so editing what they said into something better is inside the same territory as inventing it.
+
+### Will my clients be able to tell it is not really me?
+
+Assume not. In published research, 315 people sorting synthetic faces from real ones averaged 48.2 percent against a 50 percent coin flip, and 219 people who were trained and told the answer after every attempt reached 59.0 percent and got no better with practice. Those were still images of strangers rather than video of somebody familiar, so the transfer is not exact, and there is no published measurement of the familiar case. Plan for the version where nobody notices.
+
+### Who owns the model of my face and my voice?
+
+You should, and it should say so in writing before the recording happens. The three things to have in the document are that the likeness and voice model are yours, that they are not licensed to anybody else or reused on other people's content, and that they are deleted on request. A vendor unwilling to write those three lines down has told you something useful.
+
+### Is this worth it for a one or two person brokerage?
+
+Sometimes, and the test is not size. It is whether you already have material that is scripted, repeated and currently not being recorded because the recording is the bottleneck. If the honest answer is that you would not have made these videos at all, a twin is worth considering. If the answer is that you would have recorded them yourself and just have not, the twin is solving a discipline problem with software, which never works.
+
+## What to do about it
+
+Take twenty minutes before you take a camera.
+
+Write down the three things you would put on video every week if recording cost nothing. Then write, beside each one, the single sentence in it that would be expensive to get wrong. A tax figure, a school, a boundary, a timeline, a condition of the property.
+
+That second column is the actual specification for the build, and it is the part no vendor will write for you. It says which sentences a script may generate freely, which ones have to come from a source rather than from a model, and which ones a person has to approve before anything sends.
+
+Then decide who watches. Not whether. Who.
+
+[[scene:funnel]]`;
+
 export const INVOICING_POST = `You sent the buyer to a brokerage two states away in February. It was a good referral, the arrangement was ordinary and lawful, and both of you signed something.
 
 Their deal closed in July.

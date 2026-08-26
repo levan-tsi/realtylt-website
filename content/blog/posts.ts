@@ -7,6 +7,7 @@ import type { ArticleFilm } from "@/lib/blog/types";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
+  AI_CLONE_POST,
   AI_SCHEDULING_POST,
   INVOICING_POST,
   AI_CHAT_ASSISTANT_POST,
@@ -23,6 +24,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
 import { INVOICING_FLAGSHIP } from "./invoicing-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "./enrichment-scenes";
@@ -82,6 +84,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "ai-clone-real-estate-agent-video-avatar",
+    title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
+    date: "2026-08-26",
+    /** NO `updated`, for the same reason topics 6 to 17 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Fourteen statements were published in your name to fourteen people who now believe you said them. Whose face and voice a business may reproduce, why New York's oldest privacy statute makes the wrong version a misdemeanour, what happened when 315 people tried to tell synthetic faces from real ones, and the cost of a digital twin that nobody quotes.",
+    seoDescription:
+      "Whose likeness a real estate business may reproduce, what New York Civil Rights Law 50 and 50-f require, and what happened when 315 people tried to spot synthetic faces.",
+    cover: "/images/editorial/victrola.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_CLONE_POST,
+    flagship: CLONE_FLAGSHIP,
+  },
   {
     slug: "invoicing-and-payments-real-estate-brokerage",
     title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
