@@ -9,7 +9,7 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
-export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years and nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere around eight hundred mornings in a row, without a single complaint.
+export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years and nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere over five hundred mornings in a row, without a single complaint.
 
 Then on a Tuesday a field came back with a value it had never seen before. Not a broken value. A perfectly ordinary new one, added by the company that runs the system, published in their release notes, and entirely within the promise they had made about not breaking anything.
 
@@ -44,9 +44,9 @@ That is not an argument against building anything. It is an argument for reading
 
 [[scene:three-costs]]
 
-Of those three, the second catches small businesses hardest, and the polite version of it does not land, so here is the direct one. A bespoke automation is usually understood by exactly one person. For a year that is completely fine, and it is fine in the same way that having one set of keys is fine. The cost of that arrangement is not paid continuously. It is paid all at once, on the day you need a change and that person is not available, and the size of the bill at that moment is set by how much of the thing was written down rather than by how well it was built.
+Of those three, the second catches small businesses hardest, and the polite version of it does not land, so here is the direct one. A bespoke automation is often understood by exactly one person. For a year that is completely fine, and it is fine in the same way that having one set of keys is fine. The cost of that arrangement is not paid continuously. It is paid all at once, on the day you need a change and that person is not available, and the size of the bill at that moment is set by how much of the thing was written down rather than by how well it was built.
 
-There is a cheap fix and almost nobody asks for it, which is a written description of what the chain does, in the language of the business rather than in the language of the software, kept with the thing itself. It costs an hour at the end of a build. It is the difference between a change and a rebuild.
+There is a cheap fix and it is easy to leave out of a scope, which is a written description of what the chain does, in the language of the business rather than in the language of the software, kept with the thing itself. It costs an hour at the end of a build. It is the difference between a change and a rebuild.
 
 ## Everything it stands on belongs to somebody else
 
@@ -54,7 +54,7 @@ The part that surprises people is not that vendors change things. It is how shor
 
 [[scene:notice]]
 
-Three companies with more to lose from breaking their customers than almost anybody, all publishing what they will actually guarantee, and the longest guarantee on that chart is two years. A brokerage does not think in two year horizons about its own operations. It thinks about the way it has always done things, which is usually measured in decades.
+Three companies with more to lose from breaking their customers than almost anybody, all publishing what they will actually guarantee, and the longest guarantee on that chart is two years. A brokerage does not think in two year horizons about its own operations. It thinks about the way it has always done things, and that habit is older than any of these policies.
 
 Read the exceptions rather than the numbers, though, because the exceptions are where the honesty is.
 
@@ -62,15 +62,15 @@ Read the exceptions rather than the numbers, though, because the exceptions are 
 
 Every clause in that sentence is reasonable. A company should be able to change something to comply with the law or to close a security hole, and nobody would seriously argue otherwise. The third one is the interesting one: a substantial economic or material technical burden is a judgment the vendor makes about its own business, and it is the escape hatch that means twelve months is a policy rather than a contract term you could plan around.
 
-The same clause carries one more thing worth knowing, and it is the one that catches builds most often. The commitment does not apply to anything that has not reached general availability. A great deal of the most useful functionality in any platform spends a year or more in preview, and building on a preview is building on something whose owner has explicitly promised you nothing.
+The same clause carries one more thing worth knowing, and it is the one that catches builds most often. The commitment does not apply to anything that has not reached general availability. Plenty of genuinely useful functionality sits in preview for a long time before it is promoted, and building on a preview is building on something whose owner has explicitly promised you nothing.
 
-Microsoft's policy has the same shape, promising a minimum of twelve months' notice where no successor product is offered, and excluding free services and preview releases from that. Meta's is the tidiest of the three and the easiest to misread: a Graph API version is guaranteed for two years, but the clock starts on the day the NEXT version ships rather than on the day yours does. Build against a version that is eighteen months old and you have six months, not two years.
+[Microsoft's modern lifecycle policy](https://learn.microsoft.com/en-us/lifecycle/policies/modern) has the same shape, promising a minimum of twelve months' notice where no successor product is offered, and excluding free services and preview releases from that. [Meta's](https://developers.facebook.com/docs/graph-api/guides/versioning) is the tidiest of the three and the easiest to misread: a Graph API version is guaranteed for two years, but the clock starts on the day the NEXT version ships rather than on the day yours does. Build against a version that is eighteen months old and you have six months, not two years.
 
 ## The change that is not a breaking change
 
 There is a shared vocabulary for this, and learning it explains how a build can break on a day when nobody broke anything.
 
-[Semantic versioning](https://semver.org/) is the convention most of the software industry follows for numbering releases. Its rule is three lines long: increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible manner, and the patch version when you make backward compatible bug fixes. That gives everybody a shared meaning for a number, and it means a responsible vendor can tell you, in advance, when something will hurt.
+[Semantic versioning](https://semver.org/) is a published convention for numbering releases, and a great deal of software follows it. Its rule is three lines long: increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible manner, and the patch version when you make backward compatible bug fixes. That gives everybody a shared meaning for a number, and it means a responsible vendor can tell you, in advance, when something will hurt.
 
 Now here is the gap, and Stripe documents it more clearly than anybody so it is worth quoting them. In [their API reference](https://docs.stripe.com/api/versioning) they distinguish two kinds of fixed-value field. A closed one has a set of possible values that is fixed and will not grow. An open one can grow, and they say plainly that new values can be added as a backward-compatible change without requiring an API version upgrade. Their advice to developers follows from that: do not assume that the documented values are exhaustive, and write code that handles a value it has never seen.
 
@@ -84,7 +84,7 @@ There is an old and useful piece of work on this and it comes from the American 
 
 [[scene:bearing]]
 
-The totals are from 2002 and the whole national estimate is extrapolated from two industries, which the report says about itself. The ratio is what transfers, and the ratio is the argument of this entire article. When software does not work, the great majority of the cost lands on the business using it.
+Read the chart's note for what that estimate does and does not rest on. What matters here is the direction of the split: when software does not work, the great majority of the cost lands on the business using it.
 
 That is true of anything you buy, and it is true twice over for something built for you alone. A product with ten thousand customers has ten thousand people who might hit a fault before you do and a vendor with a commercial reason to fix it. A build with one customer has you, and the fault is found on the day it costs you something.
 
@@ -94,23 +94,23 @@ None of that is a reason not to build. It is a reason to insist the thing tells 
 
 ## The number this page will not print
 
-Everybody who writes about this reaches for the same statistic, which is the share of a system's total lifetime cost that goes on maintenance rather than on building it. The usual range quoted is somewhere between sixty and eighty percent, and it is quoted so often that it has the feel of a settled fact.
+There is one statistic anybody who has read about this will have seen, which is the share of a system's total lifetime cost that goes on maintenance rather than on building it. The usual range quoted is somewhere between sixty and eighty percent, and it is quoted so often that it has the feel of a settled fact.
 
 It is not printed here, and the reason is a check rather than a shrug.
 
-The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is real: its record exists, with a publication date and a reference count. The ACM's own library answers 403 to a request for it. The publisher's page for the 2000 article answers 200 with an eight kilobyte page containing none of the article's text, no occurrence of the word maintenance, and no occurrence of the number.
+The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real: its catalogue record exists, with a publication date and a reference count. Getting at the paper itself is another matter. The ACM's library sits behind a bot check that no automated request made for this article cleared, in a browser or otherwise, and the publisher's page for the 2000 article answers with an eight kilobyte shell containing none of the article's text, no occurrence of the word maintenance, and no occurrence of the number.
 
 So neither could be read in the original, which means nobody writing this page can tell you what was actually measured, on how many systems, in what industry, in a decade when software was written and deployed in ways that no longer exist. A number nobody can check is not a conservative estimate. It is a rumour with a citation attached.
 
-There is a second thing missing from this page for a related reason, and it is more interesting because the source IS readable. The most reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project, rising steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the concept, not a measurement of anything, and drawing it would have been a fabrication with a footnote.
+There is a second thing missing from this page for a related reason, and it is more interesting because the source IS readable. A much reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project, rising steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the concept, not a measurement of anything, and drawing it would have been a fabrication with a footnote.
 
-What can be said honestly is narrower and it is enough. Maintenance is not a small share of what a build costs over its life, everybody who has owned one knows that, and no number worth printing exists for how large a share it is.
+What can be said honestly is narrower and it is enough. Maintenance is not a small share of what a build costs over its life, which anybody who has owned one will recognise, and no number worth printing exists for how large a share it is.
 
 ## What makes a bespoke build survivable
 
 Five properties, and every one of them is cheap at the beginning and expensive to add later.
 
-It fails loudly. The most common ending for a custom automation is not an error, it is silence, and silence is indistinguishable from having nothing to do. Something has to shout, somewhere a person actually looks.
+It fails loudly. The ending to plan for is not an error, it is silence, and silence is indistinguishable from having nothing to do. Something has to shout, somewhere a person actually looks.
 
 It refuses rather than guesses. When it meets a value, a document or a case it does not recognise, it puts it aside for a person. This is the same principle every other build on this site rests on and it is the one that prevents the expensive class of failure rather than the annoying class.
 
@@ -126,7 +126,7 @@ And it has a review date. A date in the calendar, once a year, where somebody as
 
 ## What happens on the day you want to change it
 
-Every conversation about a build is about the first version, and every build has a second version, usually within a year, because businesses move. What the second version costs is decided almost entirely by choices made during the first, and almost none of those choices feel important at the time.
+Every conversation about a build is about the first version, and there is nearly always a second version, because businesses move. What the second version costs is decided almost entirely by choices made during the first, and almost none of those choices feel important at the time.
 
 The first is whether the rules live in one place or are scattered through the thing. A chain where the decisions are gathered in one step, written the way a person would write them, can have a rule changed by somebody reading it and editing a line. A chain where the same decision is expressed in four places, slightly differently, cannot be changed at all without somebody rediscovering all four, and rediscovering them takes longer than writing them did.
 
@@ -140,7 +140,7 @@ None of this is exotic engineering. It is three habits, they cost nothing during
 
 Four situations, and none of them are about the technology being immature.
 
-When the process is still moving. A chain wired to a way of working that is being redesigned spends its life being rewired, and the rewiring is not cheaper than the build was. Wait until the shape has stopped changing, which usually takes one quiet quarter rather than a year.
+When the process is still moving. A chain wired to a way of working that is being redesigned spends its life being rewired, and the rewiring is not cheaper than the build was. Wait until the shape has stopped changing, and judge that by whether anybody has moved a step in the last few months rather than by a date.
 
 When you cannot describe it in a paragraph. Not because a builder needs the paragraph, but because being unable to write it means the decision inside it has not been made, and software will make that decision for you by accident and then hide it.
 
@@ -168,7 +168,7 @@ Ask what they would talk you out of. A builder with nothing on that list has eit
 
 The build divides into two shapes with very different prices, and which one you have is decided by the systems rather than by the logic.
 
-Where every system involved has a decent published way in, the work runs to days instead of weeks, and a good share of it is agreeing the rules rather than writing anything. This is most of what gets built and it is the boring, good version.
+Where every system involved has a decent published way in, the work runs to days instead of weeks, and a good share of it is agreeing the rules rather than writing anything. That is the boring, good version of this work.
 
 Where something has to read a document, deal with a system that has no proper way in, or wait on an office that is not yours, the price is set by that obstacle and not by the rest. Treat it as its own project with its own shape, and treat any quote offered before the obstacle has been looked at as a guess.
 
@@ -184,7 +184,7 @@ It does not take the person out of the steps that need one. Any step that guesse
 
 It does not protect you from other people's release schedules. It exposes you to them, permanently, and the exposure is part of what you are buying rather than a risk somebody can price away.
 
-And it does not retire itself. Nothing does. A build with no review date runs until something outside it breaks it, and the question of whether it was still earning its keep gets answered by a vendor's engineering team rather than by you.
+And it does not retire itself. Nothing does. The only mechanism that ever switches one of these off is a date in somebody's calendar and a person willing to ask the question on that date.
 
 [[scene:wasted]]
 
@@ -284,7 +284,7 @@ The first is the obvious comfort. If you have not built anything yet, you are no
 
 The second reading is the one that changes behaviour. A field where one firm in ten has adopted anything is a field with no settled playbook. There is no consensus about what a small business should build first, because not enough small businesses have built anything for a consensus to exist. Which means the confident answers you are being given about what to do first are not summaries of what worked. They are guesses, sold with conviction, and the correct posture toward all of them, including the ones on this page, is to ask what they rest on.
 
-That figure is also from a 2017 reference year, and the vocabulary has moved a very long way since. Treat it as a fact about how new all of this still is, not as a description of the market this week.
+Treat all of it as a fact about how new this still is rather than as a description of the market this week, for the reason the chart's own note gives.
 
 ## The three questions that do the cutting
 
@@ -318,7 +318,7 @@ The first of those three deserves an extra sentence because it gets built most o
 
 The correct build for that class of question exists and it is smaller than the one people ask for. It fetches the value from the record that governs it, and where there is no record it says so, out loud, rather than filling the gap. Anything with a document or a data component on this site rests on that same principle: a system may report what a source says, and it may say it does not know. It may not produce the answer itself.
 
-There is a fourth thing to leave alone, not on the list above because it is not really a candidate, and it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test and it is not a technical one. It is a good instinct, it is available for free, and it has never once been wrong in either direction.
+There is a fourth thing to leave alone, not on the list above because it is not really a candidate, and it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test and it is not a technical one. It is a good instinct, it is available for free, and it costs nothing to apply before any of the other three.
 
 ## Why ranking by the average outcome gets it wrong
 
@@ -340,7 +340,7 @@ Do not carry those percentages home, and the chart's own note says so: the media
 
 At about this point somebody asks what proportion of these projects fail, and there is an answer in wide circulation. It should not be used, and the reason is specific rather than a general grumble about statistics.
 
-The figure everybody quotes comes from a report published annually by a private research firm and sold rather than published, so the data underneath it has never been open to inspection. Two researchers at Vrije Universiteit Amsterdam did the next best thing: they took the report's own published definitions of a successful and a challenged project, applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf), and looked at what came out.
+The figure comes from a report published annually by a private research firm and sold rather than published, and the specific complaint the academic literature makes about it is that its underlying data has never been opened to independent inspection. Two researchers at Vrije Universiteit Amsterdam, whose paper carries that affiliation on its own byline, did the next best thing: they took the report's own published definitions of a successful and a challenged project, applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf), and looked at what came out.
 
 Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the estimation practice, and they result in meaningless figures. The mechanism is not subtle. Those definitions score a project purely on how far it deviated from its original estimate, so coming in under budget counts against you the same way as going over, and a well run organisation whose forecasts were independently checked and were genuinely accurate still scored a 35 percent success rate under them. Worse, an organisation the researchers examined had adopted those definitions internally and had thereby trained its own managers to inflate every budget request, which made the forecasts far less accurate while making the success rate look better.
 
@@ -356,7 +356,7 @@ First, containment. What happens when this one is wrong, and who finds out. Ever
 
 Second, whether the rule is settled. Not whether it is simple, whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one, because the unsettled one is a management job wearing a technical costume and it will come back later as a technical failure.
 
-Third, and only third, the size of the thing. Every other version of this exercise starts here, and it belongs at the end, because it is the criterion that produces the most confident wrong answers. The largest saving on a list is almost always the item with the most judgment in it, which is precisely why a person is still doing it.
+Third, and only third, the size of the thing. Every other version of this exercise starts here, and it belongs at the end, because it is the criterion that produces the most confident wrong answers. The largest saving on a list is very often the item with the most judgment in it, which is precisely why a person is still doing it.
 
 [[scene:audit-path]]
 
@@ -390,7 +390,7 @@ The cost that appears in neither half is the one this article keeps returning to
 
 It does not decide for you. It removes candidates and explains why, and what the business does about the survivors is a decision with your name on it.
 
-It does not see what nobody will say. The account of how the work runs is only as good as the description it is given, and the steps people are quietly embarrassed about are often the ones that would automate best.
+It does not see what nobody will say. Everything below the surface of the account has to be volunteered, and an hour with a stranger is not always when that happens.
 
 It does not produce a saving. Every hour identified is an hour you then have to choose to spend on something else, and businesses that do not make that choice deliberately find the hour absorbed within a month.
 
@@ -466,11 +466,9 @@ Almost every difficult question in this subject collapses into that one, and it 
 
 [[scene:two-halves]]
 
-## The oldest statute of its kind in the country, and it is a criminal one
+## New York's answer is a statute, and it is a criminal one
 
-New York got here before anybody else, and it got here because of a photograph.
-
-The right of publicity in this state is not judge made and it is not recent. It sits in [Civil Rights Law section 50](https://www.nysenate.gov/legislation/laws/CVR/50), enacted after a young woman's picture was used on flour advertisements without her knowledge and the courts of the day found she had no remedy. The legislature supplied one, and it is short enough to read in a breath.
+This is not a doctrine that grew up quietly in the courts and has to be inferred from a line of cases. It is [Civil Rights Law section 50](https://www.nysenate.gov/legislation/laws/CVR/50), the whole of it fits in a single sentence, and that sentence is short enough to read in a breath.
 
 [[scene:pull-quote]]
 
@@ -490,9 +488,9 @@ Nothing in this article is legal advice, and this is exactly the paragraph to ta
 
 ## What happens to a likeness after the person has died
 
-The assumption is that death ends it. In New York the opposite is closer to true, and the statute that says so is recent enough that most people have never heard of it.
+The assumption is that death ends it. In New York the opposite is closer to true, and the statute that says so is recent enough to be easy to have missed.
 
-[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) was added in 2020 and is titled, plainly, right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness, defining a deceased personality as a person domiciled in this state at death whose likeness had commercial value at the time of, or because of, their death. And it does something the older sections never had to: it defines the thing this article is about.
+[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) has been in force since 2020, on the version history its own page carries, and is titled, plainly, right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness, defining a deceased personality as a person domiciled in this state at death whose likeness had commercial value at the time of, or because of, their death. And it does something the older sections never had to: it defines the thing this article is about.
 
 A digital replica, in the statute's own words, is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition and the second half is the part people miss. Altering what somebody actually said, past the point where it is still their performance, is inside the definition as surely as inventing it from nothing.
 
@@ -518,17 +516,17 @@ One thing has to be said plainly because it is the sort of claim that ages badly
 
 ## Nobody can reliably tell, and that is measured rather than assumed
 
-There is a comfortable belief in this industry that a client would know. It is the belief that most of the informal ethics of AI video quietly rests on, and it has been tested.
+There is a comfortable belief in this industry that a client would know. It is the belief a great deal of the informal ethics of AI video quietly rests on, and unlike most of what gets said in this area it has actually been tested.
 
 Two researchers at Lancaster University and the University of California, Berkeley ran a set of perceptual studies with real participants and published them in the Proceedings of the National Academy of Sciences in 2022. They took four hundred synthesised faces and matched each one to a real photograph of a similar person, then asked people to sort them.
 
 [[scene:tell-apart]]
 
-The result is not that people are bad at this. It is that there is nothing there to be good at. The trained group had been shown what to look for and were told after every single answer whether they had got it right, which is the most favourable condition anybody has ever tested this under, and they ended the session no better than they started it. The paper attributes that to some of the synthetic faces simply containing no perceptible artefact to find.
+The result is not that people are bad at this. It is that there is nothing there to be good at. The trained group had been shown what to look for and were told after every single answer whether they had got it right, which is about as favourable a condition as anybody could set up, and they ended the session no better than they started it. The paper attributes that to some of the synthetic faces simply containing no perceptible artefact to find.
 
 The natural response is that a machine should do the checking instead. That has been tested too, at a scale no individual company could manage.
 
-In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips made from three thousand four hundred and twenty six paid actors, and ran a public competition on it. The dataset is worth a sentence of its own for a reason that belongs on this page: the authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it, which is not something most datasets in this field can say. Two thousand one hundred and fourteen teams entered.
+In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips made from three thousand four hundred and twenty six paid actors, and ran a public competition on it. The dataset is worth a sentence of its own for a reason that belongs on this page: the authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it, and note in the same paper that many previously released datasets in this field did not guarantee that. Two thousand one hundred and fourteen teams entered.
 
 [[scene:detector]]
 
@@ -540,13 +538,13 @@ Put the two studies together and one conclusion falls out that nothing since has
 
 Once you accept that the viewer cannot tell, the disclosure question stops being a matter of taste and starts being the only mechanism there is. The good news is that it is cheap. The interesting news is that there is a technical standard for the durable version of it, and reading what that standard says about itself is more instructive than reading anything written about it.
 
-The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html) for attaching signed, tamper evident provenance to a media file. In its vocabulary the signed bundle is a manifest, the friendly name for it is a Content Credential, and one of the things a manifest can record is that a file was produced by a generative model, using a specific machine readable value rather than a phrase somebody typed.
+The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html) for attaching signed, tamper evident provenance to a media file. It is a serious piece of engineering with serious companies behind it, and the useful thing about reading the document itself is how carefully it describes its own limits.
 
 [[scene:credentials]]
 
-The passage that matters most is in the specification's own scope section, quoting its guiding principles: that the specifications should not provide value judgments about whether a given set of provenance data is good or bad, merely whether the assertions included within can be validated as associated with the underlying asset, correctly formed, and free from tampering. The basis of trust, it says elsewhere, is the identity of the signer.
+The sentence quoted in the middle of that scene is from the specification's own scope section, and it is worth noticing what a standards body chooses to refuse. It will not tell you whether provenance data is good or bad. It will tell you whether the assertions in it are correctly formed and have not been tampered with, and it says elsewhere that the basis for any trust decision is the identity of whoever signed.
 
-That is an honest standard describing its own limits, and it is the reason the technical answer and the practical answer are different. The technical answer is a credential nobody will look at. The practical answer is a sentence at the start of the video in which a person says, in their own words, that this was recorded once and assembled by software. It costs four seconds, it cannot be stripped, and it converts the entire problem from something a viewer might discover into something you told them.
+That is a standard describing its own limits accurately, and it is the reason the technical answer and the practical answer are different. The technical answer is a credential that only works if somebody chooses to inspect it. The practical answer is a sentence at the start of the video in which a person says, in their own words, that this was recorded once and assembled by software. It costs four seconds, it cannot be stripped, and it converts the entire problem from something a viewer might discover into something you told them.
 
 ## What we will and will not build
 
@@ -556,19 +554,19 @@ Everything above is about the world. This section is about us, and it is the one
 
 The /ai page already says that we do not build agents that pretend to be a specific human being, and that was written about voice on a telephone. It applies with more force to a face. A likeness of the person who sat in front of the camera and agreed in writing is a tool. A likeness of anybody else is the thing four separate bodies of law are pointed at, and no amount of the client being a good one moves that answer.
 
-What that means concretely is a short list of things that are not negotiable. There is one consent per person and it is written and specific about what may be made. The recording and the model belong to the person in them, are not licensed on, and stop being used when they say so. Nothing is produced about a third party's likeness at all. And a person, not a workflow, decides which sentences the twin is allowed to say.
+What that means concretely is a short list of things that are not negotiable, and the useful way to read it is as an order rather than as a policy. Each step below only makes sense if the one before it happened, which is why the ones at the end are the ones that get skipped.
 
 [[scene:consent-path]]
 
 ## What a twin honestly does for a brokerage
 
-Strip out the excitement and there are three real jobs, and they are smaller and more specific than the category is usually sold on.
+Strip out the excitement and there are three real jobs, and all three are smaller and more specific than the pitch.
 
 It removes the recording session from things that were always scripted anyway. A market note, a new listing walkthrough, a short explanation of what happens after an offer is accepted. These are things where the words matter and the performance does not, which is exactly the case where a twin loses nothing.
 
 It makes an individually addressed version affordable. Not better than a personal video, just possible at a count where a personal video is not. This is the honest version of the pitch: fourteen people get something with their own name in it instead of one blast, and the alternative was never fourteen real recordings, it was one email.
 
-And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read, and everybody in this trade already knows that, which is why they feel guilty about not recording more.
+And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read. That is why so many agents intend to record more than they do.
 
 What none of those three needs is for anybody to be deceived. Every one of them survives being labelled, which is a good test of whether a use is a legitimate one: if telling the viewer would ruin it, the use was never about saving you a recording session.
 
@@ -580,7 +578,7 @@ A twin does not reduce the amount of judgment a business has to apply. It moves 
 
 [[scene:videos-calculator]]
 
-That number is small, and small is the point. Nobody is going to tell you that reviewing your own videos is unaffordable. What actually happens is quieter: it gets done for the first fortnight, then it gets done sometimes, then somebody says the last forty were all fine. The failure is not a decision anybody made.
+What actually happens to that number is quieter than a refusal. The reviewing gets done for the first fortnight, then it gets done sometimes, then somebody says the last forty were all fine. Nobody ever decided to stop.
 
 The fix is not technology and it is not a bigger budget. It is naming a person and a moment. Somebody watches, before it sends. Where no one has been given that duty by name, the honest response is to produce fewer videos rather than to pretend the watching is happening.
 
@@ -626,7 +624,7 @@ It does not make you present. A twin can deliver information and it cannot notic
 
 It does not speak for anybody who has not agreed in writing. That is a legal boundary in this state before it is a policy of ours, and the statute attached to it is a criminal one.
 
-It does not decide what is safe to say. The sentences that create liability in a property transaction look completely ordinary, and no model has a sense of which ones those are.
+It does not decide what is safe to say. That list has to exist before anything is recorded, and writing it is a job for a person who has been in the transactions.
 
 It does not remove the need for somebody to watch what goes out. It increases that need, because it increases the volume, and a build that is working perfectly goes wrong here more often than it goes wrong anywhere else.
 
@@ -666,7 +664,7 @@ You should, and it should say so in writing before the recording happens. The th
 
 ### Is this worth it for a one or two person brokerage?
 
-Sometimes, and the test is not size. It is whether you already have material that is scripted, repeated and currently not being recorded because the recording is the bottleneck. If the honest answer is that you would not have made these videos at all, a twin is worth considering. If the answer is that you would have recorded them yourself and just have not, the twin is solving a discipline problem with software, which never works.
+Sometimes, and the test is not size. It is whether you already have material that is scripted, repeated and currently not being recorded because the recording is the bottleneck. If the honest answer is that you would not have made these videos at all, a twin is worth considering. If the answer is that you would have recorded them yourself and just have not, the twin is being asked to solve a discipline problem, which is not what it is.
 
 ## What to do about it
 

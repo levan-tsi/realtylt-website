@@ -112,7 +112,7 @@ export const NOTICE = {
     "Months of notice or continued operation, taken from three vendors' own published policies rather than from any article about them. The first is Google's commitment in its cloud terms of service to notify a customer before discontinuing a service or making a backwards-incompatible change to a customer-facing interface. The second is Microsoft's stated minimum notification under its modern lifecycle policy where no successor is offered. The third is Meta's guarantee that a Graph API version keeps working, measured from the release date of the version after it rather than from its own.",
   sourceText: "Google Cloud Platform Terms of Service 1.4(e); Microsoft Modern Lifecycle Policy; Meta Graph API versioning.",
   sourceHref: "https://cloud.google.com/terms/",
-  note: "Three different promises about three different things, drawn together because the only thing they have in common is the number a business gets. Read the carve-outs rather than the bars. Google's twelve months does not bind it where a change is needed to comply with the law, to address a material security risk, or to avoid a substantial economic or material technical burden, and the whole clause is switched off for anything that has not reached general availability, which is where a great deal of the interesting functionality lives. Microsoft's is a minimum with free services and previews excluded. Meta's clock starts when the NEXT version ships rather than when yours does, so the version you built against may already have spent most of its two years. None of these vendors is behaving badly here. They are all being unusually clear, and what they are being clear about is that the ground moves.",
+  note: "Three different promises about three different things, drawn together because the only thing they have in common is the number of months a business gets. Two things a lifted copy of this chart has to carry with it. Every one of these commitments has exceptions written into it, so a bar here is a policy rather than a term you could plan around, and the article this comes from quotes them. And the third bar is measured from the release of the NEXT version rather than of the one you built on, so a version that is already eighteen months old carries six months rather than twenty four. None of these vendors is behaving badly. They are being unusually clear, and what they are being clear about is that the ground moves.",
 };
 
 /** SCENE copy — the three costs that begin on the day it works.
@@ -123,7 +123,7 @@ export const NOTICE = {
 export const THREE_COSTS: GridItem[] = [
   {
     lead: "It is now a thing that has to keep working",
-    body: "Not a purchase, a possession. Somebody has to notice when it stops, and the noticing is the expensive half, because a chain that quietly does nothing looks exactly like a chain that had nothing to do. The cheapest useful thing any build can have is a loud failure, and almost nobody asks for one.",
+    body: "Not a purchase, a possession. Somebody has to notice when it stops, and the noticing is the expensive half, because a chain that quietly does nothing looks exactly like a chain that had nothing to do. The cheapest useful thing any build can have is a loud failure, and it is the easiest thing to leave out of a scope.",
   },
   {
     lead: "One person understands it",
@@ -131,7 +131,7 @@ export const THREE_COSTS: GridItem[] = [
   },
   {
     lead: "It stands on things you do not control",
-    body: "Every system it touches is somebody else's, running to somebody else's release schedule, and the changes that break a chain are usually not even the ones a vendor calls breaking. A new value in a field, a rate limit tightened, a login flow that adds a step. None of that is a fault. All of it is Tuesday.",
+    body: "Every system it touches is somebody else's, running to somebody else's release schedule, and some of the changes that break a chain are not even the ones a vendor calls breaking. A new value in a field, a rate limit tightened, a login flow that adds a step. None of that is a fault. All of it is Tuesday.",
   },
 ];
 
@@ -198,7 +198,7 @@ export const LIFECYCLE: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "The process it was built around went away",
-    body: "You changed portals, or the brokerage restructured, or the thing it fed into got replaced. The chain still runs, faultlessly, on a shape of work that no longer exists, and because it never errors nobody has any reason to look at it. This is the most common ending and it almost never gets noticed on the day it happens.",
+    body: "You changed portals, or the brokerage restructured, or the thing it fed into got replaced. The chain still runs, faultlessly, on a shape of work that no longer exists, and because it never errors nobody has any reason to look at it. This is the ending nobody plans for, and it does not announce itself on the day it happens.",
   },
   {
     lead: "It got extended once too often",
@@ -260,8 +260,11 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the bench top along
       // the bottom with a blue tarpaulin folded on it and papers beside it, neither of which is in
-      // the 21:9 slice. Nothing in this photograph carries legible lettering.
-      alt: "A workshop wall hung with hand tools in deliberate rows, files and chisels standing upright in a rack at the left, hammers and mallets below them, screwdrivers with yellow, green and red handles ranked by size across the middle, pliers and shears at the right against exposed brick, and a bench top along the bottom of the frame carrying a folded blue tarpaulin and loose papers",
+      // the 21:9 slice. ONE CORRECTION MADE BY LOOKING: an earlier version of this comment said
+      // nothing in the photograph carries lettering, and the phone crop has a labelled plastic
+      // bottle standing on the bench. Its label is not legible at the shipped size, so the alt
+      // says a labelled bottle rather than naming anything on it.
+      alt: "A workshop wall hung with hand tools in deliberate rows, spanners and pliers along the top, long files and chisels standing upright at the left, hammers and wire brushes below them, screwdrivers with yellow, green, red and blue handles ranked by size across the middle, a saw and shears at the right against exposed brick, and a bench along the bottom of the frame carrying a folded blue sheet, a labelled plastic bottle, a black folder and loose papers",
       caption:
         "Nobody buys a wall like this. It accumulates, one tool at a time, each one bought for a job that a tool already on the wall could not quite do. That is what a bespoke build actually is, and it is also the warning in the picture: every one of these has to be found, kept sharp and put back, and a wall nobody maintains is just a lot of metal on a hook.",
       credit: "Photograph by huw-ogilvie, CC BY 2.0.",
@@ -288,7 +291,10 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
     },
     bearing: {
       kind: "statbars",
-      band: "light",
+      /** DARK rather than light, measured rather than chosen: with this chart on a light field the
+       * prose either side of it ran as one pale band of 18 to 21 percent of the article, against a
+       * shipped cohort range of 14 to 17. Flipping it breaks the run and costs nothing else. */
+      band: "dark",
       label: "Who pays",
       ...BEARING,
     },
@@ -397,7 +403,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds a fourth
       // card along the bottom edge and more of the wooden frame at the left, neither of which is
       // in the 21:9 slice. Nothing in this photograph carries legible lettering.
-      alt: "Punched cards laced together in a continuous band riding the head of a Jacquard loom, three of them filling the frame, each a stiff cream rectangle pierced with rows of round holes in irregular groups, the cards held in a dark wooden frame with a metal rod along the right hand edge and worn timber visible behind them",
+      alt: "Punched cards laced edge to edge into a continuous band, four of them across the frame with the top and bottom ones cut off, each a stiff cream rectangle pierced with rows of round holes in irregular groups, dark lacing tape running between them, and worn pale timber with metal pins along the right hand edge",
       caption:
         "This is a program, and it is two hundred years old. Every hole is an instruction, the loom cannot do anything the cards do not say, and the reason this one still exists is that somebody kept the cards. That is the entire lesson: the machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
       credit: "Photograph by pedrik, CC BY 2.0.",

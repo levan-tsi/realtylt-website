@@ -35,8 +35,8 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * topic turns on, the criminal statute nobody expects, and the measurement that decides how the
  * disclosure question has to be answered. */
 export const IN_SHORT: string[] = [
-  "There are two completely different products under the same word. One reproduces your own face and voice, with your own written permission, on your own content. The other reproduces somebody else, and in New York that second one is not a grey area: using a living person's name, portrait, picture, likeness or voice for advertising or trade without their written consent first is a misdemeanour under a statute that has been on the books since 1903.",
-  "Federal law is narrower than most people assume. The Federal Trade Commission's impersonation rule, in force since March 2024, prohibits falsely posing as a government body or as a business or an officer of one. It does not cover individuals. The Commission has proposed adding them, and has proposed making it a violation to supply goods or services knowing they will be used to impersonate, which would reach the people who build these things as well as the people who use them. As of this writing that proposal is still a proposal.",
+  "There are two completely different products under the same word. One reproduces your own face and voice, with your own written permission, on your own content. The other reproduces somebody else, and in New York that second one is not a grey area: using a living person's name, portrait, picture, likeness or voice for advertising or trade without their written consent first is a misdemeanour under a section of this state's Civil Rights Law.",
+  "Federal law is narrower here than it looks. The Federal Trade Commission's impersonation rule, in force since March 2024, prohibits falsely posing as a government body or as a business or an officer of one. It does not cover individuals. The Commission has proposed adding them, and has proposed making it a violation to supply goods or services knowing they will be used to impersonate, which would reach the people who build these things as well as the people who use them. As of this writing that proposal is still a proposal.",
   "Whether the viewer can tell is not a matter of opinion. In a study of 315 people classifying real and synthetic faces one at a time, average accuracy was 48.2 percent against a chance level of 50. A second group of 219 people, given training and told after every single answer whether they were right, reached 59.0 percent and got no better with practice.",
 ];
 
@@ -59,7 +59,7 @@ export const TWO_HALVES: GridItem[] = [
   },
   {
     lead: "Somebody who has died",
-    body: "The one people assume is free, and in New York it is the most precisely regulated of the four. A separate statute passed in 2020 defines a digital replica, gives the right to whoever inherited it, and lets an action be brought for up to forty years after the death. There is a public register of who holds those rights.",
+    body: "The one people assume is free, and in New York it is the most precisely regulated of the four. A separate statute in force since 2020 defines a digital replica, gives the right to whoever inherited it, and lets an action be brought for up to forty years after the death. There is a public register of who holds those rights.",
   },
 ];
 
@@ -105,7 +105,7 @@ export const TELL_APART = {
   sourceText:
     "Nightingale and Farid, AI-synthesized faces are indistinguishable from real faces and more trustworthy, Proceedings of the National Academy of Sciences, 2022.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8872790/",
-  note: "Read the second bar rather than the first, because it is the one that closes the argument. Practice did not help. The paper is explicit that accuracy in the first half of the trained session and in the second half were within half a point of each other, and it puts that down to some synthetic faces simply having no detectable artefact in them to find. Two honest limits on what this can be used for. These were still photographs of people who do not exist, not video of somebody the viewer knows personally, and a face you have met every week for three years is a different task from a stranger's. And the same paper found the synthetic faces were rated slightly MORE trustworthy than the real ones, 4.82 against 4.48 on a seven point scale, which is a small effect and an uncomfortable one. What none of this measures is whether your own clients would spot a video of you, and nobody has published that.",
+  note: "Two honest limits on what this can be used for. These were still photographs of people who do not exist, not video of somebody the viewer knows personally, and a face you have met every week for three years is a different task from a stranger's. And the same paper found the synthetic faces were rated slightly MORE trustworthy than the real ones, 4.82 against 4.48 on a seven point scale, which is a small effect and an uncomfortable one. What none of this measures is whether your own clients would spot a video of you, and nobody has published that.",
 };
 
 /** SCENE copy — can a machine tell? Cited data graphic TWO.
@@ -144,7 +144,7 @@ export const DETECTOR = {
     "Precision, meaning the share of the videos it flagged that really were fakes, for the first placed entry in the DeepFake Detection Challenge, measured on real videos gathered outside the competition's own dataset rather than on the ones it was trained against. The three bars are the same model at three sensitivities, reported by the organisers at recall levels of one tenth, three tenths and nine tenths. Turning it up to catch more fakes is what makes it flag more things that were not fakes.",
   sourceText: "Dolhansky and others, The DeepFake Detection Challenge (DFDC) Dataset, Facebook AI, 2020.",
   sourceHref: "https://arxiv.org/abs/2006.07397",
-  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it, and turning the dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And the organisers report that 2,114 teams entered and that most submissions on the hidden test set scored around what guessing would have scored, which says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse: you cannot leave the disclosing to a detector.",
+  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it, and turning the dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And on the hidden test set the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on every video would have scored, with many of them simply random. That says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse: you cannot leave the disclosing to a detector.",
 };
 
 /** SCENE copy — what a content credential is, and what it does not say.
@@ -256,7 +256,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the paper labels along
       // the top edge and the pink cloth at the bottom right corner. Only legible letters are named.
-      alt: "Wooden letterpress type lying face up in rows, seen at a low angle, the large sans serif letters reading t, t, q, q, a, a, p and a question mark across the middle of the frame with the figures 2, 1, 2 and 2 at the right hand edge, several printed paper labels tucked among the blocks along the top, and a fold of pink cloth at the bottom right corner",
+      alt: "Large letterpress type blocks lying face up and packed tightly together, photographed at a low angle so the rows recede, a few of them pale bare wood and most of them darkened with ink, with lowercase t, q, a, p and o legible across the middle of the frame, a question mark among the blocks along the top edge, a row of figures at the right hand edge, small printed paper labels tucked between some of the blocks, and a fold of pink cloth at the bottom right corner",
       caption:
         "Every one of these blocks is a copy. Somebody cut a master letter once, and everything printed afterwards came from a duplicate of it, which is why the same q could be set in a thousand shops at once and still be that q. What the case does not settle is who is allowed to pick a block up. That has never been a property of the type.",
       credit: "Photograph by Kyle Van Horn, CC BY 2.0.",
@@ -392,7 +392,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the
       // lower half of the wooden cabinet with its metal band and a keyhole, neither of which is
       // in the 21:9 slice. Nothing in this photograph carries legible lettering.
-      alt: "An antique wind-up gramophone standing against a plain yellow wall, its wide metal horn opening toward the left of the frame and mottled with age, the horn's neck curving down to a small brass tone arm over a turntable on a square wooden box, all of it sitting on a darker cabinet whose lower half carries a metal band and a keyhole",
+      alt: "An antique wind-up gramophone standing against a plain yellow wall, its wide metal horn opening toward the left of the frame and mottled with age, the horn's neck curving down to a small metal tone arm over a turntable on a reddish wooden box, all of it sitting on a darker cabinet whose lower half carries a metal band and a keyhole",
       caption:
         "This was the first machine that let a voice arrive somewhere its owner had never been. Nobody thought the singer was in the room, and nobody was fooled, because the horn is enormous and the whole object announces itself. That is the part worth keeping rather than the technology. A reproduction that is obviously a reproduction has never needed anybody's permission to be honest about what it is.",
       credit: "Photograph by Vince Alongi, CC BY 2.0.",
@@ -415,7 +415,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Before you record anything, write two lists. On the first, every sentence you are happy for a machine to say in your voice without you hearing it first. On the second, every sentence you would want to be in the room for. Most people find the second list is shorter than they expected and contains the only sentences that were ever worth saying on camera.",
+      text: "Before you record anything, write two lists. On the first, every sentence you are happy for a machine to say in your voice without you hearing it first. On the second, every sentence you would want to be in the room for. The second list is usually the shorter one, and it tends to contain the only sentences that were ever worth saying on camera.",
       actions: [
         { label: "See it on the AI page", href: "/ai#clone", variant: "light" },
         { label: "How it is built", href: "/services/ai-clone", variant: "outline-light" },
@@ -429,7 +429,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
    * renamed heading degrades to its full text rather than leaving a dead row. */
   headingLabels: {
     "what-a-digital-twin-actually-is-and-the-line-everything-rests-on": "What it is",
-    "the-oldest-statute-of-its-kind-in-the-country-and-it-is-a-criminal-one": "Written consent",
+    "new-yorks-answer-is-a-statute-and-it-is-a-criminal-one": "Written consent",
     "what-happens-to-a-likeness-after-the-person-has-died": "After a death",
     "the-federal-rule-that-covers-businesses-and-does-not-yet-cover-people": "The federal rule",
     "nobody-can-reliably-tell-and-that-is-measured-rather-than-assumed": "Can anyone tell",

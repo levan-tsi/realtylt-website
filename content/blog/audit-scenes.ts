@@ -34,7 +34,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * that makes ranking by an average the wrong move. */
 export const IN_SHORT: string[] = [
   "The output of an audit is a decision, and most of the value in it is subtraction. A list of twelve things you could automate is not worth paying for, because you can write that yourself in an afternoon. Knowing which four of the twelve to cross out, and being able to say why, is the part that takes somebody who has watched these break.",
-  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey, a sample of over 850,000 firms where answering is required by law, and found that while 90.2 percent of firms had put at least one kind of information into digital form, only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
+  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey, a sample of over 850,000 firms where answering is required by law, and found that while 90.2 percent of the firms that collect any information at all held some of it digitally, only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
   "Rank by the average outcome and you will rank wrong, because the outcomes are not distributed like that. In a study of 1,471 information technology projects worth 241 billion dollars, the ordinary ones overran by 3.6 percent on average, and 17 percent of them landed in a fat right hand tail where a thin-tailed distribution would have put 0.7 percent.",
 ];
 
@@ -45,7 +45,7 @@ export const IN_SHORT: string[] = [
 export const DELIVERABLE: GridItem[] = [
   {
     lead: "A written description of how the work runs now",
-    body: "Not an org chart and not a process diagram made in advance. A plain account of what actually happens, including the workaround somebody invented in 2022 that everybody now depends on and nobody has written down. This is the part that surprises owners, and it is worth having even if nothing else follows from it.",
+    body: "Not an org chart and not a process diagram made in advance. A plain account of what actually happens, including the workaround somebody invented a few years ago that the office now depends on and nobody has written down. This is the part that surprises owners, and it is worth having even if nothing else follows from it.",
   },
   {
     lead: "An order, with the reasoning attached",
@@ -92,7 +92,7 @@ export const ADOPTION = {
   eyebrow: "The evidence",
   caption: "What US firms had actually adopted, on a survey of over 850,000 of them",
   bars: [
-    { label: "Kept at least one kind of information digitally", value: 90.2, display: "90.2%" },
+    { label: "Of firms that collect information, held some of it digitally", value: 90.2, display: "90.2%" },
     { label: "Used at least one advanced business technology", value: 10.3, display: "10.3%" },
   ],
   max: 100,
@@ -114,7 +114,7 @@ export const ADOPTION = {
 export const SUBTRACTIONS: GridItem[] = [
   {
     lead: "Does it happen often enough to be worth owning?",
-    body: "Not often enough to save time. Often enough that somebody will notice within a week when it stops working, because everything built has a day when it stops working. A job that runs four times a year fails silently and is discovered by a client, which is the most expensive way to find out anything.",
+    body: "Not often enough to save time. Often enough that somebody would notice within a week if it stopped, because the frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
   },
   {
     lead: "Could you write the rule down for a new hire?",
@@ -276,9 +276,9 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the lower band of the
       // panel carrying two more Cyrillic labels. Only legible lettering is named.
-      alt: "Three round pressure gauges set into a chipped yellow instrument panel, the large central one with a black needle resting near the low end of its scale and the word for oil extraction stencilled in Cyrillic capitals on the panel above it, a smaller gauge at each side, the left one showing a scale of ten to sixteen and the right one partly cut off by the frame, and two more Cyrillic labels stencilled along the bottom edge beneath the dials",
+      alt: "Three round pressure gauges set into a worn yellow instrument panel, the large central one carrying both a long black needle resting near the low end of its scale and a short red one below it, with a Cyrillic label stencilled on the panel above it and another directly beneath it, a gauge at each side cut off by the frame, the left one showing a scale running from ten to sixteen, and two further Cyrillic labels stencilled along the bottom edge",
       caption:
-        "Three gauges, three needles, and not one of them tells anybody what to do. A reading is a fact about the machine, and turning it into an action needs somebody who knows what this machine is for, what it did last week and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
+        "Three gauges, four needles between them, and not one of them tells anybody what to do. A reading is a fact about the machine, and turning it into an action needs somebody who knows what this machine is for, what it did last week and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
       credit: "Photograph by Thomas Quine, CC BY 2.0.",
       ariaLabel: "Three pressure gauges on a yellow instrument panel",
     },
@@ -302,7 +302,10 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
     },
     outcomes: {
       kind: "statbars",
-      band: "light",
+      /** DARK rather than light, measured rather than chosen: with this chart on a light field the
+       * prose either side of it ran as one pale band of 18 to 21 percent of the article, against a
+       * shipped cohort range of 14 to 17. Flipping it breaks the run and costs nothing else. */
+      band: "dark",
       label: "How they land",
       ...OUTCOMES,
     },
@@ -320,7 +323,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "Six steps, and the third one is the product.",
-      lede: "Drawn as the order it has to happen in rather than as a menu. Most of what gets sold under this name is the first two boxes, which are the ones you could do without help. The third is where the money is and it is the only step whose output is shorter than its input. Note that the last box is a date rather than a task, and that it is the one everybody skips.",
+      lede: "Drawn as the order it has to happen in rather than as a menu. A great deal of what gets sold under this name is the first two boxes, which are the ones you could do without help. The third is where the money is and it is the only step whose output is shorter than its input. Note that the last box is a date rather than a task, and that it is the one everybody skips.",
       steps: AUDIT_PATH,
       altPrefix:
         "The path from a written account of one job as it actually ran, through naming every candidate, cutting the list with three questions, ordering what survives with the reasons attached, building the first one small, and re-reading the list six weeks later",
@@ -337,7 +340,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "candidates",
           label: "Things you could name right now that you would automate",
-          hint: "Write them on paper first. Most people get to somewhere between eight and twenty before they run out, and the exercise is more useful than the number.",
+          hint: "Write them on paper first, without stopping to judge any of them. The writing is more useful than the number it produces, and the number is only here to be reduced.",
           min: 3,
           max: 40,
           step: 1,
@@ -419,7 +422,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the thick
       // black cables leaving the bottom of each box and more of the green steel frame at the right.
       // Only legible markings are named.
-      alt: "Three red industrial isolator boxes bolted in a row to a concrete block wall, each with a black lever handle on its face, the levers at different angles so no two are set the same way, the middle box stencilled FREZA and the one below it 500 V, faded painted markings on the others, and thick black cables running out of the bottom of each box past a green steel frame",
+      alt: "Three red industrial isolator boxes bolted in a row to a grey wall of horizontal courses, each with a black lever handle on its face and the levers at three different angles so no two are set the same way, the middle one stencilled ZIP-0 above the lever and FREZA and R400/15A below it, a smaller red enclosure bolted beneath it stencilled 500 V, another smaller one under the box at the right, and thick black cables running out of the bottoms of all of them past a green painted steel frame",
       caption:
         "Three switches, and the useful thing about them is that no two are in the same position. Somebody decided, for each one, whether the thing behind it should be running today. That decision took a second and it is the entire job. Everything expensive in this subject comes from switching something on and never afterwards asking whether it should still be on.",
       credit: "Photograph by Vladimir Mokry, CC0 1.0.",
