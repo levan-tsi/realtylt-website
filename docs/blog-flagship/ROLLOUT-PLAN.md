@@ -12,19 +12,28 @@
 | E | **the photograph shortage solved**: 14 new CC BY editorial plates, 5 unspent · topics 12-13: **skip tracing** (DPPA + FCRA, the legally heaviest page in the set), **marketing automation** (CAN-SPAM, the 0.3% ceiling, the three RFCs) · 8 more service claims killed incl. **three fabricated Hudson Valley addresses** live on the skip-tracing page · a wrong REASON caught in the second pass | VERIFIED, LIVE |
 | — | **D5 stopped lying**: `visibleUpdated` was /updated/i over the whole body, so a post that used the word in prose was credited with a revision line it did not carry. It still failed on the dates, which is why the lie survived four rounds. Now reads the rendered `time[datetime]`; proved both ways | VERIFIED, LIVE |
 | — | **the /ai page stopped disagreeing with the services surface** on seven claims (ai-page repo, LOCAL, awaiting the owner's deploy go): the reviews panel literally described REVIEW GATING, plus the dead 73%, "fraction of vendor pricing", "tens of thousands in unworked commission", "never slip through a PDF", "unlimited parallel agents", and CRM-sync's absolutes | LOCAL, owner-gated |
-| F | topics 14-15: document processing, data enrichment | building |
+| F | 7 new CC BY / CC0 plates (4 unspent) · topics 14-15: **document processing** (FUNSD, DocVQA, Reg Z's two definitions of "business day"), **data enrichment** (the FTC's 6(b) data-broker study, the CCPA right to correct, and a decay rate that does not survive being followed) · 8 more service claims killed incl. **an invented person with an invented phone number** live on the enrichment page · **the plate is 16:9 on a phone and 21:9 on a laptop**, so Round E's alt-text rule was half right · six chart notes caught restating their own prose · **two more /ai COPY keys corrected**, both contradicted by their own page | building |
 
-**Standing cohort state:** 13 flagship posts, all green on `flagship-standard.mjs`, sibling
-overlap 0 across the whole cohort, zero new scene components in twelve consecutive topics, 1231
+**Standing cohort state:** 15 flagship posts, all green on `flagship-standard.mjs`, sibling
+overlap 0 across the whole cohort, zero new scene components in fourteen consecutive topics, 1251
 tests. New posts score 17/19 on `score-flagship`: C3 (film) is owner-held and D5 (a real revision
-date) cannot be true on the day a post ships. Neither is ever faked or re-baselined.
+date) cannot be true on the day a post ships. Neither is ever faked or re-baselined. **5 topics
+have no flagship post**: ai-scheduling, invoicing-and-payments, ai-clone, ai-audit,
+custom-automation.
 
-**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 14 new CC BY
-2.0 photographs, 9 spent and **5 unspent**, each licence read on its own source page. The rule
-that makes them go further than they look: a post needs **two plates of its own**, not six, because
-four images arrive free on every post. See ROUND-E-LOG.md E0 for the three scratch scripts that
-find, fetch and judge a new one in about fifteen minutes, and for the five candidates that were
-rejected and why.
+**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 21
+photographs under CC BY 2.0 or CC0, 17 spent and **4 unspent**, each licence read on its own
+source page. The rule that makes them go further than they look: a post needs **two plates of its
+own**, not six, because four images arrive free on every post. The committed pipeline is
+`find-plates.mjs`, `fetch-plates.mjs`, `plate-swatch.mjs` and `check-plate-licence.mjs`; run
+`export MSYS_NO_PATHCONV=1` first in git-bash or every `/images/...` argument is rewritten into a
+Windows path and nothing loads. See ROUND-E-LOG.md E0 and ROUND-F-LOG.md F0 for the ten candidates
+those two rounds rejected and why.
+
+**Round F corrected the alt-text half of that rule.** The Plate primitive renders 1088x466 at a
+1440 viewport, which is 21:9, and 358x201 at 390, which is 16:9. Both fill the container width, so
+the phone crop is a VERTICAL SUPERSET of the desktop one and alt text written from the 21:9 crop
+is accurate and incomplete. `plate-swatch.mjs` now draws both and labels which to write from.
 
 **Owner questions still open** (surfaced by the rounds, never written onto a page): does the
 voice agent record audio or only store a transcript (NY one-party vs CA all-party) · does review
@@ -39,15 +48,16 @@ what the two new pages now say they do**: do skip-tracing builds record a source
 every enriched row, what permitted purpose is our own enrichment account established under, does
 the pipeline scrub the do-not-call registry before anything dials, do marketing builds set up
 SPF/DKIM/DMARC on the client's sending domain or assume it, and is Google Postmaster Tools set up
-for the clients we send for. See ROUND-E-LOG.md.
+for the clients we send for. **Round F adds six, same shape**: do document-processing builds abstain or always return a value with a confidence, where does a flagged value go and who works that queue, do we store the source document and page number with every extracted value, what is our default overwrite behaviour on an enrichment pass, do enrichment builds write a source and a date onto every appended value, and does the BatchData response carry an age we could pass through. See ROUND-E-LOG.md and ROUND-F-LOG.md.
 
-**Also carried:** `standard.json` has NOT been ratcheted since Round B, and Rounds C, D and E each
-measured it and declined for the same reason. After Round E `available` measures **proseWords
-5,488 / dataGraphics 3**, which would put **six** of the eleven older posts below the bar by
-construction (ai-chat, ai-voice, database-reactivation, ai-lead, workflow-automation and
-ai-appointment are all under 5,488 words, and five carry 2 data graphics rather than 3). Closing
-it honestly is a six-post writing job, not a flag flip, **and the gap grows with every round that
-ships a long post.** Worth doing deliberately in a round with room for it.
+**Also carried:** `standard.json` has NOT been ratcheted since Round B, and Rounds C, D, E and F
+each measured it and declined for the same reason. After Round F `available` measures **proseWords
+5,503 / citations 5 / faqQuestions 8 / dataGraphics 3**, which would put **six** of the thirteen
+older posts below the bar by construction (ai-chat, ai-voice, database-reactivation, ai-lead,
+workflow-automation and ai-appointment are all under 5,503 words, five carry 2 data graphics rather
+than 3, and six carry fewer than 8 FAQ questions). Closing it honestly is a six-post writing job,
+not a flag flip, **and the gap grows with every round that ships a long post.** Worth doing
+deliberately in a round with room for it.
 
 **The order:** blogs + services for all ~20 topics in this repo. The AI Chat Assistant post is the
 design standard. Videos untouched ("leave videos alone for now"). Workflow: Opus 5 subagents build
@@ -56,10 +66,11 @@ a separate checker agent audits the whole body of work at the end.
 
 ## Where the board stands (verified 2026-08-25)
 
-- **13 flagship posts green as of Round E** (chat, voice, reactivation, qualification, workflow,
-  review, booking, local-seo, geo, crm-sync, agent-workforce, skip-tracing, marketing-automation):
-  `flagship-standard.mjs` prints all 13 meet the standard; the template and the primitive set are
-  proven twelve topics deep with ZERO new components. **7 topics have no flagship post.**
+- **15 flagship posts green as of Round F** (chat, voice, reactivation, qualification, workflow,
+  review, booking, local-seo, geo, crm-sync, agent-workforce, skip-tracing, marketing-automation,
+  document-processing, data-enrichment): `flagship-standard.mjs` prints all 15 meet the standard;
+  the template and the primitive set are proven fourteen topics deep with ZERO new components.
+  **5 topics have no flagship post.**
 - **20 service pages exist**, disciplined, but `SERVICES-CRITIQUE.md` records: one legal-risk
   mechanic described as compliant (review gating, §1), the debunked 78% asserted 3x on the chat
   page whose own relatedPosts link debunks it (§2), the only regulated-risk page silent on its
@@ -89,8 +100,8 @@ Unknown product facts (e.g. whether calls are recorded) are REPORTED, never writ
 **ROUNDS B.. — the 15 topics, ~2 per builder round, in session-11's order:**
 ~~review-automation, ai-appointment-booking, local-seo, geo-landing-pages, crm-sync,
 ai-agent-workforce, skip-tracing-lead-generation, marketing-automation~~ (done through Round E),
-**document-processing, data-enrichment, ai-scheduling, invoicing-and-payments, ai-clone, ai-audit,
-custom-automation** (7 left).
+~~document-processing, data-enrichment~~ (done through Round F), **ai-scheduling,
+invoicing-and-payments, ai-clone, ai-audit, custom-automation** (5 left).
 Per topic: research (its OWN primary source, read in the primary document — the zombie-stat rule);
 write to the ratcheted standard (prose/sections/citations/FAQ/images/graphics/cost/calculator/
 limits/how-to, overlap vs nearest sibling at the ceiling); scenes from the existing primitives
