@@ -90,19 +90,18 @@ rule working rather than failing: a plate has to earn its band in the article it
   attribution (`components/idx/MlsAttribution.tsx`), not as decoration, so it may not be
   restyled, recoloured or replaced.
 
-## One unresolved file
+## The formerly unresolved file — RESOLVED by owner decision, 2026-08-26
 
 `public/images/hero/hero-vimeo-frame.jpg` is the first frame of the ambient Vimeo clip the live
-site plays behind the home hero (video 398379426, the old vendor's). It exists so the video
-fades in over an identical still instead of flashing black, so it stands or falls with the clip
-— and the clip has no licence record either. **This needs an owner decision, not a patch:**
-either confirm the clip is licensed to RealtyLT, or drop the video and let every visitor get
-the licensed still that phones and reduced-motion visitors already get. Until then it is listed
-below as unresolved rather than quietly omitted.
+site plays behind the home hero (video 398379426, delivered as part of the vendor-built site).
+It had no licence record here. **The owner resolved it 2026-08-26:** his purchase of the old
+site included the whole page and its code outright ("whole code and page is mine, that's what I
+paid for"), so the clip and its frame are his to use. Recorded on his representation; if the
+vendor contract ever surfaces saying otherwise, this row is where to revisit.
 
 | File | Title | Creator | License | Source |
 |---|---|---|---|---|
-| public/images/hero/hero-vimeo-frame.jpg | First frame of the live site's ambient hero clip | Unknown (old IDX vendor) | UNRESOLVED — see above | [source](https://vimeo.com/398379426) |
+| public/images/hero/hero-vimeo-frame.jpg | First frame of the live site's ambient hero clip | Old IDX vendor, purchased with the site | Owner-purchased with the site build (owner decision 2026-08-26) | [source](https://vimeo.com/398379426) |
 | public/images/hero/hudson-olana.jpg | View of Hudson and Catskills from Olana — LIVE on /thank-you since round 38, rendered grayscale like every other hero. Was `hero-cand-olana.jpg`, a round-36 candidate; renamed when it shipped so the filename stops calling itself a candidate. CC BY 2.0 requires attribution, which this row is. | Ed from Queens, USA | BY 2.0 | [source](https://commons.wikimedia.org/wiki/File:View_of_Hudson_and_Catskills_from_Olana.jpg) |
 | public/images/hero/hero-cand-breakneck-south.jpg | Hudson Highlands view south from Breakneck Ridge — ROUND-36 CANDIDATE, same ridge the phone hero shows | ScubaBear68 | BY 2.0 | [source](https://commons.wikimedia.org/wiki/File:Hudson_Highlands_view_south_from_Breakneck_Ridge.jpg) |
 | public/images/hero/hero-cand-bear-mountain.jpg | Bear Mountain Bridge and Popolopen Creek, Anthony's Nose — ROUND-36 CANDIDATE | Reconrabbit | CC0 | [source](https://commons.wikimedia.org/wiki/File:Bear_Mountain_Bridge_and_Popolopen_Creek,_Anthony%27s_Nose.jpg) |
