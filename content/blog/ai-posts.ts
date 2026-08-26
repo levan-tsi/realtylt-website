@@ -9,6 +9,216 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const AI_AUDIT_POST = `The list had eleven things on it and it took about twenty minutes to write, which should have been the first clue that writing it was not the hard part.
+
+Answer the phone at night. Stop retyping the same details into two systems. Chase the signatures. Reply to the portal enquiries faster. Get the market note out without a Sunday evening disappearing into it. Every one of them a real irritation, every one of them something a machine could plausibly do, and every one of them written down by somebody who runs the business and knows what actually happens in it.
+
+The hour that followed did not add anything to the list. It crossed four things off it.
+
+Two went because they happen a handful of times a year, and a job that runs four times a year fails without anybody noticing until a client notices. One went because the rule behind it turned out not to exist: three people in the office did it three different ways and all three thought theirs was the policy. And one went because a wrong answer would have gone out in writing, to a buyer, with somebody's name on the bottom of it.
+
+That hour was the product. The list was free.
+
+[[scene:in-short]]
+
+## What an audit is actually for, and it is not the list
+
+There is a version of this service, sold everywhere, that is a discovery meeting with a document attached. Somebody asks what your business does, writes the answers down in a tidier order than you gave them, and returns a deck of opportunities. It is not dishonest. It is just that you already had that information, and what you did not have was permission to remove things from it.
+
+An audit worth money has one property: parts of the list come back shorter than they went in, and each removal has a reason beside it that you can apply again next year without anybody's help.
+
+[[scene:deliverable]]
+
+Why removal is worth more than addition is a thing about small businesses that is easy to say and hard to believe until it has happened to you. Nobody is short of ideas about what to automate. Everybody is short of whatever stops a plausible idea, and a plausible idea that gets built becomes a permanent obligation: something that runs, that somebody has to understand, that breaks quietly in a year when a system it depends on changes underneath it.
+
+Crossing four things off a list of eleven does not save you eleven builds. It saves you four builds, four maintenance obligations and four quiet failures, and it does it before any money has moved.
+
+## The part that is already free, and is not repeated here
+
+Before the questions in this article are any use, somebody has to write down how one real job actually runs, in the order it happened, including the steps that only exist because a system does not do something it was bought to do.
+
+That work is described in detail in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business), which walks through doing it with a piece of paper and no help from anybody, and there is no point in this page saying it again in different words. Go and read that if you have not mapped anything yet, then come back.
+
+What follows starts one step later. You have a list of candidates. Everything below is about what to do with a list, which is a different problem from producing one, and it is where an outside eye is genuinely worth something, because the person who wrote the list is the person least able to remove things from it.
+
+## You are almost certainly not behind
+
+Something has to be said before any of the ranking makes sense, because the feeling that everybody else has already done this is doing a lot of quiet damage to how these decisions get made.
+
+The Census Bureau ran a technology module on the 2018 Annual Business Survey and published the results with a team of economists from the Bureau, from Stanford and from Toronto. It is worth knowing how that instrument differs from the surveys these numbers usually come from. The sample was over 850,000 firms across every private non-farm sector, answering is required by law rather than optional, and about two thirds of the firms in it had fewer than ten employees. The Bureau also publishes [the technology module's own tables](https://www.census.gov/data/tables/2018/econ/abs/2018-abs-digital-technology-module.html), which the paper notes are uncorrected for sample weights and should therefore be read as a lower bound. The authors are explicit about why that matters: privately funded technology surveys, they write, suffer from low response rates and significant selection bias, which limits how far their findings generalise.
+
+[[scene:adoption]]
+
+[[scene:plate]]
+
+Two readings of that chart, and the second one is the useful one.
+
+The first is the obvious comfort. If you have not built anything yet, you are not the last one. The distance between having your information in a computer, which is nearly everybody, and using anything on that list of nine technologies, which was one firm in ten, is enormous, and it was measured on a sample large enough that it is not an artefact of who chose to answer.
+
+The second reading is the one that changes behaviour. A field where one firm in ten has adopted anything is a field with no settled playbook. There is no consensus about what a small business should build first, because not enough small businesses have built anything for a consensus to exist. Which means the confident answers you are being given about what to do first are not summaries of what worked. They are guesses, sold with conviction, and the correct posture toward all of them, including the ones on this page, is to ask what they rest on.
+
+That figure is also from a 2017 reference year, and the vocabulary has moved a very long way since. Treat it as a fact about how new all of this still is, not as a description of the market this week.
+
+## The three questions that do the cutting
+
+Here is the whole method, and it is deliberately small enough to remember without a document.
+
+[[scene:subtractions]]
+
+Take them one at a time, because each removes a different kind of candidate and the third removes the most.
+
+The frequency question is not really about the saving. It is about detection. Everything anybody builds has a day when it stops working, usually because something it depends on changed and nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because somebody is waiting for the output. A job that runs quarterly fails in March and is discovered in June by a person who is annoyed. The saving on the quarterly one may be larger and it is still the worse candidate.
+
+The rule question quietly turns into a management problem, and it is the most useful thing an outsider can force. Asking three people how something gets decided, separately, and getting three answers is not a sign that anybody is doing it wrong. It is a sign that a decision was never made and everyone filled the gap sensibly. Building software over the top of that does not resolve it. It freezes whichever version the person writing the specification happened to hear, and then removes everybody's ability to notice.
+
+The consequence question gets skipped, and the reason it gets skipped is that it feels pessimistic in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
+
+The framework the American standards body publishes for managing risk in AI systems makes the same point in a much drier voice, and it is worth quoting for what it puts on the list of options.
+
+[[scene:pull-quote]]
+
+[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf), published by the National Institute of Standards and Technology, is voluntary and is aimed at organisations far larger than a brokerage. It is still worth ten minutes, because it was written by people with nothing to sell, and what it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
+
+It is also honest about its own limits in a way worth copying. It says plainly that while it can be used to prioritise risk, it does not prescribe risk tolerance, and that the level of risk which is acceptable is highly contextual and specific to the application. There is no universal answer to how careful to be. There is only your business, and what happens in it when something is wrong.
+
+## What should not be automated in a property business
+
+Generic versions of this advice exist and they are worthless, because the categories they warn about are ones nobody was going to automate anyway. This is the specific version for this trade.
+
+[[scene:do-not]]
+
+The first of those three deserves an extra sentence because it gets built most often. A model asked about a property will produce an answer about the property. It will produce a plausible square footage, a plausible tax figure, a plausible school assignment. The failure is not that it invents things in an obvious way, it is that the answer arrives in the right format and at roughly the right size, which is exactly the shape of thing nobody checks.
+
+The correct build for that class of question exists and it is smaller than the one people ask for. It fetches the value from the record that governs it, and where there is no record it says so, out loud, rather than filling the gap. Anything with a document or a data component on this site rests on that same principle: a system may report what a source says, and it may say it does not know. It may not produce the answer itself.
+
+There is a fourth thing to leave alone, not on the list above because it is not really a candidate, and it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test and it is not a technical one. It is a good instinct, it is available for free, and it has never once been wrong in either direction.
+
+## Why ranking by the average outcome gets it wrong
+
+Suppose the list is now short and honest. The natural next move is to estimate what each survivor is worth, put them in order of that, and start at the top. That instinct is wrong, and not as a matter of taste.
+
+Two researchers at Oxford assembled what they describe as the largest academic dataset of its kind: 1,471 information technology projects, worth 241 billion dollars, drawn from private-sector records, from published national audit reports in the United States and the United Kingdom, and from federal budget filings. Then they looked at how the cost overruns were actually distributed rather than at the average of them.
+
+[[scene:outcomes]]
+
+The middle of that distribution is boring, which is the point. Ordinary projects come in a few percent over, sometimes under, and if that were the whole story an average would be a perfectly good planning tool. What the authors find instead is a right hand tail far too heavy for that. Seventeen percent of the sample sits out there, against under one percent for a distribution where an average would be safe to reason with.
+
+The practical translation for a business with five candidates on a shortlist is short. The number you would write beside each one is its typical outcome, and typical is not what you are exposed to. You are exposed to the tail, and the tail is not a bigger version of the middle. It is a different thing that happens for different reasons.
+
+Which changes the sorting rule. Sort by how contained the worst case is rather than by how good the expected case is. A candidate with a modest payback whose failure means somebody redoes it by hand for a fortnight beats a candidate with triple the payback and a failure nobody can describe. That is not caution for its own sake, it is what the shape of the data says.
+
+Do not carry those percentages home, and the chart's own note says so: the median project in that sample was planned at three point three million dollars, which is not a category anything a small business commissions belongs to. It is the shape that transfers.
+
+## The failure rate nobody can give you
+
+At about this point somebody asks what proportion of these projects fail, and there is an answer in wide circulation. It should not be used, and the reason is specific rather than a general grumble about statistics.
+
+The figure everybody quotes comes from a report published annually by a private research firm and sold rather than published, so the data underneath it has never been open to inspection. Two researchers at Vrije Universiteit Amsterdam did the next best thing: they took the report's own published definitions of a successful and a challenged project, applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf), and looked at what came out.
+
+Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the estimation practice, and they result in meaningless figures. The mechanism is not subtle. Those definitions score a project purely on how far it deviated from its original estimate, so coming in under budget counts against you the same way as going over, and a well run organisation whose forecasts were independently checked and were genuinely accurate still scored a 35 percent success rate under them. Worse, an organisation the researchers examined had adopted those definitions internally and had thereby trained its own managers to inflate every budget request, which made the forecasts far less accurate while making the success rate look better.
+
+So the honest position, and this article will hold it rather than reach for a number anyway, is that nobody can tell you what share of automation projects fail. The most widely quoted attempt measures something else and the alternatives are marketing. That is the same answer this site has had to give about data broker figures and about response rates for cold outreach, and it comes from the same reasoning: a figure whose method nobody can inspect is not a cautious figure or an optimistic one, it is not a figure.
+
+What can be said is what the Oxford work does support, which is about the shape rather than the rate. Most of these come in near their estimate and a minority go badly wrong, and no average describes both.
+
+## What the order actually gets sorted by
+
+With the failure rate refused and the average demoted, there is still a list and it still needs an order. Here is what it gets sorted by, in the order the criteria get applied.
+
+First, containment. What happens when this one is wrong, and who finds out. Everything that survived the third question is already inside a boundary, and within that boundary you want the ones whose failure is visible and cheap ahead of the ones whose failure is invisible and awkward.
+
+Second, whether the rule is settled. Not whether it is simple, whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one, because the unsettled one is a management job wearing a technical costume and it will come back later as a technical failure.
+
+Third, and only third, the size of the thing. Every other version of this exercise starts here, and it belongs at the end, because it is the criterion that produces the most confident wrong answers. The largest saving on a list is almost always the item with the most judgment in it, which is precisely why a person is still doing it.
+
+[[scene:audit-path]]
+
+[[scene:shortlist-calculator]]
+
+## How to run one yourself, without us
+
+Four things, and none of them require anybody to be paid.
+
+Write the list without editing. Every candidate you can name, in the order they occur to you, including the ones you know are silly. Editing while writing is how the interesting-but-wrong candidate survives, because it sounds better than the boring one and you never wrote the boring one down.
+
+Ask the rule question out loud, to three people, separately. Not in a meeting. The answers diverging is the finding, and it will not happen in a room where everybody can hear each other agree.
+
+Put the consequence question against every line, in writing, before you let yourself think about the benefits. In that order specifically, because the reverse does not work: once a benefit has been said aloud, the consequence question stops being asked seriously.
+
+Then put the list away for a fortnight and read it again. Half of what looked urgent will have solved itself, moved, or turned out to be a symptom of something else, and you will have found that out for nothing.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+The audit itself is short and it is deliberately priced so that a no costs you almost nothing. It is an hour, done with you rather than at you, and the written version comes back afterwards. The reason it is an hour rather than a week is that the questions above are quick and the answers are already in your head. The expensive part of a long engagement is somebody learning your business, and you already know your business.
+
+What actually varies is what happens next, and it varies by a factor nobody can quote in advance, because it depends on which candidate survived. Connecting two systems that both have a decent way in is days. Something that has to read documents, or has to deal with an office that is not yours, is a different order of work, and the honest answer to how much is that it is a different conversation with its own scope.
+
+The cost that appears in neither half is the one this article keeps returning to. Anything built is a thing somebody now owns. Budget for it being looked at rather than only for it being made, and where nobody would notice it stopping, that is a reason to reconsider the candidate rather than a reason to add a monitoring line to the quote.
+
+## What an audit does not do
+
+It does not decide for you. It removes candidates and explains why, and what the business does about the survivors is a decision with your name on it.
+
+It does not see what nobody will say. The account of how the work runs is only as good as the description it is given, and the steps people are quietly embarrassed about are often the ones that would automate best.
+
+It does not produce a saving. Every hour identified is an hour you then have to choose to spend on something else, and businesses that do not make that choice deliberately find the hour absorbed within a month.
+
+It does not stay true. The list has a shelf life measured in months, because your systems, your staff and your volume all move.
+
+And nobody has to buy it. Everything in this article can be done by the person running the business, in an evening, with a piece of paper. What buying it gets you is somebody with no attachment to the list doing the crossing off.
+
+[[scene:wasted]]
+
+## Common questions, answered honestly
+
+### What is an AI audit, in plain terms?
+
+It is a short, structured look at how your business actually runs, done to work out which repetitive parts of it are worth automating and, just as importantly, which are not. The output is a written account of the work, a shortlist in a defensible order, the list of things you have decided not to build, and one small automation actually running. The last two are what distinguish it from a sales meeting.
+
+### Can I not just do this myself?
+
+Yes, and you should do the first half yourself regardless. Writing down how one job really runs, and listing everything you would automate, costs nothing and nobody can do it better than the person running the business. What is genuinely harder alone is the crossing off, because everything on that list is there for a reason you agree with, and the value of an outside pair of eyes is that they have no attachment to any of it.
+
+### How is this different from workflow automation?
+
+Workflow automation is the building. An audit is the deciding, and it happens first. The workflow article on this site covers mapping a single job and finding the steps worth connecting, which is where most people should start. This one is about what to do when you already have more candidates than budget, which is a different problem with a different method: subtraction rather than ranking.
+
+### What do I actually get at the end?
+
+Four things. A written account of how the work runs today, including the parts nobody had written down. A shortlist in an order, with the reason for each position beside it. The list of candidates that were removed and why, which is the part you will reuse. And one automation built and running, so the exercise ends in something real.
+
+### Do I need to know anything about AI beforehand?
+
+No, and knowing a great deal about it is a mild disadvantage. The questions that decide this are about your business: how often something happens, whether the rule behind it is settled, and where a wrong answer would end up. Somebody who has read widely about what the technology can do tends to sort by capability, and capability is the least important of the three.
+
+### What should a small business automate first?
+
+Whatever survives the three questions and has the most contained failure, which is usually something unglamorous. The reason this article will not name a specific first thing is that the survey evidence says a settled answer does not exist yet: one firm in ten had adopted anything at all in the largest measurement available, which is not enough for anybody to have learned what works in general. Anybody giving you a confident universal answer is guessing.
+
+### How do you decide what not to automate?
+
+Three tests, applied in order. It happens too rarely for anybody to notice it breaking. The rule behind it is not actually settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own, and the third removes the most.
+
+### Is an hour really enough?
+
+For the deciding, usually yes, because the information is already in your head and the questions are short. It is not enough to design anything, and designing is not what the hour is for. If an hour turns into a proposal for a six month programme, the hour was a sales call.
+
+## What to do about it
+
+Do the cheap half tonight.
+
+One sheet of paper, everything you would automate if the budget were not a question, written without stopping to judge any of it. Then one line against each: if this were wrong, who finds out, and when.
+
+Cross off every line where the honest answer is a client. Cross off every line where the honest answer is nobody.
+
+What is left is usually two or three things, and it is now a shortlist rather than a wish. That is the entire exercise, it cost you an evening, and the only thing anybody else can add to it is the willingness to cross off one more.
+
+[[scene:funnel]]`;
+
 export const AI_CLONE_POST = `On Tuesday afternoon fourteen short videos went out, one to each person who had asked about the new listing on the ridge. Every one of them opened with that person's name. Every one of them was in your face and your voice, standing in a room you have been in, saying things you would say.
 
 You were at a closing in Poughkeepsie for most of the afternoon and you have not watched any of them.

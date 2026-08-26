@@ -7,6 +7,7 @@ import type { ArticleFilm } from "@/lib/blog/types";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
+  AI_AUDIT_POST,
   AI_CLONE_POST,
   AI_SCHEDULING_POST,
   INVOICING_POST,
@@ -24,6 +25,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
 import { INVOICING_FLAGSHIP } from "./invoicing-scenes";
@@ -84,6 +86,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "ai-audit-small-business-what-not-to-automate",
+    title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
+    date: "2026-08-26",
+    /** NO `updated`, for the same reason topics 6 to 18 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Anybody can write the list of things they would automate. The part worth paying for is knowing which ones to remove and being able to say why. The three questions that do the cutting, what a survey of 850,000 firms found about how far behind you really are, and why the most quoted project failure figure in the industry cannot be used.",
+    seoDescription:
+      "What an AI audit actually produces, the three questions that decide what not to automate, and why the industry's most quoted project failure rate cannot be used.",
+    cover: "/images/editorial/switch-box.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_AUDIT_POST,
+    flagship: AUDIT_FLAGSHIP,
+  },
   {
     slug: "ai-clone-real-estate-agent-video-avatar",
     title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
