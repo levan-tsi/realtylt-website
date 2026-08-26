@@ -3046,7 +3046,7 @@ A booking link, of the kind most calendar products now offer, moves the work to 
 
 ### Will it reduce no-shows?
 
-Two parts of it will, and it is worth knowing which. The reminder is the part with real evidence: a randomised trial of 1,848 appointments found attendance of 80.5% with no reminder against 87.5% with a single text sent three days ahead. The other part is less obvious and possibly larger, which is that booking inside the first conversation tends to produce a much shorter gap between the ask and the appointment, and shorter gaps are associated with far better attendance in the clinic study above. Neither of those figures is from real estate, and anybody quoting you a no-show reduction for your business is quoting you a number nobody has measured.
+Two parts of it will, and it is worth knowing which. The reminder is the part with real evidence: a randomised trial of 1,848 people found attendance of 80.5% with no reminder against 87.5% with a single text sent three days ahead. The other part is less obvious and possibly larger, which is that booking inside the first conversation tends to produce a much shorter gap between the ask and the appointment, and shorter gaps are associated with far better attendance in the clinic study above. Neither of those figures is from real estate, and anybody quoting you a no-show reduction for your business is quoting you a number nobody has measured.
 
 ### How does it know when I am free?
 

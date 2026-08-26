@@ -136,7 +136,7 @@ export const REMINDERS = {
   max: 100,
   lit: 1,
   basis:
-    "Share of people who attended, from 1,848 randomly assigned appointments. The 0.8 point gap between the text and the call is not a result: the paper reports no significant difference between the two (P=0.670). What is significant is either of them against no reminder at all.",
+    "Share of people who attended, from the 1,848 randomly assigned participants the paper analysed. The 0.8 point gap between the text and the call is not a result: the paper reports no significant difference between the two (P=0.670). What is significant is either of them against no reminder at all.",
   sourceText:
     "Zhou-wen Chen, Li-zheng Fang, Li-ying Chen and Hong-lei Dai, Comparison of an SMS text messaging and phone reminder to improve attendance at a health promotion center: A randomized controlled trial, Journal of Zhejiang University Science B 2008;9(1):34-38.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/",

@@ -341,7 +341,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       caption:
         "Every line here is a person, written down by somebody whose job it was to be accurate, on a sheet that was never meant to leave the room it was kept in. A list of names has always been easy to make and easy to move. What has changed is that the list now arrives with a telephone number attached to it, and nothing about the list tells you where that part came from.",
       credit: "Photograph by peagreengirl, CC BY 2.0.",
-      ariaLabel: "A page of names in a ledger",
+      ariaLabel: "A sheet of names from an old pay roll",
     },
     complaints: {
       kind: "statbars",

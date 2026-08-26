@@ -389,7 +389,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       caption:
         "Every key on this machine does one thing and does it visibly, and the row of little windows along the top holds the running figure where a person can watch it change. That second half is the part worth keeping. A payment system that cannot show you what a figure is made of has not saved you the arithmetic, it has only moved it somewhere you cannot check it.",
       credit: "Photograph by Les Chatfield, CC BY 2.0.",
-      ariaLabel: "The keyboard of a mechanical adding machine",
+      ariaLabel: "The keyboard of a mechanical calculating machine",
     },
     availability: {
       kind: "statbars",

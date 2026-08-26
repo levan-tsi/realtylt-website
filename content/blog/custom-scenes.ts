@@ -60,7 +60,14 @@ export const WHEN_CUSTOM: GridItem[] = [
   },
   {
     lead: "The volume is real but too small to be a market",
-    body: "Something that happens forty times a month in your business happens forty times a month in about two hundred businesses nationally, which is not enough for anybody to build a product for. This is the most common genuine case and it is also the one where the build should be smallest.",
+    /** ROUND I removed "in about two hundred businesses nationally". The forty times a month is
+     * a hypothetical about the reader's own business and reads as one. That clause was a claim
+     * about the world with nothing behind it, sitting in a grid card, which is a field with no
+     * `source` and no `basis`. Found by a narrowed version of the check the checker recommended
+     * and did not build: figures asserted in a NARRATIVE scene field that the post's own body
+     * never states. Over the twenty posts it returns 14 of 382, which is a usable rate; the
+     * unnarrowed version returns 150 and the checker was right that it should not be built. */
+    body: "Something that happens forty times a month in your business happens in too few other businesses for anybody to build a product for it. This is the most common genuine case and it is also the one where the build should be smallest.",
   },
   {
     lead: "And the case that is not on this list",
@@ -422,7 +429,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       caption:
         "This is a program, and there is nothing electronic in it. Every hole is an instruction, the loom cannot do anything the cards do not say, and the reason this one still exists is that somebody kept the cards. That is the entire lesson: the machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
       credit: "Photograph by pedrik, CC BY 2.0.",
-      ariaLabel: "Punched cards on the head of a Jacquard loom",
+      ariaLabel: "Punched cards from a Jacquard loom",
     },
     wasted: {
       kind: "grid",

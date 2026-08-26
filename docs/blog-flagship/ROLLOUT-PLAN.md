@@ -14,14 +14,18 @@
 | — | **the /ai page stopped disagreeing with the services surface** on seven claims (ai-page repo, LOCAL, awaiting the owner's deploy go): the reviews panel literally described REVIEW GATING, plus the dead 73%, "fraction of vendor pricing", "tens of thousands in unworked commission", "never slip through a PDF", "unlimited parallel agents", and CRM-sync's absolutes | LOCAL, owner-gated |
 | F | 7 new CC BY / CC0 plates (4 unspent) · topics 14-15: **document processing** (FUNSD, DocVQA, Reg Z's two definitions of "business day"), **data enrichment** (the FTC's 6(b) data-broker study, the CCPA right to correct, and a decay rate that does not survive being followed) · 8 more service claims killed incl. **an invented person with an invented phone number** live on the enrichment page · **the plate is 16:9 on a phone and 21:9 on a laptop**, so Round E's alt-text rule was half right · six chart notes caught restating their own prose · **two more /ai COPY keys corrected**, both contradicted by their own page | building |
 | G | 6 new CC BY plates (3 unspent) · topics 16-17: **ai-scheduling**, argued as an agreement you do not have yet rather than as a booking, against the hardest sibling in the rollout (overlap 60 on the first run, all of it mine) · **invoicing-and-payments**, which REFUSES the commission mechanics on the page because no primary states them, and argues the unraised charge instead · 8 more service claims killed incl. **"the double-booking that cannot happen"** · **a hole in `zombie-claims.test.ts` itself**: the bare stem `refus` exempted any claim containing the word "refused", found only by proving the new entries red · **both of this round's refusals rested on unchecked reasons and following them changed both** · an invented CHARGE key in a plate's alt text and caption | building |
+| I | **the REPAIR round, written against CHECKER-REPORT.md** · all 36 plates re-read at both shipped crops and 24 rewritten, including a caption that said "**Two million PEOPLE**" where the Data Book counts 2,085,133 **complaints** and the article's own prose three paragraphs above refuses exactly that conflation, and an adding-machine caption arguing from a **paper roll the machine does not have** (the checker missed that one) · **NY Penal Law 250.00 was quoted from the mechanical-overhearing subdivision to support a claim about telephone calls**; the wiretapping definition and the 250.05 offense replace it, and 14 further citations were read in the primary document and checked for SUBDIVISION, all 14 exact · "Keep reading" was the three newest on all thirty pages (measured: 4 distinct blocks) and is now clustered (27) · **the calculator slider was a 4px tap target on every post**, now 44px with a ZERO-subpixel diff on the ink · the voice page states the recording RULE without answering the owner's question · stale board statements corrected | building |
 | H | 7 new plates (1 unspent, and it is the last) · topics 18-19-20: **ai-clone**, written without touching the owner-held avatar and argued as a LIKENESS (NY Civil Rights Law 50, 51 and 50-f, 16 CFR 461 read in the eCFR where it still has no section for individuals, the FTC's proposed means-and-instrumentalities section, C2PA's own refusal to judge whether provenance is good) · **ai-audit**, argued as SUBTRACTION against workflow-automation's already-free mapping hour, refusing a project failure rate on the strength of a peer-reviewed reconstruction of the industry's most quoted one · **custom-automation**, argued as the thing you now OWN, refusing the maintenance-share figure after following it to a 403 and a JavaScript shell · **the carried double-booking defect closed and the guard widened in the same commit, proved RED first** · 10 more claims killed incl. **three invented hours-per-week figures inside our own audit illustration** · 5 alt-text and caption errors found by shooting every plate at both crops · **three dates and an origin story written from memory, removed** | building |
 
 **Standing cohort state:** **20 flagship posts, which is all of them**, all green on
 `flagship-standard.mjs`, sibling overlap 0 across the whole cohort, zero new scene components in
-nineteen consecutive topics, 1301 tests. New posts score 17/19 on `score-flagship`: C3 (film) is
-owner-held and D5 (a real revision date) cannot be true on the day a post ships. Neither is ever
-faked or re-baselined. **Every topic now has a flagship post.** The next agent on this work is the
-fresh-eyes checker, and ROUND-H-LOG.md ends with a priority list written for them.
+nineteen consecutive topics, **1333 tests after Round I** (1301 after H, 1321 after the checker's
+scene-echo gate, +12 in I). New posts score 17/19 on `score-flagship`: C3 (film) is owner-held and
+D5 (a real revision date) cannot be true on the day a post ships. Neither is ever faked or
+re-baselined. **Every topic now has a flagship post.** The checker has run; its report is
+CHECKER-REPORT.md and Round I closed five of its ten items. **The next round's brief is the
+ratchet**, plus the checker's items 1 (the `/ai` surface, owner-gated) and 10 (`ai-clone`'s vendor
+comparison, owner-gated), both of which are decisions rather than edits.
 
 **The photograph problem is closed, with a rule.** `public/images/editorial/` holds 34
 photographs under CC BY 2.0 or CC0, 33 spent and **1 unspent** (`mailbox-mist.jpg`, passed over by
@@ -57,8 +61,11 @@ SPF/DKIM/DMARC on the client's sending domain or assume it, and is Google Postma
 for the clients we send for. **Round F adds six, same shape**: do document-processing builds abstain or always return a value with a confidence, where does a flagged value go and who works that queue, do we store the source document and page number with every extracted value, what is our default overwrite behaviour on an enrichment pass, do enrichment builds write a source and a date onto every appended value, and does the BatchData response carry an age we could pass through. **Round G adds nine, and the first two are the most consequential in the set because a whole article rests on them**: when a showing needs another office's approval, does our build tell the client a TIME or a REQUEST, and does it release a held slot when the proposal dies · what does it do with a counter ("not eleven, maybe two") · how many chases before a person is told · does it re-ask for confirmation when an appointment moves · does anything in the invoicing build actually ASK whether an outside event happened · how does it decide a payment was received, a bank feed or an email · is the 3/7/14 day cadence a default or fixed · and does anything we build ever touch a client or escrow account. See ROUND-E-LOG.md, ROUND-F-LOG.md and ROUND-G-LOG.md.
 
 **Also carried:** `standard.json` has NOT been ratcheted since Round B, and Rounds C, D, E, F and G
-each measured it and declined for the same reason. After Round G `available` measures **proseWords
-5,725 / sections 22 / citations 5 / faqQuestions 8 / dataGraphics 3**, which would put **six** of the fifteen
+each measured it and declined for the same reason. **The ratchet is DECIDED in the section below
+and this paragraph is the arithmetic behind it, not an open argument.** Measured on the shipped
+cohort in Round I, `available` is **proseWords 5,683 / sections 22 / citations 5 / faqQuestions 8
+/ dataGraphics 3** (this said 5,725 "after Round G"; Round H remeasured it at 5,683 and the number
+here was never updated), which would put **six** of the fifteen
 older posts below the bar by construction (ai-chat, ai-voice, database-reactivation, ai-lead,
 workflow-automation and ai-appointment are all under 5,725 words, five carry 2 data graphics rather
 than 3, and six carry fewer than 8 FAQ questions). Closing it honestly is a six-post writing job,
@@ -98,32 +105,43 @@ rounds is the thing this repo refuses):
 | bodyImages | 7 | chat, voice, reactivation, lead, review | one more plate (cheap now the pipeline exists) |
 
 `sections` 19 -> 22 follows the same shape and is a consequence of the other four rather than a
-target of its own. **This is ROUND I's brief**: ratchet those four, then close them by writing.
-It is roughly a five-post job concentrated on the five ORIGINAL posts, which are also the five
-that predate every lesson this rollout learned — so the work is worth doing on its own merits,
-not merely to turn a gate green.
+target of its own. It is roughly a five-post job concentrated on the five ORIGINAL posts, which
+are also the five that predate every lesson this rollout learned — so the work is worth doing on
+its own merits, not merely to turn a gate green.
+
+**This was written as ROUND I's brief and Round I was reassigned.** The fresh-eyes checker landed
+first and its report became the round: I is a REPAIR round (plate alt text, one mis-cited
+subdivision, the recommendation block, the calculator's tap target, the voice page's recording
+silence) and it deliberately did NOT touch `standard.json`. **The ratchet is still owed and it is
+the next round's brief.** Ratcheting opens a gap by construction, so it is done at the START of
+the round that closes it, never before.
 
 **The order:** blogs + services for all ~20 topics in this repo. The AI Chat Assistant post is the
 design standard. Videos untouched ("leave videos alone for now"). Workflow: Opus 5 subagents build
 one round at a time; the Fable orchestrator verifies every round with its own gate runs and renders;
 a separate checker agent audits the whole body of work at the end.
 
-## Where the board stands (verified 2026-08-25)
+## Where the board stands (verified 2026-08-26, Round I)
 
-- **17 flagship posts green as of Round G** (chat, voice, reactivation, qualification, workflow,
-  review, booking, local-seo, geo, crm-sync, agent-workforce, skip-tracing, marketing-automation,
-  document-processing, data-enrichment, ai-scheduling, invoicing-and-payments):
-  `flagship-standard.mjs` prints all 17 meet the standard; the template and the primitive set are
-  proven sixteen topics deep with ZERO new components. **3 topics have no flagship post.**
+**This section was three rounds stale and the checker caught it. An agent who trusted it re-did
+work.** It said 17 posts and 3 topics missing, and it said the ten consumer stubs were indexable
+and in the sitemap. Both were false. Re-measured in Round I rather than re-asserted.
+
+- **20 flagship posts green**, which is all of them. `flagship-standard.mjs` prints all 20 meet
+  the standard; the template and the primitive set are proven twenty topics deep with ZERO new
+  components. **No topic is missing a flagship post.**
 - **20 service pages exist**, disciplined, but `SERVICES-CRITIQUE.md` records: one legal-risk
   mechanic described as compliant (review gating, §1), the debunked 78% asserted 3x on the chat
   page whose own relatedPosts link debunks it (§2), the only regulated-risk page silent on its
   regulation (lead-qual fair housing, §3), **no limits field anywhere** (§4), a "never" promise on
   document-processing (§5), the ServiceToc mobile sheet under the chat launcher, two pages with
   empty relatedPosts, and three thin pages sitting on rich researched posts (tier mismatch).
-- **10 consumer placeholder posts** are indexable and in the sitemap rendering
-  "[Placeholder draft...]" — a per-post noindex + sitemap drop is owed (must not rely on the
-  global prelaunch noindex, which the owner will flip at launch).
+- **The 10 consumer placeholder posts were closed in Round A and this line was never updated.**
+  Re-measured in a browser in Round I: the sitemap serves 66 URLs, 21 blog (the 20 flagships plus
+  `/blog`) and 20 services, and **0** of the stubs are in it; `/blog/packing-101-pro-tips-organized-move`
+  returns `robots: noindex, follow`. The blog index stopped listing them in the same round. As of
+  Round I they also no longer recommend the automation cohort at the foot of the page, which was
+  the last way a person could fall from a stub into the wrong half of the site.
 - **C3 of score-flagship needs a film.** Videos are owner-held, so every NEW topic lands 18/19
   with C3 honestly red. Never fake it; never re-baseline. `flagship-standard.mjs` (no film
   column) must be fully green, ratcheted at the START of the first blog round.
