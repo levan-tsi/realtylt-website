@@ -27,7 +27,8 @@
 ##
 ## -- GATES (all foreground, orchestrator's own runs) --------------------------------------
 ## tsc clean. Tests 1337 -> 1348 (builder) -> 1356 (scrutineer) -> 1359 (Fable). All green.
-## Prod poll was running at handoff (window>0, sqftMax=0 -> 0, the-bronx 200 expected).
+## Prod VERIFIED after deploy: window 6,994 = ceiling-diff EXACT on the live table,
+## sqftMax=0 -> 0 (was 5,185 minutes earlier on the old deploy), /top-areas/the-bronx 200.
 ##
 ## -- OPEN, deliberately NOT done ----------------------------------------------------------
 ## * Off-ladder listedDays/listedMinDays URL values (hand-typed only): server honors clamped
