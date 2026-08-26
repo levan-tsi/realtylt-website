@@ -14,11 +14,14 @@ Everything below was **measured**, not assumed. Evidence: `docs/_audit/launch/au
 These are configuration, not code. Doing them out of order is the main way this launch can go wrong.
 
 1. **Fix `NEXT_PUBLIC_SITE_URL` in the Vercel environment BEFORE removing the noindex.**
-   Measured on prod today: every canonical, every JSON-LD `url`, `og:url`, and all **58 sitemap
-   entries** emit `https://realtylt-website.vercel.app/...`, because that value is set in Vercel.
+   Measured on prod at audit time: every canonical, every JSON-LD `url`, `og:url`, and every
+   sitemap entry emit `https://realtylt-website.vercel.app/...`, because that value is set in
+   Vercel. (58 entries at the original audit; 68 measured 2026-08-26 after the blog publishes
+   and round 41's `/plan` + `/sitemap` additions — the count grows with the blog, the invariant
+   is what matters: ALL of them are on the temp host until the variable is cleared.)
    ```
    canonical: https://realtylt-website.vercel.app/selling
-   sitemap  : 58/58 entries on realtylt-website.vercel.app
+   sitemap  : 68/68 entries on realtylt-website.vercel.app (2026-08-26)
    ```
    It is harmless right now because the whole site is `noindex`. The moment indexing is enabled
    with this value still set, the real domain will be telling Google its canonical lives on a
