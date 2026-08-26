@@ -1,5 +1,44 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 41 (2026-08-26): /sitemap IS A PAGE NOW. DONE, PUSHED (a2dd78d + 599d276) =======
+## The owner's note: "site map is terrible looks like code there... like my page on brivity
+## ...similar or better." The footer linked /sitemap.xml — raw XML. Now:
+##
+## -- WHAT SHIPPED ------------------------------------------------------------------------
+## 1. app/sitemap/page.tsx + directory.ts: a designed HTML site map at /sitemap. ~70 links,
+##    5 sections (Pages with one-line notes / Top Areas grouped HV+NYC / 20 AI Services /
+##    every published post with date / Legal & Fair Housing). Site's own reference language:
+##    Newsreader headings, hairline border-line rows, mono counts, lg sticky rail whose jump
+##    list counts each section. No motion (deliberate: reference page). Beats the Brivity
+##    page it was measured against (their flat ALL-CAPS dump; structure read off live site).
+## 2. ROUTING TRAP DEFUSED: next.config redirected bare /sitemap -> /top-areas, and
+##    /sitemap/:path* would ALSO swallow the bare path (* matches zero segments). Now only
+##    /sitemap/:path+ redirects (deep vendor tree still -> /top-areas); /sitemap.xml intact.
+##    redirects.test.ts asserts bare /sitemap is ours so no future rule can take it back.
+## 3. Footer bottom strip: "Sitemap"->/sitemap.xml became "Site Map"->/sitemap (Link).
+## 4. sitemap.xml: +/plan (was public+indexable but NOT in the inventory — real SEO gap,
+##    found while building the page) and +/sitemap. Local measured total: 68 entries.
+##    PRELAUNCH-AUDIT checklist updated (58 was stale; the temp-host invariant is the point).
+## 5. app/sitemap/directory.test.ts couples the two maps: every evergreen XML URL must
+##    appear on the page; counts tied to COUNTY/BOROUGH/getServices lengths; no dup hrefs.
+##
+## -- VERIFIED (numbers) ------------------------------------------------------------------
+## tsc clean; npm test 96 files / 1337 tests green (all FOREGROUND). Driven on :3100 at
+## 1440/390/320: zero horizontal overflow; tap targets — probe caught 31 label-only rows at
+## 19px, padding moved li->anchor, now 0 under 24px; jump anchor scrolls (y=1687); service
+## link + blog post links navigate; footer->sitemap walkthrough from home OK; full map is in
+## SSR HTML (JS-disabled OK); focus ring 2px solid ink on links; reduced-motion renders.
+## /sitemap 200 · /sitemap/NY 308->/top-areas · /sitemap.xml 200 (all live-driven on dev).
+## Screenshots: docs/design-r41/sitemap-{1440,390}.png (committed).
+##
+## -- OPEN / NEXT -------------------------------------------------------------------------
+## * Prod verify after this push: /sitemap 200 + /sitemap/NY 308 on realtylt-website.vercel.app
+##   (poll was running at handoff time; if it timed out, re-check by hand).
+## * The carried work list below (listing alerts capability, EHO/REALTOR marks research,
+##   stock-photo replacement) was NOT this round's focus and remains open.
+## * Blog dates on the map are en-US short form; if the owner wants the long form
+##   (fmtDate), it is one line in app/sitemap/directory.ts.
+
 ## == HANDOFF 2026-08-25 AFTERNOON -> ROUND 41. THE LEAD-FLOW ROUND IS DONE AND LIVE =======
 ## The owner's second morning list, every item closed and PROVEN on production. Same
 ## workstyle: single Fable agent, measure everything, explicit-pathspec commits.
