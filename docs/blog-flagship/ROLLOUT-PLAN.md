@@ -14,15 +14,18 @@
 | — | **the /ai page stopped disagreeing with the services surface** on seven claims (ai-page repo, LOCAL, awaiting the owner's deploy go): the reviews panel literally described REVIEW GATING, plus the dead 73%, "fraction of vendor pricing", "tens of thousands in unworked commission", "never slip through a PDF", "unlimited parallel agents", and CRM-sync's absolutes | LOCAL, owner-gated |
 | F | 7 new CC BY / CC0 plates (4 unspent) · topics 14-15: **document processing** (FUNSD, DocVQA, Reg Z's two definitions of "business day"), **data enrichment** (the FTC's 6(b) data-broker study, the CCPA right to correct, and a decay rate that does not survive being followed) · 8 more service claims killed incl. **an invented person with an invented phone number** live on the enrichment page · **the plate is 16:9 on a phone and 21:9 on a laptop**, so Round E's alt-text rule was half right · six chart notes caught restating their own prose · **two more /ai COPY keys corrected**, both contradicted by their own page | building |
 | G | 6 new CC BY plates (3 unspent) · topics 16-17: **ai-scheduling**, argued as an agreement you do not have yet rather than as a booking, against the hardest sibling in the rollout (overlap 60 on the first run, all of it mine) · **invoicing-and-payments**, which REFUSES the commission mechanics on the page because no primary states them, and argues the unraised charge instead · 8 more service claims killed incl. **"the double-booking that cannot happen"** · **a hole in `zombie-claims.test.ts` itself**: the bare stem `refus` exempted any claim containing the word "refused", found only by proving the new entries red · **both of this round's refusals rested on unchecked reasons and following them changed both** · an invented CHARGE key in a plate's alt text and caption | building |
+| H | 7 new plates (1 unspent, and it is the last) · topics 18-19-20: **ai-clone**, written without touching the owner-held avatar and argued as a LIKENESS (NY Civil Rights Law 50, 51 and 50-f, 16 CFR 461 read in the eCFR where it still has no section for individuals, the FTC's proposed means-and-instrumentalities section, C2PA's own refusal to judge whether provenance is good) · **ai-audit**, argued as SUBTRACTION against workflow-automation's already-free mapping hour, refusing a project failure rate on the strength of a peer-reviewed reconstruction of the industry's most quoted one · **custom-automation**, argued as the thing you now OWN, refusing the maintenance-share figure after following it to a 403 and a JavaScript shell · **the carried double-booking defect closed and the guard widened in the same commit, proved RED first** · 10 more claims killed incl. **three invented hours-per-week figures inside our own audit illustration** · 5 alt-text and caption errors found by shooting every plate at both crops · **three dates and an origin story written from memory, removed** | building |
 
-**Standing cohort state:** 17 flagship posts, all green on `flagship-standard.mjs`, sibling
-overlap 0 across the whole cohort, zero new scene components in sixteen consecutive topics, 1271
-tests. New posts score 17/19 on `score-flagship`: C3 (film) is owner-held and D5 (a real revision
-date) cannot be true on the day a post ships. Neither is ever faked or re-baselined. **3 topics
-have no flagship post**: ai-clone, ai-audit, custom-automation.
+**Standing cohort state:** **20 flagship posts, which is all of them**, all green on
+`flagship-standard.mjs`, sibling overlap 0 across the whole cohort, zero new scene components in
+nineteen consecutive topics, 1301 tests. New posts score 17/19 on `score-flagship`: C3 (film) is
+owner-held and D5 (a real revision date) cannot be true on the day a post ships. Neither is ever
+faked or re-baselined. **Every topic now has a flagship post.** The next agent on this work is the
+fresh-eyes checker, and ROUND-H-LOG.md ends with a priority list written for them.
 
-**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 27
-photographs under CC BY 2.0 or CC0, 24 spent and **3 unspent**, each licence read on its own
+**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 34
+photographs under CC BY 2.0 or CC0, 33 spent and **1 unspent** (`mailbox-mist.jpg`, passed over by
+three separate rounds for a stated reason each time), each licence read on its own
 source page. **Round G tightened that rule in one place: the photo page is the authority for the
 photographer's NAME as well as for the licence.** Openverse's `creator` field is sometimes the
 account alias, and four of Round G's six candidates differed. Read it in a browser
@@ -142,7 +145,8 @@ Unknown product facts (e.g. whether calls are recorded) are REPORTED, never writ
 ~~review-automation, ai-appointment-booking, local-seo, geo-landing-pages, crm-sync,
 ai-agent-workforce, skip-tracing-lead-generation, marketing-automation~~ (done through Round E),
 ~~document-processing, data-enrichment~~ (done through Round F), ~~ai-scheduling,
-invoicing-and-payments~~ (done through Round G), **ai-clone, ai-audit, custom-automation** (3 left).
+invoicing-and-payments~~ (done through Round G), ~~ai-clone, ai-audit, custom-automation~~ (done in
+Round H). **The list is finished.**
 Per topic: research (its OWN primary source, read in the primary document — the zombie-stat rule);
 write to the ratcheted standard (prose/sections/citations/FAQ/images/graphics/cost/calculator/
 limits/how-to, overlap vs nearest sibling at the ceiling); scenes from the existing primitives

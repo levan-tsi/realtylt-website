@@ -38,6 +38,24 @@ describes is what runs.
 The invoicing page deliberately says nothing about how commission is disbursed because no primary
 source established it. If a build touches funds at all, that changes what the page must disclose.
 
+**1.6 Is there a written consent document for a clone, and what does it say?** (added round H)
+New York Civil Rights Law section 50 makes it a **misdemeanour** to use a living person's likeness
+or voice for advertising or trade without written consent obtained FIRST. When the person is you
+that is a document you sign once, and the clone page and post now both describe it: it should name
+the person, say what may be made from the recording, say how long the permission lasts and say
+what happens when they revoke it. **If no such document exists, the first step on that page is
+aspiration.** The same question with more teeth: **what happens to a colleague's model when they
+leave the brokerage?** Their likeness is theirs, and section 50 does not stop applying on the day
+somebody changes firms.
+
+**1.7 Does every clone video carry a spoken line saying it was made with an AI avatar?**
+(added round H) This is the single most load-bearing product claim added to any page this round.
+The page now says every video says it. The reason it is under legal exposure rather than under
+positioning is that the FTC has **proposed** a rule making it a violation to provide goods or
+services knowing they will be used to impersonate, which would reach the people who build one as
+well as the people who publish one. That proposal is not law today, checked in the eCFR itself.
+It is also the only control that works, because published research says the viewer cannot tell.
+
 ---
 
 ## 2. Does the build do what the page now says? (per service)
@@ -80,6 +98,29 @@ source established it. If a build touches funds at all, that changes what the pa
 - Is the **human editing step on area pages default or optional**? The geo post's entire argument
   rests on this one.
 
+**AI clone** (added round H)
+- Is there a **list of sentences the script layer may never generate**? School districts, tax
+  figures, boundaries, permit status. The page says these are decided by a person in advance.
+- Is there a **review step before a video sends, and who is named for it**? The whole calculator on
+  that post rests on the answer being yes and on somebody owning it.
+
+**AI audit** (added round H)
+- Does the audit actually produce a **written list of what NOT to build**? That is the fourth card
+  of the post's main scene and the argument of the whole article. If the deliverable is only the
+  shortlist, the page describes a better product than the one that ships.
+- Does it end with **one automation built and running**? Claimed before this round and kept.
+- **What does it cost, and is a "no" genuinely cheap?** The post says it is priced so that the
+  answer being no costs you almost nothing. That is a commercial fact only you can confirm.
+
+**Custom automation** (added round H)
+- Do builds **fail loudly**, and where does the alert go? The post names this as the highest-return
+  item in the whole subject and the page now says the chain does it.
+- Is there a **written handover document** with each build, in the language of the business? Added
+  as a step on the page this round. If it is not produced, that step should come back out.
+- Does a client's build run in an **environment and on credentials they control**?
+- Is there a **review date** on anything we have already built? The post says nothing retires
+  itself and a date in a calendar is the only mechanism that ever switches one off.
+
 ---
 
 ## 3. Product and positioning decisions
@@ -96,6 +137,19 @@ render "[Placeholder draft...]". They need real articles or deletion — a decis
 
 **3.3 Films.** Every new post scores 17/19 rather than 19/19 because C3 wants a film and videos
 are held by you. Nothing is faked. Say the word and the films become a round.
+
+**3.4 The /ai COPY drift is now thirteen keys wide.** (added round H) Round G recorded nine.
+Round H changed four more, all on pages whose own articles contradicted them: `ai-audit`'s `lede`,
+`specs` and `why` all promised a list "ranked by payback", and `custom-automation`'s `why` said a
+build is done "Once, then forever". Every change was made because the page could not support the
+claim. Reconciling thirteen keys between `content/services/*.ts` and the COPY object in
+`realtylt-ai-page` is a decision rather than a task, and it gets less optional each round.
+
+**3.5 Two vendors are named as a quality benchmark on the clone page, and it was left alone.**
+(added round H) `ai-clone.lede` and `ai-clone.specs` say "A HeyGen-class video avatar plus an
+ElevenLabs-class voice clone". That is a claim about how good our avatar is, made by comparison,
+about a pipeline this round was instructed not to touch. **Flagged rather than changed**, because
+changing it would be both a widening of the drift above and a statement about the avatar.
 
 ---
 
