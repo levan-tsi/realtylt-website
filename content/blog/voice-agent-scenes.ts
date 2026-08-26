@@ -493,9 +493,11 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/counties/putnam.jpg",
-      alt: "Dusk over the Hudson at Cold Spring, New York, with the pilings of an old dock standing in the shallows",
+      // ROUND I: enriched from the 16:9 crop, and the caption's "from the water" corrected. The
+      // camera is standing on the stony shore looking out, not on the river.
+      alt: "Dusk over the Hudson at Cold Spring, New York, four broken pilings and a slab of an old dock standing in the shallows in front of a stony shore, dark wooded hills closing the river on both sides and the sky going gold and pink between them",
       caption:
-        "Cold Spring, from the water. The call at 9:42 is somebody deciding whether they are driving up on Saturday, and that decision does not wait until Monday to get made.",
+        "Cold Spring, from the shore. The call at 9:42 is somebody deciding whether they are driving up on Saturday, and that decision does not wait until Monday to get made.",
       credit: "Photograph by eleephotography, CC BY 2.0.",
       ariaLabel: "A Hudson Valley river town",
     },

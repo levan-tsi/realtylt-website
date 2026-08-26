@@ -317,7 +317,12 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       // 1.78 at 390, so the phone sees a taller slice. ORIGINAL is only legible in the taller
       // crop, and it is the most useful word on the rack for this article. Only the words that
       // are actually readable are named; several labels are worn or turned away.
-      alt: "A worn wooden rack of rubber stamps photographed from above, the printed labels on their handles reading COPY, PROFORMA, ORIGINAL, DUPLICATE and TRIPLICATE along the top row, SURFACE MAIL on a long stamp at the left, INSURED at the right and COPY again along the bottom, with a dark wooden handled stamp standing in the middle beside a small red and white label reading AIR PARCEL POST FIRST CLASS MAIL",
+      //
+      // ROUND I: the red and white plate is not a label lying BESIDE the dark handled stamp. It
+      // IS that stamp's body, a rotary selector with a brass winged key on its side, and it
+      // carries six numbered settings rather than the two the old alt quoted. PAID, at the left
+      // of the same row, was missing from the alt altogether.
+      alt: "A worn wooden rack of rubber stamps photographed from above, the printed labels on their sides reading COPY, PROFORMA, ORIGINAL, DUPLICATE and TRIPLICATE along one row, SURFACE MAIL on a long stamp below them, PAID at the left and INSURED at the right of the row under that, and COPY again along the bottom, with a dark red wooden handled stamp standing in the middle whose red body is a rotary selector listing six settings, AIR PARCEL POST, DO NOT BEND, FIRST CLASS MAIL, FOR DEPOSIT ONLY, HAND STAMP ONLY and PARCEL POST, with a brass winged key at its side",
       caption:
         "ORIGINAL, DUPLICATE, TRIPLICATE, COPY. Four words on one rack, and every one of them exists because somebody needed to know which version they were holding before they acted on it. A document reader makes a new copy of the facts in a contract and it does not stamp it, so the question those stamps answered becomes yours to answer instead.",
       credit: "Photograph by mpclemens, CC BY 2.0.",
@@ -468,7 +473,12 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       // exactly as it appears; the handwritten names are legible and are deliberately NOT
       // transcribed, because a two hundred year old hand is exactly the thing this article says
       // gets misread, and guessing at one in alt text would be the mistake it warns about.
-      alt: "A folded sheet of a handwritten and printed deed from 1825, the upper half filled with a looping brown ink hand describing a boundary, an acreage and a pew in a meeting house, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions, ending in a printed clause about a wife releasing her right of dower and the words IN WITNESS WHEREOF",
+      //
+      // ROUND I: "brown ink" was a colour that is not in the file. MEASURED rather than judged by
+      // eye: every sampled pixel of deed-1825.jpg has a channel spread of exactly 0, so the scan
+      // is pure greyscale and there is no brown anywhere in it. The hand is dark grey on a pale
+      // grey sheet, and that is now what the alt says.
+      alt: "A folded sheet of a handwritten and printed deed from 1825, reproduced in black and white, the upper half filled with a looping dark hand describing a boundary, an acreage and a pew in a meeting house, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions, ending in a printed clause about a wife releasing her right of dower and the words IN WITNESS WHEREOF",
       caption:
         "A real estate contract has had this shape for two hundred years. A printed paragraph that is identical on every copy, with the part that decides who owns what written into the holes in it by hand. Two hundred years later the format is the same and so is the difficulty: the printed text is easy to read and carries no information, and the handwriting is the whole deal.",
       credit: "Photograph by museado, CC0 1.0.",

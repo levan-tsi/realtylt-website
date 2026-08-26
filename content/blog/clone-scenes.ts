@@ -254,9 +254,13 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       src: "/images/editorial/type-case.jpg",
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
-      // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the paper labels along
-      // the top edge and the pink cloth at the bottom right corner. Only legible letters are named.
-      alt: "Large letterpress type blocks lying face up and packed tightly together, photographed at a low angle so the rows recede, a few of them pale bare wood and most of them darkened with ink, with lowercase t, q, a, p and o legible across the middle of the frame, a question mark among the blocks along the top edge, a row of figures at the right hand edge, small printed paper labels tucked between some of the blocks, and a fold of pink cloth at the bottom right corner",
+      // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the pink cloth at the
+      // bottom right corner. Only legible letters are named.
+      //
+      // ROUND I removed "small printed paper labels tucked between some of the blocks". There are
+      // none. Looked for at both crops and at a zoom: what is between the blocks is wood grain,
+      // ink and shadow. Round H's unresolvable-text class, described as a fact.
+      alt: "Large letterpress type blocks lying face up and packed tightly together, photographed at a low angle so the rows recede, a few of them pale bare wood and most of them darkened with ink, with lowercase t, a, o and p legible across the middle of the frame, a question mark among the blocks along the top edge, a row of figures at the right hand edge, and a fold of pink and white checked cloth at the bottom right corner",
       caption:
         "Every one of these blocks is a copy. Somebody cut a master letter once, and everything printed afterwards came from a duplicate of it, which is why the same q could be set in a thousand shops at once and still be that q. What the case does not settle is who is allowed to pick a block up. That has never been a property of the type.",
       credit: "Photograph by Kyle Van Horn, CC BY 2.0.",
@@ -389,12 +393,19 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/victrola.jpg",
-      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the
-      // lower half of the wooden cabinet with its metal band and a keyhole, neither of which is
-      // in the 21:9 slice. Nothing in this photograph carries legible lettering.
-      alt: "An antique wind-up gramophone standing against a plain yellow wall, its wide metal horn opening toward the left of the frame and mottled with age, the horn's neck curving down to a small metal tone arm over a turntable on a reddish wooden box, all of it sitting on a darker cabinet whose lower half carries a metal band and a keyhole",
+      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the top
+      // of the wooden cabinet and the two metal fittings on its front. Nothing in this photograph
+      // carries legible lettering.
+      //
+      // ROUND I: the winding crank is the thing in the frame that makes "wind-up" a description
+      // rather than a guess, and the old alt did not mention it. The keyhole and the metal band
+      // were also not resolvable at either crop, so they are gone. And the caption claimed a
+      // historical FIRST that the photograph cannot support and that is not even true of the
+      // technology, since a telephone carried a voice somewhere its owner had never been first.
+      // The argument never needed the superlative.
+      alt: "An antique wind-up gramophone standing against a plain yellow wall, its wide metal horn opening toward the left of the frame and mottled with age, the horn's neck curving down to a metal fitting on a reddish wooden box with a winding crank projecting from the right of it, all of it standing on a darker cabinet with canted corners and two small metal fittings on its front",
       caption:
-        "This was the first machine that let a voice arrive somewhere its owner had never been. Nobody thought the singer was in the room, and nobody was fooled, because the horn is enormous and the whole object announces itself. That is the part worth keeping rather than the technology. A reproduction that is obviously a reproduction has never needed anybody's permission to be honest about what it is.",
+        "This is a machine for sending a voice somewhere its owner has never been. Nobody thought the singer was in the room, and nobody was fooled, because the horn is enormous and the whole object announces itself. That is the part worth keeping rather than the technology. A reproduction that is obviously a reproduction has never needed anybody's permission to be honest about what it is.",
       credit: "Photograph by Vince Alongi, CC BY 2.0.",
       ariaLabel: "An antique wind-up gramophone against a yellow wall",
     },

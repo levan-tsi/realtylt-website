@@ -332,7 +332,12 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       // image found it, which is the standing lesson about this class of defect: an alt text is
       // a factual claim about a picture, and on a page arguing that the details are checkable a
       // wrong one is not cosmetic.
-      alt: "Two adjoining houses on a city block in late summer, one grey with a mansard roof and one red brick, both well kept, seen from the pavement through heavy planting",
+      // ROUND I found it still slightly wrong twice. The left house is not grey: sampling its
+      // wall in the shipped crop returns rgb(253,239,223) and rgb(228,220,209), which is a warm
+      // off-white. And BOTH houses have shingled mansard roofs with dormers, so giving one to the
+      // left house alone denied the right one a roof it plainly has. They are also separated by a
+      // flight of steps and a tree rather than adjoining.
+      alt: "Two Victorian houses side by side on a sloping city block in late summer, the left one painted cream with a shingled mansard roof and dormers over a covered porch, the right one of red brick with green painted trim, bay windows and a shingled mansard roof of its own, both well kept, seen from the pavement over a low brick retaining wall through heavy flowering planting and an iron railing",
       caption:
         "Two houses on the same block, both in good order, and nothing on either front tells you which one has a wet basement. That is the position a stranger is in with your business, and your reviews are the only part of the picture you did not write yourself. Which is exactly why a page of nothing but fives stops being information.",
       credit: "Photograph by Elvert Barnes, CC BY 2.0.",

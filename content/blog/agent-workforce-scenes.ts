@@ -285,10 +285,14 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-17.jpg",
-      // WRITTEN FROM THE 21:9 CROP, not from the catalogue title. Checked against the plate
-      // swatch: the chalkboard list, the beams, the orange bar front and the stools are all
-      // inside the crop. The six items are read off the board rather than assumed.
-      alt: "An open plan room with exposed timber ceiling beams, a long polished wooden dining table on the left and an orange fronted kitchen bar with metal stools on the right, and in the centre a tall cabinet faced with a black chalkboard carrying a handwritten list in white chalk reading milk, dog food, coffee, bread, cheese and soap",
+      // RE-CHECKED IN ROUND I AT THE 16:9 CROP, which is the one a phone ships. The chalkboard
+      // list, the beams, the orange bar front and the stools are all inside it, and the six items
+      // are read off the board rather than assumed.
+      //
+      // One correction: the chalk is not white. Sampling the brightest strokes returns
+      // rgb(123,135,120), a pale green, and it reads green at the zoom as well. Small, but it is
+      // the same class as the "brown ink" on a greyscale scan two posts over.
+      alt: "An open plan room with exposed timber ceiling beams, a long polished wooden dining table on the left and an orange fronted kitchen island with metal stools on the right, and in the centre a white cabinet whose front is a dark chalkboard panel carrying a handwritten list in pale green chalk reading milk, dog food, coffee, bread, cheese and soap",
       caption:
         "Six lines on a board and anybody in this house can do the shopping without asking a question. That is what a brief is, and it is the entire difference between an assistant that is useful and one that is fast and plausible and slightly wrong. Nobody can write yours except you.",
       credit: "Photograph by Jeremy Levine Design, CC BY 2.0.",
@@ -401,10 +405,14 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-14.jpg",
-      // WRITTEN FROM THE 21:9 CROP. The crop keeps the mantel, the open door and the French
-      // doors and cuts the ceiling; the room beyond the open door is dim and the light on the
-      // floor comes from the glazed doors at the right.
-      alt: "A living room with a dark wooden fireplace mantel carrying two large carved elephants and a row of turned candlesticks, a fern standing in the white painted fireplace opening, a wide panelled door standing open onto a dim room beyond, and glazed French doors at the right throwing sunlight across a polished wood floor",
+      // RE-CHECKED IN ROUND I AT THE 16:9 CROP. It keeps the mantel, the open door and the French
+      // doors; the light on the floor comes from the glazed doors at the right.
+      //
+      // Two corrections. The fern stands in a white pot on the hearth in front of a BLACK firebox
+      // whose surround is painted white, so "in the white painted fireplace opening" put it in the
+      // wrong place. And the room through the open door is not dim: a window and a black leather
+      // sofa are plainly visible in it, which is better for the caption than a dark doorway is.
+      alt: "A living room with a wooden fireplace mantel carrying two large carved elephants and a row of turned candlesticks under a tall mirror, a fern in a white pot on the hearth in front of a black firebox whose surround is painted white, a five panel door standing open onto a further room with a window and a sofa in it, and glazed French doors at the right throwing sunlight across a polished wood floor",
       caption:
         "The door is open and the light is on the floor and nobody has walked through yet. Everything an assistant produces sits exactly like this until a person goes and looks at it, and the going and looking is not a temporary precaution for the first month. It is the shape of the job now.",
       credit: "Photograph by smoMashup1, CC BY 2.0.",

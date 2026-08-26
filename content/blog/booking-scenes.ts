@@ -306,9 +306,15 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       src: "/images/listings/house-05.jpg",
       // Alt and caption rewritten after LOOKING at the file rather than at its catalogue title:
       // the first version said "bare windows" and "flat afternoon light" and had the lights on
-      // inside, and the photograph is an ornate Victorian in bright daylight with curtains in
-      // every window. Same class of defect as the plate on topic 6, found the same way.
-      alt: "An ornate yellow and maroon Victorian house with a wide covered porch and a turret, curtains in every window, photographed from the street in bright daylight with nobody in the frame",
+      // inside. Same class of defect as the plate on topic 6, found the same way.
+      //
+      // ROUND I corrected it again at both crops. "Curtains in every window" is the "each drawer"
+      // over-claim: several windows carry curtains or blinds and the decorative gable opening
+      // carries none. The sky is white overcast rather than bright daylight. The porch is a small
+      // ornate entrance porch, not a wide one. And the 16:9 crop a phone ships shows a white sign
+      // in red capitals at the foot of the steps whose wording is cut off by the frame, which
+      // the alt now says rather than guesses.
+      alt: "An ornate yellow and maroon Victorian house with a turret, a bracketed entrance porch under fretwork, curtains and blinds at most of the windows and two wreaths on the front door, photographed from the street under a white overcast sky with nobody in the frame and a white sign in red capitals standing at the foot of the steps, its wording cut off by the bottom of the frame",
       caption:
         "This is the six thirty that nobody came to. Nobody is in the frame, which is the entire subject: the drive out, the forty minutes on the porch, and the Saturday slot quietly given away nine days earlier in order to hold this one.",
       credit: "Photograph by Jimmy_Joe, CC BY 2.0.",
@@ -414,7 +420,10 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-13.jpg",
-      alt: "A red-painted saltbox house with a steep roof and small-paned windows, each hung with a Christmas wreath, photographed from the road below under a grey winter sky",
+      // ROUND I: "each hung with a Christmas wreath" was the over-claim. Counted at both crops:
+      // five wreaths, all of them on the FRONT elevation, plus a bow on the door. The four
+      // windows on the gable end at the left carry none.
+      alt: "A red-painted saltbox house with a steep shingled roof, a brick chimney at the ridge and small-paned sash windows, the five windows across its front each hung with a dark evergreen wreath and a red bow and the door carrying a bow of its own, while the windows on the gable end at the left carry none, photographed from the road below under a pale grey winter sky",
       caption:
         "And this is the whole point of the machinery: one ordinary day on which two people stand in a house at the time they said they would. Nothing about that hour is impressive. Everything expensive in this article happens because it did not.",
       credit: "Photograph by CityLimitsJunction, CC BY 4.0.",

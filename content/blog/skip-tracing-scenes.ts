@@ -289,12 +289,16 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/mailboxes-row.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED, checked on the plate swatch. There are FOUR
-      // boxes in the crop, not three: the first draft said three because the second and third
-      // overlap from this angle. The legible numbers are 70, painted large on the rust brown
-      // box, and 60, painted small on the silver one at the right. There is no house and no
-      // road in the frame.
-      alt: "Four metal rural mailboxes standing in a row on a rough grey plank supported by three timber legs, one small and rust streaked, one pale and painted over, one rust brown with U S MAIL embossed on its door and a large hand painted 70 on its side, and one silver with a small 60 painted low on it, standing in long grass in front of a mown green field with a hillside of orange and gold autumn woodland behind and two small farm buildings at the treeline",
+      // RE-READ IN ROUND I AT THE 16:9 CROP, which is the one a phone ships; the note under this
+      // used to say it was written from the 21:9 one, which Round F established is the smaller of
+      // the two. There are FOUR boxes in the crop, not three: an early draft said three because
+      // the second and third overlap from this angle. The legible numbers are 70 and 60.
+      //
+      // Two corrections. The 70 is painted on the rust brown box's DOOR, under the embossed U.S.
+      // MAIL and APPROVED BY THE POSTMASTER-GENERAL, not on its side. And the alt described the
+      // background as a hillside and left out the thing that dominates it: a long ridge closing
+      // the valley with a pale cliff face standing at its top.
+      alt: "Four metal rural mailboxes standing in a row on a rough grey plank carried on splayed timber legs, one small and rust streaked, one pale and ribbed with writing along its side, one rust brown with U S MAIL and APPROVED BY THE POSTMASTER-GENERAL embossed on its door and a large hand painted 70 across the same door, and one silver with a small 60 written low on its door, all of them standing in long grass in front of a green field, with orange and gold autumn woodland rising behind it, two small farm buildings at the treeline and a long ridge closing the valley with a pale cliff face at its top",
       caption:
         "Two of these carry a number that anybody driving past can read, which is the whole point of a mailbox. Not one of them carries a telephone number, and that is not an oversight either. The information a person puts where the public can see it is a decision they made, and the information they did not put there is also a decision.",
       credit: "Photograph by _Imaji_, CC BY 2.0.",
@@ -322,13 +326,20 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/editorial/ledger-names.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED. Two columns of entries, not one. Individual
-      // names are legible in the original but are NOT enumerated here: they are transcribed as
-      // "personal names" because a list of nineteenth century payroll names read off a
+      // RE-READ IN ROUND I AT THE 16:9 CROP. Two columns of entries, not one. Individual names
+      // are legible in the original but are NOT enumerated here: they are transcribed as
+      // "personal names" because a list of eighteenth century pay roll names read off a
       // photograph is exactly the invented precision this cohort has been caught on before.
-      alt: "An open page of an old payroll journal photographed close up, the paper aged to a deep yellow and torn away at the right edge, two columns of personal names written in brown ink cursive down the page, each name followed by a date and a short row of figures in faint ruled columns",
+      //
+      // "An open page of an old payroll journal" followed the photographer's own title ("Very Old
+      // payroll Journal") rather than the picture. What is in the frame is a single sheet, torn
+      // away down its right edge, ruled into columns whose heads read Names, Commencing and
+      // Ending. So the alt now describes a sheet, and the caption no longer says "in a book".
+      // The column heads are described rather than the ranks beside the names, which are at the
+      // limit of what the shipped crop resolves.
+      alt: "A single sheet of an old pay roll photographed close up, the paper aged to a deep yellow and torn away down its right edge, ruled into columns whose heads read Names, Commencing and Ending above narrow money columns, two columns of personal names written in brown ink cursive down the sheet, each name followed by dates and a short row of figures",
       caption:
-        "Every line here is a person, written down by somebody whose job it was to be accurate, in a book that was never meant to leave the room it was kept in. A list of names has always been easy to make and easy to move. What has changed is that the list now arrives with a telephone number attached to it, and nothing about the list tells you where that part came from.",
+        "Every line here is a person, written down by somebody whose job it was to be accurate, on a sheet that was never meant to leave the room it was kept in. A list of names has always been easy to make and easy to move. What has changed is that the list now arrives with a telephone number attached to it, and nothing about the list tells you where that part came from.",
       credit: "Photograph by peagreengirl, CC BY 2.0.",
       ariaLabel: "A page of names in a ledger",
     },
@@ -471,14 +482,32 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/no-solicitation.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED. The pictogram is a figure in a broad hat
-      // striding with a case, inside a white outlined triangle. The first draft said the figure
-      // was struck through with a diagonal bar; photographed at the plate's real geometry there
-      // is no bar across the figure, so that claim is gone. The word order on the sign is
-      // WARNING above NO SOLICITATION, both between exclamation marks on the first line only.
-      alt: "A weathered red metal sign filling the frame, scratched and faded, carrying a large white outlined triangle with a white pictogram inside it of a figure in a broad hat striding away carrying a case, and beneath the triangle the words exclamation mark WARNING exclamation mark above the words NO SOLICITATION, both in white capitals, with a pale grey surface showing at each edge of the frame",
+      // RE-READ IN ROUND I AT THE 16:9 CROP. The first draft said the figure was struck through
+      // with a diagonal bar; photographed at the plate's real geometry there is no bar, so that
+      // claim went in Round G. The word order is WARNING above NO SOLICITATION, both between
+      // exclamation marks on the first line only.
+      //
+      // TWO ROUND I CORRECTIONS, and the caption one is the worst single defect the checker found
+      // in the cohort.
+      //
+      // The figure is not "in a broad hat". The hat is coming OFF, drawn above and clear of the
+      // head with a motion line over it, which is the whole joke of the sign. And the sign has a
+      // third line the alt omitted: Thank You!, in script between two rules, which is the exact
+      // detail the caption's last sentence turns on.
+      //
+      // The caption said "Two million PEOPLE said the same thing to the Federal Trade Commission
+      // last year." The Commission's Do Not Call Data Book 2024 counts 2,085,133 COMPLAINTS for
+      // the fiscal year (1,099,223 robocall, 763,970 live caller, 221,940 not reported), which is
+      // the sum the statbars scene four screens above renders bar by bar, and the same document
+      // says the data is "unverified complaints reported by consumers, not a consumer survey".
+      // Complaints are not people; one person can file many. The article's own prose refuses this
+      // exact conflation three paragraphs earlier, about the 254 million registrations: "That is
+      // not a count of people". So the page argued against itself, in the one scene field that
+      // carries no source. "Last year" also went, because it is a floating reference that reads
+      // wrong the day FY2025 publishes.
+      alt: "A weathered red metal sign filling the frame, scratched and faded, carrying a large white outlined triangle with a white pictogram inside it of a figure striding to the right with a case in one hand and its broad hat flying off above its head with a motion line over it, and beneath the triangle the words exclamation mark WARNING exclamation mark above the words NO SOLICITATION, both in white capitals, and below those, between two short rules, the words Thank You! in a white script hand, with a pale grey surface showing at each edge of the frame",
       caption:
-        "Somebody bought this, drilled it to their own wall and looked at it every day, which is a considerable amount of trouble to go to in order to say one thing. Two million people said the same thing to the Federal Trade Commission last year, and 254 million numbers are registered saying it in advance. The sign is the polite version.",
+        "Somebody bought this, drilled it to their own wall and looked at it every day, which is a considerable amount of trouble to go to in order to say one thing. The Federal Trade Commission counted two million complaints saying it in a single fiscal year, and 254 million numbers are registered saying it in advance. Neither of those is a headcount. This is one person, and it still says thank you at the bottom.",
       credit: "Photograph by upyernoz, CC BY 2.0.",
       ariaLabel: "A no solicitation sign",
     },

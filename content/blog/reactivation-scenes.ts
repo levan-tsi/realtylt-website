@@ -287,7 +287,10 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/counties/dutchess.jpg",
-      alt: "The Walkway Over the Hudson, the former Poughkeepsie railroad bridge, crossing high above the river at Poughkeepsie, New York",
+      // ROUND I re-read this at the 16:9 crop. Accurate but thin, so the picture went in. The
+      // walkers on the deck matter to the caption: they are the visible half of "somebody finally
+      // went and looked", and the old alt did not mention them.
+      alt: "The Walkway Over the Hudson, the former Poughkeepsie railroad bridge, its black steel trusses running the width of the frame on tall piers standing in the river, small figures walking the deck and a flag flying from it, with the Poughkeepsie waterfront and a wooded bluff behind under a flat grey sky",
       caption:
         "The Poughkeepsie railroad bridge burned on the eighth of May, 1974, and then stood there unused for thirty five years. It reopened on the third of October, 2009, as a footpath. Nothing about it had changed in the meantime except that somebody finally went and looked at what was already standing.",
       credit: "Photograph by bobistraveling, CC BY 2.0.",

@@ -318,9 +318,13 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       band: "light",
       src: "/images/editorial/ghost-sign-foundry.jpg",
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
-      // crop a laptop ships. Only what is legible is named: the upper letters really are
-      // unreadable, because two paintings overlap there, and FOUNDRY and CO really are clear.
-      alt: "Looking steeply up a red brick wall at a tall painted sign, white capital letters on a dark ground, the letters at the top overlapping each other so that no word can be read, with FOUNDRY and CO clearly legible below them, a window in the brickwork to the right and pale blue sky along the left edge",
+      // crop a laptop ships. Only what is legible is named.
+      //
+      // ROUND I: "so that no word can be read" over-claimed. The name runs VERTICALLY down the
+      // wall, one letter above the next, and only its upper letters are painted over one another;
+      // the last few stand clear and read TOR. Saying that is better for the caption than saying
+      // nothing can be read, because it is the half-readable layer that makes the point.
+      alt: "Looking steeply up a red brick wall at a tall painted sign in white capitals on a dark panel, its letters running vertically one above the next, the upper ones painted over each other so the name cannot be resolved and only the last of them standing clear and reading TOR, with FOUNDRY and CO in horizontal capitals below, a corbelled brick cornice along the top, a window in the brickwork to the right and pale blue sky along the left edge",
       caption:
         "Somebody painted that, and it was true. Somebody painted over it, and that was true too. What is left is a wall carrying two claims at once, one of them readable and neither of them dated, and no way to tell from the wall which one you are looking at. That is what a contact record looks like after a pass that overwrote a field, and unlike the wall, your CRM shows you only the top layer.",
       credit: "Photograph by A Continuous Lean, CC BY 2.0.",

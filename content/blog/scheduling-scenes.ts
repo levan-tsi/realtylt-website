@@ -410,7 +410,11 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the floor of the box
       // and the run of rail beyond the window; both are described.
-      alt: "A long rank of tall painted signal levers in a railway signal box, receding away from the camera, most of them white with red and yellow levers standing among them, each with a curved catch handle at the top, a row of small brass instruments and dials mounted on the frame above them, a polished plank floor below and a window along the right showing track outside",
+      // ROUND I inverted the colour statement, which was inverted. RED is the dominant paint by a
+      // clear margin; white, yellow, blue and black-and-white chequered levers stand among the
+      // red, not the other way round. The numbered oval plates on the lever tops were also not
+      // mentioned and are the most legible marking in the frame.
+      alt: "A long rank of tall painted signal levers in a railway signal box, receding away from the camera, most of them red with white, yellow, blue and black-and-white chequered levers standing among them, each with a curved catch handle at the top and a small numbered oval plate on its shaft, a row of brass instruments and dials mounted on the frame above them, a black lever bed and a plank floor below, and windows along the right showing track outside",
       caption:
         "A mechanical interlocking is the oldest working answer to this problem. Every lever in the frame is physically prevented from moving until the levers it conflicts with are set correctly, so a signalman cannot offer two trains the same piece of track even by accident. The bars are cut so that a wrong combination is impossible rather than discouraged, which is a higher standard than any calendar has ever been held to.",
       credit: "Photograph by Steve Knight, CC BY 2.0.",
@@ -556,7 +560,13 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the
       // ceiling above the screens and the top of the concourse wall below them. Only the words
       // that are actually legible at that crop are transcribed.
-      alt: "A row of blue framed electronic departure screens mounted under a station roof, each headed Departures in white on blue with a yellow departure time and destination beneath it, Wick, Edinburgh, Aberdeen, Kyle of Lochalsh and Dingwall among them, each screen listing its calling points in small yellow type and carrying the operator name First ScotRail along the bottom, the words On time set beside several of the times, a fifth screen headed Subsequent Departures and a sixth cut off at the right edge headed Informat",
+      //
+      // ROUND I: the old alt said "each" twice and neither was true. Four of the six screens are
+      // headed Departures; the fifth is Subsequent Departures and the sixth is cut off reading
+      // Informat. And only those same four carry First ScotRail along the bottom. Counted at both
+      // crops. The corresponding row in public/images/ATTRIBUTIONS.md said five screens and now
+      // says six.
+      alt: "A row of six blue framed electronic departure screens mounted under a station roof, four of them headed Departures in white on blue with a yellow departure time and destination beneath, Wick, Edinburgh, Aberdeen and Kyle of Lochalsh, each of those four listing its calling points in small yellow type and carrying the operator name First ScotRail along the bottom, a fifth headed Subsequent Departures showing Dingwall and Aberdeen and carrying no operator name, a sixth cut off at the right edge headed Informat, and the words On time set beside every time on the board",
       caption:
         "Every time on this board was decided by somebody who is not standing in front of it, and the board's whole job is to say which ones are still true. On time is a claim being made now about a plan made months ago, and it is republished the moment it stops being true. That is the standard a scheduling system should be held to, and almost none of them are: they tell you a time once and then go quiet.",
       credit: "Photograph by David Jones, CC BY 2.0.",

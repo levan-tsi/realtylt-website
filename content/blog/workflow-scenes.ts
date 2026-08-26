@@ -290,7 +290,11 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/lifestyle/financing.jpg",
-      alt: "A person at a wooden desk with an accounting screen open on a laptop, one hand on the trackpad and the other keying the same figures into a separate desk calculator",
+      // ROUND I: the old alt said "one hand on the trackpad and the other keying the same figures
+      // into a separate desk calculator". BOTH hands are at the calculator; the trackpad is
+      // visible and empty, and the calculator is lying across the laptop's own keyboard. This is
+      // the photograph the whole article rests on and it was described wrongly.
+      alt: "A person at a dark wooden desk with an accounting screen open on a laptop, a large desk calculator lying across the laptop's own keyboard and both of their hands at it, one keying the number pad and the other resting on its edge, with the laptop's trackpad visible and untouched, a potted plant and an orange folder at the left and a stack of ring binders and a glass of water at the right",
       caption:
         "A number is on the screen. A person is typing it into something else. This is the entire subject of this article, and if the picture looks unremarkable, that is the finding: nobody in this business thinks they spend their week doing this, and everybody does.",
       credit: "Photograph by Wilfred Iven, CC0.",
@@ -431,7 +435,9 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/hero/hudson-twilight.jpg",
-      alt: "The Hudson River at dusk seen from the hills above West Point, with cloud lit orange over the far bank",
+      // ROUND I re-read this at the 16:9 crop. Nothing in it was wrong, only thin: the old alt
+      // gave a screen reader the place and none of the picture.
+      alt: "The Hudson at dusk from a wooded height above West Point, the river running away between two dark forested headlands, a band of cloud lit orange and red low over the far reach, and deep blue sky with pale cloud above it",
       caption:
         "This is what a chain failing one time in twenty looks like. It stays switched on, it stays green, and it is doing exactly what you think it is doing ninety five percent of the time. The two people a month it drops never appear anywhere, and nothing in the system has the job of telling you their names.",
       credit: "Photograph by Wei Zhang@Hudson, CC BY 2.0.",

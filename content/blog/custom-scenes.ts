@@ -264,7 +264,14 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // nothing in the photograph carries lettering, and the phone crop has a labelled plastic
       // bottle standing on the bench. Its label is not legible at the shipped size, so the alt
       // says a labelled bottle rather than naming anything on it.
-      alt: "A workshop wall hung with hand tools in deliberate rows, spanners and pliers along the top, long files and chisels standing upright at the left, hammers and wire brushes below them, screwdrivers with yellow, green, red and blue handles ranked by size across the middle, a saw and shears at the right against exposed brick, and a bench along the bottom of the frame carrying a folded blue sheet, a labelled plastic bottle, a black folder and loose papers",
+      //
+      // ROUND I: there are no shears at the right. What is there is two hand saws, a hacksaw
+      // frame and a large steel try square, with a pair of dark goggles and two pairs of dividers
+      // below them, and the goggles and the square were the two most prominent objects in that
+      // half of the frame and were not mentioned at all. A second pair of goggles, bright yellow,
+      // hangs among the pliers at the top. The bottle's label reads Mobil at the shipped crop,
+      // which is enough to call it engine oil and not enough to quote.
+      alt: "A workshop wall hung with hand tools in deliberate rows on pale painted boarding, adjustable spanners, pliers, a red pipe wrench and long handled bolt cutters along the top with a pair of yellow goggles among them, long files and rasps standing upright at the left, hammers and scrapers beside them, a shelf of screwdrivers with yellow, green, red and black handles ranked by size across the middle with chisels and punches hanging beneath it, two hand saws, a hacksaw frame and a large steel try square at the right against exposed brick with a second pair of goggles and two pairs of dividers below them, and a bench along the bottom of the frame carrying a blue plastic sheet, a labelled bottle of engine oil, a black folder and loose papers",
       caption:
         "Nobody buys a wall like this. It accumulates, one tool at a time, each one bought for a job that a tool already on the wall could not quite do. That is what a bespoke build actually is, and it is also the warning in the picture: every one of these has to be found, kept sharp and put back, and a wall nobody maintains is just a lot of metal on a hook.",
       credit: "Photograph by huw-ogilvie, CC BY 2.0.",
@@ -403,9 +410,17 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds a fourth
       // card along the bottom edge and more of the wooden frame at the left, neither of which is
       // in the 21:9 slice. Nothing in this photograph carries legible lettering.
-      alt: "Punched cards laced edge to edge into a continuous band, four of them across the frame with the top and bottom ones cut off, each a stiff cream rectangle pierced with rows of round holes in irregular groups, dark lacing tape running between them, and worn pale timber with metal pins along the right hand edge",
+      //
+      // ROUND I: the lacing is PALE CREAM CORD threaded through the edges of the cards, not "dark
+      // lacing tape running between them"; what runs between the cards is the dark seam where two
+      // of them hinge. The cards are stacked up the frame rather than laid across it. And the
+      // caption asserted an AGE for a photographed object, which is the one thing a photograph
+      // cannot carry: the source title is "Punched cards from a Jacquard loom" and gives no date,
+      // the body of this post never mentions Jacquard, so "two hundred years old" rested on
+      // nothing. The point never needed it.
+      alt: "Punched cards laced edge to edge into a continuous band, four of them stacked up the frame with the top and bottom ones cut off, each a stiff cream rectangle pierced with rows of round holes in irregular groups and stained brown along its edges, pale cream lacing cord threaded through the edge of every card down both sides, and dark timber with a thin metal rod along the right hand edge",
       caption:
-        "This is a program, and it is two hundred years old. Every hole is an instruction, the loom cannot do anything the cards do not say, and the reason this one still exists is that somebody kept the cards. That is the entire lesson: the machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
+        "This is a program, and there is nothing electronic in it. Every hole is an instruction, the loom cannot do anything the cards do not say, and the reason this one still exists is that somebody kept the cards. That is the entire lesson: the machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
       credit: "Photograph by pedrik, CC BY 2.0.",
       ariaLabel: "Punched cards on the head of a Jacquard loom",
     },

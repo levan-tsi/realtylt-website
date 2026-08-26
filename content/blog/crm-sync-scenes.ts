@@ -266,10 +266,14 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-07.jpg",
-      // WRITTEN FROM THE 21:9 CROP, not from the catalogue title. Checked against the plate
-      // swatch: the wreath, the 1820 plaque, the 279 and the second red building are all inside
-      // the crop; there is no lawn and no full view of either roof.
-      alt: "A red clapboard house in snow with white window frames, an oval plaque reading 1820 on the wall and the number 279 painted beside a dark teal front door hung with a red berried wreath under a green garland, with a second, weathered red building standing behind it to the left and snow laden bare branches crossing the top of the frame",
+      // RE-CHECKED IN ROUND I AT THE 16:9 CROP, which is the one a phone ships. The wreath, the
+      // plaque, the 279 and the second red building are all inside it; there is no lawn and no
+      // full view of either roof.
+      //
+      // One correction of the kind this round exists for: the plaque reads "c 1820", with the
+      // circa. Quoting it as "1820" turns an approximation into a date, on the one plate whose
+      // caption argues that the marking is the unambiguous thing about the house.
+      alt: "A red clapboard house in snow with cream window frames and electric candles in several of them, an oval plaque reading c 1820 on the wall and the number 279 painted beside a dark teal front door hung with a red berried wreath under a green garland, with a second, weathered red building standing behind it to the left and snow laden bare branches crossing the top of the frame",
       caption:
         "The date on the plaque and the number beside the door are there because a description of this house does not find it. Red, gable end, snow on the roof: so is the building behind it. The number is the only thing on that wall which means one house and not another, and a contact record works exactly the same way.",
       credit: "Photograph by Muffet, CC BY 2.0.",
@@ -404,9 +408,16 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       // wall": it is a stone-faced building front with a small gable and a garage opening, and
       // the number sits high up on that gable rather than at eye level. It said the number was
       // "set into it in pale pebbles", which the picture does not support: the digits are picked
-      // out in the stonework and are not obviously paler. And it attributed the planted roof to
-      // the wall, when the garden is on the flat roof running off to the right of the gable.
-      alt: "A building front faced in rounded river stones with the number 1734 picked out in the stonework of its small gable and a dark open garage doorway beneath, the flat roof running off to the right planted as a garden of red, orange and yellow tulips and daffodils, a pale house rising behind it, a bed of tulips at ground level and a white picket fence at each end",
+      // out in the stonework. And it attributed the planted roof to the wall, when the garden is
+      // on the flat roof running off to the right of the gable.
+      //
+      // ROUND I STOPPED QUOTING THE NUMBER AS 1734. The source file is 1024px wide, the gable
+      // occupies a small part of it, and the digits do not resolve at the shipped crop, at a
+      // lanczos upscale or at a contrast stretch: four pale digit shapes are visible and the last
+      // two cannot be read. The photographer's title is "Green Roof" and settles nothing. So the
+      // alt now says what kind of mark it is, which is Round H's rule for exactly this case, and
+      // the caption's argument does not need the digits.
+      alt: "A building front faced in rounded river stones with a four figure number picked out in paler stones in its small gable and a dark open garage doorway beneath, the flat roof running off to the right planted as a garden of red, white, yellow and purple tulips, daffodils and grape hyacinth, a pale shingled house rising behind it, a bed of tulips at ground level, a white picket fence at each end and washing hanging on a line at the right",
       caption:
         "The number is built into the stonework of that gable, which is a great deal more trouble than a plaque. That is the whole of what a good record is: one deliberate, unambiguous piece of information that means this and nothing else, put there on purpose by a person who knew it would matter later to somebody looking for the place.",
       credit: "Photograph by pnwra, CC BY 2.0.",

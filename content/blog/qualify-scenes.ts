@@ -275,11 +275,15 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/counties/ulster.jpg",
-      alt: "Lake Awosting at Minnewaska State Park Preserve, New York, seen from the cliffs above the water",
+      // ROUND I: "seen from the cliffs above the water" is not in the frame. The vantage is a
+      // little above the surface and no cliff appears in it, so the clause went and the picture
+      // itself went in, which the old alt gave a screen reader none of. The ariaLabel said "The
+      // ridge above Minnewaska" of a photograph whose subject is a lake.
+      alt: "Lake Awosting at Minnewaska State Park Preserve, New York: still blue water filling the foreground, a far shore of red, orange and gold autumn woodland with dark conifers standing among it, pale rock ledges along the waterline and a low wooded ridge beyond, under a clear sky",
       caption:
         "Minnewaska on a Saturday. Of the three people who asked you about a house up here this week, one has a closing date and two are the better part of a year from doing anything, and all three of them used the same contact form.",
       credit: "Photograph by Gaurav Pandit, CC BY 3.0.",
-      ariaLabel: "The ridge above Minnewaska",
+      ariaLabel: "Lake Awosting at Minnewaska",
     },
     "what-it-does": {
       kind: "grid",

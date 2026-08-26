@@ -295,7 +295,11 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
        * on its plates and grids. Same primitives, different page. */
       band: "dark",
       src: "/images/listings/house-06.jpg",
-      alt: "A green and teal painted Queen Anne Victorian with a pointed turret, tall arched windows hung with warm orange curtains, a first-floor balcony strung with small pennant bunting and a tall pink banner beside the entrance, standing against a bank of dark conifers",
+      // ROUND I: the bunting is red, white and blue FAN bunting, the semicircular kind, hung in a
+      // row along the balcony rail. "Small pennant bunting" is a different object and the colours
+      // are the whole reason the caption works. The warm orange in the windows is light rather
+      // than curtains, so the alt no longer says which.
+      alt: "A green and teal painted Queen Anne Victorian with a pointed turret and tall arched windows in red painted surrounds glowing warm orange, a first-floor balcony hung with a row of red, white and blue fan bunting, a tall pink banner beside the entrance, standing against a bank of dark conifers",
       caption:
         "Somebody in this town knows why there is bunting on that balcony this week. That is the whole difference between a page about a place and a page with a place name in it, and it is not a writing problem. It is a question of whether you have ever been there on a Saturday.",
       credit: "Photograph by Kathleen Tyler Conklin, CC BY 2.0.",

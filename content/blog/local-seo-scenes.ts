@@ -322,7 +322,10 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-08.jpg",
-      alt: "A brick and stone cottage with red-painted timbering, red window frames and a red front door, a wide fieldstone chimney rising through the middle of the roof, standing in mature woodland behind an unmown lawn with a line of flat stepping stones leading toward it",
+      // ROUND I: the lawn is short, even and plainly mown, so "unmown" was simply the opposite of
+      // the picture. The chimney is an external stone stack standing against the front of the
+      // house rather than rising through the middle of the roof.
+      alt: "A brick and stone cottage with red-painted timbering, red window frames and a red front door, a wide stone chimney stack standing against the front of the house and rising past the roof, set in mature woodland behind a short mown lawn with deep shrub borders and a line of flat stepping stones leading toward the door",
       caption:
         "Somebody within a few miles of this house is looking for an agent this week and will choose from three names on a phone screen. Whether yours is one of them is decided partly by a number nobody in this business ever writes down, which is how far away from them your front door happens to be.",
       credit: "Photograph by hoyasmeg, CC BY 2.0.",
@@ -452,11 +455,17 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-02.jpg",
-      // WRITTEN FROM THE CROP, not from the file. The first version ended "with two terracotta
-      // pots of red geraniums either side of the step", which is in the photograph and is not on
-      // the page: the plate's 21:9 crop cuts the bottom of the frame and takes the step and both
-      // pots with it. Same class of defect as the three Round B found, caught the same way.
-      alt: "The front of a white-painted stone house with black shutters and a dark panelled front door, a mass of white flowering shrub arching over the entrance, and a white lattice fence above clipped box hedges across the foreground",
+      // WRITTEN FROM THE CROP, not from the file. Round B removed "with two terracotta pots of
+      // red geraniums either side of the step" because the 21:9 crop cuts the bottom of the frame
+      // and takes both pots with it.
+      //
+      // ROUND I PUT THEM BACK, and this is the first case in the cohort where Round F's rule
+      // reverses an earlier correction rather than adding to it. The Plate ships 16:9 at 390 and
+      // 21:9 at 1440, and the 16:9 crop is the taller of the two: both pots are plainly inside
+      // the frame a phone renders. Round B was right about the laptop and wrong about the phone,
+      // and the phone crop is the one the alt has to cover. The octagonal window over the door
+      // and the brass lantern beside it were missing at either crop.
+      alt: "The front of a white-painted stone house with black shutters, an octagonal window over a dark panelled front door and a brass lantern beside it, a mass of white flowering shrub arching over the entrance, two terracotta pots of red flowers standing either side of the door, and a white fretwork fence above clipped box hedges across the foreground",
       caption:
         "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment, reads the name, the hours and the last few things other people said, and decides whether to knock. Everything in this article is about that doorstep rather than about your website.",
       credit: "Photograph by Wonderlane, CC BY 2.0.",

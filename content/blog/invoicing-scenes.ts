@@ -373,9 +373,21 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the bottom row of
       // number keys and the two arrow-marked keys at the foot of the right hand column, and the
       // narrow ruled window along the top. Only legible key markings are named.
-      alt: "The keyboard of an old blue-grey mechanical adding machine photographed square on, several columns of round cream number keys running from nine at the top down to three, a narrow ruled window with printed digits along the top edge, a right hand block of larger cream keys marked with a division sign, a STOP key, a minus sign, a NON SHIFT key, a plus sign and a key marked NEG with a cross on it, two more keys below them marked with arrows pointing left and right, and a single column of number keys down the far right edge",
+      //
+      // TWO ROUND I CORRECTIONS, and the second is the worse one.
+      //
+      // The keys are NOT all cream. They alternate in blocks of cream and pale green, roughly
+      // half of each, and the bottom row visible at the phone crop is twos rather than threes.
+      //
+      // And the caption argued from a PAPER ROLL that is not on this machine. Cropping the top
+      // third of the source file settles it: under the green cover are two rows of mechanical
+      // register windows numbered 1 to 18, which is a non-printing calculating machine, not a
+      // printing adding machine. This is the identical class of defect as Round G's invented
+      // CHARGE key, and the checker did not catch it. The caption now argues from the row of
+      // little numbered windows that IS in the shipped frame.
+      alt: "The keyboard of an old blue-grey mechanical calculating machine photographed square on, ten columns of round number keys running from nine at the top down to a row of twos cut off along the bottom edge, the columns alternating in blocks of cream and pale green so about half the keys are green, a narrow strip of small numbered windows along the top edge, a right hand block of larger cream keys carrying a division sign, a STOP key, a short minus key above a long plus key, a NON SHIFT key and a key marked NEG with a cross on it, two more keys below them marked with arrows pointing left and right, and a single column of cream number keys down the far right edge",
       caption:
-        "Every key on this machine does one thing and does it visibly, and the paper roll behind it exists so that somebody can go back afterwards and see how a total was arrived at. That second half is the part worth keeping. A payment system that cannot show you what a figure is made of has not saved you the arithmetic, it has only moved it somewhere you cannot check it.",
+        "Every key on this machine does one thing and does it visibly, and the row of little windows along the top holds the running figure where a person can watch it change. That second half is the part worth keeping. A payment system that cannot show you what a figure is made of has not saved you the arithmetic, it has only moved it somewhere you cannot check it.",
       credit: "Photograph by Les Chatfield, CC BY 2.0.",
       ariaLabel: "The keyboard of a mechanical adding machine",
     },
@@ -522,7 +534,10 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop carries the
       // row of small round keys along the bottom and more of the machine's scrolled iron frame,
       // neither of which is in the 21:9 slice. Only legible markings are named.
-      alt: "A close view of the keys of an antique cash register, round enamelled key tops on brass stalks standing above a polished wooden case, several of them numbered 90, 80, 70, 9 and 8 in dark blue on white, three red keys at the left reading $9, $8 and a 7 cut off by the frame edge, a knurled brass key in the middle with RECEIPT printed across its white top, and a small glass display window at the top right corner showing the letters Cen",
+      //
+      // ROUND I: the colours were inverted for three of the five. 90, 80 and 70 are WHITE numerals
+      // on dark blue enamel; only the 9 and the 8 are dark blue on cream. Checked at both crops.
+      alt: "A close view of the keys of an antique cash register, round enamelled key tops on brass stalks standing above a polished wooden case, 90, 80 and 70 in white numerals on dark blue enamel and 9 and 8 in dark blue on cream, three orange red keys at the left reading $9, $8 and a 7 cut off by the frame edge, a knurled brass key in the middle with RECEIPT printed across its cream top, and a small glass display window at the top right corner showing the letters Cen",
       caption:
         "Every round key on this machine sets an amount, and one of them does something else entirely: it prints the evidence. On a mechanical register, entering the figure and producing the receipt are two separate actions, deliberately, because a number somebody typed and a record somebody can hold are different objects. A payments build that closes a receivable on the strength of an email has collapsed those two back into one.",
       credit: "Photograph by Steve Snodgrass, CC BY 2.0.",

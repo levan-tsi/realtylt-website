@@ -268,11 +268,14 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/editorial/flyer-kiosk.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED, checked on the plate swatch. The legible
-      // fragments really are on the sheets in the crop: GRADUATE SCHOOL, LSAT, MCAT, Are You
-      // Ready, FREE SCREENING, RENT, LIVE CLOSE TO CAMPUS. There is no visible board behind
-      // them; the paper covers the whole frame, which is the point of the caption.
-      alt: "A kiosk covered edge to edge in overlapping paper flyers in hot pink, magenta, yellow, green, orange and white, several curling away from the surface, one carrying a row of tear off tabs, with fragments of wording legible across them including GRADUATE SCHOOL, LSAT, MCAT, Are You Ready, FREE SCREENING, RENT and LIVE CLOSE TO CAMPUS, and no bare board visible anywhere behind the paper",
+      // RE-CHECKED IN ROUND I AT THE 16:9 CROP, which is the one a phone ships and the vertical
+      // superset of the 21:9 one this was originally written from. The legible fragments really
+      // are on the sheets: GRADUATE SCHOOL, LSAT, MCAT, Are You Ready, FREE SCREENING, RENT, LIVE
+      // CLOSE TO CAMPUS. There is no visible board behind them; the paper covers the whole frame,
+      // which is the point of the caption. Two things the old alt missed: bright blue is one of
+      // the loudest colours on the board and was not listed, and there are several sheets with
+      // tear off tabs rather than one.
+      alt: "A kiosk covered edge to edge in overlapping paper flyers in hot pink, magenta, bright blue, yellow, green, orange and white, several curling away from the surface, several carrying rows of tear off tabs, with fragments of wording legible across them including GRADUATE SCHOOL, LSAT, MCAT, Are You Ready, FREE SCREENING, RENT and LIVE CLOSE TO CAMPUS, and no bare board visible anywhere behind the paper",
       caption:
         "Every sheet here was written by somebody who had thought about it. Each one is addressed to nobody in particular, which is the only thing they have in common, and it is enough to make all of them invisible at once. This is what a database of people who half remember you sees when a broadcast arrives, and no amount of care inside one sheet fixes it.",
       credit: "Photograph by Richard Ha, CC BY 2.0.",
@@ -319,13 +322,18 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/index-drawers.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED. Three tiers of drawers are in the crop and the
-      // top tier's labels sit above it, so only the middle and bottom rows are readable. The
-      // legible labels are ranges of surnames and two subject words; they are described as
-      // ranges rather than transcribed one by one.
-      alt: "Three tiers of wooden card index drawers filling the frame, warm honey coloured pine with brass cup handles, each drawer carrying a small white card in a metal frame hand lettered with a range of surnames such as ROC to RYZ and SAR to SGZ, with a metal rail and part of a dark fitting at the right hand edge",
+      // RE-READ IN ROUND I AT THE 16:9 CROP, which is the one a phone ships, and two things were
+      // wrong. "Each drawer carrying a range of surnames" is false of the whole bottom tier: it
+      // reads DISTRICT, blank, DISTRICT, HANSARD, HANSARD, HANSARD, HANSARD. And the handles are
+      // long brass bail pulls on two posts, not cup handles. Both errors were repeated in
+      // public/images/ATTRIBUTIONS.md and both are corrected there too.
+      //
+      // The caption also asserted WHY the ranges are uneven, which nothing in the frame supports.
+      // The two filing schemes in one cabinet are visible, are a better fact, and are now what it
+      // argues from.
+      alt: "Three tiers of wooden card index drawers filling the frame, warm honey coloured varnished pine with long brass bail handles, each drawer carrying a small white card in a metal frame lettered by hand, the middle tier reading ranges of surnames such as ROC to RYZ and SAR to SGZ while the bottom tier reads DISTRICT twice and HANSARD four times with one card left blank, and a dark metal rack, a paler cabinet and a bundle of newspapers at the right hand edge",
       caption:
-        "Somebody wrote every one of those labels by hand, and the reason the ranges are uneven is that they were adjusted as the drawers filled. That is what a segment is, and it is the part of a campaign nobody revisits. A query written once keeps running against a database that will not stop changing underneath it.",
+        "Somebody wrote every one of those labels by hand, and the bottom tier is not filed the way the tier above it is. One row runs in ranges of surnames; the row beneath it repeats two subject words and leaves a card blank. Two schemes in one cabinet is what a segment turns into, and it is the part of a campaign nobody revisits. A query written once keeps running against a database that will not stop changing underneath it.",
       credit: "Photograph by waferboard, CC BY 2.0.",
       ariaLabel: "A wall of index drawers",
     },

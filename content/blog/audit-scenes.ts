@@ -274,11 +274,17 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       src: "/images/editorial/dial-panel.jpg",
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
       // crop a laptop ships. Measured in round F: the Plate primitive renders 2.33 at 1440 and
-      // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the lower band of the
-      // panel carrying two more Cyrillic labels. Only legible lettering is named.
-      alt: "Three round pressure gauges set into a worn yellow instrument panel, the large central one carrying both a long black needle resting near the low end of its scale and a short red one below it, with a Cyrillic label stencilled on the panel above it and another directly beneath it, a gauge at each side cut off by the frame, the left one showing a scale running from ten to sixteen, and two further Cyrillic labels stencilled along the bottom edge",
+      // 1.78 at 390, so the phone sees a taller slice.
+      //
+      // ROUND I re-read this against the picture and two things were wrong. The four Cyrillic
+      // labels are stencilled on the BLACK BEZELS of the three gauges, not on the yellow panel:
+      // MASLO OTKACHKA above the centre glass and VAKUUM below it, and the same treatment on the
+      // two bezels cut by the frame. And the pointer count was four; there are FIVE, because the
+      // right gauge carries a red index pointer as well as a black needle, exactly as the centre
+      // one does. Only lettering legible at the shipped crop is named.
+      alt: "Three round pressure gauges set into a worn yellow instrument panel, the large central one carrying a long black needle resting at the low end of its scale and a short red index pointer below it, its black bezel stencilled in Cyrillic above the glass and again beneath it, a gauge at each side cut off by the frame with Cyrillic stencilled on their bezels in the same way, the left one showing a scale running from ten to sixteen and the right one carrying a black needle and a red pointer of its own",
       caption:
-        "Three gauges, four needles between them, and not one of them tells anybody what to do. A reading is a fact about the machine, and turning it into an action needs somebody who knows what this machine is for, what it did last week and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
+        "Three gauges, five pointers between them, and not one of them tells anybody what to do. A reading is a fact about the machine, and turning it into an action needs somebody who knows what this machine is for, what it did last week and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
       credit: "Photograph by Thomas Quine, CC BY 2.0.",
       ariaLabel: "Three pressure gauges on a yellow instrument panel",
     },
@@ -422,7 +428,14 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the thick
       // black cables leaving the bottom of each box and more of the green steel frame at the right.
       // Only legible markings are named.
-      alt: "Three red industrial isolator boxes bolted in a row to a grey wall of horizontal courses, each with a black lever handle on its face and the levers at three different angles so no two are set the same way, the middle one stencilled ZIP-0 above the lever and FREZA and R400/15A below it, a smaller red enclosure bolted beneath it stencilled 500 V, another smaller one under the box at the right, and thick black cables running out of the bottoms of all of them past a green painted steel frame",
+      //
+      // ROUND I re-read this and THREE of its specifics were wrong, which is the worst plate in
+      // the cohort. The levers are RED, the same paint as the boxes, not black. ZIP-0 is not a
+      // marking on this photograph at all: the middle box's small separate enclosure ABOVE it is
+      // stencilled ZSP-2, and what sits above the lever is a row of marks and the word ZAP. And
+      // the rating reads R100/15A on both the left and the middle box, not R400/15A. Verified at
+      // both crops and at a lanczos zoom on the lettering.
+      alt: "Three red industrial isolator boxes bolted in a row to a grey wall of horizontal concrete courses, each with a red lever handle on its face and the levers at three different angles so no two are set the same way, the left and middle boxes hand lettered ZAP. above the lever, the middle one lettered FREZA and R100/15A below it with a small separate red enclosure bolted above it stencilled ZSP-2 and another bolted below it lettered 500 V., a smaller enclosure under each of the other two boxes as well, and thick black cables running out of the bottoms of all of them past a green painted steel frame",
       caption:
         "Three switches, and the useful thing about them is that no two are in the same position. Somebody decided, for each one, whether the thing behind it should be running today. That decision took a second and it is the entire job. Everything expensive in this subject comes from switching something on and never afterwards asking whether it should still be on.",
       credit: "Photograph by Vladimir Mokry, CC0 1.0.",

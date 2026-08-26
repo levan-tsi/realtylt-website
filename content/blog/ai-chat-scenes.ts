@@ -286,7 +286,12 @@ export const AI_CHAT_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/listings/house-01.jpg",
-      alt: "A shingled house with a deep covered porch, a lamp hanging in it, seen from the street",
+      // ROUND I re-read this at the 16:9 crop. Nothing was wrong, only thin: the shipped phone
+      // crop carries the gambrel roof, the row of dormers and the two walls in front of the house
+      // and the old alt described none of it. The house number is legible on the porch beam and
+      // is deliberately NOT transcribed: it is a real house, and the skip-tracing post on this
+      // site argues at length about publishing an address somebody did not publish themselves.
+      alt: "A cedar shingled house with a gambrel roof and a row of shingled dormers, a deep covered porch across the front carried on bracketed white posts with a lantern hanging under it, seen from the street over a river stone wall and a brick retaining wall, with mature trees crowding in on both sides",
       caption:
         "A shingled house with a deep porch and a light hanging in it. This is the shape of nearly every question this article is about. Nobody messages a real estate website at twenty to midnight to ask what an AI assistant is. They ask whether the seller of one specific house would look at a contingent offer, and no amount of fluency answers that. Something behind the conversation has to know which house you mean.",
       credit: "Photograph by CodyR, CC BY 2.0.",
