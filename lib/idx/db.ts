@@ -156,7 +156,15 @@ function searchFilters(p: SearchParams): string {
   if (p.bedsMin != null) parts.push(`beds=gte.${p.bedsMin}`);
   if (p.bathsMin != null) parts.push(`baths=gte.${p.bathsMin}`);
   if (p.sqftMin != null) parts.push(`sqft=gte.${p.sqftMin}`);
-  if (p.sqftMax != null) parts.push(`sqft=lte.${p.sqftMax}`);
+  // sqft=gte.1 with the MAX: unlike lot/garage/tax (honestly NULL when unknown), sqft defaults
+  // to 0, so lte alone matched every unmeasured row — "under 750 sq ft" returned 6,909 Active
+  // rows of which 5,199 stated no sqft at all, including 100% of Land (measured, round 41).
+  // types.ts always documented the intent: a row missing a fact is excluded by that fact's
+  // range filter. A sqftMin makes the guard redundant.
+  if (p.sqftMax != null) {
+    parts.push(`sqft=lte.${p.sqftMax}`);
+    if (p.sqftMin == null) parts.push(`sqft=gte.1`);
+  }
   // "MORE" panel filters — real generated columns since supabase/migrations/
   // idx_more_facts_columns.sql, like every other fact on this table.
   //

@@ -302,6 +302,23 @@ describe("DbIdxClient.search", () => {
     expect(listingCall).not.toContain("listing->");
   });
 
+  it("a sqft MAX never matches an unmeasured (0) sqft; an explicit MIN is its own guard", async () => {
+    // Unlike lot/garage/tax (NULL when unknown), sqft defaults to 0 — measured round 41:
+    // sqftMax alone matched 5,199 Active rows with no sqft, including 100% of Land.
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 1 };
+    });
+    const c = new DbIdxClient();
+    await c.search({ sqftMax: 750 });
+    const maxOnly = calls.find((u) => u.includes("sqft=lte.750"))!;
+    expect(maxOnly).toContain("sqft=gte.1");
+    await c.search({ sqftMin: 500, sqftMax: 3000 });
+    const withMin = calls.find((u) => u.includes("sqft=lte.3000"))!;
+    expect(withMin).toContain("sqft=gte.500");
+    expect(withMin).not.toContain("sqft=gte.1");
+  });
+
   it("defaults to the WHOLE served scope — HV counties AND NYC boroughs (owner's call, round 23)", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };

@@ -76,7 +76,9 @@ export class FixtureIdxClient implements IdxClient {
       if (bedsMin != null && l.beds < bedsMin) return false;
       if (bathsMin != null && l.baths < bathsMin) return false;
       if (sqftMin != null && l.sqft < sqftMin) return false;
-      if (sqftMax != null && l.sqft > sqftMax) return false;
+      // Same rule as db.ts (round 41): an unmeasured sqft (stored as 0) never satisfies a
+      // MAX cap — without this, "under 750 sq ft" matched every row with no sqft at all.
+      if (sqftMax != null && (l.sqft > sqftMax || l.sqft < 1)) return false;
       // MORE-panel range filters. A missing structured fact fails its range (honest: an
       // unknown garage/lot/year/tax can't satisfy a user's bound) — mirrors the DB, where a
       // null jsonb value never passes a gte/lte comparison.

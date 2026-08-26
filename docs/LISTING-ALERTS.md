@@ -31,7 +31,13 @@ do not serve, a negative price, a property type off the whitelist — all of the
 exactly the way they fall out of a live query. Keys are the `SearchParams` field names
 (`county`, `priceMin`, `priceMax`, `bedsMin`, `bathsMin`, `sqftMin`, `sqftMax`, `propertyType`,
 `rental`, `garageMin/Max`, `lotMin/Max`, `yearMin/Max`, `taxMax`, `withPhotosOnly`,
-`newWithinDays`, `listedMinDays`, `q`). Absent filters are absent keys, never nulls.
+`newWithinDays`, `listedMinDays`, `status`, `q`). Absent filters are absent keys, never nulls.
+
+Since round 41 the saved query string runs through the same PAGE-grammar translation the
+/search page renders with, so the criteria also carry the scope the subscriber was looking
+at: the quick chips arrive as `status` ("Active" — including the page's default view — or
+"Pending") or as the 7-day `newWithinDays` window ("New listings"). A criteria object with
+no `status` key means the subscriber explicitly chose "All" (every on-market status).
 
 `newWithinDays` and `listedMinDays` are the two ends of ONE window — days on market. The first
 is its newest end (listed within N days), the second its oldest (listed at least N days ago);

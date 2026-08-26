@@ -8,13 +8,17 @@
  * here the same way they fall out of a live query.
  */
 
-import { parseFilterParams } from "./query";
+import { expandPageParams, parseFilterParams } from "./query";
 
 export type SearchCriteria = Record<string, string | number | boolean>;
 
 export function searchCriteria(query: string): SearchCriteria {
   const params = new URLSearchParams(query.startsWith("?") ? query.slice(1) : query);
-  const filters = parseFilterParams(params) as Record<string, unknown>;
+  // A saved search stores the PAGE query string, so it goes through the same page-grammar
+  // translation the page itself renders with (quick chips incl. the default Active scope,
+  // the Days-on-market pair) — otherwise the criteria the CRM reads describe a broader
+  // search than the visitor was looking at.
+  const filters = parseFilterParams(expandPageParams(params)) as Record<string, unknown>;
   const out: SearchCriteria = {};
   for (const [k, v] of Object.entries(filters)) {
     if (v === undefined || v === null || v === "") continue;

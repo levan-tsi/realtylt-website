@@ -186,12 +186,16 @@ describe("FixtureIdxClient — filters", () => {
       mk("G2", { garageSpaces: 2, sqft: 2600, yearBuilt: 1995, lotAcres: 0.3, taxAnnual: 22000 }),
       mk("G0", { garageSpaces: 0, sqft: 4000, yearBuilt: 1960, lotAcres: 40, taxAnnual: 3000 }),
       mk("GNONE", { sqft: 5000 }), // no OPTIONAL facts (garage/lot/year/tax); sqft is mandatory
+      mk("GZERO", { sqft: 0 }), // unmeasured sqft, stored as 0 the way the feed delivers it
     ]);
     // Numeric, not lexicographic: garage >= 3 keeps 10 but drops 2 (a text compare would drop 10).
     expect((await c.search({ garageMin: 3, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
     // A listing missing the fact never satisfies a bound (honest — unknown ≠ pass).
     expect((await c.search({ garageMin: 1, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G10", "G2"]);
+    // GZERO's 0 sqft is "unmeasured", not "small": a MAX cap never matches it (round 41 —
+    // before this rule, "under 750 sq ft" matched 5,199 Active rows with no sqft at all).
     expect((await c.search({ sqftMax: 2000, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
+    expect((await c.search({ sqftMax: 99999, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2", "GNONE"]);
     expect((await c.search({ yearMin: 2000, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
     expect((await c.search({ lotMin: 1, lotMax: 10, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
     expect((await c.search({ taxMax: 10000, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10"]);

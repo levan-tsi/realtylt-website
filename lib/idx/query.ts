@@ -123,8 +123,12 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
  * visitor can type. */
 export const NEW_LISTING_DAYS = 7;
 
-export function parseSearchRequest(q: URLSearchParams): SearchParams {
-  const sort = q.get("sort") as SortKey | null;
+/** The /search PAGE grammar, translated to API params — one definition, two callers.
+ * parseSearchRequest renders the page with it, and lib/idx/criteria.ts runs a SAVED search's
+ * query string through it before parsing, because a saved search stores the page grammar:
+ * until round 41 a saved "New listings" search reached the CRM with no window at all, and the
+ * page's default Active scope reached it with no status. */
+export function expandPageParams(q: URLSearchParams): URLSearchParams {
   const withQuick = new URLSearchParams(q);
   // On /search, `quick` is the ONLY status control. Raw ?status= / ?newDays= are API-route
   // params the SearchClient has never read — honoring them here would render an HTML answer
@@ -168,8 +172,13 @@ export function parseSearchRequest(q: URLSearchParams): SearchParams {
     const current = num(withQuick.get("newDays"));
     withQuick.set("newDays", String(Math.min(listed, current ?? Infinity)));
   }
+  return withQuick;
+}
+
+export function parseSearchRequest(q: URLSearchParams): SearchParams {
+  const sort = q.get("sort") as SortKey | null;
   return {
-    ...parseFilterParams(withQuick),
+    ...parseFilterParams(expandPageParams(q)),
     sort: sort && SORTS.includes(sort) ? sort : "mixed",
     page: Math.max(1, Math.floor(num(q.get("page")) ?? 1)),
     pageSize: SEARCH_PAGE_SIZE,
