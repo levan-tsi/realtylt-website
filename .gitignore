@@ -46,3 +46,4 @@ docs/blog-redesign/_*.png
 docs/_audit/
 scripts/_scratch-*
 .r12tmp/
+public/_ecand/

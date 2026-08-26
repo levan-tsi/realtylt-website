@@ -42,7 +42,19 @@ because it is there.
 suggested for, and **`mailbox-mist.jpg` was deliberately not used on data-enrichment** even
 though it fits the subject: three of the four photographs on the skip-tracing post are mailboxes,
 and a fourth mailbox on the article sitting directly beside it would have made the two posts look
-like one. **Four rows remain UNSPENT** for topics 16, 17, 18, 19 and 20.
+like one.
+
+**Round G added six and spent seven**, taking `clock-not-in-use.jpg` and `register-keys.jpg` off
+the unspent list for the topics they were suggested for. It also tightened the licence rule in
+one place, because the round G brief said a fetch of a Flickr photo page returns a shell with no
+licence in it. Rather than argue, every candidate was opened in Chromium
+(`scripts/_scratch-g-lic.mjs`) and the licence link, the title and the photographer's name were
+read off the rendered page. **The name is the part that moved.** Openverse's `creator` field is
+sometimes the account alias rather than the display name on the photo page, and four of this
+round's six differed: kitmasterbloke is Steve Knight, M McBey is Mike McBey, "Elsie esq." is Les
+Chatfield and kvanhorn is Kyle Van Horn. Four shipped rows were re-checked the same way and were
+already right (`mpclemens` and `upyernoz` really are the names those pages display). **Three rows
+remain UNSPENT** for topics 18, 19 and 20.
 
 ## Two folders that are NOT stock photography
 
@@ -112,9 +124,9 @@ below as unresolved rather than quietly omitted.
 | public/images/editorial/post-office-boxes.jpg | Post Office Boxes - Boonville, MO — a wall of numbered boxes in a small-town post office. SPENT: cold-open field of the marketing-automation flagship | Robert Stinnett | BY 2.0 | [source](https://www.flickr.com/photos/93732749@N00/5701673909) |
 | public/images/editorial/mailbox-mist.jpg | Rural Mailbox — one box numbered 1801 against a field in fog. **UNSPENT** | Michele Dorsey Walfred | BY 2.0 | [source](https://www.flickr.com/photos/97485958@N02/41814676714) |
 | public/images/editorial/tool-wall.jpg | The Garage — hand tools hung in order on a workshop wall. **UNSPENT**, suggested for custom-automation | huw-ogilvie | BY 2.0 | [source](https://www.flickr.com/photos/97438202@N00/28135419) |
-| public/images/editorial/clock-not-in-use.jpg | Worcester Shrub Hill Station - clock not in use — a station clock with a notice over its face telling you to read the electronic displays instead. **UNSPENT**, suggested for ai-scheduling | Elliott Brown | BY 2.0 | [source](https://www.flickr.com/photos/39415781@N06/6365953749) |
+| public/images/editorial/clock-not-in-use.jpg | Worcester Shrub Hill Station - clock not in use — a station clock with a notice over its face telling you to read the electronic displays instead. SPENT: cover of the ai-scheduling flagship. Round G | Elliott Brown | BY 2.0 | [source](https://www.flickr.com/photos/39415781@N06/6365953749) |
 | public/images/editorial/office-stamps.jpg | Rubber stamp stash — a rack of office stamps reading SURFACE MAIL, PROFORMA, DUPLICATE, TRIPLICATE, INSURED, COPY. **UNSPENT**, suggested for document-processing | mpclemens | BY 2.0 | [source](https://www.flickr.com/photos/24364103@N04/5483313713) |
-| public/images/editorial/register-keys.jpg | Cash Register — the keys of an antique register, one of them reading RECEIPT. **UNSPENT**, suggested for invoicing-and-payments | Steve Snodgrass | BY 2.0 | [source](https://www.flickr.com/photos/10710442@N08/4034636727) |
+| public/images/editorial/register-keys.jpg | Cash Register — the keys of an antique register, one of them reading RECEIPT. SPENT: plate two and cover of the invoicing-and-payments flagship. Round G | Steve Snodgrass | BY 2.0 | [source](https://www.flickr.com/photos/10710442@N08/4034636727) |
 | public/images/editorial/archive-stacks.jpg | Shelves in the stacks of the Haus-, Hof- und Staatsarchiv — a corridor of numbered archive boxes receding to a lit door. SPENT: cold-open field of the document-processing flagship. Round F. The labels are Holy Roman Empire series (Reichstagsakten, Kurrheinische and Oberrheinische Kreisakten); a second photograph from the same set was rejected because its boxes read REICHSKANZLEI | -JvL- | BY 2.0 | [source](https://www.flickr.com/photos/32051524@N08/13091907034) |
 | public/images/editorial/deed-1825.jpg | Manuscript Deed for Shaw Homestead, Kensington, New Hampshire, 1825 — a printed conveyance form with every blank filled in by hand. SPENT: plate two of the document-processing flagship. Round F. The parties named on it are two centuries dead and the deed is a public record published by a museum, which is why a legible name was acceptable here and is not on the skip-tracing post | museado | CC0 1.0 | [source](https://www.flickr.com/photos/200781279@N05/53901705421) |
 | public/images/editorial/signature-ink.jpg | Signature — a fountain pen and one word written in ink on cream paper. SPENT: cover of the document-processing flagship. Round F | hierher | BY 2.0 | [source](https://www.flickr.com/photos/52220311@N08/16314639066) |
@@ -122,6 +134,12 @@ below as unresolved rather than quietly omitted.
 | public/images/editorial/ghost-signs-layered.jpg | Ghost Signs: Hand Painted Advertisements, Second Avenue, 34th Street, New York — several painted signs showing through each other on one building. SPENT: cover of the data-enrichment flagship. Round F | Jeffrey Zeldman | BY 2.0 | [source](https://www.flickr.com/photos/48889052497@N01/19534852651) |
 | public/images/editorial/posters-peeled.jpg | peeled away — layers of torn paper on a wall, several older sheets showing through the tears. SPENT: cold-open field of the data-enrichment flagship. Round F | Michael Cory | BY 2.0 | [source](https://www.flickr.com/photos/80044857@N00/5639931024) |
 | public/images/editorial/palimpsest-page.jpg | A page of the Archimedes Palimpsest — a prayer book written across an erased older manuscript, both scripts visible at once. SPENT: plate two of the data-enrichment flagship. Round F | Walters Art Museum Illuminated Manuscripts | CC0 1.0 | [source](https://www.flickr.com/photos/39699193@N03/5492154703) |
+| public/images/editorial/lever-frame.jpg | The 44 lever frame at St Albans South signalbox — a receding rank of painted signal levers in a mechanical interlocking. SPENT: plate one of the ai-scheduling flagship. Round G. Every row in this block had its licence, its title AND its photographer's name read on the rendered photo page in Chromium (`scripts/_scratch-g-lic.mjs`), not out of a search index | Steve Knight | BY 2.0 | [source](https://www.flickr.com/photos/58415659@N00/16078259650) |
+| public/images/editorial/switchboard.jpg | Vintage telephone switchboard — rows of numbered jacks with a forest of patch cords plugged into them. SPENT: cold-open field of the ai-scheduling flagship. Round G | Mike McBey | BY 2.0 | [source](https://www.flickr.com/photos/158652122@N02/49467795397) |
+| public/images/editorial/departure-board.jpg | Departure board at Inverness Railway Station — five screens of departures, each carrying a time somebody else set. SPENT: plate two of the ai-scheduling flagship. Round G | David Jones | BY 2.0 | [source](https://www.flickr.com/photos/45457437@N00/9707241535) |
+| public/images/editorial/adding-machine.jpg | Old mechanical adding machine — a full grid of numbered keys with the four operations down the right. SPENT: plate one of the invoicing-and-payments flagship. Round G | Les Chatfield | BY 2.0 | [source](https://www.flickr.com/photos/61132483@N00/15896899229) |
+| public/images/editorial/till-drawer.jpg | Open till drawer — an empty cash drawer standing open under a register, one receipt on the floor beside it. SPENT: cold-open field of the invoicing-and-payments flagship. Round G | Deborah Fitchett | BY 2.0 | [source](https://www.flickr.com/photos/31320962@N05/3999463246) |
+| public/images/editorial/type-case.jpg | gothic san serif lower case - FUTURA! — wooden letterpress type lying face up, one carved master per letter. **UNSPENT**, suggested for ai-clone | Kyle Van Horn | BY 2.0 | [source](https://www.flickr.com/photos/8503402@N08/2728009027) |
 | public/images/levan-portrait.jpg | Levan Tsiklauri portrait | Levan Tsiklauri | Owner's own photograph | [source](https://realtylt.com/who-we-are) |
 | public/images/google-logo.png | Google mark, shown beside real Google reviews | Google LLC | Trademark, nominative use | [source](https://about.google/brand-resource-center/) |
 | public/images/why/our-search.webp | RealtyLT search page | RealtyLT | Our own screenshot | [source](https://github.com/levan-tsi/realtylt-website) |
