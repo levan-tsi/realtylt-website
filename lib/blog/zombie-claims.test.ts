@@ -159,11 +159,69 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /J\.\s?Kowalski|\(845\)\s?555[\s-]?0188/i,
     why: "a made-up surname and a made-up telephone number marked 'verified', attached to a first name from an open house, on the page about buying assertions concerning real people. STANDARD.md: a fabricated specific on a page whose argument is that the details are checkable destroys the argument. Same class as the three fabricated street addresses Round E removed from the skip-tracing page",
   },
+  // ── Round G, 2026-08-25. Eight claims killed while writing the ai-scheduling and
+  // invoicing-and-payments flagships. Three are ABSOLUTES a research source contradicts, four
+  // are the same unsourced claim about a majority of late payments wearing four different
+  // sentences, and one is an invented duration. The majority claim is the most interesting of
+  // the eight, because it was true-sounding, sympathetic, load-bearing on four surfaces of one
+  // page, and there is no measurement of it anywhere for any industry.
+  {
+    name: "the double-booking that cannot happen",
+    pattern: /double[- ]booking that cannot happen|nothing double-?books and nothing has to be undone|can only ever offer time that is genuinely free/i,
+    why: "an absolute the scheduling flagship's own sources contradict. Reading a live calendar stops YOUR diary being offered twice and does nothing about the other party's, because no software has visibility of a co-broke office's calendar. RFC 6638 also resets every attendee to NEEDS-ACTION on a reschedule, so even an accepted slot stops being agreed the moment the time moves",
+  },
+  {
+    name: "interested and on the calendar are ten minutes apart",
+    pattern: /about ten minutes of enthusiasm/i,
+    why: "an invented duration presented as a property of buyers. Nobody has measured how long an intent to view a property lasts, and a number printed under an illustration reads as a measurement. Same class as the 'thirty seconds' Round F removed from the document processing figure",
+  },
+  {
+    name: "reminders remove the common reasons for a no-show",
+    pattern: /remove the common reasons for one/i,
+    why: "'remove' is an absolute the site's own evidence contradicts. The randomised trial the appointment booking flagship rests on moved attendance from 80.5 percent to 87.5 percent with one reminder, which is a real effect and is not removal",
+  },
+  {
+    name: "most late payments are forgotten rather than refused",
+    pattern: /most late (invoices|payments) are (forgotten|simple forgetfulness)|late invoices are forgotten, not refused/i,
+    why: "no published measurement exists for any industry, let alone this one. The figures in circulation come from survey products published by companies selling collections and invoicing software, none of which states a sample for this claim. It was load-bearing on four surfaces of one page",
+  },
+  {
+    name: "a reminder recovers the majority of late payments",
+    pattern: /recovers the majority of them|a reminder is all they ever needed/i,
+    why: "the same unmeasured majority claim as above, stated as a recovery rate. Nobody has published a recovery rate for a reminder sequence with a method under it",
+  },
+  {
+    name: "chasing cuts the wait from weeks to days",
+    pattern: /cut the wait from weeks to days/i,
+    why: "a quantified outcome claim with nothing under it. This is /ai COPY and it was changed because the page cannot support it: no measurement of what automated chasing does to payment timing in this trade has been published",
+  },
+  {
+    name: "deposits reduce no-shows because a person who has paid turns up",
+    pattern: /deposits reduce no-shows|a person who has paid something turns up/i,
+    why: "an unsourced causal claim, and the one topic on this site where a randomised trial does exist says something narrower: a reminder moved attendance seven points. Nobody has published what a deposit does to attendance at a property appointment",
+  },
+  {
+    name: "the third nudge is the one that gets paid",
+    pattern: /third nudge is the one that gets paid/i,
+    why: "an unsourced claim about which reminder in a sequence produces payment. No published study of reminder sequences by position exists for this or any adjacent trade",
+  },
 ];
 
-/** Words that mean the sentence is refusing the number rather than resting on it. */
+/** Words that mean the sentence is refusing the number rather than resting on it.
+ *
+ * `refus` USED TO BE A BARE STEM, and round G proved that it was a hole. Three claims of the
+ * form "most late payments are forgotten, not refused" were injected to prove the new guard
+ * entries red, and three of them PASSED, because the word "refused" inside the claim itself
+ * matched the stem and the whole five line window was treated as a retraction. A disowning
+ * heuristic that a claim can satisfy by containing the word "refused" is not a heuristic, it is
+ * a way of exempting exactly the sentences most likely to be about refusal.
+ *
+ * Narrowed to the forms this repo actually uses when it is disowning something ("refuses to",
+ * "a deliberate refusal", "the paper explicitly refused", "standing refusals"), which leaves
+ * "not refused" outside it. Re-proved red on all eight round G entries afterwards, and the
+ * whole suite re-run to confirm no file was passing because of the loose stem. */
 const DISOWNED =
-  /unsourc|declines? to use|does not use|cannot be sourced|nobody can (check|source|produce)|no published|no stated sample|no methodology|slogan wearing|deliberately not|not built on|refus|belongs to a different statute|is not the (TCPA|figure)|the real figure|wrong statute/i;
+  /unsourc|declines? to use|does not use|cannot be sourced|nobody can (check|source|produce)|no published|no stated sample|no methodology|slogan wearing|deliberately not|not built on|refuses\b|refusals?\b|refusing to|refused to|explicitly refused|deliberately refused|belongs to a different statute|is not the (TCPA|figure)|the real figure|wrong statute/i;
 
 /** Every file where copy that a reader will SEE can live.
  *
