@@ -1,5 +1,39 @@
 # The questions only the owner can answer
 
+---
+
+## 0. THE ONE THING BLOCKING A CLEAN DOMAIN — one `git push`, yours to give
+
+**realtylt.com/ai is still serving every claim this rollout spent eight rounds killing**, and the
+worst of it is in machine-readable form. Measured on the live deployment on 2026-08-26:
+
+| where | what is live right now |
+|---|---|
+| **two FAQPage JSON-LD answers** | "78% of deals close with whoever responds first" |
+| **`/ai/llms.txt`** | the same figure, on the file written specifically for AI answer engines |
+| visible page copy | the same figure, x5 in the served HTML |
+| the runtime service copy | the unsourceable 73%, "unlimited parallel agents", and the review-gating sentence SERVICES-CRITIQUE called the most serious item on the whole surface |
+
+Three things make this the top item rather than a loose end:
+
+1. **JSON-LD and `llms.txt` are the two most liftable surfaces on the domain.** This is precisely
+   the form an AI answer engine quotes verbatim. The number has no published report, no stated
+   sample and no methodology, and this site's own flagship post says so.
+2. **This repo links into it 29 times** from 20 scene files. A reader who follows our own link out
+   of the article that debunks 78% is shown 78% two clicks later.
+3. **`next.config.ts` is what puts it on the domain** — `/ai` is a rewrite to the separate
+   `realtylt-ai-page` project. So this is not another team's problem; this repo publishes it.
+
+**The fix is already written, verified and committed** in the `realtylt-ai-page` repo (stamp
+`20260825g`): all seven claims corrected, the reviews panel rewritten to the compliant mechanic,
+rendered and read at desktop and phone, sweep 72/0 and cursor law 13/0. It has never been
+deployed because the standing rule on that repo is that **you review the /ai page before it goes
+out**, and that rule has been kept.
+
+**It needs one word from you.** Deploying it also fixes the same claims on this domain, because
+of the proxy.
+
+
 Every one of these was surfaced by a build round that needed the answer and **wrote nothing**
 rather than guess. They are collected here from ROUND-A..H-LOG.md so they can be worked through
 in one sitting instead of read out of eight files.
