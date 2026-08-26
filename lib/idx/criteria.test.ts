@@ -49,7 +49,22 @@ describe("searchCriteria", () => {
   });
 
   it("clamps the new-listing window the same way the search route does", () => {
-    expect(searchCriteria("newDays=400")).toEqual({ newWithinDays: 90 });
+    expect(searchCriteria("newDays=400")).toEqual({ newWithinDays: 365 });
+  });
+
+  // The saved query string is the /search page's own grammar, so BOTH ends of the
+  // Days-on-market window have to survive it — the owner's "listed 3-6 months ago" reaches
+  // the CRM as a window, not as "anything older than 3 months".
+  it("stores both ends of the Days-on-market window", () => {
+    expect(searchCriteria("listedMinDays=90&listedDays=180")).toEqual({
+      listedMinDays: 90,
+      newWithinDays: 180,
+    });
+  });
+
+  it("keeps an absent window end an absent key, never a null", () => {
+    expect(searchCriteria("listedMinDays=90")).toEqual({ listedMinDays: 90 });
+    expect(searchCriteria("listedMinDays=0")).toEqual({});
   });
 
   it("keeps the keyword but bounds it", () => {

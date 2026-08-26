@@ -8,8 +8,8 @@ describe("parseFilterParams — newDays (New Listings quick filter)", () => {
   it("parses a positive window", () => {
     expect(parseFilterParams(q("newDays=7")).newWithinDays).toBe(7);
   });
-  it("clamps an absurd window to 90 days", () => {
-    expect(parseFilterParams(q("newDays=99999")).newWithinDays).toBe(90);
+  it("clamps an absurd window to a year", () => {
+    expect(parseFilterParams(q("newDays=99999")).newWithinDays).toBe(365);
   });
   it("ignores absent / zero / negative / non-numeric values", () => {
     expect(parseFilterParams(q("")).newWithinDays).toBeUndefined();
@@ -204,9 +204,63 @@ describe("listedDays — the Days-on-market select (round 24)", () => {
     expect(parseSearchRequest(new URLSearchParams("quick=new&listedDays=3")).newWithinDays).toBe(3);
   });
 
-  it("is bounded by the same 90-day cap as raw newDays, and garbage is ignored", () => {
-    expect(parseSearchRequest(new URLSearchParams("listedDays=5000")).newWithinDays).toBe(90);
+  it("is bounded by the same one-year cap as raw newDays, and garbage is ignored", () => {
+    expect(parseSearchRequest(new URLSearchParams("listedDays=5000")).newWithinDays).toBe(365);
     expect(parseSearchRequest(new URLSearchParams("listedDays=banana")).newWithinDays).toBeUndefined();
     expect(parseSearchRequest(new URLSearchParams("listedDays=-3")).newWithinDays).toBeUndefined();
+  });
+});
+
+/** The owner's ask, in his words: "I wanted to filter properties that was listed 3-6 months ago
+ * and it was only up to 3 months." Days on market is a WINDOW now — newWithinDays is its
+ * newest end, listedMinDays its oldest — and these lock both ends and the guard between them. */
+describe("listedMinDays — the Days-on-market window's oldest end", () => {
+  it("parses a positive floor", () => {
+    expect(parseFilterParams(q("listedMinDays=90")).listedMinDays).toBe(90);
+  });
+
+  it("carries BOTH ends, so 'listed 3 to 6 months ago' is finally sayable", () => {
+    const p = parseFilterParams(q("listedMinDays=90&newDays=180"));
+    expect(p.listedMinDays).toBe(90);
+    expect(p.newWithinDays).toBe(180);
+  });
+
+  it("clamps and refuses the same values the newest end does", () => {
+    expect(parseFilterParams(q("listedMinDays=99999")).listedMinDays).toBe(365);
+    expect(parseFilterParams(q("")).listedMinDays).toBeUndefined();
+    expect(parseFilterParams(q("listedMinDays=0")).listedMinDays).toBeUndefined();
+    expect(parseFilterParams(q("listedMinDays=-5")).listedMinDays).toBeUndefined();
+    expect(parseFilterParams(q("listedMinDays=abc")).listedMinDays).toBeUndefined();
+  });
+
+  it("needs no page→API translation: /search and the API spell it the same", () => {
+    expect(parseSearchRequest(q("listedMinDays=90")).listedMinDays).toBe(90);
+    expect(parseSearchRequest(q("listedMinDays=90&listedDays=180")).newWithinDays).toBe(180);
+  });
+
+  // "6 months ago to 3 months ago" is the window said backwards, not a request for nothing —
+  // and SearchClient's normalizeListed swaps it identically, so the HTML and the client agree.
+  it("swaps an inverted page pair rather than answering nothing", () => {
+    const p = parseSearchRequest(q("listedMinDays=180&listedDays=90"));
+    expect(p.listedMinDays).toBe(90);
+    expect(p.newWithinDays).toBe(180);
+  });
+
+  // The swap is deliberately NOT applied at API level: there, the newest end may have come
+  // from quick=new, and "new listings AND listed 3+ months ago" is a genuine contradiction
+  // that must narrow to nothing instead of being tidied into a window nobody asked for.
+  it("leaves quick=new contradicting a floor as the contradiction it is", () => {
+    const p = parseSearchRequest(q("quick=new&listedMinDays=90"));
+    expect(p.newWithinDays).toBe(7);
+    expect(p.listedMinDays).toBe(90);
+  });
+
+  // A saved search stores the PAGE query string, and criteria.ts runs parseFilterParams over
+  // it — so the newest end has to be readable under the page's own spelling too, or a saved
+  // "3 to 6 months" would reach the CRM as "anything older than 3 months".
+  it("reads the page's listedDays spelling as the newest end when newDays is absent", () => {
+    const p = parseFilterParams(q("listedMinDays=90&listedDays=180"));
+    expect(p.newWithinDays).toBe(180);
+    expect(p.listedMinDays).toBe(90);
   });
 });

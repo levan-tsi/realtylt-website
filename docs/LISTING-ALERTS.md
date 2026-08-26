@@ -31,7 +31,12 @@ do not serve, a negative price, a property type off the whitelist — all of the
 exactly the way they fall out of a live query. Keys are the `SearchParams` field names
 (`county`, `priceMin`, `priceMax`, `bedsMin`, `bathsMin`, `sqftMin`, `sqftMax`, `propertyType`,
 `rental`, `garageMin/Max`, `lotMin/Max`, `yearMin/Max`, `taxMax`, `withPhotosOnly`,
-`newWithinDays`, `q`). Absent filters are absent keys, never nulls.
+`newWithinDays`, `listedMinDays`, `q`). Absent filters are absent keys, never nulls.
+
+`newWithinDays` and `listedMinDays` are the two ends of ONE window — days on market. The first
+is its newest end (listed within N days), the second its oldest (listed at least N days ago);
+either can stand alone, and together they mean "listed 3 to 6 months ago" (90 and 180). Both
+are capped at 365.
 
 Rows written before 2026-07-28 have `criteria = null`. There were none in production when this
 shipped, and the website tops a row up the moment its alerts switch is turned on, so a null

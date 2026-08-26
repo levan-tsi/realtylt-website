@@ -51,11 +51,16 @@ export class FixtureIdxClient implements IdxClient {
       views,
       propertyType,
       newWithinDays,
+      listedMinDays,
       sort = "newest",
       page = 1,
       pageSize = DEFAULT_PAGE_SIZE,
     } = params;
+    // The Days-on-market window's two ends, as timestamps: newSince is the newest-end bound
+    // (listed after it) and listedUntil the oldest-end one (listed before it). Mirrors
+    // db.searchFilters, which pushes the same pair of comparisons against listed_at.
     const newSince = newWithinDays ? Date.now() - newWithinDays * 86_400_000 : null;
+    const listedUntil = listedMinDays ? Date.now() - listedMinDays * 86_400_000 : null;
 
     let out = this.listings.filter((l) => {
       if (county) {
@@ -115,6 +120,7 @@ export class FixtureIdxClient implements IdxClient {
       }
       if (propertyType && l.propertyType !== propertyType) return false;
       if (newSince != null && +new Date(l.listedAt) < newSince) return false;
+      if (listedUntil != null && +new Date(l.listedAt) > listedUntil) return false;
       // Map-viewport box (round 23). Mirrors db.searchFilters: a 0/absent coordinate can
       // never sit inside a valid NY box, so unlocated rows are excluded from a scoped grid.
       if (params.bounds) {

@@ -24,6 +24,19 @@ export function flag(v: string | null): boolean | undefined {
   return v === "1" || v === "true" || v === "on" || v === "yes" ? true : undefined;
 }
 
+/** How far back either end of the Days-on-market window may reach. It was 90, which is the
+ * whole reason the owner could not ask for "listed 3-6 months ago" — 6 months did not exist.
+ * Measured 2026-08-26 on the live table: 8,971 of 15,254 Active for-sale listings were inside
+ * 90 days, so the other 6,283 (41%) were unreachable by this filter at any setting. */
+export const LISTED_MAX_DAYS = 365;
+
+/** One bound of the Days-on-market window: a positive day count, capped so a crafted value
+ * cannot ask for an absurd range. */
+function listedBound(v: string | null): number | undefined {
+  const d = num(v);
+  return d && d > 0 ? Math.min(d, LISTED_MAX_DAYS) : undefined;
+}
+
 /** The filter fields only — paging/sort are the caller's business. */
 export function parseFilterParams(q: URLSearchParams): SearchParams {
   const county = q.get("county") as CountySlug | null;
@@ -90,12 +103,14 @@ export function parseFilterParams(q: URLSearchParams): SearchParams {
       return k || undefined;
     })(),
     views: flag(q.get("views")),
-    // "New Listings" quick filter — bounded to a sane window so a crafted value can't ask
-    // for an absurd range.
-    newWithinDays: (() => {
-      const d = num(q.get("newDays"));
-      return d && d > 0 ? Math.min(d, 90) : undefined;
-    })(),
+    // The Days-on-market WINDOW's two ends. `newDays` is the newest end (listed within N days),
+    // and `listedDays` is the same bound spelled the way the /search URL spells it — read as a
+    // fallback so a SAVED SEARCH, whose query string is the page's own grammar, carries the
+    // window it was saved with instead of only its oldest end. parseSearchRequest always sets
+    // `newDays` before it gets here, so the live page and API paths are untouched by the alias.
+    newWithinDays: listedBound(q.get("newDays") || q.get("listedDays")),
+    // The oldest end — same name on the page and on the API, so it needs no translation.
+    listedMinDays: listedBound(q.get("listedMinDays")),
   };
 }
 
@@ -131,10 +146,24 @@ export function parseSearchRequest(q: URLSearchParams): SearchParams {
   if (quick === "new") withQuick.set("newDays", String(NEW_LISTING_DAYS));
   if (quick === "active") withQuick.set("status", "Active");
   if (quick === "pending") withQuick.set("status", "Pending");
-  // "Days on market" MORE select (round 24) — a PAGE param, translated to the API's newDays
-  // window here exactly like the client's own fetch does. It composes with quick=new by
-  // taking the smaller window: both constraints are the visitor's, both hold.
-  const listed = num(q.get("listedDays"));
+  // "Days on market" MORE control (round 24) — its MAX end is a PAGE param, translated to the
+  // API's newDays window here exactly like the client's own fetch does. It composes with
+  // quick=new by taking the smaller window: both constraints are the visitor's, both hold.
+  // Its MIN end (`listedMinDays`) needs no translation — the page and the API call it the same
+  // thing, so parseFilterParams below reads it straight off the URL.
+  //
+  // An INVERTED pair is normalised first: "6 months ago to 3 months ago" is the same window a
+  // person says backwards, and SearchClient's fromParams swaps it identically, so the server's
+  // HTML and the client's own fetch answer the same question for a hand-typed URL. The swap
+  // lives HERE, on the page pair, and not in parseFilterParams: at API level the newest-end
+  // bound may have come from quick=new rather than from this control, and "new listings AND
+  // listed at least 3 months ago" is a real contradiction that must answer nothing rather than
+  // be tidied into a window nobody asked for.
+  const rawMin = num(q.get("listedMinDays"));
+  const rawMax = num(q.get("listedDays"));
+  const flipped = !!rawMin && !!rawMax && rawMin > rawMax;
+  const listed = flipped ? rawMin : rawMax;
+  if (flipped) withQuick.set("listedMinDays", String(rawMax));
   if (listed && listed > 0) {
     const current = num(withQuick.get("newDays"));
     withQuick.set("newDays", String(Math.min(listed, current ?? Infinity)));

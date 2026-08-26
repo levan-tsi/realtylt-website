@@ -218,10 +218,17 @@ function searchFilters(p: SearchParams): string {
     if (p.propertyType) parts.push(`property_type=eq.${encodeURIComponent(p.propertyType)}`);
     else parts.push(EXCLUDE_RENTALS);
   }
-  // "New Listings" quick filter — keep only rows listed within the last N days.
+  // The Days-on-market WINDOW, one bound per clause against the same listed_at column:
+  // newWithinDays is its newest end (listed no longer than N days ago) and listedMinDays its
+  // oldest (listed at least N days ago). Either alone is a one-sided filter — "new listings"
+  // and "sitting a while" — and both together are the owner's "listed 3-6 months ago".
   if (p.newWithinDays != null && p.newWithinDays > 0) {
     const since = new Date(Date.now() - p.newWithinDays * 86_400_000).toISOString();
     parts.push(`listed_at=gte.${encodeURIComponent(since)}`);
+  }
+  if (p.listedMinDays != null && p.listedMinDays > 0) {
+    const until = new Date(Date.now() - p.listedMinDays * 86_400_000).toISOString();
+    parts.push(`listed_at=lte.${encodeURIComponent(until)}`);
   }
   // An EXACT city — what the visitor picked from the suggest dropdown. Equality, not a
   // substring, so "Beacon" cannot drag in Beacon Street in Middletown.

@@ -147,6 +147,38 @@ describe("DbIdxClient.search", () => {
     expect(result.totalPages).toBe(2); // paging still exists ABOVE the viewport page size
   });
 
+  // "I wanted to filter properties that was listed 3-6 months ago and it was only up to 3
+  // months." Both ends are comparisons against the SAME listed_at column, inverted: the newest
+  // end is a gte (listed since), the oldest end an lte (listed before).
+  it("asks the feed for a Days-on-market WINDOW, not just a ceiling", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 12 };
+    });
+    const now = Date.now();
+
+    await new DbIdxClient().search({ listedMinDays: 90, newWithinDays: 180, sort: "newest" });
+
+    const listingCall = decodeURIComponent(calls.find((u) => u.includes("idx_listings"))!);
+    const since = /listed_at=gte\.([^&]+)/.exec(listingCall)?.[1];
+    const until = /listed_at=lte\.([^&]+)/.exec(listingCall)?.[1];
+    expect(since).toBeDefined();
+    expect(until).toBeDefined();
+    // 180 days back and 90 days back, to the second the query was built.
+    expect(Math.round((now - Date.parse(since!)) / 86_400_000)).toBe(180);
+    expect(Math.round((now - Date.parse(until!)) / 86_400_000)).toBe(90);
+    // The oldest end is its own filter — asking only for it must not smuggle in a ceiling,
+    // or "listed at least 3 months ago" would quietly become a window.
+    const floorCalls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 12 };
+    });
+    await new DbIdxClient().search({ listedMinDays: 90, sort: "newest" });
+    const floorCall = decodeURIComponent(floorCalls.find((u) => u.includes("idx_listings"))!);
+    expect(floorCall).toMatch(/listed_at=lte\./);
+    expect(floorCall).not.toMatch(/listed_at=gte\./);
+  });
+
   // The owner's "it takes you to page 2 and that's it" bug. `mixed` used to add a day-seeded
   // ROW offset to every page, and that offset can be nearly the whole set — so page 2 ran off
   // the end. Measured on production before the fix: Orange county with 3+ beds is 1,720

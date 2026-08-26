@@ -99,8 +99,12 @@ interface Filters {
   heating: string;
   /** Parking kind token (PARKING_VALUES). */
   parking: string;
-  /** "Days on market" — listed within N days. A PAGE param the API route translates to its
-   * newDays window (composing with quick=new by taking the smaller). */
+  /** "Days on market", the OLDEST end: listed at least N days ago. Same name on the page and
+   * on the API, so it travels untranslated. */
+  listedMinDays: string;
+  /** "Days on market", the NEWEST end: listed within N days. A PAGE param the API route
+   * translates to its newDays window (composing with quick=new by taking the smaller). The
+   * pair is what makes "listed 3 to 6 months ago" sayable — it used to be a ceiling alone. */
   listedDays: string;
   /** Basement, one level deeper than the yes/no flag. ONE select (Any / Yes / Finished /
    * Walk-out) drives all three basement booleans, exactly one ever set. */
@@ -125,7 +129,7 @@ interface Filters {
 }
 
 /** Keys that live in the MORE panel — used for the active-count badge and the panel reset. */
-const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType", "heating", "parking", "listedDays", "keywords"] as const;
+const MORE_KEYS = ["sqftMin", "sqftMax", "garageMin", "garageMax", "lotMin", "lotMax", "yearMin", "yearMax", "taxMax", "homeType", "heating", "parking", "listedMinDays", "listedDays", "keywords"] as const;
 
 /** The MORE panel's boolean toggles. Separate from MORE_KEYS because they count as active when
  * TRUE rather than when non-empty, and because toQuery emits them as `=1` or not at all — a
@@ -164,14 +168,17 @@ const PARKING_OPTS = [
   { value: "driveway", label: "Driveway" },
   { value: "assigned", label: "Assigned spot" },
 ];
-const LISTED_OPTS = [
-  { value: "1", label: "Last 24 hours" },
-  { value: "3", label: "Last 3 days" },
-  { value: "7", label: "Last week" },
-  { value: "14", label: "Last 2 weeks" },
-  { value: "30", label: "Last month" },
-  { value: "90", label: "Last 3 months" },
-];
+/** Days on market — now a RANGE, in the panel's own min→max grammar, because the owner could
+ * not ask the one question he wanted: "I wanted to filter properties that was listed 3-6
+ * months ago and it was only up to 3 months." As a single ceiling this control could say
+ * "listed within 3 months" and nothing else — never "at least 3 months ago", never past 90
+ * days at all. Measured on the live table 2026-08-26: 8,971 of 15,254 Active for-sale
+ * listings are inside 90 days, so 6,283 homes sat outside every setting this control had.
+ * Both ends share this ladder, so 3 months → 6 months is exactly the window he asked for.
+ * Capped at 365 to match LISTED_MAX_DAYS, the parser's bound on either end. */
+const LISTED_DAY_OPTS = [1, 3, 7, 14, 30, 90, 180, 365];
+const fmtDays = (n: number) =>
+  n === 1 ? "1 day" : n < 7 ? `${n} days` : n < 30 ? `${n / 7} week${n === 7 ? "" : "s"}` : n < 365 ? `${n / 30} month${n === 30 ? "" : "s"}` : "1 year";
 
 /** Home-type options. Values match HOME_TYPE_VALUES in lib/idx/types.ts, which maps each to the
  * RESO PropertySubType values it covers.
@@ -191,9 +198,14 @@ const HOME_TYPE_OPTS: { value: string; label: string; rentalOnly?: boolean }[] =
   { value: "manufactured", label: "Manufactured or mobile" },
 ];
 
-const PRICE_STEPS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 3000].map(
-  (k) => k * 1000,
-);
+/** The sale price ladder, in thousands. It stopped at $3M, which put 649 Active for-sale
+ * listings above its top rung with no way to say so: "Min Price" could not reach them and
+ * "Max Price" could not exclude them, so anyone shopping over $3M had one setting for the whole
+ * band. Measured on the live table 2026-08-26 (Active, for sale): ≥$3M 649 · ≥$4M 376 · ≥$5M
+ * 249 · ≥$10M 79. The four new rungs cut the unreachable band to 79 and cost nothing below. */
+const PRICE_STEPS = [
+  100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 3000, 4000, 5000, 7500, 10000,
+].map((k) => k * 1000);
 const fmtK = (n: number) => (n >= 1_000_000 ? `$${n / 1_000_000}M` : `$${n / 1000}K`);
 // For-rent price ladder (monthly rent) + label — the sale ladder ($100K+) is useless for rentals.
 const RENT_PRICE_STEPS = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000];
@@ -203,7 +215,10 @@ const fmtRent = (n: number) => `$${n.toLocaleString("en-US")}/mo`;
 const GARAGE_OPTS = [1, 2, 3, 4, 5];
 const SQFT_OPTS = [750, 1000, 1250, 1500, 2000, 2500, 3000, 4000, 5000];
 const LOT_OPTS = [0.25, 0.5, 1, 2, 5, 10, 25, 50, 100]; // acres
-const YEAR_OPTS = [1900, 1950, 1970, 1980, 1990, 2000, 2010, 2015, 2020, 2024];
+// Top rung was 2024, so "new construction" was unaskable: measured 2026-08-26 on Active
+// for-sale rows, 709 are built 2025 or later and 482 are 2026 or later — a third of what
+// "2024+" (802) returns is actually older stock. Two rungs, both backed by real inventory.
+const YEAR_OPTS = [1900, 1950, 1970, 1980, 1990, 2000, 2010, 2015, 2020, 2024, 2025, 2026];
 const TAX_OPTS = [2500, 5000, 7500, 10000, 15000, 20000, 30000, 50000];
 const fmtLot = (n: number) => (n < 1 ? `${n} ac` : `${n} ac`);
 
@@ -216,7 +231,9 @@ function fromParams(sp: URLSearchParams): Filters {
   // that can never match. Drop it here, at the single entry point, rather than in the control.
   const rawHomeType = sp.get("homeType") ?? "";
   const homeTypeOpt = HOME_TYPE_OPTS.find((o) => o.value === rawHomeType);
-  return {
+  // Off-ladder day counts fall back to "any", mirroring parseFilterParams.
+  const onLadder = (v: string | null) => (LISTED_DAY_OPTS.some((n) => String(n) === v) ? v! : "");
+  return normalizeListed({
     q: sp.get("q") ?? "",
     city: sp.get("city") ?? "",
     county: sp.get("county") ?? "",
@@ -246,7 +263,8 @@ function fromParams(sp: URLSearchParams): Filters {
     // Round-24 selects — invalid tokens fall back to "any", mirroring parseFilterParams.
     heating: HEATING_OPTS.some((o) => o.value === sp.get("heating")) ? sp.get("heating")! : "",
     parking: PARKING_OPTS.some((o) => o.value === sp.get("parking")) ? sp.get("parking")! : "",
-    listedDays: LISTED_OPTS.some((o) => o.value === sp.get("listedDays")) ? sp.get("listedDays")! : "",
+    listedMinDays: onLadder(sp.get("listedMinDays")),
+    listedDays: onLadder(sp.get("listedDays")),
     basementFinished: TRUE_FLAGS.has(sp.get("basementFinished") ?? ""),
     basementWalkout: TRUE_FLAGS.has(sp.get("basementWalkout") ?? ""),
     nearTransit: TRUE_FLAGS.has(sp.get("nearTransit") ?? ""),
@@ -264,7 +282,18 @@ function fromParams(sp: URLSearchParams): Filters {
     page: Math.max(1, Math.floor(Number(sp.get("page"))) || 1),
     // Live realtylt.com defaults /search to the hybrid list+map view.
     view: sp.get("view") === "grid" ? "grid" : "map",
-  };
+  });
+}
+
+/** Days on market is a WINDOW, and a window can be said backwards: picking "6 months" on the
+ * left of a pair whose right already reads "3 months" is the same request as 3 to 6, not a
+ * request for nothing. One normaliser, applied at both places filters enter the client — a URL
+ * (fromParams) and a control change (apply) — so an inverted pair never reaches the URL, the
+ * fetch, or a saved search. parseSearchRequest applies the identical swap server-side. */
+function normalizeListed<T extends { listedMinDays: string; listedDays: string }>(f: T): T {
+  return f.listedMinDays && f.listedDays && +f.listedMinDays > +f.listedDays
+    ? { ...f, listedMinDays: f.listedDays, listedDays: f.listedMinDays }
+    : f;
 }
 
 function toQuery(f: Filters, forApi: boolean): string {
@@ -328,7 +357,13 @@ function describeFilters(f: Filters): { name: string; parts: string[] } {
     HOME_TYPE_OPTS.find((o) => o.value === f.homeType)?.label.toLowerCase(),
     f.heating && `${HEATING_OPTS.find((o) => o.value === f.heating)?.label.toLowerCase()} heat`,
     PARKING_OPTS.find((o) => o.value === f.parking)?.label.toLowerCase(),
-    f.listedDays && LISTED_OPTS.find((o) => o.value === f.listedDays)?.label.toLowerCase(),
+    // Days on market reads as a window when both ends are set, and as the one bound the
+    // visitor actually chose when only one is.
+    f.listedMinDays && f.listedDays
+      ? `on market ${fmtDays(+f.listedMinDays)} to ${fmtDays(+f.listedDays)}`
+      : f.listedMinDays
+        ? `on market ${fmtDays(+f.listedMinDays)}+`
+        : f.listedDays && `listed within ${fmtDays(+f.listedDays)}`,
     f.keywords && `says "${f.keywords}"`,
     f.basement && "basement",
     f.basementFinished && "finished basement",
@@ -369,7 +404,9 @@ function apiFilterParams(f: Filters): URLSearchParams {
   if (f.quick === "pending") api.set("status", "Pending");
   // "Days on market" is a PAGE param; the API speaks newDays. Composes with quick=new by
   // taking the smaller window — the same translation parseSearchRequest applies server-side,
-  // so the HTML render and this fetch ask the identical question.
+  // so the HTML render and this fetch ask the identical question. Only the window's NEWEST end
+  // needs translating; its oldest end (listedMinDays) is spelled the same on both sides and
+  // rides along untouched.
   if (f.listedDays) {
     api.delete("listedDays");
     const current = Number(api.get("newDays"));
@@ -470,7 +507,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
 
   const apply = useCallback((patch: Partial<Filters>) => {
     // Any filter change resets to page 1 unless the patch names a page (view toggle keeps it).
-    setFilters((prev) => ({ ...prev, ...patch, page: patch.page ?? 1 }));
+    setFilters((prev) => normalizeListed({ ...prev, ...patch, page: patch.page ?? 1 }));
   }, []);
 
   // Re-sync when the URL changes underneath us (header "Search Listings" click,
@@ -707,12 +744,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       yearMin: "", yearMax: "", taxMax: "", homeType: "", withPhotos: false,
       centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
       washerDryer: false, formalDining: false, municipalUtilities: false,
-      heating: "", parking: "", listedDays: "", basementFinished: false, basementWalkout: false, nearTransit: false,
+      heating: "", parking: "", listedMinDays: "", listedDays: "", basementFinished: false, basementWalkout: false, nearTransit: false,
       keywords: "", views: false,
     });
 
   // One labelled min→max row for the MORE panel.
-  type NumKey = "sqftMin" | "sqftMax" | "garageMin" | "garageMax" | "lotMin" | "lotMax" | "yearMin" | "yearMax" | "taxMax";
+  type NumKey = "sqftMin" | "sqftMax" | "garageMin" | "garageMax" | "lotMin" | "lotMax" | "yearMin" | "yearMax" | "taxMax" | "listedMinDays" | "listedDays";
   const rangeRow = (label: string, minKey: NumKey, maxKey: NumKey, opts: number[], fmt: (n: number) => string) => (
     <div>
       <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
@@ -742,7 +779,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
 
   // One labelled single-choice cell for the MORE panel (round-24 dropdowns). The flex wrapper
   // is load-bearing for the same reason as Home type's: panelSelectCls is flex-1.
-  type SelKey = "heating" | "parking" | "listedDays";
+  type SelKey = "heating" | "parking";
   const selectRow = (label: string, key: SelKey, anyLabel: string, opts: { value: string; label: string }[]) => (
     <div>
       <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
@@ -1017,6 +1054,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             {rangeRow("Square footage", "sqftMin", "sqftMax", SQFT_OPTS, (n) => n.toLocaleString())}
             {rangeRow("Lot size", "lotMin", "lotMax", LOT_OPTS, fmtLot)}
             {rangeRow("Year built", "yearMin", "yearMax", YEAR_OPTS, (n) => `${n}`)}
+            {/* Days on market sits with the other ranges because it IS one now: min→max, the
+                same two selects and the same "to", so "3 months to 6 months" is read the way
+                every other pair in this panel is read. */}
+            {rangeRow("Days on market", "listedMinDays", "listedDays", LISTED_DAY_OPTS, fmtDays)}
             <div>
               <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Max annual tax</p>
               {/* Same flex wrapper, and this one is a pre-existing defect the new Home type
@@ -1036,7 +1077,6 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             </div>
             {/* Round-24 dropdowns (owner: "drop down filters are still less"). Each token is a
                 generated column with measured inventory — idx_round24_facet_columns.sql. */}
-            {selectRow("Days on market", "listedDays", "Any time", LISTED_OPTS)}
             {selectRow("Heating fuel", "heating", "Any heating", HEATING_OPTS)}
             {selectRow("Parking", "parking", "Any parking", PARKING_OPTS)}
             <div>

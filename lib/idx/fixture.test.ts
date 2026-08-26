@@ -153,6 +153,31 @@ describe("FixtureIdxClient — filters", () => {
     expect(all.total).toBe(2);
   });
 
+  // The owner's ask: "listed 3-6 months ago", which a ceiling alone could never express.
+  it("Days on market is a window: the two ends keep only what falls between them", async () => {
+    const base = FIXTURE_LISTINGS[0];
+    const at = (days: number, id: string): Listing => ({
+      ...base,
+      id,
+      county: "orange",
+      listedAt: new Date(Date.now() - days * 86_400_000).toISOString(),
+    });
+    const c = new FixtureIdxClient([at(10, "NEW"), at(120, "MIDDLE"), at(300, "OLD")]);
+
+    // Floor alone: listed at least 90 days ago.
+    expect((await c.search({ listedMinDays: 90, pageSize: 100 })).listings.map((l) => l.id)).toEqual([
+      "MIDDLE",
+      "OLD",
+    ]);
+    // Both ends: 90 to 180 days — the 3-to-6-months window, mirroring db.searchFilters'
+    // listed_at gte/lte pair.
+    expect(
+      (await c.search({ listedMinDays: 90, newWithinDays: 180, pageSize: 100 })).listings.map((l) => l.id),
+    ).toEqual(["MIDDLE"]);
+    // An inverted pair narrows to nothing — the parser is what normalizes, not this filter.
+    expect((await c.search({ listedMinDays: 180, newWithinDays: 90, pageSize: 100 })).total).toBe(0);
+  });
+
   it("MORE panel: garage / lot / year / sqft-max / tax ranges filter numerically", async () => {
     const base = FIXTURE_LISTINGS[0];
     const mk = (id: string, f: Partial<Listing>): Listing => ({ ...base, id, county: "orange", ...f });

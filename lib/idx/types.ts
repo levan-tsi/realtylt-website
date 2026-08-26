@@ -159,8 +159,14 @@ export interface SearchParams {
    * floor is not applied. Default/false → the for-sale experience, which EXCLUDES rentals from
    * every count, median, rail, and total. Rentals are a deliberately separate surface. */
   rental?: boolean;
-  /** "New Listings" quick filter — keep only rows listed within the last N days. */
+  /** "New Listings" quick filter and the Days-on-market pair's NEWEST-end bound — keep only
+   * rows listed within the last N days. */
   newWithinDays?: number;
+  /** The Days-on-market pair's OLDEST-end bound — keep only rows listed at least N days ago.
+   * Together with newWithinDays it makes "Listed" a WINDOW rather than a ceiling: the owner's
+   * ask ("I wanted to filter properties that was listed 3-6 months ago and it was only up to
+   * 3 months") is listedMinDays 90 + newWithinDays 180. Absent = no oldest-end bound. */
+  listedMinDays?: number;
   // ── "MORE" panel filters (structured facts replicated 2026-07-15). Older rows missing a
   // fact are excluded by that fact's range filter — honest (we can't claim an unknown value).
   sqftMax?: number;
