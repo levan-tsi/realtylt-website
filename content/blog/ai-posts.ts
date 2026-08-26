@@ -17,7 +17,7 @@ Her record now has a different number in it.
 
 Nobody decided that. The pass filled in what was empty, and where a field was not empty it wrote anyway, because that is what the default was and nobody was asked. There is nothing in the row that says what used to be there, nothing that says where the new one came from, and nothing that says when either of them was true.
 
-The blanks getting filled is the part everybody talks about. The overwrite is the part nobody does, and it is the more expensive half.
+The blanks getting filled is the part everybody talks about. The overwrite is the part nobody mentions, and it is the more expensive half.
 
 [[scene:in-short]]
 
@@ -97,7 +97,7 @@ Below that are vendor blog posts. Data quality companies and enrichment provider
 
 Below those are the aggregator pages, which cite each other and eventually cite a benchmark attributed to a marketing research publisher whose original study is not linked from any of them.
 
-And the spread is the finding. The same claim, about the same thing, is quoted at twenty two and a half percent, at twenty to thirty percent, at thirty to forty percent, and at seventy percent for email addresses specifically. Those are not measurements that disagree. They are a number that has come loose from whatever produced it and is now being cited by people who are quoting each other.
+And the spread is the finding. On the pages we opened, the same claim about the same thing is quoted at thirty percent, at twenty two and a half percent, at twenty to thirty percent, and, for email addresses specifically, at up to seventy. Those are not measurements that disagree with each other. They are a number that has come loose from whatever produced it and is now being cited by people who are citing each other.
 
 So there is no decay rate in this article, none in the calculator, and none on our service page. There is something better, which is the reason a rate cannot be a single number in the first place.
 
@@ -117,15 +117,19 @@ Which is why the number worth having is not a benchmark at all. Take two hundred
 
 ## What to do when two sources disagree
 
-This is the question the whole subject turns on and almost nothing written about it addresses, so it is worth being concrete.
+This is the question the whole subject turns on, so it is worth being concrete about it.
 
-A pass runs. For a given contact, your record says one thing and the response says another. There are only four possible behaviours and every build picks one, usually without anybody being asked.
+A pass runs. For a given contact, your record says one thing and the response says another. There are four possible behaviours and every build has one of them. Find out which before a pass runs, not afterwards.
 
-The first is that the newest value wins. This is the most common default and it is the worst one, because "newest" means the moment the file was queried rather than the moment the fact was true. A number confirmed by the client last month will be replaced by a number a provider has held since some unrecorded date, purely because your query happened today.
+The first is that the newest value wins, where newest means the value that arrived most recently rather than the value that most recently became true. A number your client confirmed to you last month gets replaced by a number a provider has held since some date nobody recorded, purely because the query happened today.
+
+It is worth seeing how that behaviour is presented by the software, because it tells you which way the tooling leans. [HubSpot's documentation for importing records](https://knowledge.hubspot.com/import-and-export/import-objects) describes protecting what you already hold as something you switch on. There is an advanced option called Prevent property overwrite, which the page explains as: "if you're updating existing records, prevent the import from overwriting records' existing property values for the row". When it is selected for a property, "the import will update the property for new records and existing records that have never had a value for the property. It won't update the property for existing records that have a value or had a value in the past, even if currently empty."
+
+What matters there is the shape and not the detail. On one major CRM, per property, at import time, keeping your own value is a checkbox. That is one platform and not a survey of the field, and it is exactly why the four choices below are worth settling in writing before a pass runs instead of discovering afterwards which one you got.
 
 The second is that yours wins and the response is discarded. Safe, and it quietly turns enrichment into a fill-the-blanks exercise, which is often exactly what you wanted and should be a decision rather than an accident.
 
-The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the honest answer for most businesses and it costs one extra column.
+The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the one that costs least to be wrong about, and it costs one extra column.
 
 The fourth is a review queue: disagreements go to a short list and a person settles them. That is right when the field matters and the volume is small, and it is worth knowing that it is the same shape as the clerical review step in the published record-linkage model that the CRM sync article covers, which exists for exactly this reason.
 
@@ -141,7 +145,7 @@ California's consumer privacy law, at [Civil Code 1798.106](https://leginfo.legi
 
 Read who that is addressed to. Not the data broker. The business that maintains the information, which in the scenario at the top of this article is you.
 
-Whether it applies to you specifically is a different question and for most brokerages the answer is no. The same law defines a covered business at [Civil Code 1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140) as one doing business in California that also meets one of three thresholds: annual gross revenues over twenty five million dollars, or annually buying, selling or sharing the personal information of a hundred thousand or more consumers or households, or deriving half or more of its revenue from selling or sharing personal information. A real estate business in New York clears none of those on an ordinary year.
+Whether it applies to you specifically is a separate question, and the thresholds are published, so it takes a minute rather than a lawyer. The same law defines a covered business at [Civil Code 1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140) as one doing business in California that also meets one of three: annual gross revenues over twenty five million dollars, or annually buying, selling or sharing the personal information of a hundred thousand or more consumers or households, or deriving half or more of its revenue from selling or sharing personal information. Read those three against your own year and you will know where you stand.
 
 So this is not a compliance obligation for most readers of this page. It is a description of the right shape, written by people who thought hard about it, and it says two things worth adopting whether or not anybody is making you. The duty attaches to whoever holds the record rather than to whoever supplied it. And answering it requires knowing where a value came from, which is the column this article keeps coming back to.
 
@@ -167,7 +171,7 @@ We could not read the statute text itself. The New York Senate's website refuses
 
 The largest line on this bill is not ours and never passes through us. A supplier charges for each record it is asked about, so that part of the spend rises directly with how many rows you hand over.
 
-Which makes the first cost decision the one nobody treats as a decision: how many records to run. The default is the whole database, because it is one click, and most databases contain a large majority of rows that nobody is ever going to work. Running a tenth of it, chosen deliberately, usually produces more conversations for a tenth of the money, and choosing that tenth is an hour of somebody's thinking rather than a purchase.
+Which makes the first cost decision the one nobody treats as a decision: how many records to run. The default is the whole database, because it is one click. The number worth having instead is the count of rows somebody in your business would actually call this quarter, and producing it is an hour of thinking rather than a purchase. Whatever it comes to is the honest size of the job, and the gap between it and the whole database is money about to be spent making people reachable that nobody was going to reach.
 
 The second thing to settle before signing is whether the charge lands on every record you submit or only on the ones that come back with something. That distinction changes the arithmetic completely, and in an area where not much resolves, the first arrangement can spend a budget and leave you with almost nothing to show for it.
 
@@ -177,9 +181,9 @@ On time, running a pass is fast. What takes the time is the conversation about t
 
 ## What it does not do, and should not pretend to
 
-It does not verify a person. Verification, in this industry, usually means the number is well formed, is in service and is not a duplicate. Those are useful checks and none of them is the check people assume: that this number reaches this person. Our own service page uses the word "verified" and this is the sentence that qualifies it.
+It does not verify a person. What verification establishes, on our own page and on every provider page we have read, is that a number is well formed, is in service and is not a duplicate. Those are useful checks and none of them is the check people assume, which is that this number reaches this person. Our own service page uses the word "verified" and this is the sentence that qualifies it.
 
-It does not tell you how old a value is unless the provider is asked for it and passes it through. Freshness is the single most useful attribute an appended field could carry and it is the one most commonly absent from the response. Ask whether it is available, and if it is, store it.
+It does not tell you how old a value is unless the provider is asked for it and passes it through. Freshness is the single most useful attribute an appended field could carry, and it is worth asking for by name, because a response that does not carry it looks exactly like one that does.
 
 It does not promise a match, and a rate quoted before anybody has seen your list is a rate about somebody else. How much resolves varies with the town, with how thin the county file is behind a given address, and with how recently anybody moved. Two hundred of your own rows, run as a sample, settles the question for your own book in half a day.
 
@@ -205,11 +209,11 @@ Twenty minutes, on the database you already have. No tool and no subscription.
 
 4. **Find a contact you know moved.** Somebody who sold and left the area. Look at what the record says now, and decide whether the record knows they moved or is quietly still describing the person who lived there.
 
-5. **Sort by the phone column and look at the gaps.** Count how many rows are empty. That number is the actual size of the problem enrichment solves, and for most people it is much smaller than the whole database they were about to run.
+5. **Sort by the phone column and look at the gaps.** Count how many rows are empty. That number is the actual size of the problem enrichment solves, and it is worth holding next to the number you were about to send.
 
 6. **Ring one number that you did not put there yourself.** Not to sell anything. Just to find out who answers. One call tells you more about your own data than any report, and if the answer surprises you, that is the finding.
 
-7. **Ask whoever ran the last pass what happened to fields that already had values.** If nobody can answer, the answer is that they were overwritten, because that is what every default does.
+7. **Ask whoever ran the last pass what the overwrite setting was.** Not what should have happened. What the setting was, per field. If nobody can answer, treat that as an open question rather than as a reassurance.
 
 ## Common questions, answered honestly
 
@@ -223,11 +227,11 @@ One begins at an address and works towards a stranger. The other begins at someb
 
 ### Will enrichment overwrite the data I already have?
 
-That depends entirely on how the pass is configured, and the common default is that the newer value wins. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, insist that the previous value, the source and the date are written to the record, because without those there is no way back from a bad pass.
+That depends on how the pass is configured, and it is worth establishing rather than assuming. On HubSpot, for instance, not overwriting a value you already hold is a per-property checkbox selected at import time, which tells you which way the tooling leans. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, insist that the previous value, the source and the date are written to the record, because without those there is no way back from a bad pass.
 
 ### How accurate is appended contact data?
 
-Nobody can tell you honestly before running your list, and the figures that circulate do not survive being followed, which is worked through above. What you can do is measure it: take two hundred records where you already know the answer, run them, and count how many agree, disagree and come back empty. That takes an afternoon and it is a number about your own market rather than somebody's benchmark.
+Nobody can tell you before running your list, and the figures that circulate do not survive being followed, which is worked through above. What you can do is measure it: take two hundred records where you already know the answer, run them, and count how many agree, disagree and come back empty. That takes an afternoon and it is a number about your own market rather than somebody's benchmark.
 
 ### How fast does contact data go stale?
 
@@ -264,7 +268,7 @@ Two of the printed lines have been struck through and rewritten by hand, and the
 
 You forwarded it. The reader pulled out every date on the page and wrote them where they were supposed to go, and one of them landed on your calendar with a reminder attached. Everybody stopped thinking about it, which is exactly what the system is for.
 
-Three weeks later somebody asks whether that contingency has expired, and it turns out there are two defensible answers, and the difference between them is four days.
+Three weeks later somebody asks whether that contingency has expired, and it turns out there are two defensible answers, and they are not the same day.
 
 Nothing malfunctioned. The characters were read correctly, the handwriting was read correctly, the date on the calendar is the date on the page. What went wrong is not on the page at all, and that is what this article is about.
 
@@ -286,7 +290,7 @@ The second is reading it: turning those pixels into characters.
 
 The third is deciding what each piece of text is for. This string is a heading, this one is a label, this one is the value that belongs to that label. A form is not a paragraph, and the meaning is carried by the layout as much as by the words.
 
-The fourth is the one nobody counts as part of the job, and it is where this article ends up. A value can be correct, correctly labelled, correctly filed, and still be the wrong answer, because what it counts from is not printed anywhere on the page.
+The fourth does not look like part of the job at all, and it is where this article ends up. A value can be correct, correctly labelled, correctly filed, and still be the wrong answer, because what it counts from is not printed anywhere on the page.
 
 ## The original is not a document, it is a photograph of one
 
@@ -318,7 +322,7 @@ That is the difference between a file and a photograph, and it is why the first 
 
 ## Finding a word and knowing what it is for are two different problems
 
-Now the half of the same paper that almost nobody quotes, and it is the half that should change how you buy this.
+The same paper measured two harder things, and they are the half that should change how you buy this.
 
 The authors also measured two harder tasks. One is labelling: given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking: given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value, and the only thing that makes them a fact is the line drawn between them.
 
@@ -332,7 +336,7 @@ It is worth being precise about what that second task is in your own paperwork, 
 
 ## A person is not perfect at this either, and somebody published the number
 
-Almost every conversation about automating paperwork is implicitly a comparison against a person who never makes a mistake. That person has been measured and does not exist.
+There is a person standing behind every argument about automating paperwork, on both sides of it, and that person never misreads anything. Somebody has measured them.
 
 [DocVQA](https://arxiv.org/abs/2007.00398), published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona, is a set of 50,000 questions asked about 12,767 document images, drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones: what is the total, what is the date on this document, who is this letter addressed to.
 
@@ -340,7 +344,7 @@ Then they had people answer them.
 
 [[scene:human-ceiling]]
 
-Now read that first bar against the thing it is really competing with. The comparison everybody makes silently is against a careful reading, done once, by somebody with the file open and nothing else on. The comparison that decides whether any of this is worth having is against the fourth read of the day, at ten past five, of a page two people have already looked at.
+Now read that first bar against the thing it is really competing with, because there are two candidates and only one of them is honest. The first is a careful reading, done once, by somebody with the file open and nothing else on, which is roughly the condition those volunteers were in. The second is the fourth read of the day, at ten past five, of a page two people have already looked at. Your process runs on the second one.
 
 So the useful question is never whether a document reader is right every time. It is which values it handles better than a tired person, which ones it handles worse, and what it does with the ones it cannot settle. Those are three different questions and only the third is a build decision.
 
@@ -376,13 +380,13 @@ The same section carries a second one of these, and it is the reason for the lin
 
 ## A wrong date costs more than a missing one
 
-This is the asymmetry that should decide how the whole thing is built, and it runs the opposite way to most people's instinct.
+This is the asymmetry that should decide how the whole thing is built.
 
 A missing value is loud. The field is empty, somebody notices, somebody opens the document. It costs a few minutes and it costs them at a moment when they are paying attention.
 
 A wrong value is silent, and it is worse than silent, because it is now wearing your system's authority. It is on the calendar. It has a reminder attached. Everybody downstream treats it as settled, and the specific thing that will not happen is anybody going back to the page, because the reason the system exists is so that nobody has to.
 
-That has a direct consequence for how a document reader should behave, and most products are tuned the other way. A reader that returns an answer for every field looks better in a demonstration and is worse in a business. What you want is a reader that abstains, that says nothing rather than guessing, and that puts the abstentions somewhere a person will actually look. Our own service page has said for a while that anything it is not confident about goes to a human rather than being filed quietly, and that is the right design. This article is the argument for why, and the argument is arithmetic rather than caution: a blank costs minutes, a confident wrong date costs a deal.
+That has a direct consequence for how a document reader should behave, and the incentive runs against it. A reader that returns an answer for every field looks better in a demonstration and is worse in a business. What you want is a reader that abstains, that says nothing rather than guessing, and that puts the abstentions somewhere a person will actually look. Our own service page has said for a while that anything it is not confident about goes to a human rather than being filed quietly, and that is the right design. This article is the argument for why, and the argument is arithmetic rather than caution: a blank costs minutes, a confident wrong date costs a deal.
 
 [[scene:doc-path]]
 
@@ -390,7 +394,7 @@ That has a direct consequence for how a document reader should behave, and most 
 
 One more thing that is worth knowing before you build any of this, because it decides what you have to keep.
 
-American law is comfortable with electronic records. [15 U.S.C. 7001](https://www.law.cornell.edu/uscode/text/15/7001), the ESIGN Act, opens by saying that "a signature, contract, or other record relating to such transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form". That settles the old anxiety about whether a digitally signed contract counts, and it is the half everybody already knows.
+American law is comfortable with electronic records. [15 U.S.C. 7001](https://www.law.cornell.edu/uscode/text/15/7001), the ESIGN Act, opens by saying that "a signature, contract, or other record relating to such transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form". That settles the old anxiety about whether a digitally signed contract counts, and it is not the half that decides what you have to keep.
 
 The half worth knowing is the retention rule at 7001(d). Where a law requires that a contract be retained, the requirement is met by keeping an electronic record which "accurately reflects the information set forth in the contract or other record" and which "remains accessible to all persons who are entitled to access by statute, regulation, or rule of law, for the period required by such statute, regulation, or rule of law, in a form that is capable of being accurately reproduced for later reference, whether by transmission, printing, or otherwise".
 
@@ -408,9 +412,9 @@ The practical version of this is dull and cheap. Keep the original, keep it find
 
 No price is quoted here, and the reason is that the software is the smallest of the three things you would be paying for.
 
-The first is the reading itself, which is charged by the page by whichever engine sits underneath, and it is the cheap part and the part that scales predictably. The second is the setup, and it is priced per DOCUMENT TYPE rather than per document: a purchase agreement, a disclosure form, a lease and an addendum are four different sets of expectations about where things are and what they mean, and adding the fourth one is not much cheaper than adding the first. The third is the part almost nobody budgets for, which is deciding what the values mean. What a deadline counts from. Which calendar rule applies. Which of two contradictory pages wins. Those are conversations rather than configuration, they are the ones that decide whether the output is trustworthy, and they take longer than the build.
+The first is the reading itself, which is charged by the page by whichever engine sits underneath, and it is the cheap part and the part that scales predictably. The second is the setup, and it is priced per DOCUMENT TYPE rather than per document: a purchase agreement, a disclosure form, a lease and an addendum are four different sets of expectations about where things are and what they mean, and adding the fourth one is not much cheaper than adding the first. The third does not look like a cost at all, which is why it is the one that gets left out, and it is deciding what the values mean. What a deadline counts from. Which calendar rule applies. Which of two contradictory pages wins. Those are conversations rather than configuration, they are the ones that decide whether the output is trustworthy, and they take longer than the build.
 
-Two things move the bill more than anything else. One is whether your originals are files or photographs of paper, which is worth finding out before anybody quotes you rather than after. The other is how many document types you genuinely need, as opposed to how many you can name, and those two numbers are usually very different.
+Two things move the bill more than anything else. One is whether your originals are files or photographs of paper, which is worth finding out before anybody quotes you rather than after. The other is how many document types you genuinely need, as opposed to how many you can name, and it is worth writing the two lists down separately before anybody quotes.
 
 On time, a single document type with clean originals and one place for the output to go is a short piece of work. What extends it has nothing to do with reading or with page counts. It is discovering, in week two, that there is nowhere for the output to land: no field in the CRM, no calendar anybody shares, no agreed owner for the exceptions. If those already exist, this moves quickly. If they do not, what you have bought is a systems project wearing a document reader's clothes, and that is worth knowing on day one rather than in week two.
 
@@ -444,7 +448,7 @@ This takes an afternoon, needs no subscription, and will tell you more than any 
 
 4. **Run the ten and score by value, not by document.** Fifty values. Mark each one right, wrong or missing. Keep wrong and missing in separate columns, because they are different failures and only one of them is dangerous.
 
-5. **Count the wrongs that would have been believed.** Of the ones it got wrong, how many looked plausible enough that nobody would have questioned them. That is the real error rate for your purposes, and it is usually much lower than the raw wrong count, which is good news, and it is never zero.
+5. **Count the wrongs that would have been believed.** Of the ones it got wrong, how many looked plausible enough that nobody would have questioned them. That is the real error rate for your purposes. It is a subset of the raw wrong count, so it is smaller, and whether it comes out at zero on fifty values is the thing you are actually measuring.
 
 6. **Take the ugliest page and make it uglier.** Photograph the printout at an angle, in poor light. Run it again. What you are looking for is not whether the score drops, because it will. You are looking at what the system does when it drops: does it go quiet, or does it keep answering.
 
@@ -488,7 +492,7 @@ Five short questions, all with short answers. What does the confidence score mea
 
 There is one piece of homework under all of this and it is not a software decision.
 
-Somewhere in your business there is a set of counting rules that everybody uses and nobody has written down. Which day a period starts on. Whether Saturday counts. What happens when a deadline lands on a holiday. Which of two contradictory pages wins. Those rules are currently held in one or two people's heads, they are the thing that makes an extracted value into a deadline, and until they exist on paper you cannot automate this and you also cannot train anybody into it.
+Somewhere in your business there is a set of counting rules. Which day a period starts on. Whether Saturday counts. What happens when a deadline lands on a holiday. Which of two contradictory pages wins. Those rules are what turn an extracted value into a deadline, and the test of whether they exist is simple: can you point at where they are written down. If the answer is that a particular person knows, you cannot automate this and you also cannot train anybody into it, and those are the same problem wearing different clothes.
 
 Writing them down is free, it takes an afternoon, and it is worth doing whether or not you ever buy any of this.
 

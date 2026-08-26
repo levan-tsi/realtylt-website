@@ -171,7 +171,7 @@ export const UNDERSTANDING = {
   sourceText:
     "Jaume, Ekenel and Thiran, FUNSD, Table VI, baseline results for entity labeling and linking.",
   sourceHref: "https://arxiv.org/abs/1905.13538",
-  note: "These are the authors' own simple baselines, published to give the field something to beat, and the field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed and it is the opposite of what most people assume: the character recognition is the part that mostly works, and the part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there, and at that precision roughly one claimed link in fifty is a real one. A system tuned that way has technically found your closing date, along with a great many things that are not it, and nothing in the output says which is which.",
+  note: "These are the authors' own simple baselines, published to give the field something to beat, and the field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed: the character recognition is the part that mostly works, and the part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there, and at that precision roughly one claimed link in fifty is a real one. A system tuned that way has technically found your closing date, along with a great many things that are not it, and nothing in the output says which is which.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic THREE.
@@ -250,7 +250,7 @@ export const DOC_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "Everything is flagged, so nothing is",
-    body: "A reader that marks a third of its output as uncertain has told you the truth and has also handed you a queue nobody will work. Within a fortnight the flags are being cleared in batches without the pages being opened, which is worse than having no flags, because now there is a record saying somebody checked.",
+    body: "A reader that marks a third of its output as uncertain has told you the truth and has also handed you a queue somebody now has to work. Within a fortnight the flags are being cleared in batches without the pages being opened, which is worse than having no flags, because now there is a record saying somebody checked.",
   },
   {
     lead: "The output has nowhere to land",
@@ -357,7 +357,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From a photograph of a page to a date somebody relies on.",
-      lede: "Six hops, and the products in this category are sold on the first three. The fourth is where a correctly read value becomes a wrong answer, and the fifth is the only one that catches it. Both of those are decisions about your business rather than settings in a piece of software, and neither is usually discussed before a build starts.",
+      lede: "Six hops, and the products in this category are sold on the first three. The fourth is where a correctly read value becomes a wrong answer, and the fifth is the only one that catches it. Both of those are decisions about your business rather than settings in a piece of software, and neither of them is a question a demonstration answers.",
       steps: DOC_PATH,
       altPrefix:
         "The path from a photographed page to a date on a calendar, through character recognition, field assignment, what the value is counted from and whether a person checks it",
@@ -386,7 +386,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "docs",
           label: "Documents in a typical file",
-          hint: "The agreement, every addendum and rider, the disclosures, the inspection paperwork, the mortgage documents. Most people guess low on this one and then count a real file and are surprised.",
+          hint: "The agreement, every addendum and rider, the disclosures, the inspection paperwork, the mortgage documents. This is not worth guessing at. Open a file you closed last month and count.",
           min: 3,
           max: 30,
           step: 1,
@@ -454,7 +454,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Values a year that nobody reads off the page",
-      note: "The headline is the fourth row rather than the hours, because the hours are the reassuring half and the count is the one worth sitting with. Notice what the last row does: at the settings most people arrive at, checking every single value against its own page is a couple of days of work spread across a year, which is affordable, and almost nobody spends it. Shares of values produce fractions, and a third of a date is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it, because we have not measured one on your paperwork and the published measurements above are on other people's documents. There is no hours-saved row, both because saving hours is a different article on this site and because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this whole category is usually sold on, because the honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
+      note: "The headline is the fourth row rather than the hours, because the hours are the reassuring half and the count is the one worth sitting with. Notice what the last row does: at the settings this opens with, checking every single value against its own page is a couple of days of work spread across a year. That is affordable, and it is not what happens, because the whole reason the system exists is so that nobody opens the page. Shares of values produce fractions, and a third of a date is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it, because we have not measured one on your paperwork and the published measurements above are on other people's documents. There is no hours-saved row, both because saving hours is a different article on this site and because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this category invites you to imagine, because the honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
       action: { label: "See how it is built", href: "/services/document-processing" },
       secondary: { label: "Send us one document", href: "/connect" },
     },
@@ -470,7 +470,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       // gets misread, and guessing at one in alt text would be the mistake it warns about.
       alt: "A folded sheet of a handwritten and printed deed from 1825, the upper half filled with a looping brown ink hand describing a boundary, an acreage and a pew in a meeting house, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions, ending in a printed clause about a wife releasing her right of dower and the words IN WITNESS WHEREOF",
       caption:
-        "This is what a real estate contract has always been. A printed paragraph that is identical on every copy, with the part that decides who owns what written into the holes in it by hand. Two hundred years later the format is the same and so is the difficulty: the printed text is easy to read and carries no information, and the handwriting is the whole deal.",
+        "A real estate contract has had this shape for two hundred years. A printed paragraph that is identical on every copy, with the part that decides who owns what written into the holes in it by hand. Two hundred years later the format is the same and so is the difficulty: the printed text is easy to read and carries no information, and the handwriting is the whole deal.",
       credit: "Photograph by museado, CC0 1.0.",
       ariaLabel: "A deed from 1825 with its blanks filled in by hand",
     },

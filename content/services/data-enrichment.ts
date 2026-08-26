@@ -135,7 +135,7 @@ export const dataEnrichment: Service = {
     "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable, because a dead number that looks live costs you more than a blank field.",
     "It does not guarantee a match. How much resolves depends on the area and on how much public record sits behind the address, and no honest provider quotes a rate before seeing the list.",
     "It does not tell you how old a value is unless the provider passes that through. Freshness is the most useful thing an appended field could carry and it is the one most often missing from the response, so it is worth asking for by name.",
-    "It does not know which answer is right when two sources disagree. That is a decision about your business, it gets made once, and the common software default is that whichever value arrived most recently wins.",
+    "It does not know which answer is right when two sources disagree. That is a decision about your business and it gets made once. Worth knowing which way the tooling leans: on HubSpot, keeping a value you already hold is a per-property checkbox you select at import time rather than the resting state.",
     "It does not make a list callable in the legal sense. Do-not-call registrations and consent rules apply to an enriched record exactly as they do to any other.",
     "It does not tell you anybody is interested. Enrichment makes a record reachable. Whether that person wants to hear from you is a different question.",
   ],
@@ -151,7 +151,7 @@ export const dataEnrichment: Service = {
     },
     {
       q: "Will enrichment overwrite the data I already have?",
-      a: "Only if the pass is configured that way, and the common default is that the newer value wins. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, the previous value, the source and the date should be written to the record, because without them there is no way back from a bad pass.",
+      a: "Only if the pass is configured that way, so establish which way rather than assuming. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, the previous value, the source and the date should be written to the record, because without them there is no way back from a bad pass.",
     },
     {
       q: "How fast does contact data go stale?",

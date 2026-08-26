@@ -47,7 +47,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * nobody publishes about it, and the failure that is not the one people brace for. */
 export const IN_SHORT: string[] = [
   "An appended field is somebody else's assertion about a person, and it arrives without the two things that would let you weigh it: when it was true, and who said so. The Federal Trade Commission put compulsory orders to nine of these companies and reported that most of their data comes from other companies like them rather than from an original source.",
-  "There is no honest published rate for how fast contact data goes stale. We followed the circulating figures rather than assuming where they came from, and they end at a press release with a distribution disclaimer on it, at vendor blog posts, and at an aggregator citing a benchmark whose original is not linked. The same claim is quoted anywhere between twenty two and seventy percent.",
+  "There is no honest published rate for how fast contact data goes stale. We followed the circulating figures rather than assuming where they came from, and they end at a press release with a distribution disclaimer on it, at vendor blog posts, and at an aggregator citing a benchmark whose original is not linked. On the pages we opened, the same claim is quoted at thirty percent, at twenty two and a half, at twenty to thirty, and at up to seventy for email addresses.",
   "And the expensive failure is not the record that comes back empty. It is the field you already knew, quietly replaced by a value you cannot check, in a row that does not record what was there before.",
 ];
 
@@ -64,7 +64,7 @@ export const NOT_THE_NEIGHBOURS: GridItem[] = [
   },
   {
     lead: "Not the duplicate",
-    body: "Deciding whether two records in your own systems describe one person is a question you can answer, because you can open both. There is a published model for it and it has a third outcome that most builds skip. Here the other record is inside a company you have no access to, and you cannot see how it decided anything.",
+    body: "Deciding whether two records in your own systems describe one person is a question you can answer, because you can open both. There is a published model for it, and it has a third outcome worth knowing about. Here the other record is inside a company you have no access to, and you cannot see how it decided anything.",
   },
   {
     lead: "Not the old list",
@@ -92,7 +92,7 @@ export const WHAT_A_FIELD_ASSERTS: GridItem[] = [
   },
   {
     lead: "It does not say what it replaced",
-    body: "This is the one that costs money and it is entirely under your control. If the pass wrote into a field that already held something, the row should say so, and in most builds it does not. The old value is gone, nobody chose to discard it, and the person who could have told you it was the right one is the client whose number you no longer have.",
+    body: "This is the one that costs money and it is entirely under your control. If the pass wrote into a field that already held something, the row should say so. Whether yours does is a thing you can check this afternoon, and the answer decides whether a bad pass is reversible. Where it does not, the old value is simply gone, nobody chose to discard it, and the one person who could have confirmed it was right is the client whose number you no longer have.",
   },
 ];
 
@@ -226,7 +226,7 @@ export const TENURE = {
     "Median years of tenure with the current employer, from a supplement to the Current Population Survey, a monthly sample of about sixty thousand households. Median means the point at which half of all workers had more and half had less, so half of the youngest group had been in the job under two years and nine months.",
   sourceText: "U.S. Bureau of Labor Statistics, Employee Tenure in 2024, Table 1, released September 2024.",
   sourceHref: "https://www.bls.gov/news.release/tenure.t01.htm",
-  note: "This is about employment, not about the mobile number of somebody who bought a house from you, and it is here for one reason: it is the only measurement in the whole of this subject that names its survey, its sample and its definition. Use it as an argument rather than as a number. Whatever underlies a field decides how fast that field goes wrong, and the rate is different for different people, so a single percentage covering everybody in your database is describing a population that does not exist. There is no equivalent public measurement for a personal mobile number, a personal email address or a homeowner's mailing address, and the fact that nobody has published one is the most useful thing to know about every figure that circulates as though somebody had.",
+  note: "This is about employment, not about the mobile number of somebody who bought a house from you, and it is here for one reason: it is the only measurement in the whole of this subject that names its survey, its sample and its definition. Use it as an argument rather than as a number. Whatever underlies a field decides how fast that field goes wrong, and the rate is different for different people, so a single percentage covering everybody in your database is describing a population that does not exist. We went looking for an equivalent measurement for a personal mobile number, a personal email address or a homeowner's mailing address and did not find one with a stated method, which is worth holding next to the fact that every figure circulating about data decay is quoted as though somebody had done exactly that study.",
 };
 
 /** SCENE copy — the six hops from your record to your record.
@@ -255,7 +255,7 @@ export const ENRICH_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "The database looks finished",
-    body: "Before the pass, two thirds of the rows were visibly incomplete and everybody treated the list accordingly. After it, every row is full. Nothing in the interface distinguishes a number a client typed in herself from a number a file suggested, so the whole database now carries the confidence of its best row and the accuracy of its worst.",
+    body: "Before the pass, the gaps were visible and everybody handled the list accordingly. Afterwards every row is full, and nothing in the interface distinguishes a number a client typed in herself from a number a file suggested. The database now carries the confidence of its best row and the accuracy of its worst, and the only person who could tell the two apart has stopped being able to.",
   },
   {
     lead: "Nobody can undo it",
@@ -263,7 +263,7 @@ export const WASTED: GridItem[] = [
   },
   {
     lead: "It is spent on people you will never call",
-    body: "Enrichment is charged per record and most databases contain a large majority of rows nobody is ever going to work. Running the whole thing is the default because it is one click, and it converts a budget into fullness rather than into conversations. The cheapest version of this project is usually a tenth of the size of the one people buy.",
+    body: "Enrichment is charged per record, and a database that has been collecting for years holds a great many rows nobody has any intention of calling. Running the whole thing is the default because it is one click, and it converts a budget into fullness rather than into conversations. The version worth buying is the one where somebody chose the rows first, and choosing them costs an hour.",
   },
 ];
 
@@ -416,7 +416,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "differ",
           label: "Share of those where an outside file comes back with something else",
-          hint: "This one is yours to supply and it is worth measuring rather than guessing: run two hundred records where you already know the answer and count the disagreements. Nobody can quote you this number honestly and several people will try.",
+          hint: "This one is yours to supply and it is worth measuring rather than guessing: run two hundred records where you already know the answer and count the disagreements. Nobody can quote it to you honestly before seeing your list.",
           min: 5,
           max: 100,
           step: 5,
@@ -464,7 +464,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Fields where somebody has to decide which answer is yours",
-      note: "The headline is the third row rather than the hours, because the hours are the affordable half and the count is the one nobody asks about before buying. Every one of those is a moment where a computer will otherwise choose on your behalf, silently, and the default in most builds is that the newer value wins. Shares of records produce fractions, and half a disagreement is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no rate of decay anywhere in it, because the figures that circulate do not survive being followed, which is worked through in the section above. There is no figure for how often the appended value turns out to be the correct one, because the only person who can measure that is you, on a couple of hundred of your own records where you already know the answer, and that measurement is worth more than anybody's benchmark. And there is no money in this calculator at all: a reachable client is not a commission, the loss from a number you can no longer reach is not payable on any date, and the arithmetic that turns either into a dollar figure does not exist.",
+      note: "The headline is the third row rather than the hours, because the hours are the affordable half and the count is the one nobody asks about before buying. Every one of those is a moment where something will choose on your behalf if nobody has chosen deliberately, and the choosing happens silently. Shares of records produce fractions, and half a disagreement is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no rate of decay anywhere in it, because the figures that circulate do not survive being followed, which is worked through in the section above. There is no figure for how often the appended value turns out to be the correct one, because the only person who can measure that is you, on a couple of hundred of your own records where you already know the answer, and that measurement is worth more than anybody's benchmark. And there is no money in this calculator at all: a reachable client is not a commission, the loss from a number you can no longer reach is not payable on any date, and the arithmetic that turns either into a dollar figure does not exist.",
       action: { label: "See how it is built", href: "/services/data-enrichment" },
       secondary: { label: "Ask us what your last pass did", href: "/connect" },
     },
