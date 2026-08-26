@@ -13,17 +13,20 @@
 | — | **D5 stopped lying**: `visibleUpdated` was /updated/i over the whole body, so a post that used the word in prose was credited with a revision line it did not carry. It still failed on the dates, which is why the lie survived four rounds. Now reads the rendered `time[datetime]`; proved both ways | VERIFIED, LIVE |
 | — | **the /ai page stopped disagreeing with the services surface** on seven claims (ai-page repo, LOCAL, awaiting the owner's deploy go): the reviews panel literally described REVIEW GATING, plus the dead 73%, "fraction of vendor pricing", "tens of thousands in unworked commission", "never slip through a PDF", "unlimited parallel agents", and CRM-sync's absolutes | LOCAL, owner-gated |
 | F | 7 new CC BY / CC0 plates (4 unspent) · topics 14-15: **document processing** (FUNSD, DocVQA, Reg Z's two definitions of "business day"), **data enrichment** (the FTC's 6(b) data-broker study, the CCPA right to correct, and a decay rate that does not survive being followed) · 8 more service claims killed incl. **an invented person with an invented phone number** live on the enrichment page · **the plate is 16:9 on a phone and 21:9 on a laptop**, so Round E's alt-text rule was half right · six chart notes caught restating their own prose · **two more /ai COPY keys corrected**, both contradicted by their own page | building |
+| G | 6 new CC BY plates (3 unspent) · topics 16-17: **ai-scheduling**, argued as an agreement you do not have yet rather than as a booking, against the hardest sibling in the rollout (overlap 60 on the first run, all of it mine) · **invoicing-and-payments**, which REFUSES the commission mechanics on the page because no primary states them, and argues the unraised charge instead · 8 more service claims killed incl. **"the double-booking that cannot happen"** · **a hole in `zombie-claims.test.ts` itself**: the bare stem `refus` exempted any claim containing the word "refused", found only by proving the new entries red · **both of this round's refusals rested on unchecked reasons and following them changed both** · an invented CHARGE key in a plate's alt text and caption | building |
 
-**Standing cohort state:** 15 flagship posts, all green on `flagship-standard.mjs`, sibling
-overlap 0 across the whole cohort, zero new scene components in fourteen consecutive topics, 1251
+**Standing cohort state:** 17 flagship posts, all green on `flagship-standard.mjs`, sibling
+overlap 0 across the whole cohort, zero new scene components in sixteen consecutive topics, 1271
 tests. New posts score 17/19 on `score-flagship`: C3 (film) is owner-held and D5 (a real revision
-date) cannot be true on the day a post ships. Neither is ever faked or re-baselined. **5 topics
-have no flagship post**: ai-scheduling, invoicing-and-payments, ai-clone, ai-audit,
-custom-automation.
+date) cannot be true on the day a post ships. Neither is ever faked or re-baselined. **3 topics
+have no flagship post**: ai-clone, ai-audit, custom-automation.
 
-**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 21
-photographs under CC BY 2.0 or CC0, 17 spent and **4 unspent**, each licence read on its own
-source page. The rule that makes them go further than they look: a post needs **two plates of its
+**The photograph problem is closed, with a rule.** `public/images/editorial/` holds 27
+photographs under CC BY 2.0 or CC0, 24 spent and **3 unspent**, each licence read on its own
+source page. **Round G tightened that rule in one place: the photo page is the authority for the
+photographer's NAME as well as for the licence.** Openverse's `creator` field is sometimes the
+account alias, and four of Round G's six candidates differed. Read it in a browser
+(`scripts/_scratch-g-lic.mjs`). The rule that makes them go further than they look: a post needs **two plates of its
 own**, not six, because four images arrive free on every post. The committed pipeline is
 `find-plates.mjs`, `fetch-plates.mjs`, `plate-swatch.mjs` and `check-plate-licence.mjs`; run
 `export MSYS_NO_PATHCONV=1` first in git-bash or every `/images/...` argument is rewritten into a
@@ -48,13 +51,13 @@ what the two new pages now say they do**: do skip-tracing builds record a source
 every enriched row, what permitted purpose is our own enrichment account established under, does
 the pipeline scrub the do-not-call registry before anything dials, do marketing builds set up
 SPF/DKIM/DMARC on the client's sending domain or assume it, and is Google Postmaster Tools set up
-for the clients we send for. **Round F adds six, same shape**: do document-processing builds abstain or always return a value with a confidence, where does a flagged value go and who works that queue, do we store the source document and page number with every extracted value, what is our default overwrite behaviour on an enrichment pass, do enrichment builds write a source and a date onto every appended value, and does the BatchData response carry an age we could pass through. See ROUND-E-LOG.md and ROUND-F-LOG.md.
+for the clients we send for. **Round F adds six, same shape**: do document-processing builds abstain or always return a value with a confidence, where does a flagged value go and who works that queue, do we store the source document and page number with every extracted value, what is our default overwrite behaviour on an enrichment pass, do enrichment builds write a source and a date onto every appended value, and does the BatchData response carry an age we could pass through. **Round G adds nine, and the first two are the most consequential in the set because a whole article rests on them**: when a showing needs another office's approval, does our build tell the client a TIME or a REQUEST, and does it release a held slot when the proposal dies · what does it do with a counter ("not eleven, maybe two") · how many chases before a person is told · does it re-ask for confirmation when an appointment moves · does anything in the invoicing build actually ASK whether an outside event happened · how does it decide a payment was received, a bank feed or an email · is the 3/7/14 day cadence a default or fixed · and does anything we build ever touch a client or escrow account. See ROUND-E-LOG.md, ROUND-F-LOG.md and ROUND-G-LOG.md.
 
-**Also carried:** `standard.json` has NOT been ratcheted since Round B, and Rounds C, D, E and F
-each measured it and declined for the same reason. After Round F `available` measures **proseWords
-5,503 / citations 5 / faqQuestions 8 / dataGraphics 3**, which would put **six** of the thirteen
+**Also carried:** `standard.json` has NOT been ratcheted since Round B, and Rounds C, D, E, F and G
+each measured it and declined for the same reason. After Round G `available` measures **proseWords
+5,725 / sections 22 / citations 5 / faqQuestions 8 / dataGraphics 3**, which would put **six** of the fifteen
 older posts below the bar by construction (ai-chat, ai-voice, database-reactivation, ai-lead,
-workflow-automation and ai-appointment are all under 5,503 words, five carry 2 data graphics rather
+workflow-automation and ai-appointment are all under 5,725 words, five carry 2 data graphics rather
 than 3, and six carry fewer than 8 FAQ questions). Closing it honestly is a six-post writing job,
 not a flag flip, **and the gap grows with every round that ships a long post.** Worth doing
 deliberately in a round with room for it.
@@ -66,11 +69,11 @@ a separate checker agent audits the whole body of work at the end.
 
 ## Where the board stands (verified 2026-08-25)
 
-- **15 flagship posts green as of Round F** (chat, voice, reactivation, qualification, workflow,
+- **17 flagship posts green as of Round G** (chat, voice, reactivation, qualification, workflow,
   review, booking, local-seo, geo, crm-sync, agent-workforce, skip-tracing, marketing-automation,
-  document-processing, data-enrichment): `flagship-standard.mjs` prints all 15 meet the standard;
-  the template and the primitive set are proven fourteen topics deep with ZERO new components.
-  **5 topics have no flagship post.**
+  document-processing, data-enrichment, ai-scheduling, invoicing-and-payments):
+  `flagship-standard.mjs` prints all 17 meet the standard; the template and the primitive set are
+  proven sixteen topics deep with ZERO new components. **3 topics have no flagship post.**
 - **20 service pages exist**, disciplined, but `SERVICES-CRITIQUE.md` records: one legal-risk
   mechanic described as compliant (review gating, §1), the debunked 78% asserted 3x on the chat
   page whose own relatedPosts link debunks it (§2), the only regulated-risk page silent on its
@@ -100,8 +103,8 @@ Unknown product facts (e.g. whether calls are recorded) are REPORTED, never writ
 **ROUNDS B.. — the 15 topics, ~2 per builder round, in session-11's order:**
 ~~review-automation, ai-appointment-booking, local-seo, geo-landing-pages, crm-sync,
 ai-agent-workforce, skip-tracing-lead-generation, marketing-automation~~ (done through Round E),
-~~document-processing, data-enrichment~~ (done through Round F), **ai-scheduling,
-invoicing-and-payments, ai-clone, ai-audit, custom-automation** (5 left).
+~~document-processing, data-enrichment~~ (done through Round F), ~~ai-scheduling,
+invoicing-and-payments~~ (done through Round G), **ai-clone, ai-audit, custom-automation** (3 left).
 Per topic: research (its OWN primary source, read in the primary document — the zombie-stat rule);
 write to the ratcheted standard (prose/sections/citations/FAQ/images/graphics/cost/calculator/
 limits/how-to, overlap vs nearest sibling at the ceiling); scenes from the existing primitives
@@ -136,9 +139,9 @@ a new one · every claim either carries a primary source or the site already mak
 - **A refusal needs a CHECK, not a plausible reason** (Rounds D and E). Both rounds caught
   themselves asserting an unverified fact as the stated grounds for refusing a figure. If the
   reason is "we followed them and they all led to vendors", follow them.
-- **Photographs: two plates per post, judged at the 21:9 crop, licence read on the source page**
-  (Round E). Five unspent plates are in `public/images/editorial/`, and the pipeline is now
-  COMMITTED rather than scratch: `find-plates.mjs`, `fetch-plates.mjs`, `plate-swatch.mjs`,
+- **Photographs: two plates per post, judged at BOTH shipped crops, licence AND photographer name
+  read on the source page in a browser** (Rounds E, F and G). Three unspent plates are in
+  `public/images/editorial/`, and the pipeline is now COMMITTED rather than scratch: `find-plates.mjs`, `fetch-plates.mjs`, `plate-swatch.mjs`,
   `check-plate-licence.mjs`. CC BY-SA is forbidden and there is a committed test for it.
   **`scripts/fetch-images.mjs` is marked DO NOT RUN**: its failure path writes an empty
   ATTRIBUTIONS.md, which would delete the whole licence record.
