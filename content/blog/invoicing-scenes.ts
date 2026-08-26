@@ -119,7 +119,7 @@ export const AVAILABILITY = {
   sourceText:
     "12 CFR 229.10(b), 229.12(b) and 229.13(b) and (h)(4), Regulation CC, availability of funds and collection of checks.",
   sourceHref: "https://www.law.cornell.edu/cfr/text/12/229.12",
-  note: "Read every bar as a ceiling rather than as a measurement. This is the latest a bank is permitted to make the money available, not what your bank does, and plenty of banks are faster than the regulation requires on plenty of deposits. Two details are worth carrying anyway. The first is that an electronic payment's clock does not start when the sender clicks send: the regulation says the payment is received when the receiving bank has both the funds in finally collected form and the information about which account to credit, so a transfer initiated late on a Friday can be a Tuesday. The second is that the large deposit exception is written in dollars, which means it applies to a brokerage's cheques as a matter of routine rather than as an unusual event, and the bank does not have to warn you in advance that it is invoking it.",
+  note: "Read every bar as a ceiling rather than as a measurement. This is the latest a bank is permitted to make the money available, not what your bank does, and plenty of banks are faster than the regulation requires on plenty of deposits. One detail is worth carrying anyway, because it is the one that catches people out. An electronic payment's clock does not start when the sender presses send: the regulation says the payment is received when the receiving bank has both the funds in finally collected form and the information about which account to credit, so a transfer initiated late on a Friday can be a Tuesday. And the subpart these rules sit in is titled availability of funds and disclosure of funds availability policies. The second half of that title is the useful one. Your bank has a written policy of its own inside these limits, and that document, rather than this chart, is what governs your account.",
 };
 
 /** SCENE copy — the same day rail. Cited data graphic TWO.
@@ -146,16 +146,15 @@ export const SAME_DAY = {
   eyebrow: "The evidence",
   caption: "What one same day ACH payment is allowed to carry",
   bars: [
-    { label: "Before 2020", value: 25000, display: "$25,000" },
     { label: "From 2020", value: 100000, display: "$100,000" },
     { label: "From 2022", value: 1000000, display: "$1 million" },
   ],
-  lit: 2,
+  lit: 1,
   basis:
-    "The per payment ceiling on a same day ACH credit, on the dates Nacha's own timeline gives for each increase. Nacha writes the operating rules for the ACH network, so this is the rule maker stating its own limit rather than a provider describing the market. The bars are dollar amounts, so the axis runs to the largest of them.",
+    "The per payment ceiling on a same day ACH credit, on the dates Nacha's own timeline gives for each increase. Nacha writes the operating rules for the ACH network, so this is the rule maker stating its own limit rather than a provider describing the market. The bars are dollar amounts, so the axis runs to the larger of them.",
   sourceText: "Nacha, Same Day ACH, network timeline of per transaction dollar limits.",
   sourceHref: "https://www.nacha.org/content/same-day-ach",
-  note: "The reason this chart is here is that the third bar changed what is possible and very little changed in practice. Below a hundred thousand dollars, same day ACH could not carry the payment a brokerage most wants to make quickly. Above a million, it can. What it does not tell you is whether your own bank offers same day origination on your account, at what cut-off time, and at what fee, and those three answers are the entire difference between a rail existing and a rail being available to you. Ask your bank those three questions rather than reading them off this page. The same Nacha page also carries an announcement that the per payment limit is going to ten million dollars, which is not drawn here because an announced number and a number in force are different things.",
+  note: "Two bars rather than three, and the missing one is worth saying out loud. Nacha's timeline records the same ceiling at $25,000 before 2020, and drawn against a million that is two and a half percent of the track, which renders as a dot rather than as a bar and would read as nothing at all. It is here in writing instead. What none of these numbers tells you is whether your own bank offers same day origination on your account, at what daily cut-off, and at what fee, and those three answers are the whole difference between a rail existing and a rail being available to you. Ask your bank rather than reading them off this page. Nacha's page also carries an announcement that the ceiling is going to ten million dollars, which is not drawn here because an announced number and a number in force are different things.",
 };
 
 /** SCENE copy — the four rails and what each one actually is.
@@ -177,7 +176,7 @@ export const RAILS: GridItem[] = [
   },
   {
     lead: "A card",
-    body: "The convenient rail for the small end: a deposit, an application fee, a management charge. It is the only one with a fee that is visibly a percentage, and in New York what you may add to the price for it is capped by statute at what the card company charged you, with the total price including the surcharge required to be posted. That is a rule about signage as much as about money.",
+    body: "The convenient rail for the small end: a deposit, an application fee, a management charge. It is the only one of the four whose fee is visibly a percentage, which is why it is the only one anybody is ever tempted to pass on to the customer, and it is therefore the only one with a New York statute attached to what you are allowed to do about that.",
   },
 ];
 
@@ -221,7 +220,7 @@ export const KILL_CHAIN = {
     "Dollars in millions, from the 2024 figures for the Financial Fraud Kill Chain, the process the Bureau uses to ask a receiving bank to freeze a fraudulent transfer. The first bar is what was reported to it across 3,020 complaints. The second and third are the amounts frozen on domestic and on international requests, published separately by the Bureau and left separate here. The Bureau states a 66 percent success rate for the year.",
   sourceText: "Federal Bureau of Investigation, Internet Crime Complaint Center, 2024 Internet Crime Report.",
   sourceHref: "https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf",
-  note: "Two cautions and one reason this is on the page at all. The first caution is that everything in this report is a complaint somebody filed rather than an audited figure, and the report says so about its own data. The second is that a freeze is not a recovery: it stops money moving on while the rest is worked out. The reason it is here is the shape of the first bar against the other two. Somebody has to notice, and notice fast enough for a bank to be reached, and the whole of that depends on a person at your end comparing an instruction against something they already had. There is no figure anywhere in that report, or in this article, for how much of this touches a brokerage specifically, because the report does not count it that way.",
+  note: "Two cautions and one reason this is on the page at all. The first caution is that everything in this report is a complaint somebody filed rather than an audited figure, and the report says so about its own data. The second is that a freeze is not a recovery: it stops money moving on while the rest is worked out. The reason it is here is the shape of the first bar against the other two, which is what happens to a payment once it has left. There is also no figure anywhere in that report, or anywhere in this article, for how much of this touches a brokerage specifically, because the report does not count it that way: its own real estate category is defined as something else entirely, so the property version of this crime is inside the business email compromise total rather than beside it.",
 };
 
 /** SCENE copy — the staged exchange.
@@ -373,7 +372,7 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       // 1.78 at 390, so the phone sees a taller slice. The taller crop adds the bottom row of
       // number keys and the two arrow-marked keys at the foot of the right hand column, and the
       // narrow ruled window along the top. Only legible key markings are named.
-      alt: "The keyboard of an old blue-grey mechanical adding machine photographed square on, ten columns of round cream number keys running from nine at the top down to three and below, a narrow ruled window with printed digits along the top edge, and a right hand column of larger cream operation keys marked with a division sign, a multiplication sign, a minus sign, a plus sign, a NON ADD key and a crossed key",
+      alt: "The keyboard of an old blue-grey mechanical adding machine photographed square on, several columns of round cream number keys running from nine at the top down to three, a narrow ruled window with printed digits along the top edge, a right hand block of larger cream keys marked with a division sign, a STOP key, a minus sign, a NON SHIFT key, a plus sign and a key marked NEG with a cross on it, two more keys below them marked with arrows pointing left and right, and a single column of number keys down the far right edge",
       caption:
         "Every key on this machine does one thing and does it visibly, and the paper roll behind it exists so that somebody can go back afterwards and see how a total was arrived at. That second half is the part worth keeping. A payment system that cannot show you what a figure is made of has not saved you the arithmetic, it has only moved it somewhere you cannot check it.",
       credit: "Photograph by Les Chatfield, CC BY 2.0.",
@@ -522,9 +521,9 @@ export const INVOICING_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop carries the
       // row of small round keys along the bottom and more of the machine's scrolled iron frame,
       // neither of which is in the 21:9 slice. Only legible markings are named.
-      alt: "The upper keys of an antique cash register in worn brass and black, several tall keys standing proud of the rest with printed labels on their tops, one of them reading RECEIPT and another CHARGE, columns of small round numbered keys below them, and the scrolled ironwork of the machine's frame around the edges",
+      alt: "A close view of the keys of an antique cash register, round enamelled key tops on brass stalks standing above a polished wooden case, several of them numbered 90, 80, 70, 9 and 8 in dark blue on white, two red keys reading $8 and $9 at the left, and in the middle a knurled brass key with RECEIPT printed across its white top",
       caption:
-        "RECEIPT and CHARGE are two different keys on this machine, and they always were. One of them records that money arrived. The other records that somebody owes you. A century of shop counters understood that those are separate facts, and a surprising amount of modern software still lets a note in an email settle the first one.",
+        "Every round key on this machine sets an amount, and one of them does something else entirely: it prints the evidence. On a hundred year old register, entering the figure and producing the receipt are two separate actions, deliberately, because a number somebody typed and a record somebody can hold are different objects. A payments build that closes a receivable on the strength of an email has collapsed those two back into one.",
       credit: "Photograph by Steve Snodgrass, CC BY 2.0.",
       ariaLabel: "The keys of an antique cash register",
     },

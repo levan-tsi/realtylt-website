@@ -42,8 +42,8 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. What the machine could
  * not do, what the standard already calls the thing you do not have, and the cost of moving it. */
 export const IN_SHORT: string[] = [
-  "A scheduling assistant that ran for five months at Microsoft Research finished 39% of its requests without a person ever touching them. The three commonest reasons the other 61% needed a human were all the same reason: an attendee replied in a way the system did not expect, an attendee could not take any of the offered times, or an attendee never replied at all.",
-  "The calendar standards already have a word for an appointment nobody has agreed to. It is the value an invitation starts life with, and it is the value most of your confirmed showings are still sitting at when you tell somebody they are confirmed.",
+  "A scheduling assistant that ran for five months at Microsoft Research handled 39% of its requests inside its structured workflow and needed a trained person for the other 61%. The three commonest reasons for calling that person in were all the same reason: an attendee replied in a way the system did not expect, an attendee could not take any of the offered times, or an attendee never replied at all.",
+  "The calendar standards already have a word for an appointment nobody has agreed to. It is the value every invitation starts life in, and the only thing that moves it is a reply arriving. Not time passing, and not the absence of an objection.",
   "And moving the time is not free. The standard that governs how calendar servers do scheduling requires that when the start time changes, every attendee's answer is thrown away and set back to unanswered. A reschedule does not carry the agreement with it. It asks for it again.",
 ];
 
@@ -122,7 +122,7 @@ export const ESCALATIONS = {
   sourceText:
     "Cranshaw, Elwany, Newman, Kocielnik, Yu, Soni, Teevan and Monroy-Hernandez, Calendar.help: Designing a Workflow-Based Scheduling Agent with Humans in the Loop, CHI 2017, Table 3.",
   sourceHref: "https://arxiv.org/abs/1703.08428",
-  note: "These are meetings between information workers, not showings, and the assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control, and the failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn: one is an uninstrumented bucket at 14%, and three at 8%, 7% and 2% are the system escalating internally rather than anything a party to the meeting did. Read the three big bars as one finding rather than three, because they are three ways of writing down the same sentence: somebody else had not answered yet.",
+  note: "These are meetings between information workers, not showings, and the assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control, and the failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn: one is an uninstrumented bucket at 14%, and three at 8%, 7% and 2% are the system escalating internally rather than anything a party to the meeting did. One thing the table cannot tell you is how many of those requests were recoverable. An escalation means a trained person picked it up, not that the meeting failed, and the paper is about how much skilled attention a scheduling agent consumes rather than about how many appointments it loses.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic TWO.
@@ -157,7 +157,7 @@ export const CEILING = {
   sourceText:
     "Cranshaw et al., Calendar.help, CHI 2017, System Efficiency: 39% of requests completed entirely within the microtasking workflows, the remaining 61% requiring some intervention.",
   sourceHref: "https://arxiv.org/abs/1703.08428",
-  note: "Two things stop this being a verdict on automation. The first is that the 39% is not a fully automated share: the authors describe Tier 1 as software and Tier 2 as a person doing one small defined task, and the number covers both, so it is the share that never needed the expensive human rather than the share no human touched. The second is the population. In the same study, 84% of the requests were meetings between two people and only 15% had three or more attendees, up to a maximum of eleven. A showing on somebody else's listing is a three or four party appointment as a matter of course, which means this chart was produced by a much easier version of the problem than the one you have on a Saturday morning.",
+  note: "Two things stop this being a verdict on automation in general. The first is that it is a snapshot of one system at one point in its life rather than a ceiling: the same paper reports that the earliest version of the service ran entirely on skilled humans, so this 39% is a position on a curve the authors were deliberately pushing, and they say plainly that getting there took continual observation of how people actually replied. The second is that nobody has run anything like this on property appointments, so the split above is evidence about the shape of the problem and not a forecast for your Saturdays.",
 };
 
 /** SCENE copy — who actually has to agree before a showing is real.
@@ -176,7 +176,7 @@ export const WHO_AGREES: GridItem[] = [
   },
   {
     lead: "The way in",
-    body: "A code, a key, a box, an alarm, a doorman, a gate. This one is not a person and so it never gets counted as a party, and it is the one that silently carries a time window: a code that works between ten and four is a constraint on the appointment exactly as much as a seller who works from home is.",
+    body: "A code, a key, a box, an alarm, a doorman, a gate. This one is not a person, which is why it is the one left off the list, and it silently carries a time window of its own: a code that works between ten and four is a constraint on the appointment exactly as much as a seller who works from home is.",
   },
   {
     lead: "The professionals, on a closing",
@@ -214,7 +214,7 @@ export const STATES: GridItem[] = [
   },
   {
     lead: "They said maybe",
-    body: "The standard has a state for tentative, and so does every calendar you have ever used, and almost nobody uses it deliberately. It is the correct answer far more often than it gets given, and a system that can carry a maybe without rounding it up to a yes is telling you something true about your Saturday.",
+    body: "The standard carries a state for tentative, kept distinct from yes and from no, and a system that can hold a maybe there without rounding it up is telling you something true about your Saturday. A build with nowhere to put an answer that is not a decision will file it as one of the other two, and it will not be the cautious one.",
   },
 ];
 
@@ -340,7 +340,7 @@ export const SCHED_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "A proposal is presented as a booking",
-    body: "The single most expensive setting in this whole category, and it is usually not a setting at all, it is the wording of one automatic message. If the note that goes out when a request is raised says confirmed, then every unanswered request in your system is a promise, and you will only find out which ones were real on the morning.",
+    body: "The single most expensive thing in this whole category is not a setting. It is the wording of one automatic message. If the note that goes out when a request is raised says confirmed, then every unanswered request in your system is a promise, and you will only find out which ones were real on the morning.",
   },
   {
     lead: "The hold is never released",
@@ -556,7 +556,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop adds the
       // ceiling above the screens and the top of the concourse wall below them. Only the words
       // that are actually legible at that crop are transcribed.
-      alt: "Five blue framed electronic departure screens mounted in a row under a station roof, each headed Departures in white on blue with a yellow departure time and destination beneath it, Edinburgh, Aberdeen, Kyle of Lochalsh and Dingwall among them, each screen listing its calling points in small yellow type and carrying the operator name First ScotRail along the bottom, the words On time set beside several of the times, and the rightmost screen headed Subsequent Departures",
+      alt: "A row of blue framed electronic departure screens mounted under a station roof, each headed Departures in white on blue with a yellow departure time and destination beneath it, Wick, Edinburgh, Aberdeen, Kyle of Lochalsh and Dingwall among them, each screen listing its calling points in small yellow type and carrying the operator name First ScotRail along the bottom, the words On time set beside several of the times, a fifth screen headed Subsequent Departures and a sixth cut off at the right edge headed Informat",
       caption:
         "Every time on this board was decided by somebody who is not standing in front of it, and the board's whole job is to say which ones are still true. On time is a claim being made now about a plan made months ago, and it is republished the moment it stops being true. That is the standard a scheduling system should be held to, and almost none of them are: they tell you a time once and then go quiet.",
       credit: "Photograph by David Jones, CC BY 2.0.",

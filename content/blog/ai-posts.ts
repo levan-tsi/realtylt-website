@@ -23,9 +23,7 @@ That is the shape of the money problem in this business, and it is almost the ex
 
 Before any of the usual advice applies, it is worth separating the money that behaves like an invoice from the money that does not, because a great deal of software is sold on the assumption that all of it does.
 
-There is money that arrives out of a closing. There is money another business owes you because of something that happened at their end. There is money somebody owes you for work you did and billed for directly. And there is money that is not yours at all, which you may be holding for somebody else.
-
-Those four behave differently, they fail differently, and only two of them are improved by anything a reminder sequence does.
+Four kinds of money come into a business like this one, and the distinctions between them are not accounting pedantry. They arrive by different mechanisms, they fail in different ways, and only two of them are improved by anything a reminder sequence does. Getting them mixed up is how a brokerage ends up paying for software aimed at the wrong half of its own cash flow.
 
 [[scene:what-is-an-invoice]]
 
@@ -39,7 +37,7 @@ What can be established, and what the rest of this article is built on, is narro
 
 ## The law that decides who you may pay and who may pay you
 
-The Real Estate Settlement Procedures Act is usually filed under closing disclosures and mostly ignored by the sales side of a brokerage. Its eighth section is not about disclosure at all. It is about payments between businesses, and it is the law that decides which of your arrangements are ordinary commerce and which are a crime.
+The Real Estate Settlement Procedures Act is best known for the disclosures a buyer signs at a closing. Its eighth section is not about disclosure at all. It is about payments between businesses, and it is the law that decides which of your arrangements are ordinary commerce and which are a crime.
 
 [12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two prohibitions and they are worth reading in the order the statute puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. Subsection (b) covers splitting.
 
@@ -75,21 +73,21 @@ For a local cheque, 229.12(b) gives the second business day following the bankin
 
 [229.13(b)](https://www.law.cornell.edu/cfr/text/12/229.13) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that the aggregate is in excess of $6,725 on any one banking day. And 229.13(h) allows the bank, where an exception applies, to extend the schedule by a reasonable period, which the same subsection then defines as up to five business days for the class of cheque covered by 229.12(b).
 
-Six thousand seven hundred and twenty five dollars is not an unusual amount in this business. It is a routine one. Which means the two day availability schedule that most people vaguely believe in stops applying to the ordinary case, and the outside limit on the excess is the second business day plus up to five more.
+Six thousand seven hundred and twenty five dollars is not an unusual amount in this business. It is a routine one. Which means the two day availability schedule stops applying to the ordinary case in this business, and the outside limit on the part above the threshold is the second business day plus up to five more.
 
 There is nothing sinister in that. Banks carry the risk on a cheque until it clears and the regulation is what balances that risk against your access to your own money. The practical consequence is simply that a brokerage which pays people out of an amount it received by cheque is exposed to a schedule it did not set and may not have read.
 
 ## What each rail costs, and what you are allowed to pass on
 
-Four rails carry essentially all of the money in a small property business, and choosing between them is usually done by whoever pays rather than by whoever is owed.
+Four rails carry the money in a small property business, and which one a given payment arrives on is chosen by whoever is sending it rather than by whoever is waiting for it.
 
 [[scene:rails]]
 
 The one with a rule attached that is specific to this state is the card. New York [General Business Law 518](https://www.nysenate.gov/legislation/laws/GBS/518), in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a customer who elects to use a credit card shall clearly and conspicuously post the total price for using a credit card, inclusive of the surcharge. It then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company for such credit card use, and the final sales price inclusive of the surcharge shall not amount to a price greater than the posted price.
 
-Two practical readings of that. You may not round up. Whatever the processor charges you is the ceiling on what you may add, so a flat three percent applied because it is a round number is a problem if your actual cost is lower. And the obligation is about posting: the price a customer sees has to be the total they will pay by card. The statute also expressly preserves two tier pricing, defined in it as posting a cash price alongside a credit card price inclusive of any surcharge, which is the arrangement most businesses actually want. Violations carry a civil penalty of up to five hundred dollars each.
+Two practical readings of that. You may not round up. Whatever the processor charges you is the ceiling on what you may add, so a flat three percent applied because it is a round number is a problem if your actual cost is lower. And the obligation is about posting: the price a customer sees has to be the total they will pay by card. The statute also expressly preserves two tier pricing, defined in it as posting a cash price alongside a credit card price inclusive of any surcharge, which is the version of this the statute explicitly protects. Violations carry a civil penalty of up to five hundred dollars each.
 
-The other rail worth a second look is ACH, because it changed and almost nobody noticed.
+The other rail worth a second look is ACH, because the ceiling on what a single same day payment can carry has moved twice, and the second move is recent enough that a lot of habits predate it.
 
 [[scene:same-day]]
 
@@ -207,7 +205,7 @@ The reminder half, probably not, because at that size you know every invoice you
 
 ### What is the first thing to fix?
 
-The list. Before any software, write down every arrangement where somebody else's event is what pays you, and how you would find out that the event happened. Most of the value in this whole topic is in that list existing, and it takes an afternoon and no budget.
+The list. Before any software, write down every arrangement where somebody else's event is what pays you, and how you would find out that the event happened. Making that list is the part of this topic that needs no budget at all, and it takes an afternoon.
 
 ## What to do about it
 
@@ -235,9 +233,9 @@ So you rang a buyer who was already in the car, and you were the person who had 
 
 There is a version of this business where scheduling really is a calendar problem. You hold the listing, you meet people at your own office, and the only two diaries that have to agree are yours and theirs. For that version, software solved this years ago, and this article has nothing to tell you that a booking link would not.
 
-Then there is the other version, which is most of a working week. A buyer wants to see a house that belongs to somebody else's client. An inspector needs two hours inside a property that is occupied. A closing needs an attorney, a lender and a title company in the same hour. In every one of those, the appointment does not exist until people you have never met agree to it, and not one of them has given you access to their calendar.
+Then there is the other version, and it is the one this article is about. A buyer wants to see a house that belongs to somebody else's client. An inspector needs two hours inside a property that is occupied. A closing needs an attorney, a lender and a title company in the same hour. In every one of those, the appointment does not exist until people you have never met agree to it, and not one of them has given you access to their calendar.
 
-That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact: you are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait, which is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking somebody a question can fail in about nine ways, and most of them look identical from your side, because they all look like nothing happening.
+That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact: you are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait, which is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking somebody a question can fail in a great many ways, and from your side they are indistinguishable, because every one of them looks like nothing happening.
 
 So the unit of this article is not the appointment. It is the agreement you do not have yet, and the whole argument is that a business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
 
@@ -247,7 +245,7 @@ So the unit of this article is not the appointment. It is the agreement you do n
 
 Almost everything published about scheduling software is written by the people selling it, which makes the exceptions worth reading carefully. There is one study of a real scheduling assistant, running for real people, that published what actually went wrong, and it is the most useful document in this whole subject.
 
-Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads and the assistant took over: it proposed times from the subscriber's calendar, negotiated with the invitees, and put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails, and it does the thing almost nobody does, which is publish the reasons the machine had to give up and hand a request to a trained human being.
+Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads and the assistant took over: it proposed times from the subscriber's calendar, negotiated with the invitees, and put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails, and it publishes the reasons the machine had to give up and hand a request to a trained human being, which is the part of this subject nothing else we could find puts a number on.
 
 The three commonest reasons are, in order, that an attendee replied in a way the system did not expect, that none of the offered times worked for everybody, and that an attendee never replied at all. Those are 32, 27 and 26 percent of the escalations. They are not three findings. They are one finding written three ways, and the finding is that the difficulty lives on the other side of the conversation.
 
@@ -261,9 +259,7 @@ Read that chart carefully, because there is an honest reading and a flattering o
 
 ## Who has to say yes before a showing is real
 
-It is worth being concrete about who these people are, because the number of them is the thing that decides how hard a given appointment is, and almost nobody counts them at the moment they agree to something.
-
-The person you are meeting is one, and they are the only one who is actually in the conversation. Whoever controls the property is a second, and on somebody else's listing that is at least an agent and possibly a seller behind them. If the property is occupied by a tenant there is a third, with rights, and those rights are a matter of the lease and of state and local law rather than of anybody's convenience. And then there is the way in, which is not a person and therefore never gets counted, and which quietly carries a time window of its own.
+The number of separate permissions an appointment needs is the single best predictor of how hard it will be, and it is the thing least likely to be written down anywhere at the moment somebody agrees to it. It is worth counting them deliberately, because they are not all people and they do not all fail the same way. Three of the four below can say no to you, and the fourth one cannot say anything at all, which is exactly why it is the one that gets forgotten.
 
 [[scene:who-agrees]]
 
@@ -299,7 +295,7 @@ That has a consequence for how you run a week, and no piece of software is what 
 
 Here is a small thing that turns out to be worth a great deal, and almost nothing in this market surfaces it.
 
-The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment, saying what happened to the message the server sent them. There are eight published codes. One means it is still trying. One means sent and delivered. One means sent, and then says in as many words that the server does not have explicit information about whether it was delivered, which is the ordinary answer whenever the invitation travelled by email. The remaining five are failures, separated because they need different responses: the address was not a calendar user at all, permissions were insufficient, delivery could not be completed this time, no route could be found, or scheduling with that recipient is not allowed.
+The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment, saying what happened to the message the server sent them. There are eight published codes, and the reason there are eight rather than two is that the standard takes seriously how many different ways a message can fail to reach a calendar. They collapse into three states a person can act on.
 
 [[scene:delivery]]
 
@@ -317,7 +313,7 @@ It can chase, and then stop. An unanswered request needs a second message and th
 
 And it can re-ask when the time moves, for the reason the specification gives above.
 
-There is one more thing worth knowing about, because a major vendor already does it and almost nobody uses it. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability, and every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
+There is one more thing worth knowing about, because a major vendor already returns it and you will not see it in a demonstration. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability, and every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
 
 So one of the two calendar platforms your business probably runs on will hand a scheduling system a confidence figure per proposed time, and the overwhelming majority of what gets built on top of it throws that number away and prints the time on its own. The same page carries a caveat worth quoting too, which is that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
 
@@ -333,7 +329,7 @@ An appointment you did not offer costs a message. The buyer waits until Friday m
 
 An appointment you offered and then withdrew costs something you cannot get back with a message. The buyer arranged their Saturday around it. They may have told somebody else they were busy. And the specific thing they learn is not that the listing agent was slow, because they were not there for that part. What they learn is that when you say a thing is confirmed, it may or may not be.
 
-So the truthful build is sometimes slower than the untruthful one, and a demonstration will always flatter the untruthful one. Answering in four seconds with a time looks better on a screen recording than answering in four seconds with a request. The first is measurably quicker and the second is accurate, and no amount of footage will ever make that difference visible to somebody watching a demo.
+So the truthful build is sometimes slower than the untruthful one, and a demonstration flatters the untruthful one. Answering in four seconds with a time looks better on a screen recording than answering in four seconds with a request. The first is measurably quicker and the second is accurate, and no amount of footage will ever make that difference visible to somebody watching a demo.
 
 [[scene:yes-calculator]]
 
@@ -385,7 +381,7 @@ It is software that takes a request for an appointment, works out what has to be
 
 ### How is this different from AI appointment booking?
 
-Booking is about getting one person from interested to a time they have written down, and about whether they turn up. That has real evidence behind it and it is written up separately on this site. Scheduling, as used here, starts at the point where a time has been proposed and asks who has agreed to it. The two overlap in the easy case, where the only two people involved are you and them. They come apart the moment an appointment needs a permission from somebody who is not in the conversation, which in this industry is most of them.
+Booking is about getting one person from interested to a time they have written down, and about whether they turn up. That has real evidence behind it and it is written up separately on this site. Scheduling, as used here, starts at the point where a time has been proposed and asks who has agreed to it. The two overlap in the easy case, where the only two people involved are you and them. They come apart the moment an appointment needs a permission from somebody who is not in the conversation, which covers every showing on a listing somebody else holds.
 
 ### Can it stop a double booking?
 
@@ -409,7 +405,7 @@ Then at some point a person has to decide, and the useful question is when and w
 
 ### Is any of this different for a closing?
 
-It is the same problem with more parties and a much higher cost of being wrong, which is why closings are usually run by an attorney or a title company rather than by whoever asked first. Nothing in this article suggests automating that. What does transfer is the discipline: know which of the people involved have actually confirmed, in writing, and treat a moved date as a new question rather than an amendment.
+It is the same problem with more parties and a much higher cost of being wrong, and it is not scheduled by whoever asks first. Nothing in this article suggests automating it. What does transfer is the discipline: know which of the people involved have actually confirmed, in writing, and treat a moved date as a new question rather than an amendment.
 
 ## What to do about it
 

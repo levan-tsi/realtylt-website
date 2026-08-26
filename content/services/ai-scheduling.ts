@@ -38,7 +38,7 @@ export const aiScheduling: Service = {
    * person, and the three commonest reasons were all an attendee. */
   stat: {
     value: "61%",
-    label: "of real scheduling requests needed a person, and the top three reasons were all the other party",
+    label: "of real scheduling requests needed a trained person, and the top three reasons were all the other party",
     source: {
       text: "Cranshaw et al., Calendar.help, CHI 2017, 1,626 meetings over five months",
       href: "https://arxiv.org/abs/1703.08428",
