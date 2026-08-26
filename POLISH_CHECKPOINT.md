@@ -1,5 +1,47 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 41b (2026-08-26 afternoon): FILTERS + SWEEP. DONE, PUSHED (9fed83b..a156859) ====
+## Owner granted subagents this session: ONE Opus builder, then ONE Opus scrutineer, Fable
+## gating both (every gate re-run, every headline number re-measured by the orchestrator).
+##
+## -- WHAT SHIPPED (4 commits) -------------------------------------------------------------
+## 9fed83b DAYS ON MARKET IS A WINDOW. His words: "filter properties that was listed 3-6
+##   months ago and it was only up to 3 months." Was worse: ceiling-only meant 41% of Active
+##   inventory unreachable at ANY setting. Now listedMinDays (floor) + newWithinDays
+##   (ceiling) through parser/db/fixture/criteria/UI; min-TO-max control next to Year built,
+##   ladder to 180/365. + price ladder $4M-$10M (649 unreachable above old $3M top) + Year
+##   built 2025/2026 (new construction was unaskable). PROVEN: window = ceiling-diff exactly,
+##   both URL spellings, pins==list, partition sums to base, sorts respect both ends, saved
+##   round trip holds, 320/390 clean.
+## 7ea0eeb SWEEP FIXES (scrutineer found): (1) empty-state "Clear All Filters" never cleared
+##   any MORE-panel filter - dead click at 0 results; now typed so a future uncleaned field
+##   fails tsc. (2) every Bronx listing's crumb + JSON-LD hit /top-areas/bronx 404 (slug is
+##   the-bronx; 1,388 listings). Sweep otherwise CLEAN: 260 pages, 542 link targets, 1 bad
+##   link (that one), zero real console errors, all filters drive.
+## a156859 TWO SEMANTICS CALLS (Fable decided): (1) sqftMax no longer matches sqft=0 rows -
+##   "under 750 sqft" was 75% no-sqft rows incl 100% of Land; now 0/1,710/0 measured. (2)
+##   searchCriteria runs the PAGE grammar (new expandPageParams, one definition, two
+##   callers): saved searches now carry the quick-chip scope incl the default Active view -
+##   before, the CRM would alert on listings the visitor's page never showed. LISTING-ALERTS
+##   doc updated (status key; no status = explicit All).
+##
+## -- GATES (all foreground, orchestrator's own runs) --------------------------------------
+## tsc clean. Tests 1337 -> 1348 (builder) -> 1356 (scrutineer) -> 1359 (Fable). All green.
+## Prod poll was running at handoff (window>0, sqftMax=0 -> 0, the-bronx 200 expected).
+##
+## -- OPEN, deliberately NOT done ----------------------------------------------------------
+## * Off-ladder listedDays/listedMinDays URL values (hand-typed only): server honors clamped
+##   value, client select shows "No max" and repaints broader on first touch. Pre-existing
+##   shape. Fix idea: snap off-ladder to nearest rung in fromParams. Small, next round.
+## * Beds 6+/7+ rung (1,465 at >=6), sqft 6k/10k rungs, lot/garage tails (feed data quality
+##   suspect) - flagged with numbers in the builder's audit, owner-taste calls.
+## * LISTED_DAY_OPTS top rung vs LISTED_MAX_DAYS: unguarded 365 duplicates, one-line test.
+## * HERO LAB: owner rejected photo round (quality), round-2 all-motion options published
+##   (same artifact URL, 588717b9): A Valley Lights / B River Draws Itself / C First Light /
+##   D Constellation. Fable pick: A. AWAITING OWNER'S LETTER, then build it into app/page.
+## * Vimeo frame licence RESOLVED by owner 2026-08-26 (bought site outright) - ATTRIBUTIONS
+##   updated (7aa9627). Brivity's phone hero = stock white kitchen (hom.png), for reference.
+
 ## == ROUND 41 (2026-08-26): /sitemap IS A PAGE NOW. DONE, PUSHED (a2dd78d + 599d276) =======
 ## The owner's note: "site map is terrible looks like code there... like my page on brivity
 ## ...similar or better." The footer linked /sitemap.xml — raw XML. Now:
