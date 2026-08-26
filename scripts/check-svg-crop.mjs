@@ -52,6 +52,7 @@ const SLUGS = args.length
       "marketing-automation-real-estate-email-deliverability",
       "document-processing-real-estate-contract-deadlines",
       "data-enrichment-real-estate-stale-contact-records",
+      "ai-scheduling-real-estate-showing-confirmations",
     ];
 
 const browser = await chromium.launch();

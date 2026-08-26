@@ -7,6 +7,7 @@ import type { ArticleFilm } from "@/lib/blog/types";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
+  AI_SCHEDULING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   CRM_SYNC_POST,
@@ -21,6 +22,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
+import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "./enrichment-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "./document-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
@@ -78,6 +80,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "ai-scheduling-real-estate-showing-confirmations",
+    title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 15 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can actually do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, and why moving the time throws every yes away.",
+    seoDescription:
+      "Real estate scheduling across calendars you do not control: what a scheduling agent's own published failure data shows, what the calendar standards call an unanswered invitation, and why rescheduling resets every confirmation.",
+    cover: "/images/editorial/clock-not-in-use.jpg",
+    body: [],
+    placeholder: false,
+    markdown: AI_SCHEDULING_POST,
+    flagship: SCHEDULING_FLAGSHIP,
+  },
   {
     slug: "data-enrichment-real-estate-stale-contact-records",
     title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",

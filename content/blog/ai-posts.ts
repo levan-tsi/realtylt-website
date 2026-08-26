@@ -9,6 +9,206 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday and it was not your listing. For it to happen at all, three people who do not work for you had to be willing: the agent who holds the listing, whoever has to be out of the house that morning, and whoever controls how the front door opens.
+
+You sent the request on Thursday afternoon. On Thursday evening you told the buyer that Saturday at eleven was confirmed, and you were not being careless when you said it. You had proposed a time, nobody had objected to it, and there it was in bold on your own calendar looking exactly like every appointment that has ever happened.
+
+At twenty past nine on Saturday morning the listing agent replied. The property is tenant occupied and the tenant is entitled to notice.
+
+So you rang a buyer who was already in the car, and you were the person who had told them it was settled. Nothing in that story is a booking failure. The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you.
+
+[[scene:in-short]]
+
+## What a scheduling problem is, once the calendar is not yours
+
+There is a version of this business where scheduling really is a calendar problem. You hold the listing, you meet people at your own office, and the only two diaries that have to agree are yours and theirs. For that version, software solved this years ago, and this article has nothing to tell you that a booking link would not.
+
+Then there is the other version, which is most of a working week. A buyer wants to see a house that belongs to somebody else's client. An inspector needs two hours inside a property that is occupied. A closing needs an attorney, a lender and a title company in the same hour. In every one of those, the appointment does not exist until people you have never met agree to it, and not one of them has given you access to their calendar.
+
+That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact: you are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait, which is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking somebody a question can fail in about nine ways, and most of them look identical from your side, because they all look like nothing happening.
+
+So the unit of this article is not the appointment. It is the agreement you do not have yet, and the whole argument is that a business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
+
+[[scene:not-the-booking]]
+
+## The part nobody automates is the part that is other people
+
+Almost everything published about scheduling software is written by the people selling it, which makes the exceptions worth reading carefully. There is one study of a real scheduling assistant, running for real people, that published what actually went wrong, and it is the most useful document in this whole subject.
+
+Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads and the assistant took over: it proposed times from the subscriber's calendar, negotiated with the invitees, and put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails, and it does the thing almost nobody does, which is publish the reasons the machine had to give up and hand a request to a trained human being.
+
+The three commonest reasons are, in order, that an attendee replied in a way the system did not expect, that none of the offered times worked for everybody, and that an attendee never replied at all. Those are 32, 27 and 26 percent of the escalations. They are not three findings. They are one finding written three ways, and the finding is that the difficulty lives on the other side of the conversation.
+
+[[scene:escalations]]
+
+The reason to sit with that chart rather than nod at it is the population underneath it. In the same study, 84 percent of the requests were meetings between two people, and only 15 percent had three or more attendees, with eleven as the largest. That is the easy version of this problem, and the table above is what the easy version looks like. A Saturday showing on somebody else's occupied listing is a three or four party appointment before anybody has thought about it.
+
+[[scene:ceiling]]
+
+Read that chart carefully, because there is an honest reading and a flattering one and the difference matters. The 39 percent is not the share that no human touched. The authors describe their system in tiers, where the first tier is software and the second is a person doing one small, tightly defined task, and the 39 percent covers both. What it measures is the share of requests that never needed the expensive, skilled scheduler. That is a genuinely good result and it is a long way from nobody being involved.
+
+## Who has to say yes before a showing is real
+
+It is worth being concrete about who these people are, because the number of them is the thing that decides how hard a given appointment is, and almost nobody counts them at the moment they agree to something.
+
+The person you are meeting is one, and they are the only one who is actually in the conversation. Whoever controls the property is a second, and on somebody else's listing that is at least an agent and possibly a seller behind them. If the property is occupied by a tenant there is a third, with rights, and those rights are a matter of the lease and of state and local law rather than of anybody's convenience. And then there is the way in, which is not a person and therefore never gets counted, and which quietly carries a time window of its own.
+
+[[scene:who-agrees]]
+
+[[scene:plate]]
+
+## The standard already has a word for an appointment nobody agreed to
+
+Everything your calendar does when it sends an invitation is defined in a published internet standard, and the standard is unusually blunt about the thing this article is about.
+
+The protocol is called iTIP, and it is [RFC 5546](https://www.rfc-editor.org/rfc/rfc5546.txt). It divides everybody into an organiser, who owns the event, and attendees, who do not. An attendee cannot change the master copy of the appointment. What an attendee can do is reply, and the reply carries a single value that says where they stand, which the specification calls PARTSTAT, short for participation status.
+
+The sentence worth knowing is this one, from section 2.1.1: when an organiser issues the initial object, attendee status is typically unknown, and the organiser specifies this by setting the participation status to NEEDS-ACTION. Each attendee then changes their own status to something else as part of a reply sent back to the organiser.
+
+In other words, the standard that runs the world's calendars starts every single invitation in a state that means nobody has answered, and the only thing that moves it out of that state is a message coming back. Not time passing. Not the absence of an objection. Not the appointment being written in bold. A reply, from that person, arriving.
+
+[[scene:states]]
+
+There is one more method in the same specification that is worth knowing by name, because it describes what the listing agent in the opening story was actually doing. The standard calls it COUNTER, and its own table describes it as used by an attendee to negotiate a change, giving the request to change a proposed event time as the example. A counter is not a rejection and it is not an acceptance. It is a third thing, and a system that has no place to put it will file it as one of the other two.
+
+## Moving the time throws away every yes you had
+
+This is the part that surprised me most while reading, and it is the strongest practical argument in the article.
+
+There is a second specification, [RFC 6638](https://www.rfc-editor.org/rfc/rfc6638.txt), which defines how a calendar server does scheduling automatically on your behalf. Section 3.2.8 sets out what a server has to do when the appointment moves, and it is not a suggestion.
+
+[[scene:pull-quote]]
+
+Read that in plain language. If the start time, the end time or the duration of an appointment changes, every attendee's answer is deleted and set back to unanswered, on every affected occurrence, and it applies to everybody except the organiser. The standard treats a rescheduled appointment as a new question, because that is what it is. Nobody agreed to Saturday at two. They agreed to Saturday at eleven, and Saturday at eleven no longer exists.
+
+That has a consequence for how you run a week, and no piece of software is what makes it true. Every time you move an appointment involving other people, you are spending all of their agreements at once and you have to buy them back. A build that moves an appointment and does not re-ask is not saving anybody a message. It is carrying forward a set of confirmations that the standard, and common sense, both say are void.
+
+## Your own system knows whether the message arrived
+
+Here is a small thing that turns out to be worth a great deal, and almost nothing in this market surfaces it.
+
+The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment, saying what happened to the message the server sent them. There are eight published codes. One means it is still trying. One means sent and delivered. One means sent, and then says in as many words that the server does not have explicit information about whether it was delivered, which is the ordinary answer whenever the invitation travelled by email. The remaining five are failures, separated because they need different responses: the address was not a calendar user at all, permissions were insufficient, delivery could not be completed this time, no route could be found, or scheduling with that recipient is not allowed.
+
+[[scene:delivery]]
+
+None of those eight, including the good one, tells you that the person is coming. Delivered is a fact about a server. Accepted is a fact about a person. They are two different columns and a great deal of the trouble in this subject comes from reading the first one and feeling reassured about the second.
+
+## What a scheduling layer can honestly do across calendars it does not own
+
+Strip away everything a demonstration shows you and there are four things worth paying for here, and only one of them involves reading your calendar.
+
+It can propose without promising. That sounds like a small distinction and it is the whole article: the message that goes to your buyer when a request is raised either says a time or it says a request has gone in, and those two messages produce completely different Saturdays.
+
+It can hold your own side properly. Your calendar is the one thing in this whole exchange that your software genuinely controls, so the moment a proposal is live it should be blocked, and the moment it dies it should be released. Getting the first half right and the second half wrong is how a diary fills up with appointments that never happened.
+
+It can chase, and then stop. An unanswered request needs a second message and then it needs a decision from a person, and the decision is a real product feature rather than an admission of defeat.
+
+And it can re-ask when the time moves, for the reason the specification gives above.
+
+There is one more thing worth knowing about, because a major vendor already does it and almost nobody uses it. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability, and every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
+
+So one of the two calendar platforms your business probably runs on will hand a scheduling system a confidence figure per proposed time, and the overwhelming majority of what gets built on top of it throws that number away and prints the time on its own. The same page carries a caveat worth quoting too, which is that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
+
+[[scene:the-request]]
+
+[[scene:sched-path]]
+
+## Why offering a slot you cannot hold is worse than offering nothing
+
+The instinct when a scheduling system feels slow is to make it more decisive, and the instinct is wrong, because the two failures are not symmetrical.
+
+An appointment you did not offer costs a message. The buyer waits until Friday morning and then hears a time, and the only thing they have lost is a day of not knowing. That is a real cost and it is small, and it is entirely recoverable by saying, on Thursday, that you are waiting on the listing side.
+
+An appointment you offered and then withdrew costs something you cannot get back with a message. The buyer arranged their Saturday around it. They may have told somebody else they were busy. And the specific thing they learn is not that the listing agent was slow, because they were not there for that part. What they learn is that when you say a thing is confirmed, it may or may not be.
+
+So the truthful build is sometimes slower than the untruthful one, and a demonstration will always flatter the untruthful one. Answering in four seconds with a time looks better on a screen recording than answering in four seconds with a request. The first is measurably quicker and the second is accurate, and no amount of footage will ever make that difference visible to somebody watching a demo.
+
+[[scene:yes-calculator]]
+
+## How to test one before you buy it
+
+Four questions, and none of them needs anything technical.
+
+Ask them to show you what the person on the other end receives before anybody has agreed. Not after. If the message that goes out when a request is raised contains a time and no qualification, that is the product, and no setting later in the flow will undo it.
+
+Ask what happens to your own calendar while a proposal is outstanding, and then ask what happens to it when the proposal dies. Both halves. A system that blocks and never releases will look immaculate for a fortnight and then start telling people you are busy on days you are free.
+
+Ask what it does with a counter. Somebody has replied that eleven is impossible but two might work, in a text message, in lower case, with no punctuation. That reply is neither a yes nor a no and it is the most common thing that will ever happen to this system. Watch where it lands.
+
+Ask how you find out that an invitation was never delivered. There is a real answer to this, it is in the standard, and a vendor who has thought about scheduling for more than a fortnight will know what you are asking about.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+The software is the smaller line here and it is not the thing that moves the number. What moves it is how many different kinds of counterparty you have to reach and how each of them prefers to be reached. One brokerage sets up showings with the same handful of offices, by text, and every one of them replies the same day. Another deals with a rotating cast of listing agents, a property manager who only reads email, a management company with a portal and two sellers who like to be telephoned. Those are different projects, and the difference is in the reaching rather than in the calendar.
+
+The recurring cost that scales is messaging, and this topic generates more of it than you would guess. A single appointment can produce a request out, a chase, a counter coming back, a confirmation to the other office and a note to your own client, and every one of those is metered separately. Ask about that line per message rather than per month, because it is the one that grows as the business does.
+
+Setup is short and the decisions are not. The four that take the time are which appointment types you actually run, what access constraint each of them carries, how long you are willing to keep your own calendar blocked waiting for an answer that has not come, and what should happen when that time runs out. None of the four is a configuration screen. They are policies, you are already applying them informally today, and writing them down has value whether or not any software ever arrives.
+
+The line that never appears on a quote is the habit change underneath all of it. Anything can only report who has confirmed if somebody put the confirmation into it, so the first month is mostly people learning to forward the text message instead of remembering it. That part is unglamorous and free, and a brokerage that does it will get a useful answer out of whatever it buys afterwards.
+
+## What it does not do, and should not pretend to
+
+It does not make anybody reply. That is the whole of the chart earlier on this page in one sentence. The three largest reasons a real scheduling agent had to hand a meeting to a person were all somebody else not answering, or answering awkwardly, and no amount of software on your side changes what happens on theirs.
+
+It does not read a calendar it has not been given. The only availability it can see is yours. Everybody else's is a message, and every product that talks about live availability across parties is talking about your side of it.
+
+It does not decide which appointments are worth having. A system that sets up appointments faster will set up more of them, and if nothing sits between the request and the calendar, that is a fuller week rather than a better one.
+
+It does not know that the tenant has a notice period unless somebody has told it. Access constraints are not published anywhere a machine can read them, and a build that offers times without them will keep proposing eleven on Saturday until a person types the rule in.
+
+And it inherits whatever your own diary already gets wrong. Availability that exists only in somebody's head is invisible to it, so a calendar that gets overridden regularly will produce proposals that have to be withdrawn, and they will now be withdrawn in front of another office rather than quietly between the two of you.
+
+[[scene:wasted]]
+
+## Common questions, answered honestly
+
+### What is AI scheduling, in plain terms?
+
+It is software that takes a request for an appointment, works out what has to be true for it to happen, proposes times to the people whose agreement it needs, keeps track of who has actually replied, blocks your own calendar while it waits, and tells everybody once when it is settled. The intelligent part is narrow: understanding a request that arrives as three lines of lower case text, and keeping one negotiation straight across several threads at once. Everything underneath that is unremarkable record keeping, which is what you want it to be, because record keeping behaves the same on a bad Saturday as on a quiet Tuesday.
+
+### How is this different from AI appointment booking?
+
+Booking is about getting one person from interested to a time they have written down, and about whether they turn up. That has real evidence behind it and it is written up separately on this site. Scheduling, as used here, starts at the point where a time has been proposed and asks who has agreed to it. The two overlap in the easy case, where the only two people involved are you and them. They come apart the moment an appointment needs a permission from somebody who is not in the conversation, which in this industry is most of them.
+
+### Can it stop a double booking?
+
+It can stop one kind and not the other. It can stop your own calendar being offered twice, because your calendar is the one it can read and write, and holding a slot the instant a proposal goes live is what makes that reliable. It cannot stop the listing side promising the same two o'clock to somebody else, because it has no visibility of their diary and no authority over it. Any product that says double booking cannot happen is describing the first kind and letting you hear the second.
+
+### What happens when somebody replies "maybe"?
+
+That is the interesting question and it is worth asking a vendor before you buy. There is a standard answer available: the calendar specifications carry a tentative state alongside yes and no, and a system can hold a proposal there without rounding it up. What you are checking is whether the product has anywhere to put an answer that is not a decision, because that answer is going to arrive constantly.
+
+### Does moving an appointment need everybody to confirm again?
+
+Yes, and this is not our opinion. The specification that governs how calendar servers do scheduling requires that any change to the start time, end time or duration resets every attendee's participation status to needs action. The agreement was to a specific time. Change the time and there is no agreement, only the appearance of one, and a build that carries the old confirmations forward is carrying forward something the standard says has been cleared.
+
+### How does it know when I am free?
+
+It reads your calendar, which is the ordinary part. Two things are worth checking beyond that. The first is what level of access it is asking for, and this site answers that question in detail on the appointment booking article rather than repeating it here. The second is whether it has permission to write as well as read, because reading alone cannot reserve anything, and a proposal that has not been reserved is still available to whoever asks next.
+
+### What if the other agent never answers at all?
+
+Then at some point a person has to decide, and the useful question is when and who. A reasonable build sends the request, sends one chase, and then puts it in front of somebody with the whole history attached and a client who is still waiting. What you do not want is a system that chases indefinitely, because the queue grows quietly and the person actually waiting is your buyer, who is hearing nothing.
+
+### Is any of this different for a closing?
+
+It is the same problem with more parties and a much higher cost of being wrong, which is why closings are usually run by an attorney or a title company rather than by whoever asked first. Nothing in this article suggests automating that. What does transfer is the discipline: know which of the people involved have actually confirmed, in writing, and treat a moved date as a new question rather than an amendment.
+
+## What to do about it
+
+Do this tonight and it takes about fifteen minutes.
+
+Open the next two weeks of your calendar and pick out every appointment that needs somebody outside your own office. For each one, write down how many people had to agree, and then write down how many of those agreements you could actually produce if somebody asked you to. Not remember. Produce, as a message with a time on it.
+
+The distance between those two columns is your exposure, written in your own hand, and it doubles as the list of calls worth making tomorrow morning. A brokerage with no distance between them is already doing the expensive part manually and has nothing to buy from anybody. A brokerage with a distance has just located the Saturday that is going to go wrong, with a week still left in which to stop it.
+
+[[scene:funnel]]`;
+
 export const DATA_ENRICHMENT_POST = `You ran the pass because two thirds of the database had no phone number in it. That is a real problem and enrichment is a real answer to it, and by the afternoon most of those blanks were full.
 
 Somewhere in the middle of the file is a woman you sold a house to three years ago. She gave you that number herself, standing in her own kitchen, and you have texted her on it since.
