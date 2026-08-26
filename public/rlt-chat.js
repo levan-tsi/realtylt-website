@@ -542,6 +542,13 @@
     // eslint-disable-next-line no-control-regex
     const cleaned = String(url).replace(/[\u0000-\u0020\u00a0\u2028\u2029]+/g, '');
     if (/^(?:https?:|mailto:|tel:)/i.test(cleaned)) return cleaned;
+    // A PROTOCOL-RELATIVE url is NOT a relative url. Measured 2026-08-26 (review round):
+    // "[go](//evil.example.com/x)" passed the leading-slash rule below and rendered as an
+    // ordinary-looking link inside the branded panel that resolves to https://evil.example.com/x.
+    // It is not script execution, so the allowlist above was never wrong — but the visitor is
+    // being sent off-site by text the model (or an MLS remark, or a typed agent reply) supplied,
+    // which is a phishing surface we hand out for free. One leading slash is a path; two is a host.
+    if (/^\/\//.test(cleaned)) return '#';
     // Relative and same-page links: a path, a query, a fragment, or a bare filename.
     if (/^[/#?]/.test(cleaned) || /^[\w.-]+(?:[/?#]|$)/.test(cleaned)) return cleaned;
     return '#';
