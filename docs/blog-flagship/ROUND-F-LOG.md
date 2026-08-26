@@ -547,9 +547,23 @@ scrollWidth == viewport width at 320, 390 AND 1440:
 Every external link was fetched and returned 200 before it shipped: twelve across the two posts on
 the first check, plus the HubSpot import page the second pass added.
 
-Probe rails held: `**/api/lead` and `**/api/media/**` aborted in every browser run. No MLS or
-DATA-API call on any page or probe path. No film, avatar or HeyGen work. Nothing touched in
-`next.config.ts`, the CSP, security controls or `lib/idx`.
+Probe rails held: `**/api/lead` aborted in every browser run, and `**/api/media/**` aborted in
+every run of the committed and reused probes. **Two ad-hoc one-liners this round aborted
+`/api/lead` but not `/api/media/**`**, so rather than assert the rail held on those, it was
+measured: every one of the five pages driven this round was loaded again with a request listener
+counting anything matching `api/media`, `mlsgrid` or `DATA-API`, scrolled to the bottom, and the
+count came back **0 on all five**. Neither a blog article nor a service page requests a photograph
+through the media route. No film, avatar or HeyGen work. Nothing touched in `next.config.ts`, the
+CSP, security controls or `lib/idx`.
+
+**Two new scratch probes, both in the gitignored `_scratch-*` namespace**, recorded here so they
+can be recreated. `_scratch-f-scene.mjs` shoots ONE scene or heading section at its real size by
+clipping between its anchor and the next one, which is what found the six echoing chart notes: the
+strip probes scale a forty thousand pixel page into eight columns and a bar label cannot be read in
+one. Its first version called `closest("section")` on the anchor and produced a 114,000px
+"scene", because a scene anchor is a zero-height marker whose nearest section is the article root.
+`_scratch-f-svc.mjs` does the same for a service page, section by section, because
+`_scratch-e-pageshot.mjs` renders one at 41,000px in a single column.
 
 **The same known probe limitation Round E recorded still applies.**
 `_scratch-e-overflow.mjs` skips a wide node only if it has an ancestor with `overflow-x: auto` or
