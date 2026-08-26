@@ -55,6 +55,7 @@ export const POSTS = [
   "document-processing-real-estate-contract-deadlines",
   "data-enrichment-real-estate-stale-contact-records",
   "ai-scheduling-real-estate-showing-confirmations",
+  "invoicing-and-payments-real-estate-brokerage",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */

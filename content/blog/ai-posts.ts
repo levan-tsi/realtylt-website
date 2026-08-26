@@ -9,6 +9,218 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const INVOICING_POST = `You sent the buyer to a brokerage two states away in February. It was a good referral, the arrangement was ordinary and lawful, and both of you signed something.
+
+Their deal closed in July.
+
+Nothing happened at your end in July, or in August, and the reason is worth being precise about, because it is not that anybody behaved badly. The event that created the charge happened in a building you have never been to, in a file you cannot see, and the only person who knew about it had a closing of their own to get through that afternoon. Telling you was nobody's job. There was no invoice sitting unpaid in anybody's system, because there was no invoice.
+
+That is the shape of the money problem in this business, and it is almost the exact opposite of the problem every article about invoicing is written to solve. The standard advice is about the last mile: send it sooner, chase it politely, escalate on a schedule. All of that is real and this article gets to it. But the expensive part in a brokerage happens four months earlier, when something you should have charged for occurred somewhere you were not looking.
+
+[[scene:in-short]]
+
+## What counts as an invoice in a brokerage, and what does not
+
+Before any of the usual advice applies, it is worth separating the money that behaves like an invoice from the money that does not, because a great deal of software is sold on the assumption that all of it does.
+
+There is money that arrives out of a closing. There is money another business owes you because of something that happened at their end. There is money somebody owes you for work you did and billed for directly. And there is money that is not yours at all, which you may be holding for somebody else.
+
+Those four behave differently, they fail differently, and only two of them are improved by anything a reminder sequence does.
+
+[[scene:what-is-an-invoice]]
+
+## What this article refuses to tell you about your commission
+
+Here is the refusal, stated in the open rather than buried, because a business owner opening a page about invoicing will look for their commission first.
+
+This article does not describe how a commission is documented, requested or disbursed at a closing. Not because it is unimportant, obviously, but because it varies by state, by whether there is an attorney at the table, by which closing agent is running it and by what your brokerage agreement says, and no primary source states it in a way that would be true for every reader of this page. Every version of that paragraph I could have written would have been a plausible generalisation, and a plausible generalisation about how your largest payment arrives is worse than nothing.
+
+What can be established, and what the rest of this article is built on, is narrower and more useful than a generalisation would have been. Federal law states clearly who you are allowed to pay and be paid by in a transaction with a mortgage on it. Federal regulation states exactly when money that has reached your bank becomes money you can spend. And New York statute states what you may add to a price when somebody pays you by card. Those three are checkable, they are the same for everybody in this state, and each one has a real consequence for how a brokerage should run.
+
+## The law that decides who you may pay and who may pay you
+
+The Real Estate Settlement Procedures Act is usually filed under closing disclosures and mostly ignored by the sales side of a brokerage. Its eighth section is not about disclosure at all. It is about payments between businesses, and it is the law that decides which of your arrangements are ordinary commerce and which are a crime.
+
+[12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two prohibitions and they are worth reading in the order the statute puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. Subsection (b) covers splitting.
+
+[[scene:pull-quote]]
+
+[[scene:plate]]
+
+Two things about those sentences matter more than the summaries of them do.
+
+The first is the scope. Both prohibitions attach to a transaction involving a federally related mortgage loan, and that term is defined in [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) as, broadly, a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That is nearly every ordinary purchase mortgage and it is not a cash sale, which is a distinction worth holding rather than assuming either way.
+
+The second is the exception list, and one item on it is the reason the story at the top of this page describes a lawful arrangement rather than an unlawful one. Subsection (c)(3) permits payments pursuant to cooperative brokerage and referral arrangements or agreements between real estate agents and brokers. Congress named your trade specifically. A referral fee from one brokerage to another is not the thing this statute exists to stop, and the same subsection separately permits a bona fide salary or compensation or other payment for goods or facilities actually furnished or for services actually performed.
+
+Put those together and a usable rule falls out, one that a person running a brokerage can apply without a lawyer in the room. Money moving between licensed real estate brokers under a referral arrangement is contemplated by the statute. Money moving to anybody else has to be buying something that was actually furnished or actually performed, and the phrase "actually performed" is doing real work: the statute is not interested in what the invoice says the payment was for.
+
+The penalties are not theoretical either. Subsection (d) provides for a fine of not more than $10,000 or imprisonment for not more than one year, or both, and separately makes violators jointly and severally liable to the person charged for the settlement service in an amount equal to three times the amount of any charge paid for that service. Nothing in this article is legal advice, and this is exactly the paragraph to take to somebody whose advice it is.
+
+One more piece of the same statute is worth knowing because it explains why the money side of a transaction feels invisible from a brokerage's desk. [12 U.S.C. 2603](https://www.law.cornell.edu/uscode/text/12/2603) requires the Bureau to publish a single integrated disclosure for mortgage loan transactions, and says that such forms shall conspicuously and clearly itemize all charges imposed upon the borrower and all charges imposed upon the seller in connection with the settlement. The charges get itemised. They get itemised on a form somebody else prepares, in a process somebody else runs, and that is a perfectly sensible arrangement which happens to mean that the paperwork proving what you are owed is not paperwork you produced.
+
+## Paid is three different days, and only one of them is yours
+
+Ask anybody in a small business when they got paid and they will name the day the money appeared. There are actually three days in that sentence and they can be a week apart.
+
+There is the day the other side says they sent it. There is the day it reaches your bank. And there is the day your bank lets you use it, which is the only one of the three that matters if you have people to pay on Friday.
+
+That third day is not a matter of your bank's mood. It is regulated. [Regulation CC](https://www.law.cornell.edu/cfr/text/12/229.12) sets the outside limits, and the limits are more interesting than the averages.
+
+For an electronic payment, which covers a wire and an ACH credit, the rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. There is a definition attached to "received" that is worth reading twice: the payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when the receiving bank has both halves, not when somebody at the other end pressed send.
+
+For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. And then there is the exception that applies to this industry more than to almost any other.
+
+[[scene:availability]]
+
+[229.13(b)](https://www.law.cornell.edu/cfr/text/12/229.13) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that the aggregate is in excess of $6,725 on any one banking day. And 229.13(h) allows the bank, where an exception applies, to extend the schedule by a reasonable period, which the same subsection then defines as up to five business days for the class of cheque covered by 229.12(b).
+
+Six thousand seven hundred and twenty five dollars is not an unusual amount in this business. It is a routine one. Which means the two day availability schedule that most people vaguely believe in stops applying to the ordinary case, and the outside limit on the excess is the second business day plus up to five more.
+
+There is nothing sinister in that. Banks carry the risk on a cheque until it clears and the regulation is what balances that risk against your access to your own money. The practical consequence is simply that a brokerage which pays people out of an amount it received by cheque is exposed to a schedule it did not set and may not have read.
+
+## What each rail costs, and what you are allowed to pass on
+
+Four rails carry essentially all of the money in a small property business, and choosing between them is usually done by whoever pays rather than by whoever is owed.
+
+[[scene:rails]]
+
+The one with a rule attached that is specific to this state is the card. New York [General Business Law 518](https://www.nysenate.gov/legislation/laws/GBS/518), in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a customer who elects to use a credit card shall clearly and conspicuously post the total price for using a credit card, inclusive of the surcharge. It then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company for such credit card use, and the final sales price inclusive of the surcharge shall not amount to a price greater than the posted price.
+
+Two practical readings of that. You may not round up. Whatever the processor charges you is the ceiling on what you may add, so a flat three percent applied because it is a round number is a problem if your actual cost is lower. And the obligation is about posting: the price a customer sees has to be the total they will pay by card. The statute also expressly preserves two tier pricing, defined in it as posting a cash price alongside a credit card price inclusive of any surcharge, which is the arrangement most businesses actually want. Violations carry a civil penalty of up to five hundred dollars each.
+
+The other rail worth a second look is ACH, because it changed and almost nobody noticed.
+
+[[scene:same-day]]
+
+## The payment instruction that was not from your client
+
+This is the paragraph in this article with the highest cost attached and the least to do with software you would buy.
+
+The FBI's Internet Crime Complaint Center publishes an annual report of what was reported to it. The [2024 edition](https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf) records 859,532 complaints and $16.6 billion in reported losses, with 256,256 of those complaints reporting an actual loss and an average reported loss of $19,372. Business email compromise, which is the category a diverted payment instruction falls into, accounts for 21,442 complaints and $2,770,151,146.
+
+There is a definitional point here that is easy to get wrong and worth getting right, because it changes what the numbers mean. The report has a crime type called Real Estate, and its own glossary defines that as loss of funds from a real estate investment or fraud involving rental or timeshare property. A spoofed instruction to wire closing funds to the wrong account is not counted there. The report's own worked example of exactly that scenario, where buyers received a spoofed email purporting to come from their agents asking them to wire funds to finalise the closing, sits under business email compromise. So the honest summary is that this category contains the property version of the crime and does not report it separately, and anybody quoting you a real estate specific figure from this report has taken it from the wrong table.
+
+[[scene:kill-chain]]
+
+The operational lesson is small, free and entirely about people. A change to payment instructions arriving by email is not a change to payment instructions. It is a request to change them, and it is verified by telephoning a number you already had before the message arrived, never a number in it. That rule costs nothing, it is not a product, and no piece of software this or any company sells is a substitute for it.
+
+## What a payments build can honestly do in a brokerage
+
+Strip out everything that is really about a plumber invoicing for a boiler and four things remain, and only one of them is the reminder sequence.
+
+It can go and ask. This is the one that is worth the most and gets built the least: a standing job that asks, on a schedule, whether the events that create your charges have happened yet. Referrals you sent out, transactions somebody else is closing, work that gets billed when something lands. Nobody at the other end is going to remember, and the asking is cheap and unlimited and does not get embarrassed.
+
+It can raise the charge against the agreement rather than against a conversation. What makes a referral fee collectable is the document you both signed, and the invoice that quotes it will be paid by somebody who was not part of the exchange that produced it.
+
+It can chase, politely and on a fixed schedule, which is the ordinary part and is genuinely useful for the ordinary invoices. There is no shame in it being the boring half.
+
+And it can reconcile, which is the step that turns everything above from a record of what you asked for into a record of what you actually have.
+
+[[scene:the-chase]]
+
+[[scene:money-path]]
+
+## Why the chasing is the small half
+
+It is worth being blunt about this because it is where the category sells itself and it is not where the money is.
+
+A reminder sequence works on invoices that exist. It sends them earlier than a person would, it sends the second and third messages a person finds uncomfortable, and it keeps a timestamped record of both. For rental fees, management charges and any work you bill directly, that is a real improvement and it costs almost nothing to set up.
+
+It does nothing whatsoever about a charge that was never raised, and it cannot, because there is nothing in the system to remind anybody about. The unraised charge is invisible to every dashboard you will ever be shown, and it is invisible in a specific and cruel way: your accounts receivable report will look excellent, because everything in it is being handled beautifully. What is missing is not late. It is absent.
+
+That asymmetry decides what to ask a vendor before anything else, and it is not about how the reminders are worded. Ask what causes an invoice to come into existence at all, and whether the cause is an event or a person remembering.
+
+[[scene:events-calculator]]
+
+## How to test one before you buy it
+
+Four questions, none of them technical.
+
+Ask what creates an invoice. Watch carefully for whether the answer is a person marking something complete. If it is, then the automation begins after the hard part is over, and the demonstration you are watching starts at the wrong place.
+
+Ask what happens when a payment arrives that does not match anything. A part payment, a payment with no reference, two invoices settled in one transfer. That happens most weeks in a working business, and the answer tells you whether anybody who built the product has ever sat down with a live bank statement.
+
+Ask how it decides something was paid. If any part of that answer involves reading a message from the person who owes you, that is the wrong answer, and it is worth asking twice because the first answer is often about the bank feed and the second one is about the email.
+
+Ask what it does about the money that is not yours. The correct answer is that it does not touch it, and a product that is enthusiastic about integrating with a client account is a product to think slowly about.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+This one divides cleanly into two halves with completely different prices, and the halves get sold as one thing.
+
+The ordinary invoicing half is short and cheap. Your accounting package almost certainly issues invoices and sends reminders already, and the work is connecting it to whatever creates the charge and agreeing the wording and the timings. That is days rather than weeks, and a meaningful share of it is deciding rather than building.
+
+The other half is the asking, and its price is set entirely by who you have to ask and how they answer. A handful of brokerages you deal with constantly, all of whom reply to a text, is one project. Two management companies with portals, an attorney's office that works by email and a title company that answers the phone is a different one, and the price sits in getting hold of them rather than in the logic.
+
+Recurring cost is small on this topic compared with the others on this site, because the volume is low. A brokerage sends far fewer of these messages in a month than it sends appointment reminders in a week, and the ongoing bill reflects that.
+
+The part with a genuine ongoing cost is the reconciliation, and the cost is attention rather than money. Somebody has to look at the exceptions the matching could not resolve, and if nobody is named for that job it will not be done, and everything above it becomes decoration.
+
+## What it does not do, and should not pretend to
+
+It does not collect a debt. After the sequence has run, a business that will not pay is a conversation and possibly a lawyer, and the value of the automation at that point is the record of what was sent and when.
+
+It does not tell you that an event happened. It can ask, repeatedly and cheaply, and asking is not the same as knowing. Anybody can decline to answer and some people will.
+
+It does not make a payment arrive sooner than the rail allows. Availability is set by regulation and by your bank's own policy within it, and no amount of software moves a cheque through the system faster.
+
+It does not touch money that is not yours. Client money is governed by rules specific to your state and your licence, and this article deliberately does not summarise them.
+
+And it does not know whether a payment instruction is genuine. That is a human control with a telephone in it, and treating it as a software feature is how the expensive version of this goes wrong.
+
+[[scene:wasted]]
+
+## Common questions, answered honestly
+
+### What does invoicing automation actually do for a brokerage?
+
+Two separate things that get sold as one. The first is ordinary: it issues invoices for the work you bill directly, sends the reminders on a schedule so the awkward second and third ones actually go, and keeps a record. The second is the one worth paying for here, and it is a standing job that asks other people's offices whether the events you get paid on have happened yet, so that a charge gets raised while everybody still remembers the transaction.
+
+### Does this handle my commission?
+
+This article does not claim to, and any product that claims to should be asked to explain exactly how, in your state, with your closing agent. A commission comes out of a closing that somebody else runs on a date the transaction sets, which is a different mechanism from an invoice you send and follow up. What automation can do around it is track that the transaction happened and reconcile what arrived against what you expected.
+
+### Can I charge clients a card fee?
+
+In New York you may, within a rule. The statute requires you to post the total price including the surcharge, clearly and conspicuously, and it caps the surcharge at what the card company actually charged your business for that card use. A flat percentage chosen because it is a round number can exceed your real cost, and the same statute preserves two tier pricing, which is posting a cash price and a card price side by side. Violations carry a civil penalty of up to five hundred dollars each.
+
+### Why did the money arrive on Monday and clear on Thursday?
+
+Because availability is regulated separately from arrival. For an electronic payment the outside limit is the business day after your bank has both the funds and the instructions. For a cheque it is the second business day, except that the schedule stops applying to the amount above $6,725 deposited in one banking day, and where the bank invokes that exception it may extend the schedule by up to five further business days. Your bank's own policy sits inside those limits and is worth asking for in writing.
+
+### Should I be paying people by ACH instead of by cheque?
+
+Ask your bank three questions before deciding: whether they offer same day origination on your account, what the daily cut-off time is, and what each payment costs. The rail itself has carried up to a million dollars per payment since 2022 under Nacha's rules, which is enough for almost anything a brokerage sends out, but whether it is available to you at that limit and at what price is a matter of your bank rather than the network.
+
+### Somebody emailed asking us to update their bank details. What now?
+
+Telephone them on a number you already had before that email existed, and confirm it with a person. Not the number in the message, not a number in the signature, and not a number you found by searching for the company this afternoon. This is the single control that matters and it works whether or not you ever automate anything.
+
+### Is it worth this for a one or two person brokerage?
+
+The reminder half, probably not, because at that size you know every invoice you have out and sending it yourself takes minutes. The asking half is worth it at any size, because it does not scale with how big you are, it scales with how many arrangements you are a party to, and a two person brokerage can easily have a dozen referrals out with other firms.
+
+### What is the first thing to fix?
+
+The list. Before any software, write down every arrangement where somebody else's event is what pays you, and how you would find out that the event happened. Most of the value in this whole topic is in that list existing, and it takes an afternoon and no budget.
+
+## What to do about it
+
+Take twenty minutes and one sheet of paper.
+
+Down the left, write every kind of money that comes into the business. Not the amounts, the kinds. Commission, referral fees you are owed, referral fees you owe, rentals, management, anything billed separately.
+
+Down the right, write how you find out that each one has become due. Some will say a system tells us. Some will say the closing happens and we know. And at least one is going to say, if you are honest about it, that somebody usually mentions it.
+
+That last line is where the money is, and the fix for it does not start with buying anything. It starts with deciding whose job it is to ask, and how often.
+
+[[scene:funnel]]`;
+
 export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday and it was not your listing. For it to happen at all, three people who do not work for you had to be willing: the agent who holds the listing, whoever has to be out of the house that morning, and whoever controls how the front door opens.
 
 You sent the request on Thursday afternoon. On Thursday evening you told the buyer that Saturday at eleven was confirmed, and you were not being careless when you said it. You had proposed a time, nobody had objected to it, and there it was in bold on your own calendar looking exactly like every appointment that has ever happened.

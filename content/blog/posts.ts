@@ -8,6 +8,7 @@ import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
   AI_SCHEDULING_POST,
+  INVOICING_POST,
   AI_CHAT_ASSISTANT_POST,
   AI_VOICE_AGENTS_POST,
   CRM_SYNC_POST,
@@ -23,6 +24,7 @@ import {
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
+import { INVOICING_FLAGSHIP } from "./invoicing-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "./enrichment-scenes";
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "./document-scenes";
 import { MARKETING_AUTOMATION_FLAGSHIP } from "./marketing-automation-scenes";
@@ -81,6 +83,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
   {
+    slug: "invoicing-and-payments-real-estate-brokerage",
+    title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
+    date: "2026-08-25",
+    /** NO `updated`, for the same reason topics 6 to 16 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "There was no invoice sitting unpaid in anybody's system, because there was no invoice. What actually behaves like a receivable in a brokerage and what does not, the federal statute that decides who you may pay and be paid by, why the money that arrived on Monday is not yours until Thursday, and the one control that stops a diverted payment.",
+    seoDescription:
+      "What behaves like a receivable in a brokerage, what RESPA says about referral fees, and why money that arrived on Monday may not be yours until Thursday.",
+    cover: "/images/editorial/register-keys.jpg",
+    body: [],
+    placeholder: false,
+    markdown: INVOICING_POST,
+    flagship: INVOICING_FLAGSHIP,
+  },
+  {
     slug: "ai-scheduling-real-estate-showing-confirmations",
     title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
     date: "2026-08-25",
@@ -92,7 +113,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can actually do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, and why moving the time throws every yes away.",
     seoDescription:
-      "Real estate scheduling across calendars you do not control: what a scheduling agent's own published failure data shows, what the calendar standards call an unanswered invitation, and why rescheduling resets every confirmation.",
+      "What a scheduling system can do when the calendars it needs belong to other people, and why moving an appointment resets every confirmation you had.",
     cover: "/images/editorial/clock-not-in-use.jpg",
     body: [],
     placeholder: false,

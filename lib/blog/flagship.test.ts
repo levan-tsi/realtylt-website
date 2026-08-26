@@ -15,6 +15,7 @@ import { MARKETING_AUTOMATION_FLAGSHIP } from "@/content/blog/marketing-automati
 import { DOCUMENT_PROCESSING_FLAGSHIP } from "@/content/blog/document-scenes";
 import { DATA_ENRICHMENT_FLAGSHIP } from "@/content/blog/enrichment-scenes";
 import { SCHEDULING_FLAGSHIP } from "@/content/blog/scheduling-scenes";
+import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -24,6 +25,7 @@ import {
   DATABASE_REACTIVATION_POST,
   DATA_ENRICHMENT_POST,
   AI_SCHEDULING_POST,
+  INVOICING_POST,
   DOCUMENT_PROCESSING_POST,
   GEO_LANDING_PAGES_POST,
   LEAD_QUALIFICATION_POST,
@@ -303,6 +305,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["document processing", DOCUMENT_PROCESSING_POST, DOCUMENT_PROCESSING_FLAGSHIP],
   ["data enrichment", DATA_ENRICHMENT_POST, DATA_ENRICHMENT_FLAGSHIP],
   ["ai scheduling", AI_SCHEDULING_POST, SCHEDULING_FLAGSHIP],
+  ["invoicing and payments", INVOICING_POST, INVOICING_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {
