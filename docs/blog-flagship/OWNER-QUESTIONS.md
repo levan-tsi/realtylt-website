@@ -59,9 +59,36 @@ of recent reviews" sits in a different position from one that implies it is all 
 pages now say "a selection of recent reviews". Confirm the widget matches the label.
 
 **1.3 Does the voice agent record audio, or only store a transcript?**
-New York is one-party consent (Penal Law 250.00); California is all-party (Penal Code 632). If
-it records, the page has to say so and say what it does when the caller is out of state. **If it
-only stores a transcript, saying that plainly is a selling point** and the question goes away.
+New York is one-party consent (the telephone definition is Penal Law 250.00(1), "wiretapping",
+and the offense is 250.05); California is all-party (Penal Code 632). If it records, the page has
+to say so and say what it does when the caller is out of state. **If it only stores a transcript,
+saying that plainly is a selling point** and the question goes away.
+
+> **ROUND I, and this one is now urgent rather than tidy.** Two things changed around this
+> question while it sat open for eight rounds.
+>
+> **First, the flagship post has been answering it since before the rollout began, and nobody
+> noticed.** `content/blog/ai-posts.ts` states as OUR POSITION that *"the agent says that it is
+> an assistant and that the call is recorded, at the start of the call rather than in a rushed
+> sentence at the end"*, and the post's illustrated transcript
+> (`content/blog/voice-agent-scenes.ts`) has the agent saying *"I record calls so nothing gets
+> lost between now and the morning."* So the site already tells a reader that the product records
+> audio, on the article the voice service page links to first, while this list records the same
+> fact as unknown. Round A's rule ("unknown product facts are REPORTED, never written") was
+> written for the services surface and never swept the five ORIGINAL posts, which is how the
+> claim survived. **Round I did not touch it**, because deleting a claim that may simply be true
+> is as much an owner decision as writing one, and because the answer to this question settles it
+> either way. If the build records, both sentences are correct and the only work is on the
+> service page. If it does not, two sentences on the flagship post are wrong and one of them is
+> in a transcript a visitor reads as a demonstration.
+>
+> **Second, the service page is no longer silent.** `content/services/ai-voice-agents.ts` now
+> carries a `limits` entry and a FAQ that state the RULE without asserting which side of it we
+> are on: the caller's state governs, New York is one-party and California is all-party, an
+> inbound line that takes out-of-state calls has to be built for the stricter rule, and whether a
+> given build keeps audio or only the transcript is a setup decision. That closes the silence
+> SERVICES-CRITIQUE §5 raised. It does not close this question, and it is deliberately written so
+> that either answer can be dropped into it in one sentence.
 
 **1.4 Does the skip-tracing pipeline scrub the DNC registry before anything dials?**
 And **what permitted purpose is our own enrichment account established under?** The skip-tracing

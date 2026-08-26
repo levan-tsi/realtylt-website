@@ -109,6 +109,17 @@ export const aiVoiceAgents: Service = {
     "It will not invent a price, a legal position, or a fact about a property. Anything it cannot verify becomes a booked call, which is the honest outcome and the higher-converting one.",
     "It does not pretend to be a specific human being. The agent identifies itself as an assistant, and we do not build ones that do otherwise.",
     "It does not replace ringing back the people who matter. If the caller is a past client or your seller's neighbor, the agent's job is to hold the door open for twenty minutes, not to be the relationship.",
+    /** ROUND I, SERVICES-CRITIQUE.md §5, raised 2026-08-03 and open through eight rounds: this
+     * page said "it logs every call so the record is there" and never said whether the thing
+     * logged is audio. It still does not say, because nobody here knows: it is OWNER-QUESTIONS
+     * §1.3 and writing an answer would be inventing a product fact, which Round A's rule
+     * forbids on exactly this example.
+     *
+     * What CAN be written is the rule the build has to satisfy whichever way the answer goes,
+     * and that is what this entry and the FAQ below carry. It is a selling point under either
+     * answer, which is the point SERVICES-CRITIQUE made: the page was silent about the thing
+     * its own flagship post spends a paragraph on. */
+    "It does not settle your recording policy, and that policy is decided by where the caller is sitting rather than where you are. New York is a one-party consent state and California is an all-party one, so a line that answers calls from out of state has to be set up for the stricter rule. Whether a particular build keeps the audio or only the transcript is part of that setup, and it is a decision to make on purpose.",
   ],
 
   faqs: [
@@ -135,6 +146,10 @@ export const aiVoiceAgents: Service = {
     {
       q: "Does it work with my calendar and my CRM?",
       a: "Yes. It reads your live availability so it only ever offers slots you actually have, and it writes the call transcript, the qualification, and the outcome back into your CRM. It plugs into the systems you already run rather than adding another one.",
+    },
+    {
+      q: "Do I need consent to record these calls?",
+      a: "It is decided by the caller's state rather than yours. New York is a one-party state: the offense is Penal Law section 250.05, and the definition that governs a telephone call, at section 250.00, is the recording of a telephonic communication by a person who is not a sender or receiver of it, so a participant may record a call they are on. California is the other kind, and Penal Code section 632 makes it an offense to record a confidential communication without the consent of all parties. On an inbound call you rarely know where the caller is until they say, so the workable rule is to plan for the stricter one and to disclose at the start of the call rather than at the end. Whether a particular build keeps the audio or only the transcript is part of setting it up, and it is worth having in writing before the line goes live. None of this is legal advice, and the article on this service carries both statutes in full.",
     },
     {
       q: "Is it legal to have an AI make outbound calls?",
