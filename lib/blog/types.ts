@@ -9,6 +9,7 @@
  * DB post and a static post are visually and structurally indistinguishable.
  */
 import type { FlagshipContent } from "./flagship";
+import type { Cluster } from "./related";
 
 /** A film that belongs to an article. Present only on posts that actually have one; its
  * presence is what makes the page emit `VideoObject`, so an article can never advertise a
@@ -40,6 +41,9 @@ export interface Article {
   source: "static" | "db";
   /** True only for the seeded content stubs — renders the "Draft stub" note. */
   placeholder: boolean;
+  /** Which group of articles this one belongs with, for "Keep reading". Optional because a
+   * CRM-published post arrives without one; lib/blog/related.ts falls back on the cohort. */
+  cluster?: Cluster;
   seoTitle?: string;
   seoDescription?: string;
   /** Set only by posts that ship a film. Drives the VideoObject block. */

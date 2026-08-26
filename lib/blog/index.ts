@@ -27,6 +27,7 @@ export function staticToArticle(post: BlogPost): Article {
     author: "Levan Tsiklauri",
     source: "static",
     placeholder: post.placeholder,
+    cluster: post.cluster,
     seoDescription: post.seoDescription,
     film: post.film,
     flagship: post.flagship,

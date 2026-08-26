@@ -14,6 +14,7 @@ import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
 import { fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
 import { flagshipToc } from "@/lib/blog/flagship";
 import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
+import { relatedArticles } from "@/lib/blog/related";
 import { articleStructuredData, articleUrl } from "@/lib/blog/structured-data";
 import { extractToc, readingTime } from "@/lib/blog/toc";
 import { SITE } from "@/lib/site";
@@ -102,7 +103,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       ? flagshipToc(parseOutline(post.body.markdown), scenes)
       : [];
 
-  const related = (await getArticles()).filter((a) => a.slug !== post.slug).slice(0, 3);
+  // Curated rather than "the three newest, minus me", which put the identical block on all
+  // thirty pages and handed a consumer post about packing three B2B automation essays.
+  // lib/blog/related.ts carries the rule and the measurement that chose it.
+  const related = relatedArticles(post, await getArticles());
 
   // Shared across the two body layouts so the cover and end cap render identically in both.
   // `lg:col-span-2` is inert outside a grid, so the same cover node works full-width in the

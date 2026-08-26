@@ -4,6 +4,7 @@
 
 import type { FlagshipContent } from "@/lib/blog/flagship";
 import type { ArticleFilm } from "@/lib/blog/types";
+import type { Cluster } from "@/lib/blog/related";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -76,6 +77,10 @@ export interface BlogPost {
   /** Scene payloads, for a markdown body that places [[scene:...]] markers. */
   flagship?: FlagshipContent;
   placeholder: boolean;
+  /** Which group of articles this one belongs with, for the "Keep reading" block at the foot
+   * of the page. See lib/blog/related.ts for why one word per post beats deriving the block
+   * from the posts' own links. */
+  cluster?: Cluster;
 }
 
 const PLACEHOLDER_BODY = (topic: string): string[] => [
@@ -90,6 +95,7 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
 export const POSTS: BlogPost[] = [
   {
     slug: "custom-automation-real-estate-bespoke-build",
+    cluster: "building",
     title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
     date: "2026-08-26",
     /** NO `updated`, for the same reason topics 6 to 19 carry none: a post written and shipped
@@ -109,6 +115,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-audit-small-business-what-not-to-automate",
+    cluster: "building",
     title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
     date: "2026-08-26",
     /** NO `updated`, for the same reason topics 6 to 18 carry none: a post written and shipped
@@ -128,6 +135,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-clone-real-estate-agent-video-avatar",
+    cluster: "visibility",
     title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
     date: "2026-08-26",
     /** NO `updated`, for the same reason topics 6 to 17 carry none: a post written and shipped
@@ -147,6 +155,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "invoicing-and-payments-real-estate-brokerage",
+    cluster: "back-office",
     title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 16 carry none: a post written and shipped
@@ -166,6 +175,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-scheduling-real-estate-showing-confirmations",
+    cluster: "appointments",
     title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 15 carry none: a post written and shipped
@@ -185,6 +195,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "data-enrichment-real-estate-stale-contact-records",
+    cluster: "records",
     title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 14 carry none: a post written and shipped
@@ -204,6 +215,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "document-processing-real-estate-contract-deadlines",
+    cluster: "back-office",
     title: "It Read the Date Correctly. The Date Was Not the Deadline.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 13 carry none: a post written and shipped
@@ -223,6 +235,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "marketing-automation-real-estate-email-deliverability",
+    cluster: "records",
     title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 12 carry none: a post written and shipped
@@ -242,6 +255,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
+    cluster: "records",
     title: "You Have Her Number. She Never Gave It to You.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 11 carry none: a post written and shipped
@@ -261,6 +275,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-agent-workforce-real-estate-assistants",
+    cluster: "building",
     title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 10 carry none: a post written and shipped
@@ -280,6 +295,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "crm-sync-real-estate-duplicate-contact-records",
+    cluster: "records",
     title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 to 9 carry none: a post written and shipped
@@ -299,6 +315,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "geo-landing-pages-real-estate-doorway-pages",
+    cluster: "visibility",
     title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topics 6 and 7 carry none: a post written and shipped
@@ -318,6 +335,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "local-seo-real-estate-map-pack-google-business-profile",
+    cluster: "visibility",
     title: "Three Businesses Show Up. Yours Is Not One of Them.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason as the post above. */
@@ -333,6 +351,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-appointment-booking-no-shows-real-estate",
+    cluster: "appointments",
     title: "You Booked the Showing for Nine Days Out. Nobody Came.",
     date: "2026-08-25",
     /** NO `updated`, for the same reason topic 6 carries none: a post written and shipped
@@ -352,6 +371,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "automated-google-review-requests-real-estate",
+    cluster: "visibility",
     title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
     date: "2026-08-25",
     /** NO `updated`, deliberately, and it costs this post D5 on scripts/score-flagship.mjs.
@@ -376,6 +396,7 @@ export const POSTS: BlogPost[] = [
      flagships: full-bleed scenes, cited data graphics and their own cold opens. */
   {
     slug: "ai-lead-qualification-real-estate-scoring",
+    cluster: "answering",
     title: "All Three Leads Look the Same. Two Are Worth Your Morning.",
     date: "2026-07-31",
     /** Shipped 07-31 with NO `updated`, deliberately, because a post written and shipped inside
@@ -399,6 +420,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "database-reactivation-old-real-estate-leads",
+    cluster: "records",
     title: "They Said Not Right Now. That Was Three Years Ago.",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
@@ -420,6 +442,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-voice-agent-missed-calls-real-estate",
+    cluster: "answering",
     title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
@@ -443,6 +466,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "workflow-automation-real-estate-business",
+    cluster: "building",
     title: "The Busywork Tax: What Workflow Automation Actually Removes",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
@@ -469,6 +493,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ai-chat-assistant-real-estate-website",
+    cluster: "answering",
     title: "Your Website Answered That Buyer at 11:40pm. Did You?",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
@@ -490,6 +515,7 @@ export const POSTS: BlogPost[] = [
 
   {
     slug: "top-5-renovations-increase-home-value-ny",
+    cluster: "owning",
     title: "The Top 5 Renovations That Actually Increase Your Homes Value in New York",
     date: "2025-10-24",
     excerpt:
@@ -500,6 +526,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "first-time-home-buyer-ny-10-step-checklist",
+    cluster: "owning",
     title: "First-Time Home Buyer in NY? Here's Your 10-Step Checklist from Start to Finish",
     date: "2025-10-24",
     excerpt:
@@ -510,6 +537,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "moving-to-hudson-valley-rental-vs-buying",
+    cluster: "moving",
     title: "Moving to the Hudson Valley: Rental vs. Buying – What Makes the Most Sense?",
     date: "2025-09-13",
     excerpt:
@@ -520,6 +548,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "relocating-to-hudson-valley-newcomers-guide",
+    cluster: "moving",
     title: "Relocating to the Hudson Valley: What Newcomers Need to Know About Small-Town Charm Meets Big-City Access",
     date: "2025-09-13",
     excerpt:
@@ -530,6 +559,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-hire-best-local-movers-7-questions",
+    cluster: "moving",
     title: "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing",
     date: "2025-09-13",
     excerpt:
@@ -540,6 +570,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "packing-101-pro-tips-organized-move",
+    cluster: "moving",
     title: "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move",
     date: "2025-09-12",
     excerpt:
@@ -550,6 +581,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "ultimate-moving-checklist-8-week-guide",
+    cluster: "moving",
     title: "The Ultimate Moving Checklist: Your 8-Week Guide to a Stress-Free Move",
     date: "2025-09-12",
     excerpt:
@@ -560,6 +592,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "lower-energy-bills-9-efficiency-tips-ny",
+    cluster: "owning",
     title: "Lower Your Energy Bills: 9 Efficiency Tips for New York Homeowners",
     date: "2025-09-12",
     excerpt:
@@ -570,6 +603,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "new-homeowners-toolkit-9-essentials",
+    cluster: "owning",
     title: "The Ultimate New Homeowner's Toolkit: 9 Essentials Every Owner Needs",
     date: "2025-09-12",
     excerpt:
@@ -580,6 +614,7 @@ export const POSTS: BlogPost[] = [
   },
   {
     slug: "finishing-your-basement-cost-and-value",
+    cluster: "owning",
     title: "Thinking of Finishing Your Basement? What to Know About Cost and Value",
     date: "2025-09-12",
     excerpt:
