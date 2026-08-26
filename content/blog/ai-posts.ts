@@ -105,17 +105,15 @@ So there is no decay rate in this article, none in the calculator, and none on o
 
 Contact details do not rot on their own. They stop being true when something happens to a person: a move, a job change, a marriage, a new phone, a business closing. So the speed at which a field goes wrong is the speed at which that thing happens to the people in your database, and different people are not the same.
 
-There is one measurement in this whole subject that names its survey, its sample and its definition, and it is about employment rather than about phone numbers.
+Which means the useful question was never how fast data decays. It is what sits underneath a particular field, and how often that thing changes for the particular people you hold. One government survey measures exactly that shape, for exactly one field, and the field is employment.
 
 [[scene:tenure]]
 
-The Bureau of Labor Statistics runs a tenure supplement to the Current Population Survey, a monthly sample of about sixty thousand households, and [its release for January 2024](https://www.bls.gov/news.release/tenure.nr0.htm) states that "the median number of years that wage and salary workers had been with their current employer was 3.9 years", the lowest since 2002. Table 1 breaks that down by age, and the spread is the point: the median for people in their late twenties and early thirties is 2.7 years, and for people in their late fifties it is 9.6.
+[The Bureau of Labor Statistics release for January 2024](https://www.bls.gov/news.release/tenure.nr0.htm) puts the overall figure at "3.9 years", the lowest since 2002. The chart above is Table 1 of the same release, and the spread across it is the whole argument.
 
-Now imagine both of those people in one database, with a work email address each, and imagine one percentage covering them both.
+Now put both of those people in one database with a work email address each, and run a single percentage across the pair of them. Whatever that percentage is, it is wrong about both of them in opposite directions, and it will be quoted as though it described the database.
 
-That is the argument, and it transfers even though the measurement does not. An agent's CRM is mostly personal mobile numbers and personal email addresses rather than work ones, and there is no public measurement of how fast those go wrong. The absence is itself worth knowing, because every circulating decay statistic is presented as though somebody had done that study, and nobody has.
-
-What you can do instead takes an afternoon and produces a number that is actually about you: take two hundred records at random from the part of your database you would actually work, and check them. That number is worth more than any benchmark, because it is measured on your own people, in your own market, at their own ages.
+Which is why the number worth having is not a benchmark at all. Take two hundred records at random from the part of your database you would really work, and check them by hand. It takes an afternoon, it costs nothing, and what comes out is measured on your own people in your own market at their own ages, which is the only version of this figure anybody can defend.
 
 ## What to do when two sources disagree
 
@@ -294,7 +292,7 @@ The fourth is the one nobody counts as part of the job, and it is where this art
 
 Every demonstration of this technology uses a clean, born digital PDF, and on a clean born digital PDF the first two problems barely exist: the text is already text and the software can simply ask for it. That is a real and common case and if all your paperwork is like that, most of what follows is easier for you than it is for other people.
 
-It usually is not like that. Real estate paperwork has a long life outside computers. It gets printed to be signed at a kitchen table, signed with a pen, scanned on an office machine at whatever setting was last used, emailed, printed again by the other side, initialled again, and photographed on a phone in a car. Every one of those passes is a copy of a copy.
+It usually is not like that, and the reason is that real estate paperwork has a long life outside computers before anybody asks software to read it. Four things happen to it on the way, and each one takes something away.
 
 [[scene:unreliable-original]]
 
@@ -312,11 +310,11 @@ There is a detail in how they built it that is worth having. They started from 2
 
 [[scene:reading]]
 
-The two bars are the same commercial vision engine on the same pages. Given the location of every word, it reproduced the characters almost exactly. Made to find the words itself, it lost about a quarter of them.
+Nothing about that second bar is a failure of reading. It is a failure of finding, and the finding happens first, so everything downstream works from a partial transcript without being told which parts are missing.
 
-That gap is the whole reason a photograph is a different problem from a file. Nothing about the second measurement is a failure of reading. It is a failure of finding, and the finding happens first, so everything after it is working from a partial transcript without being told which parts are missing.
+Be concrete about what that means on a contract. Suppose the printed clauses are located and read cleanly, and two lines written into a margin are not located at all. What comes out is not a document with two gaps in it. It is a document that looks complete, because those two lines never became text, and a value that never became text cannot be noticed as absent by anything further down the chain.
 
-The paper's other engine, an open source one, scored 7.3 and 3.4 on those same two measures, and it would be dishonest to draw that as a bar. The authors explain it in the same paragraph: "The Tesseract OCR engine performs poorly on the FUNSD dataset, which can be explained by the fact that the minimum quality of 300 dpi needed by Tesseract is not met in the FUNSD dataset." A tool used below its own published minimum tells you about the pages, not about tools.
+That is the difference between a file and a photograph, and it is why the first question to ask about any of this is what your originals actually are.
 
 ## Finding a word and knowing what it is for are two different problems
 
@@ -326,13 +324,11 @@ The authors also measured two harder tasks. One is labelling: given a piece of t
 
 [[scene:understanding]]
 
-Read the second bar again, and then read the condition attached to both of them, which the authors state plainly: "Note that we test the algorithms by assuming that we know the optimal word grouping, word location, and textual content. In this way, we only assess the specific task."
+Read the second bar again, and then read the condition the authors attach to both of them: "Note that we test the algorithms by assuming that we know the optimal word grouping, word location, and textual content. In this way, we only assess the specific task."
 
 Both numbers were produced with the reading already done perfectly. The hard part is not the part that looks hard.
 
-The composition of that second score is worth a sentence of its own, because it is a shape you will meet again in any tool you buy. Recall was 99.2 and precision was 2.1. In plain terms, the method found almost every genuine connection on the page and it also proposed an enormous number of connections that were not there. A system tuned that way has certainly found your closing date. It has also found thirty other things and called them your closing date, and you would have no way of telling from the output which one it meant.
-
-These are the authors' own simple baselines, published in 2019 so that other people could beat them, and other people have. Do not take 0.04 as a description of a product you could buy this year. Take the ordering, because the ordering has not moved: reading is mostly solved, and knowing what you read is where the difficulty lives.
+It is worth being precise about what that second task is in your own paperwork, because it is the thing you thought you were buying. A label sits somewhere on the page and a value sits somewhere else, and neither is a fact until something draws a line between the two. On a page where the label is three inches from the value, or where one label governs a column of four values, or where a value sits in a box belonging to the addendum rather than to the paragraph above it, that line is a judgement about layout. Layout is the property of a document that survives copying worst, which is why this is the step that degrades first on a photograph.
 
 ## A person is not perfect at this either, and somebody published the number
 
@@ -344,11 +340,11 @@ Then they had people answer them.
 
 [[scene:human-ceiling]]
 
-94.36 percent. Volunteers, working carefully, with no client on the phone and no other file open, reading a document and answering a factual question about it, were wrong about one time in eighteen.
+Now read that first bar against the thing it is really competing with. The comparison everybody makes silently is against a careful reading, done once, by somebody with the file open and nothing else on. The comparison that decides whether any of this is worth having is against the fourth read of the day, at ten past five, of a page two people have already looked at.
 
-That number is the most useful thing in this article for deciding anything, and it cuts both ways. It means the honest question is never whether a document reader is perfect. It is whether it is better or worse than a tired person at four in the afternoon, and on which kinds of value, and what happens to the ones it is unsure about. It also means that a process which depends on nobody ever misreading a date has already failed, today, with no software involved at all.
+So the useful question is never whether a document reader is right every time. It is which values it handles better than a tired person, which ones it handles worse, and what it does with the ones it cannot settle. Those are three different questions and only the third is a build decision.
 
-The other two bars in that chart are not scores. They are ceilings. They measure how often the right answer was even present in the text the reading step managed to produce, computed two ways: loosely, at 87 percent, and strictly, at 77 percent. Whatever sits on top of the reading, however clever it becomes, it cannot answer from text that was never recovered.
+And it means something uncomfortable about the process you have now. Anything that depends on nobody ever misreading a date is already failing at some rate, today, with no software involved at all, and nobody in your business has ever measured that rate either.
 
 ## The date is not the deadline
 

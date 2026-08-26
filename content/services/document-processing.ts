@@ -58,7 +58,7 @@ export const documentProcessing: Service = {
     rows: [
       {
         before: "A purchase agreement as a clean PDF",
-        after: ["Parties", "price", "every date printed in a fixed field"],
+        after: ["Parties", "price", "the dates printed in fixed fields"],
         tag: "extracted",
       },
       {
@@ -68,7 +68,7 @@ export const documentProcessing: Service = {
       },
       {
         before: "A rider photographed on a phone, changed by hand",
-        after: ["Handwriting read", "the date it counts from not on the page", "held back"],
+        after: ["Handwriting read", "what it counts from is missing", "held back"],
         tag: "needs a rule",
       },
     ],

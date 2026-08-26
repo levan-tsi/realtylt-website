@@ -75,11 +75,11 @@ export const NOT_THE_WORK: GridItem[] = [
 export const UNRELIABLE_ORIGINAL: GridItem[] = [
   {
     lead: "It is often a photograph",
-    body: "Not a scan and not a file. A phone held at an angle over a page on a kitchen table, at night, with a shadow across the lower third and the far edge of the paper narrower than the near one. Everything downstream inherits that geometry, and no amount of intelligence later in the chain gets the missing pixels back.",
+    body: "Not a scan and not a file, and the difference is not cosmetic. A page held under a phone is captured at whatever angle and in whatever light happened to be available, and that geometry is baked in before any software sees it. Detail that was never captured is not recoverable further down the chain, however clever the thing at the end of it is.",
   },
   {
     lead: "The changes are handwritten",
-    body: "The printed body of a form is the easy part and it is also the part that matters least, because it is the same on every copy. What is specific to this deal is written into the gaps: a figure crossed out and replaced, a date altered, two sets of initials in a margin. Those are the marks with the most meaning and the least legibility.",
+    body: "There is an unhelpful symmetry in a form. The printed body is easy to read and carries nothing specific to your deal, because it is identical on every copy in the state. Everything that makes this transaction different from that one was added afterwards by a person with a pen, which is to say that legibility and importance run in opposite directions down the page.",
   },
   {
     lead: "It arrives in pieces",
@@ -171,7 +171,7 @@ export const UNDERSTANDING = {
   sourceText:
     "Jaume, Ekenel and Thiran, FUNSD, Table VI, baseline results for entity labeling and linking.",
   sourceHref: "https://arxiv.org/abs/1905.13538",
-  note: "These are the authors' own simple baselines, published to give the field something to beat, and the field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed and it is the opposite of what most people assume: the character recognition is the part that mostly works, and the part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there. A system that connects everything to everything has technically found your closing date and has also found forty other things and called them your closing date.",
+  note: "These are the authors' own simple baselines, published to give the field something to beat, and the field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed and it is the opposite of what most people assume: the character recognition is the part that mostly works, and the part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there, and at that precision roughly one claimed link in fifty is a real one. A system tuned that way has technically found your closing date, along with a great many things that are not it, and nothing in the output says which is which.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic THREE.
@@ -312,12 +312,14 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/editorial/office-stamps.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED, checked on the plate swatch. Only the words
-      // legible in the crop are named. The rack is fuller than this; several labels are worn
-      // or turned away and are deliberately not guessed at.
-      alt: "A worn wooden rack of rubber stamps photographed from above, the printed labels on their handles reading PROFORMA, DUPLICATE and TRIPLICATE along the top row, SURFACE MAIL on a long stamp at the left, INSURED at the right and COPY along the bottom, with a dark wooden handled stamp standing in the middle beside a small red and white label reading AIR PARCEL POST FIRST CLASS MAIL",
+      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
+      // crop a laptop ships. Measured this round: the Plate primitive renders 2.33 at 1440 and
+      // 1.78 at 390, so the phone sees a taller slice. ORIGINAL is only legible in the taller
+      // crop, and it is the most useful word on the rack for this article. Only the words that
+      // are actually readable are named; several labels are worn or turned away.
+      alt: "A worn wooden rack of rubber stamps photographed from above, the printed labels on their handles reading COPY, PROFORMA, ORIGINAL, DUPLICATE and TRIPLICATE along the top row, SURFACE MAIL on a long stamp at the left, INSURED at the right and COPY again along the bottom, with a dark wooden handled stamp standing in the middle beside a small red and white label reading AIR PARCEL POST FIRST CLASS MAIL",
       caption:
-        "Every one of those words exists because somebody needed to know which copy they were holding. DUPLICATE and TRIPLICATE are not decoration, they are the answer to a question a filing system has to be able to answer about itself. A document reader produces a new copy of the facts in a contract and it does not stamp it, so knowing which copy is authoritative becomes your job rather than the paperwork's.",
+        "ORIGINAL, DUPLICATE, TRIPLICATE, COPY. Four words on one rack, and every one of them exists because somebody needed to know which version they were holding before they acted on it. A document reader makes a new copy of the facts in a contract and it does not stamp it, so the question those stamps answered becomes yours to answer instead.",
       credit: "Photograph by mpclemens, CC BY 2.0.",
       ariaLabel: "A rack of office stamps",
     },
@@ -460,11 +462,13 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/deed-1825.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED. The printed line is transcribed exactly as it
-      // appears; the handwritten names are legible in the crop and are deliberately not
-      // transcribed, because a two hundred year old hand is exactly the kind of thing this
-      // article says gets misread.
-      alt: "A folded sheet of a handwritten and printed deed from 1825, the top half filled with a looping brown ink hand describing a boundary and acreage, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions",
+      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The taller crop carries two
+      // things the 21:9 one cuts off: more of the boundary description at the top, and the
+      // closing dower clause and attestation at the foot. The printed line is transcribed
+      // exactly as it appears; the handwritten names are legible and are deliberately NOT
+      // transcribed, because a two hundred year old hand is exactly the thing this article says
+      // gets misread, and guessing at one in alt text would be the mistake it warns about.
+      alt: "A folded sheet of a handwritten and printed deed from 1825, the upper half filled with a looping brown ink hand describing a boundary, an acreage and a pew in a meeting house, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions, ending in a printed clause about a wife releasing her right of dower and the words IN WITNESS WHEREOF",
       caption:
         "This is what a real estate contract has always been. A printed paragraph that is identical on every copy, with the part that decides who owns what written into the holes in it by hand. Two hundred years later the format is the same and so is the difficulty: the printed text is easy to read and carries no information, and the handwriting is the whole deal.",
       credit: "Photograph by museado, CC0 1.0.",

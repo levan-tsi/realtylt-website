@@ -27,7 +27,7 @@ export const dataEnrichment: Service = {
   title: "Half a name becomes a full profile",
   lede: "A bare address or partial contact is enriched into phone, email, and property detail through BatchData and public-record sources, deduped and validated, with what came back marked as what came back rather than merged silently into what you already knew.",
   specs: ["BatchData + public records", "phone + email verification", "property detail append", "dedupe + validate"],
-  why: "You can't work a lead you can't reach. Enrichment fills the gaps in records you already own, and records where each value came from and when, so the row tells you how much to trust it.",
+  why: "You can't work a lead you can't reach. Enrichment fills the gaps in records you already own, and writes down where each value came from and when, so the row tells you how much to trust it.",
   keywords: [
     "real estate data enrichment",
     "skip trace enrichment api",
@@ -49,7 +49,7 @@ export const dataEnrichment: Service = {
   stat: {
     value: "20",
     label:
-      "the number of different sources one data broker told the Federal Trade Commission it draws consumers' contact information from",
+      "separate sources of consumers' contact information that one data broker reported to the Federal Trade Commission",
     source: {
       text: "FTC, Data Brokers: A Call for Transparency and Accountability, May 2014",
       href: "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",

@@ -84,11 +84,11 @@ export const WHAT_A_FIELD_ASSERTS: GridItem[] = [
   },
   {
     lead: "It does not say who",
-    body: "The Commission's study found that these companies mostly buy from each other rather than collecting from an original source, and that one of them draws contact information from twenty different places. So the honest answer to where a value came from is usually the name of the last company in a chain, which is not the same as the name of whoever wrote it down.",
+    body: "The name on your invoice is the company you bought from, and that company mostly bought it as well. So the truthful answer to where a value came from is the last name in a chain rather than the name of whoever first wrote it down, and nobody publishes the chain. That is not a criticism of any particular supplier. It is the shape of the market, and a federal regulator has said so on the record.",
   },
   {
     lead: "It does not say observed or inferred",
-    body: "The same study describes two kinds of content in these files: raw data such as a name, an address or an age, and derived data, which the company worked out about somebody rather than being told. Both arrive in the same column, in the same font, and a guess that has been rounded to a value looks exactly like a measurement.",
+    body: "Some of what sits in these files was written down by somebody who saw it happen. Some of it was worked out from other things, by a company that has never met the person it describes. Both come back through the same interface in the same shape, so a conclusion that has been rounded into a value is indistinguishable from a measurement by the time it reaches your CRM.",
   },
   {
     lead: "It does not say what it replaced",
@@ -140,7 +140,7 @@ export const BROKER_SOURCES = {
     "Federal Trade Commission, Data Brokers: A Call for Transparency and Accountability, May 2014.",
   sourceHref:
     "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
-  note: "This report is from 2014 and the industry has changed a great deal since, so do not read the bars as a description of whoever supplies your own enrichment today. Read the middle one as a structural fact, because that is what it is: when companies in a market mostly buy from each other, no single one of them can tell you where a value originally came from, and the Commission states that consequence directly. The report also says that most of the nine obtain their data from other brokers rather than from an original source, and that one of them draws consumers' contact information from twenty different places. Nothing about that arrangement has become simpler in the years since.",
+  note: "This report is from 2014 and the industry has changed a great deal since, so do not read the bars as a description of whoever supplies your own enrichment today. Read the middle one as a structural fact, because that is what it is: when companies in a market mostly buy from each other, no single one of them can tell you where a value originally came from. The chart cannot show you the thing that follows from it, which is that the answer to \"where did this come from\" stops being a name and becomes a direction of travel. Nothing about that arrangement has become simpler in the years since.",
 };
 
 /** SCENE copy — the same file, three labels. Cited data graphic TWO.
@@ -177,7 +177,7 @@ export const PRODUCT_LINES = {
     "Federal Trade Commission, Data Brokers, May 2014, on the three product categories the nine sell.",
   sourceHref:
     "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
-  note: "The reason this matters to a business buying enrichment is that the label decides the rules, and the label is chosen at the point of sale rather than at the point of collection. A file used to decide whether somebody is eligible for something is regulated differently from the same file used to post a market update, and the difference attaches to the purpose you had rather than to the fields in front of you. That distinction, and the two federal statutes that turn on it, are worked through at length in the skip tracing article on this site and are deliberately not repeated here. What belongs here is the narrower point: one file, three names, and the name is not a property of the data.",
+  note: "The counts are from 2014 and the industry has changed since, so read them as a shape rather than as a market share, and note that the three overlap because several of the nine sell in more than one category. What the chart cannot draw is the part that matters, which is that nothing in the underlying records changes as they move between these three shelves. The same rows, the same fields, the same unknown ages, sold three times under three descriptions to three kinds of buyer, and the description is picked at the moment of sale rather than at the moment anybody wrote the data down.",
 };
 
 /** SCENE copy — decay is a property of the people. Cited data graphic THREE.
@@ -317,10 +317,10 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "light",
       src: "/images/editorial/ghost-sign-foundry.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED, checked on the plate swatch. Only what is
-      // legible in the crop is named: the upper letters really are unreadable, because two
-      // paintings overlap there, and FOUNDRY and CO really are clear.
-      alt: "Looking steeply up a red brick wall at a tall painted sign, white capital letters on a dark ground, the letters at the top overlapping each other so that no word can be read, with FOUNDRY and CO clearly legible below them, a window at the upper right and pale blue sky along the left edge",
+      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS and which contains the 21:9
+      // crop a laptop ships. Only what is legible is named: the upper letters really are
+      // unreadable, because two paintings overlap there, and FOUNDRY and CO really are clear.
+      alt: "Looking steeply up a red brick wall at a tall painted sign, white capital letters on a dark ground, the letters at the top overlapping each other so that no word can be read, with FOUNDRY and CO clearly legible below them, a window in the brickwork to the right and pale blue sky along the left edge",
       caption:
         "Somebody painted that, and it was true. Somebody painted over it, and that was true too. What is left is a wall carrying two claims at once, one of them readable and neither of them dated, and no way to tell from the wall which one you are looking at. That is what a contact record looks like after a pass that overwrote a field, and unlike the wall, your CRM shows you only the top layer.",
       credit: "Photograph by A Continuous Lean, CC BY 2.0.",
@@ -358,11 +358,12 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       kind: "plate",
       band: "dark",
       src: "/images/editorial/palimpsest-page.jpg",
-      // WRITTEN FROM THE 21:9 CROP AS RENDERED. Two densities of ink are visible in the crop:
-      // a strong brown and red hand, and a fainter grey script showing through behind it. The
-      // direction of the under-text is NOT described, because it cannot be made out at this
-      // crop and guessing at it would be inventing a detail.
-      alt: "A stained parchment leaf in ochre and olive, covered in Greek script in dark brown ink with several lines and a large initial picked out in red, a fainter grey script showing through from underneath between the lines, the ragged left edge held by a blue rod against a pale mount",
+      // WRITTEN FROM THE 16:9 CROP, WHICH IS THE ONE A PHONE SHIPS. The alt describes only what
+      // is VISIBLE. It does not say the fainter marks are the older text, because at this size
+      // that cannot be told apart from ink showing through from the other side of the leaf, and
+      // the fact that this page is a palimpsest comes from the museum's own title rather than
+      // from anything a reader can see here. The caption carries that; the alt does not.
+      alt: "A stained parchment leaf in ochre and olive, closely covered in Greek script in dark brown ink with several lines and one large initial picked out in red, fainter marks visible between and behind the writing, the ragged left edge lit blue where a rod holds it against a pale mount",
       caption:
         "The page was scraped clean and written on again, which is what people did when parchment was expensive. The older text is still there, faintly, under the newer one, and the only reason anybody can read it now is that somebody went looking for it with the right equipment. Keeping what you overwrote costs a database column. Recovering it afterwards costs a research project.",
       credit: "Photograph by Walters Art Museum Illuminated Manuscripts, CC0 1.0.",
