@@ -18,6 +18,7 @@ import { SCHEDULING_FLAGSHIP } from "@/content/blog/scheduling-scenes";
 import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
 import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
 import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
+import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -29,6 +30,7 @@ import {
   AI_SCHEDULING_POST,
   INVOICING_POST,
   AI_AUDIT_POST,
+  CUSTOM_AUTOMATION_POST,
   AI_CLONE_POST,
   DOCUMENT_PROCESSING_POST,
   GEO_LANDING_PAGES_POST,
@@ -312,6 +314,7 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["invoicing and payments", INVOICING_POST, INVOICING_FLAGSHIP],
   ["ai clone", AI_CLONE_POST, CLONE_FLAGSHIP],
   ["ai audit", AI_AUDIT_POST, AUDIT_FLAGSHIP],
+  ["custom automation", CUSTOM_AUTOMATION_POST, CUSTOM_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {

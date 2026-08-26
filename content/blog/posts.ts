@@ -8,6 +8,7 @@ import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
   AI_AUDIT_POST,
+  CUSTOM_AUTOMATION_POST,
   AI_CLONE_POST,
   AI_SCHEDULING_POST,
   INVOICING_POST,
@@ -26,6 +27,7 @@ import {
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
+import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
 import { SCHEDULING_FLAGSHIP } from "./scheduling-scenes";
 import { INVOICING_FLAGSHIP } from "./invoicing-scenes";
@@ -86,6 +88,25 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "custom-automation-real-estate-bespoke-build",
+    title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
+    date: "2026-08-26",
+    /** NO `updated`, for the same reason topics 6 to 19 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run eight hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
+    seoDescription:
+      "When a custom automation is the right answer, what Google, Microsoft and Meta promise about changing their interfaces, and what a bespoke build costs after it works.",
+    cover: "/images/editorial/jacquard-cards.jpg",
+    body: [],
+    placeholder: false,
+    markdown: CUSTOM_AUTOMATION_POST,
+    flagship: CUSTOM_FLAGSHIP,
+  },
   {
     slug: "ai-audit-small-business-what-not-to-automate",
     title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",

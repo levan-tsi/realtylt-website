@@ -9,6 +9,233 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years and nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere around eight hundred mornings in a row, without a single complaint.
+
+Then on a Tuesday a field came back with a value it had never seen before. Not a broken value. A perfectly ordinary new one, added by the company that runs the system, published in their release notes, and entirely within the promise they had made about not breaking anything.
+
+The chain did not stop. It did the thing it had been told to do when it did not recognise something, which was to take the last branch, because that was the sensible thing to do in 2024 when there were only three values and the third one was the rare one.
+
+Nine days later somebody noticed.
+
+Nothing catastrophic happened in those nine days. A few dozen records went to the wrong place and were quietly put right in an afternoon, which is the usual size of this kind of failure and is also why it is worth writing about. The expensive part was not the mistake, it was the nine days, and the nine days happened because the chain had no way of saying that something unfamiliar had turned up.
+
+
+This article is about the part of a bespoke build that nobody quotes for, and it is not the code. It is the fact that from the moment the thing works, you own it, and everything underneath it belongs to somebody else.
+
+[[scene:in-short]]
+
+## What custom actually means, and when nothing off the shelf will do
+
+Custom is not a level of ambition. It is a description of where a problem sits, and there are exactly four situations where the honest answer is that no product covers it. Three of them are real and the fourth is the one that costs businesses the most money.
+
+[[scene:when-custom]]
+
+One distinction runs under all four, and it is the one a sales conversation blurs, so it is worth setting out on its own. A product solves the version of a problem that enough businesses share for somebody to make a living from it. Everything else is either not a real problem or is real and too rare to be a market. Only the second of those is a case for building, and telling them apart is genuinely hard from the inside, because the thing capping your business always feels like it must be universal.
+
+The most useful question is not whether a tool exists. It is how many other businesses would recognise the description of the step. If the answer is thousands, look harder for a product before you commission anything, because a product with ten thousand customers has already had its awkward edges found by people who were not paying to find them.
+
+## The quote covers the part that ends
+
+Here is the shape of the commercial arrangement, and nothing about it is a trick. A build has a scope, a price and a finish date. What happens after the finish date has none of those three, and that is not dishonesty, it is incompleteness.
+
+[[scene:plate]]
+
+That is not an argument against building anything. It is an argument for reading the quote as what it is, which is the cost of the first stage of something with no last stage.
+
+[[scene:three-costs]]
+
+Of those three, the second catches small businesses hardest, and the polite version of it does not land, so here is the direct one. A bespoke automation is usually understood by exactly one person. For a year that is completely fine, and it is fine in the same way that having one set of keys is fine. The cost of that arrangement is not paid continuously. It is paid all at once, on the day you need a change and that person is not available, and the size of the bill at that moment is set by how much of the thing was written down rather than by how well it was built.
+
+There is a cheap fix and almost nobody asks for it, which is a written description of what the chain does, in the language of the business rather than in the language of the software, kept with the thing itself. It costs an hour at the end of a build. It is the difference between a change and a rebuild.
+
+## Everything it stands on belongs to somebody else
+
+The part that surprises people is not that vendors change things. It is how short the promises are when you go and read them, and how honest the vendors are about it.
+
+[[scene:notice]]
+
+Three companies with more to lose from breaking their customers than almost anybody, all publishing what they will actually guarantee, and the longest guarantee on that chart is two years. A brokerage does not think in two year horizons about its own operations. It thinks about the way it has always done things, which is usually measured in decades.
+
+Read the exceptions rather than the numbers, though, because the exceptions are where the honesty is.
+
+[[scene:pull-quote]]
+
+Every clause in that sentence is reasonable. A company should be able to change something to comply with the law or to close a security hole, and nobody would seriously argue otherwise. The third one is the interesting one: a substantial economic or material technical burden is a judgment the vendor makes about its own business, and it is the escape hatch that means twelve months is a policy rather than a contract term you could plan around.
+
+The same clause carries one more thing worth knowing, and it is the one that catches builds most often. The commitment does not apply to anything that has not reached general availability. A great deal of the most useful functionality in any platform spends a year or more in preview, and building on a preview is building on something whose owner has explicitly promised you nothing.
+
+Microsoft's policy has the same shape, promising a minimum of twelve months' notice where no successor product is offered, and excluding free services and preview releases from that. Meta's is the tidiest of the three and the easiest to misread: a Graph API version is guaranteed for two years, but the clock starts on the day the NEXT version ships rather than on the day yours does. Build against a version that is eighteen months old and you have six months, not two years.
+
+## The change that is not a breaking change
+
+There is a shared vocabulary for this, and learning it explains how a build can break on a day when nobody broke anything.
+
+[Semantic versioning](https://semver.org/) is the convention most of the software industry follows for numbering releases. Its rule is three lines long: increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible manner, and the patch version when you make backward compatible bug fixes. That gives everybody a shared meaning for a number, and it means a responsible vendor can tell you, in advance, when something will hurt.
+
+Now here is the gap, and Stripe documents it more clearly than anybody so it is worth quoting them. In [their API reference](https://docs.stripe.com/api/versioning) they distinguish two kinds of fixed-value field. A closed one has a set of possible values that is fixed and will not grow. An open one can grow, and they say plainly that new values can be added as a backward-compatible change without requiring an API version upgrade. Their advice to developers follows from that: do not assume that the documented values are exhaustive, and write code that handles a value it has never seen.
+
+That is the Tuesday at the top of this page, described by a vendor in advance, in public, as an ordinary thing they will do. Nobody broke a promise. A new value arrived in a field, which was always allowed, and the chain had been written by somebody who assumed the list was finished.
+
+The lesson for anybody commissioning a build is small and specific enough to ask for by name. What does this do when it meets something it does not recognise? There are only two acceptable answers and neither is a guess. It stops and tells somebody, or it sets the thing aside for a person to look at. A chain that quietly picks the nearest option is a chain that will one day pick the wrong one for nine days.
+
+## Who pays when software does not work
+
+There is an old and useful piece of work on this and it comes from the American standards body rather than from anybody in the industry.
+
+[[scene:bearing]]
+
+The totals are from 2002 and the whole national estimate is extrapolated from two industries, which the report says about itself. The ratio is what transfers, and the ratio is the argument of this entire article. When software does not work, the great majority of the cost lands on the business using it.
+
+That is true of anything you buy, and it is true twice over for something built for you alone. A product with ten thousand customers has ten thousand people who might hit a fault before you do and a vendor with a commercial reason to fix it. A build with one customer has you, and the fault is found on the day it costs you something.
+
+There is a second reading of that ratio which is worth having in front of you during a quote. The people selling you a build are not the people who will carry most of the cost of it going wrong, and that is not a criticism of anybody's integrity, it is simply where the incidence falls. It is the reason the questions further down this page are all about what happens afterwards rather than about what gets made, and it is the reason a builder who volunteers those answers before being asked is worth more than one who is cheaper.
+
+None of that is a reason not to build. It is a reason to insist the thing tells you loudly when it is unhappy, which costs almost nothing while it is being made and returns more than anything else on this page.
+
+## The number this page will not print
+
+Everybody who writes about this reaches for the same statistic, which is the share of a system's total lifetime cost that goes on maintenance rather than on building it. The usual range quoted is somewhere between sixty and eighty percent, and it is quoted so often that it has the feel of a settled fact.
+
+It is not printed here, and the reason is a check rather than a shrug.
+
+The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is real: its record exists, with a publication date and a reference count. The ACM's own library answers 403 to a request for it. The publisher's page for the 2000 article answers 200 with an eight kilobyte page containing none of the article's text, no occurrence of the word maintenance, and no occurrence of the number.
+
+So neither could be read in the original, which means nobody writing this page can tell you what was actually measured, on how many systems, in what industry, in a decade when software was written and deployed in ways that no longer exist. A number nobody can check is not a conservative estimate. It is a rumour with a citation attached.
+
+There is a second thing missing from this page for a related reason, and it is more interesting because the source IS readable. The most reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project, rising steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the concept, not a measurement of anything, and drawing it would have been a fabrication with a footnote.
+
+What can be said honestly is narrower and it is enough. Maintenance is not a small share of what a build costs over its life, everybody who has owned one knows that, and no number worth printing exists for how large a share it is.
+
+## What makes a bespoke build survivable
+
+Five properties, and every one of them is cheap at the beginning and expensive to add later.
+
+It fails loudly. The most common ending for a custom automation is not an error, it is silence, and silence is indistinguishable from having nothing to do. Something has to shout, somewhere a person actually looks.
+
+It refuses rather than guesses. When it meets a value, a document or a case it does not recognise, it puts it aside for a person. This is the same principle every other build on this site rests on and it is the one that prevents the expensive class of failure rather than the annoying class.
+
+It is described in your own words. One page, kept with it, saying what it does and why, in the language somebody in your office would use. This is what turns the next change from a rebuild into a change.
+
+It has a named owner. Not a maintainer of the code, a person in your business who would notice it stopping and whose job it is to care. Where there is nobody, there is no build worth making.
+
+And it has a review date. A date in the calendar, once a year, where somebody asks whether this is still worth having. That is the only mechanism that ever retires anything.
+
+[[scene:lifecycle]]
+
+[[scene:changes-calculator]]
+
+## What happens on the day you want to change it
+
+Every conversation about a build is about the first version, and every build has a second version, usually within a year, because businesses move. What the second version costs is decided almost entirely by choices made during the first, and almost none of those choices feel important at the time.
+
+The first is whether the rules live in one place or are scattered through the thing. A chain where the decisions are gathered in one step, written the way a person would write them, can have a rule changed by somebody reading it and editing a line. A chain where the same decision is expressed in four places, slightly differently, cannot be changed at all without somebody rediscovering all four, and rediscovering them takes longer than writing them did.
+
+The second is whether anybody can see what it did. A build that keeps a plain record of every run, what came in, what it decided and what it wrote, can be debugged by anybody. A build with no record has to be reproduced before it can be understood, and reproducing something that only happens when a particular kind of record arrives is most of the work.
+
+The third is the one people find hardest to hear. The more the first version was made to fit exactly how you worked in the month it was written, the more expensive the second version is, because every specific accommodation is a thing the next change has to be careful of. There is a real tension here and it should be said out loud rather than smoothed over: the case for building rather than buying is precisely that it fits you, and fit is also what makes it rigid. The resolution is not to build something generic, which would defeat the point. It is to be specific about the rules and plain about everything else.
+
+None of this is exotic engineering. It is three habits, they cost nothing during a build, and they are the difference between a second version that takes an afternoon and one that gets quoted as a rebuild. Ask for them by name.
+
+## When not to commission one at all
+
+Four situations, and none of them are about the technology being immature.
+
+When the process is still moving. A chain wired to a way of working that is being redesigned spends its life being rewired, and the rewiring is not cheaper than the build was. Wait until the shape has stopped changing, which usually takes one quiet quarter rather than a year.
+
+When you cannot describe it in a paragraph. Not because a builder needs the paragraph, but because being unable to write it means the decision inside it has not been made, and software will make that decision for you by accident and then hide it.
+
+When nobody would notice it stopping. This is the shortest test in this article and it removes more candidates than any of the others. Something nobody would miss for a month is either not worth automating or is worth automating and nobody has been made responsible for it, and both of those are answered before a build rather than by one.
+
+And when the honest reason is that a product exists and you do not like it. Sometimes that is a real reason, because a tool you will not use is worth nothing. More often it is an expensive way to avoid a fortnight of getting used to something.
+
+## How to test a builder before you hire one
+
+Four questions, and the first two are worth more than everything else you could ask.
+
+Ask what it does when it meets something it does not recognise. Listen for whether the answer contains a person. Anything that describes a sensible default is describing the failure at the top of this page, and the follow-up question is what the default was chosen against and who decided.
+
+Ask how you would find out it had stopped. Where the answer is that the missing output would tell you, ask what that output looks like on a quiet week, and watch what happens.
+
+Ask what happens to it if this relationship ends. The answer should involve the thing running somewhere you control, described somewhere you can read, in a form somebody else could take over. Anything that lives only in an account of theirs is a build you are renting.
+
+Ask what they would talk you out of. A builder with nothing on that list has either never seen one of these go wrong or is not going to tell you about it.
+
+[[scene:offer]]
+
+[[scene:plate-two]]
+
+## What it costs, and how long it takes
+
+The build divides into two shapes with very different prices, and which one you have is decided by the systems rather than by the logic.
+
+Where every system involved has a decent published way in, the work runs to days instead of weeks, and a good share of it is agreeing the rules rather than writing anything. This is most of what gets built and it is the boring, good version.
+
+Where something has to read a document, deal with a system that has no proper way in, or wait on an office that is not yours, the price is set by that obstacle and not by the rest. Treat it as its own project with its own shape, and treat any quote offered before the obstacle has been looked at as a guess.
+
+Then there is the running cost, and it has two parts that are usually collapsed into one. The infrastructure is small: this class of thing does not consume much of anything. The ownership is the real number, and this article deliberately does not quote it, because it is your hours and not our invoice. Size it with the calculator above rather than with a guess, and if the answer looks small, that is because it is small per year and permanent.
+
+## What it does not do, and should not pretend to
+
+It does not spare anybody from understanding the work. Automating a step you cannot explain moves the confusion rather than resolving it.
+
+It does not survive a process that keeps changing. A chain wired to a workflow that is redrawn every month spends its life being rewired, and that cost is real and recurring.
+
+It does not take the person out of the steps that need one. Any step that guesses where it ought to have asked is one that will, on some future day, be confidently wrong to a client's face and leave a record of it.
+
+It does not protect you from other people's release schedules. It exposes you to them, permanently, and the exposure is part of what you are buying rather than a risk somebody can price away.
+
+And it does not retire itself. Nothing does. A build with no review date runs until something outside it breaks it, and the question of whether it was still earning its keep gets answered by a vendor's engineering team rather than by you.
+
+[[scene:wasted]]
+
+## Common questions, answered honestly
+
+### What is custom automation, in plain terms?
+
+It is a chain of steps built around how your business actually works, rather than a product you configure. The pieces are ordinary and mostly already exist: reading from one system, checking or enriching something, applying a rule you decided, writing into another system, telling a person when it cannot proceed. What makes it custom is the arrangement and the rule, both of which are yours.
+
+### Why would anybody build this rather than buy something?
+
+Because a product solves the version of a problem enough businesses share to be worth making a living from, and the step capping you is often not that version. The honest sequence is to look hard for a product first, since one with thousands of customers has had its awkward edges found by people who were not paying to find them, and to build only where the search genuinely comes up empty.
+
+### When should I not commission a custom build?
+
+Four cases. The process is still being redesigned. You cannot describe the step in a paragraph, which usually means a decision has not been made. Nobody in the business would notice it stopping. Or a product exists and the real objection is that you would rather not learn it. The third one removes the most candidates and it is the quickest to check.
+
+### What happens when the software it connects to changes?
+
+Usually nothing, occasionally something, and the awkward middle case is a change that is not officially a breaking change at all. Vendors are allowed to add new values to fields without changing an API version, and they say so in their own documentation. That is why the most important thing to specify in any build is what it does when it meets something unfamiliar, and why the only good answers involve stopping and telling somebody.
+
+### Who fixes it when it breaks on a Friday night?
+
+Ask that before you sign anything, because the answer is a commercial arrangement rather than a technical one. What matters more is that most of these failures are not urgent in the way an outage is urgent: the honest requirement is usually that somebody notices within a day, not within an hour. Which is why loud failure is worth more than a fast response.
+
+### Who owns it if we stop working together?
+
+You should, and it should be true rather than promised. That means it runs somewhere you control, using credentials that are yours, and there is a written description of what it does in language somebody else could pick up. A build that lives only inside a supplier's account is a build you are renting, whatever the invoice says.
+
+### How is this different from workflow automation?
+
+The workflow article on this site is about finding the steps worth connecting and what the manual versions cost you. This one is about what happens after one has been built: who owns it, what it stands on, and what it costs every year afterwards. Same components, different question, and the second question is the one that decides whether the first one was worth answering.
+
+### Is it worth it for a one or two person business?
+
+Sometimes, and the deciding factor is not headcount. It is whether the step is frequent, whether the underlying rule has actually been decided, and whether anybody would notice it stopping. A two person business often scores better on the first two than a larger one, because the rule lives in one head and is genuinely consistent, and worse on the third, because there is nobody spare to be the person who notices.
+
+## What to do about it
+
+One page, tonight, and it is not a specification.
+
+At the top, the step you would most like to hand over, written as a paragraph you could give to somebody starting on Monday.
+
+Underneath, every system it would have to touch, by name. Count anything with its own login.
+
+Underneath that, one name: the person who would notice if it silently did nothing tomorrow.
+
+If the middle list is long and the bottom line is empty, you have not found a build yet. You have found something that has to be decided first, and deciding it costs nothing.
+
+[[scene:funnel]]`;
+
 export const AI_AUDIT_POST = `The list had eleven things on it and it took about twenty minutes to write, which should have been the first clue that writing it was not the hard part.
 
 Answer the phone at night. Stop retyping the same details into two systems. Chase the signatures. Reply to the portal enquiries faster. Get the market note out without a Sunday evening disappearing into it. Every one of them a real irritation, every one of them something a machine could plausibly do, and every one of them written down by somebody who runs the business and knows what actually happens in it.
