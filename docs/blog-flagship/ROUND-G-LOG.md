@@ -13,10 +13,15 @@ b1f2e27  G1   topic 16, ai scheduling, argued as an agreement you do not have ye
 1cadd58  G4   defects found by LOOKING, and one of them was an invented key on a photograph
 8c07a60  G5   the second pass, and both of its unchecked REASONS turned out to be wrong
          G6   this log
+4063ada  G7   a stale ledger row, found by checking my own counts against the directory
 ```
 
+That is eight, not seven, and G7 exists because checking the log's own plate count against the
+directory turned up a row Round F never flipped: `office-stamps.jpg` read UNSPENT while
+`document-scenes.ts` had been using it since that round shipped.
+
 Rounds E and F both had to add a commit because the log's own commit list was written before the
-last commits existed. This one was counted afterwards. G6 is the log itself and is the seventh.
+last commits existed. This one was counted afterwards and still grew by one, which is the same lesson a third time.
 
 **Two posts, ZERO new components.** Seventeen topics on the template now and sixteen in a row
 that add none. The bespoke-component hatch was not opened and did not need the calculator-lesson
