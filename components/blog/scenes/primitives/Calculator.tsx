@@ -121,18 +121,58 @@ export function Calculator({
                         >
                           {fmt(state[input.id], input.format)}
                         </span>
-                        <input
-                          id={id}
-                          type="range"
-                          min={input.min}
-                          max={input.max}
-                          step={input.step}
-                          value={state[input.id]}
-                          onChange={(e) =>
-                            setState((s) => ({ ...s, [input.id]: Number(e.target.value) }))
-                          }
-                          className="h-1 w-full cursor-pointer appearance-none rounded-full bg-[#dfe4ea] accent-porchlight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-river"
-                        />
+                        {/* THE TRACK IS 4px OF INK AND 44px OF TARGET, and they are two
+                            different boxes on purpose.
+
+                            Round I measured the old one by DRAGGING rather than by reading the
+                            CSS: at 390 DPR3 the element box was 250x4, a drag along the centre
+                            line moved the value and a drag 10px above or 8px below it moved
+                            nothing. A finger's contact patch is roughly 34 CSS px. CLAUDE.md
+                            floors tap targets at 24px, so the signature interaction of the whole
+                            flagship template missed the house rule by a factor of six, on every
+                            post, and no gate could see it: check-svg-crop only reads text inside
+                            SVG, and score-flagship only asks whether a calculator is present.
+
+                            THE WRAPPER IS THE FIX AND IT IS NOT DECORATION. The obvious version
+                            was `box-content h-1 py-5 bg-clip-content`, which does give a 44px
+                            box painted 4px, and it was built and shot before this one. It is
+                            wrong, and only the pixels said so: `rounded-full` on a 44px border
+                            box is a 22px radius, and clipping the background to a content box
+                            inset 20px vertically reduces only the VERTICAL radius, leaving 22px
+                            horizontally. The ends stop being round caps and become long
+                            elliptical tapers, measured at 10px and 6px of bar height where the
+                            old track was a uniform 12. That is the ink changing, which this
+                            change is not allowed to do.
+
+                            So the ink and the target are separated. The grey span IS the track,
+                            4px and rounded exactly as before. The input sits transparent and
+                            44px tall, centred on it, and the browser centres its thumb in the
+                            input, which puts the thumb back on the same centre line. The
+                            wrapper's own box stays h-1, so the flex row's baseline alignment and
+                            the section's vertical rhythm do not move.
+
+                            The focus ring loses its offset for the same reason: at offset-4
+                            around a 44px box it drew a large rectangle around a hairline. At
+                            offset-0 it hugs the target, which is also the honest thing to show a
+                            keyboard user, because the target really is that tall. */}
+                        <span className="relative block h-1 w-full">
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 rounded-full bg-[#dfe4ea]"
+                          />
+                          <input
+                            id={id}
+                            type="range"
+                            min={input.min}
+                            max={input.max}
+                            step={input.step}
+                            value={state[input.id]}
+                            onChange={(e) =>
+                              setState((s) => ({ ...s, [input.id]: Number(e.target.value) }))
+                            }
+                            className="absolute inset-x-0 top-1/2 h-11 -translate-y-1/2 cursor-pointer appearance-none rounded-full bg-transparent accent-porchlight focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-river"
+                          />
+                        </span>
                       </div>
                     </>
                   ) : (
