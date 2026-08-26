@@ -32,8 +32,8 @@
 ## Screenshots: docs/design-r41/sitemap-{1440,390}.png (committed).
 ##
 ## -- OPEN / NEXT -------------------------------------------------------------------------
-## * Prod verify after this push: /sitemap 200 + /sitemap/NY 308 on realtylt-website.vercel.app
-##   (poll was running at handoff time; if it timed out, re-check by hand).
+## * Prod VERIFIED 2026-08-26: /sitemap 200 with map content, /sitemap/NY 308 -> /top-areas,
+##   /sitemap.xml 200 - all three driven on realtylt-website.vercel.app after the push.
 ## * The carried work list below (listing alerts capability, EHO/REALTOR marks research,
 ##   stock-photo replacement) was NOT this round's focus and remains open.
 ## * Blog dates on the map are en-US short form; if the owner wants the long form
