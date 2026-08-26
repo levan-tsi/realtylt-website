@@ -51,7 +51,7 @@ export const aiAppointmentBooking: Service = {
     events: [
       { at: "0s", label: "The inquiry arrives", note: "8:15pm, from your website." },
       { at: "6s", label: "The AI replies", note: "Not tomorrow morning. Now, while they are still there." },
-      { at: "40s", label: "Real slots offered", note: "Read live from your calendar, so nothing double-books." },
+      { at: "40s", label: "Real slots offered", note: "Read live from your calendar, so a slot it offers is one your own diary still shows." },
       { at: "1:10", label: "Booked", note: "Confirmed inside the same conversation. No phone tag." },
       { at: "24h before", label: "Reminded", note: "The reminder is what turns a booking into an attendance." },
     ],
@@ -73,7 +73,7 @@ export const aiAppointmentBooking: Service = {
     },
     {
       title: "It books against your real calendar",
-      body: "Live availability, so nothing double-books and nothing has to be rearranged the next morning. The slot it offers is a slot you have.",
+      body: "Live availability, so it will not offer time your own calendar already holds. Where an appointment also needs somebody outside your office, their agreement is a message you have sent rather than a time you have, and no calendar integration changes that.",
     },
     {
       title: "It reminds them so they show",
@@ -111,7 +111,7 @@ export const aiAppointmentBooking: Service = {
     },
     {
       q: "How does it know when I am free?",
-      a: "It reads your live calendar, so it only ever offers slots that are genuinely open and it cannot double-book you. If you block time out, those slots disappear from what it offers.",
+      a: "It reads your live calendar, so what it offers is time your own diary still shows as free, and blocking time out removes those slots. That is the half it can guarantee. The half it cannot is anybody else's calendar, which is why the scheduling article on this site treats a showing on somebody else's listing as an agreement you do not have yet rather than as a booking.",
     },
     {
       q: "Will it reduce no-shows?",

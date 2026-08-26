@@ -147,5 +147,6 @@ export const aiVoiceAgents: Service = {
   relatedPosts: [
     "ai-voice-agent-missed-calls-real-estate",
     "ai-chat-assistant-real-estate-website",
+    "ai-clone-real-estate-agent-video-avatar",
   ],
 };

@@ -9,9 +9,9 @@ export const aiAudit: Service = {
 
   eyebrow: "AI Audit · Start here",
   title: "See exactly where AI pays off first",
-  lede: "We map how your business actually runs, find the spots where AI saves the most time or money, and hand you a plan ranked by payback, then build the first win. The low-risk way to start when you know AI can help but not where to point it.",
-  specs: ["full workflow review", "ranked by payback", "clear build plan", "a quick first win"],
-  why: "Most owners know AI could help but freeze on where to begin, so nothing ships. An audit turns that into a short, prioritized list of what to automate first, so you spend on the change with the biggest return instead of guessing.",
+  lede: "We map how your business actually runs, cut the candidates that should not be built, and hand you what is left in an order with the reason for each position beside it. Then we build the first win. The low-risk way to start when you know AI can help but not where to point it.",
+  specs: ["full workflow review", "an order, with reasons", "clear build plan", "a quick first win"],
+  why: "Knowing AI could help and knowing where to point it are different problems, and only the second one produces anything. An audit turns an open topic into a short list with the reason for each position written beside it, and into a shorter list of the things you have decided not to build.",
   keywords: [
     "ai consulting for small business",
     "ai automation audit",
@@ -23,36 +23,47 @@ export const aiAudit: Service = {
   seo: {
     title: "AI Audit: Find Where AI Pays Off in Your Business First",
     description:
-      "A mapped review of how your business actually runs, AI opportunities ranked by payback, a clear build plan, and a first win shipped. The low-risk way to start.",
+      "A mapped review of how your business actually runs, an ordered shortlist with the reasoning attached, the list of what not to build, and a first win shipped.",
+  },
+
+  /** Somebody else's measurement, and the one that resets an owner's sense of being behind.
+   * Added in round H alongside the flagship. */
+  stat: {
+    value: "10.3%",
+    label: "of US firms used any advanced business technology, on a survey of over 850,000 of them",
+    source: {
+      text: "Zolas and others, Advanced Technologies Adoption and Use by U.S. Firms: Evidence from the Annual Business Survey, NBER, 2020",
+      href: "https://www.nber.org/system/files/working_papers/w28290/w28290.pdf",
+    },
   },
 
   figure: {
     kind: "records",
-    caption: "What the ranked list looks like when it lands",
-    headers: { before: "What you do by hand today", after: "What it is worth to fix" },
+    caption: "What the shortlist looks like when it lands",
+    headers: { before: "What you do by hand today", after: "What the three questions said" },
     rows: [
       {
         before: "Answering website inquiries the next morning",
-        after: ["~6 hrs/week", "highest payback", "build first"],
-        tag: "rank 1",
+        after: ["happens daily", "rule is settled", "a wrong answer is visible"],
+        tag: "first",
       },
       {
         before: "Retyping lead details from email into the CRM",
-        after: ["~4 hrs/week", "cheap to automate", "build second"],
-        tag: "rank 2",
+        after: ["happens daily", "rule is settled", "a wrong answer is easy to undo"],
+        tag: "second",
       },
       {
         before: "Chasing missing signatures on open files",
-        after: ["~3 hrs/week", "needs system access", "phase two"],
-        tag: "rank 3",
+        after: ["happens weekly", "rule needs deciding", "needs system access"],
+        tag: "later",
       },
     ],
-    footnote: "Ranked by payback, not by how impressive it sounds. The boring one at the top is usually the one that pays.",
+    footnote: "An illustration of the shape of the output rather than a recording of anybody's business. No hours are shown, because nobody has measured yours, and the columns are the three questions rather than a score.",
   },
 
   whatItIs: [
-    "It is a mapped review of how your business actually runs, done by walking one real job end to end and writing down every step, every tool, and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
-    "What you get back is a short list of AI and automation opportunities, ranked by payback rather than by novelty, with a build plan attached. Then we build the first one, so the audit ends in a working thing rather than a document.",
+    "It is a mapped review of how your business actually runs, done by walking one real job end to end and writing down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
+    "What you get back is shorter than what you brought. Candidates get removed for stated reasons, what survives comes back in an order with the reason for each position beside it, and the list of what was removed comes back too, because those reasons are the part you will use again next year. Then we build the first one, so the audit ends in a working thing rather than a document.",
   ],
 
   howItWorks: [
@@ -61,8 +72,12 @@ export const aiAudit: Service = {
       body: "One real job, traced from the first touch to the last. Every manual step, every tool it passes through, and every place the same information gets typed twice.",
     },
     {
-      title: "We rank by payback",
-      body: "Hours saved, errors removed, and revenue recovered, weighed against how hard each one is to build. The list comes back in the order you should actually do it.",
+      title: "We cut the list before we order it",
+      body: "Three questions, applied to every candidate. Does it happen often enough that somebody would notice it breaking within a week. Could you write the rule down for a new hire. And where would a wrong answer end up. Any one of those can remove a candidate, and the third removes the most.",
+    },
+    {
+      title: "We order what survives, and write down why",
+      body: "How contained the worst case is comes first, whether the rule is actually settled comes second, and the size of the saving comes third. Every position has its reason beside it, so the order survives somebody asking why the third one is not the first.",
     },
     {
       title: "We build the first win",
@@ -76,8 +91,8 @@ export const aiAudit: Service = {
       body: "The most common place to be stuck. An audit turns an open-ended topic into a numbered list, which is the difference between thinking about AI and using it.",
     },
     {
-      title: "You want a number before you commit",
-      body: "The list tells you what each fix is worth before you pay to build any of it, so the first spend is on the change with the biggest return.",
+      title: "You want the list to get shorter, not longer",
+      body: "Anybody can add candidates. The useful hour removes them, for reasons you can apply again yourself, and it does that before any money has moved.",
     },
     {
       title: "You tried a tool and it did nothing",
@@ -86,20 +101,26 @@ export const aiAudit: Service = {
   ],
 
   limits: [
-    "It does not decide anything for you. The output is a ranked list and a plan, and what your business actually changes stays your call.",
-    "It cannot rank what nobody will say out loud. The map is only as honest as the description of how the work really happens, including the parts everyone quietly works around.",
+    "It does not decide anything for you. The output is a shorter list and a plan, and what your business actually changes stays your call.",
+    "It cannot see what nobody will say out loud. The account is only as honest as the description of how the work really happens, including the parts everyone quietly works around.",
     "It does not produce a saving on paper. Every hour on the list is an hour you still have to choose to spend on something else.",
+    "It does not put a price on each candidate. What a build costs depends entirely on which one, and a number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
+    "It does not stay true. The list has a shelf life measured in months, because your systems, your people and your volume all move.",
     "It is not a strategy document. It ends with one automation built and running, and anything past that first build is a separate decision.",
   ],
 
   faqs: [
     {
       q: "What is an AI audit?",
-      a: "It is a review of how your business actually operates, done to find where AI or automation would save the most time or money. The output is a list of opportunities ranked by payback and a plan for building them, starting with the one that returns the most for the least effort.",
+      a: "It is a review of how your business actually operates, done to find where AI or automation is worth building and, just as importantly, where it is not. The output is a written account of the work, a shortlist in an order with the reason for each position attached, the list of candidates that were removed and why, and one automation built and running.",
     },
     {
       q: "Where should a small business start with AI?",
-      a: "With the task you repeat most often and enjoy least, which is almost never the one that sounds most impressive. In practice the first win is usually instant response to inbound inquiries, or removing the copy-paste between two systems. An audit exists to identify which one it is for you rather than guessing.",
+      a: "With whatever survives three questions and has the most contained failure, which is usually something unglamorous. There is deliberately no universal answer here: in the 2018 Annual Business Survey, a Census Bureau sample of over 850,000 firms where answering is required by law, only 10.3 percent of firms used any advanced business technology at all, which is not enough adoption for anybody to have learned what works in general. A confident universal answer is a guess.",
+    },
+    {
+      q: "How do you decide what not to automate?",
+      a: "Three tests, in order. It happens too rarely for anybody to notice it breaking, which is how a quarterly job fails in March and gets discovered in June. The rule behind it is not actually settled, which usually shows up as three people describing it three different ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own.",
     },
     {
       q: "What do I actually get at the end?",
@@ -111,5 +132,9 @@ export const aiAudit: Service = {
     },
   ],
 
-  relatedPosts: ["workflow-automation-real-estate-business"],
+  relatedPosts: [
+    "ai-audit-small-business-what-not-to-automate",
+    "workflow-automation-real-estate-business",
+    "custom-automation-real-estate-bespoke-build",
+  ],
 };

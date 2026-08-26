@@ -11,7 +11,7 @@ export const customAutomation: Service = {
   title: "If it's repetitive, it can run itself",
   lede: "Inbound and outbound agents, enrichment, qualification, scheduling, CRM sync, document processing, all orchestrated in n8n and wired to your stack. The same machine drops into almost any workflow.",
   specs: ["n8n orchestration", "your workflow", "your tools", "your scale"],
-  why: "Every team has a bottleneck no off-the-shelf tool fixes. Custom automation removes the manual step quietly capping your growth. Once, then forever.",
+  why: "Every team has a bottleneck no off-the-shelf tool fixes. Custom automation removes the manual step quietly capping your growth, and it becomes a thing you own from the day it works: something that runs, that somebody understands, and that stands on interfaces belonging to other companies.",
   keywords: [
     "real estate workflow automation",
     "custom ai automation for realtors",
@@ -24,6 +24,18 @@ export const customAutomation: Service = {
     title: "Custom AI Automation Built Around Your Workflow",
     description:
       "Inbound and outbound agents, enrichment, qualification, scheduling, CRM sync, and document processing, orchestrated in n8n and wired to your stack.",
+  },
+
+  /** A vendor's own published promise, and the shortest of the three the flagship draws. It is
+   * here rather than a claim of ours because what a business is buying with a bespoke build is an
+   * exposure to other companies' release schedules. Added in round H alongside the flagship. */
+  stat: {
+    value: "12 months",
+    label: "the notice Google's cloud terms promise before a backwards-incompatible change to a customer-facing API",
+    source: {
+      text: "Google Cloud Platform Terms of Service, section 1.4(e), Discontinuation of Services",
+      href: "https://cloud.google.com/terms/",
+    },
   },
 
   figure: {
@@ -55,14 +67,18 @@ export const customAutomation: Service = {
     },
     {
       title: "Run it in your stack, with the lights on",
-      body: "Orchestrated in n8n, wired to your systems, logged on every run, versioned so a change can be rolled back. Built once, then it just runs.",
+      body: "Orchestrated in n8n, wired to your systems, logged on every run, versioned so a change can be rolled back. It fails loudly rather than quietly, because the most common ending for a chain like this is silence, and silence looks exactly like having nothing to do.",
+    },
+    {
+      title: "Hand it over so somebody else could pick it up",
+      body: "A written description of what it does in the language of the business rather than of the software, kept with the thing itself, plus credentials and an environment that are yours. That page costs an hour at the end of a build and it is the difference between the next change being a change and being a rebuild.",
     },
   ],
 
   useCases: [
     {
       title: "The step no tool covers",
-      body: "Every business has one. It is specific, it is manual, and it is why hiring feels like the only option. It usually is not.",
+      body: "Specific to how you work, manual, and the reason hiring starts to feel like the only option. Sometimes it is. The useful question first is how many other businesses would recognise the description, because if the answer is thousands there is probably a product.",
     },
     {
       title: "Several tools that refuse to talk",
@@ -78,13 +94,15 @@ export const customAutomation: Service = {
     "It does not build what you cannot describe. The honest test is whether you could explain the task to a competent new hire, and if you cannot, deciding how the work should run is the first job.",
     "It does not replace your stack. Automation sits between the systems you already run and connects them, so nothing here is a reason to migrate your CRM.",
     "It does not survive a process that keeps changing. A chain wired to a workflow redrawn every month spends its life being rewired, and that cost is real.",
-    "It does not take the person out of the steps that need one. A step built to guess where it should have asked will eventually guess wrong in front of a client, in writing.",
+    "It does not take the person out of the steps that need one. A step that guesses where it ought to have asked is one that will, on some future day, be confidently wrong to a client's face.",
+    "It does not stop existing once it is delivered. It runs, somebody has to notice when it stops, and every system it touches belongs to a company with its own release schedule.",
+    "It does not retire itself. A build with no review date runs until something outside it breaks it, which means a vendor decides when you stop, rather than you.",
   ],
 
   faqs: [
     {
       q: "What can actually be automated?",
-      a: "Anything repetitive with a rule behind it, and increasingly anything repetitive with a judgment behind it, since an LLM can make the judgment. Inbound and outbound conversations, data enrichment, lead qualification, scheduling, CRM sync, and document processing are all standard now. The honest test is whether you could describe the task to a competent new hire, because if you can, it can be built.",
+      a: "Anything repetitive with a rule behind it, and a good deal that has a judgment behind it, since a model can make many kinds of judgment now. Inbound and outbound conversations, data enrichment, lead qualification, scheduling, CRM sync and document processing are all standard. Being able to describe the task to a competent new hire is the first test and it is not the last: it also has to happen often enough that somebody would notice it breaking, and a wrong answer has to land somewhere that is not in front of a client.",
     },
     {
       q: "Why n8n rather than an off-the-shelf product?",
@@ -92,7 +110,11 @@ export const customAutomation: Service = {
     },
     {
       q: "How do you decide what to build first?",
-      a: "By payback. The step that costs the most hours and is cheapest to remove goes first. If you have not mapped that yet, the AI audit is the place to start, and it is designed to end with the first build rather than a document.",
+      a: "By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving. That order is deliberate: on the largest academic sample of technology projects, 17 percent landed in a fat right hand tail where a thin-tailed distribution would have put under one percent, so an expected payback describes the middle of the range rather than what you are exposed to. If you have not mapped any of this yet, the AI audit is the place to start.",
+    },
+    {
+      q: "What happens when the software it connects to changes?",
+      a: "Usually nothing, occasionally something, and the awkward middle case is a change that is not officially a breaking change at all. Vendors are allowed to add new values to a field without changing an API version and they document that they will. Which is why the thing to specify in any build is what it does when it meets something unfamiliar, and the only good answers involve stopping and telling a person.",
     },
     {
       q: "Will it work with the tools I already have?",
@@ -100,5 +122,9 @@ export const customAutomation: Service = {
     },
   ],
 
-  relatedPosts: ["workflow-automation-real-estate-business"],
+  relatedPosts: [
+    "custom-automation-real-estate-bespoke-build",
+    "workflow-automation-real-estate-business",
+    "ai-audit-small-business-what-not-to-automate",
+  ],
 };

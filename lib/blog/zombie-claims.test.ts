@@ -167,7 +167,16 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   // page, and there is no measurement of it anywhere for any industry.
   {
     name: "the double-booking that cannot happen",
-    pattern: /double[- ]booking that cannot happen|nothing double-?books and nothing has to be undone|can only ever offer time that is genuinely free/i,
+    /** WIDENED IN ROUND H, in the same commit as the rewrite it catches, which is the order round
+     * G's log specified. Round G killed this absolute on `ai-scheduling` and then CHECKED rather
+     * than assumed whether the entry also caught `ai-appointment-booking`, which carried the same
+     * claim in three places. It did not: the committed pattern required "nothing double-books AND
+     * nothing has to be undone" where the booking page said "rearranged", and required "can only
+     * ever offer" where the booking page said "only ever offers". Run against that file it matched
+     * zero lines. Widening it first would have turned the suite red on a page nobody was fixing,
+     * and this repo does not carry red tests, so the widening waited for the fix. */
+    pattern:
+      /double[- ]booking that cannot happen|nothing double-?books|cannot double-book you|can only ever offer time that is genuinely free|only ever offers? (time|slots) that (is|are) genuinely (free|open)/i,
     why: "an absolute the scheduling flagship's own sources contradict. Reading a live calendar stops YOUR diary being offered twice and does nothing about the other party's, because no software has visibility of a co-broke office's calendar. RFC 6638 also resets every attendee to NEEDS-ACTION on a reschedule, so even an accepted slot stops being agreed the moment the time moves",
   },
   {
@@ -204,6 +213,61 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     name: "the third nudge is the one that gets paid",
     pattern: /third nudge is the one that gets paid/i,
     why: "an unsourced claim about which reminder in a sequence produces payment. No published study of reminder sequences by position exists for this or any adjacent trade",
+  },
+  // ── Round H, 2026-08-26. Nine claims killed while writing the ai-clone, ai-audit and
+  // custom-automation flagships, which close the twenty-topic rollout. Three of them are the
+  // SAME claim (rank by payback) wearing three different sentences on two different pages, and
+  // the reason it had to go is that the audit flagship's own evidence says the ranking rule is
+  // wrong rather than merely unproven.
+  {
+    name: "a video is why the quiet lead answers",
+    pattern: /which is why they answer it/i,
+    why: "an outcome claim with nothing under it, on the one page whose own flagship refuses every response and reply figure for personalised video because each one that could be traced is published by a company selling video software and none states a sample",
+  },
+  {
+    name: "a dozen videos in an afternoon",
+    pattern: /a dozen individually addressed videos in an afternoon/i,
+    why: "an invented duration presented as a property of the product. Nobody has timed this and the avatar pipeline is owner-held, so this page cannot state what it produces or how fast. Same class as the 'ten minutes of enthusiasm' round G removed and the 'thirty seconds' round F removed",
+  },
+  {
+    name: "it looks and sounds like you rather than a generic presenter",
+    pattern: /looks and sounds like you rather than a generic presenter/i,
+    why: "a quality guarantee about a pipeline this repo does not own and has never measured. Films, HeyGen and the avatar are owner-held; a service page may say what the twin is built FROM and may not promise how convincing the result is",
+  },
+  {
+    name: "ranked by payback",
+    pattern: /ranked? by payback|by payback\. the step that costs the most hours/i,
+    why: "the page promised a sort order its own linked article argues against, which is the SERVICES-CRITIQUE section 2 failure (a commercial page contradicted by the post it links to). The argument, stated as an argument rather than as a measurement: Budzier and Flyvbjerg measured 17 percent of 1,471 ICT projects in a fat right tail against 0.7 percent for a thin-tailed distribution, and the inference drawn from that shape on the flagship is that an expected value describes the middle rather than the exposure, so payback belongs third behind how contained the worst case is and whether the rule is settled. The measurement is theirs and the inference is ours, and the page now says the same thing the article does",
+  },
+  {
+    name: "the list tells you what each fix is worth",
+    pattern: /what each fix is worth before you pay/i,
+    why: "a promise to quantify every candidate in advance, on the page whose own flagship refuses a payback period outright because it depends entirely on which candidate. The audit's output is an order with the reason for each position attached, not a price list",
+  },
+  {
+    name: "the first win is usually",
+    pattern: /the first win is usually/i,
+    why: "a claim about what works first for small businesses in general, and the largest measurement available says no such general answer can exist yet: the 2018 Annual Business Survey, over 850,000 firms with response required by law, found 10.3 percent using any advanced business technology at all",
+  },
+  {
+    name: "most owners know AI could help but freeze",
+    pattern: /most owners know ai could help/i,
+    why: "an unsourced claim about the mental state of a majority of business owners. This is /ai COPY and it was changed because the page cannot support it, and because the same sentence promised spending on the change with the biggest return, which is the payback ranking the audit flagship disproves",
+  },
+  {
+    name: "once, then forever",
+    pattern: /once,? then forever|built once,? then it just runs/i,
+    why: "the absolute the custom-automation flagship exists to disprove. A build is a possession from the day it works: it stands on interfaces whose owners promise twelve to twenty four months of notice with carve-outs, and NIST's own estimate puts $38.3bn of the annual cost of software not working on the businesses using it against $21.2bn on the ones making it. This is /ai COPY",
+  },
+  {
+    name: "if you can describe it, it can be built",
+    pattern: /because if you can,? it can be built/i,
+    why: "describability is presented as a sufficient test and it is only a necessary one. The custom-automation flagship names three further disqualifiers on its own page: the process is still being redesigned, nobody would notice it stopping, or a product already does it",
+  },
+  {
+    name: "an invented hours-per-week figure in a service figure",
+    pattern: /~\s*\d+\s*hrs\/week/i,
+    why: "a number printed inside an illustration of our own output reads as a measurement of somebody's business, and nobody measured these. Round F removed a 'thirty seconds' from the document-processing figure for exactly this and round G had to add an explicit illustration line to two more figures",
   },
 ];
 
