@@ -29,6 +29,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/blog`, priority: 0.7, changeFrequency: "weekly", lastModified: now },
     { url: `${base}/services`, priority: 0.9, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/connect`, priority: 0.7, changeFrequency: "yearly", lastModified: now },
+    // Public and indexable but missing from this inventory until round 41 — found while
+    // building the HTML site map (app/sitemap/directory.ts), which lists both.
+    { url: `${base}/plan`, priority: 0.5, changeFrequency: "monthly", lastModified: now },
+    { url: `${base}/sitemap`, priority: 0.3, changeFrequency: "weekly", lastModified: now },
     { url: `${base}/privacy-policy`, priority: 0.2, changeFrequency: "yearly", lastModified: now },
     { url: `${base}/dmca-terms`, priority: 0.2, changeFrequency: "yearly", lastModified: now },
   ];

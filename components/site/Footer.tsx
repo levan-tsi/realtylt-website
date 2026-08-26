@@ -187,12 +187,15 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <a
-                href="/sitemap.xml"
+              {/* The HTML site map (app/sitemap) — a person's page. Crawlers get
+                  /sitemap.xml via robots.ts; a visitor clicking raw XML was round 41's
+                  opening defect. */}
+              <Link
+                href="/sitemap"
                 className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
               >
-                Sitemap
-              </a>
+                Site Map
+              </Link>
             </li>
           </ul>
         </div>

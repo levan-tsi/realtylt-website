@@ -152,9 +152,10 @@ const nextConfig: NextConfig = {
       // Listings/Page/N and School-District, Neighborhood and Postal-Code trees beneath it,
       // for 22 counties including many we do not serve. None of that shape exists here, and
       // the honest destination for all of it is the index of the areas we DO work in.
-      // (Distinct from /sitemap.xml, which this site generates and which still resolves.)
-      { source: "/sitemap", destination: "/top-areas", permanent: true },
-      { source: "/sitemap/:path*", destination: "/top-areas", permanent: true },
+      // `:path+` (one or more segments), NOT `:path*`: redirects run before the filesystem,
+      // and `*` also matches the bare /sitemap — which is now our own HTML site map page
+      // (app/sitemap/page.tsx, round 41). /sitemap.xml stays the generated crawler file.
+      { source: "/sitemap/:path+", destination: "/top-areas", permanent: true },
     ];
   },
   async rewrites() {
