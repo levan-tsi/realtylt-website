@@ -35,12 +35,20 @@ export const crmSync: Service = {
 
   /** ROUND D: `stat` added, carrying the one measurement in this subject with a published
    * method behind it. Winkler's overview for the Census Bureau cites his own earlier finding
-   * that even high quality files contain more than 20 percent error in first name pairs among
-   * pairs that are TRUE MATCHES. It is the number that explains why deduplication is hard, and
-   * it comes from outside this business, so it carries its source. */
+   * about first name pairs among pairs that are TRUE MATCHES. It is the number that explains
+   * why deduplication is hard, and it comes from outside this business, so it carries its
+   * source.
+   *
+   * ROUND I RESTORED THE HEDGE, and it went missing here first. The operative sentence, read
+   * in the Census PDF: "Winkler (1990a) showed that even high quality files MIGHT CONTAIN 20+%
+   * error in first name pairs and 10+% error in last name pairs among pairs that are true
+   * matches." This comment dropped "might", and the label underneath it then printed the
+   * number as a flat property of every cleaned file. Same figure, same source, correct
+   * citation; only the modality had moved, which is the cheapest way for a page to overstate
+   * a paper it is quoting accurately. */
   stat: {
     value: "20%+",
-    label: "of record pairs that are the same person disagree on the first name, even in files somebody has already cleaned",
+    label: "of record pairs that are the same person can disagree on the first name, even in files somebody has already cleaned",
     source: {
       text: "W. E. Winkler, Overview of Record Linkage and Current Research Directions, U.S. Census Bureau, 2006",
       href: "https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf",

@@ -1228,9 +1228,13 @@ Faults found by probing frames, both of which a single still would have hidden:
 ### PREMISES THAT WERE WRONG, corrected against primary sources
 
 The brief for this session asserted **"NY is two-party consent for recording"**. It is not.
-[NY Penal Law 250.00](https://www.nysenate.gov/legislation/laws/PEN/250.00) defines mechanical
-overhearing as recording *"without the consent of at least one party thereto, by a person not
-present thereat"*, so a participant may record. New York is ONE-party. The post says so and
+[NY Penal Law 250.00](https://www.nysenate.gov/legislation/laws/PEN/250.00) defines wiretapping
+as recording *"a telephonic or telegraphic communication by a person other than a sender or
+receiver thereof, without the consent of either the sender or receiver"*, so a participant may
+record. New York is ONE-party. **(Corrected in Round I. This paragraph, and the post, both
+quoted 250.00(2), "mechanical overhearing of a conversation", which governs conversations in a
+room rather than telephone calls. The right subdivision is 250.00(1) and the offense itself is
+250.05.)** The post says so and
 argues we should disclose anyway, which is a better section than the wrong premise would have
 produced. **Verify every factual premise before building on it, including the brief's.**
 

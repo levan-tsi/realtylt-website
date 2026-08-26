@@ -46,7 +46,13 @@ export const VOICE_FILM = {
  * liability. */
 export const IN_SHORT: string[] = [
   "A missed call is not a message waiting for you in the morning. Most callers never leave one, so it arrives as nothing at all: no name, no number worth calling back, no record that anybody wanted you.",
-  "Speed decides who gets the conversation. Across 1.25 million leads, firms that made contact within the hour were nearly seven times likelier to reach a decision maker than firms that waited one more hour.",
+  /** ROUND I: "reach a decision maker" was a softening of what the study measured. The
+   * operative sentence, read in the primary document and quoted in full in ai-chat-scenes.ts,
+   * says firms were nearly seven times as likely "to qualify the lead (which we defined as
+   * having a meaningful conversation with a key decision maker)". Reaching somebody is a
+   * materially easier outcome than having a meaningful conversation with them, and the easier
+   * one was attached to the 7x on all three of the short surfaces a skimmer sees. */
+  "Speed decides who gets the conversation. Across 1.25 million leads, firms that made contact within the hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour.",
   "An AI voice agent answers every call, qualifies inside a normal conversation, books from your real calendar and writes the outcome to your CRM. It does not close, and it says out loud that it is an assistant.",
 ];
 
@@ -472,7 +478,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       ],
       headline: 5,
       resultLabel: "Going to whoever picked up",
-      note: "Two things worth knowing about this arithmetic. The first is that it is far gentler than the research above would justify: the 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to reach a decision maker than firms that waited one more hour, and more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe, so the callback curve here is a plain judgement and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though somebody who dialled you is warmer than somebody who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
+      note: "Two things worth knowing about this arithmetic. The first is that it is far gentler than the research above would justify: the 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour, and more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe, so the callback curve here is a plain judgement and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though somebody who dialled you is warmer than somebody who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
       action: { label: "See how it is built", href: "/services/ai-voice-agents" },
       secondary: { label: "Ask about yours", href: "/connect" },
     },

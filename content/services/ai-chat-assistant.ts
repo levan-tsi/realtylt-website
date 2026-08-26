@@ -34,7 +34,7 @@ export const aiChatAssistant: Service = {
   title: "The assistant your visitors actually talk to",
   lede: "Real text chat on Claude. It searches your MLS live, texts matching listings over Twilio SMS, hands off to a Vapi voice call, and captures the lead before it bounces. This is the one you can touch right now.",
   specs: ["Claude", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
-  why: "Harvard Business Review found that contacting a lead inside the hour made a firm nearly seven times likelier to reach a decision maker than waiting one more hour. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
+  why: "Harvard Business Review found that contacting a lead inside the hour made a firm nearly seven times likelier to get a meaningful conversation with a decision maker than waiting one more hour. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
   keywords: [
     "ai chatbot for real estate website",
     "real estate website assistant",
@@ -49,9 +49,21 @@ export const aiChatAssistant: Service = {
       "A live AI chat assistant that searches your MLS, texts matching listings over SMS, hands off to a voice call, and captures the lead in seconds instead of hours.",
   },
 
+  /** ROUND I: this was the ONLY stat in the set of sixteen without a `source`, on the one page
+   * SERVICES-CRITIQUE.md §2 was written about, whose own recommendation ends "If `stat`
+   * survives, give it `source` and make it required." The source was never missing from the
+   * page, only from the field: the header comment above and the FAQ below both carry it. The
+   * argument for leaving it off was that hbr.org paywalls the article. That is not a reason
+   * here, because it is the same paywalled article the other fifteen chips' sibling scenes
+   * cite by name, and a reader who cannot open it can still see whose study it is and how big
+   * the sample was, which is the whole job of the field. */
   stat: {
     value: "23%",
     label: "of 2,241 US companies never answered a website inquiry at all",
+    source: {
+      text: "Harvard Business Review, The Short Life of Online Sales Leads (2011), by James Oldroyd, Kristina McElheran and David Elkington. A test inquiry submitted through the website of each of 2,241 US companies. Cross-industry work from 2011, not a real estate study.",
+      href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+    },
   },
 
   figure: {
