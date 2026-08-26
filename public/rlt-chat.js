@@ -16,6 +16,12 @@
     // for the id server-side — instead of minting one in the browser — is what stops a stranger
     // who guesses a session id from reading the conversation back through the assistant.
     SESSION_URL: 'https://realtylt-crm-web.vercel.app/api/chat/session',
+    // TAKEOVER DELIVERY (2026-08-26). When Levan presses Take over in the CRM and types, the
+    // reply is a chat_logs row with sender='agent' and nothing carried it here — measured on
+    // prod, row 220, never rendered. This is where we ask for his replies while the panel is
+    // open. Needs the ownership token, so a widget in the no-token fallback simply never polls.
+    POLL_URL: 'https://realtylt-crm-web.vercel.app/api/chat/messages',
+    POLL_INTERVAL: 10000,
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
     BRAND_NAME: 'Levan Tsiklauri',
@@ -27,6 +33,18 @@
     TYPING_DELAY: 300,
     REQUEST_TIMEOUT: 30000
   };
+
+  // THE THREE URLS, AND ONLY THOSE, may be pointed somewhere else by a page that sets
+  // window.RLT_CHAT_CONFIG before this script loads. That is how the CRM's harness drives this
+  // exact file against a local server instead of a shipped copy that has drifted from it.
+  // Production sets nothing and gets the constants above; nothing else is overridable, so a
+  // stray global on a live page cannot rebrand or restyle the widget.
+  if (window.RLT_CHAT_CONFIG) {
+    ['WEBHOOK_URL', 'SESSION_URL', 'POLL_URL'].forEach(function(key) {
+      const value = window.RLT_CHAT_CONFIG[key];
+      if (typeof value === 'string' && value) CONFIG[key] = value;
+    });
+  }
 
   // ============================================================
   // GUARD - don't double-inject
@@ -66,10 +84,10 @@
       // JSON is the current shape; a bare string is a session id from an older widget.
       if (raw.charAt(0) === '{') {
         const o = JSON.parse(raw);
-        if (o && o.id) return { id: o.id, token: o.token || null };
+        if (o && o.id) return { id: o.id, token: o.token || null, cursor: o.cursor || 0 };
         return null;
       }
-      return { id: raw, token: null };
+      return { id: raw, token: null, cursor: 0 };
     } catch (e) { return null; }
   }
 
@@ -93,13 +111,13 @@
       if (resp.ok) {
         const d = await resp.json();
         if (d && d.sessionId) {
-          _session = { id: d.sessionId, token: d.token || null };
+          _session = { id: d.sessionId, token: d.token || null, cursor: 0 };
           writeStoredSession(_session);
           return _session;
         }
       }
     } catch (e) { /* fall through to a local id */ }
-    _session = { id: uuid(), token: null };
+    _session = { id: uuid(), token: null, cursor: 0 };
     writeStoredSession(_session);
     return _session;
   }
@@ -107,6 +125,15 @@
   // Each agent reply carries a fresh token; keep the newest so the session stays owned.
   function updateToken(token) {
     if (token && _session) { _session.token = token; writeStoredSession(_session); }
+  }
+
+  // How far through the transcript we have been shown Levan's replies. Persisted with the
+  // session so a page reload does not replay everything he already said.
+  function updateCursor(cursor) {
+    if (typeof cursor === 'number' && _session && cursor > (_session.cursor || 0)) {
+      _session.cursor = cursor;
+      writeStoredSession(_session);
+    }
   }
 
   function getSessionId() {
@@ -254,6 +281,16 @@
         word-wrap: break-word;
       }
       .rlt-msg-bot { background: #f1f3f4; color: #1f2937; align-self: flex-start; border-bottom-left-radius: 4px; white-space: normal; }
+      /* A reply Levan typed himself in the CRM. Same bubble, tinted and tagged, so it is
+         obvious at a glance which words are his and which are the assistant's. */
+      .rlt-msg-agent { background: #eaf1fb; box-shadow: inset 3px 0 0 ${CONFIG.BRAND_COLOR}; }
+      .rlt-agent-tag {
+        display: block;
+        font-size: 11px;
+        font-weight: 600;
+        color: ${CONFIG.BRAND_COLOR_DARK};
+        margin-bottom: 4px;
+      }
       .rlt-msg-user { background: ${CONFIG.BRAND_COLOR}; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; white-space: pre-wrap; }
       .rlt-msg a { color: inherit; text-decoration: underline; word-break: break-all; }
       .rlt-msg-bot a { color: ${CONFIG.BRAND_COLOR}; }
@@ -487,16 +524,41 @@
     });
   }
 
+  // A URL a chat bubble may link to. Anything else becomes an inert '#'.
+  //
+  // MEASURED 2026-08-26, driving this file in a real browser: the previous version stripped a
+  // LEADING "javascript:" and unescaped "&amp;" first, and five payloads walked straight past
+  // it into a rendered href — " javascript:…", "\tjavascript:…" (a browser strips whitespace
+  // and control characters when it parses a URL, so those are the same scheme to it),
+  // "&#106;avascript:…" (the &amp; unescape handed the entity back so the attribute parser
+  // could decode it), "data:text/html,<script>…" and "vbscript:…". A denylist of one scheme was
+  // never going to hold; this is an allowlist, and it is checked against the value with those
+  // characters already removed.
+  //
+  // The &amp; unescape is gone with it. Leaving "&amp;" in an href is the CORRECT encoding —
+  // the attribute parser turns it back into "&" — so undoing it bought nothing and cost the
+  // entity bypass above.
+  function safeHref(url) {
+    // eslint-disable-next-line no-control-regex
+    const cleaned = String(url).replace(/[\u0000-\u0020\u00a0\u2028\u2029]+/g, '');
+    if (/^(?:https?:|mailto:|tel:)/i.test(cleaned)) return cleaned;
+    // Relative and same-page links: a path, a query, a fragment, or a bare filename.
+    if (/^[/#?]/.test(cleaned) || /^[\w.-]+(?:[/?#]|$)/.test(cleaned)) return cleaned;
+    return '#';
+  }
+
   // Render inline markdown on already-HTML-escaped text.
   function renderInline(raw) {
     let s = escapeHtml(raw);
     s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
     s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
-    // Markdown links [text](url) - strip XSS, then insert <a>
+    // Markdown links [text](url). The text is already escaped; the URL goes through the
+    // scheme allowlist above. This path now carries three kinds of text a visitor can shape -
+    // the model's own reply, a tool result quoting an MLS remark, and (from 2026-08-26) a
+    // reply typed by a person in the CRM - so it is not the place for a denylist.
     s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(_, txt, url) {
-      const safeUrl = url.replace(/&amp;/g, '&').replace(/^javascript:/i, '');
-      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${txt}</a>`;
+      return `<a href="${safeHref(url)}" target="_blank" rel="noopener noreferrer">${txt}</a>`;
     });
     return linkify(s);
   }
@@ -525,10 +587,17 @@
     requestAnimationFrame(function() { msgsEl.scrollTop = msgsEl.scrollHeight; });
   }
 
+  // role: 'user' | 'bot' | 'agent'. 'agent' is a real person (Levan) typing in the CRM after
+  // Take over; it is rendered as a bot-side bubble with his name on it so the visitor is never
+  // left guessing whether they are still talking to the assistant.
   function addMessage(role, text) {
     const el = document.createElement('div');
-    el.className = 'rlt-msg ' + (role === 'user' ? 'rlt-msg-user' : 'rlt-msg-bot');
-    el.innerHTML = role === 'user' ? linkify(escapeHtml(text)) : renderMarkdown(text);
+    el.className = 'rlt-msg ' + (role === 'user' ? 'rlt-msg-user' : 'rlt-msg-bot')
+      + (role === 'agent' ? ' rlt-msg-agent' : '');
+    const body = role === 'user' ? linkify(escapeHtml(text)) : renderMarkdown(text);
+    el.innerHTML = role === 'agent'
+      ? '<span class="rlt-agent-tag">' + escapeHtml(CONFIG.BRAND_NAME.split(' ')[0]) + ' · live</span>' + body
+      : body;
     msgsEl.appendChild(el);
     scrollToBottom();
   }
@@ -597,6 +666,75 @@
   }
 
   // ============================================================
+  // TAKEOVER RELAY - hearing Levan when he takes the conversation over
+  // ============================================================
+  // He presses Take over in the CRM, types, and it lands in chat_logs as sender='agent'. Until
+  // 2026-08-26 nothing brought it here: measured on prod, his reply (row 220) was never
+  // rendered and the visitor's next message came back as the same static "he'll reply shortly"
+  // notice. Two paths now carry it - this poll while the panel is open, and the paused reply to
+  // the visitor's own next message - and BOTH funnel through renderAgentMessages, so a race
+  // between them shows his sentence once rather than twice.
+  const seenAgentIds = new Set();
+  let pollTimer = null;
+
+  function renderAgentMessages(list) {
+    if (!Array.isArray(list) || !list.length) return 0;
+    let shown = 0;
+    list.forEach(function(m) {
+      if (!m || typeof m.text !== 'string' || !m.text.trim()) return;
+      const id = typeof m.id === 'number' ? m.id : null;
+      if (id !== null) {
+        if (seenAgentIds.has(id)) return;
+        seenAgentIds.add(id);
+      }
+      addMessage('agent', m.text);
+      recordTurn('agent', m.text);
+      if (id !== null) updateCursor(id);
+      shown += 1;
+    });
+    return shown;
+  }
+
+  async function pollAgentMessages() {
+    // No token means the CRM cannot tell this conversation is ours and answers 401 by design,
+    // so there is nothing to ask for - the no-token fallback simply never polls. A panel nobody
+    // has open, or a tab in the background, is not worth a request either.
+    if (isSending || !_session || !_session.id || !_session.token) return;
+    if (!panel.classList.contains('rlt-open')) return;
+    if (document.visibilityState === 'hidden') return;
+    try {
+      const url = CONFIG.POLL_URL
+        + '?sessionId=' + encodeURIComponent(_session.id)
+        + '&since=' + encodeURIComponent(_session.cursor || 0);
+      const resp = await fetch(url, { headers: { 'x-rlt-chat-token': _session.token } });
+      // 401 and 429 are answers, not failures worth a console line every ten seconds.
+      if (!resp.ok) return;
+      const data = await resp.json();
+      const shown = renderAgentMessages(data && data.messages);
+      updateCursor(data && data.cursor);
+      // A person just answered, so the chips the assistant offered before he arrived are stale.
+      if (shown) clearChips();
+    } catch (e) { /* offline or suspending: the next tick tries again */ }
+  }
+
+  function startPolling() {
+    if (pollTimer) return;
+    pollTimer = setInterval(pollAgentMessages, CONFIG.POLL_INTERVAL);
+    pollAgentMessages();
+  }
+
+  function stopPolling() {
+    if (!pollTimer) return;
+    clearInterval(pollTimer);
+    pollTimer = null;
+  }
+
+  // Coming back to the tab should show his reply immediately, not up to ten seconds later.
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') pollAgentMessages();
+  });
+
+  // ============================================================
   // API CALL
   // ============================================================
   async function callAgent(message) {
@@ -659,10 +797,19 @@
     try {
       const data = await callAgent(text);
       hideTyping();
-      const reply = (data && data.reply) ? data.reply : "Hmm, I didn't catch that. Try again?";
-      addMessage('bot', reply);
-      recordTurn('bot', reply);
-      renderChips(data && Array.isArray(data.suggestions) ? data.suggestions : []);
+      // He answered while we were typing. His words ARE the reply to this turn - the response
+      // also repeats them in `reply` so an older copy of this widget still shows them, which is
+      // exactly why they must not be printed twice here.
+      const relayed = renderAgentMessages(data && data.agentMessages);
+      updateCursor(data && data.cursor);
+      if (relayed) {
+        clearChips();
+      } else {
+        const reply = (data && data.reply) ? data.reply : "Hmm, I didn't catch that. Try again?";
+        addMessage('bot', reply);
+        recordTurn('bot', reply);
+        renderChips(data && Array.isArray(data.suggestions) ? data.suggestions : []);
+      }
     } catch (err) {
       hideTyping();
       const msg = err.name === 'AbortError'
@@ -690,6 +837,7 @@
     if (!window.matchMedia('(pointer: coarse)').matches) {
       setTimeout(function() { inputEl.focus(); }, 350);
     }
+    startPolling();
   });
 
   closeEl.addEventListener('click', function() {
@@ -697,6 +845,7 @@
     panel.style.height = '';
     panel.style.bottom = '';
     bubble.style.display = 'flex';
+    stopPolling();
   });
 
   // Keep the input bar above the virtual keyboard on iOS Safari.
@@ -715,7 +864,10 @@
 
   resetEl.addEventListener('click', function() {
     if (confirm('Start a fresh conversation? Your current chat will be cleared.')) {
+      // The poll timer is left running on purpose: clearHistory() drops the session, the poll
+      // no-ops without one, and it picks the new conversation up the moment one is minted.
       clearHistory();
+      seenAgentIds.clear();
       history = [];
       msgsEl.innerHTML = '';
       restoreHistory();
@@ -747,6 +899,9 @@
     close: function() { closeEl.click(); },
     reset: function() { resetEl.click(); },
     getSessionId: getSessionId,
-    getHistory: function() { return history.slice(); }
+    getHistory: function() { return history.slice(); },
+    // The relay, for a harness (and for diagnosing a takeover that did not arrive).
+    pollNow: pollAgentMessages,
+    getCursor: function() { return _session ? (_session.cursor || 0) : 0; }
   };
 })();
