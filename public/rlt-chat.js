@@ -25,7 +25,7 @@
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
     BRAND_NAME: 'Levan Tsiklauri',
-    GREETING: "Hey! Looking for a home in Westchester, the Hudson Valley, or anywhere in the city? I can pull live MLS listings, text them to your phone, or get you connected with Levan directly. What are you searching for?",
+    GREETING: "Hey! Looking for a home in Westchester, the Hudson Valley, or anywhere in the city? I can pull live MLS listings and get you connected with Levan directly. What are you searching for?",
     INITIAL_CHIPS: ['Show me 3-bed homes under $700k', 'Condos under $1M', 'Talk to Levan'],
     SESSION_KEY: 'realtylt_chat_session',
     HISTORY_KEY: 'realtylt_chat_history',
