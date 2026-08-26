@@ -422,10 +422,25 @@ function apiFilterParams(f: Filters): URLSearchParams {
 const placeKey = (f: Filters) => `${f.county}|${f.city}|${f.q}|${f.rental}`;
 
 /** Everything "Clear all filters" resets. Shared because the empty state exists in two places
- * now — the grid's full-width panel and the map view's results column, which keeps its map. */
-const CLEARED_FILTERS = {
+ * now — the grid's full-width panel and the map view's results column, which keeps its map.
+ *
+ * It has to cover EVERY MORE-panel field, not just the ones the bar shows. It did not: a search
+ * narrowed by home type, heating, parking, keywords, a feature toggle or either end of Days on
+ * market reached "No homes match those filters", offered this button, and the button changed
+ * nothing — the URL, the filters and the zero count all survived the click. The Days-on-market
+ * floor made that easy to hit ("New listings" plus "on market 3 months+" is a real
+ * contradiction that answers 0), but keywords and home type could already do it. The panel's
+ * own "Reset advanced" always cleared all of them, so the two buttons disagreed about what a
+ * filter is. The type annotation is the guard: MORE_KEYS and MORE_FLAGS are required here, so
+ * adding the next panel field without clearing it stops the build. */
+const CLEARED_FILTERS: Record<(typeof MORE_KEYS)[number] | (typeof MORE_FLAGS)[number], string | boolean> &
+  Partial<Filters> = {
   q: "", city: "", county: "", priceMin: "", priceMax: "", bedsMin: "", bathsMin: "", sqftMin: "", propertyType: "",
   sqftMax: "", garageMin: "", garageMax: "", lotMin: "", lotMax: "", yearMin: "", yearMax: "", taxMax: "", withPhotos: false,
+  homeType: "", heating: "", parking: "", listedMinDays: "", listedDays: "", keywords: "",
+  centralAir: false, basement: false, waterfront: false, firstFloorBed: false, eatInKitchen: false,
+  washerDryer: false, formalDining: false, municipalUtilities: false,
+  basementFinished: false, basementWalkout: false, nearTransit: false, views: false,
 };
 
 /* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */

@@ -23,6 +23,7 @@ import { listingPath } from "@/lib/idx/listing-url";
 import { calcMortgage } from "@/lib/mortgage";
 import { SERVED_AREAS, SITE } from "@/lib/site";
 import { breadcrumbsJsonLd, jsonLdScript } from "@/lib/jsonld";
+import { boroughPath } from "@/content/boroughs";
 
 // generateMetadata + the page both need the listing — cache() dedupes to one lookup per request.
 // Exported so the /listing/[id] redirect stub and the /homes-for-sale slug route share it.
@@ -83,6 +84,12 @@ export async function ListingDetail({ id }: { id: string }) {
     : { paths: l.photos, mirrored: l.photos.length };
   const photos = gallery.paths;
   const county = SERVED_AREAS.find((c) => c.slug === l.county);
+  // The Bronx is the one area whose PAGE slug is not its area slug (/top-areas/the-bronx vs the
+  // DB value "bronx"), and this breadcrumb built the URL from the area slug — so every Bronx
+  // listing pointed its "THE BRONX" crumb, and the BreadcrumbList it publishes to Google, at
+  // /top-areas/bronx, which is a 404. Measured 2026-08-26: 1,388 Active Bronx listings, every
+  // one of them. `boroughPath` is the mapping content/boroughs already owns for this.
+  const countyHref = county ? boroughPath(county.slug) ?? `/top-areas/${county.slug}` : undefined;
 
   // ── Facts (structured fields, with legacy-row fallbacks parsed from `features`)
   const yearBuilt = l.yearBuilt ?? (Number(factFromFeatures(l, /^Built (\d{4})$/)) || undefined);
@@ -217,7 +224,7 @@ export async function ListingDetail({ id }: { id: string }) {
   const breadcrumbLd = breadcrumbsJsonLd(SITE.url, [
     { name: "Home", path: "/" },
     { name: "Search", path: "/search" },
-    ...(county ? [{ name: county.name, path: `/top-areas/${county.slug}` }] : []),
+    ...(county && countyHref ? [{ name: county.name, path: countyHref }] : []),
     { name: `${l.address}, ${l.city}` },
   ]);
 
@@ -275,10 +282,10 @@ export async function ListingDetail({ id }: { id: string }) {
             <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
               <nav aria-label="Breadcrumb" className="min-w-0 text-xs uppercase tracking-[0.14em] text-stone">
                 <Link href="/search" className="inline-flex min-h-6 items-center hover:text-ink">Search</Link>
-                {county && (
+                {county && countyHref && (
                   <>
                     {" / "}
-                    <Link href={`/top-areas/${county.slug}`} className="inline-flex min-h-6 items-center hover:text-ink">
+                    <Link href={countyHref} className="inline-flex min-h-6 items-center hover:text-ink">
                       {county.name}
                     </Link>
                   </>
