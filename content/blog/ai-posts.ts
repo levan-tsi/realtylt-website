@@ -271,7 +271,7 @@ For the memory half, call your own office as though you were a client, say three
 
 For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing a weekly loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
 
-The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about forty words.
+The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about eighty words.
 
 [[scene:funnel]]`;
 
