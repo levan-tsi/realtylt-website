@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Saved | Your Homes & Searches",
   description:
-    "Homes you've hearted and searches you've saved, kept on this device. Turn on email alerts to hear about new matches first.",
+    "Homes you've hearted and searches you've saved, kept on this device. Save a search and turn on email alerts to hear about new matches first.",
   // Someone else's saved list is empty by definition — there is no page here for a search
   // result to lead to. /portal declares the same for the same reason.
   robots: { index: false, follow: false },
@@ -24,9 +24,12 @@ export default async function SavedPage() {
           <h1 className="t-h1 mt-2">
             Your <strong>Homes &amp; Searches</strong>
           </h1>
+          {/* "below" was a promise the empty state broke: the alerts block only renders once
+              a search is saved, so a first-time visitor read an instruction pointing at
+              nothing. Conditional phrasing is true in both states. */}
           <p className="mt-2 max-w-xl t-small text-paper/70">
-            Saved on this device, no account needed. Turn on email alerts below and we&rsquo;ll
-            watch the market for you.
+            Saved on this device, no account needed. Save a search, turn on its email alerts,
+            and we&rsquo;ll watch the market for you.
           </p>
         </div>
       </header>
