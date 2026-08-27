@@ -110,7 +110,7 @@ export const customAutomation: Service = {
     },
     {
       q: "How do you decide what to build first?",
-      a: "By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving. That order is deliberate: on the largest academic sample of technology projects, 17 percent landed in a fat right hand tail where a thin-tailed distribution would have put under one percent, so an expected payback describes the middle of the range rather than what you are exposed to. If you have not mapped any of this yet, the AI audit is the place to start.",
+      a: "By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving. That order is deliberate: on a sample of 1,471 technology projects worth 241 billion dollars, 17 percent landed in a fat right hand tail where a thin-tailed distribution would have put under one percent, so an expected payback describes the middle of the range rather than what you are exposed to. If you have not mapped any of this yet, the AI audit is the place to start.",
     },
     {
       q: "What happens when the software it connects to changes?",

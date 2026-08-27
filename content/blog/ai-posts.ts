@@ -285,7 +285,6 @@ Nine days later somebody noticed.
 
 Nothing catastrophic happened in those nine days. A few dozen records went to the wrong place and were quietly put right in an afternoon, which is the usual size of this kind of failure and is also why it is worth writing about. The expensive part was not the mistake, it was the nine days, and the nine days happened because the chain had no way of saying that something unfamiliar had turned up.
 
-
 This article is about the part of a bespoke build that nobody quotes for, and it is not the code. It is the fact that from the moment the thing works, you own it, and everything underneath it belongs to somebody else.
 
 [[scene:in-short]]
@@ -364,9 +363,9 @@ There is one statistic anybody who has read about this will have seen, which is 
 
 It is not printed here, and the reason is a check rather than a shrug.
 
-The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real: its catalogue record exists, with a publication date and a reference count. Getting at the paper itself is another matter. The ACM's library sits behind a bot check that no automated request made for this article cleared, in a browser or otherwise, and the publisher's page for the 2000 article answers with an eight kilobyte shell containing none of the article's text, no occurrence of the word maintenance, and no occurrence of the number.
+The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real and its catalogue record is there, with a publication date on it. Neither could actually be read. Both sit behind a publisher's wall that did not open for this article, in a browser or otherwise.
 
-So neither could be read in the original, which means nobody writing this page can tell you what was actually measured, on how many systems, in what industry, in a decade when software was written and deployed in ways that no longer exist. A number nobody can check is not a conservative estimate. It is a rumour with a citation attached.
+So nobody writing this page can tell you what was actually measured, on how many systems, in what industry, in a decade when software was written and deployed in ways that no longer exist. A number nobody can check is not a conservative estimate. It is a rumour with a citation attached.
 
 There is a second thing missing from this page for a related reason, and it is more interesting because the source IS readable. A much reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project, rising steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the concept, not a measurement of anything, and drawing it would have been a fabrication with a footnote.
 
