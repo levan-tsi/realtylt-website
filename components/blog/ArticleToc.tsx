@@ -142,14 +142,17 @@ export function ArticleToc({ items }: { items: TocItem[] }) {
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="fixed bottom-5 left-1/2 z-50 flex max-w-[86vw] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
+            /* Width cap + prefix give-way: components/blog/FlagshipToc.tsx documents both.
+             * The old max-w-[86vw] cleared the chat launcher only because the labels here
+             * happened to be short; a long heading grew the pill under the bubble. */
+            className="fixed bottom-5 left-1/2 z-50 flex max-w-[calc(100%-10.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" strokeWidth="1.9">
               <path d="M4 6h10M4 12h16M4 18h12" strokeLinecap="round" />
             </svg>
             <span className="min-w-0 truncate">
-              <span className="text-paper/55">On this page</span>
-              <span className="mx-1.5 text-paper/30">/</span>
+              <span className="hidden text-paper/55 min-[560px]:inline">On this page</span>
+              <span className="mx-1.5 hidden text-paper/30 min-[560px]:inline">/</span>
               <span className="font-bold">{activeText}</span>
             </span>
           </button>

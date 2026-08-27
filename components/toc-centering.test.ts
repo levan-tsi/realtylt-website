@@ -91,13 +91,15 @@ describe("the floating table-of-contents pill is centred on the viewport", () =>
     });
   }
 
-  it("FlagshipToc caps the pill's width instead, so a centred pill still clears the launcher", () => {
-    // The replacement for the sideways dodge. If this disappears, the pill is centred and
-    // overlapping, which is the bug the sideways dodge was invented to solve.
-    expect(src2()).toMatch(/max-w-\[calc\(100%-10\.5rem\)\]/);
-  });
+  for (const file of TOCS) {
+    it(`${file} caps the pill's width instead, so a centred pill still clears the launcher`, () => {
+      // The replacement for the sideways dodge. If this disappears, the pill is centred and
+      // overlapping, which is the bug the sideways dodge was invented to solve. All three
+      // pills carry it: ArticleToc and ServiceToc used `max-w-[86vw]`, which cleared the
+      // launcher only because their labels happened to be ~200px — a long heading label
+      // would have grown the pill straight under the bubble.
+      const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+      expect(src).toMatch(/max-w-\[calc\(100%-10\.5rem\)\]/);
+    });
+  }
 });
-
-function src2(): string {
-  return fs.readFileSync(path.join(ROOT, "components/blog/FlagshipToc.tsx"), "utf8");
-}
