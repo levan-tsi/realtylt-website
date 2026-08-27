@@ -87,7 +87,10 @@ export const reviewAutomation: Service = {
   howItWorks: [
     {
       title: "It asks the moment the job is done",
-      body: "Not next week. Enthusiasm has a half-life, and the difference between asking today and asking on Friday is most of your reviews.",
+      // ROUND 47: "the difference between asking today and asking on Friday is most of your
+      // reviews" is a magnitude nobody has measured, which is the class round D removed from
+      // three other service pages. The flagship makes the same point without a quantity.
+      body: "Not next week. Enthusiasm has a half-life, and an ask that lands after somebody has moved on does not produce a worse review, it produces no review.",
     },
     {
       title: "One tap, no friction",
@@ -105,8 +108,14 @@ export const reviewAutomation: Service = {
 
   useCases: [
     {
-      title: "The rating that climbs on its own",
-      body: "Asking every happy customer, every time, at the right moment, is a simple idea that fails purely on consistency. Automating it removes the only failure mode.",
+      // ROUND 47: this said "Asking every HAPPY customer, every time". The mechanic round B
+      // rewrote this whole page for is that everyone is asked whatever they scored, which the
+      // lede, whatItIs, howItWorks[2], the figure footnote and limits[0] all now say. The
+      // retraction swept five fields and missed this one, and the word it missed is the word the
+      // page exists to remove. The title went with it: on this page's own argument the rating
+      // moves toward the truth rather than upward, which is limits[4]'s point.
+      title: "The ask that actually happens, every time",
+      body: "Asking every customer, at the moment the work is fresh in their mind, is a simple idea that fails purely on consistency. Automating it removes the only failure mode it has.",
     },
     {
       title: "Recency, which is what people actually read",

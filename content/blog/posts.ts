@@ -413,12 +413,15 @@ export const POSTS: BlogPost[] = [
     cluster: "visibility",
     title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
     date: "2026-08-25",
-    /** NO `updated`, deliberately, and it costs this post D5 on scripts/score-flagship.mjs.
-     * A post written and shipped inside one day has not been revised, and the check wants
-     * dateModified later than datePublished. Topic 4 shipped 18/19 for this exact reason and
-     * the handoff records the rule: set `updated` when the article takes its first real
-     * revision, never to satisfy a gate. Combined with the absent film (C3), this slug scores
-     * 17/19 on the day it ships, and both reds are true statements. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47, which is the condition the note below always named: the first
+     * real revision. Published 2026-08-25, revised 2026-08-27 when the relevance pass found the
+     * survey's minimum-rating figure read backwards, as 68% for whom four stars was enough
+     * rather than 68% whose floor is four. See docs/parity/ROUND47-RELEVANCE-PASS.md. C3 stays
+     * red, no film, so the slug ships at 18/19.
+     *
+     * The rule the superseded note recorded still stands and is worth keeping: set `updated`
+     * when the article takes its first real revision, never to satisfy a gate. */
     excerpt:
       "Twelve five-star reviews, the newest from 2023, and the client who never told you she looked. What review automation actually does, exactly where Google's line between asking and gating falls, and what one extra star was worth in the one study that measured money instead of opinion.",
     seoDescription:

@@ -3395,7 +3395,7 @@ The first is timing, and it is almost the whole problem. The moment somebody is 
 
 The second is that asking is genuinely awkward, in a way that is hard to admit to. You have just been paid a large sum of money by somebody you like, and the next thing out of your mouth is a favour. Most people would rather do almost anything else, so they intend to do it later, and later is a place where reviews go to die.
 
-The third is fear, and it is the one that produces the actual misconduct in this category. If you ask everybody, some of them will say something you would rather they did not. That fear is where review gating comes from, and the survey above is the best argument against it: only 10% of that panel said they would use nothing below five stars, while 68% said four or better was enough. The room between four and five is where almost every real business lives, and it is much larger than the fear suggests.
+The third is fear, and it is the one that produces the actual misconduct in this category. If you ask everybody, some of them will say something you would rather they did not. That fear is where review gating comes from, and the survey above is the best argument against it: only 10% of that panel said they would use nothing below five stars, while 68% put their floor at four. The room between four and five is where almost every real business lives, and it is much larger than the fear suggests.
 
 [[scene:plate]]
 
