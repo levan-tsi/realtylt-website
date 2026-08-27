@@ -1,5 +1,74 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 41c HANDOFF (2026-08-26/27): AI-READABILITY + HERO ENGINE + QA ROUND 2 =========
+## Owner's standing instructions this session: multiple test rounds on everything; subagents
+## granted (1 builder + 1 scrutineer + 1 fresh QA, all Opus, Fable re-measured every claim).
+## THE NEXT SESSION SHOULD RE-RUN THE GATES (tsc + npm test, baseline 98 files / 1364) AND
+## SPOT-RE-MEASURE one number from each commit below before building on any of it.
+##
+## -- SHIPPED + PUSHED (this block, on top of round 41b) -----------------------------------
+## 203c311 AI-READABILITY: /llms.txt (generated from app/sitemap/directory.ts - the SAME
+##   source as /sitemap page + sitemap.xml, so the three maps cannot disagree; service links
+##   carry seo descriptions); /ai in sitemap.xml (69 locs) + 20 /ai# journey links on the
+##   /sitemap page ("Inside RealtyLT AI" group, screenshot docs/design-r41/sitemap-ai-group);
+##   Google Preferred Sources button (official 2-line embed) in footer bottom strip, GATED on
+##   SITE.url==="https://realtylt.com" so it arms ITSELF at launch (domain-level feature;
+##   vercel.app registration would be wasted). CSP measured with a throwaway server: the
+##   button is an IFRAME from news.google.com -> script-src AND frame-src both carry the
+##   host; connect-src NOT needed (measured both ways). JSON-LD logo -> logo-realtylt.png.
+##   ALL VERIFIED ON PROD: llms.txt 200/5 sections, sitemap page group renders, xml has /ai.
+## (privacy commit) POSTHOG DISCLOSED in the privacy policy (was the one live tracker the
+##   cookies section never named; replay inputs masked). COOKIE-BANNER ANSWER GIVEN: not
+##   legally required (NY brokerage, no EU targeting, sub-CCPA thresholds); the RULE: the
+##   day GA or the Meta pixel is added, the policy section grows THE SAME DAY.
+## ef2f974 QA ROUND 2 (fresh sub; 81 filters x 50 rows = 4,050 predicate checks 0 violations;
+##   map pins == list 15/15; 98 pages x 2 widths + 26 at 320 zero overflow; 538 links 0
+##   broken): (1) P1 - past-the-end ?page= made PostgREST 416 -> rest() threw -> WHOLE query
+##   fell to the SIX-WEEK-OLD committed snapshot under a live "Data last updated" line. 416
+##   now = empty page + true count from Content-Range; clamp works (266/Jul12 -> 579/today).
+##   (2) homeType=manufactured missed 2 of the feed's 4 spellings - 55 of 189 homes were
+##   reachable by NO filter. (3) stale scope comment corrected with measurement.
+## 1f65fa1 JUNK-VALUE GUARDS (Fable decided the sub's escalations): taxMax pairs with
+##   tax_annual=gt.0 (476 stated-\$0 rows; detail page already hid 0 as unknown - the site
+##   disagreed with itself; 6,171 -> 5,695 EXACTLY the 476); yearMax +gt.0 (six 0-rows),
+##   yearMin +lte.2100 (two 9999-rows); financing calculator non-money fields strip "-"
+##   (a -50% down payment rendered a confident 150%-LTV P&I). Fixture mirrors all guards.
+##
+## -- HERO: ENGINE APPROVED BY OWNER, POLISHED 3 ROUNDS, AWAITING FINAL WORD ---------------
+## Artifact 588717b9 (round-3-polished): ONE WebGL point-cloud, three homes per point -
+## market swirl -> HOUSE (builds BOTTOM-UP, windows bloom after walls settle via uSettle,
+## eaves/chimney/door + gold path to the door) -> VALLEY (gold ridges + pale-blue Hudson
+## ribbon + stars) -> cycle. Tangential swirl mid-flight, mouse tilt, 61fps, 390/320 clean,
+## reduced-motion = still lit house, 18KB no deps. Owner: "definitely better... make it wow"
+## - delivered 3 more polish rounds; he has NOT yet said "build it into the site".
+## NEXT SESSION: if he approves, port the artifact's <script> engine into a client component
+## behind the home hero (source of truth: scratchpad hero-lab-v3.html of session 2297c510,
+## ALSO mirrored: the engine is self-contained - rebuild from the artifact via WebFetch if
+## the scratchpad is gone). Fallback chain: no-WebGL -> licensed dusk still; reduced-motion
+## -> settled house frame. Respect §2: the engine drops in as ONE canvas + component.
+##
+## -- OPEN ITEMS, RANKED (all measured, none blocking) -------------------------------------
+## 1. taxMax semantics shipped; the REMAINING sub escalations already fixed. Still open from
+##    QA2 P3 list: /saved copy promises an alerts toggle a signed-out empty visitor cannot
+##    see (copy nit, owner voice); 13 Active listings carry FUTURE listed_at (feed data -
+##    display choice); /search vs /top-areas county counts differ by map-frame (699 vs 702,
+##    both true; maybe a one-line caption); Back does not undo filter chips (deliberate
+##    round-24 replaceState trade - owner should bless or reverse); openHouse field is dead
+##    (needs the OpenHouse RESO resource synced - pairs with filter roadmap #5).
+## 2. FILTER ROADMAP (QA2 sufficiency audit vs Zillow+Brivity, full table in the QA report,
+##    docs/design-r41/qa2/_competitor-filters.json): TOP: HOA max (31% of inventory is
+##    condo/co-op; needs AssociationFeeFrequency added to SELECT_FIELDS + resync), school
+##    district (data 88% filled TODAY), interior toggles (walk-in/elevator/high ceilings -
+##    same recipe as the 5 shipped toggles), price-reduced (needs previous_price on upsert),
+##    open house (new sync resource), lot character + heating SYSTEM + townhouse token
+##    (near-zero cost). We BEAT both competitors on days-on-market (window vs ceiling).
+## 3. Off-ladder listedDays URL values diverge server-vs-client (round 41b note, still open).
+## 4. /ai page (OTHER repo ~/realtylt-ai-page): two <h1>s; dev SERVICES_BASE assumes :3000.
+## 5. Hydration warning under parallel dev-server saturation - never reproduced serially,
+##    unexplained; watch for it in prod logs after launch.
+## 6. When GA + Meta pixel land: privacy policy same-day; consider Consent Mode only if
+##    EU/CA audiences materialize.
+##
 ## == ROUND 41b (2026-08-26 afternoon): FILTERS + SWEEP. DONE, PUSHED (9fed83b..a156859) ====
 ## Owner granted subagents this session: ONE Opus builder, then ONE Opus scrutineer, Fable
 ## gating both (every gate re-run, every headline number re-measured by the orchestrator).
