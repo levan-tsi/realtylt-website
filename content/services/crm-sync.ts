@@ -35,7 +35,7 @@ export const crmSync: Service = {
     // existing database is not cleaned by this. The fix reached `why` and not `seo.description`,
     // which is the field search engines read. Now says the mechanism, as `why` and `whatItIs` do.
     description:
-      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is the one your automations are acting on.",
+      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you see is the one your automations are acting on.",
   },
 
   /** ROUND D: `stat` added, carrying the one measurement in this subject with a published
