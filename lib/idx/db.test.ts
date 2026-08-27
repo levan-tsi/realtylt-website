@@ -334,6 +334,56 @@ describe("DbIdxClient.search", () => {
     expect(result.total).toBe(5402);
   });
 
+  it("clamps a past-the-end ?page= to the last real page instead of dropping to the snapshot", async () => {
+    // PostgREST answers an offset past the end with 416 PGRST103, not an empty 200 — and its
+    // Content-Range still carries the true count as `*/579`. Measured 2026-08-26 on
+    // /api/idx/search?county=putnam&page=13: rest() threw, search() caught, and the visitor got
+    // the committed snapshot — total 266, page 6 of 6, "Data last updated 2026-07-12" — against
+    // a live 579 / 12 pages / 2026-08-27. Six-week-old prices under a live attribution line.
+    const TOTAL = 579;
+    const offsets: number[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes("idx_sync_state")) return new Response(JSON.stringify(READY_STATE), { status: 200 });
+        const offset = Number(new URL(url).searchParams.get("offset") ?? 0);
+        offsets.push(offset);
+        if (offset >= TOTAL) {
+          return new Response(
+            JSON.stringify({ code: "PGRST103", message: "Requested range not satisfiable" }),
+            { status: 416, headers: { "content-range": `*/${TOTAL}` } },
+          );
+        }
+        return new Response(JSON.stringify([{ listing: LISTING }]), {
+          status: 200,
+          headers: { "content-range": `${offset}-${offset}/${TOTAL}` },
+        });
+      }),
+    );
+
+    const r = await new DbIdxClient().search({ county: "putnam", pageSize: 50, page: 13, sort: "newest" });
+    expect(offsets).toContain(600); // asked for the stale page
+    expect(offsets).toContain(550); // then for the last real one
+    expect(r.total).toBe(TOTAL); // the LIVE total, never the snapshot's
+    expect(r.page).toBe(12);
+    expect(r.totalPages).toBe(12);
+    expect(r.listings).toHaveLength(1);
+    expect(r.dataLastUpdated).toBe(READY_STATE[0].last_synced_at);
+  });
+
+  it("asks for every feed spelling of a manufactured home, not just two", async () => {
+    const calls = stubFetch((url) => {
+      if (url.includes("idx_sync_state")) return { body: READY_STATE };
+      return { body: [{ listing: LISTING }], total: 197 };
+    });
+    await new DbIdxClient().search({ homeType: "manufactured" });
+    const call = calls.find((u) => u.includes("property_sub_type=in."))!;
+    for (const v of ["Manufactured%20Home", "Mobile%20Home", "Manufactured%20On%20Land", "Mobile%20Home%20with%20Land"]) {
+      expect(call).toContain(v);
+    }
+  });
+
   it("serves the snapshot fallback until the baseline completes", async () => {
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state"))

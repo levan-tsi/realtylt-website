@@ -117,6 +117,20 @@ async function rest<T>(path: string, opts: { count?: boolean } = {}): Promise<{ 
     // page-level ISR + the 60s state cache own the caching story.
     signal: AbortSignal.timeout(10_000),
   });
+  // An OFFSET PAST THE END is not an error, it is an empty page. PostgREST answers it with
+  // 416 PGRST103 ("An offset of 600 was requested, but there are only 579 rows") and its
+  // Content-Range STILL carries the true count as `*/579`, so this returns no rows and the
+  // real total — which is exactly what search()'s past-the-end clamp below needs.
+  //
+  // Throwing here instead is what a stale `?page=` link used to hit: measured 2026-08-26 on
+  // /api/idx/search?county=putnam&page=13, the throw dropped the whole request into the
+  // committed-snapshot fallback and answered total=266 / page 6 of 6 / "Data last updated
+  // 2026-07-12" against the live 579 / 12 pages / 2026-08-27. Six-week-old prices and
+  // statuses, under a live attribution line, with no error anywhere the visitor could see.
+  if (res.status === 416) {
+    const reported = Number(res.headers.get("content-range")?.split("/")[1]);
+    return { rows: [], total: Number.isFinite(reported) ? reported : 0 };
+  }
   if (!res.ok) throw new Error(`Supabase REST ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const rows = (await res.json()) as T[];
   const total = opts.count ? Number(res.headers.get("content-range")?.split("/")[1] ?? rows.length) : rows.length;
@@ -141,8 +155,12 @@ const PARKING_COLUMNS: Record<ParkingType, string> = {
 /** SearchParams → PostgREST filter string over the generated columns. */
 function searchFilters(p: SearchParams): string {
   const parts: string[] = [];
-  // No explicit area picked → scope the whole /search experience (grid, count, map pins) to the
-  // six Hudson Valley counties the map frame shows; NYC boroughs stay opt-in via ?county=slug.
+  // No explicit area picked → scope the whole /search experience (grid, count, map pins) to
+  // DEFAULT_COUNTY_SLUGS, which since round 23 is every area we serve: the six Hudson Valley
+  // counties AND the five NYC boroughs (see lib/site.ts for the owner's call and the numbers).
+  // It read "six counties, boroughs opt-in via ?county=" until 2026-08-26, which had been
+  // untrue since the default widened — measured: the unscoped default answers 24,919 for-sale
+  // listings, and 13,650 of them are in the boroughs the comment said were excluded.
   if (p.county) parts.push(`county=eq.${encodeURIComponent(p.county)}`);
   else parts.push(`county=in.(${DEFAULT_COUNTY_SLUGS.join(",")})`);
   // Sale/rent scope. For-rent shows ONLY rentals; the default for-sale search EXCLUDES rentals

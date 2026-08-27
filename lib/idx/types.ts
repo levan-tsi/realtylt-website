@@ -245,7 +245,12 @@ export const HOME_TYPE_VALUES = {
   coop: ["Stock Cooperative"],
   "multi-family": ["Duplex", "Triplex", "Quadruplex", "Multi Family"],
   apartment: ["Apartment"],
-  manufactured: ["Manufactured Home", "Mobile Home"],
+  // The feed spells a manufactured home FOUR ways, not two. "Manufactured On Land" (43) and
+  // "Mobile Home with Land" (14) were missing here, so "Manufactured or mobile" answered 140
+  // homes against a real 197 and those 57 were reachable by NO filter on the site (exact
+  // counts, PostgREST count=exact on property_sub_type, 2026-08-26). Same buyer concept —
+  // whether the land comes with it is not what the dropdown is asking.
+  manufactured: ["Manufactured Home", "Mobile Home", "Manufactured On Land", "Mobile Home with Land"],
 } as const satisfies Record<string, readonly string[]>;
 
 export type HomeType = keyof typeof HOME_TYPE_VALUES;

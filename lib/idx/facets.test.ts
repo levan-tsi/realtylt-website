@@ -34,6 +34,16 @@ describe("homeType filter", () => {
     expect([...subtypes].sort()).toEqual([...HOME_TYPE_VALUES["multi-family"]].sort());
   });
 
+  it("manufactured covers all four feed spellings, land or no land", () => {
+    // Measured 2026-08-26 (PostgREST count=exact on property_sub_type): Manufactured Home 94,
+    // Mobile Home 46, Manufactured On Land 43, Mobile Home with Land 14. The token carried only
+    // the first two, so the dropdown answered 140 of 197 and 57 homes were reachable by no
+    // filter at all. Whether the land conveys is not what "Manufactured or mobile" is asking.
+    expect([...HOME_TYPE_VALUES.manufactured].sort()).toEqual(
+      ["Manufactured Home", "Manufactured On Land", "Mobile Home", "Mobile Home with Land"],
+    );
+  });
+
   it("a listing that omits propertySubType is excluded from EVERY homeType value", async () => {
     const omitted = FIXTURE_LISTINGS.find((l) => l.propertySubType === undefined);
     expect(omitted).toBeDefined();
