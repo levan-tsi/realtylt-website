@@ -620,7 +620,7 @@ export const POSTS: BlogPost[] = [
   {
     slug: "moving-to-hudson-valley-rental-vs-buying",
     cluster: "moving",
-    title: "Moving to the Hudson Valley: Rental vs. Buying – What Makes the Most Sense?",
+    title: "Moving to the Hudson Valley: Rental vs. Buying, and What Makes the Most Sense",
     date: "2025-09-13",
     excerpt:
       "Rents keep climbing, but so do rates. Here's an honest framework for deciding whether your first Hudson Valley address should be rented or owned.",

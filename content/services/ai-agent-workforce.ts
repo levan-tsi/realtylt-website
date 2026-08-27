@@ -8,8 +8,8 @@ export const aiAgentWorkforce: Service = {
   tier: "core",
 
   eyebrow: "Agent Workforce · On-demand LLM assistants",
-  title: "Hire as many assistants as you want",
-  lede: "Spin up a personal AI assistant for any job. One drafts your emails, one preps CMAs, one chases paperwork, one watches your inbox. Each assistant is an LLM agent tuned to the task you hand it, and you can run as many as you want, in parallel, around the clock.",
+  title: "An assistant for every recurring job",
+  lede: "Spin up a personal AI assistant for any job. One drafts your emails, one preps CMAs, one chases paperwork, one watches your inbox. Each assistant is an LLM agent tuned to the task you hand it, and they run in parallel, around the clock.",
   // "unlimited parallel agents" was still here after Round D synced this page, because that
   // round found the phrase on the /ai journey and fixed it THERE. Nothing is unlimited: this
   // page's own flagship post is about what supervising several agents costs, and the limits

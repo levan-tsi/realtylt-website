@@ -9,7 +9,7 @@ export const localSeo: Service = {
 
   eyebrow: "Local SEO · Get found nearby",
   title: "Show up when your market searches",
-  lede: "Your Google Business Profile, map listings, and city pages tuned to rank for the searches buyers and sellers actually type: “realtor near me,” “homes for sale in your city.” The AI keeps posts, categories, and citations current so you hold the top of local search instead of paying for every click.",
+  lede: "Your Google Business Profile, map listings, and city pages tuned to rank for the searches buyers and sellers actually type: “realtor near me,” “homes for sale in your city.” The AI keeps posts, categories, and citations current so you compete for the top of local search instead of paying for every click.",
   specs: ["Google Business Profile", "local + map-pack ranking", "citations kept current", "city + service pages"],
   /** REWRITTEN 2026-08-25 (Round C), and this is /ai COPY drift the owner should see. It said
    * "the agent they call is usually the one they find first", which is an assertion about

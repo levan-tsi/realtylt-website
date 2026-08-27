@@ -23,7 +23,7 @@ export const invoicingAndPayments: Service = {
 
   eyebrow: "Payments · Invoicing + deposits",
   title: "Get paid faster, chase invoices never",
-  lede: "The AI sends the invoice the moment a job is booked or finished, takes a deposit up front with a tap-to-pay link, and follows up politely on anything unpaid (a friendly nudge at 3 days, 7, then 14) until the money is in your account. You never have to send the awkward reminder yourself.",
+  lede: "The AI sends the invoice the moment a job is booked or finished, takes a deposit up front with a tap-to-pay link, and follows up politely on anything unpaid (a friendly nudge at 3 days, 7, then 14), then hands anything still open to you with the history attached. You never have to send the awkward reminder yourself.",
   specs: ["instant invoices", "deposit + tap-to-pay links", "polite auto follow-up", "tracks who owes what"],
   why: "Nobody enjoys sending the third reminder, which is why it does not get sent. Automating the invoice and the follow-up means both happen on the day they were supposed to, without you playing bad cop.",
   keywords: [

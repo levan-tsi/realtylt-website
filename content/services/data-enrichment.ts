@@ -13,10 +13,10 @@ import type { Service } from "./types";
  *   and this page's own second `limit` contradicts it in as many words: it does not guarantee a
  *   match. A promise a page disowns four fields later is worse than no promise.
  *
- * `specs` still says "phone + email verification" and is left alone as COPY. What verification
- * actually establishes is that a number is well formed, in service and not a duplicate, which
- * is not the same as establishing that it reaches that person, and the limits and the FAQ now
- * say so. Flagged for the owner rather than changed. */
+ * `specs` said "phone + email verification" until 2026-08-27: verification establishes that a
+ * number is well formed, in service and not a duplicate, not that it reaches that person, and
+ * the limits and the FAQ say so. Flagged for the owner in the rounds 45-48 pass; HIS GO on
+ * 2026-08-27 changed it to "phone + email checks" here and on the /ai panel together. */
 export const dataEnrichment: Service = {
   slug: "data-enrichment",
   aiKey: "enrich",
@@ -26,7 +26,7 @@ export const dataEnrichment: Service = {
   eyebrow: "Enrichment · Append + Verify",
   title: "Half a name becomes a full profile",
   lede: "A bare address or partial contact is enriched into phone, email, and property detail through BatchData and public-record sources, deduped and validated, with what came back marked as what came back rather than merged silently into what you already knew.",
-  specs: ["BatchData + public records", "phone + email verification", "property detail append", "dedupe + validate"],
+  specs: ["BatchData + public records", "phone + email checks", "property detail append", "dedupe + validate"],
   why: "You can't work a lead you can't reach. Enrichment fills the gaps in records you already own, and writes down where each value came from and when, so the row tells you how much to trust it.",
   keywords: [
     "real estate data enrichment",

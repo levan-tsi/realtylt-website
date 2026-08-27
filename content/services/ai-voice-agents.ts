@@ -11,7 +11,7 @@ export const aiVoiceAgents: Service = {
   title: "AI that answers the calls, and makes them",
   lede: "Vapi voice agents pick up every inbound call 24/7 and dial leads back to qualify them, holding natural conversations at sub-second latency, then logging the outcome and booking the next step.",
   specs: ["Vapi", "sub-second latency", "inbound + outbound", "auto follow-up"],
-  why: "A missed call is a lost commission. AI that answers instantly and calls leads back in seconds turns dead inquiries into booked appointments, without hiring an ISA.",
+  why: "A missed call is a lost conversation, and the conversation is where every deal starts. AI that answers instantly and calls leads back in seconds turns dead inquiries into booked appointments, without hiring an ISA.",
   keywords: [
     "ai voice agent for real estate",
     "ai phone agent real estate",

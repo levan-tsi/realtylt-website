@@ -16,7 +16,7 @@ export const aiScheduling: Service = {
 
   eyebrow: "Scheduling · Calendar Autopilot",
   title: "Appointments that book themselves",
-  lede: "The AI reads intent from a chat or call, offers real open slots from your Google or Outlook calendar, books the showing or consult, and sends the confirmations and reminders. It reschedules on request without a human touching it.",
+  lede: "The AI reads intent from a chat or call, offers real open slots from your Google or Outlook calendar, books the showing or consult, and sends the confirmations and reminders. It reschedules on request without a phone call.",
   specs: ["Google + Outlook calendar", "live availability", "auto reminders", "self-serve reschedule"],
   why: "The gap between “interested” and “on the calendar” is where leads go cold. Instant booking closes that gap in the same conversation that opened it, and holding the slot the moment it is taken is what stops your own diary being offered twice.",
   keywords: [
