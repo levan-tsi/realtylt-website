@@ -54,7 +54,7 @@ export const WORKFLOW_FILM = {
  * that increasingly answer on somebody's behalf. Each one is a number somebody else can check:
  * the first two are the cited field study, the third is Zapier's own documented default. */
 export const IN_SHORT: string[] = [
-  "The ninety seconds of typing is not the cost. Twenty four information workers were timed to the second at their desks, and interrupted work was picked up again an average of twenty five minutes and twenty six seconds later.",
+  "The ninety seconds of typing is not the cost. Twenty four information workers were timed to the second at their desks, and the interrupted work that got picked up again the same day took an average of twenty five minutes and twenty six seconds to come back to.",
   "You are not automating step four. You are automating one through eight, because the chain is where the reloading happens and a chain is exactly what these tools are good at.",
   "Zapier's own documentation says it pauses a chain that errors ninety five percent of the times it ran in the last seven days. Read that the other way: a chain failing one time in twenty is a chain nobody is going to tell you about.",
 ];
@@ -117,7 +117,7 @@ export const FRAGMENTED = {
    * A `max` here would draw all four short and lose the ratio that is the entire point. */
   lit: 2,
   basis:
-    "Average elapsed time, 24 information workers observed at their desks and timed to the second. The middle figure is not a third category: nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
+    "Average elapsed time, 24 information workers observed at their desks and timed to the second. All three resumption figures count work picked up again the same day, which was 77.2 percent of everything interrupted. The middle figure is not a third category: nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
   sourceText:
     "Gloria Mark, Victor M. Gonzalez and Justin Harris, No Task Left Behind? Examining the Nature of Fragmented Work, Proceedings of CHI 2005, University of California, Irvine. Over 700 hours of observation; 57 percent of work segments ended in an interruption and 77.2 percent of interrupted work was resumed the same day.",
   sourceHref: "https://ics.uci.edu/~gmark/CHI2005.pdf",
@@ -131,7 +131,7 @@ export const FRAGMENTED = {
 export const THREE_LIES: GridItem[] = [
   {
     lead: "It only takes a minute.",
-    body: "It takes a minute forty times a month, which is an afternoon, which is a listing appointment you did not go on. And a minute of typing is never a minute. It is a minute plus whatever it costs to get back to what you were doing, which the study above puts closer to twenty five.",
+    body: "It takes a minute forty times a month, and forty minutes is the smallest possible version of that number. A minute of typing is never a minute. It is a minute plus whatever it costs to get back to what you were doing, which the study above puts closer to twenty five.",
   },
   {
     lead: "I would rather do it myself, so I know it is done right.",

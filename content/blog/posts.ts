@@ -538,8 +538,16 @@ export const POSTS: BlogPost[] = [
      * graphic, the rebuilt chain as a diagram, its own film, and two sections it never had (what
      * it costs, and what it does not do). Roughly half the sentences on the page are new.
      * 08-02: gained a calculator that counts the typing and deliberately leaves out the 25 min
-     * 26 sec interruption cost, for the reason the article itself gives. */
-    updated: "2026-08-02",
+     * 26 sec interruption cost, for the reason the article itself gives.
+     *
+     * ROUND 48 moved it to 08-27 for the first full-text pass over this post. The 25 min 26 sec
+     * figure is conditional in the paper ("When people did resume work on the same day"), and
+     * four surfaces stated it unconditionally while the scene docstring already knew better; the
+     * condition is now on all of them. A "three lies" card also derived an afternoon from forty
+     * minutes, and a superlative claimed the study was the clearest anybody has published. Every
+     * other figure re-verified in the CHI 2005 paper, on Zapier's two help pages and in n8n's
+     * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
+    updated: "2026-08-27",
     excerpt:
       "The manual step takes ninety seconds. Getting back to what you were doing takes twenty five minutes. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
     seoDescription:

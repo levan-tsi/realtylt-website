@@ -4167,13 +4167,13 @@ Ninety seconds is also not what any of them cost.
 
 In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine published the results of shadowing twenty four information workers at their desks with a stopwatch. Seven managers, nine analysts, eight developers. Each one was formally observed and timed for three and a half days, an average of twenty five hours and forty two minutes per person, more than seven hundred hours of observation in total, with every action noted to the second.
 
-It is not a survey of how busy people feel. It is a timed log of what they actually did, and it is still the clearest measurement anybody has published of the thing this article is about.
+It is not a survey of how busy people feel. It is a timed log of what they actually did, and it is the clearest measurement of the thing this article is about that we have been able to find.
 
 They found that people spent an average of eleven minutes and four seconds on one piece of work before switching to something else or being interrupted, and that fifty seven percent of those stretches ended in an interruption rather than in a decision to stop. Then they measured the part almost nobody measures: how long it took to come back.
 
 [[scene:fragmented]]
 
-Put the middle bar next to the ninety seconds. The typing is not the cost. The cost is that a ninety second job pulls you out of something, and the something takes an average of twenty five minutes and twenty six seconds to get back to.
+Put the middle bar next to the ninety seconds. The typing is not the cost. The cost is that a ninety second job pulls you out of something, and the something takes an average of twenty five minutes and twenty six seconds to get back to, counting only the work that got picked up again the same day.
 
 The third bar is the one that should worry a real estate business in particular, because it is the shape of every step in your week that only happens when somebody remembers. Work that people picked back up themselves resumed in twenty one minutes and twenty eight seconds. Work that waited for somebody else to prompt the return sat for sixty one minutes and thirty seven seconds, nearly three times as long.
 

@@ -43,7 +43,7 @@ export const workflowAutomation: Service = {
   whatItIs: [
     "It is the plumbing between the tools you already pay for. Your CRM, your calendar, your email, your forms, your invoicing, and your documents all hold pieces of the same job, and the gap between them is where the hours go: copying a number from one tab to another, remembering to send the thing, retyping what a system already knows.",
     "We wire those tools together with Make, n8n, or Zapier, and we put AI in the loop where a decision has to be made rather than just a field copied. A new lead, a paid invoice, or a signed form triggers everything that should follow it, end to end, in seconds, at any hour.",
-    "The cost is not the ninety seconds of typing. In a 2005 field study at UC Irvine, twenty four desk workers were shadowed with a stopwatch, and the average time to get back to a piece of work after an interruption was twenty five minutes and twenty six seconds. Those were software people rather than agents, so read that as what interruption does to concentrated work rather than as a number about your week. The point stands either way: a step that fires by itself does not pull you out of anything.",
+    "The cost is not the ninety seconds of typing. In a 2005 field study at UC Irvine, twenty four desk workers were shadowed with a stopwatch, and the average time to get back to an interrupted piece of work, counting the ones picked up again the same day, was twenty five minutes and twenty six seconds. Those were software people rather than agents, so read that as what interruption does to concentrated work rather than as a number about your week. The point stands either way: a step that fires by itself does not pull you out of anything.",
   ],
 
   howItWorks: [
