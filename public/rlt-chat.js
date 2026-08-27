@@ -27,6 +27,12 @@
     BRAND_NAME: 'Levan Tsiklauri',
     GREETING: "Hey! Looking for a home in Westchester, the Hudson Valley, or anywhere in the city? I can pull live MLS listings and get you connected with Levan directly. What are you searching for?",
     INITIAL_CHIPS: ['Show me 3-bed homes under $700k', 'Condos under $1M', 'Talk to Levan'],
+    // THE OTHER OPENING (2026-08-27). The same widget now runs on realtylt.com/ai, where the
+    // visitor did not come to look at houses. Greeting them with Westchester listings is the
+    // wrong assistant wearing the right coat. Chosen by detectPersona() below; the two lines
+    // above are untouched and still open every conversation on every other page.
+    AI_GREETING: "Hey! I'm the assistant on RealtyLT's AI side. I can walk you through what we build, chat assistants, voice agents, automations, and what would actually be worth doing first for your business. What do you do?",
+    AI_CHIPS: ['What could AI automate for me?', 'How do voice agents work?', 'Book a call with Levan'],
     SESSION_KEY: 'realtylt_chat_session',
     HISTORY_KEY: 'realtylt_chat_history',
     HISTORY_LIMIT: 20,
@@ -74,7 +80,34 @@
     });
   }
 
-  // { id, token } for this tab. Held in memory and mirrored to sessionStorage.
+  // ============================================================
+  // PERSONA - which of the two assistants this conversation belongs to
+  // ============================================================
+  // THE OWNER, 2026-08-27: on realtylt.com/ai the widget must stop asking about homes and be
+  // the AI-services assistant instead. The page is the only thing that knows, so the page tells
+  // the server, in `userMeta.context`.
+  //
+  // IT IS A HINT AND THE SERVER TREATS IT AS ONE. It picks a prompt, a tool set, a greeting and
+  // a lead stamp. It changes nothing about the origin allowlist, the session token, the rate
+  // limit or any gate - a browser that lies about it gets a different tone and FEWER tools.
+  // (crm: apps/web/lib/chat/persona.ts carries the full reasoning.)
+  //
+  // IT STICKS TO THE CONVERSATION, NOT TO THE PAGE. Stored beside the session id, so a visitor
+  // who starts on /ai and then wanders onto the main site keeps the assistant they started
+  // with. A conversation begun anywhere else is real-estate, exactly as it always was.
+  function detectPersona() {
+    try {
+      // `/ai`, `/ai/anything` - and NOT `/air-conditioning`, which is what a bare startsWith
+      // would have matched.
+      if (/^\/ai(?:\/|$)/.test(location.pathname || '')) return 'aipage';
+      // The AI page's own Vercel deployments: realtylt-ai-page.vercel.app and the per-deploy
+      // hash urls under the same project, both of which the CRM's origin allowlist knows.
+      if (/^realtylt-ai-page(?:[-.])/.test(location.hostname || '')) return 'aipage';
+    } catch (e) { /* exotic environment: fall through to the default */ }
+    return 'realestate';
+  }
+
+  // { id, token, cursor, persona } for this tab. Held in memory and mirrored to sessionStorage.
   let _session = null;
 
   function readStoredSession() {
@@ -84,10 +117,10 @@
       // JSON is the current shape; a bare string is a session id from an older widget.
       if (raw.charAt(0) === '{') {
         const o = JSON.parse(raw);
-        if (o && o.id) return { id: o.id, token: o.token || null, cursor: o.cursor || 0 };
+        if (o && o.id) return { id: o.id, token: o.token || null, cursor: o.cursor || 0, persona: o.persona || null };
         return null;
       }
-      return { id: raw, token: null, cursor: 0 };
+      return { id: raw, token: null, cursor: 0, persona: null };
     } catch (e) { return null; }
   }
 
@@ -101,7 +134,14 @@
   async function ensureSession() {
     if (_session && _session.id) return _session;
     const stored = readStoredSession();
-    if (stored) { _session = stored; return _session; }
+    if (stored) {
+      // A session stored by an older copy of this file carries no persona. Stamp it from
+      // wherever the visitor is standing now rather than leaving it null: an unstamped session
+      // would re-detect on every page and stop being sticky, which is the point of storing it.
+      if (!stored.persona) { stored.persona = detectPersona(); writeStoredSession(stored); }
+      _session = stored;
+      return _session;
+    }
     try {
       const resp = await fetch(CONFIG.SESSION_URL, {
         method: 'POST',
@@ -111,15 +151,25 @@
       if (resp.ok) {
         const d = await resp.json();
         if (d && d.sessionId) {
-          _session = { id: d.sessionId, token: d.token || null, cursor: 0 };
+          _session = { id: d.sessionId, token: d.token || null, cursor: 0, persona: detectPersona() };
           writeStoredSession(_session);
           return _session;
         }
       }
     } catch (e) { /* fall through to a local id */ }
-    _session = { id: uuid(), token: null, cursor: 0 };
+    _session = { id: uuid(), token: null, cursor: 0, persona: detectPersona() };
     writeStoredSession(_session);
     return _session;
+  }
+
+  // The persona this conversation belongs to: the one it was opened with when we have it, and
+  // otherwise the page under the visitor's feet. Safe to call before ensureSession has run,
+  // which the greeting does.
+  function currentPersona() {
+    if (_session && _session.persona) return _session.persona;
+    const stored = readStoredSession();
+    if (stored && stored.persona) return stored.persona;
+    return detectPersona();
   }
 
   // Each agent reply carries a fresh token; keep the newest so the session stays owned.
@@ -706,10 +756,13 @@
   function restoreHistory() {
     msgsEl.innerHTML = '';
     if (history.length === 0) {
-      // First-time greeting
+      // First-time greeting. Two of them now: the AI page opens a different conversation, and
+      // opening it with Westchester listings was the thing the owner asked to be rid of. Every
+      // other page gets the original two lines, unchanged.
       setTimeout(function() {
-        addMessage('bot', CONFIG.GREETING);
-        renderChips(CONFIG.INITIAL_CHIPS);
+        const ai = currentPersona() === 'aipage';
+        addMessage('bot', ai ? CONFIG.AI_GREETING : CONFIG.GREETING);
+        renderChips(ai ? CONFIG.AI_CHIPS : CONFIG.INITIAL_CHIPS);
       }, 200);
     } else {
       history.forEach(function(m) { addMessage(m.role, m.text); });
@@ -814,6 +867,10 @@
           message: message,
           userMeta: {
             page: location.pathname,
+            // WHICH ASSISTANT THIS CONVERSATION BELONGS TO (2026-08-27). `page` alone could
+            // not answer it: it changes as the visitor navigates, and the conversation does
+            // not. Sent on every turn so the server never has to remember.
+            context: sess.persona || detectPersona(),
             referrer: document.referrer || '',
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString()
