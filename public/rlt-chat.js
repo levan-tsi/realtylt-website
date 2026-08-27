@@ -107,6 +107,113 @@
     return 'realestate';
   }
 
+  // ============================================================
+  // PORTAL IDENTITY - the visitor who is already signed in
+  // ============================================================
+  // A client signed in to realtylt.com has been chatting as an anonymous stranger: greeted cold
+  // and asked for a name and number the CRM already has. This carries their Supabase ACCESS
+  // TOKEN to the chat routes so the server can verify who they are (crm: lib/chat/portal.ts,
+  // migration 0241). We send a TOKEN and never a name: a name in a request body is a claim, and
+  // a claim about who you are is exactly the thing that must not be believed.
+  //
+  // WHERE THE SESSION ACTUALLY LIVES, verified against the installed dependency rather than
+  // assumed: this site uses @supabase/ssr 0.5.2 (lib/supabase/client.ts, createBrowserClient),
+  // which stores the session in a COOKIE and not in localStorage. Its format, from the package's
+  // own chunker.js and cookies.js:
+  //
+  //   name     sb-<projectref>-auth-token, or sb-<projectref>-auth-token.0, .1 ... when the
+  //            url-encoded value exceeds 3180 characters (combineChunks joins them in order,
+  //            preferring the unsuffixed cookie when it exists).
+  //   value    the session JSON, optionally prefixed "base64-" and base64url-encoded.
+  //
+  // localStorage is read too, because plain supabase-js writes there under the same key name,
+  // and window.RLT_PORTAL_TOKEN is read first so a page that would rather hand the token over
+  // explicitly can, without this file having to keep up with a storage format.
+  //
+  // EVERY FAILURE IS SILENT AND MEANS "ANONYMOUS". Not signed in, signed in with an expired
+  // token, a storage format we do not recognise: all of them are an ordinary visitor, which is
+  // what this widget has always served.
+  function b64urlDecode(value) {
+    const b64 = value.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
+    const binary = atob(padded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+
+  // The access token out of a stored supabase session, whatever shape it was stored in.
+  function accessTokenFrom(raw) {
+    if (!raw) return null;
+    let text = raw;
+    if (text.indexOf('base64-') === 0) text = b64urlDecode(text.slice(7));
+    const parsed = JSON.parse(text);
+    // The object is the current shape; the array is what older clients wrote, access token first.
+    const token = Array.isArray(parsed) ? parsed[0] : parsed && parsed.access_token;
+    return typeof token === 'string' && token ? token : null;
+  }
+
+  const AUTH_COOKIE = /^sb-.+-auth-token$/;
+
+  function tokenFromCookies() {
+    const jar = {};
+    (document.cookie || '').split(';').forEach(function(part) {
+      const eq = part.indexOf('=');
+      if (eq < 0) return;
+      const name = part.slice(0, eq).trim();
+      try { jar[name] = decodeURIComponent(part.slice(eq + 1)); }
+      catch (e) { /* a value that will not decode is not one supabase wrote */ }
+    });
+    // Base names first, then chunk sets, exactly as combineChunks resolves them.
+    const bases = Object.keys(jar).map(function(n) { return n.replace(/\.\d+$/, ''); });
+    for (const base of bases) {
+      if (!AUTH_COOKIE.test(base)) continue;
+      let raw = jar[base];
+      if (!raw) {
+        const parts = [];
+        for (let i = 0; jar[base + '.' + i] !== undefined; i++) parts.push(jar[base + '.' + i]);
+        raw = parts.join('');
+      }
+      try {
+        const token = accessTokenFrom(raw);
+        if (token) return token;
+      } catch (e) { /* not a session we understand */ }
+    }
+    return null;
+  }
+
+  function tokenFromLocalStorage() {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !AUTH_COOKIE.test(key)) continue;
+      try {
+        const token = accessTokenFrom(localStorage.getItem(key));
+        if (token) return token;
+      } catch (e) { /* not a session we understand */ }
+    }
+    return null;
+  }
+
+  function readPortalToken() {
+    try {
+      if (typeof window.RLT_PORTAL_TOKEN === 'string' && window.RLT_PORTAL_TOKEN) {
+        return window.RLT_PORTAL_TOKEN;
+      }
+    } catch (e) { /* fall through */ }
+    try { const c = tokenFromCookies(); if (c) return c; } catch (e) { /* fall through */ }
+    try { const l = tokenFromLocalStorage(); if (l) return l; } catch (e) { /* private mode */ }
+    return null;
+  }
+
+  // The header the CRM reads it from. A bearer credential belongs in a header, never in a body.
+  const PORTAL_HEADER = 'x-rlt-portal-token';
+
+  function withPortalToken(headers) {
+    const token = readPortalToken();
+    if (token) headers[PORTAL_HEADER] = token;
+    return headers;
+  }
+
   // { id, token, cursor, persona } for this tab. Held in memory and mirrored to sessionStorage.
   let _session = null;
 
@@ -125,8 +232,15 @@
   }
 
   function writeStoredSession(s) {
-    try { sessionStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(s)); }
-    catch (e) { /* private mode: memory-only for this tab */ }
+    // FOUR FIELDS, NAMED. `displayName` is deliberately not one of them: a name written to
+    // storage would outlive the sign-out that took it away, and the only thing it is for is the
+    // opening line of a conversation that has not started yet.
+    try {
+      sessionStorage.setItem(
+        CONFIG.SESSION_KEY,
+        JSON.stringify({ id: s.id, token: s.token || null, cursor: s.cursor || 0, persona: s.persona || null })
+      );
+    } catch (e) { /* private mode: memory-only for this tab */ }
   }
 
   // Resolve the session once, then reuse it. Asks the CRM to mint an id + token; falls back to
@@ -145,7 +259,9 @@
     try {
       const resp = await fetch(CONFIG.SESSION_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // The portal token rides here too, so a signed-in client can be greeted by name in the
+        // opening line rather than being recognised only on reply number two.
+        headers: withPortalToken({ 'Content-Type': 'application/json' }),
         body: '{}'
       });
       if (resp.ok) {
@@ -153,6 +269,9 @@
         if (d && d.sessionId) {
           _session = { id: d.sessionId, token: d.token || null, cursor: 0, persona: detectPersona() };
           writeStoredSession(_session);
+          // Memory only, and only for this conversation's first line. The server decided it,
+          // from a token it verified; nothing here asserts who anybody is.
+          _session.displayName = (d && typeof d.displayName === 'string' && d.displayName) || null;
           return _session;
         }
       }
@@ -756,14 +875,35 @@
   function restoreHistory() {
     msgsEl.innerHTML = '';
     if (history.length === 0) {
-      // First-time greeting. Two of them now: the AI page opens a different conversation, and
-      // opening it with Westchester listings was the thing the owner asked to be rid of. Every
-      // other page gets the original two lines, unchanged.
-      setTimeout(function() {
+      // First-time greeting. Three of them now: the AI page opens a different conversation, and
+      // a signed-in client is greeted by name instead of being asked who they are. Everyone
+      // else gets the original two lines on the original timing, unchanged.
+      let greeted = false;
+      const greetOnce = function() {
+        if (greeted) return;
+        greeted = true;
         const ai = currentPersona() === 'aipage';
-        addMessage('bot', ai ? CONFIG.AI_GREETING : CONFIG.GREETING);
+        const name = (_session && _session.displayName) || '';
+        addMessage(
+          'bot',
+          name
+            ? (ai
+                ? 'Welcome back, ' + name + '. What can I help you with on the AI side today?'
+                : 'Welcome back, ' + name + '. Want to pick up where you left off, or shall I pull something new from the MLS?')
+            : (ai ? CONFIG.AI_GREETING : CONFIG.GREETING)
+        );
         renderChips(ai ? CONFIG.AI_CHIPS : CONFIG.INITIAL_CHIPS);
-      }, 200);
+      };
+      if (readPortalToken()) {
+        // ONLY FOR A SIGNED-IN CLIENT. Asking the CRM who they are means minting the session
+        // now rather than on their first message, and doing that for every page view on
+        // realtylt.com would be a POST nobody asked for. The 1500ms cap is there so a slow or
+        // failed mint never leaves somebody looking at an empty panel.
+        setTimeout(greetOnce, 1500);
+        ensureSession().then(greetOnce, greetOnce);
+      } else {
+        setTimeout(greetOnce, 200);
+      }
     } else {
       history.forEach(function(m) { addMessage(m.role, m.text); });
     }
@@ -858,6 +998,10 @@
       const headers = { 'Content-Type': 'application/json' };
       // The token proves ownership of this session; without it the CRM answers statelessly.
       if (sess.token) headers['x-rlt-chat-token'] = sess.token;
+      // And, independently, who the person is when they are signed in to the portal. Two
+      // credentials, two gates: this one never opens a conversation and that one never proves
+      // an identity. Re-read every turn, so signing out mid-conversation takes effect at once.
+      withPortalToken(headers);
 
       const resp = await fetch(CONFIG.WEBHOOK_URL, {
         method: 'POST',
