@@ -137,6 +137,19 @@ second, uncaptioned copy of its taxonomy figure with different percentages (37.1
 the chart uses Figure 1, whose caption names its sample, and the scene file records that the other
 one was seen and refused.
 
+> **Verified 2026-08-27 (round 47), and it needed verifying.** The round-46 checker searched the
+> v3 source for 37.17 / 31.41 / 31.41, found nothing, and reported this sentence as unsupported.
+> Round 47 pulled the published v3 PDF and the arXiv source package and found all three: they
+> render at lines 251 to 253 of `pdftotext -layout`, drawn inside
+> `figures/arxiv_figure_neurips_cropped.pdf`, which `04_methodology.tex:6` includes as the
+> methodology workflow figure. They are also the ONLY category split in v1, which is where that
+> older taxonomy panel comes from. One refinement to the wording above: the figure carrying it does
+> have a caption, about the workflow rather than about the taxonomy, so the taxonomy panel inside
+> it is what is uncaptioned, and the point the sentence is making, that nothing there names a
+> sample, holds. Round 46's own conclusion about this paper was reversed the same way; see
+> `docs/parity/ROUND46-RELEVANCE-PASS.md`, "Round 47: this section reached the right chart by the
+> wrong route".
+
 **The calculator computes what the service COSTS, which is the first one on this website that
 does.** Chain: assistants you would run, times pieces of work each produces a week, times 52, times
 the share you would actually read, times the minutes to read one, into hours. Headline: hours a

@@ -51,9 +51,12 @@ prints the footnote and turns it into the argument it actually is: the agent wro
 and the suite in this system is the other kind, human-approved, one test per thing that went wrong
 once, and it only ever grows. The 91.0 against 80.1 numbers were verified correct and kept.
 
-`lib/blog/zombie-claims.test.ts:374`, the round L `why`, repeated the wrong framing and was
-corrected in the same commit. (This line cited `:356` until round 46; the round L `why` is at
-`:374`, and `:356` is a comment line above the entry.)
+The round L `why` in `lib/blog/zombie-claims.test.ts`, on the entry named **"the system cannot
+write or change code"**, repeated the wrong framing and was corrected in the same commit.
+(This citation carried a line number until round 47. It said `:356`, which round 46 corrected to
+`:374`, and by round 47's HEAD the same `why` had moved again, to `:376`. A line number is a
+citation that rots every time anything above it is edited, so the entry is named here instead:
+`name` is unique in that file, stable across edits, and greppable.)
 
 ### 3. The weekly-loop residues
 

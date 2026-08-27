@@ -31,8 +31,9 @@ practices such as self-generated unit test suites. Thus, our Reflexion-based pro
 implementation is eligible for pass@1 accuracy reporting."*
 
 So the clause stays and the sentence stays true, with the scope named. The round L `why` in
-`lib/blog/zombie-claims.test.ts` carried the same over-lean ("files Reflexion under 'Use of oracle
-labels' **for it**") and was moved in step to "for its reasoning results".
+`lib/blog/zombie-claims.test.ts`, on the entry named *"the system cannot write or change code"*,
+carried the same over-lean ("files Reflexion under 'Use of oracle labels' **for it**") and was
+moved in step to "for its reasoning results".
 
 ### 6. The three record corrections
 
@@ -41,7 +42,10 @@ labels' **for it**") and was moved in step to "for its reasoning results".
   paragraph describing **CodeT**. Replaced with the paper's own words about its own setup. The
   mis-attribution is written into the log rather than swapped out, because a receipt that pointed
   at the wrong sentence is a fact about how that round worked.
-- **(b)** `zombie-claims.test.ts:356` corrected to `:374`.
+- **(b)** `zombie-claims.test.ts:356` corrected to `:374`. **Superseded in round 47:** by then the
+  same `why` sat at `:376`, which is what a line-number citation does to itself. Both records now
+  name the entry instead, *"the system cannot write or change code"*, which is unique in the file
+  and does not move.
 - **(c)** The round K docstring said *"seven autonomy forms all red"*. The injection was four under
   round K and four under round L, which is what the round log itself says.
 
@@ -125,8 +129,14 @@ misquotes inside quotation marks, which is the class that survives every proofre
 9. TRUTH. The quotation before it began *"and that makes the unsubscription process..."* with the
    "and" inside the quotation marks. It is not in the document. The "and" is now ours.
 10. TRUTH. Yahoo's spam-rate sentence was quoted with its dash changed to a comma and its second
-    half cut with no mark. It now quotes the exact clause and states the rest as ours, which is
-    also the sharper half: Yahoo tells senders not to compute this figure themselves.
+    half cut with no mark. It now quotes the exact clause and states the rest as ours.
+    **Corrected in round 47.** The gloss printed here, *"Yahoo tells senders not to compute this
+    figure themselves"*, inverts the page. Yahoo's line, refetched and read verbatim, is *"Spam
+    rate is calculated in our system based on mail delivered to the inbox - keep this in mind
+    when referencing"*. That is a statement about the DENOMINATOR, and the instruction attached
+    to it is to keep the denominator in mind, not to abstain from the figure. Round 47 also moved
+    the post's own gloss off *"when calculating the rate in their own system"*, which asserts a
+    sender-side calculation Yahoo does not mention, onto the page's own word, referencing.
 11. TRUTH. *"Yahoo puts it as a heading"* was a claim about a vendor page's layout that nothing
     here can check. Now "states it in as many words".
 12. STORY. The cold open sends a note to fourteen hundred people and five press the button, which
@@ -232,7 +242,7 @@ states itself**, section by section, and every term is quoted in the paper:
 | FC2, inter-agent misalignment | 2.20 + 6.80 + 7.40 + 0.85 + 1.90 + 13.2 | **32.35** |
 | FC3, task verification | 6.20 + 8.20 + 9.10 | **23.50** |
 
-Three exact hits and a total of 100. The legend that disagrees is the paper disagreeing with
+Three exact hits and a total of 100.05. The legend that disagrees is the paper disagreeing with
 itself, not with us. So the chart is untouched and the docstring now carries the arithmetic and an
 explicit warning, because the next checker will run exactly the search this one ran and reach
 exactly the wrong conclusion.
@@ -240,6 +250,39 @@ exactly the wrong conclusion.
 The general lesson, and it is the round's: **a derived number cannot be verified by searching for
 it.** A provenance note that says "quoted" when the truth is "summed" converts a correct chart into
 a defect on the next read.
+
+### Round 47: this section reached the right chart by the wrong route, and both claims above are wrong
+
+The bars survived, and they should have. Everything else in this section did not, and it is worth
+writing down rather than swapping out, because the failure was an INSTRUMENT failure of exactly
+the kind rounds 45 and 46 kept finding in themselves.
+
+**The values ARE printed in the paper, and they ARE extractable.** Round 47 downloaded the
+published v3 PDF from `arxiv.org/pdf/2503.13657v3` and ran `pdftotext` over it. It returns
+`44.2%`, `32.3%` and `23.5%` on three consecutive lines, in `-layout`, plain and `-raw` alike.
+They are drawn inside Figure 1, whose source file is `figures/taxonomy_neurips_final_10_23_25.pdf`
+in the arXiv package and which `02_introduction.tex` includes. The bars are QUOTED. Round 46's
+*"They are not printed anywhere in the paper"* and *"searching for 44.2 or 32.3 returns nothing in
+v1, v2 or v3, which was checked in all three"* are both false about v3. They are true about v1 and
+v2, which carry an older taxonomy figure reading 37.17 / 31.41 / 31.41, and true about the `.tex`
+sources in every revision, which is the likely shape of the search that produced them.
+
+**The 41.8 / 36.9 / 21.3 legend is not the paper contradicting itself.** It belongs to
+`figures/masft_bar.pdf`, the per-system chart in section 6, and that figure's caption states its
+own corpus: *"Distribution of failure in MAD with MAST labels on total 210 traces. This plot
+visualizes the failure distributions of the first 30 traces for each system."* 210 traces against
+Figure 1's 1,642. Two samples, two splits, no contradiction. Calling it a self-contradiction was
+the softest available explanation and it was reached without opening the figure.
+
+**The 100.05.** The correction above is right for the prose sums and worth keeping for that
+reason, but it exists only because the prose gives FM-2.4, information withholding, as 0.85% where
+Figure 1 prints 0.80%. On the figure's own numbers the three categories total exactly 100.
+
+So round 46's general lesson stands, and a second one sits underneath it. A derived number cannot
+be verified by searching for it. And **a number that a search cannot find has not been shown to be
+absent** until the search itself has been shown to be able to find it. The docstring in
+`content/blog/agent-workforce-scenes.ts` now carries the receipt for the real provenance, with the
+sums kept as corroboration rather than as the citation.
 
 ## Tried and reverted
 
