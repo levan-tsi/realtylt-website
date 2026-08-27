@@ -9,6 +9,250 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
+export const SINGULARITY_POST = `The question came in on a Tuesday in March and the answer that went back was almost right.
+
+Somebody wanted to know whether the tax figure on a listing included the school portion or came separately. It is a common question and it has a real answer. What went back was a fluent sentence that was wrong in a small way. Not wrong enough to be complained about, and not wrong enough to look like an error to anybody who did not already know. Wrong enough that the person reading it decided the site did not really know, and went to find out somewhere else.
+
+The same question came in again in April, and in June, and in September, and got the same nearly right answer every time, because nothing about the answer had changed and nothing was ever going to change it on its own. It was not hidden. It sat in the transcripts the whole time, in plain text, with a timestamp on it.
+
+Seven months is not a story about carelessness. It is a story about the fact that reading a year of conversations is not a job anybody in a brokerage has, and that the systems producing those conversations had never once been asked to read themselves.
+
+[[scene:in-short]]
+
+## What the name is claiming, and what it is not
+
+Singularity is a borrowed word and it is worth taking it off the table before it does any damage. In the argument it was borrowed from, it names a point at which machine intelligence starts improving itself so quickly that nothing past it can be predicted. That is not what is being sold here, this article is not going to defend it, and anybody using the word that way about a piece of business software is selling you a feeling.
+
+What the name is actually marking is a smaller and far more checkable transition. It is the point at which the software you bought stops being a fixed object you own and becomes a thing that changes on a schedule, using your own material, with somebody's signature on every change.
+
+In plain terms: one system stands up the other agents, hands each of them its instructions, holds the single record they all read from and write to, and once a week goes back over what actually happened and proposes one revision to itself. Nothing in it rewrites its own code. What changes is the written half, meaning instructions, worked examples and the rules that decide which question goes where.
+
+If that sounds deflationary, it is meant to. It is also, on its own terms, unusual. Almost nothing else a business buys has any mechanism at all for noticing that it has been wrong in the same way four hundred times, and that absence is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming, and the rest of this piece is about whether the claim survives contact with the research.
+
+The two halves are very different purchases and they deserve to be argued separately. One of them works from the first week and is easy to check. The other is the one worth being sceptical about, and the published evidence on it is not flattering.
+
+## Seven months is not unusual, it is the default
+
+Start with why nobody caught it, because the answer is not that somebody was asleep.
+
+Nothing failed. No process crashed, no request timed out, no alert fired, and by every measure a piece of software has of itself, all of those conversations completed successfully. A system can only notice the failure modes somebody has given it a definition of, and confident and slightly wrong is not one of them. It looks identical to confident and correct from the inside, which is the entire problem.
+
+Then there is where the evidence lives. The phone system holds the calls. The website holds the chats. The CRM holds whatever a person typed into it afterwards, in whatever words they chose, and the shared inbox holds the rest. Four stores, four formats, four logins, and nowhere that a question and the answer it got can be counted together. Somebody willing to do the reading would have to do it four times and then reconcile it by hand, and that is before deciding what counts as the same question asked twice.
+
+And the reading is the part that never happens. Not because anybody is lazy, but because the volume arrives at a rate that assumes nobody will ever go back. Every week produces a new week. Nothing about the arrangement produces an hour in which last week gets looked at, and an hour that is not in the calendar is an hour that does not exist.
+
+So the defect has a very particular signature. It is cheap to fix once found, close to impossible to find, and it does not decay. A broken integration announces itself inside a day because something visible stops. A wrong sentence goes out at exactly the same rate for as long as the question keeps being asked, never gets worse, and therefore never crosses the threshold where anybody escalates it. The person most likely to discover it for you is a client, and by then it is not a defect, it is a conversation about whether they can trust anything else you told them.
+
+## The obvious fix is to let it check its own work
+
+The intuitive answer is to have the system check itself. If it can write an answer it can read one, so let it read what it just wrote, notice the problem, and try again. That is not a strawman. It is roughly what most products in this category mean when they use the word improving, and it has been tested properly by people with no product to sell.
+
+A team at Google DeepMind and the University of Illinois Urbana-Champaign put the question directly in a paper called [Large Language Models Cannot Self-Correct Reasoning Yet](https://arxiv.org/abs/2310.01798), published at ICLR in 2024. Their setup is deliberately plain. Ask the model a question. Then ask it to review what it wrote and report any serious problems it finds. Then ask it to answer the original question again with that feedback in hand. Two rounds at most, and nothing whatsoever from outside the model at any point, which is the condition they call intrinsic self correction.
+
+The result goes the wrong way.
+
+[[scene:self-review]]
+
+Look at what happened between the first bar and the third. The model was not given worse questions, a smaller budget or a shorter prompt. It was given more chances and more of its own thinking, and it ended up further from the right answer than it started. Two extra rounds of careful review bought a worse score.
+
+The mechanism is not mysterious and it is worth naming, because it is the thing that will happen inside any product built the naive way. A model instructed to look for a problem in an answer will produce a problem, in the same way it produces everything else, whether or not there is one there. When the answer was already right, the review manufactures a reason to change it. That is why the effect is strongest where the wrong options look plausible: on a multiple choice commonsense set in the same table, the older model fell from 75.8 percent to 38.1 after a single round of reviewing itself.
+
+There is an obvious objection to all of this, which is that grade school word problems are not a conversation about a house. That is right, and it is why this paper is here rather than a study of brokerages, which does not exist and is not going to. What carries over is not the percentage. It is the mechanism, and the mechanism is about how these models behave when asked to grade themselves, which does not become a different mechanism because the subject changed to property taxes.
+
+## What changed between those two numbers was not the model
+
+The same paper runs a second condition and it is the one worth the price of admission.
+
+Everything is held constant: the same model, the same questions, the same three step prompting. The single difference is that the correct answer is used to decide whether another attempt is needed at all. In the paper's words, if the answer is already correct, no further self correction will be performed.
+
+Under that condition the older model went from 75.9 percent to 84.3 on the same grade school set, and from 75.8 to 89.7 on the commonsense set where reviewing itself had previously cost it half its score. The stronger model went from 95.5 to 97.5.
+
+It looks like cheating, and in a sense it is, because knowing which answers are wrong is a great deal of the work of fixing them. But that is the finding rather than a flaw in it. The ability to produce a better answer was sitting there in both conditions. What the first condition lacked was any reliable way of knowing when to reach for it, and the model could not supply that from inside itself.
+
+The same shape shows up in the places where reflection genuinely works. [Reflexion](https://arxiv.org/abs/2303.11366), from a team at Northeastern, MIT and Princeton, has a language agent write code, reflect in ordinary words on what went wrong, and try again, and it reports 91.0 percent on the HumanEval Python benchmark against 80.1 for the strongest previous result. The reflecting is doing real work there. It is also standing on something the arithmetic experiments never had: the code gets run against a suite of tests, so wrong is a fact that arrives from outside the model rather than an opinion the model forms about itself.
+
+Which puts the dividing line in this entire subject somewhere other than where the marketing puts it. It is not how clever the reviewer is, how large the model is, or how carefully the reflection prompt is written. It is whether anything in the arrangement is capable of telling it no.
+
+## So the whole question is what plays the part of the compiler
+
+In software there is a compiler and a test suite, and both of them will tell you flatly that you are wrong without caring how confident you sounded. In a brokerage there is no such thing, which is where most people stop and conclude that none of this applies.
+
+It does not stop there, and the reason is history.
+
+Every conversation your agents have already had comes with an outcome attached, and you know what that outcome was. Somebody booked a viewing. Somebody went quiet directly after a particular sentence and never came back. Somebody had to be telephoned the next morning because what they had been told was wrong, and there is a note in the record saying so. That is not ground truth in the sense a compiler is, and calling it that would be the first dishonest sentence in this article. It is something weaker and still useful: a large body of material where the answer given and what happened next are both written down, by something other than the model that produced the answer.
+
+So the loop that the word improving is actually describing is this. Read the whole week rather than a sample. Find the single weakest point in it. Propose one change to the written instructions. Run that change back against conversations whose outcome is already known and compare it against what is currently live. Keep it only if it does better. Have a person approve it before it reaches anybody. Write down what changed, what it replaced, and what it beat.
+
+[[scene:loop]]
+
+Everything interesting about this is in the last three steps, and everything cheap to build is in the first two. That is worth knowing when somebody demonstrates one to you, because a weekly summary of what your agents did is a reporting feature with an impressive vocabulary, and it is what a lot of this gets sold as.
+
+## One change a week, and the reason is not modesty
+
+The single change rule sounds like caution, or like a vendor managing expectations. It is neither. It falls straight out of what these systems are.
+
+In 2015 a group of ten Google engineers wrote [Hidden Technical Debt in Machine Learning Systems](https://proceedings.neurips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html), which has become the standard reference for why machine learning systems rot in ways ordinary software does not. They give the central problem a name that stuck: the CACE principle, standing for Changing Anything Changes Everything. They are explicit that it "applies not only to input signals, but also to hyper-parameters, learning settings, sampling methods, convergence thresholds, data selection, and essentially every other possible tweak".
+
+The same paper has a section on configuration debt that reads like a description of a stack of agents nobody has tidied since the build. "In a mature system which is being actively developed, the number of lines of configuration can far exceed the number of lines of the traditional code. Each configuration line has a potential for mistakes." Their examples are about features and logging dates. Yours are about which questions get routed to a person, which phrasing the assistant uses when it does not know, and which of four agents is allowed to promise a callback.
+
+That is the argument for one change, and it has nothing to do with going slowly. If two things change in the same week and the week comes out better, you have learned nothing you can act on, because you cannot say which one to keep, which one to undo, or whether one of them is quietly cancelling out the other. A week in which twenty things changed is a week that produced a mood rather than a finding.
+
+There is a second reason and it is about you rather than about the software. One change a week is a size a person can actually read and approve without it becoming a rubber stamp. Twenty is not, and the failure mode of twenty is not that somebody rejects the wrong one. It is that after the third week nobody reads any of them.
+
+## Most of the changes will not work, and that is the normal result
+
+Here is the number that decides whether any of this is worth doing, and it comes from the people who built the apparatus for measuring it.
+
+In 2009 three people who ran Microsoft's experimentation platform published a case study called [Online Experimentation at Microsoft](https://exp-platform.com/Documents/ExP_DMCaseStudies.pdf), covering experiments across eighteen of the company's properties, one of which was MSN Real Estate. The fifth section is titled Most Ideas Fail to Show Value, and the sentence in it is this: "Evaluating well-designed and executed experiments that were designed to improve a key metric, only about one-third were successful at improving the key metric!"
+
+Sit with that for a moment before deciding what it means. It is not a statement about a careless team. It is a statement about a company with a dedicated experimentation platform, running well designed experiments, on ideas that had already survived somebody's judgement about whether they were worth building. Two in three of those did nothing or made things worse.
+
+That figure is the argument for the whole apparatus rather than an argument against it. If most good ideas fail, then a system that ships every idea it has is not improving anything, it is walking randomly, and it will be worse in six months than it is today with total consistency and excellent intentions. The value is not in generating the ideas. Generating plausible changes is the cheapest thing any of this does. The value is entirely in the step that throws most of them away.
+
+It also sets the honest expectation for what a normal week looks like, which no product page will tell you. Most weeks the loop proposes something and the replay says no, and the correct output of that week is nothing changed. A vendor promising a measurable gain every week is describing a sales cycle rather than a system.
+
+## The grader is not the truth either
+
+The replay is the load bearing step, so it is the one that deserves the hardest look, and this is where an honest version of this article has to give something away.
+
+Replaying a proposed change against conversations that already happened is an estimate, not a measurement. The recorded conversation went the way it did partly because of what the old version said, and every turn after that was shaped by it. A changed answer at turn two means turn three would not have happened the way it is written down, and no amount of care makes that stop being true. What you get back is a model of what would probably have happened, and the honest question is how often that model is wrong.
+
+Somebody has actually measured it. [Offline A/B testing for Recommender Systems](https://arxiv.org/abs/1801.07030), presented at WSDM in 2018 by a team at Criteo Research, took a proprietary history of 39 real online experiments and asked how well four different offline methods predicted the results the live tests eventually produced.
+
+[[scene:offline-estimate]]
+
+[[scene:plate]]
+
+The reason to publish that chart on a page selling the thing it criticises is that the alternative is worse. The alternative is testing every proposed change on live clients, which is slow, and which spends the goodwill of real people on ideas that mostly will not work. The offline replay is how the obviously bad ones get killed cheaply. It is not how anything gets proved.
+
+What follows from taking it seriously is the design of the last two steps. The replay narrows the field, a person decides, and the change that ships is watched afterwards rather than filed as finished. That third part is the one most easily skipped and it is the one that catches the false positives, which the same paper reports at close to half of everything its best method approved.
+
+## Who has to be in the loop, and what they actually do
+
+Every version of this that is safe to run has a person in it, and it is worth being specific about what that person is for, because approval can easily become a signature on something nobody read.
+
+They are not there to check the arithmetic. The comparison is either run properly or it is not, and a person reading a table of numbers is not going to catch a badly built replay. They are there for three things a replay cannot do.
+
+The first is deciding whether the new answer is better or merely different. A loop can tell you that a rewritten explanation of the closing timeline produced more booked calls in the replay. Only somebody who does this for a living can tell you that the new phrasing promises something you cannot always deliver, and that the extra calls are going to turn into a different problem in April.
+
+The second is catching the change that optimises the measurement rather than the business. Whatever the replay counts as a win is what the system will slowly become good at, and it will find routes to it that nobody intended. If booked calls are the target, pressing harder for calls is a valid strategy, including with the people who were never going to buy.
+
+The third is remembering the things that are not in the record at all. A rule that exists because of a conversation with your broker two years ago, a phrase you will not use because of what it cost somebody once, a question that always goes to a person for reasons that have nothing to do with how well the software handles it. None of that is in the transcripts, so none of it is in the replay.
+
+Ten minutes a week, on one change, with the comparison in front of them. That is the actual ask, and a version of this that needs more than that from you every week has been built wrong.
+
+## The other half, which is the one memory
+
+All of the above is the part worth being sceptical about. The other half is not clever at all and it is the part clients notice.
+
+If a person explains their situation on the phone on Tuesday and then explains it again to the website on Thursday, that is not a technical shortcoming that a smarter model fixes. It is four products that have never been introduced. Every one of them is doing its own job correctly and none of them has any way of knowing what the others were told.
+
+[[scene:memory]]
+
+The thing to notice in the second column is that nothing in it is clever. There is no inference, no prediction and no model doing anything impressive. Every item is a fact somebody said out loud, written to one place instead of four, and read back by whatever they happened to reach next. That is the whole mechanism, and it is why this half works from the week it is switched on rather than in month six.
+
+It is also the half that makes the other half possible. A loop cannot find the weakest question of the week if the week is scattered across four systems that count things differently. The shared record is not a feature sitting next to the improvement loop. It is the floor the loop stands on.
+
+## What actually persists, and what does not
+
+Memory is a generous word for what is happening and it is worth replacing with the literal version, because the generous version leads people to expect things that are not there.
+
+What persists is a record and a set of written instructions. The record is the conversations, with what was said, when, on which channel, and whatever outcome got attached to them. The instructions are the prompts, the worked examples, the routing rules and the standing constraints. The loop reads the first and edits the second. That is the entirety of it.
+
+What does not persist is anything the system was not connected to. A deal that lived in a spreadsheet on somebody's desktop is a deal it has never heard of. A commitment made in a car park is not in there. An agent's judgement about a seller who was not being straight about their timeline is not in there unless somebody typed it in, and mostly nobody typed it in.
+
+This matters commercially rather than philosophically, because the gap between those two lists is where every disappointment with this category comes from. A system that knows what it was connected to and says so plainly when it does not know is a useful colleague. One that has been described as knowing everything will be believed on the day it confidently fills a gap, and that is the day it costs you something.
+
+[[scene:reading-calculator]]
+
+## What it costs, and how long it takes
+
+There is no price on this page and there is not going to be one, because the number is set by things that cannot be seen from here. Three of them, and only one is the software.
+
+The first is how many places have to be joined up before there is one record at all. This is the whole job on most engagements. A brokerage running a phone system, a website, one CRM and a calendar is a different piece of work from one running four CRMs because three offices merged and nobody ever finished the migration. Anybody quoting before they have asked which of those you are has quoted a template.
+
+The second is the running cost of the loop itself, and it is honestly modest. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. What is not free is the ten minutes of your week, and unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
+
+The third is what you already have. If the agents are not there yet, this is not the first thing to buy, and a vendor who sells you an improvement loop for a system with two months of thin history is selling you a mechanism with nothing to work on.
+
+On timing, the honest shape has two very different halves. The shared record changes what a client experiences within the first fortnight, because it removes repetition from the first conversation onwards, and you can verify that yourself by calling your own office and then opening your own website. The loop is slower and honestly so. It needs enough real conversations to separate a genuine weak point from a bad fortnight, which for most brokerages is months rather than weeks, and anyone quoting a shorter timeline is quoting one they have not measured.
+
+[[scene:offer]]
+
+## How to test one before you buy it
+
+Take these to any vendor, this one included. All five can be asked inside a demonstration, and the answers are more informative than the demonstration.
+
+Ask what the grader is. Not whether it improves, but what specifically tells it that a change was better, in words you can repeat to somebody else afterwards. If the answer is that the model evaluates its own output, you have the first chart on this page, and you should say so.
+
+Ask to see last month's changes. A real loop produces a list: what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be assembled for you, then nothing has been keeping receipts and nothing can be undone in six weeks when something turns out to have been wrong.
+
+Ask what happens in a week when nothing is wrong. The answer you want is that it reports no change. If every week produces an improvement, either the system is not honest or the grader is not real, and both of those are worse than a quiet week.
+
+Ask how a change gets undone. Specifically: if the change that shipped three weeks ago turns out to be the reason something got worse, what is the sequence, who runs it, and how long does it take. A system that can only go forwards is not a system that learns.
+
+Then ask the boring one, which is where the record lives, who can read it, whether the conversations are used to train anything general, and whether they can be deleted on request. Those are contract questions rather than technical ones, they are the same three worth insisting on with any vendor in this category, and they belong in writing rather than in a conversation.
+
+## What it does not do, and should not pretend to
+
+It does not rewrite its own code. The loop revises instructions, examples and routing, and a person approves every change before it ships. That constraint is not a limitation somebody will lift next year. It is the reason the thing is safe to leave running.
+
+It does not know anything it was not connected to, and the useful version says so rather than filling the gap with something plausible.
+
+It does not improve on a schedule anybody can bank on. A week in which nothing went obviously wrong has no honest output but silence, and the research above says the majority of proposed changes will fail their own test.
+
+It does not decide what good looks like. A loop can find the weakest answer in a week of conversations. Only somebody who knows the business can say whether the replacement is better or just different, and that judgement is not something the system is ever going to take over.
+
+It does not make the underlying models yours. The agents run on platforms licensed from the companies that built them, and their pricing and their release schedules are things this system is exposed to exactly like everything else in the building.
+
+And it does not start as any of this. On day one it is a handful of agents and an empty record. Everything above describes what accumulates, and accumulation needs months of real conversations before there is anything to accumulate.
+
+[[scene:pull-quote]]
+
+[[scene:where-it-stalls]]
+
+## Common questions, answered honestly
+
+### What is a self improving AI system, in plain terms?
+
+It is one system that runs your other AI agents, keeps a single record of every conversation they have, and once a week reads that record, finds the weakest point in it, proposes one change to its own written instructions, tests that change against conversations whose outcome is already known, and ships it only if it wins and only after a person approves it. Nothing in it rewrites its own code. What improves is the instructions, and what makes the improving real is the test rather than the reflection.
+
+### Does it rewrite its own code?
+
+No, and it should not. What changes is the written layer: prompts, worked examples, the rules that decide which question goes to a person. That is where almost all of the useful behaviour of an agent system actually lives, which is why revising it is worth doing, and it is also the layer a person can read in ten minutes and approve or reject. Software that edits its own source is a different and much worse product for a business to own, because the thing that makes this safe is that a human being can understand every change before it happens.
+
+### Why one change a week and not twenty?
+
+Because twenty changes in a week teach you nothing. If the week comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything, and it is the standard finding about systems of this kind. There is a second reason that is about people rather than software: one change is a size somebody will actually read before approving, and twenty is a size that turns approval into a signature.
+
+### What is it actually graded against?
+
+Your own conversations, and specifically the ones whose outcome is already recorded. A proposed change is run back against them and compared against what is currently live. That is an estimate rather than a measurement, and this page publishes the research on how much such estimates disagree with live results rather than hiding it. It is good enough to kill the bad ideas cheaply. It is not good enough to prove anything, which is why a person approves and why what ships gets watched afterwards.
+
+### Can I see what it changed?
+
+You should be able to see all of it, and if you cannot, the thing you have been sold is not this. Every change should leave a record of what it replaced, what the comparison said, who approved it and when. That record is what makes a bad decision reversible three weeks later rather than a subject for argument, and it is the single most useful thing to ask a vendor to show you before you buy.
+
+### Do I need all the other services first?
+
+You need enough of them to be worth joining up, which in practice means at least two things talking to clients and a few months of history between them. One assistant on a website does not need a system above it, and a loop with almost nothing to read is a mechanism running on empty. The shared record is worth having earlier than the loop is, and the two do not have to arrive on the same day.
+
+### What if my business is too small for this?
+
+Then the honest version of this article is the free half of it. Open a month of your own transcripts, read every one, and write down the three questions that got the worst answers. That is the same job the loop does, done by hand, and at small volumes a person doing it once a quarter is genuinely better than software doing it weekly. The software earns its place at the volume where nobody is ever going to do that again.
+
+## What to do about it
+
+The two halves of this have two different first steps and neither of them needs a purchase.
+
+For the memory half, call your own office as though you were a client, say three specific things about what you are looking for, hang up, and then go and ask your own website something related an hour later. Count how many of the three it already knows. Whatever that number is, it is the number your clients are experiencing, and it is the clearest picture of this you will ever get in ten minutes.
+
+For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing a weekly loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
+
+The build itself, what it connects, and what a week of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about forty words.
+
+[[scene:funnel]]`;
+
 export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years and nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere over five hundred mornings in a row, without a single complaint.
 
 Then on a Tuesday a field came back with a value it had never seen before. Not a broken value. A perfectly ordinary new one, added by the company that runs the system, published in their release notes, and entirely within the promise they had made about not breaking anything.

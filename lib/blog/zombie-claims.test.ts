@@ -292,6 +292,42 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
       /yours,? not licensed|\b(likeness and )?(the )?(voice |avatar )?model (is|are) yours\b|\byou own the (model|avatar|voice)\b|\b(model|avatar) (that )?(is|stays|remains) yours\b|\bthe likeness and (the )?voice are yours\b|\byours rather than (borrowed|rented|licensed)\b/i,
     why: "the underlying avatar and voice models belong to the vendors whose platforms render them and are licensed, not owned. A client owns their likeness, the recording, the scripts and the finished videos, which is a real and sufficient answer; claiming the model itself is a claim this business cannot make about somebody else's software",
   },
+  // ── Round K, 2026-08-27. Four claims killed while writing the Singularity flagship, topic 21.
+  // Three of them are already dead on the WEBSITE and alive on the /ai page: `COPY.singularity`
+  // in realtylt-ai-page/web/src/main.js still carries all three, and content/services/
+  // the-singularity.ts documents at the top of the file that it declined to carry them across.
+  // That is precisely the situation this table exists for. A divergence recorded in a comment is
+  // a divergence that survives until somebody "fixes" the inconsistency in the wrong direction,
+  // and the obvious way to fix it is to paste the panel's words onto the page that ranks.
+  //
+  // The fourth is the claim the post's own evidence refutes rather than merely fails to support,
+  // which makes it the most expensive one to make on this particular topic.
+  {
+    name: "it improves faster than you can shop for a replacement",
+    pattern: /improves faster than you can shop for a replacement|faster than you (can|could) (shop for|buy|find) a replacement/i,
+    why: "a comparative rate claim against every other product a business owns, with no measurement of this system and none of any of them. It is the closing sentence of the /ai Singularity panel and the one line the service page deliberately did not carry across, which is recorded in the header of content/services/the-singularity.ts. If the panel and the page are ever made to agree, COPY.singularity is the side that changes",
+  },
+  {
+    name: "it remembers everything",
+    /** DELIBERATELY NARROW. The service page's own lede says the system "remembers every call,
+     * every chat and every deal they touch", which is a BOUNDED claim about the material its
+     * agents handle and is true. The absolute is the thing being killed, so the pattern matches
+     * only the absolute. Checked against the whole of content/ before it was added: the bounded
+     * form appears once and this does not match it. */
+    pattern: /\bremembers everything\b/i,
+    why: "an absolute that the same product's limits contradict four lines later. It knows what it was connected to and nothing else, and a deal that lived in a spreadsheet nobody wired in is a deal it has never heard of. This is a `specs` chip on the /ai panel and the flagship post spends a section replacing it with the literal version, which is that a record persists and a set of written instructions persists",
+  },
+  {
+    name: "it gets better with every deal",
+    pattern: /gets better with every deal/i,
+    why: "a rate nobody has measured, and the flagship post's own evidence says the opposite is the normal week. Kohavi, Crook and Longbotham, who built Microsoft's experimentation platform, report that of well designed experiments intended to improve a key metric, only about one third succeeded. A loop whose honest output most weeks is no change cannot also be getting better with every deal",
+  },
+  {
+    name: "it improves without anybody approving it",
+    pattern:
+      /(improves?|gets better|learns)[^.]{0,50}\bwithout (a |any )?(human|person|approval|supervision)\b|\bno (human|person) (is )?(needed )?in the loop\b/i,
+    why: "the one claim on this topic that published research refutes rather than merely leaves unsupported. Huang and co-authors (Google DeepMind, ICLR 2024) measured intrinsic self-correction, where a model reviews its own answer with nothing from outside itself, and GPT-4 fell from 95.5 percent on GSM8K to 89.0 after two rounds, while the same model given an outside signal about which answers were wrong rose to 97.5. The person approving is not a safety garnish on this product, it is the half that makes the other half work",
+  },
   {
     name: "an invented hours-per-week figure in a service figure",
     pattern: /~\s*\d+\s*hrs\/week/i,

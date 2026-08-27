@@ -59,6 +59,7 @@ export const POSTS = [
   "ai-clone-real-estate-agent-video-avatar",
   "ai-audit-small-business-what-not-to-automate",
   "custom-automation-real-estate-bespoke-build",
+  "the-singularity-self-improving-ai-system",
 ];
 
 /** Every metric is a FACT about the served page. `kind` decides how the floor is derived. */

@@ -24,6 +24,7 @@ import {
   LOCAL_SEO_POST,
   MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
+  SINGULARITY_POST,
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
@@ -47,6 +48,7 @@ import { AI_VOICE_FLAGSHIP, VOICE_FILM } from "./voice-agent-scenes";
 import { REACTIVATION_FILM, REACTIVATION_FLAGSHIP } from "./reactivation-scenes";
 import { QUALIFY_FILM, QUALIFY_FLAGSHIP } from "./qualify-scenes";
 import { WORKFLOW_FILM, WORKFLOW_FLAGSHIP } from "./workflow-scenes";
+import { SINGULARITY_FLAGSHIP } from "./singularity-scenes";
 
 /** "October 24, 2025" — the T12:00:00Z noon guard keeps the date stable in every timezone. */
 export const fmtDate = (iso: string) =>
@@ -93,6 +95,26 @@ const PLACEHOLDER_BODY = (topic: string): string[] => [
    sort being stable so an empty blog_posts table reproduces exactly this ordering. A new
    post therefore goes at the TOP, not the bottom. */
 export const POSTS: BlogPost[] = [
+  {
+    slug: "the-singularity-self-improving-ai-system",
+    cluster: "building",
+    title: "The Answer Was Wrong in March. It Was Still Wrong in October.",
+    date: "2026-08-27",
+    /** NO `updated`, for the same reason topics 6 to 20 carry none: a post written and shipped
+     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
+     * than datePublished. Set it when the article takes its first real revision, never to
+     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
+     * true statements about the page. */
+    excerpt:
+      "Nobody was careless. A common question got a slightly wrong answer in March and went on getting it until October, because reading a year of conversations is not a job anybody in a brokerage has. What a self improving system actually is, why a model that reviews its own work scores lower rather than higher, and what has to be standing outside the loop before the word means anything.",
+    seoDescription:
+      "What a self improving AI system actually does: one shared memory across every agent, and a weekly loop graded against conversations whose outcome is already known.",
+    cover: "/images/editorial/ships-barograph.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SINGULARITY_POST,
+    flagship: SINGULARITY_FLAGSHIP,
+  },
   {
     slug: "custom-automation-real-estate-bespoke-build",
     cluster: "building",

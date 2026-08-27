@@ -163,9 +163,11 @@ export const theSingularity: Service = {
     },
   ],
 
+  /** Its own flagship post leads, as on every other service page. It landed the day after this
+   * file did (round 43), which is why the list shipped without it for one day. */
   relatedPosts: [
+    "the-singularity-self-improving-ai-system",
     "ai-agent-workforce-real-estate-assistants",
     "custom-automation-real-estate-bespoke-build",
-    "workflow-automation-real-estate-business",
   ],
 };

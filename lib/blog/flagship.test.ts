@@ -19,6 +19,7 @@ import { INVOICING_FLAGSHIP } from "@/content/blog/invoicing-scenes";
 import { CLONE_FLAGSHIP } from "@/content/blog/clone-scenes";
 import { AUDIT_FLAGSHIP } from "@/content/blog/audit-scenes";
 import { CUSTOM_FLAGSHIP } from "@/content/blog/custom-scenes";
+import { SINGULARITY_FLAGSHIP } from "@/content/blog/singularity-scenes";
 import {
   AI_AGENT_WORKFORCE_POST,
   AI_APPOINTMENT_BOOKING_POST,
@@ -38,6 +39,7 @@ import {
   LOCAL_SEO_POST,
   MARKETING_AUTOMATION_POST,
   REVIEW_AUTOMATION_POST,
+  SINGULARITY_POST,
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "@/content/blog/ai-posts";
@@ -315,6 +317,9 @@ const TOPICS: [string, string, FlagshipContent][] = [
   ["ai clone", AI_CLONE_POST, CLONE_FLAGSHIP],
   ["ai audit", AI_AUDIT_POST, AUDIT_FLAGSHIP],
   ["custom automation", CUSTOM_AUTOMATION_POST, CUSTOM_FLAGSHIP],
+  // Topic 21, 2026-08-27. The first flagship whose scenes are ALL primitives: no `component`
+  // escape hatch anywhere in its payload, which is what the template was generalised for.
+  ["the singularity", SINGULARITY_POST, SINGULARITY_FLAGSHIP],
 ];
 
 describe.each(TOPICS)("the topic content contract: %s", (_name, body, content) => {
