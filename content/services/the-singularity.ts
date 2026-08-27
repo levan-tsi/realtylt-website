@@ -65,7 +65,7 @@ export const theSingularity: Service = {
     "learns from every correction",
     "nothing ships without approval",
   ],
-  why: "Most tools are worth the most on the day you install them, then they age. A system that keeps its own memory, writes down every correction you give it, and can change the software it runs on is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
+  why: "Most tools are worth the most on the day you install them, then they age. A system that keeps its own memory, writes down the corrections you give it, and can change the software it runs on is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
   keywords: [
     "ai agent orchestration real estate",
     "self improving ai system",
