@@ -132,7 +132,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       title: "Filling a cold-call list without buying one",
-      body: "Instead of paying a vendor for a stale list that ten other agents also bought, you generate a fresh one for the exact area you are working, on the day you are going to call it.",
+      body: "Instead of paying a vendor for a stale list that was sold to everybody else who paid for it, you generate a fresh one for the exact area you are working, on the day you are going to call it.",
     },
   ],
 
