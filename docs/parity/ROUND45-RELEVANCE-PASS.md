@@ -28,10 +28,19 @@ Two beats in one run, one agent, no subagents.
 The checker was right and the papers say so in their own words. Both were read today rather than
 recalled:
 
-- Reflexion (arXiv:2303.11366), §Programming: it uses **"self-generated unit tests that are used to
-  score generated function implementations"**, and criticises competing methods that *"rely upon
-  ground truth test cases that invalidate pass@1 eligibility"*. Its abstract offers feedback signals
-  that are *"external or internally simulated"*.
+- Reflexion (arXiv:2303.11366), §Programming: **"The task of programming presents a unique
+  opportunity to use more grounded self-evaluation practices such as self-generated unit test
+  suites. Thus, our Reflexion-based programming task implementation is eligible for pass@1
+  accuracy reporting. To generate a test suite, we use Chain-of-Thought prompting to produce
+  diverse, extensive tests"**, and it criticises competing methods that *"rely upon ground truth
+  test cases that invalidate pass@1 eligibility"*. Its abstract offers feedback signals that are
+  *"external or internally simulated"*.
+  **Corrected in round 46.** This bullet originally quoted *"self-generated unit tests that are
+  used to score generated function implementations"* as Reflexion describing itself. The round-45
+  checker caught it: that sentence is Reflexion's related-work paragraph describing **CodeT**, not
+  Reflexion. The claim the bullet was making survives the correction, because the paper says the
+  same thing about itself two sections later in the words now quoted, but the receipt was pointing
+  at the wrong sentence and a receipt that does that is not a receipt.
 - Huang et al. (arXiv:2310.01798), Table 1, *Summary of issues in previous LLM self-correction
   evaluation*: **"RCI (Kim et al. 2023); Reflexion (Shinn et al. 2023) — Use of oracle labels
   (Section 3)"**.
@@ -42,8 +51,9 @@ prints the footnote and turns it into the argument it actually is: the agent wro
 and the suite in this system is the other kind, human-approved, one test per thing that went wrong
 once, and it only ever grows. The 91.0 against 80.1 numbers were verified correct and kept.
 
-`lib/blog/zombie-claims.test.ts:356`, the round L `why`, repeated the wrong framing and was
-corrected in the same commit.
+`lib/blog/zombie-claims.test.ts:374`, the round L `why`, repeated the wrong framing and was
+corrected in the same commit. (This line cited `:356` until round 46; the round L `why` is at
+`:374`, and `:356` is a comment line above the entry.)
 
 ### 3. The weekly-loop residues
 
