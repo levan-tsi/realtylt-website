@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SavedClient } from "@/components/search/SavedClient";
+import { SavedHeroNote } from "@/components/search/SavedHeroNote";
 import { getDataLastUpdated, isFixtureMode } from "@/lib/idx";
 import { SITE } from "@/lib/site";
 
@@ -24,13 +25,9 @@ export default async function SavedPage() {
           <h1 className="t-h1 mt-2">
             Your <strong>Homes &amp; Searches</strong>
           </h1>
-          {/* "below" was a promise the empty state broke: the alerts block only renders once
-              a search is saved, so a first-time visitor read an instruction pointing at
-              nothing. Conditional phrasing is true in both states. */}
-          <p className="mt-2 max-w-xl t-small text-paper/70">
-            Saved on this device, no account needed. Save a search, turn on its email alerts,
-            and we&rsquo;ll watch the market for you.
-          </p>
+          {/* Auth-aware: "on this device" is false for a signed-in visitor, whose saves are
+              account-bound. SavedHeroNote carries both truthful versions. */}
+          <SavedHeroNote />
         </div>
       </header>
       {/* Saved homes live in this device's storage, so there is nothing to render without

@@ -142,9 +142,29 @@ export function SavedClient({
             )}
           </section>
 
-          {/* Alert opt-in -> lead. Only shown when there is actually something to alert on:
-              offering to watch "the 0 searches above" is worse than not offering. */}
-          {searches.length > 0 && (
+          {/* Alert opt-in. Only shown when there is actually something to alert on: offering
+              to watch "the 0 searches above" is worse than not offering. SIGNED IN, the lead
+              form would re-ask for a name, email and phone the account already holds (the
+              2026-08-27 E2E's sharpest finding) — and the real control already exists as the
+              per-search toggle in the portal. Point there instead; the form is for visitors
+              whose searches live only in this browser and can reach the CRM no other way. */}
+          {searches.length > 0 && signedIn && (
+          <section aria-labelledby="alerts-heading" className="mt-14">
+            <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
+              <h2 id="alerts-heading" className="t-h3 text-ink">
+                Want new matches by email?
+              </h2>
+              <p className="mt-2 max-w-lg t-small text-stone">
+                Email alerts live on each saved search in your portal. Flip one on and
+                we&rsquo;ll email you when new homes match it.
+              </p>
+              <Button href="/portal/searches" size="md" className="mt-6">
+                Manage alerts
+              </Button>
+            </div>
+          </section>
+          )}
+          {searches.length > 0 && !signedIn && (
           <section aria-labelledby="alerts-heading" className="mt-14">
             <div className="rounded-2xl border border-ink/10 bg-mist p-6 md:p-8">
               <h2 id="alerts-heading" className="t-h3 text-ink">
