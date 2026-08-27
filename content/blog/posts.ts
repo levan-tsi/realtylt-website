@@ -507,8 +507,16 @@ export const POSTS: BlogPost[] = [
      *
      * 08-02: a second real revision. It gained a calculator, and its "what it does not do"
      * section was rewritten from scratch because it had been the chat post's with the synonyms
-     * swapped, down to the same divorce sale and the same contingency question. */
-    updated: "2026-08-02",
+     * swapped, down to the same divorce sale and the same contingency question.
+     *
+     * ROUND 48 moved it to 08-27 for the first full-text pass over this post. Two claims were
+     * softened to what the sources say: "Nobody has published a study of how fast real estate
+     * agents answer their phones" became a statement about our own search, matching the house
+     * form used at the decay-rate heading; and the turn-gap note claimed the gaze finding flatly
+     * where PNAS reports it in nine of ten languages and significant in five. Every other figure
+     * on this post re-verified against HBR, PNAS, FCC 24-17, NY Penal Law and California.
+     * See docs/parity/ROUND48-RELEVANCE-PASS.md. */
+    updated: "2026-08-27",
     excerpt:
       "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
     seoDescription:

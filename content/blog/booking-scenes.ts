@@ -140,7 +140,7 @@ export const REMINDERS = {
   sourceText:
     "Zhou-wen Chen, Li-zheng Fang, Li-ying Chen and Hong-lei Dai, Comparison of an SMS text messaging and phone reminder to improve attendance at a health promotion center: A randomized controlled trial, Journal of Zhejiang University Science B 2008;9(1):34-38.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/",
-  note: "China, 2007, paid health check-ups, and a population that had already chosen to spend money on the appointment. Seven points is what one reminder was worth there and it is not a number to expect on a listing appointment, because nobody has measured that. Two things do carry. A single reminder is the only intervention in this literature that is both cheap and reliably effective, and the cheap channel performed as well as the expensive one, at roughly two thirds of the cost per person who turned up.",
+  note: "China, 2007, routine health check-ups, and a population that had already gone as far as making a reservation and leaving two phone numbers for it. Seven points is what one reminder was worth there and it is not a number to expect on a listing appointment, because nobody has measured that. Two things do carry. A single reminder is the only intervention in this literature that is both cheap and reliably effective, and the cheap channel performed as well as the expensive one, at roughly two thirds of the cost per person who turned up.",
 };
 
 /** SCENE copy — the four moves.

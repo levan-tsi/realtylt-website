@@ -3711,7 +3711,7 @@ That is the whole problem, and it is not really a lost lead. It is a lost conver
 
 ## What a missed call actually costs
 
-Nobody has published a study of how fast real estate agents answer their phones. What has been published is the next best thing, and it is worth reading properly rather than quoting.
+We could not find a published study of how fast real estate agents answer their phones. What has been published is the next best thing, and it is worth reading properly rather than quoting.
 
 In 2011, Harvard Business Review reported an audit of 2,241 US companies. The researchers submitted a test inquiry through each company's own website and timed how long the reply took.
 

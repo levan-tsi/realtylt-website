@@ -56,7 +56,11 @@ export const aiVoiceAgents: Service = {
     },
     {
       title: "New leads get called back immediately",
-      body: "The moment a lead comes in from your site, a portal, or a campaign, the agent dials them. Speed is the whole advantage: the person who reaches the lead first usually gets the appointment, and the agent is dialing while the lead is still on the page.",
+      // ROUND 48: "the person who reaches the lead first usually gets the appointment" is the
+      // claim round C removed from /services/ai-appointment-booking as "Most jobs go to whoever
+      // books first". The audited research this page cites measures how much likelier a fast
+      // contact is to reach a real conversation, not who wins the job. Retraction swept here.
+      body: "The moment a lead comes in from your site, a portal, or a campaign, the agent dials them. Speed is the whole advantage, and the agent is dialing while the lead is still on the page rather than after they have moved on to the next name on their list.",
     },
     {
       title: "It qualifies inside a normal conversation",
@@ -75,7 +79,7 @@ export const aiVoiceAgents: Service = {
     },
     {
       title: "Speed to lead on new inquiries",
-      body: "A portal lead arrives. The agent calls it back in seconds and qualifies it while your competitors are still waiting for the next batch of their morning call list. The appointment goes to whoever got there first.",
+      body: "A portal lead arrives. The agent calls it back in seconds and qualifies it while your competitors are still waiting for the next batch of their morning call list. The conversation happens while the person is still thinking about it.",
     },
     {
       title: "Working an old list without a caller",
