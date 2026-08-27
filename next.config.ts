@@ -70,7 +70,12 @@ const CSP = [
   // access-control-allow-origin for both realtylt.com and the temp host, methods POST/OPTIONS,
   // header x-rlt-chat-token). One exact origin, no wildcard; `lib/chat-csp.test.ts` now fails if
   // the widget's URL and this list ever drift apart again.
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
+  // www.googletagmanager.com: gtag.js (already allowed in script-src) also sends fetch
+  // beacons to its OWN host — observed refused on production 2026-08-27 (blog page, gtag
+  // /td diagnostics beacon: "Fetch API cannot load https://www.googletagmanager.com/td?id=
+  // AW-11479042629 ... violates connect-src"). Script host and beacon host must travel
+  // together, same rule the Preferred Sources button taught for frame-src.
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
