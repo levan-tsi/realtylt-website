@@ -16,6 +16,7 @@ import { boundsForCounty, SERVED_REGION } from "@/components/idx/county-bounds";
 // "New Listings" quick-filter window (≤7 days, same as the card's "New" badge). Shared with
 // the server render so both sides ask the feed the same question.
 import { NEW_LISTING_DAYS } from "@/lib/idx/query";
+import { LISTED_DAY_OPTS, snapListedDays } from "@/components/search/listed-days";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { listingPath } from "@/lib/idx/listing-url";
 import { saveResultSet } from "@/lib/idx/result-set";
@@ -168,15 +169,6 @@ const PARKING_OPTS = [
   { value: "driveway", label: "Driveway" },
   { value: "assigned", label: "Assigned spot" },
 ];
-/** Days on market — now a RANGE, in the panel's own min→max grammar, because the owner could
- * not ask the one question he wanted: "I wanted to filter properties that was listed 3-6
- * months ago and it was only up to 3 months." As a single ceiling this control could say
- * "listed within 3 months" and nothing else — never "at least 3 months ago", never past 90
- * days at all. Measured on the live table 2026-08-26: 8,971 of 15,254 Active for-sale
- * listings are inside 90 days, so 6,283 homes sat outside every setting this control had.
- * Both ends share this ladder, so 3 months → 6 months is exactly the window he asked for.
- * Capped at 365 to match LISTED_MAX_DAYS, the parser's bound on either end. */
-const LISTED_DAY_OPTS = [1, 3, 7, 14, 30, 90, 180, 365];
 const fmtDays = (n: number) =>
   n === 1 ? "1 day" : n < 7 ? `${n} days` : n < 30 ? `${n / 7} week${n === 7 ? "" : "s"}` : n < 365 ? `${n / 30} month${n === 30 ? "" : "s"}` : "1 year";
 
@@ -231,8 +223,6 @@ function fromParams(sp: URLSearchParams): Filters {
   // that can never match. Drop it here, at the single entry point, rather than in the control.
   const rawHomeType = sp.get("homeType") ?? "";
   const homeTypeOpt = HOME_TYPE_OPTS.find((o) => o.value === rawHomeType);
-  // Off-ladder day counts fall back to "any", mirroring parseFilterParams.
-  const onLadder = (v: string | null) => (LISTED_DAY_OPTS.some((n) => String(n) === v) ? v! : "");
   return normalizeListed({
     q: sp.get("q") ?? "",
     city: sp.get("city") ?? "",
@@ -263,8 +253,10 @@ function fromParams(sp: URLSearchParams): Filters {
     // Round-24 selects — invalid tokens fall back to "any", mirroring parseFilterParams.
     heating: HEATING_OPTS.some((o) => o.value === sp.get("heating")) ? sp.get("heating")! : "",
     parking: PARKING_OPTS.some((o) => o.value === sp.get("parking")) ? sp.get("parking")! : "",
-    listedMinDays: onLadder(sp.get("listedMinDays")),
-    listedDays: onLadder(sp.get("listedDays")),
+    // Off-ladder day counts SNAP to the nearest rung — the server clamps rather than drops
+    // them, so "" here would show "No max" over a genuinely filtered result set.
+    listedMinDays: snapListedDays(sp.get("listedMinDays")),
+    listedDays: snapListedDays(sp.get("listedDays")),
     basementFinished: TRUE_FLAGS.has(sp.get("basementFinished") ?? ""),
     basementWalkout: TRUE_FLAGS.has(sp.get("basementWalkout") ?? ""),
     nearTransit: TRUE_FLAGS.has(sp.get("nearTransit") ?? ""),
