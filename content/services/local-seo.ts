@@ -110,7 +110,10 @@ export const localSeo: Service = {
     },
     {
       q: "Is local SEO better than running ads?",
-      a: "It is slower to arrive and it does not stop. Ads deliver traffic the day you turn them on and nothing the day you turn them off. The harder question is what your ads are actually adding, and the one large field experiment on that found the returns measured by ordinary reporting were wildly overstated compared with the returns measured by switching the spend off in one place and leaving it on in another.",
+      // ROUND 47: said "the one large field experiment on that", a superlative about a literature
+      // nobody here has surveyed, and it named no experiment. Same shape as the round-45 fix to
+      // /services/custom-automation. Naming eBay removes the superlative and makes it checkable.
+      a: "It is slower to arrive and it does not stop. Ads deliver traffic the day you turn them on and nothing the day you turn them off. The harder question is what your ads are actually adding, and when eBay tested that by switching its brand-term spend off on two search engines while leaving it running on a third, the returns measured by ordinary reporting turned out to be wildly overstated against the returns measured by the experiment. The flagship post sets out what does and does not transfer from that to a business nobody searches for by name.",
     },
     {
       q: "How long does local SEO take to work?",
@@ -118,7 +121,10 @@ export const localSeo: Service = {
     },
     {
       q: "Can I show up in a town my office is not in?",
-      a: "In the map pack, not really, because distance is one of the three inputs and the profile's service area is capped by Google's own guidelines at roughly two hours of driving from where the business is based. The other route is an ordinary page on your own website about the work you have genuinely done in that town, which is judged on what is written on it rather than on where you sit. That is a different piece of work with a different risk attached, and it has its own article.",
+      // ROUND 47: "capped ... at roughly two hours" reads as a hard limit. The guidelines say the
+      // boundaries "shouldn't extend farther than about 2 hours of driving time", and the sentence
+      // straight after allows that larger areas may suit some businesses. Same fix in the post.
+      a: "In the map pack, not really, because distance is one of the three inputs and Google's own guidelines say a profile's service area should not reach farther than about two hours of driving from where the business is based, allowing that some businesses will need more. The other route is an ordinary page on your own website about the work you have genuinely done in that town, which is judged on what is written on it rather than on where you sit. That is a different piece of work with a different risk attached, and it has its own article.",
     },
   ],
 

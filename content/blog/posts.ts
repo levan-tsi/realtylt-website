@@ -372,7 +372,11 @@ export const POSTS: BlogPost[] = [
     cluster: "visibility",
     title: "Three Businesses Show Up. Yours Is Not One of Them.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason as the post above. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+     * pass restored the exception Google's own service-area guideline carries in its very next
+     * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
+     * film, so the slug ships at 18/19. */
     excerpt:
       "Somebody nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list, one of the three inputs is a fact about you that nothing can change, and the rules for whether you may even have a profile name this industry by name.",
     seoDescription:
