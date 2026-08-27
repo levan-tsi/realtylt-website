@@ -256,14 +256,28 @@
       _session = stored;
       return _session;
     }
+    // THE PORTAL TOKEN RIDES HERE TOO, so a signed-in client can be greeted by name in the
+    // opening line rather than being recognised only on reply number two.
+    //
+    // AND THE SAME PREFLIGHT PROBLEM APPLIES, with a quieter cost. A CRM whose
+    // Access-Control-Allow-Headers does not name `x-rlt-portal-token` makes the browser block
+    // this request, and the fallback below mints a LOCAL id with no ownership token, which the
+    // CRM then answers statelessly: no memory across turns and no take-over polling. That is a
+    // worse conversation than an anonymous one, for the one visitor we know the most about. So
+    // this asks a second time without the header before it gives up on the server entirely.
+    const mint = async (withoutPortalToken) => {
+      const headers = { 'Content-Type': 'application/json' };
+      if (!withoutPortalToken) withPortalToken(headers);
+      return fetch(CONFIG.SESSION_URL, { method: 'POST', headers: headers, body: '{}' });
+    };
     try {
-      const resp = await fetch(CONFIG.SESSION_URL, {
-        method: 'POST',
-        // The portal token rides here too, so a signed-in client can be greeted by name in the
-        // opening line rather than being recognised only on reply number two.
-        headers: withPortalToken({ 'Content-Type': 'application/json' }),
-        body: '{}'
-      });
+      let resp;
+      try {
+        resp = await mint(false);
+      } catch (e) {
+        if (!readPortalToken()) throw e;
+        resp = await mint(true);
+      }
       if (resp.ok) {
         const d = await resp.json();
         if (d && d.sessionId) {
@@ -989,10 +1003,24 @@
   // ============================================================
   // API CALL
   // ============================================================
-  async function callAgent(message) {
+  // A CUSTOM HEADER IS A PROMISE THE OTHER END HAS TO HAVE KEPT.
+  //
+  // `x-rlt-portal-token` triggers a CORS PREFLIGHT, and a CRM whose
+  // Access-Control-Allow-Headers does not list it makes the browser BLOCK the request entirely.
+  // Not a 4xx we could read: blocked, as a TypeError, before anything is sent. Measured against
+  // the live CRM on 2026-08-27, whose preflight answers "Content-Type, x-rlt-chat-token".
+  //
+  // This file and the CRM deploy from different repositories on different days, so "they will
+  // ship together" is not a thing either of them can promise. So the widget carries its own
+  // answer: if a turn fails outright AND it was carrying the portal header, it goes again
+  // without it. The visitor loses the by-name greeting on an old CRM and keeps their
+  // conversation, which is the right way round.
+  //
+  // ONLY ON A REQUEST THAT NEVER LANDED. A timeout (AbortError) is not a rejected header, and
+  // retrying one would double a thirty-second wait in front of somebody already waiting.
+  async function postTurn(message, opts) {
     const controller = new AbortController();
     const timeout = setTimeout(function() { controller.abort(); }, CONFIG.REQUEST_TIMEOUT);
-
     try {
       const sess = await ensureSession();
       const headers = { 'Content-Type': 'application/json' };
@@ -1001,7 +1029,7 @@
       // And, independently, who the person is when they are signed in to the portal. Two
       // credentials, two gates: this one never opens a conversation and that one never proves
       // an identity. Re-read every turn, so signing out mid-conversation takes effect at once.
-      withPortalToken(headers);
+      if (!opts || !opts.withoutPortalToken) withPortalToken(headers);
 
       const resp = await fetch(CONFIG.WEBHOOK_URL, {
         method: 'POST',
@@ -1035,6 +1063,18 @@
     } catch (err) {
       clearTimeout(timeout);
       throw err;
+    }
+  }
+
+  async function callAgent(message) {
+    const carriedPortalToken = Boolean(readPortalToken());
+    try {
+      return await postTurn(message);
+    } catch (err) {
+      const abandoned = err && (err.name === 'AbortError' || /Server returned/.test(String(err.message)));
+      if (!carriedPortalToken || abandoned) throw err;
+      // The header is the only thing that could have been refused before the request left.
+      return await postTurn(message, { withoutPortalToken: true });
     }
   }
 
