@@ -310,8 +310,8 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   {
     name: "it remembers everything",
     /** DELIBERATELY NARROW. The service page's own lede says the system "remembers every call,
-     * every chat and every deal they touch", which is a BOUNDED claim about the material its
-     * agents handle and is true. The absolute is the thing being killed, so the pattern matches
+     * chat and deal they touch" (content/services/the-singularity.ts, `lede`), which is a BOUNDED
+     * claim about the material its agents handle and is true. The absolute is the thing being killed, so the pattern matches
      * only the absolute. Checked against the whole of content/ before it was added: the bounded
      * form appears once and this does not match it. */
     pattern: /\bremembers everything\b/i,
@@ -324,8 +324,19 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   },
   {
     name: "it improves without anybody approving it",
+    /** WIDENED 2026-08-27 (round 45). The first cut did not catch its own name: it knew
+     * `human`, `person`, `approval` and `supervision` but not `anybody`, `anyone`, `your
+     * approval` or `with nobody watching`, so the literal sentence this entry is called after
+     * would have walked straight past it. Four forms a fresh audit produced were all misses.
+     *
+     * The third alternative is anchored on a SUBJECT (it / this / the system) and requires a
+     * determiner before `approval`, because the true claim on this topic is `nothing ships
+     * without approval` and it is a live spec chip on both the service page and the /ai panel.
+     * A guard that kills the correct sentence while hunting its opposite is worse than no guard.
+     * Probed both ways before it landed: seven autonomy forms all red, and all sixty files in
+     * SOURCES green. */
     pattern:
-      /(improves?|gets better|learns)[^.]{0,50}\bwithout (a |any )?(human|person|approval|supervision)\b|\bno (human|person) (is )?(needed )?in the loop\b/i,
+      /(improves?|improving|gets better|learns)[^.]{0,60}\bwithout (a |any |your |our )?(human|person|people|anybody|anyone|approval|sign-?off|supervision|oversight)\b|\bwithout (anybody|anyone|a human|a person|you|your|our) (approving|reviewing|reading|seeing|checking|signing)\b|\b(it|this|the (system|loop|agent))\s+(ships?|improves?|updates?|changes?|deploys?)\b[^.]{0,40}\bwithout (your|any|a|our)\s+(approval|sign-?off|say-?so|permission|review)\b|\b(improves?|improving|gets better|learns|updates?|ships?)[^.]{0,60}\bwith (nobody|no one|no-one)\s+(watching|approving|looking|involved)\b|\bno (human|person) (is )?(needed )?in the loop\b/i,
     why: "the one claim on this topic that published research refutes rather than merely leaves unsupported. Huang and co-authors (Google DeepMind, ICLR 2024) measured intrinsic self-correction, where a model reviews its own answer with nothing from outside itself, and GPT-4 fell from 95.5 percent on GSM8K to 89.0 after two rounds, while the same model given an outside signal about which answers were wrong rose to 97.5. The person approving is not a safety garnish on this product, it is the half that makes the other half work",
   },
   // ── Round L, 2026-08-27. THE FIRST ENTRY IN THIS TABLE THAT KILLS AN UNDER-CLAIM.
@@ -345,14 +356,21 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   // both directions: it DOES write code, and it NEVER ships without a person.
   {
     name: "the system cannot write or change code",
-    /** Two forms. The first is the exact wording that shipped, which is the one that will come
+    /** Four forms. The first is the exact wording that shipped, which is the one that will come
      * back if somebody tidies this topic toward sounding modest. The second is the general shape
      * of the same under-claim with a different verb. Deliberately anchored on a subject pronoun
      * so that a sentence ABOUT the promise ("not a promise about what it will leave alone") does
      * not trip it, which is a real sentence in the post and was checked against the whole of
-     * content/ and components/blog/scenes/ before this was added. */
+     * content/ and components/blog/scenes/ before this was added.
+     *
+     * WIDENED 2026-08-27 (round 45) after an audit found three shapes walking through it. The
+     * subject list only knew `it` and `the system`, so "This system does not write code" passed.
+     * The verb was single, so the paired "does not write or change any software" passed. And the
+     * THIRD form round 44's own log names, "the instructions change, not the software", was never
+     * in here at all, which is the one that matters most: it is the sentence that shipped in the
+     * service page FAQ and it does the damage without using the word cannot. */
     pattern:
-      /rewrites? its own code|\b(it|the (system|loop|agent))\s+(does not|cannot|will not|never)\s+(rewrite|write|change|touch)s?\s+(its own |any |real |the )?(code|software|source)\b/i,
+      /rewrites? its own code|\b(it|(this|our|the) (system|loop|agent))\s+(does not|do not|cannot|can not|will not|never)\s+(rewrite|write|change|touch)s?( or (rewrite|write|change|touch)s?)?\s+(its own |any |real |the |your )?(code|software|source)\b|\binstructions? chang\w+,? not the (software|code)\b|\b(only )?(changes?|rewrites?) the instructions,? (not|never|and not) the (software|code)\b/i,
     why: "false about this offering. The Singularity is a coding agent with a file-based memory: it writes and ships real software, and what makes that safe is the test suite and the human approval standing between anything it writes and anybody seeing it, not an inability to write it. The post's own evidence points the same way, since Reflexion reports 91.0 percent on HumanEval with code that gets EXECUTED, which is the outside signal the intrinsic self-correction experiments never had. The post also prints what Reflexion's own paper concedes, that those unit tests are self-generated, and Huang et al. Table 1 files Reflexion under 'Use of oracle labels' for it; this repo's suite is the stronger case because a person approved every test in it and the list only grows. Saying the system cannot write code gives away the capability the offer is built on and replaces a checkable safety claim with a weaker false one",
   },
   {
