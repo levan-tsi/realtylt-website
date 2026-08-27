@@ -305,7 +305,7 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   {
     name: "it improves faster than you can shop for a replacement",
     pattern: /improves faster than you can shop for a replacement|faster than you (can|could) (shop for|buy|find) a replacement/i,
-    why: "a comparative rate claim against every other product a business owns, with no measurement of this system and none of any of them. It is the closing sentence of the /ai Singularity panel and the one line the service page deliberately did not carry across, which is recorded in the header of content/services/the-singularity.ts. If the panel and the page are ever made to agree, COPY.singularity is the side that changes",
+    why: "a comparative rate claim against every other product a business owns, with no measurement of this system and none of any of them. It was the closing sentence of the /ai Singularity panel and the one line the service page deliberately did not carry across, which is recorded in the header of content/services/the-singularity.ts. Round 44 rewrote the panel copy for the repositioning, so the two sides now agree; this entry is what keeps the sentence from being pasted back in the day somebody wants a stronger closer",
   },
   {
     name: "it remembers everything",
@@ -315,7 +315,7 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
      * only the absolute. Checked against the whole of content/ before it was added: the bounded
      * form appears once and this does not match it. */
     pattern: /\bremembers everything\b/i,
-    why: "an absolute that the same product's limits contradict four lines later. It knows what it was connected to and nothing else, and a deal that lived in a spreadsheet nobody wired in is a deal it has never heard of. This is a `specs` chip on the /ai panel and the flagship post spends a section replacing it with the literal version, which is that a record persists and a set of written instructions persists",
+    why: "an absolute that the same product's limits contradict four lines later. It knows what it was connected to and nothing else, and a deal that lived in a spreadsheet nobody wired in is a deal it has never heard of. It was a `specs` chip on the /ai panel until round 44 replaced it with `durable project memory`, and the flagship post spends a section on the literal version, which is that what persists is FILES: the record of the conversations, the written instructions, one file per area of the work, and a growing pile of tests. The bounded claim is strong enough on its own and this entry only kills the absolute",
   },
   {
     name: "it gets better with every deal",
@@ -327,6 +327,33 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern:
       /(improves?|gets better|learns)[^.]{0,50}\bwithout (a |any )?(human|person|approval|supervision)\b|\bno (human|person) (is )?(needed )?in the loop\b/i,
     why: "the one claim on this topic that published research refutes rather than merely leaves unsupported. Huang and co-authors (Google DeepMind, ICLR 2024) measured intrinsic self-correction, where a model reviews its own answer with nothing from outside itself, and GPT-4 fell from 95.5 percent on GSM8K to 89.0 after two rounds, while the same model given an outside signal about which answers were wrong rose to 97.5. The person approving is not a safety garnish on this product, it is the half that makes the other half work",
+  },
+  // ── Round L, 2026-08-27. THE FIRST ENTRY IN THIS TABLE THAT KILLS AN UNDER-CLAIM.
+  // Every other row here is a number or a promise that was too large. This one was too small, and
+  // it was ours: the Singularity post and service page both shipped "nothing in it rewrites its
+  // own code", written in good faith as honest-limits copy for what was described as a
+  // prompts-and-playbooks product. The owner read the live page and rejected it, because the
+  // thing being sold is the system this business actually runs, which writes and ships real
+  // software under a test suite and a human approval. A retraction table that only ever catches
+  // exaggeration will happily let a business describe itself as less than it is, and a sentence
+  // that gives away the main capability is exactly as expensive on a page an AI answer lifts from
+  // as one that invents a capability.
+  //
+  // The safety claim did not disappear, it changed sides: it is now the gate rather than an
+  // inability, and round K's "improves without anybody approving it" is what holds that end up.
+  // The two entries are meant to be read together. Between them the true claim is pinned from
+  // both directions: it DOES write code, and it NEVER ships without a person.
+  {
+    name: "the system cannot write or change code",
+    /** Two forms. The first is the exact wording that shipped, which is the one that will come
+     * back if somebody tidies this topic toward sounding modest. The second is the general shape
+     * of the same under-claim with a different verb. Deliberately anchored on a subject pronoun
+     * so that a sentence ABOUT the promise ("not a promise about what it will leave alone") does
+     * not trip it, which is a real sentence in the post and was checked against the whole of
+     * content/ and components/blog/scenes/ before this was added. */
+    pattern:
+      /rewrites? its own code|\b(it|the (system|loop|agent))\s+(does not|cannot|will not|never)\s+(rewrite|write|change|touch)s?\s+(its own |any |real |the )?(code|software|source)\b/i,
+    why: "false about this offering. The Singularity is a coding agent with a file-based memory: it writes and ships real software, and what makes that safe is the test suite and the human approval standing between anything it writes and anybody seeing it, not an inability to write it. The post's own evidence points the same way, since Reflexion reports 91.0 percent on HumanEval precisely because the code is run against tests, which is the outside signal the intrinsic self-correction experiments never had. Saying the system cannot write code gives away the capability the offer is built on and replaces a checkable safety claim with a weaker false one",
   },
   {
     name: "an invented hours-per-week figure in a service figure",
