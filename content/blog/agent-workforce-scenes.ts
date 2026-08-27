@@ -135,11 +135,16 @@ export const NOT_A_CHATBOT: GridItem[] = [
  * exactly 100.
  *
  * THE TRAP, and it is the reason this note is this long. The same paper prints a SECOND category
- * split, in the legend of the per-system bar chart in section 6: System Design Issues 41.8%,
- * Inter-Agent Misalignment 36.9%, Task Verification 21.3%. The paper is not disagreeing with
- * itself. That figure states a different corpus in its own caption: "Distribution of failure in
- * MAD with MAST labels on total 210 traces. This plot visualizes the failure distributions of
- * the first 30 traces for each system." 210 traces against Figure 1's 1,642. A checker who finds
+ * split, in the legend of the per-system bar chart `figures/masft_bar.pdf`, which renders as
+ * FIGURE 4 on page 8 of v3. It is included from 06_discussions.tex, so it sits under section 5's
+ * heading rather than section 6's, which is what earlier notes here got wrong. Its legend:
+ * System Design Issues 41.8%, Inter-Agent Misalignment 36.9%, Task Verification 21.3%. The paper
+ * is not disagreeing with itself. That figure states a different corpus in its own caption:
+ * "Distribution of failure in MAST-Data with MAST labels on total 210 traces. This plot
+ * visualizes the failure distributions of the first 30 traces for each system." The \dataset{}
+ * macro renders MAST-Data; "MAD" survives only inside macro names in the .tex source, and three
+ * of this repo's records quoted it as MAD until round 48. 210 traces against Figure 1's 1,642.
+ * A checker who finds
  * 41.8/36.9/21.3 and "corrects" these bars would be swapping a 210-trace sample into a chart
  * whose caption names the 1,642-trace one. Do not make the edit.
  *

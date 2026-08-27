@@ -41,7 +41,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
 export const IN_SHORT: string[] = [
   "Google's spam policies name this tactic twice. Doorway abuse covers pages targeted at specific regions or cities that funnel users to one page, and scaled content abuse covers using generative AI tools to generate many pages without adding value for users. Neither entry says a page per area is forbidden. Both say what makes one worthless.",
   "A page that repeats itself is machine readable. In a sample of 17,168 web pages classified by hand, 13.8% were judged spam overall, and among the pages that compressed to a quarter of their size or better, 70% were.",
-  "An area page is an advertisement about a community, and that is regulated separately from anything Google does. The fair housing rules name selecting locations for advertising that deny particular segments of the market information about housing opportunities, and they name exaggerating drawbacks or failing to inform anybody of the desirable features of a neighbourhood.",
+  "An area page is an advertisement about a community, and that is regulated separately from anything Google does. The fair housing rules name selecting locations for advertising that deny parts of the market information about housing opportunities, and discouraging somebody by exaggerating drawbacks or failing to inform them of a neighbourhood's desirable features. Both prohibitions hang on the same clause: because of race, colour, religion, sex, handicap, familial status or national origin.",
 ];
 
 /** SCENE copy — the two policy names.

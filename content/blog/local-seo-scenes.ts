@@ -173,7 +173,7 @@ export const PROFILE_RULES: GridItem[] = [
   },
   {
     lead: "An address you do not sit in is not an address.",
-    body: "A rented mailing address that you do not operate from is called a virtual office in the guidelines and is not eligible. A desk in a co-working space needs clear signage, staff during business hours and the ability to receive customers there. And a service area is capped at roughly two hours of driving from where the business is based.",
+    body: "A rented mailing address that you do not operate from is called a virtual office in the guidelines and is not eligible. A desk in a co-working space needs clear signage, staff during business hours and the ability to receive customers there. And the guidelines say a service area should not reach farther than about two hours of driving from where the business is based, while allowing that some businesses will need more.",
   },
 ];
 

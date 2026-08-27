@@ -332,11 +332,12 @@ export const POSTS: BlogPost[] = [
     cluster: "records",
     title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 9 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 48. Published 2026-08-25, revised 2026-08-27: the sync-path
+     * diagram heading still read "one record that is true", the unqualified claim round 47
+     * removed twice from /services/crm-sync. It now reads as the diagram's own lede does, that
+     * both systems agree on the record. See docs/parity/ROUND48-RELEVANCE-PASS.md. First real
+     * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
       "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync actually decides on your behalf, why the published model for matching records has three answers rather than two, and the one field in your setup that every duplicate you have ever had came from.",
     seoDescription:

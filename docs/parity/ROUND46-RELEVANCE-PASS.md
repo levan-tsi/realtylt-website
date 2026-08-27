@@ -268,9 +268,11 @@ v2, which carry an older taxonomy figure reading 37.17 / 31.41 / 31.41, and true
 sources in every revision, which is the likely shape of the search that produced them.
 
 **The 41.8 / 36.9 / 21.3 legend is not the paper contradicting itself.** It belongs to
-`figures/masft_bar.pdf`, the per-system chart in section 6, and that figure's caption states its
-own corpus: *"Distribution of failure in MAD with MAST labels on total 210 traces. This plot
-visualizes the failure distributions of the first 30 traces for each system."* 210 traces against
+`figures/masft_bar.pdf`, the per-system chart that renders as **Figure 4 on page 8** of v3
+(included from `06_discussions.tex`, so it sits under section 5's heading, not section 6's), and
+that figure's caption states its own corpus: *"Distribution of failure in MAST-Data with MAST
+labels on total 210 traces. This plot visualizes the failure distributions of the first 30 traces
+for each system."* 210 traces against
 Figure 1's 1,642. Two samples, two splits, no contradiction. Calling it a self-contradiction was
 the softest available explanation and it was reached without opening the figure.
 

@@ -396,7 +396,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "Appointments you actually keep, a year",
-      note: "There is no second column here and no line showing what this would become with reminders switched on, and the missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had already paid for a health check-up. Applying that to your listing appointments would be the most flattering arithmetic on this website and it would be arithmetic nobody has done. Every rate above is yours for the same reason: three of them have never been measured for this industry by anybody, and a default we typed in would quietly become the number you remember.",
+      note: "There is no second column here and no line showing what this would become with reminders switched on, and the missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a reservation for a routine health check-up. Applying that to your listing appointments would be the most flattering arithmetic on this website and it would be arithmetic nobody has done. Every rate above is yours for the same reason: three of them have never been measured for this industry by anybody, and a default we typed in would quietly become the number you remember.",
       action: { label: "See how it is built", href: "/services/ai-appointment-booking" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },

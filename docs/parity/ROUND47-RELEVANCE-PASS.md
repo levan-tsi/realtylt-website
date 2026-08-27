@@ -38,10 +38,15 @@ the wrong route"*, and the short version is:
   docstring. The bars are **quoted**, not derived, and the per-mode sums are now corroboration
   rather than the citation.
 - The conflicting 41.8 / 36.9 / 21.3 is not the paper contradicting itself. It is
-  `figures/masft_bar.pdf`, the per-system chart in section 6, whose caption states its own corpus:
-  *"Distribution of failure in MAD with MAST labels on total 210 traces. This plot visualizes the
-  failure distributions of the first 30 traces for each system."* 210 traces against Figure 1's
-  1,642.
+  `figures/masft_bar.pdf`, the per-system chart that renders as **Figure 4 on page 8** of v3
+  (included from `06_discussions.tex`, so it sits under section 5's heading, not section 6's),
+  whose caption states its own corpus: *"Distribution of failure in MAST-Data with MAST labels on
+  total 210 traces. This plot visualizes the failure distributions of the first 30 traces for each
+  system."* 210 traces against Figure 1's 1,642.
+  **Round 48 provenance note:** this quote read *"failure in MAD"* here, in ROUND46 and in
+  `agent-workforce-scenes.ts` until the round-47 checker caught it. The v3 `\dataset{}` macro
+  renders **MAST-Data**; "MAD" survives only inside macro names in the `.tex` source. Corrected in
+  all three, and the figure number and page were read off `pdftotext -layout` on the v3 PDF.
 - The 37.17 / 31.41 / 31.41 that round 46 could find no trace of renders at lines 251 to 253 of
   `pdftotext -layout` on the same v3 PDF, drawn inside `figures/arxiv_figure_neurips_cropped.pdf`,
   which `04_methodology.tex:6` includes. It is the split v1 carried, reproduced inside the
@@ -244,11 +249,19 @@ split (22 / 25 / 28 / 25 across four bands), 97%, 41% "always", 10%, 68%, *"47% 
 use a business with fewer than 20 reviews, and only 9% are willing to use one with five or fewer"*
 and the 74% recency figure the service page's stat quotes.
 
-**A verification-route note, recorded because the next checker will hit it.** `brightlocal.com`
-returns an empty response to a direct programmatic request, with no status line at all. The page
-was read through a text-extraction proxy, which returned the live 2026 article with its
-2026-02-11 publication time and its full methodology block. Read from the live page, not from the
-repo's own record, but not read by a direct fetch either.
+**A verification-route note, corrected by round 48 because the next checker will hit it.** Round 47
+recorded that `brightlocal.com` "returns an empty response to a direct programmatic request, with
+no status line at all", and blamed the site. **That was an instrument error, not a site behaviour.**
+The empty response is this box's `curl`/schannel TLS stack, which AVG sits in the middle of. Node's
+built-in `fetch` gets a clean **HTTP 200** with the full 709 KB page, verified in round 48:
+
+```js
+const r = await fetch('https://www.brightlocal.com/research/local-consumer-review-survey/');
+// 200, text/html; charset=utf-8, 709270 bytes
+```
+
+Next checker: use node `fetch`, not `curl` and not a text-extraction proxy. Round 47's reading of
+the article was correct; only its explanation of the route was wrong.
 
 Also verified live: Luca's HBS working paper (Yelp against Washington State Department of Revenue
 records for Seattle, January 2003 to October 2009, *"there are 3,582 restaurants during the period

@@ -308,7 +308,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       band: "dark",
       label: "The path",
       eyebrow: "The system",
-      heading: "From something happening to one record that is true.",
+      heading: "From something happening to one record both systems agree on.",
       lede: "Six hops, and the two that decide whether this works are the second and the fifth. Everything between them is plumbing that either exists or does not. The identity decision and the conflict rule are judgements about your business, they are made once, and they are the two nobody asks about before signing.",
       steps: SYNC_PATH,
       altPrefix: "The path from an event in one system to a single contact record that both systems agree about",
