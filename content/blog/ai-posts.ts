@@ -261,7 +261,7 @@ You need enough of them to be worth joining up, which in practice means at least
 
 ### What if my business is too small for this?
 
-Then the honest version of this article is the free half of it. Open a month of your own transcripts, read every one, and write down the three questions that got the worst answers. That is the same job the loop does, done by hand, and at small volumes a person doing it once a quarter is genuinely better than software doing it weekly. The software earns its place at the volume where nobody is ever going to do that again.
+Then the honest version of this article is the free half of it. Open a month of your own transcripts, read every one, and write down the three questions that got the worst answers. That is the same job the loop does, done by hand, and at small volumes a person doing it once a quarter is genuinely better than software doing it on a schedule. The software earns its place at the volume where nobody is ever going to do that again.
 
 ## What to do about it
 
@@ -269,7 +269,7 @@ The two halves of this have two different first steps and neither of them needs 
 
 For the memory half, call your own office as though you were a client, say three specific things about what you are looking for, hang up, and then go and ask your own website something related an hour later. Count how many of the three it already knows. Whatever that number is, it is the number your clients are experiencing, and it is the clearest picture of this you will ever get in ten minutes.
 
-For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing a weekly loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
+For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing the loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
 
 The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about eighty words.
 

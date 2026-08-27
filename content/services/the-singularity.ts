@@ -134,7 +134,7 @@ export const theSingularity: Service = {
   useCases: [
     {
       title: "The answer that was wrong in March and is still wrong",
-      body: "Somewhere in your funnel a question gets an answer that quietly costs you people, and nobody has read enough transcripts to notice. A loop that reads all of them every week is looking for exactly that, and it is the kind of thing that never gets found by anyone who has a day job.",
+      body: "Somewhere in your funnel a question gets an answer that quietly costs you people, and nobody has read enough transcripts to notice. A loop that reads all of them is looking for exactly that, and it is the kind of thing that never gets found by anyone who has a day job.",
     },
     {
       title: "Four tools, four versions of the same client",
