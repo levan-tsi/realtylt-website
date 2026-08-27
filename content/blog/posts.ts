@@ -571,10 +571,20 @@ export const POSTS: BlogPost[] = [
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
      * of its own. It now names that problem, rests on research it can show you, and gains three
-     * primary sources plus four sections its own successors already had. 1,030 words to 3,313. */
-    updated: "2026-08-02",
+     * primary sources plus four sections its own successors already had. 1,030 words to 3,313.
+     *
+     * ROUND 48: the first full-text pass over the standard-bearer, and it held. Two changes
+     * only. The body carried a rendered typo, "with akeyboard", in a bold section lead. And this
+     * excerpt opened on "Most home searching happens at night, on a phone, and most real estate
+     * websites answer the next morning", two magnitude claims the article itself never makes and
+     * cannot support, sitting in the dek of the post whose second section exists to say that a
+     * number nobody can check is a slogan. Replaced with the article's own opening. The same
+     * pair of claims was swept off /services/ai-chat-assistant. `updated` moves to 08-27 because
+     * the served text changed, and the change is recorded here rather than dressed up as more
+     * than it was. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
+    updated: "2026-08-27",
     excerpt:
-      "Most home searching happens at night, on a phone, and most real estate websites answer the next morning. What an AI chat assistant actually does in that gap, why the number this whole category is sold on cannot be sourced, and what to ask before you buy one.",
+      "Somebody read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant actually does in that gap, why the number this whole category is sold on cannot be sourced, and what to ask before you buy one.",
     seoDescription:
       "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one before you buy.",
     cover: "/images/lifestyle/buying.jpg",

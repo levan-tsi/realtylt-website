@@ -114,7 +114,10 @@ export const aiChatAssistant: Service = {
   useCases: [
     {
       title: "The after-hours buyer",
-      body: "Most home searching happens at night on a phone. The assistant answers at 11pm, sends four matching listings by text, and books a Saturday showing. In the morning you have a booked appointment instead of a contact form.",
+      // ROUND 48: "Most home searching happens at night on a phone" is two magnitude claims
+      // about the world with nothing under either, on the page whose own flagship argues that a
+      // number nobody can check is a slogan. The scenario carries the point without them.
+      body: "The searching that happens after your office closes does not wait for it to open. The assistant answers at 11pm, sends four matching listings by text, and books a Saturday showing. In the morning you have a booked appointment instead of a contact form.",
     },
     {
       title: "The visitor who was about to bounce",
@@ -147,7 +150,7 @@ export const aiChatAssistant: Service = {
     },
     {
       q: "How fast does an AI assistant reply to a website lead?",
-      a: "In seconds, at any hour. The research worth quoting here is Harvard Business Review's 2011 study of 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead, which the researchers defined as a real conversation with somebody who could decide, than firms that waited one more hour. That is cross-industry work rather than a real estate study, so what carries over is the shape rather than the multiple. Most real estate websites answer in hours or never, which makes the assistant the difference between a lead you talked to and a lead your competitor talked to.",
+      a: "In seconds, at any hour. The research worth quoting here is Harvard Business Review's 2011 study of 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead, which the researchers defined as a real conversation with somebody who could decide, than firms that waited one more hour. That is cross-industry work rather than a real estate study, so what carries over is the shape rather than the multiple. What the assistant changes is that the inquiry gets answered while the person is still on the page, instead of whenever somebody next opens the inbox.",
     },
     {
       q: "Will visitors know they are talking to an AI?",
