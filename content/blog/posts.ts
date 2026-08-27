@@ -392,11 +392,12 @@ export const POSTS: BlogPost[] = [
     cluster: "appointments",
     title: "You Booked the Showing for Nine Days Out. Nobody Came.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topic 6 carries none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
+     * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
+     * appointments, which the paper does not say anywhere. See
+     * docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
+     * slug ships at 18/19. */
     excerpt:
       "You answered, you were pleasant, you agreed on a time that suited everybody, and nobody came. What AI appointment booking actually does about the gap between the ask and the day, what 51,529 appointments say about booking too far ahead, and the one reminder with a randomised trial behind it.",
     seoDescription:

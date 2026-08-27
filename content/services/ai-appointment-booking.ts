@@ -53,7 +53,10 @@ export const aiAppointmentBooking: Service = {
       { at: "6s", label: "The AI replies", note: "Not tomorrow morning. Now, while they are still there." },
       { at: "40s", label: "Real slots offered", note: "Read live from your calendar, so a slot it offers is one your own diary still shows." },
       { at: "1:10", label: "Booked", note: "Confirmed inside the same conversation. No phone tag." },
-      { at: "24h before", label: "Reminded", note: "The reminder is what turns a booking into an attendance." },
+      // ROUND 47: the note read "The reminder is what turns a booking into an attendance", which
+      // states as a certainty the thing `limits[0]` denies one screen below and which the trial
+      // this page quotes measures at seven points rather than at all of them.
+      { at: "24h before", label: "Reminded", note: "One reminder moved attendance seven points in the trial this page quotes. It is still only a reminder." },
     ],
     // "The job usually goes to whoever booked it first" was the same unsourced claim that came
     // out of `why` on 2026-08-25, still alive one field lower down. A retraction that misses the
@@ -84,11 +87,20 @@ export const aiAppointmentBooking: Service = {
   useCases: [
     {
       title: "The evening inquiry",
-      body: "Someone asks at 8pm. By 8:02 they are booked for Thursday. In the old version of this, you called them back at 10am and they had already booked with someone else.",
+      // ROUND 47: ended "and they had already booked with someone else", the narrative form of
+      // "Most jobs go to whoever books first", which round C removed from `why` and from the
+      // figure footnote on this same page. `why` now says an inquiry waiting on a callback is one
+      // somebody else CAN answer. This one asserted that somebody else did.
+      body: "Someone asks at 8pm. By 8:02 they are booked for Thursday. In the old version of this, you called them back at 10am and found out what fourteen hours had done to it.",
     },
     {
       title: "The end of phone tag",
-      body: "Two people trying to find a mutually free hour by voicemail is a solved problem. The inquiries lost to that friction are lost quietly, which is why almost nobody counts them and why the loss never turns up in a report.",
+      // ROUND 47: "The inquiries lost to that friction are lost quietly, which is why almost
+      // nobody counts them" is word for word the shape round D removed from /services/crm-sync
+      // ("The deals lost to a stale CRM are lost quietly, which is why nobody counts them"),
+      // for the reason its comment gives: it asserts a loss nobody here has measured. The
+      // retraction did not reach this page. Replaced with what is actually knowable.
+      body: "Two people trying to find a mutually free hour by voicemail is a solved problem. What it costs is not something anybody here has measured, and it is not something your own reports can tell you either, because an inquiry that goes quiet leaves the same trace as one that was never serious.",
     },
     {
       title: "The no-shows you can actually prevent",

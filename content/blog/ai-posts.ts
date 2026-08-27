@@ -3205,7 +3205,7 @@ In 2007 four researchers at Sir Run Run Shaw Hospital in Hangzhou took 1,859 peo
 
 The [result](https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/) is one of the plainest numbers in this whole series. Attendance was 80.5% with no reminder, 87.5% with a text and 88.3% with a call. Both reminder groups beat the control by a margin the paper reports as statistically significant, and the difference between the text and the call was not significant at all. The text cost less: 0.31 Yuan per person who turned up against 0.48 for the phone calls.
 
-Read that as a shape rather than as a promise. Nobody has run this trial on people going to look at a house, the population in Hangzhou had already paid for the appointment they were being reminded about, and 2007 was a different century for text messaging. What survives the translation is the least glamorous sentence in this article. One reminder, sent automatically, is the highest return per unit of effort of anything on this page, and it is also the first thing people switch off because it feels like nagging.
+Read that as a shape rather than as a promise. Nobody has run this trial on people going to look at a house, the people in Hangzhou had made a reservation for a routine health check-up rather than answered an advertisement, and 2007 was a different century for text messaging. What survives the translation is the least glamorous sentence in this article. One reminder, sent automatically, is the highest return per unit of effort of anything on this page, and it is also the first thing people switch off because it feels like nagging.
 
 [[scene:reminders]]
 
