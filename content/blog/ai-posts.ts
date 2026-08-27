@@ -660,7 +660,7 @@ Assume not. In published research, 315 people sorting synthetic faces from real 
 
 ### Who owns the model of my face and my voice?
 
-You should, and it should say so in writing before the recording happens. The three things to have in the document are that the likeness and voice model are yours, that they are not licensed to anybody else or reused on other people's content, and that they are deleted on request. A vendor unwilling to write those three lines down has told you something useful.
+Split that in two, because the halves have different answers and running them together is how this gets sold wrong. The avatar and the voice engine belong to the vendors who built them, and a brokerage licenses the use of a platform the same way it licenses everything else it did not build. Nobody is selling you a model you own. What is yours is the material at both ends: your likeness, the recording the model was built from, the scripts, and the finished videos. So the three lines to get in writing before the recording happens are not about owning the software. They are that your likeness and your recording are used only on your own content, that they are not licensed on to anybody else or used to build anything for anybody else, and that both are deleted on request. A vendor unwilling to write those three lines down has told you something useful.
 
 ### Is this worth it for a one or two person brokerage?
 

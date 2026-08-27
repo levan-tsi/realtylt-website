@@ -264,6 +264,34 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
     pattern: /because if you can,? it can be built/i,
     why: "describability is presented as a sufficient test and it is only a necessary one. The custom-automation flagship names three further disqualifiers on its own page: the process is still being redesigned, nobody would notice it stopping, or a product already does it",
   },
+  // ── Round J, 2026-08-27. The owner read the clone post and caught the first entry in this
+  // table that is neither a number nor a hedge, but a flat statement about WHO OWNS WHAT:
+  //
+  //   "The video blog said the model is yours and not licensed. We use HeyGen for AI clone
+  //    videos. It is HeyGen's model, you license/rent the platform from them."
+  //
+  // He is right, and the claim was live on three surfaces at once, which is the exact shape
+  // the 78% taught this file to expect: the scene caption (CONSENT_PATH, "The model / Yours,
+  // not licensed on"), the post's own FAQ ("the likeness and voice model are yours"), and the
+  // service page FAQ, where "Who owns the avatar and the voice?" was answered "You do."
+  //
+  // What is actually true: the avatar renders on a HeyGen-class platform and the voice on an
+  // ElevenLabs-class engine, both LICENSED from the vendors who built them. What a client owns
+  // is the material at both ends, the likeness, the footage, the scripts and the finished
+  // videos. All three surfaces now say that, and this entry is why they keep saying it.
+  {
+    name: "the client owns the avatar model",
+    /** The bare "You do." that answered "Who owns the avatar and the voice?" on the service
+     * page is not catchable on its own: two words with no claim in them, and the question it
+     * answers is on a different line and a different object key. What IS catchable is the
+     * sentence that always came with it, "the likeness and the voice are yours", so that form
+     * is in here too. It cost one adjacent rewrite: the same page's `limits` entry used the
+     * identical phrase to mean something narrower and true (it speaks as nobody else), and
+     * that line now says so without borrowing the ownership words. */
+    pattern:
+      /yours,? not licensed|\b(likeness and )?(the )?(voice |avatar )?model (is|are) yours\b|\byou own the (model|avatar|voice)\b|\b(model|avatar) (that )?(is|stays|remains) yours\b|\bthe likeness and (the )?voice are yours\b|\byours rather than (borrowed|rented|licensed)\b/i,
+    why: "the underlying avatar and voice models belong to the vendors whose platforms render them and are licensed, not owned. A client owns their likeness, the recording, the scripts and the finished videos, which is a real and sufficient answer; claiming the model itself is a claim this business cannot make about somebody else's software",
+  },
   {
     name: "an invented hours-per-week figure in a service figure",
     pattern: /~\s*\d+\s*hrs\/week/i,

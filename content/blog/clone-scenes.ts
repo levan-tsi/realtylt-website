@@ -176,7 +176,13 @@ export const CREDENTIALS: GridItem[] = [
 export const CONSENT_PATH: { label: string; connects: string; at?: string }[] = [
   { label: "The consent", connects: "One person, in writing" },
   { label: "The recording", connects: "Held, and revocable" },
-  { label: "The model", connects: "Yours, not licensed on" },
+  /** WAS "Yours, not licensed on", and it was wrong. The owner caught it on 2026-08-26: the
+   * avatar renders on a third-party platform that this business LICENSES, so a caption saying
+   * the model is yours and is not licensed states the opposite of the arrangement. What a
+   * client owns is the likeness, the footage, the scripts and the finished videos, and the
+   * three captions either side of this one already say so. Guarded in
+   * lib/blog/zombie-claims.test.ts (round J). */
+  { label: "The model", connects: "Licensed, not owned" },
   { label: "The script", connects: "Only what you stand behind" },
   { label: "The review", connects: "Somebody watches it" },
   { label: "The label", connects: "Said, not buried" },
@@ -304,10 +310,14 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "Six steps, and only two of them are technical.",
-      lede: "This is the whole of a lawful twin, drawn as the order it has to happen in. Every product in the category is sold on the third box. The first two are what makes the third one yours rather than borrowed, and the last two are the entire difference between a tool and a problem. Note that the two nobody budgets for are at the end.",
+      lede: "This is the whole of a lawful twin, drawn as the order it has to happen in. Every product in the category is sold on the third box. The first two are what make the third one lawful rather than lifted, and the last two are the entire difference between a tool and a problem. Note that the two nobody budgets for are at the end.",
       steps: CONSENT_PATH,
+      /** The lede said "yours rather than borrowed" and this alt said "a model that stays
+       * yours", which is the SAME false ownership claim the caption carried, on the prose
+       * surface and on the screen-reader surface. Exactly the 78% shape: one retraction, three
+       * places to make it, and the alt text is the one an audit never opens. */
       altPrefix:
-        "The path from one person's written consent, through a recording and a model that stays yours, to a script bounded by what you stand behind, a person reviewing what goes out, and a plainly spoken label",
+        "The path from one person's written consent, through a recording and a licensed model built only from it, to a script bounded by what you stand behind, a person reviewing what goes out, and a plainly spoken label",
     },
     "videos-calculator": {
       kind: "calculator",

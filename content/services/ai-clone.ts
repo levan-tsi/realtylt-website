@@ -58,7 +58,7 @@ export const aiClone: Service = {
   howItWorks: [
     {
       title: "Build the twin",
-      body: "A short recording session produces the avatar and the voice. The likeness and the voice are yours, they stay yours, and they are only ever used on your own content.",
+      body: "A short recording session produces the avatar and the voice. The platform that renders them is licensed from its vendor rather than owned by anybody here. What is yours is your likeness, the footage it was built from, the scripts and the finished videos, and those are only ever used on your own content.",
     },
     {
       title: "Give it what it needs to know",
@@ -90,7 +90,7 @@ export const aiClone: Service = {
   ],
 
   limits: [
-    "It does not speak for anyone but you. The likeness and the voice are yours, used only on your own content, and we do not build a likeness of anybody else, living or dead, at any price.",
+    "It does not speak for anyone but you. It carries your likeness and your voice, only ever on your own content, and we do not build a likeness of anybody else, living or dead, at any price.",
     "It does not say anything you have not already stood behind. The scripts come from your own material, so what it can say is bounded by what you put in it.",
     "It does not know which sentences are the expensive ones. A tax figure, a school district, a boundary or a permit status all read like ordinary data and behave like liability, so those get decided by a person in advance rather than by a script.",
     "It does not belong in the moments that need you. A twin scales the greeting, the walkthrough and the follow-up. The listing appointment and the hard conversation are still yours.",
@@ -121,7 +121,7 @@ export const aiClone: Service = {
     },
     {
       q: "Who owns the avatar and the voice?",
-      a: "You do. The likeness and the voice are yours, they are used only on your content, and they are not shared, licensed on, or reused anywhere else.",
+      a: "Two answers, and they are worth keeping apart. The technology is licensed, not owned: the video runs on a HeyGen-class avatar platform and the voice on an ElevenLabs-class engine, and those models belong to the vendors who built them. What is yours is your likeness, the recording it was built from, the scripts and the finished videos. Those are used only on your content, never licensed on to anybody else, and deleted on request.",
     },
   ],
 
