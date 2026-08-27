@@ -173,7 +173,7 @@ export const OFFLINE_ESTIMATE = {
  * this name. */
 export const LOOP_STEPS: { label: string; connects: string; at?: string }[] = [
   { label: "The brief", connects: "One task, written down", at: "Start" },
-  { label: "The memory", connects: "Every file the last one left" },
+  { label: "The memory", connects: "What the last pass wrote down" },
   { label: "The change", connects: "One thing, code included" },
   { label: "The gate", connects: "Tests, probes, the screen" },
   { label: "The approval", connects: "A person, holding the diff", at: "Ship" },

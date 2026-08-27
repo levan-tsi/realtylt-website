@@ -104,11 +104,17 @@ export const POSTS: BlogPost[] = [
      * inside one day has not been revised, and score-flagship's D5 wants dateModified later
      * than datePublished. Set it when the article takes its first real revision, never to
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+     * true statements about the page.
+     *
+     * ROUND 44 rewrote most of this post's argument on the day it was published, which is a
+     * revision by any honest reading. It still gets no `updated`, because a date equal to the
+     * published date is not a freshness signal, it is a gate being fed. The next revision on a
+     * later day sets it. Excerpt and seoDescription DID change, because both described the
+     * product the post no longer sells. */
     excerpt:
-      "Nobody was careless. A common question got a slightly wrong answer in March and went on getting it until October, because reading a year of conversations is not a job anybody in a brokerage has. What a self improving system actually is, why a model that reviews its own work scores lower rather than higher, and what has to be standing outside the loop before the word means anything.",
+      "Nobody was careless. A common question got a slightly wrong answer in March and went on getting it until October, because reading a year of conversations is not a job anybody in a brokerage has. What a self improving system actually is, why a model that reviews its own work scores lower rather than higher, and what has to be standing outside one before it can be trusted to change real software.",
     seoDescription:
-      "What a self improving AI system actually does: one shared memory across every agent, and a weekly loop graded against conversations whose outcome is already known.",
+      "What a self improving AI system does: one shared memory, what it learns kept in files rather than a model, and code that ships only past tests and a person.",
     cover: "/images/editorial/ships-barograph.jpg",
     body: [],
     placeholder: false,

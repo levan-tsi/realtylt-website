@@ -27,15 +27,15 @@ Both failures have the same cause and it is not a model that was not clever enou
 
 Singularity is a borrowed word and it is worth taking it off the table before it does any damage. In the argument it was borrowed from, it names a point at which machine intelligence starts improving itself so quickly that nothing past it can be predicted. That is not what is being sold here, this article is not going to defend it, and anybody using the word that way about a piece of business software is selling you a feeling.
 
-What the name is actually marking is a smaller and far more checkable transition. It is the point at which the software you bought stops being a fixed object you own and becomes a thing that changes on a schedule, using your own material, with somebody's signature on every change.
+What the name is actually marking is a smaller and far more checkable transition. It is the point at which the software you bought stops being a fixed object you own and becomes a thing that keeps changing, using your own material, with somebody's signature on every change.
 
 In plain terms: one system stands up the other agents, hands each of them its instructions, holds the single record they all read from and write to, keeps what it has learned about your business in files it has to read again before it starts anything, and proposes one change at a time to any of it. Some of those changes are to the written half, meaning instructions, worked examples and the rules that decide which question goes where. Some of them are to the software itself, which it writes.
 
-That second part is the one most descriptions of this category are careful to deny, and denying it is the easy way to sound responsible. It is also not true here, so it is not going to be said. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until a test suite that cannot be talked round has run over it and a person has read the change and said yes.
+That second part is the one most descriptions of this category are careful to deny, and denying it is the easy way to sound responsible. The denial would also be false here, so it is not going to be made. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until a test suite that cannot be talked round has run over it and a person has read the change and said yes.
 
 That is a smaller claim than the word usually carries and a larger one than most vendors will make out loud, which is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any mechanism at all for noticing that it has been wrong in the same way four hundred times, and that absence is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming, and the rest of this piece is about whether the claim survives contact with the research.
 
-The two halves are very different purchases and they deserve to be argued separately. One of them works from the first week and is easy to check. The other is the one worth being sceptical about, and the published evidence on it is not flattering.
+There are two halves to what is being bought and they deserve to be argued separately. The shared memory works from the first week and is easy to check. The improving is the one worth being sceptical about, and the published evidence on it is not flattering.
 
 ## Seven months is not unusual, it is the default
 
@@ -243,7 +243,7 @@ In files, on your side of the line, which you can open. There is the record of t
 
 ### Why one change at a time and not twenty?
 
-Because twenty changes in a week teach you nothing. If the week comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything, and it is the standard finding about systems of this kind. There is a second reason that is about people rather than software: one change is a size somebody will actually read before approving, and twenty is a size that turns approval into a signature.
+Because twenty changes at once teach you nothing. If it comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything, and it is the standard finding about systems of this kind. There is a second reason that is about people rather than software: one change is a size somebody will actually read before approving, and twenty is a size that turns approval into a signature.
 
 ### What is it actually graded against?
 
@@ -269,7 +269,7 @@ For the memory half, call your own office as though you were a client, say three
 
 For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing a weekly loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
 
-The build itself, what it connects, and what a week of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about forty words.
+The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about forty words.
 
 [[scene:funnel]]`;
 
