@@ -39,7 +39,11 @@ function listedBound(v: string | null): number | undefined {
 
 /** The filter fields only — paging/sort are the caller's business. */
 export function parseFilterParams(q: URLSearchParams): SearchParams {
-  const county = q.get("county") as CountySlug | null;
+  // Lowercased before the whitelist: the site only ever emits lowercase slugs, but a
+  // hand-typed or externally-shared ?county=Dutchess was silently ignored — 15,233 homes
+  // under a URL that looks filtered (2026-08-27 E2E). Case-folding is safe against a slug
+  // whitelist; anything still off-list falls through to undefined as before.
+  const county = (q.get("county")?.toLowerCase() ?? null) as CountySlug | null;
   const type = q.get("propertyType") as PropertyType | null;
   return {
     q: q.get("q")?.slice(0, 100) || undefined,

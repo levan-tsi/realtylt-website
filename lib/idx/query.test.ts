@@ -64,6 +64,14 @@ describe("parseFilterParams — MORE panel filters", () => {
     }
   });
 
+  it("county is case-folded against the whitelist; junk still falls to undefined", () => {
+    // ?county=Dutchess (hand-typed / externally shared) was silently ignored: the chip read
+    // unpressed and the page answered with ALL counties under a filtered-looking URL.
+    expect(parseFilterParams(q("county=Dutchess")).county).toBe("dutchess");
+    expect(parseFilterParams(q("county=QUEENS")).county).toBe("queens");
+    expect(parseFilterParams(q("county=narnia")).county).toBeUndefined();
+  });
+
   it("flag(): truthy tokens → true, everything else → undefined", () => {
     for (const v of ["1", "true", "on", "yes"]) expect(flag(v)).toBe(true);
     for (const v of ["0", "false", "", "no", null]) expect(flag(v)).toBeUndefined();

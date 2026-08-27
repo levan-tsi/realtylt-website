@@ -226,7 +226,9 @@ function fromParams(sp: URLSearchParams): Filters {
   return normalizeListed({
     q: sp.get("q") ?? "",
     city: sp.get("city") ?? "",
-    county: sp.get("county") ?? "",
+    // Lowercased to mirror parseFilterParams — a shared ?county=Dutchess link must press
+    // the same chip the lowercase URL does.
+    county: sp.get("county")?.toLowerCase() ?? "",
     priceMin: sp.get("priceMin") ?? "",
     priceMax: sp.get("priceMax") ?? "",
     bedsMin: sp.get("bedsMin") ?? "",
