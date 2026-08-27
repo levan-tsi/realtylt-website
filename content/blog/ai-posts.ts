@@ -1666,7 +1666,7 @@ That is the difference between a file and a photograph, and it is why the first 
 
 The same paper measured two harder things, and they are the half that should change how you buy this.
 
-The authors also measured two harder tasks. One is labelling: given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking: given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value, and the only thing that makes them a fact is the line drawn between them.
+One is labelling: given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking: given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value, and the only thing that makes them a fact is the line drawn between them.
 
 [[scene:understanding]]
 
@@ -1718,7 +1718,7 @@ One phrase, two meanings, and which one applies is decided by a list of paragrap
 
 Now put a document reader in front of a page that says "three business days". It can read those words at any accuracy you like. It cannot know which of those two definitions the drafter had in mind, because that information was never on the page. Somebody has to decide, once, in writing, what rule your system applies, and that decision is a piece of your business rather than a setting in a piece of software.
 
-The same section carries a second one of these, and it is the reason for the line held on its own above. Consummation is not closing. It is defined as the moment the buyer becomes contractually obligated on the credit transaction, which is a different event from the day everybody signs the deed and gets the keys, and in some states it falls on a different date. A reader that finds "closing date" on a page and treats it as consummation has made a substitution nobody asked it to make, and it will not tell you it did.
+The same section carries a second one of these, and it is the reason for the line held on its own above. Consummation is not closing. It is defined as the moment the buyer becomes contractually obligated on the credit transaction, which is a different event from the day everybody signs the deed and gets the keys. When it happens is not settled by Regulation Z at all: the official commentary on that definition is headed "State law governs", and says that when the obligation is created "is a matter to be determined under applicable law". A reader that finds "closing date" on a page and treats it as consummation has made a substitution nobody asked it to make, and it will not tell you it did.
 
 ## A wrong date costs more than a missing one
 

@@ -92,7 +92,7 @@ export const documentProcessing: Service = {
     },
     {
       title: "It flags, files, and reminds",
-      body: "Missing fields and signatures are flagged for a human. Everything else is written to the CRM and the transaction folder, with the deadlines on your calendar.",
+      body: "Missing fields, missing signatures and anything the reader is not confident about all go to a person. What is settled is written to the CRM and the transaction folder, with the deadlines on your calendar.",
     },
     {
       /** ROUND F. A step this page did not have, and the flagship is the argument for it: a
