@@ -96,6 +96,10 @@ export const geoLandingPages: Service = {
     "It does not put you in an AI answer on request. Nobody controls what an assistant quotes. Writing a page that is quotable is the only lever there is.",
     "It does not replace the rest of local search. A page for each area is one surface. The Google Business Profile, the reviews and the links are another, and they are decided by different machinery.",
     "It does not make your list of areas longer than it is. How many places you can write honestly about is a fact about your career so far, and the honest version of this project usually produces a shorter list than the first meeting did.",
+    // ROUND 47: the flagship lists five things this does not do and this page carried four. The
+    // missing one is the one the lede's "evergreen" reads against, so it is the one worth having
+    // here: the proof on these pages has a date on it whether or not the page prints one.
+    "It does not survive being left alone. The closing was three years ago, the tax figure moved, the shop closed. Most of these pages need a short sitting once a year, and a set nobody goes back to becomes a record of when you stopped paying attention.",
   ],
 
   faqs: [
@@ -113,7 +117,11 @@ export const geoLandingPages: Service = {
     },
     {
       q: "Is there a fair housing issue with area pages?",
-      a: "Yes, and it is the part nobody raises. The advertising rules apply to a web page exactly as they apply to a flyer: 24 CFR 100.75 says written statements include any documents used with respect to the sale of a dwelling, and it names selecting locations for advertising that deny parts of the housing market information about housing opportunities. 24 CFR 100.70 names discouraging somebody by exaggerating drawbacks or failing to inform them of the desirable features of a community. Practically: write about the housing and the transaction rather than about who lives somewhere, and give your areas comparable effort, because uneven effort across a set of pages is invisible from inside any one of them.",
+      // ROUND 47: both regulation summaries dropped the clause the prohibitions actually hang on,
+      // "because of race, color, religion, sex, handicap, familial status, or national origin".
+      // Without it the answer says the law forbids uneven pages, which it does not, and a page
+      // that overstates a fair housing rule is not a safer page. Same fix made in the flagship.
+      a: "Yes, and it is the part nobody raises. The advertising rules apply to a web page exactly as they apply to a flyer: 24 CFR 100.75 says written statements include any documents used with respect to the sale of a dwelling, and it names selecting locations for advertising that deny parts of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. 24 CFR 100.70 names discouraging somebody, on those same grounds, by exaggerating drawbacks or failing to inform them of the desirable features of a community. Both turn on the reason, so an uneven set of pages is not unlawful by itself. Practically: write about the housing and the transaction rather than about who lives somewhere, and give your areas comparable effort, because the pattern across a set of pages is the thing a reason gets read off and it is invisible from inside any one of them.",
     },
     {
       q: "How do I get my business cited in ChatGPT or Google AI Overviews?",

@@ -352,11 +352,11 @@ export const POSTS: BlogPost[] = [
     cluster: "visibility",
     title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 and 7 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+     * pass restored the clause 24 CFR 100.70 actually hangs on to both places this post
+     * summarises it; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays
+     * red, no film, so the slug ships at 18/19. */
     excerpt:
       "A page for every town you serve is the oldest tactic in local marketing, and Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway actually falls, how cheap sameness is to measure, and the fair housing rule nobody selling this will mention.",
     seoDescription:
