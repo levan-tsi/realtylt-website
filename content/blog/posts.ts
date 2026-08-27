@@ -476,8 +476,15 @@ export const POSTS: BlogPost[] = [
     date: "2026-07-30",
     /** 07-31: rewritten and verified. 08-02: gained a calculator whose every multiplier is the
      * reader's own, because no independent study of cold database response rates exists, plus a
-     * rewritten legal preamble and close. */
-    updated: "2026-08-02",
+     * rewritten legal preamble and close.
+     *
+     * ROUND 48 moved it to 08-27 for the first full-text pass over this post. Three claims went:
+     * the sixteen thousand dollar figure, which is a 2016 FTC ceiling and is now $53,088 rather
+     * than a live number; the revocation rule stated without the reasonable-person condition the
+     * regulation actually attaches (the scene file had it right, the prose had dropped it); and
+     * "three hundred conversations to find four people", a conversion rate this same post calls
+     * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
+    updated: "2026-08-27",
     excerpt:
       "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign actually does with that list, the consent rules with dates in them that nobody selling you one mentions, and what it costs when it goes wrong.",
     seoDescription:

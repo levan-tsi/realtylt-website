@@ -41,13 +41,13 @@ export const databaseReactivation: Service = {
       { who: "visitor", text: "both, we'd need to sell the house here first" },
       { who: "ai", text: "Then the first useful thing is knowing what yours is worth today. Levan has Thursday at 5:30 or Saturday morning. Which works?" },
     ],
-    footnote: "You already paid to acquire this lead. Reactivation is the cheapest appointment you will book this month.",
+    footnote: "You already paid to acquire this lead. Working it again costs the asking rather than the acquisition.",
   },
 
   whatItIs: [
     "It is an AI that works the leads already sitting in your CRM: the ones from two years ago, the ones who said not right now, the ones nobody has called since the day they came in. It texts and calls them with a real, conversational opener, listens to what comes back, and finds the ones whose circumstances have changed.",
     "The economics are the point. Those leads are already paid for. Reactivation does not buy new traffic, it converts inventory you own, which makes the appointments it books close to free compared with every other source in your budget.",
-    "The reason nobody does it by hand is that the work is genuinely awful. Three hundred conversations to find four people whose circumstances changed, most of them going to voicemail, and the reward for doing it properly is getting to do it again next quarter. Human follow-up also dies at the second attempt, because a third starts to feel like pestering, and the person who did not pick up at two on a Tuesday was driving rather than deciding.",
+    "The reason nobody does it by hand is that the work is genuinely awful. Hundreds of conversations to find the handful of people whose circumstances changed, most of them going to voicemail, and the reward for doing it properly is getting to do it again next quarter. Human follow-up also dies at the second attempt, because a third starts to feel like pestering, and the person who did not pick up at two on a Tuesday was driving rather than deciding.",
   ],
 
   howItWorks: [
@@ -80,7 +80,7 @@ export const databaseReactivation: Service = {
     },
     {
       title: "A slow month with no new spend",
-      body: "When lead flow dries up, the cheapest pipeline is the one you already own. Reactivation fills a calendar without adding a dollar of ad budget.",
+      body: "When lead flow dries up, the cheapest pipeline is the one you already own. Reactivation works it without adding a dollar of ad budget.",
     },
     {
       title: "The list you can actually send to",
@@ -118,7 +118,7 @@ export const databaseReactivation: Service = {
     },
     {
       q: "Am I allowed to text leads from 2023?",
-      a: "It depends on what the record says, and the rules have dates in them. The established business relationship that exempts you from the national do-not-call registry runs eighteen months from a purchase or transaction and three months from an inquiry, under 47 CFR 64.1200(f)(5), so a 2023 form fill ran out of both a long time ago. An automated text is a separate and stricter question: the same regulation requires prior express written consent before an autodialer or artificial voice reaches a mobile number, and a checkbox saying you agree to be contacted is usually not that. And an opt-out has to be honored within ten business days, in whatever words the person used. All three are answerable from your own records in an afternoon, and a vendor who cannot tell you how a campaign handles them is not ready to send it. None of this is legal advice.",
+      a: "It depends on what the record says, and the rules have dates in them. The established business relationship that exempts you from the national do-not-call registry runs eighteen months from a purchase or transaction and three months from an inquiry, under 47 CFR 64.1200(f)(5), so a 2023 form fill ran out of both a long time ago. An automated text is a separate and stricter question: the same regulation requires prior express written consent before an autodialer or artificial voice reaches a mobile number, and a checkbox saying you agree to be contacted is usually not that. And an opt-out has to be honored within ten business days, in the listed words or in any others a reasonable person would read the same way. All three are answerable from your own records in an afternoon, and a vendor who cannot tell you how a campaign handles them is not ready to send it. None of this is legal advice.",
     },
     {
       q: "How does it decide who is worth calling?",

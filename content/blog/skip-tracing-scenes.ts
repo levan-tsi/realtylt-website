@@ -14,7 +14,8 @@
  * closest article in the cohort and it already owns the whole subject of CALLING people. It
  * carries 47 CFR 64.1200(f)(5) and the eighteen month and three month windows, 64.1200(a)(2) on
  * autodialers, the revocation rule, 47 U.S.C. 227(b)(3) and its five hundred dollars a message,
- * and the sixteen thousand dollar figure that belongs to a different statute. None of that is
+ * and the sixteen thousand dollar figure, which round 48 corrected there: it is an FTC ceiling
+ * superseded in 2016 and now $53,088 in 16 CFR 1.98, not a live number. None of that is
  * repeated here, and this article hands the reader to that one by name when the question is
  * about the call.
  *
