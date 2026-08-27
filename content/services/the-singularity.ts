@@ -63,6 +63,7 @@ export const theSingularity: Service = {
     "writes and ships real code",
     "durable project memory",
     "learns from every correction",
+    "works unattended for hours or days",
     "nothing ships without approval",
   ],
   why: "Most tools are worth the most on the day you install them, then they age. A system that keeps its own memory, writes down the corrections you give it, and can change the software it runs on is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
@@ -108,7 +109,7 @@ export const theSingularity: Service = {
 
   whatItIs: [
     "It is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up, gives each one its job, and holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
-    "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong, and it can do something about it: change the instructions, change the routing, and when the fix belongs in the software, write and test the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once.",
+    "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong, and it can do something about it: change the instructions, change the routing, and when the fix belongs in the software, write and test the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once. It does the work the way a person would, a real browser included: it opens what it changed and clicks through it to see that it behaves. And a job is not sized to a sitting. It can work unattended for hours or days depending on the task, checkpointing as it goes, while the gate stays exactly where it was.",
     "It is worth saying plainly what that is and is not. It is not a different kind of intelligence, and there is no point at which it stops needing you. It writes real changes, code included, and not one of them reaches a client until a test suite has run over it and a person has approved it. The reason it earns a name is not that it runs on its own. It is that almost nothing else a business buys has any way of remembering what it got wrong.",
   ],
 
