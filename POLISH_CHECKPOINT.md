@@ -1,5 +1,34 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 44 (2026-08-27): THE SINGULARITY REPOSITIONING — SHIPPED =======================
+## Full log: docs/parity/ROUND44-SINGULARITY-REPOSITIONING.md. READ MEMORY
+## `project-singularity-product-definition` BEFORE WRITING ANY SINGULARITY COPY ANYWHERE.
+##
+## The owner read the live flagship the day after it shipped and rejected the positioning:
+## "It says it can't write its own code, but you CAN." He was right. "Nothing in it rewrites
+## its own code" shipped x2 in the post and x2 on the service page, written in good faith as
+## honest-limits copy for a prompts-and-playbooks product that is NOT the offering. The
+## offering is the system this business runs: a coding agent with a FILE-BASED memory that
+## writes and ships real software under a test suite and a human approval, keeps a memory
+## index and per-area files, and turns corrections into guards.
+##
+## THE HONESTY BAR DID NOT MOVE, IT CHANGED SIDES. The safety claim is no longer an inability
+## ("it cannot touch the software") but a GATE ("a test suite and a person stand between
+## anything it writes and anybody seeing it"), which is true, checkable and stronger. All five
+## sources stayed: ICLR self-correction, Reflexion (promoted to the pivot, because the code
+## half runs under exactly its condition), Sculley CACE, Kohavi, Gilotte (re-scoped to the half
+## with no compiler). No new number anywhere.
+##
+## 47da89d post + scenes (diagram re-cut to brief/memory/change/gate/approval/record; heading id
+##   one-change-a-week -> one-change-at-a-time). 2e36d85 the service page. 5e8beec ZOMBIE ROUND
+##   L, the first entry in that table that kills an UNDER-claim, proved red first; round K's
+##   two reasons rewritten. d0067ec registry copy + the log.
+## Gates: tsc clean, 99/1384, toc-align 21/21, scene-echo silent, score-flagship 17/19 which IS
+##   the production baseline (C3 no film, D5 no later modified date, both pre-existing and
+##   true), render clean at 1440/390/320 on both pages, em dashes zero in visitor copy.
+## OPEN: the /ai panel COPY.singularity is proposed at the foot of the round log and is applied
+##   in realtylt-ai-page, not here. Until it lands, panel and page disagree on the two chips.
+
 ## == ROUND 42 (2026-08-27): ACCURACY + ALIGNMENT — SHIPPED ================================
 ## Full log: docs/parity/ROUND42-ACCURACY-ALIGNMENT.md. Read it before touching the clone
 ## pages, the flagship ToC, or content/services/. Gates out: tsc clean, npm test 99/1373.
