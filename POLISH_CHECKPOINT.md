@@ -1,5 +1,83 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 49 (2026-08-27 evening): FINAL PRE-LAUNCH E2E + THE LEAD-CHAIN FIXES ==========
+## Shape: Fable + ONE Opus E2E sub (owner-granted). The sub drove PRODUCTION (sha 3100d6c
+## then 8c5d0ed): 82/82 pages clean at 1440/390/320, 411 internal hrefs 0 broken, all
+## launch gates intact. Fable verified the whole notification chain itself (Gmail + n8n +
+## CRM tables) — the sub's evidence: scratchpad e2e/ (122 shots), full report in the
+## session; the DEFECTS AND THEIR FIXES are what matters here.
+##
+## -- LAUNCH STATE (verified, precise) ----------------------------------------------------
+## Step 1 DONE: NEXT_PUBLIC_SITE_URL cleared — canonicals + all 71 sitemap entries now say
+##   realtylt.com; the Preferred Sources button armed itself (renders an inert 0x60 strip
+##   on the temp host until DNS — re-check it fills after the flip).
+## Step 2 PENDING (owner): DNS. realtylt.com + www still serve the OLD Brivity site, and
+##   ** www.realtylt.com/ai IS AN EMPTY BRIVITY PAGE ** (nginx, no AI content) — anything
+##   already advertising realtylt.com/ai lands on nothing until the flip. The real AI page
+##   works at realtylt-website.vercel.app/ai (rewrite) and realtylt-ai-page.vercel.app.
+##   Old-site /services/* = 410, new /blog/* slugs = 500 there too.
+## Step 3 PENDING (owner): remove PRELAUNCH=1 (X-Robots-Tag noindex still on, correct).
+##
+## -- SHIPPED THIS ROUND (9 commits, 4efc3a2..8c5d0ed, all prod-verified) -----------------
+## 4efc3a2 ToC width-dodge on ArticleToc+ServiceToc (round-42 open item; delta 0.0 measured)
+## 6f71934 off-ladder listedDays SNAP to nearest rung + ladder top IS LISTED_MAX_DAYS
+## 3100d6c /saved copy: "alerts below" the empty state never rendered
+## b46d67a THE ROUND'S BIG ONE, both halves proven on production first:
+##   (a) notifyLeadThankYou was fire-and-forget (void fetch) in a lambda — Vercel froze the
+##       instance on response and the email DIED: 5 CRM-accepted leads -> 3 emails, the
+##       survivors reaching n8n 10-64s late. NOW AWAITED (3s cap, never fails the lead).
+##       Re-proven live post-deploy: probe D's webhook hit n8n DURING the request (~1s,
+##       same x-vercel-id), consented copy, Gmail id 1a0455c1a8f4706f.
+##   (b) the wizard's follow-up POST carried no consentToContact -> buildConsent read
+##       absence as declined -> a CONSENTED /selling visitor got the "you asked us not to
+##       call" email. The consent answer now travels in the body. wizard-consent.test.ts.
+## ef0d6c6 /saved signed-in variant (hero note auth-aware via SavedHeroNote; alerts section
+##   points signed-in visitors at the /portal/searches toggle instead of re-asking details)
+## e193abf signed-in saves born alerts:TRUE (dialog copy already promised it; column
+##   default was false — the promise was a lie until the visitor found the portal toggle)
+## ac1479b ?county=Dutchess case-folds (was silently ALL-counties under a filtered URL)
+## 792b86b /plan joins FOOTER_NAV (was linked ONLY from /sitemap — orphaned buyer tool)
+## 8c5d0ed CSP connect-src += www.googletagmanager.com (gtag /td beacon observed refused)
+## GATES: tsc clean; npm test 1396/1396 (baseline 1384, only up); all foreground.
+##
+## -- THE NOTIFICATION CHAIN, PROVEN END TO END TODAY -------------------------------------
+## Form -> /api/lead -> CRM contact (MERGES BY PHONE: probes A-C shared one number -> one
+## contact, leadids 117-121 appended, ONE "New lead" alert — by design, know it) -> n8n
+## thank-you (consent-aware, 1h/address throttle) -> Gmail. Signup -> instant session ->
+## pg_net -> n8n -> "New site account" to Levan + welcome email to the client; password
+## reset via CRM email-hook. ALL SIX EMAIL TYPES verified received today. Sender is still
+## levan@ for everything — the noreply@/info@ addressing plan (r41 item 1) remains open and
+## starts with HIS ~3min Gmail "Send mail as" step.
+##
+## -- PROBE ARTIFACTS (owner may delete) --------------------------------------------------
+## CRM contacts: "Final Probe A" (0cc13f2c, holds B+C leads 117-121), "Final Probe D"
+## (phone ...7924, the chain re-proof), portal account levan+final0827w@ (Supabase Auth ->
+## delete via dashboard; has 2 favorites + 1 saved search alerts ON). All emails in his
+## inbox are the features working.
+##
+## -- OPEN, RANKED (the E2E's surviving list) ---------------------------------------------
+## 1. OWNER: DNS flip + PRELAUNCH removal (order above), then re-check Preferred Sources
+##    fills and realtylt.com/ai serves the AI page.
+## 2. OWNER FLAG (recorded, his 2026-08-23 decision stands): consent checkbox is REQUIRED
+##    to submit while its own disclosure says "never required to buy or sell a home", and
+##    /thank-you promises an AI (artificial-voice) call — the PEWC tension lib/leads/
+##    consent.ts documents. Revisit before ad spend scales.
+## 3. /connect desktop: 453px dead space beside the calendar iframe at 1280-1440 — the one
+##    frame that reads unfinished. Owner-directed page (r39): needs his taste, not a patch.
+## 4. Listing lead sheets take no free-text message; no prev/next between listings; no
+##    price-drop signal on saved homes — the three top funnel improvements the E2E ranked.
+## 5. P3s deliberately not fixed: slug-mismatch listing URLs 200 (canonical protects; a 301
+##    means a second fetch per view), county CTA count vs landing drift (two queries, two
+##    moments), 14px explainer copy on flagship posts + ai-voice-agents service page
+##    (16-11 nodes; owner taste), /ai _vercel/insights 404 console noise (ai-page repo).
+## 6. /ai lane (OTHER repo) still owes: re-copy rlt-chat.js (its inline copy is pre-voice
+##    now), SERVICE_SLUG singularity entry, its two <h1>s, the insights 404.
+## 7. Bronx county timeout (9x/30d, graceful snapshot fallback, 53ms warm — load-coincident
+##    with sync writes; no index fix warranted) + hourly idx-sync timeouts (5x/3wk,
+##    self-heals, data 41min fresh at check). Watch, don't patch.
+## 8. HERO ENGINE design rounds (round 41c brief below) — untouched this round, still the
+##    owner's multi-round design thread before any port.
+
 ## == ROUND 44 (2026-08-27): THE SINGULARITY REPOSITIONING — SHIPPED =======================
 ## Full log: docs/parity/ROUND44-SINGULARITY-REPOSITIONING.md. READ MEMORY
 ## `project-singularity-product-definition` BEFORE WRITING ANY SINGULARITY COPY ANYWHERE.
