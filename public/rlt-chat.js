@@ -33,6 +33,12 @@
     // above are untouched and still open every conversation on every other page.
     AI_GREETING: "Hey! I'm the assistant on RealtyLT's AI side. I can walk you through what we build, chat assistants, voice agents, automations, and what would actually be worth doing first for your business. What do you do?",
     AI_CHIPS: ['What could AI automate for me?', 'How do voice agents work?', 'Book a call with Levan'],
+    // THE THIRD THING THE PERSONA HAS TO SWAP. The greeting and the chips changed for /ai and
+    // the INPUT did not, so the box under an AI-services conversation went on reading "Ask
+    // about a listing, an area, anything..." That is the one line the visitor is looking at
+    // while deciding what to type, which makes it the worst of the three to leave behind.
+    PLACEHOLDER: 'Ask about a listing, an area, anything...',
+    AI_PLACEHOLDER: 'Ask about a service, an automation, anything...',
     SESSION_KEY: 'realtylt_chat_session',
     HISTORY_KEY: 'realtylt_chat_history',
     HISTORY_LIMIT: 20,
@@ -695,6 +701,12 @@
   const msgsEl = panel.querySelector('#rlt-msgs');
   const chipsEl = panel.querySelector('#rlt-chips');
   const inputEl = panel.querySelector('#rlt-input');
+  // The markup ships the real-estate placeholder, so this file still says something sensible if
+  // the line below never runs. Set from currentPersona() rather than from the path, for the same
+  // reason the greeting is: the persona sticks to the CONVERSATION, so somebody who started on
+  // /ai and wandered onto the main site keeps the assistant, the chips and now the prompt they
+  // started with.
+  if (inputEl) inputEl.placeholder = currentPersona() === 'aipage' ? CONFIG.AI_PLACEHOLDER : CONFIG.PLACEHOLDER;
   const sendEl = panel.querySelector('#rlt-send');
   const closeEl = panel.querySelector('.rlt-close-btn');
   const resetEl = panel.querySelector('.rlt-reset-btn');
