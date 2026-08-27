@@ -20,6 +20,10 @@ const AI_COPY_KEYS = [
   "chat", "voice", "agents", "clone", "data", "marketing", "reactivation", "workflow",
   "consult", "plus", "book", "pay", "reviews", "crmsync", "scheduling", "docs", "qualify",
   "enrich", "localseo", "geopages",
+  // Set by `if (EYE_PROTO) COPY.singularity = {...}` rather than declared in the literal, so it
+  // is a COPY key on every load that has not passed ?eye=0. The owner put the panel on the main
+  // page on 2026-07-20; the page behind it landed 2026-08-27.
+  "singularity",
 ];
 
 /** Every string a visitor can read on a service page. */
@@ -54,8 +58,8 @@ function figureCopy(s: Service): string[] {
 }
 
 describe("service registry", () => {
-  it("has all twenty services", () => {
-    expect(SERVICES).toHaveLength(20);
+  it("has all twenty-one services", () => {
+    expect(SERVICES).toHaveLength(21);
   });
 
   it("has unique slugs", () => {

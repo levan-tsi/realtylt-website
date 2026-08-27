@@ -378,7 +378,11 @@ describe("retracted claims stay retracted", () => {
     for (const f of SOURCES) expect(fs.existsSync(path.join(ROOT, f)), f).toBe(true);
     // And it is actually pointed at the commercial surface, not only at the blog. A glob that
     // silently matches nothing is the same beautiful pass wearing a directory read.
-    expect(SOURCES.filter((f) => f.startsWith("content/services/")).length).toBe(20);
+    // 21 since 2026-08-27, when /services/the-singularity landed. This number is deliberately a
+    // literal and not SERVICES.length: the point of the assertion is that a directory read is
+    // really finding the commercial surface, and comparing one derived count against another
+    // derived count would pass just as happily on an empty glob.
+    expect(SOURCES.filter((f) => f.startsWith("content/services/")).length).toBe(21);
     // And every scene file, which is where a retracted number can keep talking in twenty point
     // type. Nine flagships, nine scene files, plus posts.ts and ai-posts.ts.
     expect(SOURCES.filter((f) => f.startsWith("content/blog/")).length).toBeGreaterThanOrEqual(11);

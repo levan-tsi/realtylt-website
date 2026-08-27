@@ -24,6 +24,7 @@ import { leadQualification } from "./lead-qualification";
 import { dataEnrichment } from "./data-enrichment";
 import { localSeo } from "./local-seo";
 import { geoLandingPages } from "./geo-landing-pages";
+import { theSingularity } from "./the-singularity";
 import type { Service } from "./types";
 
 export type { Figure, FaqItem, Service, ServiceTier, ServiceVideo } from "./types";
@@ -33,7 +34,9 @@ export const SERVICES: Service[] = [
   aiChatAssistant,
   aiVoiceAgents,
   skipTracingLeadGeneration,
-  // core — the rest of the /ai hub
+  // core — the rest of the /ai hub. The Singularity leads it: on /ai it is the panel the whole
+  // journey builds towards, and it is the one service that is ABOUT the other twenty.
+  theSingularity,
   aiAgentWorkforce,
   aiClone,
   marketingAutomation,
