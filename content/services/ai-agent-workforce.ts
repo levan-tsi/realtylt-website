@@ -67,7 +67,7 @@ export const aiAgentWorkforce: Service = {
 
   whatItIs: [
     "It is a set of AI assistants, each one pointed at a single recurring job. An assistant is not a general chatbot you have to re-explain your business to every morning. It is configured for one task, it knows your tools, and it does that task the same way every time.",
-    "The unlock is parallelism. You can only do one thing at a time, and you can only afford so many people. Assistants have neither limit: the inbox one, the CMA one, and the paperwork one all run at once, all night, and adding another one is a decision rather than a hire.",
+    "The unlock is parallelism. You can only do one thing at a time; the inbox one, the CMA one and the paperwork one all run at once, all night, and adding another one is a decision rather than a hire. What grows with each one you add is the reading, and that is the limit that actually binds rather than the software.",
   ],
 
   howItWorks: [

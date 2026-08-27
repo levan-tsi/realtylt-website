@@ -109,19 +109,30 @@ export const NOT_A_CHATBOT: GridItem[] = [
  * comprehensive, high-quality collection of 1642 annotated execution traces" from seven
  * frameworks.
  *
- * The three category percentages are read off Figure 1, whose caption states its sample: "The
- * percentages shown represent the prevalence of each failure mode and category as observed in
- * our analysis of 1642 MAS execution traces." System Design Issues 44.2%, Inter-Agent
- * Misalignment 32.3%, Task Verification 23.5%.
+ * THE THREE BAR VALUES ARE DERIVED, NOT QUOTED, and round 46 rewrote this paragraph because the
+ * previous version said they were "read off Figure 1". They are not printed anywhere in the
+ * paper. Searching the PDF for "44.2" or "32.3" returns nothing in v1, v2 or v3, which was
+ * checked in all three. What they are is the sum of the per-mode percentages the v3 prose states
+ * itself, section by section, and every term is quoted in the paper:
  *
- * A SECOND COPY OF THE SAME FIGURE appears later in the paper carrying different percentages
- * (37.17 / 31.41 / 31.41) with no caption naming its sample. It is NOT used, and the fact that
- * it exists is recorded here so a future reader who finds it knows the choice was deliberate
- * rather than careless.
+ *   FC1, system design issues: 11.8 + 1.5 + 15.7 + 2.80 + 12.4 = 44.20
+ *   FC2, inter-agent misalignment: 2.20 + 6.80 + 7.40 + 0.85 + 1.90 + 13.2 = 32.35
+ *   FC3, task verification: 6.20 + 8.20 + 9.10 = 23.50
  *
- * The individual modes quoted in the body come from the same figure: step repetition 15.7%,
- * reasoning-action mismatch 13.2%, unaware of termination conditions 12.4%, disobey task
- * specification 11.8%. */
+ * The sample is the caption's: "The percentages shown represent the prevalence of each failure
+ * mode and category as observed in our analysis of 1642 MAS execution traces."
+ *
+ * THE TRAP, and it is the reason this note is this long. The same paper ALSO prints a category
+ * split in the legend of its per-system figure: System Design Issues 41.8%, Inter-Agent
+ * Misalignment 36.9%, Task Verification 21.3%. That one does NOT reconcile with the per-mode
+ * numbers in the same document, and the earlier arXiv revisions carry a third set again. A
+ * checker who searches for the bar values, finds nothing, then finds 41.8/36.9/21.3 will
+ * conclude this chart was invented and will "correct" it into disagreeing with the paper's own
+ * modes. Round 46 got to exactly that point before summing the modes. Do not make the edit.
+ *
+ * The individual modes quoted in the body are the v3 prose figures: step repetition 15.7%
+ * (FM-1.3), reasoning-action mismatch 13.2% (FM-2.6), unaware of termination conditions 12.4%
+ * (FM-1.5), disobey task specification 11.8% (FM-1.1). */
 export const WHERE_FAIL = {
   eyebrow: "The evidence",
   caption: "Where the failures came from, in 1,642 annotated multi-agent runs",
