@@ -132,7 +132,7 @@ export const POSTS: BlogPost[] = [
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
      * true statements about the page. */
     excerpt:
-      "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run eight hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
+      "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run five hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
     seoDescription:
       "When a custom automation is the right answer, what Google, Microsoft and Meta promise about changing their interfaces, and what a bespoke build costs after it works.",
     cover: "/images/editorial/jacquard-cards.jpg",
