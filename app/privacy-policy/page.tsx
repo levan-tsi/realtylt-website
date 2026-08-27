@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "What RealtyLT collects when you contact us, chat, or save homes on this site, who processes it, the advertising and mapping cookies involved, and how to have your information removed.",
 };
 
-const UPDATED = "July 27, 2026";
+const UPDATED = "August 26, 2026";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -96,6 +96,14 @@ export default function PrivacyPolicyPage() {
           to Google. Google may set and read cookies or similar identifiers on your device for this,
           and may use that data under its own privacy policy. We do not receive a list of who you
           are from Google; we see counts and campaign performance.
+        </p>
+        <p>
+          <strong className="text-ink">Site analytics (PostHog).</strong> We use PostHog to
+          understand how the site is used: which pages people visit, what they click, and session
+          replays that show how a visit unfolded. Anything you type into a form is masked in
+          replays before it ever leaves your browser. This data is collected under our own
+          first-party setup, is not shared with advertisers, and is used only to make the site
+          work better.
         </p>
         <p>
           <strong className="text-ink">Google Maps.</strong> Pages with a map load Google Maps,
