@@ -1503,7 +1503,7 @@ A telephone number is not on that list. A mailing address is not on that list. A
 
 So the New York statute people mention in this context is about security and breach notification for a specific set of high risk identifiers, and it is mostly not about the fields enrichment appends. That is a checked absence rather than an omission, and it is here because the alternative is a page implying a duty that does not exist.
 
-We could not read the statute text itself. The New York Senate's website refuses programmatic requests, so nothing in this article is asserted from the statute, only from the Attorney General's published summary of it, and that distinction is deliberate.
+Nothing above is quoted from the statute itself. It all comes from the Attorney General's published summary of the law that office enforces, which is a step further from the text than this article would like to be, and worth saying out loud, because the whole finding here is what one defined term does and does not include.
 
 [[scene:enrich-path]]
 
@@ -1577,7 +1577,7 @@ Nobody can tell you before running your list, and the figures that circulate do 
 
 ### How fast does contact data go stale?
 
-There is no published rate worth quoting. The circulating figures range from twenty two to seventy percent for the same claim and trace back to press releases and vendor pages rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
+There is no published rate worth quoting. The circulating figures for contact data run from twenty two and a half percent to thirty, with up to seventy quoted for email addresses on their own, and every one of them traces back to a press release or a vendor page rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
 
 ### Does an enriched list mean I can call it?
 
