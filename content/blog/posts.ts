@@ -448,8 +448,14 @@ export const POSTS: BlogPost[] = [
      * section on why auditing your inputs is not enough (built on HUD's April 2024 guidance on
      * algorithmic housing advertising, a source the post did not have), a section on what it
      * costs, a calculator in the reader's own numbers, and a rewritten close. Roughly 950 words
-     * of it are new. The date below is a true statement about that. */
-    updated: "2026-08-02",
+     * of it are new. The date below is a true statement about that.
+     *
+     * ROUND 48 moved it to 08-27 for the first full-text pass over this post. Two claims went:
+     * "How urgent it was", which said the survey measured urgency when the graphic three lines
+     * below correctly says sellers SAID it, and "Every scoring system in this business measures
+     * the same three things, because they are the three that predict", a universal about a
+     * market nobody here has surveyed. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
+    updated: "2026-08-27",
     excerpt:
       "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:

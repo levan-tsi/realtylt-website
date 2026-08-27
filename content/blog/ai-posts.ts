@@ -4013,7 +4013,7 @@ You will find out which is which some time next week, if you get that far down t
 
 There is a comfortable assumption underneath every CRM, which is that the leads in it are roughly interchangeable and that working them in order is therefore fair. It is not fair. It is just arbitrary, and arbitrary is expensive when the underlying population is as spread out as this one.
 
-The National Association of REALTORS asks recent sellers how urgent their sale was. Not how urgent it felt to their agent. How urgent it was.
+The National Association of REALTORS asks recent sellers how urgent their sale was. Not how urgent it felt to their agent. How urgent they said it was.
 
 [[scene:urgency]]
 
@@ -4039,7 +4039,7 @@ The fourth one is the whole point and it is smaller than it sounds. Nothing here
 
 ## The three signals, and what they sound like
 
-Every scoring system in this business measures the same three things, because they are the three that predict. What separates a useful one from a decorative one is whether it reads them out of sentences or out of checkboxes.
+Scoring systems in this business tend to measure the same three things, and the reason is not mysterious: they are the three a person can be specific about before anything has happened. What separates a useful one from a decorative one is whether it reads them out of sentences or out of checkboxes.
 
 [[scene:three-signals]]
 
