@@ -88,7 +88,7 @@ export const marketingAutomation: Service = {
       // ROUND E: NEW STEP. The page previously described the campaign and said nothing at all
       // about delivery, which is the half the sender does not control. See
       // /blog/marketing-automation-real-estate-email-deliverability.
-      body: "SPF, DKIM and DMARC are published for the domain you send from, and the address in your From line is aligned with them, because both major mailbox providers now require it and mail that fails is filtered rather than bounced. One-click unsubscribe goes in the headers, and opt-outs are honored in days rather than in the ten business days the statute allows. None of this improves your message. It is what stops the message being judged before anybody reads it.",
+      body: "SPF, DKIM and DMARC are published for the domain you send from, and the address in your From line is aligned with them. Authentication is on Google's list of requirements for every sender; the alignment and the published DMARC policy are on its list for senders above five thousand messages a day, and mail that fails is filtered rather than bounced. One-click unsubscribe goes in the headers, and opt-outs are honored in days rather than in the ten business days the statute allows. None of this improves your message. It is what stops the message being judged before anybody reads it.",
     },
   ],
 
@@ -98,7 +98,7 @@ export const marketingAutomation: Service = {
       // ROUND E: "Most leads are not ready today" is gone. It is a claim about the composition
       // of a lead pool with nothing under it, and it is repeated in `why` on this same page,
       // which is the Round B and C pattern of one unsourced claim appearing twice.
-      body: "Somebody who enquires today and transacts next spring hears from a lot of people in between, and most of it is generic. Nurture keeps you present for the wait without asking you to remember, which is the only way the last message before they decide is one of yours.",
+      body: "Somebody who enquires today and transacts next spring hears from a lot of people in between, and most of it is generic. Nurture keeps you present for the wait without asking you to remember, and remembering is the part that fails first.",
     },
     {
       title: "New listing, right audience",

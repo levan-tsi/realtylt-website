@@ -1945,11 +1945,11 @@ Which means all three of these are necessary and none of them is the work. They 
 
 One-click unsubscribe is the thing in the bulk sender list that sounds like a concession to the recipient, and it is worth understanding because it is not one. It is the mechanism that protects your reputation from the people who want to leave.
 
-It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt), and the reasoning is written down in the introduction rather than left to be inferred. The problem it solves is technical: anti-spam software often fetches every link in a message's headers automatically, so a plain unsubscribe link in a header could be triggered by a machine rather than a person. Senders responded by putting a confirmation page behind it, "and that makes the unsubscription process more complex than a single click".
+It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt), and the reasoning is written down in the introduction rather than left to be inferred. The problem it solves is technical: anti-spam software often fetches every link in a message's headers automatically, so a plain unsubscribe link in a header could be triggered by a machine rather than a person. Senders responded by putting a confirmation page behind it, and "that makes the unsubscription process more complex than a single click".
 
 Then the specification explains why that mattered, and this is the sentence to take away:
 
-> Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer arrives.
+> Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer appears in the recipient's inbox.
 
 That is an internet standards document stating the business case for a frictionless exit, on the sender's behalf. Every extra step between somebody deciding to leave and being gone is a step during which their alternative is the button that costs you three tenths of a percent.
 
@@ -1959,13 +1959,13 @@ There is one detail with a practical consequence. Section 4 of the same document
 
 Here is the number, and here is the reason you cannot check yourself against it.
 
-Both providers publish the same ceiling. Yahoo puts it as a heading: "Keep your spam rate below 0.3%". Google puts it in the all senders list. On a list of a thousand people that is three complaints. Not three unsubscribes, which are a healthy sign and cost you nothing. Three people pressing the button that says this should not be here.
+Both providers publish the same ceiling. Yahoo states it in as many words: "Keep your spam rate below 0.3%". Google puts it in the all senders list. On a list of a thousand people that is three complaints. Not three unsubscribes, which are a healthy sign and cost you nothing. Three people pressing the button that says this should not be here. Five of them, on a list of fourteen hundred, is the market note at the top of this page.
 
 [[scene:complaint-calculator]]
 
 Now the honest part, and it is the reason the calculator above computes a ceiling rather than a rate.
 
-Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox, keep this in mind when referencing." Read that carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
+Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox", and the same line tells senders to keep that in mind when calculating the rate in their own system. Read it carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
 
 That has an uncomfortable consequence. As your reputation falls, more of your mail is filtered, which shrinks the denominator, which raises the rate computed from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to be stable, and there is no version of the arithmetic you can do at your own end that reproduces it.
 
