@@ -110,6 +110,9 @@ export const FOOTER_NAV = [
   { label: "Selling", href: "/selling" },
   { label: "Financing", href: "/financing" },
   { label: "Home Value", href: "/home-value" },
+  // Same orphan rule as /services below: the 2026-08-27 E2E found /plan linked ONLY from
+  // /sitemap — a payment-first buyer tool no visitor could reach.
+  { label: "Plan Your Purchase", href: "/plan" },
   { label: "Who We Are", href: "/who-we-are" },
   { label: "Reviews", href: "/reviews" },
   { label: "Connect", href: "/connect" },
