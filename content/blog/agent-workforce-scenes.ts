@@ -109,26 +109,39 @@ export const NOT_A_CHATBOT: GridItem[] = [
  * comprehensive, high-quality collection of 1642 annotated execution traces" from seven
  * frameworks.
  *
- * THE THREE BAR VALUES ARE DERIVED, NOT QUOTED, and round 46 rewrote this paragraph because the
- * previous version said they were "read off Figure 1". They are not printed anywhere in the
- * paper. Searching the PDF for "44.2" or "32.3" returns nothing in v1, v2 or v3, which was
- * checked in all three. What they are is the sum of the per-mode percentages the v3 prose states
- * itself, section by section, and every term is quoted in the paper:
+ * THE THREE BAR VALUES ARE PRINTED IN FIGURE 1. This note has now been wrong twice about that,
+ * so it carries the receipt. Round 45 said they were "read off Figure 1" without one; round 46
+ * could not find them, concluded they were "not printed anywhere in the paper", and rewrote this
+ * paragraph to present them as sums. Round 47 downloaded the published v3 PDF and read it:
+ * `pdftotext` returns 44.2%, 32.3% and 23.5% on three consecutive lines, in -layout, plain and
+ * -raw alike. In the arXiv source package they live in figures/taxonomy_neurips_final_10_23_25.pdf,
+ * which 02_introduction.tex includes as Figure 1. They are QUOTED, not derived. What is true is
+ * that the search comes back empty in v1 and v2, which carry an older taxonomy figure reading
+ * 37.17 / 31.41 / 31.41, and empty against the .tex sources in every revision, because the
+ * numbers are drawn inside the figure rather than typed in the prose.
  *
- *   FC1, system design issues: 11.8 + 1.5 + 15.7 + 2.80 + 12.4 = 44.20
+ * Figure 1's caption names the sample and says the figure prints these: "The percentages shown
+ * represent the prevalence of each failure mode and category as observed in our analysis of 1642
+ * MAS execution traces."
+ *
+ * The v3 prose corroborates all three, mode by mode, and every term is quoted in the paper:
+ *
+ *   FC1, system design issues: 11.8 + 1.50 + 15.7 + 2.80 + 12.4 = 44.20
  *   FC2, inter-agent misalignment: 2.20 + 6.80 + 7.40 + 0.85 + 1.90 + 13.2 = 32.35
  *   FC3, task verification: 6.20 + 8.20 + 9.10 = 23.50
  *
- * The sample is the caption's: "The percentages shown represent the prevalence of each failure
- * mode and category as observed in our analysis of 1642 MAS execution traces."
+ * FC2 sums to 32.35 rather than 32.30 because the prose gives FM-2.4, information withholding,
+ * as 0.85% where Figure 1 prints 0.80%. On the figure's own numbers the three categories total
+ * exactly 100.
  *
- * THE TRAP, and it is the reason this note is this long. The same paper ALSO prints a category
- * split in the legend of its per-system figure: System Design Issues 41.8%, Inter-Agent
- * Misalignment 36.9%, Task Verification 21.3%. That one does NOT reconcile with the per-mode
- * numbers in the same document, and the earlier arXiv revisions carry a third set again. A
- * checker who searches for the bar values, finds nothing, then finds 41.8/36.9/21.3 will
- * conclude this chart was invented and will "correct" it into disagreeing with the paper's own
- * modes. Round 46 got to exactly that point before summing the modes. Do not make the edit.
+ * THE TRAP, and it is the reason this note is this long. The same paper prints a SECOND category
+ * split, in the legend of the per-system bar chart in section 6: System Design Issues 41.8%,
+ * Inter-Agent Misalignment 36.9%, Task Verification 21.3%. The paper is not disagreeing with
+ * itself. That figure states a different corpus in its own caption: "Distribution of failure in
+ * MAD with MAST labels on total 210 traces. This plot visualizes the failure distributions of
+ * the first 30 traces for each system." 210 traces against Figure 1's 1,642. A checker who finds
+ * 41.8/36.9/21.3 and "corrects" these bars would be swapping a 210-trace sample into a chart
+ * whose caption names the 1,642-trace one. Do not make the edit.
  *
  * The individual modes quoted in the body are the v3 prose figures: step repetition 15.7%
  * (FM-1.3), reasoning-action mismatch 13.2% (FM-2.6), unaware of termination conditions 12.4%

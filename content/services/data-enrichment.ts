@@ -155,7 +155,7 @@ export const dataEnrichment: Service = {
     },
     {
       q: "How fast does contact data go stale?",
-      a: "There is no published rate worth quoting. The figures that circulate for contact data run from about twenty two percent a year to thirty, with up to seventy quoted for email addresses on their own, and they trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate belongs to the people in your database rather than to the data, and it is different for a first-time buyer and a couple downsizing.",
+      a: "There is no published rate worth quoting. The figures that circulate for contact data run from twenty to thirty percent a year, with up to seventy quoted for email addresses on their own, and they trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate belongs to the people in your database rather than to the data, and it is different for a first-time buyer and a couple downsizing.",
     },
     {
       q: "What happens to records that cannot be enriched?",

@@ -1577,7 +1577,7 @@ Nobody can tell you before running your list, and the figures that circulate do 
 
 ### How fast does contact data go stale?
 
-There is no published rate worth quoting. The circulating figures for contact data run from twenty two and a half percent to thirty, with up to seventy quoted for email addresses on their own, and every one of them traces back to a press release or a vendor page rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
+There is no published rate worth quoting. The circulating figures for contact data run from twenty to thirty percent, with up to seventy quoted for email addresses on their own, and every one of them traces back to a press release or a vendor page rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
 
 ### Does an enriched list mean I can call it?
 
@@ -1965,7 +1965,7 @@ Both providers publish the same ceiling. Yahoo states it in as many words: "Keep
 
 Now the honest part, and it is the reason the calculator above computes a ceiling rather than a rate.
 
-Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox", and the same line tells senders to keep that in mind when calculating the rate in their own system. Read it carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
+Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox", and the same line tells senders to keep that in mind when referencing it. Read it carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
 
 That has an uncomfortable consequence. As your reputation falls, more of your mail is filtered, which shrinks the denominator, which raises the rate computed from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to be stable, and there is no version of the arithmetic you can do at your own end that reproduces it.
 

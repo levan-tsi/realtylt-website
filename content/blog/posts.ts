@@ -100,7 +100,7 @@ export const POSTS: BlogPost[] = [
     cluster: "building",
     title: "The Answer Was Wrong in March. It Was Still Wrong in October.",
     date: "2026-08-27",
-    /** NO `updated`, for the same reason topics 6 to 20 carry none: a post written and shipped
+    /** NO `updated`, for the same reason every post shipped inside a single day carries none: a post written and shipped
      * inside one day has not been revised, and score-flagship's D5 wants dateModified later
      * than datePublished. Set it when the article takes its first real revision, never to
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
@@ -126,11 +126,14 @@ export const POSTS: BlogPost[] = [
     cluster: "building",
     title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
     date: "2026-08-26",
-    /** NO `updated`, for the same reason topics 6 to 19 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47, on the field's own terms rather than the gate's. Published
+     * 2026-08-26 and revised on 2026-08-27, when the relevance pass changed visitor copy in this
+     * article; the change list is in docs/parity/ROUND45-RELEVANCE-PASS.md and, for the dek,
+     * ROUND46. That is the first real revision this post has taken, which is exactly the
+     * condition this field documents. D5 turning green is a consequence, not the reason: the
+     * posts that were read that day and left unchanged still carry no `updated`. C3 stays red,
+     * this topic has no film, so the slug ships at 18/19. */
     excerpt:
       "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run five hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
     seoDescription:
@@ -146,11 +149,11 @@ export const POSTS: BlogPost[] = [
     cluster: "building",
     title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
     date: "2026-08-26",
-    /** NO `updated`, for the same reason topics 6 to 18 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
+     * pass cut a clause from the Vrije Universiteit paragraph; see
+     * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision, which is the condition this
+     * field documents. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
       "Anybody can write the list of things they would automate. The part worth paying for is knowing which ones to remove and being able to say why. The three questions that do the cutting, what a survey of 850,000 firms found about how far behind you really are, and why the most quoted project failure figure in the industry cannot be used.",
     seoDescription:
@@ -166,11 +169,11 @@ export const POSTS: BlogPost[] = [
     cluster: "visibility",
     title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
     date: "2026-08-26",
-    /** NO `updated`, for the same reason topics 6 to 17 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
+     * pass corrected the 16 CFR part 461 effective date and trimmed the section 50-f paragraph;
+     * see docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
+     * the slug ships at 18/19. */
     excerpt:
       "Fourteen statements were published in your name to fourteen people who now believe you said them. Whose face and voice a business may reproduce, why New York's oldest privacy statute makes the wrong version a misdemeanour, what happened when 315 people tried to tell synthetic faces from real ones, and the cost of a digital twin that nobody quotes.",
     seoDescription:
@@ -186,11 +189,11 @@ export const POSTS: BlogPost[] = [
     cluster: "back-office",
     title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 16 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+     * pass fixed which denominator the IC3 average loss hangs on; see
+     * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
+     * slug ships at 18/19. */
     excerpt:
       "There was no invoice sitting unpaid in anybody's system, because there was no invoice. What actually behaves like a receivable in a brokerage and what does not, the federal statute that decides who you may pay and be paid by, why the money that arrived on Monday is not yours until Thursday, and the one control that stops a diverted payment.",
     seoDescription:
@@ -206,11 +209,11 @@ export const POSTS: BlogPost[] = [
     cluster: "appointments",
     title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 15 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+     * pass pointed the fine-tuning caveat at the right Microsoft Graph page and rewrote the
+     * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
+     * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
       "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can actually do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, and why moving the time throws every yes away.",
     seoDescription:
@@ -226,11 +229,11 @@ export const POSTS: BlogPost[] = [
     cluster: "records",
     title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 14 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46
+     * reshaped the SHIELD refusal and the decay-rate FAQ, and round 47 put the decay-rate floor
+     * back to twenty. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
+     * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
       "Most of the blanks came back full, which is what you paid for. In one record the number a client gave you herself had been replaced, and nothing in the row said what was there before, where the new one came from, or when either was true. What an appended field actually asserts, why no honest decay rate exists, and the two columns that make all of it manageable.",
     seoDescription:
@@ -246,11 +249,11 @@ export const POSTS: BlogPost[] = [
     cluster: "back-office",
     title: "It Read the Date Correctly. The Date Was Not the Deadline.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 13 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
+     * pass removed a duplicated sentence and quoted Regulation Z's State law governs commentary;
+     * see docs/parity/ROUND46-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
+     * the slug ships at 18/19. */
     excerpt:
       "The rider arrived as a photograph taken over a kitchen table, with two handwritten changes and a date among them. Everything was read correctly and the answer was still wrong, because what a deadline counts from is not printed on the page. What was actually measured on real scanned forms, what a person scores on the same task, and the phrase one regulation defines twice.",
     seoDescription:
@@ -266,11 +269,11 @@ export const POSTS: BlogPost[] = [
     cluster: "records",
     title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 12 carry none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-08-27",
+    /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
+     * three misquotes and closed the cold open's loop, and round 47 moved the Yahoo gloss onto
+     * that page's own word. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
+     * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
       "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button, and the next month's note reached fewer people for reasons nothing in your software will ever show you. What marketing automation actually decides on your behalf, the ceiling Google and Yahoo both publish, and why you cannot work out your own.",
     seoDescription:
@@ -286,7 +289,8 @@ export const POSTS: BlogPost[] = [
     cluster: "records",
     title: "You Have Her Number. She Never Gave It to You.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 11 carry none: a post written and shipped
+    /** NO `updated`. Round 46 read this post in full and changed nothing in it, and round 47 left
+     * it alone as well, so there has been no revision to date. Same reason as elsewhere: a post written and shipped
      * inside one day has not been revised, and score-flagship's D5 wants dateModified later
      * than datePublished. Set it when the article takes its first real revision, never to
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
@@ -306,7 +310,9 @@ export const POSTS: BlogPost[] = [
     cluster: "building",
     title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
     date: "2026-08-25",
-    /** NO `updated`, for the same reason topics 6 to 10 carry none: a post written and shipped
+    /** NO `updated`. Rounds 46 and 47 both changed the scene file's provenance docstring for this
+     * topic, which is a comment rather than copy, and left the article itself untouched. Same
+     * reason as elsewhere: a post written and shipped
      * inside one day has not been revised, and score-flagship's D5 wants dateModified later
      * than datePublished. Set it when the article takes its first real revision, never to
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
