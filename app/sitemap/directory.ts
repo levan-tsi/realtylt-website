@@ -9,7 +9,7 @@
 import { COUNTY_CONTENT } from "@/content/counties";
 import { BOROUGH_CONTENT } from "@/content/boroughs";
 import { getArticles } from "@/lib/blog";
-import { getServices } from "@/lib/services";
+import { aiJourneyHref, getServices } from "@/lib/services";
 import { SITE } from "@/lib/site";
 
 export interface DirectoryLink {
@@ -71,10 +71,19 @@ export async function getDirectory(): Promise<DirectorySection[]> {
     },
   ];
 
-  const services: DirectoryLink[] = getServices().map((s) => ({
-    label: s.name,
-    href: `/services/${s.slug}`,
-  }));
+  const services: DirectoryGroup[] = [
+    {
+      label: "Service pages",
+      links: getServices().map((s) => ({ label: s.name, href: `/services/${s.slug}` })),
+    },
+    {
+      // The same twenty, inside the interactive RealtyLT AI journey (owner's ask, round 41c:
+      // the map covers the AI page's own territory too). /ai#… is the rewrite namespace, so
+      // these render as <a> like /ai itself does.
+      label: "Inside RealtyLT AI",
+      links: getServices().map((s) => ({ label: s.name, href: aiJourneyHref(s), external: true })),
+    },
+  ];
 
   // Same exclusion as app/sitemap.ts: a seeded stub is noindex on its own page, so it
   // appears on neither map.
@@ -92,7 +101,7 @@ export async function getDirectory(): Promise<DirectorySection[]> {
   return [
     { id: "pages", title: "Pages", groups: [{ links: pages }] },
     { id: "areas", title: "Top Areas", groups: areas },
-    { id: "services", title: "AI Services", groups: [{ links: services }] },
+    { id: "services", title: "AI Services", groups: services },
     { id: "blog", title: "From the Blog", groups: [{ links: posts }] },
     { id: "legal", title: "Legal & Fair Housing", groups: [{ links: legal }] },
   ];

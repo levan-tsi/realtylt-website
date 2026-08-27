@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { EqualHousingMark } from "@/components/site/EqualHousingMark";
+import { PreferredSourceButton } from "@/components/site/PreferredSourceButton";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 
 /** Site footer.
@@ -166,7 +167,7 @@ export function Footer() {
             office is independently owned and operated." two strips apart. One of them had to
             go, and it is this one: the other names the legal entity and carries the franchise
             disclaimer, and it belongs with the Equal Housing and REALTOR® marks it sits beside. */}
-        <div className="mx-auto flex max-w-[1250px] flex-col gap-2 px-4 py-4 text-xs md:flex-row md:items-center md:justify-center lg:px-8">
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-3 px-4 py-4 text-xs md:flex-row md:items-center md:justify-center lg:px-8">
           {/* inline-flex min-h-[24px]: text-xs links with no padding were ~13px tall, under the
               WCAG 2.5.8 (24px) pointer-target minimum on mobile. */}
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
@@ -198,6 +199,9 @@ export function Footer() {
               </Link>
             </li>
           </ul>
+          {/* Renders nothing until the site serves as realtylt.com (the launch env switch) —
+              see PreferredSourceButton for why the button must wait for the real domain. */}
+          <PreferredSourceButton />
         </div>
       </div>
     </footer>

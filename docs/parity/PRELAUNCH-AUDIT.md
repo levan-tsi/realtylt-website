@@ -34,8 +34,24 @@ These are configuration, not code. Doing them out of order is the main way this 
    `X-Robots-Tag: noindex, nofollow` and `robots.txt: Disallow: /`. Verify after deploy:
    `robots.txt` should switch to `Allow: /` with a `Disallow: /api/` and a sitemap line.
 4. **Re-verify** (in this order): a canonical on the apex, `robots.txt`, `sitemap.xml` hosts, then
-   submit the sitemap in Google Search Console.
+   **submit sitemap.xml in Google Search Console** (add the realtylt.com property first if it only
+   knows the Brivity site). Also spot-check `/llms.txt` serves absolute realtylt.com URLs — it
+   follows `NEXT_PUBLIC_SITE_URL` like everything else.
 5. **Enable Supabase Auth leaked-password protection** (dashboard toggle, see 2.3).
+6. **Google "Add to Preferred Sources" button arms ITSELF at launch** — no work needed here.
+   `components/site/PreferredSourceButton.tsx` (footer bottom strip, dark theme, official
+   two-line embed per developers.google.com/search/docs/appearance/preferred-sources) renders
+   only when `SITE.url === "https://realtylt.com"`, i.e. the moment step 1's env fix lands,
+   because preferred sources are DOMAIN-level and registering the vercel.app host would help
+   nobody. After launch: click it once on the live site and confirm the Google flow names
+   realtylt.com. Clicks feed AI Overviews / AI Mode badging and Top Stories/Discover weighting.
+7. **Share preview after DNS**: og.png, title ("RealtyLT | Levan Tsiklauri | United Real
+   Estate") and description already match the live site's card; the only "vercel" a share card
+   shows today is the HOST, which steps 1-2 fix. Paste the apex URL into a WhatsApp/iMessage/
+   Slack preview once live and look at it.
+8. **Analytics**: PostHog is live with session replay ON (`session_recording` +
+   `maskAllInputs` in PostHogInit.tsx) — new-visitor replays start collecting the moment real
+   traffic lands. Nothing to flip.
 
 ## 1. WHAT IS ALREADY GOOD (verified, not assumed)
 

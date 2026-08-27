@@ -28,6 +28,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/reviews`, priority: 0.6, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/blog`, priority: 0.7, changeFrequency: "weekly", lastModified: now },
     { url: `${base}/services`, priority: 0.9, changeFrequency: "monthly", lastModified: now },
+    // The interactive AI page — a separate Vercel project served under this host via rewrite
+    // (next.config.ts), so it is OUR URL to publish. Its per-service deep links are #fragments
+    // and stay out of XML; the HTML site map and /llms.txt carry them.
+    { url: `${base}/ai`, priority: 0.8, changeFrequency: "monthly", lastModified: now },
     { url: `${base}/connect`, priority: 0.7, changeFrequency: "yearly", lastModified: now },
     // Public and indexable but missing from this inventory until round 41 — found while
     // building the HTML site map (app/sitemap/directory.ts), which lists both.

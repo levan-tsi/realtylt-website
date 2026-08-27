@@ -34,7 +34,8 @@ describe("the human site map vs the crawler sitemap", () => {
     const areas = dir.find((s) => s.id === "areas")!;
     const services = dir.find((s) => s.id === "services")!;
     expect(sectionCount(areas)).toBe(COUNTY_CONTENT.length + BOROUGH_CONTENT.length);
-    expect(sectionCount(services)).toBe(getServices().length);
+    // Twice: each service appears as its indexable page AND as its /ai# journey deep link.
+    expect(sectionCount(services)).toBe(getServices().length * 2);
 
     const hrefs = (await allLinks()).map((l) => l.href);
     expect(new Set(hrefs).size, "a link appears twice on the site map").toBe(hrefs.length);
@@ -43,9 +44,10 @@ describe("the human site map vs the crawler sitemap", () => {
   it("internal links are site-relative; only off-router destinations are external", async () => {
     for (const l of await allLinks()) {
       if (l.external) {
-        // /ai (rewrite to another project), /sitemap.xml (metadata route), or a real https URL.
+        // /ai and its #panel deep links (rewrite to another project), /sitemap.xml (metadata
+        // route), or a real https URL.
         expect(
-          l.href === "/ai" || l.href === "/sitemap.xml" || l.href.startsWith("https://"),
+          l.href === "/ai" || l.href.startsWith("/ai#") || l.href === "/sitemap.xml" || l.href.startsWith("https://"),
           `${l.href} is marked external but is none of the known off-router shapes`,
         ).toBe(true);
       } else {

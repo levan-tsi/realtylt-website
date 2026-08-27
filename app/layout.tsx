@@ -64,7 +64,9 @@ const AGENT_JSON_LD = {
   url: SITE.url,
   telephone: SITE.phoneE164,
   email: SITE.email,
-  logo: `${SITE.url}/og.png`,
+  // The actual logo mark, not the 1200x630 share card — Google's logo guidance wants the
+  // brand image itself here; og.png stays the social preview.
+  logo: `${SITE.url}/logo-realtylt.png`,
   address: {
     "@type": "PostalAddress",
     streetAddress: SITE.address.street,
