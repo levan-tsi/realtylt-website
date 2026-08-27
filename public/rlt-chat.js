@@ -291,6 +291,20 @@
         color: ${CONFIG.BRAND_COLOR_DARK};
         margin-bottom: 4px;
       }
+      /* WHO IS ON THE OTHER END, at the moment it changes. The tag above says whose words a
+         bubble is; this says when the person arrived and when they left. Deliberately not a
+         bubble: it is the room telling you something, not somebody speaking. Centred, quiet,
+         and short enough to stay one line at 390px. */
+      .rlt-msg-system {
+        align-self: center;
+        max-width: 92%;
+        background: none;
+        padding: 2px 0;
+        font-size: 12px;
+        line-height: 1.35;
+        color: #6b7280;
+        text-align: center;
+      }
       .rlt-msg-user { background: ${CONFIG.BRAND_COLOR}; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; white-space: pre-wrap; }
       .rlt-msg a { color: inherit; text-decoration: underline; word-break: break-all; }
       .rlt-msg-bot a { color: ${CONFIG.BRAND_COLOR}; }
@@ -609,6 +623,41 @@
     scrollToBottom();
   }
 
+  // A line from the ROOM, not from anybody in it: "Levan has joined the chat", "You're back
+  // with the assistant". textContent, never innerHTML - the only strings that reach it are the
+  // two literals below, and it stays that way.
+  function addSystemLine(text) {
+    const el = document.createElement('div');
+    el.className = 'rlt-msg rlt-msg-system';
+    el.setAttribute('data-testid', 'rlt-system-line');
+    el.textContent = text;
+    msgsEl.appendChild(el);
+    scrollToBottom();
+  }
+
+  /*
+   * WHOSE CHAT IS THIS RIGHT NOW.
+   *
+   * The owner, 2026-08-26: "I don't see if I speak with agent or Levan... will it show I'm live
+   * and it's me not AI". His bubbles already carry a "Levan - live" tag; what was missing is the
+   * MOMENT. A visitor with the panel open sees nothing happen when he presses Take over, and
+   * nothing at all when he hands a conversation back without typing.
+   *
+   * `null` means we have not been told yet. The FIRST answer only records the state and says
+   * nothing: a visitor opening a panel on a conversation he already had would otherwise be told
+   * he "has joined" something he joined ten minutes ago. Only a CHANGE is worth a line.
+   */
+  let _paused = null;
+  function notePausedState(paused) {
+    if (typeof paused !== 'boolean') return;
+    if (_paused === null) { _paused = paused; return; }
+    if (paused === _paused) return;
+    _paused = paused;
+    addSystemLine(paused
+      ? CONFIG.BRAND_NAME.split(' ')[0] + ' has joined the chat'
+      : "You're back with the assistant");
+  }
+
   function addError(text) {
     const el = document.createElement('div');
     el.className = 'rlt-error';
@@ -717,6 +766,9 @@
       // 401 and 429 are answers, not failures worth a console line every ten seconds.
       if (!resp.ok) return;
       const data = await resp.json();
+      // BEFORE his words, so "Levan has joined the chat" sits above the reply it explains.
+      // An older CRM that does not send `paused` simply leaves this untouched.
+      notePausedState(data && data.paused);
       const shown = renderAgentMessages(data && data.messages);
       updateCursor(data && data.cursor);
       // A person just answered, so the chips the assistant offered before he arrived are stale.
