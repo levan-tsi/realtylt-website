@@ -1,9 +1,20 @@
 /** Scene copy for the Singularity flagship post. TOPIC 21, and the first one written after the
  * twenty-topic rollout closed.
  *
+ * REPOSITIONED 2026-08-27 (round 44), on the owner's reading of the live page. The first cut of
+ * this post described a prompts-and-playbooks product and said, twice, that nothing in it
+ * rewrites its own code. That was written as an honest-limits line and it is false about the
+ * thing actually being sold, which is a coding agent with a file-based memory: it writes and
+ * ships real software, it keeps what it learns in files it must read before starting, and every
+ * correction it is given is written down once rather than repeated. The honesty bar did not
+ * move, it moved sides. The safety claim is no longer "it cannot touch the software" but "a test
+ * suite and a person stand between anything it writes and anybody seeing it", which is both true
+ * and the stronger sentence. See memory `project-singularity-product-definition`.
+ *
  * WHAT THIS POST IS ABOUT, and why it needed its own literature. The service page at
- * /services/the-singularity describes a system that runs the other agents, holds one memory, and
- * once a week proposes a single change and tests it against conversations that already happened.
+ * /services/the-singularity describes a system that runs the other agents, holds one memory,
+ * writes and changes the software around them, and proposes one change at a time against a
+ * grader that is a test suite for code and recorded history for anything an agent says.
  * The nearest sibling in the cohort is the agent workforce post, which already spends two cited
  * charts on MAST (arXiv:2503.13657) and tau-bench (arXiv:2406.12045). Neither is re-used here.
  * This post rests on a different question: not whether several agents can work together, but
@@ -33,9 +44,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * an assistant lifting this box lifts the honest version of the argument rather than the
  * marketing one. Every line is argued at length below it. */
 export const IN_SHORT: string[] = [
-  "One system standing behind every agent means somebody explains their situation once, to whichever of them they reach first. That half works from the week it is switched on.",
-  "The self improving half does not work by having the model check itself. Asked to review its own answer twice, a leading model went from 95.5 percent correct on grade school arithmetic to 89.0.",
-  "What makes a loop a loop is a grader standing outside it. Here that is conversations whose outcome is already known, one change at a time, and a person who approves what ships.",
+  "One system stands behind every agent, holds the record they all read from, and writes and changes the software around them. It does write real code, and none of it reaches anybody until the tests pass and a person says yes.",
+  "The improving does not come from having the model check itself. Asked to review its own answer twice, a leading model went from 95.5 percent correct on grade school arithmetic to 89.0.",
+  "What it learns is kept in files rather than inside a model, one line per correction, read before the next piece of work starts. Every agent reads the same record, so a client explains their situation once.",
 ];
 
 /** SCENE copy — self review makes it worse. CITED DATA GRAPHIC ONE.
@@ -149,18 +160,24 @@ export const OFFLINE_ESTIMATE = {
  * as an unreadable overlap: Diagram.tsx lays the SVG out on a 1080 unit viewBox, divides it by
  * the number of steps, and centres one unwrapped <text> per hop, so the character budget is
  * 1080/steps. Every one of the other eighteen diagrams in the cohort uses exactly six steps
- * with captions of 32 characters or fewer, which is the proven budget rather than a guess. The
- * "read" hop was folded into "the week", which it was always half of.
+ * with captions of 32 characters or fewer, which is the proven budget rather than a guess.
  *
- * The last hop is the one usually missing from anything sold under this name, and it is
- * deliberately the only hop that produces no change at all. */
+ * RE-CUT 2026-08-27 (round 44) to the loop the product actually runs. The old six hops began at
+ * "the week" and ended at a receipt, which described a weekly review of conversations and only
+ * that. The system being sold also builds and changes software, so the spine now starts where
+ * the work starts, at a written brief and the files the previous pass left behind, and the hop
+ * that used to be "the replay" is "the gate", because for a code change the grader is a test
+ * suite rather than an estimate. The last hop still produces no change of its own: it writes
+ * down what happened, and when the thing that happened was a mistake, it leaves a test behind so
+ * that mistake cannot come back. That hop is the one usually missing from anything sold under
+ * this name. */
 export const LOOP_STEPS: { label: string; connects: string; at?: string }[] = [
-  { label: "The week", connects: "All of it, not a sample", at: "Mon" },
-  { label: "The weak point", connects: "One question, one handoff" },
-  { label: "The proposal", connects: "One rule or one example" },
-  { label: "The replay", connects: "Conversations already had" },
-  { label: "The approval", connects: "A person, holding both", at: "Fri" },
-  { label: "The receipt", connects: "What changed and what it beat" },
+  { label: "The brief", connects: "One task, written down", at: "Start" },
+  { label: "The memory", connects: "Every file the last one left" },
+  { label: "The change", connects: "One thing, code included" },
+  { label: "The gate", connects: "Tests, probes, the screen" },
+  { label: "The approval", connects: "A person, holding the diff", at: "Ship" },
+  { label: "The record", connects: "What changed, and a new test" },
 ];
 
 /** SCENE copy — one memory, staged across two channels and two days.
@@ -297,11 +314,11 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       band: "dark",
       label: "The loop",
       eyebrow: "The system",
-      heading: "Six steps, and the last one is the only reason the other five are safe.",
-      lede: "Drawn as the order it has to happen in. Most of what is sold under this name is the first two boxes, which are a reporting tool with a good vocabulary. The fourth is the one that turns an opinion into a comparison, and the sixth is what lets a bad decision be found later by somebody who was not in the room when it was taken.",
+      heading: "Six steps, and the last three are the ones usually missing.",
+      lede: "Drawn as the order it has to happen in. Most of what is sold under this name is the first two boxes, which are a briefing and a reporting tool with a good vocabulary. The fourth is the one that turns an opinion into something checkable, the fifth is the ten minutes that makes the rest of it safe to run, and the sixth is what lets a bad decision be found later by somebody who was not in the room when it was taken.",
       steps: LOOP_STEPS,
       altPrefix:
-        "The weekly loop, from one pass over every exchange of the week, to a single weak point, one proposed change, a replay against conversations whose outcome is already known, a person approving it, and a written record of what it replaced",
+        "The loop, from a written brief and the files the previous pass left behind, to one change with code included, a gate of tests and probes that can refuse it, a person reading the change and approving it, and a written record that leaves a new test behind",
     },
     "offline-estimate": {
       kind: "statbars",
@@ -425,7 +442,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       band: "dark",
       field: "river",
       tone: "quote",
-      text: "The clever part was never the model. It is that something finally reads the week, picks one thing, and has to prove it against a conversation that already happened.",
+      text: "The clever part was never the model. It is that a correction gets written down where the next piece of work has to read it, and that nothing ships until something outside the thing says yes.",
     },
     "where-it-stalls": {
       kind: "grid",
@@ -471,7 +488,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
     "the-obvious-fix-is-to-let-it-check-its-own-work": "Checking itself",
     "what-changed-between-those-two-numbers-was-not-the-model": "The oracle",
     "so-the-whole-question-is-what-plays-the-part-of-the-compiler": "The grader",
-    "one-change-a-week-and-the-reason-is-not-modesty": "One change",
+    "one-change-at-a-time-and-the-reason-is-not-modesty": "One change",
     "most-of-the-changes-will-not-work-and-that-is-the-normal-result": "Most fail",
     "the-grader-is-not-the-truth-either": "Not the truth",
     "who-has-to-be-in-the-loop-and-what-they-actually-do": "Who approves",

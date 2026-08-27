@@ -17,6 +17,10 @@ The same question came in again in April, and in June, and in September, and got
 
 Seven months is not a story about carelessness. It is a story about the fact that reading a year of conversations is not a job anybody in a brokerage has, and that the systems producing those conversations had never once been asked to read themselves.
 
+There is a second version of that story and it is the worse one, because in it somebody did notice. A sentence on this website once told a reader they would own something they were in fact going to be licensing. It was spotted, corrected in the three places anybody could think of, and reported as fixed. A sweep the same afternoon found it still alive in two more, in the caption under a diagram and in the alt text underneath that. Nobody was careless there either. The correction had been made to some pages rather than written down anywhere that the next piece of work would be obliged to read.
+
+Both failures have the same cause and it is not a model that was not clever enough. Neither arrangement had a memory it had to read before starting, and neither had anything standing outside it able to say no. What fixed the second one was not a better sentence. It was six lines in a test file, naming the claim, saying why it was wrong, and failing the build if that wording appears again in any file a reader can see. Those six lines now run on every change anybody makes, forever, and that is this entire article written small.
+
 [[scene:in-short]]
 
 ## What the name is claiming, and what it is not
@@ -25,9 +29,11 @@ Singularity is a borrowed word and it is worth taking it off the table before it
 
 What the name is actually marking is a smaller and far more checkable transition. It is the point at which the software you bought stops being a fixed object you own and becomes a thing that changes on a schedule, using your own material, with somebody's signature on every change.
 
-In plain terms: one system stands up the other agents, hands each of them its instructions, holds the single record they all read from and write to, and once a week goes back over what actually happened and proposes one revision to itself. Nothing in it rewrites its own code. What changes is the written half, meaning instructions, worked examples and the rules that decide which question goes where.
+In plain terms: one system stands up the other agents, hands each of them its instructions, holds the single record they all read from and write to, keeps what it has learned about your business in files it has to read again before it starts anything, and proposes one change at a time to any of it. Some of those changes are to the written half, meaning instructions, worked examples and the rules that decide which question goes where. Some of them are to the software itself, which it writes.
 
-If that sounds deflationary, it is meant to. It is also, on its own terms, unusual. Almost nothing else a business buys has any mechanism at all for noticing that it has been wrong in the same way four hundred times, and that absence is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming, and the rest of this piece is about whether the claim survives contact with the research.
+That second part is the one most descriptions of this category are careful to deny, and denying it is the easy way to sound responsible. It is also not true here, so it is not going to be said. What makes this safe to run is not a promise that the thing will never touch the software. It is that nothing it writes reaches anybody until a test suite that cannot be talked round has run over it and a person has read the change and said yes.
+
+That is a smaller claim than the word usually carries and a larger one than most vendors will make out loud, which is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any mechanism at all for noticing that it has been wrong in the same way four hundred times, and that absence is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming, and the rest of this piece is about whether the claim survives contact with the research.
 
 The two halves are very different purchases and they deserve to be argued separately. One of them works from the first week and is easy to check. The other is the one worth being sceptical about, and the published evidence on it is not flattering.
 
@@ -77,17 +83,19 @@ Which puts the dividing line in this entire subject somewhere other than where t
 
 In software there is a compiler and a test suite, and both of them will tell you flatly that you are wrong without caring how confident you sounded. In a brokerage there is no such thing, which is where most people stop and conclude that none of this applies.
 
-It does not stop there, and the reason is history.
+Two things are worth noticing before agreeing with that. The first is that one half of this system never left engineering at all. A good deal of the work is building and changing the software the agents run on, and there the compiler is not a metaphor. The change gets written, the type checker runs, the test suite runs, and a probe opens the finished page at three widths and measures what is actually on the screen. Not one of them cares what the model believed about its own work, and any one of them can refuse the change on its own. That is precisely the condition the reflection experiments were missing, which is why the half of this that writes software is the half that can be trusted to move quickly.
+
+The second is that the other half, the one talking to your clients, has no compiler and is never going to get one. What it has instead is history, and history is weaker in a way worth being exact about.
 
 Every conversation your agents have already had comes with an outcome attached, and you know what that outcome was. Somebody booked a viewing. Somebody went quiet directly after a particular sentence and never came back. Somebody had to be telephoned the next morning because what they had been told was wrong, and there is a note in the record saying so. That is not ground truth in the sense a compiler is, and calling it that would be the first dishonest sentence in this article. It is something weaker and still useful: a large body of material where the answer given and what happened next are both written down, by something other than the model that produced the answer.
 
-So the loop that the word improving is actually describing is this. Read the whole week rather than a sample. Find the single weakest point in it. Propose one change to the written instructions. Run that change back against conversations whose outcome is already known and compare it against what is currently live. Keep it only if it does better. Have a person approve it before it reaches anybody. Write down what changed, what it replaced, and what it beat.
+So the loop that the word improving is actually describing is this. Start from what is written down, which is the record of the work and every correction anybody has ever given it. Find the single weakest point. Propose one change, whether that is a sentence, a routing rule or a piece of software. Put it in front of whatever is capable of saying no, which for code is a test suite and for a conversation is history. Keep it only if it does better. Have a person read it and approve it before it reaches anybody. Then write down what changed, what it replaced and what it beat, so the next pass starts from that rather than from nothing.
 
 [[scene:loop]]
 
 Everything interesting about this is in the last three steps, and everything cheap to build is in the first two. That is worth knowing when somebody demonstrates one to you, because a weekly summary of what your agents did is a reporting feature with an impressive vocabulary, and it is what a lot of this gets sold as.
 
-## One change a week, and the reason is not modesty
+## One change at a time, and the reason is not modesty
 
 The single change rule sounds like caution, or like a vendor managing expectations. It is neither. It falls straight out of what these systems are.
 
@@ -95,9 +103,9 @@ In 2015 a group of ten Google engineers wrote [Hidden Technical Debt in Machine 
 
 The same paper has a section on configuration debt that reads like a description of a stack of agents nobody has tidied since the build. "In a mature system which is being actively developed, the number of lines of configuration can far exceed the number of lines of the traditional code. Each configuration line has a potential for mistakes." Their examples are about features and logging dates. Yours are about which questions get routed to a person, which phrasing the assistant uses when it does not know, and which of four agents is allowed to promise a callback.
 
-That is the argument for one change, and it has nothing to do with going slowly. If two things change in the same week and the week comes out better, you have learned nothing you can act on, because you cannot say which one to keep, which one to undo, or whether one of them is quietly cancelling out the other. A week in which twenty things changed is a week that produced a mood rather than a finding.
+That is the argument for one change, and it has nothing to do with going slowly. If two things change together and it comes out better, you have learned nothing you can act on, because you cannot say which one to keep, which one to undo, or whether one of them is quietly cancelling out the other. A round in which twenty things changed produced a mood rather than a finding.
 
-There is a second reason and it is about you rather than about the software. One change a week is a size a person can actually read and approve without it becoming a rubber stamp. Twenty is not, and the failure mode of twenty is not that somebody rejects the wrong one. It is that after the third week nobody reads any of them.
+There is a second reason and it is about you rather than about the software. One change is a size a person can actually read and approve without it becoming a rubber stamp, and when the change is code, reading it means reading the difference between the old file and the new one, which is a short document by design. Twenty is not that size, and the failure mode of twenty is not that somebody rejects the wrong one. It is that after the third week nobody reads any of them.
 
 ## Most of the changes will not work, and that is the normal result
 
@@ -109,11 +117,11 @@ Sit with that for a moment before deciding what it means. It is not a statement 
 
 That figure is the argument for the whole apparatus rather than an argument against it. If most good ideas fail, then a system that ships every idea it has is not improving anything, it is walking randomly, and it will be worse in six months than it is today with total consistency and excellent intentions. The value is not in generating the ideas. Generating plausible changes is the cheapest thing any of this does. The value is entirely in the step that throws most of them away.
 
-It also sets the honest expectation for what a normal week looks like, which no product page will tell you. Most weeks the loop proposes something and the replay says no, and the correct output of that week is nothing changed. A vendor promising a measurable gain every week is describing a sales cycle rather than a system.
+It also sets the honest expectation for what a normal round looks like, which no product page will tell you. Most of the time the loop proposes something, the test says no, and the correct output is that nothing changed. The written record of this system's own build has a column for exactly that: what was tried, and what was reverted the same day for failing its own gate. A vendor promising a measurable gain every week is describing a sales cycle rather than a system.
 
 ## The grader is not the truth either
 
-The replay is the load bearing step, so it is the one that deserves the hardest look, and this is where an honest version of this article has to give something away.
+For the half with no compiler, the replay is the load bearing step, so it is the one that deserves the hardest look, and this is where an honest version of this article has to give something away.
 
 Replaying a proposed change against conversations that already happened is an estimate, not a measurement. The recorded conversation went the way it did partly because of what the old version said, and every turn after that was shaped by it. A changed answer at turn two means turn three would not have happened the way it is written down, and no amount of care makes that stop being true. What you get back is a model of what would probably have happened, and the honest question is how often that model is wrong.
 
@@ -131,7 +139,7 @@ What follows from taking it seriously is the design of the last two steps. The r
 
 Every version of this that is safe to run has a person in it, and it is worth being specific about what that person is for, because approval can easily become a signature on something nobody read.
 
-They are not there to check the arithmetic. The comparison is either run properly or it is not, and a person reading a table of numbers is not going to catch a badly built replay. They are there for three things a replay cannot do.
+They are not there to check the arithmetic. The comparison is either run properly or it is not, and a person reading a table of numbers is not going to catch a badly built replay. When the change is code, what they are reading is the difference between two files and the list of tests that went green underneath it, which is a ten minute job rather than an engineering one. They are there for three things no test and no replay can do.
 
 The first is deciding whether the new answer is better or merely different. A loop can tell you that a rewritten explanation of the closing timeline produced more booked calls in the replay. Only somebody who does this for a living can tell you that the new phrasing promises something you cannot always deliver, and that the extra calls are going to turn into a different problem in April.
 
@@ -139,7 +147,7 @@ The second is catching the change that optimises the measurement rather than the
 
 The third is remembering the things that are not in the record at all. A rule that exists because of a conversation with your broker two years ago, a phrase you will not use because of what it cost somebody once, a question that always goes to a person for reasons that have nothing to do with how well the software handles it. None of that is in the transcripts, so none of it is in the replay.
 
-Ten minutes a week, on one change, with the comparison in front of them. That is the actual ask, and a version of this that needs more than that from you every week has been built wrong.
+Ten minutes on one change, with the comparison in front of them. That is the actual ask, and a version of this that needs more than that from you has been built wrong.
 
 ## The other half, which is the one memory
 
@@ -157,7 +165,11 @@ It is also the half that makes the other half possible. A loop cannot find the w
 
 Memory is a generous word for what is happening and it is worth replacing with the literal version, because the generous version leads people to expect things that are not there.
 
-What persists is a record and a set of written instructions. The record is the conversations, with what was said, when, on which channel, and whatever outcome got attached to them. The instructions are the prompts, the worked examples, the routing rules and the standing constraints. The loop reads the first and edits the second. That is the entirety of it.
+What persists is files. Not a model that has quietly learned you, which is what most people picture and is not what this is. There is a record of the conversations, with what was said, when, on which channel, and whatever outcome got attached. There is a set of written instructions: the prompts, the worked examples, the routing rules, the standing constraints. There is an index of what has been learned about the work, kept one file per area of it, and every one of those files has to be read before anything is started. And there is a pile of tests that only grows, because each one exists on account of something that went wrong once in a way nobody wants to find twice.
+
+The distinction that matters commercially is between two clocks. Inside a single session the system holds everything in front of it and then forgets all of it the moment the session ends, in the same way a person walking out of a meeting does. What survives is only what got written to one of those files, which is why writing to them is a step in the work rather than a courtesy afterwards. A correction that was made in conversation and never written down was not a correction. It was a conversation.
+
+That shape is worth insisting on for a reason that has nothing to do with technology. A memory kept in files is one you can open, read, disagree with, correct and take with you. A memory kept inside somebody else's model is one you are renting, and you will find out what is in it the day it is wrong.
 
 What does not persist is anything the system was not connected to. A deal that lived in a spreadsheet on somebody's desktop is a deal it has never heard of. A commitment made in a car park is not in there. An agent's judgement about a seller who was not being straight about their timeline is not in there unless somebody typed it in, and mostly nobody typed it in.
 
@@ -171,7 +183,7 @@ There is no price on this page and there is not going to be one, because the num
 
 The first is how many places have to be joined up before there is one record at all. This is the whole job on most engagements. A brokerage running a phone system, a website, one CRM and a calendar is a different piece of work from one running four CRMs because three offices merged and nobody ever finished the migration. Anybody quoting before they have asked which of those you are has quoted a template.
 
-The second is the running cost of the loop itself, and it is honestly modest. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. What is not free is the ten minutes of your week, and unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
+The second is the running cost of the loop itself, and it is the smallest of the three. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. Work that writes and tests software costs more than that, and it is still not the number that decides anything here. What is not free is the ten minutes of your week, and unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
 
 The third is what you already have. If the agents are not there yet, this is not the first thing to buy, and a vendor who sells you an improvement loop for a system with two months of thin history is selling you a mechanism with nothing to work on.
 
@@ -181,9 +193,11 @@ On timing, the honest shape has two very different halves. The shared record cha
 
 ## How to test one before you buy it
 
-Take these to any vendor, this one included. All five can be asked inside a demonstration, and the answers are more informative than the demonstration.
+Take these to any vendor, this one included. All six can be asked inside a demonstration, and the answers are more informative than the demonstration.
 
-Ask what the grader is. Not whether it improves, but what specifically tells it that a change was better, in words you can repeat to somebody else afterwards. If the answer is that the model evaluates its own output, you have the first chart on this page, and you should say so.
+Ask what the grader is. Not whether it improves, but what specifically tells it that a change was better, in words you can repeat to somebody else afterwards. If the answer is that the model evaluates its own output, you have the first chart on this page, and you should say so. If the answer is a test suite, ask to watch one fail, because a suite nobody has ever seen go red is decoration.
+
+Ask where the last correction is written down. Not whether it learns, but the actual file that a mistake from three weeks ago turned into, and what reads that file before the next piece of work begins. If the answer is that the model remembers, the honest translation is that nobody wrote it down and you are going to give the same correction again.
 
 Ask to see last month's changes. A real loop produces a list: what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be assembled for you, then nothing has been keeping receipts and nothing can be undone in six weeks when something turns out to have been wrong.
 
@@ -195,7 +209,9 @@ Then ask the boring one, which is where the record lives, who can read it, wheth
 
 ## What it does not do, and should not pretend to
 
-It does not rewrite its own code. The loop revises instructions, examples and routing, and a person approves every change before it ships. That constraint is not a limitation somebody will lift next year. It is the reason the thing is safe to leave running.
+It does not ship anything on its own. It writes real changes, code included, and not one of them reaches a client until the tests have run over it and a person has read it and approved it. That gate is not a limitation somebody will lift next year. It is the reason the thing is safe to leave running, and a vendor offering to remove it is offering to remove the half that works.
+
+It does not remember what nobody wrote down. Everything that survives the end of a session survives because it was written to a file, so a correction given in passing and never recorded is a correction you will be giving again.
 
 It does not know anything it was not connected to, and the useful version says so rather than filling the gap with something plausible.
 
@@ -215,19 +231,23 @@ And it does not start as any of this. On day one it is a handful of agents and a
 
 ### What is a self improving AI system, in plain terms?
 
-It is one system that runs your other AI agents, keeps a single record of every conversation they have, and once a week reads that record, finds the weakest point in it, proposes one change to its own written instructions, tests that change against conversations whose outcome is already known, and ships it only if it wins and only after a person approves it. Nothing in it rewrites its own code. What improves is the instructions, and what makes the improving real is the test rather than the reflection.
+It is one system that runs your other AI agents, keeps a single record of every conversation they have, writes down what it learns in files it has to read before it works again, and improves by proposing one change at a time to any part of itself, the software included. Each proposed change is put in front of something outside the model, which is a test suite for code and your own recorded conversations for anything an agent says, and it ships only if it wins and only after a person approves it. What makes the improving real is the test and the written record rather than the reflection.
 
-### Does it rewrite its own code?
+### Does it actually write code?
 
-No, and it should not. What changes is the written layer: prompts, worked examples, the rules that decide which question goes to a person. That is where almost all of the useful behaviour of an agent system actually lives, which is why revising it is worth doing, and it is also the layer a person can read in ten minutes and approve or reject. Software that edits its own source is a different and much worse product for a business to own, because the thing that makes this safe is that a human being can understand every change before it happens.
+Yes, and that is the part worth being specific about, because most descriptions of this category go out of their way to promise the opposite. It writes and changes real software, and it also revises the written layer: prompts, worked examples, the rules that decide which question goes to a person. What it does not do is put any of that in front of a client on its own. Every change runs against a test suite first, and a person reads it and approves it before it ships. Software that edits itself with nobody watching is a different and much worse thing to own. The point here is not that a human has been removed from the loop, it is that the human is in it for ten minutes, on one change, that something else has already proved does not break anything.
 
-### Why one change a week and not twenty?
+### Where does the memory actually live?
+
+In files, on your side of the line, which you can open. There is the record of the conversations, the written instructions the agents run on, and a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it: not into a model, but into a line in a file with a date on it. It is worth insisting on that shape, because a memory kept in files is one you can read, correct and take with you, and a memory kept inside somebody else's model is one you are renting.
+
+### Why one change at a time and not twenty?
 
 Because twenty changes in a week teach you nothing. If the week comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything, and it is the standard finding about systems of this kind. There is a second reason that is about people rather than software: one change is a size somebody will actually read before approving, and twenty is a size that turns approval into a signature.
 
 ### What is it actually graded against?
 
-Your own conversations, and specifically the ones whose outcome is already recorded. A proposed change is run back against them and compared against what is currently live. That is an estimate rather than a measurement, and this page publishes the research on how much such estimates disagree with live results rather than hiding it. It is good enough to kill the bad ideas cheaply. It is not good enough to prove anything, which is why a person approves and why what ships gets watched afterwards.
+Two different things, and knowing which is which is most of the answer. When the change is software, it is graded by a type checker, a test suite and probes that open the finished page and measure what is on it, none of which care how confident anything sounded and any of which can refuse it outright. When the change is to what an agent says to a client, there is nothing that strict available, so the grader is your own conversations, specifically the ones whose outcome is already recorded. A proposed change is run back against them and compared against what is currently live. That second one is an estimate rather than a measurement, and this page publishes the research on how much such estimates disagree with live results rather than hiding it. It is good enough to kill the bad ideas cheaply. It is not good enough to prove anything, which is why a person approves and why what ships gets watched afterwards.
 
 ### Can I see what it changed?
 
