@@ -226,17 +226,36 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
           viewport whose gutter cannot hold a readable label gets the sheet too. */}
       <div className={railStyle ? "min-[1360px]:hidden" : ""}>
         {!open && (
-          // Centred inside the space that EXCLUDES the site's chat launcher rather than in the
-          // viewport. Centred on the viewport, this pill lands 1px from the launcher at 390 and
-          // overlaps it outright once the active label is a long one.
-          <div className="fixed inset-x-4 bottom-5 right-[5.25rem] z-50 flex justify-center">
+          // Centred ON THE VIEWPORT, and the previous version was not.
+          //
+          // It used to centre inside the band that EXCLUDES the chat launcher
+          // (`inset-x-4 right-[5.25rem]`), which dodges the launcher by moving the pill left.
+          // Measured at 390 DPR3 on all twenty flagship posts: pill centre 161 against a
+          // viewport centre of 195, the same 34px on every one of them, while the service pages
+          // next door sat dead centre. That is the owner's report of 2026-08-26 ("on phone some
+          // blogs, the hovering listing on the bottom ... was misaligned"), and "some" is the
+          // twenty: the ten legacy posts render no trigger at all.
+          //
+          // The launcher is dodged on WIDTH now, so the pill can stay centred. The bubble is
+          // 60px wide and sits 16px off the right edge (measured: box 314,768 60x60 at 390), so
+          // a centred pill capped at `100% - 10.5rem` ends 84px from the edge and clears it by
+          // 8px at every width. The cap is a percentage of the container rather than `100vw`
+          // deliberately: vw includes the scrollbar, which would hand the pill ~15px it does not
+          // have on a desktop browser below the rail breakpoint.
+          //
+          // Below ~560px that cap is narrower than the longest scene labels ("When they
+          // disagree" and friends run to 286px with the prefix), and truncation eats from the
+          // END, so capping alone would cut the ACTIVE LABEL and keep the boilerplate. The
+          // boilerplate gives way instead: the hamburger already says what the control is, and
+          // the sheet's own header repeats "On this page" in full the moment it opens.
+          <div className="fixed inset-x-0 bottom-5 z-50 flex justify-center">
           <button
             type="button"
             data-toc-trigger
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            className="flex max-w-full items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
+            className="flex max-w-[calc(100%-10.5rem)] items-center gap-2.5 rounded-full border border-white/12 bg-ink px-5 py-3 text-sm text-paper shadow-float"
           >
             <svg
               aria-hidden
@@ -247,8 +266,8 @@ export function FlagshipToc({ items }: { items: FlagshipTocItem[] }) {
               <path d="M4 6h10M4 12h16M4 18h12" strokeLinecap="round" />
             </svg>
             <span className="min-w-0 truncate">
-              <span className="text-paper/55">On this page</span>
-              <span className="mx-1.5 text-paper/30">/</span>
+              <span className="hidden text-paper/55 min-[560px]:inline">On this page</span>
+              <span className="mx-1.5 hidden text-paper/30 min-[560px]:inline">/</span>
               <span className="font-bold">{activeLabel}</span>
             </span>
           </button>
