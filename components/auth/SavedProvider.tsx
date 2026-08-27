@@ -203,7 +203,11 @@ export function SavedProvider({ children }: { children: ReactNode }) {
       if (signedIn && user && supabase) {
         const { data } = await supabase
           .from("portal_saved_searches")
-          .insert({ client_id: user.id, label, query, criteria: searchCriteria(query) })
+          // alerts:true from birth — the dialog's signed-in success copy says "we'll alert
+          // you when new homes match", and until 2026-08-27 the row was born alerts:false
+          // (the column default) under exactly that promise. Saving a search IS the ask;
+          // /portal/searches keeps the off switch.
+          .insert({ client_id: user.id, label, query, alerts: true, criteria: searchCriteria(query) })
           .select(SEARCH_COLS)
           .single();
         if (data) {
