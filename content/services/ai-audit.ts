@@ -124,7 +124,7 @@ export const aiAudit: Service = {
     },
     {
       q: "What do I actually get at the end?",
-      a: "A written map of how the work runs today, a ranked list of what to automate and what each one is worth, a build plan, and one automation actually shipped and running.",
+      a: "A written map of how the work runs today, including the parts nobody had written down. A shortlist in an order, with the reason for each position beside it. The list of candidates that were removed and why, which is the part you will use again next year. And one automation actually built and running, so it ends in something real rather than a document.",
     },
     {
       q: "Do I need to know anything about AI beforehand?",
