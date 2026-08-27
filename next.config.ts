@@ -70,7 +70,7 @@ const CSP = [
   // access-control-allow-origin for both realtylt.com and the temp host, methods POST/OPTIONS,
   // header x-rlt-chat-token). One exact origin, no wildcard; `lib/chat-csp.test.ts` now fails if
   // the widget's URL and this list ever drift apart again.
-  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com",
+  "connect-src 'self' https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
@@ -86,7 +86,7 @@ const SECURITY_HEADERS = [
   { key: "X-DNS-Prefetch-Control", value: "off" },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()",
+    value: "camera=(), microphone=(self), geolocation=(), browsing-topics=(), interest-cohort=()",
   },
 ];
 
