@@ -223,6 +223,13 @@ function QualifyingWizard({
         source: prefill.source ?? "/selling",
         interestReason: reasonFor(a.intent),
         qualifier: buildQualifier(a),
+        // The SAME consent answer as the primary lead. Without it, buildConsent reads the
+        // absence as granted:false — and the consent-aware thank-you email told a consented
+        // /selling visitor "you asked us not to call" (production, 2026-08-27), because this
+        // POST was the one that reached n8n.
+        ...(prefill.consented !== undefined
+          ? { consentToContact: prefill.consented ? "true" : "false" }
+          : {}),
         rlt_hp: "",
       };
       // Best-effort — the primary lead is already saved; never block the UI on this.

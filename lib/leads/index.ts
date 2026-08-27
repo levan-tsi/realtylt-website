@@ -181,32 +181,43 @@ export async function submitLead(lead: LeadPayload): Promise<LeadResult> {
       body: JSON.stringify(lead),
     });
     if (!res.ok) return { ok: false, error: `CRM webhook responded ${res.status}` };
-    notifyLeadThankYou(lead);
+    await notifyLeadThankYou(lead);
     return { ok: true };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
 }
 
-/** The thank-you note every lead now gets (round 40, owner-directed): fire-and-forget to
- * the n8n "Website Lead Thank-You" workflow, which sends consent-aware copy through the
- * owner's Gmail and throttles per-address (1h) so the qualifying wizard's follow-up POST
- * can never double-send. Never blocks and never fails the lead — the CRM record is already
- * in by the time this fires. Skipped entirely in stub/test mode (no webhook = no email). */
-function notifyLeadThankYou(lead: LeadPayload): void {
+/** The thank-you note every lead now gets (round 40, owner-directed): posts to the n8n
+ * "Website Lead Thank-You" workflow, which sends consent-aware copy through the owner's
+ * Gmail and throttles per-address (1h) so the qualifying wizard's follow-up POST can never
+ * double-send. Never fails the lead — the CRM record is already in by the time this fires.
+ * Skipped entirely in stub/test mode (no webhook = no email).
+ *
+ * AWAITED, deliberately. This was fire-and-forget (`void fetch`), and on Vercel a function
+ * freezes the moment its response returns — a pending fetch dies with it. Proven on
+ * production 2026-08-27: five CRM-accepted leads produced THREE emails, and the survivors
+ * reached n8n 10-64 seconds late (the fetch resumed only when a later request thawed the
+ * same instance). The 3s cap keeps a dead n8n from stalling the visitor's submit. */
+async function notifyLeadThankYou(lead: LeadPayload): Promise<void> {
   const url = process.env.LEAD_THANKYOU_WEBHOOK;
   const secret = process.env.LEAD_THANKYOU_SECRET;
   if (!url || !secret) return;
-  void fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-rlt-thankyou-secret": secret },
-    body: JSON.stringify({
-      name: lead.firstName || lead.name,
-      email: lead.email,
-      consented: lead.consent?.granted === true,
-      source: lead.source,
-    }),
-  }).catch(() => {});
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-rlt-thankyou-secret": secret },
+      body: JSON.stringify({
+        name: lead.firstName || lead.name,
+        email: lead.email,
+        consented: lead.consent?.granted === true,
+        source: lead.source,
+      }),
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch {
+    /* best-effort: the lead is saved either way */
+  }
 }
 
 /** Best-effort per-IP throttle for /api/lead: sliding window, max 8 submissions/60s.

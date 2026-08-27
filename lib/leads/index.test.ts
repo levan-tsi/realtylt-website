@@ -189,4 +189,44 @@ describe("submitLead", () => {
     expect(r.ok).toBe(false);
     expect(r.error).toContain("ECONNREFUSED");
   });
+
+  it("the thank-you webhook is AWAITED, so a frozen lambda cannot lose the email", async () => {
+    // Fire-and-forget (`void fetch`) resolved submitLead before the webhook settled; Vercel
+    // then freezes the function and the pending fetch dies with it. Proven on production
+    // 2026-08-27: five CRM-accepted leads produced THREE thank-you emails, and the survivors
+    // reached n8n 10-64s late (the fetch only resumed when a later request thawed the
+    // instance). This pins the ordering: the webhook promise settles before submitLead does.
+    vi.stubEnv("CRM_LEAD_WEBHOOK", "https://crm.example/leads");
+    vi.stubEnv("LEAD_THANKYOU_WEBHOOK", "https://n8n.example/thankyou");
+    vi.stubEnv("LEAD_THANKYOU_SECRET", "s3cret");
+    let thankYouSettled = false;
+    const fetchMock = vi.fn().mockImplementation((url: unknown) => {
+      if (String(url).includes("thankyou")) {
+        return new Promise((resolve) =>
+          setTimeout(() => {
+            thankYouSettled = true;
+            resolve(new Response("{}", { status: 200 }));
+          }, 20),
+        );
+      }
+      return Promise.resolve(new Response("{}", { status: 200 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const r = await submitLead(lead);
+    expect(r).toEqual({ ok: true });
+    expect(thankYouSettled).toBe(true);
+  });
+
+  it("a dead thank-you webhook never fails the lead", async () => {
+    vi.stubEnv("CRM_LEAD_WEBHOOK", "https://crm.example/leads");
+    vi.stubEnv("LEAD_THANKYOU_WEBHOOK", "https://n8n.example/thankyou");
+    vi.stubEnv("LEAD_THANKYOU_SECRET", "s3cret");
+    const fetchMock = vi.fn().mockImplementation((url: unknown) => {
+      if (String(url).includes("thankyou")) return Promise.reject(new Error("n8n down"));
+      return Promise.resolve(new Response("{}", { status: 200 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const r = await submitLead(lead);
+    expect(r).toEqual({ ok: true });
+  });
 });
