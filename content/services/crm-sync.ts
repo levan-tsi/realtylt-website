@@ -29,8 +29,13 @@ export const crmSync: Service = {
 
   seo: {
     title: "Two-Way CRM Sync for Follow Up Boss, kvCORE, and HubSpot",
+    // ROUND 47: ended "so the record you are looking at is true". That is the exact claim round D
+    // removed from `why` one field above, for the reason its comment gives: this page's own
+    // subject is a body of research about how records fail to be true, and `limits` says the
+    // existing database is not cleaned by this. The fix reached `why` and not `seo.description`,
+    // which is the field search engines read. Now says the mechanism, as `why` and `whatItIs` do.
     description:
-      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is true.",
+      "Every call, text, booking, and enriched contact writes back to your CRM, and updates flow the other way, so the record you are looking at is the one your automations are acting on.",
   },
 
   /** ROUND D: `stat` added, carrying the one measurement in this subject with a published
@@ -63,7 +68,11 @@ export const crmSync: Service = {
       { label: "The AI takes a call", note: "Transcript, outcome, and next step land on the contact record." },
       { label: "A text is answered", note: "The thread is attached to the lead, not stranded in a phone." },
       { label: "The CRM is updated", note: "A stage change in Follow Up Boss flows back out to everything else." },
-      { label: "Nothing is retyped", note: "One record, true in both places, all the time." },
+      // ROUND 47: the note was "One record, true in both places, all the time." Third survivor of
+      // round D's fix in this file: the unqualified "true", plus an absolute the flagship post
+      // contradicts two sections apart (a sync breaks the week a vendor renames a field, and an
+      // unreconciled database stays unreconciled). Now it supports its own label instead.
+      { label: "Nothing is retyped", note: "The call, the text and the booking arrive on the record without anybody copying them across, which is where a digit goes missing." },
     ],
     // ROUND D: was "The deals lost to a stale CRM are lost quietly, which is why nobody counts
     // them." It asserts that deals are lost, which nobody here has measured and which the
