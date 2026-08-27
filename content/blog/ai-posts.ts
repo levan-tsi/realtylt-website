@@ -4121,7 +4121,7 @@ And it does not decide anything. Every hot lead is a suggestion that you call so
 
 ### How does AI qualify a real estate lead?
 
-It reads the actual conversation instead of the form, and scores what it finds on three things: intent, budget and timeline. Whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three predict who transacts soon, and none of them appear on a contact form.
+It reads the actual conversation instead of the form, and scores what it finds on three things: intent, budget and timeline. Whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three are the things a person can be specific about before anything has happened, and none of them appear on a contact form.
 
 ### What is lead scoring, in plain terms?
 

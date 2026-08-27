@@ -111,7 +111,7 @@ export const leadQualification: Service = {
   faqs: [
     {
       q: "How does AI qualify a real estate lead?",
-      a: "It reads the actual conversation rather than the form, and scores the lead on intent, budget, and timeline: whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three things predict who transacts, and none of them appear on a contact form.",
+      a: "It reads the actual conversation rather than the form, and scores the lead on intent, budget, and timeline: whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three are the things a person can be specific about before anything has happened, and none of them appear on a contact form.",
     },
     {
       q: "What is lead scoring?",

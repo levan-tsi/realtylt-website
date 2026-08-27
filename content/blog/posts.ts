@@ -459,7 +459,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:
-      "What AI lead qualification reads instead of your contact form, the three signals that predict who transacts, and the fair housing rules that govern scoring and routing.",
+      "What AI lead qualification reads instead of the contact form, the three signals a person can be specific about, and the fair housing rules on scoring and routing.",
     cover: "/images/counties/westchester.jpg",
     body: [],
     placeholder: false,
@@ -549,7 +549,7 @@ export const POSTS: BlogPost[] = [
      * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "The manual step takes ninety seconds. Getting back to what you were doing takes twenty five minutes. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
+      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
     seoDescription:
       "What workflow automation removes from a real estate business, how to find your own list in an hour, and the quiet failure the platforms document but nobody mentions.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
