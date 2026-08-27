@@ -1,0 +1,1997 @@
+{
+  "pages": 53,
+  "anchorCount": 3212,
+  "problems": [],
+  "externals": [
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcustom-automation-real-estate-bespoke-build",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=It%20Ran%20Every%20Morning%20for%20Two%20Years.%20Then%20a%20Field%20Came%20Back%20With%20a%20New%20Word%20in%20It.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcustom-automation-real-estate-bespoke-build",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=It%20Ran%20Every%20Morning%20for%20Two%20Years.%20Then%20a%20Field%20Came%20Back%20With%20a%20New%20Word%20in%20It.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcustom-automation-real-estate-bespoke-build",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://cloud.google.com/terms/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build",
+        "/services/custom-automation"
+      ]
+    },
+    {
+      "href": "https://learn.microsoft.com/en-us/lifecycle/policies/modern",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://semver.org/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://docs.stripe.com/api/versioning",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-audit-small-business-what-not-to-automate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=You%20Had%20Eleven%20Ideas.%20The%20Hour%20Crossed%20Four%20of%20Them%20Off.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-audit-small-business-what-not-to-automate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=You%20Had%20Eleven%20Ideas.%20The%20Hour%20Crossed%20Four%20of%20Them%20Off.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-audit-small-business-what-not-to-automate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://www.census.gov/data/tables/2018/econ/abs/2018-abs-digital-technology-module.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://www.nber.org/system/files/working_papers/w28290/w28290.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate",
+        "/services/ai-audit"
+      ]
+    },
+    {
+      "href": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/1304.4590",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://www.cs.vu.nl/~x/chaos/chaos.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-clone-real-estate-agent-video-avatar",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Fourteen%20Videos%20Went%20Out%20in%20Your%20Face.%20You%20Have%20Watched%20None%20of%20Them.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-clone-real-estate-agent-video-avatar",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Fourteen%20Videos%20Went%20Out%20in%20Your%20Face.%20You%20Have%20Watched%20None%20of%20Them.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-clone-real-estate-agent-video-avatar",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.federalregister.gov/documents/2024/03/01/2024-03793/trade-regulation-rule-on-impersonation-of-government-and-businesses",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8872790/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar",
+        "/services/ai-clone"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/2006.07397",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Finvoicing-and-payments-real-estate-brokerage",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Referral%20Closed%20in%20July.%20Nobody%20Here%20Raised%20an%20Invoice.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Finvoicing-and-payments-real-estate-brokerage",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Referral%20Closed%20in%20July.%20Nobody%20Here%20Raised%20an%20Invoice.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Finvoicing-and-payments-real-estate-brokerage",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/12/2607",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/12/2602",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/12/2603",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/12/229.12",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/12/229.10",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/12/229.13",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage",
+        "/services/invoicing-and-payments"
+      ]
+    },
+    {
+      "href": "https://www.nacha.org/content/same-day-ach",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-scheduling-real-estate-showing-confirmations",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=You%20Said%20It%20Was%20Confirmed.%20One%20of%20the%20Three%20People%20Had%20Not%20Replied.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-scheduling-real-estate-showing-confirmations",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=You%20Said%20It%20Was%20Confirmed.%20One%20of%20the%20Three%20People%20Had%20Not%20Replied.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-scheduling-real-estate-showing-confirmations",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/1703.08428",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations",
+        "/services/ai-scheduling"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc5546.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc6638.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdata-enrichment-real-estate-stale-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Empty%20Fields%20Got%20Filled.%20So%20Did%20the%20Ones%20That%20Were%20Already%20Right.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdata-enrichment-real-estate-stale-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Empty%20Fields%20Got%20Filled.%20So%20Did%20the%20Ones%20That%20Were%20Already%20Right.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdata-enrichment-real-estate-stale-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records",
+        "/services/data-enrichment"
+      ]
+    },
+    {
+      "href": "https://knowledge.hubspot.com/import-and-export/import-objects",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.106",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://ag.ny.gov/resources/organizations/data-breach-reporting/shield-act",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdocument-processing-real-estate-contract-deadlines",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=It%20Read%20the%20Date%20Correctly.%20The%20Date%20Was%20Not%20the%20Deadline.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdocument-processing-real-estate-contract-deadlines",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=It%20Read%20the%20Date%20Correctly.%20The%20Date%20Was%20Not%20the%20Deadline.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdocument-processing-real-estate-contract-deadlines",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/1905.13538",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/2007.00398",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines",
+        "/services/document-processing"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/12/1026.19",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/12/1026.2",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/5/6103",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/15/7001",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmarketing-automation-real-estate-email-deliverability",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=You%20Sent%20It%20to%20Fourteen%20Hundred%20People.%20Five%20Pressed%20One%20Button.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmarketing-automation-real-estate-email-deliverability",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=You%20Sent%20It%20to%20Fourteen%20Hundred%20People.%20Five%20Pressed%20One%20Button.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmarketing-automation-real-estate-email-deliverability",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/15/7704",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/16/316.5",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/16/316.3",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://support.google.com/a/answer/81126",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability",
+        "/services/marketing-automation"
+      ]
+    },
+    {
+      "href": "https://senders.yahooinc.com/best-practices/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc7208.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc6376.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc7489.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc8058.txt",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://petsymposium.org/popets/2018/popets-2018-0006.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fskip-tracing-real-estate-legal-owner-phone-numbers",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=You%20Have%20Her%20Number.%20She%20Never%20Gave%20It%20to%20You.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fskip-tracing-real-estate-legal-owner-phone-numbers",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=You%20Have%20Her%20Number.%20She%20Never%20Gave%20It%20to%20You.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fskip-tracing-real-estate-legal-owner-phone-numbers",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.census.gov/data/tables/time-series/demo/geographic-mobility/historic.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/47/52.21",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/18/2721",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/18/2725",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/18/2722",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/18/2724",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers",
+        "/services/skip-tracing-lead-generation"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/15/1681b",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/15/1681a",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://docs.fcc.gov/public/attachments/FCC-18-177A1.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-agent-workforce-real-estate-assistants",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Four%20Assistants%20Ran%20Overnight.%20Nobody%20Read%20What%20They%20Did.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-agent-workforce-real-estate-assistants",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Four%20Assistants%20Ran%20Overnight.%20Nobody%20Read%20What%20They%20Did.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-agent-workforce-real-estate-assistants",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/2503.13657",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants",
+        "/services/ai-agent-workforce"
+      ]
+    },
+    {
+      "href": "https://arxiv.org/abs/2406.12045",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcrm-sync-real-estate-duplicate-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=She%20Is%20In%20Your%20CRM%20Twice.%20Only%20One%20of%20Them%20Knows%20She%20Sold.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcrm-sync-real-estate-duplicate-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=She%20Is%20In%20Your%20CRM%20Twice.%20Only%20One%20of%20Them%20Knows%20She%20Sold.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcrm-sync-real-estate-duplicate-contact-records",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records",
+        "/services/crm-sync"
+      ]
+    },
+    {
+      "href": "https://www.census.gov/topics/population/genealogy/data/2010_surnames.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc9110.html#name-put",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc5789.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://developers.hubspot.com/docs/guides/api/crm/objects/contacts",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fgeo-landing-pages-real-estate-doorway-pages",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Nine%20Town%20Pages.%20The%20Only%20Thing%20That%20Changed%20Was%20the%20Town.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fgeo-landing-pages-real-estate-doorway-pages",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Nine%20Town%20Pages.%20The%20Only%20Thing%20That%20Changed%20Was%20the%20Town.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fgeo-landing-pages-real-estate-doorway-pages",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://developers.google.com/search/docs/essentials/spam-policies",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages",
+        "/services/geo-landing-pages"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/24/100.75",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/24/100.70",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://nationalfairhousing.org/wp-content/uploads/2025/11/2025-NFHA-Fair-Housing-Trends-Report.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flocal-seo-real-estate-map-pack-google-business-profile",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Three%20Businesses%20Show%20Up.%20Yours%20Is%20Not%20One%20of%20Them.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flocal-seo-real-estate-map-pack-google-business-profile",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Three%20Businesses%20Show%20Up.%20Yours%20Is%20Not%20One%20of%20Them.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flocal-seo-real-estate-map-pack-google-business-profile",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://support.google.com/business/answer/7091",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile",
+        "/services/local-seo"
+      ]
+    },
+    {
+      "href": "https://support.google.com/business/answer/3038177",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://www.nber.org/system/files/working_papers/w20171/w20171.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-appointment-booking-no-shows-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=You%20Booked%20the%20Showing%20for%20Nine%20Days%20Out.%20Nobody%20Came.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-appointment-booking-no-shows-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=You%20Booked%20the%20Showing%20for%20Nine%20Days%20Out.%20Nobody%20Came.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-appointment-booking-no-shows-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate",
+        "/services/ai-appointment-booking"
+      ]
+    },
+    {
+      "href": "https://developers.google.com/workspace/calendar/api/v3/reference/freebusy/query",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fautomated-google-review-requests-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Twelve%20Five-Star%20Reviews.%20The%20Newest%20One%20Is%20From%202023.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fautomated-google-review-requests-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Twelve%20Five-Star%20Reviews.%20The%20Newest%20One%20Is%20From%202023.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fautomated-google-review-requests-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.brightlocal.com/research/local-consumer-review-survey/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate",
+        "/services/review-automation"
+      ]
+    },
+    {
+      "href": "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://support.google.com/contributionpolicy/answer/7400114",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/16/465.7",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-lead-qualification-real-estate-scoring",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=All%20Three%20Leads%20Look%20the%20Same.%20Two%20Are%20Worth%20Your%20Morning.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-lead-qualification-real-estate-scoring",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=All%20Three%20Leads%20Look%20the%20Same.%20Two%20Are%20Worth%20Your%20Morning.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-lead-qualification-real-estate-scoring",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring",
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/42/3604",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/2025-code-of-ethics-standards-of-practice",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://archives.hud.gov/news/2024/FHEO_Guidance_on_Advertising_through_Digital_Platforms.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdatabase-reactivation-old-real-estate-leads",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=They%20Said%20Not%20Right%20Now.%20That%20Was%20Three%20Years%20Ago.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdatabase-reactivation-old-real-estate-leads",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=They%20Said%20Not%20Right%20Now.%20That%20Was%20Three%20Years%20Ago.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdatabase-reactivation-old-real-estate-leads",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/cfr/text/47/64.1200",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.law.cornell.edu/uscode/text/47/227",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.twilio.com/docs/messaging/features/twilio-health-score-for-messaging",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-voice-agent-missed-calls-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Nobody%20Leaves%20a%20Voicemail%20Anymore.%20They%20Call%20the%20Next%20Agent.%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-voice-agent-missed-calls-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Nobody%20Leaves%20a%20Voicemail%20Anymore.%20They%20Call%20the%20Next%20Agent.&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-voice-agent-missed-calls-real-estate",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate",
+        "/blog/ai-chat-assistant-real-estate-website",
+        "/services/ai-chat-assistant"
+      ]
+    },
+    {
+      "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://docs.fcc.gov/public/attachments/FCC-24-17A1.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240AB2905",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fworkflow-automation-real-estate-business",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Busywork%20Tax%3A%20What%20Workflow%20Automation%20Actually%20Removes%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fworkflow-automation-real-estate-business",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Busywork%20Tax%3A%20What%20Workflow%20Automation%20Actually%20Removes&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fworkflow-automation-real-estate-business",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://ics.uci.edu/~gmark/CHI2005.pdf",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://help.zapier.com/hc/en-us/articles/14167175792909-Decide-how-your-Zap-handles-errors-with-advanced-settings",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://help.zapier.com/hc/en-us/articles/20505304170637-Review-run-statuses-in-Zap-workflows",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://docs.n8n.io/flow-logic/error-handling/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-chat-assistant-real-estate-website",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Your%20Website%20Answered%20That%20Buyer%20at%2011%3A40pm.%20Did%20You%3F%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-chat-assistant-real-estate-website",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Your%20Website%20Answered%20That%20Buyer%20at%2011%3A40pm.%20Did%20You%3F&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-chat-assistant-real-estate-website",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17943",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17941",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://web.dev/articles/vitals",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://www.w3.org/TR/WCAG22/",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ftop-5-renovations-increase-home-value-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/top-5-renovations-increase-home-value-ny"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Top%205%20Renovations%20That%20Actually%20Increase%20Your%20Homes%20Value%20in%20New%20York%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ftop-5-renovations-increase-home-value-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/top-5-renovations-increase-home-value-ny"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Top%205%20Renovations%20That%20Actually%20Increase%20Your%20Homes%20Value%20in%20New%20York&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ftop-5-renovations-increase-home-value-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/top-5-renovations-increase-home-value-ny"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffirst-time-home-buyer-ny-10-step-checklist",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/first-time-home-buyer-ny-10-step-checklist"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=First-Time%20Home%20Buyer%20in%20NY%3F%20Here's%20Your%2010-Step%20Checklist%20from%20Start%20to%20Finish%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffirst-time-home-buyer-ny-10-step-checklist",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/first-time-home-buyer-ny-10-step-checklist"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=First-Time%20Home%20Buyer%20in%20NY%3F%20Here's%20Your%2010-Step%20Checklist%20from%20Start%20to%20Finish&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffirst-time-home-buyer-ny-10-step-checklist",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/first-time-home-buyer-ny-10-step-checklist"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmoving-to-hudson-valley-rental-vs-buying",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/moving-to-hudson-valley-rental-vs-buying"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Moving%20to%20the%20Hudson%20Valley%3A%20Rental%20vs.%20Buying%20%E2%80%93%20What%20Makes%20the%20Most%20Sense%3F%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmoving-to-hudson-valley-rental-vs-buying",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/moving-to-hudson-valley-rental-vs-buying"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Moving%20to%20the%20Hudson%20Valley%3A%20Rental%20vs.%20Buying%20%E2%80%93%20What%20Makes%20the%20Most%20Sense%3F&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmoving-to-hudson-valley-rental-vs-buying",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/moving-to-hudson-valley-rental-vs-buying"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Frelocating-to-hudson-valley-newcomers-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/relocating-to-hudson-valley-newcomers-guide"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Relocating%20to%20the%20Hudson%20Valley%3A%20What%20Newcomers%20Need%20to%20Know%20About%20Small-Town%20Charm%20Meets%20Big-City%20Access%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Frelocating-to-hudson-valley-newcomers-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/relocating-to-hudson-valley-newcomers-guide"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Relocating%20to%20the%20Hudson%20Valley%3A%20What%20Newcomers%20Need%20to%20Know%20About%20Small-Town%20Charm%20Meets%20Big-City%20Access&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Frelocating-to-hudson-valley-newcomers-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/relocating-to-hudson-valley-newcomers-guide"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fhow-to-hire-best-local-movers-7-questions",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/how-to-hire-best-local-movers-7-questions"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=How%20to%20Hire%20the%20Best%20Local%20Movers%3A%207%20Questions%20You%20Must%20Ask%20Before%20Signing%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fhow-to-hire-best-local-movers-7-questions",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/how-to-hire-best-local-movers-7-questions"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=How%20to%20Hire%20the%20Best%20Local%20Movers%3A%207%20Questions%20You%20Must%20Ask%20Before%20Signing&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fhow-to-hire-best-local-movers-7-questions",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/how-to-hire-best-local-movers-7-questions"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fpacking-101-pro-tips-organized-move",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/packing-101-pro-tips-organized-move"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Packing%20101%3A%20Pro%20Tips%20and%20Hacks%20for%20a%20Faster%2C%20More%20Organized%20Move%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fpacking-101-pro-tips-organized-move",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/packing-101-pro-tips-organized-move"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Packing%20101%3A%20Pro%20Tips%20and%20Hacks%20for%20a%20Faster%2C%20More%20Organized%20Move&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fpacking-101-pro-tips-organized-move",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/packing-101-pro-tips-organized-move"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fultimate-moving-checklist-8-week-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ultimate-moving-checklist-8-week-guide"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Ultimate%20Moving%20Checklist%3A%20Your%208-Week%20Guide%20to%20a%20Stress-Free%20Move%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fultimate-moving-checklist-8-week-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ultimate-moving-checklist-8-week-guide"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Ultimate%20Moving%20Checklist%3A%20Your%208-Week%20Guide%20to%20a%20Stress-Free%20Move&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fultimate-moving-checklist-8-week-guide",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/ultimate-moving-checklist-8-week-guide"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flower-energy-bills-9-efficiency-tips-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/lower-energy-bills-9-efficiency-tips-ny"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Lower%20Your%20Energy%20Bills%3A%209%20Efficiency%20Tips%20for%20New%20York%20Homeowners%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flower-energy-bills-9-efficiency-tips-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/lower-energy-bills-9-efficiency-tips-ny"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Lower%20Your%20Energy%20Bills%3A%209%20Efficiency%20Tips%20for%20New%20York%20Homeowners&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flower-energy-bills-9-efficiency-tips-ny",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/lower-energy-bills-9-efficiency-tips-ny"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fnew-homeowners-toolkit-9-essentials",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/new-homeowners-toolkit-9-essentials"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=The%20Ultimate%20New%20Homeowner's%20Toolkit%3A%209%20Essentials%20Every%20Owner%20Needs%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fnew-homeowners-toolkit-9-essentials",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/new-homeowners-toolkit-9-essentials"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=The%20Ultimate%20New%20Homeowner's%20Toolkit%3A%209%20Essentials%20Every%20Owner%20Needs&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fnew-homeowners-toolkit-9-essentials",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/new-homeowners-toolkit-9-essentials"
+      ]
+    },
+    {
+      "href": "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffinishing-your-basement-cost-and-value",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/finishing-your-basement-cost-and-value"
+      ]
+    },
+    {
+      "href": "https://wa.me/?text=Thinking%20of%20Finishing%20Your%20Basement%3F%20What%20to%20Know%20About%20Cost%20and%20Value%20https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffinishing-your-basement-cost-and-value",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/finishing-your-basement-cost-and-value"
+      ]
+    },
+    {
+      "href": "https://twitter.com/intent/tweet?text=Thinking%20of%20Finishing%20Your%20Basement%3F%20What%20to%20Know%20About%20Cost%20and%20Value&url=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffinishing-your-basement-cost-and-value",
+      "status": 200,
+      "note": "",
+      "from": [
+        "/blog/finishing-your-basement-cost-and-value"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcustom-automation-real-estate-bespoke-build",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://developers.facebook.com/docs/graph-api/guides/versioning",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-audit-small-business-what-not-to-automate",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-audit-small-business-what-not-to-automate"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-clone-real-estate-agent-video-avatar",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Finvoicing-and-payments-real-estate-brokerage",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-scheduling-real-estate-showing-confirmations",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-scheduling-real-estate-showing-confirmations"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdata-enrichment-real-estate-stale-contact-records",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdocument-processing-real-estate-contract-deadlines",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/document-processing-real-estate-contract-deadlines"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmarketing-automation-real-estate-email-deliverability",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/marketing-automation-real-estate-email-deliverability"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fskip-tracing-real-estate-legal-owner-phone-numbers",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-agent-workforce-real-estate-assistants",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fcrm-sync-real-estate-duplicate-contact-records",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/crm-sync-real-estate-duplicate-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fgeo-landing-pages-real-estate-doorway-pages",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/geo-landing-pages-real-estate-doorway-pages"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flocal-seo-real-estate-map-pack-google-business-profile",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/local-seo-real-estate-map-pack-google-business-profile"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-appointment-booking-no-shows-real-estate",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-appointment-booking-no-shows-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fautomated-google-review-requests-real-estate",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/automated-google-review-requests-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-lead-qualification-real-estate-scoring",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-lead-qualification-real-estate-scoring"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fdatabase-reactivation-old-real-estate-leads",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/database-reactivation-old-real-estate-leads"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-voice-agent-missed-calls-real-estate",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fworkflow-automation-real-estate-business",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/workflow-automation-real-estate-business"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fai-chat-assistant-real-estate-website",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ai-chat-assistant-real-estate-website"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ftop-5-renovations-increase-home-value-ny",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/top-5-renovations-increase-home-value-ny"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffirst-time-home-buyer-ny-10-step-checklist",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/first-time-home-buyer-ny-10-step-checklist"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fmoving-to-hudson-valley-rental-vs-buying",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/moving-to-hudson-valley-rental-vs-buying"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Frelocating-to-hudson-valley-newcomers-guide",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/relocating-to-hudson-valley-newcomers-guide"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fhow-to-hire-best-local-movers-7-questions",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/how-to-hire-best-local-movers-7-questions"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fpacking-101-pro-tips-organized-move",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/packing-101-pro-tips-organized-move"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fultimate-moving-checklist-8-week-guide",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/ultimate-moving-checklist-8-week-guide"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Flower-energy-bills-9-efficiency-tips-ny",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/lower-energy-bills-9-efficiency-tips-ny"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Fnew-homeowners-toolkit-9-essentials",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/new-homeowners-toolkit-9-essentials"
+      ]
+    },
+    {
+      "href": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frealtylt-website.vercel.app%2Fblog%2Ffinishing-your-basement-cost-and-value",
+      "status": 400,
+      "note": "",
+      "from": [
+        "/blog/finishing-your-basement-cost-and-value"
+      ]
+    },
+    {
+      "href": "https://dos.ny.gov/fair-housing-notice",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog",
+        "/services",
+        "/blog/custom-automation-real-estate-bespoke-build",
+        "/blog/ai-audit-small-business-what-not-to-automate",
+        "/blog/ai-clone-real-estate-agent-video-avatar",
+        "/blog/invoicing-and-payments-real-estate-brokerage",
+        "/blog/ai-scheduling-real-estate-showing-confirmations",
+        "/blog/data-enrichment-real-estate-stale-contact-records",
+        "/blog/document-processing-real-estate-contract-deadlines",
+        "/blog/marketing-automation-real-estate-email-deliverability",
+        "/blog/skip-tracing-real-estate-legal-owner-phone-numbers",
+        "/blog/ai-agent-workforce-real-estate-assistants",
+        "/blog/crm-sync-real-estate-duplicate-contact-records",
+        "/blog/geo-landing-pages-real-estate-doorway-pages",
+        "/blog/local-seo-real-estate-map-pack-google-business-profile",
+        "/blog/ai-appointment-booking-no-shows-real-estate",
+        "/blog/automated-google-review-requests-real-estate",
+        "/blog/ai-lead-qualification-real-estate-scoring",
+        "/blog/database-reactivation-old-real-estate-leads",
+        "/blog/ai-voice-agent-missed-calls-real-estate",
+        "/blog/workflow-automation-real-estate-business",
+        "/blog/ai-chat-assistant-real-estate-website",
+        "/blog/top-5-renovations-increase-home-value-ny",
+        "/blog/first-time-home-buyer-ny-10-step-checklist",
+        "/blog/moving-to-hudson-valley-rental-vs-buying",
+        "/blog/relocating-to-hudson-valley-newcomers-guide",
+        "/blog/how-to-hire-best-local-movers-7-questions",
+        "/blog/packing-101-pro-tips-organized-move",
+        "/blog/ultimate-moving-checklist-8-week-guide",
+        "/blog/lower-energy-bills-9-efficiency-tips-ny",
+        "/blog/new-homeowners-toolkit-9-essentials",
+        "/blog/finishing-your-basement-cost-and-value",
+        "/services/ai-agent-workforce",
+        "/services/ai-appointment-booking",
+        "/services/ai-audit",
+        "/services/ai-chat-assistant",
+        "/services/ai-clone",
+        "/services/ai-scheduling",
+        "/services/ai-voice-agents",
+        "/services/crm-sync",
+        "/services/custom-automation",
+        "/services/data-enrichment",
+        "/services/database-reactivation",
+        "/services/document-processing",
+        "/services/geo-landing-pages",
+        "/services/invoicing-and-payments",
+        "/services/lead-qualification",
+        "/services/local-seo",
+        "/services/marketing-automation",
+        "/services/review-automation",
+        "/services/skip-tracing-lead-generation",
+        "/services/the-singularity",
+        "/services/workflow-automation"
+      ]
+    },
+    {
+      "href": "https://dl.acm.org/doi/10.1145/359511.359522",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/custom-automation-real-estate-bespoke-build"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/CVR/50",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/CVR/51",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/CVR/50-F",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-clone-real-estate-agent-video-avatar"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/GBS/518",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/invoicing-and-payments-real-estate-brokerage"
+      ]
+    },
+    {
+      "href": "https://www.bls.gov/news.release/tenure.t01.htm",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.bls.gov/news.release/tenure.nr0.htm",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/data-enrichment-real-estate-stale-contact-records"
+      ]
+    },
+    {
+      "href": "https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://dos.ny.gov/real-estate-license-law",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-agent-workforce-real-estate-assistants"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/PEN/250.05",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    },
+    {
+      "href": "https://www.nysenate.gov/legislation/laws/PEN/250.00",
+      "status": 403,
+      "note": "",
+      "from": [
+        "/blog/ai-voice-agent-missed-calls-real-estate"
+      ]
+    }
+  ]
+}

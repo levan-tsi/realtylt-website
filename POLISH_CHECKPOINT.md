@@ -1,5 +1,46 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 42 (2026-08-27): ACCURACY + ALIGNMENT — SHIPPED ================================
+## Full log: docs/parity/ROUND42-ACCURACY-ALIGNMENT.md. Read it before touching the clone
+## pages, the flagship ToC, or content/services/. Gates out: tsc clean, npm test 99/1373.
+##
+## c941698 THE PHONE CONTENTS PILL was 34px left of centre on ALL TWENTY flagship posts
+##   (measured 390 DPR3: centre 161 vs viewport 195, identical on every one, while the
+##   service pages measured 0). Cause: FlagshipToc dodged the chat launcher SIDEWAYS with
+##   `inset-x-4 right-[5.25rem]`; the offset is exactly half the excluded gutter. Now dodges
+##   on WIDTH (`max-w-[calc(100%-10.5rem)]`, a % of the CONTAINER not 100vw, which includes
+##   the scrollbar), and "On this page /" hides below 560px so END-truncation cannot eat the
+##   ACTIVE LABEL. After: 20/20 delta 0, launcher gap 23-56px, no truncation; 320 through
+##   1359 all delta 0 and no overflow. Guards: components/toc-centering.test.ts (in npm test)
+##   + scripts/toc-align-probe.mjs (per post, exits non-zero). Both proved red first.
+## 885f8d8 THE HEYGEN OWNERSHIP CLAIM, the owner's #1. The model is HeyGen's and LICENSED;
+##   what a client owns is the likeness, footage, scripts and finished videos. It was live on
+##   FIVE surfaces and the last two (the diagram's LEDE and its ALT TEXT) were found only by a
+##   second sweep after the first three were believed to be all of them. The 78% shape again.
+##   Guard: zombie-claims round J, the first entry in that table that is an ownership
+##   statement rather than a number.
+## 8788f0e The /ai persona finally swaps the INPUT PLACEHOLDER too (PLACEHOLDER /
+##   AI_PLACEHOLDER in CONFIG, chosen by currentPersona()). ** THE /ai PAGE CARRIES A BYTE
+##   COPY OF public/rlt-chat.js AND MUST RE-COPY IT. **
+## c3c70fe /services/the-singularity, the 21st service page, from COPY.singularity. TWO
+##   claims from the panel deliberately NOT carried (the "improves faster than you can shop
+##   for a replacement" rate claim, and "remembers everything" which its own limits
+##   contradict). If panel and page must agree word for word, change COPY, not the page.
+##   Three places assumed 20 services and were all updated: registry length + AI_COPY_KEYS in
+##   lib/services/index.test.ts, and the source count in zombie-claims.test.ts.
+##
+## SWEEP: 53 pages, 3,212 anchors, 0 internal problems. 240 unique externals, 196x200; the
+##   rest are WAF/bot responses. A CONTROL experiment (request a bogus URL on the same host)
+##   proved ACM live (its WAF passes 404s through) and proved BLS + dos.ny.gov UNVERIFIABLE
+##   from this box (identical challenge for real and invented URLs). Not reported as green.
+##   /ai is NOT served by this app: dev 404s it, prod answers 200. The PNAS 48.2/59.0/315/219
+##   figures on the clone pages were re-verified word for word against the primary.
+##
+## STILL OPEN: BLS + dos.ny.gov need one check from a residential connection. ArticleToc and
+##   ServiceToc still use max-w-[86vw] (centred and clear TODAY at 200px, but a long label
+##   would overlap the launcher). The /ai lane owes: re-copy rlt-chat.js, and add
+##   `singularity: 'the-singularity'` to SERVICE_SLUG. The Singularity BLOG POST is unwritten.
+
 ## == ROUND 41c HANDOFF (2026-08-26/27): AI-READABILITY + HERO ENGINE + QA ROUND 2 =========
 ## Owner's standing instructions this session: multiple test rounds on everything; subagents
 ## granted (1 builder + 1 scrutineer + 1 fresh QA, all Opus, Fable re-measured every claim).
