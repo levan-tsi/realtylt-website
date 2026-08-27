@@ -122,9 +122,12 @@ export function MortgageCalculator({
                   // "$1,250,000" lands as 1250000 and a typed "-" cannot get in. Only the
                   // FIRST dot survives: without that, typing a second one makes Number()
                   // return NaN and the field blanks itself under the caret.
-                  const raw = f.money
-                    ? e.target.value.replace(/[^\d.]/g, "").replace(/^(\d*\.?)|\./g, "$1")
-                    : e.target.value;
+                  // Non-money fields strip the minus too: a typed "-50" down payment used to
+                  // sail through as a 150%-LTV loan with a confident P&I (QA round 2).
+                  const raw = (f.money
+                    ? e.target.value.replace(/[^\d.]/g, "")
+                    : e.target.value.replace(/-/g, "")
+                  ).replace(/^(\d*\.?)|\./g, "$1");
                   setValues((v) => ({ ...v, [f.key]: raw === "" ? NaN : Number(raw) }));
                 }}
                 className="w-full border-0 border-b border-paper/40 bg-transparent px-0 py-1.5 text-sm text-paper transition-colors focus:border-paper focus:outline-none"

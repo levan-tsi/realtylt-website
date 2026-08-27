@@ -199,9 +199,14 @@ function searchFilters(p: SearchParams): string {
   if (p.garageMax != null) parts.push(`garage_spaces=lte.${p.garageMax}`);
   if (p.lotMin != null) parts.push(`lot_acres=gte.${p.lotMin}`);
   if (p.lotMax != null) parts.push(`lot_acres=lte.${p.lotMax}`);
-  if (p.yearMin != null) parts.push(`year_built=gte.${p.yearMin}`);
-  if (p.yearMax != null) parts.push(`year_built=lte.${p.yearMax}`);
-  if (p.taxMax != null) parts.push(`tax_annual=lte.${p.taxMax}`);
+  // The junk-value guards (QA round 2, same class as the sqft=0 fix): the feed stores a
+  // stated-but-meaningless 0 on 6 year_built rows and 476 tax_annual rows, and a 9999 on 2
+  // year_built rows. The detail page already renders a 0 tax as unknown (ListingDetail hides
+  // the row), so the filter counting it as a real $0 had the site disagreeing with itself —
+  // at taxMax=2500 the zero rows dominated the results.
+  if (p.yearMin != null) { parts.push(`year_built=gte.${p.yearMin}`); parts.push(`year_built=lte.2100`); }
+  if (p.yearMax != null) { parts.push(`year_built=lte.${p.yearMax}`); if (p.yearMin == null) parts.push(`year_built=gt.0`); }
+  if (p.taxMax != null) { parts.push(`tax_annual=lte.${p.taxMax}`); parts.push(`tax_annual=gt.0`); }
   // photos_servable, not the JSONB marker: the marker is wiped by the sync's full-JSONB upsert,
   // so filtering on it hid 9,186 active listings that DO have photos (measured 2026-07-30).
   if (p.withPhotosOnly) parts.push(`photos_servable=gt.0`);

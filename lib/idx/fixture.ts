@@ -86,9 +86,11 @@ export class FixtureIdxClient implements IdxClient {
       if (garageMax != null && !((l.garageSpaces ?? Infinity) <= garageMax)) return false;
       if (lotMin != null && !((l.lotAcres ?? -1) >= lotMin)) return false;
       if (lotMax != null && !((l.lotAcres ?? Infinity) <= lotMax)) return false;
-      if (yearMin != null && !((l.yearBuilt ?? -1) >= yearMin)) return false;
-      if (yearMax != null && !((l.yearBuilt ?? Infinity) <= yearMax)) return false;
-      if (taxMax != null && !((l.taxAnnual ?? Infinity) <= taxMax)) return false;
+      // Junk-value guards mirror db.ts (QA round 2): a stated 0 or 9999 year and a stated $0
+      // tax are "unknown", not facts, and never satisfy a bound.
+      if (yearMin != null && !((l.yearBuilt ?? -1) >= yearMin && (l.yearBuilt ?? Infinity) <= 2100)) return false;
+      if (yearMax != null && !((l.yearBuilt ?? Infinity) <= yearMax && (l.yearBuilt ?? 0) > 0)) return false;
+      if (taxMax != null && !((l.taxAnnual ?? Infinity) <= taxMax && (l.taxAnnual ?? 0) > 0)) return false;
       if (withPhotosOnly && !((l.photosMirrored ?? 0) > 0)) return false;
       // Home type + feature toggles. Same semantics as the generated columns the DB path
       // filters on (supabase/migrations/idx_search_facet_columns.sql): an ABSENT array is a

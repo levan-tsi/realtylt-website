@@ -187,6 +187,8 @@ describe("FixtureIdxClient — filters", () => {
       mk("G0", { garageSpaces: 0, sqft: 4000, yearBuilt: 1960, lotAcres: 40, taxAnnual: 3000 }),
       mk("GNONE", { sqft: 5000 }), // no OPTIONAL facts (garage/lot/year/tax); sqft is mandatory
       mk("GZERO", { sqft: 0 }), // unmeasured sqft, stored as 0 the way the feed delivers it
+      mk("GJUNK", { sqft: 3000, taxAnnual: 0, yearBuilt: 0 }), // stated-but-meaningless zeros
+      mk("GFUT", { sqft: 3000, yearBuilt: 9999 }), // the feed's junk future year
     ]);
     // Numeric, not lexicographic: garage >= 3 keeps 10 but drops 2 (a text compare would drop 10).
     expect((await c.search({ garageMin: 3, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
@@ -195,8 +197,12 @@ describe("FixtureIdxClient — filters", () => {
     // GZERO's 0 sqft is "unmeasured", not "small": a MAX cap never matches it (round 41 —
     // before this rule, "under 750 sq ft" matched 5,199 Active rows with no sqft at all).
     expect((await c.search({ sqftMax: 2000, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
-    expect((await c.search({ sqftMax: 99999, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2", "GNONE"]);
+    expect((await c.search({ sqftMax: 99999, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2", "GFUT", "GJUNK", "GNONE"]);
     expect((await c.search({ yearMin: 2000, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
+    // Junk guards (QA round 2): 0 and 9999 years and a stated $0 tax are unknowns, not facts.
+    expect((await c.search({ yearMin: 1900, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2"]);
+    expect((await c.search({ yearMax: 3000, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2"]);
+    expect((await c.search({ taxMax: 99999, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10", "G2"]);
     expect((await c.search({ lotMin: 1, lotMax: 10, pageSize: 100 })).listings.map((l) => l.id)).toEqual(["G10"]);
     expect((await c.search({ taxMax: 10000, pageSize: 100 })).listings.map((l) => l.id).sort()).toEqual(["G0", "G10"]);
   });
