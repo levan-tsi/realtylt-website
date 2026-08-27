@@ -1,0 +1,382 @@
+<title>RealtyLT Hero Lab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&display=swap">
+<style>
+  :root{
+    --ink:#0b0f16; --ink-2:#121826; --paper:#f5f2ec; --stone:#98a0ab;
+    --ember:#e0a763; --line:rgba(245,242,236,.14);
+    --serif:"Newsreader",Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  }
+  body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);line-height:1.55}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  .intro{padding:56px 0 36px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ember)}
+  h1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5vw,52px);letter-spacing:-.02em;line-height:1.06;margin:14px 0 0;text-wrap:balance}
+  h1 strong{font-weight:600}
+  .intro p{color:var(--stone);max-width:66ch;margin:16px 0 0}
+  .intro p b{color:var(--paper);font-weight:600}
+
+  .stagebox{margin:40px 0 0}
+  .hero{position:relative;height:min(84vh,700px);min-height:480px;border-radius:16px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse 90% 70% at 50% 30%,#101726,#0b0f16 72%)}
+  canvas#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .hero .bar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:rgba(245,242,236,.85);z-index:6}
+  .hero .content{position:absolute;left:0;right:0;bottom:0;padding:0 22px 38px;z-index:6;text-align:center}
+  .hero .hl{font-family:var(--serif);font-weight:300;font-size:clamp(38px,6vw,64px);letter-spacing:-.02em;line-height:1.05;margin:0;text-wrap:balance;text-shadow:0 2px 26px rgba(0,0,0,.5)}
+  .hero .hl strong{font-weight:600}
+  .search{display:flex;gap:12px;max-width:560px;margin:24px auto 0}
+  .search input{flex:1;min-width:0;height:52px;padding:0 18px;font-size:16px;font-family:var(--sans);color:var(--paper);background:rgba(11,15,22,.55);border:1px solid rgba(245,242,236,.35);border-radius:12px;backdrop-filter:blur(6px)}
+  .search input::placeholder{color:rgba(245,242,236,.6)}
+  .search button{height:52px;padding:0 26px;font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--ink);background:var(--paper);border:0;border-radius:12px;cursor:pointer;transition:transform .15s ease,background .2s}
+  .search button:hover{background:#fff;transform:translateY(-1px)}
+  .phase{position:absolute;right:16px;bottom:12px;z-index:6;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:rgba(245,242,236,.55)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+  .controls button{min-height:32px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--paper);font-size:14px;font-family:var(--sans);cursor:pointer;transition:border-color .2s,color .2s}
+  .controls button:hover{border-color:var(--ember);color:var(--ember)}
+  .controls button[aria-pressed="true"]{border-color:var(--ember);color:var(--ember)}
+  .controls button:focus-visible,.search :focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .hint{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--stone);margin-top:10px}
+
+  .verdict{margin:56px 0 72px;border-top:1px solid var(--line);padding-top:34px}
+  .verdict h2{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,32px);margin:0 0 8px}
+  .verdict p{color:var(--stone);max-width:70ch}
+  .verdict b{color:var(--paper)}
+  @media (max-width:600px){
+    .search{flex-direction:column}
+    .search button{width:100%}
+    .hero{height:74vh}
+  }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <p class="eyebrow">RealtyLT · the home hero, round three</p>
+    <h1>The market becomes <strong>your home.</strong></h1>
+    <p>The bar you set is the AI page: one particle field where every point has two homes, and
+      the whole galaxy reorganizes into the brain. This is that engine, rebuilt for real
+      estate, with <b>three homes per point</b>: thousands of drifting lights (every home on
+      the market), which gather into <b>one house</b> (the one that is yours), then settle into
+      <b>the valley at dusk</b> (where it belongs), and drift apart again. No photographs, no
+      video, no library: one shader, weightless, crisp on any screen.</p>
+    <p><b>Watch one full cycle (about 20 seconds), and move your mouse</b>: the scene tilts in
+      your hand, and the nearest lights lean toward you.</p>
+  </header>
+
+  <section class="stagebox" aria-label="The living hero">
+    <div class="hero" id="hero">
+      <canvas id="gl" aria-hidden="true"></canvas>
+      <div class="bar"><span>REALTYLT</span><span>MENU</span></div>
+      <div class="content">
+        <p class="hl">Let&rsquo;s Find <strong>Home</strong></p>
+        <div class="search"><input type="text" placeholder="Neighborhood, city, ZIP, or address" aria-label="Search listings"><button type="button">SEARCH</button></div>
+      </div>
+      <span class="phase" id="phaselabel">THE MARKET</span>
+    </div>
+    <div class="controls" role="group" aria-label="Scene options">
+      <button type="button" data-mode="cycle" aria-pressed="true">Full cycle</button>
+      <button type="button" data-mode="house" aria-pressed="false">Hold the house</button>
+      <button type="button" data-mode="valley" aria-pressed="false">Hold the valley</button>
+      <button type="button" data-mode="field" aria-pressed="false">Hold the market</button>
+    </div>
+    <p class="hint">The chips are for judging each state; the shipped hero would run the full cycle.</p>
+  </section>
+
+  <section class="verdict">
+    <h2>What ships if you say yes</h2>
+    <p>This exact engine drops into the real hero as one canvas behind the headline: about 60KB
+      of code, no assets to load, 60fps on a phone (the point count scales down), a still lit
+      house under reduced motion, and the licensed dusk photograph as the no-WebGL fallback.
+      The cycle timing, palette, and house shape are all one-line dials. <b>Nobody else in real
+      estate has a hero that tells this story, because nobody else can copy a photograph of
+      it.</b></p>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var canvas = document.getElementById("gl");
+  var hero = document.getElementById("hero");
+  var gl = canvas.getContext("webgl", { antialias: false, alpha: true, premultipliedAlpha: true });
+  if (!gl) { hero.style.background = "#121826"; return; }
+
+  var MOBILE = matchMedia("(max-width: 700px)").matches;
+  var N = MOBILE ? 9000 : 16000;
+  function seeded(s) { return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+  var rnd = seeded(20260826);
+
+  /* ── the three homes per point ────────────────────────────────────────── */
+  var field = new Float32Array(N * 3);
+  var house = new Float32Array(N * 3);
+  var valley = new Float32Array(N * 3);
+  var kind = new Float32Array(N);   /* 0 dust · 1 structure · 2 light (window/door/path) */
+  var river = new Float32Array(N);  /* 1 = this point is the Hudson in the valley shape */
+  var delay = new Float32Array(N);  /* stagger; for the house it means BOTTOM-UP build */
+  var arc = new Float32Array(N * 3);/* tangential swirl direction for the flight */
+
+  /* THE MARKET — a loose swirling disk of lights */
+  for (var i = 0; i < N; i++) {
+    var a = rnd() * Math.PI * 2, r = Math.pow(rnd(), 0.55) * 3.2;
+    var sw = r * 1.6;
+    field[i * 3] = Math.cos(a + sw) * r * 1.35;
+    field[i * 3 + 1] = (rnd() - 0.5) * 0.85 * (1.15 - r / 4);
+    field[i * 3 + 2] = Math.sin(a + sw) * r - 0.4;
+  }
+
+  /* THE HOUSE — gabled volume with real roof planes, eaves, panes, a door, and a path */
+  var W = 1.9, H = 1.05, D = 1.35, RY = 0.85, OV = 0.14, S = 1.02, yb = -0.72;
+  function edge(a2, b2) { var t = rnd(); return [a2[0] + (b2[0] - a2[0]) * t, a2[1] + (b2[1] - a2[1]) * t, a2[2] + (b2[2] - a2[2]) * t]; }
+  function housePoint(idx) {
+    var p, k = 0, pick = rnd();
+    if (pick < 0.105) { /* window panes: two front squares + a gable pane */
+      var wpick = rnd(), wx, wy;
+      if (wpick < 0.4) { wx = -0.62 + rnd() * 0.3; wy = yb + 0.46 + rnd() * 0.3; }
+      else if (wpick < 0.8) { wx = 0.32 + rnd() * 0.3; wy = yb + 0.46 + rnd() * 0.3; }
+      else { wx = -0.14 + rnd() * 0.28; wy = yb + H + 0.14 + rnd() * 0.26; }
+      p = [wx, wy, -(D / 2 + 0.012)]; k = 2;
+    } else if (pick < 0.145) { /* the door */
+      p = [-0.09 + rnd() * 0.18, yb + rnd() * 0.5, -(D / 2 + 0.008)]; k = 2;
+    } else if (pick < 0.175) { /* the path TO the door — a soft S of light on the ground,
+      running toward the viewer (negative z is NEAR: depth = 3.6 + z) */
+      var t2 = rnd();
+      p = [Math.sin(t2 * 3.6) * 0.24 * (1 - t2), yb - 0.015, -(D / 2 + 0.08) - (1 - t2) * 0.95];
+      k = 2;
+    } else if (pick < 0.5) { /* structural edges — the drawing of the house */
+      k = 1;
+      var E = [
+        [[-W/2,yb,D/2],[W/2,yb,D/2]], [[-W/2,yb,-D/2],[W/2,yb,-D/2]],
+        [[-W/2,yb,D/2],[-W/2,yb,-D/2]], [[W/2,yb,D/2],[W/2,yb,-D/2]],
+        [[-W/2,yb,D/2],[-W/2,yb+H,D/2]], [[W/2,yb,D/2],[W/2,yb+H,D/2]],
+        [[-W/2,yb,-D/2],[-W/2,yb+H,-D/2]], [[W/2,yb,-D/2],[W/2,yb+H,-D/2]],
+        /* eave lines overhang the walls */
+        [[-W/2-OV,yb+H,D/2+OV],[W/2+OV,yb+H,D/2+OV]],
+        [[-W/2-OV,yb+H,-D/2-OV],[W/2+OV,yb+H,-D/2-OV]],
+        /* rakes up the gables */
+        [[-W/2-OV,yb+H,D/2+OV],[0,yb+H+RY,D/2+OV]], [[W/2+OV,yb+H,D/2+OV],[0,yb+H+RY,D/2+OV]],
+        [[-W/2-OV,yb+H,-D/2-OV],[0,yb+H+RY,-D/2-OV]], [[W/2+OV,yb+H,-D/2-OV],[0,yb+H+RY,-D/2-OV]],
+        /* the ridge and a chimney */
+        [[0,yb+H+RY,D/2+OV],[0,yb+H+RY,-D/2-OV]],
+        [[0.52,yb+H+RY-0.06,0.18],[0.52,yb+H+RY+0.3,0.18]],
+        [[0.62,yb+H+RY-0.12,0.18],[0.62,yb+H+RY+0.3,0.18]],
+        [[0.52,yb+H+RY+0.3,0.18],[0.62,yb+H+RY+0.3,0.18]]
+      ];
+      p = edge.apply(null, E[Math.floor(rnd() * E.length)]);
+    } else { /* faces: walls sparse, roof slopes with a soft sheen */
+      var f = rnd();
+      if (f < 0.42) { /* the two roof planes, eave to ridge */
+        var side = rnd() < 0.5 ? -1 : 1, s2 = rnd(), t3 = rnd();
+        p = [side * (1 - s2) * (W / 2 + OV), yb + H + s2 * RY, -(D / 2 + OV) + t3 * (D + OV * 2)];
+      } else if (f < 0.58) { /* gable triangles */
+        var s3 = rnd(), t4 = rnd() * (1 - s3);
+        var gx = (s3 + t4 - 0.5) * W;
+        p = [gx, yb + H + Math.min(s3, t4) * 2 * RY * 0.9, (rnd() < 0.75 ? -D / 2 : D / 2)];
+        p[1] = yb + H + (0.5 - Math.abs(gx / W)) * 2 * RY * rnd();
+      } else if (f < 0.82) { /* front + back walls (front = NEAR = negative z) */
+        p = [-W / 2 + rnd() * W, yb + rnd() * H, rnd() < 0.6 ? -D / 2 : D / 2];
+      } else { /* side walls */
+        p = [rnd() < 0.5 ? -W / 2 : W / 2, yb + rnd() * H, -D / 2 + rnd() * D];
+      }
+    }
+    house[idx * 3] = p[0] * S; house[idx * 3 + 1] = p[1] * S; house[idx * 3 + 2] = p[2] * S;
+    return k;
+  }
+
+  /* THE VALLEY — gold ridgelines, the Hudson winding between them, faint stars above */
+  function ridgeY(x, band) {
+    return -0.55 - band * 0.16
+      + Math.sin(x * 1.7 + band * 2.1) * 0.14
+      + Math.sin(x * 3.9 + band * 5.3) * 0.055
+      + Math.sin(x * 0.6 + band) * 0.2;
+  }
+  function valleyPoint(idx, k) {
+    var x, y, z, band;
+    if (k === 0 && rnd() < 0.10) { /* the river: a pale ribbon in the valley floor */
+      river[idx] = 1;
+      var tt = rnd();
+      x = (tt - 0.5) * 5.0;
+      z = -0.75 - Math.sin(tt * 2.6 + 0.7) * 0.9;
+      band = Math.min(3, Math.max(0, Math.round((-z + 0.6) / 0.85)));
+      y = ridgeY(x, band) - 0.28 - rnd() * 0.04;
+    } else if (k === 0 && rnd() < 0.28) { /* sky stars above the ridges */
+      x = (rnd() - 0.5) * 5.4; y = 0.35 + rnd() * 1.25; z = -1.2 - rnd() * 1.6;
+    } else {
+      band = Math.floor(rnd() * 4);
+      x = (rnd() - 0.5) * 5.2;
+      var yTop = ridgeY(x, band);
+      z = -band * 0.85 + 0.6;
+      if (k === 2) y = yTop - 0.02 - rnd() * 0.05;
+      else if (k === 1) y = yTop - rnd() * 0.06;
+      else y = yTop - 0.06 - rnd() * 0.75;
+    }
+    valley[idx * 3] = x; valley[idx * 3 + 1] = y; valley[idx * 3 + 2] = z;
+  }
+
+  var hMin = yb * S, hMax = (yb + H + RY + 0.34) * S;
+  for (i = 0; i < N; i++) {
+    var k = housePoint(i);
+    kind[i] = k;
+    valleyPoint(i, k);
+    /* bottom-up build: a point's height in the house decides when it flies */
+    var hFrac = (house[i * 3 + 1] - hMin) / (hMax - hMin);
+    delay[i] = Math.min(1, Math.max(0, hFrac)) * 0.55 + rnd() * 0.18;
+    /* tangential swirl: the flight curves the way a galaxy turns */
+    var fx = field[i * 3], fz = field[i * 3 + 2];
+    var fl = Math.max(0.001, Math.hypot(fx, fz));
+    var mag = 0.35 + rnd() * 0.5;
+    arc[i * 3] = (-fz / fl) * mag;
+    arc[i * 3 + 1] = (rnd() - 0.3) * 0.35;
+    arc[i * 3 + 2] = (fx / fl) * mag * 0.5;
+  }
+
+  /* ── shaders ──────────────────────────────────────────────────────────── */
+  var vsrc = [
+    "precision mediump float;",
+    "attribute vec3 aField; attribute vec3 aHouse; attribute vec3 aValley;",
+    "attribute float aKind; attribute float aDelay; attribute vec3 aArc; attribute float aRiver;",
+    "uniform float uPhase; uniform float uSettle;",
+    "uniform float uTime; uniform vec2 uTilt; uniform float uAspect; uniform float uPx;",
+    "varying float vKind; varying float vFade; varying float vTw; varying float vFly; varying float vRiver;",
+    "float easeS(float t){ return t*t*(3.0-2.0*t); }",
+    "float seg(float t){ float d=aDelay*0.75; return easeS(clamp((t*1.75-d),0.0,1.0)); }",
+    "void main(){",
+    "  vec3 A; vec3 B; float t; float valMix;",
+    "  float ph = mod(uPhase, 3.0);",
+    "  if (ph < 1.0)      { A=aField;  B=aHouse;  t=seg(fract(ph)); valMix=0.0; }",
+    "  else if (ph < 2.0) { A=aHouse;  B=aValley; t=seg(fract(ph)); valMix=t; }",
+    "  else               { A=aValley; B=aField;  t=seg(fract(ph)); valMix=1.0-t; }",
+    "  vFly = sin(3.14159 * t);",
+    "  vRiver = aRiver * valMix;",
+    "  vec3 p = mix(A, B, t) + aArc * (vFly * 0.3);",
+    "  p.x += sin(uTime*0.35 + aDelay*6.28) * 0.012;",
+    "  p.y += cos(uTime*0.28 + aDelay*9.42) * 0.012;",
+    "  float cx = cos(uTilt.y), sx = sin(uTilt.y), cy = cos(uTilt.x), sy = sin(uTilt.x);",
+    "  p = vec3(p.x*cy + p.z*sy, p.y, -p.x*sy + p.z*cy);",
+    "  p = vec3(p.x, p.y*cx - p.z*sx, p.y*sx + p.z*cx);",
+    "  float depth = 3.6 + p.z;",
+    "  gl_Position = vec4(p.x/(depth*0.62)/uAspect, (p.y+0.22)/(depth*0.62), 0.0, 1.0);",
+    "  float base = (aKind > 1.5 ? 4.6 : (aKind > 0.5 ? 2.7 : 1.9)) + vRiver * 1.2;",
+    "  gl_PointSize = max(base * uPx * (2.2/depth), 1.6);",
+    "  vKind = aKind; vFade = clamp(pow(2.2/depth, 1.3), 0.18, 1.0);",
+    "  vTw = 0.75 + 0.25*sin(uTime*1.9 + aDelay*40.0);",
+    "}"
+  ].join("\n");
+  var fsrc = [
+    "precision mediump float;",
+    "uniform float uSettle;",
+    "varying float vKind; varying float vFade; varying float vTw; varying float vFly; varying float vRiver;",
+    "void main(){",
+    "  vec2 c = gl_PointCoord - 0.5;",
+    "  float d = length(c);",
+    "  float glow = pow(smoothstep(0.5, 0.0, d), 1.4);",
+    "  vec3 ember = vec3(0.878, 0.655, 0.388);",
+    "  vec3 bright = vec3(1.0, 0.84, 0.55);",
+    "  vec3 dust = vec3(0.62, 0.60, 0.66);",
+    "  vec3 riverc = vec3(0.72, 0.82, 0.95);",
+    "  vec3 col = vKind > 1.5 ? bright : (vKind > 0.5 ? ember : mix(dust, ember, 0.45));",
+    "  col = mix(col, riverc, vRiver);",
+    "  float amp;",
+    "  if (vKind > 1.5) {",
+    "    /* the lights come on AFTER the walls settle: dim in flight, bloom on arrival */",
+    "    float lit = 0.3 + 0.7 * smoothstep(0.25, 1.4, uSettle);",
+    "    amp = 1.5 * vTw * lit;",
+    "  } else if (vKind > 0.5) { amp = 1.15; } else { amp = 0.55 + vRiver * 0.75; }",
+    "  amp *= 1.0 + 0.45 * vFly;",   /* the flight itself glows */
+    "  gl_FragColor = vec4(col * glow * amp * vFade, glow * amp * vFade);",
+    "}"
+  ].join("\n");
+
+  function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsrc));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsrc));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+  gl.useProgram(prog);
+
+  function attr(name, data, size) {
+    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, name); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
+  }
+  attr("aField", field, 3); attr("aHouse", house, 3); attr("aValley", valley, 3);
+  attr("aKind", kind, 1); attr("aDelay", delay, 1); attr("aArc", arc, 3); attr("aRiver", river, 1);
+  var uPhase = gl.getUniformLocation(prog, "uPhase");
+  var uSettle = gl.getUniformLocation(prog, "uSettle");
+  var uTime = gl.getUniformLocation(prog, "uTime");
+  var uTilt = gl.getUniformLocation(prog, "uTilt");
+  var uAspect = gl.getUniformLocation(prog, "uAspect");
+  var uPx = gl.getUniformLocation(prog, "uPx");
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+  /* ── phase driver ─────────────────────────────────────────────────────── */
+  var DWELL = 4.4, MORPH = 3.0, PERIOD = DWELL + MORPH;
+  var mode = "cycle", holdTarget = { field: 0, house: 1, valley: 2 };
+  var phase = 0, label = document.getElementById("phaselabel");
+  var NAMES = ["THE MARKET", "YOUR HOME", "THE VALLEY"];
+  function cyc(sec) {
+    var c = sec % (PERIOD * 3);
+    var s2 = Math.floor(c / PERIOD), inSeg = c - s2 * PERIOD;
+    return { phase: s2 + Math.min(inSeg / MORPH, 1), settle: Math.max(0, inSeg - MORPH) };
+  }
+
+  var tiltX = 0, tiltY = 0, targX = 0, targY = 0;
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.getBoundingClientRect();
+    targX = ((e.clientX - r.left) / r.width - 0.5) * 0.24;
+    targY = ((e.clientY - r.top) / r.height - 0.5) * 0.14;
+  });
+  hero.addEventListener("pointerleave", function () { targX = 0; targY = 0; });
+
+  document.querySelectorAll(".controls button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll(".controls button").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+      mode = b.getAttribute("data-mode");
+    });
+  });
+
+  function resize() {
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    var r = hero.getBoundingClientRect();
+    canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform1f(uAspect, r.width / r.height);
+    gl.uniform1f(uPx, Math.max(dpr, 1.4));
+  }
+  resize(); addEventListener("resize", resize);
+
+  var started = performance.now(), settle = 0, holdSince = null;
+  window.__forcePhase = null; /* probe hook; __forceSettle too */
+  function frame(now) {
+    var t = (now - started) / 1000;
+    if (window.__forcePhase != null) {
+      phase = window.__forcePhase;
+      settle = window.__forceSettle != null ? window.__forceSettle : 2;
+    } else if (reduce) {
+      phase = 1; settle = 2;
+    } else if (mode === "cycle") {
+      var st = cyc(t + MORPH);
+      phase = st.phase; settle = st.settle;
+    } else {
+      var want = holdTarget[mode];
+      var cur = phase % 3;
+      var diff = (want - cur + 3) % 3;
+      if (diff > 0.02 && diff < 2.98) { phase = cur + Math.min(diff, 0.02); holdSince = null; }
+      else { phase = want; if (holdSince == null) holdSince = now; settle = (now - holdSince) / 1000; }
+    }
+    tiltX += (targX - tiltX) * 0.06; tiltY += (targY - tiltY) * 0.06;
+    gl.uniform1f(uPhase, phase % 3);
+    gl.uniform1f(uSettle, settle);
+    gl.uniform1f(uTime, t);
+    gl.uniform2f(uTilt, tiltX, tiltY);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.POINTS, 0, N);
+    var nm = NAMES[Math.round(phase % 3) % 3];
+    if (label.textContent !== nm) label.textContent = nm;
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>

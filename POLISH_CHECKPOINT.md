@@ -75,18 +75,35 @@
 ##   yearMin +lte.2100 (two 9999-rows); financing calculator non-money fields strip "-"
 ##   (a -50% down payment rendered a confident 150%-LTV P&I). Fixture mirrors all guards.
 ##
-## -- HERO: ENGINE APPROVED BY OWNER, POLISHED 3 ROUNDS, AWAITING FINAL WORD ---------------
-## Artifact 588717b9 (round-3-polished): ONE WebGL point-cloud, three homes per point -
+## -- HERO: CONCEPT APPROVED, ENGINE NEEDS MORE DESIGN ROUNDS (owner's brief, 2026-08-27) --
+## Artifact 588717b9 (round-3-polished) = ONE WebGL point-cloud, three homes per point:
 ## market swirl -> HOUSE (builds BOTTOM-UP, windows bloom after walls settle via uSettle,
-## eaves/chimney/door + gold path to the door) -> VALLEY (gold ridges + pale-blue Hudson
-## ribbon + stars) -> cycle. Tangential swirl mid-flight, mouse tilt, 61fps, 390/320 clean,
-## reduced-motion = still lit house, 18KB no deps. Owner: "definitely better... make it wow"
-## - delivered 3 more polish rounds; he has NOT yet said "build it into the site".
-## NEXT SESSION: if he approves, port the artifact's <script> engine into a client component
-## behind the home hero (source of truth: scratchpad hero-lab-v3.html of session 2297c510,
-## ALSO mirrored: the engine is self-contained - rebuild from the artifact via WebFetch if
-## the scratchpad is gone). Fallback chain: no-WebGL -> licensed dusk still; reduced-motion
-## -> settled house frame. Respect §2: the engine drops in as ONE canvas + component.
+## eaves/chimney/door + gold path) -> VALLEY (gold ridges + pale-blue Hudson + stars) ->
+## cycle. Tangential swirl, mouse tilt, 61fps, 390/320 clean, reduced-motion = still lit
+## house, ~20KB no deps. SOURCE OF TRUTH IS IN-REPO: docs/design-r41/hero-lab-engine.html
+## (committed this round; the artifact URL renders it live; __forcePhase/__forceSettle
+## window hooks freeze any state for screenshots at deviceScaleFactor 2).
+##
+## OWNER'S FEEDBACK VERBATIM: "its better but house is just simple box make it bigger longer
+## luxury home and better detailed mountains and those stars going up and etc it still needs
+## multiple rounds of design and polish."  THE NEXT-SESSION HERO BRIEF, decomposed:
+## 1. THE HOUSE -> A LUXURY ESTATE, not a gabled box: wider two-story massing (main volume
+##    + a lower wing), a 2-story window GRID (lit panes in rows, not two squares), porch
+##    with columns / portico over the door, dormers or a hip-roof wing, stone chimney with
+##    EMBERS RISING from it (ties to his "stars going up"), door with sidelights, hedge/
+##    landscape dust rows along the path. Keep bottom-up build + windows-bloom-on-settle -
+##    those are approved. The house should read "estate the visitor aspires to".
+## 2. THE MOUNTAINS -> real detail: multi-octave ridge noise (current is 3 sines and reads
+##    smooth), sharper near ridge with tree-line texture (short vertical dash particles),
+##    farther ridges hazier (stronger depth fade), maybe one distinct peak. Keep the Hudson
+##    ribbon + make it read as WATER (subtle flow shimmer along its length).
+## 3. "STARS GOING UP": give the sky life - slow upward drift on the valley sky stars, and
+##    chimney embers rising in house state; consider faint rising motes in the market state.
+## 4. PROCESS HE EXPECTS: MULTIPLE render-judge-refine rounds (this session ran 5; he wants
+##    more), each round screenshotting every state at dpr2 + mid-morphs, judged with fresh
+##    eyes before the next. Do NOT port into app/page until he says the design is done.
+## Port plan when approved (unchanged): one client component + canvas behind the home hero;
+## no-WebGL fallback -> licensed dusk still; reduced-motion -> settled house frame.
 ##
 ## -- OPEN ITEMS, RANKED (all measured, none blocking) -------------------------------------
 ## 1. taxMax semantics shipped; the REMAINING sub escalations already fixed. Still open from
