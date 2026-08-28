@@ -100,6 +100,12 @@ export const NAV = [
   { label: "Home Value", href: "/home-value" },
   { label: "Who We Are", href: "/who-we-are" },
   { label: "Blog", href: "/blog" },
+  // The owner, 2026-08-28: "add AI before connect on top menu bar and give it purple outline or
+  // our logo R blue so people notice". The logo-R blue (porchlight), outlined: the anti-slop
+  // palette bans purple as a primary and the R-blue is already the brand mark. `external`
+  // because /ai is served by a rewrite to the AI page's own deployment, not an RSC route (a
+  // <Link> prefetch there 404s); `accent` is what the header reads to draw the outline.
+  { label: "AI", href: "/ai", external: true, accent: true },
   { label: "Connect", href: "/connect" },
 ] as const;
 

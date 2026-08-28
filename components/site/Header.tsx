@@ -209,6 +209,23 @@ export function Header() {
                 const boxed = item.label === "Connect";
                 const active = pathname === item.href;
                 const hasGroups = "groups" in item && item.groups;
+                // The AI item (owner-directed, 2026-08-28): outlined in the logo-R blue so it is
+                // noticed, and a plain anchor because /ai is an external rewrite. The text is the
+                // deeper step of the same blue (porchlight-deep, 5.0:1 on paper); the pure R-blue
+                // fails AA at 13px. Hover fills with the R-blue and inverts, the way Connect and
+                // the areas pills invert on hover, so it still behaves like a nav item.
+                if ("accent" in item && item.accent) {
+                  return (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        className={`rounded-xl border border-porchlight px-4 py-2.5 text-porchlight-deep hover:border-porchlight hover:bg-porchlight hover:text-paper ${PRESS}`}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  );
+                }
                 return (
                   <li
                     key={item.href}
@@ -334,6 +351,21 @@ export function Header() {
           <ul className="px-4 py-2">
             {NAV.map((item) => {
               const hasGroups = "groups" in item && item.groups;
+              if ("accent" in item && item.accent) {
+                // The same outlined pill as the desktop item, a plain anchor (external rewrite).
+                // A row of plain uppercase links gets one boxed one, which is how the desktop
+                // row already reads; the box keeps the drawer's 48px row rhythm (my-1.5 + 36px).
+                return (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className={`my-1.5 inline-flex min-h-9 items-center rounded-xl border border-porchlight px-4 text-sm font-bold uppercase tracking-wide text-porchlight-deep hover:border-porchlight hover:bg-porchlight hover:text-paper ${PRESS}`}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              }
               if (!hasGroups) {
                 return (
                   <li key={item.href}>
