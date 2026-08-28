@@ -44,7 +44,7 @@
 
 /** Bump when the wording changes. Stored on every lead so a record can be read back years
  * later against the exact text that was on screen. */
-export const CONSENT_VERSION = "2026-08-03.v2";
+export const CONSENT_VERSION = "2026-08-28.v3";
 
 /** The clickable line. Plain, warm, and about THEIR request rather than our marketing. */
 export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
@@ -70,6 +70,35 @@ export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
  */
 export const CONSENT_DISCLOSURE =
   "Includes automated and recorded calls and texts. Optional, and never required to buy or sell a home. Reply STOP any time. Message and data rates may apply.";
+
+/**
+ * THE OTHER ANSWER, restored 2026-08-28. Round 49 flagged the tension recorded above (a box that
+ * must be ticked, under a disclosure that says "never required") and the owner answered: "i did
+ * not get it do as its proper to do." He delegated the legal shape, so the control is the one the
+ * 2026-08-22 session shipped once and the 08-23 decision removed: two radios, NEITHER
+ * pre-selected, BOTH submit, and the form will not go until one is chosen. Every lead still
+ * arrives with an explicit answer, which was the thing he actually needed (the dialer and the AI
+ * caller know where they stand), and a yes is a yes that was not a condition of anything, which
+ * is what makes it consent. Declining is a real, equal, unpunished choice or the yes beside it is
+ * worth nothing. It is honest about what still happens: they asked us something, so we answer by
+ * email. Version bumped so records can be told apart from the required-box era.
+ */
+export const CONSENT_DECLINE_LABEL = "No thanks. Email me instead.";
+
+/** The question the two answers belong to. A screen reader hears it before either answer. */
+export const CONSENT_QUESTION = "Can we call or text you about this?";
+
+/** The two answers the control can send, and nothing else. A form must refuse to submit until
+ * the visitor has chosen one; absence is neither a yes nor a no, it is an unanswered question.
+ * Shared by every form so the predicate cannot drift between the footer, the listing sheets and
+ * /plan. */
+export function consentAnswered(value: unknown): value is "true" | "false" {
+  return value === "true" || value === "false";
+}
+
+/** The refusal copy, one sentence, shared for the same reason. */
+export const CONSENT_UNANSWERED_ERROR =
+  "Please pick one of the two options above so we know how to reach you.";
 
 /** What gets stored: the whole agreement as one string, because the label alone is not the
  * agreement and the disclosure alone is not the ask. */

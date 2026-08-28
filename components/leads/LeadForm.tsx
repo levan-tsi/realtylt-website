@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
 import { useQualifyingWizard, wizardOpensOn } from "@/components/leads/QualifyingWizard";
+import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
 import { INTEREST_REASONS, SITE } from "@/lib/site";
 import type { SavedSearchRequest } from "@/lib/leads/types";
 
@@ -123,14 +124,15 @@ export function LeadForm({
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
 
-    // CONSENT IS REQUIRED AND ITS REFUSAL IS LOUD. Checked here rather than by the `required`
-    // attribute so the visitor gets the same styled, focusable, screen-reader-announced error
-    // every other failure on this form gets, in the same place, instead of a native bubble that
-    // can render off-screen or not at all.
-    if (data.consentToContact !== "true") {
+    // THE CONSENT QUESTION IS UNSKIPPABLE AND LEAVING IT UNANSWERED IS LOUD. Either answer
+    // submits (2026-08-28, "do as its proper to do"); no answer does not. Checked here rather
+    // than by the `required` attribute so the visitor gets the same styled, focusable,
+    // screen-reader-announced error every other failure on this form gets, in the same place,
+    // instead of a native bubble that can render off-screen or not at all.
+    if (!consentAnswered(data.consentToContact)) {
       setConsentInvalid(true);
       setStatus("error");
-      setError("Please tick the box above so we can call or text you about your request.");
+      setError(CONSENT_UNANSWERED_ERROR);
       const box = form.querySelector<HTMLInputElement>("[data-consent-input]");
       box?.scrollIntoView({ block: "center", behavior: "smooth" });
       box?.focus();

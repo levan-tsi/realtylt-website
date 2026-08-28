@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ConsentCheckbox } from "@/components/leads/ConsentCheckbox";
+import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
 import {
   CEILING_ASSUMPTIONS,
   MONTHLY_OPTIONS,
@@ -667,11 +668,18 @@ function TailoredPlan({ answers }: { answers: QuizAnswers }) {
 /** The optional hand-off. Everything above works without it; consent is strict, unchecked,
  * and the exact wording stored is the LEAD-CONSENT-CONTRACT's. */
 function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<typeof planFor> }) {
-  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error" | "unanswered">("idle");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    // The consent question is unskippable here too (2026-08-28): either answer sends, no
+    // answer shows the same sentence every other form shows, next to the control.
+    if (!consentAnswered(fd.get("consentToContact"))) {
+      setState("unanswered");
+      e.currentTarget.querySelector<HTMLInputElement>("[data-consent-input]")?.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
     setState("sending");
     const qualifier: Record<string, string> = { searchUrl: plan.searchUrl };
     if (answers.path) qualifier.path = answers.path;
@@ -750,7 +758,7 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
       </div>
       <input type="text" name="rlt_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
       <div className="mt-3">
-        <ConsentCheckbox />
+        <ConsentCheckbox invalid={state === "unanswered"} />
       </div>
       <div className="mt-4 flex items-center gap-4">
         <button
@@ -763,6 +771,11 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
         {state === "error" && (
           <p role="alert" className="t-small text-ink">
             That did not go through. Try again, or call {SITE.phone}.
+          </p>
+        )}
+        {state === "unanswered" && (
+          <p role="alert" className="t-small text-ink">
+            {CONSENT_UNANSWERED_ERROR}
           </p>
         )}
       </div>

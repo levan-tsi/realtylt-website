@@ -5,6 +5,7 @@ import { ConsentCheckbox } from "./ConsentCheckbox";
 import { LeadSheet } from "./LeadSheet";
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
 import { SITE } from "@/lib/site";
 import {
   formatOffer,
@@ -334,7 +335,7 @@ function ErrorNote({
  *
  * One hook, two callers, so the tour and offer sheets cannot drift from each other — and the
  * wording is LeadForm's wording, so none of the three drift from the footer either. */
-const CONSENT_ERROR = "Please tick the box above so we can call or text you about your request.";
+const CONSENT_ERROR = CONSENT_UNANSWERED_ERROR;
 
 function useConsentGuard() {
   const [invalid, setInvalid] = useState(false);
@@ -342,9 +343,10 @@ function useConsentGuard() {
   useEffect(() => {
     if (invalid) alertRef.current?.focus();
   }, [invalid]);
-  /** True when the box is unticked: the caller must return without posting anything. */
+  /** True when the question is unanswered (2026-08-28: either answer submits, no answer does
+   * not): the caller must return without posting anything. */
   function refused(form: HTMLFormElement, data: Record<string, string>) {
-    if (data.consentToContact === "true") {
+    if (consentAnswered(data.consentToContact)) {
       setInvalid(false);
       return false;
     }

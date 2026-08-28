@@ -74,9 +74,10 @@ describe("the refusal is the same refusal the rest of the site gives", () => {
   /** The wording is LeadForm's wording. A visitor who meets this on a listing page and again in
    * the footer must not be told two different things about the same box. */
   it("uses the wording the footer and /connect forms already use", () => {
-    const shared = "Please tick the box above so we can call or text you about your request.";
+    const shared = "CONSENT_UNANSWERED_ERROR";
     expect(src, "listing sheets drifted from LeadForm's wording").toContain(shared);
     expect(strip(read("components/leads/LeadForm.tsx"))).toContain(shared);
+    expect(strip(read("components/plan/PlanQuiz.tsx"))).toContain(shared);
   });
 
   it("marks the box invalid on both sheets, not just one", () => {
