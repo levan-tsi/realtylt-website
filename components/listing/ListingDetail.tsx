@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TrackView } from "@/components/portal/TrackView";
 import { ListingCard, priceLabel } from "@/components/idx/ListingCard";
+import { ResultSetScope } from "@/components/idx/ResultSetScope";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { ListingPhotos } from "@/components/idx/ListingPhotos";
 import { LeadForm } from "@/components/leads/LeadForm";
@@ -594,11 +595,18 @@ export async function ListingDetail({ id }: { id: string }) {
                 </Link>
               )}
             </div>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Round 50 (funnel item 6b): the one rail on the site that did not record itself
+                as a result set, so a home opened from here arrived with no Previous / Next.
+                Scoped like the home rails and the county grids: a click names this list. */}
+            <ResultSetScope
+              listings={similar}
+              backHref={`/listing/${l.id}`}
+              className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
               {similar.map((s) => (
                 <ListingCard key={s.id} listing={s} variant="plain" />
               ))}
-            </div>
+            </ResultSetScope>
           </div>
         </section>
       )}

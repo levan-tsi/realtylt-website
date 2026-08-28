@@ -82,13 +82,20 @@ export function FavoriteListings({
           </button>
         </p>
       )}
-      <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {listings.map((l) => (
-          <li key={l.id}>
-            <ListingCard listing={l} />
-          </li>
-        ))}
-      </ul>
+      {/* Round 50: the import had been here since the round-18 fix but the grid was never
+          wrapped, so a saved home opened from this page arrived with no Previous / Next. Now
+          a click names this list. `changes` turns on the price-cut / status-change chips
+          (funnel item 6c): saved homes are the one place a visitor is watching a specific
+          home over time, which is what those chips are about. */}
+      <ResultSetScope listings={listings} backHref="/saved">
+        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {listings.map((l) => (
+            <li key={l.id}>
+              <ListingCard listing={l} changes />
+            </li>
+          ))}
+        </ul>
+      </ResultSetScope>
       {listings.length > 0 && (
         <MlsAttribution
           dataLastUpdated={dataLastUpdated}

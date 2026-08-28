@@ -49,6 +49,13 @@ export interface Listing {
   propertyType: PropertyType;
   status: ListingStatus;
   openHouse?: boolean;
+  /** Change history (round 50), kept beside the JSONB by the trigger in
+   * supabase/migrations/idx_round50_price_history.sql and attached by the card reads. Absent
+   * until the hourly sync has observed a change on the row; `priceChangedAt` /
+   * `statusChangedAt` are OUR observation time (within an hour), never the MLS's own stamp. */
+  previousPrice?: number;
+  priceChangedAt?: string;
+  statusChangedAt?: string;
   description: string;
   features: string[];
   /** Structured facts (rows stored before 2026-07-15 fall back to the `features` strings). */

@@ -308,19 +308,31 @@ const ORDER: Record<SortKey, string> = {
  * owner's "8 pics, one photo" bug), and listing->photosMirrored is wiped to 0 by the sync's
  * full-JSONB upsert. null/undefined = never computed for this row (a listing inserted since the
  * last refresh): fall back to the claim, which is the pre-2026-07-30 behaviour. */
-function toCard(l: Listing, servable?: number | null): Listing {
+function toCard(r: CardRow): Listing {
+  const l = r.listing;
   return {
     ...l,
-    photoCount: typeof servable === "number" ? servable : l.photos.length,
+    photoCount: typeof r.photos_servable === "number" ? r.photos_servable : l.photos.length,
     photos: [`/api/media/${l.id}/0`],
+    // Round 50: the change history the trigger idx_listings_track_changes keeps beside the
+    // JSONB (supabase/migrations/idx_round50_price_history.sql). Attached only when present,
+    // so a row that has never re-priced carries no keys rather than nulls.
+    ...(r.previous_price != null ? { previousPrice: Number(r.previous_price) } : {}),
+    ...(r.price_changed_at ? { priceChangedAt: r.price_changed_at } : {}),
+    ...(r.status_changed_at ? { statusChangedAt: r.status_changed_at } : {}),
   };
 }
 
-/** Every card read pulls the listing JSONB plus the servable-photo column beside it. */
-const CARD_SELECT = "select=listing,photos_servable";
+/** Every card read pulls the listing JSONB, the servable-photo column, and the three
+ * change-history columns beside it. */
+const CARD_SELECT = "select=listing,photos_servable,previous_price,price_changed_at,status_changed_at";
 interface CardRow {
   listing: Listing;
   photos_servable: number | null;
+  /** numeric arrives as a string from PostgREST. */
+  previous_price?: string | number | null;
+  price_changed_at?: string | null;
+  status_changed_at?: string | null;
 }
 
 /** Every visitor-facing card read goes through this. Observed on the home page 2026-07-30
@@ -467,7 +479,7 @@ export class DbIdxClient implements IdxClient {
       // 78% of the inventory is under $1M that meant page after page of the same price. The
       // rows are only REORDERED here: same listings, same count, same pagination, same map
       // pins. Every other sort is an explicit instruction from the visitor and is left alone.
-      const cards = rows.map((r) => toCard(r.listing, r.photos_servable));
+      const cards = rows.map((r) => toCard(r));
       return {
         listings: sort === "mixed" ? interleaveByBand(cards) : cards,
         total,
@@ -488,7 +500,7 @@ export class DbIdxClient implements IdxClient {
       const { rows } = await onceRetried(() =>
         rest<CardRow>(`idx_listings?id=eq.${encodeURIComponent(id)}&${CARD_SELECT}`),
       );
-      return rows[0] ? toCard(rows[0].listing, rows[0].photos_servable) : null;
+      return rows[0] ? toCard(rows[0]) : null;
     } catch (e) {
       console.error(`[idx-db] getListing(${id}) failed — serving the committed snapshot:`, e);
       return this.fallbackClient().getListing(id);
@@ -508,7 +520,7 @@ export class DbIdxClient implements IdxClient {
         rows: [...ownNew.rows, ...ownLux.rows].filter((r) => !ownSeen.has(r.listing.id) && ownSeen.add(r.listing.id)),
       };
       const listings = interleaveByBand(
-        pickPriceSpread(own.rows.map((r) => toCard(r.listing, r.photos_servable)), limit),
+        pickPriceSpread(own.rows.map((r) => toCard(r)), limit),
       );
       if (listings.length >= limit) return listings;
       // Top up with the freshest non-featured so the rail is never sparse.
@@ -558,7 +570,7 @@ export class DbIdxClient implements IdxClient {
     // put every high-end home on page 2 of the rail — selected, and invisible. The owner asked
     // for what the rail SHOWS to be balanced, which means the first screen.
     return interleaveByBand(
-      pickPriceSpread(candidates.map((r) => toCard(r.listing, r.photos_servable)), limit),
+      pickPriceSpread(candidates.map((r) => toCard(r)), limit),
     );
   }
 

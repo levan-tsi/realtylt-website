@@ -407,6 +407,7 @@ function TourModal({
       email: data.email,
       phone: data.phone,
       consentToContact: data.consentToContact,
+      message: data.message,
       address: fullAddress(listing),
       source: `/listing/${listing.id}`,
       interestReason: REASON_BUYING,
@@ -498,6 +499,10 @@ function TourModal({
             <input className={fieldCls} name="name" required autoComplete="name" placeholder="Your name" aria-label="Your name" />
             <input className={fieldCls} name="email" type="email" required autoComplete="email" placeholder="Email address" aria-label="Email address" />
             <input className={fieldCls} name="phone" type="tel" required autoComplete="tel" placeholder="Phone number" aria-label="Phone number" />
+            {/* Round 50 (funnel item 6a): the tour sheet took no free text, so "can we see the
+                basement too" or "only free after 6" had nowhere to go. The same optional
+                textarea the offer sheet already carries, same wording, forwarded the same way. */}
+            <textarea className={`${fieldCls} min-h-20 resize-y`} name="message" placeholder="Anything we should know? (optional)" aria-label="Message" />
           </div>
 
             <div className="mt-4">

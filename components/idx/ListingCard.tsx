@@ -103,21 +103,38 @@ export function ListingCard({
   listing,
   priority = false,
   variant = "overlay",
+  changes = false,
 }: {
   listing: Listing;
   priority?: boolean;
   /** "overlay" = home-page tile (text on photo); "plain" = live search-results card (white body). */
   variant?: "overlay" | "plain";
+  /** Round 50 (funnel item 6c): say what changed on a home the visitor is WATCHING. "Price cut
+   * $15k · 3 days ago", "Pending · 2 days ago", "Back on market · today". On by the saved-homes
+   * surfaces only, which is where a person is following a specific home over time; a search
+   * grid is a first look and the chips would be noise there. Reads the change history the
+   * hourly sync's trigger keeps (lib/idx/types.ts), and says nothing for a change older than
+   * 30 days or one the store has not observed. */
+  changes?: boolean;
 }) {
   const l = listing;
   // Badge priority mirrors live realtylt.com tiles: status first, then Open House,
   // then "New" for listings on market ≤7 days.
   const isNew = Date.now() - Date.parse(l.listedAt) < 7 * 86_400_000;
-  const badge =
-    l.status !== "Active" ? l.status : l.openHouse ? "Open House" : isNew ? "New" : null;
+  const statusNote = changes && recent(l.statusChangedAt) ? ago(l.statusChangedAt!) : null;
+  const cut =
+    changes && l.previousPrice != null && l.previousPrice > l.price && recent(l.priceChangedAt)
+      ? `Price cut ${priceDiff(l.previousPrice - l.price)} · ${ago(l.priceChangedAt!)}`
+      : null;
+  // A non-Active status carries its own recency inside the chip it already has; an Active
+  // home that CHANGED to Active came back on the market, which is its own chip.
+  const statusChip = l.status !== "Active" ? (statusNote ? `${l.status} · ${statusNote}` : l.status) : null;
+  const backOnMarket = l.status === "Active" && statusNote ? `Back on market · ${statusNote}` : null;
+  const badge = statusChip ?? backOnMarket ?? (l.openHouse ? "Open House" : isNew ? "New" : null);
   // Live search cards can stack up to two status chips side by side (e.g. "Coming Soon" + "New").
+  // With `changes` the price-cut chip is a third, stacked under them.
   const chips = (
-    [l.status !== "Active" ? l.status : null, l.openHouse ? "Open House" : null, isNew ? "New" : null].filter(
+    [statusChip, backOnMarket, l.openHouse ? "Open House" : null, isNew ? "New" : null].filter(
       Boolean,
     ) as string[]
   ).slice(0, 2);
@@ -174,9 +191,9 @@ export function ListingCard({
           {/* gap-0.5, not gap-px: 1px was the only gap on the listing and search pages off the
               2px grid the rest of the site is built on, and two stacked chips read identically
               at 2px. */}
-          {chips.length > 0 && (
-            <div className="absolute left-0 top-3 flex gap-0.5">
-              {chips.map((c) => (
+          {(chips.length > 0 || cut) && (
+            <div className="absolute left-0 top-3 flex flex-wrap gap-0.5">
+              {[...chips, ...(cut ? [cut] : [])].map((c) => (
                 <span
                   key={c}
                   className="rounded-lg bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper"
@@ -261,10 +278,19 @@ export function ListingCard({
           aria-hidden
           className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-black/90 via-black/45 to-transparent"
         />
-        {badge && (
-          <span className="absolute left-3 top-3 rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
-            {badge}
-          </span>
+        {(badge || cut) && (
+          <div className="absolute left-3 top-3 flex flex-col items-start gap-1">
+            {badge && (
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+                {badge}
+              </span>
+            )}
+            {cut && (
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+                {cut}
+              </span>
+            )}
+          </div>
         )}
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
@@ -305,4 +331,24 @@ export function ListingCard({
       </div>
     </article>
   );
+}
+
+/** Within the 30-day window a change is worth a chip. */
+function recent(iso?: string): boolean {
+  if (!iso) return false;
+  const t = Date.parse(iso);
+  return Number.isFinite(t) && Date.now() - t < 30 * 86_400_000;
+}
+
+/** "today", "1 day ago", "12 days ago" — from OUR observation time, so never a date. */
+function ago(iso: string): string {
+  const d = Math.floor((Date.now() - Date.parse(iso)) / 86_400_000);
+  return d <= 0 ? "today" : d === 1 ? "1 day ago" : `${d} days ago`;
+}
+
+/** "$15k", "$1.2M", "$750" — the size of a cut, in the site's own price shorthand. */
+export function priceDiff(n: number): string {
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}M`;
+  if (n >= 1_000) return `$${Math.round(n / 1_000)}k`;
+  return `$${Math.round(n)}`;
 }
