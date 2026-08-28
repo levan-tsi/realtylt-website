@@ -1,5 +1,105 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 50 DONE (2026-08-28 afternoon/evening): THE OWNER'S LIST, BUILT ==================
+## Shape: SINGLE Fable session, no subagents, ~9 commits d5f7e4c..88ad9d0 on main, every one
+## verified on the dev server with real browser probes (1440/390/320) and pushed; Vercel
+## auto-deploys. The peer CRM session landed ONE rlt-chat.js commit (ac55610, widget build
+## 2026-08-28d: echo bar + tap-to-interrupt + held mic frames + voice_stats) on main between
+## mine; the aipage session re-copied rlt-chat.js from d5f7e4c (28c) and owes a re-copy of
+## 28d (it was told). Tests 1396 -> 1432, tsc clean, all foreground.
+##
+## -- WHAT THE OWNER ASKED FOR TODAY (his message to this session) AND WHERE IT LANDED -----
+## * Chat launcher invisible on /ai until you scroll -> d5f7e4c: the first-screen tuck is
+##   skipped when detectPersona() === 'aipage' (page-decided, no new RLT_CHAT_CONFIG key);
+##   listing pages keep it. lib/chat-launcher-tuck.test.ts. aipage session confirmed it live
+##   on realtylt.com/ai (desk + phone).
+## * "Shared link shows the old design" (Downloads/IMG_8765.jpg, an iMessage thread) ->
+##   a55c4e2: BOTH cards were stale. Website: og.png was the pre-round-11 design (RT
+##   monogram, Fraunces, "Six counties · One river"); scripts/make-og.mjs now renders the
+##   real logo + Newsreader + the licensed Highlands photo, palette PNG 194 KB, and every
+##   og:image points at the NEW filename /og-realtylt.png so iMessage/WhatsApp caches miss
+##   (og.png regenerated with the same bytes for old links). app/og-image.test.ts. The /ai
+##   card is the aipage repo's: that session regenerated it as /ai/og-20260828.png. He must
+##   RE-SHARE from a fresh message; threads that cached the old card keep showing it.
+## * "The same form twice" on the home page -> 579a1ef: the value section is now the HOME
+##   INTAKE. One question (buy / sell / both), then the two or three that matter (buyers:
+##   how soon, pre-approved; sellers: how soon, primary residence, what they hope to get;
+##   both: sell timing, price, pre-approval), then the same LeadForm, ON the page. Left
+##   column keeps a "What you've told us" trail with Change per line. Answers ride as the
+##   same `qualifier` the wizard/plan send (+ intake=home) so the CRM's "What they told us"
+##   card reads them. lib/home-intake.ts (pure, 11 tests) + components/home/HomeIntake.tsx.
+##   Driven: 37 checks at 1440+390, no-JS tiles are links to /buying and /selling.
+## * "AI before Connect in the top menu, purple outline or logo-R blue" -> d275981: the
+##   R-blue OUTLINE (purple is banned as a primary), plain <a> because /ai is a rewrite,
+##   same pill in the drawer, one row at 1280 and 1440. lib/nav-ai-item.test.ts.
+##
+## -- THE ROUND 50 BRIEF ITEMS (the block below), STATUS ----------------------------------
+## 0. PRELAUNCH=1: still HIS switch; not touched. (Still noindex on the live domain.)
+## 1. EMAILS: DONE in n8n, not this repo. Thank-you (gKA4YoMDx5ADd8Dx) + welcome
+##    (3RLrnY2SMcZ5ZMDL) are branded HTML in the CRM's shell with his REAL linked signature
+##    (Realtor(R), tel:, mailto:, site, Book a Consultation -> /connect). Local twin:
+##    scripts/email-templates.mjs (renders PNGs). Proven: exec 7037/7038, Gmail
+##    1a0496cafdea167c / 1a0496cd1ea32090 in his inbox (to levan+r50thanks@ and
+##    levan+r50welcome@, plus one "New site account" internal notice = his test data).
+##    The CRM auth-hook mails were done CRM-side earlier today (758e922a). OPEN: the
+##    noreply@/info@ addressing plan still starts with HIS Gmail "Send mail as" step.
+## 2. DEDUP: CRM-side, shipped by the CRM session (migration 0247) - not this repo.
+## 3. ACTIVITY: CRM half shipped (88baf6eb, WEB-ACTIVITY-2026-08-28.md). 3a (/plan answers)
+##    was already travelling as a qualifier. 3b website half = D12 (lead-identified
+##    ANONYMOUS visits) is BLOCKED on a CRM-side RPC (their option (b),
+##    record_site_visit(...)); nothing to build here until it exists. Signed-in visits
+##    already alert him (proven on prod by the CRM session).
+## 4. AI NAV: DONE (above).
+## 5. CONSENT: DONE a6bc6c5. Two radios, neither pre-selected, both submit, unskippable;
+##    shared consentAnswered() + CONSENT_UNANSWERED_ERROR across LeadForm, both listing
+##    sheets and /plan (which had NO guard); role=group not fieldset (tint cut the legend);
+##    CONSENT_VERSION 2026-08-28.v3. Driven at 1440/390: no POST without an answer, "No
+##    thanks" -> /thank-you?c=0. Also fixed two consent.test.ts assertions that were
+##    vacuous (literal 0x08 bytes where \b was meant).
+## 6. FUNNEL TRIO: DONE 2543196. (a) tour sheet textarea + forwarded; (b) Previous/Next
+##    now also from /saved (import existed, grid never wrapped) and the similar-homes rail;
+##    (c) price-cut / status chips on saved homes, fed by a BEFORE UPDATE OF listing
+##    trigger (migration idx_round50_price_history.sql, APPLIED to prod, proven in a
+##    rolled-back transaction). previous_price fills as prices change from now on; no
+##    history before today. RESO OriginalListPrice/PriceChangeTimestamp are NOT selected;
+##    whether OneKey fills them is an unmeasured hypothesis.
+## 7. /CONNECT: DONE 516b636. Portrait at the top beside Google's avatar band, contact rows
+##    under it, address, then the "rather not pick a slot" + MESSAGE US block moved up into
+##    the sticky column. Column content 330 -> ~750px of the 899px embed; page 2616 -> 2445.
+## 8. AI-PAGE REPO: not touched (the aipage session owns it and did the widget re-copy +
+##    its share card). Its console 404 (_vercel/insights) is logged in its own checkpoint.
+## 9. WATCHER: DONE in n8n (ZvvwCsRM0uxGZLFH, published). public.idx_health_snapshot()
+##    (migration idx_round50_health_snapshot.sql, APPLIED: SECURITY DEFINER, read-only,
+##    executable by n8n_bot which has NO table grants - nothing loosened). Every 3h: alert
+##    ONLY when sync stale > 3h, actives < 5,000 or swing > 15%, zero-photo rows older than
+##    7 days > 4% of actives or doubling, nothing touched in 24h; same problem set
+##    re-alerts at most every 6h. Mondays 12:05 UTC an all-clear digest (heartbeat). Proven:
+##    manual run 7042 read 27,521 active / sync 27 min / 37 stale zero-photo and stayed
+##    silent. NOT covered: Vercel error spikes (no Vercel token in n8n). The digest path was
+##    not executed (a manual run starts from the first trigger only) - its nodes are the
+##    proven Gmail config + the same shell.
+##
+## -- VERIFIED THIS ROUND (numbers) --------------------------------------------------------
+## 0 horizontal overflow on /, /listing/*, /connect, /saved, /who-we-are at 1440/390/320;
+## intake 37/37 checks x2 widths + no-JS; consent 2 radios, 0 checked on load, group
+## aria-invalid on refusal; header one row at 1280 (nav right 1233) and 1440; saved chips
+## "Price cut $15k · 3 days ago" / "Pending · 2 days ago" / "Back on market · today" render;
+## pager "1 of 2" from /saved and "1 of 3" from the similar rail; console clean walking the
+## intake; both emails read back from Gmail with links intact.
+##
+## -- OBSERVED, NOT CHANGED (security, for the owner / a CRM session) -----------------------
+## information_schema shows anon + authenticated holding INSERT/UPDATE/DELETE/TRUNCATE on
+## idx_listings and idx_sync_state; RLS IS ON (relrowsecurity true) so the policies are what
+## gate writes. Worth a deliberate look at the policies; not touched (security controls).
+##
+## -- STILL OPEN AFTER ROUND 50 ---------------------------------------------------------
+## * D12 website half (needs CRM RPC). * noreply@/info@ (his Gmail step). * PRELAUNCH=1.
+## * Vercel error watching (no token in n8n). * The r49 P3s, unchanged. * The aipage
+##   session owes the rlt-chat.js 28d re-copy. * Peer harness must stay off :3100 (it bound
+##   [::1]:3100 today and answered my localhost probes; probes now use 127.0.0.1).
+## * A weekly digest test send has not been observed yet: first fires Mon 2026-08-31 12:05 UTC.
+## * Owner test data to delete when convenient: levan+r50thanks@ / levan+r50welcome@ emails.
+
 ## == ROUND 50 BRIEF (written 2026-08-28): THE OWNER'S POST-E2E LIST. HANDOFF ONLY - ======
 ## == NOTHING BELOW THIS LINE'S LIST HAS BEEN BUILT. ======================================
 ## Context: the site went LIVE on realtylt.com on 2026-08-28 (DNS cut over; apex + /ai both
