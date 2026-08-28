@@ -878,6 +878,21 @@
   const micEl = panel.querySelector('#rlt-mic');
   const micTextEl = panel.querySelector('.rlt-mic-text');
   const voiceStripEl = panel.querySelector('#rlt-voice');
+  // TAP TO INTERRUPT (2026-08-28d). On a phone speaker the assistant's own voice comes back
+  // through the microphone, and the bar for talking over it is set high enough that the echo
+  // never counts as the visitor (see VOICE_ECHO_MARGIN). A visitor who wants to cut in on a
+  // phone taps the strip instead: playback stops, the next words go straight up. The mic button
+  // stays what it was — that one ends the call.
+  if (voiceStripEl) {
+    voiceStripEl.addEventListener('click', function() {
+      if (voice.state !== 'speaking') return;
+      voice.stats.barges += 1;
+      voice.preroll = [];
+      voice.loudFrames = 0;
+      stopPlayback();
+      setVoiceState('listening');
+    });
+  }
   const voiceLabelEl = panel.querySelector('#rlt-voice-label');
   const voiceEndEl = panel.querySelector('#rlt-voice-end');
   const voiceBarsEl = voiceStripEl ? voiceStripEl.querySelectorAll('.rlt-voice-meter i') : [];
@@ -1338,7 +1353,7 @@
   // rather than waiting for the network to say so. That last one is local, and it is the
   // difference between interrupting a person and interrupting a recording.
 
-  const VOICE_WIDGET_BUILD = '2026-08-28c';
+  const VOICE_WIDGET_BUILD = '2026-08-28d';
   const VOICE_INPUT_RATE = 16000;
   const VOICE_OUTPUT_RATE = 24000;
   // ~43ms of audio per frame at 48kHz. Small enough that barge-in is imperceptible, large enough
@@ -1392,6 +1407,52 @@
   // config, network), and retrying those in a loop is how a widget melts a rate limit.
   const VOICE_MAX_RECONNECTS = 4;
   const VOICE_STABLE_MS = 8000;
+  /*
+   * THE SILENT-ROOM ECHO (the owner's re-test, 2026-08-28 15:27, iPhone, a quiet room). The echo
+   * gate above only withholds the microphone while the assistant talks UNLESS the local barge-in
+   * fires — and barge-in is a multiple of the ROOM level with an absolute floor. In a quiet room
+   * the room level is ~0, so the floor IS the threshold, and a phone speaker playing the
+   * assistant's own voice clears 0.012 with ease: the gate opened, and "Hello.", "Just" — the
+   * assistant's own words — were transcribed as the visitor. Two more things now decide a barge-in
+   * while the assistant is talking:
+   *   - a higher floor that only applies while it talks (a quiet "yes" AFTER it finishes still
+   *     goes straight up: the gate is closed then, and no threshold applies);
+   *   - the PLAYBACK ITSELF. The widget knows the level of the audio it is playing at every
+   *     moment, and learns how much of it comes back through the microphone (the coupling: on a
+   *     laptop with working echo cancellation, next to nothing; on a phone speaker, a lot). What
+   *     comes back is expected; only a voice clearly ABOVE the expected echo is the visitor.
+   */
+  const VOICE_BARGE_FLOOR_SPEAKING = 0.03;
+  // MEASURED (scripts/voice-0828/04 on the CRM side, the playback fed back into the microphone
+  // at 0.35, four runs): at 1.8 the echo still crossed the bar for four frames now and then and
+  // "Let me", "I" — the assistant's own words — landed as the visitor's; at 2.5, nothing of the
+  // assistant's came back in four minutes of calls. The price of 2.5 is that a visitor talking
+  // OVER the assistant on a loud phone speaker has to be clearly louder than its echo; on a
+  // laptop with echo cancellation the coupling learns as ~0 and this term never bites. The strip
+  // is tappable while the assistant speaks for exactly that phone case.
+  const VOICE_ECHO_MARGIN = 2.5;
+  const VOICE_ECHO_RISE = 0.08;
+  const VOICE_ECHO_FALL = 0.02;
+  // How far back the playback level is looked up. Speaker-to-microphone takes tens of
+  // milliseconds plus the output latency; a window this wide covers a phone.
+  const VOICE_ECHO_LOOKBACK_S = 0.4;
+  /*
+   * THE WORDS SPOKEN INTO A DEAD SOCKET (the owner: "a few times I had to repeat myself"). While
+   * a socket is being replaced the microphone had nowhere to go, so whatever was said in those
+   * two or three seconds was simply lost — and the first thing a person says after "Reconnecting…"
+   * is the thing they wanted. Frames are kept from the first loud one until the new socket is up,
+   * then sent ahead of the live microphone, capped at a few seconds. The same buffer holds what is
+   * said while a tool runs, when the microphone is being held for the drop fix below.
+   */
+  const VOICE_HELD_FRAMES_MAX = 120;
+  /*
+   * HOLD THE MICROPHONE WHILE A TOOL RUNS. Google closed the socket with 1007 "audio content type
+   * not supported for this model configuration" around the tool-call moment on ~2 of 3 widget
+   * runs and never in a probe that stopped streaming after its phrase (2026-08-28 midday). With
+   * this on, no frames go up from the toolCall until the toolResponse is sent; what the visitor
+   * says meanwhile is kept and sent afterwards. Measured in scripts/voice-0828/04 on the CRM side.
+   */
+  const VOICE_HOLD_MIC_DURING_TOOL = true;
 
   const voice = {
     available: false,
@@ -1409,6 +1470,19 @@
     /** The room's own level, learned from quiet frames. Seeded high enough that the first frames
      *  of a call cannot barge on nothing while it is still settling. */
     noiseFloor: 0.01,
+    /** How much of the playback comes back through the microphone (mic RMS / playback RMS),
+     *  learned while the assistant talks. Zero until measured: echo cancellation gets the
+     *  benefit of the doubt for the first frames, the floor covers them. */
+    echoGain: 0,
+    /** The audio being played, as {t0, t1, rms} windows on the context clock. */
+    playEnv: [],
+    /** Frames kept while there was no socket to send to, or while a tool was running. */
+    held: [],
+    heldArmed: false,
+    /** Tool calls relayed and not yet answered. */
+    toolPending: 0,
+    startedAt: 0,
+    socketAt: 0,
     heard: '',
     said: '',
     liveUser: null,
@@ -1462,13 +1536,22 @@
       serverInterrupts: 0,
       // Frames the echo gate replaced with silence while the assistant was talking.
       gatedFrames: 0,
-      // Completed spoken exchanges written into the thread.
+      // Frames kept back while a tool ran or a socket was being replaced, and how many of those
+      // were sent on once it could hear again.
+      heldFrames: 0,
+      replayedFrames: 0,
+      // Completed spoken exchanges written into the thread, and the ones where the visitor's
+      // side came back empty — the model answered something it never transcribed.
       turns: 0,
+      emptyTurns: 0,
       // Sockets that dropped and were picked back up without ending the call.
       reconnects: 0,
       // The two numbers that make a barge-in that did not happen diagnosable instead of a mystery.
       peakRms: 0,
       floor: 0,
+      // The barge threshold while the assistant talks, and the learned coupling behind it.
+      echoFloor: 0,
+      coupling: 0,
       closeCode: null,
       closeReason: ''
     }
@@ -1510,7 +1593,7 @@
   const VOICE_LABELS = {
     connecting: 'Connecting to Hudson…',
     listening: 'Talking with Hudson · listening',
-    speaking: 'Talking with Hudson · speaking',
+    speaking: 'Talking with Hudson · speaking · tap to interrupt',
     working: 'Hudson is working on that…',
     ending: 'Ending…'
   };
@@ -1580,13 +1663,17 @@
     if (!pcm.length) return;
     const buffer = voice.ctx.createBuffer(1, pcm.length, VOICE_OUTPUT_RATE);
     const channel = buffer.getChannelData(0);
-    for (let i = 0; i < pcm.length; i += 1) channel[i] = pcm[i] / 32768;
+    let energy = 0;
+    for (let i = 0; i < pcm.length; i += 1) { channel[i] = pcm[i] / 32768; energy += channel[i] * channel[i]; }
     const src = voice.ctx.createBufferSource();
     src.buffer = buffer;
     src.connect(voice.ctx.destination);
     // A small floor keeps the first chunk from being scheduled in the past on a slow first frame.
     voice.playHead = Math.max(voice.playHead, voice.ctx.currentTime + 0.06);
     src.start(voice.playHead);
+    // What is playing when, and how loud: the microphone pump reads this to tell the assistant's
+    // own voice coming back from a visitor talking over it.
+    voice.playEnv.push({ t0: voice.playHead, t1: voice.playHead + buffer.duration, rms: Math.sqrt(energy / pcm.length) });
     voice.playHead += buffer.duration;
     voice.playing.push(src);
     src.onended = function() {
@@ -1604,6 +1691,24 @@
     voice.playing.forEach(function(src) { try { src.stop(); } catch (e) { /* already ended */ } });
     voice.playing = [];
     voice.playHead = 0;
+    voice.playEnv = [];
+  }
+
+  // The loudest playback in the last little while, on the context clock. The window looks back
+  // because the speaker-to-microphone path and the output latency both lag the schedule.
+  function playbackLevel() {
+    if (!voice.ctx || !voice.playEnv.length) return 0;
+    const now = voice.ctx.currentTime;
+    let level = 0;
+    const keep = [];
+    for (let i = 0; i < voice.playEnv.length; i += 1) {
+      const w = voice.playEnv[i];
+      if (w.t1 < now - VOICE_ECHO_LOOKBACK_S - 0.5) continue;
+      keep.push(w);
+      if (w.t0 <= now + 0.05 && w.t1 >= now - VOICE_ECHO_LOOKBACK_S && w.rms > level) level = w.rms;
+    }
+    voice.playEnv = keep;
+    return level;
   }
 
   // ---- the transcript -------------------------------------------------------------------------
@@ -1620,6 +1725,7 @@
     if (heard) { addMessage('user', heard); recordTurn('user', heard); }
     if (said) { addMessage('bot', said); recordTurn('bot', said); }
     voice.stats.turns += 1;
+    if (!heard) voice.stats.emptyTurns += 1;
     try {
       const data = await voicePost({ spoken: { visitor: heard, assistant: said } });
       // The CRM answers with whether a human has the conversation, the same way the typed path
@@ -1660,6 +1766,7 @@
   // because a socket waiting on a response that never comes is a conversation that has died.
   async function relayToolCalls(calls) {
     setVoiceState('working');
+    voice.toolPending += 1;
     let responses;
     try {
       const data = await voicePost({
@@ -1686,6 +1793,9 @@
       });
     }
     voiceSend({ toolResponse: { functionResponses: responses } });
+    voice.toolPending = Math.max(0, voice.toolPending - 1);
+    // Whatever the visitor said while the tool ran goes up now, ahead of the live microphone.
+    if (!voice.toolPending) releaseHeld();
     if (voice.state === 'working') setVoiceState(voice.playing.length ? 'speaking' : 'listening');
   }
 
@@ -1693,6 +1803,54 @@
     if (voice.ws && voice.ws.readyState === 1) {
       try { voice.ws.send(JSON.stringify(obj)); } catch (e) { /* socket closed under us */ }
     }
+  }
+
+  function sendPcmFrame(pcm) {
+    let bin = '';
+    const bytes = new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength);
+    for (let i = 0; i < bytes.length; i += 1) bin += String.fromCharCode(bytes[i]);
+    voice.stats.framesSent += 1;
+    voice.stats.bytesSent += bytes.length;
+    voiceSend({
+      realtimeInput: {
+        // voice.mimeType, not a closure over one token: the socket under this microphone can
+        // be the second or third of the call by now, and each mint refreshes the contract.
+        audio: { data: btoa(bin), mimeType: voice.mimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE) }
+      }
+    });
+  }
+
+  // The frames kept while nothing could be sent, sent now in order. Nothing is kept unless the
+  // visitor actually spoke (see `heldArmed` in the pump), so this is their words, not dead air.
+  function releaseHeld() {
+    if (!voice.held.length) { voice.heldArmed = false; return; }
+    if (!voice.ws || voice.ws.readyState !== 1) return;
+    const frames = voice.held;
+    voice.held = [];
+    voice.heldArmed = false;
+    for (let i = 0; i < frames.length; i += 1) sendPcmFrame(frames[i]);
+    voice.stats.replayedFrames += frames.length;
+  }
+
+  // The call's numbers, to the CRM's event log: when a socket dies and when the call ends. Counts
+  // only, never words. Fire and forget — a stat that does not arrive costs nothing.
+  function postVoiceStats(why) {
+    if (!voice.sessionId) return;
+    const s = voice.stats;
+    const now = Date.now();
+    const stats = {
+      why: why,
+      widget: VOICE_WIDGET_BUILD,
+      framesSent: s.framesSent, gatedFrames: s.gatedFrames, heldFrames: s.heldFrames,
+      replayedFrames: s.replayedFrames, barges: s.barges, serverInterrupts: s.serverInterrupts,
+      turns: s.turns, emptyTurns: s.emptyTurns, reconnects: s.reconnects, audioChunks: s.audioChunks,
+      peakRms: s.peakRms, floor: s.floor, echoFloor: s.echoFloor,
+      lifeMs: voice.startedAt ? now - voice.startedAt : 0,
+      socketMs: voice.socketAt ? now - voice.socketAt : 0
+    };
+    if (typeof s.closeCode === 'number') stats.closeCode = s.closeCode;
+    if (s.closeReason) stats.closeReason = s.closeReason;
+    voicePost({ stats: stats }).catch(function() { /* diagnostic only */ });
   }
 
   // ---- minting and reconnecting ---------------------------------------------------------------
@@ -1761,9 +1919,12 @@
     voice.reconnecting = true;
     voice.reconnects += 1;
     voice.stats.reconnects += 1;
+    // The dying socket's numbers, before they are folded into the next one.
+    postVoiceStats('socket');
     if (voice.expiryTimer) { clearTimeout(voice.expiryTimer); voice.expiryTimer = null; }
     const old = voice.ws;
     voice.ws = null;
+    voice.toolPending = 0;
     if (old) { old.onclose = null; try { old.close(); } catch (e) { /* already closing */ } }
     stopPlayback();
     setVoiceState('connecting', 'Reconnecting…');
@@ -1819,7 +1980,10 @@
         // phone number in this conversation"). The CRM now bakes the conversation so far, and the
         // facts already captured, into the setup the token locks - memory that does not depend
         // on this file or on the handle. token.history still arrives; nothing reads it.
+        voice.socketAt = Date.now();
         setVoiceState('listening');
+        // Whatever was said into the dead socket goes up first, before the live microphone.
+        releaseHeld();
         return;
       }
 
@@ -1905,6 +2069,16 @@
     // reset here: if the last call dropped or hit the 15-minute cap, this tap continues it.
     voice.reconnects = 0;
     voice.reconnecting = false;
+    voice.toolPending = 0;
+    voice.held = [];
+    voice.heldArmed = false;
+    voice.echoGain = 0;
+    voice.startedAt = Date.now();
+    voice.socketAt = 0;
+    // One call, one set of numbers: what the CRM is sent at the end describes THIS call.
+    Object.keys(voice.stats).forEach(function(k) {
+      voice.stats[k] = k === 'closeCode' ? null : k === 'closeReason' ? '' : 0;
+    });
     // The browser's permission bubble is about to appear over the getUserMedia call below. Naming it
     // first turns an abrupt system prompt into an expected step, so the visitor knows to say yes.
     setVoiceState('connecting', 'Allow microphone access when your browser asks');
@@ -1981,7 +2155,8 @@
     voice.processor = voice.ctx.createScriptProcessor(VOICE_FRAME, 1, 1);
     const ratio = voice.ctx.sampleRate / VOICE_INPUT_RATE;
     voice.processor.onaudioprocess = function(ev) {
-      if (!voice.ws || voice.ws.readyState !== 1 || voice.stopping) return;
+      if (voice.stopping || voice.state === 'off') return;
+      const socketUp = Boolean(voice.ws && voice.ws.readyState === 1);
       const input = ev.inputBuffer.getChannelData(0);
 
       let sum = 0;
@@ -1989,13 +2164,22 @@
       const rms = Math.sqrt(sum / input.length);
       setVoiceLevel(rms);
 
-      // BARGE-IN, LOCAL. Two frames above the room's own floor while the assistant is talking, and
+      // BARGE-IN, LOCAL. Frames above the room's own floor while the assistant is talking, and
       // the playback queue is emptied at once. The server's own `interrupted` arrives later and
       // does the same thing again, harmlessly.
-      const threshold = Math.max(VOICE_BARGE_FLOOR, voice.noiseFloor * VOICE_BARGE_MULTIPLE);
+      const roomThreshold = Math.max(VOICE_BARGE_FLOOR, voice.noiseFloor * VOICE_BARGE_MULTIPLE);
+      let threshold = roomThreshold;
       // The gate decision is taken BEFORE this frame can lift it: a frame that completes a
       // barge-in is the first one sent, together with the withheld frames before it.
       const assistantTalking = voice.playing.length > 0;
+      let playLevel = 0;
+      if (assistantTalking) {
+        // While the assistant talks the bar is higher, and higher still by however much of the
+        // playback this microphone is known to pick up. See VOICE_BARGE_FLOOR_SPEAKING.
+        playLevel = playbackLevel();
+        threshold = Math.max(threshold, VOICE_BARGE_FLOOR_SPEAKING, voice.echoGain * playLevel * VOICE_ECHO_MARGIN);
+        voice.stats.echoFloor = Math.round(threshold * 1000) / 1000;
+      }
       let barged = false;
       if (rms > threshold) {
         voice.loudFrames += 1;
@@ -2009,12 +2193,23 @@
         voice.loudFrames = 0;
         // The floor is learned from QUIET frames only. Learning it from speech would teach the
         // widget that the visitor's voice is the background, which is the failure mode this whole
-        // adaptive scheme exists to avoid.
-        const rate = rms > voice.noiseFloor ? VOICE_FLOOR_RISE : VOICE_FLOOR_FALL;
-        voice.noiseFloor = voice.noiseFloor + (rms - voice.noiseFloor) * rate;
+        // adaptive scheme exists to avoid. It is not learned while the assistant talks either —
+        // its echo is not the room.
+        if (!assistantTalking) {
+          const rate = rms > voice.noiseFloor ? VOICE_FLOOR_RISE : VOICE_FLOOR_FALL;
+          voice.noiseFloor = voice.noiseFloor + (rms - voice.noiseFloor) * rate;
+        }
+      }
+      // The coupling is learned from frames that did NOT complete a barge-in while something
+      // audible was playing: what the microphone hears then is mostly the speaker. It rises
+      // quickly so the first sentence of a call already protects the second, and falls slowly.
+      if (assistantTalking && !barged && playLevel > 0.02) {
+        const ratio = Math.min(2, rms / playLevel);
+        voice.echoGain += (ratio - voice.echoGain) * (ratio > voice.echoGain ? VOICE_ECHO_RISE : VOICE_ECHO_FALL);
+        voice.stats.coupling = Math.round(voice.echoGain * 1000) / 1000;
       }
       if (rms > voice.stats.peakRms) voice.stats.peakRms = Math.round(rms * 1000) / 1000;
-      voice.stats.floor = Math.round(threshold * 1000) / 1000;
+      voice.stats.floor = Math.round(roomThreshold * 1000) / 1000;
 
       // Downsample to 16kHz by averaging each source window rather than picking one sample from
       // it: a bare nearest-neighbour decimation aliases speech badly and the transcription is what
@@ -2029,6 +2224,35 @@
         for (let j = start; j < end; j += 1) { acc += input[j]; n += 1; }
         const v = n ? acc / n : 0;
         pcm[i] = Math.max(-1, Math.min(1, v)) * 32767;
+      }
+
+      // NOWHERE TO SEND, OR A TOOL RUNNING: keep what the visitor says rather than lose it. The
+      // buffer arms on the first frame above the bar — the SPEAKING bar when the assistant is
+      // talking, because "let me pull that up" is said while the tool runs and its echo must not
+      // be kept as the visitor (measured: it came back as "Let me" in a USER bubble) — so
+      // silence before they speak is not kept, and it is capped so a long wait cannot pile up
+      // minutes of audio.
+      const holding = VOICE_HOLD_MIC_DURING_TOOL && voice.toolPending > 0;
+      if (!socketUp || holding) {
+        // The assistant talking while a tool runs ("let me pull that up") is gated here exactly
+        // as it is below: measured, its echo was held and replayed as "Let me put" otherwise.
+        if (assistantTalking && !barged) {
+          voice.preroll.push(pcm);
+          if (voice.preroll.length > VOICE_PREROLL_FRAMES) voice.preroll.shift();
+          voice.stats.gatedFrames += 1;
+          return;
+        }
+        if (rms > threshold) voice.heldArmed = true;
+        if (voice.heldArmed) {
+          if (barged && voice.preroll.length) {
+            for (let i = 0; i < voice.preroll.length; i += 1) voice.held.push(voice.preroll[i]);
+          }
+          voice.preroll = [];
+          voice.held.push(pcm);
+          while (voice.held.length > VOICE_HELD_FRAMES_MAX) voice.held.shift();
+          voice.stats.heldFrames += 1;
+        }
+        return;
       }
       // THE ECHO GATE. Assistant talking and no barge-in: keep this frame back (for the pre-roll)
       // and send silence in its place, so the stream never pauses and the model never hears
@@ -2046,21 +2270,6 @@
       voice.preroll = [];
       sendPcmFrame(pcm);
     };
-
-    function sendPcmFrame(pcm) {
-      let bin = '';
-      const bytes = new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength);
-      for (let i = 0; i < bytes.length; i += 1) bin += String.fromCharCode(bytes[i]);
-      voice.stats.framesSent += 1;
-      voice.stats.bytesSent += bytes.length;
-      voiceSend({
-        realtimeInput: {
-          // voice.mimeType, not a closure over one token: the socket under this microphone can
-          // be the second or third of the call by now, and each mint refreshes the contract.
-          audio: { data: btoa(bin), mimeType: voice.mimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE) }
-        }
-      });
-    }
     voice.source.connect(voice.processor);
     // A ScriptProcessorNode only fires while it is connected to the destination. The gain is zero
     // so the visitor never hears their own microphone played back at them.
@@ -2080,6 +2289,7 @@
     stopPlayback();
     // Whatever was said before the hang-up is still part of the conversation.
     flushSpokenTurn();
+    postVoiceStats(note ? 'ended:' + note.slice(0, 40) : 'hangup');
     if (voice.processor) { try { voice.processor.disconnect(); } catch (e) {} voice.processor.onaudioprocess = null; }
     if (voice.source) { try { voice.source.disconnect(); } catch (e) {} }
     if (voice.stream) voice.stream.getTracks().forEach(function(t) { try { t.stop(); } catch (e) {} });
@@ -2088,6 +2298,11 @@
     voice.ws = null; voice.ctx = null; voice.stream = null; voice.processor = null; voice.source = null;
     voice.loudFrames = 0;
     voice.preroll = [];
+    voice.held = [];
+    voice.heldArmed = false;
+    voice.toolPending = 0;
+    voice.playEnv = [];
+    voice.echoGain = 0;
     voice.noiseFloor = 0.01;
     voice.reconnecting = false;
     // voice.resumeHandle deliberately SURVIVES the hang-up: the next tap on the mic continues
