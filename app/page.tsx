@@ -5,12 +5,12 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TestimonialBand } from "@/components/ui/TestimonialBand";
 import { ScrollCue } from "@/components/ui/ScrollCue";
-import { LeadForm } from "@/components/leads/LeadForm";
 import { DriftRail } from "@/components/idx/DriftRail";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { HomeHeroVideo } from "@/components/home/HomeHeroVideo";
+import { HomeIntake } from "@/components/home/HomeIntake";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
@@ -238,83 +238,16 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Home value split — "Find Your Home Value" + "Tell Us About Your Home" form */}
+      {/* ── The intake (round 50, owner-directed). This was "Find Your Home Value" beside a
+          "Tell Us About Your Home" form, and the footer then asked the same six fields again:
+          "the same feeling in form" twice on one page. Now the section asks one question (buy,
+          sell, or both), follows the answer with the two or three that matter, and only then
+          asks for a name, on the page rather than in a pop-up. The seller copy that stood here
+          is not lost: the ledger under "Why Work With Us" carries the 24h offer and the 100+
+          sites, and the details step says what a seller gets back. id="value" stays: it is the
+          scroll cue's target and the section's job is still the same first conversation. */}
       <section id="value" className="sec bg-paper" aria-labelledby="value-heading">
-        {/* lg:items-center, because the two columns are not the same height and never will be:
-            the form is a tall panel and the copy beside it is five lines shorter. Left-aligned
-            at the top it left ~545px of dead white under the copy, which is exactly the "unused
-            extra space" complaint. Centred, the shorter column sits against the middle of the
-            taller one and the section reads as one object. */}
-        <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
-          <Reveal>
-            {/* The eyebrow is the section's entry point, and it is the first one on this page:
-                every home-page section had been a bare centred h2, so nothing told a reader
-                which section they had arrived in before the headline did. */}
-            <SectionHeading as="h2" eyebrow="For sellers">
-              <span id="value-heading">Find Your Home Value</span>
-            </SectionHeading>
-            {/* REWRITTEN IN ROUND 36. This block carried the previous vendor's seller pitch
-                verbatim for 35 rounds ("So, you're ready to sell your home! Congratulations…",
-                "impeccable customer service", "we demand excellence") — superlatives with
-                nothing behind them, and an exclamation mark. The round-36 assessment named the
-                copy as the fastest way this site still reads templated, and the replacement
-                follows the writing rules stated there: plain verbs, sentence case, claims the
-                site itself already makes elsewhere (real comps drive the estimate — the Why
-                carousel's own caption; the 24h cash offer; the 100+ syndication sites; seven
-                days a week), no superlatives, no exclamation marks, no em dashes. Round 11's
-                SETTING decisions are untouched: lead-in a shade darker, ~62ch measure, spaced
-                paragraphs. */}
-            {[
-              "Selling starts with one number: what your home is worth today. We price against real sales in your county rather than a formula, and we tell you what we would list at and why.",
-              "From there, you set the pace. List with us and your home reaches more than a hundred search sites, or take a written cash offer inside twenty-four hours and skip the showings. Either way, a person answers seven days a week.",
-            ].map((p, i) => (
-              <p
-                key={i}
-                className={
-                  // Two paragraphs of one block were set at two sizes AND two leadings —
-                  // 17px/1.7 then 16px/1.75. Nobody decides that; 17px is not a step on this
-                  // site's scale and a 1px difference is not a decision, it is drift. One size
-                  // and one leading now, with the colour still carrying the lead-in.
-                  i === 0
-                    ? "mt-7 max-w-md leading-[1.7] text-ink-soft"
-                    : "mt-5 max-w-md leading-[1.7] text-stone"
-                }
-              >
-                {p}
-              </p>
-            ))}
-          </Reveal>
-          <Reveal delay={140}>
-            {/* The form is an OBJECT, not loose fields on a page. It had been a bare heading over
-                naked inputs sitting directly on the white, next to a column of body copy — so the
-                densest, most important thing in the section was the one thing with no edges. Every
-                other form on the site that matters sits in a panel; this one now does too. 24px is
-                the large-feature-panel step, which is what this is. */}
-            <div className="rounded-3xl border border-line bg-mist p-6 md:p-8 lg:p-10">
-              <h3 className="t-h3 text-ink">Tell Us About Your Home</h3>
-              {/* One sentence, rewritten with the seller block (round 36): the old vendor line
-                  promised "experts in every area that have access to the resources needed",
-                  which is a paragraph about nothing. Say what happens instead. */}
-              <p className="mb-7 mt-3 max-w-md leading-[1.7] text-stone">
-                Tell us where the home is and how to reach you, and we&rsquo;ll come back with a
-                number built from recent sales near you.
-              </p>
-              {/* Live home-page form: First/Last 2-up, then Email, Phone, Property Address,
-                  Message stacked single-column (no interest dropdown). Wiring/validation/
-                  honeypot unchanged; intent still reaches the CRM via the hidden reason. */}
-              <LeadForm
-                splitName
-                withAddress
-                stackAddressRow
-                hideReason
-                defaultReason="I'm interested in selling a home"
-                submitLabel="Send Message"
-                successTitle="Got it. Thanks."
-                successBody="We'll start on your home's numbers and reach out shortly."
-              />
-            </div>
-          </Reveal>
-        </div>
+        <HomeIntake />
       </section>
 
       {/* ── Featured listings. Heading stays centred: it sits over a symmetric card grid, which
