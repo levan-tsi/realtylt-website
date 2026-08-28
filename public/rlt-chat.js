@@ -36,7 +36,7 @@
     // on the real site before a visitor ever meets it. 'on' offers it to every capable browser.
     // It gates one boolean in voiceSupported() and nothing else, so the lit path and the dark
     // path are the same code.
-    VOICE_LAUNCH: 'dark',
+    VOICE_LAUNCH: 'on',
     BRAND_COLOR: '#1557b0',
     BRAND_COLOR_DARK: '#0d47a1',
     BRAND_NAME: 'Levan Tsiklauri',
