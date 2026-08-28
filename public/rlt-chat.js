@@ -1682,6 +1682,18 @@
   //     hands it to the fresh session as clientContent before the visitor speaks.
 
   async function mintVoiceSession() {
+    try {
+      return await mintVoiceOnce();
+    } catch (err) {
+      if (!voice.resumeHandle) throw err;
+      // A stale handle can be refused at MINT time, not only at connect. The handle is
+      // disposable; the call is not: drop it and mint clean, once.
+      voice.resumeHandle = null;
+      return mintVoiceOnce();
+    }
+  }
+
+  async function mintVoiceOnce() {
     if (!voice.sessionId) throw new Error('voice: no session');
     const headers = { 'Content-Type': 'application/json' };
     if (voice.sessionToken) headers['x-rlt-chat-token'] = voice.sessionToken;
