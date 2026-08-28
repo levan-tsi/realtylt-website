@@ -9,26 +9,27 @@
     // The CRM's own agent speaks the widget's exact contract (proven by the CRM's
     // chat-compat-harness against this very function). Rollback = put the n8n line back:
     // 'https://n8n.srv1017745.hstgr.cloud/webhook/realtylt-chat' — the workflow stays
-    // published and untouched. The vercel host is deliberate: app.realtylt.com DNS still
-    // points at the old server.
-    WEBHOOK_URL: 'https://realtylt-crm-web.vercel.app/api/chat/agent',
+    // published and untouched. REBRANDED 2026-08-28: app.realtylt.com now points at the CRM's
+    // Vercel deployment (DNS cut over on launch day), so the visitor-facing host is ours;
+    // realtylt-crm-web.vercel.app still answers and remains the rollback host.
+    WEBHOOK_URL: 'https://app.realtylt.com/api/chat/agent',
     // The CRM mints the session id and a signed ownership token here (C1, 2026-08-24). Asking
     // for the id server-side — instead of minting one in the browser — is what stops a stranger
     // who guesses a session id from reading the conversation back through the assistant.
-    SESSION_URL: 'https://realtylt-crm-web.vercel.app/api/chat/session',
+    SESSION_URL: 'https://app.realtylt.com/api/chat/session',
     // TAKEOVER DELIVERY (2026-08-26). When Levan presses Take over in the CRM and types, the
     // reply is a chat_logs row with sender='agent' and nothing carried it here — measured on
     // prod, row 220, never rendered. This is where we ask for his replies while the panel is
     // open. Needs the ownership token, so a widget in the no-token fallback simply never polls.
-    POLL_URL: 'https://realtylt-crm-web.vercel.app/api/chat/messages',
+    POLL_URL: 'https://app.realtylt.com/api/chat/messages',
     POLL_INTERVAL: 10000,
     // CLICK TO TALK (2026-08-27). Two routes, and the split IS the security design. The first
     // mints a Gemini Live token whose model, persona and TOOL LIST are locked server-side, so the
     // socket this browser then opens straight to Google cannot be widened by anything on this
     // page. The second is the only door back: every tool the model asks for runs on the CRM, and
     // the spoken transcript is written into the same conversation as the typed one.
-    VOICE_TOKEN_URL: 'https://realtylt-crm-web.vercel.app/api/chat/voice-token',
-    VOICE_TURN_URL: 'https://realtylt-crm-web.vercel.app/api/chat/voice-turn',
+    VOICE_TOKEN_URL: 'https://app.realtylt.com/api/chat/voice-token',
+    VOICE_TURN_URL: 'https://app.realtylt.com/api/chat/voice-turn',
     // DARK LAUNCH (2026-08-27, the owner's call). This file is a static script, so a build-time
     // env never reaches it; the switch is this one word. 'dark' ships the whole voice feature
     // present but unoffered — the button stays hidden even on a browser that could run it —
@@ -1349,13 +1350,25 @@
    * Echo cancellation is requested on the stream, so the assistant's own voice coming back through
    * the speakers is not what lifts this.
    */
-  const VOICE_BARGE_MULTIPLE = 3.5;
+  // RETUNED 2026-08-28 after a live call: someone talking NEARBY the visitor read as the visitor
+  // barging in, and the assistant cut itself off mid-reply. The multiple asks for a clearly
+  // direct voice; four frames (~170ms at 48kHz) ask for a sustained one, so a burst of background
+  // chatter no longer empties the playback queue. A visitor genuinely interrupting speaks AT the
+  // microphone and clears both within a couple of syllables.
+  const VOICE_BARGE_MULTIPLE = 4.0;
   const VOICE_BARGE_FLOOR = 0.012;
-  const VOICE_BARGE_FRAMES = 2;
+  const VOICE_BARGE_FRAMES = 4;
   // How quickly the learned floor follows the room. Slow on the way up so one cough does not
   // raise the bar; quick on the way down so a room that goes quiet is heard again.
   const VOICE_FLOOR_RISE = 0.02;
   const VOICE_FLOOR_FALL = 0.2;
+  // THE RECONNECT BUDGET (2026-08-28, the "line dropped a few times on its own" fix). A dropped
+  // socket now reconnects and CONTINUES — see startVoice — but only this many times per call,
+  // and only when the dying connection had lived long enough to count as established. A socket
+  // that dies younger than VOICE_STABLE_MS is a connection-level refusal (bad handle, model
+  // config, network), and retrying those in a loop is how a widget melts a rate limit.
+  const VOICE_MAX_RECONNECTS = 4;
+  const VOICE_STABLE_MS = 8000;
 
   const voice = {
     available: false,
@@ -1379,6 +1392,20 @@
     expiryTimer: null,
     stopping: false,
     lastError: null,
+    /*
+     * THE CALL'S MEMORY ACROSS SOCKETS (2026-08-28). Google sends resumption handles while a
+     * Live session runs; carrying the latest one back to the CRM on the next mint makes the new
+     * socket CONTINUE that session — same conversation, nothing re-asked — instead of starting a
+     * stranger. Kept across endVoice on purpose, so tapping the mic again after a drop or the
+     * 15-minute cap picks the same conversation back up; cleared only by Reset, because a fresh
+     * conversation must not inherit a dead call's context.
+     */
+    resumeHandle: null,
+    // Per-call reconnect budget and the in-flight latch that stops two reconnects racing.
+    reconnects: 0,
+    reconnecting: false,
+    // The audio contract from the current token, read by the mic pump on every frame.
+    mimeType: null,
     /*
      * THE CONVERSATION THIS CALL BELONGS TO, captured when it starts.
      *
@@ -1410,6 +1437,8 @@
       serverInterrupts: 0,
       // Completed spoken exchanges written into the thread.
       turns: 0,
+      // Sockets that dropped and were picked back up without ending the call.
+      reconnects: 0,
       // The two numbers that make a barge-in that did not happen diagnosable instead of a mystery.
       peakRms: 0,
       floor: 0,
@@ -1639,11 +1668,204 @@
     }
   }
 
+  // ---- minting and reconnecting ---------------------------------------------------------------
+  // THE MEMORY FIX (2026-08-28). The launch-day bug: every socket drop used to end the call, and
+  // a re-tap minted a model with no idea what was said — it re-asked the owner his number ten
+  // times in one conversation. Two mechanisms close it, both running through mintVoiceSession:
+  //
+  //   the HANDLE — Google sends sessionResumptionUpdate tickets while a session runs; handing
+  //     the latest back to the CRM makes the next socket CONTINUE that session, memory and all.
+  //     It rides in this request because the constrained socket ignores the browser's own setup
+  //     message: the CRM bakes it into the setup the token itself carries.
+  //   the SEED — when there is no handle worth presenting (first call, expired, refused), the
+  //     CRM returns the recent conversation — typed turns included — and setupComplete below
+  //     hands it to the fresh session as clientContent before the visitor speaks.
+
+  async function mintVoiceSession() {
+    if (!voice.sessionId) throw new Error('voice: no session');
+    const headers = { 'Content-Type': 'application/json' };
+    if (voice.sessionToken) headers['x-rlt-chat-token'] = voice.sessionToken;
+    const viaHandle = Boolean(voice.resumeHandle);
+    const body = {
+      sessionId: voice.sessionId,
+      userMeta: { page: location.pathname, context: voice.persona || detectPersona() }
+    };
+    if (viaHandle) body.resumeHandle = voice.resumeHandle;
+    const resp = await fetch(CONFIG.VOICE_TOKEN_URL, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(body)
+    });
+    if (!resp.ok) throw new Error('voice-token ' + resp.status);
+    const token = await resp.json();
+    if (!token || !token.token || !token.wsUrl) throw new Error('voice-token empty');
+    // Whether THIS token was minted around a resumption handle decides two things downstream:
+    // whether the fresh session needs the seed, and who gets blamed if the socket dies young.
+    token.viaHandle = viaHandle;
+    voice.mimeType = token.inputMimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE);
+    return token;
+  }
+
+  // A drop is no longer a hang-up. Mint a fresh token and open a new socket over the SAME
+  // microphone and audio graph: the visitor hears a beat of quiet, not "the line dropped", and
+  // the model remembers the conversation either way — the handle resumes the session itself, and
+  // a fresh session gets the CRM's transcript. Budgeted, because a socket that cannot stay up is
+  // not a socket worth dialing forever.
+  async function reconnectVoice() {
+    if (voice.stopping || voice.state === 'off' || voice.reconnecting) return;
+    if (voice.reconnects >= VOICE_MAX_RECONNECTS) {
+      endVoice('The line dropped. Tap the microphone to pick it back up.');
+      return;
+    }
+    voice.reconnecting = true;
+    voice.reconnects += 1;
+    voice.stats.reconnects += 1;
+    if (voice.expiryTimer) { clearTimeout(voice.expiryTimer); voice.expiryTimer = null; }
+    const old = voice.ws;
+    voice.ws = null;
+    if (old) { old.onclose = null; try { old.close(); } catch (e) { /* already closing */ } }
+    stopPlayback();
+    setVoiceState('connecting', 'Reconnecting…');
+    // Whatever was heard or said before the drop is part of the conversation — and AWAITED here,
+    // unlike the hang-up path, so a fresh session's seed can include the turn that just died.
+    try { await flushSpokenTurn(); } catch (e) { /* a lost transcript must not block the retry */ }
+    let token;
+    try {
+      token = await mintVoiceSession();
+    } catch (err) {
+      voice.reconnecting = false;
+      endVoice('The line dropped. Tap the microphone to pick it back up.');
+      return;
+    }
+    if (voice.stopping || voice.state === 'off') { voice.reconnecting = false; return; }
+    openVoiceSocket(token);
+    voice.reconnecting = false;
+  }
+
+  // One socket for one minted token: handlers, the seed, and the token's own clock. Split out of
+  // startVoice so a reconnect reuses the microphone pipeline — onaudioprocess reads voice.ws on
+  // every frame, so the new socket picks the mic up the moment it is assigned.
+  function openVoiceSocket(token) {
+    const ws = new WebSocket(token.wsUrl + '?access_token=' + encodeURIComponent(token.token));
+    const openedAt = Date.now();
+    voice.ws = ws;
+
+    ws.onopen = function() {
+      // The protocol requires a setup message. Ours is IGNORED: the token carries the real one,
+      // and that is exactly the property that makes handing this token to a browser safe. It is
+      // sent minimal on purpose, so nobody reading this file later mistakes it for configuration.
+      voiceSend({ setup: {} });
+      setVoiceState('listening');
+    };
+
+    ws.onmessage = async function(ev) {
+      let raw;
+      try {
+        raw = typeof ev.data === 'string' ? ev.data : await ev.data.text();
+      } catch (e) { return; }
+      let msg;
+      try { msg = JSON.parse(raw); } catch (e) { return; }
+      voice.stats.messagesIn += 1;
+
+      if (msg.setupComplete) {
+        // A session no handle could resume starts blank; hand it the conversation so far before
+        // the visitor speaks. turnComplete false: this is context, not a prompt to answer.
+        if (!token.viaHandle && Array.isArray(token.history) && token.history.length) {
+          voiceSend({
+            clientContent: {
+              turns: token.history.map(function(t) {
+                return { role: t.role === 'model' ? 'model' : 'user', parts: [{ text: String(t.text || '') }] };
+              }),
+              turnComplete: false
+            }
+          });
+        }
+        setVoiceState('listening');
+        return;
+      }
+
+      // Google's "come back as this session" ticket, refreshed while the call runs. The latest
+      // one is what a reconnect — or the visitor's next tap on the mic — hands back to the CRM.
+      if (msg.sessionResumptionUpdate) {
+        const u = msg.sessionResumptionUpdate;
+        if (u.resumable && u.newHandle) voice.resumeHandle = u.newHandle;
+        return;
+      }
+
+      if (msg.toolCall && msg.toolCall.functionCalls && msg.toolCall.functionCalls.length) {
+        relayToolCalls(msg.toolCall.functionCalls);
+        return;
+      }
+      // The server's polite goodbye, sent before it closes a long connection. Reconnecting NOW —
+      // with the handle it has been feeding us — is the difference between a seamless continue
+      // and the visitor hearing the line die.
+      if (msg.goAway) { reconnectVoice(); return; }
+
+      const sc = msg.serverContent;
+      if (!sc) return;
+      if (sc.interrupted) { voice.stats.serverInterrupts += 1; stopPlayback(); setVoiceState('listening'); }
+      if (sc.inputTranscription && sc.inputTranscription.text) {
+        voice.heard += sc.inputTranscription.text;
+        liveBubble('user', voice.heard.trim());
+      }
+      if (sc.outputTranscription && sc.outputTranscription.text) {
+        voice.said += sc.outputTranscription.text;
+        liveBubble('bot', voice.said.trim());
+      }
+      const parts = (sc.modelTurn && sc.modelTurn.parts) || [];
+      for (let i = 0; i < parts.length; i += 1) {
+        if (parts[i].inlineData && parts[i].inlineData.data) {
+          voice.stats.audioChunks += 1;
+          playChunk(parts[i].inlineData.data);
+        }
+      }
+      if (sc.turnComplete) flushSpokenTurn();
+    };
+
+    ws.onerror = function() { voice.lastError = 'socket'; };
+    ws.onclose = function(ev) {
+      // An older socket closing late must never touch the call that replaced it.
+      if (voice.ws !== ws) return;
+      voice.stats.closeCode = ev && ev.code;
+      voice.stats.closeReason = String((ev && ev.reason) || '').slice(0, 200);
+      if (voice.state === 'off' || voice.stopping) return;
+      if (Date.now() - openedAt < VOICE_STABLE_MS) {
+        // The connection never established. If it carried a resumption handle, the handle is the
+        // prime suspect — expired, or naming a session Google no longer holds — so drop it and
+        // let the reconnect start clean, seeded from the CRM transcript instead. A CLEAN start
+        // dying this young is a refusal (the 1007/1011 class), and retrying refusals is a loop.
+        if (token.viaHandle) {
+          voice.resumeHandle = null;
+          reconnectVoice();
+        } else {
+          endVoice('The line dropped. Tap the microphone to pick it back up.');
+        }
+        return;
+      }
+      reconnectVoice();
+    };
+
+    // The token's own clock, honoured here so a session ends with a sentence rather than with a
+    // socket closing under the visitor mid-word. The resumption handle survives endVoice, so the
+    // next tap picks this same conversation back up.
+    if (voice.expiryTimer) clearTimeout(voice.expiryTimer);
+    const remaining = (token.expiresAt || 0) - Date.now();
+    if (remaining > 0) {
+      voice.expiryTimer = setTimeout(function() {
+        endVoice("That's as long as one call runs. Tap the microphone to carry on.");
+      }, remaining);
+    }
+  }
+
   // ---- the session ----------------------------------------------------------------------------
   async function startVoice() {
     if (voice.state !== 'off') return;
     voice.stopping = false;
     voice.lastError = null;
+    // A fresh call gets a fresh reconnect budget. The resumption handle is deliberately NOT
+    // reset here: if the last call dropped or hit the 15-minute cap, this tap continues it.
+    voice.reconnects = 0;
+    voice.reconnecting = false;
     // The browser's permission bubble is about to appear over the getUserMedia call below. Naming it
     // first turns an abrupt system prompt into an expected step, so the visitor knows to say yes.
     setVoiceState('connecting', 'Allow microphone access when your browser asks');
@@ -1689,19 +1911,7 @@
       voice.sessionId = sess.id;
       voice.sessionToken = sess.token || null;
       voice.persona = sess.persona || detectPersona();
-      const headers = { 'Content-Type': 'application/json' };
-      if (sess.token) headers['x-rlt-chat-token'] = sess.token;
-      const resp = await fetch(CONFIG.VOICE_TOKEN_URL, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          sessionId: sess.id,
-          userMeta: { page: location.pathname, context: voice.persona }
-        })
-      });
-      if (!resp.ok) throw new Error('voice-token ' + resp.status);
-      token = await resp.json();
-      if (!token || !token.token || !token.wsUrl) throw new Error('voice-token empty');
+      token = await mintVoiceSession();
     } catch (err) {
       stream.getTracks().forEach(function(t) { t.stop(); });
       voice.sessionId = null;
@@ -1783,7 +1993,9 @@
       voice.stats.bytesSent += bytes.length;
       voiceSend({
         realtimeInput: {
-          audio: { data: btoa(bin), mimeType: token.inputMimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE) }
+          // voice.mimeType, not a closure over one token: the socket under this microphone can
+          // be the second or third of the call by now, and each mint refreshes the contract.
+          audio: { data: btoa(bin), mimeType: voice.mimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE) }
         }
       });
     };
@@ -1795,72 +2007,7 @@
     voice.processor.connect(mute);
     mute.connect(voice.ctx.destination);
 
-    const ws = new WebSocket(token.wsUrl + '?access_token=' + encodeURIComponent(token.token));
-    voice.ws = ws;
-
-    ws.onopen = function() {
-      // The protocol requires a setup message. Ours is IGNORED: the token carries the real one,
-      // and that is exactly the property that makes handing this token to a browser safe. It is
-      // sent minimal on purpose, so nobody reading this file later mistakes it for configuration.
-      voiceSend({ setup: {} });
-      setVoiceState('listening');
-    };
-
-    ws.onmessage = async function(ev) {
-      let raw;
-      try {
-        raw = typeof ev.data === 'string' ? ev.data : await ev.data.text();
-      } catch (e) { return; }
-      let msg;
-      try { msg = JSON.parse(raw); } catch (e) { return; }
-      voice.stats.messagesIn += 1;
-
-      if (msg.setupComplete) { setVoiceState('listening'); return; }
-
-      if (msg.toolCall && msg.toolCall.functionCalls && msg.toolCall.functionCalls.length) {
-        relayToolCalls(msg.toolCall.functionCalls);
-        return;
-      }
-      if (msg.goAway) { endVoice('The line dropped. Tap the microphone to pick it back up.'); return; }
-
-      const sc = msg.serverContent;
-      if (!sc) return;
-      if (sc.interrupted) { voice.stats.serverInterrupts += 1; stopPlayback(); setVoiceState('listening'); }
-      if (sc.inputTranscription && sc.inputTranscription.text) {
-        voice.heard += sc.inputTranscription.text;
-        liveBubble('user', voice.heard.trim());
-      }
-      if (sc.outputTranscription && sc.outputTranscription.text) {
-        voice.said += sc.outputTranscription.text;
-        liveBubble('bot', voice.said.trim());
-      }
-      const parts = (sc.modelTurn && sc.modelTurn.parts) || [];
-      for (let i = 0; i < parts.length; i += 1) {
-        if (parts[i].inlineData && parts[i].inlineData.data) {
-          voice.stats.audioChunks += 1;
-          playChunk(parts[i].inlineData.data);
-        }
-      }
-      if (sc.turnComplete) flushSpokenTurn();
-    };
-
-    ws.onerror = function() { voice.lastError = 'socket'; };
-    ws.onclose = function(ev) {
-      voice.stats.closeCode = ev && ev.code;
-      voice.stats.closeReason = String((ev && ev.reason) || '').slice(0, 200);
-      if (voice.state !== 'off' && !voice.stopping) {
-        endVoice('The line dropped. Tap the microphone to pick it back up.');
-      }
-    };
-
-    // The token's own clock, honoured here so a session ends with a sentence rather than with a
-    // socket closing under the visitor mid-word.
-    const remaining = (token.expiresAt || 0) - Date.now();
-    if (remaining > 0) {
-      voice.expiryTimer = setTimeout(function() {
-        endVoice("That's as long as one call runs. Tap the microphone to carry on.");
-      }, remaining);
-    }
+    openVoiceSocket(token);
     clearChips();
   }
 
@@ -1879,6 +2026,9 @@
     voice.ws = null; voice.ctx = null; voice.stream = null; voice.processor = null; voice.source = null;
     voice.loudFrames = 0;
     voice.noiseFloor = 0.01;
+    voice.reconnecting = false;
+    // voice.resumeHandle deliberately SURVIVES the hang-up: the next tap on the mic continues
+    // this conversation. Only Reset clears it, because only Reset means "start me over".
     // AFTER the flush, never before. `flushSpokenTurn` runs synchronously as far as its first
     // await, and `voicePost` reads this on its own first line, so the id is already captured by
     // the time we get here — and clearing it now stops any later stray call posting into a
@@ -1959,6 +2109,9 @@
       // what stops a spoken turn being written into a conversation that no longer exists.
       endVoice();
       voice.receipts = [];
+      // A fresh conversation must not inherit a dead call's context: the resumption handle would
+      // carry the OLD conversation's memory into the one the visitor just asked to start over.
+      voice.resumeHandle = null;
       // The poll timer is left running on purpose: clearHistory() drops the session, the poll
       // no-ops without one, and it picks the new conversation up the moment one is minted.
       clearHistory();
