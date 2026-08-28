@@ -1,5 +1,125 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 50 BRIEF (written 2026-08-28): THE OWNER'S POST-E2E LIST. HANDOFF ONLY - ======
+## == NOTHING BELOW THIS LINE'S LIST HAS BEEN BUILT. ======================================
+## Context: the site went LIVE on realtylt.com on 2026-08-28 (DNS cut over; apex + /ai both
+## verified serving the new stack; voice is ON for everyone; website prod = 7bc08e1). The
+## owner read the round-49 report and answered with this list. Workstyle he asked to keep:
+## same as round 49 - Fable orchestrates, ONE Opus sub granted, measure everything, commit
+## with pathspecs, verify on production. His words are quoted; the decode follows each.
+##
+## -- 0. THE LAST LAUNCH SWITCH IS STILL SET (check first, it may be deliberate) ----------
+## robots.txt on the LIVE realtylt.com still answers "Disallow: /" and X-Robots-Tag noindex
+## rides every response: PRELAUNCH=1 has not been removed. The domain is public but
+## invisible to search. Removing it is the owner's step 3; when he says go: remove the env
+## var in Vercel, redeploy, verify robots.txt opens + the noindex header is gone, submit
+## sitemap.xml in Search Console, and re-check the two post-flip items from round 49 (the
+## Preferred Sources button fills; realtylt.com/ai serves - the second is already true).
+##
+## -- 1. EMAILS: "emails were not that good brivitys emails are better design and
+##    sofisticated also my signature in gmail has links the ones u send had not" ----------
+## Redesign the CLIENT-FACING emails as branded HTML at Brivity's level: the n8n thank-you
+## (gKA4YoMDx5ADd8Dx) + welcome (2nd Gmail node on 3RLrnY2SMcZ5ZMDL) nodes, and the CRM
+## /api/auth/email-hook templates (auth mail is CRM-side - see infra-auth-email-hook
+## memory). Design reference: Brivity's real emails in his inbox (the levan+brivity1@
+## "Registration Confirmation" from support@brivity.com; the lead-alert template we already
+## send is the house example of branded HTML). The signature must be HIS real linked one
+## (USER.md holds it): Levan Tsiklauri (LT) | Realtor(R) - NEVER "broker" - tel: and
+## mailto: links, www.realtylt.com link, "Book a Consultation" link (the /connect page or
+## the calendar link), 1097 Route 55 Suite 9, Lagrangeville NY 12540. Fold in the standing
+## r41 addressing plan (noreply@ for transactional, info@ for CMA/reports) - it starts with
+## HIS ~3min Gmail "Send mail as" step; without it Gmail rewrites the From.
+##
+## -- 2. LEAD DEDUP: "if its same name and number why have a duplicate lead merge it ...
+##    when tehy fill form we got the lead and if they register or sign in we dont want
+##    that to be double lead" -------------------------------------------------------------
+## CRM-side intake matching. Today the CRM merges by PHONE (round 49 proved it: 5 POSTs,
+## one number -> one contact) but an account SIGNUP has no phone field, so the same person
+## filling a form and then registering becomes TWO contacts (Final Probe A + Final Probe W
+## is exactly this shape). Fix: every intake (lead webhook, auth signup, chat session)
+## matches on email OR phone before creating; merge into the existing contact and append,
+## the way leads 117-121 already append. MEMORY's CRM block already lists
+## "chat-session->contact link + capture DEDUP" - same work item, do them as one.
+##
+## -- 3. ACTIVITY INTO THE CRM, BRIVITY-STYLE: "if they do my plan we should get answers
+##    what they chose there if they visited page we should get alert so agetnt could take
+##    action or me  what she opend  should show up in crm as brivity does" ----------------
+## The biggest new build. Two halves, cross-repo (website emits, CRM stores/renders/alerts):
+## a. /plan choices -> CRM: when the person is identifiable (signed in, or a lead exists
+##    for the session), post the /plan selections the way the wizard qualifier already
+##    travels (the qualifier-append pattern on the contact is proven and CRM-readable).
+## b. Page-visit activity feed per contact: which pages and which LISTINGS a known contact
+##    opened, shown on the CRM contact timeline, with an alert (email to him / agent) on
+##    high-intent actions (opened /plan, repeated views of one listing, ran a valuation).
+##    Design decision for the session: first-party events (a portal_activity table written
+##    by the site for signed-in users + lead-identified sessions) is the CRM-queryable
+##    shape; PostHog stays the anonymous-aggregate layer. Brivity's contact screen is the
+##    reference (his old account still works for looking).
+##
+## -- 4. NAV: "we need to connect realtylt.com/ and / ai page and add AI before connect on
+##    top menu bar and give it purple outline or our logo R blue so people notice" --------
+## The routing half is DONE (realtylt.com/ai serves the AI page since the DNS cut). Build
+## the nav half: an "AI" item in the HEADER nav (lib/site.ts HEADER_NAV + Header.tsx),
+## positioned BEFORE Connect, visually distinct: his two options are a purple outline or
+## the logo-R blue. RECOMMEND the logo-R blue outline - the anti-slop rule
+## (design-anti-ai-slop-palette) bans purple-family as a primary and the R-blue is already
+## the brand mark; if he wants purple anyway it is his call, use an OUTLINE not a fill.
+## Keep tap targets/focus/mobile drawer parity (the drawer gets the same item).
+##
+## -- 5. CONSENT: his answer to the round-49 PEWC flag was "i did not get it do as its
+##    proper to do" ------------------------------------------------------------------------
+## He is delegating: make it legally proper. The proper form is the one the 2026-08-22
+## session shipped once (website-consent-to-call-text-gap memory): an UNSKIPPABLE CHOICE,
+## not a forced tick - two radios (yes / no-email-only), NEITHER preselected, BOTH submit,
+## required to pick one. That preserves PEWC validity (consent not a condition of service)
+## AND keeps the loud visible validation the owner wanted on 2026-08-23. The declined
+## /thank-you branch already exists and the wizard already carries consent (b46d67a), so
+## flipping the control back makes the whole declined path real again. Update
+## lib/leads/consent.ts docs + the ConsentCheckbox component (becomes a radio group;
+## remember verify-html-radio-group-is-scoped-by-form for the probes) + verify-lead-modal.
+##
+## -- 6. FUNNEL TRIO: his "3 should we add is it good?" = yes, add them (recommended in
+##    round 49, he did not object) --------------------------------------------------------
+## a. Optional free-text message on the listing tour/offer sheets (one textarea).
+## b. Prev/next between listings (walk the result set from the detail page; the round-18
+##    prev/next memory is the prior art for the result-set handoff).
+## c. Price-drop / status-change badges on saved homes ("Price cut $15k - 3 days ago").
+##    Needs previous_price captured on sync upsert (filter-roadmap item; touch the sync
+##    UPSERT MAPPING only, not the sync scheduling - MLS rules still bind).
+##
+## -- 7. /CONNECT: "booke a time where text is my face from google calendar should be next
+##    to taht and othere boxes up with it" ------------------------------------------------
+## His portrait card moves NEXT TO the Google Calendar embed (fills the 453px dead column
+## round 49 measured at 1280-1440), and the other boxes move up with it. This is his
+## direction for the one frame that read unfinished - screenshot before/after at 1440.
+##
+## -- 8. AI-PAGE REPO: "ai repo is off if its iportant fix them" --------------------------
+## Grant given for the ~/realtylt-ai-page repo (check no other session owns it first - one
+## editor per repo). The important one NOW: its inline rlt-chat copy is PRE-VOICE while
+## voice is ON for everyone - re-copy public/rlt-chat.js from the website repo (the page
+## carries a BYTE COPY and must re-copy, round-42 law). Then: SERVICE_SLUG singularity
+## entry, the two <h1>s, the /_vercel/insights 404 console noise.
+##
+## -- 9. DATA-INTEGRITY MONITORING: "do we chech data that its properly migrating and no
+##    erros and other things ?" -----------------------------------------------------------
+## Honest answer recorded in round 49: sync self-heals and we LOOK at it per-session, but
+## nothing WATCHES it. Build the watcher: a scheduled n8n workflow that emails him when
+## idx_sync_state.watermark goes stale (>3h), when active-listing counts swing abnormally,
+## when photos_servable drops, or when Vercel error groups spike. inventory-health.mjs is
+## the committed gate to borrow logic from; the n8n-zero-row-crash memory holds the
+## failure-heartbeat trap to avoid. Keep it read-only on MLS (queries our OWN Supabase).
+##
+## -- CARRIED FROM ROUND 49, still true ---------------------------------------------------
+## Six "Final Probe" CRM artifacts + levan+final0827w@ auth account = his test data, delete
+## when convenient. Bronx timeout + sync-cron timeout: watch only. Hero engine design
+## rounds: still the owner-gated design thread. Round-49 P3s deliberately unfixed (slug
+## 301, CTA count drift, 14px explainer copy) - unchanged.
+##
+## -- WHERE THE ROUND-49 REPORT LIVES (he asked) ------------------------------------------
+## The full report was delivered in-chat only; the durable state is the ROUND 49 block
+## below + this brief; the E2E evidence (122 screenshots, sweep.json, probe scripts) is in
+## the 08-27 session scratchpad e2e/ folder - session-local, treat as gone once cleaned.
+
 ## == ROUND 49 (2026-08-27 evening): FINAL PRE-LAUNCH E2E + THE LEAD-CHAIN FIXES ==========
 ## Shape: Fable + ONE Opus E2E sub (owner-granted). The sub drove PRODUCTION (sha 3100d6c
 ## then 8c5d0ed): 82/82 pages clean at 1440/390/320, 411 internal hrefs 0 broken, all
