@@ -47,11 +47,11 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     type: "website",
     locale: "en_US",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "RealtyLT. Let's find home. Hudson Valley real estate." }],
+    images: [{ url: "/og-realtylt.png", width: 1200, height: 630, alt: "RealtyLT. Let's Find Home. Hudson Valley and New York City real estate." }],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og.png"],
+    images: ["/og-realtylt.png"],
   },
 };
 
@@ -65,7 +65,7 @@ const AGENT_JSON_LD = {
   telephone: SITE.phoneE164,
   email: SITE.email,
   // The actual logo mark, not the 1200x630 share card — Google's logo guidance wants the
-  // brand image itself here; og.png stays the social preview.
+  // brand image itself here; og-realtylt.png stays the social preview.
   logo: `${SITE.url}/logo-realtylt.png`,
   address: {
     "@type": "PostalAddress",

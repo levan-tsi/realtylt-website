@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: `${SITE.url}/services`,
     // Declaring `openGraph` replaces the layout's object, images included — without this the
     // hub page shared with no picture while every /services/<slug> page under it had one.
-    images: [{ url: `${SITE.url}/og.png`, width: 1200, height: 630 }],
+    images: [{ url: `${SITE.url}/og-realtylt.png`, width: 1200, height: 630 }],
   },
 };
 

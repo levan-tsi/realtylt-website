@@ -56,7 +56,7 @@ export async function generateMetadata({
       description: service.seo.description,
       url,
       siteName: "RealtyLT",
-      images: [{ url: `${new URL(url).origin}/og.png`, width: 1200, height: 630 }],
+      images: [{ url: `${new URL(url).origin}/og-realtylt.png`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",

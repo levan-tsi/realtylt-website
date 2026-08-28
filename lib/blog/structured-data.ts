@@ -51,7 +51,7 @@ export function articleJsonLd(article: Article) {
       name: SITE.name,
       legalName: SITE.legalName,
       url: SITE.url,
-      logo: { "@type": "ImageObject", url: `${SITE.url}/og.png` },
+      logo: { "@type": "ImageObject", url: `${SITE.url}/og-realtylt.png` },
     },
   };
 }
@@ -105,7 +105,7 @@ export function videoJsonLd(article: Article) {
       "@type": "Organization",
       name: SITE.name,
       url: SITE.url,
-      logo: { "@type": "ImageObject", url: `${SITE.url}/og.png` },
+      logo: { "@type": "ImageObject", url: `${SITE.url}/og-realtylt.png` },
     },
   };
 }

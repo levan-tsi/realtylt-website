@@ -45,7 +45,7 @@ export async function listingMetadata(id: string): Promise<Metadata> {
   const share =
     (l.photoCount ?? 0) > 0
       ? { url: `${SITE.url}/api/media/${l.id}/0`, alt: `${l.address}, ${l.city}, NY` }
-      : { url: `${SITE.url}/og.png`, width: 1200, height: 630, alt: SITE.name };
+      : { url: `${SITE.url}/og-realtylt.png`, width: 1200, height: 630, alt: SITE.name };
   return {
     title,
     description,
