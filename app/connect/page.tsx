@@ -83,24 +83,48 @@ export default function ConnectPage() {
               keeps the number and the email in view for the whole length of the booking flow
               instead. */}
           <div className="lg:sticky lg:top-8 lg:self-start">
-            {/* ROUND 39, the owner's two sentences: "texts are one in the middle one starts from
-                the left" and "bring google appointments higher... my picture next to google
-                in-person strategy session text same level." The embed centers everything and
-                cannot be restyled; cropping its list-view header off is not safe either, because
-                the SECOND screen (the date picker) puts the session title and details in that
-                same top band (measured 2026-08-24 by driving the booking URL directly). So the
-                column reorders instead:
-                 - The two contact rows come FIRST. The h1 directly above reads "Call, email, or
-                   book a time" — the two controls now sit under the two words that name them,
-                   and the third clause maps to the calendar column beside them.
-                 - The portrait card moves DOWN to the level the embed's own header forces on its
-                   session cards: mt-16 puts the portrait top at ~216px from the column top, which
-                   is where "In-Person Real Estate Strategy Session" renders (header ≈ 200px +
-                   16px card padding, measured against the live embed). His picture and the
-                   session cards now share one optical band, his verbatim ask.
-                 - His face still appears twice (ours + Google's small avatar) but no longer at
-                   the same altitude, which was the r38 objection to the stacked card. */}
-            <address className="not-italic">
+            {/* ROUND 50 (owner, 2026-08-28): "book a time where text is my face from google
+                calendar should be next to that and other boxes up with it." Round 39 had put the
+                two contact rows first and dropped the portrait to the session cards' level, which
+                left the column's lower half empty beside a 899px calendar (the round-49 E2E
+                measured ~453px of dead space at 1280-1440, the one frame that read unfinished).
+                His direction now is explicit and it reverses the r38 objection it replaces: his
+                card sits at the TOP, level with the embed's own avatar + name header, and
+                everything else moves up under it:
+                 - portrait card first (his face beside Google's face, one band);
+                 - the two contact rows directly under it, still under the words that name them;
+                 - the office address;
+                 - then the "rather not pick a slot" fallback and the message modal, which used
+                   to sit UNDER the calendar ~900px down. Beside the calendar, in a sticky column,
+                   they stay on screen for the whole booking flow, which is when a visitor forms
+                   the opinion they answer. The column now carries content most of the embed's
+                   height at 1280-1440 instead of stopping a third of the way down. */}
+            <div className="flex items-center gap-5">
+              <Image
+                src="/images/levan-portrait.jpg"
+                alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
+                // The file is a true 3:4 (3024x4032) and both rendered boxes are 3:4, so the
+                // intrinsic ratio is honoured at either size and nothing is stretched. Declaring
+                // both dimensions is what reserves the box before the bytes arrive.
+                width={336}
+                height={448}
+                // priority: this is inside the first viewport at every width.
+                priority
+                // Greyscale to match every other photograph on the site, including the SAME
+                // portrait on /who-we-are.
+                // 96x128 on a phone and 132x176 from sm up. Both are exactly 3:4, and the smaller
+                // one is not a taste call: at 320 the name block beside it needs about 170px for
+                // "INVESTOR & REALTOR®" at the eyebrow's tracking, and 96 + 20 + 170 is the whole
+                // 288px column.
+                className="h-32 w-24 shrink-0 rounded-2xl object-cover grayscale sm:h-44 sm:w-[132px]"
+              />
+              <div>
+                <p className="t-h3 text-ink">Levan Tsiklauri</p>
+                <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
+              </div>
+            </div>
+
+            <address className="mt-8 not-italic">
               <ContactRow
                 href={SITE.phoneHref}
                 label="Call or text"
@@ -121,33 +145,6 @@ export default function ConnectPage() {
               </div>
             </address>
 
-            {/* mt-16 only above lg, where it is the level-tuning constant; on a phone the column
-                is a stack and every spare pixel above the calendar costs a thumb-scroll. */}
-            <div className="mt-8 flex items-center gap-5 lg:mt-16">
-              <Image
-                src="/images/levan-portrait.jpg"
-                alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
-                // The file is a true 3:4 (3024x4032) and both rendered boxes are 3:4, so the
-                // intrinsic ratio is honoured at either size and nothing is stretched. Declaring
-                // both dimensions is what reserves the box before the bytes arrive.
-                width={336}
-                height={448}
-                // priority: this is inside the first viewport at every width now.
-                priority
-                // Greyscale to match every other photograph on the site, including the SAME
-                // portrait on /who-we-are.
-                // 96x128 on a phone and 132x176 from sm up. Both are exactly 3:4, and the smaller
-                // one is not a taste call: at 320 the name block beside it needs about 170px for
-                // "INVESTOR & REALTOR®" at the eyebrow's tracking, and 96 + 20 + 170 is the whole
-                // 288px column.
-                className="h-32 w-24 shrink-0 rounded-2xl object-cover grayscale sm:h-44 sm:w-[132px]"
-              />
-              <div>
-                <p className="t-h3 text-ink">Levan Tsiklauri</p>
-                <p className="t-eyebrow mt-2 text-stone">Investor &amp; REALTOR&reg;</p>
-              </div>
-            </div>
-
             {/* The office address is now a DIRECTIONS link (launch-list quick win, 2026-08-24):
                 on a phone it opens the Maps app pointed at the office instead of being four
                 dead words. Same quiet voice as the page's other text links. */}
@@ -164,6 +161,28 @@ export default function ConnectPage() {
                 {SITE.address.postalCode}
               </a>
             </p>
+
+            {/* THE SECOND FALLBACK, moved up here from under the calendar (round 50). It answers
+                "I do not want to pick a slot", and in a sticky column beside the grid it is on
+                screen at the moment that opinion forms instead of ~900px below it. The three
+                words that name the action still carry it; on a phone this column stacks ABOVE
+                the calendar and the number it points at is the row two blocks up. Deliberately
+                NOT gtag-tracked: the row above already fires the "Phone" event. The button opens
+                the SAME modal the listing pages use and the SAME LeadForm the footer runs, so
+                the consent contract is one contract. */}
+            <div className="mt-8 border-t border-line pt-8">
+              <p className="t-small max-w-[46ch] text-stone">
+                Would rather not pick a slot?{" "}
+                <a
+                  href={SITE.phoneHref}
+                  className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                >
+                  Call or text
+                </a>{" "}
+                and we&rsquo;ll find a time. Evenings and weekends included.
+              </p>
+              <ConnectFormModal />
+            </div>
           </div>
 
           <div>
@@ -190,12 +209,8 @@ export default function ConnectPage() {
               className="block h-[1040px] w-full border-0 md:h-[899px]"
             />
 
-            {/* THE TWO FALLBACKS, both after the thing they are a fallback FOR. The first answers
-                "the embed is broken"; the second answers "I do not want to pick a slot", which is
-                an opinion a visitor forms by looking at the grid rather than before seeing it.
-                The button opens the SAME modal the listing pages use and the SAME LeadForm the
-                footer runs, so the consent contract is the one the owner decided rather than a
-                second copy of it. */}
+            {/* THE EMBED-IS-BROKEN FALLBACK stays under the thing it is a fallback for. The other
+                one ("I do not want to pick a slot") moved into the sticky column (round 50). */}
             <p className="t-fine mt-4 text-stone">
               Trouble with the calendar?{" "}
               <a
@@ -208,26 +223,6 @@ export default function ConnectPage() {
               </a>
               .
             </p>
-            <div className="mt-8 border-t border-line pt-8">
-              {/* THE SENTENCE'S OWN WORDS ARE THE CONTROL. Above lg the contact card is sticky,
-                  so "call or text" points at a phone number still on screen; on a phone it does
-                  not, and this line sat about 1,900px below the number it was recommending. The
-                  three words that name the action carry it instead — no new control, no second
-                  copy of the number, and the tightest mapping available. Deliberately NOT
-                  gtag-tracked: the two rows at the top already fire the "Phone" event, and a
-                  third entry point would count one visitor's single intent twice. */}
-              <p className="t-small max-w-[46ch] text-stone">
-                Would rather not pick a slot?{" "}
-                <a
-                  href={SITE.phoneHref}
-                  className="inline-flex min-h-6 items-center font-bold text-ink underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
-                >
-                  Call or text
-                </a>{" "}
-                and we&rsquo;ll find a time. Evenings and weekends included.
-              </p>
-              <ConnectFormModal />
-            </div>
           </div>
         </div>
       </div>
