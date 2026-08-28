@@ -1329,6 +1329,7 @@
   // rather than waiting for the network to say so. That last one is local, and it is the
   // difference between interrupting a person and interrupting a recording.
 
+  const VOICE_WIDGET_BUILD = '2026-08-28c';
   const VOICE_INPUT_RATE = 16000;
   const VOICE_OUTPUT_RATE = 24000;
   // ~43ms of audio per frame at 48kHz. Small enough that barge-in is imperceptible, large enough
@@ -1358,6 +1359,19 @@
   const VOICE_BARGE_MULTIPLE = 4.0;
   const VOICE_BARGE_FLOOR = 0.012;
   const VOICE_BARGE_FRAMES = 4;
+  /*
+   * THE ECHO GATE (2026-08-28, the owner's iPhone call). While the assistant is TALKING, the
+   * microphone is not sent to the model unless the visitor is clearly barging in. Before this,
+   * every frame went up regardless, and on a phone speaker the assistant's own voice came back
+   * through the mic: the server transcribed it as the VISITOR ("Seems voices" landed in the chat
+   * right after the assistant said "Seems like we're having connection issues"), and a passing
+   * car did the same. The browser's echo cancellation is requested, but it is not reliable on
+   * every device, and this does not need it to be. The stream stays CONTINUOUS - the gated
+   * frames go up as silence, because Gemini's activity detection expects audio to keep flowing.
+   * When a barge-in does fire, the last few gated frames are sent first, so the model hears the
+   * start of the interruption rather than a word with its first syllable missing.
+   */
+  const VOICE_PREROLL_FRAMES = VOICE_BARGE_FRAMES;
   // How quickly the learned floor follows the room. Slow on the way up so one cough does not
   // raise the bar; quick on the way down so a room that goes quiet is heard again.
   const VOICE_FLOOR_RISE = 0.02;
@@ -1381,6 +1395,8 @@
     playHead: 0,
     playing: [],
     loudFrames: 0,
+    /** Frames withheld by the echo gate, kept so a barge-in can replay the start of it. */
+    preroll: [],
     /** The room's own level, learned from quiet frames. Seeded high enough that the first frames
      *  of a call cannot barge on nothing while it is still settling. */
     noiseFloor: 0.01,
@@ -1435,6 +1451,8 @@
       // us afterwards that it had noticed. The gap between the two is the feature.
       barges: 0,
       serverInterrupts: 0,
+      // Frames the echo gate replaced with silence while the assistant was talking.
+      gatedFrames: 0,
       // Completed spoken exchanges written into the thread.
       turns: 0,
       // Sockets that dropped and were picked back up without ending the call.
@@ -1700,7 +1718,9 @@
     const viaHandle = Boolean(voice.resumeHandle);
     const body = {
       sessionId: voice.sessionId,
-      userMeta: { page: location.pathname, context: voice.persona || detectPersona() }
+      // `widget` names this build in the CRM's mint log, so "which script did the phone run"
+      // is a query rather than a guess.
+      userMeta: { page: location.pathname, context: voice.persona || detectPersona(), widget: VOICE_WIDGET_BUILD }
     };
     if (viaHandle) body.resumeHandle = voice.resumeHandle;
     const resp = await fetch(CONFIG.VOICE_TOKEN_URL, {
@@ -1780,18 +1800,16 @@
       voice.stats.messagesIn += 1;
 
       if (msg.setupComplete) {
-        // A session no handle could resume starts blank; hand it the conversation so far before
-        // the visitor speaks. turnComplete false: this is context, not a prompt to answer.
-        if (!token.viaHandle && Array.isArray(token.history) && token.history.length) {
-          voiceSend({
-            clientContent: {
-              turns: token.history.map(function(t) {
-                return { role: t.role === 'model' ? 'model' : 'user', parts: [{ text: String(t.text || '') }] };
-              }),
-              turnComplete: false
-            }
-          });
-        }
+        // A HANDLE IS SINGLE-USE (measured 2026-08-28). The one that opened this socket is spent
+        // the moment the session resumes; presenting it again after a drop is refused young, and
+        // that refusal was the owner's "it forgot everything": the retry started clean. Forget it
+        // here, and let the fresh handles this session sends replace it.
+        if (token.viaHandle) voice.resumeHandle = null;
+        // The transcript seed that used to go up here as clientContent is retired: measured with
+        // real audio, the model did not treat it as the conversation ("I don't have your name or
+        // phone number in this conversation"). The CRM now bakes the conversation so far, and the
+        // facts already captured, into the setup the token locks - memory that does not depend
+        // on this file or on the handle. token.history still arrives; nothing reads it.
         setVoiceState('listening');
         return;
       }
@@ -1966,10 +1984,15 @@
       // the playback queue is emptied at once. The server's own `interrupted` arrives later and
       // does the same thing again, harmlessly.
       const threshold = Math.max(VOICE_BARGE_FLOOR, voice.noiseFloor * VOICE_BARGE_MULTIPLE);
+      // The gate decision is taken BEFORE this frame can lift it: a frame that completes a
+      // barge-in is the first one sent, together with the withheld frames before it.
+      const assistantTalking = voice.playing.length > 0;
+      let barged = false;
       if (rms > threshold) {
         voice.loudFrames += 1;
         if (voice.loudFrames >= VOICE_BARGE_FRAMES && voice.playing.length) {
           voice.stats.barges += 1;
+          barged = true;
           stopPlayback();
           setVoiceState('listening');
         }
@@ -1998,8 +2021,26 @@
         const v = n ? acc / n : 0;
         pcm[i] = Math.max(-1, Math.min(1, v)) * 32767;
       }
+      // THE ECHO GATE. Assistant talking and no barge-in: keep this frame back (for the pre-roll)
+      // and send silence in its place, so the stream never pauses and the model never hears
+      // itself. A barge-in releases the withheld frames first, then this one.
+      if (assistantTalking && !barged) {
+        voice.preroll.push(pcm);
+        if (voice.preroll.length > VOICE_PREROLL_FRAMES) voice.preroll.shift();
+        voice.stats.gatedFrames += 1;
+        sendPcmFrame(new Int16Array(pcm.length));
+        return;
+      }
+      if (barged && voice.preroll.length) {
+        for (let i = 0; i < voice.preroll.length; i += 1) sendPcmFrame(voice.preroll[i]);
+      }
+      voice.preroll = [];
+      sendPcmFrame(pcm);
+    };
+
+    function sendPcmFrame(pcm) {
       let bin = '';
-      const bytes = new Uint8Array(pcm.buffer);
+      const bytes = new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength);
       for (let i = 0; i < bytes.length; i += 1) bin += String.fromCharCode(bytes[i]);
       voice.stats.framesSent += 1;
       voice.stats.bytesSent += bytes.length;
@@ -2010,7 +2051,7 @@
           audio: { data: btoa(bin), mimeType: voice.mimeType || ('audio/pcm;rate=' + VOICE_INPUT_RATE) }
         }
       });
-    };
+    }
     voice.source.connect(voice.processor);
     // A ScriptProcessorNode only fires while it is connected to the destination. The gain is zero
     // so the visitor never hears their own microphone played back at them.
@@ -2037,6 +2078,7 @@
     if (voice.ctx) { try { voice.ctx.close(); } catch (e) {} }
     voice.ws = null; voice.ctx = null; voice.stream = null; voice.processor = null; voice.source = null;
     voice.loudFrames = 0;
+    voice.preroll = [];
     voice.noiseFloor = 0.01;
     voice.reconnecting = false;
     // voice.resumeHandle deliberately SURVIVES the hang-up: the next tap on the mic continues
