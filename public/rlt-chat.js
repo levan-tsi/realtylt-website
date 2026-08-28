@@ -802,16 +802,25 @@
   // The class is toggled at every width; only the phone stylesheet acts on it, so desktop
   // behaviour is unchanged. Once the panel has been opened the launcher stays put — by then
   // the visitor has asked for it, and having it vanish under them would be worse than an overlap.
+  //
+  // NOT ON THE AI PAGE (the owner's own test, 2026-08-28: "the chat launcher is invisible until
+  // you scroll"). The tuck exists so the launcher never lands on a form field or a CTA in a
+  // listing page's first screen. On /ai the first screen is the hero and the chat IS the
+  // thing the page is selling, so hiding it there hides the product. Decided by the PAGE
+  // (detectPersona reads the pathname), not by the stored conversation persona: a visitor who
+  // starts on /ai and wanders onto a listing page gets the listing tuck like everyone else.
   let bubbleSummoned = false;
   const TUCK_UNTIL = () => Math.round(window.innerHeight * 0.6);
   const syncBubble = () => {
     if (bubbleSummoned) return;
     bubble.classList.toggle('rlt-bubble--tucked', window.scrollY < TUCK_UNTIL());
   };
-  bubble.classList.add('rlt-bubble--tucked');
-  window.addEventListener('scroll', syncBubble, { passive: true });
-  window.addEventListener('resize', syncBubble, { passive: true });
-  syncBubble();
+  if (detectPersona() !== 'aipage') {
+    bubble.classList.add('rlt-bubble--tucked');
+    window.addEventListener('scroll', syncBubble, { passive: true });
+    window.addEventListener('resize', syncBubble, { passive: true });
+    syncBubble();
+  }
 
   const panel = document.createElement('div');
   panel.className = 'rlt-panel';
