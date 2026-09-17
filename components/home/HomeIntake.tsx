@@ -49,6 +49,7 @@ export function HomeIntake() {
   // reader by moving focus to the new question, and skip that on first paint.
   const arrived = useRef(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!arrived.current) {
@@ -113,7 +114,17 @@ export function HomeIntake() {
                     <dd>
                       <button
                         type="button"
-                        onClick={() => setStep(l.step)}
+                        onClick={() => {
+                          setStep(l.step);
+                          // Below lg the trail lives BELOW the panel, so the question this
+                          // button just re-opened is above the fold the visitor is on. Bring
+                          // the panel back; on desktop the panel is already beside the trail
+                          // and "nearest" makes this a no-op instead of a jump.
+                          panelRef.current?.scrollIntoView({
+                            block: window.matchMedia("(min-width: 1024px)").matches ? "nearest" : "start",
+                            behavior: "smooth",
+                          });
+                        }}
                         aria-label={`Change: ${l.label}, ${l.value}`}
                         className={`inline-flex min-h-6 items-center text-xs font-bold uppercase tracking-[0.14em] text-stone underline-offset-4 hover:text-ink hover:underline ${PRESS}`}
                       >
@@ -131,7 +142,7 @@ export function HomeIntake() {
         {/* The panel keeps the 24px large-feature step and the mist ground the form had; only
             what is inside it changed. overflow-hidden so the progress rule's ends follow the
             corners. */}
-        <div className="overflow-hidden rounded-3xl border border-line bg-mist">
+        <div ref={panelRef} className="overflow-hidden scroll-mt-4 rounded-3xl border border-line bg-mist">
           {/* Progress rule: the wizard's own device, here in the panel's top edge. It says
               "this is a short sequence and you are here" without a numbered ladder. */}
           <div className="h-1 w-full bg-line/70" aria-hidden>
@@ -146,6 +157,15 @@ export function HomeIntake() {
             <p className="t-eyebrow text-stone">
               {step === "details" ? "Last step" : `Question ${index + 1}${answers.intent ? ` of ${total}` : ""}`}
             </p>
+            {/* On a phone the trail sits BELOW the panel, so at the last step the visitor's
+                answers are out of view exactly when the form asks them to commit. One quiet
+                line replays them; from lg the trail is beside the panel and this would be a
+                duplicate, so it is phone-only. */}
+            {step === "details" && lines.length > 0 && (
+              <p className="t-fine mt-2 text-stone lg:hidden">
+                {lines.map((l) => l.value).join(" · ")}
+              </p>
+            )}
             <h3 ref={titleRef} tabIndex={-1} className="t-h3 mt-3 text-ink outline-none">
               {step === "intent" ? INTENT_QUESTION : step === "details" ? "Where should we send it?" : question!.question}
             </h3>
