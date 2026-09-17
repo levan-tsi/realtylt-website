@@ -21,6 +21,22 @@
 ## lines + the "What they told us" card); no intake:home lead has arrived yet on prod.
 ## Tests 1432, tsc clean; consent + intake probes ALL PASS at 1440/390.
 
+## -- ROUND 51e (same night): ALL EMAIL RIDES THE CRM; THE WATCH IS ARMED -----------------
+## The CRM session shipped its three endpoints (CRM 5106ca95, migration 0251) and flipped
+## THIS project's env via the owner's dashboard (LEAD_THANKYOU_WEBHOOK ->
+## app.realtylt.com/api/site/lead-thankyou + rotated shared secret; signup pg_net repointed
+## CRM-side). PROVEN here: one real headful prod submit (levan+thx0917@) -> the branded
+## thank-you in Gmail SENT 16:50, sent BY THE CRM - the n8n thank-you hop is dead. e88fe2b:
+## lib/watch/send.ts = the CRM ops-alert door (x-rlt-site-secret = SITE_EMAIL_SECRET or the
+## LEAD_THANKYOU_SECRET value; RESEND DELETED, it never sent anything); digest re-fired
+## through pg_cron's mechanism -> mail:"sent" -> "RealtyLT watch: all clear" in his inbox
+## 16:54. THE WATCH IS ARMED END TO END. (He got a duplicate digest at 16:55 - my earlier
+## client-timed-out SQL statement re-firing, one-off, not a dedupe bug.)
+## n8n IS NOW CALLED BY NOTHING except its own IDX watcher schedule: ZvvwCsRM0uxGZLFH still
+## published (Monday would double-digest) + the dead thank-you/signup workflows. Asked the
+## CRM session to unpublish via its n8n auth; else the owner's one-click list (n8n UI toggle
+## or /mcp re-auth here). From: stays levan@ until his noreply@ Gmail alias (~5 min).
+## email-templates.mjs marked historical - the CRM owns the templates now.
 ## -- ROUND 51d (LAUNCH DAY, same evening): armed, launched, challenged, healed ----------
 ## THE SITE IS LIVE AND INDEXABLE: the owner had the aipage session delete all PRELAUNCH
 ## vars + redeploy (noindex and robots Disallow are GONE). Bot Protection=Challenge is on
