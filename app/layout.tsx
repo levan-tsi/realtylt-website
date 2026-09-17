@@ -131,6 +131,13 @@ export default function RootLayout({
           }
         `}</Script>
         <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11479042629" strategy="afterInteractive" />
+        {/* Vercel Web Analytics (owner-enabled on the project 2026-09-17, the launch day). The
+            plain same-origin script, not the @vercel/analytics package: the package drags a
+            peer-dep tree we do not need, and this is exactly the tag the endpoint serves it
+            for. Same-origin, so the existing CSP ('self' for script/connect) already covers
+            both the script and its beacon. The endpoint provisions on the first deployment
+            after the dashboard toggle; until that deploy it 404s harmlessly. */}
+        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
       </body>
     </html>
   );

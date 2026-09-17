@@ -61,6 +61,15 @@ describe("the health watch judge", () => {
     expect(v.problems.join(" ")).toMatch(/swung -2[67]/); // 27,450 -> 20,000 is ~-27%
   });
 
+  it("Bot Protection's challenge (429) reads as up, never as an alarm - the edge answered", () => {
+    const c = healthy();
+    c.site = { ok: false, status: 429, ms: 700 };
+    c.search = { ok: false, status: 429, ms: 300 };
+    const v = judge(c);
+    expect(v.problems).toEqual([]);
+    expect(v.facts.find(([k]) => k === "Website")?.[1]).toContain("up (bot-challenged)");
+  });
+
   it("a slow site trips the floor; a missing snapshot is named, not thrown", () => {
     const slow = healthy();
     slow.site = { ok: true, status: 200, ms: THRESHOLDS.slowSiteMs + 1 };

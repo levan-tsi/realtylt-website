@@ -95,11 +95,15 @@ export function judge(input: WatchInput): Judgement {
     if (isCritical) critical = true;
   };
 
-  // The platform itself.
+  // The platform itself. A 429 on the public probes is Vercel's Bot Protection CHALLENGING
+  // this server-side fetch (live since 2026-09-17; only real browsers pass) - the edge
+  // answered, which is what an up/down probe can honestly measure from here. It is "up
+  // (bot-challenged)" in the facts, never an alarm; 5xx, nothing, and slowness still are.
+  const challenged = (p: ProbeResult | null) => !!p && p.status === 429;
   if (!site) bad("The website probe did not run.", true);
-  else if (!site.ok) bad(`realtylt.com answered ${site.status || "nothing"} - the website is down or erroring.`, true);
+  else if (!site.ok && !challenged(site)) bad(`realtylt.com answered ${site.status || "nothing"} - the website is down or erroring.`, true);
   else if (site.ms > THRESHOLDS.slowSiteMs) bad(`realtylt.com took ${(site.ms / 1000).toFixed(1)}s to answer (floor ${THRESHOLDS.slowSiteMs / 1000}s).`, true);
-  if (search && !search.ok) bad(`The listing search API answered ${search.status || "nothing"} - visitors cannot search.`, true);
+  if (search && !search.ok && !challenged(search)) bad(`The listing search API answered ${search.status || "nothing"} - visitors cannot search.`, true);
   if (!crm) bad("The CRM probe did not run.", true);
   else if (!crm.ok) bad(`app.realtylt.com answered ${crm.status || "nothing"} - the CRM is down.`, true);
 
@@ -143,7 +147,8 @@ export function facts(input: WatchInput): [string, string][] {
   const { snap, counts, site, search, crm } = input;
   const s = snap ?? {};
   const c = counts ?? {};
-  const probe = (p: ProbeResult | null) => (p ? `${p.ok ? "up" : "DOWN"} (${p.status}, ${p.ms}ms)` : "not probed");
+  const probe = (p: ProbeResult | null) =>
+    p ? `${p.ok ? "up" : p.status === 429 ? "up (bot-challenged)" : "DOWN"} (${p.status}, ${p.ms}ms)` : "not probed";
   const num = (v: unknown) => (v == null ? "?" : Number(v).toLocaleString("en-US"));
   return [
     ["Website", probe(site)],
