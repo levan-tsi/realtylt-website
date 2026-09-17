@@ -21,6 +21,30 @@
 ## lines + the "What they told us" card); no intake:home lead has arrived yet on prod.
 ## Tests 1432, tsc clean; consent + intake probes ALL PASS at 1440/390.
 
+## -- ROUND 51b (same day, his follow-up): THE PLATFORM WATCH, OFF N8N -------------------
+## ccac4dc: /api/cron/health-watch + lib/watch/* (judge pure, 7 tests) + migration
+## idx_round51_site_watch (APPLIED; site_watch_state + site_watch_counts(), service-role
+## only; pg_cron jobs site-health-watch hourly :23 + site-health-digest Mon 11:23 UTC -
+## the committed file carries <CRON_SECRET> placeholder, the real bearer lives only in
+## cron.job). Covers: website + search API + CRM probed from the edge, the idx snapshot,
+## and the ATTACK first cut (lead >15/h, signup >10/h, chat >100/h floods; baselines ~0).
+## CRITICAL class (down site/CRM, floods) = URGENT subject, immediate; drift = normal;
+## same-problem re-alert 6h; weekly digest. MAIL IS NOT ARMED YET: Resend was chosen
+## because it also gives him the no-reply sender he asked for - HIS TWO STEPS: create a
+## Resend account + API key, verify realtylt.com (2 DNS records), put RESEND_API_KEY in
+## the website's Vercel env. Until then the route stores/returns mail:"no-transport" and
+## the n8n IDX watcher keeps guard; ONCE ARMED, unpublish n8n ZvvwCsRM0uxGZLFH (n8n MCP
+## needed re-auth this session - /mcp).
+## ALSO ESTABLISHED: D12 (anonymous-visitor tracking) is NOT built CRM-side - pg_proc has
+## no record_site_visit; only signed-in tracking is live. The CRM session must build the
+## secret-gated door first; then the website emitter is a small follow-up here.
+## Vercel errors today: website 6h = 3x the known borough statement-timeout (graceful
+## fallback, watch-not-patch); CRM 24h = zero.
+## EMAIL ADDRESSING (his question): everything still sends AS levan@ via n8n Gmail. The
+## no-reply plan: Resend noreply@ for transactional (welcome/registration + watch), his
+## levan@ personal follow-up stays personal; the switch of welcome/thank-you transport to
+## Resend is a small build AFTER his Resend/DNS step. Recorded in the r41 addressing plan.
+
 ## == ROUND 50 DONE (2026-08-28 afternoon/evening): THE OWNER'S LIST, BUILT ==================
 ## Shape: SINGLE Fable session, no subagents, ~9 commits d5f7e4c..88ad9d0 on main, every one
 ## verified on the dev server with real browser probes (1440/390/320) and pushed; Vercel
