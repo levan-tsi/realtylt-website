@@ -325,6 +325,18 @@
   // otherwise the page under the visitor's feet. Safe to call before ensureSession has run,
   // which the greeting does.
   function currentPersona() {
+    // THE AI PAGE ALWAYS PRESENTS THE AI ASSISTANT (owner, 2026-09-17: /ai "still suggests
+    // real estate boxes and says hey looking for home"). The conversation's persona used to
+    // win everywhere - deliberately, so a visitor who started on /ai kept their assistant on
+    // the main site. That was designed when the AI page lived on its own host; since the
+    // cutover both pages share realtylt.com's storage, so a session born over listings walks
+    // into /ai wearing the wrong coat. Proven on the live page (CRM scripts/voice-0828/06):
+    // a tab carrying a realestate session was greeted on /ai with Westchester listings, the
+    // 3-bed chips and the listing placeholder. So: the PAGE wins where the page IS the
+    // product; everywhere else the conversation keeps the persona it started with, exactly
+    // as before. The stored persona is left untouched - stepping back onto the main site
+    // steps back into the old conversation.
+    if (detectPersona() === 'aipage') return 'aipage';
     if (_session && _session.persona) return _session.persona;
     const stored = readStoredSession();
     if (stored && stored.persona) return stored.persona;
@@ -868,9 +880,9 @@
   const inputEl = panel.querySelector('#rlt-input');
   // The markup ships the real-estate placeholder, so this file still says something sensible if
   // the line below never runs. Set from currentPersona() rather than from the path, for the same
-  // reason the greeting is: the persona sticks to the CONVERSATION, so somebody who started on
-  // /ai and wandered onto the main site keeps the assistant, the chips and now the prompt they
-  // started with.
+  // reason the greeting is: the persona sticks to the CONVERSATION off the AI page, so somebody
+  // who started on /ai and wandered onto the main site keeps the assistant, the chips and now
+  // the prompt they started with. On /ai itself the page wins - see currentPersona().
   if (inputEl) inputEl.placeholder = currentPersona() === 'aipage' ? CONFIG.AI_PLACEHOLDER : CONFIG.PLACEHOLDER;
   const sendEl = panel.querySelector('#rlt-send');
   const closeEl = panel.querySelector('.rlt-close-btn');
@@ -1239,8 +1251,10 @@
             page: location.pathname,
             // WHICH ASSISTANT THIS CONVERSATION BELONGS TO (2026-08-27). `page` alone could
             // not answer it: it changes as the visitor navigates, and the conversation does
-            // not. Sent on every turn so the server never has to remember.
-            context: sess.persona || detectPersona(),
+            // not. Sent on every turn so the server never has to remember. Through
+            // currentPersona() (2026-09-17) so the model the CRM builds matches the assistant
+            // on screen - on /ai that is the AI assistant whatever the session started as.
+            context: currentPersona(),
             referrer: document.referrer || '',
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString()
@@ -1353,7 +1367,7 @@
   // rather than waiting for the network to say so. That last one is local, and it is the
   // difference between interrupting a person and interrupting a recording.
 
-  const VOICE_WIDGET_BUILD = '2026-08-28d';
+  const VOICE_WIDGET_BUILD = '2026-09-17a';
   const VOICE_INPUT_RATE = 16000;
   const VOICE_OUTPUT_RATE = 24000;
   // ~43ms of audio per frame at 48kHz. Small enough that barge-in is imperceptible, large enough
@@ -2123,7 +2137,9 @@
       // Captured here and used for the whole call, transcript flush included.
       voice.sessionId = sess.id;
       voice.sessionToken = sess.token || null;
-      voice.persona = sess.persona || detectPersona();
+      // currentPersona(), not the session's own stamp: a call started on /ai is the AI
+      // assistant even inside a conversation that began over listings (2026-09-17).
+      voice.persona = currentPersona();
       token = await mintVoiceSession();
     } catch (err) {
       stream.getTracks().forEach(function(t) { t.stop(); });
