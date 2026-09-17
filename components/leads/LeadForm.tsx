@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Input, Select, Textarea } from "@/components/ui/Field";
 import { useQualifyingWizard, wizardOpensOn } from "@/components/leads/QualifyingWizard";
 import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
+import { stampAndRecordSubmit } from "@/lib/activity/beacon";
 import { INTEREST_REASONS, SITE } from "@/lib/site";
 import type { SavedSearchRequest } from "@/lib/leads/types";
 
@@ -124,8 +125,8 @@ export function LeadForm({
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
 
-    // THE CONSENT QUESTION IS UNSKIPPABLE AND LEAVING IT UNANSWERED IS LOUD. Either answer
-    // submits (2026-08-28, "do as its proper to do"); no answer does not. Checked here rather
+    // THE BOX IS REQUIRED AND LEAVING IT UNTICKED IS LOUD (the owner, thrice; 09-17 final).
+    // Checked here rather
     // than by the `required` attribute so the visitor gets the same styled, focusable,
     // screen-reader-announced error every other failure on this form gets, in the same place,
     // instead of a native bubble that can render off-screen or not at all.
@@ -166,6 +167,12 @@ export function LeadForm({
         return;
       }
       setStatus("success");
+      // Round 51 (D12): stamp the device with the identity the visitor just gave us and
+      // record the submit, so a form-filler without an account is trackable like Brivity's.
+      stampAndRecordSubmit(
+        { email: data.email, phone: data.phone },
+        { path: source ?? pathname, kind: data.interestReason },
+      );
       form.reset();
       // `c` carries the consent ANSWER, not the phone number, so the thank-you page can tell a
       // visitor the truth about what happens next: someone who agreed to a call is going to be

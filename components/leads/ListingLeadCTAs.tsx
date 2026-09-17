@@ -6,6 +6,7 @@ import { LeadSheet } from "./LeadSheet";
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
+import { stampAndRecordSubmit } from "@/lib/activity/beacon";
 import { SITE } from "@/lib/site";
 import {
   formatOffer,
@@ -35,7 +36,22 @@ async function postLead(body: Record<string, unknown>): Promise<boolean> {
       body: JSON.stringify(body),
     });
     const json = (await res.json()) as { ok?: boolean };
-    return res.ok && !!json.ok;
+    const ok = res.ok && !!json.ok;
+    if (ok) {
+      // Round 51 (D12): the person just told us who they are - stamp the device and record
+      // the submit, so their browsing lands on their CRM record from this moment on. One
+      // point covers both sheets. The listing id rides the source path (/listing/<id>).
+      const source = typeof body.source === "string" ? body.source : undefined;
+      stampAndRecordSubmit(
+        { email: typeof body.email === "string" ? body.email : undefined, phone: typeof body.phone === "string" ? body.phone : undefined },
+        {
+          path: source,
+          listingId: source?.startsWith("/listing/") ? source.slice("/listing/".length) : undefined,
+          kind: typeof body.interestReason === "string" ? body.interestReason : undefined,
+        },
+      );
+    }
+    return ok;
   } catch {
     return false;
   }

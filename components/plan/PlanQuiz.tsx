@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ConsentCheckbox } from "@/components/leads/ConsentCheckbox";
 import { CONSENT_UNANSWERED_ERROR, consentAnswered } from "@/lib/leads/consent";
+import { sendActivity, stampAndRecordSubmit } from "@/lib/activity/beacon";
 import {
   CEILING_ASSUMPTIONS,
   MONTHLY_OPTIONS,
@@ -707,6 +708,13 @@ function SendPlan({ answers, plan }: { answers: QuizAnswers; plan: ReturnType<ty
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      if (res.ok) {
+        // Round 51 (D12): the plan sender told us who they are.
+        stampAndRecordSubmit(
+          { email: String(fd.get("email") ?? "") || undefined, phone: String(fd.get("phone") ?? "") || undefined },
+          { path: "/plan", kind: "Sent their purchase plan" },
+        );
+      }
       setState(res.ok ? "sent" : "error");
     } catch {
       setState("error");
