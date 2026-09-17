@@ -15,8 +15,7 @@ import { sendWatchMail } from "@/lib/watch/send";
  * edge; the listing store's idx_health_snapshot(); site_watch_counts() for the flood signals.
  * The judge and its thresholds live in lib/watch/checks.ts (unit-tested); the state that makes
  * swings and re-alert throttling possible lives in site_watch_state (id=1, jsonb). Alerts go
- * through lib/watch/send.ts (Resend; "no-transport" until the key exists - the n8n watcher
- * keeps guard until then, see the send.ts note).
+ * through lib/watch/send.ts (the CRM's ops-alert door since 51e; ARMED on prod).
  *
  * The route never throws for a failed probe - a down site is a REPORT, not an exception; only
  * a bad secret or a broken store answers non-200. */

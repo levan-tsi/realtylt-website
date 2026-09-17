@@ -1,4 +1,5 @@
-// The branded client emails the n8n workflows send AS Levan (round 50 item 1). This file is the
+// ROUND 51e: the CRM now owns these templates (its /api/site/lead-thankyou + /api/site/signup,
+// migration 0251) - this file stays as the HISTORICAL twin of the round-50 n8n era. It was the
 // local twin of the two n8n Code nodes ("Guard, Throttle & Compose" on gKA4YoMDx5ADd8Dx and
 // "Compose Welcome" on 3RLrnY2SMcZ5ZMDL): same shell, same signature, same copy. Run it to render
 // both variants to HTML + PNG and LOOK before pasting the SHELL/compose body into n8n.

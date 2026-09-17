@@ -188,8 +188,9 @@ export async function submitLead(lead: LeadPayload): Promise<LeadResult> {
   }
 }
 
-/** The thank-you note every lead now gets (round 40, owner-directed): posts to the n8n
- * "Website Lead Thank-You" workflow, which sends consent-aware copy through the owner's
+/** The thank-you note every lead now gets (round 40, owner-directed; round 51e re-homed): posts to the CRM
+ * /api/site/lead-thankyou endpoint (the CRM owns all outbound email since 51e; the n8n
+ * workflow this used to call is retired), which sends consent-aware copy through the owner's
  * Gmail and throttles per-address (1h) so the qualifying wizard's follow-up POST can never
  * double-send. Never fails the lead — the CRM record is already in by the time this fires.
  * Skipped entirely in stub/test mode (no webhook = no email).
