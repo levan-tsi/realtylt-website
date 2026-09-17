@@ -1,5 +1,26 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 51 (2026-09-17): THE OWNER'S CORRECTIONS ON ROUND 50 ==========================
+## Three commits 07d079d/01d7936/d785b82, pushed. His words drove all three:
+## 1. CONSENT: "I told u to delet why did u add it back remove that" - the round-50 decline
+##    radios are GONE, back to ONE required box (loud refusal kept, consentAnswered() now
+##    accepts only "true", CONSENT_VERSION 2026-09-17.v4). The four-flip history is written
+##    into lib/leads/consent.ts. THIS IS FINAL unless HE reopens it - never restore removed
+##    UI on an ambiguous delegation again (memory: feedback-dont-restore-deleted-ui-...).
+## 2. /CONNECT: "google photo from calendar is still low" - headline moved INTO the left
+##    column so the embed (whose first band is his Google photo) starts at the section top,
+##    level with "book a time". Page 2445 -> 2224 at 1440.
+## 3. INTAKE polish: Change (in the trail) scrolls the panel back into view on a phone; the
+##    last step replays the answers in one t-fine line (phone-only). He wants MORE polish
+##    rounds on the intake - carry that.
+## FACTS ESTABLISHED FOR HIS QUESTIONS: n8n is NOT disabled - it still sends the thank-you +
+## welcome/signup emails (site's /api/lead posts to LEAD_THANKYOU_WEBHOOK) and the IDX
+## watcher digests (in his inbox Aug 31/Sep 7/Sep 14). Only the n8n CHATBOT is retired. If
+## he wants n8n fully gone, migration path: memory infra-n8n-still-runs-emails-and-watcher.
+## Qualifier answers DO land on the CRM contact (verified live: contacts.notes [Qualifier]
+## lines + the "What they told us" card); no intake:home lead has arrived yet on prod.
+## Tests 1432, tsc clean; consent + intake probes ALL PASS at 1440/390.
+
 ## == ROUND 50 DONE (2026-08-28 afternoon/evening): THE OWNER'S LIST, BUILT ==================
 ## Shape: SINGLE Fable session, no subagents, ~9 commits d5f7e4c..88ad9d0 on main, every one
 ## verified on the dev server with real browser probes (1440/390/320) and pushed; Vercel
