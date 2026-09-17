@@ -33,9 +33,11 @@
 ## 16:54. THE WATCH IS ARMED END TO END. (He got a duplicate digest at 16:55 - my earlier
 ## client-timed-out SQL statement re-firing, one-off, not a dedupe bug.)
 ## n8n IS NOW CALLED BY NOTHING except its own IDX watcher schedule: ZvvwCsRM0uxGZLFH still
-## published (Monday would double-digest) + the dead thank-you/signup workflows. Asked the
-## CRM session to unpublish via its n8n auth; else the owner's one-click list (n8n UI toggle
-## or /mcp re-auth here). From: stays levan@ until his noreply@ Gmail alias (~5 min).
+## published (Monday would double-digest) + the dead thank-you/signup workflows. BOTH sessions
+## are blocked on the same expired n8n connector - OWNER ONLY: re-auth n8n at claude.ai ->
+## Settings -> Connectors (then any session unpublishes all three in seconds) OR three
+## clicks in the n8n UI. Probe residue: verified + cleaned by the CRM session (lead 135 /
+## contact 2614cf2c, 0 by query). From: levan@ until his noreply@ Gmail alias (~5 min).
 ## email-templates.mjs marked historical - the CRM owns the templates now.
 ## -- ROUND 51d (LAUNCH DAY, same evening): armed, launched, challenged, healed ----------
 ## THE SITE IS LIVE AND INDEXABLE: the owner had the aipage session delete all PRELAUNCH
