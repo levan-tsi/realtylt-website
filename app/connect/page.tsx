@@ -70,19 +70,28 @@ export default function ConnectPage() {
   return (
     <section className="sec-sm bg-paper" aria-labelledby="connect-hero">
       <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-        <p className="t-eyebrow text-stone">Seven days a week</p>
-        {/* A statement in the house voice, sentence case, and a map of the page: the three things
-            it names are the three things beneath it, in that order. */}
-        <h1 id="connect-hero" className="t-h1 mt-4 text-ink">
-          Call, email, or <strong>book a time</strong>.
-        </h1>
-
-        <div className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-[minmax(0,360px)_1fr] lg:gap-16">
+        {/* ROUND 51 (owner, 2026-09-17): "the google photo from calendar is still low, it should
+            be next to book a time so other boxes are up too and page is more optimized." The
+            embed's own FIRST band is his Google photo + name, and we cannot restyle inside the
+            iframe - so the fix is where the iframe STARTS. The headline moved into the left
+            column, the full-width heading block above the grid is gone, and the calendar column
+            now begins at the section's top: his Google photo sits level with the words
+            "book a time" (~190px higher than before), and every box in the left column rises
+            with it. The headline is still the page's first element in reading order and on a
+            phone the stack is unchanged: eyebrow, headline, portrait, contacts, calendar. */}
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,360px)_1fr] lg:gap-16">
           {/* The left column is sticky above lg because the calendar is 899px tall and this
               column is about half that. It used to leave a 400px hole beside the embed, and it
               keeps the number and the email in view for the whole length of the booking flow
               instead. */}
           <div className="lg:sticky lg:top-8 lg:self-start">
+            <p className="t-eyebrow text-stone">Seven days a week</p>
+            {/* A statement in the house voice, and a map of the page: the three things it names
+                are the three things beneath and beside it, in that order. */}
+            <h1 id="connect-hero" className="t-h1 mt-4 text-ink">
+              Call, email, or <strong>book a time</strong>.
+            </h1>
+
             {/* ROUND 50 (owner, 2026-08-28): "book a time where text is my face from google
                 calendar should be next to that and other boxes up with it." Round 39 had put the
                 two contact rows first and dropped the portrait to the session cards' level, which
@@ -99,7 +108,7 @@ export default function ConnectPage() {
                    they stay on screen for the whole booking flow, which is when a visitor forms
                    the opinion they answer. The column now carries content most of the embed's
                    height at 1280-1440 instead of stopping a third of the way down. */}
-            <div className="flex items-center gap-5">
+            <div className="mt-9 flex items-center gap-5">
               <Image
                 src="/images/levan-portrait.jpg"
                 alt="Levan Tsiklauri, investor and REALTOR® at RealtyLT"
