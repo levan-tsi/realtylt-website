@@ -21,6 +21,22 @@
 ## lines + the "What they told us" card); no intake:home lead has arrived yet on prod.
 ## Tests 1432, tsc clean; consent + intake probes ALL PASS at 1440/390.
 
+## -- ROUND 51c (same day): D12 CONNECTED + THE OWNER'S EMAIL ARCHITECTURE DECISION ------
+## D12: the CRM session built record_site_visit the same hour; the website emitter shipped
+## (880303c): submit stamps rlt:lead-identity:v1 (90d) on EVERY lead surface; TrackView's one
+## mount serves signed-in (unchanged) and signed-out-with-identity (beacon -> /api/activity ->
+## the door, server-side only); strangers send nothing. Proven from dev against the PROD door
+## (matched:false no-op). ⚠️ NOT ARMED on prod: SITE_ACTIVITY_SECRET must be added to the
+## website Vercel env (value = C:UsersLevan.rlt-secretssite-activity-secret.txt; my
+## Vercel CLI is logged out - owner adds it or runs `! npx vercel login` in a session). Then
+## the joint prod e2e with the CRM session.
+## EMAIL DECISION (owner): "CRM should handle all of those... why Resend" - the CRM owns ALL
+## outbound email (it has his connected Gmail, lib/email/gmail.ts). Handed the CRM session the
+## consolidation: (a) thank-you sent by CRM on intake, (b) welcome + owner notice CRM-side,
+## (c) a secret-gated ops-alert endpoint so health-watch alerts ride the CRM and RESEND IS
+## DROPPED, (d) noreply@ = his ~5min Gmail "Send mail as" alias step. Until (a)/(b)/(c) land
+## CRM-side, n8n keeps sending (nothing breaks); then the website drops its n8n webhooks and
+## n8n retires fully. lib/watch/send.ts stays as-is until (c) exists, then swaps target.
 ## -- ROUND 51b (same day, his follow-up): THE PLATFORM WATCH, OFF N8N -------------------
 ## ccac4dc: /api/cron/health-watch + lib/watch/* (judge pure, 7 tests) + migration
 ## idx_round51_site_watch (APPLIED; site_watch_state + site_watch_counts(), service-role
