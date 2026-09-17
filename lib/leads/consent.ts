@@ -44,7 +44,7 @@
 
 /** Bump when the wording changes. Stored on every lead so a record can be read back years
  * later against the exact text that was on screen. */
-export const CONSENT_VERSION = "2026-08-28.v3";
+export const CONSENT_VERSION = "2026-09-17.v4";
 
 /** The clickable line. Plain, warm, and about THEIR request rather than our marketing. */
 export const CONSENT_LABEL = "Yes, you can call or text me about my request.";
@@ -72,33 +72,28 @@ export const CONSENT_DISCLOSURE =
   "Includes automated and recorded calls and texts. Optional, and never required to buy or sell a home. Reply STOP any time. Message and data rates may apply.";
 
 /**
- * THE OTHER ANSWER, restored 2026-08-28. Round 49 flagged the tension recorded above (a box that
- * must be ticked, under a disclosure that says "never required") and the owner answered: "i did
- * not get it do as its proper to do." He delegated the legal shape, so the control is the one the
- * 2026-08-22 session shipped once and the 08-23 decision removed: two radios, NEITHER
- * pre-selected, BOTH submit, and the form will not go until one is chosen. Every lead still
- * arrives with an explicit answer, which was the thing he actually needed (the dialer and the AI
- * caller know where they stand), and a yes is a yes that was not a condition of anything, which
- * is what makes it consent. Declining is a real, equal, unpunished choice or the yes beside it is
- * worth nothing. It is honest about what still happens: they asked us something, so we answer by
- * email. Version bumped so records can be told apart from the required-box era.
+ * THE DECLINE OPTION IS GONE AGAIN, 2026-09-17, AND THIS TIME THE DECISION IS FINAL UNLESS HE
+ * REOPENS IT. The history, in full, because this control has now flipped four times: 2026-08-22
+ * two radios; 08-23 he removed the decline ("only yes text and call me option check box which is
+ * must"); 08-28, shown the round-49 flag, he said "do as its proper to do" and the radios came
+ * back; 09-17, seeing them on the page, he said "you have added No thanks Email me instead box
+ * which we had before but I told u to delete why did u add it back remove that." That is a
+ * repeat of his 08-23 decision with the history in front of him. His business, his risk; the
+ * PEWC argument above stays recorded and is not re-run. So: ONE tickable box, REQUIRED to
+ * submit, refusing is loud (never native `required` - the silent-failure bug of 08-23).
+ * Version bumped again so records from the two-option window (08-28..09-17) stay readable.
  */
-export const CONSENT_DECLINE_LABEL = "No thanks. Email me instead.";
 
-/** The question the two answers belong to. A screen reader hears it before either answer. */
-export const CONSENT_QUESTION = "Can we call or text you about this?";
-
-/** The two answers the control can send, and nothing else. A form must refuse to submit until
- * the visitor has chosen one; absence is neither a yes nor a no, it is an unanswered question.
- * Shared by every form so the predicate cannot drift between the footer, the listing sheets and
- * /plan. */
-export function consentAnswered(value: unknown): value is "true" | "false" {
-  return value === "true" || value === "false";
+/** The box was ticked. With a required box this is the only submitting state; absence means the
+ * visitor has not answered and the form must refuse loudly. Shared by every form so the check
+ * cannot drift between the footer, the listing sheets and /plan. */
+export function consentAnswered(value: unknown): value is "true" {
+  return value === "true";
 }
 
 /** The refusal copy, one sentence, shared for the same reason. */
 export const CONSENT_UNANSWERED_ERROR =
-  "Please pick one of the two options above so we know how to reach you.";
+  "Please tick the box above so we can call or text you about your request.";
 
 /** What gets stored: the whole agreement as one string, because the label alone is not the
  * agreement and the disclosure alone is not the ask. */

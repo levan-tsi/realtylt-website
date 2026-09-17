@@ -132,11 +132,12 @@ describe("consent — every form that takes a phone number actually asks", () =>
     expect(read("components/leads/LeadForm.tsx")).toMatch(/\.\.\.data,/);
   });
 
-  /** THE QUESTION IS UNSKIPPABLE, AND LEAVING IT UNANSWERED MUST BE LOUD.
+  /** THE BOX IS REQUIRED, AND REFUSING IT MUST BE LOUD.
    *
-   * Three decisions in a week (2026-08-22 two options; 08-23 one mandatory box; 08-28 "do as
-   * its proper to do" = two options again, neither pre-selected, both submit). The reasoning
-   * lives in components/leads/ConsentCheckbox.tsx and lib/leads/consent.ts and is not re-run here.
+   * Four decisions (2026-08-22 two options; 08-23 one mandatory box; 08-28 two options again;
+   * 09-17 the owner, seeing the decline option live: "I told u to delete why did u add it back
+   * remove that" - one mandatory box, final). The reasoning lives in
+   * components/leads/ConsentCheckbox.tsx and lib/leads/consent.ts and is not re-run here.
    *
    * WHAT THESE GUARD IS THE BUG HE ACTUALLY HIT. The first mandatory version used the browser's
    * native `required`, and on the footer form that produced no message, no scroll and no posted
@@ -152,24 +153,21 @@ describe("consent — every form that takes a phone number actually asks", () =>
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/^\s*\/\/.*$/gm, "");
 
-  it("is two radios, a yes and a no, neither pre-selected", () => {
+  it("is one tickable box, never pre-ticked, with no decline option (owner, 09-17)", () => {
     const src = consentSrc();
-    expect((src.match(/type="checkbox"/g) ?? []).length).toBe(0);
-    expect((src.match(/type="radio"/g) ?? []).length).toBe(2);
-    expect((src.match(/name="consentToContact"/g) ?? []).length).toBe(2);
+    expect((src.match(/type="checkbox"/g) ?? []).length).toBe(1);
+    expect((src.match(/type="radio"/g) ?? []).length).toBe(0);
+    expect((src.match(/name="consentToContact"/g) ?? []).length).toBe(1);
     expect(src).toContain('value="true"');
-    expect(src).toContain('value="false"');
+    expect(src).not.toContain('value="false"');
+    expect(src).not.toContain("CONSENT_DECLINE_LABEL");
     expect(src).not.toMatch(/\bdefaultChecked\b/);
     expect(src).not.toMatch(/\bchecked[=\s]/);
-    // The decline option is the thing that makes the yes worth anything; both labels come
-    // from the one wording file.
-    expect(src).toContain("CONSENT_DECLINE_LABEL");
-    expect(src).toContain("CONSENT_LABEL");
   });
 
-  it("either answer is an answer; absence is not", () => {
+  it("only the ticked box submits; absence and everything else refuse", () => {
     expect(consentAnswered("true")).toBe(true);
-    expect(consentAnswered("false")).toBe(true);
+    expect(consentAnswered("false")).toBe(false);
     expect(consentAnswered(undefined)).toBe(false);
     expect(consentAnswered("")).toBe(false);
     expect(consentAnswered("on")).toBe(false);
