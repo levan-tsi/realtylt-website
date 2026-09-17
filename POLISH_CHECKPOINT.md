@@ -21,6 +21,33 @@
 ## lines + the "What they told us" card); no intake:home lead has arrived yet on prod.
 ## Tests 1432, tsc clean; consent + intake probes ALL PASS at 1440/390.
 
+## -- ROUND 51d (LAUNCH DAY, same evening): armed, launched, challenged, healed ----------
+## THE SITE IS LIVE AND INDEXABLE: the owner had the aipage session delete all PRELAUNCH
+## vars + redeploy (noindex and robots Disallow are GONE). Bot Protection=Challenge is on
+## (a Meta scraper burned $16.51 of credit; spend cap $20/pause now set). CONSEQUENCES:
+## plain-HTTP probes of realtylt.com now get the challenge page - every prod probe must be
+## a REAL browser (Playwright headful); and pg_cron's calls were challenged too - the 16:07
+## MLS sync got 429 and data went stale until a Vercel Firewall custom rule (owner-
+## authorized Chrome takeover): "Cron bypass (Supabase pg_cron)", Request Path starts with
+## /api/cron/ -> Bypass, PUBLISHED + PROVEN (health-watch 200 through it; sync caught up,
+## last_synced_at 16:19:54). The watch itself now reads probe 429s as "up (bot-challenged)"
+## (ae863cf) after its 16:17 self-check false-alarmed - the probes-lie class, again.
+## D12 IS LIVE END TO END ON PROD: the CRM session armed SITE_ACTIVITY_SECRET (owner's
+## dashboard) + redeployed; the joint e2e PASSED headful: lead "D12 Probe0917" -> submit_form
+## matched:true, 3x view_listing KEY1051498 matched:true; CRM verifying + cleaning residue.
+## Web Analytics: enabled on the project (aipage session); layout now carries the plain
+## same-origin /_vercel/insights/script.js tag (no @vercel/analytics package - peer-dep
+## conflict for a one-line tag); the ae863cf deploy provisions the endpoint.
+## GMAIL noreply@ ALIAS: NOT done - the Chrome extension has no site permission for
+## admin.google.com (blocked at extension level, not login). Owner either grants the Claude
+## extension access to admin.google.com + mail.google.com and asks again, or does it himself
+## (Workspace Admin -> Users -> his user -> Add email alias "noreply"; then Gmail Settings ->
+## Accounts -> Send mail as -> noreply@realtylt.com, treat as alias).
+## STILL OPEN: CRM session owes the three email endpoints (thank-you/welcome/ops-alert) -
+## then this repo drops LEAD_THANKYOU_WEBHOOK + swaps lib/watch/send.ts off Resend and n8n
+## retires; watch mail still no-transport until then (n8n watcher keeps guard); Search
+## Console sitemap submission now makes sense (site is indexable) - owner or a session with
+## Google access.
 ## -- ROUND 51c (same day): D12 CONNECTED + THE OWNER'S EMAIL ARCHITECTURE DECISION ------
 ## D12: the CRM session built record_site_visit the same hour; the website emitter shipped
 ## (880303c): submit stamps rlt:lead-identity:v1 (90d) on EVERY lead surface; TrackView's one
