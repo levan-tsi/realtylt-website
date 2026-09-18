@@ -32,7 +32,7 @@ export const reviewAutomation: Service = {
 
   eyebrow: "Reputation · Reviews on autopilot",
   title: "More 5-star reviews, without the awkward ask",
-  lede: "The moment a job wraps, the AI texts the customer and walks them one tap to your Google review page. No chasing, no forgetting. Everyone gets the same link, whatever they scored, because asking only the people you expect to be kind is review gating and Google's policy rules it out. A low score gets the link and a private message from you as well, so you hear about a problem the day it happens instead of reading it later.",
+  lede: "The moment a job wraps, the AI texts the customer and takes them, in one tap, to your Google review page. No chasing, no forgetting. Everyone gets the same link, whatever they scored. Asking only the people you expect to be kind is called review gating, and Google’s policy rules it out. A low score gets the link and a private message from you as well. So you hear about a problem the day it happens, instead of reading it later.",
   specs: ["auto-request at job end", "one-tap Google reviews", "the same link for everyone", "a low score reaches you too"],
   // THE 73% IS DEAD (Round B, 2026-08-25). "73% of customers read reviews before they book"
   // sat here, in `stat` and in an FAQ, with no source. It was hunted for: BrightLocal's Local
@@ -42,7 +42,7 @@ export const reviewAutomation: Service = {
   // local businesses at all, 41% who "always" do, and, most usefully for THIS page, 74% who
   // seek reviews written in the last three months. So the number here is now that one, quoted
   // as written, with the survey named beside it.
-  why: "Reviews are read before they are ever mentioned, and the ones people read are the recent ones. This asks every customer at the moment the work is fresh in their mind, which is the only moment the ask actually works, and a steady trickle is worth more than a good year three years ago.",
+  why: "People read reviews before anyone ever mentions them, and the ones they read are the recent ones. This asks every customer while the work is fresh in their mind. That is the only moment the ask really works. A steady trickle beats a good year three years ago.",
   keywords: [
     "automated review requests",
     "get more google reviews",

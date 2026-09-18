@@ -32,9 +32,9 @@ export const aiChatAssistant: Service = {
 
   eyebrow: "Website AI Assistant",
   title: "The assistant your visitors actually talk to",
-  lede: "Real text chat on Claude. It searches your MLS live, texts matching listings over Twilio SMS, hands off to a Vapi voice call, and captures the lead before it bounces. This is the one you can touch right now.",
+  lede: "A real chat on your website, run by an AI called Claude. It searches the MLS, the shared list of homes for sale, while the visitor waits. It can text them the homes that match, or switch to a voice call. It saves their contact info before they leave. This is the one you can touch right now.",
   specs: ["Claude", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
-  why: "Harvard Business Review found that contacting a lead inside the hour made a firm nearly seven times likelier to get a meaningful conversation with a decision maker than waiting one more hour. This one replies in seconds, qualifies, and books, so no inquiry dies overnight.",
+  why: "Harvard Business Review studied this. Firms that contacted a lead inside the hour were nearly seven times likelier to have a meaningful conversation with a decision maker. That is compared with waiting one more hour. This one replies in seconds, asks the right questions, and books a time. No inquiry dies overnight.",
   keywords: [
     "ai chatbot for real estate website",
     "real estate website assistant",

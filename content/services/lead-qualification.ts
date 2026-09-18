@@ -9,9 +9,9 @@ export const leadQualification: Service = {
 
   eyebrow: "Qualification · Score + Route",
   title: "The hot leads reach you first",
-  lede: "Every inbound lead is scored on intent, budget, and timeline from what they actually say and do, then routed to the right agent or nurture track. Claude reads the conversation, ranks the pipeline, and surfaces who to call now.",
+  lede: "Every new lead gets a score. The score comes from what they really say and do: how serious they are, their budget, and their timeline. Then each lead is sent to the right agent or the right follow-up track. Claude, the AI, reads the conversation, ranks your list, and shows you who to call now.",
   specs: ["intent + budget + timeline scoring", "Claude-read conversations", "auto-routing", "live pipeline ranking"],
-  why: "Treating every lead the same wastes your best hours on tire-kickers. Automatic qualification puts the ready-to-move sellers and buyers at the top, so your best hours go to them.",
+  why: "Treating every lead the same wastes your best hours on tire-kickers, the people who only look. Sorting leads this way is called qualification. It puts the sellers and buyers who are ready to move at the top. Your best hours go to them.",
   keywords: [
     "ai lead qualification real estate",
     "lead scoring automation realtor",

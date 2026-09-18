@@ -9,9 +9,9 @@ export const workflowAutomation: Service = {
 
   eyebrow: "Automation · Connect your tools",
   title: "The busywork runs itself now",
-  lede: "We wire your tools together (Make, n8n, Zapier, plus AI) so the repetitive steps between them just happen. A new lead, a paid invoice, a signed form: the follow-on tasks fire on their own, across every app you already use, without anyone copy-pasting between tabs.",
+  lede: "We wire your apps together so the boring steps between them just happen. We use tools made for this, like Make, n8n, and Zapier, plus AI. A new lead comes in, an invoice gets paid, a form gets signed. The next tasks start on their own, in every app you already use. Nobody copies and pastes between tabs.",
   specs: ["Make / n8n / Zapier", "connects your existing tools", "AI in the loop", "runs end to end"],
-  why: "Every business loses hours to the same manual steps: moving data between apps, chasing the next task, retyping what a system already knows. Automating that chain hands those hours back and quietly removes the mistakes that come from doing it by hand.",
+  why: "Every business loses hours to the same steps done by hand. Moving data between apps. Chasing the next task. Typing in what a system already knows. When that chain runs itself, you get those hours back. The mistakes that come from doing it by hand go away too.",
   keywords: [
     "business workflow automation",
     "n8n automation services",

@@ -9,14 +9,14 @@ export const databaseReactivation: Service = {
 
   eyebrow: "Revive · Cold Database",
   title: "Wake the leads you already paid for",
-  lede: "AI works your dormant CRM, texting and calling old leads with relevant, conversational outreach, surfacing who's ready to move now and booking them straight to your calendar. The cheapest pipeline you own is the one you forgot.",
+  lede: "The AI works the old leads sitting in your CRM, the app that holds your contacts. It texts and calls them the way a person would, about things that matter to them. It finds who is ready to move now and books them on your calendar. The cheapest pipeline you own is the one you forgot.",
   specs: ["CRM reactivation", "AI text + call", "intent detection", "books to calendar"],
   // The old line here was "The average database holds tens of thousands in unworked
   // commission", which is an unsourced dollar claim about a database nobody has measured. Its
   // own flagship post refuses to make it: no independent study of cold database response rates
   // exists in any vertical, which is precisely why that post ends in a calculator built out of
   // the reader's own numbers instead of a headline figure. Killed 2026-08-25, Round B.
-  why: "Every name in there was paid for once, and nobody has asked them anything since. Reactivation works leads you already own rather than buying new ones, so the only real cost is the asking, and what that is worth depends on your own list rather than on an average of somebody else's.",
+  why: "Every name in there was paid for once, and nobody has asked them anything since. Reactivation works the leads you already own instead of buying new ones. So the only real cost is the asking. What that is worth depends on your own list, not on an average of somebody else’s.",
   keywords: [
     "database reactivation real estate",
     "ai to re-engage old leads",

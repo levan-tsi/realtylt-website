@@ -236,7 +236,9 @@ const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
   },
   {
     name: "ranked by payback",
-    pattern: /ranked? by payback|by payback\. the step that costs the most hours/i,
+    // Widened 2026-09-18: the /services index closed on "rank what is worth automating by what it
+    // pays back", the same claim in a FOURTH sentence, on a page this guard did not read.
+    pattern: /ranked? by payback|by payback\. the step that costs the most hours|rank[^.]{0,60}\bpays? back/i,
     why: "the page promised a sort order its own linked article argues against, which is the SERVICES-CRITIQUE section 2 failure (a commercial page contradicted by the post it links to). The argument, stated as an argument rather than as a measurement: Budzier and Flyvbjerg measured 17 percent of 1,471 ICT projects in a fat right tail against 0.7 percent for a thin-tailed distribution, and the inference drawn from that shape on the flagship is that an expected value describes the middle rather than the exposure, so payback belongs third behind how contained the worst case is and whether the rule is settled. The measurement is theirs and the inference is ours, and the page now says the same thing the article does",
   },
   {
@@ -430,6 +432,11 @@ const SOURCES = [
     .readdirSync(path.join(ROOT, "content/services"))
     .filter((f) => f.endsWith(".ts") && f !== "index.ts" && f !== "types.ts")
     .map((f) => `content/services/${f}`),
+  // The services INDEX is commercial copy written in JSX, outside every directory above. It kept
+  // "rank ... by what it pays back" for three weeks after the claim was retired everywhere else
+  // (found 2026-09-18 by the readability pass, not by this guard). The sibling-sweep law applies
+  // to a page file as much as to a content file.
+  "app/services/page.tsx",
 ];
 
 /** Comments are where the HISTORY of a killed number is written down, and that history is the

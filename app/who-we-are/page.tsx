@@ -83,14 +83,14 @@ export default function WhoWeArePage() {
               <p>
                 RealtyLT is Levan Tsiklauri, an investor and REALTOR&reg; with United Real Estate,
                 working the mid-Hudson region from Lagrangeville. Levan came to real estate the
-                practical way: buying, renovating, and managing property himself before ever
-                representing a client. That experience shapes how RealtyLT works today: numbers
-                first, honest advice always, and no pressure at any step.
+                practical way. Buying, renovating, and managing property came first, before ever
+                representing a client. That experience shapes how RealtyLT works today. Numbers
+                first. Honest advice always. No pressure at any step.
               </p>
               <p>
-                United Real Estate backs that work with the reach of a national brokerage (MLS
-                syndication, marketing tools, and a referral network) while every client still
-                talks to the same person from first call to closing. {SITE.disclaimer}
+                United Real Estate backs that work with the reach of a national brokerage: MLS
+                syndication, marketing tools, and a referral network. Every client still talks to
+                the same person from first call to closing. {SITE.disclaimer}
               </p>
             </div>
           </Reveal>

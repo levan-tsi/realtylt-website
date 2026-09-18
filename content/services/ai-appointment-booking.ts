@@ -9,14 +9,14 @@ export const aiAppointmentBooking: Service = {
 
   eyebrow: "Booking · Turn inquiries into jobs",
   title: "Every inquiry booked while it's still hot",
-  lede: "When someone asks for your time, the AI replies in seconds, offers your real open slots, and books the job right there in the conversation, then sends the confirmation and reminders so they actually show up. No phone tag, no “let me check my calendar,” no lead going cold overnight.",
+  lede: "When someone asks for your time, the AI replies in seconds. It offers your real open slots and books the job right there in the chat. Then it sends a confirmation and reminders, so they really show up. No phone tag, no “let me check my calendar,” no lead going cold overnight.",
   specs: ["instant reply + booking", "confirmations + reminders", "cuts no-shows", "fills open slots"],
   // "Most jobs go to whoever books first" was here until 2026-08-25 and had nothing under it,
   // which is the same shape of claim as the 78% this repo killed on the chat page. Replaced
   // with the two things the flagship post can actually evidence: an appointment left waiting is
   // one somebody else can take, and an appointment pushed a long way out is measurably less
   // likely to happen (McMullen and Netland 2015, cited on the post).
-  why: "An inquiry waiting on a callback is one somebody else can answer, and a time agreed for a fortnight away is one that often does not happen at all. Booking inside the first conversation and reminding them before the day are the two cheap moves that turn more inquiries into work you actually do.",
+  why: "An inquiry waiting on a callback is one somebody else can answer. A time agreed for two weeks away is one that often does not happen at all. So book inside the first conversation, and remind them before the day. Those are the two cheap moves that turn more inquiries into work you really do.",
   keywords: [
     "ai appointment setter",
     "online booking for service business",

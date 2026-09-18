@@ -25,9 +25,9 @@ export const dataEnrichment: Service = {
 
   eyebrow: "Enrichment · Append + Verify",
   title: "Half a name becomes a full profile",
-  lede: "A bare address or partial contact is enriched into phone, email, and property detail through BatchData and public-record sources, deduped and validated, with what came back marked as what came back rather than merged silently into what you already knew.",
+  lede: "Start with a bare address or half a contact. The AI fills in the phone, the email, and the property details, using BatchData and public records. It removes duplicates and checks each value. What came back is marked as what came back. It is never mixed silently into what you already knew.",
   specs: ["BatchData + public records", "phone + email checks", "property detail append", "dedupe + validate"],
-  why: "You can't work a lead you can't reach. Enrichment fills the gaps in records you already own, and writes down where each value came from and when, so the row tells you how much to trust it.",
+  why: "You can’t work a lead you can’t reach. Enrichment means filling the gaps in records you already own. It also writes down where each value came from, and when. So every row tells you how much to trust it.",
   keywords: [
     "real estate data enrichment",
     "skip trace enrichment api",

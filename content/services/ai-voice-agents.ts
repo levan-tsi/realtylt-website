@@ -9,9 +9,9 @@ export const aiVoiceAgents: Service = {
 
   eyebrow: "Voice · Inbound + Outbound",
   title: "AI that answers the calls, and makes them",
-  lede: "Vapi voice agents pick up every inbound call 24/7 and dial leads back to qualify them, holding natural conversations at sub-second latency, then logging the outcome and booking the next step.",
+  lede: "An AI voice agent picks up every call, day or night. It also calls new leads back to ask what they need. It talks like a person and answers in under a second. Then it writes down what was said and books the next step.",
   specs: ["Vapi", "sub-second latency", "inbound + outbound", "auto follow-up"],
-  why: "A missed call is a lost conversation, and the conversation is where every deal starts. AI that answers instantly and calls leads back in seconds turns dead inquiries into booked appointments, without hiring an ISA.",
+  why: "A missed call is a lost conversation, and the conversation is where every deal starts. An AI that picks up right away, and calls leads back in seconds, turns dead inquiries into booked appointments. You do not have to hire a person just to work the phones.",
   keywords: [
     "ai voice agent for real estate",
     "ai phone agent real estate",

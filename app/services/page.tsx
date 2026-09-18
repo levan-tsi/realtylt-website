@@ -131,9 +131,9 @@ export default function ServicesIndexPage() {
               Twenty things that used to <strong>need a person</strong>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">
-              Assistants that answer in seconds, voice agents that never miss a call, pipelines that
-              turn a map into a phone list, and automation that quietly removes the busywork. Each
-              one has a page, and one of them you can talk to right now.
+              Assistants that answer in seconds. Voice agents that never miss a call. Pipelines that
+              turn a map into a phone list. Automation that quietly removes the busywork. Each one
+              has a page, and one of them you can talk to right now.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-6">
@@ -264,9 +264,9 @@ export default function ServicesIndexPage() {
               Not sure which one you <strong>need first?</strong>
             </h2>
             <p className="mx-auto mt-5 max-w-xl leading-relaxed text-paper/75">
-              That is the normal place to be. The audit exists for exactly this: we map how your
-              business actually runs, rank what is worth automating by what it pays back, and build
-              the first one.
+              That is the normal place to be. The audit exists for exactly this. We map how your
+              business really runs. We cut the ideas that should not be built, and put the rest in
+              order with the reason for each spot beside it. Then we build the first one.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button href="/services/ai-audit" variant="light" size="lg">

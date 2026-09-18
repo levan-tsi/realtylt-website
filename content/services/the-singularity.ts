@@ -57,7 +57,7 @@ export const theSingularity: Service = {
 
   eyebrow: "The Singularity · the tipping point",
   title: "The point where it starts improving itself",
-  lede: "Scattered tools become one brain, and the Singularity is the moment that brain starts working on itself. It builds and runs the other agents, remembers every call, chat and deal they touch, and writes and changes the software around them. Every correction you give it is written down once and applied from then on, and nothing ships until the tests pass and you approve it.",
+  lede: "Scattered tools become one brain, and this is the moment that brain starts working on itself. It builds and runs your other agents. It writes and changes the software around them. It keeps what it learns in files it has to read before it starts anything. Every other tool you own peaked the day you installed it. This one writes down what it got wrong, and nothing it writes ships until the tests pass and you approve it.",
   specs: [
     "builds and runs your agents",
     "writes and ships real code",
@@ -66,7 +66,7 @@ export const theSingularity: Service = {
     "works unattended for hours or days",
     "nothing ships without approval",
   ],
-  why: "Most tools are worth the most on the day you install them, then they age. A system that keeps its own memory, writes down the corrections you give it, and can change the software it runs on is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
+  why: "Most tools are worth the most on the day you install them, then they age. This system keeps its own memory. It writes down the corrections you give it. It can change the software it runs on. So it is worth more a year in than on day one. Everything else you buy gets older. This gets better.",
   keywords: [
     "ai agent orchestration real estate",
     "self improving ai system",

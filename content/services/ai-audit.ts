@@ -9,9 +9,9 @@ export const aiAudit: Service = {
 
   eyebrow: "AI Audit · Start here",
   title: "See exactly where AI pays off first",
-  lede: "We map how your business actually runs, cut the candidates that should not be built, and hand you what is left in an order with the reason for each position beside it. Then we build the first win. The low-risk way to start when you know AI can help but not where to point it.",
+  lede: "We map how your business really runs. We cut the ideas that should not be built. Then we hand you what is left, in order, with the reason for each spot written beside it. After that, we build the first win. It is the low-risk way to start when you know AI can help but not where to point it.",
   specs: ["full workflow review", "an order, with reasons", "clear build plan", "a quick first win"],
-  why: "Knowing AI could help and knowing where to point it are different problems, and only the second one produces anything. An audit turns an open topic into a short list with the reason for each position written beside it, and into a shorter list of the things you have decided not to build.",
+  why: "Knowing AI could help is one problem. Knowing where to point it is a different one, and only the second gets anything built. An audit is a full check of how you work. It turns an open question into a short list, with the reason for each spot beside it. It also gives you a shorter list: the things you have decided not to build.",
   keywords: [
     "ai consulting for small business",
     "ai automation audit",

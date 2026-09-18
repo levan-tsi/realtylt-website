@@ -123,6 +123,26 @@ in `content/blog/posts.ts` to `"2026-09-18"`. Nothing else in that file changes.
    honestly. An unresolved violation is REPORTED, never worked around: do not edit the BEFORE
    snapshot, do not add to the ALLOW file. Those are the orchestrator's calls.
 
+## Lessons from batch 1 (added by the orchestrator while it ran)
+
+- **Short sentences collide.** `lib/blog/flagship.test.ts` fails a topic when a scene payload
+  repeats a body sentence ("the topic content contract"). Long sentences never matched by
+  accident; six-word ones do ("It flags what is missing."). When the test names a scene, reword
+  the SCENE's copy of the sentence, keep the body's.
+- **`lede` and `why` on the service pages are already done.** They were taken byte for byte from
+  the /ai panels, which went through this same pass in their own repo (grade <= 6, 21/21) and a
+  truth sweep against this repo's retraction table. Still not yours to edit, and now you know
+  why: a one-word change breaks the byte-sibling audit in the other repo.
+- **Retired claim class: "verified" and "callable".** The owner retired both on 2026-08-27. We
+  do not say a phone, email or owner name we return is "verified", and we do not call a list or
+  pipeline "callable" (the enrichment page itself says enrichment "does not make a list callable
+  in the legal sense"). Landed forms: "a phone and an email", "a list you can work". A sentence
+  that is ABOUT the claim (explaining that nobody can promise it) stays.
+- **What good looks like, measured:** invoicing post 9.5 -> 5.1, its service page 7.8 -> 5.5,
+  clone post 9.4 -> 5.7, its service page 7.8 -> 5.4; invariants PASS on all four at length
+  x1.01-1.02. Glosses that worked: "Treble damages means three times the charge." "a wire, which
+  is a direct bank transfer." One short sentence, plainly true, right after the hard word.
+
 ## Do not
 
 - Do not `git add`, commit or push. The orchestrator commits after verifying.

@@ -9,7 +9,7 @@ export const aiAgentWorkforce: Service = {
 
   eyebrow: "Agent Workforce · On-demand LLM assistants",
   title: "An assistant for every recurring job",
-  lede: "Spin up a personal AI assistant for any job. One drafts your emails, one preps CMAs, one chases paperwork, one watches your inbox. Each assistant is an LLM agent tuned to the task you hand it, and they run in parallel, around the clock.",
+  lede: "Spin up a personal AI assistant for any job. One drafts your emails. One preps CMAs, the reports that price a home. One chases paperwork. One watches your inbox. Each one is an AI set up for the single task you hand it. They all work at the same time, around the clock.",
   // "unlimited parallel agents" was still here after Round D synced this page, because that
   // round found the phrase on the /ai journey and fixed it THERE. Nothing is unlimited: this
   // page's own flagship post is about what supervising several agents costs, and the limits
@@ -17,7 +17,7 @@ export const aiAgentWorkforce: Service = {
   // contradicts the article it links to. Found by sweeping the killed claims across every
   // surface rather than only the ones a round had open.
   specs: ["many agents in parallel", "task-tuned LLMs", "plugs into your tools", "always on"],
-  why: "You can't hire a person for every recurring task, but you can delegate each one to its own AI assistant. You stop doing the busywork and start managing a staff that never sleeps.",
+  why: "You can’t hire a person for every task that repeats. But you can hand each one to its own AI assistant. You stop doing the busywork and start managing a staff that never sleeps.",
   keywords: [
     "personal ai assistant for realtors",
     "ai agents for real estate",

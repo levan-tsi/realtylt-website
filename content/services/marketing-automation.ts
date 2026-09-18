@@ -9,7 +9,7 @@ export const marketingAutomation: Service = {
 
   eyebrow: "Marketing · Multi-channel Automation",
   title: "Campaigns that run themselves",
-  lede: "Email and SMS drip, social posting, listing promotion, retargeting, and nurture sequences, all triggered by what each lead actually does. Behavior fires the next touch, so the right message lands at the right moment without you lifting a finger.",
+  lede: "It sends emails and texts on a schedule, posts to social media, and promotes your listings. It shows ads to people who already visited your site. Each step is set off by what a lead really does. They open an email, and the next message goes out. The right note lands at the right moment, and you never lift a finger.",
   specs: ["email + SMS drip", "social + listing promotion", "behavior-triggered", "retargeting + nurture"],
   /** ROUND E. This read "Most leads aren't ready today. They're ready in six months, and they
    * buy from whoever stayed top of mind." Two unsourced claims about buyer behaviour in one
@@ -19,7 +19,7 @@ export const marketingAutomation: Service = {
    *
    * THIS IS /ai COPY, seeded verbatim, so changing it widens the drift between the journey and
    * the services surface. That drift now covers five keys. Recorded in ROUND-E-LOG.md. */
-  why: "A lead who is months from moving hears from a lot of people in between, and most of it is generic and forgettable. Behaviour-triggered nurture is how you stay useful across that wait without having to remember to.",
+  why: "A lead who is months from moving hears from a lot of people in between. Most of it is generic and easy to forget. Messages set off by what a lead does are how you stay useful across that wait. And you do not have to remember to send them.",
   keywords: [
     "real estate marketing automation",
     "automated email drip real estate",

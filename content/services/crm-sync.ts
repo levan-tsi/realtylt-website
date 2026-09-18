@@ -9,7 +9,7 @@ export const crmSync: Service = {
 
   eyebrow: "Sync · Two-way CRM",
   title: "Your CRM stays true without the data entry",
-  lede: "Every call, text, booking, and enriched contact writes straight back to Follow Up Boss, kvCORE, HubSpot, or your CRM, and pulls updates the other way. n8n keeps both sides in lockstep so nothing lives in two places out of date.",
+  lede: "Every call, text, booking, and filled-in contact is written straight into your CRM, the app that holds your contacts. That can be Follow Up Boss, kvCORE, HubSpot, or another one. Updates flow back the other way too. A tool called n8n keeps the two sides in step, so a change on one is a change on both.",
   specs: ["Follow Up Boss / kvCORE / HubSpot", "two-way sync", "n8n orchestration", "no double entry"],
   // ROUND D, 2026-08-25. Was "Agents lose deals to stale, half-updated CRMs. Real-time two-way
   // sync means the record you look at is the record that's true, with every touch logged
@@ -18,7 +18,7 @@ export const crmSync: Service = {
   // reason. The second says the record is "true" without qualification, which the research on
   // this page's own topic does not support. Replaced with the mechanism, which is real and
   // needs no figure under it. THIS IS /ai COPY: the journey and this page now differ here.
-  why: "A stale record is not a filing problem. It is the reason an automated message goes to somebody who signed last week. Two-way sync means the record in front of you is the one the rest of your systems are acting on, with every call, text and booking written to it as it happens.",
+  why: "A stale record is not a filing problem. It is the reason an automated message goes to somebody who signed last week. With two-way sync, the record in front of you is the one your other systems act on. Every touch is written to it as it happens.",
   keywords: [
     "crm sync automation real estate",
     "follow up boss integration",
