@@ -88,7 +88,7 @@ export const theSingularity: Service = {
     nodes: [
       {
         label: "The memory",
-        note: "Calls, chats and deals in one place, plus a file it has to read first holding every correction you have given it.",
+        note: "Calls, chats and deals in one place. Plus a file it has to read first, holding every correction you have given it.",
       },
       {
         label: "The agents",
@@ -104,13 +104,13 @@ export const theSingularity: Service = {
       },
     ],
     footnote:
-      "The loop is the product and the gate is what makes it safe to run. One change at a time, tested before anybody sees it, and yours to approve or refuse.",
+      "The loop is the product, and the gate is what makes it safe to run. One change at a time, tested before anybody sees it, and yours to approve or refuse.",
   },
 
   whatItIs: [
-    "It is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up, gives each one its job, and holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
-    "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong, and it can do something about it: change the instructions, change the routing, and when the fix belongs in the software, write and test the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once. It does the work the way a person would, a real browser included: it opens what it changed and clicks through it to see that it behaves. And a job is not sized to a sitting. It can work unattended for hours or days depending on the task, checkpointing as it goes, while the gate stays exactly where it was.",
-    "It is worth saying plainly what that is and is not. It is not a different kind of intelligence, and there is no point at which it stops needing you. It writes real changes, code included, and not one of them reaches a client until a test suite has run over it and a person has approved it. The reason it earns a name is not that it runs on its own. It is that almost nothing else a business buys has any way of remembering what it got wrong.",
+    "It is the layer above everything else on this site. Instead of a chat assistant here, a voice agent there, and a pile of automations that have never met, one system stands them up. It gives each one its job, and it holds the memory they all read from. A caller who explained their situation on the phone on Tuesday does not explain it again to the website on Thursday.",
+    "The second half is the part the name is about. A system that can see everything its agents did can also see where they went wrong. And it can do something about it. It can change the instructions. It can change the routing. And when the fix belongs in the software, it writes and tests the software. What it learns does not stay in a conversation. It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you only have to give once. It does the work the way a person would, a real browser included. It opens what it changed and clicks through it to see that it behaves. And a job is not sized to a sitting. It can work unattended for hours or days depending on the task, saving its place as it goes, while the gate stays exactly where it was.",
+    "It is worth saying plainly what that is and is not. It is not a different kind of intelligence, and there is no point at which it stops needing you. It writes real changes, code included. Not one of them reaches a client until a test suite has run over it and a person has approved it. The reason it earns a name is not that it runs on its own. It is that almost nothing else a business buys has any way of remembering what it got wrong.",
   ],
 
   howItWorks: [
@@ -120,67 +120,67 @@ export const theSingularity: Service = {
     },
     {
       title: "Give them one memory, kept in files",
-      body: "Every call, chat and deal the agents touch is written to the same place, so what a person said once is known everywhere afterwards. Alongside it sits what the system has learned about your business, kept in files you can open rather than inside a model you cannot. This is the part that changes what a client experiences, and it changes it on day one rather than in month six.",
+      body: "Every call, chat and deal the agents touch is written to the same place. So what a person said once is known everywhere afterwards. Alongside it sits what the system has learned about your business, kept in files you can open rather than inside a model you cannot. This is the part that changes what a client experiences, and it changes it on day one rather than in month six.",
     },
     {
       title: "Find the weak point, and change one thing",
-      body: "It looks for the weakest point in what actually happened: the question that got the worst answers, the handoff that kept failing, the sentence that made people leave. Then it proposes one change, and if the fix belongs in the software it writes that too. One change, because a round in which twenty things changed is a round in which nobody can say which of them helped.",
+      body: "It looks for the weakest point in what actually happened. That might be the question that got the worst answers, the handoff that kept failing, or the sentence that made people leave. Then it proposes one change, and if the fix belongs in the software it writes that too. One change, because a round in which twenty things changed is a round in which nobody can say which of them helped.",
     },
     {
       title: "Put it through the gate, then keep the receipts",
-      body: "A change to the software is run against a test suite that does not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened and compared against what is live. Either way it ships only if it wins and only after a person approves it, and both the comparison and the approval are written down, so a change that turns out to be wrong can be found and undone rather than argued about.",
+      body: "A change to the software is run against a test suite that does not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened, and compared against what is live. Either way it ships only if it wins, and only after a person approves it. Both the comparison and the approval are written down. So a change that turns out to be wrong can be found and undone rather than argued about.",
     },
   ],
 
   useCases: [
     {
       title: "The answer that was wrong in March and is still wrong",
-      body: "Somewhere in your funnel a question gets an answer that quietly costs you people, and nobody has read enough transcripts to notice. A loop that reads all of them is looking for exactly that, and it is the kind of thing that never gets found by anyone who has a day job.",
+      body: "Somewhere in your funnel a question gets an answer that quietly costs you people, and nobody has read enough transcripts to notice. A loop that reads all of them is looking for exactly that. It is the kind of thing that never gets found by anyone who has a day job.",
     },
     {
       title: "Four tools, four versions of the same client",
-      body: "The phone knows one thing, the website another, the CRM a third, and the client can tell. One memory is not a feature so much as the removal of a problem you have stopped noticing you have.",
+      body: "The phone knows one thing, the website another, the CRM a third, and the client can tell. One memory is not so much a feature as the removal of a problem you have stopped noticing you have.",
     },
     {
       title: "The thing you explained once and now explain every month",
-      body: "How you price, what you will not say, which questions go to a person. Told to one system it stays told, and it stays told to the agent you add next year rather than being re-explained to each new tool in turn.",
+      body: "How you price, what you will not say, which questions go to a person. Told to one system it stays told. It stays told to the agent you add next year, rather than being re-explained to each new tool in turn.",
     },
   ],
 
   limits: [
-    "It does not ship anything on its own. It writes real changes, code included, and not one of them reaches a client until the tests have run over it and you have read it and approved it. That gate is the entire reason it is safe to let it run.",
-    "It does not remember what nobody wrote down. What survives the end of a working session is what got written to a file, so a correction given in passing and never recorded is a correction you will be giving again.",
-    "It does not know anything it was not connected to. A deal that lived in a spreadsheet nobody wired in is a deal it has never heard of, and the useful version of this system is one that says so rather than guessing.",
-    "It does not improve on a schedule you can bank on. A week in which nothing went obviously wrong is a week whose honest output is no change, and anybody promising a measurable gain every week is describing a sales cycle rather than a system.",
-    "It does not decide what good looks like. The loop can find the weakest answer in a week of conversations; only somebody who knows the business can say whether the replacement is better or merely different.",
-    "It does not make the underlying models ours. The agents run on licensed platforms belonging to other companies, and their pricing and release schedules are something this system is exposed to exactly like everything else here.",
-    "It does not start as any of this. On day one it is a handful of agents and an empty memory, and the compounding everything above describes needs months of real conversations before there is anything to compound.",
+    "It does not ship anything on its own. It writes real changes, code included. Not one of them reaches a client until the tests have run over it and you have read it and approved it. That gate is the entire reason it is safe to let it run.",
+    "It does not remember what nobody wrote down. What survives the end of a working session is what got written to a file. So a correction given in passing and never recorded is a correction you will be giving again.",
+    "It does not know anything it was not connected to. A deal that lived in a spreadsheet nobody wired in is a deal it has never heard of. The useful version of this system is one that says so rather than guessing.",
+    "It does not improve on a schedule you can bank on. A week in which nothing went obviously wrong is a week whose honest output is no change. Anybody promising a measurable gain every week is describing a sales cycle rather than a system.",
+    "It does not decide what good looks like. The loop can find the weakest answer in a week of conversations. Only somebody who knows the business can say whether the replacement is better or merely different.",
+    "It does not make the underlying models ours. The agents run on licensed platforms belonging to other companies. Their pricing and release schedules are something this system is exposed to exactly like everything else here.",
+    "It does not start as any of this. On day one it is a handful of agents and an empty memory. The building up that everything above describes needs months of real conversations before there is anything to build on.",
   ],
 
   faqs: [
     {
       q: "What does the Singularity do that the individual services do not?",
-      a: "Two things, and neither is available to a service bought on its own. The first is one memory: every agent reads from and writes to the same record, so a client explains themselves once rather than once per channel, and a correction you give is written down once rather than repeated to each tool in turn. The second is a loop that reads what actually happened, proposes one improvement, and proves it before it ships, including improvements that mean changing the software. A single service can be good. Only a system that sees all of them can tell you which part of the whole is worst this week.",
+      a: "Two things, and neither is available to a service bought on its own. The first is one memory. Every agent reads from and writes to the same record, so a client explains themselves once rather than once per channel. And a correction you give is written down once rather than repeated to each tool in turn. The second is a loop that reads what actually happened, proposes one improvement, and proves it before it ships. That includes improvements that mean changing the software. A single service can be good. Only a system that sees all of them can tell you which part of the whole is worst this week.",
     },
     {
       q: "What does improving itself actually mean, and does it write real code?",
-      a: "It writes real code, and that is worth saying plainly because most descriptions of this category promise the opposite. It changes two things: the written layer, meaning prompts, worked examples, routing rules and standing constraints, and the software itself. Which one is being changed decides what grades it. A change to the software goes through a type checker and a test suite that do not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened and compared against what is currently live. Either way it is one change at a time, it ships only if it wins and only after you approve it, and nothing changes without a record of what changed and why.",
+      a: "It writes real code, and that is worth saying plainly, because most descriptions of this category promise the opposite. It changes two things. The first is the written layer, meaning prompts, worked examples, routing rules and standing constraints. The second is the software itself. Which one is being changed decides what grades it. A change to the software goes through a type checker and a test suite that do not care how confident anything sounded. A change to what an agent says is replayed against conversations that already happened, and compared against what is currently live. Either way it is one change at a time. It ships only if it wins, and only after you approve it. And nothing changes without a record of what changed and why.",
     },
     {
       q: "Where does the memory actually live?",
-      a: "In files you can open, not inside a model. There is the record of the conversations, the written instructions your agents run on, and a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it: a line in a file, with a date on it, rather than something a model is trusted to have absorbed. It is worth insisting on that shape whoever you buy from, because a memory kept in files is one you can read, correct and take with you, and a memory kept inside somebody else's model is one you are renting.",
+      a: "In files you can open, not inside a model. There is the record of the conversations. There are the written instructions your agents run on. And there is a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it. It goes into a line in a file, with a date on it, rather than into something a model is trusted to have taken in. It is worth insisting on that shape whoever you buy from. That is because a memory kept in files is one you can read, correct and take with you. A memory kept inside somebody else's model is one you are renting.",
     },
     {
       q: "Does it learn from my data, and can that data reach anybody else?",
-      a: "It learns from your own conversations, which is the only material that could make it better at your business specifically. Where that material is held and what the underlying model vendors may do with it are two separate contract questions, and they are worth asking in writing rather than assuming: that your conversations are stored in an environment you control, that they are not used to train anything general, and that they can be deleted on request. Those are the same three lines worth insisting on with any vendor in this category.",
+      a: "It learns from your own conversations, which is the only material that could make it better at your business specifically. Where that material is held is one contract question. What the underlying model vendors may do with it is another. Both are worth asking in writing rather than assuming. Ask for three things. That your conversations are stored in an environment you control. That they are not used to train anything general. And that they can be deleted on request. Those are the same three lines worth insisting on with any vendor in this category.",
     },
     {
       q: "How long before it is actually better than what I started with?",
-      a: "The shared memory helps immediately, because it removes repetition from the first conversation onwards. The improvement loop is slower and honestly so: it needs enough real conversations to tell a genuine weak point from a bad week, which for most brokerages is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
+      a: "The shared memory helps straight away, because it stops a client having to repeat themselves from the first conversation onwards. The improvement loop is slower, and honestly so. It needs enough real conversations to tell a genuine weak point from a bad week. For most brokerages that is a matter of months rather than weeks. Anybody quoting a timeline shorter than that is quoting one they have not measured.",
     },
     {
       q: "What happens if one of its changes makes things worse?",
-      a: "It gets undone, and the reason that is a short answer is that the loop is built backwards from it. Every change is one change rather than a batch, it is compared against what was live before it shipped, and the comparison and the approval are both written down. So a change that looks wrong a fortnight later can be identified and reversed rather than debated, which is the difference between a system that learns and a system that drifts.",
+      a: "It gets undone, and the reason that is a short answer is that the loop is built backwards from it. Every change is one change rather than a batch. It is compared against what was live before it shipped. And the comparison and the approval are both written down. So a change that looks wrong a fortnight later can be spotted and reversed rather than argued about. That is the difference between a system that learns and a system that drifts.",
     },
   ],
 

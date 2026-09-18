@@ -39,9 +39,9 @@ import type { FlagshipContent, ConversationEvent, ConversationTurn, GridItem } f
  * Three lines, each checkable by somebody else in the primary document. Reliability, origin of
  * failure, accountability, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
-  "An assistant that is right most mornings is not an assistant that is right every morning, and the gap between those two is much larger than it feels. The benchmark that measures it found a leading agent solving over 60 percent of tasks on one attempt and under 25 percent when all eight attempts had to be right.",
-  "Most multi-agent failures are not the model being stupid. In 1,642 annotated runs across seven frameworks, 44.2 percent of what went wrong came from how the system and the instructions were specified, and the single commonest mode was an agent repeating a step it had already completed.",
-  "Nothing you delegate to an assistant changes who is accountable for it. New York's licensing law lists the parties that may hold a real estate licence and they are all people and companies, and the provision on a broker's responsibility turns on what the broker knew and what the broker kept.",
+  "An assistant that is right most mornings is not an assistant that is right every morning. The gap between those two is much larger than it feels. The benchmark that measures it found a leading agent solving over 60 percent of tasks on one attempt, and under 25 percent when all eight attempts had to be right.",
+  "Most multi-agent failures are not the model being stupid. In 1,642 annotated runs across seven frameworks, 44.2 percent of what went wrong came from how the system and the instructions were specified. The single commonest mode was an agent repeating a step it had already completed.",
+  "Nothing you hand to an assistant changes who is accountable for it. New York's licensing law lists the parties that may hold a real estate licence, and they are all people and companies. The provision on a broker's responsibility turns on what the broker knew and what the broker kept.",
 ];
 
 /** SCENE copy — the tenth morning, staged.
@@ -66,7 +66,7 @@ export const TENTH_EVENTS: ConversationEvent[] = [
   // mention Friday", and the panel beside it shows four turns of which one is the text about
   // Friday and one is the assistant's own reply. Two of them are the thread. The count was
   // wrong and the sentence contradicted the turn directly above it.
-  { at: "6:38am", label: "Read the thread", detail: "The two emails in the thread, and neither of them mentions Friday. The change was made by text, in another app, and it never arrived here." },
+  { at: "6:38am", label: "Read the thread", detail: "The two emails in the thread, and neither of them mentions Friday. The change was made by text, in another app. It never arrived here." },
   { at: "6:39am", label: "Read the calendar", detail: "One event, Thursday at 11, unchanged. The message from the car never reached it either." },
   { at: "6:39am", label: "Checked the brief", detail: "Confirm known appointments. Escalate anything ambiguous. Nothing here looked ambiguous." },
   { at: "6:40am", label: "Reported success", detail: "One reply sent, one thread closed, no warnings and no flags. The run log is green and it is accurate." },
@@ -80,19 +80,19 @@ export const TENTH_EVENTS: ConversationEvent[] = [
 export const NOT_A_CHATBOT: GridItem[] = [
   {
     lead: "One assistant, one job, already briefed",
-    body: "The difference from a general chat window is not intelligence, it is standing context. An assistant configured for one recurring task holds the description of that task, the tools it needs and the standard you want, so you are not re-explaining your business every morning. That part of the pitch is true and it is worth having on its own.",
+    body: "The difference from a general chat window is not intelligence. It is standing context, meaning it does not start from nothing each time. An assistant set up for one recurring task holds the description of that task, the tools it needs and the standard you want. So you are not re-explaining your business every morning. That part of the pitch is true, and it is worth having on its own.",
   },
   {
     lead: "Several at once, on a trigger",
-    body: "You can only do one thing at a time. Assistants have no such limit, they do not stop at five o'clock, and they start because something happened rather than because somebody remembered. Adding another is a configuration change. That part is true as well, and it is the half every page in this category leads with.",
+    body: "You can only do one thing at a time. Assistants have no such limit. They do not stop at five o'clock. And they start because something happened rather than because somebody remembered. Adding another is a configuration change. That part is true as well, and it is the half every page about this leads with.",
   },
   {
     lead: "What you actually removed was the producing",
-    body: "The work did not disappear, it changed category. Drafting became reading. Building became checking. That is very often a good trade, because reading is faster than writing and it can be done in one sitting instead of scattered through a day. It is a trade rather than a saving, and a page that describes it as a saving is describing half of it.",
+    body: "The work did not disappear. It changed kind. Drafting became reading. Building became checking. That is very often a good trade, because reading is faster than writing and it can be done in one sitting instead of scattered through a day. It is a trade rather than a saving, and a page that calls it a saving is describing half of it.",
   },
   {
     lead: "And reviewing four streams is a job",
-    body: "One assistant is a habit. Four is a morning routine with real hours in it, done by the one person who can tell whether the output is right. Nobody costs that in, which is why the calculator further down this page works out the reviewing rather than the saving. It is the only number in this subject that is entirely yours.",
+    body: "One assistant is a habit. Four is a morning routine with real hours in it, done by the one person who can tell whether the output is right. Nobody adds that up, which is why the calculator further down this page works out the reviewing rather than the saving. It is the only number in this subject that is entirely yours.",
   },
 ];
 
@@ -162,11 +162,11 @@ export const WHERE_FAIL = {
   max: 100,
   lit: 0,
   basis:
-    "The share of classified failures falling into each of the three categories, across 1,642 annotated execution traces drawn from seven multi-agent frameworks running coding, mathematics and general agent tasks. The taxonomy underneath it was built by six human experts reading 150 traces closely and then tested for consistency between independent annotators, which is the step that separates a taxonomy from an opinion.",
+    "The share of classified failures falling into each of the three categories, across 1,642 annotated execution traces. Those traces were drawn from seven multi-agent frameworks running coding, mathematics and general agent tasks. The taxonomy underneath it was built by six human experts reading 150 traces closely. It was then tested for consistency between independent annotators, which is the step that separates a taxonomy from an opinion.",
   sourceText:
     "Mert Cemri and twelve co-authors, UC Berkeley, Why Do Multi-Agent LLM Systems Fail?, arXiv:2503.13657, 2025.",
   sourceHref: "https://arxiv.org/abs/2503.13657",
-  note: "These are research frameworks running research tasks, mostly programming and mathematics, and not four assistants in a brokerage. Two limits matter. The bars are shares of the failures that happened, not a probability that anything will fail, so a system with very few failures and a system with very many can produce the same chart. And the taxonomy was applied at scale by a language model calibrated against the human annotations rather than by the humans themselves, which the authors state plainly. What transfers is the ranking rather than the percentages: the largest category is how the system and its instructions were specified, which is the half a buyer controls and the half nobody quotes on.",
+  note: "These are research frameworks running research tasks, mostly programming and mathematics, and not four assistants in a brokerage. Two limits matter. The bars are shares of the failures that happened, not a probability that anything will fail. So a system with very few failures and a system with very many can produce the same chart. And the taxonomy was applied at scale by a language model calibrated against the human annotations rather than by the humans themselves. The authors state that plainly. What carries over is the ranking rather than the percentages. The largest category is how the system and its instructions were specified. That is the half a buyer controls and the half nobody quotes on.",
 };
 
 /** SCENE copy — what happens when the written rules are taken away. Cited data graphic TWO.
@@ -204,11 +204,11 @@ export const RULES_REMOVED = {
   max: 100,
   lit: 3,
   basis:
-    "The share of tasks completed correctly on a single attempt by one leading model, measured by comparing the state of the database at the end of each conversation against the one correct outcome. All four figures come from the paper's ablation table, in which the written policy is removed from the agent's instructions. The simple task set is a retail domain of 115 tasks; the complex one is an airline domain of 50 tasks with rules that vary by membership tier and cabin class.",
+    "The share of tasks completed correctly on a single attempt by one leading model. It is measured by comparing the state of the database at the end of each conversation against the one correct outcome. All four figures come from the paper's ablation table, in which the written policy is removed from the agent's instructions. The simple task set is a retail domain of 115 tasks. The complex one is an airline domain of 50 tasks, with rules that vary by membership tier and cabin class.",
   sourceText:
     "Shunyu Yao, Noah Shinn, Pedram Razavi and Karthik Narasimhan, tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains, arXiv:2406.12045, 2024.",
   sourceHref: "https://arxiv.org/abs/2406.12045",
-  note: "This was measured in June 2024 on models that have all been replaced, and every absolute number here would be different today. Read the pairs rather than the heights. Two more limits are worth knowing: the customer on the other side of every conversation is another language model rather than a person, which makes the conversations tidier than real ones, and the domains are simplified versions of real businesses rather than real ones. What survives all of that is the comparison the ablation was built to make, which is how much of an agent's usable ability is coming from a document somebody wrote rather than from the model underneath it.",
+  note: "This was measured in June 2024 on models that have all been replaced. Every absolute number here would be different today. Read the pairs rather than the heights. Two more limits are worth knowing. The first is that the customer on the other side of every conversation is another language model rather than a person. That makes the conversations tidier than real ones. The second is that the domains are simplified versions of real businesses rather than real ones. What survives all of that is the comparison the ablation was built to make. That comparison is how much of an agent's usable ability is coming from a document somebody wrote rather than from the model underneath it.",
 };
 
 /** SCENE copy — three ways a good set of assistants produces nothing.
@@ -219,15 +219,15 @@ export const RULES_REMOVED = {
 export const WASTED: GridItem[] = [
   {
     lead: "The review that stopped happening in week two",
-    body: "It does not stop because anybody decided to stop. It stops because nine good mornings in a row teach you that the tenth will be fine, which is exactly the lesson a system with a high single-attempt success rate is built to teach. The control that matters is not a decision to be careful, it is a slot in a diary that survives a busy fortnight.",
+    body: "It does not stop because anybody decided to stop. It stops because nine good mornings in a row teach you that the tenth will be fine. That is exactly the lesson a system with a high single-attempt success rate is built to teach. The control that matters is not a decision to be careful. It is a slot in a diary that survives a busy fortnight.",
   },
   {
     lead: "A brief nobody has reopened since the build",
-    body: "The document is the thing that makes the assistant useful and it is the only part of the setup that goes stale, because your business moves and the brief does not. A year-old brief produces a year-old standard with total consistency, and nothing in the output looks old, which is why nobody notices until a client mentions it.",
+    body: "The document is the thing that makes the assistant useful, and it is the only part of the setup that goes stale. That is because your business moves and the brief does not. A year-old brief produces a year-old standard with total consistency, and nothing in the output looks old, which is why nobody notices until a client mentions it.",
   },
   {
     lead: "Assistants wired to each other for no reason",
-    body: "Chaining one assistant's output into the next feels like progress and it buys a whole category of failure that independent assistants do not have: information held and not passed on, an assumption carried forward instead of questioned, a task quietly drifting. Unless there is a reason for the handover, two separate assistants and a person in the middle is the cheaper machine.",
+    body: "Chaining one assistant's output into the next feels like progress, and it buys a whole category of failure that independent assistants do not have. That category holds information held and not passed on, an assumption carried forward instead of questioned, and a task quietly drifting. Unless there is a reason for the handover, two separate assistants and a person in the middle is the cheaper machine.",
   },
 ];
 
@@ -280,7 +280,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       label: "The tenth morning",
       eyebrow: "The run that reported success",
       heading: "Everything it read was true an hour earlier.",
-      note: "Staged for illustration. No real client, no real address and no real transcript: this is the shape of the failure, written out so the two tracks can be read side by side.",
+      note: "Staged for illustration. No real client, no real address and no real transcript. This is the shape of the failure, written out so the two tracks can be read side by side.",
       themLabel: "The buyer's agent",
       usLabel: "Your side",
       // NOT "The thread". Found by looking: the column carries four bubbles and one of them is
@@ -323,7 +323,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       // the same class as the "brown ink" on a greyscale scan two posts over.
       alt: "An open plan room with exposed timber ceiling beams, a long polished wooden dining table on the left and an orange fronted kitchen island with metal stools on the right, and in the centre a white cabinet whose front is a dark chalkboard panel carrying a handwritten list in pale green chalk reading milk, dog food, coffee, bread, cheese and soap",
       caption:
-        "Six lines on a board and anybody in this house can do the shopping without asking a question. That is what a brief is, and it is the entire difference between an assistant that is useful and one that is fast and plausible and slightly wrong. Nobody can write yours except you.",
+        "Six lines on a board, and anybody in this house can do the shopping without asking a question. That is what a brief is. It is the whole difference between an assistant that is useful and one that is fast and believable and slightly wrong. Nobody can write yours except you.",
       credit: "Photograph by Jeremy Levine Design, CC BY 2.0.",
       ariaLabel: "The list on the board",
     },
@@ -339,7 +339,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       label: "One assistant",
       eyebrow: "The system",
       heading: "Six hops, and two of them are not software at all.",
-      lede: "The first and the last hop are the ones that decide whether this works, and neither of them is anything you buy. Writing the job down is where most of the assistant's usable ability comes from, and the read at the end is the only control in the whole diagram, because nothing else in it can tell you that the output was wrong.",
+      lede: "The first and the last hop are the ones that decide whether this works, and neither of them is anything you buy. Writing the job down is where most of the assistant's usable ability comes from. The read at the end is the only control in the whole diagram, because nothing else in it can tell you that the output was wrong.",
       steps: AGENT_PATH,
       altPrefix: "The path from a job written down to a draft that a person reads before anybody sees it",
     },
@@ -379,7 +379,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "read",
           label: "Share you would read before it reaches anybody",
-          hint: "Be honest about the number you would still be hitting in week six rather than the one you intend in week one.",
+          hint: "Be honest. Use the number you would still be hitting in week six, not the one you intend in week one.",
           min: 5,
           max: 100,
           step: 5,
@@ -410,7 +410,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       ],
       headline: 5,
       resultLabel: "Hours a year reading what they produced",
-      note: "This is the only calculator on this website that works out what the service costs you rather than what it saves you, and that is deliberate: the saving is the part everybody already estimates and the reviewing is the part nobody does. There is no hours-saved row because it would be a guess. Nobody has published a measurement of how long an assistant's draft takes a person to check in this industry, and every input above is therefore yours. There is also no row comparing this with a salary, and there was never going to be one. The published median wage for an administrative assistant is a real number and it is quoted further down this page, but it buys accountability and judgement and somebody who notices that the job has changed, and dividing it by anything here would be arithmetic on two things that are not the same purchase.",
+      note: "This is the only calculator on this website that works out what the service costs you rather than what it saves you. That is on purpose. The saving is the part everybody already estimates, and the reviewing is the part nobody does. There is no hours-saved row, because it would be a guess. Nobody has published a measurement of how long an assistant's draft takes a person to check in this industry, so every input above is yours. There is also no row comparing this with a salary, and there was never going to be one. The published median wage for an administrative assistant is a real number, and it is quoted further down this page. But it buys accountability and judgement and somebody who notices that the job has changed. Dividing it by anything here would be arithmetic on two things that are not the same purchase.",
       action: { label: "See how it is built", href: "/services/ai-agent-workforce" },
       secondary: { label: "Talk one job through with us", href: "/connect" },
     },
@@ -425,7 +425,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Send us one recurring job in your own words, however roughly. We will send back the brief we would write for it, the exceptions we think it needs, and an honest opinion on whether it is delegable at all yet.",
+      text: "Send us one recurring job in your own words, however roughly. We will send back three things. The brief we would write for it. The exceptions we think it needs. And an honest opinion on whether it can be handed over at all yet.",
       reassure: "It is a short reply from a person, it costs nothing, and not yet is a perfectly good answer to give about a job.",
       action: { label: "Send us one job", href: "/connect" },
       ariaLabel: "Send one job for an honest opinion",
@@ -443,7 +443,7 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       // sofa are plainly visible in it, which is better for the caption than a dark doorway is.
       alt: "A living room with a wooden fireplace mantel carrying two large carved elephants and a row of turned candlesticks under a tall mirror, a fern in a white pot on the hearth in front of a black firebox whose surround is painted white, a five panel door standing open onto a further room with a window and a sofa in it, and glazed French doors at the right throwing sunlight across a polished wood floor",
       caption:
-        "The door is open and the light is on the floor and nobody has walked through yet. Everything an assistant produces sits exactly like this until a person goes and looks at it, and the going and looking is not a temporary precaution for the first month. It is the shape of the job now.",
+        "The door is open, the light is on the floor, and nobody has walked through yet. Everything an assistant produces sits exactly like this until a person goes and looks at it. The going and looking is not a short-term precaution for the first month. It is the shape of the job now.",
       credit: "Photograph by smoMashup1, CC BY 2.0.",
       ariaLabel: "The room nobody has walked through yet",
     },
@@ -464,13 +464,13 @@ export const AGENT_WORKFORCE_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Take one job you keep redoing and write the brief for it this week, before anybody sells you anything. Include what should happen in the cases that are not the normal case. If you cannot finish it, you have learned the most valuable thing available today, which is that the job is not yet delegable to anybody at all.",
+      text: "Take one job you keep redoing and write the brief for it this week, before anybody sells you anything. Include what should happen in the cases that are not the normal case. If you cannot finish it, you have learned the most valuable thing available today, which is that nobody at all can take that job on yet.",
       actions: [
         { label: "See it on the AI page", href: "/ai#agents", variant: "light" },
         { label: "How it is built", href: "/services/ai-agent-workforce", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because three separate things drive it and only one of them is software: the hour or two of writing each brief properly, the work of giving an assistant safe access to the systems its job needs, and a running cost that tracks how much it has to read rather than how much it writes. The AI audit is an hour, done with you, and it ends with one job written down properly rather than with a document.",
+        "There is no price here, because three separate things drive it and only one of them is software. The first is the hour or two of writing each brief properly. The second is the work of giving an assistant safe access to the systems its job needs. The third is a running cost that tracks how much it has to read rather than how much it writes. The AI audit is an hour, done with you, and it ends with one job written down properly rather than with a document.",
     },
   },
 

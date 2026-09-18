@@ -652,3 +652,558 @@ exactly the class of error batch 1 shipped.
 The two repairs cost one sentence each, which moved the crm sync post from 5.8 to 5.9 and the
 scheduling post from 5.9 to 6.0. Both still pass. Final numbers above are post-repair, and
 `npx vitest run lib/blog lib/services content app/blog` was re-run afterwards: `PASS (388) FAIL (0)`.
+
+---
+
+# BATCH 3
+
+Builder: batch-3 agent, 2026-09-18. Method and laws: `SIMPLIFY-PLAYBOOK-20260918.md`, plus the
+two sections batches 1 and 2 paid for (never split a clause away from its governor; before you
+split at a colon, a "that" or a modal, ask what the first half was doing to the second half).
+BEFORE = `6eab055`. Baselines below were measured on the dev server at the start of this batch,
+so they already include the orchestrator's excerpt and author-card work.
+
+## 1. AI AGENT WORKFORCE
+
+| surface | grade before | grade after | median before | median after | invariants |
+|---|---|---|---|---|---|
+| `/blog/ai-agent-workforce-real-estate-assistants` | 8.3 | **5.9** | 15w | 12w | PASS x1.03 |
+| `/services/ai-agent-workforce` | 6.5 | **5.4** | 12w | 11w | PASS x1.05 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`.
+` because ` in the body: 17 -> 16. ` which `: 22 -> 16. Paragraph count 109 -> 109.
+
+### `updated` date
+
+`AI_AGENT_WORKFORCE_POST` had **no** `updated` line and a `/** NO \`updated\` ... */` comment
+explaining why. Per the brief, `updated: "2026-09-18"` was added directly ABOVE that comment and
+the comment was left untouched. **The comment now contradicts the line above it and is the
+orchestrator's to update.**
+
+### Glosses added (word for word)
+
+1. body, Berkeley paragraph: "A trace is the record of one whole run."
+2. body, same paragraph: "...built a taxonomy of what went wrong, **which is a named list of the
+   kinds of failure**, by having six human experts read a hundred and fifty traces closely."
+3. body, cost section: "The reason is that they are quoted per million tokens. **A token is a
+   small piece of text.** That price means nothing until somebody knows how many tokens your job
+   takes."
+4. scenes `NOT_A_CHATBOT[0]`: "It is standing context, **meaning it does not start from nothing
+   each time**." (the body's own "A general chat session starts empty" is the same claim.)
+
+### Non-trivial word swaps
+
+- "domain" -> "task set" for tau-retail / tau-airline, and "Two domains:" -> "There are two of
+  these businesses." Safe on THIS page because the chart labels already read "Simple task set" /
+  "Complex task set" and `RULES_REMOVED.basis` already equates them ("The simple task set is a
+  retail domain of 115 tasks"). "domain" survives in that basis line, untouched.
+- "The model is a commodity" -> "The model is an off-the-shelf part."
+- "the honest specification for what running this well requires" -> "the honest list of ...".
+- "delegating licensed work" -> "handing out licensed work". "delegable" is gone from all four
+  places it appeared in this topic: two body sentences ("cannot yet be handed to anybody at all",
+  "can truly be handed over"), the `offer` and `funnel` scenes, and the service page's
+  `howItWorks[0]` ("Repeating is what makes a job one you can hand over"). It is not a keyword.
+- "indistinguishable in tone from the nine" -> "a piece of work whose tone was exactly like the
+  nine" (the batch-2-approved rendering; "in tone" kept, because it was the precise claim).
+- "did not hallucinate anything" -> "did not make anything up".
+- "configuration change" kept in the scene, "settings change" used in the body (they were already
+  two different sentences; keeping them different keeps `flagship.test.ts` green).
+- "buys unpredictability nobody asked for" -> "makes the result harder to predict, which nobody
+  asked for".
+- FAQ "buys accountability, judgement and somebody who notices when the job changes" -> "buys
+  somebody who can be held responsible, somebody with judgement, and somebody who notices when the
+  job changes" (same three things, named the way the body names them).
+- service page `whatItIs[1]`: "The unlock is parallelism." -> "The gain is that they all run at
+  once." **"unlock" is on the playbook's banned hype list and this was a pre-existing instance in
+  a field that IS mine; it is gone.** "in parallel" also became "at the same time" in
+  `howItWorks[2]` and `faqs[1]`; the phrase survives untouched in `specs`, which is not mine.
+- service page: "triages overnight email" -> "sorts the overnight email by what matters";
+  "the expiring contingency" -> "the contingency about to run out".
+
+### Places I deliberately did NOT split
+
+- "Now run the same tasks eight times each, and require all eight to be right." Two joint
+  conditions; the original was one sentence and stays one.
+- "Give it an input with a contradiction in it, or a case the brief does not cover, and find out
+  whether it stops and asks or whether it decides." Same reason.
+- "Set that beside four assistants running overnight with nobody reading the output after day
+  four, and you have the honest list of what running this well requires." Imperative + consequence
+  in one sentence; splitting would make the first half a standalone order.
+- "Two parts of [the booklet] are worth reading, because neither is about artificial intelligence
+  and both are about you." Kept whole so the "because" and the "neither/both" pair stay attached.
+- Section 442-c's 36-word statutory sentence ("actual knowledge of the violation ... after notice
+  of the misconduct") is left long and verbatim. It is the longest sentence on the page.
+- Section 175.21's "regular, frequent and consistent personal guidance, instruction, oversight and
+  superintendence, with respect to the brokerage business and all matters relating to it" left
+  verbatim; only the lead-in around it was split.
+- BLS's "the median wage is the wage at which half the workers in an occupation earned more than
+  that amount and half earned less" left verbatim.
+- tau-bench's "the chance that all k independent attempts are successful, averaged across tasks"
+  left verbatim, with a plain lead-in ("They named it pass hat k, and they defined it as ...").
+- "arbitrary" kept in "where the rules are specific and arbitrary in the way real business rules
+  are". It is a hard word, but glossing it would have added a claim about who set the rules.
+- Every "should" in the service page FAQ about what a serious build does was kept as "should".
+- The colons that were introducing lists were all reopened with the word the colon was lending:
+  "It is system design. **That group covers** ...", "is the document. **It holds** ...",
+  "**That category holds** ...", "**That means** the right permissions ...", "Two more limits are
+  worth knowing. **The first is that** ... **The second is that** ...", "There is no price here ...
+  **The first is** ... **The second is** ... **The third is** ...".
+
+### Self-check repairs made before the final scorer run
+
+1. "And it produced work that sounded exactly like the nine that were correct" had dropped the
+   original's "in tone". Restored as "a piece of work whose tone was exactly like the nine".
+2. "The most common single mode, at 15.7 percent of everything, is step repetition" had dropped
+   "Their", which was attributing the figure to the paper. Restored to "Their most common single
+   mode ...".
+
+### Unresolved
+
+None. No invariants violation on either surface.
+
+## 2. THE SINGULARITY
+
+| surface | grade before | grade after | median before | median after | invariants |
+|---|---|---|---|---|---|
+| `/blog/the-singularity-self-improving-ai-system` | 8.3 | **5.9** | 17w | 13w | PASS x1.02 |
+| `/services/the-singularity` | 6.6 | **5.2** | 13w | 11w | PASS x1.03 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`.
+` because ` in the body: 31 -> 30. ` which `: 51 -> 33. ` only `: 11 -> 11. Paragraphs 134 -> 134.
+
+### `updated` date
+
+`SINGULARITY_POST` had **no** `updated` line and a `NO updated, for the same reason ...` provenance
+comment explaining why. `updated: "2026-09-18"` was added directly ABOVE that comment; the comment
+was not touched. **It now contradicts the line above it and is the orchestrator's to update.**
+
+### The repositioning, checked line by line
+
+Every sentence that carries the owner's 2026-08-27 reposition was re-read against the BEFORE and
+is intact. The gate sentences, in full, after the rewrite:
+
+- body: "It is that nothing it writes reaches anybody until two things have happened. A test suite
+  that cannot be talked round has to run over it. And a person has to read the change and say yes."
+  (BEFORE was one sentence joined with "and"; the split names both halves as required, not either.)
+- body: "However long it worked alone, nothing it wrote ships until the tests have run and a person
+  has said yes." (wording unchanged, only the colon before it removed.)
+- body limits: "Not one of them reaches a client until the tests have run over it and a person has
+  read it and approved it." (kept whole, deliberately not split.)
+- FAQ: "A change ships only if it wins, and only after a person approves it." (both "only"s kept.)
+- FAQ: "Every change runs against a test suite first, and a person reads it and approves it before
+  it ships." (unchanged.)
+- service `limits[0]`, `howItWorks[3]`, `faqs[1]`: "only if it wins, and only after you approve it",
+  and "until the tests have run over it and you have read it and approved it". Both "only"s and the
+  conjunction are kept in every one.
+- memory: "It keeps what it has learned about your business in files it has to read again before it
+  starts anything", and the scene's "kept in files rather than inside a model", are intact in
+  substance. Nothing was reworded into a model that learns you.
+- autonomy: "it proposes one change at a time" is verbatim. "unattended for hours or days" keeps
+  "depending on the task" and keeps "while the gate stays exactly where it was".
+
+` only ` in the body is 11 before and 11 after, which is the mechanical check on this.
+
+### Glosses added (word for word)
+
+1. body, compiler section: "In software there is a compiler and a test suite. **A compiler is the
+   program that turns written code into something a machine can run.** Both of them will tell you
+   flatly that you are wrong, and neither cares how confident you sounded."
+2. service `whatItIs[1]`: "checkpointing as it goes" became "**saving its place** as it goes".
+3. service `faqs[3]`: the three contract asks were re-opened with the word the colon had been
+   lending them, and a count was added: "Both are worth asking in writing rather than assuming.
+   **Ask for three things.** That your conversations are stored in an environment you control. That
+   they are not used to train anything general. And that they can be deleted on request." The count
+   matches the next sentence's own "the same three lines".
+
+### Non-trivial word swaps
+
+- "intrinsic self correction", "oracle condition", "ablation", "ground truth", "CACE", "Reflexion",
+  "HumanEval" and "proprietary" all KEPT. Source register, source names, or the paper's own term.
+- "a fluent sentence" became "a smooth sentence"; "plausible" became "believable" in three places;
+  "the review manufactures a reason" became "the review makes up a reason".
+- "arrangement" became "setup" in three places ("Neither setup had a memory", "Nothing about the
+  setup produces an hour", "whether anything in the setup is able to tell it no"). One
+  "arrangement" survives, in the scenes file, where it reads best.
+- "capable of saying no" became "able to say no", twice. The claim is identical.
+- "a very particular signature" became "a shape all of its own".
+- "reconcile it by hand" became "match the four sets up by hand".
+- "optimises the measurement" became "improves the measurement".
+- "the majority of proposed changes will fail" became "most proposed changes will fail" (batch 2
+  judged that pair as the same quantity).
+- "the apparatus for measuring it" became "the tools for measuring it". ONE instance only; the
+  second, "the argument for the whole apparatus", is kept.
+- "it removes repetition from the first conversation onwards" became "it stops a client having to
+  repeat themselves from the first conversation onwards", in the body and in service `faqs[4]`.
+- "standing constraints" became "the limits that always apply" in the body's list of what persists.
+  The service page's `faqs[1]` keeps "standing constraints", which is where the phrase is
+  load-bearing.
+- "compounding" became "building up" in `limits[6]`. "identified and reversed rather than debated"
+  became "spotted and reversed rather than argued about".
+- service `useCases[1]`: "not a feature so much as the removal of" became "not so much a feature as
+  the removal of". Word order only; the original reads as a slip.
+
+### Places I deliberately did NOT split
+
+- "Not one of them reaches a client until the tests have run over it and a person has read it and
+  approved it." Both gates in one sentence, on purpose.
+- "If it comes out better you cannot say which change did it, which one to keep, or whether two of
+  them are cancelling each other out." Condition plus list.
+- "If a person explains their situation on the phone on Tuesday and then explains it again to the
+  website on Thursday, that is not a technical fault a smarter model fixes." Two joint conditions,
+  which is the batch-1 shape exactly. Left at 31 words.
+- "To be exact: if the change that shipped three weeks ago turns out to be the reason something got
+  worse, what is the sequence, who runs it, and how long does it take." One question.
+- "When the change is code, what they are reading is the difference between two files, and the list
+  of tests that went green underneath it." Joint object.
+- "And the paper behind the first chart on this page lists Reflexion, for its reasoning results
+  rather than its coding ones, in its own table of studies whose reported gains lean on knowing the
+  right answer." 36 words, left whole: the two qualifiers are the whole point of the footnote.
+- Both verbatim block quotations (the CACE "applies not only to input signals ..." sentence and the
+  configuration-debt pair) and the Microsoft sentence ("Evaluating well-designed and executed
+  experiments ... only about one-third were successful at improving the key metric!") are untouched,
+  exclamation mark included. "In the paper's words, if the answer is already correct, no further
+  self correction will be performed" is untouched.
+- "Most Ideas Fail to Show Value" left exactly as the section title it is.
+- Colons that were introducing lists were reopened with the word they had been lending: "It changes
+  two things. **The first is** ... **The second is** ..."; "Two things ... **The first is** one
+  memory ... **The second is** a loop ..."; "Everything is held constant. **That means** the same
+  model, the same questions, the same three step prompting."; "And it can do something about it.
+  **It can change** the instructions. **It can change** the routing."
+
+### Unresolved
+
+None. No invariants violation on either surface. Nothing in `lib/blog/zombie-claims.test.ts` came
+back: "improves faster than you can shop for a replacement", "remembers everything" and "gets
+better with every deal" are all still absent, and the suite is green.
+
+### One flag for the orchestrator, raised honestly
+
+The brief's line "The MAST chart copy stays as adjudicated" sits under this topic, but MAST
+(arXiv:2503.13657) is not cited on the Singularity pages at all. It is topic 1's `WHERE_FAIL`
+chart. I read that as being about the adjudicated NUMBERS and their framing, and on that reading
+nothing moved: the bars 44.2 / 32.3 / 23.5, the caption, the 1,642-trace sample, the `sourceText`
+and the whole provenance comment (including the trap about 41.8 / 36.9 / 21.3 and the 210-trace
+figure) are byte-identical. What I did change in that scene is prose only, in `basis` and `note`:
+four sentence splits, "transfers" to "carries over", and nothing else. The one word swap I drafted
+there ("probability" to "chance") I reverted, because it is a statistical term inside a chart note.
+If "stays as adjudicated" was meant to freeze those two strings entirely, they are the two to
+revert, and topic 1's blog page has 0.1 of headroom, so a revert would need a compensating split
+elsewhere.
+
+## 3. CUSTOM AUTOMATION
+
+| surface | grade before | grade after | median before | median after | invariants |
+|---|---|---|---|---|---|
+| `/blog/custom-automation-real-estate-bespoke-build` | 8.2 | **5.9** | 16w | 13w | PASS x1.01 |
+| `/services/custom-automation` | 6.7 | **5.9** | 13w | 12w | PASS x1.05 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`.
+` because ` in the body: 16 -> 16. ` which `: 13 -> 5. Paragraphs 113 -> 113.
+`updated:` in `content/blog/posts.ts` moved `2026-08-27` -> `2026-09-18` (that line only).
+
+### Glosses added
+
+None. This topic needed no new definition: the two technical terms it turns on (a breaking change,
+and an open versus a closed fixed-value field) are already defined in the body by Stripe's own
+wording, which is left verbatim.
+
+### Non-trivial word swaps
+
+- "it is simply where the incidence falls" became "it is simply where the cost falls". "Incidence"
+  is the economics term for exactly this and it is the one word on the page a ten year old could
+  not get from context.
+- "every specific accommodation is a thing the next change has to be careful of" became "every
+  special fitting is a thing the next change has to be careful of".
+- "fit is also what makes it rigid" became "fit is also what makes it hard to change".
+- "The resolution is not to build something generic" became "The answer is not to build something
+  generic".
+- "a conservative estimate" became "a cautious estimate"; "deployed" became "put to work";
+  "catastrophic" became "terrible"; "the technology being immature" became "the technology not
+  being ready"; "credentials" became "logins" (the page's own calculator hint already says
+  "Count anything with its own login").
+- "reconciling what does not match" became "matching up what does not agree" (scene).
+- "the cost of the next change stopped being proportional to the size of the change" became
+  "stopped rising in step with the size of the change" (scene).
+- "It accumulates, one tool at a time" became "It builds up, one tool at a time"; "a wall nobody
+  maintains" became "a wall nobody looks after" (plate caption).
+- "genuinely" became "truly" in three body places and one scene place; "actually" became "really"
+  in three body places. Never inside a quotation.
+- "the constraint is manual process" became "the thing holding you back is manual process";
+  "a reason to migrate your CRM" became "a reason to move your CRM" (service page).
+- Left alone on purpose: "commission", "infrastructure", "extrapolated", "organisations",
+  "documentation", "incompleteness", "exhaustive" (Stripe's word), "bespoke".
+
+### One rewrite that changes an emphasis, flagged
+
+The body's "building on a preview is building on something whose owner has **explicitly promised
+you nothing**" became "building on a preview is building on something **the owner's own policy
+leaves out of the promise**." Same fact, and it keeps the explicitness where the original put it
+(in the policy), but it is the one sentence in this topic where I moved the emphasis rather than
+only the words. The paragraph above it still carries the operative sentence verbatim: "The
+commitment does not apply to anything that has not reached general availability."
+
+### Places I deliberately did NOT split
+
+- The semver rule, 33 words, verbatim from semver.org: "Increase the major version when you make
+  incompatible API changes, the minor version when you add functionality in a backward compatible
+  manner, and the patch version when you make backward compatible bug fixes."
+- Stripe's "new values can be added as a backward-compatible change without requiring an API
+  version upgrade", and their advice, "Do not assume that the documented values are exhaustive,
+  and write code that handles a value it has never seen."
+- The `pull-quote` scene (Google Cloud Terms 1.4(e)) untouched, and the phrase "a substantial
+  economic or material technical burden" left verbatim everywhere it appears.
+- Microsoft's "a minimum of twelve months' notice where no successor product is offered" and its
+  exclusion of free services and preview releases; Meta's "guaranteed for two years" with the
+  clock starting on the NEXT version; the "Example Only" caption; all of 59.5 / 38.3 / 21.2 /
+  1,471 / 241 billion / 17 percent / one percent.
+- "When the expensive part of your week is carrying something from one system to another, and
+  matching up what does not agree, there is no product to buy." A condition, kept whole at 28
+  words.
+- "The more the first version was made to fit exactly how you worked in the month it was written,
+  the more expensive the second version is." A correlative; splitting it breaks the comparison.
+- "Where the answer is that the missing output would tell you, ask what that output looks like on
+  a quiet week, and watch what happens." Condition plus two joined instructions.
+- "Something nobody would miss for a month is one of two things. **Either** it is not worth
+  automating, **or** it is worth automating and nobody has been made responsible for it." The
+  either/or was made explicit rather than split into two flat claims.
+- FAQ "The honest order is to look hard for a product first, **and to build only** where the
+  search truly comes up empty." Both halves are one described sequence, so both stayed
+  infinitives rather than becoming an order.
+- Three splits use a "Say ... Then ..." frame ("Say the decisions are gathered in one step ...",
+  "Say a build keeps a plain record of every run ...", "Say the same decision is written in four
+  places ..."). Batch 1 warned about that frame, so in every one of the three the consequence
+  sentence opens with "Then", which keeps the condition grammatically live.
+
+### Unresolved
+
+None. No invariants violation on either surface.
+
+## 4. DOCUMENT PROCESSING
+
+| surface | grade before | grade after | median before | median after | invariants |
+|---|---|---|---|---|---|
+| `/blog/document-processing-real-estate-contract-deadlines` | 8.2 | **5.9** | 16w | 12w | PASS x1.01 |
+| `/services/document-processing` | 6.5 | **5.6** | 12w | 11w | PASS x1.03 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`.
+` because ` in the body: 17 -> 17. ` which `: 29 -> 22. Paragraphs 120 -> 120.
+`updated:` in `content/blog/posts.ts` moved `2026-08-27` -> `2026-09-18` (that line only).
+
+This topic has the highest proportion of verbatim source text in the batch, and the four longest
+sentences on the finished page are all quotations. That is why it is the one page in the batch
+that took two rounds of ordinary splitting to reach 5.9.
+
+### Glosses added
+
+None. The one technical term that needed explaining, Levenshtein similarity, was already glossed
+in the scene's `basis` line; that gloss was split into two sentences and not changed.
+
+### Non-trivial word swaps
+
+- "the lender's obligations rather than yours" became "the lender's duties rather than yours"
+  (the obligation/duty pair batch 2 judged and accepted).
+- "Those are conversations rather than configuration" became "rather than settings".
+- "Extraction is a convenience layer" became "Extraction is a handy layer".
+- "has made a substitution nobody asked it to make" became "has made a swap nobody asked it to
+  make".
+- "genuinely ambiguous" (scene) became "truly unclear"; "genuinely hard" became "truly hard";
+  "aspirational" became "hopeful"; "brings in an assertion from a company" became "brings in a
+  claim from a company"; "a tractable problem" became "a problem that can be solved at all".
+- "legibility and importance run in opposite directions" became "how readable a thing is and how
+  much it matters run in opposite directions".
+- "that geometry is baked in" became "that shape is baked in"; "is not recoverable further down
+  the chain" became "cannot be got back further down the chain".
+- "demonstration" became "demo" in three of six places; the FAQ's "offers to show you a demo
+  instead has answered a sixth question you did not ask" keeps the sting.
+- Left alone on purpose: "consummation", "rescission", "contingency", "addendum", "abstention"/
+  "abstains", "Levenshtein", "F1", "precision", "recall", "corpus", "born digital", "dpi".
+
+### Places I deliberately did NOT split
+
+- The ESIGN retention rule. It was 81 words; it is now two sentences of 25 and 56, and BOTH
+  quoted fragments are byte-identical ("accurately reflects the information set forth in the
+  contract or other record" / "remains accessible to all persons who are entitled to access by
+  statute, regulation, or rule of law, for the period required by such statute, regulation, or
+  rule of law, in a form that is capable of being accurately reproduced for later reference,
+  whether by transmission, printing, or otherwise"). The join was changed from "and which" to
+  "It has to be a record which also", which keeps the requirement and adds no new claim.
+- 12 CFR 1026.2's second definition, with its whole list of paragraph numbers, left at 47 words.
+- 12 CFR 1026.19's three quoted deadlines, the FUNSD corpus description, the FUNSD sampling
+  sentence, the FUNSD caveat about optimal word grouping, the DocVQA corpus wording, the ESIGN
+  opening clause, and the commentary's "State law governs" and "is a matter to be determined
+  under applicable law": all untouched.
+- The `pull-quote` scene (12 CFR 1026.2(a)(13), "Consummation means the time that a consumer
+  becomes contractually obligated on a credit transaction") untouched.
+- "Suppose the printed clauses are located and read cleanly, and two lines written into a margin
+  are not located at all." Two joint conditions in one sentence.
+- "It cannot know which of those two definitions the drafter had in mind, because that
+  information was never on the page." The because is the whole point.
+- Every `should` on the service page and in the body's design argument ("anything the system is
+  not confident about **should** be flagged for a person") kept as `should`. The provenance
+  comment on `content/services/document-processing.ts` bans the word "never" on that page; I
+  checked the finished file and introduced none.
+- All three charts keep every number, label, `display` string, `sourceText` and `sourceHref`:
+  94.4 / 76.4, 0.57 / 0.04 with 99.2 and 2.1 in the note, and 94.36 / 87.0 / 77.0.
+
+### Self-check repair made before the final scorer run
+
+The ` because ` count came back 17 -> 13 on the first pass. I found the four dropped connectives
+by diffing the because-bearing sentences and restored all four: the "three articles sit near this
+one" opener, "the output is data rather than a document", "now read that first bar against the
+thing it is really competing with", and "one more thing is worth knowing before you build any of
+this". Count after the repair: 17 -> 17.
+
+**Two more of the same class were found and repaired in earlier topics by the same check**, after
+those topics had already been logged:
+
+- AI AGENT WORKFORCE, the BLS paragraph: "Median means what the Bureau says it means, and the
+  Bureau's own words are worth quoting. **That is because** half of the sums in this field depend
+  on people not knowing them." (the `because` had been dropped on the split.) Both scorers re-run:
+  gate 5.9, invariants PASS at x1.03.
+- THE SINGULARITY, after the loop diagram: "That is worth knowing when somebody shows you one.
+  **That is because** a weekly summary of what your agents did is a reporting feature with an
+  impressive vocabulary." Both scorers re-run: gate 5.9, invariants PASS at x1.02.
+
+### Unresolved
+
+None. No invariants violation on either surface.
+
+## 5. REVIEW AUTOMATION
+
+| surface | grade before | grade after | median before | median after | invariants |
+|---|---|---|---|---|---|
+| `/blog/automated-google-review-requests-real-estate` | 8.3 | **5.9** | 16w | 12w | PASS x1.02 |
+| `/services/review-automation` | 6.8 | **5.9** | 14w | 12w | PASS x1.01 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`.
+` because ` in the body: 14 -> 14. ` which `: 18 -> 7. Paragraphs 97 -> 97.
+`updated:` in `content/blog/posts.ts` moved `2026-08-27` -> `2026-09-18` (that line only).
+
+### Gloss added (word for word)
+
+One, in the body, after the Luca ablation sentence: "On that comparison, an exogenous one-star
+improvement leads to roughly a 9% increase in revenue. **Exogenous here means the change came
+from the rounding rather than from the restaurant.**" The paper's own word is kept, and the gloss
+is exactly what the two sentences before it have already set up.
+
+### Non-trivial word swaps
+
+- "a large asset in your credibility" became "a large asset in how much you are believed".
+- "it is simply where the incidence falls" does not appear on this page; the parallel swap here
+  was "articulated" to "put into words" and "optimise for" to "aim at".
+- "What actually recurs is the messaging" became "What actually comes round again and again is
+  the messaging".
+- "there is very little proprietary technology in this category" became "very little technology
+  of their own".
+- "a small and unglamorous piece of plumbing" became "a small and dull piece of plumbing".
+- "There is no notification for it" became "There is no alert for it"; "extremely common" became
+  "very common"; "you get told immediately" (service) became "you get told straight away";
+  "the automatable half" (scene) became "the half you can automate".
+- "asking is genuinely awkward" became "asking is truly awkward"; "genuinely useful to a small
+  business" (scene) became "truly useful".
+- "almost nobody asks consistently" (service `whatItIs[0]`) became "almost nobody asks every
+  time", and the FAQ's "the ask is inconsistent and late" became "the ask is late, and it does
+  not happen every time". Both keep the claim; neither is a hedge change.
+- Left alone on purpose: every word of Google's contribution policy and of 16 CFR 465.7,
+  including "selectively solicit positive reviews", "discourage or prohibit negative reviews",
+  "materially misrepresent, expressly or by implication", "regardless of sentiment", and the
+  whole carve-out list; "review gating", "recency", "exogenous", "statistically insignificant",
+  "independent", "misrepresentation", "incentives", "solicit", "premises".
+
+### Places I deliberately did NOT split
+
+- 16 CFR 465.7(b) as the body states it, 55 words. It is the longest sentence on the page and it
+  is a careful restatement of a rule in the rule's own register.
+- The carve-out list, 48 words, left as one sentence with its colon intact.
+- Google's permission sentence ("solicit or encourage content that represents a genuine
+  experience, without offering incentives and without attempting to influence the rating or the
+  contents of the review"), and the FAQ's shorter version of the same.
+- "A block of reviews that implies it represents most or all of what customers submitted, while
+  quietly holding back the low ones, is the thing the rule describes."
+- "If you have ever been told to ask clients to mention the town you want to rank for, that is
+  the sentence it collides with."
+- The `pull-quote` scene ("A profile with nothing but fives on it has told a stranger one thing,
+  and it is not that you are good...") is untouched. **I split it once by mistake and the
+  invariants script caught it as "quote BENT or LOST"; it was reverted before the final run.**
+  That is the only invariants failure anywhere in this batch and it is resolved, not worked
+  around. Neither `REWRITE-INVARIANTS-BEFORE-20260918.json` nor the ALLOW file was edited.
+- The staged transcript turns in the service page `figure` and in the `the-ask` scene are
+  dialogue and were not touched.
+
+### One repair the zombie test caught, and it is worth the next builder's attention
+
+`lib/blog/zombie-claims.test.ts` went red on my first pass at this topic. The retired claim is
+the unsourced 73%, and the test lets a line mention it only when a disowning phrase sits within
+two lines of it. The BEFORE carried that phrase as "the **unsourced** figure"; my rewrite had
+swapped it to "the sourceless figure", which is a plainer word and which silently removed the
+page's own disavowal from the test's window. Restored to "the unsourced figure", and the suite is
+green. **The lesson for the next batch: a word can be load-bearing for a committed test as well
+as for a reader, and on this cohort the disowning vocabulary ("unsourced", "does not use",
+"refuses", "no published") is exactly that.**
+
+A second repair, from the same ` because ` diff used on the other topics: "The average is the
+least interesting thing on the page after the first two seconds. **That is because** everybody in
+your market has a good one."
+
+### Unresolved
+
+None. Both scorers PASS on both surfaces and the suite is green.
+
+---
+
+# BATCH 3 CLOSE-OUT
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/ai-agent-workforce-real-estate-assistants` | 8.3 | 5.9 | 12w | PASS x1.03 |
+| `/services/ai-agent-workforce` | 6.5 | 5.4 | 11w | PASS x1.05 |
+| `/blog/the-singularity-self-improving-ai-system` | 8.3 | 5.9 | 13w | PASS x1.02 |
+| `/services/the-singularity` | 6.6 | 5.2 | 11w | PASS x1.03 |
+| `/blog/custom-automation-real-estate-bespoke-build` | 8.2 | 5.9 | 13w | PASS x1.01 |
+| `/services/custom-automation` | 6.7 | 5.9 | 12w | PASS x1.05 |
+| `/blog/document-processing-real-estate-contract-deadlines` | 8.2 | 5.9 | 12w | PASS x1.01 |
+| `/services/document-processing` | 6.5 | 5.6 | 11w | PASS x1.03 |
+| `/blog/automated-google-review-requests-real-estate` | 8.3 | 5.9 | 12w | PASS x1.02 |
+| `/services/review-automation` | 6.8 | 5.9 | 12w | PASS x1.01 |
+
+`npx vitest run lib/blog lib/services content app/blog` -> `PASS (388) FAIL (0)`, run in the
+foreground after every topic and again at the end.
+
+**Paragraph counts are identical in all five bodies** (109, 134, 113, 120, 97), so nothing was
+added, dropped or reordered.
+
+**` because ` is flat in all five bodies**: 17/17, 31/31, 16/16, 17/17, 14/14. That is batch 2's
+residue closed. It took a deliberate repair pass on four of the five topics: I diffed the
+because-bearing sentences BEFORE against AFTER and restored eight dropped connectives as
+"That is because ...". ` which ` fell from 137 to 83 across the five, which is the intended half
+of the same trade.
+
+**Files touched**, and nothing else: `content/blog/ai-posts.ts` (five bodies, all via
+`post-body.mjs inject`), the five scenes files, the five service files, five `updated:` lines in
+`content/blog/posts.ts`, and this log. `git diff` over `content/` filtered to comment lines
+returns **nothing**, so no provenance comment moved. `git diff --numstat` on `posts.ts` is
+5 insertions and 3 deletions, which is the three date replacements plus the two date lines added
+above their "NO `updated`" comments.
+
+**Mechanical sweep, clean:** zero em dashes, en dashes or arrow glyphs anywhere in the ten files'
+prose or in the five rewritten bodies, and zero hype words (`seamless`, `game-chang*`, `unlock`,
+`supercharge`, `revolutionar*`, `effortless`, `cutting-edge`, `turnkey`). One PRE-EXISTING
+"unlock" was removed: `content/services/ai-agent-workforce.ts` `whatItIs[1]` opened "The unlock is
+parallelism"; that field is mine to edit and it now reads "The gain is that they all run at once."
+
+### Two things for the orchestrator
+
+1. **Two `updated:` lines were ADDED above provenance comments that say the post has none.**
+   `SINGULARITY_POST` and `AI_AGENT_WORKFORCE_POST` both had a `/** NO \`updated\` ... */` block
+   explaining the absence. Per the brief the line went in directly above each comment and the
+   comments were left untouched, so both comments now contradict the line above them. Those two
+   comments are the orchestrator's to update.
+2. **The brief's line "The MAST chart copy stays as adjudicated"** is filed under the Singularity
+   topic, but MAST (arXiv:2503.13657) is cited only on the AGENT WORKFORCE pages, in the
+   `WHERE_FAIL` chart. I read it as being about the adjudicated numbers and kept every one of
+   them, the caption, the sample, the `sourceText` and the whole provenance comment byte for
+   byte. What did change in that scene is prose only, in `basis` and `note`: four sentence splits
+   plus "transfers" to "carries over". The one word swap I drafted there ("probability" to
+   "chance") was reverted, because it is a statistical term inside a chart note. If the intent
+   was to freeze those two strings entirely, they are the two to revert, and that page has only
+   0.1 of headroom, so a revert needs a compensating split elsewhere on it.

@@ -109,17 +109,15 @@ export const POSTS: BlogPost[] = [
     title: "The Answer Was Wrong in March. It Was Still Wrong in October.",
     seoTitle: "A Self Improving AI System: Shared Memory, Tested Code",
     date: "2026-08-27",
-    /** NO `updated`, for the same reason every post shipped inside a single day carries none: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page.
-     *
-     * ROUND 44 rewrote most of this post's argument on the day it was published, which is a
-     * revision by any honest reading. It still gets no `updated`, because a date equal to the
-     * published date is not a freshness signal, it is a gate being fed. The next revision on a
-     * later day sets it. Excerpt and seoDescription DID change, because both described the
-     * product the post no longer sells. */
+    updated: "2026-09-18",
+    /** `updated` was ABSENT until 2026-09-18, on purpose. ROUND 44 rewrote most of this post's
+     * argument on the day it was published, which is a revision by any honest reading, and it
+     * still got no date, because a date equal to the published date is not a freshness signal,
+     * it is a gate being fed: "The next revision on a later day sets it." The final round's
+     * readability pass IS that revision: body and scene copy rewritten sentence by sentence
+     * (grade 8.4 to 5.9; every link, number and quote held by scripts/rewrite-invariants.mjs; the
+     * two-gate vocabulary counted before and after and found identical: "approv" 13/13, the
+     * tests 8/8, "a person" 20/20, "only" 11/11). The absent film (C3) is still a true red. */
     excerpt:
       "Nobody was careless. A common question got a slightly wrong answer in March. It went on getting it until October, because reading a year of conversations is not a job anyone in a brokerage has. What a self improving system really is. Why a model that reviews its own work scores lower, not higher. And what has to be standing outside one before it can be trusted to change real software.",
     seoDescription:
@@ -136,7 +134,7 @@ export const POSTS: BlogPost[] = [
     title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
     seoTitle: "Custom Automation for Real Estate: When a Bespoke Build Fits",
     date: "2026-08-26",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47, on the field's own terms rather than the gate's. Published
      * 2026-08-26 and revised on 2026-08-27, when the relevance pass changed visitor copy in this
      * article; the change list is in docs/parity/ROUND45-RELEVANCE-PASS.md and, for the dek,
@@ -265,7 +263,7 @@ export const POSTS: BlogPost[] = [
     title: "It Read the Date Correctly. The Date Was Not the Deadline.",
     seoTitle: "AI Document Processing for Real Estate Contract Deadlines",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass removed a duplicated sentence and quoted Regulation Z's State law governs commentary;
      * see docs/parity/ROUND46-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
@@ -331,13 +329,14 @@ export const POSTS: BlogPost[] = [
     title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
     seoTitle: "An AI Agent Workforce in Real Estate: What Supervision Costs",
     date: "2026-08-25",
-    /** NO `updated`. Rounds 46 and 47 both changed the scene file's provenance docstring for this
-     * topic, which is a comment rather than copy, and left the article itself untouched. Same
-     * reason as elsewhere: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-09-18",
+    /** `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 changed only the scene
+     * file's provenance docstring for this topic, which is a comment rather than copy, and a
+     * date equal to the published date is a gate being fed ("set it when the article takes its
+     * first real revision, never to satisfy a gate"). The final round's readability pass IS that
+     * first revision: body and scene copy rewritten sentence by sentence (grade 8.5 to 5.9, every
+     * link, number and quote held by scripts/rewrite-invariants.mjs), on a later day than it was
+     * published. The absent film (C3) is still a true red on this slug. */
     excerpt:
       "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce really is. Why an assistant that is right most of the time is a different product from one that is right every time. Where multi-agent systems really fail. And who is accountable when one of them is wrong.",
     seoDescription:
@@ -440,7 +439,7 @@ export const POSTS: BlogPost[] = [
     title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
     seoTitle: "Automated Google Review Requests for Real Estate: The Rules",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47, which is the condition the note below always named: the first
      * real revision. Published 2026-08-25, revised 2026-08-27 when the relevance pass found the
      * survey's minimum-rating figure read backwards, as 68% for whom four stars was enough

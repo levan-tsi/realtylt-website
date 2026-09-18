@@ -29,9 +29,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * first is Google's own policy text, the second is the survey's own published figure, the third
  * is the finding of the one study that put a number on what reviews are worth in money. */
 export const IN_SHORT: string[] = [
-  "Asking only the customers you expect to be kind is called review gating, and Google's contribution policy lists it under what merchants may not do, in the same breath as paying for reviews. The compliant version is also the better one: everyone gets the same link, and a rough score reaches you privately as well.",
-  "Volume is not the goal, recency is. In BrightLocal's 2026 survey of 1,002 US adults, 74% said they look for reviews written in the last three months, and only 10% said they will use nothing below five stars.",
-  "The one study that measured money rather than opinion found a one-star increase worth 5 to 9 percent of revenue, and only for independent businesses. It was done on Seattle restaurants, which is why this article will not turn it into a commission figure for you.",
+  "Asking only the customers you expect to be kind is called review gating. Google's contribution policy lists it under what merchants may not do, in the same breath as paying for reviews. The compliant version is also the better one. Everyone gets the same link, and a rough score reaches you privately as well.",
+  "Volume is not the goal, recency is. In BrightLocal's 2026 survey of 1,002 US adults, 74% said they look for reviews written in the last three months. Only 10% said they will use nothing below five stars.",
+  "The one study that measured money rather than opinion found a one-star increase worth 5 to 9 percent of revenue. It found that only for independent businesses. It was done on Seattle restaurants. That is why this article will not turn it into a commission figure for you.",
 ];
 
 /** SCENE copy — the thresholds chart. Cited data graphic ONE.
@@ -80,11 +80,11 @@ export const THRESHOLDS = {
    * fear that produces gating in the first place. */
   lit: 0,
   basis:
-    "Share of a representative panel of 1,002 US adult consumers. Each bar answers a different question, so they are four separate thresholds rather than four slices of one pie, and nothing here adds up to a hundred.",
+    "Share of a representative panel of 1,002 US adult consumers. Each bar answers a different question. So they are four separate thresholds rather than four slices of one pie. Nothing here adds up to a hundred.",
   sourceText:
     "BrightLocal, Local Consumer Review Survey 2026, conducted on a representative panel of 1,002 US adult consumers via SurveyMonkey.",
   sourceHref: "https://www.brightlocal.com/research/local-consumer-review-survey/",
-  note: "This is what people say they do, collected by a company that sells review software, and both halves of that sentence are worth holding on to. Self-reported behaviour and observed behaviour are different measurements, nobody in the panel was asked about a real estate agent specifically, and a business that sells the tool has an interest in the answer. It is quoted here because it is the only annually repeated survey of this behaviour that publishes its sample and its method, and because the figure this article actually needs from it is a direction rather than a decimal: recent beats plentiful.",
+  note: "This is what people say they do, collected by a company that sells review software. Both halves of that sentence are worth holding on to. Self-reported behaviour and observed behaviour are different measurements. Nobody in the panel was asked about a real estate agent specifically. And a business that sells the tool has an interest in the answer. It is quoted here for two reasons. It is the only annually repeated survey of this behaviour that publishes its sample and its method. And the figure this article actually needs from it is a direction rather than a decimal: recent beats plentiful.",
 };
 
 /** SCENE copy — what a stranger does with your profile.
@@ -94,19 +94,19 @@ export const THRESHOLDS = {
 export const PROFILE_SCAN: GridItem[] = [
   {
     lead: "The number, then the count beside it.",
-    body: "A 4.8 with nine reviews and a 4.8 with ninety are the same number and not the same signal, and everybody knows it without being told. The count is the first thing that decides whether the rating means anything at all.",
+    body: "A 4.8 with nine reviews and a 4.8 with ninety are the same number and not the same signal. Everybody knows it without being told. The count is the first thing that decides whether the rating means anything at all.",
   },
   {
     lead: "The date on the newest one.",
-    body: "This is the move almost nobody optimises for and the one the survey above puts highest. A wall of praise from three years ago tells a stranger that you were good in 2023 and says nothing whatever about whether you are busy now.",
+    body: "This is the move almost nobody aims at, and the one the survey above puts highest. A wall of praise from three years ago tells a stranger that you were good in 2023. It says nothing whatever about whether you are busy now.",
   },
   {
     lead: "The worst review on the first screen.",
-    body: "Not the best. People go looking for the bad one on purpose, because it is the only part of the page they believe has not been managed, and they read it to find out what you are like when something goes wrong.",
+    body: "Not the best. People go looking for the bad one on purpose. It is the only part of the page they believe has not been managed. They read it to find out what you are like when something goes wrong.",
   },
   {
     lead: "Whether anybody answered it.",
-    body: "A complaint with a straight reply under it does more work than the four fives above it. It is the only place on the page where you get to speak, and it is read by people who will never leave a review themselves.",
+    body: "A complaint with a straight reply under it does more work than the four fives above it. It is the only place on the page where you get to speak. And it is read by people who will never leave a review themselves.",
   },
 ];
 
@@ -148,11 +148,11 @@ export const YELP_LIFT = {
    * is making, which is between the correlation and the causal estimate. */
   lit: 1,
   basis:
-    "Percentage change in quarterly revenue. The second bar comes from a rounding experiment: Yelp displays a rating rounded to the nearest half star, so restaurants whose true average sat a hair either side of a threshold were shown different ratings for the same underlying reviews. Both estimates are for independent restaurants. The same paper found the effect statistically insignificant and close to zero for chain-affiliated restaurants, which has no bar because a bar of nothing reads as a broken chart.",
+    "Percentage change in quarterly revenue. The second bar comes from a rounding experiment. Yelp displays a rating rounded to the nearest half star. So two restaurants can sit a hair either side of a threshold. They are shown different ratings for the same underlying reviews. Both estimates are for independent restaurants. The same paper found the effect statistically insignificant and close to zero for chain-affiliated restaurants. That has no bar, because a bar of nothing reads as a broken chart.",
   sourceText:
     "Michael Luca, Reviews, Reputation, and Revenue: The Case of Yelp.com, Harvard Business School Working Paper 12-016. Yelp reviews matched to Washington State Department of Revenue records for every restaurant in Seattle, January 2003 to October 2009.",
   sourceHref: "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
-  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on real estate agents and nobody should pretend the multiplier transfers: a restaurant is chosen dozens of times a year by people spending forty dollars, and an agent is chosen once by somebody spending the largest sum of their life. What does transfer is the direction and the shape of the mechanism, including the part that is genuinely useful to a small business: the effect showed up for independents and not for chains, and a one-office brokerage is a great deal closer to the first of those than to the second.",
+  note: "Restaurants, in one city, ending in 2009, measured against sales tax records. Nobody has run this study on real estate agents, and nobody should pretend the multiplier transfers. A restaurant is chosen dozens of times a year by people spending forty dollars. An agent is chosen once by somebody spending the largest sum of their life. What does transfer is the direction and the shape of the mechanism. That includes the part that is truly useful to a small business. The effect showed up for independents and not for chains. A one-office brokerage is a great deal closer to the first of those than to the second.",
 };
 
 /** SCENE copy — the four moves.
@@ -163,15 +163,15 @@ export const YELP_LIFT = {
 export const FOUR_MOVES: GridItem[] = [
   {
     lead: "It asks on the day, not on Friday.",
-    body: "The message goes out while the thing that happened is still the most recent thing that happened. Enthusiasm has a half-life measured in hours, and almost every review a business never got was lost to a delay rather than to a refusal.",
+    body: "The message goes out while the thing that happened is still the most recent thing that happened. Enthusiasm has a half-life measured in hours. Almost every review a business never got was lost to a delay rather than to a refusal.",
   },
   {
     lead: "It asks everybody, in the same words.",
-    body: "Every customer gets the same Google link, whatever they scored a minute earlier. That is not a compliance concession bolted onto the product. It is the product, and the section below explains why the alternative is the one thing in this category that is actually against the rules.",
+    body: "Every customer gets the same Google link, whatever they scored a minute earlier. That is not a compliance concession bolted on to the product. It is the product. The section below explains why the alternative is the one thing here that is actually against the rules.",
   },
   {
     lead: "A rough answer also reaches you, at once.",
-    body: "As well as the link and never instead of it. You get the score, what they wrote and who wrote it, in the same minute, which buys you the afternoon to make the call rather than the fortnight to discover the review.",
+    body: "As well as the link and never instead of it. You get the score, what they wrote and who wrote it, in the same minute. That buys you the afternoon to make the call, rather than the fortnight to discover the review.",
   },
 ];
 
@@ -198,27 +198,27 @@ export const FOUR_MOVES: GridItem[] = [
 export const GATING_LINE: GridItem[] = [
   {
     lead: "Allowed: asking every customer, every time.",
-    body: "The policy's own permission is to solicit content that represents a genuine experience, without incentives and without trying to influence the rating or what the review says. Automating when that ask happens does not touch any part of that sentence.",
+    body: "The policy's own permission is to solicit content that represents a genuine experience. It says to do that without incentives, and without trying to influence the rating or what the review says. Automating when that ask happens does not touch any part of that sentence.",
   },
   {
     lead: "Allowed: surveying people first, to find out what went wrong.",
-    body: "Screening feedback so you can fix things is a normal thing to do and nothing in the policy speaks against it. What the score is allowed to change is what reaches you. What it is not allowed to change is who gets the link.",
+    body: "Screening feedback so you can fix things is a normal thing to do. Nothing in the policy speaks against it. What the score is allowed to change is what reaches you. What it is not allowed to change is who gets the link.",
   },
   {
     lead: "Allowed: replying to every review, including the bad ones.",
-    body: "This is the part of the page you control and the part prospects read first. It is also free, and it is the single highest-return thing an owner can do with fifteen minutes on a Sunday.",
+    body: "This is the part of the page you control, and the part prospects read first. It is also free. It is the single highest-return thing an owner can do with fifteen minutes on a Sunday.",
   },
   {
     lead: "Not allowed: sending the link only to the happy ones.",
-    body: "The policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. Nearly every reputation product sold to small businesses does exactly this, and most of them describe it as catching problems early.",
+    body: "The policy lists, under what merchants may not do, discouraging or prohibiting negative reviews or selectively soliciting positive ones. Nearly every reputation product sold to small businesses does exactly this. Most of them describe it as catching problems early.",
   },
   {
     lead: "Not allowed: paying for it, in any currency.",
-    body: "Incentives are named specifically and the list is broad: payment, discounts, free goods or services, offered for posting a review, for revising one, or for taking a negative one down. A closing gift that arrives with a request attached is inside that sentence.",
+    body: "Incentives are named specifically, and the list is broad. It covers payment, discounts, free goods or services, offered for posting a review, for revising one, or for taking a negative one down. A closing gift that arrives with a request attached is inside that sentence.",
   },
   {
     lead: "Not allowed: telling them what to say, or standing over them.",
-    body: "The policy says merchants should not pressure people to write a review while on the premises, and should not ask for specific content to be included. Asking a client to mention your name, or the town you would like to rank for, is a request for specific content. The policy's own example of that is a merchant asking staff to solicit reviews naming a particular member of staff.",
+    body: "The policy says merchants should not pressure people to write a review while on the premises. It also says they should not ask for specific content to be included. Asking a client to mention your name, or the town you would like to rank for, is a request for specific content. The policy's own example of that is a merchant asking staff to solicit reviews naming a particular member of staff.",
   },
 ];
 
@@ -262,15 +262,15 @@ export const THE_ASK = {
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "You turn it on and stop replying.",
-    body: "A profile that suddenly grows reviews nobody has answered reads worse than a quiet one. The ask is the automatable half. The reply is not, it is fifteen minutes a week, and it is the half a stranger actually reads.",
+    body: "A profile that suddenly grows reviews nobody has answered reads worse than a quiet one. The ask is the half you can automate. The reply is not. It is fifteen minutes a week, and it is the half a stranger actually reads.",
   },
   {
     lead: "It gets pointed at the wrong moment.",
-    body: "The moment a job is finished is not always the moment the customer feels finished. Ask the seller the day the sign goes up and you are asking somebody in the middle of the stressful part. The trigger is a decision about your business, not a setting.",
+    body: "The moment a job is finished is not always the moment the customer feels finished. Ask the seller the day the sign goes up, and you are asking somebody in the middle of the stressful part. The trigger is a decision about your business, not a setting.",
   },
   {
     lead: "You treat a bad review as a problem with the review.",
-    body: "The instinct is to get it removed, and there is an industry that will take money to try. The people who come out of a bad review well are the ones who answered it in public, fixed the thing underneath it, and let the next twelve reviews do the rest.",
+    body: "The instinct is to get it removed, and there is an industry that will take money to try. The people who come out of a bad review well did three things. They answered it in public, they fixed the thing underneath it, and they let the next twelve reviews do the rest.",
   },
 ];
 
@@ -339,7 +339,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       // flight of steps and a tree rather than adjoining.
       alt: "Two Victorian houses side by side on a sloping city block in late summer, the left one painted cream with a shingled mansard roof and dormers over a covered porch, the right one of red brick with green painted trim, bay windows and a shingled mansard roof of its own, both well kept, seen from the pavement over a low brick retaining wall through heavy flowering planting and an iron railing",
       caption:
-        "Two houses on the same block, both in good order, and nothing on either front tells you which one has a wet basement. That is the position a stranger is in with your business, and your reviews are the only part of the picture you did not write yourself. Which is exactly why a page of nothing but fives stops being information.",
+        "Two houses on the same block, both in good order. Nothing on either front tells you which one has a wet basement. That is the position a stranger is in with your business. Your reviews are the only part of the picture you did not write yourself. Which is exactly why a page of nothing but fives stops being information.",
       credit: "Photograph by Elvert Barnes, CC BY 2.0.",
       ariaLabel: "Two fronts, nothing to choose between them",
     },
@@ -406,7 +406,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "writes",
           label: "Of the people asked, the share who actually write one",
-          hint: "This one is yours to set and it is deliberately not ours. Nobody publishes an honest conversion rate for review requests, so a number here would be invented, and it would be invented in our favour.",
+          hint: "This one is yours to set and it is deliberately not ours. Nobody publishes an honest conversion rate for review requests. So a number here would be invented, and it would be invented in our favour.",
           min: 5,
           max: 60,
           step: 5,
@@ -429,7 +429,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
        * evidence is about recency. */
       headline: 3,
       resultLabel: "Reviews dated in the last three months",
-      note: "This counts reviews and stops there. It deliberately does not multiply anything by the five to nine percent revenue figure further up this page: that was measured on Seattle restaurants against quarterly sales tax records, its author found the effect only among independent businesses, and turning it into a commission forecast for a brokerage is arithmetic he never did and we are not going to do on his behalf. The share who actually write one is yours for the same reason. There is no published conversion rate for review requests in any vertical, and the one number we would most benefit from inventing is the one we will not.",
+      note: "This counts reviews and stops there. It deliberately does not multiply anything by the five to nine percent revenue figure further up this page. That figure was measured on Seattle restaurants against quarterly sales tax records. Its author found the effect only among independent businesses. Turning it into a commission forecast for a brokerage is arithmetic he never did. We are not going to do it on his behalf. The share who actually write one is yours for the same reason. There is no published conversion rate for review requests in any vertical. And the one number we would most benefit from inventing is the one we will not.",
       action: { label: "See how it is built", href: "/services/review-automation" },
       secondary: { label: "Ask us to look at your profile", href: "/connect" },
     },
@@ -444,8 +444,8 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The read, at least",
-      text: "Send us the link to your Google profile and we will send back what a stranger sees in the first fifteen seconds: the date on your newest review, the worst one on the first screen, and which of them have never been answered.",
-      reassure: "It takes us ten minutes, it is yours whether or not we ever build you anything, and there is nothing to install.",
+      text: "Send us the link to your Google profile. We will send back what a stranger sees in the first fifteen seconds. That is the date on your newest review. It is the worst one on the first screen, and which of them have never been answered.",
+      reassure: "It takes us ten minutes, and it is yours whether or not we ever build you anything. There is nothing to install.",
       action: { label: "Ask for the read", href: "/connect" },
       ariaLabel: "Ask for a read of your review profile",
     },
@@ -468,13 +468,13 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Somebody stood in a kitchen last week with your name and one other on a phone screen, and picked the other one on the strength of a date. Neither of you will ever hear about it, and it will happen again this week.",
+      text: "Somebody stood in a kitchen last week with your name and one other on a phone screen. They picked the other one on the strength of a date. Neither of you will ever hear about it. And it will happen again this week.",
       actions: [
         { label: "See it on the AI page", href: "/ai#reviews", variant: "light" },
         { label: "How it is built", href: "/services/review-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page because the cost is mostly not the software: it is the messaging that carries the ask, which is billed by the message, and the fifteen minutes a week that somebody has to spend replying. The AI audit is an hour, done with you, and it ends with the ask switched on for one real trigger rather than with a document.",
+        "There is no price on this page, because the cost is mostly not the software. It is the messaging that carries the ask, which is billed by the message. And it is the fifteen minutes a week that somebody has to spend replying. The AI audit is an hour, done with you. It ends with the ask switched on for one real trigger rather than with a document.",
     },
   },
 

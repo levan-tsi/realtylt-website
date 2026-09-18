@@ -40,9 +40,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * the right answer, the promise that turns out to be shorter than a business's memory, and where
  * the cost of software going wrong actually lands. */
 export const IN_SHORT: string[] = [
-  "A custom build is the right answer when the step that is capping you is specific to how you work, and the wrong answer far more often than the people who sell them will say. The useful test is not whether it can be built. Almost anything can. It is whether you can afford to own it for as long as you will have it.",
-  "Everything it stands on belongs to somebody else, and their promises are shorter than a business's memory. Google's cloud terms commit to twelve months of notice before a backwards-incompatible change to a customer-facing interface, with carve-outs including anything needed to avoid a substantial economic or material technical burden, and none of it applies to a service that has not reached general availability. Meta guarantees a Graph API version for two years from the day its successor ships. Microsoft's modern lifecycle policy promises a minimum of twelve months.",
-  "And when software goes wrong, most of the cost lands on the business using it rather than the business that made it. The study the American standards institute commissioned on this put the annual national cost of inadequate software testing at 59.5 billion dollars and split it 38.3 billion to users against 21.2 billion to developers.",
+  "A custom build is the right answer when the step that is capping you is specific to how you work. It is the wrong answer far more often than the people who sell them will say. The useful test is not whether it can be built. Almost anything can. It is whether you can afford to own it for as long as you will have it.",
+  "Everything it stands on belongs to somebody else, and their promises are shorter than a business's memory. Google's cloud terms commit to twelve months of notice before a backwards-incompatible change to a customer-facing interface. The carve-outs include anything needed to avoid a substantial economic or material technical burden. And none of it applies to a service that has not reached general availability. Meta guarantees a Graph API version for two years from the day its successor ships. Microsoft's modern lifecycle policy promises a minimum of twelve months.",
+  "And when software goes wrong, most of the cost lands on the business using it rather than the business that made it. The study the American standards institute commissioned on this put the annual national cost of inadequate software testing at 59.5 billion dollars. It split that 38.3 billion to users against 21.2 billion to developers.",
 ];
 
 /** SCENE copy — when an off-the-shelf tool genuinely cannot.
@@ -52,11 +52,11 @@ export const IN_SHORT: string[] = [
 export const WHEN_CUSTOM: GridItem[] = [
   {
     lead: "The step is between two products, not inside one",
-    body: "Every product is excellent at its own job and nobody sells the gap. When the expensive part of your week is carrying something from one system to another and reconciling what does not match, there is no product to buy, because the shape of the problem is the shape of your particular pair of systems.",
+    body: "Every product is excellent at its own job, and nobody sells the gap. When the expensive part of your week is carrying something from one system to another, and matching up what does not agree, there is no product to buy. That is because the shape of the problem is the shape of your own pair of systems.",
   },
   {
     lead: "The rule is yours and nobody else has it",
-    body: "How you decide which enquiries get called first, what makes a listing ready to go live, which of your arrangements gets chased and when. A product implements the average version of a rule. If your version is the reason you win, configuring somebody else's average is a slow way of giving it up.",
+    body: "How you decide which enquiries get called first, what makes a listing ready to go live, which of your arrangements gets chased and when. A product builds in the average version of a rule. If your version is the reason you win, setting up somebody else's average is a slow way of giving it up.",
   },
   {
     lead: "The volume is real but too small to be a market",
@@ -67,11 +67,11 @@ export const WHEN_CUSTOM: GridItem[] = [
      * and did not build: figures asserted in a NARRATIVE scene field that the post's own body
      * never states. Over the twenty posts it returns 14 of 382, which is a usable rate; the
      * unnarrowed version returns 150 and the checker was right that it should not be built. */
-    body: "Something that happens forty times a month in your business happens in too few other businesses for anybody to build a product for it. This is the most common genuine case and it is also the one where the build should be smallest.",
+    body: "Something that happens forty times a month in your business happens in too few other businesses for anybody to build a product for it. This is the most common genuine case, and it is also the one where the build should be smallest.",
   },
   {
     lead: "And the case that is not on this list",
-    body: "Wanting it to work exactly the way it does now. That is the most expensive reason to build anything, because you are paying to preserve a process rather than to improve one, and the version of it that gets built will be harder to change than the habits it was made to protect.",
+    body: "Wanting it to work exactly the way it does now. That is the most expensive reason to build anything, because you are paying to keep a process rather than to improve one. And the version of it that gets built will be harder to change than the habits it was made to protect.",
   },
 ];
 
@@ -116,10 +116,10 @@ export const NOTICE = {
   ],
   lit: 2,
   basis:
-    "Months of notice or continued operation, taken from three vendors' own published policies rather than from any article about them. The first is Google's commitment in its cloud terms of service to notify a customer before discontinuing a service or making a backwards-incompatible change to a customer-facing interface. The second is Microsoft's stated minimum notification under its modern lifecycle policy where no successor is offered. The third is Meta's guarantee that a Graph API version keeps working, measured from the release date of the version after it rather than from its own.",
+    "Months of notice or continued operation. All three are taken from the vendors' own published policies rather than from any article about them. The first is Google's commitment in its cloud terms of service. That commitment is to notify a customer before discontinuing a service, or before making a backwards-incompatible change to a customer-facing interface. The second is Microsoft's stated minimum notification under its modern lifecycle policy where no successor is offered. The third is Meta's guarantee that a Graph API version keeps working. It is measured from the release date of the version after it, rather than from its own.",
   sourceText: "Google Cloud Platform Terms of Service 1.4(e); Microsoft Modern Lifecycle Policy; Meta Graph API versioning.",
   sourceHref: "https://cloud.google.com/terms/",
-  note: "Three different promises about three different things, drawn together because the only thing they have in common is the number of months a business gets. Two things a lifted copy of this chart has to carry with it. Every one of these commitments has exceptions written into it, so a bar here is a policy rather than a term you could plan around, and the article this comes from quotes them. And the third bar is measured from the release of the NEXT version rather than of the one you built on, so a version that is already eighteen months old carries six months rather than twenty four. None of these vendors is behaving badly. They are being unusually clear, and what they are being clear about is that the ground moves.",
+  note: "Three different promises about three different things. They are drawn together because the only thing they have in common is the number of months a business gets. Two things a lifted copy of this chart has to carry with it. Every one of these commitments has exceptions written into it. So a bar here is a policy rather than a term you could plan around, and the article this comes from quotes them. And the third bar is measured from the release of the NEXT version rather than of the one you built on. So a version that is already eighteen months old carries six months rather than twenty four. None of these vendors is behaving badly. They are being unusually clear, and what they are being clear about is that the ground moves.",
 };
 
 /** SCENE copy — the three costs that begin on the day it works.
@@ -130,15 +130,15 @@ export const NOTICE = {
 export const THREE_COSTS: GridItem[] = [
   {
     lead: "It is now a thing that has to keep working",
-    body: "Not a purchase, a possession. Somebody has to notice when it stops, and the noticing is the expensive half, because a chain that quietly does nothing looks exactly like a chain that had nothing to do. The cheapest useful thing any build can have is a loud failure, and it is the easiest thing to leave out of a scope.",
+    body: "Not a purchase, a possession. Somebody has to notice when it stops, and the noticing is the expensive half. That is because a chain that quietly does nothing looks exactly like a chain that had nothing to do. The cheapest useful thing any build can have is a loud failure, and it is the easiest thing to leave out of a scope.",
   },
   {
     lead: "One person understands it",
-    body: "Usually the person who built it, occasionally one person in your office, and for a year that is completely fine. It stops being fine at the exact moment you need a change and that person is unavailable, and the amount of the original cost you have to pay again at that point is a function of how well it was written down rather than how well it was built.",
+    body: "Usually the person who built it, occasionally one person in your office, and for a year that is completely fine. It stops being fine at the exact moment you need a change and that person is unavailable. What decides how much of the original cost you pay again at that point is how well it was written down, not how well it was built.",
   },
   {
     lead: "It stands on things you do not control",
-    body: "Every system it touches is somebody else's, running to somebody else's release schedule, and some of the changes that break a chain are not even the ones a vendor calls breaking. A new value in a field, a rate limit tightened, a login flow that adds a step. None of that is a fault. All of it is Tuesday.",
+    body: "Every system it touches is somebody else's, running to somebody else's release schedule. And some of the changes that break a chain are not even the ones a vendor calls breaking. A new value in a field, a rate limit tightened, a login flow that adds a step. None of that is a fault. All of it is Tuesday.",
   },
 ];
 
@@ -176,11 +176,11 @@ export const BEARING = {
   ],
   lit: 0,
   basis:
-    "Billions of dollars a year, from the national estimate in the report the National Institute of Standards and Technology commissioned on the economic impact of inadequate software testing infrastructure. The two bars sum to the report's headline figure of 59.5 billion dollars. The split was derived from surveys of software developers and of software users in two industries and then extrapolated per employee to the rest of the economy.",
+    "Billions of dollars a year. The figures come from the national estimate in the report the National Institute of Standards and Technology commissioned on the economic impact of inadequate software testing infrastructure. The two bars sum to the report's headline figure of 59.5 billion dollars. The split came from surveys of software developers and of software users in two industries. It was then extrapolated per employee to the rest of the economy.",
   sourceText:
     "RTI for the National Institute of Standards and Technology, The Economic Impacts of Inadequate Infrastructure for Software Testing, Planning Report 02-3, 2002.",
   sourceHref: "https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf",
-  note: "Two caveats and one reason this is here. It is from 2002, which is a long time ago in this field, and the national total rests on an extrapolation from two industries rather than on a census, both of which the report states about itself. The ratio is the part worth carrying rather than the totals, and the ratio is the whole argument of this article: the business that ends up paying for software not working is overwhelmingly the business using it, not the one that wrote it. That is true of a product you buy and it is true twice over of something built for you alone, because there is no other customer to notice the fault first and no vendor whose next release fixes it. One more thing from the same report is deliberately absent from this page, and it is explained in the section below.",
+  note: "Two caveats and one reason this is here. It is from 2002, which is a long time ago in this field. And the national total rests on an extrapolation from two industries rather than on a census. The report states both of those about itself. The ratio is the part worth carrying rather than the totals, and the ratio is the whole argument of this article. The business that ends up paying for software not working is overwhelmingly the business using it, not the one that wrote it. That is true of a product you buy, and it is true twice over of something built for you alone. There is no other customer to notice the fault first, and no vendor whose next release fixes it. One more thing from the same report is deliberately absent from this page, and it is explained in the section below.",
 };
 
 /** SCENE copy — the life of a one-off, drawn as the order it happens in.
@@ -205,15 +205,15 @@ export const LIFECYCLE: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "The process it was built around went away",
-    body: "You changed portals, or the brokerage restructured, or the thing it fed into got replaced. The chain still runs, faultlessly, on a shape of work that no longer exists, and because it never errors nobody has any reason to look at it. This is the ending nobody plans for, and it does not announce itself on the day it happens.",
+    body: "You changed portals, or the brokerage restructured, or the thing it fed into got replaced. The chain still runs, faultlessly, on a shape of work that no longer exists. And because it never errors, nobody has any reason to look at it. This is the ending nobody plans for, and it does not announce itself on the day it happens.",
   },
   {
     lead: "It got extended once too often",
-    body: "Every addition was reasonable and every one was cheaper than starting again. Somewhere around the fifth, the thing stopped being a chain anybody could hold in their head, and the cost of the next change stopped being proportional to the size of the change. The signal is somebody saying they would rather not touch it.",
+    body: "Every addition was reasonable, and every one was cheaper than starting again. Somewhere around the fifth, the thing stopped being a chain anybody could hold in their head. And the cost of the next change stopped rising in step with the size of the change. The signal is somebody saying they would rather not touch it.",
   },
   {
     lead: "Nobody ever decided to retire it",
-    body: "Systems are switched on by a decision and switched off by an accident. A build with no review date will run until something breaks it, which means the question of whether it is still earning its keep gets answered by a vendor's release schedule rather than by you.",
+    body: "Systems are switched on by a decision and switched off by an accident. A build with no review date will run until something breaks it. So the question of whether it is still earning its keep gets answered by a vendor's release schedule rather than by you.",
   },
 ];
 
@@ -280,7 +280,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // which is enough to call it engine oil and not enough to quote.
       alt: "A workshop wall hung with hand tools in deliberate rows on pale painted boarding, adjustable spanners, pliers, a red pipe wrench and long handled bolt cutters along the top with a pair of yellow goggles among them, long files and rasps standing upright at the left, hammers and scrapers beside them, a shelf of screwdrivers with yellow, green, red and black handles ranked by size across the middle with chisels and punches hanging beneath it, two hand saws, a hacksaw frame and a large steel try square at the right against exposed brick with a second pair of goggles and two pairs of dividers below them, and a bench along the bottom of the frame carrying a blue plastic sheet, a labelled bottle of engine oil, a black folder and loose papers",
       caption:
-        "Nobody buys a wall like this. It accumulates, one tool at a time, each one bought for a job that a tool already on the wall could not quite do. That is what a bespoke build actually is, and it is also the warning in the picture: every one of these has to be found, kept sharp and put back, and a wall nobody maintains is just a lot of metal on a hook.",
+        "Nobody buys a wall like this. It builds up, one tool at a time, each one bought for a job that a tool already on the wall could not quite do. That is what a bespoke build actually is. It is also the warning in the picture. Every one of these has to be found, kept sharp and put back. A wall nobody looks after is just a lot of metal on a hook.",
       credit: "Photograph by huw-ogilvie, CC BY 2.0.",
       ariaLabel: "Hand tools hung in rows on a workshop wall",
     },
@@ -318,7 +318,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       label: "The life of it",
       eyebrow: "The system",
       heading: "The quote covers the first box.",
-      lede: "Six stages, and the whole of the commercial conversation happens at the left hand end. Everything from the third box onward is yours, it is open ended, and it is where a build either quietly earns its keep for years or quietly stops. Note that the last one is the only stage that requires somebody to make a decision, which is why it is the one that almost never happens.",
+      lede: "Six stages, and the whole of the commercial conversation happens at the left hand end. Everything from the third box onward is yours. It is open ended, and it is where a build either quietly earns its keep for years or quietly stops. Note that the last one is the only stage that needs somebody to make a decision. That is why it is the one that almost never happens.",
       steps: LIFECYCLE,
       altPrefix:
         "The life of a bespoke automation from a quoted build, through the day it starts working, a single custodian, a change made on somebody else's release schedule, a repair you pay for on their timing, and a deliberate retirement",
@@ -359,7 +359,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "breaks",
           label: "Share of those that would actually break something on your side",
-          hint: "Most of them will not touch you. The honest number here is low and the point is that it is not zero.",
+          hint: "Most of them will not touch you. The honest number here is low, and the point is that it is not zero.",
           min: 5,
           max: 100,
           step: 5,
@@ -396,7 +396,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Times a year somebody else changes something this stands on",
-      note: "The headline is the second row rather than the hours, and the reason is the argument of the whole article. The hours at the settings this opens with are a small number that nobody would refuse to spend. The exposure is the thing being bought: you have agreed to keep up with several other companies' release schedules, permanently, in exchange for a step of work you no longer do. Whether that trade is good depends entirely on how large the step was, which is why there is no verdict here. Shares produce fractions, and a quarter of a breakage is not a thing, so read anything with a decimal in it as a rough count. Four things this refuses to put a number on. There is no share of a system's lifetime cost that goes on maintenance, and the reason is specific rather than a shrug: the figure everybody quotes traces to a 1978 survey and a 2000 magazine article, and neither could be read in the original, so nothing is printed. There is no lifespan for a custom build, because nobody publishes one. There is no price, because it depends on which systems. And there is no comparison against what an off-the-shelf tool would have cost, because the case for building is that the tool does not exist.",
+      note: "The headline is the second row rather than the hours, and the reason is the argument of the whole article. The hours at the settings this opens with are a small number that nobody would refuse to spend. The exposure is the thing being bought. You have agreed to keep up with several other companies' release schedules, permanently, in exchange for a step of work you no longer do. Whether that trade is good depends entirely on how large the step was, which is why there is no verdict here. Shares produce fractions, and a quarter of a breakage is not a thing. So read anything with a decimal in it as a rough count. Four things this refuses to put a number on. There is no share of a system's lifetime cost that goes on maintenance, and the reason is specific rather than a shrug. The figure everybody quotes traces to a 1978 survey and a 2000 magazine article. Neither could be read in the original, so nothing is printed. There is no lifespan for a custom build, because nobody publishes one. There is no price, because it depends on which systems. And there is no comparison against what an off-the-shelf tool would have cost, because the case for building is that the tool does not exist.",
       action: { label: "See how it is built", href: "/services/custom-automation" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -404,9 +404,9 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Describe the one step that is actually capping you, in a paragraph, the way you would describe it to somebody starting on Monday. We will tell you whether a product already does it, whether it is a build, or whether the real answer is that a decision has not been made yet.",
+      text: "Describe the one step that is actually capping you, in a paragraph, the way you would describe it to somebody starting on Monday. We will tell you one of three things. Whether a product already does it. Whether it is a build. Or whether the real answer is that a decision has not been made yet.",
       reassure:
-        "It is a short reply from a person, it costs nothing, and a fair share of the time the honest answer is that something you already pay for will do it, which is a cheaper outcome for you and a worse one for us.",
+        "It is a short reply from a person, and it costs nothing. A fair share of the time the honest answer is that something you already pay for will do it. That is a cheaper outcome for you and a worse one for us.",
       action: { label: "Describe the step", href: "/connect" },
       ariaLabel: "Describe the step that is capping you",
     },
@@ -427,7 +427,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
       // nothing. The point never needed it.
       alt: "Punched cards laced edge to edge into a continuous band, four of them stacked up the frame with the top and bottom ones cut off, each a stiff cream rectangle pierced with rows of round holes in irregular groups and stained brown along its edges, pale cream lacing cord threaded through the edge of every card down both sides, and dark timber with a thin metal rod along the right hand edge",
       caption:
-        "This is a program, and there is nothing electronic in it. Every hole is an instruction, the loom cannot do anything the cards do not say, and the reason this one still exists is that somebody kept the cards. That is the entire lesson: the machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
+        "This is a program, and there is nothing electronic in it. Every hole is an instruction. The loom cannot do anything the cards do not say. And the reason this one still exists is that somebody kept the cards. That is the entire lesson. The machine was never the fragile part. The fragile part is the description of what it was supposed to do, and whether anybody can still read it.",
       credit: "Photograph by pedrik, CC BY 2.0.",
       ariaLabel: "Punched cards from a Jacquard loom",
     },
@@ -454,7 +454,7 @@ export const CUSTOM_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/custom-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the honest range on this topic is genuinely wide: connecting two systems that both have a decent way in is days, and something that has to read documents or reach an office that is not yours is a different order of work. What does not vary is that the build is quoted and the ownership is not, and the second one is the part worth talking about first. The AI audit is an hour, done with you, and it exists partly to establish that a custom build is not the answer.",
+        "There is no price here, because the honest range on this topic is truly wide. Connecting two systems that both have a decent way in is days. Something that has to read documents, or reach an office that is not yours, is a different order of work. What does not vary is that the build is quoted and the ownership is not. The second one is the part worth talking about first. The AI audit is an hour, done with you, and it exists partly to establish that a custom build is not the answer.",
     },
   },
 

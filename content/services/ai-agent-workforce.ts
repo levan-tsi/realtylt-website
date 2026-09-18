@@ -66,14 +66,14 @@ export const aiAgentWorkforce: Service = {
   },
 
   whatItIs: [
-    "It is a set of AI assistants, each one pointed at a single recurring job. An assistant is not a general chatbot you have to re-explain your business to every morning. It is configured for one task, it knows your tools, and it does that task the same way every time.",
-    "The unlock is parallelism. You can only do one thing at a time; the inbox one, the CMA one and the paperwork one all run at once, all night, and adding another one is a decision rather than a hire. What grows with each one you add is the reading, and that is the limit that actually binds rather than the software.",
+    "It is a set of AI assistants, each one pointed at a single recurring job. An assistant is not a general chatbot you have to re-explain your business to every morning. It is set up for one task. It knows your tools. And it does that task the same way every time.",
+    "The gain is that they all run at once. You can only do one thing at a time. The inbox one, the CMA one and the paperwork one all run together, all night. And adding another one is a decision rather than a hire. What grows with each one you add is the reading, and that is the limit that actually binds rather than the software.",
   ],
 
   howItWorks: [
     {
       title: "Name the job you keep redoing",
-      body: "We start with the tasks that repeat: the emails you draft from the same template, the comps you pull the same way, the document you chase every deal. Repetition is what makes a job delegable.",
+      body: "We start with the tasks that repeat. That means the emails you draft from the same template, the comps you pull the same way, and the document you chase every deal. Repeating is what makes a job one you can hand over.",
     },
     {
       title: "Write the brief, then tune an assistant to it",
@@ -81,60 +81,60 @@ export const aiAgentWorkforce: Service = {
       // research this page now cites puts most of an agent's usable ability in that document.
       // Removing the written policy from one benchmark agent took it from 33.2% to 10.8% on
       // the domain whose rules were specific rather than commonsense.
-      body: "The document comes before the software: the task, the rules, and what should happen in the cases that are not the normal case. Each assistant is an LLM agent given that brief and the tools it needs and nothing else, and it is tested against work you have already done by hand.",
+      body: "The document comes before the software. It sets out the task, the rules, and what should happen in the cases that are not the normal case. Each assistant is an LLM agent given that brief and the tools it needs and nothing else. It is tested against work you have already done by hand.",
     },
     {
       title: "Run as many as you need, always on",
-      body: "The assistants work in parallel and do not stop at 5pm. You review the output rather than produce it, which is the difference between doing the busywork and managing it.",
+      body: "The assistants work at the same time and do not stop at 5pm. You review the output rather than produce it. That is the difference between doing the busywork and managing it.",
     },
   ],
 
   useCases: [
     {
       title: "The inbox that reads itself",
-      body: "An assistant triages overnight email, surfaces what genuinely needs you, and drafts the replies to the rest so you are approving instead of typing.",
+      body: "An assistant sorts the overnight email by what matters, brings up what truly needs you, and drafts the replies to the rest. So you are approving instead of typing.",
     },
     {
       title: "CMA prep before the appointment",
-      body: "Comps pulled, filtered, and laid out before you walk in, so the hour you used to spend building the deck goes to the conversation instead.",
+      body: "Comps pulled, filtered and laid out before you walk in. The hour you used to spend building the deck goes to the conversation instead.",
     },
     {
       title: "The transaction chaser",
-      body: "An assistant watches every open file for the missing signature, the expiring contingency, and the document nobody sent, and it does the chasing.",
+      body: "An assistant watches every open file for the missing signature, the contingency about to run out, and the document nobody sent. And it does the chasing.",
     },
   ],
 
   limits: [
     "It does not think for you. An assistant does one job the way you described it, so a vague brief produces output that is fast, consistent and useless.",
     "It is not a hire. There is nobody to take responsibility, notice that the job has changed, or tell you the process itself is wrong.",
-    "It does not remove the review. Anything that reaches a client should be read by a person first, and an assistant that drafts is worth more than one that sends.",
+    "It does not remove the review. Anything that reaches a client should be read by a person first. An assistant that drafts is worth more than one that sends.",
     "It does not fix a job nobody has written down. If the task lives only in your head and changes every time, describing it is the first piece of work, not building it.",
-    "It does not scale the way the word workforce suggests. Four assistants are four times the output somebody has to read, and chaining one into the next adds a whole category of failure that separate assistants do not have.",
+    "It does not scale the way the word workforce suggests. Four assistants are four times the output somebody has to read. And chaining one into the next adds a whole category of failure that separate assistants do not have.",
   ],
 
   faqs: [
     {
       q: "What is an AI agent workforce?",
-      a: "It is a set of AI assistants, each configured for one recurring task and each connected to the tools that task needs. Instead of one general chatbot you have to brief every time, you have a staff: an assistant for email, an assistant for comps, an assistant for paperwork, all running at once.",
+      a: "It is a set of AI assistants. Each one is set up for one recurring task, and each one is connected to the tools that task needs. Instead of one general chatbot you have to brief every time, you have a staff. There is an assistant for email, an assistant for comps and an assistant for paperwork, all running at once.",
     },
     {
       q: "How many AI assistants can I run at once?",
       // ROUND D: the second half is new. The technical answer was true and incomplete: they do
       // not queue behind each other, and the limit that actually binds is how much output one
       // person can review before the reviewing stops happening.
-      a: "Technically as many as you have jobs for, because they run in parallel and the inbox assistant does not queue behind the CMA assistant. Practically the limit is not the software, it is how many streams of output one person can read before the reading quietly stops. It is a number worth working out rather than assuming, and it is the one to settle before you commit.",
+      a: "In theory, as many as you have jobs for, because they run at the same time and the inbox assistant does not queue behind the CMA assistant. In practice the limit is not the software. It is how many streams of output one person can read before the reading quietly stops. It is a number worth working out rather than assuming, and it is the one to settle before you commit.",
     },
     {
       q: "What happens when one of them gets something wrong?",
-      a: "It produces something wrong that reads exactly like everything it produced when it was right, which is why the answer has to be structural rather than a matter of paying attention. Anything ambiguous should stop and ask rather than decide, anything client-facing should be drafted rather than sent, there should be a readable record of what each assistant did, and somebody should actually read a sample of the output on a fixed day each week.",
+      a: "It produces something wrong that reads exactly like everything it produced when it was right. That is why the answer has to be built in rather than a matter of paying attention. Anything unclear should stop and ask rather than decide. Anything that goes to a client should be drafted rather than sent. There should be a readable record of what each assistant did. And somebody should actually read a sample of the output on a fixed day each week.",
     },
     {
       q: "Do I need technical skills to use them?",
-      a: "No. You describe the job the way you would describe it to a new assistant on their first day, and we build and tune the agent. You interact with the output, not the plumbing.",
+      a: "No. You describe the job the way you would describe it to a new assistant on their first day, and we build and tune the agent. You deal with the output, not the plumbing.",
     },
     {
       q: "How is this different from just using ChatGPT?",
-      a: "A general chatbot starts from zero every session and cannot touch your systems. These assistants are tuned to one job, hold the context of your business, have real access to your CRM, calendar, and files, and run on a schedule or a trigger without you opening a tab.",
+      a: "A general chatbot starts from zero every session and cannot touch your systems. These assistants are tuned to one job. They hold the context of your business. They have real access to your CRM, calendar and files. And they run on a schedule or a trigger without you opening a tab.",
     },
   ],
 

@@ -44,9 +44,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * an assistant lifting this box lifts the honest version of the argument rather than the
  * marketing one. Every line is argued at length below it. */
 export const IN_SHORT: string[] = [
-  "One system stands behind every agent, holds the record they all read from, and writes and changes the software around them. It does write real code, and none of it reaches anybody until the tests pass and a person says yes.",
+  "One system stands behind every agent. It holds the record they all read from, and it writes and changes the software around them. It does write real code, and none of it reaches anybody until the tests pass and a person says yes.",
   "The improving does not come from having the model check itself. Asked to review its own answer twice, a leading model went from 95.5 percent correct on grade school arithmetic to 89.0.",
-  "What it learns is kept in files rather than inside a model, one line per correction, read before the next piece of work starts. Every agent reads the same record, so a client explains their situation once.",
+  "What it learns is kept in files rather than inside a model. One line per correction, read before the next piece of work starts. Every agent reads the same record, so a client explains their situation once.",
 ];
 
 /** SCENE copy — self review makes it worse. CITED DATA GRAPHIC ONE.
@@ -91,11 +91,11 @@ export const SELF_REVIEW = {
   max: 100,
   lit: 3,
   basis:
-    "The share of grade school word problems one leading model answered correctly, at four settings. The first three are the intrinsic condition, in which the model is asked to look again at what it wrote and try again, with nothing from outside itself to go on. The fourth is the oracle condition from the same paper, in which the right answer is used to decide whether another attempt is needed at all. Both of the paper's tables print the same starting score of 95.5 for this model on this benchmark, which is what lets the fourth bar stand beside the other three.",
+    "The share of grade school word problems one leading model answered correctly, at four settings. The first three are the intrinsic condition. In that condition the model is asked to look again at what it wrote and try again, with nothing from outside itself to go on. The fourth is the oracle condition from the same paper. In that one, the right answer is used to decide whether another attempt is needed at all. Both of the paper's tables print the same starting score of 95.5 for this model on this benchmark, which is what lets the fourth bar stand beside the other three.",
   sourceText:
     "Jie Huang, Xinyun Chen, Swaroop Mishra, Huaixiu Steven Zheng, Adams Wei Yu, Xinying Song and Denny Zhou (Google DeepMind and the University of Illinois Urbana-Champaign), Large Language Models Cannot Self-Correct Reasoning Yet, ICLR 2024, arXiv:2310.01798.",
   sourceHref: "https://arxiv.org/abs/2310.01798",
-  note: "Arithmetic word problems, on models accessed in August 2023, and every absolute figure here would be different on this morning's models. The heights are also close together, which is itself the finding rather than a weakness of the chart: on this benchmark self review moved the score a few points in the wrong direction rather than off a cliff. It went off a cliff elsewhere in the same table. On a multiple choice commonsense set the older model fell from 75.8 to 38.1 after one round, because a model told to look for a problem in its own answer will find one whether or not there is one. The fourth bar is a laboratory instrument and not a product: it uses the correct answer to decide when to stop, which is precisely the thing nobody has while somebody is waiting for a reply.",
+  note: "Arithmetic word problems, on models accessed in August 2023, and every absolute figure here would be different on this morning's models. The heights are also close together, which is itself the finding rather than a weakness of the chart. On this benchmark self review moved the score a few points in the wrong direction rather than off a cliff. It went off a cliff elsewhere in the same table. On a multiple choice commonsense set the older model fell from 75.8 to 38.1 after one round, because a model told to look for a problem in its own answer will find one whether or not there is one. The fourth bar is a laboratory instrument and not a product. It uses the correct answer to decide when to stop, which is exactly the thing nobody has while somebody is waiting for a reply.",
 };
 
 /** SCENE copy — the grader is not the truth either. CITED DATA GRAPHIC TWO.
@@ -140,11 +140,11 @@ export const OFFLINE_ESTIMATE = {
   max: 100,
   lit: 3,
   basis:
-    "The false negative rate of four ways of estimating, from recorded history alone, what a change would do. A false negative here is a change the offline estimate turned down which the live test then showed was a genuine improvement. All four were checked against the same 39 real online experiments on a large commercial recommendation system, and they differ only in how carefully each one corrects for the fact that the recorded behaviour came from the system that was running at the time rather than from the one being judged. The paper's own bootstrapped intervals are roughly 8 to 11 points wide, so the ordering carries further than the exact heights do.",
+    "The false negative rate of four ways of estimating, from recorded history alone, what a change would do. A false negative here is a change the offline estimate turned down which the live test then showed was a genuine improvement. All four were checked against the same 39 real online experiments on a large commercial recommendation system. They differ only in how carefully each one corrects for one fact. The recorded behaviour came from the system that was running at the time, rather than from the one being judged. The paper's own bootstrapped intervals are roughly 8 to 11 points wide, so the ordering carries further than the exact heights do.",
   sourceText:
     "Alexandre Gilotte, Clement Calauzenes, Thomas Nedelec, Alexandre Abraham and Simon Dolle (Criteo Research), Offline A/B testing for Recommender Systems, WSDM 2018, arXiv:1801.07030.",
   sourceHref: "https://arxiv.org/abs/1801.07030",
-  note: "Product recommendation rather than conversation, at a scale no brokerage will ever see, in 2018. It is here for one reason, which is that it is the only published measurement of the step this entire system rests on. Two numbers from it are worth carrying and neither of them flatters the method. Even the most careful estimator turned down roughly one real improvement in six. And of the changes it did approve, its precision was 0.56, so a little over half of what it waved through turned out to be an improvement when it actually ran. That is the honest reason a person approves the change, and the reason a change that shipped is watched afterwards rather than filed as settled.",
+  note: "Product recommendation rather than conversation, at a scale no brokerage will ever see, in 2018. It is here for one reason, which is that it is the only published measurement of the step this entire system rests on. Two numbers from it are worth carrying, and neither of them flatters the method. Even the most careful estimator turned down roughly one real improvement in six. And of the changes it did approve, its precision was 0.56, so a little over half of what it waved through turned out to be an improvement when it actually ran. That is the honest reason a person approves the change, and the reason a change that shipped is watched afterwards rather than filed as settled.",
 };
 
 /** SCENE copy — the loop, as a spine.
@@ -260,15 +260,15 @@ export const MEMORY_EVENTS: { at: string; label: string; detail: string }[] = [
 export const WHERE_IT_STALLS: GridItem[] = [
   {
     lead: "A loop that is not allowed to report no change",
-    body: "Some weeks the honest output is that nothing went wrong badly enough to be worth touching. A loop under pressure to justify itself will find something anyway, and a change made because a slot in the calendar demanded one is a change nobody can defend afterwards. The health of this thing is measured by whether it is comfortable saying nothing this week.",
+    body: "Some weeks the honest output is that nothing went wrong badly enough to be worth touching. A loop under pressure to justify itself will find something anyway. And a change made because a slot in the calendar demanded one is a change nobody can defend afterwards. The health of this thing is measured by whether it is comfortable saying nothing this week.",
   },
   {
     lead: "A grader pointed at the wrong thing",
-    body: "Every loop gets good at whatever it is scored on and finds routes to that score nobody intended. The failure is quiet rather than loud: the figures improve month after month while the thing they were standing in for gets worse. Write down what a good conversation actually looks like before anything is graded against it, then read that description again every quarter, because it is the only part of the arrangement that stops the machine being right about the wrong question.",
+    body: "Every loop gets good at whatever it is scored on, and finds routes to that score nobody intended. The failure is quiet rather than loud. The figures improve month after month while the thing they were standing in for gets worse. Write down what a good conversation actually looks like before anything is graded against it, and read that description again every quarter. That is because it is the only part of the arrangement that stops the machine being right about the wrong question.",
   },
   {
     lead: "Receipts nobody has ever opened",
-    body: "Every change is supposed to leave a record of what it replaced and what it beat, and that record is worth exactly as much as the number of times somebody has read one. If nobody could tell you what changed last month, you do not have a system that learns. You have one that drifts, with excellent paperwork.",
+    body: "Every change is supposed to leave a record of what it replaced and what it beat. That record is worth exactly as much as the number of times somebody has read one. If nobody could tell you what changed last month, you do not have a system that learns. You have one that drifts, with excellent paperwork.",
   },
 ];
 
@@ -315,7 +315,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       label: "The loop",
       eyebrow: "The system",
       heading: "Six steps, and the last three are the ones usually missing.",
-      lede: "Drawn as the order it has to happen in. Most of what is sold under this name is the first two boxes, which are a briefing and a reporting tool with a good vocabulary. The fourth is the one that turns an opinion into something checkable, the fifth is the ten minutes that makes the rest of it safe to run, and the sixth is what lets a bad decision be found later by somebody who was not in the room when it was taken.",
+      lede: "Drawn as the order it has to happen in. Most of what is sold under this name is the first two boxes, which are a briefing and a reporting tool with a good vocabulary. The fourth is the one that turns an opinion into something checkable. The fifth is the ten minutes that makes the rest of it safe to run. And the sixth is what lets a bad decision be found later by somebody who was not in the room when it was taken.",
       steps: LOOP_STEPS,
       altPrefix:
         "The loop, from a written brief and the files the previous pass left behind, to one change with code included, a gate of tests and probes that can refuse it, a person reading the change and approving it, and a written record that leaves a new test behind",
@@ -340,7 +340,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       src: "/images/editorial/wind-tunnel-model.jpg",
       alt: "A yellow full scale aircraft model standing on trestles at the open mouth of a wind tunnel, its short wings held by a straight brace across them, exposed machinery under the fuselage and a rounded metal fairing resting on the deck beneath, with the dark curved throat of the tunnel behind it",
       caption:
-        "A machine built to be blown at. Nobody flew this one and nobody was meant to: it exists so that a question about the real aircraft could be answered before anybody sat in it. That is the whole idea an improvement loop is borrowing, and it is worth saying plainly that a model in a tunnel is not the sky. The measurements were still useful, and the aircraft still had to fly before anyone knew.",
+        "A machine built to be blown at. Nobody flew this one and nobody was meant to. It exists so that a question about the real aircraft could be answered before anybody sat in it. That is the whole idea an improvement loop is borrowing, and it is worth saying plainly that a model in a tunnel is not the sky. The measurements were still useful, and the aircraft still had to fly before anyone knew.",
       credit: "Photograph: NASA Ames, 1961, via rawpixel, CC BY 2.0.",
       ariaLabel: "A test model at the mouth of a wind tunnel",
     },
@@ -424,7 +424,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Conversations a year nobody reads",
-      note: "There is no money on the end of this one and that is deliberate. Turning an unread transcript into a lost commission needs a rate for how often a poor answer costs a deal, nobody has published one for this trade, and inventing it would mean the most important number in the sum was the one nobody could check. So the arithmetic stops at the size of the pile. Two of the three rows are your own numbers and the third is twelve. The one judgement in it is that reading a sample means reading about one in five, which is not a measurement of anything and is printed in the arithmetic on the right so that you can disagree with it. What comes out is not a loss, it is the material the loop would have to read, and the only claim being made about it is that it exists. If your honest answer to the second question is that somebody reads all of them, you do not need this and that is a real answer rather than a polite one.",
+      note: "There is no money on the end of this one, and that is on purpose. Turning an unread transcript into a lost commission needs a rate for how often a poor answer costs a deal. Nobody has published one for this trade. And inventing it would mean the most important number in the sum was the one nobody could check. So the arithmetic stops at the size of the pile. Two of the three rows are your own numbers, and the third is twelve. The one judgement in it is that reading a sample means reading about one in five. That is not a measurement of anything, and it is printed in the arithmetic on the right so that you can disagree with it. What comes out is not a loss. It is the material the loop would have to read, and the only claim being made about it is that it exists. If your honest answer to the second question is that somebody reads all of them, you do not need this, and that is a real answer rather than a polite one.",
       action: { label: "See how it is built", href: "/services/the-singularity" },
       secondary: { label: "Talk it through", href: "/connect" },
     },
@@ -432,7 +432,7 @@ export const SINGULARITY_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "Or have us read one",
-      text: "Send us a week of your own chat or call transcripts with the names taken out, and we will read every one of them and send back the three questions that got the worst answers, quoted line for line.",
+      text: "Send us a week of your own chat or call transcripts with the names taken out. We will read every one of them. Then we will send back the three questions that got the worst answers, quoted line for line.",
       reassure: "No charge, and nobody calls you unless you ask us to.",
       action: { label: "Send us a week", href: "/connect" },
       ariaLabel: "Have us read a week of your own transcripts",

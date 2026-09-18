@@ -42,9 +42,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. The easy half, the hard
  * half, and the half that is not about reading at all. */
 export const IN_SHORT: string[] = [
-  "Turning ink into text is close to solved on a clean page and is not solved on a bad one. In the one published study of real scanned forms we could find, a commercial engine recovered the words almost exactly once it knew where they were, and lost a quarter of them when it had to find them first.",
-  "Knowing which value belongs to which label is a different and much harder problem, and the same study measured it. Labelling a piece of text as a question or an answer scored a little over a half. Joining an answer to the question it belongs to scored four hundredths.",
-  "And the expensive failure is not a misread character. It is a date that was read perfectly and counted from the wrong event, in the wrong kind of day, because none of that is printed anywhere on the page it came off.",
+  "Turning ink into text is close to solved on a clean page, and it is not solved on a bad one. In the one published study of real scanned forms we could find, a commercial engine recovered the words almost exactly, once it knew where they were. It lost a quarter of them when it had to find them first.",
+  "Knowing which value belongs to which label is a different and much harder problem. The same study measured it. Labelling a piece of text as a question or an answer scored a little over a half. Joining an answer to the question it belongs to scored four hundredths.",
+  "And the expensive failure is not a misread character. It is a date that was read perfectly and counted from the wrong event, in the wrong kind of day. That is because none of that is printed anywhere on the page it came off.",
 ];
 
 /** SCENE copy — what this is, by what it is not.
@@ -55,15 +55,15 @@ export const IN_SHORT: string[] = [
 export const NOT_THE_WORK: GridItem[] = [
   {
     lead: "Not the busywork",
-    body: "Wiring your systems together so that finishing one step starts the next is a real and valuable thing, it is a different product, and it is written up on its own. That question is about work that a person used to do by hand. This one is about a single value that a machine claims it found on a page, and whether that claim is true.",
+    body: "Wiring your systems together so that finishing one step starts the next is a real and valuable thing. It is a different product, and it is written up on its own. That question is about work that a person used to do by hand. This one is about a single value that a machine claims it found on a page, and whether that claim is true.",
   },
   {
     lead: "Not the duplicate",
-    body: "Deciding whether two contact records describe one person is a question about your own database, and there is a published model for answering it. This one never leaves the document. There is one copy of the page, nobody disputes whose it is, and everything difficult happens between the paper and the field.",
+    body: "Deciding whether two contact records describe one person is a question about your own database. There is a published model for answering it. This one never leaves the document. There is one copy of the page. Nobody disputes whose it is, and everything difficult happens between the paper and the field.",
   },
   {
     lead: "Not the append",
-    body: "Filling in what a contact record is missing brings in an assertion from a company you have never spoken to. Here the source is in your hand. You can put it next to the output and check, line by line, which is the whole reason this is a tractable problem and the reason the fix is boring rather than clever.",
+    body: "Filling in what a contact record is missing brings in a claim from a company you have never spoken to. Here the source is in your hand. You can put it next to the output and check, line by line. That is the whole reason this problem can be solved at all, and the reason the fix is boring rather than clever.",
   },
 ];
 
@@ -75,19 +75,19 @@ export const NOT_THE_WORK: GridItem[] = [
 export const UNRELIABLE_ORIGINAL: GridItem[] = [
   {
     lead: "It is often a photograph",
-    body: "Not a scan and not a file, and the difference is not cosmetic. A page held under a phone is captured at whatever angle and in whatever light happened to be available, and that geometry is baked in before any software sees it. Detail that was never captured is not recoverable further down the chain, however clever the thing at the end of it is.",
+    body: "Not a scan and not a file, and the difference is not just how it looks. A page held under a phone is captured at whatever angle and in whatever light happened to be available. That shape is baked in before any software sees it. Detail that was never captured cannot be got back further down the chain, however clever the thing at the end of it is.",
   },
   {
     lead: "The changes are handwritten",
-    body: "There is an unhelpful symmetry in a form. The printed body is easy to read and carries nothing specific to your deal, because it is identical on every copy in the state. Everything that makes this transaction different from that one was added afterwards by a person with a pen, which is to say that legibility and importance run in opposite directions down the page.",
+    body: "There is an unhelpful symmetry in a form. The printed body is easy to read and carries nothing specific to your deal. It is identical on every copy in the state. Everything that makes this transaction different from that one was added afterwards by a person with a pen. Which is to say that how readable a thing is and how much it matters run in opposite directions down the page.",
   },
   {
     lead: "It arrives in pieces",
-    body: "A file is a base document plus addenda plus riders plus a disclosure, signed at different moments, and a later page can change a term on an earlier one. Read as separate documents they all parse. Read as a transaction they contradict each other, and nothing in any single page tells a reader which version won.",
+    body: "A file is a base document plus addenda plus riders plus a disclosure, signed at different moments. And a later page can change a term on an earlier one. Read as separate documents they all parse. Read as a transaction they contradict each other. And nothing in any single page tells a reader which version won.",
   },
   {
     lead: "It has been copied",
-    body: "Printed, signed, scanned, emailed, printed again, signed again, photographed. Each pass loses a little contrast and gains a little noise, and the thing that degrades first is thin ink: a decimal point, a comma, the difference between a one and a seven in somebody's handwriting.",
+    body: "Printed, signed, scanned, emailed, printed again, signed again, photographed. Each pass loses a little contrast and gains a little noise. The thing that degrades first is thin ink. A decimal point, a comma, the difference between a one and a seven in somebody's handwriting.",
   },
 ];
 
@@ -128,11 +128,11 @@ export const READING = {
   max: 100,
   lit: 1,
   basis:
-    "Two measurements of the same commercial vision engine on the same 199 scanned forms, scored by Levenshtein similarity, which compares the characters produced against the characters that were really there rather than counting a word as simply right or wrong. The first row was given the location of every word. The second had to find them.",
+    "Two measurements of the same commercial vision engine on the same 199 scanned forms, scored by Levenshtein similarity. That compares the characters produced against the characters that were really there. It does not count a word as simply right or wrong. The first row was given the location of every word. The second had to find them.",
   sourceText:
     "Guillaume Jaume, Hazim Kemal Ekenel and Jean-Philippe Thiran, FUNSD: A Dataset for Form Understanding in Noisy Scanned Documents, 2019.",
   sourceHref: "https://arxiv.org/abs/1905.13538",
-  note: "Read this as the shape of the problem rather than as a score for any product you would buy. The forms are from the nineteen eighties and nineties at about a hundred dots per inch, the measurement is from 2019, and engines have moved since. What has not moved is the eighteen point gap between the two bars, because it is not a fact about the engine. It is a fact about the page: the harder the original, the more of the work is deciding where the writing is, and that step happens before anything clever gets a chance to help. The paper's other engine, an open source one, scored 7.3 and 3.4 on the same two rows, and the authors explain why in the same paragraph, so it is quoted in the text above rather than drawn here as though it were a fair comparison.",
+  note: "Read this as the shape of the problem, rather than as a score for any product you would buy. The forms are from the nineteen eighties and nineties, at about a hundred dots per inch. The measurement is from 2019, and engines have moved since. What has not moved is the eighteen point gap between the two bars. That is because it is not a fact about the engine. It is a fact about the page. The harder the original, the more of the work is deciding where the writing is. And that step happens before anything clever gets a chance to help. The paper's other engine, an open source one, scored 7.3 and 3.4 on the same two rows. The authors explain why in the same paragraph. So it is quoted in the text above, rather than drawn here as though it were a fair comparison.",
 };
 
 /** SCENE copy — understanding. Cited data graphic TWO.
@@ -167,11 +167,11 @@ export const UNDERSTANDING = {
   max: 100,
   lit: 1,
   basis:
-    "Two F1 scores from the same paper and the same 199 forms. F1 runs from 0 for useless to 1 for perfect and combines how often the system was right when it made a claim with how much of the truth it found. The bars are drawn on that scale. Both were measured with the reading step handed to the system already done correctly.",
+    "Two F1 scores from the same paper and the same 199 forms. F1 runs from 0 for useless to 1 for perfect. It combines how often the system was right when it made a claim with how much of the truth it found. The bars are drawn on that scale. Both were measured with the reading step handed to the system already done correctly.",
   sourceText:
     "Jaume, Ekenel and Thiran, FUNSD, Table VI, baseline results for entity labeling and linking.",
   sourceHref: "https://arxiv.org/abs/1905.13538",
-  note: "These are the authors' own simple baselines, published to give the field something to beat, and the field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed: the character recognition is the part that mostly works, and the part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there, and at that precision roughly one claimed link in fifty is a real one. A system tuned that way has technically found your closing date, along with a great many things that are not it, and nothing in the output says which is which.",
+  note: "These are the authors' own simple baselines, published to give the field something to beat. The field has beaten them. Do not read the second bar as what a system you could buy today would do. Read it as which half of the job is hard, because that ordering has not changed. The character recognition is the part that mostly works. The part that mostly does not is knowing that this number is the answer to that question. Note also what the second bar is made of. Recall was 99.2, so the method found nearly every real link. Precision was 2.1, so it claimed a great many that were not there. At that precision, roughly one claimed link in fifty is a real one. A system tuned that way has technically found your closing date, along with a great many things that are not it. And nothing in the output says which is which.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic THREE.
@@ -216,11 +216,11 @@ export const CEILING = {
   max: 100,
   lit: 0,
   basis:
-    "Three figures from one table in one paper, all on the same 5,188 test questions about scanned and photographed business documents. The first is what volunteers scored. The other two are not scores at all: they are the most any system could possibly get right if it is limited to the text the reading step managed to produce, computed two ways, the second stricter than the first.",
+    "Three figures from one table in one paper, all on the same 5,188 test questions about scanned and photographed business documents. The first is what volunteers scored. The other two are not scores at all. They are the most any system could possibly get right if it is limited to the text the reading step managed to produce. They are computed two ways, the second stricter than the first.",
   sourceText:
     "Minesh Mathew, Dimosthenis Karatzas and C.V. Jawahar, DocVQA: A Dataset for VQA on Document Images, 2021.",
   sourceHref: "https://arxiv.org/abs/2007.00398",
-  note: "Two things worth taking from this and neither is the one people expect. The first is that a person reading a document and answering a question about it was right 94.36 percent of the time, not 100, and the people in question were volunteers doing it carefully with no deadline. Any comparison that treats the human path as flawless is comparing against something that does not exist. The second is that the lower two bars are ceilings rather than results. Whatever sits on top of the reading step, however good it gets, it cannot answer from text the reading step did not produce, and on this corpus that alone put the roof at 87 or at 77 depending on how strictly you count. The authors' own baselines came in well below both, and those figures are from 2020 and are not quoted here, because a stale model score would be the one number on this page that says something false.",
+  note: "Two things worth taking from this, and neither is the one people expect. The first is that a person reading a document and answering a question about it was right 94.36 percent of the time, not 100. The people in question were volunteers doing it carefully with no deadline. Any comparison that treats the human path as flawless is measuring against something that does not exist. The second is that the lower two bars are ceilings rather than results. Whatever sits on top of the reading step, however good it gets, it cannot answer from text the reading step did not produce. On this corpus that alone put the roof at 87 or at 77, depending on how strictly you count. The authors' own baselines came in well below both. Those figures are from 2020 and are not quoted here, because a stale model score would be the one number on this page that says something false.",
 };
 
 /** SCENE copy — the six hops between paper and a date on a calendar.
@@ -250,15 +250,15 @@ export const DOC_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "Everything is flagged, so nothing is",
-    body: "A reader that marks a third of its output as uncertain has told you the truth and has also handed you a queue somebody now has to work. Within a fortnight the flags are being cleared in batches without the pages being opened, which is worse than having no flags, because now there is a record saying somebody checked.",
+    body: "A reader that marks a third of its output as uncertain has told you the truth. It has also handed you a queue somebody now has to work. Within a fortnight the flags are being cleared in batches without the pages being opened. That is worse than having no flags, because now there is a record saying somebody checked.",
   },
   {
     lead: "The output has nowhere to land",
-    body: "The extraction is correct and it is sitting in a report. The calendar it should have written to belongs to somebody else, the CRM field it should have filled does not exist yet, and so the values get retyped by hand from the report. The reading was never the bottleneck and this is how you find that out.",
+    body: "The extraction is correct, and it is sitting in a report. The calendar it should have written to belongs to somebody else. The CRM field it should have filled does not exist yet. So the values get retyped by hand from the report. The reading was never the bottleneck, and this is how you find that out.",
   },
   {
     lead: "Nobody owns the exceptions",
-    body: "Every document type eventually produces one the system has not seen: an addendum from another state, a form somebody rebuilt in a word processor, a page that is genuinely ambiguous. If there is no named person whose job it is to look at those, they do not go into a queue. They go into the deal, quietly, as whatever the machine guessed.",
+    body: "Every document type eventually produces one the system has not seen. It might be an addendum from another state. It might be a form somebody rebuilt in a word processor, or a page that is truly unclear. If there is no named person whose job it is to look at those, they do not go into a queue. They go into the deal, quietly, as whatever the machine guessed.",
   },
 ];
 
@@ -324,7 +324,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       // of the same row, was missing from the alt altogether.
       alt: "A worn wooden rack of rubber stamps photographed from above, the printed labels on their sides reading COPY, PROFORMA, ORIGINAL, DUPLICATE and TRIPLICATE along one row, SURFACE MAIL on a long stamp below them, PAID at the left and INSURED at the right of the row under that, and COPY again along the bottom, with a dark red wooden handled stamp standing in the middle whose red body is a rotary selector listing six settings, AIR PARCEL POST, DO NOT BEND, FIRST CLASS MAIL, FOR DEPOSIT ONLY, HAND STAMP ONLY and PARCEL POST, with a brass winged key at its side",
       caption:
-        "ORIGINAL, DUPLICATE, TRIPLICATE, COPY. Four words on one rack, and every one of them exists because somebody needed to know which version they were holding before they acted on it. A document reader makes a new copy of the facts in a contract and it does not stamp it, so the question those stamps answered becomes yours to answer instead.",
+        "ORIGINAL, DUPLICATE, TRIPLICATE, COPY. Four words on one rack. Every one of them exists because somebody needed to know which version they were holding before they acted on it. A document reader makes a new copy of the facts in a contract, and it does not stamp it. So the question those stamps answered becomes yours to answer instead.",
       credit: "Photograph by mpclemens, CC BY 2.0.",
       ariaLabel: "A rack of office stamps",
     },
@@ -362,7 +362,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From a photograph of a page to a date somebody relies on.",
-      lede: "Six hops, and the products in this category are sold on the first three. The fourth is where a correctly read value becomes a wrong answer, and the fifth is the only one that catches it. Both of those are decisions about your business rather than settings in a piece of software, and neither of them is a question a demonstration answers.",
+      lede: "Six hops, and the products in this category are sold on the first three. The fourth is where a correctly read value becomes a wrong answer. The fifth is the only one that catches it. Both of those are decisions about your business rather than settings in a piece of software. Neither of them is a question a demo answers.",
       steps: DOC_PATH,
       altPrefix:
         "The path from a photographed page to a date on a calendar, through character recognition, field assignment, what the value is counted from and whether a person checks it",
@@ -379,7 +379,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "deals",
           label: "Transactions you close in a year",
-          hint: "Both sides, and count the ones that fell apart after contract, because those generated paperwork too.",
+          hint: "Both sides. Count the ones that fell apart after contract too, because those made paperwork as well.",
           min: 4,
           max: 120,
           step: 2,
@@ -415,7 +415,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "unread",
           label: "Share that goes straight through without the page being opened",
-          hint: "Be honest rather than aspirational. If the point of the build was that somebody stops reading, this number is high by design.",
+          hint: "Be honest rather than hopeful. If the point of the build was that somebody stops reading, this number is high by design.",
           min: 10,
           max: 100,
           step: 5,
@@ -459,7 +459,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Values a year that nobody reads off the page",
-      note: "The headline is the fourth row rather than the hours, because the hours are the reassuring half and the count is the one worth sitting with. Notice what the last row does: at the settings this opens with, checking every single value against its own page is a couple of days of work spread across a year. That is affordable, and it is not what happens, because the whole reason the system exists is so that nobody opens the page. Shares of values produce fractions, and a third of a date is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it, because we have not measured one on your paperwork and the published measurements above are on other people's documents. There is no hours-saved row, both because saving hours is a different article on this site and because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this category invites you to imagine, because the honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
+      note: "The headline is the fourth row rather than the hours. The hours are the reassuring half, and the count is the one worth sitting with. Notice what the last row does. At the settings this opens with, checking every single value against its own page is a couple of days of work spread across a year. That is affordable, and it is not what happens. The whole reason the system exists is so that nobody opens the page. Shares of values produce fractions, and a third of a date is not a thing. So read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it. That is because we have not measured one on your paperwork, and the published measurements above are on other people's documents. There is no hours-saved row. That is partly because saving hours is a different article on this site. It is also because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this category invites you to imagine. The honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
       action: { label: "See how it is built", href: "/services/document-processing" },
       secondary: { label: "Send us one document", href: "/connect" },
     },
@@ -480,7 +480,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       // grey sheet, and that is now what the alt says.
       alt: "A folded sheet of a handwritten and printed deed from 1825, reproduced in black and white, the upper half filled with a looping dark hand describing a boundary, an acreage and a pew in a meeting house, a horizontal fold crease across the middle, then a heavy printed line reading To have and to hold the said granted premises with all the, and beneath it a printed paragraph whose ruled gaps are filled in by hand so that the pronouns and the names in the sentence are handwritten insertions, ending in a printed clause about a wife releasing her right of dower and the words IN WITNESS WHEREOF",
       caption:
-        "A real estate contract has had this shape for two hundred years. A printed paragraph that is identical on every copy, with the part that decides who owns what written into the holes in it by hand. Two hundred years later the format is the same and so is the difficulty: the printed text is easy to read and carries no information, and the handwriting is the whole deal.",
+        "A real estate contract has had this shape for two hundred years. A printed paragraph that is identical on every copy. The part that decides who owns what is written into the holes in it by hand. Two hundred years later the format is the same, and so is the difficulty. The printed text is easy to read and carries no information, and the handwriting is the whole deal.",
       credit: "Photograph by museado, CC0 1.0.",
       ariaLabel: "A deed from 1825 with its blanks filled in by hand",
     },
@@ -499,9 +499,9 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Send us one document you would want read automatically, with anything private crossed out, and tell us the five values you would want off it. We will tell you which of the five are printed in a fixed place, which depend on handwriting, and which one is not really on the page at all and would have to come from a rule you decide.",
+      text: "Send us one document you would want read automatically, with anything private crossed out. Tell us the five values you would want off it. We will tell you which of the five are printed in a fixed place. We will tell you which depend on handwriting. And we will tell you which one is not really on the page at all, and would have to come from a rule you decide.",
       reassure:
-        "It is a short reply from a person, it costs nothing, we do not need access to your transaction folder, and one page is genuinely enough to answer it.",
+        "It is a short reply from a person, and it costs nothing. We do not need access to your transaction folder, and one page is truly enough to answer it.",
       action: { label: "Send us one document", href: "/connect" },
       ariaLabel: "Send us one document",
     },
@@ -512,13 +512,13 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the last file you closed and find the earliest deadline in it. Then answer two questions out loud: what event does that date count from, and where is that event written down. If the answer to the second one is that everybody just knew, you have found the thing a document reader cannot do for you, and you have also found the reason it is worth having one.",
+      text: "Open the last file you closed and find the earliest deadline in it. Then answer two questions out loud. What event does that date count from, and where is that event written down. If the answer to the second one is that everybody just knew, you have found the thing a document reader cannot do for you. And you have also found the reason it is worth having one.",
       actions: [
         { label: "See it on the AI page", href: "/ai#docs", variant: "light" },
         { label: "How it is built", href: "/services/document-processing", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because three things move it and none of them is the reading: how many document TYPES you want handled, because each type is its own set of expectations, whether your originals are files or photographs of paper, and whether there is somewhere for the output to go when it arrives. The AI audit is an hour, done with you, and for this topic it starts by opening one real file rather than a sample one.",
+        "There is no price here, because three things move it and none of them is the reading. The first is how many document TYPES you want handled, because each type is its own set of expectations. The second is whether your originals are files or photographs of paper. The third is whether there is somewhere for the output to go when it arrives. The AI audit is an hour, done with you. For this topic it starts by opening one real file rather than a sample one.",
     },
   },
 

@@ -9,223 +9,223 @@
  * statute carries a real link, and every one of those links was checked for a 200 before it
  * shipped. On a page whose argument is honesty, a dead citation is worse than no citation. */
 
-export const SINGULARITY_POST = `The question came in on a Tuesday in March and the answer that went back was almost right.
+export const SINGULARITY_POST = `The question came in on a Tuesday in March, and the answer that went back was almost right.
 
-Somebody wanted to know whether the tax figure on a listing included the school portion or came separately. It is a common question and it has a real answer. What went back was a fluent sentence that was wrong in a small way. Not wrong enough to be complained about, and not wrong enough to look like an error to anybody who did not already know. Wrong enough that the person reading it decided the site did not really know, and went to find out somewhere else.
+Somebody wanted to know whether the tax figure on a listing included the school portion or came separately. It is a common question, and it has a real answer. What went back was a smooth sentence that was wrong in a small way. Not wrong enough to be complained about. Not wrong enough to look like an error to anybody who did not already know. Wrong enough that the person reading it decided the site did not really know, and went to find out somewhere else.
 
-The same question came in again in April, and in June, and in September, and got the same nearly right answer every time, because nothing about the answer had changed and nothing was ever going to change it on its own. It was not hidden. It sat in the transcripts the whole time, in plain text, with a timestamp on it.
+The same question came in again in April, and in June, and in September. It got the same nearly right answer every time, because nothing about the answer had changed and nothing was ever going to change it on its own. It was not hidden. It sat in the transcripts the whole time, in plain text, with a timestamp on it.
 
-Seven months is not a story about carelessness. It is a story about the fact that reading a year of conversations is not a job anybody in a brokerage has, and that the systems producing those conversations had never once been asked to read themselves.
+Seven months is not a story about carelessness. It is a story about two facts. Reading a year of conversations is not a job anybody in a brokerage has. And the systems producing those conversations had never once been asked to read themselves.
 
-There is a second version of that story and it is the worse one, because in it somebody did notice. A sentence on this website once told a reader they would own something they were in fact going to be licensing. It was spotted, corrected in the three places anybody could think of, and reported as fixed. A sweep the same afternoon found it still alive in two more, in the caption under a diagram and in the alt text underneath that. Nobody was careless there either. The correction had been made to some pages rather than written down anywhere that the next piece of work would be obliged to read.
+There is a second version of that story, and it is the worse one, because in it somebody did notice. A sentence on this website once told a reader they would own something they were in fact going to be licensing. It was spotted. It was corrected in the three places anybody could think of, and reported as fixed. A sweep the same afternoon found it still alive in two more, in the caption under a diagram and in the alt text underneath that. Nobody was careless there either. The correction had been made to some pages. It had not been written down anywhere that the next piece of work would be obliged to read.
 
-Both failures have the same cause and it is not a model that was not clever enough. Neither arrangement had a memory it had to read before starting, and neither had anything standing outside it able to say no. What fixed the second one was not a better sentence. It was six lines in a test file, naming the claim, saying why it was wrong, and failing the build if that wording appears again in any of the files the blog and service copy lives in. Those six lines now run on every change anybody makes, forever, and that is this entire article written small.
+Both failures have the same cause, and it is not a model that was not clever enough. Neither setup had a memory it had to read before starting. Neither had anything standing outside it able to say no. What fixed the second one was not a better sentence. It was six lines in a test file. They name the claim. They say why it was wrong. And they fail the build if that wording appears again in any of the files the blog and service copy lives in. Those six lines now run on every change anybody makes, forever, and that is this entire article written small.
 
 [[scene:in-short]]
 
 ## What the name is claiming, and what it is not
 
-Singularity is a borrowed word and it is worth taking it off the table before it does any damage. In the argument it was borrowed from, it names a point at which machine intelligence starts improving itself so quickly that nothing past it can be predicted. That is not what is being sold here, this article is not going to defend it, and anybody using the word that way about a piece of business software is selling you a feeling.
+Singularity is a borrowed word, and it is worth taking it off the table before it does any damage. In the argument it was borrowed from, it names a point at which machine intelligence starts improving itself so quickly that nothing past it can be predicted. That is not what is being sold here. This article is not going to defend it. And anybody using the word that way about a piece of business software is selling you a feeling.
 
-What the name is actually marking is a smaller and far more checkable transition. It is the point at which the software you bought stops being a fixed object you own and becomes a thing that keeps changing, using your own material, with somebody's signature on every change.
+What the name is actually marking is a smaller change, and a far easier one to check. It is the point at which the software you bought stops being a fixed object you own. It becomes a thing that keeps changing, using your own material, with somebody's signature on every change.
 
-In plain terms: one system stands up the other agents, hands each of them its instructions, holds the single record they all read from and write to, keeps what it has learned about your business in files it has to read again before it starts anything, and proposes one change at a time to any of it. Some of those changes are to the written half, meaning instructions, worked examples and the rules that decide which question goes where. Some of them are to the software itself, which it writes. And it does that work the way a person at the desk would: in the terminal, in the files, and in a real browser, opening the thing it just changed and clicking through it to see how it actually behaves.
+In plain terms, one system stands up the other agents. It hands each of them its instructions. It holds the single record they all read from and write to. It keeps what it has learned about your business in files it has to read again before it starts anything. And it proposes one change at a time to any of it. Some of those changes are to the written half, meaning instructions, worked examples and the rules that decide which question goes where. Some of them are to the software itself, which it writes. And it does that work the way a person at the desk would. It works in the terminal, in the files, and in a real browser. It opens the thing it just changed and clicks through it to see how it really behaves.
 
-That second part is the one most descriptions of this category are careful to deny, and denying it is the easy way to sound responsible. The denial would also be false here, so it is not going to be made. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until a test suite that cannot be talked round has run over it and a person has read the change and said yes.
+That second part is the one most descriptions of this category are careful to deny. Denying it is the easy way to sound responsible. The denial would also be false here, so it is not going to be made. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until two things have happened. A test suite that cannot be talked round has to run over it. And a person has to read the change and say yes.
 
-That is a smaller claim than the word usually carries and a larger one than most vendors will make out loud, which is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any mechanism at all for noticing that it has been wrong in the same way hundreds of times, and that absence is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming, and the rest of this piece is about whether the claim survives contact with the research.
+That is a smaller claim than the word usually carries, and a larger one than most vendors will make out loud. That is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any way at all of noticing that it has been wrong in the same way hundreds of times. That gap is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming. The rest of this piece is about whether the claim survives contact with the research.
 
-There are two halves to what is being bought and they deserve to be argued separately. The shared memory works from the first week and is easy to check. The improving is the one worth being sceptical about, and the published evidence on it is not flattering.
+There are two halves to what is being bought, and they deserve to be argued separately. The shared memory works from the first week, and it is easy to check. The improving is the one worth being sceptical about, and the published evidence on it is not flattering.
 
 ## Seven months is not unusual, it is the default
 
 Start with why nobody caught it, because the answer is not that somebody was asleep.
 
-Nothing failed. No process crashed, no request timed out, no alert fired, and by every measure a piece of software has of itself, all of those conversations completed successfully. A system can only notice the failure modes somebody has given it a definition of, and confident and slightly wrong is not one of them. It looks identical to confident and correct from the inside, which is the entire problem.
+Nothing failed. No process crashed. No request timed out. No alert fired. By every measure a piece of software has of itself, all of those conversations completed successfully. A system can only notice the failure modes somebody has given it a definition of. Confident and slightly wrong is not one of them. From the inside it looks exactly like confident and correct, which is the entire problem.
 
-Then there is where the evidence lives. The phone system holds the calls. The website holds the chats. The CRM holds whatever a person typed into it afterwards, in whatever words they chose, and the shared inbox holds the rest. Four stores, four formats, four logins, and nowhere that a question and the answer it got can be counted together. Somebody willing to do the reading would have to do it four times and then reconcile it by hand, and that is before deciding what counts as the same question asked twice.
+Then there is where the evidence lives. The phone system holds the calls. The website holds the chats. The CRM holds whatever a person typed into it afterwards, in whatever words they chose. The shared inbox holds the rest. Four stores, four formats, four logins, and nowhere that a question and the answer it got can be counted together. Somebody willing to do the reading would have to do it four times and then match the four sets up by hand. And that is before deciding what counts as the same question asked twice.
 
-And the reading is the part that never happens. Not because anybody is lazy, but because the volume arrives at a rate that assumes nobody will ever go back. Every week produces a new week. Nothing about the arrangement produces an hour in which last week gets looked at, and an hour that is not in the calendar is an hour that does not exist.
+And the reading is the part that never happens. Not because anybody is lazy, but because the volume arrives at a rate that assumes nobody will ever go back. Every week produces a new week. Nothing about the setup produces an hour in which last week gets looked at. And an hour that is not in the calendar is an hour that does not exist.
 
-So the defect has a very particular signature. It is cheap to fix once found, close to impossible to find, and it does not decay. A broken integration announces itself inside a day because something visible stops. A wrong sentence goes out at exactly the same rate for as long as the question keeps being asked, never gets worse, and therefore never crosses the threshold where anybody escalates it. The person most likely to discover it for you is a client, and by then it is not a defect, it is a conversation about whether they can trust anything else you told them.
+So the defect has a shape all of its own. It is cheap to fix once found. It is close to impossible to find. And it does not decay. A broken integration announces itself inside a day, because something visible stops. A wrong sentence goes out at exactly the same rate for as long as the question keeps being asked. It never gets worse, so it never crosses the line where anybody escalates it. The person most likely to discover it for you is a client. And by then it is not a defect. It is a conversation about whether they can trust anything else you told them.
 
 ## The obvious fix is to let it check its own work
 
-The intuitive answer is to have the system check itself. If it can write an answer it can read one, so let it read what it just wrote, notice the problem, and try again. That is not a strawman. It is roughly what most products in this category mean when they use the word improving, and it has been tested properly by people with no product to sell.
+The natural answer is to have the system check itself. If it can write an answer it can read one. So let it read what it just wrote, notice the problem, and try again. That is not a straw man. It is roughly what most products in this category mean when they use the word improving. And it has been tested properly by people with no product to sell.
 
-A team at Google DeepMind and the University of Illinois Urbana-Champaign put the question directly in a paper called [Large Language Models Cannot Self-Correct Reasoning Yet](https://arxiv.org/abs/2310.01798), published at ICLR in 2024. Their setup is deliberately plain. Ask the model a question. Then ask it to review what it wrote and report any serious problems it finds. Then ask it to answer the original question again with that feedback in hand. Two rounds at most, and nothing whatsoever from outside the model at any point, which is the condition they call intrinsic self correction.
+A team at Google DeepMind and the University of Illinois Urbana-Champaign put the question directly. They did it in a paper called [Large Language Models Cannot Self-Correct Reasoning Yet](https://arxiv.org/abs/2310.01798), published at ICLR in 2024. Their setup is deliberately plain. Ask the model a question. Then ask it to review what it wrote and report any serious problems it finds. Then ask it to answer the original question again with that feedback in hand. Two rounds at most, and nothing whatsoever from outside the model at any point. That is the condition they call intrinsic self correction.
 
 The result goes the wrong way.
 
 [[scene:self-review]]
 
-Look at what happened between the first bar and the third. The model was not given worse questions, a smaller budget or a shorter prompt. It was given more chances and more of its own thinking, and it ended up further from the right answer than it started. Two extra rounds of careful review bought a worse score.
+Look at what happened between the first bar and the third. The model was not given worse questions, a smaller budget or a shorter prompt. It was given more chances and more of its own thinking. And it ended up further from the right answer than it started. Two extra rounds of careful review bought a worse score.
 
-The mechanism is not mysterious and it is worth naming, because it is the thing that will happen inside any product built the naive way. A model instructed to look for a problem in an answer will produce a problem, in the same way it produces everything else, whether or not there is one there. When the answer was already right, the review manufactures a reason to change it. That is why the effect is strongest where the wrong options look plausible: on a multiple choice commonsense set in the same table, the older model fell from 75.8 percent to 38.1 after a single round of reviewing itself.
+The mechanism is not mysterious, and it is worth naming. That is because it is the thing that will happen inside any product built the naive way. A model told to look for a problem in an answer will produce a problem, in the same way it produces everything else. It does that whether or not there is one there. When the answer was already right, the review makes up a reason to change it. That is why the effect is strongest where the wrong options look believable. On a multiple choice commonsense set in the same table, the older model fell from 75.8 percent to 38.1. That was after a single round of reviewing itself.
 
-There is an obvious objection to all of this, which is that grade school word problems are not a conversation about a house. That is right, and it is why this paper is here rather than a study of brokerages, which does not exist and is not going to. What carries over is not the percentage. It is the mechanism, and the mechanism is about how these models behave when asked to grade themselves, which does not become a different mechanism because the subject changed to property taxes.
+There is an obvious objection to all of this, which is that grade school word problems are not a conversation about a house. That is right. It is also why this paper is here rather than a study of brokerages, which does not exist and is not going to. What carries over is not the percentage. It is the mechanism. The mechanism is about how these models behave when asked to grade themselves. It does not become a different mechanism because the subject changed to property taxes.
 
 ## What changed between those two numbers was not the model
 
-The same paper runs a second condition and it is the one worth the price of admission.
+The same paper runs a second condition, and it is the one worth the price of admission.
 
-Everything is held constant: the same model, the same questions, the same three step prompting. The single difference is that the correct answer is used to decide whether another attempt is needed at all. In the paper's words, if the answer is already correct, no further self correction will be performed.
+Everything is held constant. That means the same model, the same questions, the same three step prompting. The single difference is that the correct answer is used to decide whether another attempt is needed at all. In the paper's words, if the answer is already correct, no further self correction will be performed.
 
-Under that condition the older model went from 75.9 percent to 84.3 on the same grade school set, and from 75.8 to 89.7 on the commonsense set where reviewing itself had previously cost it half its score. The stronger model went from 95.5 to 97.5.
+Under that condition the older model went from 75.9 percent to 84.3 on the same grade school set. On the commonsense set, where reviewing itself had previously cost it half its score, it went from 75.8 to 89.7. The stronger model went from 95.5 to 97.5.
 
-It looks like cheating, and in a sense it is, because knowing which answers are wrong is a great deal of the work of fixing them. But that is the finding rather than a flaw in it. The ability to produce a better answer was sitting there in both conditions. What the first condition lacked was any reliable way of knowing when to reach for it, and the model could not supply that from inside itself.
+It looks like cheating, and in a sense it is. That is because knowing which answers are wrong is a great deal of the work of fixing them. But that is the finding rather than a flaw in it. The ability to produce a better answer was sitting there in both conditions. What the first condition lacked was any reliable way of knowing when to reach for it. And the model could not supply that from inside itself.
 
-The same shape shows up in the places where reflection genuinely works. [Reflexion](https://arxiv.org/abs/2303.11366), from a team at Northeastern, MIT and Princeton, has a language agent write code, reflect in ordinary words on what went wrong, and try again, and it reports 91.0 percent on the HumanEval Python benchmark against 80.1 for the strongest previous result. The reflecting is doing real work there. It is also standing on something the arithmetic experiments never had: the code gets executed, and a run that fails is a fact rather than an opinion the model formed about itself.
+The same shape shows up in the places where reflection truly works. [Reflexion](https://arxiv.org/abs/2303.11366), from a team at Northeastern, MIT and Princeton, has a language agent write code, reflect in ordinary words on what went wrong, and try again. It reports 91.0 percent on the HumanEval Python benchmark, against 80.1 for the strongest previous result. The reflecting is doing real work there. It is also standing on something the arithmetic experiments never had. The code gets run, and a run that fails is a fact rather than an opinion the model formed about itself.
 
-There is an honest footnote on that number and it is worth printing, because it makes the point sharper rather than weaker. The tests telling that agent it got something wrong are written by the agent. Reflexion generates its own unit tests and scores its attempts against them, which the authors say plainly, and the paper behind the first chart on this page lists Reflexion, for its reasoning results rather than its coding ones, in its own table of studies whose reported gains lean on knowing the right answer. So the running is genuinely outside the model and the standard is not. A model checking its work against an exam it also wrote is still in better shape than one checking from memory, and it is not the same thing as a suite somebody else insisted on. The suite in this system is the second kind: every test in it was approved by a person, each one is there because something went wrong once, and the list only ever gets longer.
+There is an honest footnote on that number, and it is worth printing. That is because it makes the point sharper rather than weaker. The tests telling that agent it got something wrong are written by the agent. Reflexion generates its own unit tests and scores its attempts against them, which the authors say plainly. And the paper behind the first chart on this page lists Reflexion, for its reasoning results rather than its coding ones, in its own table of studies whose reported gains lean on knowing the right answer. So the running is genuinely outside the model, and the standard is not. A model checking its work against an exam it also wrote is still in better shape than one checking from memory. It is also not the same thing as a suite somebody else insisted on. The suite in this system is the second kind. Every test in it was approved by a person. Each one is there because something went wrong once. And the list only ever gets longer.
 
-Which puts the dividing line in this entire subject somewhere other than where the marketing puts it. It is not how clever the reviewer is, how large the model is, or how carefully the reflection prompt is written. It is whether anything in the arrangement is capable of telling it no.
+Which puts the dividing line in this entire subject somewhere other than where the marketing puts it. It is not how clever the reviewer is, how large the model is, or how carefully the reflection prompt is written. It is whether anything in the setup is able to tell it no.
 
 ## So the whole question is what plays the part of the compiler
 
-In software there is a compiler and a test suite, and both of them will tell you flatly that you are wrong without caring how confident you sounded. In a brokerage there is no such thing, which is where most people stop and conclude that none of this applies.
+In software there is a compiler and a test suite. A compiler is the program that turns written code into something a machine can run. Both of them will tell you flatly that you are wrong, and neither cares how confident you sounded. In a brokerage there is no such thing, which is where most people stop and conclude that none of this applies.
 
-Two things are worth noticing before agreeing with that. The first is that one half of this system never left engineering at all. A good deal of the work is building and changing the software the agents run on, and there the compiler is not a metaphor. The change gets written, the type checker runs, the test suite runs, and a probe opens the finished page at three widths and measures what is actually on the screen. Not one of them cares what the model believed about its own work, and any one of them can refuse the change on its own. That is precisely the condition the reflection experiments were missing, which is why the half of this that writes software is the half that can be trusted to move quickly.
+Two things are worth noticing before agreeing with that. The first is that one half of this system never left engineering at all. A good deal of the work is building and changing the software the agents run on. There the compiler is not a figure of speech. The change gets written. The type checker runs. The test suite runs. And a probe opens the finished page at three widths and measures what is actually on the screen. Not one of them cares what the model believed about its own work. And any one of them can refuse the change on its own. That is exactly the condition the reflection experiments were missing. It is why the half of this that writes software is the half that can be trusted to move quickly.
 
 The second is that the other half, the one talking to your clients, has no compiler and is never going to get one. What it has instead is history, and history is weaker in a way worth being exact about.
 
-Every conversation your agents have already had comes with an outcome attached, and you know what that outcome was. Somebody booked a viewing. Somebody went quiet directly after a particular sentence and never came back. Somebody had to be telephoned the next morning because what they had been told was wrong, and there is a note in the record saying so. That is not ground truth in the sense a compiler is, and calling it that would be the first dishonest sentence in this article. It is something weaker and still useful: a large body of material where the answer given and what happened next are both written down, by something other than the model that produced the answer.
+Every conversation your agents have already had comes with an outcome attached, and you know what that outcome was. Somebody booked a viewing. Somebody went quiet right after a particular sentence and never came back. Somebody had to be telephoned the next morning because what they had been told was wrong. There is a note in the record saying so. That is not ground truth in the sense a compiler is. Calling it that would be the first dishonest sentence in this article. It is something weaker, and still useful. It is a large body of material where the answer given and what happened next are both written down. And they were written down by something other than the model that produced the answer.
 
-So the loop that the word improving is actually describing is this. Start from what is written down, which is the record of the work and every correction anybody has ever given it. Find the single weakest point. Propose one change, whether that is a sentence, a routing rule or a piece of software. Put it in front of whatever is capable of saying no, which for code is a test suite and for a conversation is history. Keep it only if it does better. Have a person read it and approve it before it reaches anybody. Then write down what changed, what it replaced and what it beat, so the next pass starts from that rather than from nothing.
+So the loop that the word improving is actually describing is this. Start from what is written down, which is the record of the work and every correction anybody has ever given it. Find the single weakest point. Propose one change, whether that is a sentence, a routing rule or a piece of software. Put it in front of whatever is able to say no. For code that is a test suite, and for a conversation it is history. Keep it only if it does better. Have a person read it and approve it before it reaches anybody. Then write down what changed, what it replaced and what it beat, so the next pass starts from that rather than from nothing.
 
 [[scene:loop]]
 
-Everything interesting about this is in the last three steps, and everything cheap to build is in the first two. That is worth knowing when somebody demonstrates one to you, because a weekly summary of what your agents did is a reporting feature with an impressive vocabulary, and it is what a lot of this gets sold as.
+Everything interesting about this is in the last three steps, and everything cheap to build is in the first two. That is worth knowing when somebody shows you one. That is because a weekly summary of what your agents did is a reporting feature with an impressive vocabulary. It is what a lot of this gets sold as.
 
 ## One change at a time, and the reason is not modesty
 
 The single change rule sounds like caution, or like a vendor managing expectations. It is neither. It falls straight out of what these systems are.
 
-In 2015 a group of ten Google engineers wrote [Hidden Technical Debt in Machine Learning Systems](https://proceedings.neurips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html), which has become the standard reference for why machine learning systems rot in ways ordinary software does not. They give the central problem a name that stuck: the CACE principle, standing for Changing Anything Changes Everything. They are explicit that it "applies not only to input signals, but also to hyper-parameters, learning settings, sampling methods, convergence thresholds, data selection, and essentially every other possible tweak".
+In 2015 a group of ten Google engineers wrote [Hidden Technical Debt in Machine Learning Systems](https://proceedings.neurips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html). It has become the standard reference for why machine learning systems rot in ways ordinary software does not. They give the central problem a name that stuck. It is the CACE principle, standing for Changing Anything Changes Everything. They are explicit that it "applies not only to input signals, but also to hyper-parameters, learning settings, sampling methods, convergence thresholds, data selection, and essentially every other possible tweak".
 
-The same paper has a section on configuration debt that reads like a description of a stack of agents nobody has tidied since the build. "In a mature system which is being actively developed, the number of lines of configuration can far exceed the number of lines of the traditional code. Each configuration line has a potential for mistakes." Their examples are about features and logging dates. Yours are about which questions get routed to a person, which phrasing the assistant uses when it does not know, and which of four agents is allowed to promise a callback.
+The same paper has a section on configuration debt that reads like a description of a stack of agents nobody has tidied since the build. "In a mature system which is being actively developed, the number of lines of configuration can far exceed the number of lines of the traditional code. Each configuration line has a potential for mistakes." Their examples are about features and logging dates. Yours are about which questions get routed to a person. They are about which phrasing the assistant uses when it does not know. And they are about which of four agents is allowed to promise a callback.
 
-That is the argument for one change, and it has nothing to do with going slowly. If two things change together and it comes out better, you have learned nothing you can act on, because you cannot say which one to keep, which one to undo, or whether one of them is quietly cancelling out the other. A round in which twenty things changed produced a mood rather than a finding.
+That is the argument for one change, and it has nothing to do with going slowly. If two things change together and it comes out better, you have learned nothing you can act on. That is because you cannot say which one to keep, which one to undo, or whether one of them is quietly cancelling out the other. A round in which twenty things changed produced a mood rather than a finding.
 
-There is a second reason and it is about you rather than about the software. One change is a size a person can actually read and approve without it becoming a rubber stamp, and when the change is code, reading it means reading the difference between the old file and the new one, which is a short document by design. Twenty is not that size, and the failure mode of twenty is not that somebody rejects the wrong one. It is that after the third week nobody reads any of them.
+There is a second reason, and it is about you rather than about the software. One change is a size a person can really read and approve without it becoming a rubber stamp. When the change is code, reading it means reading the difference between the old file and the new one. That difference is a short document by design. Twenty is not that size. And the failure mode of twenty is not that somebody rejects the wrong one. It is that after the third week nobody reads any of them.
 
 ## Most of the changes will not work, and that is the normal result
 
-Here is the number that decides whether any of this is worth doing, and it comes from the people who built the apparatus for measuring it.
+Here is the number that decides whether any of this is worth doing. It comes from the people who built the tools for measuring it.
 
-In 2009 three people who ran Microsoft's experimentation platform published a case study called [Online Experimentation at Microsoft](https://exp-platform.com/Documents/ExP_DMCaseStudies.pdf), covering experiments across eighteen of the company's properties, one of which was MSN Real Estate. The fifth section is titled Most Ideas Fail to Show Value, and the sentence in it is this: "Evaluating well-designed and executed experiments that were designed to improve a key metric, only about one-third were successful at improving the key metric!"
+In 2009 three people who ran Microsoft's experimentation platform published a case study called [Online Experimentation at Microsoft](https://exp-platform.com/Documents/ExP_DMCaseStudies.pdf). It covers experiments across eighteen of the company's properties, and one of those was MSN Real Estate. The fifth section is titled Most Ideas Fail to Show Value. The sentence in it is this. "Evaluating well-designed and executed experiments that were designed to improve a key metric, only about one-third were successful at improving the key metric!"
 
-Sit with that for a moment before deciding what it means. It is not a statement about a careless team. It is a statement about a company with a dedicated experimentation platform, running well designed experiments, on ideas that had already survived somebody's judgement about whether they were worth building. Two in three of those did nothing or made things worse.
+Sit with that for a moment before deciding what it means. It is not a statement about a careless team. It is a statement about a company with a dedicated experimentation platform, running well designed experiments. The ideas had already survived somebody's judgement about whether they were worth building. Two in three of those did nothing or made things worse.
 
-That figure is the argument for the whole apparatus rather than an argument against it. If most good ideas fail, then a system that ships every idea it has is not improving anything, it is walking randomly, and it will be worse in six months than it is today with total consistency and excellent intentions. The value is not in generating the ideas. Generating plausible changes is the cheapest thing any of this does. The value is entirely in the step that throws most of them away.
+That figure is the argument for the whole apparatus rather than an argument against it. If most good ideas fail, then a system that ships every idea it has is not improving anything. Then it is walking at random, and it will be worse in six months than it is today, with total consistency and excellent intentions. The value is not in coming up with the ideas. Coming up with believable changes is the cheapest thing any of this does. The value is entirely in the step that throws most of them away.
 
-It also sets the honest expectation for what a normal round looks like, which no product page will tell you. Most of the time the loop proposes something, the test says no, and the correct output is that nothing changed. The written record of this system's own build has a section for exactly that: what was tried, and what was reverted the same day for failing its own gate. A vendor promising a measurable gain every week is describing a sales cycle rather than a system.
+It also sets the honest expectation for what a normal round looks like, which no product page will tell you. Most of the time the loop proposes something, the test says no, and the correct output is that nothing changed. The written record of this system's own build has a section for exactly that. It lists what was tried, and what was reverted the same day for failing its own gate. A vendor promising a measurable gain every week is describing a sales cycle rather than a system.
 
 ## The grader is not the truth either
 
-For the half with no compiler, the replay is the load bearing step, so it is the one that deserves the hardest look, and this is where an honest version of this article has to give something away.
+For the half with no compiler, the replay is the step everything rests on. So it is the one that deserves the hardest look. This is where an honest version of this article has to give something away.
 
-Replaying a proposed change against conversations that already happened is an estimate, not a measurement. The recorded conversation went the way it did partly because of what the old version said, and every turn after that was shaped by it. A changed answer at turn two means turn three would not have happened the way it is written down, and no amount of care makes that stop being true. What you get back is a model of what would probably have happened, and the honest question is how often that model is wrong.
+Replaying a proposed change against conversations that already happened is an estimate, not a measurement. The recorded conversation went the way it did partly because of what the old version said. Every turn after that was shaped by it. A changed answer at turn two means turn three would not have happened the way it is written down. No amount of care makes that stop being true. What you get back is a model of what would probably have happened. The honest question is how often that model is wrong.
 
-Somebody has actually measured it. [Offline A/B testing for Recommender Systems](https://arxiv.org/abs/1801.07030), presented at WSDM in 2018 by a team at Criteo Research, took a proprietary history of 39 real online experiments and asked how well four different offline methods predicted the results the live tests eventually produced.
+Somebody has actually measured it. [Offline A/B testing for Recommender Systems](https://arxiv.org/abs/1801.07030) was presented at WSDM in 2018 by a team at Criteo Research. It took a proprietary history of 39 real online experiments. It asked how well four different offline methods predicted the results the live tests eventually produced.
 
 [[scene:offline-estimate]]
 
 [[scene:plate]]
 
-The reason to publish that chart on a page selling the thing it criticises is that the alternative is worse. The alternative is testing every proposed change on live clients, which is slow, and which spends the goodwill of real people on ideas that mostly will not work. The offline replay is how the obviously bad ones get killed cheaply. It is not how anything gets proved.
+The reason to publish that chart on a page selling the thing it criticises is that the alternative is worse. The alternative is testing every proposed change on live clients. That is slow, and it spends the goodwill of real people on ideas that mostly will not work. The offline replay is how the obviously bad ones get killed cheaply. It is not how anything gets proved.
 
-What follows from taking it seriously is the design of the last two steps. The replay narrows the field, a person decides, and the change that ships is watched afterwards rather than filed as finished. That third part is the one most easily skipped and it is the one that catches the false positives, which the same paper reports at close to half of everything its best method approved.
+What follows from taking it seriously is the design of the last two steps. The replay narrows the field. A person decides. And the change that ships is watched afterwards rather than filed as finished. That third part is the one most easily skipped, and it is the one that catches the false positives. The same paper reports those at close to half of everything its best method approved.
 
 ## Who has to be in the loop, and what they actually do
 
-Every version of this that is safe to run has a person in it, and it is worth being specific about what that person is for, because approval can easily become a signature on something nobody read.
+Every version of this that is safe to run has a person in it. It is worth being specific about what that person is for, because approval can easily become a signature on something nobody read.
 
-They are not there to check the arithmetic. The comparison is either run properly or it is not, and a person reading a table of numbers is not going to catch a badly built replay. When the change is code, what they are reading is the difference between two files and the list of tests that went green underneath it, which is a ten minute job rather than an engineering one. They are there for three things no test and no replay can do.
+They are not there to check the arithmetic. The comparison is either run properly or it is not. A person reading a table of numbers is not going to catch a badly built replay. When the change is code, what they are reading is the difference between two files, and the list of tests that went green underneath it. That is a ten minute job rather than an engineering one. They are there for three things no test and no replay can do.
 
-The first is deciding whether the new answer is better or merely different. A loop can tell you that a rewritten explanation of the closing timeline produced more booked calls in the replay. Only somebody who does this for a living can tell you that the new phrasing promises something you cannot always deliver, and that the extra calls are going to turn into a different problem in April.
+The first is deciding whether the new answer is better or merely different. A loop can tell you that a rewritten explanation of the closing timeline produced more booked calls in the replay. Only somebody who does this for a living can tell you two more things. That the new phrasing promises something you cannot always deliver. And that the extra calls are going to turn into a different problem in April.
 
-The second is catching the change that optimises the measurement rather than the business. Whatever the replay counts as a win is what the system will slowly become good at, and it will find routes to it that nobody intended. If booked calls are the target, pressing harder for calls is a valid strategy, including with the people who were never going to buy.
+The second is catching the change that improves the measurement rather than the business. Whatever the replay counts as a win is what the system will slowly become good at. And it will find routes to it that nobody intended. If booked calls are the target, then pressing harder for calls is a valid strategy, including with the people who were never going to buy.
 
-The third is remembering the things that are not in the record at all. A rule that exists because of a conversation with your broker two years ago, a phrase you will not use because of what it cost somebody once, a question that always goes to a person for reasons that have nothing to do with how well the software handles it. None of that is in the transcripts, so none of it is in the replay.
+The third is remembering the things that are not in the record at all. A rule that exists because of a conversation with your broker two years ago. A phrase you will not use because of what it cost somebody once. A question that always goes to a person for reasons that have nothing to do with how well the software handles it. None of that is in the transcripts, so none of it is in the replay.
 
 Ten minutes on one change, with the comparison in front of them. That is the actual ask, and a version of this that needs more than that from you has been built wrong.
 
 ## The other half, which is the one memory
 
-All of the above is the part worth being sceptical about. The other half is not clever at all and it is the part clients notice.
+All of the above is the part worth being sceptical about. The other half is not clever at all, and it is the part clients notice.
 
-If a person explains their situation on the phone on Tuesday and then explains it again to the website on Thursday, that is not a technical shortcoming that a smarter model fixes. It is four products that have never been introduced. Every one of them is doing its own job correctly and none of them has any way of knowing what the others were told.
+If a person explains their situation on the phone on Tuesday and then explains it again to the website on Thursday, that is not a technical fault a smarter model fixes. It is four products that have never been introduced. Every one of them is doing its own job correctly. None of them has any way of knowing what the others were told.
 
 [[scene:memory]]
 
-The thing to notice in the second column is that nothing in it is clever. There is no inference, no prediction and no model doing anything impressive. Every item is a fact somebody said out loud, written to one place instead of four, and read back by whatever they happened to reach next. That is the whole mechanism, and it is why this half works from the week it is switched on rather than in month six.
+The thing to notice in the second column is that nothing in it is clever. There is no inference, no prediction and no model doing anything impressive. Every item is a fact somebody said out loud, written to one place instead of four, and read back by whatever they happened to reach next. That is the whole mechanism. It is why this half works from the week it is switched on rather than in month six.
 
 It is also the half that makes the other half possible. A loop cannot find the weakest question of the week if the week is scattered across four systems that count things differently. The shared record is not a feature sitting next to the improvement loop. It is the floor the loop stands on.
 
 ## What actually persists, and what does not
 
-Memory is a generous word for what is happening and it is worth replacing with the literal version, because the generous version leads people to expect things that are not there.
+Memory is a generous word for what is happening. It is worth replacing with the literal version, because the generous version leads people to expect things that are not there.
 
-What persists is files. Not a model that has quietly learned you, which is what most people picture and is not what this is. There is a record of the conversations, with what was said, when, on which channel, and whatever outcome got attached. There is a set of written instructions: the prompts, the worked examples, the routing rules, the standing constraints. There is an index of what has been learned about the work, kept one file per area of it, and the index plus the file covering the job in hand has to be read before that job starts. And there is a pile of tests that only grows, because each one exists on account of something that went wrong once in a way nobody wants to find twice.
+What persists is files. Not a model that has quietly learned you, which is what most people picture and is not what this is. There is a record of the conversations, with what was said, when, on which channel, and whatever outcome got attached. There is a set of written instructions. That set is the prompts, the worked examples, the routing rules and the limits that always apply. There is an index of what has been learned about the work, kept one file per area of it. The index, plus the file covering the job in hand, has to be read before that job starts. And there is a pile of tests that only grows. That is because each one exists on account of something that went wrong once, in a way nobody wants to find twice.
 
-The distinction that matters commercially is between two clocks. Inside a single session the system holds everything in front of it and then forgets all of it the moment the session ends, in the same way a person walking out of a meeting does. What survives is only what got written to one of those files, which is why writing to them is a step in the work rather than a courtesy afterwards. A correction that was made in conversation and never written down was not a correction. It was a conversation.
+The distinction that matters commercially is between two clocks. Inside a single session the system holds everything in front of it. Then it forgets all of it the moment the session ends, in the same way a person walking out of a meeting does. What survives is only what got written to one of those files. That is why writing to them is a step in the work rather than a courtesy afterwards. A correction that was made in conversation and never written down was not a correction. It was a conversation.
 
-The same shape is what lets a job outlast a sitting. A session works unattended for hours, and a task that needs days survives them, because every stopping point is written down before the session ends and the next one is obliged to read it before starting. What never changes with the length of the run is the gate: however long it worked alone, nothing it wrote ships until the tests have run and a person has said yes.
+The same shape is what lets a job outlast a sitting. A session works unattended for hours, and a task that needs days survives them. That is because every stopping point is written down before the session ends, and the next session is obliged to read it before starting. What never changes with the length of the run is the gate. However long it worked alone, nothing it wrote ships until the tests have run and a person has said yes.
 
-That shape is worth insisting on for a reason that has nothing to do with technology. A memory kept in files is one you can open, read, disagree with, correct and take with you. A memory kept inside somebody else's model is one you are renting, and you will find out what is in it the day it is wrong.
+That shape is worth insisting on for a reason that has nothing to do with technology. A memory kept in files is one you can open, read, disagree with, correct and take with you. A memory kept inside somebody else's model is one you are renting. You will find out what is in it the day it is wrong.
 
-What does not persist is anything the system was not connected to. A deal that lived in a spreadsheet on somebody's desktop is a deal it has never heard of. A commitment made in a car park is not in there. An agent's judgement about a seller who was not being straight about their timeline is not in there unless somebody typed it in, and mostly nobody typed it in.
+What does not persist is anything the system was not connected to. A deal that lived in a spreadsheet on somebody's desktop is a deal it has never heard of. A commitment made in a car park is not in there. An agent's judgement about a seller who was not being straight about their timeline is not in there, unless somebody typed it in. And mostly nobody typed it in.
 
-This matters commercially rather than philosophically, because the gap between those two lists is where every disappointment with this category comes from. A system that knows what it was connected to and says so plainly when it does not know is a useful colleague. One that has been described as knowing everything will be believed on the day it confidently fills a gap, and that is the day it costs you something.
+This matters commercially rather than philosophically, because the gap between those two lists is where every disappointment with this category comes from. A system that knows what it was connected to, and says so plainly when it does not know, is a useful colleague. One that has been described as knowing everything will be believed on the day it confidently fills a gap. And that is the day it costs you something.
 
 [[scene:reading-calculator]]
 
 ## What it costs, and how long it takes
 
-There is no price on this page and there is not going to be one, because the number is set by things that cannot be seen from here. Three of them, and only one is the software.
+There is no price on this page, and there is not going to be one. That is because the number is set by things that cannot be seen from here. Three of them, and only one is the software.
 
-The first is how many places have to be joined up before there is one record at all. This is the whole job on most engagements. A brokerage running a phone system, a website, one CRM and a calendar is a different piece of work from one running four CRMs because three offices merged and nobody ever finished the migration. Anybody quoting before they have asked which of those you are has quoted a template.
+The first is how many places have to be joined up before there is one record at all. This is the whole job on most builds. A brokerage running a phone system, a website, one CRM and a calendar is one piece of work. A brokerage running four CRMs, because three offices merged and nobody ever finished the move, is a different one. Anybody quoting before they have asked which of those you are has quoted a template.
 
-The second is the running cost of the loop itself, and it is the smallest of the three. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. Work that writes and tests software costs more than that, and it is still not the number that decides anything here. What is not free is the ten minutes of your week, and unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
+The second is the running cost of the loop itself, and it is the smallest of the three. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. Work that writes and tests software costs more than that, and it is still not the number that decides anything here. What is not free is the ten minutes of your week. Unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
 
-The third is what you already have. If the agents are not there yet, this is not the first thing to buy, and a vendor who sells you an improvement loop for a system with two months of thin history is selling you a mechanism with nothing to work on.
+The third is what you already have. If the agents are not there yet, this is not the first thing to buy. A vendor who sells you an improvement loop for a system with two months of thin history is selling you a mechanism with nothing to work on.
 
-On timing, the honest shape has two very different halves. The shared record changes what a client experiences within the first fortnight, because it removes repetition from the first conversation onwards, and you can verify that yourself by calling your own office and then opening your own website. The loop is slower and honestly so. It needs enough real conversations to separate a genuine weak point from a bad fortnight, which for most brokerages is months rather than weeks, and anyone quoting a shorter timeline is quoting one they have not measured.
+On timing, the honest shape has two very different halves. The shared record changes what a client experiences within the first fortnight. That is because it stops a client having to repeat themselves from the first conversation onwards. You can check that yourself by calling your own office and then opening your own website. The loop is slower, and honestly so. It needs enough real conversations to separate a genuine weak point from a bad fortnight. For most brokerages that is months rather than weeks. Anyone quoting a shorter timeline is quoting one they have not measured.
 
 [[scene:offer]]
 
 ## How to test one before you buy it
 
-Take these to any vendor, this one included. All six can be asked inside a demonstration, and the answers are more informative than the demonstration.
+Take these to any vendor, this one included. All six can be asked inside a demo, and the answers tell you more than the demo does.
 
-Ask what the grader is. Not whether it improves, but what specifically tells it that a change was better, in words you can repeat to somebody else afterwards. If the answer is that the model evaluates its own output, you have the first chart on this page, and you should say so. If the answer is a test suite, ask to watch one fail, because a suite nobody has ever seen go red is decoration.
+Ask what the grader is. Not whether it improves, but what exactly tells it that a change was better, in words you can repeat to somebody else afterwards. If the answer is that the model judges its own output, you have the first chart on this page, and you should say so. If the answer is a test suite, ask to watch one fail, because a suite nobody has ever seen go red is decoration.
 
-Ask where the last correction is written down. Not whether it learns, but the actual file that a mistake from three weeks ago turned into, and what reads that file before the next piece of work begins. If the answer is that the model remembers, the honest translation is that nobody wrote it down and you are going to give the same correction again.
+Ask where the last correction is written down. Not whether it learns, but the actual file that a mistake from three weeks ago turned into. And ask what reads that file before the next piece of work begins. If the answer is that the model remembers, the honest translation is this. Nobody wrote it down, and you are going to give the same correction again.
 
-Ask to see last month's changes. A real loop produces a list: what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be assembled for you, then nothing has been keeping receipts and nothing can be undone in six weeks when something turns out to have been wrong.
+Ask to see last month's changes. A real loop produces a list. The list says what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be put together for you, then nothing has been keeping receipts. And nothing can be undone in six weeks when something turns out to have been wrong.
 
-Ask what happens in a week when nothing is wrong. The answer you want is that it reports no change. If every week produces an improvement, either the system is not honest or the grader is not real, and both of those are worse than a quiet week.
+Ask what happens in a week when nothing is wrong. The answer you want is that it reports no change. If every week produces an improvement, either the system is not honest or the grader is not real. Both of those are worse than a quiet week.
 
-Ask how a change gets undone. Specifically: if the change that shipped three weeks ago turns out to be the reason something got worse, what is the sequence, who runs it, and how long does it take. A system that can only go forwards is not a system that learns.
+Ask how a change gets undone. To be exact: if the change that shipped three weeks ago turns out to be the reason something got worse, what is the sequence, who runs it, and how long does it take. A system that can only go forwards is not a system that learns.
 
-Then ask the boring one, which is where the record lives, who can read it, whether the conversations are used to train anything general, and whether they can be deleted on request. Those are contract questions rather than technical ones, they are the same three worth insisting on with any vendor in this category, and they belong in writing rather than in a conversation.
+Then ask the boring one. Where does the record live, who can read it, are the conversations used to train anything general, and can they be deleted on request. Those are contract questions rather than technical ones. They are the same three worth insisting on with any vendor in this category. They belong in writing rather than in a conversation.
 
 ## What it does not do, and should not pretend to
 
-It does not ship anything on its own. It writes real changes, code included, and not one of them reaches a client until the tests have run over it and a person has read it and approved it. That gate is not a limitation somebody will lift next year. It is the reason the thing is safe to leave running, and a vendor offering to remove it is offering to remove the half that works.
+It does not ship anything on its own. It writes real changes, code included. Not one of them reaches a client until the tests have run over it and a person has read it and approved it. That gate is not a limit somebody will lift next year. It is the reason the thing is safe to leave running. A vendor offering to remove it is offering to remove the half that works.
 
-It does not remember what nobody wrote down. Everything that survives the end of a session survives because it was written to a file, so a correction given in passing and never recorded is a correction you will be giving again.
+It does not remember what nobody wrote down. Everything that survives the end of a session survives because it was written to a file. So a correction given in passing and never recorded is a correction you will be giving again.
 
-It does not know anything it was not connected to, and the useful version says so rather than filling the gap with something plausible.
+It does not know anything it was not connected to. The useful version says so rather than filling the gap with something believable.
 
-It does not improve on a schedule anybody can bank on. A week in which nothing went obviously wrong has no honest output but silence, and the research above says the majority of proposed changes will fail their own test.
+It does not improve on a schedule anybody can bank on. A week in which nothing went obviously wrong has no honest output but silence. And the research above says most proposed changes will fail their own test.
 
-It does not decide what good looks like. A loop can find the weakest answer in a week of conversations. Only somebody who knows the business can say whether the replacement is better or just different, and that judgement is not something the system is ever going to take over.
+It does not decide what good looks like. A loop can find the weakest answer in a week of conversations. Only somebody who knows the business can say whether the replacement is better or just different. That judgement is not something the system is ever going to take over.
 
-It does not make the underlying models yours. The agents run on platforms licensed from the companies that built them, and their pricing and their release schedules are things this system is exposed to exactly like everything else in the building.
+It does not make the underlying models yours. The agents run on platforms licensed from the companies that built them. Their pricing and their release schedules are things this system is exposed to exactly like everything else in the building.
 
-And it does not start as any of this. On day one it is a handful of agents and an empty record. Everything above describes what accumulates, and accumulation needs months of real conversations before there is anything to accumulate.
+And it does not start as any of this. On day one it is a handful of agents and an empty record. Everything above describes what builds up over time. Building it up needs months of real conversations before there is anything to build on.
 
 [[scene:pull-quote]]
 
@@ -235,155 +235,155 @@ And it does not start as any of this. On day one it is a handful of agents and a
 
 ### What is a self improving AI system, in plain terms?
 
-It is one system that runs your other AI agents, keeps a single record of every conversation they have, writes down what it learns in files it has to read before it works again, and improves by proposing one change at a time to any part of itself, the software included. Each proposed change is put in front of something outside the model, which is a test suite for code and your own recorded conversations for anything an agent says, and it ships only if it wins and only after a person approves it. What makes the improving real is the test and the written record rather than the reflection.
+It is one system that runs your other AI agents. It keeps a single record of every conversation they have. It writes down what it learns in files it has to read before it works again. And it improves by proposing one change at a time to any part of itself, the software included. Each proposed change is put in front of something outside the model. For code that is a test suite, and for anything an agent says it is your own recorded conversations. A change ships only if it wins, and only after a person approves it. What makes the improving real is the test and the written record rather than the reflection.
 
 ### Does it actually write code?
 
-Yes, and that is the part worth being specific about, because most descriptions of this category go out of their way to promise the opposite. It writes and changes real software, and it also revises the written layer: prompts, worked examples, the rules that decide which question goes to a person. What it does not do is put any of that in front of a client on its own. Every change runs against a test suite first, and a person reads it and approves it before it ships. Software that edits itself with nobody watching is a different and much worse thing to own. The point here is not that a human has been removed from the loop, it is that the human is in it for ten minutes, on one change, that something else has already run over.
+Yes, and that is the part worth being specific about. That is because most descriptions of this category go out of their way to promise the opposite. It writes and changes real software. It also revises the written layer, which is the prompts, the worked examples and the rules that decide which question goes to a person. What it does not do is put any of that in front of a client on its own. Every change runs against a test suite first, and a person reads it and approves it before it ships. Software that edits itself with nobody watching is a different and much worse thing to own. The point here is not that a human has been removed from the loop. It is that the human is in it for ten minutes, on one change, that something else has already run over.
 
 ### Where does the memory actually live?
 
-In files, on your side of the line, which you can open. There is the record of the conversations, the written instructions the agents run on, and a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it: not into a model, but into a line in a file with a date on it. It is worth insisting on that shape, because a memory kept in files is one you can read, correct and take with you, and a memory kept inside somebody else's model is one you are renting.
+In files, on your side of the line, which you can open. There is the record of the conversations. There are the written instructions the agents run on. And there is a set of notes about your business that the system has to read before it starts any piece of work. That last one is where a correction goes when you give it. It goes into a line in a file with a date on it, and not into a model. It is worth insisting on that shape. That is because a memory kept in files is one you can read, correct and take with you. A memory kept inside somebody else's model is one you are renting.
 
 ### Why one change at a time and not twenty?
 
-Because twenty changes at once teach you nothing. If it comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything, and it is the standard finding about systems of this kind. There is a second reason that is about people rather than software: one change is a size somebody will actually read before approving, and twenty is a size that turns approval into a signature.
+Because twenty changes at once teach you nothing. If it comes out better you cannot say which change did it, which one to keep, or whether two of them are cancelling each other out. The Google paper cited above calls this Changing Anything Changes Everything. It is the standard finding about systems of this kind. There is a second reason, and it is about people rather than software. One change is a size somebody will actually read before approving. Twenty is a size that turns approval into a signature.
 
 ### What is it actually graded against?
 
-Two different things, and knowing which is which is most of the answer. When the change is software, it is graded by a type checker, a test suite and probes that open the finished page and measure what is on it, none of which care how confident anything sounded and any of which can refuse it outright. When the change is to what an agent says to a client, there is nothing that strict available, so the grader is your own conversations, specifically the ones whose outcome is already recorded. A proposed change is run back against them and compared against what is currently live. That second one is an estimate rather than a measurement, and this page publishes the research on how much such estimates disagree with live results rather than hiding it. It is good enough to kill the bad ideas cheaply. It is not good enough to prove anything, which is why a person approves and why what ships gets watched afterwards.
+Two different things, and knowing which is which is most of the answer. When the change is software, it is graded by a type checker, a test suite and probes that open the finished page and measure what is on it. None of those care how confident anything sounded, and any of them can refuse it outright. When the change is to what an agent says to a client, there is nothing that strict available. So the grader is your own conversations, and specifically the ones whose outcome is already recorded. A proposed change is run back against them and compared against what is currently live. That second one is an estimate rather than a measurement. This page publishes the research on how much such estimates disagree with live results, rather than hiding it. It is good enough to kill the bad ideas cheaply. It is not good enough to prove anything, which is why a person approves and why what ships gets watched afterwards.
 
 ### Can I see what it changed?
 
-You should be able to see all of it, and if you cannot, the thing you have been sold is not this. Every change should leave a record of what it replaced, what the comparison said, who approved it and when. That record is what makes a bad decision reversible three weeks later rather than a subject for argument, and it is the single most useful thing to ask a vendor to show you before you buy.
+You should be able to see all of it, and if you cannot, the thing you have been sold is not this. Every change should leave a record of what it replaced, what the comparison said, who approved it and when. That record is what makes a bad decision something you can undo three weeks later, rather than something to argue about. It is the single most useful thing to ask a vendor to show you before you buy.
 
 ### Do I need all the other services first?
 
-You need enough of them to be worth joining up, which in practice means at least two things talking to clients and a few months of history between them. One assistant on a website does not need a system above it, and a loop with almost nothing to read is a mechanism running on empty. The shared record is worth having earlier than the loop is, and the two do not have to arrive on the same day.
+You need enough of them to be worth joining up. In practice that means at least two things talking to clients, and a few months of history between them. One assistant on a website does not need a system above it. And a loop with almost nothing to read is a mechanism running on empty. The shared record is worth having earlier than the loop is. The two do not have to arrive on the same day.
 
 ### What if my business is too small for this?
 
-Then the honest version of this article is the free half of it. Open a month of your own transcripts, read every one, and write down the three questions that got the worst answers. That is the same job the loop does, done by hand, and at small volumes a person doing it once a quarter is genuinely better than software doing it on a schedule. The software earns its place at the volume where nobody is ever going to do that again.
+Then the honest version of this article is the free half of it. Open a month of your own transcripts, read every one, and write down the three questions that got the worst answers. That is the same job the loop does, done by hand. At small volumes a person doing it once a quarter is truly better than software doing it on a schedule. The software earns its place at the volume where nobody is ever going to do that again.
 
 ## What to do about it
 
-The two halves of this have two different first steps and neither of them needs a purchase.
+The two halves of this have two different first steps, and neither of them needs a purchase.
 
-For the memory half, call your own office as though you were a client, say three specific things about what you are looking for, hang up, and then go and ask your own website something related an hour later. Count how many of the three it already knows. Whatever that number is, it is the number your clients are experiencing, and it is the clearest picture of this you will ever get in ten minutes.
+For the memory half, call your own office as though you were a client. Say three specific things about what you are looking for, and hang up. Then, an hour later, go and ask your own website something related. Count how many of the three it already knows. Whatever that number is, it is the number your clients are experiencing. It is also the clearest picture of this you will ever get in ten minutes.
 
-For the improving half, open last month's transcripts and read them. All of them, not a sample, because the sample you would choose is the one where something obviously went wrong and the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing the loop exists to find, and having found one by hand you will know exactly what you are buying and exactly what it is worth to you.
+For the improving half, open last month's transcripts and read them. All of them, not a sample. That is because the sample you would choose is the one where something obviously went wrong. And the whole argument of this article is that the expensive failures do not look wrong. Write down the question that got the worst answers. That is the thing the loop exists to find. Having found one by hand, you will know exactly what you are buying and exactly what it is worth to you.
 
-The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity), and the panel there is the same claim in about eighty words.
+The build itself, what it connects, and what one pass of it actually looks like, is written out on [the Singularity page](/services/the-singularity). If you would rather see the system than read about it, it is the last thing on [the RealtyLT AI page](/ai#singularity). The panel there is the same claim in about eighty words.
 
 [[scene:funnel]]`;
 
-export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years and nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere over five hundred mornings in a row, without a single complaint.
+export const CUSTOM_AUTOMATION_POST = `It had run every weekday morning for two years. Nobody had thought about it since the week it was built. A record came out of one system, got tidied, got a couple of fields filled in, and landed in another. Somewhere over five hundred mornings in a row, without a single complaint.
 
-Then on a Tuesday a field came back with a value it had never seen before. Not a broken value. A perfectly ordinary new one, added by the company that runs the system, published in their release notes, and entirely within the promise they had made about not breaking anything.
+Then on a Tuesday a field came back with a value it had never seen before. Not a broken value. A perfectly ordinary new one. The company that runs the system had added it, and published it in their release notes. They stayed entirely within the promise they had made about not breaking anything.
 
-The chain did not stop. It did the thing it had been told to do when it did not recognise something, which was to take the last branch, because that was the sensible thing to do in 2024 when there were only three values and the third one was the rare one.
+The chain did not stop. It did the thing it had been told to do when it did not recognise something. That was to take the last branch. In 2024 that was the sensible thing to do, because there were only three values and the third one was the rare one.
 
 Nine days later somebody noticed.
 
-Nothing catastrophic happened in those nine days. A few dozen records went to the wrong place and were quietly put right in an afternoon, which is the usual size of this kind of failure and is also why it is worth writing about. The expensive part was not the mistake, it was the nine days, and the nine days happened because the chain had no way of saying that something unfamiliar had turned up.
+Nothing terrible happened in those nine days. A few dozen records went to the wrong place and were quietly put right in an afternoon. That is the usual size of this kind of failure. It is also why it is worth writing about. The expensive part was not the mistake. It was the nine days. And the nine days happened because the chain had no way of saying that something unfamiliar had turned up.
 
-This article is about the part of a bespoke build that nobody quotes for, and it is not the code. It is the fact that from the moment the thing works, you own it, and everything underneath it belongs to somebody else.
+This article is about the part of a bespoke build that nobody quotes for, and it is not the code. From the moment the thing works, you own it. And everything underneath it belongs to somebody else.
 
 [[scene:in-short]]
 
 ## What custom actually means, and when nothing off the shelf will do
 
-Custom is not a level of ambition. It is a description of where a problem sits, and there are exactly four situations where the honest answer is that no product covers it. Three of them are real and the fourth is the one that costs businesses the most money.
+Custom is not a level of ambition. It is a description of where a problem sits. There are exactly four situations where the honest answer is that no product covers it. Three of them are real, and the fourth is the one that costs businesses the most money.
 
 [[scene:when-custom]]
 
-One distinction runs under all four, and it is the one a sales conversation blurs, so it is worth setting out on its own. A product solves the version of a problem that enough businesses share for somebody to make a living from it. Everything else is either not a real problem or is real and too rare to be a market. Only the second of those is a case for building, and telling them apart is genuinely hard from the inside, because the thing capping your business always feels like it must be universal.
+One difference runs under all four, and it is the one a sales conversation blurs. So it is worth setting out on its own. A product solves the version of a problem that enough businesses share for somebody to make a living from it. Everything else is either not a real problem, or is real and too rare to be a market. Only the second of those is a case for building. Telling them apart is truly hard from the inside, because the thing capping your business always feels like it must be everybody's.
 
-The most useful question is not whether a tool exists. It is how many other businesses would recognise the description of the step. If the answer is thousands, look harder for a product before you commission anything, because a product with ten thousand customers has already had its awkward edges found by people who were not paying to find them.
+The most useful question is not whether a tool exists. It is how many other businesses would recognise the description of the step. If the answer is thousands, look harder for a product before you commission anything. That is because a product with ten thousand customers has already had its awkward edges found by people who were not paying to find them.
 
 ## The quote covers the part that ends
 
-Here is the shape of the commercial arrangement, and nothing about it is a trick. A build has a scope, a price and a finish date. What happens after the finish date has none of those three, and that is not dishonesty, it is incompleteness.
+Here is the shape of the commercial arrangement, and nothing about it is a trick. A build has a scope, a price and a finish date. What happens after the finish date has none of those three. That is not dishonesty. It is incompleteness.
 
 [[scene:plate]]
 
-That is not an argument against building anything. It is an argument for reading the quote as what it is, which is the cost of the first stage of something with no last stage.
+That is not an argument against building anything. It is an argument for reading the quote as what it is. It is the cost of the first stage of something with no last stage.
 
 [[scene:three-costs]]
 
-Of those three, the second catches small businesses hardest, and the polite version of it does not land, so here is the direct one. A bespoke automation is often understood by exactly one person. For a year that is completely fine, and it is fine in the same way that having one set of keys is fine. The cost of that arrangement is not paid continuously. It is paid all at once, on the day you need a change and that person is not available, and the size of the bill at that moment is set by how much of the thing was written down rather than by how well it was built.
+Of those three, the second catches small businesses hardest. The polite version of it does not land, so here is the direct one. A bespoke automation is often understood by exactly one person. For a year that is completely fine. It is fine in the same way that having one set of keys is fine. The cost of that setup is not paid a bit at a time. It is paid all at once, on the day you need a change and that person is not available. And the size of the bill at that moment is set by how much of the thing was written down. It is not set by how well it was built.
 
-There is a cheap fix and it is easy to leave out of a scope, which is a written description of what the chain does, in the language of the business rather than in the language of the software, kept with the thing itself. It costs an hour at the end of a build. It is the difference between a change and a rebuild.
+There is a cheap fix, and it is easy to leave out of a scope. It is a written description of what the chain does, kept with the thing itself. It is in the language of the business rather than in the language of the software. It costs an hour at the end of a build. It is the difference between a change and a rebuild.
 
 ## Everything it stands on belongs to somebody else
 
-The part that surprises people is not that vendors change things. It is how short the promises are when you go and read them, and how honest the vendors are about it.
+The part that surprises people is not that vendors change things. It is how short the promises are when you go and read them. And it is how honest the vendors are about it.
 
 [[scene:notice]]
 
-Three companies with more to lose from breaking their customers than almost anybody, all publishing what they will actually guarantee, and the longest guarantee on that chart is two years. A brokerage does not think in two year horizons about its own operations. It thinks about the way it has always done things, and that habit is older than any of these policies.
+Three companies with more to lose from breaking their customers than almost anybody. All of them publish what they will actually guarantee. And the longest guarantee on that chart is two years. A brokerage does not think two years ahead about the way it runs. It thinks about the way it has always done things. That habit is older than any of these policies.
 
 Read the exceptions rather than the numbers, though, because the exceptions are where the honesty is.
 
 [[scene:pull-quote]]
 
-Every clause in that sentence is reasonable. A company should be able to change something to comply with the law or to close a security hole, and nobody would seriously argue otherwise. The third one is the interesting one: a substantial economic or material technical burden is a judgment the vendor makes about its own business, and it is the escape hatch that means twelve months is a policy rather than a contract term you could plan around.
+Every clause in that sentence is reasonable. A company should be able to change something to comply with the law, or to close a security hole. Nobody would seriously argue otherwise. The third one is the interesting one. A substantial economic or material technical burden is a judgment the vendor makes about its own business. It is the escape hatch that means twelve months is a policy rather than a contract term you could plan around.
 
-The same clause carries one more thing worth knowing, and it is the one that catches builds most often. The commitment does not apply to anything that has not reached general availability. Plenty of genuinely useful functionality sits in preview for a long time before it is promoted, and building on a preview is building on something whose owner has explicitly promised you nothing.
+The same clause carries one more thing worth knowing. It is the one that catches builds most often. The commitment does not apply to anything that has not reached general availability. Plenty of truly useful features sit in preview for a long time before they are promoted. And building on a preview is building on something the owner's own policy leaves out of the promise.
 
-[Microsoft's modern lifecycle policy](https://learn.microsoft.com/en-us/lifecycle/policies/modern) has the same shape, promising a minimum of twelve months' notice where no successor product is offered, and excluding free services and preview releases from that. [Meta's](https://developers.facebook.com/docs/graph-api/guides/versioning) is the tidiest of the three and the easiest to misread: a Graph API version is guaranteed for two years, but the clock starts on the day the NEXT version ships rather than on the day yours does. Build against a version that is eighteen months old and you have six months, not two years.
+[Microsoft's modern lifecycle policy](https://learn.microsoft.com/en-us/lifecycle/policies/modern) has the same shape. It promises a minimum of twelve months' notice where no successor product is offered. And it excludes free services and preview releases from that. [Meta's](https://developers.facebook.com/docs/graph-api/guides/versioning) is the tidiest of the three, and the easiest to misread. A Graph API version is guaranteed for two years. But the clock starts on the day the NEXT version ships, rather than on the day yours does. Build against a version that is eighteen months old and you have six months, not two years.
 
 ## The change that is not a breaking change
 
-There is a shared vocabulary for this, and learning it explains how a build can break on a day when nobody broke anything.
+There is a shared vocabulary for this. Learning it explains how a build can break on a day when nobody broke anything.
 
-[Semantic versioning](https://semver.org/) is a published convention for numbering releases, and a great deal of software follows it. Its rule is three lines long: increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible manner, and the patch version when you make backward compatible bug fixes. That gives everybody a shared meaning for a number, and it means a responsible vendor can tell you, in advance, when something will hurt.
+[Semantic versioning](https://semver.org/) is a published convention for numbering releases, and a great deal of software follows it. Its rule is three lines long. Increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible manner, and the patch version when you make backward compatible bug fixes. That gives everybody a shared meaning for a number. And it means a responsible vendor can tell you, in advance, when something will hurt.
 
-Now here is the gap, and Stripe documents it more clearly than anybody so it is worth quoting them. In [their API reference](https://docs.stripe.com/api/versioning) they distinguish two kinds of fixed-value field. A closed one has a set of possible values that is fixed and will not grow. An open one can grow, and they say plainly that new values can be added as a backward-compatible change without requiring an API version upgrade. Their advice to developers follows from that: do not assume that the documented values are exhaustive, and write code that handles a value it has never seen.
+Now here is the gap. Stripe documents it more clearly than anybody, so it is worth quoting them. In [their API reference](https://docs.stripe.com/api/versioning) they separate two kinds of fixed-value field. A closed one has a set of possible values that is fixed and will not grow. An open one can grow. They say plainly that new values can be added as a backward-compatible change without requiring an API version upgrade. Their advice to developers follows from that. Do not assume that the documented values are exhaustive, and write code that handles a value it has never seen.
 
-That is the Tuesday at the top of this page, described by a vendor in advance, in public, as an ordinary thing they will do. Nobody broke a promise. A new value arrived in a field, which was always allowed, and the chain had been written by somebody who assumed the list was finished.
+That is the Tuesday at the top of this page. A vendor described it in advance, in public, as an ordinary thing they will do. Nobody broke a promise. A new value arrived in a field, which was always allowed. And the chain had been written by somebody who assumed the list was finished.
 
-The lesson for anybody commissioning a build is small and specific enough to ask for by name. What does this do when it meets something it does not recognise? There are only two acceptable answers and neither is a guess. It stops and tells somebody, or it sets the thing aside for a person to look at. A chain that quietly picks the nearest option is a chain that will one day pick the wrong one for nine days.
+The lesson for anybody commissioning a build is small, and specific enough to ask for by name. What does this do when it meets something it does not recognise? There are only two acceptable answers, and neither is a guess. It stops and tells somebody, or it sets the thing aside for a person to look at. A chain that quietly picks the nearest option is a chain that will one day pick the wrong one for nine days.
 
 ## Who pays when software does not work
 
-There is an old and useful piece of work on this and it comes from the American standards body rather than from anybody in the industry.
+There is an old and useful piece of work on this. It comes from the American standards body rather than from anybody in the industry.
 
 [[scene:bearing]]
 
-Read the chart's note for what that estimate does and does not rest on. What matters here is the direction of the split: when software does not work, the great majority of the cost lands on the business using it.
+Read the chart's note for what that estimate does and does not rest on. What matters here is the direction of the split. When software does not work, the great majority of the cost lands on the business using it.
 
-That is true of anything you buy, and it is true twice over for something built for you alone. A product with ten thousand customers has ten thousand people who might hit a fault before you do and a vendor with a commercial reason to fix it. A build with one customer has you, and the fault is found on the day it costs you something.
+That is true of anything you buy, and it is true twice over for something built for you alone. A product with ten thousand customers has ten thousand people who might hit a fault before you do. It also has a vendor with a commercial reason to fix it. A build with one customer has you, and the fault is found on the day it costs you something.
 
-There is a second reading of that ratio which is worth having in front of you during a quote. The people selling you a build are not the people who will carry most of the cost of it going wrong, and that is not a criticism of anybody's integrity, it is simply where the incidence falls. It is the reason the questions further down this page are all about what happens afterwards rather than about what gets made, and it is the reason a builder who volunteers those answers before being asked is worth more than one who is cheaper.
+There is a second reading of that ratio which is worth having in front of you during a quote. The people selling you a build are not the people who will carry most of the cost when it goes wrong. That is not a criticism of anybody's integrity. It is simply where the cost falls. It is the reason the questions further down this page are all about what happens afterwards, rather than about what gets made. And it is the reason a builder who offers those answers before being asked is worth more than one who is cheaper.
 
-None of that is a reason not to build. It is a reason to insist the thing tells you loudly when it is unhappy, which costs almost nothing while it is being made and returns more than anything else on this page.
+None of that is a reason not to build. It is a reason to insist the thing tells you loudly when it is unhappy. That costs almost nothing while it is being made, and it returns more than anything else on this page.
 
 ## The number this page will not print
 
-There is one statistic anybody who has read about this will have seen, which is the share of a system's total lifetime cost that goes on maintenance rather than on building it. The usual range quoted is somewhere between sixty and eighty percent, and it is quoted so often that it has the feel of a settled fact.
+There is one statistic anybody who has read about this will have seen. It is the share of a system's total lifetime cost that goes on maintenance rather than on building it. The usual range quoted is somewhere between sixty and eighty percent. It is quoted so often that it has the feel of a settled fact.
 
-It is not printed here, and the reason is a check rather than a shrug.
+It is not printed here. The reason is a check rather than a shrug.
 
-The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real and its catalogue record is there, with a publication date on it. Neither could actually be read. Both sit behind a publisher's wall that did not open for this article, in a browser or otherwise.
+The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real, and its catalogue record is there, with a publication date on it. Neither could actually be read. Both sit behind a publisher's wall that did not open for this article, in a browser or otherwise.
 
-So nobody writing this page can tell you what was actually measured, on how many systems, in what industry, in a decade when software was written and deployed in ways that no longer exist. A number nobody can check is not a conservative estimate. It is a rumour with a citation attached.
+So nobody writing this page can tell you what was really measured, on how many systems, or in what industry. It was a decade when software was written and put to work in ways that no longer exist. A number nobody can check is not a cautious estimate. It is a rumour with a citation attached.
 
-There is a second thing missing from this page for a related reason, and it is more interesting because the source IS readable. A much reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project, rising steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the concept, not a measurement of anything, and drawing it would have been a fabrication with a footnote.
+There is a second thing missing from this page for a related reason. It is more interesting, because the source IS readable. A much reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project. The cost rises steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the idea, not a measurement of anything. Drawing it would have been a fabrication with a footnote.
 
-What can be said honestly is narrower and it is enough. Maintenance is not a small share of what a build costs over its life, which anybody who has owned one will recognise, and no number worth printing exists for how large a share it is.
+What can be said honestly is narrower, and it is enough. Maintenance is not a small share of what a build costs over its life. Anybody who has owned one will recognise that. And no number worth printing exists for how large a share it is.
 
 ## What makes a bespoke build survivable
 
 Five properties, and every one of them is cheap at the beginning and expensive to add later.
 
-It fails loudly. The ending to plan for is not an error, it is silence, and silence is indistinguishable from having nothing to do. Something has to shout, somewhere a person actually looks.
+It fails loudly. The ending to plan for is not an error. It is silence, and silence looks exactly like having nothing to do. Something has to shout, somewhere a person actually looks.
 
-It refuses rather than guesses. When it meets a value, a document or a case it does not recognise, it puts it aside for a person. This is the same principle every other build on this site rests on and it is the one that prevents the expensive class of failure rather than the annoying class.
+It refuses rather than guesses. When it meets a value, a document or a case it does not recognise, it puts it aside for a person. This is the same rule every other build on this site rests on. It is the one that prevents the expensive kind of failure rather than the annoying kind.
 
-It is described in your own words. One page, kept with it, saying what it does and why, in the language somebody in your office would use. This is what turns the next change from a rebuild into a change.
+It is described in your own words. One page, kept with it, saying what it does and why. It is in the language somebody in your office would use. This is what turns the next change from a rebuild into a change.
 
-It has a named owner. Not a maintainer of the code, a person in your business who would notice it stopping and whose job it is to care. Where there is nobody, there is no build worth making.
+It has a named owner. Not somebody who looks after the code. A person in your business who would notice it stopping, and whose job it is to care. Where there is nobody, there is no build worth making.
 
 And it has a review date. A date in the calendar, once a year, where somebody asks whether this is still worth having. That is the only mechanism that ever retires anything.
 
@@ -393,25 +393,25 @@ And it has a review date. A date in the calendar, once a year, where somebody as
 
 ## What happens on the day you want to change it
 
-Every conversation about a build is about the first version, and there is nearly always a second version, because businesses move. What the second version costs is decided almost entirely by choices made during the first, and almost none of those choices feel important at the time.
+Every conversation about a build is about the first version. There is nearly always a second version, because businesses move. What the second version costs is decided almost entirely by choices made during the first. And almost none of those choices feel important at the time.
 
-The first is whether the rules live in one place or are scattered through the thing. A chain where the decisions are gathered in one step, written the way a person would write them, can have a rule changed by somebody reading it and editing a line. A chain where the same decision is expressed in four places, slightly differently, cannot be changed at all without somebody rediscovering all four, and rediscovering them takes longer than writing them did.
+The first is whether the rules live in one place or are scattered through the thing. Say the decisions are gathered in one step, written the way a person would write them. Then a rule can be changed by somebody reading it and editing a line. Say the same decision is written in four places, slightly differently. Then it cannot be changed at all until somebody finds all four again. And finding them again takes longer than writing them did.
 
-The second is whether anybody can see what it did. A build that keeps a plain record of every run, what came in, what it decided and what it wrote, can be debugged by anybody. A build with no record has to be reproduced before it can be understood, and reproducing something that only happens when a particular kind of record arrives is most of the work.
+The second is whether anybody can see what it did. Say a build keeps a plain record of every run, what came in, what it decided and what it wrote. Then anybody can debug it. A build with no record has to be reproduced before it can be understood. And reproducing something that only happens when a particular kind of record arrives is most of the work.
 
-The third is the one people find hardest to hear. The more the first version was made to fit exactly how you worked in the month it was written, the more expensive the second version is, because every specific accommodation is a thing the next change has to be careful of. There is a real tension here and it should be said out loud rather than smoothed over: the case for building rather than buying is precisely that it fits you, and fit is also what makes it rigid. The resolution is not to build something generic, which would defeat the point. It is to be specific about the rules and plain about everything else.
+The third is the one people find hardest to hear. The more the first version was made to fit exactly how you worked in the month it was written, the more expensive the second version is. That is because every special fitting is a thing the next change has to be careful of. There is a real tension here, and it should be said out loud rather than smoothed over. The case for building rather than buying is precisely that it fits you, and fit is also what makes it hard to change. The answer is not to build something generic, which would defeat the point. It is to be specific about the rules and plain about everything else.
 
-None of this is exotic engineering. It is three habits, they cost nothing during a build, and they are the difference between a second version that takes an afternoon and one that gets quoted as a rebuild. Ask for them by name.
+None of this is exotic engineering. It is three habits. They cost nothing during a build. And they are the difference between a second version that takes an afternoon and one that gets quoted as a rebuild. Ask for them by name.
 
 ## When not to commission one at all
 
-Four situations, and none of them are about the technology being immature.
+Four situations, and none of them are about the technology not being ready.
 
-When the process is still moving. A chain wired to a way of working that is being redesigned spends its life being rewired, and the rewiring is not cheaper than the build was. Wait until the shape has stopped changing, and judge that by whether anybody has moved a step in the last few months rather than by a date.
+When the process is still moving. A chain wired to a way of working that is being redesigned spends its life being rewired. And the rewiring is not cheaper than the build was. Wait until the shape has stopped changing. Judge that by whether anybody has moved a step in the last few months, rather than by a date.
 
-When you cannot describe it in a paragraph. Not because a builder needs the paragraph, but because being unable to write it means the decision inside it has not been made, and software will make that decision for you by accident and then hide it.
+When you cannot describe it in a paragraph. Not because a builder needs the paragraph, but because being unable to write it means the decision inside it has not been made. And software will make that decision for you by accident, and then hide it.
 
-When nobody would notice it stopping. This is the shortest test in this article and it removes more candidates than any of the others. Something nobody would miss for a month is either not worth automating or is worth automating and nobody has been made responsible for it, and both of those are answered before a build rather than by one.
+When nobody would notice it stopping. This is the shortest test in this article. It removes more candidates than any of the others. Something nobody would miss for a month is one of two things. Either it is not worth automating, or it is worth automating and nobody has been made responsible for it. Both of those are answered before a build rather than by one.
 
 And when the honest reason is that a product exists and you do not like it. Sometimes that is a real reason, because a tool you will not use is worth nothing. More often it is an expensive way to avoid a fortnight of getting used to something.
 
@@ -419,13 +419,13 @@ And when the honest reason is that a product exists and you do not like it. Some
 
 Four questions, and the first two are worth more than everything else you could ask.
 
-Ask what it does when it meets something it does not recognise. Listen for whether the answer contains a person. Anything that describes a sensible default is describing the failure at the top of this page, and the follow-up question is what the default was chosen against and who decided.
+Ask what it does when it meets something it does not recognise. Listen for whether the answer contains a person. Anything that describes a sensible default is describing the failure at the top of this page. The follow-up question is what the default was chosen against, and who decided.
 
 Ask how you would find out it had stopped. Where the answer is that the missing output would tell you, ask what that output looks like on a quiet week, and watch what happens.
 
-Ask what happens to it if this relationship ends. The answer should involve the thing running somewhere you control, described somewhere you can read, in a form somebody else could take over. Anything that lives only in an account of theirs is a build you are renting.
+Ask what happens to it if this relationship ends. The answer should involve the thing running somewhere you control. It should be described somewhere you can read, in a form somebody else could take over. Anything that lives only in an account of theirs is a build you are renting.
 
-Ask what they would talk you out of. A builder with nothing on that list has either never seen one of these go wrong or is not going to tell you about it.
+Ask what they would talk you out of. A builder with nothing on that list has never seen one of these go wrong, or is not going to tell you about it.
 
 [[scene:offer]]
 
@@ -433,25 +433,25 @@ Ask what they would talk you out of. A builder with nothing on that list has eit
 
 ## What it costs, and how long it takes
 
-The build divides into two shapes with very different prices, and which one you have is decided by the systems rather than by the logic.
+The build splits into two shapes with very different prices. Which one you have is decided by the systems rather than by the logic.
 
-Where every system involved has a decent published way in, the work runs to days instead of weeks, and a good share of it is agreeing the rules rather than writing anything. That is the boring, good version of this work.
+Where every system involved has a decent published way in, the work runs to days instead of weeks. A good share of it is agreeing the rules rather than writing anything. That is the boring, good version of this work.
 
-Where something has to read a document, deal with a system that has no proper way in, or wait on an office that is not yours, the price is set by that obstacle and not by the rest. Treat it as its own project with its own shape, and treat any quote offered before the obstacle has been looked at as a guess.
+Sometimes something has to read a document, or deal with a system that has no proper way in, or wait on an office that is not yours. Then the price is set by that obstacle and not by the rest. Treat it as its own project, with its own shape. And treat any quote offered before the obstacle has been looked at as a guess.
 
-Then there is the running cost, and it has two parts that are usually collapsed into one. The infrastructure is small: this class of thing does not consume much of anything. The ownership is the real number, and this article deliberately does not quote it, because it is your hours and not our invoice. Size it with the calculator above rather than with a guess, and if the answer looks small, that is because it is small per year and permanent.
+Then there is the running cost, and it has two parts that are usually rolled into one. The infrastructure is small. This kind of thing does not use much of anything. The ownership is the real number, and this article does not quote it on purpose. That is because it is your hours and not our invoice. Size it with the calculator above rather than with a guess. And if the answer looks small, that is because it is small per year and permanent.
 
 ## What it does not do, and should not pretend to
 
-It does not spare anybody from understanding the work. Automating a step you cannot explain moves the confusion rather than resolving it.
+It does not spare anybody from understanding the work. Automating a step you cannot explain moves the confusion rather than clearing it up.
 
-It does not survive a process that keeps changing. A chain wired to a workflow that is redrawn every month spends its life being rewired, and that cost is real and recurring.
+It does not survive a process that keeps changing. A chain wired to a workflow that is redrawn every month spends its life being rewired. That cost is real, and it comes round again and again.
 
-It does not take the person out of the steps that need one. Any step that guesses where it ought to have asked is one that will, on some future day, be confidently wrong to a client's face and leave a record of it.
+It does not take the person out of the steps that need one. Any step that guesses where it ought to have asked will, on some future day, be confidently wrong to a client's face. And it will leave a record of it.
 
-It does not protect you from other people's release schedules. It exposes you to them, permanently, and the exposure is part of what you are buying rather than a risk somebody can price away.
+It does not protect you from other people's release schedules. It exposes you to them, permanently. That exposure is part of what you are buying, rather than a risk somebody can price away.
 
-And it does not retire itself. Nothing does. The only mechanism that ever switches one of these off is a date in somebody's calendar and a person willing to ask the question on that date.
+And it does not retire itself. Nothing does. Only two things ever switch one of these off. A date in somebody's calendar, and a person willing to ask the question on that date.
 
 [[scene:wasted]]
 
@@ -459,45 +459,45 @@ And it does not retire itself. Nothing does. The only mechanism that ever switch
 
 ### What is custom automation, in plain terms?
 
-It is a chain of steps built around how your business actually works, rather than a product you configure. The pieces are ordinary and mostly already exist: reading from one system, checking or enriching something, applying a rule you decided, writing into another system, telling a person when it cannot proceed. What makes it custom is the arrangement and the rule, both of which are yours.
+It is a chain of steps built around how your business really works, rather than a product you configure. The pieces are ordinary and mostly already exist. They are reading from one system, and checking or enriching something. They are applying a rule you decided, and writing into another system. And they are telling a person when it cannot go on. What makes it custom is the arrangement and the rule, both of which are yours.
 
 ### Why would anybody build this rather than buy something?
 
-Because a product solves the version of a problem enough businesses share to be worth making a living from, and the step capping you is often not that version. The honest sequence is to look hard for a product first, since one with thousands of customers has had its awkward edges found by people who were not paying to find them, and to build only where the search genuinely comes up empty.
+A product solves the version of a problem enough businesses share to be worth making a living from. And the step capping you is often not that version. The honest order is to look hard for a product first, and to build only where the search truly comes up empty. One with thousands of customers has had its awkward edges found by people who were not paying to find them.
 
 ### When should I not commission a custom build?
 
-Four cases. The process is still being redesigned. You cannot describe the step in a paragraph, which usually means a decision has not been made. Nobody in the business would notice it stopping. Or a product exists and the real objection is that you would rather not learn it. The third one removes the most candidates and it is the quickest to check.
+Four cases. The process is still being redesigned. You cannot describe the step in a paragraph, which usually means a decision has not been made. Nobody in the business would notice it stopping. Or a product exists and the real objection is that you would rather not learn it. The third one removes the most candidates, and it is the quickest to check.
 
 ### What happens when the software it connects to changes?
 
-Usually nothing, occasionally something, and the awkward middle case is a change that is not officially a breaking change at all. Vendors are allowed to add new values to fields without changing an API version, and they say so in their own documentation. That is why the most important thing to specify in any build is what it does when it meets something unfamiliar, and why the only good answers involve stopping and telling somebody.
+Usually nothing, occasionally something. The awkward middle case is a change that is not officially a breaking change at all. Vendors are allowed to add new values to fields without changing an API version. They say so in their own documentation. That is why the most important thing to specify in any build is what it does when it meets something unfamiliar. And it is why the only good answers involve stopping and telling somebody.
 
 ### Who fixes it when it breaks on a Friday night?
 
-Ask that before you sign anything, because the answer is a commercial arrangement rather than a technical one. What matters more is that most of these failures are not urgent in the way an outage is urgent: the honest requirement is usually that somebody notices within a day, not within an hour. Which is why loud failure is worth more than a fast response.
+Ask that before you sign anything, because the answer is a commercial arrangement rather than a technical one. What matters more is that most of these failures are not urgent in the way an outage is urgent. The honest requirement is usually that somebody notices within a day, not within an hour. Which is why loud failure is worth more than a fast response.
 
 ### Who owns it if we stop working together?
 
-You should, and it should be true rather than promised. That means it runs somewhere you control, using credentials that are yours, and there is a written description of what it does in language somebody else could pick up. A build that lives only inside a supplier's account is a build you are renting, whatever the invoice says.
+You should, and it should be true rather than promised. That means it runs somewhere you control, using logins that are yours. And there is a written description of what it does, in language somebody else could pick up. A build that lives only inside a supplier's account is a build you are renting, whatever the invoice says.
 
 ### How is this different from workflow automation?
 
-The workflow article on this site is about finding the steps worth connecting and what the manual versions cost you. This one is about what happens after one has been built: who owns it, what it stands on, and what it costs every year afterwards. Same components, different question, and the second question is the one that decides whether the first one was worth answering.
+The workflow article on this site is about finding the steps worth connecting, and what the manual versions cost you. This one is about what happens after one has been built. It is about who owns it, what it stands on, and what it costs every year afterwards. Same parts, different question. And the second question is the one that decides whether the first one was worth answering.
 
 ### Is it worth it for a one or two person business?
 
-Sometimes, and the deciding factor is not headcount. It is whether the step is frequent, whether the underlying rule has actually been decided, and whether anybody would notice it stopping. A two person business often scores better on the first two than a larger one, because the rule lives in one head and is genuinely consistent, and worse on the third, because there is nobody spare to be the person who notices.
+Sometimes, and the deciding factor is not headcount. It is whether the step is frequent, whether the underlying rule has really been decided, and whether anybody would notice it stopping. A two person business often scores better on the first two than a larger one. That is because the rule lives in one head and is truly steady. It scores worse on the third, because there is nobody spare to be the person who notices.
 
 ## What to do about it
 
 One page, tonight, and it is not a specification.
 
-At the top, the step you would most like to hand over, written as a paragraph you could give to somebody starting on Monday.
+At the top, the step you would most like to hand over. Write it as a paragraph you could give to somebody starting on Monday.
 
 Underneath, every system it would have to touch, by name. Count anything with its own login.
 
-Underneath that, one name: the person who would notice if it silently did nothing tomorrow.
+Underneath that, one name. It is the person who would notice if it silently did nothing tomorrow.
 
 If the middle list is long and the bottom line is empty, you have not found a build yet. You have found something that has to be decided first, and deciding it costs nothing.
 
@@ -1605,15 +1605,15 @@ A fuller database is easy. A database that can tell you where it got something i
 
 [[scene:funnel]]`;
 
-export const DOCUMENT_PROCESSING_POST = `The rider came in on a Sunday evening as a photograph. Somebody had put the page on a kitchen table and held a phone over it, so the top edge of the paper is wider than the bottom edge, there is a shadow across the lower third, and the whole thing is very slightly out of focus in one corner.
+export const DOCUMENT_PROCESSING_POST = `The rider came in on a Sunday evening as a photograph. Somebody had put the page on a kitchen table and held a phone over it. So the top edge of the paper is wider than the bottom edge. There is a shadow across the lower third, and the whole thing is very slightly out of focus in one corner.
 
-Two of the printed lines have been struck through and rewritten by hand, and there are initials in the margin beside each change. One of the changes is a date.
+Two of the printed lines have been struck through and rewritten by hand. There are initials in the margin beside each change. One of the changes is a date.
 
-You forwarded it. The reader pulled out every date on the page and wrote them where they were supposed to go, and one of them landed on your calendar with a reminder attached. Everybody stopped thinking about it, which is exactly what the system is for.
+You forwarded it. The reader pulled out every date on the page and wrote them where they were supposed to go. One of them landed on your calendar with a reminder attached. Everybody stopped thinking about it, which is exactly what the system is for.
 
-Three weeks later somebody asks whether that contingency has expired, and it turns out there are two defensible answers, and they are not the same day.
+Three weeks later somebody asks whether that contingency has expired. It turns out there are two defensible answers, and they are not the same day.
 
-Nothing malfunctioned. The characters were read correctly, the handwriting was read correctly, the date on the calendar is the date on the page. What went wrong is not on the page at all, and that is what this article is about.
+Nothing broke. The characters were read correctly. The handwriting was read correctly. The date on the calendar is the date on the page. What went wrong is not on the page at all, and that is what this article is about.
 
 [[scene:in-short]]
 
@@ -1621,25 +1621,25 @@ Nothing malfunctioned. The characters were read correctly, the handwriting was r
 
 ## What document processing actually is, and why the reading is the easy half
 
-Three articles on this site sit near this one, and it is worth putting them out of the way first, because most of what people assume this subject is turns out to belong to one of them.
+Three articles on this site sit near this one. It is worth putting them out of the way first, because most of what people assume this subject is turns out to belong to one of them.
 
-Document processing, described plainly, is turning a page into fields. A purchase agreement, a disclosure, a lease or an addendum goes in, and what comes out is a set of named values: these are the parties, this is the price, these are the dates, this signature block is empty. The output is data rather than a document, which is the point of it, because a date sitting in a field can be put on a calendar and a date sitting in a PDF cannot.
+Document processing, described plainly, is turning a page into fields. A purchase agreement, a disclosure, a lease or an addendum goes in. What comes out is a set of named values. These are the parties, this is the price, these are the dates, this signature block is empty. The output is data rather than a document, which is the point of it. That is because a date sitting in a field can be put on a calendar, and a date sitting in a PDF cannot.
 
-That description makes it sound like one job. It is at least four, they fail differently, and only the first two are what anybody demonstrates.
+That description makes it sound like one job. It is at least four. They fail differently, and only the first two are what anybody demonstrates.
 
-The first is finding the writing. On a page, ink is just dark pixels, and before anything can be read something has to decide which clumps of dark pixels are words and where each one starts and stops.
+The first is finding the writing. On a page, ink is just dark pixels. Before anything can be read, something has to decide which clumps of dark pixels are words. It also has to decide where each one starts and stops.
 
-The second is reading it: turning those pixels into characters.
+The second is reading it, which means turning those pixels into characters.
 
 The third is deciding what each piece of text is for. This string is a heading, this one is a label, this one is the value that belongs to that label. A form is not a paragraph, and the meaning is carried by the layout as much as by the words.
 
-The fourth does not look like part of the job at all, and it is where this article ends up. A value can be correct, correctly labelled, correctly filed, and still be the wrong answer, because what it counts from is not printed anywhere on the page.
+The fourth does not look like part of the job at all, and it is where this article ends up. A value can be correct, correctly labelled and correctly filed, and still be the wrong answer. That is because what it counts from is not printed anywhere on the page.
 
 ## The original is not a document, it is a photograph of one
 
-Every demonstration of this technology uses a clean, born digital PDF, and on a clean born digital PDF the first two problems barely exist: the text is already text and the software can simply ask for it. That is a real and common case and if all your paperwork is like that, most of what follows is easier for you than it is for other people.
+Every demonstration of this technology uses a clean, born digital PDF. On a clean born digital PDF the first two problems barely exist. The text is already text, so the software can simply ask for it. That is a real and common case. If all your paperwork is like that, most of what follows is easier for you than it is for other people.
 
-It usually is not like that, and the reason is that real estate paperwork has a long life outside computers before anybody asks software to read it. Four things happen to it on the way, and each one takes something away.
+It usually is not like that. The reason is that real estate paperwork has a long life outside computers before anybody asks software to read it. Four things happen to it on the way, and each one takes something away.
 
 [[scene:unreliable-original]]
 
@@ -1647,105 +1647,105 @@ It usually is not like that, and the reason is that real estate paperwork has a 
 
 ## What was actually measured, on forms that look like yours
 
-There is a published measurement of this, on real scanned forms rather than on clean ones, and it is worth reading carefully because the two halves of it point in opposite directions.
+There is a published measurement of this, on real scanned forms rather than on clean ones. It is worth reading carefully, because the two halves of it point in opposite directions.
 
 In 2019 three researchers at EPFL and Istanbul Technical University published [FUNSD](https://arxiv.org/abs/1905.13538), a dataset built specifically to test form understanding on bad originals. Their description of it is one sentence: "The dataset comprises 199 real, fully annotated, scanned forms. The documents are noisy and vary widely in appearance."
 
-Where those forms came from matters more than the number 199. They are drawn from a large collection of business documents from the nineteen eighties and nineties which, in the authors' own words, "have a low resolution of around 100 dpi" and "are also of low quality with various types of noise added by successive scanning and printing procedures". So the corpus is not a stress test somebody built by degrading good scans. It is what happens to paperwork when it lives in the world.
+Where those forms came from matters more than the number 199. They are drawn from a large collection of business documents from the nineteen eighties and nineties. In the authors' own words, those documents "have a low resolution of around 100 dpi" and "are also of low quality with various types of noise added by successive scanning and printing procedures". So the corpus is not a stress test somebody built by degrading good scans. It is what happens to paperwork when it lives in the world.
 
-There is a detail in how they built it that is worth having. They started from 25,000 images in the form category, and: "We discarded unreadable and similar forms, resulting in 3,200 eligible documents, out of which we randomly sampled 199 to annotate." Two things were thrown out together there, the unreadable and the near duplicates, and the paper does not separate them, so it would be wrong to say that most of the 25,000 could not be read. What can be said is that a research team looking for scanned forms good enough to annotate by hand kept about one in eight of what they had.
+There is a detail in how they built it that is worth having. They started from 25,000 images in the form category. Then, in their words: "We discarded unreadable and similar forms, resulting in 3,200 eligible documents, out of which we randomly sampled 199 to annotate." Two things were thrown out together there, the unreadable and the near duplicates, and the paper does not separate them. So it would be wrong to say that most of the 25,000 could not be read. What can be said is this. A research team looking for scanned forms good enough to annotate by hand kept about one in eight of what they had.
 
 [[scene:reading]]
 
-Nothing about that second bar is a failure of reading. It is a failure of finding, and the finding happens first, so everything downstream works from a partial transcript without being told which parts are missing.
+Nothing about that second bar is a failure of reading. It is a failure of finding, and the finding happens first. So everything downstream works from a partial transcript without being told which parts are missing.
 
-Be concrete about what that means on a contract. Suppose the printed clauses are located and read cleanly, and two lines written into a margin are not located at all. What comes out is not a document with two gaps in it. It is a document that looks complete, because those two lines never became text, and a value that never became text cannot be noticed as absent by anything further down the chain.
+Be concrete about what that means on a contract. Suppose the printed clauses are located and read cleanly, and two lines written into a margin are not located at all. What comes out is not a document with two gaps in it. It is a document that looks complete, because those two lines never became text. And a value that never became text cannot be noticed as absent by anything further down the chain.
 
-That is the difference between a file and a photograph, and it is why the first question to ask about any of this is what your originals actually are.
+That is the difference between a file and a photograph. It is why the first question to ask about any of this is what your originals really are.
 
 ## Finding a word and knowing what it is for are two different problems
 
-The same paper measured two harder things, and they are the half that should change how you buy this.
+The same paper measured two harder things. They are the half that should change how you buy this.
 
-One is labelling: given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking: given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value, and the only thing that makes them a fact is the line drawn between them.
+One is labelling. Given a piece of text on a form, is it a question, an answer, a header or none of those. The other is linking. Given an answer, which question does it belong to. That second one is what actually produces a field. "Closing date" is a label and "March 14" is a value. The only thing that makes them a fact is the line drawn between them.
 
 [[scene:understanding]]
 
-Read the second bar again, and then read the condition the authors attach to both of them: "Note that we test the algorithms by assuming that we know the optimal word grouping, word location, and textual content. In this way, we only assess the specific task."
+Read the second bar again. Then read the condition the authors attach to both of them: "Note that we test the algorithms by assuming that we know the optimal word grouping, word location, and textual content. In this way, we only assess the specific task."
 
 Both numbers were produced with the reading already done perfectly. The hard part is not the part that looks hard.
 
-It is worth being precise about what that second task is in your own paperwork, because it is the thing you thought you were buying. A label sits somewhere on the page and a value sits somewhere else, and neither is a fact until something draws a line between the two. On a page where the label is three inches from the value, or where one label governs a column of four values, or where a value sits in a box belonging to the addendum rather than to the paragraph above it, that line is a judgement about layout. Layout is the property of a document that survives copying worst, which is why this is the step that degrades first on a photograph.
+It is worth being precise about what that second task is in your own paperwork. That is because it is the thing you thought you were buying. A label sits somewhere on the page and a value sits somewhere else. Neither is a fact until something draws a line between the two. Think of a page where the label is three inches from the value. Or one where a single label governs a column of four values. Or one where a value sits in a box belonging to the addendum rather than to the paragraph above it. On those pages, that line is a judgement about layout. Layout is the property of a document that survives copying worst. That is why this is the step that degrades first on a photograph.
 
 ## A person is not perfect at this either, and somebody published the number
 
-There is a person standing behind every argument about automating paperwork, on both sides of it, and that person never misreads anything. Somebody has measured them.
+There is a person standing behind every argument about automating paperwork, on both sides of it. That person never misreads anything. Somebody has measured them.
 
-[DocVQA](https://arxiv.org/abs/2007.00398), published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona, is a set of 50,000 questions asked about 12,767 document images, drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones: what is the total, what is the date on this document, who is this letter addressed to.
+[DocVQA](https://arxiv.org/abs/2007.00398) is a set of 50,000 questions asked about 12,767 document images. It was published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona. They are drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones. What is the total, what is the date on this document, who is this letter addressed to.
 
 Then they had people answer them.
 
 [[scene:human-ceiling]]
 
-Now read that first bar against the thing it is really competing with, because there are two candidates and only one of them is honest. The first is a careful reading, done once, by somebody with the file open and nothing else on, which is roughly the condition those volunteers were in. The second is the fourth read of the day, at ten past five, of a page two people have already looked at. Your process runs on the second one.
+Now read that first bar against the thing it is really competing with. That is because there are two candidates, and only one of them is honest. The first is a careful reading, done once, by somebody with the file open and nothing else on. That is roughly the condition those volunteers were in. The second is the fourth read of the day, at ten past five, of a page two people have already looked at. Your process runs on the second one.
 
-So the useful question is never whether a document reader is right every time. It is which values it handles better than a tired person, which ones it handles worse, and what it does with the ones it cannot settle. Those are three different questions and only the third is a build decision.
+So the useful question is never whether a document reader is right every time. It is which values it handles better than a tired person. It is which ones it handles worse. And it is what it does with the ones it cannot settle. Those are three different questions, and only the third is a build decision.
 
-And it means something uncomfortable about the process you have now. Anything that depends on nobody ever misreading a date is already failing at some rate, today, with no software involved at all, and nobody in your business has ever measured that rate either.
+And it means something uncomfortable about the process you have now. Anything that depends on nobody ever misreading a date is already failing at some rate, today, with no software involved at all. Nobody in your business has ever measured that rate either.
 
 ## The date is not the deadline
 
-Everything so far has been about getting a value off a page. This is the part where a value that came off the page perfectly turns out to be the wrong answer, and it is the part our own service page did not say enough about.
+Everything so far has been about getting a value off a page. This is the part where a value that came off the page perfectly turns out to be the wrong answer. It is the part our own service page did not say enough about.
 
-Take the plainest possible field: a deadline expressed as a number of days. Three business days. A machine reads "three business days" with complete accuracy. To put a date on your calendar it now needs two things that are not written next to those words: what the count starts from, and what a day is.
+Take the plainest possible field, a deadline expressed as a number of days. Three business days. A machine reads "three business days" with complete accuracy. To put a date on your calendar it now needs two things that are not written next to those words. It needs what the count starts from, and what a day is.
 
-Neither of those is a trick question, and in the one part of a real estate transaction where the federal government has written the rules down, both have published answers that surprise people.
+Neither of those is a trick question. And there is one part of a real estate transaction where the federal government has written the rules down. In that part, both have published answers that surprise people.
 
-The mortgage disclosure rules in [Regulation Z at 12 CFR 1026.19](https://www.law.cornell.edu/cfr/text/12/1026.19) run several deadlines through a real estate closing. The lender must "ensure that the consumer receives the disclosures required under paragraph (f)(1)(i) of this section no later than three business days before consummation". For certain transactions the creditor must deliver early estimates "not later than the seventh business day before consummation of the transaction", and if a figure becomes inaccurate, "the consumer must receive the corrected disclosures no later than three business days before consummation".
+The mortgage disclosure rules in [Regulation Z at 12 CFR 1026.19](https://www.law.cornell.edu/cfr/text/12/1026.19) run several deadlines through a real estate closing. The lender must "ensure that the consumer receives the disclosures required under paragraph (f)(1)(i) of this section no later than three business days before consummation". For certain transactions the creditor must deliver early estimates "not later than the seventh business day before consummation of the transaction". And if a figure becomes inaccurate, "the consumer must receive the corrected disclosures no later than three business days before consummation".
 
-Those are the lender's obligations rather than yours, and nothing here is advice about how to meet them. They are quoted because they are the clearest published example of the thing this whole topic turns on: a deadline written on a document whose meaning lives somewhere else.
+Those are the lender's duties rather than yours, and nothing here is advice about how to meet them. They are quoted because they are the clearest published example of the thing this whole topic turns on. A deadline written on a document can have its meaning living somewhere else.
 
 [[scene:pull-quote]]
 
 ## The same three words mean two different things in one regulation
 
-Here is the part that is genuinely startling the first time you read it, and it is sitting in the definitions section, [12 CFR 1026.2](https://www.law.cornell.edu/cfr/text/12/1026.2).
+Here is the part that is genuinely startling the first time you read it. It is sitting in the definitions section, [12 CFR 1026.2](https://www.law.cornell.edu/cfr/text/12/1026.2).
 
 "Business day means a day on which the creditor's offices are open to the public for carrying on substantially all of its business functions."
 
 That is the general definition, and it depends on a fact about a particular company's opening hours. Then the same paragraph continues: "However, for purposes of rescission under 1026.15 and 1026.23, and for purposes of 1026.19(a)(1)(ii), 1026.19(a)(2), 1026.19(e)(1)(iii)(B), 1026.19(e)(1)(iv), 1026.19(e)(2)(i)(A), 1026.19(e)(4)(ii), 1026.19(f)(1)(ii), 1026.19(f)(1)(iii), 1026.20(e)(5), 1026.31, and 1026.46(d)(4), the term means all calendar days except Sundays and the legal public holidays specified in 5 U.S.C. 6103(a)".
 
-One phrase, two meanings, and which one applies is decided by a list of paragraph numbers. Under the second definition a Saturday counts, Sunday does not, and the eleven days named in [5 U.S.C. 6103](https://www.law.cornell.edu/uscode/text/5/6103) do not. Under the first, a Saturday probably does not count and a company holiday might not either.
+One phrase, two meanings, and which one applies is decided by a list of paragraph numbers. Under the second definition a Saturday counts, Sunday does not, and the eleven days named in [5 U.S.C. 6103](https://www.law.cornell.edu/uscode/text/5/6103) do not. Under the first, a Saturday probably does not count, and a company holiday might not either.
 
-Now put a document reader in front of a page that says "three business days". It can read those words at any accuracy you like. It cannot know which of those two definitions the drafter had in mind, because that information was never on the page. Somebody has to decide, once, in writing, what rule your system applies, and that decision is a piece of your business rather than a setting in a piece of software.
+Now put a document reader in front of a page that says "three business days". It can read those words at any accuracy you like. It cannot know which of those two definitions the drafter had in mind, because that information was never on the page. Somebody has to decide, once, in writing, what rule your system applies. That decision is a piece of your business rather than a setting in a piece of software.
 
-The same section carries a second one of these, and it is the reason for the line held on its own above. Consummation is not closing. It is defined as the moment the buyer becomes contractually obligated on the credit transaction, which is a different event from the day everybody signs the deed and gets the keys. When it happens is not settled by Regulation Z at all: the official commentary on that definition is headed "State law governs", and says that when the obligation is created "is a matter to be determined under applicable law". A reader that finds "closing date" on a page and treats it as consummation has made a substitution nobody asked it to make, and it will not tell you it did.
+The same section carries a second one of these. It is the reason for the line held on its own above. Consummation is not closing. It is defined as the moment the buyer becomes contractually obligated on the credit transaction. That is a different event from the day everybody signs the deed and gets the keys. When it happens is not settled by Regulation Z at all. The official commentary on that definition is headed "State law governs", and says that when the obligation is created "is a matter to be determined under applicable law". A reader that finds "closing date" on a page and treats it as consummation has made a swap nobody asked it to make. And it will not tell you it did.
 
 ## A wrong date costs more than a missing one
 
 This is the asymmetry that should decide how the whole thing is built.
 
-A missing value is loud. The field is empty, somebody notices, somebody opens the document. It costs a few minutes and it costs them at a moment when they are paying attention.
+A missing value is loud. The field is empty, somebody notices, somebody opens the document. It costs a few minutes, and it costs them at a moment when they are paying attention.
 
-A wrong value is silent, and it is worse than silent, because it is now wearing your system's authority. It is on the calendar. It has a reminder attached. Everybody downstream treats it as settled, and the specific thing that will not happen is anybody going back to the page, because the reason the system exists is so that nobody has to.
+A wrong value is silent. It is worse than silent, because it is now wearing your system's authority. It is on the calendar. It has a reminder attached. Everybody downstream treats it as settled. And the specific thing that will not happen is anybody going back to the page. That is because the reason the system exists is so that nobody has to.
 
-That has a direct consequence for how a document reader should behave, and the incentive runs against it. A reader that returns an answer for every field looks better in a demonstration and is worse in a business. What you want is a reader that abstains, that says nothing rather than guessing, and that puts the abstentions somewhere a person will actually look. Our own service page has said for a while that anything it is not confident about goes to a human rather than being filed quietly, and that is the right design. This article is the argument for why, and the argument is arithmetic rather than caution: a blank costs minutes, a confident wrong date costs a deal.
+That has a direct consequence for how a document reader should behave, and the incentive runs against it. A reader that returns an answer for every field looks better in a demo and is worse in a business. What you want is a reader that abstains. One that says nothing rather than guessing, and that puts the abstentions somewhere a person will actually look. Our own service page has said for a while that anything it is not confident about goes to a human rather than being filed quietly. That is the right design. This article is the argument for why, and the argument is arithmetic rather than caution. A blank costs minutes, and a confident wrong date costs a deal.
 
 [[scene:doc-path]]
 
 ## What the extracted copy is, and what it is not
 
-One more thing that is worth knowing before you build any of this, because it decides what you have to keep.
+One more thing is worth knowing before you build any of this. That is because it decides what you have to keep.
 
-American law is comfortable with electronic records. [15 U.S.C. 7001](https://www.law.cornell.edu/uscode/text/15/7001), the ESIGN Act, opens by saying that "a signature, contract, or other record relating to such transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form". That settles the old anxiety about whether a digitally signed contract counts, and it is not the half that decides what you have to keep.
+American law is comfortable with electronic records. [15 U.S.C. 7001](https://www.law.cornell.edu/uscode/text/15/7001), the ESIGN Act, opens by saying that "a signature, contract, or other record relating to such transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form". That settles the old anxiety about whether a digitally signed contract counts. It is not the half that decides what you have to keep.
 
-The half worth knowing is the retention rule at 7001(d). Where a law requires that a contract be retained, the requirement is met by keeping an electronic record which "accurately reflects the information set forth in the contract or other record" and which "remains accessible to all persons who are entitled to access by statute, regulation, or rule of law, for the period required by such statute, regulation, or rule of law, in a form that is capable of being accurately reproduced for later reference, whether by transmission, printing, or otherwise".
+The half worth knowing is the retention rule at 7001(d). Where a law requires that a contract be retained, the requirement is met by keeping an electronic record which "accurately reflects the information set forth in the contract or other record". It has to be a record which also "remains accessible to all persons who are entitled to access by statute, regulation, or rule of law, for the period required by such statute, regulation, or rule of law, in a form that is capable of being accurately reproduced for later reference, whether by transmission, printing, or otherwise".
 
 Read what that asks for. Not the facts from the contract. The information as set forth in it, reproducible later.
 
-A row of extracted fields is not that. It is a reading of the document, made by a particular system, on a particular day, and it drops everything the reader did not think to look for: the strike through, the initials in the margin, the handwritten note at the bottom that changes what a printed clause means. Extraction is a convenience layer over a document that has to keep existing, and any build that treats the fields as the record has quietly thrown away the thing the fields were about.
+A row of extracted fields is not that. It is a reading of the document, made by a particular system, on a particular day. And it drops everything the reader did not think to look for. The strike through. The initials in the margin. The handwritten note at the bottom that changes what a printed clause means. Extraction is a handy layer over a document that has to keep existing. Any build that treats the fields as the record has quietly thrown away the thing the fields were about.
 
-The practical version of this is dull and cheap. Keep the original, keep it findable, and store with every extracted value which document it came from and which page. That last habit costs nothing at build time and is the difference between a disagreement that takes ninety seconds to settle and one that takes an afternoon.
+The practical version of this is dull and cheap. Keep the original, keep it findable, and store with every extracted value which document it came from and which page. That last habit costs nothing at build time. It is the difference between a disagreement that takes ninety seconds to settle and one that takes an afternoon.
 
 [[scene:check-calculator]]
 
@@ -1753,27 +1753,27 @@ The practical version of this is dull and cheap. Keep the original, keep it find
 
 ## What it costs, and how long it takes
 
-No price is quoted here, and the reason is that the software is the smallest of the three things you would be paying for.
+No price is quoted here. The reason is that the software is the smallest of the three things you would be paying for.
 
-The first is the reading itself, which is charged by the page by whichever engine sits underneath, and it is the cheap part and the part that scales predictably. The second is the setup, and it is priced per DOCUMENT TYPE rather than per document: a purchase agreement, a disclosure form, a lease and an addendum are four different sets of expectations about where things are and what they mean, and adding the fourth one is not much cheaper than adding the first. The third does not look like a cost at all, which is why it is the one that gets left out, and it is deciding what the values mean. What a deadline counts from. Which calendar rule applies. Which of two contradictory pages wins. Those are conversations rather than configuration, they are the ones that decide whether the output is trustworthy, and they take longer than the build.
+The first is the reading itself. It is charged by the page by whichever engine sits underneath. It is the cheap part, and the part that scales predictably. The second is the setup, and it is priced per DOCUMENT TYPE rather than per document. A purchase agreement, a disclosure form, a lease and an addendum are four different sets of expectations about where things are and what they mean. Adding the fourth one is not much cheaper than adding the first. The third does not look like a cost at all. That is why it is the one that gets left out. It is deciding what the values mean. What a deadline counts from. Which calendar rule applies. Which of two contradictory pages wins. Those are conversations rather than settings. They are the ones that decide whether the output is trustworthy, and they take longer than the build.
 
-Two things move the bill more than anything else. One is whether your originals are files or photographs of paper, which is worth finding out before anybody quotes you rather than after. The other is how many document types you genuinely need, as opposed to how many you can name, and it is worth writing the two lists down separately before anybody quotes.
+Two things move the bill more than anything else. One is whether your originals are files or photographs of paper. That is worth finding out before anybody quotes you rather than after. The other is how many document types you truly need, as opposed to how many you can name. It is worth writing the two lists down separately before anybody quotes.
 
-On time, a single document type with clean originals and one place for the output to go is a short piece of work. What extends it has nothing to do with reading or with page counts. It is discovering, in week two, that there is nowhere for the output to land: no field in the CRM, no calendar anybody shares, no agreed owner for the exceptions. If those already exist, this moves quickly. If they do not, what you have bought is a systems project wearing a document reader's clothes, and that is worth knowing on day one rather than in week two.
+On time, a single document type with clean originals and one place for the output to go is a short piece of work. What extends it has nothing to do with reading or with page counts. It is discovering, in week two, that there is nowhere for the output to land. No field in the CRM, no calendar anybody shares, no agreed owner for the exceptions. If those already exist, this moves quickly. If they do not, what you have bought is a systems project wearing a document reader's clothes. That is worth knowing on day one rather than in week two.
 
 ## What it does not do, and should not pretend to
 
-It does not guarantee a date, and no honest version of this ever will. Misreading a line on a scanned rider is the failure mode of the whole category, which is why anything the system is not confident about should be flagged for a person rather than filed silently. That is a design choice you should confirm is being made, not something you get automatically.
+It does not guarantee a date, and no honest version of this ever will. Misreading a line on a scanned rider is the failure mode of the whole category. That is why anything the system is not confident about should be flagged for a person rather than filed silently. It is a design choice you should confirm is being made, not something you get automatically.
 
-It does not know what a value means. It reads what the page says. What the page says is a number of days, and turning that into a date on a calendar requires a rule about counting that lives in your business and not in the document. If nobody has written that rule down, the software has invented one on your behalf.
+It does not know what a value means. It reads what the page says. What the page says is a number of days. Turning that into a date on a calendar requires a rule about counting, and that rule lives in your business and not in the document. If nobody has written that rule down, the software has invented one on your behalf.
 
-It does not replace the document. The extracted fields are a reading, the original is the record, and the retention rule quoted above asks for something that accurately reflects the contract rather than a summary of it. Any build that deletes the source once the fields are populated has destroyed the only thing that can settle an argument.
+It does not replace the document. The extracted fields are a reading, and the original is the record. The retention rule quoted above asks for something that accurately reflects the contract rather than a summary of it. Any build that deletes the source once the fields are populated has destroyed the only thing that can settle an argument.
 
-It does not give a legal opinion, and it should not. It surfaces what a document says and what is missing from it, so somebody qualified can act on that. The distance between "the page says thirty days" and "your contingency expires on the fourteenth" contains at least one legal judgement and it is not the software's to make.
+It does not give a legal opinion, and it should not. It surfaces what a document says and what is missing from it. Somebody qualified can then act on that. The distance between "the page says thirty days" and "your contingency expires on the fourteenth" contains at least one legal judgement. It is not the software's to make.
 
-It does not fix a document. A missing signature is found, not solved. Chasing it is a person's work. The whole benefit is that the gap is found on the day the document arrives instead of the week it matters, which is a narrower promise than this category normally makes and is the one that survives a real transaction.
+It does not fix a document. A missing signature is found, not solved. Chasing it is a person's work. The whole benefit is that the gap is found on the day the document arrives instead of the week it matters. That is a narrower promise than this category normally makes. It is also the one that survives a real transaction.
 
-And it does not measure its own reliability in any way you can bank. Every one of these tools will show you a confidence score. That number was produced by a model about its own output, on some distribution of documents, and it is not a probability that the value is correct on your paperwork. Ask what it was measured on and what threshold the build uses. A vendor who can answer that in two sentences is telling you something good about themselves.
+And it does not measure its own reliability in any way you can bank. Every one of these tools will show you a confidence score. That number was produced by a model about its own output, on some distribution of documents. It is not a probability that the value is correct on your paperwork. Ask what it was measured on, and what threshold the build uses. A vendor who can answer that in two sentences is telling you something good about themselves.
 
 [[scene:wasted]]
 
@@ -1781,70 +1781,69 @@ And it does not measure its own reliability in any way you can bank. Every one o
 
 ## How to test a document reader on ten of your own files
 
-This takes an afternoon, needs no subscription, and will tell you more than any demonstration.
+This takes an afternoon, needs no subscription, and will tell you more than any demo.
 
-1. **Pull ten real files, not ten good ones.** Include the two that were a mess. Include the one where the addendum arrived as a photograph. A reader is only as useful as its behaviour on your worst week, and your worst week is not going to be in anybody's sample pack.
+1. **Pull ten real files, not ten good ones.** Include the two that were a mess. Include the one where the addendum arrived as a photograph. A reader is only as useful as its behaviour on your worst week. Your worst week is not going to be in anybody's sample pack.
 
-2. **Write down the five values you actually want.** Before you look at any output. Five, by name. This is harder than it sounds and it is the most valuable ten minutes of the exercise, because at least one of the five will turn out not to be printed on the page at all.
+2. **Write down the five values you actually want.** Before you look at any output. Five, by name. This is harder than it sounds, and it is the most valuable ten minutes of the exercise. That is because at least one of the five will turn out not to be printed on the page at all.
 
-3. **For each of the five, write where it comes from.** A fixed box on a standard form is one thing. A number written into a blank is another. A value that has to be derived from a date plus a counting rule is a third, and that third kind is where every expensive mistake in this subject lives.
+3. **For each of the five, write where it comes from.** A fixed box on a standard form is one thing. A number written into a blank is another. A value that has to be derived from a date plus a counting rule is a third. That third kind is where every expensive mistake in this subject lives.
 
 4. **Run the ten and score by value, not by document.** Fifty values. Mark each one right, wrong or missing. Keep wrong and missing in separate columns, because they are different failures and only one of them is dangerous.
 
-5. **Count the wrongs that would have been believed.** Of the ones it got wrong, how many looked plausible enough that nobody would have questioned them. That is the real error rate for your purposes. It is a subset of the raw wrong count, so it is smaller, and whether it comes out at zero on fifty values is the thing you are actually measuring.
+5. **Count the wrongs that would have been believed.** Of the ones it got wrong, how many looked plausible enough that nobody would have questioned them. That is the real error rate for your purposes. It is a subset of the raw wrong count, so it is smaller. Whether it comes out at zero on fifty values is the thing you are really measuring.
 
-6. **Take the ugliest page and make it uglier.** Photograph the printout at an angle, in poor light. Run it again. What you are looking for is not whether the score drops, because it will. You are looking at what the system does when it drops: does it go quiet, or does it keep answering.
+6. **Take the ugliest page and make it uglier.** Photograph the printout at an angle, in poor light. Run it again. What you are looking for is not whether the score drops, because it will. You are looking at what the system does when it drops. Does it go quiet, or does it keep answering.
 
-7. **Ask what happens to a low confidence value.** Where does it go, who sees it, and what does the queue look like on a Friday. If the answer is that it gets written anyway with a flag, you have learned the most important thing about the build, and you have learned it before it is running your calendar.
+7. **Ask what happens to a low confidence value.** Where does it go, who sees it, and what does the queue look like on a Friday. If the answer is that it gets written anyway with a flag, you have learned the most important thing about the build. And you have learned it before it is running your calendar.
 
 ## Common questions, answered honestly
 
 ### What is document processing in real estate, in plain terms?
 
-It is software that reads transaction paperwork and turns it into fields. A contract, disclosure, lease or addendum goes in, and the parties, prices, dates and missing signatures come out as structured data that can be written to a CRM, a transaction folder and a calendar, rather than staying inside a PDF that somebody has to open. The reading is the visible half. The half that decides whether it is worth having is what happens to the values it is not sure about.
+It is software that reads transaction paperwork and turns it into fields. A contract, disclosure, lease or addendum goes in. The parties, prices, dates and missing signatures come out as structured data. That data can be written to a CRM, a transaction folder and a calendar, rather than staying inside a PDF that somebody has to open. The reading is the visible half. The half that decides whether it is worth having is what happens to the values it is not sure about.
 
 ### Can AI read a scanned contract, or a photograph of one?
 
-Usually yes for the printed text, often yes for handwriting, and the accuracy depends far more on the page than on the software. The published measurement on real scanned forms above is the honest picture: on documents at around a hundred dots per inch with real scanning noise, a commercial engine recovered the characters nearly exactly when it was told where the words were, and lost about a quarter of them when it had to find them itself. A born digital PDF is a much easier case than either, because the text is already text.
+Usually yes for the printed text, and often yes for handwriting. The accuracy depends far more on the page than on the software. The published measurement on real scanned forms above is the honest picture. On documents at around a hundred dots per inch with real scanning noise, a commercial engine recovered the characters nearly exactly when it was told where the words were. It lost about a quarter of them when it had to find them itself. A born digital PDF is a much easier case than either, because the text is already text.
 
 ### What happens when it gets something wrong?
 
-That depends entirely on how it was built, and it is the question to ask first. The behaviour you want is abstention: a value the system is not confident about is left blank and put in front of a person, rather than written with a flag that nobody reads. A blank field is noticed. A wrong date that looks right is not, and it inherits the authority of your calendar, which is what makes it the expensive failure rather than the annoying one.
+That depends entirely on how it was built, and it is the question to ask first. The behaviour you want is abstention. A value the system is not confident about is left blank and put in front of a person. It is not written with a flag that nobody reads. A blank field is noticed. A wrong date that looks right is not. It inherits the authority of your calendar, which is what makes it the expensive failure rather than the annoying one.
 
 ### How is this different from workflow automation?
 
-[Workflow automation](/blog/workflow-automation-real-estate-business) is about steps of work a person used to do by hand, and its argument is what an interruption costs. This is about one value on one page and whether the claim made about it is true. The same engineers build both, using much the same parts, and they solve different problems. A document reader with nowhere to send its output is a common and expensive way of finding out that you needed the other one first.
+[Workflow automation](/blog/workflow-automation-real-estate-business) is about steps of work a person used to do by hand. Its argument is what an interruption costs. This is about one value on one page, and whether the claim made about it is true. The same engineers build both, using much the same parts, and they solve different problems. A document reader with nowhere to send its output is a common and expensive way to find out that you needed the other one first.
 
 ### Does it replace a transaction coordinator?
 
-No, and the reason is in the section above about what a date means. It removes the re-keying and it surfaces the deadlines and the gaps on the day a document arrives. What it does not do is decide what a deadline counts from, chase a missing signature, or notice that the other side has gone quiet. The mechanical part of that job is what this touches. The part that is judgement, chasing and relationship is not.
+No, and the reason is in the section above about what a date means. It removes the re-keying, and it surfaces the deadlines and the gaps on the day a document arrives. What it does not do is decide what a deadline counts from. It does not chase a missing signature, or notice that the other side has gone quiet. The mechanical part of that job is what this touches. The part that is judgement, chasing and relationship is not.
 
 ### Is the extracted data the legal record?
 
-No. The retention rule in the ESIGN Act asks for a record that accurately reflects the information set forth in the contract and can be accurately reproduced later, and a row of fields is a reading of the document rather than the document. Keep the original, keep it findable, and store the source document and page number alongside every extracted value. That last part is a five minute decision at build time and it is what makes a disagreement quick to settle.
+No. The retention rule in the ESIGN Act asks for a record that accurately reflects the information set forth in the contract and can be accurately reproduced later. A row of fields is a reading of the document rather than the document. Keep the original, keep it findable, and store the source document and page number alongside every extracted value. That last part is a five minute decision at build time. It is what makes a disagreement quick to settle.
 
 ### Can it read handwriting?
 
-Often, and the honest answer has a shape to it. Printed and typed text is the reliable case. Neat handwriting in a box designed for it is usually fine. What is genuinely hard is exactly what matters most in real estate paperwork: a figure written over a struck through one, a date altered in a margin, initials that are not meant to be legible even to a person. Those are the marks that carry the most meaning and the least information, so they are the ones a build should be designed to flag rather than to guess at.
+Often, and the honest answer has a shape to it. Printed and typed text is the reliable case. Neat handwriting in a box designed for it is usually fine. What is truly hard is exactly what matters most in real estate paperwork. A figure written over a struck through one. A date altered in a margin. Initials that are not meant to be legible even to a person. Those are the marks that carry the most meaning and the least information. So they are the ones a build should be designed to flag rather than to guess at.
 
 ### What should I ask a vendor before I buy one?
 
-Five short questions, all with short answers. What does the confidence score mean and what was it measured on. What does the system do when it falls below the threshold, and where does that value go. Does it store which document and which page each value came from. How many document types are included and what does adding one cost. And what happens on a photograph of a page rather than a PDF. Somebody who answers all five in plain sentences is worth taking seriously. Somebody who offers to show you a demonstration instead has answered a sixth question you did not ask.
+Five short questions, all with short answers. What does the confidence score mean and what was it measured on. What does the system do when it falls below the threshold, and where does that value go. Does it store which document and which page each value came from. How many document types are included and what does adding one cost. And what happens on a photograph of a page rather than a PDF. Somebody who answers all five in plain sentences is worth taking seriously. Somebody who offers to show you a demo instead has answered a sixth question you did not ask.
 
 ## What to do about it
 
-There is one piece of homework under all of this and it is not a software decision.
+There is one piece of homework under all of this, and it is not a software decision.
 
-Somewhere in your business there is a set of counting rules. Which day a period starts on. Whether Saturday counts. What happens when a deadline lands on a holiday. Which of two contradictory pages wins. Those rules are what turn an extracted value into a deadline, and the test of whether they exist is simple: can you point at where they are written down. If the answer is that a particular person knows, you cannot automate this and you also cannot train anybody into it, and those are the same problem wearing different clothes.
+Somewhere in your business there is a set of counting rules. Which day a period starts on. Whether Saturday counts. What happens when a deadline lands on a holiday. Which of two contradictory pages wins. Those rules are what turn an extracted value into a deadline, and the test of whether they exist is simple. Can you point at where they are written down. If the answer is that a particular person knows, you cannot automate this and you also cannot train anybody into it, and those are the same problem wearing different clothes.
 
-Writing them down is free, it takes an afternoon, and it is worth doing whether or not you ever buy any of this.
+Writing them down is free, and it takes an afternoon. It is worth doing whether or not you ever buy any of this.
 
-Where this sits among everything else we build is on [the RealtyLT AI page](/ai#docs); the fields it pulls and the places it writes them are on the [document processing page](/services/document-processing). If you would rather have somebody go through one real file with you and mark up which values are printed, which are handwritten and which are derived, that is the [AI audit](/services/ai-audit).
+Where this sits among everything else we build is on [the RealtyLT AI page](/ai#docs). The fields it pulls and the places it writes them are on the [document processing page](/services/document-processing). You may instead want somebody to go through one real file with you, and mark up which values are printed, which are handwritten and which are derived. That is the [AI audit](/services/ai-audit).
 
 The paperwork is not going to get cleaner. The rules about what its dates mean are the part you can fix this week.
 
-[[scene:funnel]]
-`;
+[[scene:funnel]]`;
 
 export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people. It was a decent piece of work. Median price in three towns. What had actually closed against what had been asked. And two sentences at the bottom in your own voice, about the inspection that had fallen through on Elm.
 
@@ -2332,13 +2331,13 @@ It is not a legal formula and nobody is asking for one. It runs something like t
 
 [[scene:funnel]]`;
 
-export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly, which is not laziness. It is what anybody does with something that has been right nine times.
+export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly. That is not laziness. It is what anyone does with something that has been right nine times.
 
-On the tenth morning it confirmed a Thursday walkthrough to a buyer's agent. You had moved that walkthrough to Friday the previous evening, in a text message, from the car. The assistant read the calendar, and the calendar said Thursday, because the calendar was where the walkthrough had been before you moved it.
+On the tenth morning it confirmed a Thursday walkthrough to a buyer's agent. You had moved that walkthrough to Friday the evening before, in a text message, from the car. The assistant read the calendar. The calendar said Thursday, because the calendar was where the walkthrough had been before you moved it.
 
-The draft went out at 6:40am, in your voice, from your address, and it was polite and well written and completely wrong.
+The draft went out at 6:40am, in your voice, from your address. It was polite and well written and completely wrong.
 
-Nothing malfunctioned. The assistant was not confused and did not hallucinate anything. It read what it had access to, did the job it was given, and produced a piece of work indistinguishable in tone from the nine that were correct. That last part is the whole subject of this article, because it is the reason nobody caught it.
+Nothing broke. The assistant was not confused and it did not make anything up. It read what it could reach. It did the job it was given. And it produced a piece of work whose tone was exactly like the nine that were correct. That last part is the whole subject of this article. That is because it is the reason nobody caught it.
 
 [[scene:in-short]]
 
@@ -2346,81 +2345,81 @@ Nothing malfunctioned. The assistant was not confused and did not hallucinate an
 
 ## What an agent workforce actually is, and what it is not
 
-The pitch is easy to say and it is broadly true. Instead of one general chatbot you have to brief every time, you set up several assistants, each pointed at one recurring job, each with access to the systems that job needs. One reads the overnight email and drafts replies. One pulls comps and builds the deck for tomorrow's listing appointment. One watches every open file for the signature nobody chased. They run at the same time, they do not stop at five o'clock, and adding another one is a configuration change rather than a hire.
+The pitch is easy to say, and it is broadly true. Instead of one general chatbot you have to brief every time, you set up several assistants. Each one is pointed at a single recurring job. Each one can reach the systems that job needs. One reads the overnight email and drafts replies. One pulls comps and builds the deck for tomorrow's listing appointment. One watches every open file for the signature nobody chased. They run at the same time. They do not stop at five o'clock. And adding another one is a settings change rather than a hire.
 
-What that description leaves out is the second half of the sentence, and the second half is where all the money and all the risk are. You have not removed work. You have changed what kind of work it is. Producing has become reviewing, and reviewing four streams of output is a real job with real hours in it, done by you, in the morning, before anything else.
+What that pitch leaves out is the second half of the sentence. That half holds all the money and all the risk. You have not removed work. You have changed what kind of work it is. Producing has become reviewing. And reviewing four streams of output is a real job, with real hours in it, done by you, in the morning, before anything else.
 
-That is not an argument against doing this. It is an argument for knowing what you are buying, and it is the thing every page in this category, including our own, has historically been vague about.
+That is not an argument against doing this. It is an argument for knowing what you are buying. It is also the thing every page about this, including our own, has been vague about in the past.
 
 [[scene:not-a-chatbot]]
 
 ## Right once and right every time are different products
 
-Here is the distinction that reorganises the whole subject, and it comes from the best public measurement of this that exists.
+Here is the difference that reorders the whole subject. It comes from the best public measurement of this that exists.
 
-In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a simulated business with a real database, a set of tools that can change that database, and a written policy it has to follow, and then has a second language model play a customer who wants something. Two domains: a retail one with five hundred customers, a thousand orders and a hundred and fifteen tasks, and an airline one with three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the actual state of the database against the one correct outcome. Not the transcript, not the tone. What ended up in the system.
+In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a pretend business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
 
-The authors also proposed a measurement that nobody had been using, and it is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked instead how often an agent succeeds at the same task every single time it is attempted, and they named it pass hat k: the chance that all k independent attempts are successful, averaged across tasks.
+The authors also put forward a measurement nobody had been using. It is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked something else. They asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
 
 Read that against your own morning. You do not need an assistant that can draft a good reply. You need one that drafts a good reply on Monday and Tuesday and Wednesday and the Thursday you were in the car.
 
 ## What happens when you run the same job twenty times
 
-The best model in that paper solved more than sixty percent of the retail tasks on a single attempt. Run the same tasks eight times each and require all eight to be right, and the paper reports that the figure drops below twenty five percent.
+The best model in that paper solved more than sixty percent of the retail tasks on a single attempt. Now run the same tasks eight times each, and require all eight to be right. The paper reports that the figure drops below twenty five percent.
 
-Sit with the shape of that rather than the numbers, because the numbers are from June 2024 and the models have moved since. Something that succeeds most of the time on any given morning succeeds every morning far less often than most of the time, and the gap widens the more mornings you ask about. That is not a flaw anybody introduced. It is what happens when you multiply a probability by itself, and it is the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
+Sit with the shape of that rather than the numbers. That is because the numbers are from June 2024, and the models have moved on since. Something that succeeds most of the time on any given morning succeeds every morning far less often than most of the time. And the gap widens the more mornings you ask about. That is not a fault anybody put there. It is what happens when you multiply a chance by itself. It is also the reason a demo is such a poor guide to a purchase. A demo is one attempt. A business is a hundred attempts in a row.
 
-The same paper is worth reading for one more reason: it looked at what the failures actually were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal, not an error message, not an apology. The correct action, confidently, on the wrong record. Which is what happened at 6:40 on the tenth morning.
+The same paper is worth reading for one more reason. It looked at what the failures actually were. Of thirty six failed runs it examined by hand, the largest group was the agent calling the right kind of tool with the wrong values in it. Not a refusal. Not an error message. Not an apology. The correct action, done with confidence, on the wrong record. Which is what happened at 6:40 on the tenth morning.
 
 ## Where these systems actually go wrong, and it is mostly not the model
 
-The other paper worth your time is more recent and it is about exactly the thing the service page is selling, which is several agents working at once.
+The other paper worth your time is newer. It is about exactly the thing the service page is selling, which is several agents working at once.
 
-A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks, built a taxonomy of what went wrong by having six human experts read a hundred and fifty traces closely, and then checked that the taxonomy was reliable by having independent annotators apply it and measuring how often they agreed. Their agreement measure came out at 0.88, which is high, and it matters because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks. A trace is the record of one whole run. They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fifty traces closely. Then they checked that the taxonomy was reliable. They had separate annotators apply it, and they measured how often those annotators agreed. Their agreement measure came out at 0.88, which is high. It matters, because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
 
-Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you: across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
+Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you one. Across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
 
 [[scene:where-fail]]
 
-The chart is the finding. The largest group is not the model being stupid. It is system design: the job being specified badly, the agent repeating a step it had already done, the agent not knowing when it was finished. Their single most common individual mode, at 15.7 percent of everything, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
+The chart is the finding. The largest group is not the model being stupid. It is system design. That group covers the job being described badly, the agent repeating a step it had already done, and the agent not knowing when it was finished. Their most common single mode, at 15.7 percent of everything, is step repetition. The second is the agent's stated reasoning not matching the action it then took. The third is not recognising the conditions under which it should stop.
 
-None of those are fixed by a better model, and all of them are fixed by somebody thinking harder about the instructions and the checks. The paper's own observation about this is the practical one: the systems in their sample that had explicit verification steps built into them showed fewer failures overall.
+None of those are fixed by a better model. All of them are fixed by somebody thinking harder about the instructions and the checks. The paper's own note on this is the practical one. It reports that the systems in its sample with explicit verification steps built into them showed fewer failures overall.
 
 ## The brief is the product
 
-The tau-bench authors ran one more experiment which almost nobody talks about, and for a reader about to pay for any of this it is the result in either paper that matters most.
+The tau-bench authors ran one more experiment that almost nobody talks about. For a reader about to pay for any of this, it is the result in either paper that matters most.
 
-They took the written policy out of the agent's instructions and ran everything again. In the simple domain, where the rules are close to common sense, performance fell from 61.2 to 56.8 percent, which is barely anything. In the complicated domain, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
+They took the written policy out of the agent's instructions and ran everything again. In the simple task set, where the rules are close to common sense, the score fell from 61.2 to 56.8 percent, which is barely anything. In the complicated task set, where the rules are specific and arbitrary in the way real business rules are, it fell from 33.2 to 10.8 percent.
 
 [[scene:rules-removed]]
 
-Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document: the description of the job, the rules, the exceptions, the things that must never happen. The model is a commodity and it improves every few months without you doing anything. The brief is yours, it is specific to your business, and nobody else can write it.
+Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is an off-the-shelf part, and it improves every few months without you doing anything. The brief is yours. It is specific to your business. Nobody else can write it.
 
-This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation, and it is a two hour one, because most recurring jobs have never been written down and the first hour is spent discovering the exceptions that live only in somebody's head.
+This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation. It is a two hour one. That is because most recurring jobs have never been written down, and the first hour goes on finding the exceptions that live only in somebody's head.
 
 [[scene:plate]]
 
 ## Why the second assistant costs more than the first
 
-Everything above is about one assistant. Running several is not the same thing repeated, and the difference is worth being clear about because it is the difference the word "workforce" hides.
+Everything above is about one assistant. Running several is not the same thing repeated. The difference is worth being clear about, because it is the difference the word "workforce" hides.
 
-Two assistants that never touch each other are genuinely just two assistants, and the cost is roughly double the cost of one. That describes a lot of useful setups and there is nothing wrong with it.
+Two assistants that never touch each other are truly just two assistants. The cost is roughly double the cost of one. That describes a lot of useful setups, and there is nothing wrong with it.
 
-But the moment one assistant's output becomes another assistant's input, you have built a system, and the Berkeley taxonomy has a whole category for what goes wrong there: information one agent held and did not pass on, an agent carrying on with an assumption instead of asking, an agent quietly drifting off the task it was given. Almost a third of everything they classified sat in that group. A handover between two pieces of software is not free, and it is exactly the place where an error stops being visible, because the second agent receives a confident summary rather than the thing itself.
+But the moment one assistant's output becomes another assistant's input, you have built a system. The Berkeley taxonomy has a whole category for what goes wrong there. It covers information one agent held and did not pass on. It covers an agent carrying on with an assumption instead of asking. And it covers an agent quietly drifting off the task it was given. Almost a third of everything they classified sat in that group. A handover between two pieces of software is not free. It is exactly the place where an error stops being visible, because the second agent receives a confident summary rather than the thing itself.
 
-The practical rule that falls out of this is dull and it is worth more than any feature list. Keep the assistants independent unless there is a specific reason not to, and where one has to feed another, make the handover something a person can read.
+The practical rule that falls out of this is dull, and it is worth more than any feature list. Keep the assistants separate unless there is a specific reason not to. And where one has to feed another, make the handover something a person can read.
 
 [[scene:agent-path]]
 
 ## Where the money actually goes when you run several
 
-The cost of running an agent is not what you would guess, and the tau-bench paper measured it, which almost nobody does.
+The cost of running an agent is not what you would guess. The tau-bench paper measured it, which almost nobody does.
 
-For each task their best setup handled, the agent cost 38 cents and the simulated customer on the other side cost 23 cents. That is not your price list and it should not be read as one. The number underneath it is the one that transfers: of what the agent cost, the input took 95.9 percent and everything the agent actually wrote took 4.1 percent.
+For each task their best setup handled, the agent cost 38 cents. The simulated customer on the other side cost 23 cents. That is not your price list, and it should not be read as one. The number underneath it is the one that carries over. Of what the agent cost, the input took 95.9 percent, and everything the agent actually wrote took 4.1 percent.
 
-In plain terms, almost the entire running cost of an assistant is it re-reading its own instructions, its tool definitions and the conversation so far, over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
+In plain terms, almost the entire running cost of an assistant is it re-reading its own instructions, the descriptions of its tools and the conversation so far. It does that over and over, before every single thing it says. It is not being paid to write. It is being paid to remember.
 
-That has three consequences you can act on. A longer brief costs money every time the assistant runs, so the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation gets more expensive with every turn, which is why a job that ends is cheaper than a job that lingers.
+That has three consequences you can act on. A longer brief costs money every time the assistant runs. So the discipline is a brief that is complete rather than a brief that is long. An assistant that is given access to ten tools it never uses is paying to read the descriptions of ten tools it never uses. And an assistant handling a long conversation costs more with every turn. That is why a job that ends is cheaper than a job that lingers.
 
 [[scene:agent-calculator]]
 
@@ -2428,35 +2427,35 @@ That has three consequences you can act on. A longer brief costs money every tim
 
 ## What a person costs, and why you cannot divide by it
 
-Every page in this category eventually reaches for a salary, and ours did too. So here is a real one, from the only source for it that publishes its method.
+Every page about this eventually reaches for a salary, and ours did too. So here is a real one, from the only source for it that publishes its method.
 
-The United States Bureau of Labor Statistics reports that the median annual wage for [secretaries and administrative assistants was $47,460 in May 2024](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), which is $22.82 an hour. Median means what the Bureau says it means and it is worth quoting, because half of this category's arithmetic depends on people not knowing: the median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. For context, [the median for real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) was $56,320 over the same period, and the median for all occupations was $49,500.
+The United States Bureau of Labor Statistics reports that the median annual wage for [secretaries and administrative assistants was $47,460 in May 2024](https://www.bls.gov/ooh/office-and-administrative-support/secretaries-and-administrative-assistants.htm), which is $22.82 an hour. Median means what the Bureau says it means, and the Bureau's own words are worth quoting. That is because half of the sums in this field depend on people not knowing them. The median wage is the wage at which half the workers in an occupation earned more than that amount and half earned less. For context, [the median for real estate sales agents](https://www.bls.gov/ooh/sales/real-estate-brokers-and-sales-agents.htm) was $56,320 over the same period, and the median for all occupations was $49,500.
 
-Now the part where the arithmetic stops. That $47,460 buys something with properties an assistant does not have. It answers the phone when the caller is upset. It notices that the job it was given last March is no longer the job that needs doing. It can be told once. It can be held responsible. And it is a whole person rather than a set of tasks, so removing four tasks from that job does not remove four quarters of the salary.
+Now the part where the arithmetic stops. That $47,460 buys something with qualities an assistant does not have. It answers the phone when the caller is upset. It notices that the job it was given last March is no longer the job that needs doing. It can be told once. It can be held responsible. And it is a whole person rather than a set of tasks. So taking four tasks out of that job does not take four quarters off the salary.
 
-There is also a number in the same table that nobody selling this will mention. The Bureau's projection for that occupation between 2024 and 2034 is zero percent growth, a change of minus 12,400 jobs out of roughly three and a half million. Not a collapse. Essentially flat, in the published forecast of the agency whose job is forecasting it.
+There is also a number in the same table that nobody selling this will mention. The Bureau's projection for that occupation between 2024 and 2034 is zero percent growth. That is a change of minus 12,400 jobs out of roughly three and a half million. Not a collapse. More or less flat, in the published forecast of the agency whose job is forecasting it.
 
-So this page will not divide one of those numbers by the other. The honest comparison is not assistant against employee, because they are not substitutes. It is your morning with the assistants against your morning without them, which is a question about your own time and not about anybody's salary, and it is the question the calculator above is asking.
+So this page will not divide one of those numbers by the other. The honest comparison is not assistant against employee, because they do not stand in for each other. It is your morning with the assistants against your morning without them. That is a question about your own time and not about anybody's salary. It is the question the calculator above is asking.
 
 ## Who is responsible when an assistant is wrong
 
 The email that went out at 6:40 was signed with your name. Everything else follows from that.
 
-This industry is unusual in having already written down what happens when work is delegated, because delegating licensed work is already a regulated activity in New York. It is worth reading two provisions in [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law), because neither is about artificial intelligence and both are about you.
+This trade is unusual. It has already written down what happens when work is handed to somebody else. That is because handing out licensed work is already a regulated activity in New York. Two parts of [the Department of State's own Real Estate License Law booklet](https://dos.ny.gov/real-estate-license-law) are worth reading, because neither is about artificial intelligence and both are about you.
 
-Section 442-c deals with what a salesperson's misconduct means for the broker. A broker is not automatically on the hook for what an associate did. But there are two ways they become so, and the second is the one to read twice: a broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
+Section 442-c deals with what a salesperson's misconduct means for the broker. A broker is not automatically on the hook for what an associate did. But there are two ways a broker becomes so, and the second is the one to read twice. A broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transaction wrongfully negotiated by their salesperson or employee after notice of the misconduct. Keeping what the conduct earned is the thing that attaches you to the conduct.
 
-Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. It is not a list a piece of software is on, and nothing here is a prediction about future law. It is a description of the present one, and the description is that when an assistant working for you says something to a client, there is exactly one licensed party in the conversation and it is you.
+Then read Section 440-a, which is the requirement to be licensed at all. It lists who may hold a licence. The list runs: a person, a co-partnership, a limited liability company, a corporation. That list is a list of parties that can be disciplined, sued and struck off. A piece of software is not on it, and nothing here is a prediction about future law. It is a description of the present one, and the description is this. When an assistant working for you says something to a client, there is exactly one licensed party in the conversation, and it is you.
 
 ## What supervision looks like when the thing you are supervising is software
 
-There is a second document worth borrowing, and this one is borrowed openly as an analogy rather than applied as a rule. It is about supervising people and it says nothing whatever about software.
+There is a second document worth borrowing. This one is borrowed openly as a comparison rather than applied as a rule. It is about supervising people, and it says nothing whatever about software.
 
-Section 175.21 of the Secretary of State's regulations defines what supervising a salesperson actually consists of, and rather than leaving it to judgement it writes it down: regular, frequent and consistent personal guidance, instruction, oversight and superintendence, with respect to the brokerage business and all matters relating to it. The next paragraph requires written records of what the salesperson actually did.
+Section 175.21 of the Secretary of State's regulations defines what supervising a salesperson actually consists of. It does not leave that to judgement. It writes it down as regular, frequent and consistent personal guidance, instruction, oversight and superintendence, with respect to the brokerage business and all matters relating to it. The next paragraph requires written records of what the salesperson actually did.
 
-Nobody is claiming that provision governs an inbox assistant. What it does is describe, in a document your regulator wrote, the standard this industry already applies to work done in your name by somebody who is not you. Regular. Frequent. Consistent. Written down.
+Nobody is claiming that provision governs an inbox assistant. What it does is describe the standard this trade already applies to work done in your name by somebody who is not you. And the document that describes it was written by your regulator. Regular. Frequent. Consistent. Written down.
 
-Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest specification for what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
+Set that beside four assistants running overnight with nobody reading the output after day four, and you have the honest list of what running this well requires. Not a dashboard. A habit, with a time in the diary, and a record of what was produced.
 
 [[scene:plate-two]]
 
@@ -2464,41 +2463,41 @@ Set that beside four assistants running overnight with nobody reading the output
 
 ## What it costs, and how long it takes
 
-Nobody can quote this from an article, because three separate things drive the cost and only one of them is the software.
+Nobody can quote this from an article. That is because three separate things drive the cost, and only one of them is the software.
 
-The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, is a sitting rather than a message, and it goes faster when a second person keeps pushing back on the first version you offer. The tau-bench ablation is the argument for spending that time rather than skipping it.
+The first is the brief, and it is the slow part. Writing down a job properly, exceptions included, is a sitting rather than a message. It goes faster when a second person keeps pushing back on the first version you offer. The tau-bench run with the rules taken away is the argument for spending that time rather than skipping it.
 
-The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot, and the work is connecting it safely: the right permissions, nothing wider than the job needs, and a way to switch it off.
+The second is access. An assistant that can read your calendar and your CRM is worth several times one that cannot. The work is connecting it safely. That means the right permissions, nothing wider than the job needs, and a way to switch it off.
 
-The third is the running cost, which is usage rather than a seat, tracks how much the assistant has to read rather than how much it writes, and is genuinely small per task and genuinely unbounded if nobody watches it.
+The third is the running cost. You pay for use rather than for a seat. It tracks how much the assistant has to read rather than how much it writes. And it is truly small per task, and truly without a ceiling if nobody watches it.
 
-What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published, they are readable, and you can look them up in a minute. It is that they are quoted per million tokens, which means nothing until somebody knows how many tokens your job takes; that they change several times a year; and that which model sits behind an assistant is a build decision that can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was, and it would not have answered the question you asked. What can be said is the shape: the cost per piece of work is in cents rather than dollars, it is driven by the length of the instructions rather than the length of the answer, and the honest budget line is the review time above it rather than the compute.
+What this page will not print is a per-model price, and the reason is not that the numbers are hidden. They are published, they are readable, and you can look them up in a minute. The reason is that they are quoted per million tokens. A token is a small piece of text. That price means nothing until somebody knows how many tokens your job takes. It is also that they change several times a year. And it is that which model sits behind an assistant is a build decision. That decision can be changed without anything visible happening at your end. A figure typed into an article would be stale before the article was. It would not have answered the question you asked. What can be said is the shape. The cost per piece of work is in cents rather than dollars. It is driven by the length of the instructions rather than the length of the answer. And the honest budget line is the review time above it rather than the machine time.
 
 ## What it does not do, and should not pretend to
 
-It does not take responsibility. An assistant cannot be told off, cannot learn from being told off in any way that persists unless somebody edits the brief, and cannot be the person a client complains to. Every consequence lands on a licensed human being, and that human being is you.
+It does not take responsibility. An assistant cannot be told off. It cannot learn from being told off in any way that lasts, unless somebody edits the brief. And it cannot be the person a client complains to. Every consequence lands on a licensed human being, and that human being is you.
 
-It does not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your listing emails for a year will eventually say that the market has moved and the second paragraph now reads badly. An assistant will produce that second paragraph forever, with perfect consistency, until somebody rewrites the brief.
+It does not notice that the job has changed. This is the quietest failure of the four. A person who has been drafting your listing emails for a year will eventually say that the market has moved, and that the second paragraph now reads badly. An assistant will produce that second paragraph forever, with perfect consistency, until somebody rewrites the brief.
 
-It does not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, fluent, plausible output that is subtly not what you wanted, and you find out three weeks later from a client.
+It does not do a job nobody has written down. A vague brief does not produce vague output, which would at least be a visible signal. It produces confident, smooth, believable output that is quietly not what you wanted. You find out three weeks later from a client.
 
-It does not remove the reading. Anything that reaches a client should be read by a person first, an assistant that drafts is worth more than one that sends, and the review is not a temporary safety measure for the first month. It is the job now.
+It does not remove the reading. Anything that reaches a client should be read by a person first. An assistant that drafts is worth more than one that sends. And the review is not a temporary safety measure for the first month. It is the job now.
 
-And it does not scale the way the word workforce suggests. Four independent assistants are four times the review. Four assistants feeding each other are four times the review plus a category of failure that only exists because they are connected, and the published taxonomy has six named modes inside it.
+And it does not scale the way the word workforce suggests. Four separate assistants are four times the review. Four assistants feeding each other are four times the review, plus a category of failure that only exists because they are connected. The published taxonomy has six named modes inside it.
 
 [[scene:wasted]]
 
 ## How to test one assistant before you run four
 
-Do this with one assistant, on one job, before anybody builds you a set of them. It runs over a couple of weeks, it costs you nothing but attention, and it will tell you more than any demonstration.
+Do this with one assistant, on one job, before anybody builds you a set of them. It runs over a couple of weeks. It costs you nothing but attention. And it will tell you more than any demo.
 
-Pick the dullest job you have that repeats, and write the brief before you look at any software. Include the exceptions. If you cannot write it, you have learned the most useful thing available today, which is that the job is not yet delegable to anybody, software or human.
+Pick the dullest job you have that repeats, and write the brief before you look at any software. Include the exceptions. If you cannot write it, you have learned the most useful thing available today, which is that the job cannot yet be handed to anybody at all, software or human.
 
-Then run it against work you have already done. Take ten pieces of last month's output that you produced by hand, give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
+Then run it against work you have already done. Take ten pieces of last month's output that you produced by hand. Give the assistant the same inputs, and compare. This is the only honest accuracy test, because you already know the right answer and you are not grading it on how confident it sounds.
 
-Then run the same task ten times and count how many times all ten are right. Not the average. All ten. That is the pass hat k measurement from the research above, done by hand, and it is the single number that predicts whether you will still be reading the output in week six.
+Then run the same task ten times and count how many times all ten are right. Not the average. All ten. That is the pass hat k measurement from the research above, done by hand. It is the single number that predicts whether you will still be reading the output in week six.
 
-Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the ambiguous cases rather than stopping will go on deciding, and one of those decisions reaches somebody outside your office before you have seen it.
+Then break it on purpose. Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decides. An assistant that decides in the unclear cases rather than stopping will go on deciding. And one of those decisions reaches somebody outside your office before you have seen it.
 
 Last, put a time in your diary. Fifteen minutes, the same slot every week, to read a sample of what it produced and check it against what you asked for. If you cannot find that slot for one assistant, you have your answer about four.
 
@@ -2506,11 +2505,11 @@ Last, put a time in your diary. Fifteen minutes, the same slot every week, to re
 
 ### What is an AI agent workforce, in plain terms?
 
-It is a set of AI assistants, each configured for one recurring job and each connected to the systems that job needs. Rather than one general chatbot you brief from scratch every session, you have several that already know your business and their own task, and they run in parallel, on a schedule or a trigger, without you opening anything.
+It is a set of AI assistants. Each one is set up for one recurring job, and each one is connected to the systems that job needs. Rather than one general chatbot you brief from scratch every session, you have several that already know your business and their own task. They run at the same time, on a schedule or a trigger, without you opening anything.
 
 ### How is this different from workflow automation?
 
-Workflow automation joins the software you already pay for, so the end of one step is what begins the next, and most of the steps in a good automation carry no judgement in them at all. An agent is what you reach for when a step genuinely needs a decision made from context. Both are often assembled from the same parts, and putting an agent where a simple rule would have done buys unpredictability nobody asked for.
+Workflow automation joins up the software you already pay for, so the end of one step is what begins the next. Most of the steps in a good automation carry no judgement in them at all. An agent is what you reach for when a step really needs a decision made from what is going on around it. Both are often assembled from the same parts. And putting an agent where a simple rule would have done makes the result harder to predict, which nobody asked for.
 
 ### How is this different from just using ChatGPT?
 
@@ -2518,33 +2517,33 @@ Three things, and the second is the one that matters most. A general chat sessio
 
 ### How many assistants can I actually run at once?
 
-Technically as many as you have jobs for, because they do not queue behind each other. Practically the limit is not the software, it is how many streams of output one person can review before the reviewing stops happening. It is a number worth working out rather than assuming, and the calculator above is there to let you find yours before you commit to it.
+In theory, as many as you have jobs for, because they do not queue behind each other. In practice the limit is not the software. It is how many streams of output one person can review before the reviewing stops happening. It is a number worth working out rather than assuming. The calculator above is there to let you find yours before you commit to it.
 
 ### Do I need technical skills?
 
-No, and the skill you do need is not technical. You need to be able to describe a job precisely, including what should happen in the cases that are not the normal case. That is a writing and thinking exercise rather than a software one, and it is the part that cannot be outsourced, because the exceptions live in your head.
+No, and the skill you do need is not a technical one. You need to be able to describe a job precisely, including what should happen in the cases that are not the normal case. That is a writing and thinking exercise rather than a software one. It is also the part that cannot be handed to anybody else, because the exceptions live in your head.
 
 ### What happens when one of them is wrong?
 
-It produces something wrong that reads exactly like everything it produced when it was right, which is why the answer has to be structural rather than attentive. A build that is serious about this stops and asks rather than guessing on anything ambiguous, keeps a readable record of what it did and why, drafts rather than sends anything client-facing, and has a review step somebody actually performs.
+It produces something wrong that reads exactly like everything it produced when it was right. That is why the answer has to be built in rather than a matter of paying attention. A build that is serious about this stops and asks rather than guessing on anything unclear. It keeps a readable record of what it did and why. It drafts rather than sends anything that goes to a client. And it has a review step somebody actually performs.
 
 ### Is it cheaper than hiring somebody?
 
-That is the wrong comparison and we are not going to make it. The published median wage for an administrative assistant buys accountability, judgement and somebody who notices when the job changes, and an assistant provides none of those. The comparison that is real is your own week with and without, including the review time, which is what the calculator above works out.
+That is the wrong comparison, and we are not going to make it. The published median wage for an administrative assistant buys somebody who can be held responsible, somebody with judgement, and somebody who notices when the job changes. An assistant provides none of those. The real comparison is your own week with and without, including the review time. That is what the calculator above works out.
 
 ### How do I know it is working after the first month?
 
-Not from a dashboard. Count how many pieces of its output you actually read last week and be honest about it, because the review is the control and a review nobody performs is not one. Then take a sample and check it against the brief rather than against your impression, and every quarter re-read the brief itself and ask whether it still describes the job you have now.
+Not from a dashboard. Count how many pieces of its output you actually read last week, and be honest about it. That is because the review is the control, and a review nobody performs is not one. Then take a sample and check it against the brief rather than against your impression. And every quarter, re-read the brief itself and ask whether it still describes the job you have now.
 
 ## What to do about it
 
-Go and read yesterday's output. Not the summary of it, the actual pieces, all of them, one after the other, with the brief open beside you. It takes twenty minutes and it is the only way to find out whether you have four assistants or four unread inboxes.
+Go and read yesterday's output. Not the summary of it. The actual pieces, all of them, one after the other, with the brief open beside you. It takes twenty minutes. It is the only way to find out whether you have four assistants or four unread inboxes.
 
-Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document, and the document is the part nobody else can write, and you can write it today for nothing.
+Then write one brief for one job, properly, before anybody sells you anything. The research says most of what an assistant can do for you comes out of that document. The document is the part nobody else can write. And you can write it today for nothing.
 
-The assistants are listed on [the RealtyLT AI page](/ai#agents); what each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs are genuinely delegable is what the [AI audit](/services/ai-audit) does: we take one real job, write the brief with you, and build that one first.
+The assistants are listed on [the RealtyLT AI page](/ai#agents). What each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs can truly be handed over is what the [AI audit](/services/ai-audit) does. We take one real job, write the brief with you, and build that one first.
 
-The individual jobs are written up on their own: [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
+Each of these jobs is written up on its own. There is [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
 
 Nine good mornings are not a track record. They are nine mornings.
 
@@ -3338,75 +3337,75 @@ That pair of numbers is the whole of this article in your own handwriting. If th
 
 [[scene:funnel]]`;
 
-export const REVIEW_AUTOMATION_POST = `Last Tuesday a woman in Beacon stood in her kitchen with a phone in one hand and two names on the screen. Both had been recommended by somebody she trusted. She had about ten minutes before she had to leave for the pool.
+export const REVIEW_AUTOMATION_POST = `Last Tuesday a woman in Beacon stood in her kitchen. She had a phone in one hand and two names on the screen. Both had been recommended by somebody she trusted. She had about ten minutes before she had to leave for the pool.
 
 She tapped the first name. Twelve reviews, every single one of them five stars, and the most recent was from 2023.
 
-She tapped the second. Thirty one reviews, an average of 4.6, the newest written eight days ago, and a three star from March with four lines underneath it from the agent explaining what had gone wrong with the appraisal and what he had done about it.
+She tapped the second. Thirty one reviews, an average of 4.6, and the newest written eight days ago. There was also a three star from March, with four lines underneath it from the agent. He explained what had gone wrong with the appraisal and what he had done about it.
 
 She called the second one.
 
-The first agent will never find out that this happened. There is no notification for it and no line in any report. Nothing in the CRM records that a Tuesday evening in August went somewhere else on the strength of a date.
+The first agent will never find out that this happened. There is no alert for it and no line in any report. Nothing in the CRM records what happened. A Tuesday evening in August went somewhere else on the strength of a date.
 
 [[scene:in-short]]
 
 ## The number this is usually sold on, and why it is not in here
 
-Seventy three percent of customers read reviews before they book. If you have been sold a reputation product in the last five years you have seen that figure on a slide, and until recently it was on our own service page, which is how this article started. It is unsourced, this article does not use it, and the paragraphs below are what happened when we went looking for the document behind it.
+Seventy three percent of customers read reviews before they book. If you have been sold a reputation product in the last five years you have seen that figure on a slide. Until recently it was on our own service page, which is how this article started. It has no source, and this article does not use it. The paragraphs below are what happened when we went looking for the document behind it.
 
-So we went hunting for the survey it is supposed to have come from. One survey in this field repeats every year, publishes its sample and its method on the same page as its findings, and is what almost everybody in the category is quietly paraphrasing: BrightLocal's Local Consumer Review Survey. The 2026 edition was run on a representative panel of 1,002 US adult consumers through SurveyMonkey, roughly a quarter of them in each of four age bands from eighteen to over sixty, and it says so on the page.
+So we went hunting for the survey it is supposed to have come from. One survey in this field repeats every year. It publishes its sample and its method on the same page as its findings. And it is what almost everybody in the category is quietly paraphrasing. It is BrightLocal's Local Consumer Review Survey. The 2026 edition was run on a representative panel of 1,002 US adult consumers through SurveyMonkey. Roughly a quarter of them sat in each of four age bands, from eighteen to over sixty. It says so on the page.
 
-Seventy three is not a figure in it. What is in it is 97% who say they read reviews for local businesses at all, and 41% who say they always do when they are browsing. Neither of those is 73%, and neither of them is the claim the unsourced figure is usually pinned to.
+Seventy three is not a figure in it. What is in it is 97% who say they read reviews for local businesses at all. And 41% who say they always do when they are browsing. Neither of those is 73%. Neither of them is the claim the unsourced figure is usually pinned to.
 
-It has been taken off that page, and it is not going to be propped up here either. Everything below rests on figures that are actually in the published survey, quoted alongside the question they answered, and on one piece of academic work where the thing measured was money rather than opinion.
+It has been taken off that page. It is not going to be propped up here either. Everything below rests on figures that are actually in the published survey, quoted alongside the question they answered. It also rests on one piece of academic work where the thing measured was money rather than opinion.
 
-One thing has to be said out loud about the survey before it is used. BrightLocal sells review software. A company with a commercial interest in the answer ran the questions, and the answers are what a panel says it does rather than what anybody was observed doing. Both of those are real limits and neither is a reason to throw it away, because the alternative on offer is a figure with no sample, no method and no document at all. Read it as a direction and not as a decimal.
+One thing has to be said out loud about the survey before it is used. BrightLocal sells review software. A company with a commercial interest in the answer ran the questions. And the answers are what a panel says it does, rather than what anybody was observed doing. Both of those are real limits, and neither is a reason to throw it away. That is because the alternative on offer is a figure with no sample, no method and no document at all. Read it as a direction and not as a decimal.
 
 [[scene:thresholds]]
 
 ## What a stranger actually does with your profile
 
-Nobody reads your reviews. They scan them, once, for a few seconds, on a phone, usually while doing something else, and then they either call you or they do not.
+Nobody reads your reviews. They scan them, once, for a few seconds, on a phone, usually while doing something else. Then they either call you or they do not.
 
-That scan has a shape, and it is not the one most businesses optimise for. Almost everybody who worries about reviews is worrying about the average. The average is the least interesting thing on the page after the first two seconds, because everybody in your market has a good one. What separates two agents with 4.7 stars is everything underneath the number.
+That scan has a shape, and it is not the one most businesses aim at. Almost everybody who worries about reviews is worrying about the average. The average is the least interesting thing on the page after the first two seconds. That is because everybody in your market has a good one. What separates two agents with 4.7 stars is everything underneath the number.
 
-The woman in the kitchen never articulated any of this. She did not think, this profile is stale. She thought, without words, that one of these two people is busy right now and the other one might have retired. That impression came from a date, and it was formed before she read a single sentence.
+The woman in the kitchen never put any of this into words. She did not think, this profile is stale. She thought, without words, that one of these two people is busy right now and the other one might have retired. That impression came from a date, and it was formed before she read a single sentence.
 
 [[scene:profile-scan]]
 
 ## What one extra star was worth, in the only study that measured money
 
-Opinion surveys tell you what people say. There is one well known piece of work that measured what actually happened to a business's revenue when its rating changed, and it is worth reading properly because both its finding and its caveats are useful.
+Opinion surveys tell you what people say. There is one well known piece of work that measured what really happened to a business's revenue when its rating changed. It is worth reading properly, because both its finding and its caveats are useful.
 
-Michael Luca, then at Harvard Business School, matched Yelp's reviews to the revenue records that the Washington State Department of Revenue holds for every restaurant in Seattle, from January 2003 to October 2009. That is 3,582 restaurants across the period, about 1,587 open in any given quarter, measured against tax filings rather than against anybody's self-report. His [working paper](https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf) reports that a one-star increase is associated with a 5.4% increase in revenue.
+Michael Luca, then at Harvard Business School, matched Yelp's reviews to revenue records for every restaurant in Seattle. The records are the ones the Washington State Department of Revenue holds, from January 2003 to October 2009. That is 3,582 restaurants across the period, and about 1,587 open in any given quarter. They were measured against tax filings rather than against anybody's self-report. His [working paper](https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf) reports that a one-star increase is associated with a 5.4% increase in revenue.
 
-The clever part is what he did next, and it is the reason the number can be treated as a cause rather than a coincidence. Yelp displays a restaurant's rating rounded to the nearest half star. Two restaurants whose true averages sit a hair either side of a rounding threshold have almost identical reviews and are shown different ratings. Comparing those two groups isolates the effect of the displayed rating from everything else about the restaurant, and on that comparison an exogenous one-star improvement leads to roughly a 9% increase in revenue.
+The clever part is what he did next. It is the reason the number can be treated as a cause rather than a coincidence. Yelp displays a restaurant's rating rounded to the nearest half star. Take two restaurants whose true averages sit a hair either side of a rounding threshold. They have almost identical reviews, and they are shown different ratings. Comparing those two groups separates the effect of the displayed rating from everything else about the restaurant. On that comparison, an exogenous one-star improvement leads to roughly a 9% increase in revenue. Exogenous here means the change came from the rounding rather than from the restaurant.
 
-Two more findings are worth carrying away. The effect appears among independent restaurants and is statistically insignificant and close to zero for chains, because a brand name already answers the question that reviews answer. And the market response is largest when a restaurant has many reviews, which is a technical way of saying that a rating built on more reviews is believed more.
+Two more findings are worth carrying away. The effect appears among independent restaurants. It is statistically insignificant and close to zero for chains. That is because a brand name already answers the question that reviews answer. And the market response is largest when a restaurant has many reviews. That is a technical way of saying that a rating built on more reviews is believed more.
 
 [[scene:yelp-lift]]
 
 ## Why the ask does not happen
 
-Every business owner already knows they should ask. Nobody needs persuading. The ask still does not happen, and the reasons are worth naming because two of the three are solvable and one is not.
+Every business owner already knows they should ask. Nobody needs persuading. The ask still does not happen. The reasons are worth naming, because two of the three are solvable and one is not.
 
-The first is timing, and it is almost the whole problem. The moment somebody is most willing to say something nice about you is the day the thing finished, and that is also the day you are least likely to be at a desk. By the time there is a quiet Friday afternoon to catch up on it, the closing is nine days old and the person has moved on to the next chapter of their life. Asking late does not produce a worse review. It produces no review, which is worse.
+The first is timing, and it is almost the whole problem. The moment somebody is most willing to say something nice about you is the day the thing finished. That is also the day you are least likely to be at a desk. By the time there is a quiet Friday afternoon to catch up on it, the closing is nine days old. The person has moved on to the next chapter of their life. Asking late does not produce a worse review. It produces no review, which is worse.
 
-The second is that asking is genuinely awkward, in a way that is hard to admit to. You have just been paid a large sum of money by somebody you like, and the next thing out of your mouth is a favour. Most people would rather do almost anything else, so they intend to do it later, and later is a place where reviews go to die.
+The second is that asking is truly awkward, in a way that is hard to admit to. You have just been paid a large sum of money by somebody you like. And the next thing out of your mouth is a favour. Most people would rather do almost anything else. So they intend to do it later, and later is a place where reviews go to die.
 
-The third is fear, and it is the one that produces the actual misconduct in this category. If you ask everybody, some of them will say something you would rather they did not. That fear is where review gating comes from, and the survey above is the best argument against it: only 10% of that panel said they would use nothing below five stars, while 68% put their floor at four. The room between four and five is where almost every real business lives, and it is much larger than the fear suggests.
+The third is fear, and it is the one that produces the actual misconduct in this field. If you ask everybody, some of them will say something you would rather they did not. That fear is where review gating comes from. The survey above is the best argument against it. Only 10% of that panel said they would use nothing below five stars, while 68% put their floor at four. The room between four and five is where almost every real business lives. It is much larger than the fear suggests.
 
 [[scene:plate]]
 
 ## What review automation actually does
 
-Underneath the category name it is a small and unglamorous piece of plumbing, and the shortest honest description is that it removes the two solvable reasons above and does nothing at all about the third.
+Underneath the category name it is a small and dull piece of plumbing. The shortest honest description is this. It removes the two solvable reasons above, and does nothing at all about the third.
 
-Something in your systems already knows when a job is finished. A file moves to closed, a status changes, a calendar event ends. That event, rather than a person's memory, is what starts the message. The message goes out the same day, in your name, in a few sentences that sound like you rather than like a survey vendor, and it asks one question that takes a customer four seconds to answer.
+Something in your systems already knows when a job is finished. A file moves to closed, a status changes, a calendar event ends. That event, rather than a person's memory, is what starts the message. The message goes out the same day, in your name. It is a few sentences that sound like you rather than like a survey vendor. And it asks one question that takes a customer four seconds to answer.
 
-Whatever comes back, the same Google link goes out. That is the sentence the rest of this article is about, and it is worth being blunt about how much of this industry does the opposite.
+Whatever comes back, the same Google link goes out. That is the sentence the rest of this article is about. It is worth being blunt about how much of this industry does the opposite.
 
-What the answer changes is what happens on your side of the wall. A rough score pushes the score, the words and the customer's name to you immediately, which is the difference between hearing about a problem while there is still an afternoon to fix it and reading about it on a Tuesday in a public place.
+What the answer changes is what happens on your side of the wall. A rough score pushes the score, the words and the customer's name to you straight away. One way, you hear about a problem while there is still an afternoon to fix it. The other way, you read about it on a Tuesday in a public place.
 
 [[scene:three-moves]]
 
@@ -3414,29 +3413,29 @@ What the answer changes is what happens on your side of the wall. A rough score 
 
 ## The line you may not cross, and exactly where it is
 
-Review gating is the practice of surveying customers first and only sending the public review link to the ones who answered well. It is sold as catching problems early, it is extremely common, and it is the specific thing the rules are about.
+Review gating is the practice of surveying customers first. Only the ones who answered well are then sent the public review link. It is sold as catching problems early. It is very common, and it is the specific thing the rules are about.
 
-Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) has a section listing what merchants may not do. Two of its entries are the ones that matter here. The first is offering incentives, and the policy spells out the currency: payment, discounts, free goods or services, in exchange for posting a review, revising one, or removing a negative one. The second is a single sentence, and it is the whole argument: discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
+Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) has a section listing what merchants may not do. Two of its entries are the ones that matter here. The first is offering incentives, and the policy spells out the currency. It names payment, discounts, free goods or services, in exchange for posting a review, revising one, or removing a negative one. The second is a single sentence, and it is the whole argument. Merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
 
 Read that sentence twice, because most gating products are described in language designed to make it sound like something else. Sending the survey to everyone and the link to the fives is selective solicitation. The survey is not what the rule is about. The link is.
 
-There are two more prohibitions in the same section that almost nobody mentions, and both of them cover practices that get taught as good practice. Merchants should not require or pressure people to write a review while they are on the premises, which covers the tablet at the closing table. And merchants should not request that specific content be included, with the policy giving as its own examples asking staff to solicit a certain number of reviews, or to solicit reviews mentioning a particular staff member. If you have ever been told to ask clients to mention the town you want to rank for, that is the sentence it collides with.
+There are two more prohibitions in the same section that almost nobody mentions. Both of them cover practices that get taught as good practice. Merchants should not require or pressure people to write a review while they are on the premises. That covers the tablet at the closing table. And merchants should not request that specific content be included. The policy gives its own examples: asking staff to solicit a certain number of reviews, or to solicit reviews mentioning a particular staff member. If you have ever been told to ask clients to mention the town you want to rank for, that is the sentence it collides with.
 
-The permission side of the policy is one line long: solicit or encourage content that represents a genuine experience, without offering incentives and without attempting to influence the rating or the contents of the review. Everything legitimate in this category lives inside that sentence, and it is roomier than it sounds, because asking everybody at the right moment is exactly what it allows.
+The permission side of the policy is one line long. It allows you to solicit or encourage content that represents a genuine experience, without offering incentives and without attempting to influence the rating or the contents of the review. Everything legitimate in this field lives inside that sentence. It is roomier than it sounds, because asking everybody at the right moment is exactly what it allows.
 
 [[scene:gating-line]]
 
 ## The federal half, which is about your own website
 
-The Google rules govern what happens on Google. There is a second rule that governs what you do with the reviews afterwards, on your own site, and it arrived recently enough that a lot of website widgets predate it.
+The Google rules govern what happens on Google. There is a second rule that governs what you do with the reviews afterwards, on your own site. It arrived recently enough that a lot of website widgets came before it.
 
 The Federal Trade Commission's rule on consumer reviews and testimonials took effect in 2024. The part that applies here is [16 CFR 465.7](https://www.law.cornell.edu/cfr/text/16/465.7), on review suppression. Its second paragraph makes it an unfair or deceptive practice for a business to materially misrepresent, expressly or by implication, that the reviews displayed in a section of its own website dedicated to reviews represent most or all of the reviews submitted, when reviews are being suppressed based on their rating or their negative sentiment.
 
-The load-bearing word is misrepresent. The rule does not require you to publish everything. It has an explicit carve-out for withholding reviews on criteria applied equally to all of them regardless of sentiment, and it lists what those criteria can be: confidential commercial information, defamatory or abusive or obscene content, somebody else's personal information, discriminatory content, content that is clearly false or misleading, a review the seller reasonably believes is fake, or a review wholly unrelated to what the business sells.
+The word carrying the weight is misrepresent. The rule does not require you to publish everything. It has an explicit carve-out for withholding reviews on criteria applied equally to all of them regardless of sentiment. And it lists what those criteria can be: confidential commercial information, defamatory or abusive or obscene content, somebody else's personal information, discriminatory content, content that is clearly false or misleading, a review the seller reasonably believes is fake, or a review wholly unrelated to what the business sells.
 
-What that means in practice is small and specific. A block on your website labelled as a selection of recent reviews is honest. The same block, unlabelled, sitting under a heading that implies it is your reviews, while a filter quietly holds back everything under four stars, is the thing the paragraph describes. The label is the whole difference, and it costs four words.
+What that means in practice is small and specific. A block on your website labelled as a selection of recent reviews is honest. The same block is different when it is unlabelled, sitting under a heading that implies it is your reviews. Put a filter behind it that quietly holds back everything under four stars, and that is the thing the paragraph describes. The label is the whole difference, and it costs four words.
 
-Nothing in this section is a legal opinion, and a rule you can read for yourself in four minutes is not a reason to skip asking a lawyer about your own set-up. It is here because it is checkable, the text is one click away, and a vendor who cannot tell you which of these two paragraphs their widget sits inside has not read either of them.
+Nothing in this section is a legal opinion. And a rule you can read for yourself in four minutes is not a reason to skip asking a lawyer about your own set-up. It is here because it is checkable, and the text is one click away. A vendor who cannot tell you which of these two paragraphs their widget sits inside has not read either of them.
 
 [[scene:review-calculator]]
 
@@ -3444,25 +3443,25 @@ Nothing in this section is a legal opinion, and a rule you can read for yourself
 
 ## What to do when the review is genuinely bad
 
-Sooner or later somebody writes something unfair, or something fair that you wish they had said to your face. This is the moment the whole strategy is actually tested, and there is an industry that will take your money to make it disappear.
+Sooner or later somebody writes something unfair. Or something fair that you wish they had said to your face. This is the moment the whole strategy is actually tested. And there is an industry that will take your money to make it disappear.
 
-Start with the arithmetic, because it is calming. A single one star review inside a page of thirty is a rounding error on your average and a large asset in your credibility, and the survey above is the reason: 68% of that panel wanted four stars or better and only 10% insisted on five. The review that hurts is not the bad one. It is the bad one with nothing under it.
+Start with the arithmetic, because it is calming. A single one star review inside a page of thirty is a rounding error on your average. It is also a large asset in how much you are believed. The survey above is the reason. 68% of that panel wanted four stars or better, and only 10% insisted on five. The review that hurts is not the bad one. It is the bad one with nothing under it.
 
-Answer it in public, once, short, and without arguing. Say what happened, say what you have changed, and offer to talk offline. You are not writing to the person who left it, who has usually stopped reading. You are writing to the next forty people who will scroll past it, and they are looking for exactly one thing: whether you are the kind of business that gets defensive.
+Answer it in public, once, short, and without arguing. Say what happened, say what you have changed, and offer to talk offline. You are not writing to the person who left it, who has usually stopped reading. You are writing to the next forty people who will scroll past it. They are looking for exactly one thing. It is whether you are the kind of business that gets defensive.
 
 Then fix the thing underneath it if there is one. If three people in a year mention the same lender, that is not a review problem.
 
-The one route worth knowing about is that platforms will remove content that breaks their own rules, which is a narrow door: a review from somebody who was never a customer, a competitor, a personal attack. A review that is merely wrong about you is not in that category and no amount of paying somebody will make it so.
+The one route worth knowing about is that platforms will remove content that breaks their own rules. That is a narrow door. It covers a review from somebody who was never a customer, a competitor, a personal attack. A review that is merely wrong about you is not in that category. No amount of paying somebody will make it so.
 
 ## How to test one before you buy it
 
-Four questions, and you can ask all of them in a demo without knowing anything technical. The first two are about the rules and the second two are about whether it will actually run.
+Four questions, and you can ask all of them in a demo without knowing anything technical. The first two are about the rules. The second two are about whether it will actually run.
 
-Show me the message that goes to somebody who scores you a two. Do not accept a description of it. Ask to see the actual outgoing message on a screen, and check that the review link is in it. If the link is missing, or if it is replaced by a form that comes back to the business, you are looking at the gated version whatever the sales page calls it.
+Show me the message that goes to somebody who scores you a two. Do not accept a description of it. Ask to see the actual outgoing message on a screen. Check that the review link is in it. If the link is missing, you are looking at the gated version, whatever the sales page calls it. The same goes if the link is replaced by a form that comes back to the business.
 
-Show me what the website widget does with a three star review. Then ask what the block is labelled on the page. Those two answers together tell you which side of 465.7 the product is sitting on, and the second one is usually the one nobody has thought about.
+Show me what the website widget does with a three star review. Then ask what the block is labelled on the page. Those two answers together tell you which side of 465.7 the product is sitting on. The second one is usually the one nobody has thought about.
 
-What starts the ask, exactly. If the answer is a manual upload or a list somebody pastes in weekly, you have bought a mail merge and you will stop using it in six weeks. The value of this whole category is that a real event in a system you already use starts the message without anybody deciding to.
+What starts the ask, exactly. If the answer is a manual upload, or a list somebody pastes in weekly, you have bought a mail merge. You will stop using it in six weeks. The value of this whole category is that a real event in a system you already use starts the message. Nobody has to decide to.
 
 What happens to the reply. Somebody replies to your review request, because people do. Ask where that message lands, and what happens if the reply arrives on a Sunday. A product that sends beautifully and drops the answers is a product that will embarrass you in front of a client.
 
@@ -3470,25 +3469,25 @@ What happens to the reply. Somebody replies to your review request, because peop
 
 ## What it costs, and how long it takes
 
-We do not print a figure for this, and the reason is the one that keeps a figure off every other page in this series: what it costs depends on what has to be connected to what. What can be said is where the money actually goes, and it is not where most people expect.
+We do not print a figure for this. The reason is the one that keeps a figure off every other page in this series. What it costs depends on what has to be connected to what. What can be said is where the money actually goes, and it is not where most people expect.
 
-The software is the cheap part. What actually recurs is the messaging: the ask goes out as a text, carriers charge for texts, and so the bill rises and falls with how many jobs you finished last month. Nothing else on it moves. A quiet month is a cheap month, which is an unusual and rather pleasant property for a marketing line to have.
+The software is the cheap part. What actually comes round again and again is the messaging. The ask goes out as a text, and carriers charge for texts. So the bill rises and falls with how many jobs you finished last month. Nothing else on it moves. A quiet month is a cheap month. That is an unusual and rather pleasant thing for a marketing line to be.
 
-The setup is short, and the reason is that this is the least complicated automation in the category: one trigger, one message, one link, one alert. The work is not building it, it is deciding two things. What event counts as finished, which is a genuine business question and usually takes longer to settle than the build. And what the message actually says, which has to sound like you rather than like a survey vendor, and which is the difference between a message people answer and one they delete.
+The setup is short, and the reason is that this is the least complicated automation in the category. One trigger, one message, one link, one alert. The work is not building it. It is deciding two things. The first is what event counts as finished. That is a genuine business question, and it usually takes longer to settle than the build. The second is what the message actually says. It has to sound like you rather than like a survey vendor. It is the difference between a message people answer and one they delete.
 
-The cost that never appears on any quote is the replying. Budget fifteen minutes a week for it, permanently, in your own name. If nobody in the business is going to do that, the honest advice is to not switch the asking on, because a growing pile of unanswered reviews is a worse profile than a small quiet one.
+The cost that never appears on any quote is the replying. Budget fifteen minutes a week for it, permanently, in your own name. If nobody in the business is going to do that, the honest advice is not to switch the asking on. That is because a growing pile of unanswered reviews is a worse profile than a small quiet one.
 
 ## What it does not do, and should not pretend to
 
-It does not choose who gets asked. Everybody does, whatever they scored, and if that sentence makes you uncomfortable then the discomfort is worth sitting with rather than engineering around. It is also, on this page's own evidence, the version that works better.
+It does not choose who gets asked. Everybody does, whatever they scored. If that sentence makes you uncomfortable, then the discomfort is worth sitting with rather than engineering around. It is also, on this page's own evidence, the version that works better.
 
-It does not make anybody leave a review. It removes the forgetting and the friction and the four-day delay. The customer still has to want to, and a good share of them will not, which is why the calculator above asks you for that share rather than telling you one.
+It does not make anybody leave a review. It removes the forgetting and the friction and the four-day delay. The customer still has to want to, and a good share of them will not. That is why the calculator above asks you for that share rather than telling you one.
 
-It does not remove a review, and it does not know a person who can. A published review belongs to the person who wrote it and to the platform it sits on. The only two things that ever change it are you answering it and you fixing what caused it, and the second one occasionally makes somebody edit their own review, which is the only version of removal worth having.
+It does not remove a review, and it does not know a person who can. A published review belongs to the person who wrote it and to the platform it sits on. Only two things ever change it. One is you answering it, and one is you fixing what caused it. The second one occasionally makes somebody edit their own review, which is the only version of removal worth having.
 
-It does not present a selection as the whole picture. Reviews pulled through to your own website are labelled as a selection of recent ones, because that is what they are and because of the paragraph above.
+It does not present a selection as the whole picture. Reviews pulled through to your own website are labelled as a selection of recent ones. That is because it is what they are, and because of the paragraph above.
 
-And it does not fix the service. A steady flow of honest reviews of an experience people did not enjoy is simply a faster and more public way of finding that out. That is not a defect in the tool. For some businesses it is the most valuable thing the tool will ever do, and it is also the reason to start with one trigger rather than switching it on across everything in one afternoon.
+And it does not fix the service. A steady flow of honest reviews of an experience people did not enjoy is a faster and more public way of finding that out. That is not a fault in the tool. For some businesses it is the most valuable thing the tool will ever do. It is also the reason to start with one trigger. Do not switch it on across everything in one afternoon.
 
 [[scene:failure-modes]]
 
@@ -3496,37 +3495,37 @@ And it does not fix the service. A steady flow of honest reviews of an experienc
 
 ### What is review automation, in plain terms?
 
-It is a small piece of software that watches for the moment a job is finished in a system you already use, and sends that customer a short message asking how it went, with a direct link to your public review page. Everybody gets the same link whatever they answer. If the answer is a low score, you personally get told at the same moment, with their words and their name, so you can call them the same day. That is the whole product. It is not clever and it does not need to be, because the problem it solves is consistency rather than difficulty.
+It is a small piece of software that watches for the moment a job is finished in a system you already use. It then sends that customer a short message asking how it went, with a direct link to your public review page. Everybody gets the same link, whatever they answer. If the answer is a low score, you personally get told at the same moment, with their words and their name. So you can call them the same day. That is the whole product. It is not clever and it does not need to be, because the problem it solves is consistency rather than difficulty.
 
 ### Is this different from the review tool my CRM already has?
 
-Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job, and the mechanics are the same everywhere: a trigger, a message, a link. There is very little proprietary technology in this category and a great deal of variation in what the default settings do. So the two questions worth asking about whichever one you already own are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
+Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job. The mechanics are the same everywhere. A trigger, a message, a link. There is very little technology of their own in this category. There is a great deal of variation in what the default settings do. So there are two questions worth asking about whichever one you already own. They are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
 
 ### Is it against Google's rules to automate review requests?
 
-No. Automating when the ask happens is not something the policy speaks about at all, and the permission it does grant is to solicit content that reflects a genuine experience without incentives and without influencing the rating or the content. What is against the rules is offering anything in exchange, only asking the people you expect to be kind, pressuring somebody to write one on the spot, or asking them to include particular content. A product that automates the first thing is fine. A product that automates the second is a compliance problem running on a schedule.
+No. Automating when the ask happens is not something the policy speaks about at all. The permission it does grant is to solicit content that reflects a genuine experience, without incentives and without influencing the rating or the content. What is against the rules is offering anything in exchange. So is only asking the people you expect to be kind, pressuring somebody to write one on the spot, or asking them to include particular content. A product that automates the first thing is fine. A product that automates the second is a compliance problem running on a schedule.
 
 ### What is review gating, and where exactly is the line?
 
-Gating is surveying customers first and sending the public review link only to the ones who answered well. The line is not whether you survey people, and it is not whether the score changes what you do. The line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is normal and sensible. Screening who is allowed to review you is what Google's policy lists under selectively soliciting positive reviews. If you want a single test: if two customers answer differently and get different links, you are on the wrong side of it.
+Gating is surveying customers first. The public review link then goes only to the ones who answered well. The line is not whether you survey people. It is not whether the score changes what you do. The line is whether the unhappy customer still gets the link. Screening feedback so you can fix things is normal and sensible. Screening who is allowed to review you is what Google's policy lists under selectively soliciting positive reviews. If you want a single test, here it is. If two customers answer differently and get different links, you are on the wrong side of it.
 
 ### Can I get a bad review taken down?
 
-Usually not, and the effort is better spent elsewhere. Platforms remove content that breaks their own rules, which covers a review from somebody who was never a customer, a personal attack, or content that is plainly not about the business. A review that is merely unflattering, or unfair in your view, is not in that category, and the services that offer to make one disappear are mostly selling you the appeal you could file yourself. The reliable move is the public reply, and it works on the audience that matters, which is everybody who reads the review afterwards.
+Usually not, and the effort is better spent elsewhere. Platforms remove content that breaks their own rules. That covers a review from somebody who was never a customer, a personal attack, or content that is plainly not about the business. A review that is merely unflattering, or unfair in your view, is not in that category. The services that offer to make one disappear are mostly selling you the appeal you could file yourself. The reliable move is the public reply. It works on the audience that matters, which is everybody who reads the review afterwards.
 
 ### Do I have to put my Google reviews on my own website?
 
-You do not have to, and if you do there is one rule worth knowing. Under 16 CFR 465.7 it is the misrepresentation that matters, not the selection: a block of reviews that implies it represents most or all of what customers submitted, while quietly holding back the low ones, is the thing the rule describes. The same block, labelled as a selection of recent reviews, is honest. Label it and the question goes away.
+You do not have to, and if you do there is one rule worth knowing. Under 16 CFR 465.7 it is the misrepresentation that matters, not the selection. A block of reviews that implies it represents most or all of what customers submitted, while quietly holding back the low ones, is the thing the rule describes. The same block, labelled as a selection of recent reviews, is honest. Label it and the question goes away.
 
 ### How many reviews do I actually need?
 
-More than most people have and fewer than most people fear. In the survey above, 47% said they would not use a business with fewer than twenty, and only 9% were willing to use one with five or fewer, which makes twenty a real threshold rather than a target somebody invented. After that the count matters less than the dates. A business with thirty reviews and four written this quarter reads as busy; a business with two hundred and none since last year reads as a business that used to be busy, and that impression is formed in about two seconds.
+More than most people have, and fewer than most people fear. In the survey above, 47% said they would not use a business with fewer than twenty. Only 9% were willing to use one with five or fewer. That makes twenty a real threshold rather than a target somebody invented. After that the count matters less than the dates. A business with thirty reviews and four written this quarter reads as busy. A business with two hundred, and none since last year, reads as one that used to be busy. That impression is formed in about two seconds.
 
 ## What to do about it
 
 Do the thing the woman in the kitchen did, tonight, to yourself. It costs nothing and takes ninety seconds.
 
-Open your own Google profile on a phone, signed out, the way a stranger arrives at it. Do not look at the star rating. Look at the date on the newest review, and count how many of them were written in the last three months. Then scroll to the worst one on the first screen and see whether anybody ever answered it.
+Open your own Google profile on a phone, signed out, the way a stranger arrives at it. Do not look at the star rating. Look at the date on the newest review. Count how many of them were written in the last three months. Then scroll to the worst one on the first screen and see whether anybody ever answered it.
 
 Whatever you find is what a stranger found last Tuesday, and it is the honest starting point. If the newest one is from 2023, you do not have a review problem. You have an asking problem, and it has been quietly costing you the ten-minute decisions you never hear about.
 
