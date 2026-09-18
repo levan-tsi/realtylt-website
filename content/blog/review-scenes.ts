@@ -102,7 +102,7 @@ export const PROFILE_SCAN: GridItem[] = [
   },
   {
     lead: "The worst review on the first screen.",
-    body: "Not the best. People go looking for the bad one on purpose. It is the only part of the page they believe has not been managed. They read it to find out what you are like when something goes wrong.",
+    body: "Not the best. People go looking for the bad one on purpose. That is because it is the only part of the page they believe has not been managed. They read it to find out what you are like when something goes wrong.",
   },
   {
     lead: "Whether anybody answered it.",
@@ -148,7 +148,7 @@ export const YELP_LIFT = {
    * is making, which is between the correlation and the causal estimate. */
   lit: 1,
   basis:
-    "Percentage change in quarterly revenue. The second bar comes from a rounding experiment. Yelp displays a rating rounded to the nearest half star. So two restaurants can sit a hair either side of a threshold. They are shown different ratings for the same underlying reviews. Both estimates are for independent restaurants. The same paper found the effect statistically insignificant and close to zero for chain-affiliated restaurants. That has no bar, because a bar of nothing reads as a broken chart.",
+    "Percentage change in quarterly revenue. The second bar comes from a rounding experiment. Yelp displays a rating rounded to the nearest half star. So two restaurants whose true averages sit a hair either side of a threshold are shown different ratings for the same underlying reviews. Both estimates are for independent restaurants. The same paper found the effect statistically insignificant and close to zero for chain-affiliated restaurants. That has no bar, because a bar of nothing reads as a broken chart.",
   sourceText:
     "Michael Luca, Reviews, Reputation, and Revenue: The Case of Yelp.com, Harvard Business School Working Paper 12-016. Yelp reviews matched to Washington State Department of Revenue records for every restaurant in Seattle, January 2003 to October 2009.",
   sourceHref: "https://www.hbs.edu/ris/Publication%20Files/12-016_a7e4a5a2-03f9-490d-b093-8f951238dba2.pdf",
@@ -167,7 +167,7 @@ export const FOUR_MOVES: GridItem[] = [
   },
   {
     lead: "It asks everybody, in the same words.",
-    body: "Every customer gets the same Google link, whatever they scored a minute earlier. That is not a compliance concession bolted on to the product. It is the product. The section below explains why the alternative is the one thing here that is actually against the rules.",
+    body: "Every customer gets the same Google link, whatever they scored a minute earlier. That is not a compliance concession bolted on to the product. It is the product. The section below explains why the alternative is the one thing in this line of products that is actually against the rules.",
   },
   {
     lead: "A rough answer also reaches you, at once.",
@@ -444,7 +444,7 @@ export const REVIEW_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The read, at least",
-      text: "Send us the link to your Google profile. We will send back what a stranger sees in the first fifteen seconds. That is the date on your newest review. It is the worst one on the first screen, and which of them have never been answered.",
+      text: "Send us the link to your Google profile. We will send back what a stranger sees in the first fifteen seconds. That is three things. The date on your newest review. The worst one on the first screen. And which of them have never been answered.",
       reassure: "It takes us ten minutes, and it is yours whether or not we ever build you anything. There is nothing to install.",
       action: { label: "Ask for the read", href: "/connect" },
       ariaLabel: "Ask for a read of your review profile",

@@ -203,6 +203,28 @@ first half was doing to the second half.**
 - A swap is only safe if the new word names the SAME thing on this page: "the specification"
   became "the standard" where the nearest earlier "the standard" was a different document.
 
+## What batch 3's checker added (0 HIGH, 14 MED)
+
+- **Count `because` over ALL your files, not only the bodies.** Batch 3 kept it flat in the five
+  bodies and still lost five in the scenes files, each one the load-bearing reason of its card.
+  One count over the body + scenes + service file of a topic, before and after, catches them.
+- A word that makes a NUMBER mean something is content: "independent annotators" (that is what
+  makes 0.88 agreement a finding), restaurants "whose true average" sat either side of a
+  threshold (that is the study's whole method). Do not swap or drop it.
+- "The only mechanism is A and B" is ONE joint mechanism. "Only two things" makes it two
+  switches. Same family: an example that is only true when three things hold TOGETHER must say
+  "when three things are true together", not judge the first one alone.
+- A "then" that closes an "if" is a governor too ("If that list does not exist, then nothing
+  has been keeping receipts, AND THEN nothing can be undone").
+- An answer to a "Why ...?" question starts with its reason ("Because ...").
+- After a split, check what "They", "It", "One" and "That" now point at. "It was published by
+  researchers ... They are drawn from" makes the researchers the thing drawn from.
+- A three-item list is three fragments after "That is three things.", never "That is X. It is
+  Y, and which Z."
+- Disowning words ("unsourced", "does not use", "refuses", "no published") are load-bearing
+  for the retraction TEST as well as for the reader: it allows a retired figure on a line only
+  beside one of them.
+
 ## Do not
 
 - Do not `git add`, commit or push. The orchestrator commits after verifying.

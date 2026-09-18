@@ -63,7 +63,7 @@ export const NOT_THE_WORK: GridItem[] = [
   },
   {
     lead: "Not the append",
-    body: "Filling in what a contact record is missing brings in a claim from a company you have never spoken to. Here the source is in your hand. You can put it next to the output and check, line by line. That is the whole reason this problem can be solved at all, and the reason the fix is boring rather than clever.",
+    body: "Filling in what a contact record is missing brings in a claim from a company you have never spoken to. Here the source is in your hand. You can put it next to the output and check, line by line. That is the whole reason this problem is a workable one, and the reason the fix is boring rather than clever.",
   },
 ];
 
@@ -79,7 +79,7 @@ export const UNRELIABLE_ORIGINAL: GridItem[] = [
   },
   {
     lead: "The changes are handwritten",
-    body: "There is an unhelpful symmetry in a form. The printed body is easy to read and carries nothing specific to your deal. It is identical on every copy in the state. Everything that makes this transaction different from that one was added afterwards by a person with a pen. Which is to say that how readable a thing is and how much it matters run in opposite directions down the page.",
+    body: "There is an unhelpful symmetry in a form. The printed body is easy to read and carries nothing specific to your deal. That is because it is identical on every copy in the state. Everything that makes this transaction different from that one was added afterwards by a person with a pen. Which is to say that how readable a thing is and how much it matters run in opposite directions down the page.",
   },
   {
     lead: "It arrives in pieces",
@@ -459,7 +459,7 @@ export const DOCUMENT_PROCESSING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Values a year that nobody reads off the page",
-      note: "The headline is the fourth row rather than the hours. The hours are the reassuring half, and the count is the one worth sitting with. Notice what the last row does. At the settings this opens with, checking every single value against its own page is a couple of days of work spread across a year. That is affordable, and it is not what happens. The whole reason the system exists is so that nobody opens the page. Shares of values produce fractions, and a third of a date is not a thing. So read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it. That is because we have not measured one on your paperwork, and the published measurements above are on other people's documents. There is no hours-saved row. That is partly because saving hours is a different article on this site. It is also because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this category invites you to imagine. The honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
+      note: "The headline is the fourth row rather than the hours. That is because the hours are the reassuring half, and the count is the one worth sitting with. Notice what the last row does. At the settings this opens with, checking every single value against its own page is a couple of days of work spread across a year. That is affordable, and it is not what happens. That is because the whole reason the system exists is so that nobody opens the page. Shares of values produce fractions, and a third of a date is not a thing. So read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no accuracy figure for our own extraction anywhere in it. That is because we have not measured one on your paperwork, and the published measurements above are on other people's documents. There is no hours-saved row. That is partly because saving hours is a different article on this site. It is also because nobody has published a measurement of what re-keying a transaction file costs in this industry. And there is no dollar figure for a missed deadline, which is the number this category invites you to imagine. That is because the honest version of it depends on the contract, the state, the counterparty and whether anybody was willing to be reasonable that week.",
       action: { label: "See how it is built", href: "/services/document-processing" },
       secondary: { label: "Send us one document", href: "/connect" },
     },

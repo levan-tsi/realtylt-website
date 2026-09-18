@@ -92,7 +92,7 @@ export const NOT_A_CHATBOT: GridItem[] = [
   },
   {
     lead: "And reviewing four streams is a job",
-    body: "One assistant is a habit. Four is a morning routine with real hours in it, done by the one person who can tell whether the output is right. Nobody adds that up, which is why the calculator further down this page works out the reviewing rather than the saving. It is the only number in this subject that is entirely yours.",
+    body: "One assistant is a habit. Four is a morning routine with real hours in it, done by the one person who can tell whether the output is right. Nobody puts that in the price, which is why the calculator further down this page works out the reviewing rather than the saving. It is the only number in this subject that is entirely yours.",
   },
 ];
 

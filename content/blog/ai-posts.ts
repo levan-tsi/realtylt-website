@@ -33,7 +33,7 @@ In plain terms, one system stands up the other agents. It hands each of them its
 
 That second part is the one most descriptions of this category are careful to deny. Denying it is the easy way to sound responsible. The denial would also be false here, so it is not going to be made. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until two things have happened. A test suite that cannot be talked round has to run over it. And a person has to read the change and say yes.
 
-That is a smaller claim than the word usually carries, and a larger one than most vendors will make out loud. That is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any way at all of noticing that it has been wrong in the same way hundreds of times. That gap is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming. The rest of this piece is about whether the claim survives contact with the research.
+That is a smaller claim than the word usually carries, and a larger one than most vendors will make out loud. That is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any way at all of noticing that it has been wrong in the same way hundreds of times. That missing piece is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming. The rest of this piece is about whether the claim survives contact with the research.
 
 There are two halves to what is being bought, and they deserve to be argued separately. The shared memory works from the first week, and it is easy to check. The improving is the one worth being sceptical about, and the published evidence on it is not flattering.
 
@@ -145,7 +145,7 @@ They are not there to check the arithmetic. The comparison is either run properl
 
 The first is deciding whether the new answer is better or merely different. A loop can tell you that a rewritten explanation of the closing timeline produced more booked calls in the replay. Only somebody who does this for a living can tell you two more things. That the new phrasing promises something you cannot always deliver. And that the extra calls are going to turn into a different problem in April.
 
-The second is catching the change that improves the measurement rather than the business. Whatever the replay counts as a win is what the system will slowly become good at. And it will find routes to it that nobody intended. If booked calls are the target, then pressing harder for calls is a valid strategy, including with the people who were never going to buy.
+The second is catching the change that pushes the measurement up rather than the business. Whatever the replay counts as a win is what the system will slowly become good at. And it will find routes to it that nobody intended. If booked calls are the target, then pressing harder for calls is a valid strategy, including with the people who were never going to buy.
 
 The third is remembering the things that are not in the record at all. A rule that exists because of a conversation with your broker two years ago. A phrase you will not use because of what it cost somebody once. A question that always goes to a person for reasons that have nothing to do with how well the software handles it. None of that is in the transcripts, so none of it is in the replay.
 
@@ -203,13 +203,13 @@ Ask what the grader is. Not whether it improves, but what exactly tells it that 
 
 Ask where the last correction is written down. Not whether it learns, but the actual file that a mistake from three weeks ago turned into. And ask what reads that file before the next piece of work begins. If the answer is that the model remembers, the honest translation is this. Nobody wrote it down, and you are going to give the same correction again.
 
-Ask to see last month's changes. A real loop produces a list. The list says what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be put together for you, then nothing has been keeping receipts. And nothing can be undone in six weeks when something turns out to have been wrong.
+Ask to see last month's changes. A real loop produces a list. The list says what changed, what it replaced, what the comparison said, who approved it, and on what date. If that list does not exist, or it has to be put together for you, then nothing has been keeping receipts. And then nothing can be undone in six weeks when something turns out to have been wrong.
 
 Ask what happens in a week when nothing is wrong. The answer you want is that it reports no change. If every week produces an improvement, either the system is not honest or the grader is not real. Both of those are worse than a quiet week.
 
 Ask how a change gets undone. To be exact: if the change that shipped three weeks ago turns out to be the reason something got worse, what is the sequence, who runs it, and how long does it take. A system that can only go forwards is not a system that learns.
 
-Then ask the boring one. Where does the record live, who can read it, are the conversations used to train anything general, and can they be deleted on request. Those are contract questions rather than technical ones. They are the same three worth insisting on with any vendor in this category. They belong in writing rather than in a conversation.
+Then ask the boring one. Ask where the record lives, who can read it, whether the conversations are used to train anything general, and whether they can be deleted on request. Those are contract questions rather than technical ones. They are the same three worth insisting on with any vendor in this category. They belong in writing rather than in a conversation.
 
 ## What it does not do, and should not pretend to
 
@@ -355,7 +355,7 @@ Read the chart's note for what that estimate does and does not rest on. What mat
 
 That is true of anything you buy, and it is true twice over for something built for you alone. A product with ten thousand customers has ten thousand people who might hit a fault before you do. It also has a vendor with a commercial reason to fix it. A build with one customer has you, and the fault is found on the day it costs you something.
 
-There is a second reading of that ratio which is worth having in front of you during a quote. The people selling you a build are not the people who will carry most of the cost when it goes wrong. That is not a criticism of anybody's integrity. It is simply where the cost falls. It is the reason the questions further down this page are all about what happens afterwards, rather than about what gets made. And it is the reason a builder who offers those answers before being asked is worth more than one who is cheaper.
+There is a second reading of that ratio which is worth having in front of you during a quote. The people selling you a build are not the people who will carry most of the cost when it goes wrong. That is not a criticism of anybody's integrity. It is simply who ends up carrying it. It is the reason the questions further down this page are all about what happens afterwards, rather than about what gets made. And it is the reason a builder who offers those answers before being asked is worth more than one who is cheaper.
 
 None of that is a reason not to build. It is a reason to insist the thing tells you loudly when it is unhappy. That costs almost nothing while it is being made, and it returns more than anything else on this page.
 
@@ -367,7 +367,7 @@ It is not printed here. The reason is a check rather than a shrug.
 
 The figure traces back to two places. One is a survey of data processing organisations published in [Communications of the ACM in 1978](https://dl.acm.org/doi/10.1145/359511.359522). The other is an article in IT Professional in 2000. The 1978 paper is certainly real, and its catalogue record is there, with a publication date on it. Neither could actually be read. Both sit behind a publisher's wall that did not open for this article, in a browser or otherwise.
 
-So nobody writing this page can tell you what was really measured, on how many systems, or in what industry. It was a decade when software was written and put to work in ways that no longer exist. A number nobody can check is not a cautious estimate. It is a rumour with a citation attached.
+So nobody writing this page can tell you what was really measured, on how many systems, or in what industry. Those studies come from a decade when software was written and put to work in ways that no longer exist. A number nobody can check is not a cautious estimate. It is a rumour with a citation attached.
 
 There is a second thing missing from this page for a related reason. It is more interesting, because the source IS readable. A much reproduced table in software economics shows the relative cost of fixing a defect at each stage of a project. The cost rises steeply the later it is found. It appears in the same standards report the chart above comes from. Its own caption reads Example Only. It is an illustration the report uses to explain the idea, not a measurement of anything. Drawing it would have been a fabrication with a footnote.
 
@@ -425,7 +425,7 @@ Ask how you would find out it had stopped. Where the answer is that the missing 
 
 Ask what happens to it if this relationship ends. The answer should involve the thing running somewhere you control. It should be described somewhere you can read, in a form somebody else could take over. Anything that lives only in an account of theirs is a build you are renting.
 
-Ask what they would talk you out of. A builder with nothing on that list has never seen one of these go wrong, or is not going to tell you about it.
+Ask what they would talk you out of. A builder with nothing on that list has either never seen one of these go wrong, or is not going to tell you about it.
 
 [[scene:offer]]
 
@@ -451,7 +451,7 @@ It does not take the person out of the steps that need one. Any step that guesse
 
 It does not protect you from other people's release schedules. It exposes you to them, permanently. That exposure is part of what you are buying, rather than a risk somebody can price away.
 
-And it does not retire itself. Nothing does. Only two things ever switch one of these off. A date in somebody's calendar, and a person willing to ask the question on that date.
+And it does not retire itself. Nothing does. Only one thing ever switches one of these off. It is a date in somebody's calendar, plus a person willing to ask the question on that date.
 
 [[scene:wasted]]
 
@@ -463,7 +463,7 @@ It is a chain of steps built around how your business really works, rather than 
 
 ### Why would anybody build this rather than buy something?
 
-A product solves the version of a problem enough businesses share to be worth making a living from. And the step capping you is often not that version. The honest order is to look hard for a product first, and to build only where the search truly comes up empty. One with thousands of customers has had its awkward edges found by people who were not paying to find them.
+Because a product solves the version of a problem enough businesses share to be worth making a living from. And the step capping you is often not that version. The honest order is to look hard for a product first, and to build only where the search truly comes up empty. That is because a product with thousands of customers has had its awkward edges found by people who were not paying to find them.
 
 ### When should I not commission a custom build?
 
@@ -1681,7 +1681,7 @@ It is worth being precise about what that second task is in your own paperwork. 
 
 There is a person standing behind every argument about automating paperwork, on both sides of it. That person never misreads anything. Somebody has measured them.
 
-[DocVQA](https://arxiv.org/abs/2007.00398) is a set of 50,000 questions asked about 12,767 document images. It was published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona. They are drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones. What is the total, what is the date on this document, who is this letter addressed to.
+[DocVQA](https://arxiv.org/abs/2007.00398) is a set of 50,000 questions asked about 12,767 document images. It was published by researchers at IIIT Hyderabad and the Computer Vision Center in Barcelona. The images are drawn from "6,071 industry documents" dating from as early as 1900 to as recent as 2018, and including "typewritten, printed, handwritten and born-digital text". The questions are the ordinary ones. What is the total, what is the date on this document, who is this letter addressed to.
 
 Then they had people answer them.
 
@@ -1703,7 +1703,7 @@ Neither of those is a trick question. And there is one part of a real estate tra
 
 The mortgage disclosure rules in [Regulation Z at 12 CFR 1026.19](https://www.law.cornell.edu/cfr/text/12/1026.19) run several deadlines through a real estate closing. The lender must "ensure that the consumer receives the disclosures required under paragraph (f)(1)(i) of this section no later than three business days before consummation". For certain transactions the creditor must deliver early estimates "not later than the seventh business day before consummation of the transaction". And if a figure becomes inaccurate, "the consumer must receive the corrected disclosures no later than three business days before consummation".
 
-Those are the lender's duties rather than yours, and nothing here is advice about how to meet them. They are quoted because they are the clearest published example of the thing this whole topic turns on. A deadline written on a document can have its meaning living somewhere else.
+Those are the lender's duties rather than yours, and nothing here is advice about how to meet them. They are quoted because they are the clearest published example of the thing this whole topic turns on. That thing is a deadline written on a document whose meaning lives somewhere else.
 
 [[scene:pull-quote]]
 
@@ -2357,7 +2357,7 @@ That is not an argument against doing this. It is an argument for knowing what y
 
 Here is the difference that reorders the whole subject. It comes from the best public measurement of this that exists.
 
-In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a pretend business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
+In June 2024 a team at Sierra published a benchmark called tau-bench. It is not a quiz. It puts a language agent into a made-up business. That business has a real database, a set of tools that can change the database, and a written policy the agent has to follow. A second language model then plays a customer who wants something. There are two of these businesses. The retail one has five hundred customers, a thousand orders and a hundred and fifteen tasks. The airline one has three hundred flights, two thousand reservations and fifty tasks. At the end of each conversation the benchmark compares the real state of the database against the one correct outcome. Not the transcript. Not the tone. What ended up in the system.
 
 The authors also put forward a measurement nobody had been using. It is the important part. Everybody had been reporting whether an agent succeeds at a task. They asked something else. They asked how often an agent succeeds at the same task every single time it is tried. They named it pass hat k, and they defined it as the chance that all k independent attempts are successful, averaged across tasks.
 
@@ -2375,7 +2375,7 @@ The same paper is worth reading for one more reason. It looked at what the failu
 
 The other paper worth your time is newer. It is about exactly the thing the service page is selling, which is several agents working at once.
 
-A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks. A trace is the record of one whole run. They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fifty traces closely. Then they checked that the taxonomy was reliable. They had separate annotators apply it, and they measured how often those annotators agreed. Their agreement measure came out at 0.88, which is high. It matters, because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
+A group at UC Berkeley collected 1,642 annotated execution traces from seven different multi-agent frameworks. A trace is the record of one whole run. They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fifty traces closely. Then they checked that the taxonomy was reliable. They had independent annotators apply it, and they measured how often those annotators agreed. Their agreement measure came out at 0.88, which is high. It matters, because a taxonomy nobody applies the same way twice is an opinion rather than a finding.
 
 Fourteen distinct failure modes, in three groups. Their headline number is worth knowing before anybody quotes you one. Across the seven systems they measured a failure rate between 41 percent and 86.7 percent.
 
@@ -2393,7 +2393,7 @@ They took the written policy out of the agent's instructions and ran everything 
 
 [[scene:rules-removed]]
 
-Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is an off-the-shelf part, and it improves every few months without you doing anything. The brief is yours. It is specific to your business. Nobody else can write it.
+Take the second pair seriously. Two thirds of what that agent could do came from a written document, not from the model. Which means the thing you are actually buying, when you buy an assistant, is the document. It holds the description of the job, the rules, the exceptions, and the things that must never happen. The model is a standard part anybody can buy, and it improves every few months without you doing anything. The brief is yours. It is specific to your business. Nobody else can write it.
 
 This is also why the honest version of the sales process is slower than the exciting one. "Tell us the job and we will build the assistant" sounds like a five minute conversation. It is a two hour one. That is because most recurring jobs have never been written down, and the first hour goes on finding the exceptions that live only in somebody's head.
 
@@ -2543,7 +2543,7 @@ Then write one brief for one job, properly, before anybody sells you anything. T
 
 The assistants are listed on [the RealtyLT AI page](/ai#agents). What each one is pointed at is set out on the [AI agent workforce page](/services/ai-agent-workforce). Working out which of your recurring jobs can truly be handed over is what the [AI audit](/services/ai-audit) does. We take one real job, write the brief with you, and build that one first.
 
-Each of these jobs is written up on its own. There is [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
+Each of those jobs is written up on its own. There is [answering the website at midnight](/blog/ai-chat-assistant-real-estate-website), [picking up the phone at 9:42 on a Sunday](/blog/ai-voice-agent-missed-calls-real-estate), and [the wiring between the tools that makes any of it possible](/blog/workflow-automation-real-estate-business).
 
 Nine good mornings are not a track record. They are nine mornings.
 
@@ -3345,7 +3345,7 @@ She tapped the second. Thirty one reviews, an average of 4.6, and the newest wri
 
 She called the second one.
 
-The first agent will never find out that this happened. There is no alert for it and no line in any report. Nothing in the CRM records what happened. A Tuesday evening in August went somewhere else on the strength of a date.
+The first agent will never find out that this happened. There is no alert for it and no line in any report. Nothing in the CRM records that a Tuesday evening in August went somewhere else on the strength of a date.
 
 [[scene:in-short]]
 
@@ -3415,7 +3415,7 @@ What the answer changes is what happens on your side of the wall. A rough score 
 
 Review gating is the practice of surveying customers first. Only the ones who answered well are then sent the public review link. It is sold as catching problems early. It is very common, and it is the specific thing the rules are about.
 
-Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) has a section listing what merchants may not do. Two of its entries are the ones that matter here. The first is offering incentives, and the policy spells out the currency. It names payment, discounts, free goods or services, in exchange for posting a review, revising one, or removing a negative one. The second is a single sentence, and it is the whole argument. Merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
+Google's [contribution policy](https://support.google.com/contributionpolicy/answer/7400114) has a section listing what merchants may not do. Two of its entries are the ones that matter here. The first is offering incentives, and the policy spells out the currency. It names payment, discounts, free goods or services, in exchange for posting a review, revising one, or removing a negative one. The second is a single sentence, and it is the whole argument. The policy says merchants may not discourage or prohibit negative reviews, or selectively solicit positive reviews from customers.
 
 Read that sentence twice, because most gating products are described in language designed to make it sound like something else. Sending the survey to everyone and the link to the fives is selective solicitation. The survey is not what the rule is about. The link is.
 
@@ -3433,7 +3433,7 @@ The Federal Trade Commission's rule on consumer reviews and testimonials took ef
 
 The word carrying the weight is misrepresent. The rule does not require you to publish everything. It has an explicit carve-out for withholding reviews on criteria applied equally to all of them regardless of sentiment. And it lists what those criteria can be: confidential commercial information, defamatory or abusive or obscene content, somebody else's personal information, discriminatory content, content that is clearly false or misleading, a review the seller reasonably believes is fake, or a review wholly unrelated to what the business sells.
 
-What that means in practice is small and specific. A block on your website labelled as a selection of recent reviews is honest. The same block is different when it is unlabelled, sitting under a heading that implies it is your reviews. Put a filter behind it that quietly holds back everything under four stars, and that is the thing the paragraph describes. The label is the whole difference, and it costs four words.
+What that means in practice is small and specific. A block on your website labelled as a selection of recent reviews is honest. The same block is the thing the paragraph describes when three things are true together. It is unlabelled. It sits under a heading that implies it is your reviews. And a filter quietly holds back everything under four stars. The label is the whole difference, and it costs four words.
 
 Nothing in this section is a legal opinion. And a rule you can read for yourself in four minutes is not a reason to skip asking a lawyer about your own set-up. It is here because it is checkable, and the text is one click away. A vendor who cannot tell you which of these two paragraphs their widget sits inside has not read either of them.
 
@@ -3485,9 +3485,9 @@ It does not make anybody leave a review. It removes the forgetting and the frict
 
 It does not remove a review, and it does not know a person who can. A published review belongs to the person who wrote it and to the platform it sits on. Only two things ever change it. One is you answering it, and one is you fixing what caused it. The second one occasionally makes somebody edit their own review, which is the only version of removal worth having.
 
-It does not present a selection as the whole picture. Reviews pulled through to your own website are labelled as a selection of recent ones. That is because it is what they are, and because of the paragraph above.
+It does not present a selection as the whole picture. Reviews pulled through to your own website are labelled as a selection of recent ones. They are labelled that way because that is what they are, and because of the paragraph above.
 
-And it does not fix the service. A steady flow of honest reviews of an experience people did not enjoy is a faster and more public way of finding that out. That is not a fault in the tool. For some businesses it is the most valuable thing the tool will ever do. It is also the reason to start with one trigger. Do not switch it on across everything in one afternoon.
+And it does not fix the service. A steady flow of honest reviews of an experience people did not enjoy is simply a faster and more public way of finding that out. That is not a fault in the tool. For some businesses it is the most valuable thing the tool will ever do. It is also the reason to start with one trigger, rather than switching it on across everything in one afternoon.
 
 [[scene:failure-modes]]
 
@@ -3499,7 +3499,7 @@ It is a small piece of software that watches for the moment a job is finished in
 
 ### Is this different from the review tool my CRM already has?
 
-Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job. The mechanics are the same everywhere. A trigger, a message, a link. There is very little technology of their own in this category. There is a great deal of variation in what the default settings do. So there are two questions worth asking about whichever one you already own. They are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
+Probably not in what it does, and quite possibly in whether it is allowed. Most CRMs now ship something that texts a customer at the end of a job. The mechanics are the same everywhere. A trigger, a message, a link. There is very little technology of the vendors' own in this category. There is a great deal of variation in what the default settings do. So there are two questions worth asking about whichever one you already own. They are the ones in the testing section above. Does somebody who scores you a two still get the public review link, or a private form that comes back to the business. And what does the website widget do with a three star review, and how is that block labelled. If the tool you already pay for passes both, use it and spend the money somewhere else.
 
 ### Is it against Google's rules to automate review requests?
 
