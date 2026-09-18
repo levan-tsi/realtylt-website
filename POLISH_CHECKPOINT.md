@@ -12,7 +12,8 @@
 ## * Google Search Console: https://realtylt.com property VERIFIED (HTML file cc37538,
 ##   never delete public/googleaa0cb1e3b6712287.html) + sitemap.xml SUBMITTED (71 URLs,
 ##   serves 200 in a real browser). Post-submit "Couldn't fetch" = known quirk; re-check.
-## Tests 1449, tsc clean, everything pushed through cc37538.
+## Tests 1449, tsc clean, everything pushed through cc37538; BEAT 4 (share) DONE same day
+## on prod - see the brief's beat-4 addendum (dc14d10..the audit fix; 43 surfaces ALL PASS).
 ## == ROUND 51 (2026-09-17): THE OWNER'S CORRECTIONS ON ROUND 50 ==========================
 ## Three commits 07d079d/01d7936/d785b82, pushed. His words drove all three:
 ## 1. CONSENT: "I told u to delet why did u add it back remove that" - the round-50 decline
