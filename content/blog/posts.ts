@@ -121,7 +121,7 @@ export const POSTS: BlogPost[] = [
      * later day sets it. Excerpt and seoDescription DID change, because both described the
      * product the post no longer sells. */
     excerpt:
-      "Nobody was careless. A common question got a slightly wrong answer in March and went on getting it until October, because reading a year of conversations is not a job anybody in a brokerage has. What a self improving system actually is, why a model that reviews its own work scores lower rather than higher, and what has to be standing outside one before it can be trusted to change real software.",
+      "Nobody was careless. A common question got a slightly wrong answer in March. It went on getting it until October, because reading a year of conversations is not a job anyone in a brokerage has. What a self improving system really is. Why a model that reviews its own work scores lower, not higher. And what has to be standing outside one before it can be trusted to change real software.",
     seoDescription:
       "What a self improving AI system does: one shared memory, what it learns kept in files rather than a model, and code that ships only past tests and a person.",
     cover: "/images/editorial/ships-barograph.jpg",
@@ -145,7 +145,7 @@ export const POSTS: BlogPost[] = [
      * posts that were read that day and left unchanged still carry no `updated`. C3 stays red,
      * this topic has no film, so the slug ships at 18/19. */
     excerpt:
-      "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run five hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
+      "Nobody broke a promise. A new value arrived in a field, which was always allowed. A chain that had run five hundred mornings quietly took the wrong branch for nine days. When a bespoke build is truly the right answer. What three named vendors really promise you in writing. And the cost that begins on the day it works.",
     seoDescription:
       "When custom automation is the right answer, what Google, Microsoft and Meta promise about interface changes, and what a bespoke build costs once it works.",
     cover: "/images/editorial/jacquard-cards.jpg",
@@ -166,7 +166,7 @@ export const POSTS: BlogPost[] = [
      * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision, which is the condition this
      * field documents. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "Anybody can write the list of things they would automate. The part worth paying for is knowing which ones to remove and being able to say why. The three questions that do the cutting, what a survey of 850,000 firms found about how far behind you really are, and why the most quoted project failure figure in the industry cannot be used.",
+      "Anyone can write the list of things they would automate. The part worth paying for is knowing which ones to remove, and being able to say why. The three questions that do the cutting. What a survey of 850,000 firms found about how far behind you really are. And why the most quoted project failure figure in the industry cannot be used.",
     seoDescription:
       "What an AI audit produces, the three questions that decide what not to automate, and why the industry's most quoted project failure rate cannot be used.",
     cover: "/images/editorial/switch-box.jpg",
@@ -187,7 +187,7 @@ export const POSTS: BlogPost[] = [
      * see docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
      * the slug ships at 18/19. */
     excerpt:
-      "Fourteen statements were published in your name to fourteen people who now believe you said them. Whose face and voice a business may reproduce, why New York's oldest privacy statute makes the wrong version a misdemeanour, what happened when 315 people tried to tell synthetic faces from real ones, and the cost of a digital twin that nobody quotes.",
+      "Fourteen statements were published in your name, to fourteen people who now believe you said them. Whose face and voice a business may reproduce. Why New York's oldest privacy statute makes the wrong version a misdemeanour. What happened when 315 people tried to tell synthetic faces from real ones. And the cost of a digital twin that nobody quotes.",
     seoDescription:
       "Whose likeness a real estate business may reproduce, what New York Civil Rights Law 50 and 50-f require, and how 315 people did at spotting synthetic faces.",
     cover: "/images/editorial/victrola.jpg",
@@ -208,7 +208,7 @@ export const POSTS: BlogPost[] = [
      * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
      * slug ships at 18/19. */
     excerpt:
-      "There was no invoice sitting unpaid in anybody's system, because there was no invoice. What actually behaves like a receivable in a brokerage and what does not, the federal statute that decides who you may pay and be paid by, why the money that arrived on Monday is not yours until Thursday, and the one control that stops a diverted payment.",
+      "There was no invoice sitting unpaid in anyone's system, because there was no invoice. What really behaves like a receivable in a brokerage, and what does not. The federal statute that decides who you may pay and be paid by. Why the money that arrived on Monday is not yours until Thursday. And the one control that stops a diverted payment.",
     seoDescription:
       "What behaves like a receivable in a brokerage, what RESPA says about referral fees, and why money that arrived on Monday may not be yours until Thursday.",
     cover: "/images/editorial/register-keys.jpg",
@@ -229,7 +229,7 @@ export const POSTS: BlogPost[] = [
      * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can actually do when the calendars it needs belong to other people, why the standards already have a word for an appointment nobody has agreed to, and why moving the time throws every yes away.",
+      "The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you. What a scheduling system can really do when the calendars it needs belong to other people. Why the standards already have a word for an appointment nobody has agreed to. And why moving the time throws every yes away.",
     seoDescription:
       "What a scheduling system can do when the calendars it needs belong to other people, and why moving an appointment resets every confirmation you had.",
     cover: "/images/editorial/clock-not-in-use.jpg",
@@ -250,7 +250,7 @@ export const POSTS: BlogPost[] = [
      * back to twenty. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "Most of the blanks came back full, which is what you paid for. In one record the number a client gave you herself had been replaced, and nothing in the row said what was there before, where the new one came from, or when either was true. What an appended field actually asserts, why no honest decay rate exists, and the two columns that make all of it manageable.",
+      "Most of the blanks came back full, which is what you paid for. In one record, the number a client gave you herself had been replaced. Nothing in the row said what was there before, where the new one came from, or when either was true. What an appended field really asserts. Why no honest decay rate exists. And the two columns that make all of it manageable.",
     seoDescription:
       "What real estate data enrichment appends, what the FTC found when it ordered nine data brokers to explain themselves, and why no honest decay rate exists.",
     cover: "/images/editorial/ghost-signs-layered.jpg",
@@ -271,7 +271,7 @@ export const POSTS: BlogPost[] = [
      * see docs/parity/ROUND46-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
      * the slug ships at 18/19. */
     excerpt:
-      "The rider arrived as a photograph taken over a kitchen table, with two handwritten changes and a date among them. Everything was read correctly and the answer was still wrong, because what a deadline counts from is not printed on the page. What was actually measured on real scanned forms, what a person scores on the same task, and the phrase one regulation defines twice.",
+      "The rider arrived as a photograph taken over a kitchen table, with two handwritten changes and a date among them. Everything was read correctly and the answer was still wrong, because what a deadline counts from is not printed on the page. What was really measured on real scanned forms. What a person scores on the same task. And the phrase one regulation defines twice.",
     seoDescription:
       "What AI document processing does with real estate contracts, what research measured on noisy scanned forms, and why a correct date can be the wrong deadline.",
     cover: "/images/editorial/signature-ink.jpg",
@@ -292,7 +292,7 @@ export const POSTS: BlogPost[] = [
      * that page's own word. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button, and the next month's note reached fewer people for reasons nothing in your software will ever show you. What marketing automation actually decides on your behalf, the ceiling Google and Yahoo both publish, and why you cannot work out your own.",
+      "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button. The next month's note reached fewer people, for reasons nothing in your software will ever show you. What marketing automation really decides on your behalf. The ceiling Google and Yahoo both publish. And why you cannot work out your own.",
     seoDescription:
       "What real estate marketing automation decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
     cover: "/images/editorial/notice-board.jpg",
@@ -316,7 +316,7 @@ export const POSTS: BlogPost[] = [
      * held by scripts/rewrite-invariants.mjs), on a later day than it was published. The absent
      * film (C3) is still a true red on this slug. */
     excerpt:
-      "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing actually is, what the law permits, and the four questions to put to a provider in writing.",
+      "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing really is. What the law permits. And the four questions to put to a provider in writing.",
     seoDescription:
       "What skip tracing does in real estate, what the Driver's Privacy Protection Act and the Fair Credit Reporting Act say about it, and what to ask a provider.",
     cover: "/images/editorial/mailboxes-receding.jpg",
@@ -339,7 +339,7 @@ export const POSTS: BlogPost[] = [
      * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
      * true statements about the page. */
     excerpt:
-      "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce actually is, why an assistant that is right most of the time is a different product from one that is right every time, where multi-agent systems really fail, and who is accountable when one of them is wrong.",
+      "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce really is. Why an assistant that is right most of the time is a different product from one that is right every time. Where multi-agent systems really fail. And who is accountable when one of them is wrong.",
     seoDescription:
       "What an AI agent workforce does, why being right every time matters more than one success rate, where multi-agent systems fail, and what supervision costs.",
     cover: "/images/hero/hero-cand-bear-mountain.jpg",
@@ -361,7 +361,7 @@ export const POSTS: BlogPost[] = [
      * both systems agree on the record. See docs/parity/ROUND48-RELEVANCE-PASS.md. First real
      * revision. C3 stays red, no film, so the slug ships at 18/19. */
     excerpt:
-      "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync actually decides on your behalf, why the published model for matching records has three answers rather than two, and the one field in your setup that every duplicate you have ever had came from.",
+      "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync really decides on your behalf. Why the published model for matching records has three answers rather than two. And the one field in your setup that every duplicate you have ever had came from.",
     seoDescription:
       "What two-way CRM sync does about duplicate contacts, why record matching has three outcomes, not two, and the four ways a sync quietly damages a record.",
     cover: "/images/listings/house-11.jpg",
@@ -382,7 +382,7 @@ export const POSTS: BlogPost[] = [
      * summarises it; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays
      * red, no film, so the slug ships at 18/19. */
     excerpt:
-      "A page for every town you serve is the oldest tactic in local marketing, and Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway actually falls, how cheap sameness is to measure, and the fair housing rule nobody selling this will mention.",
+      "A page for every town you serve is the oldest tactic in local marketing. Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway really falls. How cheap sameness is to measure. And the fair housing rule nobody selling this will mention.",
     seoDescription:
       "What Google's spam policy says about location pages, what separates a real area page from a doorway, and the fair housing rules on advertising an area.",
     cover: "/images/counties/orange.jpg",
@@ -403,7 +403,7 @@ export const POSTS: BlogPost[] = [
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no
      * film, so the slug ships at 18/19. */
     excerpt:
-      "Somebody nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list, one of the three inputs is a fact about you that nothing can change, and the rules for whether you may even have a profile name this industry by name.",
+      "Someone nearby searched for an agent this week and picked from three names on a phone. Google publishes what decides that list. One of the three inputs is a fact about you that nothing can change. And the rules for whether you may even have a profile name this industry by name.",
     seoDescription:
       "What Google publishes about local ranking, the profile rules that name real estate agents specifically, and what an experiment found about paid search traffic.",
     cover: "/images/hero/hudson-olana.jpg",
@@ -425,7 +425,7 @@ export const POSTS: BlogPost[] = [
      * docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
      * slug ships at 18/19. */
     excerpt:
-      "You answered, you were pleasant, you agreed on a time that suited everybody, and nobody came. What AI appointment booking actually does about the gap between the ask and the day, what 51,529 appointments say about booking too far ahead, and the one reminder with a randomised trial behind it.",
+      "You answered, you were pleasant, you agreed on a time that suited everyone, and nobody came. What AI appointment booking really does about the gap between the ask and the day. What 51,529 appointments say about booking too far ahead. And the one reminder with a randomised trial behind it.",
     seoDescription:
       "What AI appointment booking does about no-shows, what 51,529 appointments say about lead time, and why a calendar invitation is not the same as a text message.",
     cover: "/images/counties/rockland.jpg",
@@ -450,7 +450,7 @@ export const POSTS: BlogPost[] = [
      * The rule the superseded note recorded still stands and is worth keeping: set `updated`
      * when the article takes its first real revision, never to satisfy a gate. */
     excerpt:
-      "Twelve five-star reviews, the newest from 2023, and the client who never told you she looked. What review automation actually does, exactly where Google's line between asking and gating falls, and what one extra star was worth in the one study that measured money instead of opinion.",
+      "Twelve five-star reviews, the newest from 2023, and the client who never told you she looked. What review automation really does. Exactly where Google's line between asking and gating falls. And what one extra star was worth in the one study that measured money instead of opinion.",
     seoDescription:
       "What automated Google review requests do, where Google's policy draws the line on review gating, and the FTC rule that governs reviews on your own website.",
     cover: "/images/lifestyle/selling.jpg",
@@ -484,7 +484,7 @@ export const POSTS: BlogPost[] = [
      * market nobody here has surveyed. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
+      "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead. What a ready lead really sounds like. And the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:
       "What AI lead qualification reads beyond the contact form, three signals a person can be specific about, and the fair housing rules on scoring and routing.",
     cover: "/images/counties/westchester.jpg",
@@ -514,7 +514,7 @@ export const POSTS: BlogPost[] = [
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign actually does with that list, the consent rules with dates in them that nobody selling you one mentions, and what it costs when it goes wrong.",
+      "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign really does with that list. The consent rules with dates in them that nobody selling you one mentions. And what it costs when it goes wrong.",
     seoDescription:
       "What AI database reactivation does with old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
     cover: "/images/hero/valley-aerial.jpg",
@@ -547,7 +547,7 @@ export const POSTS: BlogPost[] = [
      * See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
+      "A missed call leaves no name, no message and no record that anyone wanted you. Here is what an AI voice agent really does when the phone rings at 9:42 on a Sunday. The one thing that decides whether it works. And the disclosure rules nobody selling one mentions.",
     seoDescription:
       "What an AI voice agent does when a buyer calls at 9:42 on a Sunday, why latency decides if it works, and the AI disclosure and call recording rules that apply.",
     cover: "/images/hero/millerton-night.jpg",
@@ -579,7 +579,7 @@ export const POSTS: BlogPost[] = [
      * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
+      "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation really removes from a real estate business. How to find your own version of it in an hour. And the failure mode nobody warns you about.",
     seoDescription:
       "What workflow automation removes from a real estate business, how to find your list in an hour, and the quiet failure platforms document but nobody mentions.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
@@ -615,7 +615,7 @@ export const POSTS: BlogPost[] = [
      * than it was. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
     updated: "2026-08-27",
     excerpt:
-      "Somebody read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant actually does in that gap, why the number this whole category is sold on cannot be sourced, and what to ask before you buy one.",
+      "Someone read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant really does in that gap. Why the number this whole category is sold on cannot be sourced. And what to ask before you buy one.",
     seoDescription:
       "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one first.",
     cover: "/images/lifestyle/buying.jpg",
