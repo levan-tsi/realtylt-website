@@ -35,8 +35,8 @@ export function AuthorCard({ author }: { author: string }) {
           <p className="mt-1.5 text-lg font-bold leading-snug text-ink">{author}</p>
           <p className="mt-3 max-w-2xl leading-[1.75] text-stone">
             I run RealtyLT in the Hudson Valley and I built the assistant described in this post.
-            It answers on our own site every night, connected to the live MLS feed, and everything
-            here comes from watching what it gets right and what it gets wrong.{" "}
+            It answers on our own site every night, connected to the live MLS feed. Everything here
+            comes from watching what it gets right and what it gets wrong.{" "}
             <Link
               href="/ai#chat"
               className="text-river underline underline-offset-4 transition-colors hover:text-porchlight-deep"

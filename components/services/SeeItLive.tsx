@@ -17,10 +17,10 @@ export function SeeItLive({ service, nodeIndex }: { service: Service; nodeIndex:
             </span>
           </SectionHeading>
           <p className="mt-6 max-w-lg leading-relaxed text-paper/75">
-            Everything on this page is a node on the RealtyLT AI page: a galaxy that reshapes into a
-            brain, with every service hanging off the core. Open the {service.name} node to read the
-            same thing in its own habitat, and talk to the chat assistant while you are there,
-            because that one is genuinely live.
+            Everything on this page is a node on the RealtyLT AI page. That page is a galaxy that
+            reshapes into a brain, with every service hanging off the core. Open the {service.name}{" "}
+            node to read the same thing in its own habitat. And talk to the chat assistant while you
+            are there, because that one is truly live.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
             {/* Plain anchors: /ai is a rewrite to the separate journey project (next.config.ts),
