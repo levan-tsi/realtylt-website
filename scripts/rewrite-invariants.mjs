@@ -55,6 +55,34 @@ export function mainOf(html) {
   return html.match(/<main[\s>][\s\S]*?<\/main>/i)?.[0] ?? html;
 }
 
+/** Quoted passages of four words or more, by PAIRING the marks rather than by pattern.
+ *
+ * The first version matched `"` + 12..600 non-quote characters + `"`. A quoted fragment under
+ * twelve characters (the voice post quotes the FCC ruling as the single word "artificial") cannot
+ * match from its opening mark, so the regex restarted from its CLOSING mark and paired it with
+ * the opening mark of the next quotation. Every span after that was the prose BETWEEN quotations:
+ * the builder was stopped from simplifying ordinary sentences, and, worse, the real quotations
+ * downstream were not being checked at all. Found by the batch-4 builder, 2026-09-18.
+ * Straight marks toggle open/close; curly marks open and close explicitly. Short quotes are
+ * consumed as pairs and then dropped, which is what keeps the rest in step. */
+export function quotedSpans(text) {
+  const out = [];
+  let open = -1;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === "“" || (c === '"' && open < 0)) open = i;
+    else if ((c === "”" || c === '"') && open >= 0) {
+      const q = squash(text.slice(open + 1, i));
+      // A 600+ character "quotation" is a stray mark (an inch sign, an unclosed quote) that has
+      // flipped the pairing: treat THIS mark as the real opening and carry on in step.
+      if (q.length > 600) { open = c === '"' ? i : -1; continue; }
+      if (q.split(" ").length >= 4) out.push(q);
+      open = -1;
+    }
+  }
+  return out;
+}
+
 /** The invariants of one rendered <main>. Pure: html in, plain data out. */
 export function invariantsOf(mainHtml) {
   const clean = mainHtml.replace(/<(script|style|noscript|svg)[\s>][\s\S]*?<\/\1>/gi, " ");
@@ -70,12 +98,7 @@ export function invariantsOf(mainHtml) {
     [...text.matchAll(/\$?\d[\d,]*(?:\.\d+)?%?/g)].map((m) => m[0].replace(/[,.]+$/, "")),
   )].sort();
 
-  const quoted = [];
-  for (const m of text.matchAll(/["“]([^"“”]{12,600}?)["”]/g)) {
-    const q = squash(m[1]);
-    if (q.split(" ").length >= 4) quoted.push(q);
-  }
-  const quotes = [...new Set([...blockquotes, ...quoted])];
+  const quotes = [...new Set([...blockquotes, ...quotedSpans(text)])];
   const emdash = (text.match(/—/g) || []).length;
   const words = text.split(" ").filter((w) => /[a-z0-9]/i.test(w)).length;
   return { links, headings, numbers, quotes, emdash, words, text };

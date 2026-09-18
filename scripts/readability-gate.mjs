@@ -46,13 +46,20 @@ const dec = (s) =>
     .replace(/&(rsquo|lsquo);/g, "'").replace(/&(rdquo|ldquo);/g, '"').replace(/&quot;/g, '"')
     .replace(/&middot;/g, "·").replace(/&reg;/g, "").replace(/&[a-z]+;/g, " ");
 
-/** The prose of a page: <p> and <li> inside <main>, tags stripped. */
+/** The prose of a page: <p> and <li> inside <main>, tags stripped.
+ *
+ * A LISTING CARD IS NOT PROSE. The home page's <li> blocks are live MLS cards ("20 W 53rd Street
+ * #18 B/C, New York, $24,995,000 Pending ... 5 bd · 7 ba · 4,600 sqft Listed with ..."): data
+ * that turns over with every hourly sync. Scored as sentences they decided the home page's median
+ * on their own, and when the card link gained real anchor text for crawlers (2026-09-18) each
+ * "sentence" grew six words and the page went 15w -> 16w with no copy change at all. A block that
+ * links to a listing is a card and is left out. */
 export function extractProse(html) {
   const main = html.match(/<main[\s>][\s\S]*?<\/main>/i)?.[0] ?? html;
   const noScript = main.replace(/<(script|style|noscript|svg)[\s>][\s\S]*?<\/\1>/gi, " ");
-  const blocks = [...noScript.matchAll(/<(p|li)[\s>][\s\S]*?<\/\1>/gi)].map((m) =>
-    dec(m[0].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim(),
-  );
+  const blocks = [...noScript.matchAll(/<(p|li)[\s>][\s\S]*?<\/\1>/gi)]
+    .filter((m) => !/href="\/homes-for-sale\//.test(m[0]))
+    .map((m) => dec(m[0].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim());
   return blocks.filter((b) => b.length > 0);
 }
 

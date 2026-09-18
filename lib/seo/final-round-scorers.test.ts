@@ -64,6 +64,39 @@ describe("rewrite-invariants: what a simplification must not lose", () => {
   });
 });
 
+describe("rewrite-invariants: quote pairing (the bug the batch-4 builder found)", () => {
+  it("a quoted word under twelve characters does not throw the pairing out of step", () => {
+    // The voice post quotes the FCC ruling as the single word "artificial". The first extractor
+    // needed 12+ characters between marks, so it restarted from that word's CLOSING mark and
+    // recorded the prose between quotations as a quotation, leaving the real one unchecked.
+    const inv = invariantsOf(
+      `<main><p>The ruling says an AI voice is "artificial" under the statute. In practice that means the
+       rules already governing prerecorded calls apply. It bars calls "using an artificial or prerecorded voice"
+       without consent.</p></main>`,
+    );
+    expect(inv.quotes).toEqual(["using an artificial or prerecorded voice"]);
+  });
+
+  it("pairs curly marks explicitly and survives a stray straight mark", () => {
+    const stray = "x".repeat(700);
+    const inv = invariantsOf(`<main><p>A 12" ruler ${stray}. She wrote “where did you get this number” and "a second real quoted passage here" after it.</p></main>`);
+    expect(inv.quotes).toContain("where did you get this number");
+    expect(inv.quotes).toContain("a second real quoted passage here");
+  });
+});
+
+describe("readability-gate: a listing card is not prose", () => {
+  it("leaves out blocks that link to a listing, keeps the copy around them", async () => {
+    const { extractProse } = await import("../../scripts/readability-gate.mjs");
+    const blocks = extractProse(
+      `<main><p>Search homes across six counties.</p>
+       <ul><li><a href="/homes-for-sale/NY/nyack/10960/9-harbor-lane/bid-38-KEY1"><span class="sr-only">9 Harbor Lane, Nyack, $650,000</span></a> $650,000 9 Harbor Lane 4 bd</li>
+       <li>We answer seven days a week.</li></ul></main>`,
+    );
+    expect(blocks).toEqual(["Search homes across six counties.", "We answer seven days a week."]);
+  });
+});
+
 describe("seo-audit: what a crawler that runs no JavaScript can read", () => {
   it("an aria-label is not anchor text; text, img alt and title are", () => {
     const d = parsePage(
