@@ -14,7 +14,7 @@ import { HomeIntake } from "@/components/home/HomeIntake";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
-import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
+import { OG_DEFAULTS, SITE, TOP_AREA_GROUPS } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -30,6 +30,10 @@ export const metadata: Metadata = {
   // redirect, while the sitemap listed `/`. Dev cannot see it: dev does not prerender, and the same
   // page on :3100 renders clean. Verified against `next build` output. Guarded by app/canonical.test.ts.
   alternates: { canonical: "/" },
+  // og:url gets the same explicit value for the same reason: the layout's `url: "./"` would
+  // resolve to /index here exactly as the canonical did. A page-level openGraph REPLACES the
+  // layout's block, so the shared card fields ride along. Guarded by app/canonical.test.ts.
+  openGraph: { ...OG_DEFAULTS, images: [...OG_DEFAULTS.images], url: "/" },
 };
 
 export default async function HomePage() {

@@ -26,7 +26,7 @@ export const aiAppointmentBooking: Service = {
   ],
 
   seo: {
-    title: "AI Appointment Booking: Book the Job in the First Conversation",
+    title: "AI Appointment Setter: Booked in the First Conversation",
     description:
       "An AI that replies in seconds, offers your real open slots, books inside the conversation, and sends the confirmations and reminders that stop no-shows.",
   },

@@ -6,7 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { Providers } from "@/components/auth/Providers";
 import { PostHogInit } from "@/components/site/PostHogInit";
 import { QualifyingWizardProvider } from "@/components/leads/QualifyingWizard";
-import { SERVED_AREAS, SITE } from "@/lib/site";
+import { OG_DEFAULTS, SERVED_AREAS, SITE } from "@/lib/site";
 import { jsonLdScript } from "@/lib/jsonld";
 import "./globals.css";
 
@@ -44,10 +44,12 @@ export const metadata: Metadata = {
   description:
     "Hudson Valley and NYC real estate with RealtyLT. Search homes across six counties and all five boroughs, get your home value, or a cash offer in 24 hours.",
   openGraph: {
-    siteName: SITE.name,
-    type: "website",
-    locale: "en_US",
-    images: [{ url: "/og-realtylt.png", width: 1200, height: 630, alt: "RealtyLT. Let's Find Home. Hudson Valley and New York City real estate." }],
+    // Same "./" trick as the canonical: Next resolves it against each route, so the 26 pages
+    // that inherit this block (home, buying, selling, the county pages ...) stop shipping a
+    // share card with no og:url. Pages that set their own openGraph already carry theirs.
+    url: "./",
+    ...OG_DEFAULTS,
+    images: [...OG_DEFAULTS.images],
   },
   twitter: {
     card: "summary_large_image",

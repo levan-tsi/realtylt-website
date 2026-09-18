@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "What RealtyLT collects when you contact us, chat, or save homes on this site, who processes it, the advertising and mapping cookies involved, and how to have your information removed.",
+    "What RealtyLT collects when you contact us, chat, or save homes, who processes it, the advertising and mapping cookies involved, and how to have it removed.",
 };
 
 const UPDATED = "August 26, 2026";

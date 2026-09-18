@@ -23,7 +23,7 @@ export const customAutomation: Service = {
   seo: {
     title: "Custom AI Automation Built Around Your Workflow",
     description:
-      "Inbound and outbound agents, enrichment, qualification, scheduling, CRM sync, and document processing, orchestrated in n8n and wired to your stack.",
+      "Custom real estate workflow automation: agents, enrichment, qualification, scheduling, CRM sync, and document processing, orchestrated in n8n on your stack.",
   },
 
   /** A vendor's own published promise, and the shortest of the three the flagship draws. It is

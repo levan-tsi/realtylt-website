@@ -54,7 +54,7 @@ export default function TopAreasPage() {
             {COUNTY_CONTENT.map((c, i) => (
               <Reveal key={c.slug} as="li" delay={(i % 3) * 110}>
                 <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
-                  <Link href={`/top-areas/${c.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${c.name}`} />
+                  <Link href={`/top-areas/${c.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{`Explore ${c.name}`}</span></Link>
                   <div className="photo-zoom relative aspect-[16/9] overflow-hidden">
                     <Image
                       src={c.heroImage}
@@ -96,7 +96,7 @@ export default function TopAreasPage() {
             {BOROUGH_CONTENT.map((b, i) => (
               <Reveal key={b.slug} as="li" delay={(i % 3) * 110}>
                 <article className="lift group relative h-full overflow-hidden rounded-2xl border border-line bg-white">
-                  <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10" aria-label={`Explore ${b.name}`} />
+                  <Link href={`/top-areas/${b.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{`Explore ${b.name}`}</span></Link>
                   <div className="flex items-center justify-between bg-ink px-5 py-4">
                     <h3 className="t-title text-paper">{b.name}</h3>
                     <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-paper/60">New York City</span>

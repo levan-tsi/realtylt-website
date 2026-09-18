@@ -78,7 +78,7 @@ export const theSingularity: Service = {
   seo: {
     title: "The Singularity: AI That Builds, Remembers and Improves",
     description:
-      "One system that builds and runs your AI agents, keeps what it learns in files you can read, and improves the software it runs on under your approval.",
+      "AI agent orchestration for real estate: it builds and runs your agents, keeps what it learns in readable files, and improves its own code with your approval.",
   },
 
   figure: {

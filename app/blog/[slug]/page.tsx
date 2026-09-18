@@ -43,7 +43,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await getArticle(slug);
   if (!post) return { title: "Post not found" };
+  // TWO TITLES, ON PURPOSE. The <title> tag is what a search engine ranks and prints, so it takes
+  // the keyword-bearing `seoTitle`. The share card is what a PERSON sees in a feed, so og:title and
+  // twitter:title keep the story headline the page actually shows (and that the share audit and
+  // the LinkedIn inspector were proven against on 2026-09-18).
   const title = post.seoTitle || post.title;
+  const cardTitle = post.title;
   const description = post.seoDescription || post.excerpt;
   const url = articleUrl(post);
   const image = post.cover.startsWith("http") ? post.cover : `${SITE.url}${post.cover}`;
@@ -60,7 +65,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ...(post.placeholder ? { robots: { index: false, follow: true } } : {}),
     alternates: { canonical: url },
     openGraph: {
-      title,
+      title: cardTitle,
       description,
       type: "article",
       publishedTime: post.date,
@@ -71,7 +76,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: cardTitle,
       description,
       images: [image],
     },
@@ -336,7 +341,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 {related.map((r) => (
                   <li key={r.slug} className="min-w-0">
                     <article className="group relative h-full">
-                      <Link href={`/blog/${r.slug}`} className="absolute inset-0 z-10" aria-label={r.title} />
+                      <Link href={`/blog/${r.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{r.title}</span></Link>
                       <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-2xl bg-paper">
                         <Image
                           src={r.cover}

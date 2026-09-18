@@ -89,7 +89,7 @@ export default async function BlogIndexPage() {
               <Reveal>
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-stone">Latest</p>
                 <article className="group relative mt-6 grid items-center gap-8 md:grid-cols-2 md:gap-12">
-                  <Link href={`/blog/${featured.slug}`} className="absolute inset-0 z-10" aria-label={featured.title} />
+                  <Link href={`/blog/${featured.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{featured.title}</span></Link>
                   <div className="photo-zoom relative aspect-[16/10] overflow-hidden rounded-2xl bg-mist">
                     <Image
                       src={featured.cover}
@@ -125,7 +125,7 @@ export default async function BlogIndexPage() {
                     // min-w-0 lets the clamped title truncate instead of forcing overflow.
                     <Reveal key={p.slug} as="li" delay={(i % 3) * 90} className="min-w-0">
                       <article className="group relative h-full">
-                        <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10" aria-label={p.title} />
+                        <Link href={`/blog/${p.slug}`} className="absolute inset-0 z-10"><span className="sr-only">{p.title}</span></Link>
                         <div className="photo-zoom relative aspect-[16/11] overflow-hidden rounded-2xl bg-mist">
                           <Image
                             src={p.cover}

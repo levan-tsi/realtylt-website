@@ -23,7 +23,7 @@ export const workflowAutomation: Service = {
   seo: {
     title: "Workflow Automation with n8n, Make, and Zapier",
     description:
-      "Wire the tools you already use into one chain so the steps between them fire on their own. A new lead, a paid invoice, a signed form: no copy-paste.",
+      "Business workflow automation: the tools you already use wired into one chain, so the steps between them fire on their own. No copy-paste.",
   },
 
   figure: {

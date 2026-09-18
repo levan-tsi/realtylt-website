@@ -23,7 +23,7 @@ export const aiAudit: Service = {
   seo: {
     title: "AI Audit: Find Where AI Pays Off in Your Business First",
     description:
-      "A mapped review of how your business actually runs, an ordered shortlist with the reasoning attached, the list of what not to build, and a first win shipped.",
+      "AI consulting for a small business: a mapped review of how you run, an ordered shortlist with the reasoning, the list of what not to build, and a first win.",
   },
 
   /** Somebody else's measurement, and the one that resets an owner's sense of being behind.

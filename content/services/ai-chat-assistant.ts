@@ -46,7 +46,7 @@ export const aiChatAssistant: Service = {
   seo: {
     title: "AI Chat Assistant for Real Estate Websites",
     description:
-      "A live AI chat assistant that searches your MLS, texts matching listings over SMS, hands off to a voice call, and captures the lead in seconds instead of hours.",
+      "An AI chatbot for your real estate website: it searches your MLS, texts matching listings, hands off to a voice call, and captures the lead in seconds.",
   },
 
   /** ROUND I: this was the ONLY stat in the set of sixteen without a `source`, on the one page

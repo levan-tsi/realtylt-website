@@ -64,6 +64,14 @@ export interface BlogPost {
   updated?: string;
   excerpt: string;
   cover: string;
+  /** <title> override, for search only. The `title` above is the H1 and the share-card headline
+   * and it is a STORY line ("Nobody Leaves a Voicemail Anymore. They Call the Next Agent."): it
+   * earns the click once it is seen, but it carries none of the words anybody types into a
+   * search box, and the title tag is the strongest on-page signal a page sends. So the tag gets
+   * the phrase the slug was already chosen for, in 60 characters or fewer, and the page keeps
+   * its voice. scripts/seo-audit.mjs holds both halves: length, and at least three slug words.
+   * Mirrors the DB path's `seo_title`. */
+  seoTitle?: string;
   /** Meta description override. The excerpt is VISIBLE copy (index card, article hero) and
    * is allowed to run long; this is what search engines get. Mirrors the DB path's
    * `seo_description`. Omit and the excerpt is used. */
@@ -99,6 +107,7 @@ export const POSTS: BlogPost[] = [
     slug: "the-singularity-self-improving-ai-system",
     cluster: "building",
     title: "The Answer Was Wrong in March. It Was Still Wrong in October.",
+    seoTitle: "A Self Improving AI System: Shared Memory, Tested Code",
     date: "2026-08-27",
     /** NO `updated`, for the same reason every post shipped inside a single day carries none: a post written and shipped
      * inside one day has not been revised, and score-flagship's D5 wants dateModified later
@@ -125,6 +134,7 @@ export const POSTS: BlogPost[] = [
     slug: "custom-automation-real-estate-bespoke-build",
     cluster: "building",
     title: "It Ran Every Morning for Two Years. Then a Field Came Back With a New Word in It.",
+    seoTitle: "Custom Automation for Real Estate: When a Bespoke Build Fits",
     date: "2026-08-26",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47, on the field's own terms rather than the gate's. Published
@@ -137,7 +147,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Nobody broke a promise. A new value arrived in a field, which was always allowed, and a chain that had run five hundred mornings quietly took the wrong branch for nine days. When a bespoke build is genuinely the right answer, what three named vendors actually promise you in writing, and the cost that begins on the day it works.",
     seoDescription:
-      "When a custom automation is the right answer, what Google, Microsoft and Meta promise about changing their interfaces, and what a bespoke build costs after it works.",
+      "When custom automation is the right answer, what Google, Microsoft and Meta promise about interface changes, and what a bespoke build costs once it works.",
     cover: "/images/editorial/jacquard-cards.jpg",
     body: [],
     placeholder: false,
@@ -148,6 +158,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-audit-small-business-what-not-to-automate",
     cluster: "building",
     title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
+    seoTitle: "AI Audit for a Small Business: What Not to Automate",
     date: "2026-08-26",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
@@ -157,7 +168,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Anybody can write the list of things they would automate. The part worth paying for is knowing which ones to remove and being able to say why. The three questions that do the cutting, what a survey of 850,000 firms found about how far behind you really are, and why the most quoted project failure figure in the industry cannot be used.",
     seoDescription:
-      "What an AI audit actually produces, the three questions that decide what not to automate, and why the industry's most quoted project failure rate cannot be used.",
+      "What an AI audit produces, the three questions that decide what not to automate, and why the industry's most quoted project failure rate cannot be used.",
     cover: "/images/editorial/switch-box.jpg",
     body: [],
     placeholder: false,
@@ -168,8 +179,9 @@ export const POSTS: BlogPost[] = [
     slug: "ai-clone-real-estate-agent-video-avatar",
     cluster: "visibility",
     title: "Fourteen Videos Went Out in Your Face. You Have Watched None of Them.",
+    seoTitle: "AI Clone of a Real Estate Agent: Video Avatars and the Law",
     date: "2026-08-26",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
      * pass corrected the 16 CFR part 461 effective date and trimmed the section 50-f paragraph;
      * see docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so
@@ -177,7 +189,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Fourteen statements were published in your name to fourteen people who now believe you said them. Whose face and voice a business may reproduce, why New York's oldest privacy statute makes the wrong version a misdemeanour, what happened when 315 people tried to tell synthetic faces from real ones, and the cost of a digital twin that nobody quotes.",
     seoDescription:
-      "Whose likeness a real estate business may reproduce, what New York Civil Rights Law 50 and 50-f require, and what happened when 315 people tried to spot synthetic faces.",
+      "Whose likeness a real estate business may reproduce, what New York Civil Rights Law 50 and 50-f require, and how 315 people did at spotting synthetic faces.",
     cover: "/images/editorial/victrola.jpg",
     body: [],
     placeholder: false,
@@ -188,8 +200,9 @@ export const POSTS: BlogPost[] = [
     slug: "invoicing-and-payments-real-estate-brokerage",
     cluster: "back-office",
     title: "The Referral Closed in July. Nobody Here Raised an Invoice.",
+    seoTitle: "Invoicing and Payments in a Real Estate Brokerage, and RESPA",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass fixed which denominator the IC3 average loss hangs on; see
      * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision. C3 stays red, no film, so the
@@ -208,6 +221,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-scheduling-real-estate-showing-confirmations",
     cluster: "appointments",
     title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
+    seoTitle: "AI Scheduling in Real Estate: When Confirmations Reset",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
@@ -228,6 +242,7 @@ export const POSTS: BlogPost[] = [
     slug: "data-enrichment-real-estate-stale-contact-records",
     cluster: "records",
     title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
+    seoTitle: "Real Estate Data Enrichment: Fixing Stale Contact Records",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46
@@ -237,7 +252,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Most of the blanks came back full, which is what you paid for. In one record the number a client gave you herself had been replaced, and nothing in the row said what was there before, where the new one came from, or when either was true. What an appended field actually asserts, why no honest decay rate exists, and the two columns that make all of it manageable.",
     seoDescription:
-      "What real estate data enrichment actually appends, what the FTC found when it ordered nine data brokers to explain themselves, and why no honest data decay rate exists.",
+      "What real estate data enrichment appends, what the FTC found when it ordered nine data brokers to explain themselves, and why no honest decay rate exists.",
     cover: "/images/editorial/ghost-signs-layered.jpg",
     body: [],
     placeholder: false,
@@ -248,6 +263,7 @@ export const POSTS: BlogPost[] = [
     slug: "document-processing-real-estate-contract-deadlines",
     cluster: "back-office",
     title: "It Read the Date Correctly. The Date Was Not the Deadline.",
+    seoTitle: "AI Document Processing for Real Estate Contract Deadlines",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
@@ -257,7 +273,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "The rider arrived as a photograph taken over a kitchen table, with two handwritten changes and a date among them. Everything was read correctly and the answer was still wrong, because what a deadline counts from is not printed on the page. What was actually measured on real scanned forms, what a person scores on the same task, and the phrase one regulation defines twice.",
     seoDescription:
-      "What AI document processing does with real estate contracts, what research measured on noisy scanned forms, and why a correct date can still be the wrong deadline.",
+      "What AI document processing does with real estate contracts, what research measured on noisy scanned forms, and why a correct date can be the wrong deadline.",
     cover: "/images/editorial/signature-ink.jpg",
     body: [],
     placeholder: false,
@@ -268,6 +284,7 @@ export const POSTS: BlogPost[] = [
     slug: "marketing-automation-real-estate-email-deliverability",
     cluster: "records",
     title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
+    seoTitle: "Real Estate Marketing Automation and Email Deliverability",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
@@ -277,7 +294,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "The market note went out to fourteen hundred people and nobody complained. Five of them pressed the other button, and the next month's note reached fewer people for reasons nothing in your software will ever show you. What marketing automation actually decides on your behalf, the ceiling Google and Yahoo both publish, and why you cannot work out your own.",
     seoDescription:
-      "What real estate marketing automation actually decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
+      "What real estate marketing automation decides for you, what CAN-SPAM does and does not require, and the spam rate ceiling Google and Yahoo both publish.",
     cover: "/images/editorial/notice-board.jpg",
     body: [],
     placeholder: false,
@@ -288,6 +305,7 @@ export const POSTS: BlogPost[] = [
     slug: "skip-tracing-real-estate-legal-owner-phone-numbers",
     cluster: "records",
     title: "You Have Her Number. She Never Gave It to You.",
+    seoTitle: "Skip Tracing in Real Estate: What the Law Says, What to Ask",
     date: "2026-08-25",
     /** NO `updated`. Round 46 read this post in full and changed nothing in it, and round 47 left
      * it alone as well, so there has been no revision to date. Same reason as elsewhere: a post written and shipped
@@ -298,7 +316,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing actually is, what the law permits, and the four questions to put to a provider in writing.",
     seoDescription:
-      "What skip tracing does in real estate, what the Driver's Privacy Protection Act and the Fair Credit Reporting Act actually say about it, and what to ask a provider.",
+      "What skip tracing does in real estate, what the Driver's Privacy Protection Act and the Fair Credit Reporting Act say about it, and what to ask a provider.",
     cover: "/images/editorial/mailboxes-receding.jpg",
     body: [],
     placeholder: false,
@@ -309,6 +327,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-agent-workforce-real-estate-assistants",
     cluster: "building",
     title: "Four Assistants Ran Overnight. Nobody Read What They Did.",
+    seoTitle: "An AI Agent Workforce in Real Estate: What Supervision Costs",
     date: "2026-08-25",
     /** NO `updated`. Rounds 46 and 47 both changed the scene file's provenance docstring for this
      * topic, which is a comment rather than copy, and left the article itself untouched. Same
@@ -320,7 +339,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Nine good mornings, and on the tenth an assistant confirmed a showing you had already moved. What an AI agent workforce actually is, why an assistant that is right most of the time is a different product from one that is right every time, where multi-agent systems really fail, and who is accountable when one of them is wrong.",
     seoDescription:
-      "What an AI agent workforce does, why being right every time matters more than a single success rate, where multi-agent systems fail, and what supervising them costs.",
+      "What an AI agent workforce does, why being right every time matters more than one success rate, where multi-agent systems fail, and what supervision costs.",
     cover: "/images/hero/hero-cand-bear-mountain.jpg",
     body: [],
     placeholder: false,
@@ -331,6 +350,7 @@ export const POSTS: BlogPost[] = [
     slug: "crm-sync-real-estate-duplicate-contact-records",
     cluster: "records",
     title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
+    seoTitle: "CRM Sync for Real Estate: Fixing Duplicate Contact Records",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 48. Published 2026-08-25, revised 2026-08-27: the sync-path
@@ -341,7 +361,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing. What a two-way CRM sync actually decides on your behalf, why the published model for matching records has three answers rather than two, and the one field in your setup that every duplicate you have ever had came from.",
     seoDescription:
-      "What two-way CRM sync actually does about duplicate contacts, why record matching has three outcomes rather than two, and the four ways a sync quietly damages a record.",
+      "What two-way CRM sync does about duplicate contacts, why record matching has three outcomes, not two, and the four ways a sync quietly damages a record.",
     cover: "/images/listings/house-11.jpg",
     body: [],
     placeholder: false,
@@ -352,6 +372,7 @@ export const POSTS: BlogPost[] = [
     slug: "geo-landing-pages-real-estate-doorway-pages",
     cluster: "visibility",
     title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
+    seoTitle: "GEO Landing Pages for Real Estate vs Doorway Pages",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
@@ -361,7 +382,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "A page for every town you serve is the oldest tactic in local marketing, and Google's spam policy names it twice, once in an example that is about generative AI specifically. Where the line between a real area page and a doorway actually falls, how cheap sameness is to measure, and the fair housing rule nobody selling this will mention.",
     seoDescription:
-      "What Google's spam policy actually says about location pages, what separates a real area page from a doorway, and the fair housing rules that govern advertising an area.",
+      "What Google's spam policy says about location pages, what separates a real area page from a doorway, and the fair housing rules on advertising an area.",
     cover: "/images/counties/orange.jpg",
     body: [],
     placeholder: false,
@@ -372,6 +393,7 @@ export const POSTS: BlogPost[] = [
     slug: "local-seo-real-estate-map-pack-google-business-profile",
     cluster: "visibility",
     title: "Three Businesses Show Up. Yours Is Not One of Them.",
+    seoTitle: "Local SEO for Real Estate: Map Pack and Business Profile",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
@@ -392,6 +414,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-appointment-booking-no-shows-real-estate",
     cluster: "appointments",
     title: "You Booked the Showing for Nine Days Out. Nobody Came.",
+    seoTitle: "AI Appointment Booking and No-Shows in Real Estate",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
@@ -413,6 +436,7 @@ export const POSTS: BlogPost[] = [
     slug: "automated-google-review-requests-real-estate",
     cluster: "visibility",
     title: "Twelve Five-Star Reviews. The Newest One Is From 2023.",
+    seoTitle: "Automated Google Review Requests for Real Estate: The Rules",
     date: "2026-08-25",
     updated: "2026-08-27",
     /** `updated` SET IN ROUND 47, which is the condition the note below always named: the first
@@ -441,6 +465,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-lead-qualification-real-estate-scoring",
     cluster: "answering",
     title: "All Three Leads Look the Same. Two Are Worth Your Morning.",
+    seoTitle: "AI Lead Qualification and Scoring in Real Estate",
     date: "2026-07-31",
     /** Shipped 07-31 with NO `updated`, deliberately, because a post written and shipped inside
      * one day has not been revised and inventing a date would have been exactly the freshness
@@ -459,7 +484,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead, what a ready lead actually sounds like, and the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:
-      "What AI lead qualification reads instead of the contact form, the three signals a person can be specific about, and the fair housing rules on scoring and routing.",
+      "What AI lead qualification reads beyond the contact form, three signals a person can be specific about, and the fair housing rules on scoring and routing.",
     cover: "/images/counties/westchester.jpg",
     body: [],
     placeholder: false,
@@ -471,6 +496,7 @@ export const POSTS: BlogPost[] = [
     slug: "database-reactivation-old-real-estate-leads",
     cluster: "records",
     title: "They Said Not Right Now. That Was Three Years Ago.",
+    seoTitle: "Database Reactivation: Old Real Estate Leads and the Rules",
     /** Researched and drafted 07-30, finished and shipped 07-31. Both dates are real: this
      * session began on the 30th and the piece was rewritten and verified on the 31st. */
     date: "2026-07-30",
@@ -488,7 +514,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign actually does with that list, the consent rules with dates in them that nobody selling you one mentions, and what it costs when it goes wrong.",
     seoDescription:
-      "What AI database reactivation does with your old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
+      "What AI database reactivation does with old real estate leads, the federal consent and do-not-call rules with dates in them, and what getting it wrong costs.",
     cover: "/images/hero/valley-aerial.jpg",
     body: [],
     placeholder: false,
@@ -500,6 +526,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-voice-agent-missed-calls-real-estate",
     cluster: "answering",
     title: "Nobody Leaves a Voicemail Anymore. They Call the Next Agent.",
+    seoTitle: "AI Voice Agent for Missed Calls in Real Estate",
     date: "2026-07-30",
     /** A real revision, not a freshness fiction: the all-party-consent paragraph asserted a
      * count of states that had not been checked against the statutes, and now says only what
@@ -520,7 +547,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "A missed call leaves no name, no message and no record that anybody wanted you. Here is what an AI voice agent actually does when the phone rings at 9:42 on a Sunday, the one thing that decides whether it works, and the disclosure rules nobody selling one mentions.",
     seoDescription:
-      "What an AI voice agent does when a buyer calls at 9:42 on a Sunday, why latency decides whether it works, and the AI disclosure and call recording rules that apply.",
+      "What an AI voice agent does when a buyer calls at 9:42 on a Sunday, why latency decides if it works, and the AI disclosure and call recording rules that apply.",
     cover: "/images/hero/millerton-night.jpg",
     body: [],
     placeholder: false,
@@ -532,6 +559,7 @@ export const POSTS: BlogPost[] = [
     slug: "workflow-automation-real-estate-business",
     cluster: "building",
     title: "The Busywork Tax: What Workflow Automation Actually Removes",
+    seoTitle: "Workflow Automation for a Real Estate Business, Explained",
     date: "2026-07-13",
     /** A REAL revision, not a freshness fiction. Shipped 07-13 as a plain 1,200-word article; on
      * 08-01 it was rebuilt onto the flagship path with a cited field study, an original data
@@ -551,7 +579,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation actually removes from a real estate business, how to find your own version of it in an hour, and the failure mode nobody warns you about.",
     seoDescription:
-      "What workflow automation removes from a real estate business, how to find your own list in an hour, and the quiet failure the platforms document but nobody mentions.",
+      "What workflow automation removes from a real estate business, how to find your list in an hour, and the quiet failure platforms document but nobody mentions.",
     // Was /images/team-bg.jpg, which does not exist and never has: the raw asset 404s and the
     // optimizer therefore 400s, so this post's card on /blog and its own hero were both broken.
     // Accounting Finance (CC0, already in public/images/ATTRIBUTIONS.md) is the paperwork this
@@ -567,6 +595,7 @@ export const POSTS: BlogPost[] = [
     slug: "ai-chat-assistant-real-estate-website",
     cluster: "answering",
     title: "Your Website Answered That Buyer at 11:40pm. Did You?",
+    seoTitle: "AI Chat Assistant for a Real Estate Website: How to Test One",
     date: "2026-07-12",
     /** 08-02: the largest revision this post has had. It had been resting on an unsourced "78%"
      * and carried one citation, which the voice post also used, so it effectively had no source
@@ -586,7 +615,7 @@ export const POSTS: BlogPost[] = [
     excerpt:
       "Somebody read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant actually does in that gap, why the number this whole category is sold on cannot be sourced, and what to ask before you buy one.",
     seoDescription:
-      "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one before you buy.",
+      "What an AI chat assistant does when a buyer messages your site at 11:40pm, why the 78% everyone quotes has no study behind it, and how to test one first.",
     cover: "/images/lifestyle/buying.jpg",
     body: [],
     placeholder: false,

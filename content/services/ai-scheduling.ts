@@ -30,7 +30,7 @@ export const aiScheduling: Service = {
   seo: {
     title: "AI Scheduling: Showings and Consults That Book Themselves",
     description:
-      "Live availability from Google or Outlook, offered inside the conversation, held the moment it is taken, confirmed, reminded, and rescheduled without a phone call.",
+      "AI appointment scheduling for real estate: live Google or Outlook availability offered in the conversation, held, confirmed, reminded, and rescheduled.",
   },
 
   /** SOURCED, added in round G. From the published deployment of a real scheduling assistant:

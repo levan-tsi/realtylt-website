@@ -28,6 +28,7 @@ export function staticToArticle(post: BlogPost): Article {
     source: "static",
     placeholder: post.placeholder,
     cluster: post.cluster,
+    seoTitle: post.seoTitle,
     seoDescription: post.seoDescription,
     film: post.film,
     flagship: post.flagship,

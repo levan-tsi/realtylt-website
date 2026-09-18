@@ -148,11 +148,13 @@ export function ListingCard({
   if (variant === "plain") {
     return (
       <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
-        <Link
-          href={listingPath(l)}
-          className="absolute inset-0 z-10"
-          aria-label={`${l.address}, ${l.city}, ${priceLabel(l)}`}
-        />
+        {/* The overlay link carries its name as TEXT, not aria-label: a crawler reads anchor
+            text, img alt or title and nothing else, so an aria-label-only anchor told Google
+            nothing about the listing it points at (seo-audit.mjs ANCHORS). Same accessible
+            name, same box, no visual change. */}
+        <Link href={listingPath(l)} className="absolute inset-0 z-10">
+          <span className="sr-only">{`${l.address}, ${l.city}, ${priceLabel(l)}`}</span>
+        </Link>
         {/* 2:1 on phones; 21:10 from lg. The owner's density target is three FULL rows beside
             the map ("2+2+2") — round 23 tuned the card 282 -> 240 for it; round 36's two-line
             address lockup put a real city line back (243 -> 259 measured at 1440) and the
@@ -245,11 +247,9 @@ export function ListingCard({
 
   return (
     <article className="lift group relative overflow-hidden rounded-2xl bg-white">
-      <Link
-        href={listingPath(l)}
-        className="absolute inset-0 z-10"
-        aria-label={`${l.address}, ${l.city}, ${formatPrice(l.price)}`}
-      />
+      <Link href={listingPath(l)} className="absolute inset-0 z-10">
+        <span className="sr-only">{`${l.address}, ${l.city}, ${formatPrice(l.price)}`}</span>
+      </Link>
       {/* Live home-rail tiles are portrait — measured 283×450 (aspect ≈ 63/100) @1280 */}
       <div className="photo-zoom relative aspect-[63/100] overflow-hidden bg-mist">
         {l.photos[0] ? (

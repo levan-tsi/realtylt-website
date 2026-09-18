@@ -56,7 +56,9 @@ describe("the share card", () => {
   });
 
   it("the layout declares the size the file actually is", () => {
-    const layout = read("app/layout.tsx");
-    expect(layout).toMatch(/url: "\/og-realtylt\.png", width: 1200, height: 630/);
+    // The declaration moved to OG_DEFAULTS in lib/site.ts (2026-09-18) so the home page can
+    // restate it beside its explicit og:url; the layout must still be spreading that block.
+    expect(read("lib/site.ts")).toMatch(/url: "\/og-realtylt\.png", width: 1200, height: 630/);
+    expect(read("app/layout.tsx")).toContain("...OG_DEFAULTS");
   });
 });

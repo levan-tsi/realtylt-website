@@ -24,6 +24,16 @@ export const SITE = {
   fairHousingPdf: "https://dos.ny.gov/fair-housing-notice",
 } as const;
 
+/** The share-card fields every page inherits. They live here, not inline in app/layout.tsx,
+ * because a page that sets its OWN `openGraph` replaces the layout's block wholesale (Next
+ * merges metadata shallowly), and the home page has to set its own: see app/page.tsx. */
+export const OG_DEFAULTS = {
+  siteName: SITE.name,
+  type: "website",
+  locale: "en_US",
+  images: [{ url: "/og-realtylt.png", width: 1200, height: 630, alt: "RealtyLT. Let's Find Home. Hudson Valley and New York City real estate." }],
+} as const;
+
 export const COUNTIES = [
   { slug: "dutchess", name: "Dutchess County" },
   { slug: "westchester", name: "Westchester County" },

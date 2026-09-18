@@ -32,11 +32,9 @@ function ServiceCard({ service, large = false }: { service: Service; large?: boo
         large ? "p-7 md:p-8" : "p-6"
       }`}
     >
-      <Link
-        href={`/services/${service.slug}`}
-        className="absolute inset-0 z-10"
-        aria-label={service.name}
-      />
+      <Link href={`/services/${service.slug}`} className="absolute inset-0 z-10">
+        <span className="sr-only">{service.name}</span>
+      </Link>
       <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-stone">
         {service.eyebrow}
       </p>

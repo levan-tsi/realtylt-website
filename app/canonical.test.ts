@@ -38,6 +38,21 @@ describe("the home page canonical", () => {
     expect(m![1]).not.toMatch(/\/index$/);
   });
 
+  it("states og:url explicitly too, because the layout's relative one resolves the same way", () => {
+    // app/layout.tsx carries `openGraph: { url: "./" }` so the pages that inherit the block get a
+    // per-route og:url. On the home route that is the /index bug again, one tag over.
+    const src = fs.readFileSync(path.join(APP, "page.tsx"), "utf8");
+    const meta = src.match(/export const metadata[^=]*=\s*\{([\s\S]*?)\n\};/);
+    const code = meta![1]
+      .split("\n")
+      .filter((l) => !l.trim().startsWith("//"))
+      .join("\n");
+    const m = code.match(/openGraph:.*\burl:\s*"([^"]*)"/);
+    expect(m, 'app/page.tsx must set its own openGraph.url; the inherited "./" becomes /index').not.toBeNull();
+    expect(m![1]).not.toBe("./");
+    expect(m![1]).not.toMatch(/\/index$/);
+  });
+
   it("does not resolve to /index in the built output", () => {
     if (!fs.existsSync(BUILT_HOME)) {
       // Deliberately not a silent skip: say which check did not run and why.
