@@ -1,5 +1,18 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 51f (2026-09-18): FINAL-ROUND PREP + THE OWNER'S VOICE LIST, DONE ============
+## The FINAL ROUND brief is memory/project-final-round-brief-20260918.md (+ two addenda by
+## this session: the website-lane prep and the owner's voice additions). THE NEW CHAT RUNS
+## BEATS 1-3; this session prepped and cleared the deck:
+## * readability gate COMMITTED (scripts/readability-gate.mjs) + BASELINE 2/44 pass
+##   (docs/parity/READABILITY-BEFORE-20260918.json) - the 10-year-old pass starts able.
+## * n8n FULLY RETIRED (connector re-authed; all three workflows unpublished).
+## * Preferred Sources button REMOVED (his click test: "nothing really happened") + its
+##   news.google CSP entries (ddc03e1).
+## * Google Search Console: https://realtylt.com property VERIFIED (HTML file cc37538,
+##   never delete public/googleaa0cb1e3b6712287.html) + sitemap.xml SUBMITTED (71 URLs,
+##   serves 200 in a real browser). Post-submit "Couldn't fetch" = known quirk; re-check.
+## Tests 1449, tsc clean, everything pushed through cc37538.
 ## == ROUND 51 (2026-09-17): THE OWNER'S CORRECTIONS ON ROUND 50 ==========================
 ## Three commits 07d079d/01d7936/d785b82, pushed. His words drove all three:
 ## 1. CONSENT: "I told u to delet why did u add it back remove that" - the round-50 decline
