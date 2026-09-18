@@ -3231,7 +3231,7 @@ There is a second half to this that nobody markets. It is the writing rather tha
 
 ## What a booking is, technically, and why most of them are not one
 
-Here is a difference that sounds fussy. It is also the difference between an appointment that happens and one that does not.
+Here is a small point that sounds fussy. It is also the difference between an appointment that happens and one that does not.
 
 When a booking system tells you it has confirmed the appointment, it has done one of three things. It may have sent a text message that contains a date and a time, which is a sentence. It may have attached a calendar file, which is a document. Or it may have sent an actual invitation, which is a transaction with a reply.
 
@@ -3309,7 +3309,7 @@ A booking link, of the kind most calendar products now offer, moves the work to 
 
 ### Will it reduce no-shows?
 
-Two parts of it will, and it is worth knowing which. The reminder is the part with real evidence. A randomised trial of 1,848 people found attendance of 80.5% with no reminder against 87.5% with a single text sent three days ahead. The other part is less obvious and possibly larger. Booking inside the first conversation tends to produce a much shorter gap between the ask and the appointment. And shorter gaps go with far better attendance in the clinic study above. Neither of those figures is from real estate. Anyone quoting you a no-show reduction for your business is quoting you a number nobody has measured.
+Two parts of it will, and it is worth knowing which. The reminder is the part with real evidence. A randomised trial of 1,848 people found attendance of 80.5% with no reminder against 87.5% with a single text sent three days ahead. The other part is less obvious and possibly larger. Booking inside the first conversation tends to produce a much shorter gap between the ask and the appointment. And shorter gaps are associated with far better attendance in the clinic study above. Neither of those figures is from real estate. Anyone quoting you a no-show reduction for your business is quoting you a number nobody has measured.
 
 ### How does it know when I am free?
 
@@ -3621,7 +3621,7 @@ On timing, the honest shape is this. A useful version answering from your own co
 
 Take this to any vendor, including us. Five questions, and you can ask all of them inside a demo window without anybody's permission.
 
-Ask it something it cannot know. Make up an address on a real street and ask what the taxes are. What you want back is an admission that it has no way to confirm that, and an offer of a person. If it produces a number, then you have just watched it invent one. And it will do that to a client on a Tuesday.
+Ask it something it cannot know. Make up an address on a real street and ask what the taxes are. What you want back is an admission that it has no way to confirm that, and an offer of a person. If it produces a number, then you have just watched it invent one, and it will do that to a client on a Tuesday.
 
 Ask it something that changed this week. A price cut, a status change, anything with a date on it. This is the question that separates an assistant reading a copy of your website from one reading the feed.
 
@@ -3663,7 +3663,7 @@ A bad one will. A pop-up that fires two seconds after landing and demands a phon
 
 ### My leads want a human, not a bot
 
-They do, eventually. What they want at 11:40pm is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client. What people object to is not being helped by software. It is being trapped by it, and those are different products.
+They do, eventually. What they want at 11:40pm is to know whether the taxes on that house are five thousand or fifteen. An assistant that answers that and then books them a call with you is not standing between you and the client. It is the reason there is a client. People do not object to being helped by software. They object to being trapped by it, and those are different products.
 
 ### Does it work on the MLS, or only on what my website already says?
 
@@ -3855,7 +3855,7 @@ They are still in your CRM. Their number still works. Nobody has dialed it since
 
 Last year they sold that house. Someone else listed it.
 
-Nothing was neglected in that story, which is exactly what makes it expensive. No ball was dropped and nobody was lazy. It is that a person who said not right now needs following up three years later, in the one month it stopped being not right now. That is not a thing a human being is built to do.
+Nothing was neglected in that story, which is exactly what makes it expensive. No ball was dropped and nobody was lazy. It is that a person who said not right now needs following up three years later, in the one month it stopped being not right now. Following up like that is not a thing a human being is built to do.
 
 [[scene:in-short]]
 
@@ -3909,7 +3909,7 @@ I am not a lawyer, and none of what follows is legal advice. Read it instead as 
 
 Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the records, and whatever your CRM does with the word stop. If a vendor cannot tell you how their campaign handles all three, then the campaign is not ready to send.
 
-Once you know how much of that list you are actually allowed to contact, the rest is sums. And they are sums nobody can do for you.
+Once you know how much of that list you are actually allowed to contact, the rest is a sum. And it is a sum nobody can do for you.
 
 [[scene:list-calculator]]
 
@@ -3917,7 +3917,7 @@ Once you know how much of that list you are actually allowed to contact, the res
 
 We do not publish a price for this, and I am not going to invent one here, because it depends entirely on the size and state of the list. What is worth publishing is the other side of the ledger. That is because it is a fixed number and almost nobody quotes it.
 
-The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. To treble a sum is to make it three times as big. Per message. There is a whole plaintiff's bar that does nothing else. And a list of thirty thousand contacts is a large multiplier attached to a small mistake.
+The Telephone Consumer Protection Act carries a private right of action. Under [47 U.S.C. 227(b)(3)](https://www.law.cornell.edu/uscode/text/47/227), a person can recover their actual loss "or to receive $500 in damages for each such violation, whichever is greater", and a court that finds the violation was willful or knowing may treble it. Per message. To treble a sum is to make it three times as big. There is a whole plaintiff's bar that does nothing else. And a list of thirty thousand contacts is a large multiplier attached to a small mistake.
 
 While we are here: you will see agents quote a figure of sixteen thousand dollars per text, and it is the wrong number twice over. Sixteen thousand was the Federal Trade Commission's ceiling for an unfair or deceptive practice until the [June 2016 adjustment](https://www.federalregister.gov/documents/2016/06/30/2016-15302/adjustment-of-civil-monetary-penalty-amounts) raised it to forty thousand, and [16 CFR 1.98](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-A/part-1/subpart-L/section-1.98) now puts that ceiling at $53,088. It is also a penalty an agency assesses rather than the claim a person brings against you. The number in a private lawsuit is five hundred. And five hundred multiplied by a list is the one that should worry you.
 
@@ -4073,7 +4073,7 @@ The practical protection is boring and it works. Every score has to point at a s
 
 Traceable inputs protect you from the obvious failure, which is a system reading something it should never have been shown. They do not protect you from the quiet one, where every input is innocent and the output still lands unevenly.
 
-The clearest official statement of that problem is about a different technology. It is worth reading anyway. In April 2024 the Office of Fair Housing and Equal Opportunity published [guidance on how the Fair Housing Act applies to housing advertising delivered through digital platforms](https://archives.hud.gov/news/2024/FHEO_Guidance_on_Advertising_through_Digital_Platforms.pdf). It applies specifically to the case where an algorithm rather than a person decides who gets shown what. Two sentences in it should stop anybody who is about to rank leads with software.
+The clearest official statement of that problem is about a different technology. It is worth reading anyway. In April 2024 the Office of Fair Housing and Equal Opportunity published [guidance on how the Fair Housing Act applies to housing advertising delivered through digital platforms](https://archives.hud.gov/news/2024/FHEO_Guidance_on_Advertising_through_Digital_Platforms.pdf). The guidance covers how the Act applies when an algorithm rather than a person decides who gets shown what. Two sentences in it should stop anybody who is about to rank leads with software.
 
 The first describes how the harm happens. Discriminatory delivery, HUD writes, "can happen without the advertiser's direction or knowledge, and can even frustrate an advertiser's intention that an ad be distributed more broadly". Nobody chose it, and somebody's stated intention was overridden by the machinery underneath it.
 
@@ -4216,7 +4216,7 @@ You do not need a consultant for the first pass. You need a piece of paper and a
 
 [[scene:audit]]
 
-Then rank it, because the order you do them in matters more than the list does. Sort by two things and ignore everything else. The first is how often the step happens. The second is how little judgment it needs. The top of that list is always something dull and frequent, a field being copied from one system into another twenty times a week. And it is worth more than the impressive-sounding thing at the bottom, which happens twice a month and needs somebody to think.
+Then rank it, because the order you do them in matters more than the list does. Sort by two things and ignore everything else. The first is how often the step happens. The second is how little judgment it needs. The top of that list is always something dull and frequent, a field being copied from one system into another twenty times a week. And it is worth more than the impressive-sounding thing at the bottom that happens twice a month and needs somebody to think.
 
 Most people get this backwards, and it is an expensive way round. The interesting problem is the one with judgment in it, so that is the one they want to automate first. It is also the one most likely to be wrong in front of a client. Start with the boring repetitive hop that nobody will miss. Watch it run for a fortnight, and let the trust be earned by something whose failure costs an apology rather than a deal.
 

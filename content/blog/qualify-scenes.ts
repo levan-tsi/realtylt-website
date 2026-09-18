@@ -225,7 +225,7 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "Nobody ever checks it against what happened.",
-    body: "Take last quarter's top twenty and look at who actually transacted. If the ranking had no relationship to the outcome, then you do not have a scoring system. You have a horoscope with a confidence percentage on it. This takes an hour and almost nobody does it.",
+    body: "Take last quarter's top twenty and look at who actually transacted. If the ranking had no relationship to the outcome, then what you have is not a scoring system. It is a horoscope with a confidence percentage on it. This takes an hour and almost nobody does it.",
   },
 ];
 

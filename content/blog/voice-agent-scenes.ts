@@ -298,7 +298,7 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "Nobody told it what it may not say.",
-    body: "The limits are the configuration. Give an agent no boundary on price, condition or anything legal, and it will fill the silence, fluently. You will hear about it from the client rather than from the log.",
+    body: "The limits are the configuration. Give an agent no boundary on price, condition or anything legal, and it will fill the silence, fluently. And then you will hear about it from the client rather than from the log.",
   },
   {
     lead: "The transcripts are never opened.",

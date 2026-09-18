@@ -85,7 +85,7 @@ export const LEAD_TIME = {
 export const WHY_THEY_DROP: GridItem[] = [
   {
     lead: "Their situation moves.",
-    body: "Nine days is long enough for an offer to be accepted on something else, for a mortgage conversation to go badly, or for a job to change. None of that is about you, and none of it can be won back. It is simply what happens to plans that are left out in the weather.",
+    body: "Nine days is long enough for an offer to be accepted on something else, for a mortgage conversation to go badly, or for a job to change. None of that is about you, and none of it can be got back. It is simply what happens to plans that are left out in the weather.",
   },
   {
     lead: "The commitment cools.",
@@ -226,7 +226,7 @@ export const BOOKING_PATH: { label: string; connects: string; at?: string }[] = 
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "It fills the week with the wrong people.",
-    body: "Booking turns up the volume, and it does not read intent. If nothing sits between the inquiry and the calendar, then you will spend Saturday driving to three houses for people who are eleven months away. That is a worse week than the one you had before.",
+    body: "Booking brings you more of whatever is already coming, and it does not read intent. If nothing sits between the inquiry and the calendar, then you will spend Saturday driving to three houses for people who are eleven months away. That is a worse week than the one you had before.",
   },
   {
     lead: "The calendar it reads is not the calendar you live in.",
@@ -396,7 +396,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "Appointments you actually keep, a year",
-      note: "There is no second column here, and no line showing what this would become with reminders switched on. The missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a reservation for a routine health check-up. Applying that to your listing appointments would be the most flattering sums on this website, and they would be sums nobody has done. Every rate above is yours for the same reason. Three of them have never been measured for this industry by anyone, and a default we typed in would quietly become the number you remember.",
+      note: "There is no second column here, and no line showing what this would become with reminders switched on. The missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a reservation for a routine health check-up. Applying that to your listing appointments would be the most flattering sum on this website, and it is a sum nobody has done. Every rate above is yours for the same reason. Three of them have never been measured for this industry by anyone, and a default we typed in would quietly become the number you remember.",
       action: { label: "See how it is built", href: "/services/ai-appointment-booking" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },

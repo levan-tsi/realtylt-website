@@ -1,0 +1,712 @@
+{
+ "at": "2026-09-18T22:52:42.852Z",
+ "base": "http://127.0.0.1:3100",
+ "gradeMax": 6,
+ "medianMax": 15,
+ "rows": [
+  {
+   "path": "/",
+   "pass": true,
+   "grade": 3.4,
+   "median": 9,
+   "sentences": 28,
+   "words": 240,
+   "longest": 17,
+   "worst": [
+    "17w: “ He sold our house for the exact price we wanted without even listing it on the MLS.",
+    "16w: They stop when you hover or focus them, and you can scroll the row by hand.",
+    "14w: A person reads every answer and comes back with something specific, not a newsletter.",
+    "14w: Information provided by One Key MLS, and is deemed reliable but not guaranteed accurate.",
+    "14w: Information provided by One Key MLS, and is deemed reliable but not guaranteed accurate."
+   ]
+  },
+  {
+   "path": "/blog/the-singularity-self-improving-ai-system",
+   "pass": true,
+   "grade": 5.9,
+   "median": 13,
+   "sentences": 659,
+   "words": 8996,
+   "longest": 39,
+   "worst": [
+    "39w: On a multiple choice commonsense set the older model fell from 75.8 to 38.1 after one round, because a model told to look for a problem in i",
+    "36w: Source: Jie Huang, Xinyun Chen, Swaroop Mishra, Huaixiu Steven Zheng, Adams Wei Yu, Xinying Song and Denny Zhou (Google DeepMind and the Uni",
+    "36w: And the paper behind the first chart on this page lists Reflexion, for its reasoning results rather than its coding ones, in its own table o",
+    "33w: To be exact: if the change that shipped three weeks ago turns out to be the reason something got worse, what is the sequence, who runs it, a",
+    "31w: And of the changes it did approve, its precision was 0.56, so a little over half of what it waved through turned out to be an improvement wh"
+   ]
+  },
+  {
+   "path": "/blog/custom-automation-real-estate-bespoke-build",
+   "pass": true,
+   "grade": 5.9,
+   "median": 13,
+   "sentences": 488,
+   "words": 6312,
+   "longest": 33,
+   "worst": [
+    "33w: Increase the major version when you make incompatible API changes, the minor version when you add functionality in a backward compatible man",
+    "28w: When the expensive part of your week is carrying something from one system to another, and matching up what does not agree, there is no prod",
+    "27w: What decides how much of the original cost you pay again at that point is how well it was written down, not how well it was built.",
+    "27w: The figures come from the national estimate in the report the National Institute of Standards and Technology commissioned on the economic im",
+    "27w: Sometimes something has to read a document, or deal with a system that has no proper way in, or wait on an office that is not yours."
+   ]
+  },
+  {
+   "path": "/blog/ai-audit-small-business-what-not-to-automate",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 526,
+   "words": 6232,
+   "longest": 33,
+   "worst": [
+    "33w: You get back a written account of the work, a shortlist in an order you can defend, the list of things you have decided not to build, and on",
+    "31w: Treat all of it as a fact about how new this still is rather than as a description of the market this week, for the reason the chart's own n",
+    "30w: It cannot be read as nobody using AI, because a firm buying a service that happens to run on it is not a firm adopting a technology on this ",
+    "30w: The paper's authors also note that the Census public use tables do not correct for sample weights the way they do, so figures taken from tho",
+    "29w: Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the est"
+   ]
+  },
+  {
+   "path": "/blog/ai-clone-real-estate-agent-video-avatar",
+   "pass": true,
+   "grade": 5.7,
+   "median": 11,
+   "sentences": 586,
+   "words": 6826,
+   "longest": 59,
+   "worst": [
+    "59w: A digital replica is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voi",
+    "42w: It says the specifications should not provide value judgments about whether a given set of provenance data is good or bad, merely whether th",
+    "31w: It defines a deceased personality as a person who was domiciled in this state at death and whose likeness had commercial value at the time o",
+    "31w: It makes it an unfair or deceptive act to materially and falsely pose as a government entity or officer, or as a business or officer of one,",
+    "30w: And on the hidden test set, the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on ever"
+   ]
+  },
+  {
+   "path": "/blog/invoicing-and-payments-real-estate-brokerage",
+   "pass": true,
+   "grade": 5.1,
+   "median": 11,
+   "sentences": 581,
+   "words": 6853,
+   "longest": 54,
+   "worst": [
+    "54w: Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or u",
+    "51w: The law then adds the cap: any such surcharge may not exceed the amount of the surcharge charged to the business by the credit card company ",
+    "49w: New York General Business Law 518 , in the version in force since the 2024 amendment, requires that a seller imposing a surcharge on a custo",
+    "46w: Broadly, it is a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated,",
+    "36w: 229.13(b) says that the availability schedules do not apply to the aggregate amount of deposits by one or more cheques to the extent that th"
+   ]
+  },
+  {
+   "path": "/blog/ai-scheduling-real-estate-showing-confirmations",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 563,
+   "words": 6830,
+   "longest": 56,
+   "worst": [
+    "56w: There is no figure for how often a listing side declines a request, and that gap was looked for rather than assumed: the largest showing sch",
+    "50w: There is no price here because two things move it and neither is the calendar connection: how many parties a typical appointment of yours ne",
+    "39w: And there is no second column showing what this becomes with a scheduling layer switched on, because we have not measured that on your appoi",
+    "36w: If the start time, the end time or the duration of an appointment changes, every attendee's answer is deleted and set back to unanswered, on",
+    "36w: If the note that goes out when a request is raised says confirmed, then every unanswered request in your system is a promise, and you will o"
+   ]
+  },
+  {
+   "path": "/blog/data-enrichment-real-estate-stale-contact-records",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 582,
+   "words": 7260,
+   "longest": 63,
+   "worst": [
+    "63w: The same law defines a covered business at Civil Code 1798.140 as one doing business in California that also meets one of three: annual gros",
+    "58w: The report gives its own examples of how inference works: a data broker \"might infer that an individual with a boating license has an intere",
+    "46w: California's consumer privacy law, at Civil Code 1798.106 , gives a consumer \"the right to request a business that maintains inaccurate pers",
+    "35w: A source column and a date column on every contact record, filled in from the day the record is created, whether the value came from a form ",
+    "31w: The New York Attorney General's own description of the law it enforces says the Act requires \"any person or business that maintains private "
+   ]
+  },
+  {
+   "path": "/blog/document-processing-real-estate-contract-deadlines",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 568,
+   "words": 7276,
+   "longest": 56,
+   "worst": [
+    "56w: It has to be a record which also \"remains accessible to all persons who are entitled to access by statute, regulation, or rule of law, for t",
+    "47w: Then the same paragraph continues: \"However, for purposes of rescission under 1026.15 and 1026.23, and for purposes of 1026.19(a)(1)(ii), 10",
+    "44w: Then, in their words: \"We discarded unreadable and similar forms, resulting in 3,200 eligible documents, out of which we randomly sampled 19",
+    "34w: 7001 , the ESIGN Act, opens by saying that \"a signature, contract, or other record relating to such transaction may not be denied legal effe",
+    "33w: In the authors' own words, those documents \"have a low resolution of around 100 dpi\" and \"are also of low quality with various types of nois"
+   ]
+  },
+  {
+   "path": "/blog/marketing-automation-real-estate-email-deliverability",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 546,
+   "words": 6711,
+   "longest": 64,
+   "worst": [
+    "64w: Under 16 CFR 316.5 , neither a sender nor anyone acting for them \"may require that any recipient pay any fee, provide any information other ",
+    "47w: They write: \"our corpus of emails is not intended to be representative, and we are unable to draw conclusions about the extent of tracking i",
+    "42w: Under \"Requirements for all senders\": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS recor",
+    "34w: The first is if \"a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message ",
+    "32w: Read it as the person third from the bottom of the list, the one who bought through you two years ago and has not heard from you since excep"
+   ]
+  },
+  {
+   "path": "/blog/skip-tracing-real-estate-legal-owner-phone-numbers",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 644,
+   "words": 7629,
+   "longest": 73,
+   "worst": [
+    "73w: 1681a(d)(1) a consumer report is any communication by a consumer reporting agency of information \"bearing on a consumer's credit worthiness,",
+    "63w: \"A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the c",
+    "46w: Section 2721(c) requires that they \"must keep for a period of 5 years records identifying each person or entity that receives information an",
+    "34w: Number portability is \"the ability of users of telecommunications services to retain, at the same location, existing telecommunications numb",
+    "32w: It \"means information that identifies an individual, including an individual's photograph, social security number, driver identification num"
+   ]
+  },
+  {
+   "path": "/blog/ai-agent-workforce-real-estate-assistants",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 510,
+   "words": 6413,
+   "longest": 36,
+   "worst": [
+    "36w: A broker is exposed where they had actual knowledge of the violation, or where they retain the benefits, profits or proceeds of a transactio",
+    "30w: The benchmark that measures it found a leading agent solving over 60 percent of tasks on one attempt, and under 25 percent when all eight at",
+    "30w: They built a taxonomy of what went wrong, which is a named list of the kinds of failure, by having six human experts read a hundred and fift",
+    "30w: If you cannot write it, you have learned the most useful thing available today, which is that the job cannot yet be handed to anybody at all",
+    "29w: Give it an input with a contradiction in it, or a case the brief does not cover, and find out whether it stops and asks or whether it decide"
+   ]
+  },
+  {
+   "path": "/blog/crm-sync-real-estate-duplicate-contact-records",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 539,
+   "words": 6877,
+   "longest": 41,
+   "worst": [
+    "41w: What no honest build will promise is that the matching is never wrong in either direction, because the published model that everything in th",
+    "38w: It warns that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need t",
+    "38w: It says that you can use email or a custom unique identifier property, and that following the request, if the contacts already exist they wi",
+    "38w: Which email she reads, which number she answers, and which of the two histories is the one you should have in front of you before you ring h",
+    "37w: Winkler cites his own earlier measurement: even high quality files might contain more than 20 percent error in first name pairs and more tha"
+   ]
+  },
+  {
+   "path": "/blog/geo-landing-pages-real-estate-doorway-pages",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 506,
+   "words": 6401,
+   "longest": 45,
+   "worst": [
+    "45w: Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny ",
+    "45w: And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national",
+    "33w: It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, fam",
+    "32w: And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or",
+    "31w: The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that ar"
+   ]
+  },
+  {
+   "path": "/blog/local-seo-real-estate-map-pack-google-business-profile",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 535,
+   "words": 6392,
+   "longest": 28,
+   "worst": [
+    "28w: The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from ",
+    "27w: Their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, whic",
+    "27w: Nobody outside Google has published a measurement of the map pack that states its sample and its method in the way this article demands of a",
+    "27w: Source: Thomas Blake, Chris Nosko and Steven Tadelis, Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, ",
+    "27w: What is not defensible is a plan whose main activity is submitting your details to a long list of directories, while the two published input"
+   ]
+  },
+  {
+   "path": "/blog/ai-appointment-booking-no-shows-real-estate",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 417,
+   "words": 5436,
+   "longest": 40,
+   "worst": [
+    "40w: The standard says that if that property is absent then a scheduling transaction must not be assumed, and the object is merely being used to ",
+    "38w: Source: Zhou-wen Chen, Li-zheng Fang, Li-ying Chen and Hong-lei Dai, Comparison of an SMS text messaging and phone reminder to improve atten",
+    "37w: The documentation describes exactly what comes back: it returns free and busy information for a set of calendars, and each calendar's answer",
+    "31w: The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a ",
+    "30w: In 51,529 appointments at one university eye clinic, the no-show rate at a lead time of six months was more than four times the rate at noug"
+   ]
+  },
+  {
+   "path": "/blog/automated-google-review-requests-real-estate",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 509,
+   "words": 6282,
+   "longest": 55,
+   "worst": [
+    "55w: Its second paragraph makes it an unfair or deceptive practice for a business to materially misrepresent, expressly or by implication, that t",
+    "48w: And it lists what those criteria can be: confidential commercial information, defamatory or abusive or obscene content, somebody else's pers",
+    "29w: It allows you to solicit or encourage content that represents a genuine experience, without offering incentives and without attempting to in",
+    "28w: A block of reviews that implies it represents most or all of what customers submitted, while quietly holding back the low ones, is the thing",
+    "26w: So is only asking the people you expect to be kind, pressuring somebody to write one on the spot, or asking them to include particular conte"
+   ]
+  },
+  {
+   "path": "/blog/ai-lead-qualification-real-estate-scoring",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 337,
+   "words": 4297,
+   "longest": 51,
+   "worst": [
+    "51w: 3604 , to publish any statement about the sale of a dwelling \"that indicates any preference, limitation, or discrimination\" on a protected b",
+    "39w: The three records are invented and the exchange is staged, but both numbers in it are real: the fifteen percent is the survey cited below an",
+    "39w: The moment a low score results in fewer listings, a slower answer to a direct question, or a person who can never reach a human being, you h",
+    "37w: Article 10 of the Code of Ethics says plainly that REALTORS \"shall not deny equal professional services to any person for reasons of race, c",
+    "34w: The expensive half has no slider at all, because it happens once: the seller who has to be out by spring, sitting third in a list sorted by "
+   ]
+  },
+  {
+   "path": "/blog/database-reactivation-old-real-estate-leads",
+   "pass": true,
+   "grade": 5.8,
+   "median": 12,
+   "sentences": 340,
+   "words": 4469,
+   "longest": 58,
+   "worst": [
+    "58w: Under 47 CFR 64.1200(f)(5) , the relationship runs from \"the subscriber's purchase or transaction with the entity within the eighteen (18) m",
+    "43w: The same regulation, at paragraph (a)(2), bars a telemarketing call or text to a mobile number placed with \"an automatic telephone dialing s",
+    "40w: For an automated call or text the rule wants a signed agreement that says, in clear and conspicuous words, that you may use an automatic dia",
+    "37w: Every one of those is checkable in an afternoon, and the answers live in your own systems: the form your leads filled in, the dates on the r",
+    "35w: The exchange is staged and the record is invented, but the two numbers in it are not: the two thirds is the survey cited below and the three"
+   ]
+  },
+  {
+   "path": "/blog/ai-voice-agent-missed-calls-real-estate",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 342,
+   "words": 4486,
+   "longest": 42,
+   "worst": [
+    "42w: The one of those three that governs a telephone call is defined in section 250.00 : wiretapping means recording \"a telephonic or telegraphic",
+    "36w: In a declaratory ruling adopted on February 2, 2024 and released six days later, the Federal Communications Commission confirmed that calls ",
+    "33w: The second is that the 5% close rate is the same conservative one the website chat piece uses, even though someone who dialled you is warmer",
+    "33w: The same paper found responses came earlier when the questioner was looking at the recipient in nine of its ten languages, reaching signific",
+    "33w: The offense is Penal Law section 250.05 , which makes a person guilty of eavesdropping \"when he unlawfully engages in wiretapping, mechanica"
+   ]
+  },
+  {
+   "path": "/blog/hudson-valley-market-check-in",
+   "pass": true,
+   "grade": 4.8,
+   "median": 8,
+   "sentences": 30,
+   "words": 273,
+   "longest": 21,
+   "worst": [
+    "21w: Inventory, days on market and buyer competition all diverge by county , and the difference is big enough to change your strategy.",
+    "19w: Here is how the six counties we work actually differ this season, and what that means for your timing.",
+    "19w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes",
+    "15w: Homes that sit past week three usually have a pricing problem, not a market problem.",
+    "14w: Across Dutchess, Westchester, Putnam, Rockland, Ulster and Orange, the story is not one market."
+   ]
+  },
+  {
+   "path": "/blog/workflow-automation-real-estate-business",
+   "pass": true,
+   "grade": 5.8,
+   "median": 12,
+   "sentences": 322,
+   "words": 4365,
+   "longest": 40,
+   "worst": [
+    "40w: The lead is invented and the timestamps are staged, but both numbers on screen are the cited ones from further down this page: the twenty fi",
+    "36w: That is because nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the",
+    "35w: If you would rather somebody sat through that hour with you, that is exactly what the AI audit is: we follow one real job, rank what each fi",
+    "34w: In 2005 three researchers at the Donald Bren School of Information and Computer Science, University of California, Irvine shadowed twenty fo",
+    "34w: Zapier's own help pages state that by default it \"automatically pauses a Zap if it hits an error 95% or more percent of the times that it ha"
+   ]
+  },
+  {
+   "path": "/blog/ai-chat-assistant-real-estate-website",
+   "pass": true,
+   "grade": 5.9,
+   "median": 11,
+   "sentences": 315,
+   "words": 4296,
+   "longest": 66,
+   "worst": [
+    "66w: Under Business and Professions Code section 17941 , it is unlawful \"to use a bot to communicate or interact with another person in Californi",
+    "44w: The escape hatch is one sentence long and it is free: \"A person using a bot shall not be liable under this section if the person discloses t",
+    "44w: The Web Content Accessibility Guidelines have a criterion at level A called No Keyboard Trap , and it says that if focus can be moved into a",
+    "41w: Google's own Core Web Vitals thresholds say that \"to provide a good user experience, pages should have a INP of 200 milliseconds or less\" an",
+    "40w: Source: Harvard Business Review, The Short Life of Online Sales Leads (2011), by James Oldroyd, Kristina McElheran and David Elkington, repo"
+   ]
+  },
+  {
+   "path": "/services/ai-audit",
+   "pass": true,
+   "grade": 5.1,
+   "median": 10,
+   "sentences": 154,
+   "words": 1693,
+   "longest": 36,
+   "worst": [
+    "36w: You get back a written account of the work, a shortlist in an order with the reason for each position attached, the list of candidates that ",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "22w: A number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
+    "21w: The list of what was removed comes back too, because those reasons are the part you will use again next year.",
+    "21w: Every position has its reason beside it, so the order survives someone asking why the third one is not the first."
+   ]
+  },
+  {
+   "path": "/services/ai-chat-assistant",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 145,
+   "words": 1749,
+   "longest": 26,
+   "worst": [
+    "26w: 02 It searches the real MLS, not a cached list Questions about inventory are answered against the MLS Grid API, filtered to what is genuinel",
+    "26w: What the assistant changes is that the inquiry gets answered while the person is still on the page, instead of whenever somebody next opens ",
+    "25w: Firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead than firms that waited one more hour.",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "24w: If the visitor wants to talk, then a Vapi voice agent picks the conversation up on the phone, with everything already known about them."
+   ]
+  },
+  {
+   "path": "/services/ai-voice-agents",
+   "pass": true,
+   "grade": 6,
+   "median": 12,
+   "sentences": 167,
+   "words": 2178,
+   "longest": 29,
+   "worst": [
+    "29w: If the caller is a past client or your seller's neighbor, then the agent's job is to hold the door open for twenty minutes, not to be the re",
+    "29w: The definition that governs a telephone call, at section 250.00, is the recording of a telephonic communication by a person who is not a sen",
+    "28w: 05 Telling a lot of people at once A price drop, an open house, a new listing that matches what a group of people told you they wanted.",
+    "28w: It replaces the mechanical part of the ISA role: answering every call, dialing every new lead within seconds, qualifying on budget, area, an",
+    "26w: 01 Every call gets answered Inbound calls route to the voice agent whenever you are unavailable, or always, depending on how you want it set"
+   ]
+  },
+  {
+   "path": "/services/skip-tracing-lead-generation",
+   "pass": true,
+   "grade": 5.2,
+   "median": 11,
+   "sentences": 216,
+   "words": 2427,
+   "longest": 25,
+   "worst": [
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "24w: 04 Filling a cold-call list without buying one A vendor's list is stale, and it was sold to everyone else who paid for it.",
+    "24w: She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number?",
+    "23w: the minimum a court may award one person whose motor vehicle record information was obtained for a purpose federal law does not permit",
+    "21w: In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day."
+   ]
+  },
+  {
+   "path": "/services/the-singularity",
+   "pass": true,
+   "grade": 5.2,
+   "median": 11,
+   "sentences": 203,
+   "words": 2538,
+   "longest": 34,
+   "worst": [
+    "34w: 01 The answer that was wrong in March and is still wrong Somewhere in your funnel a question gets an answer that quietly costs you people, a",
+    "33w: It goes into files that the next piece of work has to read before it starts, which is why a correction you give once is a correction you onl",
+    "29w: 04 Put it through the gate, then keep the receipts A change to the software is run against a test suite that does not care how confident any",
+    "27w: 01 Put the agents under one roof The chat assistant, the voice agent, the follow-up and the automations stop being four purchases with four ",
+    "26w: It can work unattended for hours or days depending on the task, saving its place as it goes, while the gate stays exactly where it was."
+   ]
+  },
+  {
+   "path": "/services/ai-agent-workforce",
+   "pass": true,
+   "grade": 5.4,
+   "median": 11,
+   "sentences": 131,
+   "words": 1559,
+   "longest": 28,
+   "worst": [
+    "28w: 01 The inbox that reads itself An assistant sorts the overnight email by what matters, brings up what truly needs you, and drafts the replie",
+    "27w: In theory, as many as you have jobs for, because they run at the same time and the inbox assistant does not queue behind the CMA assistant.",
+    "25w: 03 The transaction chaser An assistant watches every open file for the missing signature, the contingency about to run out, and the document",
+    "25w: You describe the job the way you would describe it to a new assistant on their first day, and we build and tune the agent.",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma"
+   ]
+  },
+  {
+   "path": "/services/ai-clone",
+   "pass": true,
+   "grade": 4.9,
+   "median": 11,
+   "sentences": 159,
+   "words": 1829,
+   "longest": 28,
+   "worst": [
+    "28w: 02 Give it what it needs to know Your listings, your market data, your scripts, and the way you really explain things go into a private know",
+    "26w: New York Civil Rights Law section 50 requires written consent obtained in advance before a living person's likeness or voice is used for adv",
+    "25w: Every video says it was made with an AI avatar, and a twin that has to be hidden is being used for the wrong thing.",
+    "24w: 03 Decide what it may never say, and who watches The sentences that are costly to get wrong in this trade look completely plain.",
+    "24w: 03 Follow-up in your face rather than a fourth email The lead who went quiet three weeks ago gets a short video from you."
+   ]
+  },
+  {
+   "path": "/services/marketing-automation",
+   "pass": true,
+   "grade": 5.2,
+   "median": 10,
+   "sentences": 161,
+   "words": 1818,
+   "longest": 31,
+   "worst": [
+    "31w: 01 The buyer who is months away Someone who enquires today and does a deal next spring hears from a lot of people in between, and most of it",
+    "28w: 03 The lead who went quiet Silence gets a change of cadence and a change of message, rather than the same drip email arriving for the ninth ",
+    "27w: 01 Behavior becomes the trigger Saving a listing, opening a text, viewing the same area three times, or going quiet for a month all mean som",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "24w: 04 The sending domain is set up so the mail can arrive SPF, DKIM and DMARC are published for the domain you send from."
+   ]
+  },
+  {
+   "path": "/services/database-reactivation",
+   "pass": true,
+   "grade": 5.5,
+   "median": 12,
+   "sentences": 136,
+   "words": 1711,
+   "longest": 32,
+   "worst": [
+    "32w: A no with a reason is the most useful thing the whole exercise produces, because it tells you which part of your list is genuinely dead and ",
+    "31w: The same regulation requires prior express written consent before an autodialer or artificial voice reaches a mobile number, and a checkbox ",
+    "30w: The established business relationship that exempts you from the national do-not-call registry runs eighteen months from a purchase or transa",
+    "29w: All three are answerable from your own records in an afternoon, and a vendor who cannot tell you how a campaign handles them is not ready to",
+    "27w: And an opt-out has to be honored within ten business days, in the listed words or in any others a reasonable person would read the same way."
+   ]
+  },
+  {
+   "path": "/services/workflow-automation",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 134,
+   "words": 1801,
+   "longest": 36,
+   "worst": [
+    "36w: 01 Lead intake that finishes itself A form submission at midnight becomes a deduped CRM record, an enriched contact, an instant reply, a sco",
+    "32w: 02 The transaction checklist that runs itself A signed contract fires the inspection reminder, the document requests, and the key-date calen",
+    "31w: Instead of a person copying a lead from a form into a CRM, sending a reply, and setting a reminder, the chain fires by itself the moment the",
+    "30w: We wire those tools together with Make, n8n, or Zapier, and we put AI in the loop where a decision has to be made rather than just a field c",
+    "29w: The average time to get back to an interrupted piece of work, counting the ones picked up again the same day, was twenty five minutes and tw"
+   ]
+  },
+  {
+   "path": "/services/custom-automation",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 132,
+   "words": 1655,
+   "longest": 29,
+   "worst": [
+    "29w: 03 Run it in your stack, with the lights on Orchestrated in n8n, wired to your systems, logged on every run, versioned so a change can be ro",
+    "27w: That page costs an hour at the end of a build, and it is the difference between the next change being a change and being a rebuild.",
+    "27w: Anything repetitive with a rule behind it, and a good deal that has a judgment behind it, since a model can make many kinds of judgment now.",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "24w: By how contained the worst case is, then by whether the rule is actually settled, and only then by the size of the saving."
+   ]
+  },
+  {
+   "path": "/services/ai-appointment-booking",
+   "pass": true,
+   "grade": 5.8,
+   "median": 11,
+   "sentences": 115,
+   "words": 1401,
+   "longest": 29,
+   "worst": [
+    "29w: That is why the scheduling article on this site treats a showing on someone else's listing as an agreement you do not have yet, rather than ",
+    "28w: Today that gap is a callback you owe, a voicemail, a text sent at a bad moment, and a couple of hours in which a rival answered first.",
+    "26w: It is also the only part of this that has been through a randomised trial, and the limits below say plainly what it still cannot do.",
+    "26w: If half your commitments live in someone's head, then a system reading the calendar will offer a slot you are already standing in a kitchen ",
+    "24w: The person who asked for your time has not moved on to the next name on their list yet, which is the entire window."
+   ]
+  },
+  {
+   "path": "/services/invoicing-and-payments",
+   "pass": true,
+   "grade": 5.1,
+   "median": 11,
+   "sentences": 156,
+   "words": 1789,
+   "longest": 25,
+   "worst": [
+    "25w: 01 It asks whether the event happened For anything that falls due because of somebody else's closing, a standing job checks in on a schedule",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "22w: 04 The reminder you did not want to send The second and third nudges are the ones that do not get sent.",
+    "22w: Hand them to a system and they go out on the day they were meant to, worded the same way every time.",
+    "22w: No, and any product that says it does should be asked to explain exactly how, in your state, with your closing agent."
+   ]
+  },
+  {
+   "path": "/services/review-automation",
+   "pass": true,
+   "grade": 5.9,
+   "median": 12,
+   "sentences": 145,
+   "words": 1788,
+   "longest": 33,
+   "worst": [
+    "33w: 02 Recency, which is what people actually read A steady flow of recent reviews reads as a business that is busy right now, which is the thin",
+    "31w: The FTC's rule on consumer reviews, 16 CFR 465.7, is about misrepresenting a review block as representing most or all of what customers subm",
+    "30w: Doing that well is worth more than a suppressed review, and a four with your answer under it is more persuasive to the next prospect than a ",
+    "29w: That is because only asking the people you expect to be kind is review gating, and Google's policy names selectively soliciting positive rev",
+    "28w: In BrightLocal's Local Consumer Review Survey 2026, run on a panel of 1,002 US adults, 47% said they would not use a business with fewer tha"
+   ]
+  },
+  {
+   "path": "/services/crm-sync",
+   "pass": true,
+   "grade": 5.5,
+   "median": 11,
+   "sentences": 137,
+   "words": 1515,
+   "longest": 29,
+   "worst": [
+    "29w: That is because the published model behind all of this sets its thresholds from the two error rates you are willing to accept, and cannot dr",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "22w: Two contact records, one woman, and an automated email asking whether she is still thinking of selling three days before her closing.",
+    "21w: of record pairs that are the same person can disagree on the first name, even in files somebody has already cleaned",
+    "21w: Why an assistant that is right most of the time is a different product from one that is right every time."
+   ]
+  },
+  {
+   "path": "/services/ai-scheduling",
+   "pass": true,
+   "grade": 5.7,
+   "median": 11,
+   "sentences": 148,
+   "words": 1629,
+   "longest": 27,
+   "worst": [
+    "27w: 03 It holds the slot as it is taken It is written to your calendar the moment somebody accepts, rather than at the end of the exchange.",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "21w: On acceptance The slot is held Written to your calendar as they take it, not at the end of the conversation.",
+    "21w: Where other parties are involved, the moved time goes back to them as a fresh request rather than as a notification.",
+    "21w: In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day."
+   ]
+  },
+  {
+   "path": "/services/document-processing",
+   "pass": true,
+   "grade": 5.6,
+   "median": 11,
+   "sentences": 137,
+   "words": 1590,
+   "longest": 27,
+   "worst": [
+    "27w: 02 It extracts what matters Terms, parties, and the dates: closing, inspection, mortgage contingency, and the ones buried in the middle of t",
+    "25w: The terms, the key dates and the parties come out as structured data, rather than as a PDF somebody has to open and squint at.",
+    "25w: Published research on real scanned forms found that most of the loss happens in finding the words on the page, rather than in reading them.",
+    "25w: The Busywork Tax: What Workflow Automation Actually Removes July 13, 2026 The Busywork Tax: What Workflow Automation Actually Removes The ma",
+    "24w: And the rules for turning a period into a date get agreed once, in writing, rather than being inherited from whatever the software assumed."
+   ]
+  },
+  {
+   "path": "/services/lead-qualification",
+   "pass": true,
+   "grade": 5.7,
+   "median": 12,
+   "sentences": 127,
+   "words": 1674,
+   "longest": 48,
+   "worst": [
+    "48w: 3604, makes no exception for a routing rule, and Article 10 of the NAR Code of Ethics covers sexual orientation and gender identity, which t",
+    "32w: 01 The morning call list that is actually ordered You spend your best hours on the leads most likely to transact rather than working down th",
+    "32w: The risk is scoring on anything that stands in for who a person is rather than what they said, and then delivering a different level of serv",
+    "31w: Area routing is also the classic fair housing proxy, so it is allowed to decide which agent picks up and never how fast, how fully, or wheth",
+    "30w: 02 The hot lead that did not look hot A home-value request from someone relocating on a deadline reads as routine on a form and as urgent in"
+   ]
+  },
+  {
+   "path": "/services/data-enrichment",
+   "pass": true,
+   "grade": 5.5,
+   "median": 11,
+   "sentences": 150,
+   "words": 1715,
+   "longest": 27,
+   "worst": [
+    "27w: So the rate belongs to the people in your database rather than to the data, and it is different for a first-time buyer and a couple downsizi",
+    "26w: Where an outside file disagrees with something the record already held, the rule is agreed with you at the start rather than inherited from ",
+    "26w: That means appending a phone number or an email, adding the property detail behind an address, confirming that a number is in service, and c",
+    "26w: The figures that circulate for contact data run from twenty to thirty percent a year, with up to seventy quoted for email addresses on their",
+    "25w: 01 Append what is missing A phone number for the email-only contact, an email for the phone-only one, and the property detail behind the add"
+   ]
+  },
+  {
+   "path": "/services/local-seo",
+   "pass": true,
+   "grade": 5.4,
+   "median": 11,
+   "sentences": 140,
+   "words": 1538,
+   "longest": 34,
+   "worst": [
+    "34w: The goal is to show up for the searches buyers and sellers really type: “realtor near me,” “homes for sale in your city.” The AI keeps your ",
+    "25w: And Google's own guidelines say a profile's service area should not reach farther than about two hours of driving from where the business is",
+    "21w: The same page states there is no way to request or pay for a better local ranking, and publishes no weights.",
+    "21w: The flagship post sets out what does and does not transfer from that to a business nobody searches for by name.",
+    "20w: 02 Every town you actually serve One page that lists eight towns in a sentence belongs to none of them."
+   ]
+  },
+  {
+   "path": "/services/geo-landing-pages",
+   "pass": true,
+   "grade": 5.4,
+   "median": 11,
+   "sentences": 150,
+   "words": 1708,
+   "longest": 30,
+   "worst": [
+    "30w: 17,168 English pages drawn at random from a 105 million page crawl and classified by hand; 13.8% were spam overall, against 70% among pages ",
+    "29w: It names selecting locations for advertising that deny parts of the housing market information about housing opportunities because of race, ",
+    "27w: Google's spam policy defines doorway abuse as pages created to rank for specific, similar queries that lead users to intermediate pages less",
+    "25w: 24 CFR 100.70 names discouraging someone, on those same grounds, by exaggerating drawbacks or failing to inform them of the desirable featur",
+    "21w: 03 Owning the lead instead of renting it The directory that ranks above you is selling your market back to you."
+   ]
+  }
+ ]
+}
