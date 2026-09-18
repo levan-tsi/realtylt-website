@@ -123,7 +123,7 @@ export const THE_TEST: GridItem[] = [
   },
   {
     lead: "Are you writing to a length.",
-    body: "One of the warning signs on the list is writing to a word count. Google answers it in the same breath: it has no preferred one. That matters more here than anywhere else. A target length is the only thing that can make two pages come out the same size. One is about a town you know inside out. The other is about a town you have never visited.",
+    body: "One of the warning signs on the list is writing to a word count. Google answers it in the same breath: it has no preferred one. That matters more here than anywhere else. Two pages should not come out the same size when one is about a town you know inside out and the other is about a town you have never visited. A target length is the only thing that makes them.",
   },
 ];
 
@@ -232,7 +232,7 @@ export const WASTED: GridItem[] = [
   },
   {
     lead: "Nobody ever goes back to them.",
-    body: "The proof on an area page has a date on it, whether or not the date is printed. The closing you cite, the street you name, the price you mention and the school you describe all age. A page whose most recent fact is four years old is telling every reader something. It says exactly how long it has been since you worked there.",
+    body: "The proof on an area page has a date on it, whether or not the date is printed. The closing you cite, the street you name, the price you mention and the school you describe all age. A page whose most recent fact is four years old tells every reader exactly how long it has been since you worked there.",
   },
 ];
 

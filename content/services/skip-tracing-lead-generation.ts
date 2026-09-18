@@ -108,7 +108,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       title: "Hand it to whatever works it",
-      body: "The finished list lands where you work it. Your CRM, an outbound campaign, or a voice agent that calls it. The point of building a list you can work is that something works it. The same stack does that part too.",
+      body: "The finished list lands where you work it. Your CRM, an outbound campaign, or a voice agent that calls it. The point of building the list is that something works it. The same stack does that part too.",
     },
   ],
 
@@ -132,7 +132,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       title: "Filling a cold-call list without buying one",
-      body: "A stale list from a vendor was sold to everyone else who paid. Instead of buying one, you generate a fresh list. It covers the exact area you are working, on the day you are going to call it.",
+      body: "A vendor's list is stale, and it was sold to everyone else who paid for it. Instead of buying one, you generate a fresh list. It covers the exact area you are working, on the day you are going to call it.",
     },
   ],
 
@@ -185,7 +185,7 @@ export const skipTracingLeadGeneration: Service = {
     },
     {
       q: "What happens to the list after it is built?",
-      a: "It lands wherever it gets worked. That is your CRM, an SMS or email sequence, or an AI voice agent. The voice agent dials the list and books the ones who are interested. Building a list you can work only pays if something works it. So the handoff is part of the build.",
+      a: "It lands wherever it gets worked. That is your CRM, an SMS or email sequence, or an AI voice agent. The voice agent dials the list and books the ones who are interested. Building the list only pays if something works it. So the handoff is part of the build.",
     },
   ],
 

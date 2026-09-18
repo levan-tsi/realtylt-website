@@ -144,7 +144,7 @@ export const DETECTOR = {
     "Precision means the share of the videos it flagged that really were fakes. These are the figures for the first placed entry in the DeepFake Detection Challenge. They were measured on real videos gathered outside the competition's own dataset, rather than on the ones it was trained against. The three bars are the same model at three sensitivities, reported by the organisers at recall levels of one tenth, three tenths and nine tenths. Turning it up to catch more fakes is what makes it flag more things that were not fakes.",
   sourceText: "Dolhansky and others, The DeepFake Detection Challenge (DFDC) Dataset, Facebook AI, 2020.",
   sourceHref: "https://arxiv.org/abs/2006.07397",
-  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it. Turning that dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And on the hidden test set, the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on every video would have scored. Many of them were simply random. That says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse. You cannot leave the disclosing to a detector.",
+  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it. Turning that dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And on the hidden test set, the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on every video would have scored. The organisers add that many of them were simply random. That says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse. You cannot leave the disclosing to a detector.",
 };
 
 /** SCENE copy — what a content credential is, and what it does not say.
@@ -196,7 +196,7 @@ export const CONSENT_PATH: { label: string; connects: string; at?: string }[] = 
 export const WASTED: GridItem[] = [
   {
     lead: "Nobody watches them any more",
-    body: "The first fortnight, every video gets checked. By the second month it is a pipeline, and a pipeline is exactly the thing whose output stops being read. The failure is not that the twin says something wild. It is that it says something slightly wrong about a property, in your face, to a person who now believes you said it.",
+    body: "The first fortnight, every video gets checked. By the second month it is a pipeline, and a pipeline is exactly the thing whose output stops being read. The failure is not that the twin says something shocking. It is that it says something slightly wrong about a property, in your face, to a person who now believes you said it.",
   },
   {
     lead: "It answers a question it should have refused",

@@ -62,7 +62,7 @@ export const WHAT_IS_AN_INVOICE: GridItem[] = [
   },
   {
     lead: "The referral fee, yes",
-    body: "You sent somebody to another brokerage. They closed it. A fee was agreed. That is a claim you have to make, to a business that has no automatic reason to tell you the day it happened. Federal law names this exact arrangement and permits it. That makes it one of the few plain receivables in the whole trade, which is money other people owe you. It is also one of the easiest to forget you have.",
+    body: "You sent somebody to another brokerage. They closed it. A fee was agreed. That is a claim you have to make, to a business that has no automatic reason to tell you the day it happened. Federal law names this exact arrangement and permits it. A receivable is money other people owe you. That makes it one of the few plain ones in the whole trade. It is also one of the easiest to forget you have.",
   },
   {
     lead: "Everything you charge a fee for, yes",

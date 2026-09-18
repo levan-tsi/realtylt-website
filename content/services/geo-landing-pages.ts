@@ -56,7 +56,7 @@ export const geoLandingPages: Service = {
   },
 
   whatItIs: [
-    "It is a genuine page for each area you serve, rather than one page that lists them all. People search by where they are. And a page that mentions eight towns in a sentence ranks for none of them.",
+    "It is a genuine page for each service area, rather than one page that lists them all. People search by where they are. And a page that mentions eight towns in a sentence ranks for none of them.",
     "Each page says what you actually do in that area. It carries local proof. It answers the questions people ask about that place. And it captures the lead on your own site. It is written for both audiences that now decide whether you are found. One is Google's index. The other is the AI assistants that increasingly answer the question before a search result is ever clicked.",
   ],
 

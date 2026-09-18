@@ -66,7 +66,7 @@ export const aiClone: Service = {
     },
     {
       title: "Decide what it may never say, and who watches",
-      body: "The sentences that are costly to get wrong in this trade look quite plain. A tax figure. A school. A boundary. A permit. A timeline. Those get named in advance. Each one either comes from the record that governs it, or does not get said at all. Then one person is named to watch what goes out, before it goes.",
+      body: "The sentences that are costly to get wrong in this trade look completely plain. A tax figure. A school. A boundary. A permit. A timeline. Those get named in advance. Each one either comes from the record that governs it, or does not get said at all. Then one person is named to watch what goes out, before it goes.",
     },
     {
       title: "Put it to work, and say so",

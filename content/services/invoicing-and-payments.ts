@@ -105,7 +105,7 @@ export const invoicingAndPayments: Service = {
     },
     {
       title: "The deposit you never asked for",
-      body: "Asking for money up front feels awkward. A link in the booking confirmation does not. Whether you ask at all is a decision about your terms rather than about software.",
+      body: "Asking for money up front feels awkward. Sending a link in the booking confirmation does not. Whether you ask at all is a decision about your terms rather than about software.",
     },
     {
       title: "The reminder you did not want to send",
@@ -117,7 +117,7 @@ export const invoicingAndPayments: Service = {
     "It does not collect a debt. After the sequence it hands the case back to you with the full history. A client who will not pay is still a talk you have to have.",
     "It does not tell you an event happened. It can ask, cheaply and again and again. Anybody at the other end can decline to answer.",
     "It does not handle your commission, and does not claim to. A commission comes out of a closing somebody else runs, on a date the deal sets. That is a different thing from an invoice you send and follow up.",
-    "It does not make money arrive sooner than the rail allows. When a deposit becomes yours to spend is set by regulation, and by your bank's policy inside it. No software moves that.",
+    "It does not make money arrive sooner than the rail allows. When you can spend a deposit is set by regulation, and by your bank's policy inside it. No software moves that.",
     "It does not touch money that is not yours. Anything you hold for somebody else is ruled by law specific to your state and your licence. That is a talk for your lawyer.",
     "It does not decide your terms. What you charge, what you ask for up front and how long you wait are your calls. This only makes sure they happen on schedule.",
     "It does not check a change of payment instructions. That is a phone call to a number you already had, made by a person. It is not a feature.",

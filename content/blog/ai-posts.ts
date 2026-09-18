@@ -747,7 +747,7 @@ The consent has to be WRITTEN. Not implied by a working relationship. Not implie
 
 The consent has to be obtained FIRST. You do not get to let the video go out on Tuesday and have the paperwork catch up on Friday. The offence is complete at the moment of the use.
 
-And the section is CRIMINAL. It says guilty of a misdemeanour. That is not how most people picture a marketing dispute. The civil half sits next door in [section 51](https://www.nysenate.gov/legislation/laws/CVR/51). It lets the person go to the supreme court of this state for an injunction and for damages. It adds that where the use was knowing, the jury in its discretion may award exemplary damages. Exemplary damages are an extra award meant to punish. Knowing is not a hard standard to meet here. The whole product is a deliberate copy of one named person.
+And the section is CRIMINAL. It says guilty of a misdemeanour. That is not how most people picture a marketing dispute. The civil half sits next door in [section 51](https://www.nysenate.gov/legislation/laws/CVR/51). It lets the person go to the supreme court of this state for an injunction and for damages. It adds that where the use was knowing, the jury in its discretion may award exemplary damages. Exemplary damages are an extra award meant to punish. Knowing is not a hard standard to meet here. The whole product is a deliberate copy of one particular person.
 
 Two plain readings for someone running a brokerage. If the face is yours, this section is a paperwork job you do once and file. The paperwork is worth having anyway. It forces the questions about scope that nobody asks otherwise. If the face belongs to anyone else in your office, it is the same job with a second signature on it. It should say what happens to the model when they leave. Section 50 does not stop applying on the day a person changes firms.
 
@@ -757,9 +757,9 @@ Nothing in this article is legal advice. This is exactly the paragraph to take t
 
 The assumption is that death ends it. In New York the opposite is closer to true. The statute that says so is new enough to be easy to have missed.
 
-[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) has been in force since 2020, on the version history its own page carries. Its title is plain: right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness. It defines a deceased personality as a person domiciled in this state at death. Their likeness must have had commercial value at the time of, or because of, their death. And the statute does something the older sections never had to. It defines the thing this article is about.
+[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) has been in force since 2020, on the version history its own page carries. Its title is plain: right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness. It defines a deceased personality as a person who was domiciled in this state at death and whose likeness had commercial value at the time of, or because of, their death. And the statute does something the older sections never had to. It defines the thing this article is about.
 
-Here is how it puts that, in its own words. A digital replica is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition. The second half is the part people miss. Changing what a person really said, past the point where it is still their performance, is inside the definition. Inventing it from nothing is no more caught than that is.
+Here is how it puts that, in its own words. A digital replica is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition. The second half is the part people miss. Changing what a person really said, past the point where it is still their performance, is inside the definition. It is caught just as surely as inventing it from nothing.
 
 How it works matters less than the fact that it works at all. Three parts are worth carrying. The rights are property, so they are inherited, sold and licensed like anything else. Anyone claiming to hold them can record that claim on a public register kept by the secretary of state. So there is somewhere to look. And the right runs for forty years after the death. Damages start at two thousand dollars or the real loss, whichever is larger.
 
@@ -793,7 +793,7 @@ The result is not that people are bad at this. It is that there is nothing there
 
 The natural response is that a machine should do the checking instead. That has been tested too, at a scale no single firm could manage.
 
-In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips. They were made from three thousand four hundred and twenty six paid actors. Facebook AI then ran a public competition on it. The dataset is worth a sentence of its own, for a reason that belongs on this page. The authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it. They note in the same paper that many earlier datasets in this field did not guarantee that. Two thousand one hundred and fourteen teams entered.
+In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips. They were made from three thousand four hundred and twenty six paid actors. Facebook AI then ran a public competition on it. The dataset is worth a sentence of its own, for a reason that belongs on this page. The authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it. They note in the same paper that many previously released datasets in this field did not guarantee that. Two thousand one hundred and fourteen teams entered.
 
 [[scene:detector]]
 
@@ -803,7 +803,7 @@ Put the two studies together and one conclusion falls out. Nothing since has sof
 
 ## So the telling has to come from you
 
-Once you accept that the viewer cannot tell, disclosure stops being a matter of taste. It becomes the only mechanism there is. The good news is that it is cheap. The odd news is that there is a technical standard for the lasting version of it. Reading what that standard says about itself teaches you more than anything written about it.
+Once you accept that the viewer cannot tell, disclosure stops being a matter of taste. It becomes the only mechanism there is. The good news is that it is cheap. The other news is that there is a technical standard for the lasting version of it. Reading what that standard says about itself teaches you more than anything written about it.
 
 The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html). It attaches signed, tamper evident provenance to a media file. Provenance here means a record of where the file came from and what was done to it. It is a serious piece of engineering with serious firms behind it. The useful thing about reading the document is how carefully it sets out its own limits.
 
@@ -835,11 +835,11 @@ It makes a version addressed to one person affordable. Not better than a persona
 
 And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read. That is why so many agents mean to record more than they do.
 
-What none of those three needs is for anyone to be deceived. Every one of them survives being labelled. That is a good test of whether a use is a fair one. If telling the viewer would ruin it, the use was never about saving you a recording session.
+What none of those three needs is for anyone to be deceived. Every one of them survives being labelled. That is a good test of whether a use is an honest one. If telling the viewer would ruin it, the use was never about saving you a recording session.
 
 ## The cost nobody quotes, which is watching them
 
-Here is the part that does not appear in any pitch. It is the reason the fourteen videos at the top of this page are the story rather than a stray tale.
+Here is the part that does not appear in any pitch. It is the reason the fourteen videos at the top of this page are the story rather than a one-off.
 
 A twin does not cut the amount of judgment a business has to apply. It moves that judgment from before the recording to after it. When you record something yourself, the checking happens by itself. You cannot say a sentence without hearing it. When a script is generated and a model reads it, nothing in the process forces anyone to listen to the result. And the volume that makes the thing worth having is exactly the volume that makes reviewing it feel out of proportion.
 
@@ -975,7 +975,7 @@ What can be shown is narrower, and more useful than a guess. The rest of this ar
 
 The Real Estate Settlement Procedures Act is best known for the papers a buyer signs at a closing. Its eighth section is not about those papers at all. It is about payments between businesses. It is the law that decides which of your deals are plain business and which are a crime.
 
-[12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two bans. They are worth reading in the order the law puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. In plain words, nobody may pay for a referral in that kind of deal, and nobody may take the pay. Subsection (b) covers splitting.
+[12 U.S.C. 2607](https://www.law.cornell.edu/uscode/text/12/2607) has two bans. They are worth reading in the order the law puts them. Subsection (a) says that no person shall give and no person shall accept any fee, kickback, or thing of value pursuant to any agreement or understanding, oral or otherwise, that business incident to or a part of a real estate settlement service involving a federally related mortgage loan shall be referred to any person. In plain words, paying for a referral in that kind of deal is a crime unless the law's own list of exceptions covers it. That list is a few paragraphs down, and one item on it is about your trade. Subsection (b) covers splitting.
 
 [[scene:pull-quote]]
 
@@ -983,7 +983,7 @@ The Real Estate Settlement Procedures Act is best known for the papers a buyer s
 
 Two things in those sentences matter more than any summary of them.
 
-The first is the reach. Both bans apply to a deal involving a federally related mortgage loan. [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) defines that term. Broadly, it is a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That reaches most everyday home loans. It does not reach a cash sale. Hold on to that difference. Do not guess either way.
+The first is the reach. Both bans apply to a deal involving a federally related mortgage loan. [12 U.S.C. 2602](https://www.law.cornell.edu/uscode/text/12/2602) defines that term. Broadly, it is a loan secured by a lien on residential property for one to four families where the lender is federally insured or regulated, or the loan is federally assisted, or it is intended to be sold to one of the named secondary market institutions. That reaches most everyday purchase mortgages. It does not reach a cash sale. Hold on to that difference. Do not guess either way.
 
 The second is the list of exceptions. One item on it is why the story at the top of this page is legal and not a crime. Subsection (c)(3) permits payments pursuant to cooperative brokerage and referral arrangements or agreements between real estate agents and brokers. Congress named your trade by name. A referral fee from one brokerage to another is not what this law exists to stop. The same subsection also permits a bona fide salary or compensation or other payment for goods or facilities actually furnished or for services actually performed.
 
@@ -1001,7 +1001,7 @@ There is the day the other side says they sent it. There is the day it reaches y
 
 That third day does not hang on your bank's mood. It is set by rule. [Regulation CC](https://www.law.cornell.edu/cfr/text/12/229.12) sets the outer limits, and the limits tell you more than the averages do.
 
-Take an electronic payment. That covers a wire, which is a direct bank transfer. It also covers an ACH credit, which is a payment sent from one bank account to another. The rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. The word "received" has a meaning worth reading twice. The payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when your bank has both halves. It does not start when someone at the other end pressed send.
+Take an electronic payment. That covers a wire, which is a direct bank transfer. It also covers an ACH credit, which is the cheaper bank transfer most businesses use. The rule at [229.10(b)](https://www.law.cornell.edu/cfr/text/12/229.10) is that the bank shall make the funds available for withdrawal not later than the business day after the banking day on which the bank received the payment. The word "received" has a meaning worth reading twice. The payment is received when the bank has both payment in actually and finally collected funds and the information on the account and amount to be credited. The clock starts when your bank has both halves. It does not start when someone at the other end pressed send.
 
 For a local cheque, 229.12(b) gives the second business day following the banking day of deposit. Then comes the exception a brokerage meets all the time.
 
@@ -1033,7 +1033,7 @@ This part of the article has the highest cost tied to it. It also has the least 
 
 The FBI's Internet Crime Complaint Center puts out a yearly report of what people reported to it. The [2024 edition](https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf) records 859,532 complaints and $16.6 billion in reported losses. Of those, 256,256 reported an actual loss. The report prints an average reported loss of $19,372. That average is taken across all 859,532 complaints, not only the ones that lost money. Know that before you repeat it. A diverted payment instruction falls under business email compromise. That is a scam where a crook poses by email as someone you trust. It accounts for 21,442 complaints and $2,770,151,146.
 
-One point about labels is easy to get wrong and worth getting right. It changes what the numbers mean. The report has a crime type called Real Estate. Its own glossary defines that as loss of funds from a real estate investment or fraud involving rental or timeshare property. A fake instruction to wire closing funds to the wrong account is not counted there. The report gives its own worked example of that exact case. In it, buyers received a spoofed email purporting to come from their agents asking them to wire funds to finalise the closing. A spoofed email is a fake made to look real. That example sits under business email compromise. So the honest summary is this. That category holds the property version of the crime and does not report it on its own. Anyone who quotes you a real estate figure from this report took it from the wrong table.
+One point about labels is easy to get wrong and worth getting right. It changes what the numbers mean. The report has a crime type called Real Estate. Its own glossary defines that as loss of funds from a real estate investment or fraud involving rental or timeshare property. A fake instruction to wire closing funds to the wrong account is not counted there. The report gives its own worked example of that exact case. In it, buyers received a spoofed email purporting to come from their agents asking them to wire funds to finalise the closing. A spoofed email is a fake made to look real. That example sits under business email compromise. So the honest summary is this. That category holds the property version of the crime and does not report it on its own. Anyone who quotes you a real estate specific figure from this report took it from the wrong table.
 
 [[scene:kill-chain]]
 
@@ -1091,7 +1091,7 @@ The plain invoicing half is short and cheap. Your accounting package likely send
 
 The other half is the asking. Its price is set wholly by who you have to ask and how they answer. A handful of brokerages you deal with all the time, all of whom reply to a text, is one project. Two management companies with portals, a lawyer's office that works by email and a title company that answers the phone is a different one. The price sits in reaching them, not in the logic of it.
 
-The running cost is small on this topic because the volume is low. These are not high frequency messages. A business raises and chases a small number of charges a month, not hundreds. The monthly bill reflects that.
+The running cost is small on this topic because the volume is low. These are not high frequency messages. A business raises and chases a small number of charges a month, not hundreds. The ongoing bill reflects that.
 
 The part with a real ongoing cost is the reconciliation. The cost is attention, not money. Someone has to look at the exceptions the matching could not solve. If nobody is named for that job, it will not be done. Then all the work above it becomes decoration.
 
@@ -2116,7 +2116,7 @@ Two things follow from that shape. Both matter more than the accuracy question e
 
 The first is that the answer is a guess with a confidence attached, and you cannot see the confidence. Every join in that chain is a decision about whether two records describe the same person. Those decisions are made by a system that has never met either of them. We have written about the arithmetic of that decision at length in [the article on two way CRM sync](/blog/crm-sync-real-estate-duplicate-contact-records). It is the same problem. The part worth carrying over here is short. A system tuned to return an answer for as many rows as possible is tuned to merge harder. Merging harder means more of the answers are the wrong person.
 
-The second is about permission. Every link in that chain is a place where someone had to have a reason to release the information. The law that governs that is not the law everyone in this trade talks about. It is not about the call at all. It is about the acquisition, which is how the information was obtained in the first place.
+The second is about permission. Every link in that chain is a place where someone, at some point, had to have a reason to release the information. The law that governs that is not the law everyone in this trade talks about. It is not about the call at all. It is about the acquisition, which is how the information was obtained in the first place.
 
 ## The record is not stale because anybody was careless
 
@@ -2134,7 +2134,7 @@ There is a second thing in that chart, and it is in the note under it. A move br
 
 People say numbers survive a move because numbers are portable. That is not what portability means. Here is the regulatory definition at [47 CFR 52.21(m)](https://www.law.cornell.edu/cfr/text/47/52.21). Number portability is "the ability of users of telecommunications services to retain, at the same location, existing telecommunications numbers without impairment of quality, reliability, or convenience when switching from one telecommunications carrier to another". At the same location. Portability is about changing carrier, not about changing address.
 
-The real reason is simpler. It is a fact about mobile service rather than about the rules. A mobile number was never attached to a building, so moving out of one does not disturb it. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for different reasons. They also go wrong at different rates. A provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
+The real reason is simpler. It is a fact about mobile service rather than about the rules. A mobile number was never attached to a building, so moving out of one does not disturb it. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons. They also go wrong at completely different rates. A provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
 
 [[scene:plate]]
 
@@ -2168,7 +2168,7 @@ None of this means a traced number came out of a motor vehicle record. We have n
 
 ## What a licence actually buys, and it is not a new permission
 
-Ask a data provider about this and you will be told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
+Anyone who has asked a data provider about this was told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
 
 Read the last seven words again.
 
@@ -2188,13 +2188,13 @@ Somebody wrote down a purpose. It exists. You are entitled to ask your provider 
 
 The [Fair Credit Reporting Act](https://www.law.cornell.edu/uscode/text/15/1681b) is the other one. It works in a way that surprises almost everyone, including people who have dealt with it before.
 
-Most people assume the FCRA covers credit reports, meaning documents with credit scores in them. A name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
+Most people assume the FCRA covers credit reports, meaning documents with credit scores in them. They assume a name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
 
 The operative words are "which is used or expected to be used". The purpose confers the status, not the fields. The same file can be a plain commercial record in one transaction and a consumer report in the next. What moves it across the line is what the person receiving it intends to do with it.
 
 That has one consequence for real estate worth stating plainly. It is the boundary that decides whether this whole subject is simple or hard for you.
 
-Say you build a list of owners in order to introduce yourself and ask whether they are thinking of selling. On its face, that is not an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, that changes. Say the filtering decides who gets an offer and who does not. The purpose has changed shape, and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
+Say you build a list of owners in order to introduce yourself and ask whether they are thinking of selling. On its face, that is not an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, and that filtering decides who gets an offer and who does not, things change. At that moment the purpose has changed shape, and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
 
 [15 U.S.C. 1681b(f)](https://www.law.cornell.edu/uscode/text/15/1681b) is the prohibition and it is short. "A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the consumer report is authorized to be furnished under this section; and (2) the purpose is certified in accordance with section 1681e of this title by a prospective user of the report through a general or specific certification."
 
@@ -2864,7 +2864,7 @@ An area page is an advertisement. It is an advertisement about a community rathe
 
 The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
 
-Then comes the paragraph that is precisely about this service. The rule names as prohibited the practice of selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason you could say out loud.
+Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason you could say out loud.
 
 The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices. Two of its examples are written as if someone had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national origin, by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
 
@@ -2882,7 +2882,7 @@ Write about the housing and the transaction. Prices, taxes, inventory, how long 
 
 Do not write about the people. This is the whole line, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
 
-Two habits deserve naming, because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects. Publish them and you have made a statement about desirability using someone else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
+Two habits deserve naming, because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects. If you publish them, you have made a statement about desirability using someone else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
 
 And treat the areas evenly. Not identically, because identical is the failure this whole article is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only you can see.
 
@@ -2976,7 +2976,7 @@ Three businesses came back, with a small map above them and a row of stars under
 
 You were not on that screen. You have never known this happened, and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
 
-The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it. The paragraph is short, and almost nobody in this industry has read it. And one of the three things it names is a fact about you that no amount of money or effort will change.
+The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it. Almost nobody in this industry has read that paragraph. And one of the three things it names is a fact about you that no amount of money or effort will change.
 
 [[scene:in-short]]
 
@@ -3044,7 +3044,7 @@ Before ranking is worth thinking about, there is a shorter question that most ag
 
 The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners. That is the category that gets a profile of its own. In the next breath the guidelines say something else. Sales associates or lead generation agents for corporations are not individual practitioners, and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work, rather than about what your card says.
 
-The rest of the rules are the sort that get broken by someone being clever. A practitioner is told not to hold several profiles to cover different specialisations. Say several public-facing practitioners share a location. Then the organisation gets its own profile. And the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile. Do not start a competing one. And an address has to be an address. A rented mailing address you do not operate from is a virtual office, and is not eligible. A desk in a co-working space needs signage, staff during business hours, and the ability to receive customers.
+The rest of the rules are the sort that get broken by someone being clever. A practitioner is told not to hold several profiles to cover different specialisations. Say several public-facing practitioners share a location. Then the organisation gets its own profile. And the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile rather than start a competing one. And an address has to be an address. A rented mailing address you do not operate from is a virtual office, and is not eligible. A desk in a co-working space needs signage, staff during business hours, and the ability to receive customers.
 
 None of this is exotic, and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it. And the appeal is a form.
 
