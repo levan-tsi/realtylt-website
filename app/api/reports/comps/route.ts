@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { SERVED_AREAS, type CountySlug } from "@/lib/site";
-import { getCountyActiveSlim, type CountyActiveRow } from "@/lib/idx/db";
+import { getCountyActiveSlim, getOfficeNames, type CountyActiveRow } from "@/lib/idx/db";
 import { getCommittedSnapshot } from "@/lib/idx/snapshot";
 import { TYPES } from "@/lib/idx/query";
 import type { PropertyType } from "@/lib/idx";
@@ -61,7 +61,12 @@ export async function GET(req: Request) {
     return a.price - b.price;
   });
 
-  const comps: Comp[] = ranked.slice(0, MAX_COMPS).map((l) => ({
+  // The DB rows come back without an office (the county-wide select stays on plain columns);
+  // fetch it for the winners only. Snapshot rows already carry theirs.
+  const winners = ranked.slice(0, MAX_COMPS);
+  const offices = db ? await getOfficeNames(winners.map((l) => l.id)) : null;
+
+  const comps: Comp[] = winners.map((l) => ({
     id: l.id,
     address: l.address,
     city: l.city,
@@ -71,7 +76,7 @@ export async function GET(req: Request) {
     sqft: l.sqft,
     pricePerSqft: l.sqft > 0 ? Math.round(l.price / l.sqft) : 0,
     propertyType: l.propertyType,
-    listOfficeName: l.listOfficeName,
+    listOfficeName: offices ? (offices.get(l.id) ?? "") : l.listOfficeName,
   }));
 
   return NextResponse.json({ comps, dataLastUpdated });

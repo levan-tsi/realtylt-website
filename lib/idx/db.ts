@@ -687,14 +687,22 @@ export async function getCountyActiveSlim(
       "idx_sync_state?id=eq.1&select=watermark,baseline_complete,last_synced_at",
     );
     if (!state.rows[0]?.baseline_complete) return null;
-    const sel =
-      "select=id,address,city,price,beds,baths,sqft,propertyType:property_type,listOfficeName:listing->>listOfficeName";
+    // PLAIN COLUMNS ONLY. This select used to carry `listOfficeName:listing->>listOfficeName`,
+    // and Postgres evaluates the select list for every row a page walks, OFFSET-skipped rows
+    // included: each one de-TOASTs the ~3 KB `listing` blob. Measured on prod 2026-09-18 with
+    // EXPLAIN (ANALYZE, BUFFERS), Queens (9,161 active rows), the page at offset 7000:
+    // 45,273 buffer hits / 172 ms WITH the key, 8,271 / 47 ms without, and a borough render
+    // walks ten such pages to compute one median. Warm it survived; under a cold cache it was
+    // the 57014 statement timeout Vercel logged on /top-areas/{queens,the-bronx,brooklyn}.
+    // Nothing that calls this needs the office for the whole county: the one caller that shows
+    // it (the comps route) asks getOfficeNames() for the two dozen rows it actually returns.
+    const sel = "select=id,address,city,price,beds,baths,sqft,propertyType:property_type";
     const rows: CountyActiveRow[] = [];
     for (let offset = 0; offset < MAX_PINS; offset += PIN_CHUNK) {
-      const page = await rest<CountyActiveRow>(
+      const page = await rest<Omit<CountyActiveRow, "listOfficeName">>(
         `idx_listings?${sel}&county=eq.${encodeURIComponent(county)}&${EXCLUDE_RENTALS}&order=id.asc&limit=${PIN_CHUNK}&offset=${offset}`,
       );
-      rows.push(...page.rows);
+      for (const r of page.rows) rows.push({ ...r, listOfficeName: "" });
       if (page.rows.length < PIN_CHUNK) break;
     }
     return { rows, dataLastUpdated: state.rows[0].last_synced_at ?? "" };
@@ -702,6 +710,23 @@ export async function getCountyActiveSlim(
     console.error(`[idx-db] county active slim (${county}) failed:`, e);
     return null;
   }
+}
+
+/** Office names for a HANDFUL of listings, by id: the JSONB key fetched AFTER the pick, never
+ * inside a county-wide select (see getCountyActiveSlim). A failure degrades to no names; a
+ * missing "Listed with" line must not fail the page that wanted it. */
+export async function getOfficeNames(ids: string[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (!ids.length || !restConfig()) return out;
+  try {
+    const { rows } = await rest<{ id: string; office: string | null }>(
+      `idx_listings?select=id,office:listing->>listOfficeName&id=in.(${ids.map(encodeURIComponent).join(",")})`,
+    );
+    for (const r of rows) out.set(r.id, r.office ?? "");
+  } catch (e) {
+    console.error("[idx-db] office names failed:", e);
+  }
+  return out;
 }
 
 /** Slim {price, listed_at} rows for an area filter (active rows via RLS), PIN_CHUNK-paged.

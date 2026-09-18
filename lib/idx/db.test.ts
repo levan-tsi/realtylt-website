@@ -15,16 +15,16 @@ const LISTING: Listing = {
 const READY_STATE = [{ watermark: "2026-07-14T08:00:00.000Z", baseline_complete: true, last_synced_at: "2026-07-15T10:00:00.000Z" }];
 
 /** Route stubbed fetch by URL substring; records every requested URL. */
-function stubFetch(handler: (url: string) => { body: unknown; total?: number }) {
+function stubFetch(handler: (url: string) => { body: unknown; total?: number; status?: number }) {
   const calls: string[] = [];
   vi.stubGlobal(
     "fetch",
     vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
       calls.push(url);
-      const { body, total } = handler(url);
+      const { body, total, status } = handler(url);
       return new Response(JSON.stringify(body), {
-        status: 200,
+        status: status ?? 200,
         headers: total != null ? { "content-range": `0-9/${total}` } : {},
       });
     }),
@@ -514,18 +514,49 @@ describe("write helpers", () => {
 
 describe("getCountyActiveSlim (reports data)", () => {
   it("pages the county's slim rows and carries the sync time", async () => {
-    const slim = { id: "K1", address: "1 A St", city: "Brooklyn", price: 500000, beds: 3, baths: 2, sqft: 1200, propertyType: "Residential", listOfficeName: "X" };
+    const slim = { id: "K1", address: "1 A St", city: "Brooklyn", price: 500000, beds: 3, baths: 2, sqft: 1200, propertyType: "Residential" };
     const calls = stubFetch((url) => {
       if (url.includes("idx_sync_state")) return { body: READY_STATE };
       return { body: [slim] };
     });
     const out = await import("./db").then((m) => m.getCountyActiveSlim("brooklyn"));
     expect(out).not.toBeNull();
-    expect(out!.rows).toEqual([slim]);
+    expect(out!.rows).toEqual([{ ...slim, listOfficeName: "" }]);
     expect(out!.dataLastUpdated).toBe("2026-07-15T10:00:00.000Z");
     const listingCall = calls.find((u) => u.includes("idx_listings"))!;
     expect(listingCall).toContain("county=eq.brooklyn");
     expect(listingCall).toContain("propertyType:property_type");
+  });
+
+  it("keeps the JSONB blob out of the hot select (the borough 57014s, measured 2026-09-18)", async () => {
+    // `listing->>listOfficeName` in this select de-TOASTed the ~3 KB blob for every row a page
+    // walked: Queens page 8 cost 45,273 buffer hits and 172 ms with the key, 8,271 and 47 ms
+    // without it, ten pages per render, to compute one median. The office name is fetched for
+    // the handful of rows that show it instead (getOfficeNames).
+    const calls = stubFetch((url) => (url.includes("idx_sync_state") ? { body: READY_STATE } : { body: [] }));
+    await import("./db").then((m) => m.getCountyActiveSlim("queens"));
+    const listingCall = calls.find((u) => u.includes("idx_listings"))!;
+    expect(decodeURIComponent(listingCall)).not.toContain("listing->");
+  });
+});
+
+describe("getOfficeNames (the JSONB key, fetched after the pick)", () => {
+  it("asks for exactly the ids it was given and maps id to office", async () => {
+    const calls = stubFetch(() => ({ body: [{ id: "K1", office: "Example Realty" }, { id: "K2", office: null }] }));
+    const out = await import("./db").then((m) => m.getOfficeNames(["K1", "K2"]));
+    expect(out.get("K1")).toBe("Example Realty");
+    expect(out.get("K2")).toBe("");
+    const call = decodeURIComponent(calls.find((u) => u.includes("idx_listings"))!);
+    expect(call).toContain("id=in.(K1,K2)");
+    expect(call).toContain("listing->>listOfficeName");
+  });
+
+  it("makes no request for an empty list, and a failure degrades to no names", async () => {
+    const calls = stubFetch(() => ({ status: 500, body: { code: "57014" } }));
+    const db = await import("./db");
+    expect((await db.getOfficeNames([])).size).toBe(0);
+    expect(calls.length).toBe(0);
+    expect((await db.getOfficeNames(["K1"])).size).toBe(0);
   });
 
   it("returns null before the baseline (caller falls back to the snapshot)", async () => {
