@@ -1,0 +1,132 @@
+# The 10-year-old pass: playbook (final round, 2026-09-18)
+
+Owner: service and blog pages read "on a high and complicated language." Rewrite so "a 10 year
+old can understand everything", BUT "don't lose the idea and what we're trying to say and the
+story and everything. Just make it simpler."
+
+This file is the method. It was written AFTER the hardest page was done by hand, so every rule
+below is something that worked: `/blog/invoicing-and-payments-real-estate-brokerage` went from
+grade 9.5 to 6.1 on the body rewrite alone, with every link, number, quote and heading intact
+and the length at x1.00. The before/after pair is the exemplar; read it before you write:
+
+    git show 6eab055:content/blog/ai-posts.ts   # BEFORE (INVOICING_POST)
+    content/blog/ai-posts.ts                    # AFTER  (INVOICING_POST)
+
+## The bar (two committed scorers, both must pass per surface)
+
+    MSYS_NO_PATHCONV=1 node scripts/readability-gate.mjs --only /blog/<slug>
+    MSYS_NO_PATHCONV=1 node scripts/rewrite-invariants.mjs --only /blog/<slug>
+
+1. **readability-gate**: Flesch-Kincaid grade <= 6 AND median sentence <= 15 words, measured on
+   the rendered `<p>`/`<li>` prose. In practice: **average sentence about 11-12 words, and plain
+   one and two syllable words.** Aim for grade 5.6-5.9 so the page has headroom.
+2. **rewrite-invariants**: every link, every number, every quoted passage and every heading
+   survives; zero em dashes; length stays within x0.85 to x1.25 of the original.
+
+`--only` on the gate prints the five longest sentences left: that is your worklist. Run both
+after every file you finish, not at the end. (`MSYS_NO_PATHCONV=1` matters in git-bash: without
+it the leading-slash path is mangled and the gate checks nothing.)
+
+## The laws (each one was paid for in an earlier round; none is negotiable)
+
+1. **Quotes are sacred: verbatim or untouched.** Anything in quote marks, any `<blockquote>`,
+   any pull-quote scene. ALSO anything that reproduces a statute, a regulation, a study, a
+   report or a person's words WITHOUT quote marks. These pages quote law inline ("no person
+   shall give and no person shall accept any fee, kickback, or thing of value pursuant to...").
+   You can tell by the register: "shall", "pursuant to", "in excess of", "inclusive of". Leave
+   those words exactly as they are. You MAY put the quotation in its own sentence with a short
+   plain lead-in, and you MAY add one plain sentence after it ("In plain words, ..."), but only
+   if the page already makes that plain claim somewhere, or it is the unarguable meaning.
+   A long verbatim sentence is allowed to stay long; a page survives a handful of them.
+2. **No invented facts, no lost facts.** Every number stays, with its source link and its
+   derivation. Do not convert a spelled-out number to digits if that digit string is not already
+   on the page (the invariants script reads it as an invented number), and never the reverse for
+   a number that appears only once. Never round, never add "about".
+3. **Hedges and honest limits are content, not clutter.** "probably", "may", "in most", "this
+   article does not claim", "nothing here is legal advice", "we have not measured this": they
+   stay. Making a sentence shorter must never make a claim stronger. If the original says a thing
+   "can" happen, the rewrite does not say it "will".
+4. **Zero em dashes. No arrow glyphs. No hype words** (the voice is a calm professional, never
+   "game-changing", "supercharge", "unlock", "seamless").
+5. **Structure does not move.** Same headings, same order, same `[[scene:...]]` markers, same
+   links with the same hrefs (link text may be simplified if it still names the source), same
+   list structure, same FAQ questions. `post-body.mjs inject` refuses a body that breaks this.
+6. **Every idea survives.** Go paragraph by paragraph. Each point, example, caveat and turn in
+   the argument must still be there. Simplify the LANGUAGE; do not summarise. If a paragraph
+   carried five ideas, the rewrite carries five ideas in more, shorter sentences.
+7. **The story stays a story.** The cold opens (the Tuesday in March, the rider that came in on
+   a Sunday) keep their people, their times, their details and their order. Short sentences
+   make them better, not worse. The AI Chat Assistant post is the story standard: change its
+   language only, its 19/19 structure stays.
+8. **Explain each technical term once, in one plain clause, at first use.** "a wire, which is a
+   direct bank transfer". "To reconcile is to check what came in against what you asked for."
+   The gloss must be plainly true. Do not define a legal term with anything you are not sure of.
+9. **Keywords stay.** The `keywords` arrays are not yours to edit, and the phrases in them that
+   appear in the prose ("AI voice agent", "skip tracing", "Google Business Profile") stay in the
+   prose. The SEO lap after this pass depends on them.
+10. **Provenance comments are law.** The `/** ... */` blocks in `content/services/*.ts` and
+    `content/blog/*-scenes.ts` record what earlier truth passes decided and why. Never edit,
+    move or delete a comment. Read the comment above a string before you touch the string: it
+    often says exactly which words are load-bearing.
+11. **Banned claims stay dead.** `lib/blog/zombie-claims.test.ts` lists claims that were
+    retracted. A simplification must not bring one back in simpler words.
+
+## How to make a sentence simple (what actually moved the grade)
+
+- One idea per sentence. Split at "and", "because", "which", "but", at every semicolon and colon.
+- Put the actor first and use a plain verb: "The bank holds the money" not "funds are held".
+- Swap the long word for the short one a child knows: purchase/buy, approximately/about (only
+  if "about" is already there), assistance/help, additional/more, require/need, obtain/get,
+  demonstrate/show, sufficient/enough, utilise/use, commence/start, regarding/about,
+  subsequently/then, individuals/people, numerous/many, transaction/deal, verify/check,
+  genuinely/truly, ordinary/plain, attorney/lawyer, asymmetry/gap, contemplated/expected.
+- Cut throat-clearing: "it is worth noting that", "the reason is worth being precise about".
+- Lists of three fragments are fine ("A part payment. A payment with no reference.") but do not
+  turn the whole page into fragments; it should read like a calm person talking.
+- Keep "you". Keep the concrete nouns (the cheque, the form, the Tuesday). Concrete is simple.
+- British spelling stays where the page has it (cheque, licence, finalise).
+
+## Where the words live (a topic = four files, done together)
+
+| Surface | File | How to edit |
+|---|---|---|
+| Post body | `content/blog/ai-posts.ts` export `X_POST` | `node scripts/post-body.mjs extract X_POST <tmp>.md`, write the new body to a NEW md file, `inject`. Never hand-edit the 500 KB file. |
+| Post scenes | `content/blog/<topic>-scenes.ts` | Edit tool, string values only. |
+| Service page | `content/services/<slug>.ts` | Edit tool, string values only. |
+| Post card/dek | `content/blog/posts.ts` | `updated:` date only (see below). |
+
+**Scenes and service files, what to touch:** prose string values (`body`, `lead` where it is a
+sentence, `note`, `caption`, `basis`, `footnote`, `a` answers, `whatItIs`, `howItWorks[].body`,
+`useCases[].body`, `limits`, `IN_SHORT` lines, figure `text`/`note`). **Never touch:** comments,
+keys, numbers and `value`/`display` data, `sourceText`/`sourceHref`/`href`, image paths, `alt`
+only if it is long prose, the pull-quote text itself, FAQ `q` questions (they are phrased the way
+people type them and they are headings).
+
+**Service page fields that are NOT yours:** `eyebrow`, `title`, `lede`, `specs`, `why`,
+`keywords`, `seo`, `stat`. They are byte-siblings of the /ai panel COPY in another repo and
+eight of them carry owner-decided wording. The orchestrator handles them in one joint pass.
+
+**`updated` dates (rule D5):** when a post's body or scenes changed, set that post's `updated:`
+in `content/blog/posts.ts` to `"2026-09-18"`. Nothing else in that file changes.
+
+## Per-topic loop
+
+1. Read the BEFORE: extract the body to md; read the scenes file and the service file in full.
+2. Rewrite the body (new md file, inject). Gate + invariants on `/blog/<slug>`.
+3. Rewrite the scenes strings. Gate + invariants again; work the `worst:` list until the page
+   passes at <= 5.9 if you can, <= 6.0 at worst.
+4. Rewrite the service page strings. Gate + invariants on `/services/<slug>`.
+5. Bump `updated`. Run `npx vitest run lib/blog lib/services content app/blog` in the FOREGROUND.
+6. Log the topic in `docs/parity/SIMPLIFY-LOG-20260918.md`: before/after grade for both
+   surfaces, anything you were unsure about (a quote you could not tell was verbatim, a hedge
+   you nearly cut, a term you glossed), and any invariants violation you could not resolve
+   honestly. An unresolved violation is REPORTED, never worked around: do not edit the BEFORE
+   snapshot, do not add to the ALLOW file. Those are the orchestrator's calls.
+
+## Do not
+
+- Do not `git add`, commit or push. The orchestrator commits after verifying.
+- Do not start, stop or restart the dev server (one runs on :3100). Do not run `next build`.
+- Do not touch anything outside `content/blog/`, `content/services/` and your log file.
+- Do not touch RLS, auth, env, `next.config.ts`, MLS code or any security control.
+- Do not fetch realtylt.com (bot-challenged) and never call the MLS Grid API.
