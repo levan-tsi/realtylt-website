@@ -84,7 +84,14 @@ if (CLICKS > 0) {
         const [popup] = await Promise.all([cctx.waitForEvent("page", { timeout: 15000 }), el.click()]);
         await popup.waitForLoadState("domcontentloaded", { timeout: 20000 }).catch(() => {});
         const u = popup.url();
-        const carried = u.includes(encodeURIComponent(`${new URL(BASE.includes("realtylt") ? "https://realtylt.com" : BASE).origin}${path}`)) || decodeURIComponent(u).includes(path);
+        // Logged OUT (this fresh browser), LinkedIn bounces the share to its login wall and
+        // carries the whole share URL inside session_redirect, DOUBLE-encoded - the page url
+        // is still there and survives the login (proven 2026-09-18 in the owner's logged-in
+        // Chrome: the composer opens with the preview card attached). So the click passes if
+        // the page url appears at ANY encoding depth.
+        const decodings = [u];
+        try { decodings.push(decodeURIComponent(u)); decodings.push(decodeURIComponent(decodings[1])); } catch { /* stop at the last valid depth */ }
+        const carried = decodings.some((d) => d.includes(path) || d.includes(encodeURIComponent(path)));
         console.log(`${carried ? "ok   " : "FAIL "}click ${tag} ${path} ${label} -> ${u.slice(0, 100)}`);
         if (!carried) fails++;
         await popup.close().catch(() => {});
