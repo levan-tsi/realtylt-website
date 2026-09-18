@@ -24,7 +24,9 @@ async function open(path) {
     ogUrl: document.querySelector('meta[property="og:url"]')?.content || "",
     ogTitle: document.querySelector('meta[property="og:title"]')?.content || "",
     robots: document.querySelector('meta[name="robots"]')?.content || "",
-    text: document.querySelector("main").innerText,
+    // textContent, not innerText: a collapsed <details> FAQ answer is not rendered, so innerText
+    // leaves it out and the probe reported a shipped fix as missing (2026-09-18, the instrument).
+    text: document.querySelector("main").textContent.replace(/\s+/g, " "),
     emptyAnchors: [...document.querySelectorAll("main a[href^='/']")].filter((a) => !a.textContent.trim() && !a.querySelector("img[alt]:not([alt=''])") && !a.title).length,
   }));
 }
@@ -54,6 +56,18 @@ ok("services index cards carry anchor text", d.emptyAnchors === 0, `empty=${d.em
 d = await open("/services/skip-tracing-lead-generation");
 ok("skip tracing page: no 'verified' / 'callable'", !/\bverified\b|\bcallable\b/i.test(d.text));
 ok("skip tracing page: the /ai lede", d.text.includes("It pulls owner leads from Google Maps."));
+
+// ---- batch 2 + the excerpt pass (website 810a03b) ------------------------------------------
+d = await open("/blog/marketing-automation-real-estate-email-deliverability");
+ok("marketing post: CAN-SPAM modal restored by the checker", d.text.includes("A recipient can use it to ask not to receive future messages."));
+ok("marketing post: the dek is the plain one", d.text.includes("What marketing automation really decides on your behalf."));
+
+d = await open("/services/ai-scheduling");
+ok("scheduling page: the RFC 'requires' it", d.text.includes("requires it. A change to the start time, end time or duration") && !d.text.includes("has a rule about this"));
+ok("service pages: the shared 'touch it' paragraph is split", d.text.includes("because that one is truly live"));
+
+d = await open("/blog/crm-sync-real-estate-duplicate-contact-records");
+ok("CRM sync post: three requirements, not three descriptions", d.text.includes("That your rule is written down somewhere you can read it."));
 
 d = await open("/top-areas/queens");
 const median = d.text.match(/\$[\d,.]+[KM]?/);
