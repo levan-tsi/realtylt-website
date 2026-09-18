@@ -109,7 +109,9 @@ export function parsePage(html) {
     // owns that box), and a crawler does not care which landmark an h1 sits in.
     h1s: [...html.replace(/<(script|style|noscript)[\s>][\s\S]*?<\/\1>/gi, " ").matchAll(/<h1[\s>][\s\S]*?<\/h1>/gi)].map((m) => text(m[0])),
     links,
-    first100: words(prose).slice(0, 100).join(" "),
+    // Everything a reader meets first, in page order: breadcrumb, eyebrow, h1, lede, chips.
+    // Headings count; a crawler does not skip them on its way to the first paragraph.
+    first100: words(text(mainClean)).slice(0, 100).join(" "),
     hasFaqUi: /<details|faq/i.test(mainClean),
     jsonld,
   };
@@ -279,6 +281,25 @@ if (isMain) {
     }));
   }
 
+  // ---- adjudicated exceptions -------------------------------------------------------------
+  // docs/parity/SEO-AUDIT-ALLOW.json = [{ "match": "<substring of a finding>", "paths": ["/x"] | "*",
+  // "why": "..." }]. An entry is a DECISION with its reason, printed on every run; it is never a
+  // silent pass, and an entry that excuses nothing is reported as stale so the file cannot rot.
+  const ALLOW_PATH = "docs/parity/SEO-AUDIT-ALLOW.json";
+  const allow = fs.existsSync(ALLOW_PATH) ? JSON.parse(fs.readFileSync(ALLOW_PATH, "utf8")) : [];
+  const allowed = [];
+  for (const rule of allow) rule.hits = 0;
+  for (const p of Object.keys(findings)) {
+    findings[p] = findings[p].filter((f) => {
+      const rule = allow.find((r) => f.includes(r.match) && (r.paths === "*" || r.paths.includes(p)));
+      if (!rule) return true;
+      rule.hits++;
+      allowed.push(`${p}: ${f}`);
+      return false;
+    });
+    if (!findings[p].length) delete findings[p];
+  }
+
   // ---- report ---------------------------------------------------------------------------
   const checked = Object.keys(pages).length;
   const failing = Object.keys(findings).sort();
@@ -292,8 +313,13 @@ if (isMain) {
     console.log(`\nBOT-BLOCKED outbound hosts (not a failure; open by hand once):`);
     for (const b of blocked) console.log("     ", b);
   }
+  let stale = 0;
+  for (const rule of allow) {
+    console.log(`\nALLOWED x${rule.hits}: "${rule.match}"\n      why: ${rule.why}`);
+    if (!rule.hits && !only) { stale++; console.log("      STALE: this entry excuses nothing any more. Delete it."); }
+  }
   const total = failing.reduce((a, p) => a + findings[p].length, 0);
-  console.log(`\n${checked - failing.filter((p) => pages[p]).length}/${checked} surfaces clean, ${total} findings${doExternal ? `, ${Object.keys(external).length} outbound links fetched` : " (outbound not fetched: --external)"}`);
-  if (reportPath) fs.writeFileSync(reportPath, JSON.stringify({ at: new Date().toISOString(), base: BASE, checked, findings, blocked }, null, 1));
-  process.exit(failing.length ? 1 : 0);
+  console.log(`\n${checked - failing.filter((p) => pages[p]).length}/${checked} surfaces clean, ${total} findings, ${allowed.length} adjudicated${doExternal ? `, ${Object.keys(external).length} outbound links fetched` : " (outbound not fetched: --external)"}`);
+  if (reportPath) fs.writeFileSync(reportPath, JSON.stringify({ at: new Date().toISOString(), base: BASE, checked, findings, allowed, blocked }, null, 1));
+  process.exit(failing.length || stale ? 1 : 0);
 }

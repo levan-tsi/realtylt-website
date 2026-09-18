@@ -1,0 +1,22 @@
+[
+  {
+    "match": "KEYWORDS: no keyword phrase is covered by the first 100 words",
+    "paths": [
+      "/services/ai-appointment-booking",
+      "/services/ai-audit",
+      "/services/ai-chat-assistant",
+      "/services/ai-scheduling",
+      "/services/ai-voice-agents",
+      "/services/crm-sync",
+      "/services/custom-automation",
+      "/services/data-enrichment",
+      "/services/document-processing",
+      "/services/lead-qualification",
+      "/services/marketing-automation",
+      "/services/review-automation",
+      "/services/skip-tracing-lead-generation",
+      "/services/the-singularity"
+    ],
+    "why": "Adjudicated 2026-09-18, won't fix. The first 100 words of a service page are breadcrumb + eyebrow + h1 + lede + spec chips + the hero figure. Eyebrow, h1, lede and chips are byte-siblings of the /ai panel COPY (another repo, owner-approved wording, just rewritten to grade 6); the figure caption is a designed 11px uppercase label that a keyword phrase would wrap to three lines on a phone. Every one of these pages carries its primary phrase in the <title>, the meta description and the URL (the three checks above this one, all passing), and in the body below the fold. The rule of thumb is not worth sibling drift or a worse hero. Revisit only if the /ai panels are rewritten again: put the phrase in COPY.p there and mirror it."
+  }
+]
