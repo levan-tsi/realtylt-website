@@ -29,13 +29,10 @@ const CSP = [
   // Ads conversion script (/pagead/viewthroughconversion/<AW id>) that gtag injects — without
   // it the owner's Google Ads conversions never fire (measured 2026-07-26: script-src-elem
   // violation on every page).
-  // news.google.com serves swg/js/v1/publisher.js — Google's "Add to Preferred Sources"
-  // button (components/site/PreferredSourceButton.tsx, renders only once the site serves as
   // realtylt.com). Measured 2026-08-26 by injecting the official embed on /buying: the script
   // loads from this host and renders the button AS AN IFRAME from the same host, so
-  // news.google.com must be in frame-src below as well — script-src alone left a 60px empty
   // frame and two frame-src violations.
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net https://news.google.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://www.googletagmanager.com https://maps.googleapis.com https://googleads.g.doubleclick.net",
   // …fonts.googleapis.com: the Google Maps JS API injects its own font stylesheet on any page
   // with a map. Blocking it threw 3 style-src-elem violations per /search view (cosmetic only —
   // the map and its controls render — but it is our CSP producing console noise on our own
@@ -43,8 +40,7 @@ const CSP = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   // The owner's Google Calendar appointment scheduler on /connect + gtag's conversion frame,
   // plus the ambient Vimeo hero background video on the home page (player.vimeo.com iframe).
-  // …news.google.com: the Preferred Sources button IS an iframe from that host (see script-src).
-  "frame-src 'self' https://calendar.google.com https://td.doubleclick.net https://player.vimeo.com https://news.google.com",
+  "frame-src 'self' https://calendar.google.com https://td.doubleclick.net https://player.vimeo.com",
   // …plus Supabase Storage: blog cover images uploaded from the CRM "Website" section
   // live in the public `blog-media` bucket (docs/BLOG-CMS.md). The rendered value is
   // additionally pinned to OUR project origin at render time (lib/blog/db.ts safeCover).
@@ -74,7 +70,6 @@ const CSP = [
   // beacons to its OWN host — observed refused on production 2026-08-27 (blog page, gtag
   // /td diagnostics beacon: "Fetch API cannot load https://www.googletagmanager.com/td?id=
   // AW-11479042629 ... violates connect-src"). Script host and beacon host must travel
-  // together, same rule the Preferred Sources button taught for frame-src.
   // 2026-08-28: `https://app.realtylt.com` added because the launch-day rebrand pointed the
   // widget's five endpoint URLs at the CRM's real domain (DNS cut over that morning; SSL and
   // the OPTIONS preflight from this origin verified 204 before the switch). The vercel host

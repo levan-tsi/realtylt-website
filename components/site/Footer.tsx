@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { EqualHousingMark } from "@/components/site/EqualHousingMark";
-import { PreferredSourceButton } from "@/components/site/PreferredSourceButton";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 
 /** Site footer.
@@ -199,9 +198,6 @@ export function Footer() {
               </Link>
             </li>
           </ul>
-          {/* Renders nothing until the site serves as realtylt.com (the launch env switch) —
-              see PreferredSourceButton for why the button must wait for the real domain. */}
-          <PreferredSourceButton />
         </div>
       </div>
     </footer>
