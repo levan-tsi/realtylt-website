@@ -72,27 +72,27 @@ export const crmSync: Service = {
       // round D's fix in this file: the unqualified "true", plus an absolute the flagship post
       // contradicts two sections apart (a sync breaks the week a vendor renames a field, and an
       // unreconciled database stays unreconciled). Now it supports its own label instead.
-      { label: "Nothing is retyped", note: "The call, the text and the booking arrive on the record without anybody copying them across, which is where a digit goes missing." },
+      { label: "Nothing is retyped", note: "The call, the text and the booking arrive on the record without anybody copying them across. Copying across is where a digit goes missing." },
     ],
     // ROUND D: was "The deals lost to a stale CRM are lost quietly, which is why nobody counts
     // them." It asserts that deals are lost, which nobody here has measured and which the
     // flagship post explicitly refuses to price. Guarded in lib/blog/zombie-claims.test.ts.
-    footnote: "Every arrow above is a decision somebody made: which field identifies a person, which side wins a disagreement, and what happens when the same message arrives twice.",
+    footnote: "Every arrow above is a decision somebody made. Which field identifies a person. Which side wins a disagreement. And what happens when the same message arrives twice.",
   },
 
   whatItIs: [
-    "It is the connection between your CRM and everything that actually happens. Calls, texts, bookings, enriched contacts, and website conversations all produce information that should be on the contact record, and most of it never gets there because putting it there is somebody's manual job.",
-    "Two-way sync means it lands automatically, and that changes to the CRM flow back out to the systems that need them. n8n keeps both sides in step, so the record you are looking at is the one the automations are acting on rather than a copy of how things were.",
+    "It is the connection between your CRM and everything that actually happens. Calls, texts, bookings, enriched contacts and website conversations all produce information. It should be on the contact record. Most of it never gets there, because putting it there is somebody's manual job.",
+    "Two-way sync means it lands automatically. It also means changes to the CRM flow back out to the systems that need them. n8n keeps both sides in step. So the record you are looking at is the one the automations are acting on. It is not a copy of how things were.",
   ],
 
   howItWorks: [
     {
       title: "Everything writes back",
-      body: "Every AI call, text, booking, and enrichment writes to the contact record as it happens, with the transcript and the outcome attached.",
+      body: "Every AI call, text, booking, and enrichment writes to the contact record as it happens. The transcript and the outcome are attached.",
     },
     {
       title: "Changes flow the other way too",
-      body: "A stage change or a note added in the CRM propagates out, so the automation acting on that contact is acting on current information.",
+      body: "A stage change or a note added in the CRM goes back out. So the automation acting on that contact is acting on current information.",
     },
     {
       // ROUND D: was "Deduping and conflict rules mean one contact stays one contact, rather
@@ -101,45 +101,45 @@ export const crmSync: Service = {
       // a flat guarantee is not a claim this page can make. What it can describe is the
       // mechanism, including the third outcome, which is the honest and more useful answer.
       title: "One person, matched rather than retyped",
-      body: "An inbound record is compared against what is already there on a rule agreed when it is built, so a match updates the existing contact. Pairs that are genuinely ambiguous go to a short review list rather than being merged on a guess.",
+      body: "An inbound record is compared against what is already there. The rule for that is agreed when it is built. So a match updates the existing contact. Pairs that are genuinely ambiguous go to a short review list. They are not merged on a guess.",
     },
   ],
 
   useCases: [
     {
       title: "The CRM that is finally accurate",
-      body: "Every touch is logged, so the record reflects the relationship rather than the last time somebody remembered to update it.",
+      body: "Every touch is logged. So the record reflects the relationship. It does not reflect the last time somebody remembered to update it.",
     },
     {
       title: "No more double entry",
       // ROUND D: was "...which is where a large share of admin hours quietly go." An unsourced
       // quantity. Guarded in lib/blog/zombie-claims.test.ts.
-      body: "Information a system already holds stops being retyped into the next system, which removes the step where a number gets one digit wrong on its way across.",
+      body: "Information a system already holds stops being retyped into the next system. That removes the step where a number gets one digit wrong on its way across.",
     },
     {
       title: "Automations that act on the current record",
       // ROUND D: was "...is what a stale CRM costs you, and it is entirely avoidable." Two
       // claims with nothing under them: that it is a cost, and that it is entirely avoidable.
-      body: "A nurture sequence firing at somebody who already went under contract is the visible version of a record that is out of date, and it happens because the sequence and the deal are looking at two different copies of the same person.",
+      body: "A nurture sequence can fire at somebody who already went under contract. That is the visible version of a record that is out of date. It happens because the sequence and the deal are looking at two different copies of the same person.",
     },
   ],
 
   limits: [
-    "It does not clean the data already in there. Sync keeps both sides in step. Years of half-finished records are a separate job, and enrichment is the service for it.",
-    "It does not decide which side is right. Conflict rules get agreed when it is built, and the rule that suits your team has to be chosen rather than assumed.",
-    "It does not open a system that will not open. Most CRMs expose an API and this is orchestrated in n8n rather than limited to a fixed list, but a closed platform stays closed.",
-    "It does not make anybody use the CRM. A record that is finally true is worth nothing if the team is still working out of a notebook.",
-    "It does not remove the human decision. The published model for matching records has three outcomes rather than two, and the middle one is a short list of ambiguous pairs for a person to settle. Anything advertising a hundred percent automatic resolution has widened its threshold and is merging people.",
+    "It does not clean the data already in there. Sync keeps both sides in step. Years of half-finished records are a separate job. Enrichment is the service for it.",
+    "It does not decide which side is right. Conflict rules get agreed when it is built. The rule that suits your team has to be chosen rather than assumed.",
+    "It does not open a system that will not open. Most CRMs expose an API. This is orchestrated in n8n, rather than limited to a fixed list. But a closed platform stays closed.",
+    "It does not make anybody use the CRM. If the team is still working out of a notebook, a record that is finally true is worth nothing.",
+    "It does not remove the human decision. The published model for matching records has three outcomes rather than two. The middle one is a short list of ambiguous pairs for a person to settle. Anything advertising a hundred percent automatic resolution has widened its threshold. It is merging people.",
   ],
 
   faqs: [
     {
       q: "What is two-way CRM sync?",
-      a: "It means information flows in both directions: activity from your calls, texts, bookings, and automations writes into the CRM, and changes made inside the CRM flow back out to the systems that act on them. One-way sync leaves one side permanently out of date.",
+      a: "It means information flows in both directions. Activity from your calls, texts, bookings, and automations writes into the CRM. Changes made inside the CRM flow back out to the systems that act on them. One-way sync leaves one side permanently out of date.",
     },
     {
       q: "Does it work with Follow Up Boss or kvCORE?",
-      a: "Yes, along with HubSpot and most CRMs that expose an API. The sync is orchestrated in n8n, so it is not limited to a fixed list of supported integrations.",
+      a: "Yes, along with HubSpot and most CRMs that expose an API. The sync is orchestrated in n8n. So it is not limited to a fixed list of supported integrations.",
     },
     {
       q: "Will it create duplicate contacts?",
@@ -148,11 +148,11 @@ export const crmSync: Service = {
       // thresholds from error bounds on false matches AND false nonmatches, so a build chooses
       // between two kinds of error and cannot have zero of both. A flat no was not something
       // this page could stand behind.
-      a: "Preventing them is what it is for: a nominated identity field and a matching rule agreed when it is built mean an inbound record matching an existing contact updates that contact. What no honest build promises is that matching is never wrong in either direction, because the published model behind all of this sets its thresholds from the two error rates you are willing to accept and cannot drive both to zero. That is why ambiguous pairs go to a review list instead of being merged.",
+      a: "Preventing them is what it is for. You nominate an identity field, and a matching rule is agreed when it is built. So an inbound record matching an existing contact updates that contact. What no honest build promises is that matching is never wrong in either direction. That is because the published model behind all of this sets its thresholds from the two error rates you are willing to accept, and cannot drive both to zero. That is why ambiguous pairs go to a review list instead of being merged.",
     },
     {
       q: "Which side wins when both systems have changed the same field?",
-      a: "Whichever one your conflict rule says, and the rule is a decision made when the sync is built rather than a default. A common arrangement is that the most recently changed value wins for facts like a phone number, while the CRM wins for anything about the relationship such as the stage of a deal. There is no rule that is right for every field, and the important part is that yours is written down somewhere you can read it.",
+      a: "Whichever one your conflict rule says. The rule is a decision made when the sync is built, rather than a default. A common arrangement has two halves. The most recently changed value wins for facts like a phone number. And the CRM wins for anything about the relationship, such as the stage of a deal. There is no rule that is right for every field. The important part is that yours is written down somewhere you can read it.",
     },
   ],
 

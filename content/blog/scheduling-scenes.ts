@@ -42,9 +42,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. What the machine could
  * not do, what the standard already calls the thing you do not have, and the cost of moving it. */
 export const IN_SHORT: string[] = [
-  "A scheduling assistant that ran for five months at Microsoft Research handled 39% of its requests inside its structured workflow and needed a trained person for the other 61%. The three commonest reasons for calling that person in were all the same reason: an attendee replied in a way the system did not expect, an attendee could not take any of the offered times, or an attendee never replied at all.",
-  "The calendar standards already have a word for an appointment nobody has agreed to. It is the value every invitation starts life in, and the only thing that moves it is a reply arriving. Not time passing, and not the absence of an objection.",
-  "And moving the time is not free. The standard that governs how calendar servers do scheduling requires that when the start time changes, every attendee's answer is thrown away and set back to unanswered. A reschedule does not carry the agreement with it. It asks for it again.",
+  "A scheduling assistant ran for five months at Microsoft Research. It handled 39% of its requests inside its structured workflow, and needed a trained person for the other 61%. The three commonest reasons for calling that person in were all the same reason. An attendee answered in a way the system did not expect. An attendee could not take any of the offered times. Or an attendee never replied at all.",
+  "The calendar standards already have a word for an appointment nobody has agreed to. It is the value every invitation starts life in. The only thing that moves it is a reply arriving. Not time passing, and not the absence of an objection.",
+  "And moving the time is not free. The standard that governs how calendar servers do scheduling has a rule about this. When the start time changes, every attendee's answer is thrown away and set back to unanswered. A reschedule does not carry the agreement with it. It asks for it again.",
 ];
 
 /** SCENE copy — the seam with topic 7, stated by contrast rather than by summary.
@@ -54,15 +54,15 @@ export const IN_SHORT: string[] = [
 export const NOT_THE_BOOKING: GridItem[] = [
   {
     lead: "Not whether they turn up",
-    body: "Getting somebody from an inquiry into a time they have written down, and getting them to be there on the day, is a real problem with real evidence behind it, and it is written up on its own. That question has two people in it and only one calendar that has to be true. This one starts at the point where a time is agreed and asks a different question: agreed by whom.",
+    body: "Getting someone from an inquiry into a time they have written down, and getting them to be there on the day, is a real problem with real evidence behind it. It is written up on its own. That question has two people in it. Only one calendar has to be true. This one starts at the point where a time is agreed. It asks a different question: agreed by whom.",
   },
   {
     lead: "Not the chain of steps",
-    body: "Wiring your systems so that finishing one thing starts the next is a different product again. Every step in that chain is yours. Here the important steps happen in an office that is not yours, on a calendar you cannot read, run by somebody who owes you nothing and has a full week of their own.",
+    body: "Wiring your systems so that finishing one thing starts the next is a different product again. Every step in that chain is yours. Here the important steps happen in an office that is not yours, on a calendar you cannot read. It is run by someone who owes you nothing and has a full week of their own.",
   },
   {
     lead: "Not the phone being answered",
-    body: "Answering fast matters and it is the smallest part of this. A reply inside ten seconds that proposes eleven on Saturday has not scheduled anything. It has made an offer on behalf of three people, two of whom have not been asked yet, and the speed of it is what makes the offer sound like a fact.",
+    body: "Answering fast matters and it is the smallest part of this. A reply inside ten seconds that proposes eleven on Saturday has not scheduled anything. It has made an offer on behalf of three people, two of whom have not been asked yet. The speed of it is what makes the offer sound like a fact.",
   },
 ];
 
@@ -118,11 +118,11 @@ export const ESCALATIONS = {
   max: 100,
   lit: 3,
   basis:
-    "Four of the eight reasons recorded when a request escalated from the automated workflow to a trained human, across a five month deployment in which 178 people scheduled 1,626 meetings by email. The first three are things an attendee did. The fourth is the only row on the published table that is about the organiser's own systems. A request can carry more than one reason at once, so the eight rows sum to more than a hundred.",
+    "Four of the eight reasons recorded when a request escalated from the automated workflow to a trained human, across a five month deployment in which 178 people scheduled 1,626 meetings by email. The first three are things an attendee did. The fourth is the only row on the published table that is about the organiser's own systems. A request can carry more than one reason at once. So the eight rows sum to more than a hundred.",
   sourceText:
     "Cranshaw, Elwany, Newman, Kocielnik, Yu, Soni, Teevan and Monroy-Hernandez, Calendar.help: Designing a Workflow-Based Scheduling Agent with Humans in the Loop, CHI 2017, Table 3.",
   sourceHref: "https://arxiv.org/abs/1703.08428",
-  note: "These are meetings between information workers, not showings, and the assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control, and the failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn: one is an uninstrumented bucket at 14%, and three at 8%, 7% and 2% are the system escalating internally rather than anything a party to the meeting did. One thing the table cannot tell you is how many of those requests were recoverable. An escalation means a trained person picked it up, not that the meeting failed, and the paper is about how much skilled attention a scheduling agent consumes rather than about how many appointments it loses.",
+  note: "These are meetings between information workers, not showings. The assistant worked by email rather than by text. What carries is the shape, and the shape is uncomfortable for anybody selling this category. The failures cluster almost entirely on the side of the table the vendor does not control. The failure the demonstrations are about, reading the organiser's calendar, is the smallest bar on the chart. Four other rows are not drawn. One is an uninstrumented bucket at 14%. Three at 8%, 7% and 2% are the system escalating internally, rather than anything a party to the meeting did. One thing the table cannot tell you is how many of those requests were recoverable. An escalation means a trained person picked it up, not that the meeting failed. The paper is about how much skilled attention a scheduling agent consumes, rather than about how many appointments it loses.",
 };
 
 /** SCENE copy — the ceiling. Cited data graphic TWO.
@@ -153,11 +153,11 @@ export const CEILING = {
   max: 100,
   lit: 1,
   basis:
-    "Shares of the 1,626 meetings scheduled during the five month deployment. The first bar is the share handled entirely inside the system's structured workflow, which the authors are careful to say includes small pieces of work done by non-expert people as well as fully automated steps. The second is the share that reached a trained scheduling worker at some point in its life.",
+    "Shares of the 1,626 meetings scheduled during the five month deployment. The first bar is the share handled entirely inside the system's structured workflow. The authors are careful to say that this includes small pieces of work done by non-expert people, as well as fully automated steps. The second is the share that reached a trained scheduling worker at some point in its life.",
   sourceText:
     "Cranshaw et al., Calendar.help, CHI 2017, System Efficiency: 39% of requests completed entirely within the microtasking workflows, the remaining 61% requiring some intervention.",
   sourceHref: "https://arxiv.org/abs/1703.08428",
-  note: "Two things stop this being a verdict on automation in general. The first is that it is a snapshot of one system at one point in its life rather than a ceiling: the same paper reports that the earliest version of the service ran entirely on skilled humans, so this 39% is a position on a curve the authors were deliberately pushing, and they say plainly that getting there took continual observation of how people actually replied. The second is that nobody has run anything like this on property appointments, so the split above is evidence about the shape of the problem and not a forecast for your Saturdays.",
+  note: "Two things stop this being a verdict on automation in general. The first is that it is a snapshot of one system at one point in its life, rather than a ceiling. The same paper reports that the earliest version of the service ran entirely on skilled humans. So this 39% is a position on a curve the authors were deliberately pushing. And they say plainly that getting there took continual observation of how people actually replied. The second is that nobody has run anything like this on property appointments. So the split above is evidence about the shape of the problem, and not a forecast for your Saturdays.",
 };
 
 /** SCENE copy — who actually has to agree before a showing is real.
@@ -168,19 +168,19 @@ export const CEILING = {
 export const WHO_AGREES: GridItem[] = [
   {
     lead: "The person you are meeting",
-    body: "The only one everybody thinks about, and the only one whose calendar the conversation can actually negotiate with, because they are in the conversation. If this were the whole problem then a booking link would have solved it years ago, and for a listing appointment at your own office it very nearly is.",
+    body: "The only one everybody thinks about. The only one whose calendar the conversation can actually negotiate with, because they are in the conversation. If this were the whole problem then a booking link would have solved it years ago. For a listing appointment at your own office it very nearly is.",
   },
   {
     lead: "Whoever controls the property",
-    body: "On your own listing that is you, which is why your own listings feel easy and other people's do not. On somebody else's it is an agent with a full week, and behind that agent a seller who has to leave the house, or a tenant who has rights about being given notice. None of those three is in your conversation and none of them owes you a reply this afternoon.",
+    body: "On your own listing that is you. That is why your own listings feel easy and other people's do not. On someone else's it is an agent with a full week. Behind that agent is a seller who has to leave the house, or a tenant who has rights about being given notice. None of those three is in your conversation. None of them owes you a reply this afternoon.",
   },
   {
     lead: "The way in",
-    body: "A code, a key, a box, an alarm, a doorman, a gate. This one is not a person, which is why it is the one left off the list, and it silently carries a time window of its own: a code that works between ten and four is a constraint on the appointment exactly as much as a seller who works from home is.",
+    body: "A code, a key, a box, an alarm, a doorman, a gate. This one is not a person, which is why it is the one left off the list. It silently carries a time window of its own. A code that works between ten and four is a constraint on the appointment. It constrains it exactly as much as a seller who works from home does.",
   },
   {
     lead: "The professionals, on a closing",
-    body: "A closing is the same problem with the volume turned up. An attorney, a lender, a title company and both sides of the deal have to be in one room or on one call, and every one of them is running the same week you are. This is the appointment where the cost of a wrong assumption is not an empty morning.",
+    body: "A closing is the same problem with the volume turned up. An attorney, a lender, a title company and both sides of the deal have to be in one room or on one call. Every one of them is running the same week you are. This is the appointment where the cost of a wrong assumption is not an empty morning.",
   },
 ];
 
@@ -202,19 +202,19 @@ export const WHO_AGREES: GridItem[] = [
 export const STATES: GridItem[] = [
   {
     lead: "Nobody has answered",
-    body: "The state every invitation is born in, and the standard names it out loud: when the organiser sends the thing out, the answer is set to needs action, because nothing has come back. This is not a failure state and it is not an error. It is the honest description of a proposal, and it is where a great many appointments are sitting at the moment somebody is told they are confirmed.",
+    body: "The state every invitation is born in, and the standard names it out loud. When the organiser sends the thing out, the answer is set to needs action, because nothing has come back. This is not a failure state and it is not an error. It is the honest description of a proposal. It is where a great many appointments are sitting at the moment someone is told they are confirmed.",
   },
   {
     lead: "They said yes",
-    body: "Somebody on the other end took a deliberate action and a reply came back to the organiser saying so. The important part is not the word yes, it is that it arrived as a message rather than as an absence. A reply is a thing that happened. Silence is a thing that did not happen, and the two are only the same if you decide they are.",
+    body: "Someone on the other end took a deliberate action. A reply came back to the organiser saying so. The important part is not the word yes. It is that it arrived as a message rather than as an absence. A reply is a thing that happened. Silence is a thing that did not happen. The two are only the same if you decide they are.",
   },
   {
     lead: "They said no",
-    body: "The cheapest outcome on this list, and the one everybody dreads. A no on Thursday costs a message. The same no at twenty past nine on Saturday costs a morning, a drive, and the part of a client's confidence that comes from believing you when you tell them something is settled.",
+    body: "The cheapest outcome on this list, and the one everybody dreads. A no on Thursday costs a message. The same no at twenty past nine on Saturday costs a morning and a drive. It also costs part of a client's confidence. That is the part that comes from believing you when you tell them something is settled.",
   },
   {
     lead: "They said maybe",
-    body: "The standard carries a state for tentative, kept distinct from yes and from no, and a system that can hold a maybe there without rounding it up is telling you something true about your Saturday. A build with nowhere to put an answer that is not a decision will file it as one of the other two, and it will not be the cautious one.",
+    body: "The standard carries a state for tentative, kept distinct from yes and from no. A system can hold a maybe there without rounding it up. One that does is telling you something true about your Saturday. A build with nowhere to put an answer that is not a decision will file it as one of the other two. It will not be the cautious one.",
   },
 ];
 
@@ -245,15 +245,15 @@ export const STATES: GridItem[] = [
 export const DELIVERY: GridItem[] = [
   {
     lead: "It has not gone yet",
-    body: "One of the eight published codes means the server is still trying. That is a perfectly ordinary state to be in for a few seconds and a very bad one to be in for a day, and the only way anybody finds out which it was is by looking. Nothing about a pending message looks different, from your side, from a message that landed.",
+    body: "One of the eight published codes means the server is still trying. That is a perfectly ordinary state to be in for a few seconds. It is a very bad one to be in for a day. The only way anybody finds out which it was is by looking. Nothing about a pending message looks different, from your side, from a message that landed.",
   },
   {
     lead: "It went, and nobody knows if it arrived",
-    body: "Two codes cover sent. One says delivered. The other says sent, and then says in as many words that the server has no explicit information about whether it was delivered, which is the ordinary case whenever the invitation travelled by email. That distinction is written into an internet standard because it is real, and it is the difference between a confirmation and a hope.",
+    body: "Two codes cover sent. One says delivered. The other says sent. It then says, in as many words, that the server has no explicit information about whether it was delivered. That is the ordinary case whenever the invitation travelled by email. That distinction is written into an internet standard because it is real. It is the difference between a confirmation and a hope.",
   },
   {
     lead: "It failed, in one of five ways",
-    body: "The other five codes are all failures, and they are separated because the right response differs: the address was not a calendar user at all, you did not have permission, the delivery could not be completed this time, no route existed, or scheduling with that recipient is not allowed. Two of the five are worth retrying and three are not, and a system that treats them the same will quietly keep sending into a wall.",
+    body: "The other five codes are all failures. They are separated because the right response differs. The address was not a calendar user at all. You did not have permission. The delivery could not be completed this time. No route existed. Or scheduling with that recipient is not allowed. Two of the five are worth retrying and three are not. A system that treats them the same will quietly keep sending into a wall.",
   },
 ];
 
@@ -293,22 +293,22 @@ export const THE_REQUEST = {
     {
       at: "4:31 pm",
       label: "Two times proposed, nothing promised",
-      detail: "The buyer is told a request has gone in and is not told a time. Nobody has agreed to anything yet, and the message the buyer receives says exactly that.",
+      detail: "The buyer is told a request has gone in. The buyer is not told a time. Nobody has agreed to anything yet, and the message the buyer receives says exactly that.",
     },
     {
       at: "6:02 pm",
       label: "The counter is recorded as a counter",
-      detail: "Not as a rejection and not as a booking. One of the two proposals is dead, the other is alive and unanswered, and the difference is written down rather than remembered.",
+      detail: "Not as a rejection and not as a booking. One of the two proposals is dead. The other is alive and unanswered, and the difference is written down rather than remembered.",
     },
     {
       at: "6:02 pm",
       label: "Your own side is held",
-      detail: "The 2pm is blocked on your calendar the moment it becomes the live proposal, so nothing else can be offered into it while you wait. This is the only calendar in the whole exchange your software can actually control.",
+      detail: "The 2pm is blocked on your calendar the moment it becomes the live proposal. Nothing else can be offered into it while you wait. This is the only calendar in the whole exchange your software can actually control.",
     },
     {
       at: "Fri 11:14 am",
       label: "The buyer is told, once",
-      detail: "Nineteen hours after the request went in, and it is the first time the buyer has been given a time. That delay is the honest cost of not having promised anything on Thursday.",
+      detail: "Nineteen hours after the request went in. It is the first time the buyer has been given a time. That delay is the honest cost of not having promised anything on Thursday.",
     },
   ],
 };
@@ -464,7 +464,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From somebody asking to everybody agreeing.",
-      lede: "Six hops, and the products in this category are sold on the first and the last. The middle four are the ones that decide whether a Saturday happens, and every one of them is a question about people who do not work for you. Note where the hold sits, and note that it is the only step in the chain your software can carry out with any authority.",
+      lede: "Six hops. The products in this category are sold on the first and the last. The middle four are the ones that decide whether a Saturday happens. Every one of them is a question about people who do not work for you. Note where the hold sits. It is the only step in the chain your software can carry out with any authority.",
       steps: SCHED_PATH,
       altPrefix:
         "The path from a request to view a property through the access constraints, a proposal of two times, the replies from the other side, a hold on your own calendar, and one confirmation",
@@ -481,7 +481,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "appts",
           label: "Appointments you arrange in a month",
-          hint: "Everything you have to set up with somebody outside your own office: showings on other people's listings, inspections, appraisals, walkthroughs, closings.",
+          hint: "Everything you have to set up with someone outside your own office. Showings on other people's listings, inspections, appraisals, walkthroughs, closings.",
           min: 2,
           max: 80,
           step: 1,
@@ -493,7 +493,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "choice",
           id: "parties",
           label: "People who have to agree, other than you",
-          hint: "Count the ones who can stop it happening. The person you are meeting is one. The listing side is another. An occupant with a notice period is a third, and on a closing it is more than that.",
+          hint: "Count the ones who can stop it happening. The person you are meeting is one. The listing side is another. An occupant with a notice period is a third. On a closing it is more than that.",
           initial: 1,
           options: [
             { value: 1, label: "One", sub: "Your own listing, your own office", display: "1 other party" },
@@ -505,7 +505,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "silent",
           label: "Share where you never get an explicit yes in writing",
-          hint: "Be honest rather than aspirational. A voice message you did not keep, a nod at an open house and a thread that just went quiet all count as no reply.",
+          hint: "Be honest rather than aspirational. A voice message you did not keep. A nod at an open house. A thread that just went quiet. All of them count as no reply.",
           min: 5,
           max: 100,
           step: 5,
@@ -517,7 +517,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "minutes",
           label: "Minutes spent chasing one of them",
-          hint: "The message, the second message, the call, and the two minutes afterwards working out what you are now going to tell the client.",
+          hint: "The message. The second message. The call. And the two minutes afterwards, working out what you are now going to tell the client.",
           min: 1,
           max: 30,
           step: 1,
@@ -549,7 +549,7 @@ export const SCHEDULING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Agreements a year that were never actually given",
-      note: "The headline is the fourth row rather than the hours, and the hours row underneath it is doing deliberate work. At the settings this opens with, the chasing comes to a number of hours that any owner would shrug at, and that is the trap: the cost of this is not the time, it is that a share of those unconfirmed agreements are being described to a client as confirmed. Shares produce fractions, and two thirds of an agreement is not a thing, so read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no no-show rate anywhere in it, because whether somebody turns up is a different article on this site with real evidence behind it and this one has nothing to add to it. There is no figure for how often a listing side declines a request, and that gap was looked for rather than assumed: the largest showing scheduling platform in the country sits on exactly this data and publishes a monthly index off it, and its own page describes that index as a leading indicator of demand trends. It counts showings that happened. What share of requests were refused, and how long the rest took to be answered, is not in it, and we could not find it published anywhere else. There is no money row, because the value of a Saturday morning depends on what was in it. And there is no second column showing what this becomes with a scheduling layer switched on, because we have not measured that on your appointments and the study on this page was run on office meetings between two people.",
+      note: "The headline is the fourth row rather than the hours. The hours row underneath it is doing deliberate work. At the settings this opens with, the chasing comes to a number of hours that any owner would shrug at. That is the trap. The cost of this is not the time. It is that a share of those unconfirmed agreements are being described to a client as confirmed. Shares produce fractions, and two thirds of an agreement is not a thing. So read anything with a decimal in it as a rough count. Four things this deliberately refuses. There is no no-show rate anywhere in it, because whether somebody turns up is a different article on this site with real evidence behind it and this one has nothing to add to it. There is no figure for how often a listing side declines a request, and that gap was looked for rather than assumed: the largest showing scheduling platform in the country sits on exactly this data and publishes a monthly index off it, and its own page describes that index as a leading indicator of demand trends. It counts showings that happened. What share of requests were refused, and how long the rest took to be answered, is not in it, and we could not find it published anywhere else. There is no money row, because the value of a Saturday morning depends on what was in it. And there is no second column showing what this becomes with a scheduling layer switched on, because we have not measured that on your appointments and the study on this page was run on office meetings between two people.",
       action: { label: "See how it is built", href: "/services/ai-scheduling" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },

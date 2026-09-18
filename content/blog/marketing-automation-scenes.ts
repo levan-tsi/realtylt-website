@@ -43,9 +43,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. The permission that is
  * not required, the ceiling that is, and the measurement that is not one. */
 export const IN_SHORT: string[] = [
-  "The federal statute that governs commercial email does not require anybody's permission to send it. It requires that the message says what it is, carries a physical address, and offers an exit that keeps working for at least thirty days. Permission is not the law's demand. It is the mailbox providers' demand, and they are stricter.",
-  "Google and Yahoo both publish the same ceiling for how often people may report you: three tenths of one percent. On Google's page it sits in the requirements for all senders rather than in the bulk section, so a one person office is inside it. On a list of a thousand, three complaints is the whole allowance.",
-  "The number you cannot work out is your own. Yahoo states that the rate is calculated in their system on mail delivered to the inbox, which is a denominator no sender can see. What you can do is send less to fewer people more carefully, which is the entire craft.",
+  "The federal statute that governs commercial email does not require anybody's permission to send it. It requires that the message says what it is. It must carry a physical address. And it must offer an exit that keeps working for at least thirty days. Permission is not the law's demand. It is the mailbox providers' demand, and they are stricter.",
+  "Google and Yahoo both publish the same ceiling for how often people may report you: three tenths of one percent. On Google's page it sits in the requirements for all senders rather than in the bulk section. So a one person office is inside it. On a list of a thousand, three complaints is the whole allowance.",
+  "The number you cannot work out is your own. Yahoo states that the rate is calculated in their system on mail delivered to the inbox. That is a denominator no sender can see. What you can do is send less, to fewer people, more carefully. That is the entire craft.",
 ];
 
 /** SCENE copy — what this is, by what it is not.
@@ -56,15 +56,15 @@ export const IN_SHORT: string[] = [
 export const NOT_THE_OTHERS: GridItem[] = [
   {
     lead: "Not the busywork",
-    body: "A chain that fires when a form is submitted, so that nobody has to copy a name into a second system, is a real and valuable thing and it is a different product. That question is about work, and it is answered by whether a step a person used to do now happens without them. Nothing in this article will save you an hour.",
+    body: "A chain can fire when a form is submitted, so that nobody has to copy a name into a second system. That is a real and valuable thing, and it is a different product. That question is about work. It is answered by whether a step a person used to do now happens without them. Nothing in this article will save you an hour.",
   },
   {
     lead: "Not the old list",
-    body: "Going back to people who contacted you years ago and went quiet is its own project with its own rules, and the rules have dates in them. That question is about permission that may have gone stale. This one assumes the permission is current and asks the harder thing: what you send those people, how often, and whether it reaches them.",
+    body: "Going back to people who contacted you years ago and went quiet is its own project with its own rules. Those rules have dates in them. That question is about permission that may have gone stale. This one assumes the permission is current. It asks the harder thing: what you send those people, how often, and whether it reaches them.",
   },
   {
     lead: "Not the ask",
-    body: "Requesting a review at the right moment is a single message with a single job and a bright legal line running through the middle of it. That question is about one moment. This one is about the two hundred moments in between, where there is no event to react to and you are deciding whether to be in somebody's morning at all.",
+    body: "Asking for a review at the right moment is a single message with a single job. It has a bright legal line running through the middle of it. That question is about one moment. This one is about the two hundred moments in between. There is no event to react to, and you are deciding whether to be in someone's morning at all.",
   },
 ];
 
@@ -76,19 +76,19 @@ export const NOT_THE_OTHERS: GridItem[] = [
 export const FOUR_DECISIONS: GridItem[] = [
   {
     lead: "Who it goes to",
-    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The person who bought last spring is still matching the buyer segment because nobody wrote the rule that takes them out of it. When a campaign embarrasses somebody it is far more often because of who it reached than because of what it said, and the audience is the half nobody opens again.",
+    body: "The audience is a query, and a query written once runs forever against a database that keeps changing. The person who bought last spring is still matching the buyer segment, because nobody wrote the rule that takes them out of it. When a campaign embarrasses someone, it is far more often because of who it reached than because of what it said. And the audience is the half nobody opens again.",
   },
   {
     lead: "What it says",
-    body: "The only part anybody edits, and the part that carries the least risk when it is wrong. A dull message to the right person on the right morning is forgettable. A brilliant message to somebody who bought through you in March reads as evidence that you do not know who they are, and being forgotten is a far cheaper outcome than that.",
+    body: "The only part anybody edits, and the part that carries the least risk when it is wrong. A dull message to the right person on the right morning is forgettable. A brilliant message to someone who bought through you in March reads as evidence that you do not know who they are. Being forgotten is a far cheaper outcome than that.",
   },
   {
     lead: "When it arrives",
-    body: "Behaviour triggers move this from a calendar to a reaction, which is a genuine improvement and is also where the strangeness comes from. Somebody looks at three listings on a Sunday evening, and what arrives on Monday tells them exactly how closely they are being watched. How long to wait is a design decision, and it is a decision whether or not anybody makes it on purpose.",
+    body: "Behaviour triggers move this from a calendar to a reaction. That is a real improvement, and it is also where the strangeness comes from. Someone looks at three listings on a Sunday evening. What arrives on Monday tells them exactly how closely they are being watched. How long to wait is a design decision, and it is a decision whether or not anyone makes it on purpose.",
   },
   {
     lead: "Whether it arrives at all",
-    body: "This is the one nobody chooses, and it is decided by a company you have no contract with, using a rule they publish and a number they will not show you. It is the reason the other three matter more than they look: every one of them is an input into a reputation you cannot inspect, and the effects arrive weeks later on a different send.",
+    body: "This is the one nobody chooses. It is decided by a company you have no contract with. They use a rule they publish and a number they will not show you. It is the reason the other three matter more than they look. Every one of them is an input into a reputation you cannot inspect. The effects arrive weeks later on a different send.",
   },
 ];
 
@@ -130,11 +130,11 @@ export const TRACKING = {
   max: 100,
   lit: 2,
   basis:
-    "Three shares of the same corpus of 12,618 commercial emails from 902 senders, collected by a crawler that subscribed to mailing lists on 15,700 websites, then opened in a real email client while the network traffic was recorded.",
+    "Three shares of the same corpus of 12,618 commercial emails from 902 senders. A crawler collected them by subscribing to mailing lists on 15,700 websites. They were then opened in a real email client while the network traffic was recorded.",
   sourceText:
     "Steven Englehardt, Jeffrey Han and Arvind Narayanan, I never signed up for this! Privacy implications of email tracking, Proceedings on Privacy Enhancing Technologies 2018.",
   sourceHref: "https://petsymposium.org/popets/2018/popets-2018-0006.pdf",
-  note: "The authors state their own limit and it is the one that matters here: \"our corpus of emails is not intended to be representative, and we are unable to draw conclusions about the extent of tracking in the typical user's mailbox.\" So read this as what commercial mailing lists were doing rather than as what your own provider does. The study is also from 2018, and the third bar in particular describes a practice that mailbox providers have since made harder rather than one that has grown. What has not changed is the mechanism, and the mechanism is the reason it is here: none of this is added by the sender, all of it arrives with the tooling, and the researchers' own list of open questions includes whether a sender setting up a campaign is even told that the tracking is there.",
+  note: "The authors state their own limit, and it is the one that matters here. They write: \"our corpus of emails is not intended to be representative, and we are unable to draw conclusions about the extent of tracking in the typical user's mailbox.\" So read this as what commercial mailing lists were doing rather than as what your own provider does. The study is also from 2018. The third bar in particular describes a practice that mailbox providers have since made harder rather than one that has grown. What has not changed is the mechanism, and the mechanism is the reason it is here. None of this is added by the sender. All of it arrives with the tooling. And the researchers' own list of open questions includes whether a sender setting up a campaign is even told that the tracking is there.",
 };
 
 /** SCENE copy — how long you have to stop, according to the two documents that say. Cited data
@@ -177,7 +177,7 @@ export const DEADLINES = {
    * Google belongs in the note, where it already is. */
   sourceText: "Yahoo Sender Best Practices, honor unsubscribes within 2 days.",
   sourceHref: "https://senders.yahooinc.com/best-practices/",
-  note: "The two bars are not in the same unit, and the difference runs in the safe direction: ten business days covers a longer stretch of calendar than ten days does, so the drawn gap is smaller than the real one rather than larger. There is no third bar for Google, and that is a checked absence rather than an omission: their sender guidelines page carries no figure in days anywhere on it. Read this as which document is actually setting your deadline, not as a scale of penalties. The statute is enforceable and the requirement is not, and the requirement is still the one that will change what happens to your mail.",
+  note: "The two bars are not in the same unit, and the difference runs in the safe direction. Ten business days covers a longer stretch of calendar than ten days does. So the drawn gap is smaller than the real one rather than larger. There is no third bar for Google, and that is a checked absence rather than an omission. Their sender guidelines page carries no figure in days anywhere on it. Read this as which document is actually setting your deadline, not as a scale of penalties. The statute is enforceable and the requirement is not. The requirement is still the one that will change what happens to your mail.",
 };
 
 /** SCENE copy — three ways a correctly built campaign produces nothing.
@@ -188,15 +188,15 @@ export const DEADLINES = {
 export const WASTED: GridItem[] = [
   {
     lead: "A segment nobody ever leaves",
-    body: "Somebody defines the buyer audience on the day it is built and never writes the rule that removes a person from it. Two years later it contains everyone who has ever filled in anything, including the family whose closing you attended. Every campaign is then aimed at a group that has quietly stopped meaning anything, and the reporting will look fine because the reporting counts sends.",
+    body: "Someone defines the buyer audience on the day it is built. Nobody ever writes the rule that removes a person from it. Two years later it contains everyone who has ever filled in anything, including the family whose closing you attended. Every campaign is then aimed at a group that has quietly stopped meaning anything. The reporting will look fine, because the reporting counts sends.",
   },
   {
     lead: "A sender address nobody owns",
-    body: "The mail goes out from a subdomain a contractor set up, authenticated by records nobody in the business can read, and the reputation attached to it belongs to whoever last configured it. The day it goes wrong there is nobody to ask. This is dull, it takes an afternoon to fix while it is small, and it is unfixable in a hurry.",
+    body: "The mail goes out from a subdomain a contractor set up. It is authenticated by records nobody in the business can read. The reputation attached to it belongs to whoever last configured it. The day it goes wrong there is nobody to ask. This is dull. It takes an afternoon to fix while it is small, and it cannot be fixed in a hurry.",
   },
   {
     lead: "Reporting that measures the sending",
-    body: "Sends, opens, clicks. All three are counts of what your own software did, and the first is entirely under your control. A dashboard built out of them will show a healthy campaign right up to the point where the mail stops arriving, because nothing in it is a measurement of the only thing that matters, which is whether a person read something and thought better of you for it.",
+    body: "Sends, opens, clicks. All three are counts of what your own software did, and the first is entirely under your control. A dashboard built out of them will show a healthy campaign right up to the point where the mail stops arriving. Nothing in it is a measurement of the only thing that matters. That is whether a person read something and thought better of you for it.",
   },
 ];
 
@@ -277,7 +277,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       // tear off tabs rather than one.
       alt: "A kiosk covered edge to edge in overlapping paper flyers in hot pink, magenta, bright blue, yellow, green, orange and white, several curling away from the surface, several carrying rows of tear off tabs, with fragments of wording legible across them including GRADUATE SCHOOL, LSAT, MCAT, Are You Ready, FREE SCREENING, RENT and LIVE CLOSE TO CAMPUS, and no bare board visible anywhere behind the paper",
       caption:
-        "Every sheet here was written by somebody who had thought about it. Each one is addressed to nobody in particular, which is the only thing they have in common, and it is enough to make all of them invisible at once. This is what a database of people who half remember you sees when a broadcast arrives, and no amount of care inside one sheet fixes it.",
+        "Every sheet here was written by somebody who had thought about it. Each one is addressed to nobody in particular. That is the only thing they have in common, and it is enough to make all of them invisible at once. This is what a database of people who half remember you sees when a broadcast arrives. No amount of care inside one sheet fixes it.",
       credit: "Photograph by Richard Ha, CC BY 2.0.",
       ariaLabel: "A kiosk covered in flyers",
     },
@@ -287,7 +287,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From something happening to somebody reading it.",
-      lede: "Six hops, and your software stops at the third. The last three are the ones that decide whether any of the first three mattered, they are performed by companies you have no agreement with, and the only one of them you can influence is the fourth. Everything written about marketing automation is about the first two hops.",
+      lede: "Six hops, and your software stops at the third. The last three are the ones that decide whether any of the first three mattered. They are done by companies you have no agreement with. The only one of them you can influence is the fourth. Everything written about marketing automation is about the first two hops.",
       steps: EMAIL_PATH,
       altPrefix:
         "The path from a trigger in your own software to a message being read, through the audience, the send, the authentication signature and somebody else's filtering judgement",
@@ -333,7 +333,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       // argues from.
       alt: "Three tiers of wooden card index drawers filling the frame, warm honey coloured varnished pine with long brass bail handles, each drawer carrying a small white card in a metal frame lettered by hand, the middle tier reading ranges of surnames such as ROC to RYZ and SAR to SGZ while the bottom tier reads DISTRICT twice and HANSARD four times with one card left blank, and a dark metal rack, a paler cabinet and a bundle of newspapers at the right hand edge",
       caption:
-        "Somebody wrote every one of those labels by hand, and the bottom tier is not filed the way the tier above it is. One row runs in ranges of surnames; the row beneath it repeats two subject words and leaves a card blank. Two schemes in one cabinet is what a segment turns into, and it is the part of a campaign nobody revisits. A query written once keeps running against a database that will not stop changing underneath it.",
+        "Someone wrote every one of those labels by hand. The bottom tier is not filed the way the tier above it is. One row runs in ranges of surnames. The row beneath it repeats two subject words and leaves a card blank. Two schemes in one cabinet is what a segment turns into. It is the part of a campaign nobody goes back to. A query written once keeps running against a database that will not stop changing underneath it.",
       credit: "Photograph by waferboard, CC BY 2.0.",
       ariaLabel: "A wall of index drawers",
     },
@@ -361,7 +361,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "covered",
           label: "Share whose mailbox is at a provider that publishes a ceiling",
-          hint: "Gmail and Yahoo both publish the same figure. Count the domains in your own list rather than guessing at this one: it is an afternoon's work and it decides how much of this section applies to you.",
+          hint: "Gmail and Yahoo both publish the same figure. Count the domains in your own list rather than guessing at this one. It is an afternoon's work, and it decides how much of this section applies to you.",
           min: 20,
           max: 100,
           step: 5,
@@ -405,7 +405,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Complaints in one send that reach the published ceiling",
-      note: "The headline is the third row rather than the yearly figure, because a single send is the unit a person actually decides about and because the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing; read two and a half as between two and three. Three things this deliberately refuses. It will not compute your actual spam rate, and it cannot: Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see, so what you have here is a ceiling expressed in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain, because the section above shows what an open actually counts and it is not attention. And there is no row for what a damaged sending reputation costs in money, because nobody has published a figure for that with a method under it and this article is not going to be the first to make one up.",
+      note: "The headline is the third row rather than the yearly figure. A single send is the unit a person actually decides about, and the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing. Read two and a half as between two and three. Three things this deliberately refuses. It will not work out your actual spam rate, and it cannot. Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see. So what you have here is a ceiling in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain. The section above shows what an open actually counts, and it is not attention. And there is no row for what a damaged sending reputation costs in money. Nobody has published a figure for that with a method under it. This article is not going to be the first to make one up.",
       action: { label: "See how it is built", href: "/services/marketing-automation" },
       secondary: { label: "Ask us to look at your sending", href: "/connect" },
     },
@@ -423,9 +423,9 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Send us the domain you send marketing email from and roughly how many people are on the list. We will tell you what your authentication records currently say, whether the address in your From line is aligned with them, and which of the two published requirements you are already meeting without knowing it.",
+      text: "Send us the domain you send marketing email from, and roughly how many people are on the list. We will tell you what your authentication records currently say. We will tell you whether the address in your From line is aligned with them. And we will tell you which of the two published requirements you are already meeting without knowing it.",
       reassure:
-        "It is a short reply from a person, it costs nothing, everything we would read is published in public DNS, and we do not need access to your mailing tool or your list.",
+        "It is a short reply from a person, and it costs nothing. Everything we would read is published in public DNS. We do not need access to your mailing tool or your list.",
       action: { label: "Ask us to look at your sending", href: "/connect" },
       ariaLabel: "Ask us to look at your sending",
     },
@@ -436,13 +436,13 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the last campaign you sent and read it as the person third from the bottom of the list, the one who bought through you two years ago and has not heard from you since except in a segment. If it does not survive that, the fix is not a better subject line. It is a smaller list, and a smaller list is the one change in this entire subject that costs nothing and works immediately.",
+      text: "Open the last campaign you sent. Read it as the person third from the bottom of the list, the one who bought through you two years ago and has not heard from you since except in a segment. If it does not survive that, the fix is not a better subject line. It is a smaller list. A smaller list is the one change in this entire subject that costs nothing and works immediately.",
       actions: [
         { label: "See it on the AI page", href: "/ai#marketing", variant: "light" },
         { label: "How it is built", href: "/services/marketing-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page because the cost tracks four things nobody can guess from an article: how many channels you want joined, whether your sending domain and its authentication already exist or have to be set up, how much of your contact data can be trusted enough to segment on, and whether anybody in the business will own the audience rules afterwards. The AI audit is an hour, done with you, and it starts by reading what your domain currently publishes about itself.",
+        "There is no price on this page, because the cost tracks four things nobody can guess from an article. How many channels you want joined. Whether your sending domain and its authentication already exist or have to be set up. How much of your contact data can be trusted enough to segment on. And whether anybody in the business will own the audience rules afterwards. The AI audit is an hour, done with you, and it starts by reading what your domain currently publishes about itself.",
     },
   },
 

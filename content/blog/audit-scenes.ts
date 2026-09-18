@@ -33,9 +33,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * actually is, the number that resets everybody's sense of being behind, and the shape of the risk
  * that makes ranking by an average the wrong move. */
 export const IN_SHORT: string[] = [
-  "The output of an audit is a decision, and most of the value in it is subtraction. A list of twelve things you could automate is not worth paying for, because you can write that yourself in an afternoon. Knowing which four of the twelve to cross out, and being able to say why, is the part that takes somebody who has watched these break.",
-  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey, a sample of over 850,000 firms where answering is required by law, and found that while 90.2 percent of the firms that collect any information at all held some of it digitally, only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
-  "Rank by the average outcome and you will rank wrong, because the outcomes are not distributed like that. In a study of 1,471 information technology projects worth 241 billion dollars, the ordinary ones overran by 3.6 percent on average, and 17 percent of them landed in a fat right hand tail where a thin-tailed distribution would have put 0.7 percent.",
+  "The output of an audit is a decision, and most of the value in it is subtraction. A list of twelve things you could automate is not worth paying for. You can write that yourself in an afternoon. Knowing which four of the twelve to cross out, and being able to say why, is the part that takes someone who has watched these break.",
+  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey. It sampled over 850,000 firms, and answering is required by law. It found that 90.2 percent of the firms that collect any information at all held some of it digitally. Only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
+  "Rank by the average outcome and you will rank wrong, because the outcomes are not spread out like that. In a study of 1,471 information technology projects worth 241 billion dollars, the ordinary ones overran by 3.6 percent on average. And 17 percent of them landed in a fat right hand tail, where a thin-tailed distribution would have put 0.7 percent.",
 ];
 
 /** SCENE copy — what an audit actually hands over.
@@ -45,19 +45,19 @@ export const IN_SHORT: string[] = [
 export const DELIVERABLE: GridItem[] = [
   {
     lead: "A written description of how the work runs now",
-    body: "Not an org chart and not a process diagram made in advance. A plain account of what actually happens, including the workaround somebody invented a few years ago that the office now depends on and nobody has written down. This is the part that surprises owners, and it is worth having even if nothing else follows from it.",
+    body: "Not an org chart and not a process diagram made in advance. A plain account of what actually happens. That includes the workaround someone invented a few years ago, which the office now depends on and nobody has written down. This is the part that surprises owners. It is worth having even if nothing else follows from it.",
   },
   {
     lead: "An order, with the reasoning attached",
-    body: "Not a ranking by how impressive each item sounds, and not a ranking by how much it annoys you. The order has to survive somebody asking why the third one is not the first, which means the reason for each position has to be written down beside it rather than held in the head of whoever made the list.",
+    body: "Not a ranking by how impressive each item sounds. Not a ranking by how much it annoys you. The order has to survive someone asking why the third one is not the first. So the reason for each position has to be written down beside it, rather than held in the head of whoever made the list.",
   },
   {
     lead: "One thing built and running",
-    body: "A document that ends in a proposal is a proposal. The useful version ends with something small working in your business, because that is the only way anybody finds out whether the assumptions in the document were true, and because a first automation that exists changes how the rest of the list gets read.",
+    body: "A document that ends in a proposal is a proposal. The useful version ends with something small working in your business. That is the only way anyone finds out whether the assumptions in the document were true. And a first automation that exists changes how the rest of the list gets read.",
   },
   {
     lead: "The list of what you are not going to do",
-    body: "The half nobody writes down and the half that pays for the exercise. Every candidate that gets crossed off saves you the build, the maintenance and the quiet failure afterwards, and the reasons for crossing things off are more reusable than the reasons for keeping them, because you will apply them again to next year's list.",
+    body: "The half nobody writes down, and the half that pays for the exercise. Every candidate that gets crossed off saves you the build. It saves you the maintenance, and the quiet failure afterwards. The reasons for crossing things off are more reusable than the reasons for keeping them, because you will apply them again to next year's list.",
   },
 ];
 
@@ -98,11 +98,11 @@ export const ADOPTION = {
   max: 100,
   lit: 1,
   basis:
-    "Share of firms, weighted to the national population of businesses, from the technology module of the 2018 Annual Business Survey run by the Census Bureau with the National Center for Science and Engineering Statistics. The first bar counts firms that collect at least one type of information and hold at least one of those types digitally. The second counts firms reporting any use of at least one of nine listed advanced business technologies, which include robotics, machine learning, machine vision, natural language processing, voice recognition, augmented reality, radio frequency identification, touchscreens and automated guided vehicles.",
+    "Share of firms, weighted to the national population of businesses. It comes from the technology module of the 2018 Annual Business Survey, run by the Census Bureau with the National Center for Science and Engineering Statistics. The first bar counts firms that collect at least one type of information and hold at least one of those types digitally. The second counts firms reporting any use of at least one of nine listed advanced business technologies. Those nine include robotics, machine learning, machine vision, natural language processing, voice recognition, augmented reality, radio frequency identification, touchscreens and automated guided vehicles.",
   sourceText:
     "Zolas and others, Advanced Technologies Adoption and Use by U.S. Firms: Evidence from the Annual Business Survey, National Bureau of Economic Research, 2020.",
   sourceHref: "https://www.nber.org/system/files/working_papers/w28290/w28290.pdf",
-  note: "Three things this cannot be stretched to say, and one it says firmly. It cannot say anything about 2026: the reference year is 2017 and both the technology and the words people use for it have moved a great deal since. It cannot be read as nobody using AI, because a firm buying a service that happens to run on it is not a firm adopting a technology on this list. And a third bar was not drawn: machine learning specifically came in at 2.9 percent use and 0.7 percent testing, which against this axis renders as a hairline rather than as a bar, so it is here in writing instead. What it does say firmly is the shape. Two thirds of the sampled firms had fewer than ten employees, answering was required by law rather than voluntary, and the distance between the two bars was enormous. The paper's authors also note that the Census public use tables do not correct for sample weights the way they do, so figures taken from those tables read lower still.",
+  note: "Three things this cannot be stretched to say, and one it says firmly. It cannot say anything about 2026. The reference year is 2017. Both the technology and the words people use for it have moved a great deal since. It cannot be read as nobody using AI, because a firm buying a service that happens to run on it is not a firm adopting a technology on this list. And a third bar was not drawn. Machine learning specifically came in at 2.9 percent use and 0.7 percent testing. Against this axis that renders as a hairline rather than as a bar, so it is here in writing instead. What it does say firmly is the shape. Two thirds of the sampled firms had fewer than ten employees. Answering was required by law rather than voluntary. And the distance between the two bars was enormous. The paper's authors also note that the Census public use tables do not correct for sample weights the way they do, so figures taken from those tables read lower still.",
 };
 
 /** SCENE copy — the three subtractions.
@@ -114,15 +114,15 @@ export const ADOPTION = {
 export const SUBTRACTIONS: GridItem[] = [
   {
     lead: "Does it happen often enough to be worth owning?",
-    body: "Not often enough to save time. Often enough that somebody would notice within a week if it stopped, because the frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
+    body: "Not often enough to save time. Often enough that someone would notice within a week if it stopped. The frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
   },
   {
     lead: "Could you write the rule down for a new hire?",
-    body: "If the answer needs a paragraph beginning with it depends, the honest first task is not a build, it is a decision that nobody has made. Software will make that decision for you by accident, consistently, in whichever direction the person writing the prompt happened to lean that morning.",
+    body: "If the answer needs a paragraph beginning with it depends, the honest first task is not a build. It is a decision that nobody has made. Software will make that decision for you by accident. It will make it the same way every time, in whichever direction the person writing the prompt happened to lean that morning.",
   },
   {
     lead: "Where does a wrong answer end up?",
-    body: "In a spreadsheet somebody checks on Friday, or in front of a client, in writing, with your name on it. This is the question that removes the most candidates and it is the one people skip, because it is the only one whose answer does not improve with better software.",
+    body: "In a spreadsheet someone checks on Friday, or in front of a client, in writing, with your name on it. This is the question that removes the most candidates. It is the one people skip. It is the only one whose answer does not improve with better software.",
   },
 ];
 
@@ -167,11 +167,11 @@ export const OUTCOMES = {
   max: 100,
   lit: 2,
   basis:
-    "Share of projects falling into each of the three regimes the authors fit to their cost overrun distribution, on a sample of 1,471 information technology projects worth 241 billion dollars, assembled from private sector records, published national audit reports and United States federal budget filings. The middle regime is an ordinary bell curve with an average overrun of 3.6 percent. The authors give 0.7 percent as the share a thin-tailed distribution would put in the outer tails, against the 17 percent they measure.",
+    "Share of projects falling into each of the three regimes the authors fit to their cost overrun distribution. The sample is 1,471 information technology projects worth 241 billion dollars, assembled from private sector records, published national audit reports and United States federal budget filings. The middle regime is an ordinary bell curve with an average overrun of 3.6 percent. The authors give 0.7 percent as the share a thin-tailed distribution would put in the outer tails, against the 17 percent they measure.",
   sourceText:
     "Budzier and Flyvbjerg, Double Whammy: How ICT Projects are Fooled by Randomness and Screwed by Political Intent, Said Business School, University of Oxford, 2013.",
   sourceHref: "https://arxiv.org/abs/1304.4590",
-  note: "Do not take 17 percent home as your own number. The median project in this sample was planned at 3.3 million dollars and the average at 122 million, and nothing a small business commissions is remotely that size. What transfers is the shape rather than the percentages, and the shape is the useful part: the middle of this distribution is unremarkable and the tail is where the damage lives, so an average tells you almost nothing about what you are risking. That is a specific argument against a specific habit, which is ranking a list of candidates by expected payback and working down it. The authors also set out why the industry's most quoted failure figures were contested in the academic literature, on the grounds that the sampling was skewed towards failure, the data collection was opaque and the categorisation was methodologically biased. A separate piece of research that tested exactly that is described further down this page.",
+  note: "Do not take 17 percent home as your own number. The median project in this sample was planned at 3.3 million dollars and the average at 122 million. Nothing a small business commissions is remotely that size. What transfers is the shape rather than the percentages, and the shape is the useful part. The middle of this distribution is unremarkable, and the tail is where the damage lives. So an average tells you almost nothing about what you are risking. That is a specific argument against a specific habit, which is ranking a list of candidates by expected payback and working down it. The authors also set out why the industry's most quoted failure figures were contested in the academic literature. The grounds were that the sampling was skewed towards failure, the data collection was opaque and the categorisation was methodologically biased. A separate piece of research that tested exactly that is described further down this page.",
 };
 
 /** SCENE copy — the six steps of an audit, drawn as the order they have to happen in.
@@ -195,15 +195,15 @@ export const AUDIT_PATH: { label: string; connects: string; at?: string }[] = [
 export const DO_NOT: GridItem[] = [
   {
     lead: "Anything that states a fact about a property",
-    body: "Square footage, a tax figure, a school district, a boundary, whether a permit exists. These read like data and behave like liability, and the correct build is one that fetches the value from the record that governs it or says it does not know, which is a different and much smaller project than the one people ask for.",
+    body: "Square footage, a tax figure, a school district, a boundary, whether a permit exists. These read like data and behave like liability. The correct build is one that fetches the value from the record that governs it, or says it does not know. That is a different and much smaller project than the one people ask for.",
   },
   {
     lead: "The judgment call you make four times a year",
-    body: "Whether to take a listing, whether to advise a price cut, whether this buyer is real. It is rare, it is high stakes, and its rule cannot be written down without lying about how the decision is actually made. Rare and important is the exact opposite of the profile worth building for.",
+    body: "Whether to take a listing, whether to advise a price cut, whether this buyer is real. It is rare. It is high stakes. And its rule cannot be written down without lying about how the decision is actually made. Rare and important is the exact opposite of the profile worth building for.",
   },
   {
     lead: "Anything whose failure is silent",
-    body: "A job that quietly stops running, a message that quietly stops sending, a field that quietly stops updating. If nothing in the business goes visibly wrong when it fails, then nobody will notice for months, and the thing you automated has become a thing you believe is happening.",
+    body: "A job that quietly stops running, a message that quietly stops sending, a field that quietly stops updating. If nothing in the business goes visibly wrong when it fails, then nobody will notice for months. The thing you automated has become a thing you believe is happening.",
   },
 ];
 
@@ -215,15 +215,15 @@ export const DO_NOT: GridItem[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "It described the official version",
-    body: "Everybody answered honestly and everybody described the process as it is supposed to work. The real one has three steps in it that exist because a system does not do something it was bought to do, and nobody mentions those, because after two years they stop feeling like steps and start feeling like the job.",
+    body: "Everyone answered honestly, and everyone described the process as it is supposed to work. The real one has three steps in it that exist because a system does not do something it was bought to do. Nobody mentions those. After two years they stop feeling like steps and start feeling like the job.",
   },
   {
     lead: "It ended in a document",
-    body: "A ranked list with nothing built is a piece of homework, and homework has a half life of about a fortnight in a working business. The value of shipping the first item is not the item, it is that the rest of the list gets read differently by people who have now seen one of these actually arrive.",
+    body: "A ranked list with nothing built is a piece of homework. Homework has a half life of about a fortnight in a working business. The value of shipping the first item is not the item. It is that the rest of the list gets read differently by people who have now seen one of these actually arrive.",
   },
   {
     lead: "Nobody re-read it",
-    body: "The order was right in March and by September two of the candidates have gone away, a new system has arrived, and something that was ruled out because nobody could write the rule down now has a rule, because somebody was forced to decide it. A list that is never re-read is a snapshot being used as a plan.",
+    body: "The order was right in March. By September two of the candidates have gone away. A new system has arrived. Something that was ruled out because nobody could write the rule down now has a rule, because someone was forced to decide it. A list that is never re-read is a snapshot being used as a plan.",
   },
 ];
 
@@ -284,7 +284,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       // one does. Only lettering legible at the shipped crop is named.
       alt: "Three round pressure gauges set into a worn yellow instrument panel, the large central one carrying a long black needle resting at the low end of its scale and a short red index pointer below it, its black bezel stencilled in Cyrillic above the glass and again beneath it, a gauge at each side cut off by the frame with Cyrillic stencilled on their bezels in the same way, the left one showing a scale running from ten to sixteen and the right one carrying a black needle and a red pointer of its own",
       caption:
-        "Three gauges, five pointers between them, and not one of them tells anybody what to do. A reading is a fact about the machine, and turning it into an action needs somebody who knows what this machine is for, what it did last week and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
+        "Three gauges, five pointers between them. Not one of them tells anybody what to do. A reading is a fact about the machine. Turning it into an action needs someone who knows what this machine is for, what it did last week, and what happens downstream if it is shut off. Every dashboard sold on the strength of its numbers is selling the easy half.",
       credit: "Photograph by Thomas Quine, CC BY 2.0.",
       ariaLabel: "Three pressure gauges on a yellow instrument panel",
     },
@@ -329,7 +329,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "Six steps, and the third one is the product.",
-      lede: "Drawn as the order it has to happen in rather than as a menu. A great deal of what gets sold under this name is the first two boxes, which are the ones you could do without help. The third is where the money is and it is the only step whose output is shorter than its input. Note that the last box is a date rather than a task, and that it is the one everybody skips.",
+      lede: "Drawn as the order it has to happen in rather than as a menu. A great deal of what gets sold under this name is the first two boxes, which are the ones you could do without help. The third is where the money is. It is the only step whose output is shorter than its input. Note that the last box is a date rather than a task, and that it is the one everybody skips.",
       steps: AUDIT_PATH,
       altPrefix:
         "The path from a written account of one job as it actually ran, through naming every candidate, cutting the list with three questions, ordering what survives with the reasons attached, building the first one small, and re-reading the list six weeks later",
@@ -346,7 +346,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "candidates",
           label: "Things you could name right now that you would automate",
-          hint: "Write them on paper first, without stopping to judge any of them. The writing is more useful than the number it produces, and the number is only here to be reduced.",
+          hint: "Write them on paper first, without stopping to judge any of them. The writing is more useful than the number it produces. The number is only here to be reduced.",
           min: 3,
           max: 40,
           step: 1,
@@ -370,7 +370,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "writable",
           label: "Share whose rule you could write down for a new hire",
-          hint: "The test is whether somebody competent could follow the written version without asking you. If the honest answer needs the phrase it depends, count it out.",
+          hint: "The test is whether someone competent could follow the written version without asking you. If the honest answer needs the phrase it depends, count it out.",
           min: 10,
           max: 100,
           step: 5,
@@ -407,7 +407,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Candidates still standing at the end",
-      note: "The number is meant to come out small, and the honest reading of that is not that automation rarely works. It is that most of a list is answered by a question rather than by a quote, and answering it costs nothing. Shares produce fractions, and two thirds of a candidate is not a thing, so read anything with a decimal in it as a rough count. Move the last slider first: it usually moves the answer more than the other two shares together, and it is the one an enthusiastic conversation skips. Four things this deliberately refuses to put a number on. There is no failure rate for automation projects, because the most quoted one in the industry has been reconstructed by researchers with their own data and shown to measure deviation from an estimate rather than whether anything succeeded. There is no payback period, because it depends entirely on which candidate. There is no figure for hours saved by an audit, because an audit saves no hours. And there is nothing here about what a build costs, because this arithmetic is about whether a build should happen at all.",
+      note: "The number is meant to come out small, and the honest reading of that is not that automation rarely works. It is that most of a list is answered by a question rather than by a quote. Answering it costs nothing. Shares produce fractions. Two thirds of a candidate is not a thing. So read anything with a decimal in it as a rough count. Move the last slider first. It usually moves the answer more than the other two shares together. It is the one an eager conversation skips. Four things this refuses to put a number on, on purpose. There is no failure rate for automation projects. The most quoted one in the industry has been rebuilt by researchers with their own data, and shown to measure deviation from an estimate rather than whether anything succeeded. There is no payback period, because it depends entirely on which candidate. There is no figure for hours saved by an audit, because an audit saves no hours. And there is nothing here about what a build costs, because these sums are about whether a build should happen at all.",
       action: { label: "See how it is built", href: "/services/ai-audit" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -415,9 +415,9 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Send us your list. Not a description of your business, the actual list of things you would automate if somebody handed you the budget tomorrow. We will send back which ones we would cross off and why, in writing, before anybody talks about money.",
+      text: "Send us your list. Not a description of your business. The actual list of things you would automate if someone handed you the budget tomorrow. We will send back which ones we would cross off and why, in writing, before anybody talks about money.",
       reassure:
-        "It is a short reply from a person, it costs nothing, and the reply is genuinely often that two of them are worth doing and the rest are not. That answer is the product working, not us being difficult.",
+        "It is a short reply from a person, and it costs nothing. The reply is truly often that two of them are worth doing and the rest are not. That answer is the product working, not us being difficult.",
       action: { label: "Send us your list", href: "/connect" },
       ariaLabel: "Send us your list of things you would automate",
     },
@@ -437,7 +437,7 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       // both crops and at a lanczos zoom on the lettering.
       alt: "Three red industrial isolator boxes bolted in a row to a grey wall of horizontal concrete courses, each with a red lever handle on its face and the levers at three different angles so no two are set the same way, the left and middle boxes hand lettered ZAP. above the lever, the middle one lettered FREZA and R100/15A below it with a small separate red enclosure bolted above it stencilled ZSP-2 and another bolted below it lettered 500 V., a smaller enclosure under each of the other two boxes as well, and thick black cables running out of the bottoms of all of them past a green painted steel frame",
       caption:
-        "Three switches, and the useful thing about them is that no two are in the same position. Somebody decided, for each one, whether the thing behind it should be running today. That decision took a second and it is the entire job. Everything expensive in this subject comes from switching something on and never afterwards asking whether it should still be on.",
+        "Three switches, and the useful thing about them is that no two are in the same position. Someone decided, for each one, whether the thing behind it should be running today. That decision took a second. It is the entire job. Everything expensive in this subject comes from switching something on and never afterwards asking whether it should still be on.",
       credit: "Photograph by Vladimir Mokry, CC0 1.0.",
       ariaLabel: "Three red industrial isolator switches on a concrete wall",
     },
@@ -458,13 +458,13 @@ export const AUDIT_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Write the list tonight, on paper, without editing it. Then go down it once with a single question against every line: if this went wrong, who would find out, and how. Cross off anything where the honest answer is a client, and cross off anything where the honest answer is nobody. What is left is short, and it is the only part of the list worth a conversation with anybody.",
+      text: "Write the list tonight, on paper, without editing it. Then go down it once with a single question against every line: if this went wrong, who would find out, and how. Cross off anything where the honest answer is a client. Cross off anything where the honest answer is nobody. What is left is short. It is the only part of the list worth a conversation with anybody.",
       actions: [
         { label: "See it on the AI page", href: "/ai#consult", variant: "light" },
         { label: "How it is built", href: "/services/ai-audit", variant: "outline-light" },
       ],
       footnote:
-        "The audit is an hour, done with you, and it is deliberately priced so that the answer being no costs you almost nothing. What it is not is a discovery call with a proposal attached: the output is written, it names the things we would not build, and it is yours whether or not you go on to build anything with us.",
+        "The audit is an hour, done with you, and it is priced on purpose so that the answer being no costs you almost nothing. What it is not is a discovery call with a proposal attached. The output is written. It names the things we would not build. It is yours whether or not you go on to build anything with us.",
     },
   },
 

@@ -46,9 +46,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. What the value is, what
  * nobody publishes about it, and the failure that is not the one people brace for. */
 export const IN_SHORT: string[] = [
-  "An appended field is somebody else's assertion about a person, and it arrives without the two things that would let you weigh it: when it was true, and who said so. The Federal Trade Commission put compulsory orders to nine of these companies and reported that most of their data comes from other companies like them rather than from an original source.",
-  "There is no honest published rate for how fast contact data goes stale. We followed the circulating figures rather than assuming where they came from, and they end at a press release with a distribution disclaimer on it, at vendor blog posts, and at an aggregator citing a benchmark whose original is not linked. On the pages we opened, the same claim is quoted at thirty percent, at twenty two and a half, at twenty to thirty, and at up to seventy for email addresses.",
-  "And the expensive failure is not the record that comes back empty. It is the field you already knew, quietly replaced by a value you cannot check, in a row that does not record what was there before.",
+  "An appended field is someone else's assertion about a person. It arrives without the two things that would let you weigh it: when it was true, and who said so. The Federal Trade Commission put compulsory orders to nine of these companies. It reported that most of their data comes from other companies like them rather than from an original source.",
+  "There is no honest published rate for how fast contact data goes stale. We followed the circulating figures rather than assuming where they came from. They end at a press release with a distribution disclaimer on it. They end at vendor blog posts. And they end at an aggregator citing a benchmark whose original is not linked. On the pages we opened, the same claim is quoted four ways. At thirty percent. At twenty two and a half. At twenty to thirty. And at up to seventy for email addresses.",
+  "And the expensive failure is not the record that comes back empty. It is the field you already knew, quietly replaced by a value you cannot check. The row does not record what was there before.",
 ];
 
 /** SCENE copy — what this is, by what it is not.
@@ -60,15 +60,15 @@ export const IN_SHORT: string[] = [
 export const NOT_THE_NEIGHBOURS: GridItem[] = [
   {
     lead: "Not the trace",
-    body: "Starting from a property and finding contact details for an owner who has never spoken to you is a different act with two federal statutes attached to it, and it has its own long article on this site. That question is about acquiring something. This one starts from a person who is already in your database, usually because they came to you, and asks what you are entitled to believe about the row you now hold.",
+    body: "Starting from a property and finding contact details for an owner who has never spoken to you is a different act. It has two federal statutes attached to it, and it has its own long article on this site. That question is about acquiring something. This one starts from a person who is already in your database, usually because they came to you. It asks what you are entitled to believe about the row you now hold.",
   },
   {
     lead: "Not the duplicate",
-    body: "Deciding whether two records in your own systems describe one person is a question you can answer, because you can open both. There is a published model for it, and it has a third outcome worth knowing about. Here the other record is inside a company you have no access to, and you cannot see how it decided anything.",
+    body: "Deciding whether two records in your own systems describe one person is a question you can answer. You can open both. There is a published model for it. It has a third outcome worth knowing about. Here the other record is inside a company you have no access to. You cannot see how it decided anything.",
   },
   {
     lead: "Not the old list",
-    body: "Whether you may still contact somebody who went quiet three years ago is a question about permission, and permission has dates in it. This article assumes you are allowed to make the call. It is about whether the number you would dial is the one that reaches her, and about what happened to the number that used to be in that field.",
+    body: "Whether you may still contact someone who went quiet three years ago is a question about permission. Permission has dates in it. This article assumes you are allowed to make the call. It is about whether the number you would dial is the one that reaches her. And it is about what happened to the number that used to be in that field.",
   },
 ];
 
@@ -80,19 +80,19 @@ export const NOT_THE_NEIGHBOURS: GridItem[] = [
 export const WHAT_A_FIELD_ASSERTS: GridItem[] = [
   {
     lead: "It does not say when",
-    body: "A phone number in an enrichment response is the best answer in somebody's file on the day you asked, and the file does not say when it was assembled. Two numbers that look identical in your CRM can be a fact confirmed last month and a fact that was true in a different decade, and nothing in the row distinguishes them.",
+    body: "A phone number in an enrichment response is the best answer in someone's file on the day you asked. The file does not say when it was assembled. Two numbers can look identical in your CRM. One can be a fact confirmed last month, and the other a fact that was true in a different decade. Nothing in the row tells them apart.",
   },
   {
     lead: "It does not say who",
-    body: "The name on your invoice is the company you bought from, and that company mostly bought it as well. So the truthful answer to where a value came from is the last name in a chain rather than the name of whoever first wrote it down, and nobody publishes the chain. That is not a criticism of any particular supplier. It is the shape of the market, and a federal regulator has said so on the record.",
+    body: "The name on your invoice is the company you bought from. That company mostly bought it as well. So the truthful answer to where a value came from is the last name in a chain, rather than the name of whoever first wrote it down. And nobody publishes the chain. That is not a criticism of any particular supplier. It is the shape of the market, and a federal regulator has said so on the record.",
   },
   {
     lead: "It does not say observed or inferred",
-    body: "Some of what sits in these files was written down by somebody who saw it happen. Some of it was worked out from other things, by a company that has never met the person it describes. Both come back through the same interface in the same shape, so a conclusion that has been rounded into a value is indistinguishable from a measurement by the time it reaches your CRM.",
+    body: "Some of what sits in these files was written down by someone who saw it happen. Some of it was worked out from other things, by a company that has never met the person it describes. Both come back through the same interface, in the same shape. So a conclusion that has been rounded into a value looks exactly like a measurement by the time it reaches your CRM.",
   },
   {
     lead: "It does not say what it replaced",
-    body: "This is the one that costs money and it is entirely under your control. If the pass wrote into a field that already held something, the row should say so. Whether yours does is a thing you can check this afternoon, and the answer decides whether a bad pass is reversible. Where it does not, the old value is simply gone, nobody chose to discard it, and the one person who could have confirmed it was right is the client whose number you no longer have.",
+    body: "This is the one that costs money, and it is entirely under your control. If the pass wrote into a field that already held something, the row should say so. Whether yours does is a thing you can check this afternoon. The answer decides whether a bad pass can be undone. Where it does not, the old value is simply gone. Nobody chose to discard it. And the one person who could have confirmed it was right is the client whose number you no longer have.",
   },
 ];
 
@@ -135,12 +135,12 @@ export const BROKER_SOURCES = {
   max: 9,
   lit: 1,
   basis:
-    "Counts out of the nine named companies the Federal Trade Commission ordered to file special reports in December 2012 under section 6(b) of the FTC Act, covering their practices from January 2010. The three rows overlap: most of the nine do all three. The axis is nine because that is the whole population studied, not a sample of the industry.",
+    "Counts out of the nine named companies the Federal Trade Commission ordered to file special reports in December 2012, under section 6(b) of the FTC Act. The orders covered their practices from January 2010. The three rows overlap: most of the nine do all three. The axis is nine because that is the whole population studied, not a sample of the industry.",
   sourceText:
     "Federal Trade Commission, Data Brokers: A Call for Transparency and Accountability, May 2014.",
   sourceHref:
     "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
-  note: "This report is from 2014 and the industry has changed a great deal since, so do not read the bars as a description of whoever supplies your own enrichment today. Read the middle one as a structural fact, because that is what it is: when companies in a market mostly buy from each other, no single one of them can tell you where a value originally came from. The chart cannot show you the thing that follows from it, which is that the answer to \"where did this come from\" stops being a name and becomes a direction of travel. Nothing about that arrangement has become simpler in the years since.",
+  note: "This report is from 2014, and the industry has changed a great deal since. So do not read the bars as a description of whoever supplies your own enrichment today. Read the middle one as a structural fact, because that is what it is. When companies in a market mostly buy from each other, no single one of them can tell you where a value originally came from. The chart cannot show you the thing that follows from it. The answer to \"where did this come from\" stops being a name and becomes a direction of travel. Nothing about that arrangement has become simpler in the years since.",
 };
 
 /** SCENE copy — the same file, three labels. Cited data graphic TWO.
@@ -172,12 +172,12 @@ export const PRODUCT_LINES = {
   max: 9,
   lit: 0,
   basis:
-    "Counts out of the same nine companies, from the same report. They add up to more than nine because several of them sell in more than one category, which is the finding rather than an error: the same underlying records are packaged as a marketing list, as an identity check and as a public lookup page.",
+    "Counts out of the same nine companies, from the same report. They add up to more than nine because several of them sell in more than one category. That is the finding rather than an error. The same underlying records are packaged as a marketing list, as an identity check and as a public lookup page.",
   sourceText:
     "Federal Trade Commission, Data Brokers, May 2014, on the three product categories the nine sell.",
   sourceHref:
     "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
-  note: "The counts are from 2014 and the industry has changed since, so read them as a shape rather than as a market share, and note that the three overlap because several of the nine sell in more than one category. What the chart cannot draw is the part that matters, which is that nothing in the underlying records changes as they move between these three shelves. The same rows, the same fields, the same unknown ages, sold three times under three descriptions to three kinds of buyer, and the description is picked at the moment of sale rather than at the moment anybody wrote the data down.",
+  note: "The counts are from 2014, and the industry has changed since. So read them as a shape rather than as a market share. Note that the three overlap, because several of the nine sell in more than one category. What the chart cannot draw is the part that matters. Nothing in the underlying records changes as they move between these three shelves. The same rows, the same fields, the same unknown ages, sold three times under three descriptions to three kinds of buyer. And the description is picked at the moment of sale rather than at the moment anybody wrote the data down.",
 };
 
 /** SCENE copy — decay is a property of the people. Cited data graphic THREE.
@@ -223,10 +223,10 @@ export const TENURE = {
   ],
   lit: 0,
   basis:
-    "Median years of tenure with the current employer, from a supplement to the Current Population Survey, a monthly sample of about sixty thousand households. Median means the point at which half of all workers had more and half had less, so half of the youngest group had been in the job under two years and nine months.",
+    "Median years of tenure with the current employer. It comes from a supplement to the Current Population Survey, a monthly sample of about sixty thousand households. Median means the point at which half of all workers had more and half had less. So half of the youngest group had been in the job under two years and nine months.",
   sourceText: "U.S. Bureau of Labor Statistics, Employee Tenure in 2024, Table 1, released September 2024.",
   sourceHref: "https://www.bls.gov/news.release/tenure.t01.htm",
-  note: "This is about employment, not about the mobile number of somebody who bought a house from you, and it is here for one reason: it is the only measurement in the whole of this subject that names its survey, its sample and its definition. Use it as an argument rather than as a number. Whatever underlies a field decides how fast that field goes wrong, and the rate is different for different people, so a single percentage covering everybody in your database is describing a population that does not exist. We went looking for an equivalent measurement for a personal mobile number, a personal email address or a homeowner's mailing address and did not find one with a stated method, which is worth holding next to the fact that every figure circulating about data decay is quoted as though somebody had done exactly that study.",
+  note: "This is about employment, not about the mobile number of someone who bought a house from you. It is here for one reason. It is the only measurement in the whole of this subject that names its survey, its sample and its definition. Use it as an argument rather than as a number. Whatever underlies a field decides how fast that field goes wrong. The rate is different for different people. So a single percentage covering everybody in your database is describing a population that does not exist. We went looking for an equivalent measurement for a personal mobile number, a personal email address or a homeowner's mailing address. We did not find one with a stated method. That is worth holding next to the fact that every figure circulating about data decay is quoted as though someone had done exactly that study.",
 };
 
 /** SCENE copy — the six hops from your record to your record.
@@ -255,15 +255,15 @@ export const ENRICH_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "The database looks finished",
-    body: "Before the pass, the gaps were visible and everybody handled the list accordingly. Afterwards every row is full, and nothing in the interface distinguishes a number a client typed in herself from a number a file suggested. The database now carries the confidence of its best row and the accuracy of its worst, and the only person who could tell the two apart has stopped being able to.",
+    body: "Before the pass, the gaps were visible. Everybody handled the list accordingly. Afterwards every row is full. Nothing in the interface tells apart a number a client typed in herself from a number a file suggested. The database now carries the confidence of its best row and the accuracy of its worst. And the only person who could tell the two apart has stopped being able to.",
   },
   {
     lead: "Nobody can undo it",
-    body: "Six weeks later somebody notices a run of wrong numbers and wants to know which pass introduced them. If the write did not record the previous value, the date and the source, that question has no answer, and the only remaining option is to run another pass over the top of it and hope.",
+    body: "Six weeks later someone notices a run of wrong numbers. They want to know which pass introduced them. If the write did not record the previous value, the date and the source, that question has no answer. The only remaining option is to run another pass over the top of it and hope.",
   },
   {
     lead: "It is spent on people you will never call",
-    body: "Enrichment is charged per record, and a database that has been collecting for years holds a great many rows nobody has any intention of calling. Running the whole thing is the default because it is one click, and it converts a budget into fullness rather than into conversations. The version worth buying is the one where somebody chose the rows first, and choosing them costs an hour.",
+    body: "Enrichment is charged per record. A database that has been collecting for years holds a great many rows nobody has any intention of calling. Running the whole thing is the default, because it is one click. It turns a budget into fullness rather than into conversations. The version worth buying is the one where someone chose the rows first. Choosing them costs an hour.",
   },
 ];
 
@@ -326,7 +326,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       // nothing can be read, because it is the half-readable layer that makes the point.
       alt: "Looking steeply up a red brick wall at a tall painted sign in white capitals on a dark panel, its letters running vertically one above the next, the upper ones painted over each other so the name cannot be resolved and only the last of them standing clear and reading TOR, with FOUNDRY and CO in horizontal capitals below, a corbelled brick cornice along the top, a window in the brickwork to the right and pale blue sky along the left edge",
       caption:
-        "Somebody painted that, and it was true. Somebody painted over it, and that was true too. What is left is a wall carrying two claims at once, one of them readable and neither of them dated, and no way to tell from the wall which one you are looking at. That is what a contact record looks like after a pass that overwrote a field, and unlike the wall, your CRM shows you only the top layer.",
+        "Someone painted that, and it was true. Someone painted over it, and that was true too. What is left is a wall carrying two claims at once, one of them readable and neither of them dated. There is no way to tell from the wall which one you are looking at. That is what a contact record looks like after a pass that overwrote a field. And unlike the wall, your CRM shows you only the top layer.",
       credit: "Photograph by A Continuous Lean, CC BY 2.0.",
       ariaLabel: "A painted sign half worn off a brick wall",
     },
@@ -369,7 +369,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       // from anything a reader can see here. The caption carries that; the alt does not.
       alt: "A stained parchment leaf in ochre and olive, closely covered in Greek script in dark brown ink with several lines and one large initial picked out in red, fainter marks visible between and behind the writing, the ragged left edge lit blue where a rod holds it against a pale mount",
       caption:
-        "The page was scraped clean and written on again, which is what people did when parchment was expensive. The older text is still there, faintly, under the newer one, and the only reason anybody can read it now is that somebody went looking for it with the right equipment. Keeping what you overwrote costs a database column. Recovering it afterwards costs a research project.",
+        "The page was scraped clean and written on again, which is what people did when parchment was expensive. The older text is still there, faintly, under the newer one. The only reason anybody can read it now is that someone went looking for it with the right equipment. Keeping what you overwrote costs a database column. Recovering it afterwards costs a research project.",
       credit: "Photograph by Walters Art Museum Illuminated Manuscripts, CC0 1.0.",
       ariaLabel: "A manuscript page written over an older erased text",
     },
@@ -379,7 +379,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From your own record back to your own record.",
-      lede: "Six hops, and it is a loop rather than a line, which is the thing that makes this different from every other data project in your business. The output lands on top of the input. Three of the six happen inside a company you have no access to, and the only two you control are the first and the last, which is where all of the available honesty lives.",
+      lede: "Six hops, and it is a loop rather than a line. That is the thing that makes this different from every other data project in your business. The output lands on top of the input. Three of the six happen inside a company you have no access to. The only two you control are the first and the last. That is where all of the available honesty lives.",
       steps: ENRICH_PATH,
       altPrefix:
         "The path from a contact record you already hold, out to a matching decision made inside somebody else's system, and back onto the same row",
@@ -420,7 +420,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "differ",
           label: "Share of those where an outside file comes back with something else",
-          hint: "This one is yours to supply and it is worth measuring rather than guessing: run two hundred records where you already know the answer and count the disagreements. Nobody can quote it to you honestly before seeing your list.",
+          hint: "This one is yours to supply, and it is worth measuring rather than guessing. Run two hundred records where you already know the answer, and count the disagreements. Nobody can quote it to you honestly before seeing your list.",
           min: 5,
           max: 100,
           step: 5,
@@ -468,7 +468,7 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Fields where somebody has to decide which answer is yours",
-      note: "The headline is the third row rather than the hours, because the hours are the affordable half and the count is the one nobody asks about before buying. Every one of those is a moment where something will choose on your behalf if nobody has chosen deliberately, and the choosing happens silently. Shares of records produce fractions, and half a disagreement is not a thing, so read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no rate of decay anywhere in it, because the figures that circulate do not survive being followed, which is worked through in the section above. There is no figure for how often the appended value turns out to be the correct one, because the only person who can measure that is you, on a couple of hundred of your own records where you already know the answer, and that measurement is worth more than anybody's benchmark. And there is no money in this calculator at all: a reachable client is not a commission, the loss from a number you can no longer reach is not payable on any date, and the arithmetic that turns either into a dollar figure does not exist.",
+      note: "The headline is the third row rather than the hours. The hours are the affordable half, and the count is the one nobody asks about before buying. Every one of those is a moment where something will choose on your behalf if nobody has chosen deliberately. The choosing happens silently. Shares of records produce fractions, and half a disagreement is not a thing. So read anything with a decimal in it as a rough count. Three things this deliberately refuses. There is no rate of decay anywhere in it, because the figures that circulate do not survive being followed, which is worked through in the section above. There is no figure for how often the appended value turns out to be the correct one. The only person who can measure that is you, on a couple of hundred of your own records where you already know the answer. That measurement is worth more than anybody's benchmark. And there is no money in this calculator at all. A reachable client is not a commission. The loss from a number you can no longer reach is not payable on any date. And the sums that turn either into a dollar figure do not exist.",
       action: { label: "See how it is built", href: "/services/data-enrichment" },
       secondary: { label: "Ask us what your last pass did", href: "/connect" },
     },
@@ -487,9 +487,9 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Export twenty contacts you would swear you know, phone numbers and all, and send them to us with the numbers removed. We will run them and send back what an enrichment pass would have written into those fields, so you can see for yourself how many agree with what you already had, how many disagree, and how many come back empty.",
+      text: "Export twenty contacts you would swear you know, phone numbers and all. Send them to us with the numbers removed. We will run them. We will send back what an enrichment pass would have written into those fields. You can see for yourself how many agree with what you already had, how many disagree, and how many come back empty.",
       reassure:
-        "It is twenty rows, it costs nothing, we do not need access to your CRM, and you keep the only copy that has the real numbers in it.",
+        "It is twenty rows, and it costs nothing. We do not need access to your CRM. You keep the only copy that has the real numbers in it.",
       action: { label: "Ask us what your last pass did", href: "/connect" },
       ariaLabel: "Ask us what your last pass did",
     },
@@ -500,13 +500,13 @@ export const DATA_ENRICHMENT_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Pick one contact you are certain about, somebody whose number you have used, and open their record. Then find the answer to a single question: where did that number come from, and when. If your CRM cannot tell you that about the one person you are sure of, it cannot tell you about the four thousand you are not, and every argument in this article is an argument about a column you have not added yet.",
+      text: "Pick one contact you are certain about, someone whose number you have used, and open their record. Then find the answer to a single question: where did that number come from, and when. If your CRM cannot tell you that about the one person you are sure of, it cannot tell you about the four thousand you are not. And every argument in this article is an argument about a column you have not added yet.",
       actions: [
         { label: "See it on the AI page", href: "/ai#enrich", variant: "light" },
         { label: "How it is built", href: "/services/data-enrichment", variant: "outline-light" },
       ],
       footnote:
-        "There is no figure here because the largest part of the bill is paid to somebody else, per record, and it moves with how many records you send and whether you are charged for attempts or for successes. What we would build around it is the smaller and duller half: deciding which records are worth running at all, writing the source and the date onto every row, and making sure a value that lands on a field which already had one goes somewhere a person can see. The AI audit is an hour, done with you, and for this topic it starts by looking at what your existing rows already say about themselves.",
+        "There is no figure here, because the largest part of the bill is paid to someone else, per record. It moves with how many records you send, and with whether you are charged for attempts or for successes. What we would build around it is the smaller and duller half. Deciding which records are worth running at all. Writing the source and the date onto every row. And making sure a value that lands on a field which already had one goes somewhere a person can see. The AI audit is an hour, done with you, and for this topic it starts by looking at what your existing rows already say about themselves.",
     },
   },
 

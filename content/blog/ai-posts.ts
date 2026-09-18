@@ -503,13 +503,13 @@ If the middle list is long and the bottom line is empty, you have not found a bu
 
 [[scene:funnel]]`;
 
-export const AI_AUDIT_POST = `The list had eleven things on it and it took about twenty minutes to write, which should have been the first clue that writing it was not the hard part.
+export const AI_AUDIT_POST = `The list had eleven things on it. It took about twenty minutes to write. That should have been the first clue that writing it was not the hard part.
 
-Answer the phone at night. Stop retyping the same details into two systems. Chase the signatures. Reply to the portal enquiries faster. Get the market note out without a Sunday evening disappearing into it. Every one of them a real irritation, every one of them something a machine could plausibly do, and every one of them written down by somebody who runs the business and knows what actually happens in it.
+Answer the phone at night. Stop retyping the same details into two systems. Chase the signatures. Reply to the portal enquiries faster. Get the market note out without a Sunday evening disappearing into it. Every one of them a real irritation. Every one of them something a machine could plausibly do. And every one of them written down by someone who runs the business and knows what actually happens in it.
 
 The hour that followed did not add anything to the list. It crossed four things off it.
 
-Two went because they happen a handful of times a year, and a job that runs four times a year fails without anybody noticing until a client notices. One went because the rule behind it turned out not to exist: three people in the office did it three different ways and all three thought theirs was the policy. And one went because a wrong answer would have gone out in writing, to a buyer, with somebody's name on the bottom of it.
+Two went because they happen a handful of times a year. A job that runs four times a year fails without anyone noticing until a client notices. One went because the rule behind it turned out not to exist. Three people in the office did it three different ways. All three thought theirs was the policy. And one went because a wrong answer would have gone out in writing, to a buyer, with someone's name on the bottom of it.
 
 That hour was the product. The list was free.
 
@@ -517,113 +517,113 @@ That hour was the product. The list was free.
 
 ## What an audit is actually for, and it is not the list
 
-There is a version of this service, sold everywhere, that is a discovery meeting with a document attached. Somebody asks what your business does, writes the answers down in a tidier order than you gave them, and returns a deck of opportunities. It is not dishonest. It is just that you already had that information, and what you did not have was permission to remove things from it.
+There is a version of this service, sold everywhere, that is a discovery meeting with a document attached. Someone asks what your business does. They write the answers down in a tidier order than you gave them. They return a deck of opportunities. It is not dishonest. It is just that you already had that information. What you did not have was permission to remove things from it.
 
-An audit worth money has one property: parts of the list come back shorter than they went in, and each removal has a reason beside it that you can apply again next year without anybody's help.
+An audit worth money has one property. Parts of the list come back shorter than they went in. And each removal has a reason beside it that you can apply again next year without anyone's help.
 
 [[scene:deliverable]]
 
-Why removal is worth more than addition is a thing about small businesses that is easy to say and hard to believe until it has happened to you. Nobody is short of ideas about what to automate. Everybody is short of whatever stops a plausible idea, and a plausible idea that gets built becomes a permanent obligation: something that runs, that somebody has to understand, that breaks quietly in a year when a system it depends on changes underneath it.
+Why removal is worth more than addition is a thing about small businesses. It is easy to say. It is hard to believe until it has happened to you. Nobody is short of ideas about what to automate. Everyone is short of whatever stops a plausible idea. And a plausible idea that gets built becomes a permanent duty. It runs. Someone has to understand it. It breaks quietly in a year, when a system it depends on changes underneath it.
 
-Crossing four things off a list of eleven does not save you eleven builds. It saves you four builds, four maintenance obligations and four quiet failures, and it does it before any money has moved.
+Crossing four things off a list of eleven does not save you eleven builds. It saves you four builds, four maintenance duties and four quiet failures. And it does it before any money has moved.
 
 ## The part that is already free, and is not repeated here
 
-Before the questions in this article are any use, somebody has to write down how one real job actually runs, in the order it happened, including the steps that only exist because a system does not do something it was bought to do.
+Before the questions in this article are any use, someone has to write down how one real job actually runs. In the order it happened. Including the steps that only exist because a system does not do something it was bought to do.
 
-That work is described in detail in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business), which walks through doing it with a piece of paper and no help from anybody, and there is no point in this page saying it again in different words. Go and read that if you have not mapped anything yet, then come back.
+That work is described in detail in [the workflow automation article on this site](/blog/workflow-automation-real-estate-business). It walks through doing it with a piece of paper and no help from anyone. There is no point in this page saying it again in different words. Go and read that if you have not mapped anything yet, then come back.
 
-What follows starts one step later. You have a list of candidates. Everything below is about what to do with a list, which is a different problem from producing one, and it is where an outside eye is genuinely worth something, because the person who wrote the list is the person least able to remove things from it.
+What follows starts one step later. You have a list of candidates. Everything below is about what to do with a list. That is a different problem from producing one. It is where an outside eye is truly worth something, because the person who wrote the list is the person least able to remove things from it.
 
 ## You are almost certainly not behind
 
-Something has to be said before any of the ranking makes sense, because the feeling that everybody else has already done this is doing a lot of quiet damage to how these decisions get made.
+Something has to be said before any of the ranking makes sense. The feeling that everyone else has already done this is doing a lot of quiet damage to how these decisions get made.
 
-The Census Bureau ran a technology module on the 2018 Annual Business Survey and published the results with a team of economists from the Bureau, from Stanford and from Toronto. It is worth knowing how that instrument differs from the surveys these numbers usually come from. The sample was over 850,000 firms across every private non-farm sector, answering is required by law rather than optional, and about two thirds of the firms in it had fewer than ten employees. The Bureau also publishes [the technology module's own tables](https://www.census.gov/data/tables/2018/econ/abs/2018-abs-digital-technology-module.html), which the paper notes are uncorrected for sample weights and should therefore be read as a lower bound. The authors are explicit about why that matters: privately funded technology surveys, they write, suffer from low response rates and significant selection bias, which limits how far their findings generalise.
+The Census Bureau ran a technology module on the 2018 Annual Business Survey. It published the results with a team of economists from the Bureau, from Stanford and from Toronto. It is worth knowing how that instrument differs from the surveys these numbers usually come from. The sample was over 850,000 firms across every private non-farm sector. Answering is required by law rather than optional. And about two thirds of the firms in it had fewer than ten employees. The Bureau also publishes [the technology module's own tables](https://www.census.gov/data/tables/2018/econ/abs/2018-abs-digital-technology-module.html). The paper notes that those tables are uncorrected for sample weights and should therefore be read as a lower bound. The authors are explicit about why that matters. Privately funded technology surveys, they write, suffer from low response rates and significant selection bias, which limits how far their findings generalise.
 
 [[scene:adoption]]
 
 [[scene:plate]]
 
-Two readings of that chart, and the second one is the useful one.
+Two readings of that chart. The second one is the useful one.
 
-The first is the obvious comfort. If you have not built anything yet, you are not the last one. The distance between having your information in a computer, which is nearly everybody, and using anything on that list of nine technologies, which was one firm in ten, is enormous, and it was measured on a sample large enough that it is not an artefact of who chose to answer.
+The first is the obvious comfort. If you have not built anything yet, you are not the last one. Nearly everyone has their information in a computer. One firm in ten was using anything on that list of nine technologies. The distance between those two is enormous. And it was measured on a sample large enough that it is not an artefact of who chose to answer.
 
-The second reading is the one that changes behaviour. A field where one firm in ten has adopted anything is a field with no settled playbook. There is no consensus about what a small business should build first, because not enough small businesses have built anything for a consensus to exist. Which means the confident answers you are being given about what to do first are not summaries of what worked. They are guesses, sold with conviction, and the correct posture toward all of them, including the ones on this page, is to ask what they rest on.
+The second reading is the one that changes behaviour. A field where one firm in ten has adopted anything is a field with no settled playbook. There is no agreement about what a small business should build first, because not enough small businesses have built anything for an agreement to exist. Which means the confident answers you are being given about what to do first are not summaries of what worked. They are guesses, sold with conviction. The right stance toward all of them, including the ones on this page, is to ask what they rest on.
 
 Treat all of it as a fact about how new this still is rather than as a description of the market this week, for the reason the chart's own note gives.
 
 ## The three questions that do the cutting
 
-Here is the whole method, and it is deliberately small enough to remember without a document.
+Here is the whole method. It is kept small on purpose, so you can remember it without a document.
 
 [[scene:subtractions]]
 
-Take them one at a time, because each removes a different kind of candidate and the third removes the most.
+Take them one at a time. Each removes a different kind of candidate, and the third removes the most.
 
-The frequency question is not really about the saving. It is about detection. Everything anybody builds has a day when it stops working, usually because something it depends on changed and nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because somebody is waiting for the output. A job that runs quarterly fails in March and is discovered in June by a person who is annoyed. The saving on the quarterly one may be larger and it is still the worse candidate.
+The frequency question is not really about the saving. It is about detection. Everything anyone builds has a day when it stops working. Usually something it depends on changed. Nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because someone is waiting for the output. A job that runs quarterly fails in March and is found in June by a person who is annoyed. The saving on the quarterly one may be larger. It is still the worse candidate.
 
-The rule question quietly turns into a management problem, and it is the most useful thing an outsider can force. Asking three people how something gets decided, separately, and getting three answers is not a sign that anybody is doing it wrong. It is a sign that a decision was never made and everyone filled the gap sensibly. Building software over the top of that does not resolve it. It freezes whichever version the person writing the specification happened to hear, and then removes everybody's ability to notice.
+The rule question quietly turns into a management problem. It is the most useful thing an outsider can force. Asking three people how something gets decided, separately, and getting three answers is not a sign that anyone is doing it wrong. It is a sign that a decision was never made. Everyone filled the gap sensibly. Building software over the top of that does not settle it. It freezes whichever version the person writing the specification happened to hear. Then it removes everyone's ability to notice.
 
-The consequence question gets skipped, and the reason it gets skipped is that it feels pessimistic in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
+The consequence question gets skipped. It gets skipped because it feels gloomy in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
 
-The framework the American standards body publishes for managing risk in AI systems makes the same point in a much drier voice, and it is worth quoting for what it puts on the list of options.
+The framework the American standards body publishes for managing risk in AI systems makes the same point in a much drier voice. It is worth quoting for what it puts on the list of options.
 
 [[scene:pull-quote]]
 
-[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf), published by the National Institute of Standards and Technology, is voluntary and is aimed at organisations far larger than a brokerage. It is still worth ten minutes, because it was written by people with nothing to sell, and what it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
+[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) is published by the National Institute of Standards and Technology. It is voluntary. It is aimed at organisations far larger than a brokerage. It is still worth ten minutes. It was written by people with nothing to sell. What it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
 
-It is also honest about its own limits in a way worth copying. It says plainly that while it can be used to prioritise risk, it does not prescribe risk tolerance, and that the level of risk which is acceptable is highly contextual and specific to the application. There is no universal answer to how careful to be. There is only your business, and what happens in it when something is wrong.
+It is also honest about its own limits in a way worth copying. It says plainly that while it can be used to prioritise risk, it does not prescribe risk tolerance. It says that the level of risk which is acceptable is highly contextual and specific to the application. There is no universal answer to how careful to be. There is only your business, and what happens in it when something is wrong.
 
 ## What should not be automated in a property business
 
-Generic versions of this advice exist and they are worthless, because the categories they warn about are ones nobody was going to automate anyway. This is the specific version for this trade.
+Generic versions of this advice exist. They are worthless. The categories they warn about are ones nobody was going to automate anyway. This is the specific version for this trade.
 
 [[scene:do-not]]
 
-The first of those three deserves an extra sentence because it gets built most often. A model asked about a property will produce an answer about the property. It will produce a plausible square footage, a plausible tax figure, a plausible school assignment. The failure is not that it invents things in an obvious way, it is that the answer arrives in the right format and at roughly the right size, which is exactly the shape of thing nobody checks.
+The first of those three deserves an extra sentence, because it gets built most often. A model asked about a property will produce an answer about the property. It will produce a plausible square footage, a plausible tax figure, a plausible school assignment. The failure is not that it invents things in an obvious way. It is that the answer arrives in the right format and at roughly the right size. That is exactly the shape of thing nobody checks.
 
-The correct build for that class of question exists and it is smaller than the one people ask for. It fetches the value from the record that governs it, and where there is no record it says so, out loud, rather than filling the gap. Anything with a document or a data component on this site rests on that same principle: a system may report what a source says, and it may say it does not know. It may not produce the answer itself.
+The correct build for that class of question exists. It is smaller than the one people ask for. It fetches the value from the record that governs it. Where there is no record it says so, out loud, rather than filling the gap. Anything with a document or a data component on this site rests on that same principle. A system may report what a source says, and it may say it does not know. It may not produce the answer itself.
 
-There is a fourth thing to leave alone, not on the list above because it is not really a candidate, and it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test and it is not a technical one. It is a good instinct, it is available for free, and it costs nothing to apply before any of the other three.
+There is a fourth thing to leave alone. It is not on the list above, because it is not really a candidate. And it should be said anyway. Anything you would be embarrassed to tell a client was automated. That is not a legal test. It is not a technical one. It is a good instinct. It is available for free. It costs nothing to apply before any of the other three.
 
 ## Why ranking by the average outcome gets it wrong
 
 Suppose the list is now short and honest. The natural next move is to estimate what each survivor is worth, put them in order of that, and start at the top. That instinct is wrong, and not as a matter of taste.
 
-Two researchers at Oxford assembled what they describe as the largest academic dataset of its kind: 1,471 information technology projects, worth 241 billion dollars, drawn from private-sector records, from published national audit reports in the United States and the United Kingdom, and from federal budget filings. Then they looked at how the cost overruns were actually distributed rather than at the average of them.
+Two researchers at Oxford assembled what they describe as the largest academic dataset of its kind. It holds 1,471 information technology projects, worth 241 billion dollars. They were drawn from private-sector records, from published national audit reports in the United States and the United Kingdom, and from federal budget filings. Then the researchers looked at how the cost overruns were actually spread out, rather than at the average of them.
 
 [[scene:outcomes]]
 
-The middle of that distribution is boring, which is the point. Ordinary projects come in a few percent over, sometimes under, and if that were the whole story an average would be a perfectly good planning tool. What the authors find instead is a right hand tail far too heavy for that. Seventeen percent of the sample sits out there, against under one percent for a distribution where an average would be safe to reason with.
+The middle of that distribution is boring, which is the point. Ordinary projects come in a few percent over. Sometimes they come in under. If that were the whole story, an average would be a perfectly good planning tool. What the authors find instead is a right hand tail far too heavy for that. Seventeen percent of the sample sits out there, against under one percent for a distribution where an average would be safe to reason with.
 
-The practical translation for a business with five candidates on a shortlist is short. The number you would write beside each one is its typical outcome, and typical is not what you are exposed to. You are exposed to the tail, and the tail is not a bigger version of the middle. It is a different thing that happens for different reasons.
+What that means for a business with five candidates on a shortlist is short. The number you would write beside each one is its typical outcome. Typical is not what you are exposed to. You are exposed to the tail. The tail is not a bigger version of the middle. It is a different thing that happens for different reasons.
 
-Which changes the sorting rule. Sort by how contained the worst case is rather than by how good the expected case is. A candidate with a modest payback whose failure means somebody redoes it by hand for a fortnight beats a candidate with triple the payback and a failure nobody can describe. That is not caution for its own sake, it is what the shape of the data says.
+Which changes the sorting rule. Sort by how contained the worst case is rather than by how good the expected case is. Take a candidate with a modest payback, whose failure means someone redoes it by hand for a fortnight. It beats a candidate with triple the payback and a failure nobody can describe. That is not caution for its own sake. It is what the shape of the data says.
 
-Do not carry those percentages home, and the chart's own note says so: the median project in that sample was planned at three point three million dollars, which is not a category anything a small business commissions belongs to. It is the shape that transfers.
+Do not carry those percentages home, and the chart's own note says so. The median project in that sample was planned at three point three million dollars. That is not a category anything a small business commissions belongs to. It is the shape that transfers.
 
 ## The failure rate nobody can give you
 
-At about this point somebody asks what proportion of these projects fail, and there is an answer in wide circulation. It should not be used, and the reason is specific rather than a general grumble about statistics.
+At about this point someone asks what proportion of these projects fail. There is an answer in wide circulation. It should not be used. The reason is specific rather than a general grumble about statistics.
 
-The figure comes from a report published annually by a private research firm and sold rather than published, and the specific complaint the academic literature makes about it is that its underlying data has never been opened to independent inspection. Two researchers at Vrije Universiteit Amsterdam did the next best thing: they took the report's own published definitions of a successful and a challenged project, applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf), and looked at what came out.
+The figure comes from a report published every year by a private research firm. It is sold rather than published. The specific complaint the academic literature makes about it is that its underlying data has never been opened to independent inspection. Two researchers at Vrije Universiteit Amsterdam did the next best thing. They took the report's own published definitions of a successful and a challenged project. They applied those definitions to their own data of [5,457 forecasts across 1,211 real projects](https://www.cs.vu.nl/~x/chaos/chaos.pdf). Then they looked at what came out.
 
-Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the estimation practice, and they result in meaningless figures. The mechanism is not subtle. Those definitions score a project purely on how far it deviated from its original estimate, so coming in under budget counts against you the same way as going over, and a well run organisation whose forecasts were independently checked and were genuinely accurate still scored a 35 percent success rate under them. Worse, an organisation the researchers examined had adopted those definitions internally and had thereby trained its own managers to inflate every budget request, which made the forecasts far less accurate while making the success rate look better.
+Their conclusion, in their own words, is that the definitions have four major problems: they are misleading, one-sided, they pervert the estimation practice, and they result in meaningless figures. The mechanism is not subtle. Those definitions score a project purely on how far it deviated from its original estimate. So coming in under budget counts against you the same way as going over. A well run organisation whose forecasts were independently checked and were truly accurate still scored a 35 percent success rate under them. Worse, an organisation the researchers examined had adopted those definitions inside the business. That trained its own managers to inflate every budget request. It made the forecasts far less accurate, while making the success rate look better.
 
-So the honest position, and this article will hold it rather than reach for a number anyway, is that nobody can tell you what share of automation projects fail. The most widely quoted attempt measures something else and the alternatives are marketing. That is the same answer this site has had to give about data broker figures and about response rates for cold outreach, and it comes from the same reasoning: a figure whose method nobody can inspect is not a cautious figure or an optimistic one, it is not a figure.
+So here is the honest position. This article will hold it rather than reach for a number anyway. Nobody can tell you what share of automation projects fail. The most widely quoted attempt measures something else. The alternatives are marketing. That is the same answer this site has had to give about data broker figures and about response rates for cold outreach. It comes from the same reasoning. A figure whose method nobody can inspect is not a cautious figure or an optimistic one. It is not a figure.
 
-What can be said is what the Oxford work does support, which is about the shape rather than the rate. Most of these come in near their estimate and a minority go badly wrong, and no average describes both.
+What can be said is what the Oxford work does support. That is about the shape rather than the rate. Most of these come in near their estimate. A minority go badly wrong. No average describes both.
 
 ## What the order actually gets sorted by
 
-With the failure rate refused and the average demoted, there is still a list and it still needs an order. Here is what it gets sorted by, in the order the criteria get applied.
+With the failure rate refused and the average demoted, there is still a list. It still needs an order. Here is what it gets sorted by, in the order the criteria get applied.
 
-First, containment. What happens when this one is wrong, and who finds out. Everything that survived the third question is already inside a boundary, and within that boundary you want the ones whose failure is visible and cheap ahead of the ones whose failure is invisible and awkward.
+First, containment. What happens when this one is wrong, and who finds out. Everything that survived the third question is already inside a boundary. Inside that boundary, you want the ones whose failure is visible and cheap ahead of the ones whose failure is invisible and awkward.
 
-Second, whether the rule is settled. Not whether it is simple, whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one, because the unsettled one is a management job wearing a technical costume and it will come back later as a technical failure.
+Second, whether the rule is settled. Not whether it is simple. Whether it is decided. A settled complicated rule is a better candidate than an unsettled simple one. The unsettled one is a management job wearing a technical costume. It will come back later as a technical failure.
 
-Third, and only third, the size of the thing. Every other version of this exercise starts here, and it belongs at the end, because it is the criterion that produces the most confident wrong answers. The largest saving on a list is very often the item with the most judgment in it, which is precisely why a person is still doing it.
+Third, and only third, the size of the thing. Every other version of this exercise starts here. It belongs at the end, because it is the test that produces the most confident wrong answers. The largest saving on a list is very often the item with the most judgment in it. That is exactly why a person is still doing it.
 
 [[scene:audit-path]]
 
@@ -631,15 +631,15 @@ Third, and only third, the size of the thing. Every other version of this exerci
 
 ## How to run one yourself, without us
 
-Four things, and none of them require anybody to be paid.
+Four things. None of them require anyone to be paid.
 
-Write the list without editing. Every candidate you can name, in the order they occur to you, including the ones you know are silly. Editing while writing is how the interesting-but-wrong candidate survives, because it sounds better than the boring one and you never wrote the boring one down.
+Write the list without editing. Every candidate you can name, in the order they occur to you, including the ones you know are silly. Editing while writing is how the interesting-but-wrong candidate survives. It sounds better than the boring one. And you never wrote the boring one down.
 
-Ask the rule question out loud, to three people, separately. Not in a meeting. The answers diverging is the finding, and it will not happen in a room where everybody can hear each other agree.
+Ask the rule question out loud, to three people, separately. Not in a meeting. The answers coming out different is the finding. It will not happen in a room where everyone can hear each other agree.
 
-Put the consequence question against every line, in writing, before you let yourself think about the benefits. In that order specifically, because the reverse does not work: once a benefit has been said aloud, the consequence question stops being asked seriously.
+Put the consequence question against every line, in writing, before you let yourself think about the benefits. In that order specifically, because the reverse does not work. Once a benefit has been said aloud, the consequence question stops being asked seriously.
 
-Then put the list away for a fortnight and read it again. Half of what looked urgent will have solved itself, moved, or turned out to be a symptom of something else, and you will have found that out for nothing.
+Then put the list away for a fortnight and read it again. Half of what looked urgent will have solved itself, moved, or turned out to be a sign of something else. And you will have found that out for nothing.
 
 [[scene:offer]]
 
@@ -647,23 +647,23 @@ Then put the list away for a fortnight and read it again. Half of what looked ur
 
 ## What it costs, and how long it takes
 
-The audit itself is short and it is deliberately priced so that a no costs you almost nothing. It is an hour, done with you rather than at you, and the written version comes back afterwards. The reason it is an hour rather than a week is that the questions above are quick and the answers are already in your head. The expensive part of a long engagement is somebody learning your business, and you already know your business.
+The audit itself is short. It is priced on purpose so that a no costs you almost nothing. It is an hour, done with you rather than at you. The written version comes back afterwards. It is an hour rather than a week. The questions above are quick, and the answers are already in your head. The costly part of a long engagement is someone learning your business. You already know your business.
 
-What actually varies is what happens next, and it varies by a factor nobody can quote in advance, because it depends on which candidate survived. Connecting two systems that both have a decent way in is days. Something that has to read documents, or has to deal with an office that is not yours, is a different order of work, and the honest answer to how much is that it is a different conversation with its own scope.
+What actually varies is what happens next. It varies by a factor nobody can quote in advance, because it depends on which candidate survived. Connecting two systems that both have a decent way in is days. Something that has to read documents, or has to deal with an office that is not yours, is a different order of work. The honest answer to how much is that it is a different conversation with its own scope.
 
-The cost that appears in neither half is the one this article keeps returning to. Anything built is a thing somebody now owns. Budget for it being looked at rather than only for it being made, and where nobody would notice it stopping, that is a reason to reconsider the candidate rather than a reason to add a monitoring line to the quote.
+The cost that appears in neither half is the one this article keeps returning to. Anything built is a thing someone now owns. Budget for it being looked at rather than only for it being made. And where nobody would notice it stopping, that is a reason to think again about the candidate rather than a reason to add a monitoring line to the quote.
 
 ## What an audit does not do
 
-It does not decide for you. It removes candidates and explains why, and what the business does about the survivors is a decision with your name on it.
+It does not decide for you. It removes candidates and explains why. What the business does about the survivors is a decision with your name on it.
 
-It does not see what nobody will say. Everything below the surface of the account has to be volunteered, and an hour with a stranger is not always when that happens.
+It does not see what nobody will say. Everything below the surface of the account has to be volunteered. An hour with a stranger is not always when that happens.
 
-It does not produce a saving. Every hour identified is an hour you then have to choose to spend on something else, and businesses that do not make that choice deliberately find the hour absorbed within a month.
+It does not produce a saving. Every hour identified is an hour you then have to choose to spend on something else. Businesses that do not make that choice on purpose find the hour absorbed within a month.
 
 It does not stay true. The list has a shelf life measured in months, because your systems, your staff and your volume all move.
 
-And nobody has to buy it. Everything in this article can be done by the person running the business, in an evening, with a piece of paper. What buying it gets you is somebody with no attachment to the list doing the crossing off.
+And nobody has to buy it. Everything in this article can be done by the person running the business, in an evening, with a piece of paper. What buying it gets you is someone with no attachment to the list doing the crossing off.
 
 [[scene:wasted]]
 
@@ -671,15 +671,15 @@ And nobody has to buy it. Everything in this article can be done by the person r
 
 ### What is an AI audit, in plain terms?
 
-It is a short, structured look at how your business actually runs, done to work out which repetitive parts of it are worth automating and, just as importantly, which are not. The output is a written account of the work, a shortlist in a defensible order, the list of things you have decided not to build, and one small automation actually running. The last two are what distinguish it from a sales meeting.
+It is a short, structured look at how your business actually runs. It is done to work out which repeated parts of it are worth automating and, just as importantly, which are not. You get back a written account of the work, a shortlist in an order you can defend, the list of things you have decided not to build, and one small automation actually running. The last two are what set it apart from a sales meeting.
 
 ### Can I not just do this myself?
 
-Yes, and you should do the first half yourself regardless. Writing down how one job really runs, and listing everything you would automate, costs nothing and nobody can do it better than the person running the business. What is genuinely harder alone is the crossing off, because everything on that list is there for a reason you agree with, and the value of an outside pair of eyes is that they have no attachment to any of it.
+Yes, and you should do the first half yourself anyway. Writing down how one job really runs, and listing everything you would automate, costs nothing. Nobody can do it better than the person running the business. What is truly harder alone is the crossing off. Everything on that list is there for a reason you agree with. The value of an outside pair of eyes is that they have no attachment to any of it.
 
 ### How is this different from workflow automation?
 
-Workflow automation is the building. An audit is the deciding, and it happens first. The workflow article on this site covers mapping a single job and finding the steps worth connecting, which is where most people should start. This one is about what to do when you already have more candidates than budget, which is a different problem with a different method: subtraction rather than ranking.
+Workflow automation is the building. An audit is the deciding, and it happens first. The workflow article on this site covers mapping a single job and finding the steps worth connecting. That is where most people should start. This one is about what to do when you already have more candidates than budget. That is a different problem with a different method: subtraction rather than ranking.
 
 ### What do I actually get at the end?
 
@@ -687,19 +687,19 @@ Four things. A written account of how the work runs today, including the parts n
 
 ### Do I need to know anything about AI beforehand?
 
-No, and knowing a great deal about it is a mild disadvantage. The questions that decide this are about your business: how often something happens, whether the rule behind it is settled, and where a wrong answer would end up. Somebody who has read widely about what the technology can do tends to sort by capability, and capability is the least important of the three.
+No, and knowing a great deal about it is a mild disadvantage. The questions that decide this are about your business. How often something happens. Whether the rule behind it is settled. And where a wrong answer would end up. Someone who has read widely about what the technology can do tends to sort by capability. Capability is the least important of the three.
 
 ### What should a small business automate first?
 
-Whatever survives the three questions and has the most contained failure, which is usually something unglamorous. The reason this article will not name a specific first thing is that the survey evidence says a settled answer does not exist yet: one firm in ten had adopted anything at all in the largest measurement available, which is not enough for anybody to have learned what works in general. Anybody giving you a confident universal answer is guessing.
+Whatever survives the three questions and has the most contained failure, which is usually something unglamorous. This article will not name a specific first thing, because the survey evidence says a settled answer does not exist yet. One firm in ten had adopted anything at all in the largest measurement available. That is not enough for anyone to have learned what works in general. Anyone giving you a confident universal answer is guessing.
 
 ### How do you decide what not to automate?
 
-Three tests, applied in order. It happens too rarely for anybody to notice it breaking. The rule behind it is not actually settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own, and the third removes the most.
+Three tests, applied in order. It happens too rarely for anyone to notice it breaking. The rule behind it is not actually settled, which usually shows up as three people describing it three ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own. The third removes the most.
 
 ### Is an hour really enough?
 
-For the deciding, usually yes, because the information is already in your head and the questions are short. It is not enough to design anything, and designing is not what the hour is for. If an hour turns into a proposal for a six month programme, the hour was a sales call.
+For the deciding, usually yes, because the information is already in your head and the questions are short. It is not enough to design anything. Designing is not what the hour is for. If an hour turns into a proposal for a six month programme, the hour was a sales call.
 
 ## What to do about it
 
@@ -709,7 +709,7 @@ One sheet of paper, everything you would automate if the budget were not a quest
 
 Cross off every line where the honest answer is a client. Cross off every line where the honest answer is nobody.
 
-What is left is usually two or three things, and it is now a shortlist rather than a wish. That is the entire exercise, it cost you an evening, and the only thing anybody else can add to it is the willingness to cross off one more.
+What is left is usually two or three things. It is now a shortlist rather than a wish. That is the entire exercise. It cost you an evening. The only thing anyone else can add to it is the willingness to cross off one more.
 
 [[scene:funnel]]`;
 
@@ -1155,47 +1155,47 @@ That last line is where the money is. The fix for it does not start with buying 
 
 [[scene:funnel]]`;
 
-export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday and it was not your listing. Three people had to be willing for it to happen at all: you, the agent who holds the listing, and whoever has to be out of the house that morning. Two of the three do not work for you and had not been asked yet.
+export const AI_SCHEDULING_POST = `The showing was for eleven on Saturday, and it was not your listing. Three people had to be willing for it to happen at all. You. The agent who holds the listing. And whoever has to be out of the house that morning. Two of the three do not work for you, and had not been asked yet.
 
-You sent the request on Thursday afternoon. On Thursday evening you told the buyer that Saturday at eleven was confirmed, and you were not being careless when you said it. You had proposed a time, nobody had objected to it, and there it was in bold on your own calendar looking exactly like every appointment that has ever happened.
+You sent the request on Thursday afternoon. On Thursday evening you told the buyer that Saturday at eleven was confirmed. You were not being careless when you said it. You had proposed a time. Nobody had objected to it. And there it was in bold on your own calendar, looking exactly like every appointment that has ever happened.
 
 At twenty past nine on Saturday morning the listing agent replied. The property is tenant occupied and the tenant is entitled to notice.
 
-So you rang a buyer who was already in the car, and you were the person who had told them it was settled. Nothing in that story is a booking failure. The appointment was booked. It was booked by one of the three people whose agreement it needed, and that one was you.
+So you rang a buyer who was already in the car. You were the person who had told them it was settled. Nothing in that story is a booking failure. The appointment was booked. It was booked by one of the three people whose agreement it needed. That one was you.
 
 [[scene:in-short]]
 
 ## What a scheduling problem is, once the calendar is not yours
 
-There is a version of this business where scheduling really is a calendar problem. You hold the listing, you meet people at your own office, and the only two diaries that have to agree are yours and theirs. For that version, software solved this years ago, and this article has nothing to tell you that a booking link would not.
+There is a version of this business where scheduling really is a calendar problem. You hold the listing. You meet people at your own office. The only two diaries that have to agree are yours and theirs. For that version, software solved this years ago. This article has nothing to tell you that a booking link would not.
 
-Then there is the other version, and it is the one this article is about. A buyer wants to see a house that belongs to somebody else's client. An inspector needs two hours inside a property that is occupied. A closing needs an attorney, a lender and a title company in the same hour. In every one of those, the appointment does not exist until people you have never met agree to it, and not one of them has given you access to their calendar.
+Then there is the other version. It is the one this article is about. A buyer wants to see a house that belongs to someone else's client. An inspector needs two hours inside a property that is occupied. A closing needs an attorney, a lender and a title company in the same hour. In every one of those, the appointment does not exist until people you have never met agree to it. And not one of them has given you access to their calendar.
 
-That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact: you are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait, which is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking somebody a question can fail in a great many ways, and from your side they are indistinguishable, because every one of them looks like nothing happening.
+That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact. You are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait. That is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking someone a question can fail in a great many ways. From your side they are indistinguishable, because every one of them looks like nothing happening.
 
-So the unit of this article is not the appointment. It is the agreement you do not have yet, and the whole argument is that a business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
+So the unit of this article is not the appointment. It is the agreement you do not have yet. And the whole argument is simple. A business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
 
 [[scene:not-the-booking]]
 
 ## The part nobody automates is the part that is other people
 
-There is one study of a real scheduling assistant, running for real people, that published what actually went wrong. It is the most useful document in this whole subject and it is not from a vendor.
+There is one study of a real scheduling assistant, running for real people. It published what actually went wrong. It is the most useful document in this whole subject. It is not from a vendor.
 
-Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads and the assistant took over: it proposed times from the subscriber's calendar, negotiated with the invitees, and put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails, and it publishes the reasons the machine had to give up and hand a request to a trained human being, which is the part of this subject nothing else we could find puts a number on.
+Between April and August 2016, a team at Microsoft Research ran a system called Calendar.help as an open deployment. Subscribers copied an email assistant into their scheduling threads. The assistant took over. It proposed times from the subscriber's calendar. It negotiated with the invitees. It put the meeting in. Their [paper](https://arxiv.org/abs/1703.08428) reports 178 participants, 1,981 invitees, 1,626 meetings and 15,659 emails. It also publishes the reasons the machine had to give up and hand a request to a trained human being. That is the part of this subject nothing else we could find puts a number on.
 
-The three commonest reasons are, in order, that an attendee replied in a way the system did not expect, that none of the offered times worked for everybody, and that an attendee never replied at all. Those are 32, 27 and 26 percent of the escalations. They are not three findings. They are one finding written three ways, and the finding is that the difficulty lives on the other side of the conversation.
+The three commonest reasons are, in order, these. An attendee replied in a way the system did not expect. None of the offered times worked for everyone. And an attendee never replied at all. Those are 32, 27 and 26 percent of the escalations. They are not three findings. They are one finding written three ways. The finding is that the difficulty lives on the other side of the conversation.
 
 [[scene:escalations]]
 
-The reason to sit with that chart rather than nod at it is the population underneath it. In the same study, 84 percent of the requests were meetings between two people, and only 15 percent had three or more attendees, with eleven as the largest. That is the easy version of this problem, and the table above is what the easy version looks like. A Saturday showing on somebody else's occupied listing is a three or four party appointment before anybody has thought about it.
+The reason to sit with that chart rather than nod at it is the population underneath it. In the same study, 84 percent of the requests were meetings between two people. Only 15 percent had three or more attendees, with eleven as the largest. That is the easy version of this problem. The table above is what the easy version looks like. A Saturday showing on someone else's occupied listing is a three or four party appointment before anyone has thought about it.
 
 [[scene:ceiling]]
 
-Read that chart carefully, because there is an honest reading and a flattering one and the difference matters. The 39 percent is not the share that no human touched. The authors describe their system in tiers, where the first tier is software and the second is a person doing one small, tightly defined task, and the 39 percent covers both. What it measures is the share of requests that never needed the expensive, skilled scheduler. That is a genuinely good result and it is a long way from nobody being involved.
+Read that chart carefully. There is an honest reading and a flattering one, and the difference matters. The 39 percent is not the share that no human touched. The authors describe their system in tiers. The first tier is software. The second is a person doing one small, tightly defined task. And the 39 percent covers both. What it measures is the share of requests that never needed the expensive, skilled scheduler. That is a truly good result. It is a long way from nobody being involved.
 
 ## Who has to say yes before a showing is real
 
-How hard an appointment is to arrange tracks the number of separate permissions it needs, and that number is the thing least likely to be written down anywhere at the moment somebody agrees to it. It is worth counting them deliberately, because they are not all people and they do not all fail the same way. Three of the four below can say no to you. The fourth cannot say anything at all, and being silent is precisely how it stays off the list.
+How hard an appointment is to arrange tracks the number of separate permissions it needs. That number is the thing least likely to be written down anywhere at the moment someone agrees to it. It is worth counting them deliberately, because they are not all people and they do not all fail the same way. Three of the four below can say no to you. The fourth cannot say anything at all. Being silent is precisely how it stays off the list.
 
 [[scene:who-agrees]]
 
@@ -1203,55 +1203,55 @@ How hard an appointment is to arrange tracks the number of separate permissions 
 
 ## The standard already has a word for an appointment nobody agreed to
 
-Everything your calendar does when it sends an invitation is defined in a published internet standard, and the standard is unusually blunt about the thing this article is about.
+Everything your calendar does when it sends an invitation is defined in a published internet standard. The standard is unusually blunt about the thing this article is about.
 
-The protocol is called iTIP, and it is [RFC 5546](https://www.rfc-editor.org/rfc/rfc5546.txt). It divides everybody into an organiser, who owns the event, and attendees, who do not. An attendee cannot change the master copy of the appointment. What an attendee can do is reply, and the reply carries a single value that says where they stand, which the specification calls PARTSTAT, short for participation status.
+The protocol is called iTIP, and it is [RFC 5546](https://www.rfc-editor.org/rfc/rfc5546.txt). It divides everyone into an organiser, who owns the event, and attendees, who do not. An attendee cannot change the master copy of the appointment. What an attendee can do is reply. The reply carries a single value that says where they stand. The specification calls that value PARTSTAT, short for participation status.
 
 The sentence worth knowing is this one, from section 2.1.1: when an organiser issues the initial object, attendee status is typically unknown, and the organiser specifies this by setting the participation status to NEEDS-ACTION. Each attendee then changes their own status to something else as part of a reply sent back to the organiser.
 
-In other words, the protocol written so that different calendaring systems can schedule with each other starts every single invitation in a state that means nobody has answered, and the only thing that moves it out of that state is a message coming back. Not time passing. Not the absence of an objection. Not the appointment being written in bold. A reply, from that person, arriving.
+In other words, the protocol written so that different calendaring systems can schedule with each other starts every single invitation in a state that means nobody has answered. And the only thing that moves it out of that state is a message coming back. Not time passing. Not the absence of an objection. Not the appointment being written in bold. A reply, from that person, arriving.
 
 [[scene:states]]
 
-There is one more method in the same specification that is worth knowing by name, because it describes what the listing agent in the opening story was actually doing. The standard calls it COUNTER, and its own table describes it as used by an attendee to negotiate a change, giving the request to change a proposed event time as the example. A counter is not a rejection and it is not an acceptance. It is a third thing, and a system that has no place to put it will file it as one of the other two.
+There is one more method in the same specification that is worth knowing by name. It describes what the listing agent in the opening story was actually doing. The standard calls it COUNTER. Its own table describes it as used by an attendee to negotiate a change, giving the request to change a proposed event time as the example. A counter is not a rejection and it is not an acceptance. It is a third thing. A system that has no place to put it will file it as one of the other two.
 
 ## Moving the time throws away every yes you had
 
-This is the least obvious thing in either specification, and it is the strongest practical argument on this page.
+This is the least obvious thing in either specification. It is the strongest practical argument on this page.
 
-There is a second specification, [RFC 6638](https://www.rfc-editor.org/rfc/rfc6638.txt), which defines how a calendar server does scheduling automatically on your behalf. Section 3.2.8 sets out what a server has to do when the appointment moves, and it is not a suggestion.
+There is a second specification, [RFC 6638](https://www.rfc-editor.org/rfc/rfc6638.txt), which defines how a calendar server does scheduling automatically on your behalf. Section 3.2.8 sets out what a server has to do when the appointment moves. It is not a suggestion.
 
 [[scene:pull-quote]]
 
-Read that in plain language. If the start time, the end time or the duration of an appointment changes, every attendee's answer is deleted and set back to unanswered, on every affected occurrence, and it applies to everybody except the organiser. The standard treats a rescheduled appointment as a new question, because that is what it is. Nobody agreed to Saturday at two. They agreed to Saturday at eleven, and Saturday at eleven no longer exists.
+Read that in plain language. If the start time, the end time or the duration of an appointment changes, every attendee's answer is deleted and set back to unanswered, on every affected occurrence, and it applies to everyone except the organiser. The standard treats a rescheduled appointment as a new question, because that is what it is. Nobody agreed to Saturday at two. They agreed to Saturday at eleven, and Saturday at eleven no longer exists.
 
-That has a consequence for how you run a week, and it holds whether or not any software is involved. Every time you move an appointment involving other people, you are spending all of their agreements at once and you have to buy them back. A build that moves an appointment and does not re-ask is not saving anybody a message. It is carrying forward a set of confirmations that the standard, and common sense, both say are void.
+That has a consequence for how you run a week. It holds whether or not any software is involved. Every time you move an appointment involving other people, you are spending all of their agreements at once. You have to buy them back. A build that moves an appointment and does not re-ask is not saving anyone a message. It is carrying forward a set of confirmations. The standard, and common sense, both say they are void.
 
 ## Your own system knows whether the message arrived
 
-Here is a small thing that turns out to be worth a great deal, and it is not on anybody's feature list.
+Here is a small thing that turns out to be worth a great deal. It is not on anyone's feature list.
 
-The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment, saying what happened to the message the server sent them. There are eight published codes, and the reason there are eight rather than two is that the standard takes seriously how many different ways a message can fail to reach a calendar. They collapse into three states a person can act on.
+The same CalDAV specification defines a delivery status that gets attached to each attendee on the appointment. It says what happened to the message the server sent them. There are eight published codes. There are eight rather than two because the standard takes seriously how many different ways a message can fail to reach a calendar. They collapse into three states a person can act on.
 
 [[scene:delivery]]
 
-None of those eight, including the good one, tells you that the person is coming. Delivered is a fact about a server. Accepted is a fact about a person. They are two different columns and a great deal of the trouble in this subject comes from reading the first one and feeling reassured about the second.
+None of those eight, including the good one, tells you that the person is coming. Delivered is a fact about a server. Accepted is a fact about a person. They are two different columns. A great deal of the trouble in this subject comes from reading the first one and feeling reassured about the second.
 
 ## What a scheduling layer can honestly do across calendars it does not own
 
-Strip away everything a demonstration shows you and there are four things worth paying for here, and only one of them involves reading your calendar.
+Strip away everything a demonstration shows you and there are four things worth paying for here. Only one of them involves reading your calendar.
 
-It can propose without promising. That sounds like a small distinction and it is the whole article: the message that goes to your buyer when a request is raised either says a time or it says a request has gone in, and those two messages produce completely different Saturdays.
+It can propose without promising. That sounds like a small distinction and it is the whole article. The message that goes to your buyer when a request is raised either says a time, or it says a request has gone in. Those two messages produce completely different Saturdays.
 
-It can hold your own side properly. Your calendar is the one thing in this whole exchange that your software genuinely controls, so the moment a proposal is live it should be blocked, and the moment it dies it should be released. Getting the first half right and the second half wrong is how a diary fills up with appointments that never happened.
+It can hold your own side properly. Your calendar is the one thing in this whole exchange that your software genuinely controls. So the moment a proposal is live it should be blocked. The moment it dies it should be released. Getting the first half right and the second half wrong is how a diary fills up with appointments that never happened.
 
-It can chase, and then stop. An unanswered request needs a second message and then it needs a decision from a person, and the decision is a real product feature rather than an admission of defeat.
+It can chase, and then stop. An unanswered request needs a second message. Then it needs a decision from a person. That decision is a real product feature rather than an admission of defeat.
 
 And it can re-ask when the time moves, for the reason the specification gives above.
 
-There is one more thing worth knowing about, because a major vendor already returns it and you will not see it in a demonstration. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability, and every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
+There is one more thing worth knowing about. A major vendor already returns it, and you will not see it in a demonstration. Microsoft's Graph API has a call named [findMeetingTimes](https://learn.microsoft.com/en-us/graph/api/user-findmeetingtimes?view=graph-rest-1.0) which suggests times based on organiser and attendee availability. Every suggestion it returns comes with a number attached. The [documentation for that field](https://learn.microsoft.com/en-us/graph/api/resources/meetingtimesuggestion?view=graph-rest-1.0) describes it as a percentage that represents the likelhood of all the attendees attending, spelled exactly like that on the page. There is a matching input, minimumAttendeePercentage, described as the minimum required confidence for a time slot to be returned at all.
 
-So one of the two calendar platforms this product connects to will hand a scheduling system a confidence figure for every time it proposes. Whatever is built on top of that is free to throw the number away and print the time on its own, which is what has happened any time you are shown a list of times with nothing attached to them. The findMeetingTimes page carries a caveat worth quoting too, which is that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
+So one of the two calendar platforms this product connects to will hand a scheduling system a confidence figure for every time it proposes. Whatever is built on top of that is free to throw the number away and print the time on its own. That is what has happened any time you are shown a list of times with nothing attached to them. The findMeetingTimes page carries a caveat worth quoting too. It says that the suggestion algorithm undergoes fine-tuning from time to time and that identical inputs may produce different results over time. That is a vendor telling you, in its own reference documentation, that this is a judgement rather than a lookup.
 
 [[scene:the-request]]
 
@@ -1259,13 +1259,13 @@ So one of the two calendar platforms this product connects to will hand a schedu
 
 ## Why offering a slot you cannot hold is worse than offering nothing
 
-The instinct when a scheduling system feels slow is to make it more decisive, and the instinct is wrong, because the two failures are not symmetrical.
+The instinct when a scheduling system feels slow is to make it more decisive. The instinct is wrong, because the two failures are not symmetrical.
 
-An appointment you did not offer costs a message. The buyer waits until Friday morning and then hears a time, and the only thing they have lost is a day of not knowing. That is a real cost and it is small, and it is entirely recoverable by saying, on Thursday, that you are waiting on the listing side.
+An appointment you did not offer costs a message. The buyer waits until Friday morning and then hears a time. The only thing they have lost is a day of not knowing. That is a real cost and it is small. It is entirely recoverable by saying, on Thursday, that you are waiting on the listing side.
 
-An appointment you offered and then withdrew costs something you cannot get back with a message. The buyer arranged their Saturday around it. They may have told somebody else they were busy. And the specific thing they learn is not that the listing agent was slow, because they were not there for that part. What they learn is that when you say a thing is confirmed, it may or may not be.
+An appointment you offered and then withdrew costs something you cannot get back with a message. The buyer arranged their Saturday around it. They may have told someone else they were busy. And the specific thing they learn is not that the listing agent was slow, because they were not there for that part. What they learn is that when you say a thing is confirmed, it may or may not be.
 
-So the truthful build is sometimes slower than the untruthful one, and a demonstration flatters the untruthful one. Answering in four seconds with a time looks better on a screen recording than answering in four seconds with a request. The first is measurably quicker and the second is accurate, and no amount of footage will ever make that difference visible to somebody watching a demo.
+So the truthful build is sometimes slower than the untruthful one. A demonstration flatters the untruthful one. Answering in four seconds with a time looks better on a screen recording than answering in four seconds with a request. The first is measurably quicker and the second is accurate. No amount of footage will ever make that difference visible to someone watching a demo.
 
 [[scene:yes-calculator]]
 
@@ -1273,11 +1273,11 @@ So the truthful build is sometimes slower than the untruthful one, and a demonst
 
 Four questions, and none of them needs anything technical.
 
-Ask them to show you what the person on the other end receives before anybody has agreed. Not after. If the message that goes out when a request is raised contains a time and no qualification, that is the product, and no setting later in the flow will undo it.
+Ask them to show you what the person on the other end receives before anyone has agreed. Not after. If the message that goes out when a request is raised contains a time and no qualification, that is the product, and no setting later in the flow will undo it.
 
-Ask what happens to your own calendar while a proposal is outstanding, and then ask what happens to it when the proposal dies. Both halves. A system that blocks and never releases will look immaculate for a fortnight and then start telling people you are busy on days you are free.
+Ask what happens to your own calendar while a proposal is outstanding, and then ask what happens to it when the proposal dies. Both halves. A system that blocks and never releases will look spotless for a fortnight, and then start telling people you are busy on days you are free.
 
-Ask what it does with a counter. Somebody has replied that eleven is impossible but two might work, in a text message, in lower case, with no punctuation. That reply is neither a yes nor a no, and the chart on this page says some version of it was the single biggest reason a real scheduling agent had to call in a person. Watch where it lands.
+Ask what it does with a counter. Someone has replied that eleven is impossible but two might work, in a text message, in lower case, with no punctuation. That reply is neither a yes nor a no, and the chart on this page says some version of it was the single biggest reason a real scheduling agent had to call in a person. Watch where it lands.
 
 Ask how you find out that an invitation was never delivered. There is a real answer to this and it is in the standard, so a vendor who has built on a calendar server will recognise the question.
 
@@ -1287,25 +1287,25 @@ Ask how you find out that an invitation was never delivered. There is a real ans
 
 ## What it costs, and how long it takes
 
-The software is the smaller line here and it is not the thing that moves the number. What moves it is how many different kinds of counterparty you have to reach and how each of them prefers to be reached. One brokerage sets up showings with the same handful of offices, by text, and every one of them replies the same day. Another deals with a rotating cast of listing agents, a property manager who only reads email, a management company with a portal and two sellers who like to be telephoned. Those are different projects, and the difference is in the reaching rather than in the calendar.
+The software is the smaller line here, and it is not the thing that moves the number. What moves it is how many different kinds of counterparty you have to reach, and how each of them prefers to be reached. One brokerage sets up showings with the same handful of offices, by text. Every one of them replies the same day. Another deals with a rotating cast of listing agents. A property manager who only reads email. A management company with a portal. And two sellers who like to be telephoned. Those are different projects. The difference is in the reaching rather than in the calendar.
 
-The recurring cost that scales is messaging, and this topic generates more of it than you would guess. A single appointment can produce a request out, a chase, a counter coming back, a confirmation to the other office and a note to your own client, and every one of those is metered separately. Ask about that line per message rather than per month, because it is the one that grows as the business does.
+The recurring cost that scales is messaging. This topic generates more of it than you would guess. A single appointment can produce five messages. A request out. A chase. A counter coming back. A confirmation to the other office. And a note to your own client. Every one of those is metered separately. Ask about that line per message rather than per month, because it is the one that grows as the business does.
 
-Setup is short and the decisions are not. The four that take the time are which appointment types you actually run, what access constraint each of them carries, how long you are willing to keep your own calendar blocked waiting for an answer that has not come, and what should happen when that time runs out. None of the four is a configuration screen. They are policies, you are already applying them informally today, and writing them down has value whether or not any software ever arrives.
+Setup is short and the decisions are not. Four of them take the time. Which appointment types you actually run. What access constraint each of them carries. How long you are willing to keep your own calendar blocked waiting for an answer that has not come. And what should happen when that time runs out. None of the four is a configuration screen. They are policies, and you are already applying them informally today. Writing them down has value whether or not any software ever arrives.
 
-The line that never appears on a quote is the habit change underneath all of it. Anything can only report who has confirmed if somebody put the confirmation into it, so the first month is mostly people learning to forward the text message instead of remembering it. That part is unglamorous and free, and a brokerage that does it will get a useful answer out of whatever it buys afterwards.
+The line that never appears on a quote is the habit change underneath all of it. Anything can only report who has confirmed if someone put the confirmation into it. So the first month is mostly people learning to forward the text message instead of remembering it. That part is unglamorous and free. A brokerage that does it will get a useful answer out of whatever it buys afterwards.
 
 ## What it does not do, and should not pretend to
 
-It does not make anybody reply. That is the whole of the chart earlier on this page in one sentence. The three largest reasons a real scheduling agent had to hand a meeting to a person were all somebody else not answering, or answering awkwardly, and no amount of software on your side changes what happens on theirs.
+It does not make anyone reply. That is the whole of the chart earlier on this page in one sentence. The three largest reasons a real scheduling agent had to hand a meeting to a person were all someone else not answering, or answering awkwardly. No amount of software on your side changes what happens on theirs.
 
-It does not read a calendar it has not been given. The only availability it can see is yours. Everybody else's is a message, and every product that talks about live availability across parties is talking about your side of it.
+It does not read a calendar it has not been given. The only availability it can see is yours. Everyone else's is a message. Every product that talks about live availability across parties is talking about your side of it.
 
-It does not decide which appointments are worth having. A system that sets up appointments faster will set up more of them, and if nothing sits between the request and the calendar, that is a fuller week rather than a better one.
+It does not decide which appointments are worth having. A system that sets up appointments faster will set up more of them. If nothing sits between the request and the calendar, that is a fuller week rather than a better one.
 
-It does not know that the tenant has a notice period unless somebody has told it. Access constraints are not published anywhere a machine can read them, and a build that offers times without them will keep proposing eleven on Saturday until a person types the rule in.
+It does not know that the tenant has a notice period unless someone has told it. Access constraints are not published anywhere a machine can read them. A build that offers times without them will keep proposing eleven on Saturday until a person types the rule in.
 
-And it inherits whatever your own diary already gets wrong. Availability that exists only in somebody's head is invisible to it, so a calendar that gets overridden regularly will produce proposals that have to be withdrawn, and they will now be withdrawn in front of another office rather than quietly between the two of you.
+And it inherits whatever your own diary already gets wrong. Availability that exists only in someone's head is invisible to it. So a calendar that gets overridden regularly will produce proposals that have to be withdrawn. They will now be withdrawn in front of another office, rather than quietly between the two of you.
 
 [[scene:wasted]]
 
@@ -1313,55 +1313,55 @@ And it inherits whatever your own diary already gets wrong. Availability that ex
 
 ### What is AI scheduling, in plain terms?
 
-It is software that takes a request for an appointment, works out what has to be true for it to happen, proposes times to the people whose agreement it needs, keeps track of who has actually replied, blocks your own calendar while it waits, and tells everybody once when it is settled. The intelligent part is narrow: understanding a request that arrives as three lines of lower case text, and keeping one negotiation straight across several threads at once. Everything underneath that is unremarkable record keeping, which is what you want it to be, because record keeping behaves the same on a bad Saturday as on a quiet Tuesday.
+It is software that takes a request for an appointment. It works out what has to be true for it to happen. It proposes times to the people whose agreement it needs. It keeps track of who has actually replied. It blocks your own calendar while it waits. And it tells everyone once when it is settled. The intelligent part is narrow. It is understanding a request that arrives as three lines of lower case text. It is keeping one negotiation straight across several threads at once. Everything underneath that is unremarkable record keeping, which is what you want it to be, because record keeping behaves the same on a bad Saturday as on a quiet Tuesday.
 
 ### How is this different from AI appointment booking?
 
-Booking is about getting one person from interested to a time they have written down, and about whether they turn up. That has real evidence behind it and it is written up separately on this site. Scheduling, as used here, starts at the point where a time has been proposed and asks who has agreed to it. The two overlap in the easy case, where the only two people involved are you and them. They come apart the moment an appointment needs a permission from somebody who is not in the conversation, which covers every showing on a listing somebody else holds.
+Booking is about getting one person from interested to a time they have written down. It is also about whether they turn up. That has real evidence behind it, and it is written up separately on this site. Scheduling, as used here, starts at the point where a time has been proposed and asks who has agreed to it. The two overlap in the easy case, where the only two people involved are you and them. They come apart the moment an appointment needs a permission from someone who is not in the conversation. That covers every showing on a listing someone else holds.
 
 ### Can it stop a double booking?
 
-It can stop one kind and not the other. It can stop your own calendar being offered twice, because your calendar is the one it can read and write, and holding a slot the instant a proposal goes live is what makes that reliable. It cannot stop the listing side promising the same two o'clock to somebody else, because it has no visibility of their diary and no authority over it. Any product that says double booking cannot happen is describing the first kind and letting you hear the second.
+It can stop one kind and not the other. It can stop your own calendar being offered twice, because your calendar is the one it can read and write. Holding a slot the instant a proposal goes live is what makes that reliable. It cannot stop the listing side promising the same two o'clock to someone else. It has no visibility of their diary and no authority over it. Any product that says double booking cannot happen is describing the first kind and letting you hear the second.
 
 ### What happens when somebody replies "maybe"?
 
-That is the interesting question and it is worth asking a vendor before you buy. There is a standard answer available: the calendar specifications carry a tentative state alongside yes and no, and a system can hold a proposal there without rounding it up. What you are checking is whether the product has anywhere to put an answer that is not a decision, because that answer is going to arrive constantly.
+That is the interesting question, and it is worth asking a vendor before you buy. There is a standard answer available. The calendar specifications carry a tentative state alongside yes and no. A system can hold a proposal there without rounding it up. What you are checking is whether the product has anywhere to put an answer that is not a decision. That answer is going to arrive constantly.
 
 ### Does moving an appointment need everybody to confirm again?
 
-Yes, and this is not our opinion. The specification that governs how calendar servers do scheduling requires that any change to the start time, end time or duration resets every attendee's participation status to needs action. The agreement was to a specific time. Change the time and there is no agreement, only the appearance of one, and a build that carries the old confirmations forward is carrying forward something the standard says has been cleared.
+Yes, and this is not our opinion. The specification that governs how calendar servers do scheduling requires that any change to the start time, end time or duration resets every attendee's participation status to needs action. The agreement was to a specific time. Change the time and there is no agreement, only the appearance of one. A build that carries the old confirmations forward is carrying forward something the standard says has been cleared.
 
 ### How does it know when I am free?
 
-It reads your calendar, which is the ordinary part. Two things are worth checking beyond that. The first is what level of access it is asking for, and this site answers that question in detail on the appointment booking article rather than repeating it here. The second is whether it has permission to write as well as read, because reading alone cannot reserve anything, and a proposal that has not been reserved is still available to whoever asks next.
+It reads your calendar, which is the ordinary part. Two things are worth checking beyond that. The first is what level of access it is asking for. This site answers that question in detail on the appointment booking article, rather than repeating it here. The second is whether it has permission to write as well as read. Reading alone cannot reserve anything, and a proposal that has not been reserved is still available to whoever asks next.
 
 ### What if the other agent never answers at all?
 
-Then at some point a person has to decide, and the useful question is when and who. A reasonable build sends the request, sends one chase, and then puts it in front of somebody with the whole history attached and a client who is still waiting. What you do not want is a system that chases indefinitely, because the queue grows quietly and the person actually waiting is your buyer, who is hearing nothing.
+Then at some point a person has to decide, and the useful question is when and who. A reasonable build sends the request. It sends one chase. Then it puts the request in front of someone, with the whole history attached and a client who is still waiting. What you do not want is a system that chases indefinitely. The queue grows quietly, and the person actually waiting is your buyer, who is hearing nothing.
 
 ### Is any of this different for a closing?
 
-It is the same problem with more parties and a much higher cost of being wrong, and it is not scheduled by whoever asks first. Nothing in this article suggests automating it. What does transfer is the discipline: know which of the people involved have actually confirmed, in writing, and treat a moved date as a new question rather than an amendment.
+It is the same problem with more parties and a much higher cost of being wrong. It is not scheduled by whoever asks first. Nothing in this article suggests automating it. What does transfer is the discipline. Know which of the people involved have actually confirmed, in writing, and treat a moved date as a new question rather than an amendment.
 
 ## What to do about it
 
 Do this tonight and it takes about fifteen minutes.
 
-Open the next two weeks of your calendar and pick out every appointment that needs somebody outside your own office. For each one, write down how many people had to agree, and then write down how many of those agreements you could actually produce if somebody asked you to. Not remember. Produce, as a message with a time on it.
+Open the next two weeks of your calendar. Pick out every appointment that needs someone outside your own office. For each one, write down how many people had to agree. Then write down how many of those agreements you could actually produce if someone asked you to. Not remember. Produce, as a message with a time on it.
 
-The distance between those two columns is your exposure, written in your own hand, and it doubles as the list of calls worth making tomorrow morning. A brokerage with no distance between them is already doing the expensive part manually and has nothing to buy from anybody. A brokerage with a distance has just located the Saturday that is going to go wrong, with a week still left in which to stop it.
+The distance between those two columns is your exposure, written in your own hand. It doubles as the list of calls worth making tomorrow morning. A brokerage with no distance between them is already doing the expensive part manually, and has nothing to buy from anyone. A brokerage with a distance has just located the Saturday that is going to go wrong. There is a week still left in which to stop it.
 
 [[scene:funnel]]`;
 
-export const DATA_ENRICHMENT_POST = `You ran the pass because two thirds of the database had no phone number in it. That is a real problem and enrichment is a real answer to it, and by the afternoon most of those blanks were full.
+export const DATA_ENRICHMENT_POST = `You ran the pass because two thirds of the database had no phone number in it. That is a real problem. Enrichment is a real answer to it. By the afternoon most of those blanks were full.
 
-Somewhere in the middle of the file is a woman you sold a house to three years ago. She gave you that number herself, standing in her own kitchen, and you have texted her on it since.
+Somewhere in the middle of the file is a woman you sold a house to three years ago. She gave you that number herself, standing in her own kitchen. You have texted her on it since.
 
 Her record now has a different number in it.
 
-Nobody decided that. The pass filled in what was empty, and where a field was not empty it wrote anyway, because that is what the default was and nobody was asked. There is nothing in the row that says what used to be there, nothing that says where the new one came from, and nothing that says when either of them was true.
+Nobody decided that. The pass filled in what was empty. Where a field was not empty it wrote anyway, because that is what the default was and nobody was asked. There is nothing in the row that says what used to be there. Nothing that says where the new one came from. And nothing that says when either of them was true.
 
-The blanks getting filled is the part everybody talks about. The overwrite is the part nobody mentions, and it is the more expensive half.
+The blanks getting filled is the part everyone talks about. The overwrite is the part nobody mentions. It is the more expensive half.
 
 [[scene:in-short]]
 
@@ -1369,23 +1369,23 @@ The blanks getting filled is the part everybody talks about. The overwrite is th
 
 ## What data enrichment actually is, and what it is not
 
-Three articles on this site are neighbours to this one and one of them is very close indeed, so it is worth drawing the lines before anything else.
+Three articles on this site are neighbours to this one. One of them is very close indeed. So it is worth drawing the lines before anything else.
 
-Data enrichment is the pass that completes and corrects records you already hold. A contact came in with a first name and an email and no phone. Another has a mailing address and no idea which property behind it they own. A third is the same person as a record you took two years ago under a different email. Enrichment sends what you have to an outside provider and writes back what comes home: a number, an email, the property detail behind the address, a merge.
+Data enrichment is the pass that completes and corrects records you already hold. A contact came in with a first name and an email and no phone. Another has a mailing address, and no idea which property behind it they own. A third is the same person as a record you took two years ago under a different email. Enrichment sends what you have to an outside provider. It writes back what comes home: a number, an email, the property detail behind the address, a merge.
 
-Two words in that description are doing all the work, and almost nothing written about this subject examines either of them. "Corrects" assumes the outside answer is better than yours. "Writes back" assumes there was nothing there.
+Two words in that description are doing all the work. Almost nothing written about this subject examines either of them. "Corrects" assumes the outside answer is better than yours. "Writes back" assumes there was nothing there.
 
-The narrow thing worth understanding is that enrichment is not a lookup and it is not a fix. It is the arrival of an assertion from a company you have never spoken to, about a person you have, into a system where it will be indistinguishable from something you knew.
+The narrow thing worth understanding is that enrichment is not a lookup. It is not a fix. It is the arrival of an assertion from a company you have never spoken to, about a person you have. It lands in a system where it will look exactly like something you knew.
 
 ## What comes back is a claim rather than a fact
 
 Think about what actually has to happen for a phone number to appear in that column.
 
-You send an identifier: a name, an address, an email. Somebody else's system then decides which of its own records describes the same human being, on partial information, with no way to ask anybody. Then it returns the value it holds against whichever record it picked.
+You send an identifier: a name, an address, an email. Someone else's system then decides which of its own records describes the same human being. It decides on partial information, with no way to ask anyone. Then it returns the value it holds against whichever record it picked.
 
-So the number in your CRM is the end of a chain of at least two guesses: this record is about your person, and this number belongs to that record. Neither guess is shown to you. What arrives is a bare string in a field, formatted exactly like the numbers your clients typed in themselves.
+So the number in your CRM is the end of a chain of at least two guesses. This record is about your person, and this number belongs to that record. Neither guess is shown to you. What arrives is a bare string in a field, formatted exactly like the numbers your clients typed in themselves.
 
-That matching problem has its own long piece on this site, [the one about keeping two systems in step](/blog/crm-sync-real-estate-duplicate-contact-records), and it is worth reading because the published model for it has a third outcome that most builds throw away. One difference changes the whole picture here. In a sync, both systems belong to you and you can open both. In an enrichment response the other system is a black box, and the threshold it used, the fields it weighed and the confidence it settled on are all facts about a company you are merely a customer of.
+That matching problem has its own long piece on this site, [the one about keeping two systems in step](/blog/crm-sync-real-estate-duplicate-contact-records). It is worth reading, because the published model for it has a third outcome that most builds throw away. One difference changes the whole picture here. In a sync, both systems belong to you and you can open both. In an enrichment response the other system is a black box. The threshold it used, the fields it weighed and the confidence it settled on are all facts about that company. You are merely a customer of it.
 
 [[scene:what-a-field-asserts]]
 
@@ -1393,119 +1393,119 @@ That matching problem has its own long piece on this site, [the one about keepin
 
 ## Where an appended field actually comes from
 
-There is one primary document on this and it has held up for twelve years because of how it was made.
+There is one primary document on this. It has held up for twelve years because of how it was made.
 
-In December 2012 the Federal Trade Commission issued compulsory orders under section 6(b) of the FTC Act to nine named data brokers, requiring them to file special reports on where their data comes from, what they do with it and what rights consumers have over it. The resulting report, [Data Brokers: A Call for Transparency and Accountability](https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf), was published in May 2014 and covers their practices from January 2010. Nine companies, named, under compulsion, describing themselves to a regulator. There is nothing else like it in this subject and everything written since leans on it.
+In December 2012 the Federal Trade Commission issued compulsory orders under section 6(b) of the FTC Act to nine named data brokers. The orders required them to file special reports on where their data comes from, what they do with it and what rights consumers have over it. The resulting report, [Data Brokers: A Call for Transparency and Accountability](https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf), was published in May 2014. It covers their practices from January 2010. Nine companies, named, under compulsion, describing themselves to a regulator. There is nothing else like it in this subject. Everything written since leans on it.
 
 [[scene:broker-sources]]
 
-The finding that reorganises how you should think about an enrichment response is the middle bar. These are not nine companies each independently observing the world. They are, to a substantial degree, one market trading the same records among themselves, and the Commission states the consequence plainly: the nine "obtain most of their data from other data brokers rather than directly from an original source", and one of them draws consumers' contact information "from twenty different sources".
+The finding that reorganises how you should think about an enrichment response is the middle bar. These are not nine companies each independently observing the world. They are, to a substantial degree, one market trading the same records among themselves. The Commission states the consequence plainly. The nine "obtain most of their data from other data brokers rather than directly from an original source", and one of them draws consumers' contact information "from twenty different sources".
 
 That is the honest picture behind the field in your CRM. Not a company that knows something about your client, but the last company in a queue, passing on what it was passed.
 
 [[scene:pull-quote]]
 
-Read that as a statement about you rather than about consumers. If the person the record is about cannot retrace it, neither can you, and you are the one who is going to be asked.
+Read that as a statement about you rather than about consumers. If the person the record is about cannot retrace it, neither can you. And you are the one who is going to be asked.
 
 ## Observation and inference arrive in the same column
 
-The same report describes two different kinds of content in these files, and it is the distinction that should change what you do with the output.
+The same report describes two different kinds of content in these files. It is that difference that should change what you do with the output.
 
 There is raw data, which the report describes as things "such as a person's name, address, home ownership status, or age". And there is derived data, "which they infer about consumers". The report gives its own examples of how inference works: a data broker "might infer that an individual with a boating license has an interest in boating, that a consumer has a technology interest based on the purchase of a 'Wired' magazine subscription, or that a consumer who has bought two Ford cars has loyalty to that brand".
 
-Those are marketing categories rather than contact details, and it would be a mistake to say your appended phone number is an inference. What is not a mistake, and is the point, is that both kinds of value come back through the same interface, in the same shape, with no marking to say which is which. A file that contains observations and guesses in the same schema, sold through one API, will land both of them in your database as facts, because a field has no way of holding the difference.
+Those are marketing categories rather than contact details. It would be a mistake to say your appended phone number is an inference. What is not a mistake, and is the point, is that both kinds of value come back through the same interface. They come back in the same shape, with no marking to say which is which. A file that contains observations and guesses in the same schema, sold through one API, will land both of them in your database as facts. A field has no way of holding the difference.
 
-The practical version of this is a question with a short answer, and it is worth putting in writing to whoever supplies you: for each field you buy, is this something the source observed or something the source concluded. A provider who can answer that field by field is telling you a great deal about how carefully the product was built.
+The practical version of this is a question with a short answer. It is worth putting in writing to whoever supplies you. For each field you buy, is this something the source observed or something the source concluded. A provider who can answer that field by field is telling you a great deal about how carefully the product was built.
 
 ## The same file, sold under three different names
 
-There is a second finding in that report, about what the same nine companies sell, and it is the one that connects this subject to the law.
+That report has a second finding, about what the same nine companies sell. It is the one that connects this subject to the law.
 
 [[scene:product-lines]]
 
-One set of underlying records, three shopfronts. The identity check and the marketing list and the people search page are built out of the same material, and what separates them is the purpose the buyer had.
+One set of underlying records, three shopfronts. The identity check, the marketing list and the people search page are built out of the same material. What separates them is the purpose the buyer had.
 
-American law works the same way round, and this is where this article stops and hands you to a different one. Two federal statutes decide what may be done with contact information about a person, they turn on where it came from and on what you intend it for rather than on which fields are in the file, and the liability lands on the buyer rather than on the seller. All of that is worked through at length in [the article on skip tracing](/blog/skip-tracing-real-estate-legal-owner-phone-numbers), including the questions to put to any provider in writing, and none of it is repeated here.
+American law works the same way round. This is where this article stops and hands you to a different one. Two federal statutes decide what may be done with contact information about a person. They turn on where it came from and on what you intend it for, rather than on which fields are in the file. And the liability lands on the buyer rather than on the seller. All of that is worked through at length in [the article on skip tracing](/blog/skip-tracing-real-estate-legal-owner-phone-numbers), including the questions to put to any provider in writing. None of it is repeated here.
 
-What belongs in this article is the narrower half: the same data, relabelled at the point of sale, and a label that is a fact about the transaction rather than about the record.
+What belongs in this article is the narrower half. The same data, relabelled at the point of sale. And a label that is a fact about the deal rather than about the record.
 
 ## Nobody has published an honest decay rate, and we went and looked
 
-Every page selling this quotes a figure for how fast contact data goes bad. Thirty percent a year is the usual one. We did not want to assert that those figures are unsourced, because asserting a reason without checking it is a mistake this project has made before, so this round the trail got followed.
+Every page selling this quotes a figure for how fast contact data goes bad. Thirty percent a year is the usual one. We did not want to assert that those figures are unsourced. Asserting a reason without checking it is a mistake this project has made before. So this round the trail got followed.
 
 Here is where it goes.
 
-The most prominent recent version of the thirty percent claim is a press release from a company that sells contact data, carried on a newspaper's website under a notice stating that it is "press release content distributed by XPR Media" and that the paper's editorial staff "were not involved in the creation of this content". No sample, no method, no population.
+The most prominent recent version of the thirty percent claim is a press release from a company that sells contact data. It is carried on a newspaper's website, under a notice stating that it is "press release content distributed by XPR Media". The same notice says the paper's editorial staff "were not involved in the creation of this content". No sample, no method, no population.
 
-Below that are vendor blog posts. Data quality companies and enrichment providers, each stating a rate, none stating what was measured or on how many records. The most useful thing on any of them is not a statistic: one recommends taking a random sample of a hundred to two hundred of your own oldest contacts and verifying them by hand, which is the correct answer and is the one thing on the page that nobody is charging for.
+Below that are vendor blog posts. Data quality companies and enrichment providers, each stating a rate, none stating what was measured or on how many records. The most useful thing on any of them is not a statistic. One recommends taking a random sample of a hundred to two hundred of your own oldest contacts and checking them by hand. That is the correct answer. It is the one thing on the page that nobody is charging for.
 
-Below those are the aggregator pages, which cite each other and eventually cite a benchmark attributed to a marketing research publisher whose original study is not linked from any of them.
+Below those are the aggregator pages. They cite each other. And eventually they cite a benchmark attributed to a marketing research publisher whose original study is not linked from any of them.
 
-And the spread is the finding. On the pages we opened, the same claim about the same thing is quoted at thirty percent, at twenty two and a half percent, at twenty to thirty percent, and, for email addresses specifically, at up to seventy. Those are not measurements that disagree with each other. They are a number that has come loose from whatever produced it and is now being cited by people who are citing each other.
+And the spread is the finding. On the pages we opened, the same claim about the same thing is quoted four ways. At thirty percent. At twenty two and a half percent. At twenty to thirty percent. And, for email addresses specifically, at up to seventy. Those are not measurements that disagree with each other. They are a number that has come loose from whatever produced it. It is now being cited by people who are citing each other.
 
-So there is no decay rate in this article, none in the calculator, and none on our service page. There is something better, which is the reason a rate cannot be a single number in the first place.
+So there is no decay rate in this article, none in the calculator, and none on our service page. There is something better. It is the reason a rate cannot be a single number in the first place.
 
 ## A rate is a property of the people, not of the data
 
-Contact details do not rot on their own. They stop being true when something happens to a person: a move, a job change, a marriage, a new phone, a business closing. So the speed at which a field goes wrong is the speed at which that thing happens to the people in your database, and different people are not the same.
+Contact details do not rot on their own. They stop being true when something happens to a person: a move, a job change, a marriage, a new phone, a business closing. So the speed at which a field goes wrong is the speed at which that thing happens to the people in your database. And different people are not the same.
 
-Which means the useful question was never how fast data decays. It is what sits underneath a particular field, and how often that thing changes for the particular people you hold. One government survey measures exactly that shape, for exactly one field, and the field is employment.
+Which means the useful question was never how fast data decays. It is what sits underneath a particular field, and how often that thing changes for the particular people you hold. One government survey measures exactly that shape, for exactly one field. The field is employment.
 
 [[scene:tenure]]
 
-[The Bureau of Labor Statistics release for January 2024](https://www.bls.gov/news.release/tenure.nr0.htm) puts the overall figure at "3.9 years", the lowest since 2002. The chart above is Table 1 of the same release, and the spread across it is the whole argument.
+[The Bureau of Labor Statistics release for January 2024](https://www.bls.gov/news.release/tenure.nr0.htm) puts the overall figure at "3.9 years", the lowest since 2002. The chart above is Table 1 of the same release. The spread across it is the whole argument.
 
-Now put both of those people in one database with a work email address each, and run a single percentage across the pair of them. Whatever that percentage is, it is wrong about both of them in opposite directions, and it will be quoted as though it described the database.
+Now put both of those people in one database with a work email address each. Run a single percentage across the pair of them. Whatever that percentage is, it is wrong about both of them in opposite directions. And it will be quoted as though it described the database.
 
-Which is why the number worth having is not a benchmark at all. Take two hundred records at random from the part of your database you would really work, and check them by hand. It takes an afternoon, it costs nothing, and what comes out is measured on your own people in your own market at their own ages, which is the only version of this figure anybody can defend.
+Which is why the number worth having is not a benchmark at all. Take two hundred records at random from the part of your database you would really work. Check them by hand. It takes an afternoon. It costs nothing. What comes out is measured on your own people, in your own market, at their own ages. That is the only version of this figure anyone can defend.
 
 ## What to do when two sources disagree
 
 This is the question the whole subject turns on, so it is worth being concrete about it.
 
-A pass runs. For a given contact, your record says one thing and the response says another. There are four possible behaviours and every build has one of them. Find out which before a pass runs, not afterwards.
+A pass runs. For a given contact, your record says one thing. The response says another. There are four possible behaviours, and every build has one of them. Find out which before a pass runs, not afterwards.
 
-The first is that the newest value wins, where newest means the value that arrived most recently rather than the value that most recently became true. A number your client confirmed to you last month gets replaced by a number a provider has held since some date nobody recorded, purely because the query happened today.
+The first is that the newest value wins. Newest means the value that arrived most recently. It does not mean the value that most recently became true. A number your client confirmed to you last month gets replaced by a number a provider has held since some date nobody recorded, purely because the query happened today.
 
-It is worth seeing how that behaviour is presented by the software, because it tells you which way the tooling leans. [HubSpot's documentation for importing records](https://knowledge.hubspot.com/import-and-export/import-objects) describes protecting what you already hold as something you switch on. There is an advanced option called Prevent property overwrite, which the page explains as: "if you're updating existing records, prevent the import from overwriting records' existing property values for the row". When it is selected for a property, "the import will update the property for new records and existing records that have never had a value for the property. It won't update the property for existing records that have a value or had a value in the past, even if currently empty."
+It is worth seeing how that behaviour is presented by the software, because it tells you which way the tooling leans. [HubSpot's documentation for importing records](https://knowledge.hubspot.com/import-and-export/import-objects) describes protecting what you already hold as something you switch on. There is an advanced option called Prevent property overwrite. The page explains it as: "if you're updating existing records, prevent the import from overwriting records' existing property values for the row". When it is selected for a property, "the import will update the property for new records and existing records that have never had a value for the property. It won't update the property for existing records that have a value or had a value in the past, even if currently empty."
 
-What matters there is the shape and not the detail. On one major CRM, per property, at import time, keeping your own value is a checkbox. That is one platform and not a survey of the field, and it is exactly why the four choices below are worth settling in writing before a pass runs instead of discovering afterwards which one you got.
+What matters there is the shape and not the detail. On one major CRM, per property, at import time, keeping your own value is a checkbox. That is one platform and not a survey of the field. It is exactly why the four choices below are worth settling in writing before a pass runs, instead of discovering afterwards which one you got.
 
-The second is that yours wins and the response is discarded. Safe, and it quietly turns enrichment into a fill-the-blanks exercise, which is often exactly what you wanted and should be a decision rather than an accident.
+The second is that yours wins and the response is discarded. Safe. And it quietly turns enrichment into a fill-the-blanks exercise. That is often exactly what you wanted. It should be a decision rather than an accident.
 
-The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the one that costs least to be wrong about, and it costs one extra column.
+The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the one that costs least to be wrong about. It costs one extra column.
 
-The fourth is a review queue: disagreements go to a short list and a person settles them. That is right when the field matters and the volume is small, and it is worth knowing that it is the same shape as the clerical review step in the published record-linkage model that the CRM sync article covers, which exists for exactly this reason.
+The fourth is a review queue. Disagreements go to a short list, and a person settles them. That is right when the field matters and the volume is small. It is also worth knowing that it is the same shape as the clerical review step in the published record-linkage model. The CRM sync article covers that model, which exists for exactly this reason.
 
-Whichever you pick, one habit does more than the choice itself. Write down, on every enriched row, where the value came from and when it was written. Not in a log somewhere. In the record, beside the value, where the person about to dial it can see it. That single column is the difference between "I do not know where that number came from" and a one sentence answer, and it costs nothing on the day the build is done.
+Whichever you pick, one habit does more than the choice itself. Write down, on every enriched row, where the value came from and when it was written. Not in a log somewhere. In the record, beside the value, where the person about to dial it can see it. That single column is the difference between "I do not know where that number came from" and a one sentence answer. And it costs nothing on the day the build is done.
 
 [[scene:plate-two]]
 
 ## The one law that describes this is about whoever holds the data
 
-There is one place where a legislature has written down what happens when a business is holding something wrong about a person, and it is not a federal statute and it probably does not apply to you. It is worth knowing anyway, because it says whose problem this is.
+There is one place where a legislature has written down what happens when a business is holding something wrong about a person. It is not a federal statute. It probably does not apply to you. It is worth knowing anyway, because it says whose problem this is.
 
 California's consumer privacy law, at [Civil Code 1798.106](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.106), gives a consumer "the right to request a business that maintains inaccurate personal information about the consumer to correct that inaccurate personal information, taking into account the nature of the personal information and the purposes of the processing". A business receiving such a request "shall use commercially reasonable efforts to correct the inaccurate personal information as directed by the consumer".
 
 Read who that is addressed to. Not the data broker. The business that maintains the information, which in the scenario at the top of this article is you.
 
-Whether it applies to you specifically is a separate question, and the thresholds are published, so it takes a minute rather than a lawyer. The same law defines a covered business at [Civil Code 1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140) as one doing business in California that also meets one of three: annual gross revenues over twenty five million dollars, or annually buying, selling or sharing the personal information of a hundred thousand or more consumers or households, or deriving half or more of its revenue from selling or sharing personal information. Read those three against your own year and you will know where you stand.
+Whether it applies to you specifically is a separate question. The thresholds are published. So it takes a minute rather than a lawyer. The same law defines a covered business at [Civil Code 1798.140](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1798.140) as one doing business in California that also meets one of three: annual gross revenues over twenty five million dollars, or annually buying, selling or sharing the personal information of a hundred thousand or more consumers or households, or deriving half or more of its revenue from selling or sharing personal information. Read those three against your own year and you will know where you stand.
 
-So this is not a compliance obligation for most readers of this page. It is a description of the right shape, written by people who thought hard about it, and it says two things worth adopting whether or not anybody is making you. The duty attaches to whoever holds the record rather than to whoever supplied it. And answering it requires knowing where a value came from, which is the column this article keeps coming back to.
+So this is not a compliance obligation for most readers of this page. It is a description of the right shape, written by people who thought hard about it. It says two things worth adopting whether or not anyone is making you. The duty attaches to whoever holds the record rather than to whoever supplied it. And answering it requires knowing where a value came from, which is the column this article keeps coming back to.
 
-The same FTC report is blunt about how rarely that is possible today. Of the nine companies studied, it found that "only two of the data brokers allow consumers to correct their personal information for marketing purposes". The report's sentence does not make its denominator explicit, so it is quoted rather than drawn as a chart, and the direction of it is not in doubt.
+The same FTC report is blunt about how rarely that is possible today. Of the nine companies studied, it found that "only two of the data brokers allow consumers to correct their personal information for marketing purposes". The report's sentence does not make its denominator explicit, so it is quoted rather than drawn as a chart. The direction of it is not in doubt.
 
 ## What New York's law actually covers, and it is not this
 
-People reach for New York's SHIELD Act here, and it is worth saying plainly why it does not cover most of what an enrichment pass adds.
+People reach for New York's SHIELD Act here. It is worth saying plainly why it does not cover most of what an enrichment pass adds.
 
-The [New York Attorney General's own description](https://ag.ny.gov/resources/organizations/data-breach-reporting/shield-act) of the law it enforces says the Act requires "any person or business that maintains private information to adopt administrative, technical, and physical safeguards", with no revenue threshold attached, which is a genuinely wide obligation. But "private information" is a defined and narrow term. On the Attorney General's page, it means personal information combined with a Social Security number, a driver's licence number, or an account number with its security code, and the Act extended it to biometric information and to a username or email address together with a password.
+The [New York Attorney General's own description](https://ag.ny.gov/resources/organizations/data-breach-reporting/shield-act) of the law it enforces says the Act requires "any person or business that maintains private information to adopt administrative, technical, and physical safeguards". No revenue threshold is attached, which is a truly wide obligation. But "private information" is a defined and narrow term. On the Attorney General's page, it means personal information combined with a Social Security number, a driver's licence number, or an account number with its security code. And the Act extended it to biometric information, and to a username or email address together with a password.
 
 A telephone number is not on that list. A mailing address is not on that list. An email address on its own is not on that list.
 
-So the New York statute people mention in this context is about security and breach notification for a specific set of high risk identifiers, and it is mostly not about the fields enrichment appends. That is a checked absence rather than an omission, and it is here because the alternative is a page implying a duty that does not exist.
+So the New York statute people mention in this context is about security and breach notification for a specific set of high risk identifiers. It is mostly not about the fields enrichment appends. That is a checked absence rather than an omission. It is here because the alternative is a page implying a duty that does not exist.
 
-Nothing above is quoted from the statute itself. It all comes from the Attorney General's published summary of the law that office enforces, which is a step further from the text than this article would like to be, and worth saying out loud, because the whole finding here is what one defined term does and does not include.
+Nothing above is quoted from the statute itself. It all comes from the Attorney General's published summary of the law that office enforces. That is a step further from the text than this article would like to be. It is worth saying out loud, because the whole finding here is what one defined term does and does not include.
 
 [[scene:enrich-path]]
 
@@ -1513,29 +1513,29 @@ Nothing above is quoted from the statute itself. It all comes from the Attorney 
 
 ## What it costs, and how long it takes
 
-The largest line on this bill is not ours and never passes through us. A supplier charges for each record it is asked about, so that part of the spend rises directly with how many rows you hand over.
+The largest line on this bill is not ours. It never passes through us. A supplier charges for each record it is asked about. So that part of the spend rises directly with how many rows you hand over.
 
-Which makes the first cost decision the one nobody treats as a decision: how many records to run. The default is the whole database, because it is one click. The number worth having instead is the count of rows somebody in your business would actually call this quarter, and producing it is an hour of thinking rather than a purchase. Whatever it comes to is the honest size of the job, and the gap between it and the whole database is money about to be spent making people reachable that nobody was going to reach.
+Which makes the first cost decision the one nobody treats as a decision: how many records to run. The default is the whole database, because it is one click. The number worth having instead is the count of rows someone in your business would actually call this quarter. Producing it is an hour of thinking rather than a purchase. Whatever it comes to is the honest size of the job. The gap between it and the whole database is money about to be spent making people reachable that nobody was going to reach.
 
-The second thing to settle before signing is whether the charge lands on every record you submit or only on the ones that come back with something. That distinction changes the arithmetic completely, and in an area where not much resolves, the first arrangement can spend a budget and leave you with almost nothing to show for it.
+The second thing to settle before signing is whether the charge lands on every record you submit, or only on the ones that come back with something. That difference changes the sums completely. In an area where not much resolves, the first arrangement can spend a budget and leave you with almost nothing to show for it.
 
-What we would build around that is the smaller half and it is where the value is. Deciding which records qualify. Writing the source and the date onto every enriched row. Making the disagreement behaviour explicit rather than inherited. Putting the flagged rows somewhere a person will look. Every one of those is cheap and dull, and they get skipped because nobody puts them on the list at the beginning.
+What we would build around that is the smaller half. It is where the value is. Deciding which records qualify. Writing the source and the date onto every enriched row. Making the disagreement behaviour explicit rather than inherited. Putting the flagged rows somewhere a person will look. Every one of those is cheap and dull. They get skipped because nobody puts them on the list at the beginning.
 
-On time, running a pass is fast. What takes the time is the conversation about the four disagreement behaviours above and about which fields you actually want touched, and that conversation is worth having before the first record moves, because retrofitting provenance onto a database that has already been enriched twice is a genuinely miserable job. If your contact records already carry a source and a date, this is straightforward. If they do not, adding that column is the project, and the enrichment is the easy part bolted on afterwards.
+On time, running a pass is fast. What takes the time is the conversation about the four disagreement behaviours above, and about which fields you actually want touched. That conversation is worth having before the first record moves. Adding provenance to a database that has already been enriched twice is a truly miserable job. If your contact records already carry a source and a date, this is straightforward. If they do not, adding that column is the project. The enrichment is the easy part bolted on afterwards.
 
 ## What it does not do, and should not pretend to
 
-It does not verify a person. What verification establishes, on our own page and on every provider page we have read, is that a number is well formed, is in service and is not a duplicate. Those are useful checks and none of them is the check people assume, which is that this number reaches this person. Our own service page uses the word "verified" and this is the sentence that qualifies it.
+It does not verify a person. What verification establishes, on our own page and on every provider page we have read, is that a number is well formed, is in service and is not a duplicate. Those are useful checks. None of them is the check people assume, which is that this number reaches this person. Our own service page uses the word "verified", and this is the sentence that qualifies it.
 
-It does not tell you how old a value is unless the provider is asked for it and passes it through. Freshness is the single most useful attribute an appended field could carry, and it is worth asking for by name, because a response that does not carry it looks exactly like one that does.
+It does not tell you how old a value is unless the provider is asked for it and passes it through. Freshness is the single most useful attribute an appended field could carry. It is worth asking for by name, because a response that does not carry it looks exactly like one that does.
 
-It does not promise a match, and a rate quoted before anybody has seen your list is a rate about somebody else. How much resolves varies with the town, with how thin the county file is behind a given address, and with how recently anybody moved. Two hundred of your own rows, run as a sample, settles the question for your own book in half a day.
+It does not promise a match. A rate quoted before anyone has seen your list is a rate about someone else. How much resolves varies with the town, with how thin the county file is behind a given address, and with how recently anyone moved. Two hundred of your own rows, run as a sample, settles the question for your own book in half a day.
 
-It does not make a record legal to contact. Do-not-call registrations and consent rules attach to the call rather than to the data, they are not affected by how the number was obtained, and they are covered in detail in [the article on reactivating an old database](/blog/database-reactivation-old-real-estate-leads) and in the skip tracing article above.
+It does not make a record legal to contact. Do-not-call registrations and consent rules attach to the call rather than to the data. They are not affected by how the number was obtained. They are covered in detail in [the article on reactivating an old database](/blog/database-reactivation-old-real-estate-leads) and in the skip tracing article above.
 
-It does not tell you anybody wants to hear from you. A complete record is a reachable record. Interest is a different question, it is not in any file anybody can sell you, and a pass that makes four thousand people reachable has not produced four thousand conversations or any evidence about whether they would be welcome.
+It does not tell you anyone wants to hear from you. A complete record is a reachable record. Interest is a different question. It is not in any file anyone can sell you. A pass that makes four thousand people reachable has not produced four thousand conversations, or any evidence about whether they would be welcome.
 
-And it does not clean up after itself. If a pass writes a value that turns out to be wrong, the wrongness is now yours, sitting in your system of record with your business's authority behind it, and the provider's involvement ended at the response.
+And it does not clean up after itself. If a pass writes a value that turns out to be wrong, the wrongness is now yours. It sits in your system of record with your business's authority behind it. The provider's involvement ended at the response.
 
 [[scene:wasted]]
 
@@ -1547,13 +1547,13 @@ Twenty minutes, on the database you already have. No tool and no subscription.
 
 1. **Open five contacts you personally remember.** People you have spoken to. Not the first five, and not the ones you have been working this week.
 
-2. **For each one, ask where the phone number came from.** Not whether it is right. Where it came from. If the record cannot tell you, you have already found the finding, and you have found it on the five people you know best.
+2. **For each one, ask where the phone number came from.** Not whether it is right. Where it came from. If the record cannot tell you, you have already found the finding. And you have found it on the five people you know best.
 
 3. **Look for a date beside any enriched value.** Anything at all: an appended-on date, a source field, a note. If there is nothing, then every value in the database is the same age as every other value, which is to say unknown.
 
-4. **Find a contact you know moved.** Somebody who sold and left the area. Look at what the record says now, and decide whether the record knows they moved or is quietly still describing the person who lived there.
+4. **Find a contact you know moved.** Someone who sold and left the area. Look at what the record says now. Decide whether the record knows they moved, or is quietly still describing the person who lived there.
 
-5. **Sort by the phone column and look at the gaps.** Count how many rows are empty. That number is the actual size of the problem enrichment solves, and it is worth holding next to the number you were about to send.
+5. **Sort by the phone column and look at the gaps.** Count how many rows are empty. That number is the actual size of the problem enrichment solves. It is worth holding next to the number you were about to send.
 
 6. **Ring one number that you did not put there yourself.** Not to sell anything. Just to find out who answers. One call tells you more about your own data than any report, and if the answer surprises you, that is the finding.
 
@@ -1563,27 +1563,27 @@ Twenty minutes, on the database you already have. No tool and no subscription.
 
 ### What is data enrichment, in plain terms?
 
-It is a pass over contact records you already hold, which sends what you know to an outside provider and writes back what it holds: a missing phone number or email, the property detail behind an address, a merge of two records that turn out to be one person. It is sold as completing your database. What it actually does is add somebody else's assertions to your database, which is a genuinely useful thing and is not the same thing.
+It is a pass over contact records you already hold. It sends what you know to an outside provider. It writes back what it holds: a missing phone number or email, the property detail behind an address, a merge of two records that turn out to be one person. It is sold as completing your database. What it actually does is add someone else's assertions to your database. That is a truly useful thing, and it is not the same thing.
 
 ### How is enrichment different from skip tracing?
 
-One begins at an address and works towards a stranger. The other begins at somebody already sitting in your database and completes what you hold about them. The suppliers overlap and the technology is the same. What separates them is whether there was ever a relationship, that is the half carrying the legal weight, and it is set out in the [skip tracing article](/blog/skip-tracing-real-estate-legal-owner-phone-numbers) rather than here.
+One begins at an address and works towards a stranger. The other begins at someone already sitting in your database and completes what you hold about them. The suppliers overlap, and the technology is the same. What separates them is whether there was ever a relationship. That is the half carrying the legal weight. It is set out in the [skip tracing article](/blog/skip-tracing-real-estate-legal-owner-phone-numbers) rather than here.
 
 ### Will enrichment overwrite the data I already have?
 
-That depends on how the pass is configured, and it is worth establishing rather than assuming. On HubSpot, for instance, not overwriting a value you already hold is a per-property checkbox selected at import time, which tells you which way the tooling leans. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, insist that the previous value, the source and the date are written to the record, because without those there is no way back from a bad pass.
+That depends on how the pass is set up, and it is worth settling rather than assuming. On HubSpot, for instance, not overwriting a value you already hold is a per-property checkbox selected at import time. That tells you which way the tooling leans. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, insist that the previous value, the source and the date are written to the record. Without those there is no way back from a bad pass.
 
 ### How accurate is appended contact data?
 
-Nobody can tell you before running your list, and the figures that circulate do not survive being followed, which is worked through above. What you can do is measure it: take two hundred records where you already know the answer, run them, and count how many agree, disagree and come back empty. That takes an afternoon and it is a number about your own market rather than somebody's benchmark.
+Nobody can tell you before running your list. The figures that circulate do not survive being followed, which is worked through above. What you can do is measure it. Take two hundred records where you already know the answer, run them, and count how many agree, disagree and come back empty. That takes an afternoon. It is a number about your own market rather than someone's benchmark.
 
 ### How fast does contact data go stale?
 
-There is no published rate worth quoting. The circulating figures for contact data run from twenty to thirty percent, with up to seventy quoted for email addresses on their own, and every one of them traces back to a press release or a vendor page rather than to a study. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate is a property of the people in your database rather than of the data, and it will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
+There is no published rate worth quoting. The circulating figures for contact data run from twenty to thirty percent, with up to seventy quoted for email addresses on their own. Every one of them traces back to a press release or a vendor page rather than to a study. What is knowable is the mechanism. A field stops being true when something happens to a person. So the rate is a property of the people in your database rather than of the data. It will be different for a first time buyer in her twenties and a couple downsizing in their sixties.
 
 ### Does an enriched list mean I can call it?
 
-No, and the two questions are entirely separate. Whether a record is reachable is a data question. Whether you may contact it is a rules question with dates and registries in it, and the answer does not change because the number was appended rather than volunteered. Both of the neighbouring articles on this site cover that ground properly.
+No, and the two questions are entirely separate. Whether a record is reachable is a data question. Whether you may contact it is a rules question with dates and registries in it. The answer does not change because the number was appended rather than volunteered. Both of the neighbouring articles on this site cover that ground properly.
 
 ### What should I ask a provider before signing?
 
@@ -1591,20 +1591,19 @@ Five short questions. Does the charge land on every record submitted or only on 
 
 ### What is the one thing that makes all of this manageable?
 
-A source column and a date column on every contact record, filled in from the day the record is created, whether the value came from a form on your website, a conversation, or a pass. It costs nothing to add before you have data and it is close to impossible to reconstruct afterwards. Every hard question in this article becomes easy once those two columns exist.
+A source column and a date column on every contact record, filled in from the day the record is created, whether the value came from a form on your website, a conversation, or a pass. It costs nothing to add before you have data. It is close to impossible to rebuild afterwards. Every hard question in this article becomes easy once those two columns exist.
 
 ## What to do about it
 
-Nothing in this article argues against enrichment. Two thirds of a database with no phone number in it is a real problem, and there is no version of solving it that does not involve buying somebody else's assertions.
+Nothing in this article argues against enrichment. Two thirds of a database with no phone number in it is a real problem. There is no version of solving it that does not involve buying someone else's assertions.
 
-What it argues is that the assertion should arrive wearing a label. Where it came from. When. What it landed on. Those three facts turn an appended value from something you have to trust into something you can weigh, and they cost one afternoon of build time to capture and are unrecoverable once a pass has run without them.
+What it argues is that the assertion should arrive wearing a label. Where it came from. When. What it landed on. Those three facts turn an appended value from something you have to trust into something you can weigh. They cost one afternoon of build time to capture. They cannot be recovered once a pass has run without them.
 
-This sits beside everything else we build, on [the RealtyLT AI page](/ai#enrich); what actually gets appended and checked is on the [data enrichment page](/services/data-enrichment). If you would rather somebody looked at what your existing records already say about themselves before anything is bought, that is the [AI audit](/services/ai-audit).
+This sits beside everything else we build, on [the RealtyLT AI page](/ai#enrich); what actually gets appended and checked is on the [data enrichment page](/services/data-enrichment). If you would rather someone looked at what your existing records already say about themselves before anything is bought, that is the [AI audit](/services/ai-audit).
 
 A fuller database is easy. A database that can tell you where it got something is the one worth having.
 
-[[scene:funnel]]
-`;
+[[scene:funnel]]`;
 
 export const DOCUMENT_PROCESSING_POST = `The rider came in on a Sunday evening as a photograph. Somebody had put the page on a kitchen table and held a phone over it, so the top edge of the paper is wider than the bottom edge, there is a shadow across the lower third, and the whole thing is very slightly out of focus in one corner.
 
@@ -1847,13 +1846,13 @@ The paperwork is not going to get cleaner. The rules about what its dates mean a
 [[scene:funnel]]
 `;
 
-export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people, and it was a decent piece of work. Median price in three towns, what had actually closed against what had been asked, and two sentences at the bottom in your own voice about the inspection that had fallen through on Elm.
+export const MARKETING_AUTOMATION_POST = `The market note went out on a Tuesday morning to fourteen hundred people. It was a decent piece of work. Median price in three towns. What had actually closed against what had been asked. And two sentences at the bottom in your own voice, about the inspection that had fallen through on Elm.
 
-Nobody complained. Five people pressed one button, which is a different thing from complaining, because pressing it takes under a second and produces no conversation and you never hear about it.
+Nobody complained. Five people pressed one button. Pressing a button is a different thing from complaining. It is different because it takes under a second, it makes no conversation, and you never hear about it.
 
-The following month's note went to the same fourteen hundred people. Your software reported that it had been sent to fourteen hundred people, because that is what your software can see. Some number smaller than fourteen hundred received it, and a smaller number than that ever saw it in the place where a person actually reads things.
+The following month's note went to the same fourteen hundred people. Your software reported that it had been sent to fourteen hundred people. That is what your software can see. Some number smaller than fourteen hundred received it. A smaller number than that ever saw it in the place where a person actually reads things.
 
-You did not find out. There is nothing to find out with. The gap between what you sent and what was read is the subject of this article, and almost nothing written about marketing automation is about it at all.
+You did not find out. There is nothing to find out with. This article is about the gap between what you sent and what was read. Almost nothing written about marketing automation is about that gap at all.
 
 [[scene:in-short]]
 
@@ -1861,45 +1860,45 @@ You did not find out. There is nothing to find out with. The gap between what yo
 
 ## What marketing automation actually is, once you take the busywork out of it
 
-Three articles on this site are next door to this one and between them they have taken most of the obvious ground, which is useful, because what is left is the part that actually decides whether any of this works.
+Three articles on this site sit next door to this one. Between them they have taken most of the obvious ground. That is useful, because what is left is the part that actually decides whether any of this works.
 
-Marketing automation, described plainly, is a standing instruction about people you are not currently talking to. Not a task that runs itself, and not a message you decide to send. It is a rule you wrote once about who should hear from you, what they should hear, and when, which then runs for years without anybody looking at it.
+Marketing automation, put plainly, is a standing instruction about people you are not currently talking to. Not a task that runs itself. Not a message you decide to send. It is a rule you wrote once about who should hear from you, what they should hear, and when. It then runs for years without anyone looking at it.
 
-That is worth saying slowly because it changes what the risks are. A workflow that copies a name into a second system either works or does not, and you find out on the day. A rule about who deserves a message from you keeps running while the people it describes change, and you find out never.
+That is worth saying slowly, because it changes what the risks are. A workflow that copies a name into a second system either works or does not. You find out on the day. A rule about who deserves a message from you keeps running while the people it describes change. You find out never.
 
 [[scene:four-decisions]]
 
-The fourth card is the whole article. The first three are decisions you make; the fourth is a decision made about you, on the basis of the first three, by an organisation that will not tell you the result.
+The fourth card is the whole article. The first three are decisions you make. The fourth is a decision made about you, by an organisation that will not tell you the result. It is made on the basis of the first three.
 
 ## The law that governs your email does not require permission
 
-Start with the legal position, because most people have it backwards and the correction is genuinely useful.
+Start with the legal position. Most people have it backwards, and the correction is truly useful.
 
-Almost everybody assumes American email marketing law works like a consent regime: you may not email somebody unless they agreed. That is the European position and it is not the American one. The [CAN-SPAM Act at 15 U.S.C. 7704](https://www.law.cornell.edu/uscode/text/15/7704) sets conditions on the message rather than on the relationship, and there is no clause anywhere in it requiring prior permission to send a commercial message.
+Almost everyone assumes American email marketing law works like a consent regime. They assume you may not email someone unless they agreed. That is the European position. It is not the American one. The [CAN-SPAM Act at 15 U.S.C. 7704](https://www.law.cornell.edu/uscode/text/15/7704) sets conditions on the message rather than on the relationship. There is no clause anywhere in it requiring prior permission to send a commercial message.
 
-What it does require is worth knowing precisely, because three of the four requirements are things a normal marketing tool does not do for you automatically.
+What it does require is worth knowing exactly. Three of the four requirements are things a normal marketing tool does not do for you on its own.
 
-The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed" that a recipient can use to ask not to receive future messages, and that mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality, it is the thing the statute names.
+The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed". A recipient uses it to ask not to receive future messages. That mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality. It is the thing the statute names.
 
-Once somebody uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline: it becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight, and it is generous by the standards of anything else in this area, which is exactly why people trip over it. A fortnight is long enough for a sequence somebody is already inside to fire once more.
+Once someone uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline. It becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight. It is generous by the standards of anything else in this area. That is exactly why people trip over it. A fortnight is long enough for a sequence someone is already inside to fire once more.
 
-And [section 7704(a)(5)](https://www.law.cornell.edu/uscode/text/15/7704) requires three things in the message itself: "clear and conspicuous identification that the message is an advertisement or solicitation", clear notice of the opportunity to decline further messages, and "a valid physical postal address of the sender". A real street address, in the footer, of a real place.
+And [section 7704(a)(5)](https://www.law.cornell.edu/uscode/text/15/7704) requires three things in the message itself. One is "clear and conspicuous identification that the message is an advertisement or solicitation". One is clear notice of the opportunity to decline further messages. One is "a valid physical postal address of the sender". A real street address, in the footer, of a real place.
 
-There is a rule underneath the statute that is more practical than the statute, and it is the one to check your own tooling against. Under [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5), neither a sender nor anybody acting for them "may require that any recipient pay any fee, provide any information other than the recipient's electronic mail address and opt-out preferences, or take any other steps except sending a reply electronic mail message or visiting a single Internet Web page" in order to opt out or to have that opt out honoured.
+There is a rule underneath the statute that is more practical than the statute. It is the one to check your own tools against. Under [16 CFR 316.5](https://www.law.cornell.edu/cfr/text/16/316.5), neither a sender nor anyone acting for them "may require that any recipient pay any fee, provide any information other than the recipient's electronic mail address and opt-out preferences, or take any other steps except sending a reply electronic mail message or visiting a single Internet Web page" in order to opt out or to have that opt out honoured.
 
 Read that against the last preference centre you were sent to. A single web page. No login. No survey about why you are leaving. No account.
 
 ## Whether your market note is an advertisement is decided by its subject line
 
-There is one more piece of the rule that matters specifically to the way real estate agents write, and it is not the part anybody quotes.
+There is one more piece of the rule that matters in particular to the way real estate agents write. It is not the part anyone quotes.
 
-The obligations above attach to a "commercial electronic mail message", and the natural instinct is to think a market update is not one. It contains data. It is useful. It is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided, and the test is not what you intended.
+The duties above attach to a "commercial electronic mail message". The natural instinct is to think a market update is not one. It contains data. It is useful. It is not selling anything. But the FTC's rule at [16 CFR 316.3](https://www.law.cornell.edu/cfr/text/16/316.3) sets out how the primary purpose of a mixed message is decided. The test is not what you intended.
 
-Where a message carries both promotional content and other content, the primary purpose is deemed commercial if "a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message contains the commercial advertisement or promotion of a commercial product or service", or if the transactional or relationship content does not appear "in whole or in substantial part, at the beginning of the body of the message".
+Where a message carries both promotional content and other content, the primary purpose is deemed commercial in either of two cases. The first is if "a recipient reasonably interpreting the subject line of the electronic mail message would likely conclude that the message contains the commercial advertisement or promotion of a commercial product or service". The second is if the transactional or relationship content does not appear "in whole or in substantial part, at the beginning of the body of the message".
 
 The subject line. A stranger's reading of it. That is the test.
 
-So a genuinely useful market note with a subject line about the market is one thing, and the same note with a subject line about booking a valuation is another, and the difference is decided by somebody who has never met you. The practical upshot is simple and it is not a burden: put the physical address and the unsubscribe in everything, and stop trying to work out which of your emails count.
+So a truly useful market note with a subject line about the market is one thing. The same note with a subject line about booking a valuation is another. The difference is decided by someone who has never met you. What follows from that is simple, and it is not a burden. Put the physical address and the unsubscribe in everything. Stop trying to work out which of your emails count.
 
 [[scene:plate]]
 
@@ -1907,55 +1906,55 @@ So a genuinely useful market note with a subject line about the market is one th
 
 Now the part that actually governs your business, and it is not a law at all.
 
-Between your sending tool and the person you are writing to sits a mailbox provider. Two of them, Google and Yahoo, publish the rules they apply to incoming mail in plain English on a public page, which is more than most parties to your business do. They have no agreement with you, you are not their customer, and there is no appeal. The proportion of your own list sitting behind those two is a thing you can count in an afternoon, and it is worth counting before you decide how much of this applies to you.
+Between your sending tool and the person you are writing to sits a mailbox provider. Two of them, Google and Yahoo, publish the rules they apply to incoming mail. The rules are in plain English on a public page. That is more than most parties to your business do. They have no agreement with you. You are not their customer. There is no appeal. You can count what share of your own list sits behind those two in an afternoon. It is worth counting before you decide how much of this applies to you.
 
-You have no way to appeal, no support line, and no notification. The whole relationship is one way, it is governed by a document on a help site, and the document is not long.
+You have no way to appeal, no support line, and no notice. The whole relationship is one way. It is governed by a document on a help site. The document is not long.
 
 [[scene:email-path]]
 
 ## The requirement everybody files under bulk sending, and where it actually sits
 
-Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into two lists, and the split is the single most misreported thing in this entire subject. There is a section headed "Requirements for all senders", and a separate one for senders of "5,000 or more messages per day".
+Google's page for [email sender guidelines](https://support.google.com/a/answer/81126) splits into two lists. That split is the single most misreported thing in this entire subject. There is a section headed "Requirements for all senders". There is a separate one for senders of "5,000 or more messages per day".
 
-The whole thing is widely referred to as the bulk sender requirements, and if that is the phrase you have heard then the natural conclusion is that a small business is exempt from all of it. Go and look at which list the important items are actually in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
+The whole thing is widely called the bulk sender requirements. If that is the phrase you have heard, the natural conclusion is that a small business is exempt from all of it. Go and look at which list the important items are actually in. Under "Requirements for all senders": set up SPF or DKIM authentication for your sending domains, ensure valid forward and reverse DNS records, use a TLS connection, format messages according to RFC 5322, and "keep spam rates reported in Postmaster Tools below 0.3%".
 
 The 0.3 percent is in the all senders list. A one person brokerage sending twice a month is inside it.
 
-The larger list adds the things that genuinely are about volume: SPF and DKIM together rather than either, a published DMARC policy, alignment between the domain in your From header and the authenticated domain, and one-click unsubscribe. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) states the same requirements in its own words, with two details Google's page does not spell out: "honor unsubscribes within 2 days", and an unsubscribe process that is obvious, visible and "doesn't require users to log in".
+The larger list adds the things that truly are about volume. SPF and DKIM together rather than either. A published DMARC policy. Alignment between the domain in your From header and the authenticated domain. And one-click unsubscribe. Yahoo's [sender best practices](https://senders.yahooinc.com/best-practices/) states the same requirements in its own words. It spells out two details Google's page does not: "honor unsubscribes within 2 days", and an unsubscribe process that is obvious, visible and "doesn't require users to log in".
 
 [[scene:deadlines]]
 
-The regulator is not the binding constraint here and it has not been for some time. One more line from Google's own page is worth sitting with, and notice who is giving it: not a party whose revenue rises with the size of your list. "Consider unsubscribing recipients who don't open or read your messages."
+The regulator is not the binding constraint here, and it has not been for some time. One more line from Google's own page is worth sitting with. Notice who is giving it: not a party whose revenue rises with the size of your list. "Consider unsubscribing recipients who don't open or read your messages."
 
 ## What SPF, DKIM and DMARC assert, in their own words
 
-Those three acronyms are sold as a deliverability package, and every provider will offer to set them up for you, which is worth paying for. What is worth understanding is what each one actually claims, because their own specifications are unusually clear about it and the clarity is not flattering to the way they are marketed.
+Those three acronyms are sold as a deliverability package. Every provider will offer to set them up for you, which is worth paying for. What is worth understanding is what each one actually claims. Their own specifications are unusually clear about it. The clarity is not flattering to the way they are marketed.
 
-SPF is [RFC 7208](https://www.rfc-editor.org/rfc/rfc7208.txt), and its abstract says what it is for: existing protocols "place no restriction on what a sending host can use as the MAIL FROM of a message", and SPF is the mechanism by which a domain owner "can explicitly authorize the hosts that are allowed to use their domain names, and a receiving host can check such authorization". It authorises machines. It says nothing about the message.
+SPF is [RFC 7208](https://www.rfc-editor.org/rfc/rfc7208.txt), and its abstract says what it is for. Existing protocols "place no restriction on what a sending host can use as the MAIL FROM of a message". SPF is the mechanism by which a domain owner "can explicitly authorize the hosts that are allowed to use their domain names, and a receiving host can check such authorization". It authorises machines. It says nothing about the message.
 
-DKIM is [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376.txt), and it "permits a person, role, or organization that owns the signing domain to claim some responsibility for a message by associating the domain with the message". Claim responsibility. Not vouch for, not certify, not recommend. It is a signature, and a signature on a bad letter is still a signature.
+DKIM is [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376.txt), and it "permits a person, role, or organization that owns the signing domain to claim some responsibility for a message by associating the domain with the message". Claim responsibility. Not vouch for, not certify, not recommend. It is a signature. A signature on a bad letter is still a signature.
 
-DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt), which ties the two together and tells a receiver what to do when neither passes. Its abstract contains one sentence that ought to be printed on every deliverability invoice ever issued.
+DMARC is [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489.txt). It ties the two together and tells a receiver what to do when neither passes. Its abstract contains one sentence that ought to be printed on every deliverability invoice ever issued.
 
 [[scene:pull-quote]]
 
-That is the specification saying, in its own summary, that doing all of this correctly buys you nothing in the way of preferential treatment. What it buys is the absence of a penalty, and the ability of a receiver to tell the difference between you and somebody forging your domain.
+That is the specification saying, in its own summary, that doing all of this correctly buys you nothing in the way of better treatment. What it buys is the absence of a penalty. It also lets a receiver tell the difference between you and someone forging your domain.
 
-Which means all three of these are necessary and none of them is the work. They establish who is speaking. Whether what you said was wanted is a completely separate judgement, made afterwards, on evidence you supply every time you send.
+Which means all three of these are needed and none of them is the work. They establish who is speaking. Whether what you said was wanted is a completely separate judgement, made afterwards, on evidence you supply every time you send.
 
 ## What one-click unsubscribe actually is, and why it protects you
 
-One-click unsubscribe is the thing in the bulk sender list that sounds like a concession to the recipient, and it is worth understanding because it is not one. It is the mechanism that protects your reputation from the people who want to leave.
+One-click unsubscribe is the thing in the bulk sender list that sounds like a favour to the recipient. It is worth understanding, because it is not one. It is the mechanism that protects your reputation from the people who want to leave.
 
-It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt), and the reasoning is written down in the introduction rather than left to be inferred. The problem it solves is technical: anti-spam software often fetches every link in a message's headers automatically, so a plain unsubscribe link in a header could be triggered by a machine rather than a person. Senders responded by putting a confirmation page behind it, and "that makes the unsubscription process more complex than a single click".
+It has its own specification, [RFC 8058](https://www.rfc-editor.org/rfc/rfc8058.txt). The reasoning is written down in the introduction rather than left to be worked out. The problem it solves is technical. Anti-spam software often fetches every link in a message's headers on its own. So a plain unsubscribe link in a header could be set off by a machine rather than a person. Senders answered by putting a confirmation page behind it, and "that makes the unsubscription process more complex than a single click".
 
 Then the specification explains why that mattered, and this is the sentence to take away:
 
 > Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer appears in the recipient's inbox.
 
-That is an internet standards document stating the business case for a frictionless exit, on the sender's behalf. Every extra step between somebody deciding to leave and being gone is a step during which their alternative is the button that costs you three tenths of a percent.
+That is an internet standards document stating the business case for an easy exit, on the sender's behalf. Every extra step between someone deciding to leave and being gone is a step. During that step, their alternative is the button that costs you three tenths of a percent.
 
-There is one detail with a practical consequence. Section 4 of the same document requires that the message carry a valid DKIM signature covering the unsubscribe headers, and says that without it "the mail receiver SHOULD NOT offer a one-click unsubscribe for that message". So the authentication work in the previous section is not a separate project from the unsubscribe work. Get the signature wrong and the safest exit route is quietly not offered to your recipients at all.
+There is one detail with a practical result. Section 4 of the same document requires that the message carry a valid DKIM signature covering the unsubscribe headers. Without it, it says, "the mail receiver SHOULD NOT offer a one-click unsubscribe for that message". So the authentication work in the section above is not a separate project from the unsubscribe work. Get the signature wrong and the safest exit route is quietly not offered to your recipients at all.
 
 ## Three tenths of one percent, and why you cannot work out your own
 
@@ -1965,67 +1964,67 @@ Both providers publish the same ceiling. Yahoo states it in as many words: "Keep
 
 [[scene:complaint-calculator]]
 
-Now the honest part, and it is the reason the calculator above computes a ceiling rather than a rate.
+Now the honest part, and it is the reason the calculator above works out a ceiling rather than a rate.
 
-Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox", and the same line tells senders to keep that in mind when referencing it. Read it carefully. The denominator is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
+Yahoo states how the figure is derived: "Spam rate is calculated in our system based on mail delivered to the inbox". The same line tells senders to keep that in mind when referring to it. Read it carefully. The denominator, which is the bottom of the fraction, is not what you sent. It is what they delivered to an inbox. Mail that was rejected or filtered before arriving is not in the bottom of that fraction.
 
-That has an uncomfortable consequence. As your reputation falls, more of your mail is filtered, which shrinks the denominator, which raises the rate computed from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to be stable, and there is no version of the arithmetic you can do at your own end that reproduces it.
+That has an uncomfortable result. As your reputation falls, more of your mail is filtered. That shrinks the denominator. A smaller denominator raises the rate worked out from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to hold still. And there is no version of the sums you can do at your own end that reproduces it.
 
-Google publishes yours to you through Postmaster Tools, which is free and takes about ten minutes to set up if you control your sending domain's DNS. That is the most concretely useful thing in this article. It is also, for a sender without an enterprise deliverability contract, the only measurement of their own reputation available to them anywhere, which makes it worth ten minutes whatever else you take from this.
+Google publishes yours to you through Postmaster Tools. It is free. It takes about ten minutes to set up if you control your sending domain's DNS. That is the most useful thing in this article in practice. For a sender without an enterprise deliverability contract, it is also the only measure of their own reputation available to them anywhere. That makes it worth ten minutes, whatever else you take from this.
 
 ## What an open actually measures
 
 The other half of the reporting problem is the number everybody does look at.
 
-An open is not an event. Nobody tells your software that a message was read. What happens is that the message contains a small image hosted on the sender's server, and if the recipient's mail client fetches that image, the fetch is recorded and reported to you as an open. That mechanism has two well known failure modes in opposite directions: clients that block remote images never register an open for a message somebody read carefully, and clients that fetch images automatically register one for a message somebody deleted from the preview pane.
+An open is not an event. Nobody tells your software that a message was read. Here is what happens. The message contains a small image hosted on the sender's server. If the recipient's mail client fetches that image, the fetch is recorded and reported to you as an open. That mechanism has two well known failure modes in opposite directions. Clients that block remote images never register an open for a message someone read carefully. Clients that fetch images on their own register one for a message someone deleted from the preview pane.
 
 That much is widely understood. What is less widely understood is what else is in there, and there is a measurement of it.
 
 [[scene:tracking]]
 
-Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, and that page loads resources from other companies. How many of those a sender put there deliberately is exactly what the researchers could not resolve, and they listed it as an open question at the end of their own paper: when a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
+Read the chart with the note under it, because the authors are careful about what they are and are not claiming. What survives the caveats is the mechanism rather than the rate. A commercial email is a page, and that page loads resources from other companies. How many of those a sender put there deliberately is exactly what the researchers could not resolve. They listed it as an open question at the end of their own paper. When a sender sets up a campaign with a mailing list manager, is the tracking disclosed to the sender at all.
 
-Be careful about what that does and does not license you to say. The same paper reports that the majority of the address leaks it found, 62 percent by its own heuristics, were intentional on the sender's part, so this is not a story in which senders are uniformly innocent. What it is is a strong argument for finding out which case you are in, and that takes ten minutes rather than a project. Send yourself a campaign, open it in a browser with the developer tools showing, and read the list of domains the message contacts. It is your list, going to those companies, with your name on it, and right now you probably do not know whether it is three or thirty.
+Be careful about what that does and does not license you to say. The same paper reports that most of the address leaks it found, 62 percent by its own heuristics, were intentional on the sender's part. So this is not a story in which senders are uniformly innocent. What it is is a strong argument for finding out which case you are in. That takes ten minutes rather than a project. Send yourself a campaign. Open it in a browser with the developer tools showing. Read the list of domains the message contacts. It is your list, going to those companies, with your name on it. Right now you probably do not know whether it is three or thirty.
 
 [[scene:plate-two]]
 
 ## Why the second campaign is harder than the first
 
-There is a mechanism running underneath all of this that explains why people's experience of marketing automation gets worse rather than better, and it is not fatigue and it is not the copy going stale.
+There is a mechanism running underneath all of this. It explains why people's experience of marketing automation gets worse rather than better. It is not fatigue, and it is not the copy going stale.
 
-Everything in the sections above compounds in one direction. The judgement a mailbox provider makes about your next message is formed from how people reacted to your last one. So the first send to a list that has never heard from you is the easiest one you will ever do, and every send after it is graded against a record you are writing as you go.
+Everything in the sections above builds up in one direction. The judgement a mailbox provider makes about your next message is formed from how people reacted to your last one. So the first send to a list that has never heard from you is the easiest one you will ever do. Every send after it is graded against a record you are writing as you go.
 
-Three consequences follow, and none of them are obvious from inside a dashboard.
+Three results follow, and none of them are obvious from inside a dashboard.
 
-The first is that mistakes are paid for later and somewhere else. A badly aimed send in March does not cost you March. It costs you a fraction of the delivery of the April message, to the people who were pleased to hear from you, and nothing in your reporting will connect the two events.
+The first is that mistakes are paid for later and somewhere else. A badly aimed send in March does not cost you March. It costs you part of the delivery of the April message, to the people who were pleased to hear from you. Nothing in your reporting will connect the two events.
 
-The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you, and the ones who never open anything are the ones most likely to eventually press the wrong button.
+The second is that adding people to a list is not free even when they never respond. Every address that did not want the message is a source of the evidence that grades you. The ones who never open anything are the ones most likely to press the wrong button in the end.
 
-The third is the one that changes behaviour, and it is why the close of this article is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list, because a shorter list of people who want the message improves the one input you actually control, and it improves it on every future send rather than on this one.
+The third is the one that changes behaviour, and it is why the close of this article is what it is. The cheapest lever available to you is not better writing, a better subject line or a better tool. It is a shorter list. A shorter list of people who want the message improves the one input you actually control. And it improves it on every future send rather than on this one.
 
 ## What it costs and how long it takes
 
-There is no price on this page, and the reason is that the expensive part of this one is not software at all.
+There is no price on this page. The reason is that the costly part of this one is not software at all.
 
-Three things are being paid for. The sending platform is a subscription priced per contact by whoever you use, and it is the smallest number in the project by a distance. Then the configuration: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data actually lives. Then the item nobody quotes, which is getting your sending domain into a state where the three records above are correct and the address in your From line is aligned with them.
+Three things are being paid for. The sending platform is a subscription priced per contact by whoever you use. It is the smallest number in the project by a distance. Then the set-up: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data actually lives. Then the item nobody quotes. That is getting your sending domain into a state where two things are true. The three records above are correct, and the address in your From line is aligned with them.
 
-That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has historically gone out from three different tools under two different subdomains configured by people who have left, it becomes an archaeology project, and the honest sequencing is to finish it before writing a single campaign rather than after.
+That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has in the past gone out from three different tools under two different subdomains set up by people who have left, it becomes a dig through history. The honest order is to finish it before writing a single campaign rather than after.
 
-The other real cost is a person. Audiences rot, and they rot silently, so somebody has to own the rules and look at them on a schedule. That is not a big job and it is nobody's job by default, which is how a segment defined once outlives everybody's memory of what it was for.
+The other real cost is a person. Audiences rot, and they rot quietly. So someone has to own the rules and look at them on a schedule. That is not a big job, and it is nobody's job by default. That is how a segment defined once outlives everyone's memory of what it was for.
 
-Before spending anything, run the audit below. It is free, it takes an afternoon, and it settles the only question that decides the shape of the project, which is whether your domain is already in good order or has been quietly accumulating configuration for six years.
+Before spending anything, run the audit below. It is free, and it takes an afternoon. It settles the only question that decides the shape of the project. Is your domain already in good order, or has it been quietly piling up settings for six years?
 
 ## What it does not do, and should not pretend to
 
-It does not create demand. Every mechanism described here assumes somebody who already has a reason to hear from you. A cadence does not turn a person who is not moving into a person who is, and pointing one at people who never asked is a different activity with a different risk profile.
+It does not create demand. Every mechanism described here assumes someone who already has a reason to hear from you. A cadence does not turn a person who is not moving into a person who is. Pointing one at people who never asked is a different activity with a different set of risks.
 
-It does not get your mail delivered. Authentication removes a reason to reject you. Delivery is a judgement made by somebody else on the basis of how the people you sent to reacted last time, and the only lever you have on it is who you send to and how often.
+It does not get your mail delivered. Authentication removes a reason to reject you. Delivery is a judgement made by someone else, on the basis of how the people you sent to reacted last time. The only lever you have on it is who you send to and how often.
 
-It does not tell you whether anybody read anything. Opens are a proxy with known failure modes in both directions and clicks are a proxy for interest in one link. Neither is a measurement of attention, and a dashboard built out of them can look healthy while the mail is being filtered.
+It does not tell you whether anyone read anything. Opens are a proxy with known failure modes in both directions. Clicks are a proxy for interest in one link. Neither is a measurement of attention. A dashboard built out of them can look healthy while the mail is being filtered.
 
-It does not fix a message that should not be sent. Behaviour triggers change when something arrives, not whether it should. A poorly judged email delivered at the perfect moment is a poorly judged email that arrives faster, and relevance in the timing does not buy forgiveness for the content.
+It does not fix a message that should not be sent. Behaviour triggers change when something arrives, not whether it should. A poorly judged email delivered at the perfect moment is a poorly judged email that arrives faster. Getting the timing right does not buy forgiveness for the content.
 
-It does not survive being aimed at everybody. This is the limit that costs the most and the one people resist, because a bigger list looks like a bigger asset. Every send to somebody who did not want it is evidence handed to a filtering system, it is scored against your domain, and the damage lands on the next message you send to the people who did want it.
+It does not survive being aimed at everyone. This is the limit that costs the most and the one people resist, because a bigger list looks like a bigger asset. Every send to someone who did not want it is evidence handed to a filtering system. It is scored against your domain. The damage lands on the next message you send to the people who did want it.
 
 [[scene:wasted]]
 
@@ -2033,64 +2032,63 @@ It does not survive being aimed at everybody. This is the limit that costs the m
 
 ## How to audit your own sending in an afternoon
 
-Nothing here needs a consultant and none of it needs access to anything you do not already have.
+Nothing here needs a consultant, and none of it needs access to anything you do not already have.
 
-1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries and anybody can read them, including you. If nobody in your business knows whether they exist, that is the finding, and it is the one to fix first because everything else depends on it.
+1. **Find out what your domain publishes about itself.** Your SPF, DKIM and DMARC records are public DNS entries. Anyone can read them, including you. If nobody in your business knows whether they exist, that is the finding. It is the one to fix first, because everything else depends on it.
 
 2. **Check the From line against them.** Both providers require the domain in your From header to be aligned with the domain that authenticated the message. If your mail says it is from you but is signed by your mailing tool's own domain, you are failing a published requirement that you can see.
 
-3. **Set up Google Postmaster Tools.** It is free, it requires a DNS record, and it will show you the one number in this article you cannot otherwise obtain, which is your own spam rate as Google computes it.
+3. **Set up Google Postmaster Tools.** It is free, and it needs a DNS record. It will show you the one number in this article you cannot get any other way. That is your own spam rate, as Google works it out.
 
-4. **Send yourself a campaign and try to unsubscribe from it.** Time it. Count the pages. If it asks you to log in, asks you why, or takes more than one page, it does not meet the rule at 16 CFR 316.5 and it is also quietly converting people who would have left politely into people who press the other button.
+4. **Send yourself a campaign and try to unsubscribe from it.** Time it. Count the pages. If it asks you to log in, asks you why, or takes more than one page, it does not meet the rule at 16 CFR 316.5. It is also quietly turning people who would have left politely into people who press the other button.
 
-5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here and there is definitely a wrong one, which is not knowing.
+5. **Open the same message with developer tools on.** Look at the list of domains it contacts. Decide whether you are comfortable with it. There is no right answer here, and there is certainly a wrong one, which is not knowing.
 
-6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise somebody who bought through you, somebody who told you they were staying put, or somebody who is now a competitor, your audience rule has no exit condition and it has not had one for a while.
+6. **Open your largest audience and scroll to the bottom of it.** Read the last twenty names. If you recognise someone who bought through you, someone who told you they were staying put, or someone who is now a competitor, your audience rule has no exit condition. It has not had one for a while.
 
-7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Count it before you guess it. It is the input with the largest effect on everything above, and it is the one people carry the vaguest idea of.
+7. **Count your sends over the last ninety days.** Not campaigns. Messages that left the building, including every automated one. Count it before you guess it. It is the input with the largest effect on everything above. It is the one people carry the vaguest idea of.
 
 ## Common questions, answered honestly
 
 ### What is real estate marketing automation, in plain terms?
 
-It is a standing instruction about people you are not currently talking to: a rule, written once, about who hears from you, what they hear and when. The software part is a scheduler and a mail sender. The part that decides whether it works is the audience rule, because that rule keeps running for years against a database of people whose circumstances keep changing.
+It is a standing instruction about people you are not currently talking to. It is a rule, written once, about who hears from you, what they hear and when. The software part is a scheduler and a mail sender. The part that decides whether it works is the audience rule, because that rule keeps running for years against a database of people whose circumstances keep changing.
 
 ### Do I need permission to email somebody in the United States?
 
-Not under the federal statute, which is the thing that surprises people. CAN-SPAM regulates the message: it must identify itself as an advertisement, carry a real postal address, and offer a working exit that survives at least thirty days, with the opt out honoured within ten business days. Permission is required in practice for a different reason. Mailbox providers judge you on how the people you email react, and mail to people who did not ask is what generates the reactions that get you filtered.
+Not under the federal statute, which is the thing that surprises people. CAN-SPAM sets rules for the message. It must identify itself as an advertisement. It must carry a real postal address. It must offer a working exit that lasts at least thirty days, with the opt out honoured within ten business days. Permission is required in practice for a different reason. Mailbox providers judge you on how the people you email react. Mail to people who did not ask is what generates the reactions that get you filtered.
 
 ### How is this different from workflow automation?
 
-Workflow automation is about work: a step somebody used to do by hand now happening on its own, and you find out on the day if it breaks. This is about judgement at scale: who deserves a message, what it says, when it lands. They are usually built with the same tools and they fail in completely different ways, which is why [the workflow article](/blog/workflow-automation-real-estate-business) is a separate read rather than a section of this one.
+Workflow automation is about work. A step someone used to do by hand now happens on its own. You find out on the day if it breaks. This is about judgement at scale: who deserves a message, what it says, when it lands. They are usually built with the same tools, and they fail in completely different ways. That is why [the workflow article](/blog/workflow-automation-real-estate-business) is a separate read rather than a section of this one.
 
 ### Is this the same as reactivating an old database?
 
-No, and the difference is the consent question. Reactivating a list of people who contacted you years ago and went quiet raises questions about permission that has gone stale, and those rules have dates in them. [That article](/blog/database-reactivation-old-real-estate-leads) covers them properly. This one assumes current permission and asks a harder question about what you do with it week after week.
+No, and the difference is the consent question. Reactivating a list of people who contacted you years ago and went quiet raises questions about permission that has gone stale. Those rules have dates in them. [That article](/blog/database-reactivation-old-real-estate-leads) covers them properly. This one assumes current permission. It asks a harder question about what you do with it week after week.
 
 ### Will automated marketing annoy my leads?
 
-Some of them, and the number that matters is much smaller than the number who are annoyed. Both major providers publish the same ceiling of three tenths of one percent for how often people may report you as spam, which on a list of a thousand is three people. Unsubscribes are not the problem and are a sign of a healthy list. The button next to it is the problem, and irrelevance is what makes people press it.
+Some of them, and the number that matters is much smaller than the number who are annoyed. Both major providers publish the same ceiling for how often people may report you as spam: three tenths of one percent. On a list of a thousand that is three people. Unsubscribes are not the problem and are a sign of a healthy list. The button next to it is the problem. Sending people things they do not care about is what makes them press it.
 
 ### Why did my open rate drop?
 
-Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image, so clients that block or proxy remote images distort the count in both directions and the mix of clients on your list changes over time. And separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate, and unlike the open rate it is measured by the party whose opinion decides whether your mail arrives.
+Possibly because fewer people opened it, and possibly for two reasons that have nothing to do with your writing. An open is recorded when a mail client fetches a tracking image. So clients that block or reroute remote images bend the count in both directions. And the mix of clients on your list changes over time. Separately, if more of your mail is being filtered, fewer people are being given the chance to open it at all. Your spam rate in Postmaster Tools is a better health signal than your open rate. Unlike the open rate, it is measured by the party whose opinion decides whether your mail arrives.
 
 ### How often should I send?
 
-There is no published number for this that is worth quoting, and any article that gives you one has made it up. What is defensible is the direction: every send is evidence handed to a filtering system, so the cost of one more message is not zero even when nobody replies. Send to fewer people more carefully and the frequency question mostly answers itself.
+There is no published number for this that is worth quoting. Any article that gives you one has made it up. What can be defended is the direction. Every send is evidence handed to a filtering system, so the cost of one more message is not zero even when nobody replies. Send to fewer people more carefully, and the frequency question mostly answers itself.
 
 ### What is the one thing to fix first?
 
-Whatever your sending domain currently publishes about itself. Not the copy, not the cadence, not the segments. If your authentication is wrong or your From line is not aligned with it, you are failing a requirement that both major providers have published in plain English, and every improvement you make above that layer is being applied to mail that may not arrive.
+Whatever your sending domain currently publishes about itself. Not the copy, not the cadence, not the segments. If your authentication is wrong, or your From line is not aligned with it, you are failing a requirement that both major providers have published in plain English. And every improvement you make above that layer is being applied to mail that may not arrive.
 
 ## What to do about it
 
 The uncomfortable idea in this article is that the most effective thing available to you is to send less.
 
-That runs against how this category is sold, because a platform priced per contact has no reason to suggest a smaller list, and a dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute and it is published by the people who run it. Your ability to reach the people who want to hear from you is a function of how the people who did not want to hear from you reacted. There is no other input you control.
+That runs against how this category is sold. A platform priced per contact has no reason to suggest a smaller list. A dashboard built on sends and opens will always reward more of both. But the mechanism is not in dispute. It is published by the people who run it. Whether you can reach the people who want to hear from you depends on how the people who did not want to hear from you reacted. There is no other input you control.
 
-[[scene:funnel]]
-`;
+[[scene:funnel]]`;
 
 export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town. Every one of them owned by someone who does not live there. And for a little over half of them, a mobile phone number sat in the next column along.
 
@@ -2552,115 +2550,115 @@ Nine good mornings are not a track record. They are nine mornings.
 
 [[scene:funnel]]`;
 
-export const CRM_SYNC_POST = `In March a woman asked your website what her house was worth. She typed her name the way she says it out loud, so the record in your CRM says Kathy Brown.
+export const CRM_SYNC_POST = `In March a woman asked your website what her house was worth. She typed her name the way she says it out loud. So the record in your CRM says Kathy Brown.
 
-In June she rang the office about a different house. Whoever picked up did everything right: took the details, typed them in properly, spelled the name the way it appears on a deed. Katherine Brown. A work email rather than the personal one, and the mobile she actually answers.
+In June she rang the office about a different house. Whoever picked up did everything right. They took the details. They typed them in properly. They spelled the name the way it appears on a deed. Katherine Brown. A work email rather than the personal one, and the mobile she actually answers.
 
 In August she listed with you. In September she went under contract.
 
-And on the Tuesday three days before her closing, an automated email went out asking Kathy whether she was still thinking about selling this year.
+And on the Tuesday three days before her closing, an automated email went out. It asked Kathy whether she was still thinking about selling this year.
 
-Nothing broke. Every part of that ran exactly the way it was built to run. Your website did its job, the person who answered the phone did theirs, and the campaign that sent the email was pointed at exactly the segment it was supposed to be pointed at. The system was working. It just did not know that the two women in it were one woman.
+Nothing broke. Every part of that ran exactly the way it was built to run. Your website did its job. The person who answered the phone did theirs. And the campaign that sent the email was pointed at exactly the segment it was supposed to be pointed at. The system was working. It just did not know that the two women in it were one woman.
 
 [[scene:in-short]]
 
 ## Why there are two of her, and it is not carelessness
 
-A contact record is created by whichever system meets somebody first. Your website makes one when a form is submitted. Your phone system makes one when a number it does not recognise rings in. The portal makes one when a lead is bought. The open house sheet makes one on Monday morning when somebody types up the clipboard. Every one of those routes is doing the correct thing, and none of them can see the others.
+A contact record is created by whichever system meets someone first. Your website makes one when a form is submitted. Your phone system makes one when a number it does not recognise rings in. The portal makes one when a lead is bought. The open house sheet makes one on Monday morning, when someone types up the clipboard. Every one of those routes is doing the correct thing. None of them can see the others.
 
-That is the whole mechanism, and it matters because the usual explanation is wrong. Duplicate records are almost never the product of somebody being sloppy. They are the product of two systems being separately right about the same human being, at two different moments, using whatever she told each of them at the time. She was in a hurry in March and typed the short version of her name. In June she was talking to a person and gave the formal version, because that is what you give a person who is writing something down.
+That is the whole mechanism. It matters because the usual explanation is wrong. Duplicate records are almost never the product of someone being sloppy. They are the product of two systems being separately right about the same human being, at two different moments, using whatever she told each of them at the time. She was in a hurry in March and typed the short version of her name. In June she was talking to a person and gave the formal version, because that is what you give a person who is writing something down.
 
-The reason this is worth understanding rather than just fixing is that it tells you what the fix has to be. If the problem were carelessness, the answer would be training. It is not carelessness, so the answer is not training. The answer is a rule about identity that lives somewhere outside all of those systems and is applied every time any of them creates a record.
+The reason this is worth understanding rather than just fixing is that it tells you what the fix has to be. If the problem were carelessness, the answer would be training. It is not carelessness, so the answer is not training. The answer is a rule about identity. It lives somewhere outside all of those systems. It is applied every time any of them creates a record.
 
 [[scene:two-of-her]]
 
 ## What the same person means to a computer
 
-You looked at those two records and knew instantly. A computer does not have the thing you just used. What it has is two strings, and a way of asking how similar they are.
+You looked at those two records and knew instantly. A computer does not have the thing you just used. What it has is two strings. It has a way of asking how similar they are.
 
-This is the part of the subject that has actually been studied, and it has a name that nobody in software sales ever uses: record linkage. The clearest published overview is [by William Winkler of the United States Census Bureau](https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf), written for the Bureau's own research report series, because the Census has the hardest version of this problem in the country and has been working on it since the 1950s. It is worth reading the whole thing if you ever have an afternoon, and one paragraph in it is worth reading now.
+This is the part of the subject that has actually been studied. It has a name that nobody in software sales ever uses: record linkage. The clearest published overview is [by William Winkler of the United States Census Bureau](https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf). He wrote it for the Bureau's own research report series. It is the clearest because the Census has the hardest version of this problem in the country, and has been working on it since the 1950s. It is worth reading the whole thing if you ever have an afternoon. One paragraph in it is worth reading now.
 
-Winkler is describing what counts as a "typographical error" between two records that genuinely belong to the same person, and he gives four examples of first name pairs: Bill and William, Mr and William, William and James, William and Willam. Look at the third one. William and James are not a misspelling of each other. They are different names, and the paper counts the pair anyway, because the definition it is working to is any difference in the way corresponding fields are written between two records that are in fact a match. Middle names get used as first names. People go by their second name for forty years. The record is not wrong; it just does not look like the other one.
+Winkler is describing what counts as a "typographical error" between two records that genuinely belong to the same person. He gives four examples of first name pairs: Bill and William, Mr and William, William and James, William and Willam. Look at the third one. William and James are not a misspelling of each other. They are different names. The paper counts the pair anyway, because the definition it is working to is any difference in the way corresponding fields are written between two records that are in fact a match. Middle names get used as first names. People go by their second name for forty years. The record is not wrong. It just does not look like the other one.
 
-How often does that happen? Winkler cites his own earlier measurement: even high quality files might contain more than 20 percent error in first name pairs and more than 10 percent error in last name pairs among pairs that are true matches. Read that twice, because it is the number that decides everything downstream, and read the word "might" in it as well: this is the upper end of what a careful file can look like, not a property of every file. In one that somebody had already taken care over, as many as one pair in five that describe the same person can disagree about her first name.
+How often does that happen? Winkler cites his own earlier measurement: even high quality files might contain more than 20 percent error in first name pairs and more than 10 percent error in last name pairs among pairs that are true matches. Read that twice, because it is the number that decides everything downstream. And read the word "might" in it as well. This is the upper end of what a careful file can look like, not a property of every file. In one that someone had already taken care over, as many as one pair in five that describe the same person can disagree about her first name.
 
 [[scene:surnames]]
 
 ## A name is not an identifier, and this is how far from one it is
 
-The other half of the problem is the opposite of the first. Names disagree when they should agree, and they also agree when they mean nothing at all.
+The other half of the problem is the opposite of the first. Names disagree when they should agree. They also agree when they mean nothing at all.
 
-The Census Bureau publishes the count of every surname that occurred at least 100 times in the 2010 Census: 162,253 of them. Brown was carried by 1,437,026 people. So a matching rule that treats a surname as evidence is not wrong, exactly, but it is worth almost nothing on its own, and it is worth a wildly different amount depending on which surname it is. Winkler makes the same point with two examples of his own, noting that a relatively rarer last name string such as Zabrinsky has more distinguishing power than a string such as Smith.
+The Census Bureau publishes the count of every surname that occurred at least 100 times in the 2010 Census: 162,253 of them. Brown was carried by 1,437,026 people. So a matching rule that treats a surname as evidence is not wrong, exactly. But it is worth almost nothing on its own. And it is worth a wildly different amount depending on which surname it is. Winkler makes the same point with two examples of his own. He notes that a relatively rarer last name string such as Zabrinsky has more distinguishing power than a string such as Smith.
 
-There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is just under fifty million pairs, and the overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking: only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer and it has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
+There is a second, duller constraint that shapes every real system. You cannot compare every record against every other record. Ten thousand contacts is just under fifty million pairs. The overwhelming majority of them are two people who have nothing to do with each other. The standard answer, which Winkler credits to Newcombe in 1962, is called blocking. Only bother comparing pairs that already agree on something, such as a surname or a date of birth. It is a good answer. It has a cost that is built into it. Any true match whose blocking field is wrong on one side will never be looked at, because the two records were never in the same pile.
 
 [[scene:plate]]
 
 ## Somebody solved this properly, and the answer has three outcomes
 
-In 1969 Fellegi and Sunter published a formal mathematical model for ideas Newcombe had introduced ten years earlier, and it is still the model underneath every serious matching system in the world. Winkler's overview restates it, and the restatement is the part a business owner should actually read.
+In 1969 Fellegi and Sunter published a formal mathematical model for ideas Newcombe had introduced ten years earlier. It is still the model underneath every serious matching system in the world. Winkler's overview restates it. The restatement is the part a business owner should actually read.
 
-You take a pair of records and you look at the pattern of what agrees and what does not: same last name, different first name, same street number, no email on one side. Then you ask a ratio. How likely is that exact pattern among pairs that really are the same person, against how likely it is among pairs that really are not? A high ratio means the agreements are the kind that only matches produce. A low one means they are the kind that strangers produce by coincidence.
+You take a pair of records and you look at the pattern of what agrees and what does not. Same last name, different first name, same street number, no email on one side. Then you ask a ratio. How likely is that exact pattern among pairs that really are the same person, against how likely it is among pairs that really are not? A high ratio means the agreements are the kind that only matches produce. A low one means they are the kind that strangers produce by coincidence.
 
-Then comes the decision rule, and it is quoted here almost exactly as Winkler writes it. If the ratio is above an upper threshold, designate the pair a match. If it is between the two thresholds, designate it a possible match and hold it for clerical review. If it is below the lower threshold, designate it a nonmatch.
+Then comes the decision rule. It is quoted here almost exactly as Winkler writes it. If the ratio is above an upper threshold, designate the pair a match. If it is between the two thresholds, designate it a possible match and hold it for clerical review. If it is below the lower threshold, designate it a nonmatch.
 
 [[scene:three-answers]]
 
 ## The third answer is a person, and it is the one nobody sells you
 
-Almost every product in this category describes two outcomes: it finds duplicates, or it does not. The model that actually works has three, and the middle one is a queue of pairs that a human being looks at. Winkler's own name for that band is the no-decision region.
+Almost every product in this category describes two outcomes. It finds duplicates, or it does not. The model that actually works has three. The middle one is a queue of pairs that a human being looks at. Winkler's own name for that band is the no-decision region.
 
-The reason it exists is the sentence right underneath the rule, and it is the honest centre of this whole article. The two thresholds are set from error bounds you choose in advance, on false matches and on false nonmatches. You get to pick how often the system is allowed to merge two people who are not the same person, and how often it is allowed to leave one person sitting in the database twice. You do not get to pick zero for both. Moving one threshold to make one of those numbers smaller makes the other one bigger, and the only place the pressure can go instead is into the middle band, which is a person's afternoon.
+The reason it exists is the sentence right underneath the rule. It is the honest centre of this whole article. The two thresholds are set from error bounds you choose in advance, on false matches and on false nonmatches. You get to pick how often the system is allowed to merge two people who are not the same person. You get to pick how often it is allowed to leave one person sitting in the database twice. You do not get to pick zero for both. Moving one threshold to make one of those numbers smaller makes the other one bigger. The only place the pressure can go instead is into the middle band, which is a person's afternoon.
 
-That is not a limitation of the software you were quoted. It is a property of the problem, published in 1969, and any vendor whose answer to "how accurate is your deduplication" is a single percentage has either not read this or is hoping you have not.
+That is not a limitation of the software you were quoted. It is a property of the problem, published in 1969. Any vendor whose answer to "how accurate is your deduplication" is a single percentage has either not read this or is hoping you have not.
 
-What it looks like at scale is worth seeing, because the trade is real and so is the payoff. Winkler records what the computerised procedures did to what he calls a very large 1990 Decennial Census application: they reduced the need for clerks and field follow-up from an estimated 3,000 individuals over 3 months to 200 individuals over 6 weeks.
+What it looks like at scale is worth seeing. The trade is real, and so is the payoff. Winkler records what the computerised procedures did to what he calls a very large 1990 Decennial Census application. They reduced the need for clerks and field follow-up from an estimated 3,000 individuals over 3 months to 200 individuals over 6 weeks.
 
 [[scene:census-clerks]]
 
-And then he says why the 200 were still needed, which is the part that never gets quoted. Both first name and age were missing from a small proportion of the Census forms and the survey forms being matched against them. Not wrong. Missing. There is no algorithm for a blank field, there was not one in 1990 and there is not one now, and the strongest matching system ever built for the American population still ended with two hundred people in a room deciding.
+And then he says why the 200 were still needed, which is the part that never gets quoted. Both first name and age were missing from a small proportion of the Census forms and the survey forms being matched against them. Not wrong. Missing. There is no algorithm for a blank field. There was not one in 1990 and there is not one now. And the strongest matching system ever built for the American population still ended with two hundred people in a room deciding.
 
 ## What a sync is actually made of
 
-Strip the word "sync" off it and there are only three questions, and every argument you will ever have about a CRM integration is one of them wearing a costume.
+Strip the word "sync" off it and there are only three questions. Every argument you will ever have about a CRM integration is one of them wearing a costume.
 
-Which record is this. That is the whole of the section above, and it is settled before anything else can happen, because a piece of information cannot be written to a contact until somebody has decided which contact it belongs to.
+Which record is this. That is the whole of the section above. It is settled before anything else can happen. A piece of information cannot be written to a contact until someone has decided which contact it belongs to.
 
-Which fields move. Your phone system knows a call happened, its length and its outcome. Your CRM has somewhere to put a call, and it also has thirty other fields the phone system has never heard of. Somebody has to sit down and say that this field over here becomes that field over there, and that the ones with no partner stay where they are.
+Which fields move. Your phone system knows a call happened, its length and its outcome. Your CRM has somewhere to put a call. It also has thirty other fields the phone system has never heard of. Someone has to sit down and say that this field over here becomes that field over there, and that the ones with no partner stay where they are.
 
-Which direction. A field can be written one way, written the other way, or written both ways, and the third of those is the only one that deserves the name two-way sync, and it is the one that creates every hard problem in the rest of this article.
+Which direction. A field can be written one way, written the other way, or written both ways. The third of those is the only one that deserves the name two-way sync. It is the one that creates every hard problem in the rest of this article.
 
 [[scene:sync-path]]
 
 ## The field that gets erased
 
-Here is a failure that looks like data loss and is actually a design decision somebody made without noticing.
+Here is a failure that looks like data loss and is actually a design decision someone made without noticing.
 
-The web has two ways of changing something that already exists, and they are not variations on a theme. The older one is a replace, and [the specification for it](https://www.rfc-editor.org/rfc/rfc9110.html#name-put) says that the sender is requesting that the stored version be replaced. [The other one](https://www.rfc-editor.org/rfc/rfc5789.html), defined in 2010 in a document whose introduction says in its first paragraph that a new method was necessary to improve interoperability and prevent errors, sends a set of instructions describing how the thing currently stored should be modified to produce a new version.
+The web has two ways of changing something that already exists. They are not variations on a theme. The older one is a replace. [The specification for it](https://www.rfc-editor.org/rfc/rfc9110.html#name-put) says that the sender is requesting that the stored version be replaced. [The other one](https://www.rfc-editor.org/rfc/rfc5789.html) was defined in 2010, in a document whose introduction says in its first paragraph that a new method was necessary to improve interoperability and prevent errors. It sends a set of instructions describing how the thing currently stored should be modified to produce a new version.
 
 In plain terms: one of them says "here is the contact, make it look like this", and the other says "change these two fields and leave everything else alone".
 
-If your sync uses the first one and the sending system has an empty box where the receiving system has a mobile number somebody typed in by hand two years ago, the mobile number is gone. Nobody deleted it. The sending system simply described the whole contact, and in its description that field was empty, and the receiving system did what it was asked. This is the single most common way a sync destroys information, and the tell is always the same: the missing data is missing from exactly the fields the other system does not have.
+Say your sync uses the first one. The sending system has an empty box where the receiving system has a mobile number someone typed in by hand two years ago. The mobile number is gone. Nobody deleted it. The sending system simply described the whole contact. In its description that field was empty, and the receiving system did what it was asked. This is the single most common way a sync destroys information. The tell is always the same. The missing data is missing from exactly the fields the other system does not have.
 
-The specification for the second method has a rule about this that is worth holding a vendor to. The server must apply the entire set of changes atomically and must never provide a partially modified representation, and if the whole patch cannot be applied then it must apply none of it. All of it or none of it. A half-updated contact is not a smaller version of a successful update. It is a record in a state that was never intended by anybody, and the standard says it must not be allowed to exist.
+The specification for the second method has a rule about this that is worth holding a vendor to. The server must apply the entire set of changes atomically and must never provide a partially modified representation, and if the whole patch cannot be applied then it must apply none of it. All of it or none of it. A half-updated contact is not a smaller version of a successful update. It is a record in a state that was never intended by anyone. The standard says it must not be allowed to exist.
 
 ## The same update, arriving twice
 
-Networks fail in the middle. That is not an edge case, it is a Tuesday, and every sync you will ever own has to decide what to do about it.
+Networks fail in the middle. That is not an edge case. It is a Tuesday. Every sync you will ever own has to decide what to do about it.
 
-[The current HTTP specification](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods) has a precise word for the property that decides the answer. A request method is idempotent if the intended effect on the server of multiple identical requests is the same as the effect of a single one. The specification is explicit about why it bothers to define this: idempotent requests can be repeated automatically if a communication failure happens before the sender learns whether the first one worked.
+[The current HTTP specification](https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods) has a precise word for the property that decides the answer. A request method is idempotent if the intended effect on the server of multiple identical requests is the same as the effect of a single one. The specification is explicit about why it bothers to define this. Idempotent requests can be repeated automatically if a communication failure happens before the sender learns whether the first one worked.
 
-Apply that to your contact record and it stops being computer science. "Set this contact's stage to Under Contract" is idempotent. Send it five times and the stage is Under Contract. "Add a note to this contact" is not. Send it five times and there are five notes, and the person who opens that record on Thursday sees the same message from you five times and draws a conclusion about you.
+Apply that to your contact record and it stops being computer science. "Set this contact's stage to Under Contract" is idempotent. Send it five times and the stage is Under Contract. "Add a note to this contact" is not. Send it five times and there are five notes. The person who opens that record on Thursday sees the same message from you five times. They draw a conclusion about you.
 
-The specification also says what a careful system does about it: a client should not automatically retry a request that is not idempotent unless it has some way of knowing that the request is safe to repeat, or some way of detecting that the original never landed. And then it says, drily, that some clients take a riskier approach and attempt to guess when an automatic retry is possible. That sentence describes a large amount of the integration software currently running inside small businesses, and the symptom is duplicate activity on a contact record rather than an error anybody sees.
+The standard also says what a careful system does about it. A client should not automatically retry a request that is not idempotent, unless it has some way of knowing that the request is safe to repeat, or some way of detecting that the original never landed. And then it says, drily, that some clients take a riskier approach and attempt to guess when an automatic retry is possible. That sentence describes a large amount of the integration software currently running inside small businesses. The symptom is duplicate activity on a contact record, rather than an error anyone sees.
 
 ## When both sides changed at once
 
-The last hard problem is the one with the best name. You open the contact in the CRM and change the phone number. At the same moment an automation, acting on what it read a second earlier, writes the whole contact back. Your change is gone, no error was raised, and nothing anywhere records that there was ever a disagreement.
+The last hard problem is the one with the best name. You open the contact in the CRM and change the phone number. At the same moment an automation, acting on what it read a second earlier, writes the whole contact back. Your change is gone. No error was raised. And nothing anywhere records that there was ever a disagreement.
 
-The specification calls this [the lost update problem](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match), names it in exactly those words, and describes the mechanism that exists to prevent it: a conditional request. The sender includes a marker for the version it last saw, and the receiving system is required not to perform the change if that marker no longer matches, refusing with a status code that exists for nothing else. The specification for partial updates goes further, warning that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need to start from a known base point or they will corrupt what they are changing.
+The standard calls this [the lost update problem](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match), and names it in exactly those words. It describes the mechanism that exists to prevent it: a conditional request. The sender includes a marker for the version it last saw. The receiving system is required not to perform the change if that marker no longer matches, refusing with a status code that exists for nothing else. The specification for partial updates goes further. It warns that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need to start from a known base point or they will corrupt what they are changing.
 
-None of that is exotic. All of it is thirty years old, written down, free to read, and absent from most small business integrations, because the cheap way to build a sync is to write the newest thing you have and not ask what was there before. That is a choice with a name, last write wins, and it is a perfectly respectable choice for some fields and a disaster for others. The point is that somebody has to make it deliberately, field by field, and be able to tell you what they picked.
+None of that is exotic. All of it is thirty years old, written down, free to read, and absent from most small business integrations. The cheap way to build a sync is to write the newest thing you have and not ask what was there before. That is a choice with a name: last write wins. It is a perfectly respectable choice for some fields and a disaster for others. The point is that someone has to make it deliberately, field by field, and be able to tell you what they picked.
 
 [[scene:crm-calculator]]
 
@@ -2668,45 +2666,45 @@ None of that is exotic. All of it is thirty years old, written down, free to rea
 
 ## Which side is right, and why somebody has to say it out loud
 
-Every two way sync eventually receives two different answers to the same question and has to pick one. There is no clever way out of this and there is no default that is correct for every field, so the build either contains a decision or it contains an accident.
+Every two way sync eventually receives two different answers to the same question and has to pick one. There is no clever way out of this. There is no default that is correct for every field. So the build either contains a decision or it contains an accident.
 
-A rule that works for a lot of small businesses is that the most recently changed value wins for anything factual, such as a phone number or an address, and the CRM wins for anything about the relationship, such as the stage of the deal or the owner of the contact. A rule that works for others is that anything a human being typed beats anything a machine wrote, always, on the grounds that the human was looking at the person while they typed it.
+A rule that works for a lot of small businesses has two halves. The most recently changed value wins for anything factual, such as a phone number or an address. And the CRM wins for anything about the relationship, such as the stage of the deal or the owner of the contact. A rule that works for others is that anything a human being typed beats anything a machine wrote, always, on the grounds that the human was looking at the person while they typed it.
 
-Neither is right. What matters is that your rule is written down somewhere you can read it, that it was chosen by somebody who understood what each field is for, and that you can find out what it is without opening a support ticket. The service page for this says plainly that the sync does not decide which side is right and that the conflict rules get agreed when it is built. That is not a caveat. It is the most important half hour of the project.
+Neither is right. Three things matter. Your rule is written down somewhere you can read it. It was chosen by someone who understood what each field is for. And you can find out what it is without opening a support ticket. The service page for this says plainly that the sync does not decide which side is right, and that the conflict rules get agreed when it is built. That is not a caveat. It is the most important half hour of the project.
 
 ## What the identity field actually is, in your CRM
 
-There is a specific thing to go and check, and it is checkable today, for free, in about ten minutes.
+There is a specific thing to go and check. It is checkable today, for free, in about ten minutes.
 
-Somewhere in your setup there is one field that decides whether an incoming record is a new person or an existing one. [HubSpot's own developer documentation](https://developers.hubspot.com/docs/guides/api/crm/objects/contacts) is unusually direct about this. Its combined create-and-update endpoint asks you to name the property you are identifying people by, and it says that you can use email or a custom unique identifier property, and that following the request, if the contacts already exist they will be updated, and if the contacts do not exist they will be created. One field, nominated by whoever built your integration, and every duplicate you have ever had is downstream of it.
+Somewhere in your setup there is one field. It decides whether an incoming record is a new person or an existing one. [HubSpot's own developer documentation](https://developers.hubspot.com/docs/guides/api/crm/objects/contacts) is unusually direct about this. Its combined create-and-update endpoint asks you to name the property you are identifying people by. It says that you can use email or a custom unique identifier property, and that following the request, if the contacts already exist they will be updated, and if the contacts do not exist they will be created. One field, nominated by whoever built your integration. Every duplicate you have ever had is downstream of it.
 
-The same page carries a warning that most people find out about by hitting it. Partial upserts are not supported when using email as the identifying property for contacts, and the documented remedy is to identify people by a custom property of your own instead. Which is worth knowing before the build rather than after, because the path that does not support a partial update is the path where you end up describing the whole contact, and that is the erasing behaviour two sections up.
+The same page carries a warning that most people find out about by hitting it. Partial upserts are not supported when using email as the identifying property for contacts. The documented remedy is to identify people by a custom property of your own instead. Which is worth knowing before the build rather than after. The path that does not support a partial update is the path where you end up describing the whole contact. That is the erasing behaviour two sections up.
 
-And it documents what survives a merge, which is the detail that tells you the vendors have thought about this harder than the resellers have. When two contacts are combined, the loser's email address does not evaporate; it is kept as an additional email on the surviving record, and those additional addresses are still unique identifiers, so no other contact can take them. Your database remembers that Kathy existed. It has to, because the next time a message comes in from that address, something has to know where to put it.
+And it documents what survives a merge. That is the detail that tells you the vendors have thought about this harder than the resellers have. When two contacts are combined, the loser's email address does not evaporate. It is kept as an additional email on the surviving record. Those additional addresses are still unique identifiers, so no other contact can take them. Your database remembers that Kathy existed. It has to, because the next time a message comes in from that address, something has to know where to put it.
 
 [[scene:offer]]
 
 ## What it costs, and how long it takes
 
-This article will not quote you a number, and not out of coyness. Four things drive the cost and none of them can be guessed from a distance: how many systems have to be joined, whether each of them exposes an interface a program can actually use, how many fields have to be mapped by hand rather than by name, and whether the records already in there have to be reconciled before anything is switched on. The fourth moves the total more than the other three and it is never in the quote.
+This article will not quote you a number, and not out of coyness. Four things drive the cost. None of them can be guessed from a distance. How many systems have to be joined. Whether each of them exposes an interface a program can actually use. How many fields have to be mapped by hand rather than by name. And whether the records already in there have to be reconciled before anything is switched on. The fourth moves the total more than the other three. It is never in the quote.
 
-The shape of it can be described without a number. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project, and the connecting is the smaller half of it. Most of the time goes on somebody sitting with you over a list of fields and asking what each one is for, which is slow because half the answers turn out to be "I think that was Dave's".
+The shape of it can be described without a number. A single pair of systems with a clear identity field and a dozen mapped fields is a small piece of work measured in days. A business with an old CRM, a newer CRM nobody finished migrating to, a phone system and a portal feed is a different project. The connecting is the smaller half of it. Most of the time goes on someone sitting with you over a list of fields and asking what each one is for. That is slow, because half the answers turn out to be "I think that was Dave's".
 
-Then there is the recurring cost, which is a person's attention. A sync is software, it will break the week a vendor renames a field, and something has to notice. And the middle band from the matching model never goes away: if you want fewer wrong merges, more pairs land in front of a human, and that is a standing item on somebody's week rather than a one-off.
+Then there is the recurring cost, which is a person's attention. A sync is software. It will break the week a vendor renames a field. Something has to notice. And the middle band from the matching model never goes away. If you want fewer wrong merges, more pairs land in front of a human. That is a standing item on someone's week rather than a one-off.
 
-Here is the number we cannot give you, and it is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly, usually in a band somewhere between ten and forty percent, and the ones we followed led either to a company that sells deduplication software quoting its own customers or to an analyst rule of thumb with no report behind it. Not one of them states a sample or a method, which is the same shape as every figure this website has had to retract. The calculator above therefore asks you for the inputs rather than assuming them, and the honest first step of any real project is measuring your own file instead of accepting somebody's average.
+Here is the number we cannot give you. It is the one you actually asked for. How many duplicates are in your database right now. Figures for this circulate constantly, usually in a band somewhere between ten and forty percent. The ones we followed led either to a company that sells deduplication software quoting its own customers, or to an analyst rule of thumb with no report behind it. Not one of them states a sample or a method, which is the same shape as every figure this website has had to retract. The calculator above therefore asks you for the inputs rather than assuming them. And the honest first step of any real project is measuring your own file, instead of accepting someone's average.
 
 [[scene:plate-two]]
 
 ## What it does not do, and should not pretend to
 
-It does not clean what is already in there. Keeping two systems in step from today onward and reconciling nine years of accumulated records are two different jobs with two different price tags, and a sync switched on over an unreconciled database will faithfully propagate every mess in it to a second system.
+It does not clean what is already in there. Keeping two systems in step from today onward and reconciling nine years of accumulated records are two different jobs with two different price tags. A sync switched on over an unreconciled database will faithfully propagate every mess in it to a second system.
 
-It does not remove the human decision. That is the entire point of the three way rule, and any build that reports a hundred percent automatic resolution has quietly widened its match threshold and is merging people. The failure mode of an over-eager deduplicator is worse than the one it fixes: two separated records are an embarrassment, and two people fused into one is a stranger reading somebody else's conversation history.
+It does not remove the human decision. That is the entire point of the three way rule. Any build that reports a hundred percent automatic resolution has quietly widened its match threshold, and is merging people. The failure mode of an over-eager deduplicator is worse than the one it fixes. Two separated records are an embarrassment. Two people fused into one is a stranger reading someone else's conversation history.
 
-It does not open a system that will not open. Most modern CRMs expose an interface built for exactly this, and a platform that does not is not going to be talked round. Screen scraping something with no interface is not a sync, it is a liability with a schedule.
+It does not open a system that will not open. Most modern CRMs expose an interface built for exactly this. A platform that does not is not going to be talked round. Screen scraping something with no interface is not a sync. It is a liability with a schedule.
 
-It does not make anybody use the CRM. A record that is finally true is worth nothing at all if the appointment still lives on a sticky note, and there is no integration that can reach into a notebook.
+It does not make anyone use the CRM. A record that is finally true is worth nothing at all if the appointment still lives on a sticky note. There is no integration that can reach into a notebook.
 
 And it will not tell you which of the two records is the real one, in the cases that matter. It will tell you they are probably the same person. Which email she reads, which number she answers, and which of the two histories is the one you should have in front of you before you ring her: that is judgement, and it belongs to whoever knows her.
 
@@ -2714,13 +2712,13 @@ And it will not tell you which of the two records is the real one, in the cases 
 
 ## How to find out how bad yours is, in twenty minutes
 
-Nobody needs a consultant for the first pass, and you should do this before anybody quotes you, because the quote is worth more when you have the answer.
+Nobody needs a consultant for the first pass. You should do this before anyone quotes you, because the quote is worth more when you have the answer.
 
-Take the last ten deals you closed. For each of those people, search your CRM for the surname on its own, then the first name on its own, then the email domain. Count the records that come back and are plainly the same human being. Ten is a small sample and it is not meant to be a statistic; it is meant to tell you whether the answer is roughly zero or roughly everywhere, and that is the only resolution the decision needs.
+Take the last ten deals you closed. For each of those people, search your CRM for the surname on its own, then the first name on its own, then the email domain. Count the records that come back and are plainly the same human being. Ten is a small sample. It is not meant to be a statistic. It is meant to tell you whether the answer is roughly zero or roughly everywhere. That is the only resolution the decision needs.
 
-Then do the same for yourself. Put your own name into your CRM, your marketing tool, and your phone system in turn, and see what each of them thinks it knows about you. Your own record is the one you can audit instantly and argue with nobody about, which is what makes it the useful place to start.
+Then do the same for yourself. Put your own name into your CRM, your marketing tool, and your phone system in turn. See what each of them thinks it knows about you. Your own record is the one you can audit instantly and argue with nobody about. That is what makes it the useful place to start.
 
-Third, find out what your automated messages are addressed off. Open the last one that went out and look at whether the name in the greeting comes from a field a person typed or a field a form captured. Kathy is in that email because of which field somebody chose, and that choice was made once, quickly, by whoever set it up.
+Third, find out what your automated messages are addressed off. Open the last one that went out. Look at whether the name in the greeting comes from a field a person typed or a field a form captured. Kathy is in that email because of which field someone chose. That choice was made once, quickly, by whoever set it up.
 
 Last, ask whoever built your current integration one question: what happens if the same webhook arrives twice. If the answer is a shrug, you have learned something more useful than any audit, and it cost you a sentence.
 
@@ -2728,43 +2726,43 @@ Last, ask whoever built your current integration one question: what happens if t
 
 ### What is two-way CRM sync, in plain terms?
 
-It means information travels in both directions between your CRM and the other systems you use. Activity from calls, texts, bookings and automations writes into the CRM, and changes made inside the CRM flow back out to the systems that act on them. One-way sync means one of the two sides is always working from a copy that is out of date, and it is usually the side doing the automated messaging.
+It means information travels in both directions between your CRM and the other systems you use. Activity from calls, texts, bookings and automations writes into the CRM. Changes made inside the CRM flow back out to the systems that act on them. One-way sync means one of the two sides is always working from a copy that is out of date. It is usually the side doing the automated messaging.
 
 ### How is this different from workflow automation?
 
-Workflow automation is about work moving between systems: a form is submitted, so a task is created and a reply goes out. Sync is about one fact being true in more than one place at the same time. The tooling underneath is often identical and the question being answered is not, so a business can have either one without the other. A business with beautiful automation and no sync sends perfectly timed messages to the wrong version of a person.
+Workflow automation is about work moving between systems. A form is submitted, so a task is created and a reply goes out. Sync is about one fact being true in more than one place at the same time. The tooling underneath is often identical and the question being answered is not, so a business can have either one without the other. A business with beautiful automation and no sync sends perfectly timed messages to the wrong version of a person.
 
 ### Will it create duplicate contacts?
 
-A correctly built sync exists to prevent them, using a nominated identity field and a matching rule agreed when it is built, so an inbound record matching an existing contact updates that contact rather than creating a second one. What no honest build will promise is that the matching is never wrong in either direction, because the published model that everything in this field rests on says you choose between two kinds of error and cannot have zero of both.
+A correctly built sync exists to prevent them. It uses a nominated identity field and a matching rule agreed when it is built, so an inbound record matching an existing contact updates that contact rather than creating a second one. What no honest build will promise is that the matching is never wrong in either direction, because the published model that everything in this field rests on says you choose between two kinds of error and cannot have zero of both.
 
 ### Does it work with Follow Up Boss, kvCORE or HubSpot?
 
-Yes, along with most CRMs that expose a documented interface for software to use. The orchestration sits outside the CRM rather than being a fixed integration, so the answer is not limited to a supported list. The right question to ask about any specific platform is narrower than "is it supported": ask which field identifies a person, whether updates can change named fields rather than replacing the whole record, and whether the same message arriving twice creates one thing or two.
+Yes, along with most CRMs that expose a documented interface for software to use. The orchestration sits outside the CRM rather than being a fixed integration, so the answer is not limited to a supported list. The right question to ask about any specific platform is narrower than "is it supported". Ask which field identifies a person. Ask whether updates can change named fields rather than replacing the whole record. And ask whether the same message arriving twice creates one thing or two.
 
 ### What happens to the data that is already in there?
 
-Nothing, until somebody decides what should happen. Reconciling an existing database is a separate exercise from syncing it forward, and doing them in the wrong order is how a project doubles in cost. The sensible sequence is to measure what is in there, agree the identity rule, reconcile the obvious matches, put the genuinely ambiguous pairs in front of a person, and only then switch the ongoing sync on.
+Nothing, until someone decides what should happen. Reconciling an existing database is a separate exercise from syncing it forward. Doing them in the wrong order is how a project doubles in cost. The sensible sequence has five steps. Measure what is in there. Agree the identity rule. Reconcile the obvious matches. Put the genuinely ambiguous pairs in front of a person. And only then switch the ongoing sync on.
 
 ### Can it merge records automatically?
 
-Some of them, and the share depends on a threshold somebody sets. That threshold is the honest conversation to have before the build starts, because it is the dial between a system that leaves work for you and a system that occasionally fuses two people together. The safe default on a first build is to automate only the pairs that are not in any doubt, put everything else in a review queue, and widen it later once you have watched what the queue actually contains.
+Some of them. The share depends on a threshold someone sets. That threshold is the honest conversation to have before the build starts. It is the dial between a system that leaves work for you and a system that occasionally fuses two people together. The safe default on a first build is to automate only the pairs that are not in any doubt. Put everything else in a review queue. Widen it later, once you have watched what the queue actually contains.
 
 ### Is this worth it for a one-person business?
 
-Often more than for a large one, and for a reason that has nothing to do with efficiency. In a big office a duplicate is caught because several people touch a record. On your own you are the only person who would ever notice, you are noticing while doing something else, and the message that goes to the wrong version of somebody goes out under your own name.
+Often more than for a large one. The reason has nothing to do with efficiency. In a big office a duplicate is caught, because several people touch a record. On your own you are the only person who would ever notice. You are noticing while doing something else. And the message that goes to the wrong version of someone goes out under your own name.
 
 ### How do I know it is working after it goes live?
 
-Watch the review queue rather than the dashboard. A queue that is empty in week one usually means the matching is too confident rather than that your data is clean, and a queue nobody opens is the same as no matching at all. The other check takes a minute: pick a contact, change one field in each system in turn, and see what the other side says afterwards.
+Watch the review queue rather than the dashboard. A queue that is empty in week one usually means the matching is too confident, rather than that your data is clean. And a queue nobody opens is the same as no matching at all. The other check takes a minute. Pick a contact, change one field in each system in turn, and see what the other side says afterwards.
 
 ## What to do about it
 
-Search your own name in your own CRM. That is the whole assignment, it costs nothing, and it settles in one screen an argument that people have in meetings for months.
+Search your own name in your own CRM. That is the whole assignment. It costs nothing, and it settles in one screen an argument that people have in meetings for months.
 
 If more than one of you comes back, you already know what the automated message going out on Tuesday is addressed to. And you know something else, which is that it was never a discipline problem, because nobody typed anything wrong. Two systems were separately right about the same person, and nothing in the building had the job of noticing.
 
-The pieces are drawn on [the RealtyLT AI page](/ai#crmsync); what writes back to what is set out on the [two-way CRM sync page](/services/crm-sync). Should you prefer somebody to go through your fields alongside you and say honestly which parts of this are a week and which are an afternoon, the [AI audit](/services/ai-audit) is exactly that hour.
+The pieces are drawn on [the RealtyLT AI page](/ai#crmsync); what writes back to what is set out on the [two-way CRM sync page](/services/crm-sync). Should you prefer someone to go through your fields alongside you and say honestly which parts of this are a week and which are an afternoon, the [AI audit](/services/ai-audit) is exactly that hour.
 
 The other half of this story is the systems doing the writing: [what happens when the phone rings and nobody picks up](/blog/ai-voice-agent-missed-calls-real-estate), [what a website conversation at midnight produces](/blog/ai-chat-assistant-real-estate-website), and [the busywork the wiring between them removes](/blog/workflow-automation-real-estate-business).
 

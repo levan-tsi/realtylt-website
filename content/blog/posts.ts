@@ -160,7 +160,7 @@ export const POSTS: BlogPost[] = [
     title: "You Had Eleven Ideas. The Hour Crossed Four of Them Off.",
     seoTitle: "AI Audit for a Small Business: What Not to Automate",
     date: "2026-08-26",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-26, revised 2026-08-27 when the relevance
      * pass cut a clause from the Vrije Universiteit paragraph; see
      * docs/parity/ROUND45-RELEVANCE-PASS.md. First real revision, which is the condition this
@@ -223,7 +223,7 @@ export const POSTS: BlogPost[] = [
     title: "You Said It Was Confirmed. One of the Three People Had Not Replied.",
     seoTitle: "AI Scheduling in Real Estate: When Confirmations Reset",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass pointed the fine-tuning caveat at the right Microsoft Graph page and rewrote the
      * seo.description ending; see docs/parity/ROUND45-RELEVANCE-PASS.md and ROUND46. First real
@@ -244,7 +244,7 @@ export const POSTS: BlogPost[] = [
     title: "The Empty Fields Got Filled. So Did the Ones That Were Already Right.",
     seoTitle: "Real Estate Data Enrichment: Fixing Stale Contact Records",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46
      * reshaped the SHIELD refusal and the decay-rate FAQ, and round 47 put the decay-rate floor
      * back to twenty. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
@@ -286,7 +286,7 @@ export const POSTS: BlogPost[] = [
     title: "You Sent It to Fourteen Hundred People. Five Pressed One Button.",
     seoTitle: "Real Estate Marketing Automation and Email Deliverability",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 twice: round 46 fixed
      * three misquotes and closed the cold open's loop, and round 47 moved the Yahoo gloss onto
      * that page's own word. See docs/parity/ROUND46-RELEVANCE-PASS.md and ROUND47. First real
@@ -354,7 +354,7 @@ export const POSTS: BlogPost[] = [
     title: "She Is In Your CRM Twice. Only One of Them Knows She Sold.",
     seoTitle: "CRM Sync for Real Estate: Fixing Duplicate Contact Records",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 48. Published 2026-08-25, revised 2026-08-27: the sync-path
      * diagram heading still read "one record that is true", the unqualified claim round 47
      * removed twice from /services/crm-sync. It now reads as the diagram's own lede does, that

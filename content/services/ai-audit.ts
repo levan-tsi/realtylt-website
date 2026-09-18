@@ -58,26 +58,26 @@ export const aiAudit: Service = {
         tag: "later",
       },
     ],
-    footnote: "An illustration of the shape of the output rather than a recording of anybody's business. No hours are shown, because nobody has measured yours, and the columns are the three questions rather than a score.",
+    footnote: "An illustration of the shape of the output rather than a recording of anybody's business. No hours are shown, because nobody has measured yours. The columns are the three questions rather than a score.",
   },
 
   whatItIs: [
-    "It is a mapped review of how your business actually runs, done by walking one real job end to end and writing down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
-    "What you get back is shorter than what you brought. Candidates get removed for stated reasons, what survives comes back in an order with the reason for each position beside it, and the list of what was removed comes back too, because those reasons are the part you will use again next year. Then we build the first one, so the audit ends in a working thing rather than a document.",
+    "It is a mapped review of how your business actually runs. We walk one real job end to end. We write down every step, every tool and every hour that goes into it. Most owners have never seen that written out, and it is always longer than they think.",
+    "What you get back is shorter than what you brought. Candidates get removed for stated reasons. What survives comes back in an order, with the reason for each position beside it. The list of what was removed comes back too, because those reasons are the part you will use again next year. Then we build the first one, so the audit ends in a working thing rather than a document.",
   ],
 
   howItWorks: [
     {
       title: "We follow the work, not the org chart",
-      body: "One real job, traced from the first touch to the last. Every manual step, every tool it passes through, and every place the same information gets typed twice.",
+      body: "One real job, traced from the first touch to the last. Every manual step. Every tool it passes through. And every place the same information gets typed twice.",
     },
     {
       title: "We cut the list before we order it",
-      body: "Three questions, applied to every candidate. Does it happen often enough that somebody would notice it breaking within a week. Could you write the rule down for a new hire. And where would a wrong answer end up. Any one of those can remove a candidate, and the third removes the most.",
+      body: "Three questions, applied to every candidate. Does it happen often enough that someone would notice it breaking within a week. Could you write the rule down for a new hire. And where would a wrong answer end up. Any one of those can remove a candidate. The third removes the most.",
     },
     {
       title: "We order what survives, and write down why",
-      body: "How contained the worst case is comes first, whether the rule is actually settled comes second, and the size of the saving comes third. Every position has its reason beside it, so the order survives somebody asking why the third one is not the first.",
+      body: "How contained the worst case is comes first. Whether the rule is actually settled comes second. The size of the saving comes third. Every position has its reason beside it, so the order survives someone asking why the third one is not the first.",
     },
     {
       title: "We build the first win",
@@ -88,11 +88,11 @@ export const aiAudit: Service = {
   useCases: [
     {
       title: "You know AI would help, but not where",
-      body: "The most common place to be stuck. An audit turns an open-ended topic into a numbered list, which is the difference between thinking about AI and using it.",
+      body: "The most common place to be stuck. An audit turns an open-ended topic into a numbered list. That is the difference between thinking about AI and using it.",
     },
     {
       title: "You want the list to get shorter, not longer",
-      body: "Anybody can add candidates. The useful hour removes them, for reasons you can apply again yourself, and it does that before any money has moved.",
+      body: "Anybody can add candidates. The useful hour removes them, for reasons you can apply again yourself. And it does that before any money has moved.",
     },
     {
       title: "You tried a tool and it did nothing",
@@ -101,26 +101,26 @@ export const aiAudit: Service = {
   ],
 
   limits: [
-    "It does not decide anything for you. The output is a shorter list and a plan, and what your business actually changes stays your call.",
-    "It cannot see what nobody will say out loud. The account is only as honest as the description of how the work really happens, including the parts everyone quietly works around.",
+    "It does not decide anything for you. The output is a shorter list and a plan. What your business actually changes stays your call.",
+    "It cannot see what nobody will say out loud. The account is only as honest as the description of how the work really happens. That includes the parts everyone quietly works around.",
     "It does not produce a saving on paper. Every hour on the list is an hour you still have to choose to spend on something else.",
-    "It does not put a price on each candidate. What a build costs depends entirely on which one, and a number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
+    "It does not put a price on each candidate. What a build costs depends entirely on which one. A number attached to a candidate before anybody has looked at the systems is a guess with a decimal point in it.",
     "It does not stay true. The list has a shelf life measured in months, because your systems, your people and your volume all move.",
-    "It is not a strategy document. It ends with one automation built and running, and anything past that first build is a separate decision.",
+    "It is not a strategy document. It ends with one automation built and running. Anything past that first build is a separate decision.",
   ],
 
   faqs: [
     {
       q: "What is an AI audit?",
-      a: "It is a review of how your business actually operates, done to find where AI or automation is worth building and, just as importantly, where it is not. The output is a written account of the work, a shortlist in an order with the reason for each position attached, the list of candidates that were removed and why, and one automation built and running.",
+      a: "It is a review of how your business actually operates. It is done to find where AI or automation is worth building and, just as importantly, where it is not. You get back a written account of the work, a shortlist in an order with the reason for each position attached, the list of candidates that were removed and why, and one automation built and running.",
     },
     {
       q: "Where should a small business start with AI?",
-      a: "With whatever survives three questions and has the most contained failure, which is usually something unglamorous. There is deliberately no universal answer here: in the 2018 Annual Business Survey, a Census Bureau sample of over 850,000 firms where answering is required by law, only 10.3 percent of firms used any advanced business technology at all, which is not enough adoption for anybody to have learned what works in general. A confident universal answer is a guess.",
+      a: "With whatever survives three questions and has the most contained failure, which is usually something unglamorous. There is no universal answer here, and that is deliberate. Take the 2018 Annual Business Survey, a Census Bureau sample of over 850,000 firms where answering is required by law. Only 10.3 percent of firms used any advanced business technology at all. That is not enough adoption for anybody to have learned what works in general. A confident universal answer is a guess.",
     },
     {
       q: "How do you decide what not to automate?",
-      a: "Three tests, in order. It happens too rarely for anybody to notice it breaking, which is how a quarterly job fails in March and gets discovered in June. The rule behind it is not actually settled, which usually shows up as three people describing it three different ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own.",
+      a: "Three tests, in order. It happens too rarely for anybody to notice it breaking. That is how a quarterly job fails in March and gets discovered in June. The rule behind it is not actually settled, which usually shows up as three people describing it three different ways. Or a wrong answer would reach a client before a person saw it. Any one of those is enough on its own.",
     },
     {
       q: "What do I actually get at the end?",

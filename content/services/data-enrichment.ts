@@ -84,12 +84,12 @@ export const dataEnrichment: Service = {
       },
     ],
     footnote:
-      "An illustration rather than a real record: no client, no address and no telephone number here belongs to anybody. What it is showing is the third row. When an outside file disagrees with something you already knew, the honest behaviour is to keep both and ask, and the common default is to overwrite without telling anybody.",
+      "An illustration rather than a real record. No client, no address and no telephone number here belongs to anybody. What it is showing is the third row. When an outside file disagrees with something you already knew, the honest behaviour is to keep both and ask. The common default is to overwrite without telling anybody.",
   },
 
   whatItIs: [
-    "It is the pass that makes the records you already own usable. Most CRMs are full of half-leads: a first name and an email, an address with no phone, a duplicate of a contact that already exists, a number that stopped working two years ago.",
-    "Enrichment resolves them through BatchData and public-record sources into a phone number, an email, and the property detail behind the address, then dedupes and validates so the list you hand to a caller is one they can actually work. What validation establishes is that a number is well formed, in service and not a duplicate, which is a useful check and is not the same as establishing that it reaches that person.",
+    "It is the pass that makes the records you already own usable. Most CRMs are full of half-leads. A first name and an email. An address with no phone. A duplicate of a contact that already exists. A number that stopped working two years ago.",
+    "Enrichment resolves them through BatchData and public-record sources into a phone number, an email, and the property detail behind the address. Then it dedupes and validates, so the list you hand to a caller is one they can actually work. What validation establishes is that a number is well formed, in service and not a duplicate. That is a useful check, and it is not the same as establishing that it reaches that person.",
   ],
 
   howItWorks: [
@@ -101,41 +101,41 @@ export const dataEnrichment: Service = {
       title: "Verify what is there",
       /** ROUND F: "A list where a third of the numbers are dead" is gone. Nobody has measured
        * that, here or anywhere with a stated method, and it was our own number. */
-      body: "Numbers are checked rather than assumed. Dialling time spent on numbers that no longer connect is a real cost and it is one almost nobody counts, which is why the checking happens before the list is handed over rather than after.",
+      body: "Numbers are checked rather than assumed. Dialling time spent on numbers that no longer connect is a real cost, and it is one almost nobody counts. That is why the checking happens before the list is handed over rather than after.",
     },
     {
       title: "Dedupe and flag",
-      body: "Duplicates merge with their history intact, and records that came back thin are flagged as thin rather than padded out to look complete.",
+      body: "Duplicates merge with their history intact. Records that came back thin are flagged as thin, rather than padded out to look complete.",
     },
     {
       /** ROUND F. A step this page did not have, and the flagship is the argument for it: an
        * appended value is an assertion with an age and a source, and a pass that writes over a
        * field you already had has destroyed something without asking. */
       title: "Source, date, and what happens on a disagreement",
-      body: "Every enriched value records where it came from and when it was written. Where an outside file disagrees with something the record already held, the rule is agreed with you at the start rather than inherited from a default, and both values can be kept so a person can settle it.",
+      body: "Every enriched value records where it came from and when it was written. Where an outside file disagrees with something the record already held, the rule is agreed with you at the start rather than inherited from a default. And both values can be kept, so a person can settle it.",
     },
   ],
 
   useCases: [
     {
       title: "The CRM you cannot call",
-      body: "Thousands of contacts and no numbers against most of them. A pass over the part of it you would actually work turns an archive into something you can pick up and use.",
+      body: "Thousands of contacts, and no numbers against most of them. A pass over the part of it you would actually work turns an archive into something you can pick up and use.",
     },
     {
       title: "Open-house sign-ins",
-      body: "A first name and a scrawled email become a fuller record, with the property they already own attached and a note saying where the rest of it came from.",
+      body: "A first name and a scrawled email become a fuller record. The property they already own is attached, with a note saying where the rest of it came from.",
     },
     {
       title: "Before you spend on outreach",
-      body: "Checking first means the campaign is not spending on rows that were never going to reach anybody, and it is cheap to do on a sample before it is done on everything.",
+      body: "Checking first means the campaign is not spending on rows that were never going to reach anybody. And it is cheap to do on a sample before it is done on everything.",
     },
   ],
 
   limits: [
-    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable, because a dead number that looks live costs you more than a blank field.",
-    "It does not guarantee a match. How much resolves depends on the area and on how much public record sits behind the address, and no honest provider quotes a rate before seeing the list.",
-    "It does not tell you how old a value is unless the provider passes that through. Freshness is the most useful thing an appended field could carry and it is the one most often missing from the response, so it is worth asking for by name.",
-    "It does not know which answer is right when two sources disagree. That is a decision about your business and it gets made once. Worth knowing which way the tooling leans: on HubSpot, keeping a value you already hold is a per-property checkbox you select at import time rather than the resting state.",
+    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable. A dead number that looks live costs you more than a blank field.",
+    "It does not guarantee a match. How much resolves depends on the area, and on how much public record sits behind the address. No honest provider quotes a rate before seeing the list.",
+    "It does not tell you how old a value is unless the provider passes that through. Freshness is the most useful thing an appended field could carry, and it is the one most often missing from the response. So it is worth asking for by name.",
+    "It does not know which answer is right when two sources disagree. That is a decision about your business, and it gets made once. It is worth knowing which way the tooling leans. On HubSpot, keeping a value you already hold is a per-property checkbox you select at import time, rather than the resting state.",
     "It does not make a list callable in the legal sense. Do-not-call registrations and consent rules apply to an enriched record exactly as they do to any other.",
     "It does not tell you anybody is interested. Enrichment makes a record reachable. Whether that person wants to hear from you is a different question.",
   ],
@@ -143,23 +143,23 @@ export const dataEnrichment: Service = {
   faqs: [
     {
       q: "What is data enrichment?",
-      a: "It is filling in what a contact record is missing and checking what it already has: appending a phone number or an email, adding the property detail behind an address, confirming that a number is in service, and collapsing duplicates. What arrives is an assertion from an outside file rather than something you observed, which is why the source and the date matter as much as the value.",
+      a: "It is filling in what a contact record is missing, and checking what it already has. That means appending a phone number or an email, adding the property detail behind an address, confirming that a number is in service, and collapsing duplicates. What arrives is an assertion from an outside file rather than something you observed. That is why the source and the date matter as much as the value.",
     },
     {
       q: "How is enrichment different from skip tracing?",
-      a: "Skip tracing starts from a property and finds the owner. Enrichment starts from a contact you already have and completes it. They use the same underlying sources, and in practice most pipelines need both. The legal weight sits with skip tracing, because there is no prior relationship behind it.",
+      a: "Skip tracing starts from a property and finds the owner. Enrichment starts from a contact you already have and completes it. They use the same underlying sources. In practice most pipelines need both. The legal weight sits with skip tracing, because there is no prior relationship behind it.",
     },
     {
       q: "Will enrichment overwrite the data I already have?",
-      a: "Only if the pass is configured that way, so establish which way rather than assuming. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, the previous value, the source and the date should be written to the record, because without them there is no way back from a bad pass.",
+      a: "Only if the pass is set up that way, so settle which way rather than assuming. Decide it deliberately: fill blanks only, keep both values in separate fields, or send disagreements to a person. Whichever you choose, the previous value, the source and the date should be written to the record. Without them there is no way back from a bad pass.",
     },
     {
       q: "How fast does contact data go stale?",
-      a: "There is no published rate worth quoting. The figures that circulate for contact data run from twenty to thirty percent a year, with up to seventy quoted for email addresses on their own, and they trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism: a field stops being true when something happens to a person, so the rate belongs to the people in your database rather than to the data, and it is different for a first-time buyer and a couple downsizing.",
+      a: "There is no published rate worth quoting. The figures that circulate for contact data run from twenty to thirty percent a year, with up to seventy quoted for email addresses on their own. They trace back to press releases and vendor pages rather than to a study with a stated sample. What is knowable is the mechanism. A field stops being true when something happens to a person. So the rate belongs to the people in your database rather than to the data, and it is different for a first-time buyer and a couple downsizing.",
     },
     {
       q: "What happens to records that cannot be enriched?",
-      a: "They come back flagged as thin or unreachable rather than padded out with a guess. A dead number that looks like a live one is worse than a blank field, because you pay for it in dial time.",
+      a: "They come back flagged as thin or unreachable rather than padded out with a guess. A dead number that looks like a live one is worse than a blank field. You pay for it in dial time.",
     },
   ],
 

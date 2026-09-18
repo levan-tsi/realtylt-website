@@ -38,9 +38,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. The measurement, the
  * model, the mechanics, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
-  "Duplicate contacts are not a discipline problem. Every route into your business creates a record, each one is separately correct about the person in front of it, and nothing in the building has the job of noticing that two of them are the same woman.",
-  "Deciding whether two records are one person is a studied problem with a published answer, and the answer has three outcomes rather than two: a match, a nonmatch, and a middle band held for a person to look at. The thresholds either side of that band are set from the two error rates you are willing to accept, and you cannot set both of them to zero.",
-  "Most of the damage a sync does is not a failure. It is a design decision nobody made out loud: whether an update replaces the whole record or changes named fields, what happens when the same message arrives twice, and which side wins when both of them changed.",
+  "Duplicate contacts are not a discipline problem. Every route into your business creates a record. Each one is separately correct about the person in front of it. And nothing in the building has the job of noticing that two of them are the same woman.",
+  "Deciding whether two records are one person is a studied problem with a published answer. The answer has three outcomes rather than two: a match, a nonmatch, and a middle band held for a person to look at. The thresholds either side of that band are set from the two error rates you are willing to accept. And you cannot set both of them to zero.",
+  "Most of the damage a sync does is not a failure. It is a design decision nobody made out loud. Whether an update replaces the whole record or changes named fields. What happens when the same message arrives twice. And which side wins when both of them changed.",
 ];
 
 /** SCENE copy — the two records.
@@ -62,15 +62,15 @@ export const TWO_OF_HER: GridItem[] = [
   },
   {
     lead: "Created in June, by whoever answered",
-    body: "Katherine Brown. A work email. A different mobile, the one she actually answers. Source: inbound call. Owner: the person who took it. Everything on it is exactly what she said out loud to somebody who was writing it down, which is a different question and gets a different answer.",
+    body: "Katherine Brown. A work email. A different mobile, the one she actually answers. Source: inbound call. Owner: the person who took it. Everything on it is exactly what she said out loud to someone who was writing it down. That is a different question, and it gets a different answer.",
   },
   {
     lead: "Neither of them is the wrong one",
-    body: "This is the part that changes what the fix has to be. There is no mistake in either record and no training that would have prevented it, because both systems did the correct thing with the information they were given. The duplicate is not an error. It is the shape two correct systems make when neither can see the other.",
+    body: "This is the part that changes what the fix has to be. There is no mistake in either record, and no training that would have prevented it. Both systems did the correct thing with the information they were given. The duplicate is not an error. It is the shape two correct systems make when neither can see the other.",
   },
   {
     lead: "And only one of them knows she sold",
-    body: "The August listing and the September contract were entered against the June record, because that is the one the agent was working from. The March record still says she is thinking about it. The campaign that emailed her three days before closing was pointed at exactly the right segment, and there is nothing in it that failed.",
+    body: "The August listing and the September contract were entered against the June record, because that is the one the agent was working from. The March record still says she is thinking about it. The campaign that emailed her three days before closing was pointed at exactly the right segment. There is nothing in it that failed.",
   },
 ];
 
@@ -100,15 +100,15 @@ export const TWO_OF_HER: GridItem[] = [
 export const THREE_ANSWERS: GridItem[] = [
   {
     lead: "Above the line: merge them",
-    body: "The pattern of agreements is the kind only the same person produces. The two records become one and the second history is folded into the first. When this one is wrong you have fused two people, and somebody opens a contact expecting one conversation and finds a stranger's in it. That is the expensive mistake, and it is the one an over-confident setting produces.",
+    body: "The pattern of agreements is the kind only the same person produces. The two records become one, and the second history is folded into the first. When this one is wrong you have fused two people. Someone opens a contact expecting one conversation and finds a stranger's in it. That is the expensive mistake, and it is the one an over-confident setting produces.",
   },
   {
     lead: "In the middle: ask somebody",
-    body: "Enough agrees to be interesting and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides, usually at a glance, because a person has context that is not in either row. This band is the price of the other two being right, and every product that advertises full automation has quietly abolished it.",
+    body: "Enough agrees to be interesting, and not enough to be sure. The pair waits in a queue for a human being who looks at both and decides. Usually at a glance, because a person has context that is not in either row. This band is the price of the other two being right. And every product that advertises full automation has quietly abolished it.",
   },
   {
     lead: "Below the line: leave them alone",
-    body: "Two people who happen to share a surname, or the same person with nothing in common between the two rows. When this one is wrong she stays in your database twice and every campaign counts her twice. It is the cheap mistake and it is the one you already have, which is precisely why the pressure is always to move the line and merge more.",
+    body: "Two people who happen to share a surname, or the same person with nothing in common between the two rows. When this one is wrong she stays in your database twice, and every campaign counts her twice. It is the cheap mistake, and it is the one you already have. That is precisely why the pressure is always to move the line and merge more.",
   },
 ];
 
@@ -144,11 +144,11 @@ export const SURNAMES = {
   ],
   lit: 3,
   basis:
-    "Counts of people by surname from the 2010 Census returns, as published by the Census Bureau. The five drawn here are the five commonest of the 162,253 surnames that occurred at least a hundred times, and the fourth is the surname in the story at the top of this article.",
+    "Counts of people by surname from the 2010 Census returns, as published by the Census Bureau. The five drawn here are the five commonest of the 162,253 surnames that occurred at least a hundred times. The fourth is the surname in the story at the top of this article.",
   sourceText:
     "United States Census Bureau, Frequently Occurring Surnames from the 2010 Census.",
   sourceHref: "https://www.census.gov/topics/population/genealogy/data/2010_surnames.html",
-  note: "This is the whole country in 2010 and your database is not the whole country, so treat the bars as an order of magnitude rather than as a rate that applies to your file. Two limits matter more than the age. Surnames are distributed very unevenly by place, so a name that is unremarkable nationally can be the only one in a village and genuinely useful evidence there. And a matching rule never uses a surname on its own, which is exactly the point: the chart is here to show what a surname is worth by itself, which is close to nothing, and therefore why everything else on the record has to do the work.",
+  note: "This is the whole country in 2010, and your database is not the whole country. So treat the bars as an order of magnitude rather than as a rate that applies to your file. Two limits matter more than the age. Surnames are spread very unevenly by place. A name that is unremarkable nationally can be the only one in a village, and truly useful evidence there. And a matching rule never uses a surname on its own, which is exactly the point. The chart is here to show what a surname is worth by itself, which is close to nothing. That is why everything else on the record has to do the work.",
 };
 
 /** SCENE copy — what automated matching did to the largest matching job in the country, and what
@@ -181,12 +181,12 @@ export const CENSUS_CLERKS = {
   ],
   lit: 1,
   basis:
-    "The figures Winkler records for the 1990 Decennial Census matching application: an estimated 3,000 individuals over three months before the computerised procedures, and 200 individuals over six weeks after them. The two bars cover different lengths of time and a bar chart cannot show that, so both periods are written into the labels.",
+    "The figures Winkler records for the 1990 Decennial Census matching application: an estimated 3,000 individuals over three months before the computerised procedures, and 200 individuals over six weeks after them. The two bars cover different lengths of time, and a bar chart cannot show that. So both periods are written into the labels.",
   sourceText:
     "William E. Winkler, Overview of Record Linkage and Current Research Directions, U.S. Census Bureau Research Report Series (Statistics #2006-2), 2006.",
   sourceHref:
     "https://www.census.gov/content/dam/Census/library/working-papers/2006/adrm/rrs2006-02.pdf",
-  note: "This was a national census in 1990, not a small business database, and it was matched against a survey designed to be matched against it, which is far better raw material than anything in a CRM. Read the second bar rather than the first. Two hundred people were still needed at the end, and the reason the paper gives is not that the matching was not good enough: it is that first name and age were simply missing from some of the forms. There is no procedure for a blank field. The transferable finding is the shape rather than the ratio, and the shape is that automation takes the volume out and leaves the ambiguity in.",
+  note: "This was a national census in 1990, not a small business database. It was matched against a survey designed to be matched against it. That is far better raw material than anything in a CRM. Read the second bar rather than the first. Two hundred people were still needed at the end. The reason the paper gives is not that the matching was not good enough. It is that first name and age were simply missing from some of the forms. There is no procedure for a blank field. The transferable finding is the shape rather than the ratio. The shape is that automation takes the volume out and leaves the ambiguity in.",
 };
 
 /** SCENE copy — three ways a correctly built sync produces nothing.
@@ -198,15 +198,15 @@ export const CENSUS_CLERKS = {
 export const WASTED: GridItem[] = [
   {
     lead: "The review queue nobody opens",
-    body: "The middle band only works if a person actually goes there. A queue nobody owns is not a safety mechanism, it is a filing cabinet, and the pairs sitting in it are the exact records most likely to be the ones you care about. A short slot on a Friday is the whole job. Nobody schedules it, because on the day it is set up it is empty.",
+    body: "The middle band only works if a person actually goes there. A queue nobody owns is not a safety mechanism. It is a filing cabinet, and the pairs sitting in it are the exact records most likely to be the ones you care about. A short slot on a Friday is the whole job. Nobody schedules it, because on the day it is set up it is empty.",
   },
   {
     lead: "Fields that were never agreed, only defaulted",
-    body: "Somebody has to say which side wins for each field that both systems can change, and it is a slow conversation because half the answers turn out to be that nobody remembers what the field was for. Skipping it does not remove the decision. It hands the decision to whichever system happens to write last, which is a rule you will discover months later by losing something.",
+    body: "Someone has to say which side wins for each field that both systems can change. It is a slow conversation, because half the answers turn out to be that nobody remembers what the field was for. Skipping it does not remove the decision. It hands the decision to whichever system happens to write last. That is a rule you will discover months later, by losing something.",
   },
   {
     lead: "A record that is finally true and nobody reads",
-    body: "The whole point of this is that the thing in front of you when you pick up the phone is current. If the team still works from a notebook, a group chat and their own memory, the CRM becomes an immaculate archive that describes a business happening somewhere else. No integration has ever reached into a notebook, and no amount of accuracy substitutes for somebody looking.",
+    body: "The whole point of this is that the thing in front of you when you pick up the phone is current. If the team still works from a notebook, a group chat and their own memory, the CRM becomes a spotless archive that describes a business happening somewhere else. No integration has ever reached into a notebook. And no amount of accuracy makes up for someone looking.",
   },
 ];
 
@@ -309,7 +309,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From something happening to one record both systems agree on.",
-      lede: "Six hops, and the two that decide whether this works are the second and the fifth. Everything between them is plumbing that either exists or does not. The identity decision and the conflict rule are judgements about your business, they are made once, and they are the two nobody asks about before signing.",
+      lede: "Six hops, and the two that decide whether this works are the second and the fifth. Everything between them is plumbing that either exists or does not. The identity decision and the conflict rule are judgements about your business. They are made once, and they are the two nobody asks about before signing.",
       steps: SYNC_PATH,
       altPrefix: "The path from an event in one system to a single contact record that both systems agree about",
     },
@@ -337,7 +337,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "routes",
           label: "Share who could have reached you more than one way",
-          hint: "Anybody who might have filled in a form and also rung, or come through a portal and also met you at an open house. Past clients and long term nurture contacts are usually the highest.",
+          hint: "Anyone who might have filled in a form and also rung, or come through a portal and also met you at an open house. Past clients and long term nurture contacts are usually the highest.",
           min: 5,
           max: 100,
           step: 5,
@@ -379,7 +379,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Pairs a computer should not settle on its own",
-      note: "The headline is the middle row rather than the hours, because the hours are the easy half: the number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person, and that is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing; read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely, usually somewhere between ten and forty percent, and the ones we followed led either to a company selling deduplication software quoting its own customers or to an analyst rule of thumb with no report behind it, so both of the shares above are yours to supply and the second of them carries a hint pointing at the one measurement in this subject that does state a method. There is also no row for what a stale record costs in commission, and there was never going to be one: the email that went to the wrong version of somebody is real, and nobody can show you the arithmetic that turns it into money.",
+      note: "The headline is the middle row rather than the hours. The hours are the easy half. The number that decides whether this project is an afternoon or a fortnight is how many pairs end up in front of a person. That is the number nobody quotes on. Sliders that multiply shares will produce a fraction of a pair, which is not a thing. Read two and a half as between two and three. What this refuses to do is tell you how many duplicates you actually have. Figures for that circulate widely, usually somewhere between ten and forty percent. The ones we followed led either to a company selling deduplication software quoting its own customers, or to an analyst rule of thumb with no report behind it. So both of the shares above are yours to supply. The second of them carries a hint pointing at the one measurement in this subject that does state a method. There is also no row for what a stale record costs in commission. There was never going to be one. The email that went to the wrong version of someone is real. Nobody can show you the sums that turn it into money.",
       action: { label: "See how it is built", href: "/services/crm-sync" },
       secondary: { label: "Ask us what your fields do", href: "/connect" },
     },
@@ -394,8 +394,8 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Send us a list of the systems that create a contact in your business and the one field each of them uses to recognise somebody. We will send back where the duplicates are coming from, which of the joins is doing the damage, and which parts of the fix are a week and which are an afternoon.",
-      reassure: "It is a short reply from a person, it costs nothing, and we do not need access to your database to answer it.",
+      text: "Send us a list of the systems that create a contact in your business, and the one field each of them uses to recognise someone. We will send back where the duplicates are coming from. We will say which of the joins is doing the damage, and which parts of the fix are a week and which are an afternoon.",
+      reassure: "It is a short reply from a person, and it costs nothing. We do not need access to your database to answer it.",
       action: { label: "Ask where yours come from", href: "/connect" },
       ariaLabel: "Ask where your duplicates come from",
     },
@@ -419,7 +419,7 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       // the caption's argument does not need the digits.
       alt: "A building front faced in rounded river stones with a four figure number picked out in paler stones in its small gable and a dark open garage doorway beneath, the flat roof running off to the right planted as a garden of red, white, yellow and purple tulips, daffodils and grape hyacinth, a pale shingled house rising behind it, a bed of tulips at ground level, a white picket fence at each end and washing hanging on a line at the right",
       caption:
-        "The number is built into the stonework of that gable, which is a great deal more trouble than a plaque. That is the whole of what a good record is: one deliberate, unambiguous piece of information that means this and nothing else, put there on purpose by a person who knew it would matter later to somebody looking for the place.",
+        "The number is built into the stonework of that gable, which is a great deal more trouble than a plaque. That is the whole of what a good record is. One deliberate, unmistakable piece of information that means this and nothing else. It was put there on purpose, by a person who knew it would matter later to someone looking for the place.",
       credit: "Photograph by pnwra, CC BY 2.0.",
       ariaLabel: "The number set into the wall",
     },
@@ -440,13 +440,13 @@ export const CRM_SYNC_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Type your own surname into your own CRM and see how many of you there are. It takes one screen and it settles an argument people have in meetings for months, and if more than one of you comes back you already know which version of everybody else your Tuesday email is talking to.",
+      text: "Type your own surname into your own CRM and see how many of you there are. It takes one screen, and it settles an argument people have in meetings for months. If more than one of you comes back, you already know which version of everybody else your Tuesday email is talking to.",
       actions: [
         { label: "See it on the AI page", href: "/ai#crmsync", variant: "light" },
         { label: "How it is built", href: "/services/crm-sync", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks four things nobody can guess from an article: how many systems have to be joined, whether each of them has an interface a program can use, how many fields have to be mapped by hand, and whether the records already in there have to be reconciled first. The AI audit is an hour, done with you, and it ends with a list of your fields rather than with a document.",
+        "There is no price here, because the cost tracks four things nobody can guess from an article. How many systems there are to join. Whether each of them has an interface a program can use. How many fields need mapping by hand. And whether the records already in there have to be reconciled first. The AI audit is an hour, done with you, and it ends with a list of your fields rather than with a document.",
     },
   },
 

@@ -314,3 +314,341 @@ committed, staged or stashed.
    `lede`, and "callable" in `seo.description`. Those are the fields the orchestrator reserved.
 2. The skip-tracing post's `/** */` comment in `posts.ts` still says it has no `updated` field. I
    added the field per rule D5 and left the comment alone, because comments are law.
+
+---
+
+# BATCH 2
+
+Builder: second batch of five topics (marketing automation, AI audit, data enrichment, CRM sync,
+AI scheduling). Same method as batch 1, plus the rule batch 1 paid for: never split a clause away
+from its governor. BEFORE = `6eab055`.
+
+## 1. MARKETING AUTOMATION
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/marketing-automation-real-estate-email-deliverability` | 8.9 (median 17w) | 5.9 | 12w | PASS x1.00 |
+| `/services/marketing-automation` | 6.9 (median 13w) | 5.5 | 10w | PASS x1.03 |
+
+Files: `MARKETING_AUTOMATION_POST` body (via post-body.mjs), `content/blog/marketing-automation-scenes.ts`,
+`content/services/marketing-automation.ts`, `updated:` line in `content/blog/posts.ts`
+(`2026-08-27` -> `2026-09-18`).
+
+### Judgment calls
+
+- **Governor kept, did not split.** "Almost everybody assumes American email marketing law works
+  like a consent regime: you may not email somebody unless they agreed." The colon clause is a
+  REPORTED BELIEF. Rewritten as two sentences with the governor repeated: "Almost everyone assumes
+  American email marketing law works like a consent regime. They assume you may not email someone
+  unless they agreed." (The batch-1 skip-tracing HIGH, avoided.)
+- **Governor kept, did not split.** The 16 CFR 316.3 mixed-message test is a disjunction of two
+  conditions. Kept as "the primary purpose is deemed commercial in either of two cases. The first
+  is if ... The second is if ...", so neither condition can be read as sufficient on its own.
+- **Governor kept, did not split.** "If that is the phrase you have heard, the natural conclusion
+  is that a small business is exempt from all of it" stays one sentence (condition).
+  Same for every "If your mail ...", "If it asks you to log in ...", "If you recognise someone ..."
+  item in the audit list, and "because that rule keeps running for years ..." in FAQ 1.
+- **Gloss added (one, word for word):** "The denominator, which is the bottom of the fraction, is
+  not what you sent." The page's own next sentence already says "is not in the bottom of that
+  fraction", so the gloss is the page's own words, not a new claim.
+- **Gloss-ish rewording, logged because it is not a pure word swap:** FAQ "Will automated marketing
+  annoy my leads?" had "irrelevance is what makes people press it"; now "sending people things they
+  do not care about is what makes them press it".
+- **Qualifiers deliberately kept:** "completely separate judgement", "uniformly innocent",
+  "in particular", "possibly ... and possibly", "may not arrive", "roughly a fortnight",
+  "probably do not know", "nobody has published a figure for that with a method under it".
+  "the majority of the address leaks" became "most of the address leaks" (same quantity).
+- **Verbatim left alone:** every CAN-SPAM and 16 CFR fragment in quote marks, the whole 64-word
+  16 CFR 316.5 sentence (left long on purpose), both 316.3 test clauses, Google's "Requirements
+  for all senders" list and its 0.3% line, Yahoo's two lines, RFC 7208 / 6376 / 8058 quotations,
+  the RFC 8058 blockquote, the RFC 7489 pull-quote scene, the Englehardt/Han/Narayanan limit
+  sentence, "Keep your spam rate below 0.3%", "Spam rate is calculated in our system based on mail
+  delivered to the inbox".
+- **Word swaps for the grade, meaning-identical:** somebody -> someone, anybody -> anyone outside
+  headings (the heading "Do I need permission to email somebody in the United States?" and
+  "The requirement everybody files under bulk sending" are untouched); genuine -> true;
+  preferential treatment -> better treatment; configuration -> set-up; consequence -> result.
+- **`measurement` -> `measure`** in one body sentence only ("the only measure of their own
+  reputation available to them anywhere"); every other "measurement of attention" is intact.
+- No invariants violation. No numbers changed. Zero em dashes, arrow glyphs or hype words added.
+
+## 2. AI AUDIT
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/ai-audit-small-business-what-not-to-automate` | 8.8 (median 17w) | 5.9 | 11w | PASS x1.00 |
+| `/services/ai-audit` | 6.2 (median 12w) | 5.4 | 10w | PASS x1.03 |
+
+Files: `AI_AUDIT_POST` body, `content/blog/audit-scenes.ts`, `content/services/ai-audit.ts`,
+`updated:` line in `content/blog/posts.ts` (`2026-08-27` -> `2026-09-18`).
+
+### Judgment calls
+
+- **Governor kept, did not split.** "Asking three people how something gets decided, separately,
+  and getting three answers is not a sign that anybody is doing it wrong." Left as one 22-word
+  sentence. Turning it into "Ask three people ... and you will get three answers" would make a
+  prediction out of a description (the batch-1 skip-tracing LOW).
+- **Governor repeated, not dropped.** The NIST framework passage: "It says plainly that while it
+  can be used to prioritise risk, it does not prescribe risk tolerance. It says that the level of
+  risk which is acceptable is highly contextual and specific to the application." The second
+  sentence repeats "It says" so the framework stays the speaker.
+- **Governor kept, did not split.** "It cannot be read as nobody using AI, because a firm buying a
+  service that happens to run on it is not a firm adopting a technology on this list";
+  "This article will not name a specific first thing, because the survey evidence says a settled
+  answer does not exist yet"; "It is not on the list above, because it is not really a candidate".
+- **The "while ... only ..." contrast in `IN_SHORT[1]` was split, and the contrast word was kept.**
+  "It found that 90.2 percent ... held some of it digitally. Only 10.3 percent used even one of
+  the nine advanced business technologies on the list." "Only" and "even one" both survive.
+- **No glosses added on this topic.** Nothing needed one that the page did not already define.
+- **Qualifiers deliberately kept:** "almost certainly not behind", "may be larger", "usually",
+  "very often", "roughly the right size", "plausible", "specifically" (on the 2.9 percent line),
+  "uncorrected for sample weights and should therefore be read as a lower bound", "It cannot say
+  anything about 2026", "Do not take 17 percent home as your own number", "nobody can tell you
+  what share of automation projects fail", "not always when that happens".
+- **Verbatim left alone:** the NIST pull-quote scene; the NIST "determination as to whether the
+  system achieves its intended purposes and stated objectives and whether its development or
+  deployment should proceed"; "mitigating, transferring, avoiding, or accepting"; the "highly
+  contextual and specific to the application" wording; the NBER authors' "low response rates and
+  significant selection bias"; the Oxford "largest academic dataset of its kind"; the VU Amsterdam
+  "misleading, one-sided, they pervert the estimation practice, and they result in meaningless
+  figures"; every percentage, count and dollar figure.
+- **Word swaps for the grade, meaning-identical:** somebody -> someone, anybody -> anyone,
+  everybody -> everyone outside headings; genuinely -> truly; obligation -> duty; consensus ->
+  agreement; pessimistic -> gloomy; distributed -> spread out; symptom -> sign; posture -> stance;
+  reconstructed -> rebuilt; annually -> every year; internally -> inside the business;
+  criterion -> test; enthusiastic -> eager; arithmetic -> sums; resolve -> settle (one instance,
+  "Building software over the top of that does not settle it").
+- **`deliberately` -> `on purpose` in four places only** (the method being small, the audit being
+  priced, the choice being made, the calculator refusing numbers). It is a six-syllable word and
+  it was the single most expensive word on the page. Kept where it still reads best.
+- No invariants violation. No numbers changed.
+
+## 3. DATA ENRICHMENT
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/data-enrichment-real-estate-stale-contact-records` | 8.8 (median 17w) | 5.9 | 11w | PASS x1.00 |
+| `/services/data-enrichment` | 6.9 (median 12w) | 5.8 | 11w | PASS x1.02 |
+
+Files: `DATA_ENRICHMENT_POST` body, `content/blog/enrichment-scenes.ts`,
+`content/services/data-enrichment.ts`, `updated:` line in `content/blog/posts.ts`
+(`2026-08-27` -> `2026-09-18`).
+
+### Judgment calls
+
+- **Governor kept, did not split.** The FTC finding "most of their data comes from other companies
+  like them rather than from an original source" stays in one sentence. I drafted a split
+  ("It does not come from an original source") and threw it away: it drops "most" and turns a
+  partial finding into an absolute one.
+- **Governor kept, did not split.** "Where a field was not empty it wrote anyway, because that is
+  what the default was and nobody was asked"; "It is worth asking for by name, because a response
+  that does not carry it looks exactly like one that does"; "It is worth seeing how that behaviour
+  is presented by the software, because it tells you which way the tooling leans"; every
+  "unless the provider is asked for it and passes it through" clause.
+- **Gloss NOT added.** The article uses "provenance" twice and never defines it; I left it alone
+  rather than glossing it, because the page's own working definition ("where the value came from
+  and when it was written") is already the sentence beside it.
+- **Wording I changed and want on the record:**
+  "indistinguishable from something you knew" -> "look exactly like something you knew";
+  "nothing in the row distinguishes them" -> "nothing in the row tells them apart";
+  "a conclusion ... is indistinguishable from a measurement" -> "looks exactly like a
+  measurement"; "whether a bad pass is reversible" -> "whether a bad pass can be undone";
+  "retrofitting provenance" -> "adding provenance"; "converts a budget into fullness" ->
+  "turns a budget into fullness"; "the arithmetic" -> "the sums" (twice); "a fact about the
+  transaction" -> "a fact about the deal" (once, in the body; the scene copy was not touched).
+  None of these strengthens or weakens a claim.
+- **The four-way decay spread was reformatted, not changed.** "quoted at thirty percent, at twenty
+  two and a half percent, at twenty to thirty percent, and, for email addresses specifically, at
+  up to seventy" became "quoted four ways. At thirty percent. At twenty two and a half percent.
+  At twenty to thirty percent. And, for email addresses specifically, at up to seventy."
+  Every figure and the word "specifically" survive.
+- **Qualifiers deliberately kept:** "to a substantial degree", "mostly bought it as well",
+  "probably does not apply to you", "it is mostly not about the fields enrichment appends",
+  "a checked absence rather than an omission", "no honest provider quotes a rate before seeing
+  the list", "unless the provider passes that through", "which is worth holding next to",
+  "it would be a mistake to say your appended phone number is an inference".
+- **Verbatim left alone:** the FTC pull-quote scene; "obtain most of their data from other data
+  brokers rather than directly from an original source"; "from twenty different sources"; the raw
+  data and derived data quotations and the whole boating-licence inference example (left at 58
+  words on purpose); "only two of the data brokers allow consumers to correct their personal
+  information for marketing purposes"; both HubSpot passages; both Civil Code 1798.106
+  quotations and the whole 63-word 1798.140 threshold sentence; the NY Attorney General's
+  "any person or business that maintains private information..."; "press release content
+  distributed by XPR Media"; "were not involved in the creation of this content"; "3.9 years".
+- **Observation for the orchestrator, not a change I made.** The body still says "Our own service
+  page uses the word 'verified' and this is the sentence that qualifies it." On the current
+  service page the visible prose says "Verify what is there" and "validation"; the literal word
+  "verified" now survives only in `seo.description` ("appended and verified"), which is an
+  orchestrator field. The sentence is about the claim, so law 1 says it stays, but the two
+  surfaces no longer match word for word. Reported, not worked around.
+- No invariants violation. No numbers changed.
+
+## 4. CRM SYNC
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/crm-sync-real-estate-duplicate-contact-records` | 8.7 (median 18w) | 5.9 | 11w | PASS x1.00 |
+| `/services/crm-sync` | 7.6 (median 14w) | 5.9 | 11w | PASS x1.03 |
+
+Files: `CRM_SYNC_POST` body, `content/blog/crm-sync-scenes.ts`, `content/services/crm-sync.ts`,
+`updated:` line in `content/blog/posts.ts` (`2026-08-27` -> `2026-09-18`).
+
+### Judgment calls
+
+- **`lib/blog/flagship.test.ts` failed once and was fixed the way the playbook says: in the SCENE,
+  not the body.** My body split produced the short sentence "How many systems have to be joined."
+  and "How many fields have to be mapped by hand rather than by name", which the funnel scene's
+  footnote echoed. The footnote now reads "How many systems there are to join" and "How many
+  fields need mapping by hand". The body kept its wording. Green after the fix: `PASS (388) FAIL (0)`.
+- **Governor kept, did not split.** "Any true match whose blocking field is wrong on one side will
+  never be looked at, because the two records were never in the same pile"; "It warns that
+  collisions between two of them can be more dangerous than collisions between two replaces,
+  because some kinds of change need to start from a known base point"; "What no honest build will
+  promise is that the matching is never wrong in either direction, because the published model ...
+  says you choose between two kinds of error and cannot have zero of both" (left at 41 words in
+  the body on purpose); "In June she was talking to a person and gave the formal version, because
+  that is what you give a person who is writing something down".
+- **A "because" clause I did split, and how the link was kept.** On the service page, FAQ
+  "Will it create duplicate contacts?" now reads "... never wrong in either direction. **That is
+  because** the published model behind all of this sets its thresholds from the two error rates you
+  are willing to accept, and cannot drive both to zero." The causal word is repeated, not dropped.
+- **Two sentences that state a joint condition were split with the conjunction preserved.**
+  "A rule that works for a lot of small businesses **has two halves.** The most recently changed
+  value wins for anything factual ... **And** the CRM wins for anything about the relationship ..."
+  Same on the service page's "A common arrangement **has two halves.**" Neither half can now be
+  read as the whole rule.
+- **"What matters is that A, that B, and that C" became "Three things matter."** followed by the
+  three, so none of them reads as the only one.
+- **Word swap I want on the record:** two instances of "the specification" became "the standard",
+  in the two places where the page already calls the same document "the standard" a sentence later.
+  Five other instances of "specification" are untouched. Also: "immaculate" -> "spotless";
+  "substitutes for" -> "makes up for"; "unambiguous" -> "unmistakable"; "distributed unevenly" ->
+  "spread unevenly"; "propagates out" -> "goes back out"; "the arithmetic" -> "the sums".
+- **Qualifiers deliberately kept:** the "might" in the Winkler 20 percent finding, and the sentence
+  that tells the reader to read it ("This is the upper end of what a careful file can look like,
+  not a property of every file"); "almost never the product of somebody being sloppy"; "probably
+  the same person"; "usually in a band somewhere between ten and forty percent"; "no honest build
+  will promise"; "a small proportion of the Census forms"; "usually means the matching is too
+  confident"; "it is quoted here almost exactly as Winkler writes it".
+- **Verbatim left alone:** the whole Fellegi and Sunter decision rule; "no-decision region"; the
+  1990 Census 3,000/3 months and 200/6 weeks figures and the missing-field sentence that explains
+  them; the RFC 9110 PUT sentence; the RFC 5789 introduction wording and its atomicity rule; the
+  idempotence definition and the retry guidance; "the lost update problem"; the HubSpot upsert and
+  partial-upsert passages; 162,253, 1,437,026 and the Zabrinsky/Smith comparison; the `pull-quote`
+  scene untouched.
+- No invariants violation. No numbers changed.
+
+## 5. AI SCHEDULING
+
+| surface | grade before | grade after | median after | invariants |
+|---|---|---|---|---|
+| `/blog/ai-scheduling-real-estate-showing-confirmations` | 8.5 (median 17w) | 6.0 | 11w | PASS x1.00 |
+| `/services/ai-scheduling` | 7.8 (median 14w) | 6.0 | 11w | PASS x1.02 |
+
+Files: `AI_SCHEDULING_POST` body, `content/blog/scheduling-scenes.ts`,
+`content/services/ai-scheduling.ts`, `updated:` line in `content/blog/posts.ts`
+(`2026-08-27` -> `2026-09-18`).
+
+### Judgment calls
+
+- **`/services/ai-scheduling` lands at exactly 6.0, not in the 5.6-5.9 band.** Every remaining
+  long sentence on that page is either an off-limits field (`lede`, `stat`) or a related-post
+  excerpt from `posts.ts`. I stopped rather than bend a sentence I own to buy a tenth of a point.
+- **`lib/blog/flagship.test.ts` failed once and was fixed in the SCENE.** My body split produced
+  "An attendee replied in a way the system did not expect." and the `in-short` scene carried the
+  same sentence. The scene now says "An attendee **answered** in a way the system did not expect."
+  The body kept the paper's own word. Green after the fix: `PASS (388) FAIL (0)`.
+- **Governor kept, did not split.** "It is worth counting them deliberately, because they are not
+  all people and they do not all fail the same way"; "There are eight rather than two because the
+  standard takes seriously how many different ways a message can fail"; "The standard treats a
+  rescheduled appointment as a new question, because that is what it is"; "It cannot see or control
+  another office's diary. **So** if a listing agent promises the same slot to somebody else..."
+  (the causal word is repeated across the split, not dropped).
+- **A conjunction I refused to break.** "If the start time, the end time or the duration of an
+  appointment changes, every attendee's answer is deleted and set back to unanswered, on every
+  affected occurrence, and it applies to everyone except the organiser." Left at 36 words, because
+  splitting it would let the reader take any one of the three triggers, or the exception, on its own.
+- **Lists turned into short sentences rather than summarised.** "The three commonest reasons are,
+  in order, these. An attendee replied ... None of the offered times worked for everyone. And an
+  attendee never replied at all." "A single appointment can produce five messages. A request out.
+  A chase. A counter coming back. A confirmation to the other office. And a note to your own
+  client." The count "five" is the count of the items already in the sentence, not a new fact.
+- **Qualifiers deliberately kept:** "which the authors are careful to say includes small pieces of
+  work done by non-expert people"; "a snapshot of one system at one point in its life, rather than
+  a ceiling"; "nobody has run anything like this on property appointments"; "it may or may not be";
+  "sometimes slower"; "identical inputs may produce different results over time"; "it is not a
+  forecast for your Saturdays"; "an escalation means a trained person picked it up, not that the
+  meeting failed".
+- **Verbatim left alone:** the RFC 6638 pull-quote scene; the RFC 5546 section 2.1.1 sentence and
+  NEEDS-ACTION; the COUNTER description; the Microsoft Graph wording including the source page's
+  own misspelling "likelhood" and the note that it is "spelled exactly like that on the page";
+  "minimumAttendeePercentage" and its description; the fine-tuning caveat; 178 / 1,981 / 1,626 /
+  15,659; 32, 27 and 26 percent; 84 / 15 / eleven; 39 and 61 percent; 14%, 8%, 7%, 2%; the
+  Cranshaw `sourceText` lines untouched.
+- **Word swaps for the grade, meaning-identical:** somebody -> someone, anybody -> anyone,
+  everybody -> everyone outside headings; "genuinely good result" -> "truly good result";
+  "immaculate" -> "spotless" (in the "look immaculate for a fortnight" test question).
+- No invariants violation. No numbers changed.
+
+---
+
+## BATCH 2 CLOSE-OUT
+
+`npx vitest run lib/blog lib/services content app/blog` at the end of the batch:
+`PASS (388) FAIL (0)`.
+
+Final scorer sweep, all ten surfaces, run after the last edit:
+
+| surface | grade | median | invariants |
+|---|---|---|---|
+| `/blog/marketing-automation-real-estate-email-deliverability` | 5.9 | 12w | PASS x1.00 |
+| `/services/marketing-automation` | 5.5 | 10w | PASS x1.03 |
+| `/blog/ai-audit-small-business-what-not-to-automate` | 5.9 | 11w | PASS x1.00 |
+| `/services/ai-audit` | 5.4 | 10w | PASS x1.03 |
+| `/blog/data-enrichment-real-estate-stale-contact-records` | 5.9 | 11w | PASS x1.00 |
+| `/services/data-enrichment` | 5.8 | 11w | PASS x1.02 |
+| `/blog/crm-sync-real-estate-duplicate-contact-records` | 5.9 | 11w | PASS x1.00 |
+| `/services/crm-sync` | 5.9 | 11w | PASS x1.03 |
+| `/blog/ai-scheduling-real-estate-showing-confirmations` | 6.0 | 11w | PASS x1.00 |
+| `/services/ai-scheduling` | 6.0 | 11w | PASS x1.02 |
+
+Files modified in this batch, and nothing else: `content/blog/ai-posts.ts` (five bodies, via
+post-body.mjs), `content/blog/{marketing-automation,audit,enrichment,crm-sync,scheduling}-scenes.ts`,
+`content/services/{marketing-automation,ai-audit,data-enrichment,crm-sync,ai-scheduling}.ts`,
+five `updated:` lines in `content/blog/posts.ts`, and this log. Verified with
+`git diff --numstat` on `posts.ts`: 5 lines changed, 5 lines removed, and they are the five
+`updated:` values. Verified with a diff filter that no `/** */` or `//` comment line changed in any
+of the ten content files. Verified that `eyebrow`, `title`, `lede`, `specs`, `why`, `keywords`,
+`seo` and `stat` were not touched on any service page (their diffs against `6eab055` are the
+orchestrator's own earlier rewrite, already in the working tree before this batch started).
+Zero em dashes, en dashes or arrow glyphs added: the only ones in these files are pre-existing and
+inside provenance comments. Nothing was committed, staged or stashed.
+
+### For the orchestrator
+
+1. `/services/ai-scheduling` sits at exactly 6.0. It passes, but it has no headroom, and every
+   further long sentence on it belongs to an orchestrator field or to a related-post excerpt.
+2. The data enrichment body still says "Our own service page uses the word 'verified' and this is
+   the sentence that qualifies it." On the service page the word "verified" now survives only in
+   `seo.description`; the visible prose says "Verify what is there" and "validation". Law 1 keeps
+   the body sentence (it is about the claim), but the two surfaces no longer match word for word.
+
+### Late self-check, after the close-out table was first written
+
+Re-reading my own AFTER against the BEFORE turned up three splits that had bent something, and all
+three were reverted or repaired before the final scorer run. They are listed here because they are
+exactly the class of error batch 1 shipped.
+
+1. **AI SCHEDULING body.** "It is entirely recoverable by saying, on Thursday, that you are waiting
+   on the listing side" had become "It is entirely recoverable. Say, on Thursday, ..." That turns a
+   description of how it is recoverable into an instruction. Reverted to the one sentence.
+2. **CRM SYNC body.** "published a formal mathematical model **for** ideas Newcombe had introduced
+   ten years earlier" had become "published a formal mathematical model. It set out ideas Newcombe
+   had introduced ten years earlier", which reads as restating rather than formalising. Reverted.
+3. **CRM SYNC body.** The "because" that explains why Winkler's overview is the clearest had been
+   dropped on a split. The governor is now repeated: "It is the clearest **because** the Census has
+   the hardest version of this problem in the country, and has been working on it since the 1950s."
+
+The two repairs cost one sentence each, which moved the crm sync post from 5.8 to 5.9 and the
+scheduling post from 5.9 to 6.0. Both still pass. Final numbers above are post-repair, and
+`npx vitest run lib/blog lib/services content app/blog` was re-run afterwards: `PASS (388) FAIL (0)`.
