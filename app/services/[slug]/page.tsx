@@ -105,7 +105,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           every blog post carried two. Same row, same component, so the intent URLs cannot
           drift from the blog's. Placed after the FAQ: the reader who has just had their last
           question answered is the one who forwards a page. */}
-      <section className="border-t border-line bg-paper py-10" aria-labelledby={`share-${service.slug}`}>
+      <section className="sec-sm border-t border-line bg-paper" aria-labelledby={`share-${service.slug}`}>
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <p id={`share-${service.slug}`} className="t-small mb-4 max-w-[52ch] text-stone">
             Know a business that needs this? Send it to them.
