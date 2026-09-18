@@ -81,6 +81,20 @@ d = await open("/blog/automated-google-review-requests-real-estate");
 ok("review post: the 465.7 example needs three things together", d.text.includes("when three things are true together"));
 ok("review CTA: a list of three, in English", d.text.includes("That is three things. The date on your newest review."));
 
+// ---- batch 4 (website bb2aa64) -------------------------------------------------------------
+d = await open("/blog/ai-chat-assistant-real-estate-website");
+ok("chat post: the refused 78% is still refused", d.text.includes("So this article does not use it"));
+ok("chat post: people do not object to being helped", d.text.includes("People do not object to being helped by software."));
+
+d = await open("/blog/database-reactivation-old-real-estate-leads");
+ok("reactivation post: 'Per message.' still scopes the damages", d.text.includes("may treble it. Per message."));
+
+d = await open("/blog/ai-lead-qualification-real-estate-scoring");
+ok("qualification post: the HUD guidance is about how the ACT applies", d.text.includes("The guidance covers how the Act applies when an algorithm"));
+
+d = await open("/blog/geo-landing-pages-real-estate-doorway-pages");
+ok("GEO post: the sibling-overlap rewording is live", d.text.includes("It is the one with the map above it."));
+
 d = await open("/top-areas/queens");
 const median = d.text.match(/\$[\d,.]+[KM]?/);
 ok("/top-areas/queens renders with a median", /median/i.test(d.text) && !!median, median ? median[0] : "none");
