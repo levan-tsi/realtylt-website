@@ -52,8 +52,8 @@ export const leadQualification: Service = {
 
   whatItIs: [
     "It is the difference between a list of leads and a ranked pipeline. Every inbound lead looks the same on a form. What separates them is what they say next, and that is where the intent, the budget, and the timeline actually live.",
-    "Claude reads the conversation, the chat, or the call transcript, scores the lead on those three things, and routes it: to you if it is hot, to a nurture track if it is not. The list you look at in the morning is ordered by who is worth calling.",
-    "There is a line under all of this and it belongs on the page that sells it: change your order, never their access. Qualification decides who you call first. It must never decide who gets to see a listing, who gets a straight answer, or who is allowed to reach a human being. The Fair Housing Act, at 42 U.S.C. 3604, contains no software exemption, and Article 10 of the NAR Code of Ethics is broader still. So the score reads the plan and never the person, never a name, a language or a neighborhood, and every point of it traces back to a sentence the lead actually wrote.",
+    "Claude reads the conversation, the chat, or the call transcript, and scores the lead on those three things. Then it routes it: to you if it is hot, to a nurture track if it is not. The list you look at in the morning is ordered by who is worth calling.",
+    "There is a line under all of this and it belongs on the page that sells it: change your order, never their access. Qualification decides who you call first. It must never decide who gets to see a listing, who gets a straight answer, or who is allowed to reach a human being. The Fair Housing Act, at 42 U.S.C. 3604, contains no software exemption, and Article 10 of the NAR Code of Ethics is broader still. So the score reads the plan and never the person, never a name, a language or a neighborhood. And every point of it traces back to a sentence the lead actually wrote.",
   ],
 
   howItWorks: [
@@ -71,7 +71,7 @@ export const leadQualification: Service = {
     },
     {
       title: "It shows its working",
-      body: "Every score points at a sentence the lead actually wrote. You can open any lead and read the words that produced the number, which is what makes it correctable when it is wrong and explainable when somebody asks you about it.",
+      body: "Every score points at a sentence the lead actually wrote. You can open any lead and read the words that produced the number. That is what makes it correctable when it is wrong, and explainable when somebody asks you about it.",
     },
   ],
 
@@ -94,7 +94,7 @@ export const leadQualification: Service = {
     },
     {
       title: "The report almost nobody runs",
-      body: "Take the leads scored low last quarter and check what they actually received: answers, listings, a person on the phone. If the low group got less of your time, the ranking did its job. If they got less of your service, it stopped being a ranking, and no audit of the inputs would have caught it.",
+      body: "Take the leads scored low last quarter and check what they actually received: answers, listings, a person on the phone. If the low group got less of your time, the ranking did its job. If they got less of your service, then it stopped being a ranking, and no audit of the inputs would have caught it.",
     },
   ],
 
@@ -111,7 +111,7 @@ export const leadQualification: Service = {
   faqs: [
     {
       q: "How does AI qualify a real estate lead?",
-      a: "It reads the actual conversation rather than the form, and scores the lead on intent, budget, and timeline: whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three are the things a person can be specific about before anything has happened, and none of them appear on a contact form.",
+      a: "It reads the actual conversation rather than the form, and scores the lead on intent, budget, and timeline. That is whether they are pre-approved, whether they have a house to sell, and when they need to move. Those three are the things a person can be specific about before anything has happened, and none of them appear on a contact form.",
     },
     {
       q: "What is lead scoring?",

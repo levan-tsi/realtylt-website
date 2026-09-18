@@ -65,8 +65,8 @@ export const aiAppointmentBooking: Service = {
   },
 
   whatItIs: [
-    "It is the piece between someone asking for your time and that time appearing on your calendar. Today that gap is a callback you owe, a voicemail, a text sent at a bad moment, and a couple of hours in which a competitor answered first.",
-    "The AI closes the gap. It replies in seconds, reads your real availability so it only offers slots you actually have, books the appointment inside the same conversation, and then sends the confirmation and the reminders that decide whether the person turns up.",
+    "It is the piece between someone asking for your time and that time appearing on your calendar. Today that gap is a callback you owe, a voicemail, a text sent at a bad moment, and a couple of hours in which a rival answered first.",
+    "The AI closes the gap. It replies in seconds. It reads your real availability, so it only offers slots you actually have. It books the appointment inside the same conversation. And then it sends the confirmation and the reminders that decide whether the person turns up.",
   ],
 
   howItWorks: [
@@ -76,7 +76,7 @@ export const aiAppointmentBooking: Service = {
     },
     {
       title: "It books against your real calendar",
-      body: "Live availability, so it will not offer time your own calendar already holds. Where an appointment also needs somebody outside your office, their agreement is a message you have sent rather than a time you have, and no calendar integration changes that.",
+      body: "Live availability, so it will not offer time your own calendar already holds. Say an appointment also needs someone outside your office. Then that person's agreement is a message you have sent rather than a time you have, and no calendar integration changes that.",
     },
     {
       title: "It reminds them so they show",
@@ -100,34 +100,34 @@ export const aiAppointmentBooking: Service = {
       // ("The deals lost to a stale CRM are lost quietly, which is why nobody counts them"),
       // for the reason its comment gives: it asserts a loss nobody here has measured. The
       // retraction did not reach this page. Replaced with what is actually knowable.
-      body: "Two people trying to find a mutually free hour by voicemail is a solved problem. What it costs is not something anybody here has measured, and it is not something your own reports can tell you either, because an inquiry that goes quiet leaves the same trace as one that was never serious.",
+      body: "Two people trying to find an hour that is free for both, by voicemail, is a solved problem. What it costs is not something anyone here has measured. It is not something your own reports can tell you either. That is because an inquiry that goes quiet leaves the same trace as one that was never serious.",
     },
     {
       title: "The no-shows you can actually prevent",
-      body: "A confirmation and a reminder is not a clever idea, it is just something nobody has time to do consistently. It is also the only part of this that has been through a randomised trial, and the limits below say plainly what it still cannot do.",
+      body: "A confirmation and a reminder is not a clever idea. It is just something nobody has time to do every time. It is also the only part of this that has been through a randomised trial, and the limits below say plainly what it still cannot do.",
     },
   ],
 
   limits: [
-    "It does not make anybody turn up. Confirmations and reminders are the most reliable thing anyone has for attendance, and they are still only reminders.",
+    "It does not make anyone turn up. Confirmations and reminders are the most reliable thing anyone has for attendance, and they are still only reminders.",
     "It does not create availability. If the week is full it books nothing, and it does not offer a slot you have blocked out.",
     "It does not qualify the appointment for you. Booking fast puts more of your week in front of people, including the ones who were never going to buy.",
     "It does not handle the conversation that follows. It gets the time on the calendar. What happens in that meeting is the part you are paid for.",
-    "It does not repair a calendar you do not trust. If half your commitments live in somebody's head, a system reading the calendar will offer a slot you are already standing in a kitchen for.",
+    "It does not repair a calendar you do not trust. If half your commitments live in someone's head, then a system reading the calendar will offer a slot you are already standing in a kitchen for.",
   ],
 
   faqs: [
     {
       q: "What is an AI appointment setter?",
-      a: "It is software that answers an inquiry immediately, offers your genuine open times, and books the appointment inside that first conversation, then confirms it and sends reminders. It removes the callback and the phone tag, which is where most inquiries are lost.",
+      a: "It is software that answers an inquiry immediately. It offers your genuine open times, and books the appointment inside that first conversation. Then it confirms it and sends reminders. It removes the callback and the phone tag, which is where most inquiries are lost.",
     },
     {
       q: "How does it know when I am free?",
-      a: "It reads your live calendar, so what it offers is time your own diary still shows as free, and blocking time out removes those slots. That is the half it can guarantee. The half it cannot is anybody else's calendar, which is why the scheduling article on this site treats a showing on somebody else's listing as an agreement you do not have yet rather than as a booking.",
+      a: "It reads your live calendar, so what it offers is time your own diary still shows as free. Blocking time out removes those slots. That is the half it can guarantee. The half it cannot is anyone else's calendar. That is why the scheduling article on this site treats a showing on someone else's listing as an agreement you do not have yet, rather than as a booking.",
     },
     {
       q: "Will it reduce no-shows?",
-      a: "That is what the confirmations and reminders are for, and it is the one part of this with a randomised trial behind it: in a comparison of 1,848 appointments, attendance was 80.5% with no reminder and 87.5% with a single text sent 72 hours ahead. That was a health check-up centre rather than a listing appointment, so read the direction rather than the decimal. The other half is less obvious: booking inside the first conversation usually shortens the gap between the ask and the day, and shorter gaps go with far better attendance.",
+      a: "That is what the confirmations and reminders are for. It is also the one part of this with a randomised trial behind it. In a comparison of 1,848 appointments, attendance was 80.5% with no reminder and 87.5% with a single text sent 72 hours ahead. That was a health check-up centre rather than a listing appointment, so read the direction rather than the decimal. The other half is less obvious. Booking inside the first conversation usually shortens the gap between the ask and the day, and shorter gaps go with far better attendance.",
     },
     {
       q: "Can it book on the phone as well as by text?",

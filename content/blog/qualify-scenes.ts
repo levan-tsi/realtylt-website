@@ -43,8 +43,8 @@ export const QUALIFY_FILM = {
  * Three lines carrying the whole argument, for the reader who is skimming and for the assistants
  * that increasingly answer on somebody's behalf. */
 export const IN_SHORT: string[] = [
-  "Your call list is sorted by when each lead arrived, which is the one thing about a lead that predicts nothing at all.",
-  "Fifteen percent of sellers said they needed to sell as quickly as possible and forty three percent said they were in no hurry. Both groups submit the same contact form.",
+  "Your call list is sorted by when each lead arrived. That is the one thing about a lead that predicts nothing at all.",
+  "Fifteen percent of sellers said they needed to sell as quickly as possible. Forty three percent said they were in no hurry. Both groups submit the same contact form.",
   "Score what somebody told you about their plans, never who they appear to be. Qualification is allowed to change the order of your morning, and it must never change what anybody is allowed to see or ask.",
 ];
 
@@ -89,7 +89,7 @@ export const URGENCY = {
     "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 6-23, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses; seller answers come from those buyers who also sold a home, so the seller base is smaller.",
   sourceHref:
     "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
-  note: "This was asked of people who had already sold, looking back at how it went. It is not a measurement of how many of your inquiries are urgent and cannot be used as one. All it establishes is that the spread between the most urgent sellers and the least urgent ones is very wide, which is the only thing this page needs it for.",
+  note: "This was asked of people who had already sold, looking back at how it went. It is not a measurement of how many of your inquiries are urgent, and it cannot be used as one. All it establishes is that the spread between the most urgent sellers and the least urgent ones is very wide. That is the only thing this page needs it for.",
 };
 
 /** SCENE copy — what it actually does.
@@ -104,7 +104,7 @@ export const WHAT_IT_DOES: GridItem[] = [
   },
   {
     lead: "It scores the three things that predict.",
-    body: "Intent, budget and timeline. A pre-approved buyer with a house under contract and a lease running out is not the same lead as somebody reading about the area, and putting them next to each other is the mistake.",
+    body: "Intent, budget and timeline. A pre-approved buyer with a house under contract and a lease running out is not the same lead as someone reading about the area. Putting them next to each other is the mistake.",
   },
   {
     lead: "It routes rather than filters.",
@@ -124,15 +124,15 @@ export const WHAT_IT_DOES: GridItem[] = [
 export const THREE_SIGNALS: GridItem[] = [
   {
     lead: "Intent: acting, or reading about acting.",
-    body: "One specific address beats a question about the market every time. So does any sentence containing we have, we need or we already. Somebody gathering information asks what things cost. Somebody moving asks what happens next.",
+    body: "One specific address beats a question about the market every time. So does any sentence containing we have, we need or we already. Someone gathering information asks what things cost. Someone moving asks what happens next.",
   },
   {
     lead: "Budget: tested, or assumed.",
-    body: "Pre-approved is a fact. Paying cash is a fact. A number somebody arrived at on a mortgage calculator at eleven at night is a hope, and the difference between the three is a single question that nobody minds being asked.",
+    body: "Pre-approved is a fact. Paying cash is a fact. A number someone arrived at on a mortgage calculator at eleven at night is a hope. The difference between the three is a single question that nobody minds being asked.",
   },
   {
     lead: "Timeline: a date, and the reason behind it.",
-    body: "Spring is not a timeline. A lease ending in March is a timeline. The reason is what makes the date real, and when somebody volunteers it unprompted they have told you they are not browsing.",
+    body: "Spring is not a timeline. A lease ending in March is a timeline. The reason is what makes the date real, and when someone volunteers it unprompted they have told you they are not browsing.",
   },
 ];
 
@@ -145,7 +145,7 @@ export const THREE_SIGNALS: GridItem[] = [
 export const FAIR_PLAY: GridItem[] = [
   {
     lead: "Score the plan, never the person.",
-    body: "Timeline, financing status, whether there is a house to sell, what they asked about. Never a name, a photograph, a language, a neighborhood, or anything a model could quietly use to guess at who somebody is. If an input would be indefensible said out loud, it is indefensible in a weight.",
+    body: "Timeline, financing status, whether there is a house to sell, what they asked about. Never a name, a photograph, a language, a neighborhood, or anything a model could quietly use to guess at who someone is. If an input would be indefensible said out loud, then it is indefensible in a weight.",
   },
   {
     lead: "Make every score point at a sentence.",
@@ -221,11 +221,11 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "It scores what is easy to count.",
-    body: "Email opens, page views, minutes on site, number of sessions. All of those are measurable and none of them are readiness. They measure curiosity, and the most curious person on your list is very often the one furthest from moving.",
+    body: "Email opens, page views, minutes on site, number of sessions. All of those are measurable and none of them are readiness. They measure curiosity. And the most curious person on your list is very often the one furthest from moving.",
   },
   {
     lead: "Nobody ever checks it against what happened.",
-    body: "Take last quarter's top twenty and look at who actually transacted. If the ranking had no relationship to the outcome, you do not have a scoring system, you have a horoscope with a confidence percentage on it. This takes an hour and almost nobody does it.",
+    body: "Take last quarter's top twenty and look at who actually transacted. If the ranking had no relationship to the outcome, then you do not have a scoring system. You have a horoscope with a confidence percentage on it. This takes an hour and almost nobody does it.",
   },
 ];
 
@@ -281,7 +281,7 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       // ridge above Minnewaska" of a photograph whose subject is a lake.
       alt: "Lake Awosting at Minnewaska State Park Preserve, New York: still blue water filling the foreground, a far shore of red, orange and gold autumn woodland with dark conifers standing among it, pale rock ledges along the waterline and a low wooded ridge beyond, under a clear sky",
       caption:
-        "Minnewaska on a Saturday. Of the three people who asked you about a house up here this week, one has a closing date and two are the better part of a year from doing anything, and all three of them used the same contact form.",
+        "Minnewaska on a Saturday. Three people asked you about a house up here this week. One has a closing date, and two are the better part of a year from doing anything. All three of them used the same contact form.",
       credit: "Photograph by Gaurav Pandit, CC BY 3.0.",
       ariaLabel: "Lake Awosting at Minnewaska",
     },
@@ -387,7 +387,7 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "Sorting, not selling",
-      note: "There is no dollar figure at the end of this one and no hourly-rate slider, which is a deliberate refusal rather than an omission. Those hours are the cheap half of the problem and they are the half that is easy to count. The expensive half has no slider at all, because it happens once: the seller who has to be out by spring, sitting third in a list sorted by arrival time, still waiting on Thursday. One of those in a year is worth more than every hour above it, and nobody who has not seen your pipeline can tell you how often it happens to you. The hours are what the sorting costs. The order is what it costs you.",
+      note: "There is no dollar figure at the end of this one and no hourly-rate slider, which is a deliberate refusal rather than an omission. Those hours are the cheap half of the problem, and they are the half that is easy to count. The expensive half has no slider at all, because it happens once: the seller who has to be out by spring, sitting third in a list sorted by arrival time, still waiting on Thursday. One of those in a year is worth more than every hour above it. And nobody who has not seen your pipeline can tell you how often it happens to you. The hours are what the sorting costs. The order is what it costs you.",
       action: { label: "See how it is built", href: "/services/lead-qualification" },
       secondary: { label: "Get a second read", href: "/connect" },
     },
@@ -399,7 +399,7 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The report nobody runs",
-      text: "Pull the leads your system ranked lowest last quarter, and we will read what they actually got back from you beside what the highest-ranked ones got. That comparison is the only one that looks at outcomes instead of inputs.",
+      text: "Pull the leads your system ranked lowest last quarter. We will read what they actually got back from you, beside what the highest-ranked ones got. That comparison is the only one that looks at outcomes instead of inputs.",
       reassure: "Nothing on this page is legal advice and this would not be either. You keep the report whatever you decide.",
       action: { label: "Run the outcomes check", href: "/connect" },
       ariaLabel: "Ask us to run the outcomes check",
@@ -474,7 +474,7 @@ export const QUALIFY_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Tomorrow morning there is a list, and the order it is in was decided by a timestamp. Somewhere on it is the person who has to be out by spring, and they are going to hire whoever calls them back.",
+      text: "Tomorrow morning there is a list, and the order it is in was decided by a timestamp. Somewhere on it is the person who has to be out by spring. They are going to hire whoever calls them back.",
       actions: [
         { label: "See it on the AI page", href: "/ai#qualify", variant: "light" },
         { label: "How it is built", href: "/services/lead-qualification", variant: "outline-light" },

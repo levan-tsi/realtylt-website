@@ -417,7 +417,7 @@ export const POSTS: BlogPost[] = [
     title: "You Booked the Showing for Nine Days Out. Nobody Came.",
     seoTitle: "AI Appointment Booking and No-Shows in Real Estate",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27: the limitation
      * paragraph on the Hangzhou reminder trial asserted the participants had paid for their
      * appointments, which the paper does not say anywhere. See
@@ -481,7 +481,7 @@ export const POSTS: BlogPost[] = [
      * below correctly says sellers SAID it, and "Every scoring system in this business measures
      * the same three things, because they are the three that predict", a universal about a
      * market nobody here has surveyed. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     excerpt:
       "Your CRM sorts leads by when they arrived, which is the one thing about a lead that predicts nothing. Here is what an AI qualification system reads instead. What a ready lead really sounds like. And the fair housing line that separates ranking your own time from rationing access.",
     seoDescription:
@@ -511,7 +511,7 @@ export const POSTS: BlogPost[] = [
      * regulation actually attaches (the scene file had it right, the prose had dropped it); and
      * "three hundred conversations to find four people", a conversion rate this same post calls
      * made up two screens later. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     excerpt:
       "Your CRM is full of people who told you not right now, and nobody has asked them since. Here is what an AI reactivation campaign really does with that list. The consent rules with dates in them that nobody selling you one mentions. And what it costs when it goes wrong.",
     seoDescription:
@@ -544,7 +544,7 @@ export const POSTS: BlogPost[] = [
      * where PNAS reports it in nine of ten languages and significant in five. Every other figure
      * on this post re-verified against HBR, PNAS, FCC 24-17, NY Penal Law and California.
      * See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     excerpt:
       "A missed call leaves no name, no message and no record that anyone wanted you. Here is what an AI voice agent really does when the phone rings at 9:42 on a Sunday. The one thing that decides whether it works. And the disclosure rules nobody selling one mentions.",
     seoDescription:
@@ -576,7 +576,7 @@ export const POSTS: BlogPost[] = [
      * minutes, and a superlative claimed the study was the clearest anybody has published. Every
      * other figure re-verified in the CHI 2005 paper, on Zapier's two help pages and in n8n's
      * error-handling docs. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     excerpt:
       "The manual step takes ninety seconds. In the study that timed it, getting back to interrupted work averaged twenty five minutes when it resumed the same day. Here is what workflow automation really removes from a real estate business. How to find your own version of it in an hour. And the failure mode nobody warns you about.",
     seoDescription:
@@ -612,7 +612,7 @@ export const POSTS: BlogPost[] = [
      * pair of claims was swept off /services/ai-chat-assistant. `updated` moves to 08-27 because
      * the served text changed, and the change is recorded here rather than dressed up as more
      * than it was. See docs/parity/ROUND48-RELEVANCE-PASS.md. */
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     excerpt:
       "Someone read your listing at twenty to midnight with one question, and you answered at nine the next morning. What an AI chat assistant really does in that gap. Why the number this whole category is sold on cannot be sourced. And what to ask before you buy one.",
     seoDescription:

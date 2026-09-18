@@ -1207,3 +1207,534 @@ parallelism"; that field is mine to edit and it now reads "The gain is that they
    "chance") was reverted, because it is a statistical term inside a chart note. If the intent
    was to freeze those two strings entirely, they are the two to revert, and that page has only
    0.1 of headroom, so a revert needs a compensating split elsewhere on it.
+
+# BATCH 4
+
+Six topics: AI appointment booking, workflow automation, AI voice agents, lead qualification,
+database reactivation, AI chat assistant. BEFORE = `6eab055`. Both scorers run per surface after
+every file. ` because ` counted over the topic's THREE files together (body md + scenes + service),
+before and after, which is what batch 3's checker asked for.
+
+## 1. AI APPOINTMENT BOOKING
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/ai-appointment-booking-no-shows-real-estate` | 8.1 -> **5.9** | 17w -> 12w | PASS (5895 -> 5953 words, x1.01) |
+| `/services/ai-appointment-booking` | 6.6 -> **5.8** | 12w -> 11w | PASS (1578 -> 1616 words, x1.02) |
+
+` because ` over body + `booking-scenes.ts` + `ai-appointment-booking.ts`: **30 -> 30** (body 19 -> 19,
+scenes 8 -> 8, service 3 -> 3). Every reason that was a reason still is one; four splits reopened with
+"That is because ...". `git diff 6eab055` on the scenes file changes **0 comment lines**. Vitest
+`lib/blog lib/services content app/blog`: PASS (388) FAIL (0). `updated:` set to 2026-09-18 (the post
+already had the line; the provenance comment under it was left alone).
+
+Judgment calls, word for word:
+
+- **No gloss was added anywhere in this topic.** Nothing needed one: the two technical terms the post
+  introduces (a free and busy query, the METHOD property) are already explained by the page in its own
+  next sentence, and adding a second explanation would have been a new claim about a standard.
+- **Systematic swap: `somebody` -> `someone`, `anybody` -> `anyone`, `everybody` -> `everyone` in prose.**
+  Pure register, no meaning change, and it is what the invoicing exemplar did. `nobody` was NOT swapped
+  (the register change to "no one" is bigger than the gain). The two FAQ headings that contain
+  "somebody" ("How is this different from sending somebody a booking link?", "What if somebody wants a
+  time I do not have?") are headings and are untouched, as is "The gap nobody measures".
+- Non-trivial word swaps, all in the body or scenes: "motivated" -> "keen" (of the person who messaged
+  on Sunday); "obligation" -> "duty" (`WHY_THEY_DROP[1]`); "none of it is recoverable" -> "none of it
+  can be won back" (`WHY_THEY_DROP[0]`); "volume amplifier" -> "turns up the volume"
+  (`FAILURE_MODES[0]`); "element" -> "part" (`FAILURE_MODES[2]`); "arithmetic" -> "sums" (twice, the
+  calculator note and the body's "ran the arithmetic the other way"); "proportion" -> "share";
+  "industry" -> "trade" in one body sentence only (the calculator note's "for this industry" is the
+  keyword-adjacent one and was left); "competitor" -> "rival" (`whatItIs[0]`); "consistently" ->
+  "every time" (`useCases[2]`); "mutually free hour" -> "an hour that is free for both"
+  (`useCases[1]`); "distinction" -> "difference" twice; "demonstrate" -> "show".
+- **Colons reopened with their governor, never split flat.** `REMINDERS.note`'s "Two things do carry"
+  became "The first is that ... The second is that ...". The offer scene's two-item colon became
+  "One is ... The other is ...". The funnel footnote's two-item colon became "The first is ... The
+  second is ...". The calculator note's "for the same reason:" kept its reason in one following
+  sentence rather than two.
+- **"then" added to close an "if"** in two places, per batch 3: the body's "Say you already override
+  the calendar three times a week because it is wrong. Then a machine reading it will be wrong three
+  times a week too."; `limits[4]` "If half your commitments live in someone's head, **then** a system
+  reading the calendar will offer a slot ..."; `FAILURE_MODES[0]` "If nothing sits between the inquiry
+  and the calendar, **then** you will spend Saturday ...".
+- **Conditional rewritten with an explicit subject** in `howItWorks[1]`: "Where an appointment also
+  needs somebody outside your office, **their** agreement is ..." became "Say an appointment also needs
+  someone outside your office. Then **that person's** agreement is ...". "Their" would have pointed at
+  "appointments" after the split; naming the person fixes it and changes nothing else.
+- Places I deliberately did NOT split:
+  - The RFC 5545 sentence (40w). It reproduces the specification and stays verbatim, with its lead-in
+    moved out in front of it ("The standard says that ...").
+  - The Google Calendar API documentation sentence (37w). Same reason; the lead-in was split off.
+  - "It is whether the person on the other end gets something their calendar treats as an invitation,
+    with an alarm attached, **and whether** you find out when they accept it." (30w) Two joint tests of
+    one question; splitting would make either one sufficient.
+  - "They estimated that **if** every appointment in the resident clinic had been booked within two
+    weeks, the overall no-show rate would fall by nearly sixty percent." (26w) A reported conditional
+    estimate; the condition and the estimate stay in one sentence.
+  - "The trial on this page found one reminder worth about seven percentage points of attendance, in
+    China, in 2007, among people who had made a reservation for a routine health check-up." (31w) Every
+    clause after the number is a limit on it; splitting would leave the number alone in a sentence.
+  - "Nine days is long enough for an offer to be accepted on something else, for a mortgage conversation
+    to go badly, or for a job to change." (27w) One governor, three alternatives.
+  - `LEAD_TIME.basis` and `REMINDERS.basis` were left almost entirely alone: both are the chart's own
+    "what this measures and what it does not" lines and both are already short-sentenced.
+- Counts I introduced, each checked against the list it counts: "Every business with a calendar in it
+  tracks **two** things" (two listed); "**Four** decisions take the time" (four listed); "It is software
+  that does **four** things" (four listed, and the section they summarise is already called "four small
+  things in a row"); "Here, **two** things change" (two listed).
+- Not touched, on purpose: every `alt` string (they carry ROUND-I provenance comments recording exactly
+  what was counted in the photograph, so they are records, not prose); the pull-quote `text`; the
+  `THE_BOOKING` visitor turns; all `sourceText`/`sourceHref`; `eyebrow`, `title`, `lede`, `specs`,
+  `why`, `keywords`, `seo`, `stat` on the service page; the FILM-class data (this topic has none).
+- One assistant turn in `THE_BOOKING` was split ("I have sent a calendar invitation to this number so
+  it lands on your phone. Levan will meet you there."). It promises, declines and discloses exactly
+  what it did before.
+
+## 2. WORKFLOW AUTOMATION
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/workflow-automation-real-estate-business` | 7.0 -> **5.8** | 14w -> 12w | PASS (4781 -> 4859 words, x1.02) |
+| `/services/workflow-automation` | 6.1 -> **5.9** | 12w -> 12w | PASS (1961 -> 2018 words, x1.03) |
+
+` because ` over body + `workflow-scenes.ts` + `workflow-automation.ts`: **20 -> 21** (body 10 -> 10,
+scenes 7 -> 8, service 3 -> 3). The one addition is deliberate: `FRAGMENTED.basis` had a colon
+carrying a reason ("is not a third category: nine resumptions in ten were self-started...") and the
+split reopened it as "That is because ...". Nothing lost a reason. `git diff 6eab055` on the scenes
+file changes **0 comment lines**. Vitest: PASS (388) FAIL (0). `updated:` set to 2026-09-18.
+
+**`WORKFLOW_FILM` is byte-identical**: `git diff 6eab055 -- content/blog/workflow-scenes.ts` contains
+no `src`, `poster`, `width`, `height`, `seconds`, `duration`, `name` or `description` line from that
+object. I also left the `reel` scene's own `caption` array untouched, because it is caption copy
+attached to the film and the brief puts captions attached to a FILM out of bounds. It contains the
+page's longest remaining sentence (40w) and that is why it is still there.
+
+Judgment calls, word for word:
+
+- **No gloss was added.** The two terms a reader might not know (an Error Trigger, a per-run history)
+  are both already named and explained in the sentence that introduces them.
+- Non-trivial word swaps: "arithmetic" -> "sums" (body, "the sums are the easy part"); "recurring" ->
+  "ongoing"; "migrated" -> "moved" (FAQ); "converts it into a dollar figure" -> "turns it into a
+  dollar figure"; "consistent ... consistency" -> "the same every time ... that" in the "does not fix
+  a bad process" limit. That last one is the only swap in this topic that drops a noun the page used
+  twice; the meaning ("wiring makes a process repeatable, which only helps if it was right") is
+  unchanged and the sentence after it is untouched.
+- **"asymmetry" was NOT swapped** ("The same asymmetry is in the tools that do it properly"). The
+  playbook lists asymmetry/gap as an allowed swap, but here the word names an imbalance between loud
+  failures and silent ones, and "gap" does not mean that. Left as it was.
+- **"knowledge work" was NOT swapped to "desk work"**, even though the scene note next to it says
+  "desk work". The sentence is about what interruption does to a class of work the paper defines, and
+  changing the term would have made the page name two different things.
+- Colons reopened with their governor: the cost section's "three things nobody can guess from an
+  article:" became "The first is ... The second is ... The third is ..."; the ranking paragraph's
+  "Sort by two things ...:" became "The first is ... The second is ..."; the funnel footnote's
+  two-item colon became "One is ... The other is ...".
+- **"They found that ..." was repeated rather than dropped.** The CHI 2005 paragraph reported two
+  findings under one reporting verb ("They found that X, and that Y"); the split repeats "They found
+  that" on the second one so neither becomes the page's own claim.
+- **The three judgment-call examples kept their colon.** "...the small judgment calls that used to
+  need a person: is this the same Sarah Miller who inquired in March, is this lead actually hot, does
+  this message need a human being rather than a template." I split only the lead-in and reopened the
+  list with "They sound like this:". Turning the three into standalone sentences would have produced
+  the batch-3 defect of direct questions punctuated with full stops.
+- **"one of three things" added as a count** in the first-month section, then the three items kept
+  their "That ..." so they stay the content of "you discover", not three flat statements about the
+  reader's own chains. Same move on "two things" in the funnel footnote (two listed).
+- "then" added to close an "if" in five places: "If the answer is nobody, **then** you have found ...";
+  "If nothing arrives, **then** you have learned ..."; "If the manual version of the job loses leads,
+  **then** the automated version loses them faster ..."; `WATCHABLE[0]` "If you cannot answer did it
+  run ..., **then** you have not built an automation"; the plate caption "if the picture looks
+  unremarkable, **then** that is the finding".
+- Places I deliberately did NOT split:
+  - The Zapier quotation (34w with its lead-in). Verbatim, in quote marks, left whole; only the
+    second citation was moved into its own sentence.
+  - The n8n error-workflow sentence in `WATCHABLE[1]`, which describes a documented pattern; I split
+    the body sentence that reproduces the same thing at the "so", not inside the description.
+  - `IN_SHORT[1]` "You are automating one through eight, **because** the chain is where the reloading
+    happens **and** a chain is exactly what these tools are good at." One because governing two
+    reasons; splitting would have made either reason sufficient.
+  - `howItWorks[1]` "Rank that list by how often the step happens **and** how little judgment it
+    needs" on the service page. Two joint sort keys, one sentence.
+  - "The top of that list is always something dull and frequent, a field being copied from one system
+    into another twenty times a week." The comma is an apposition, not an example; writing "like a
+    field being copied" would have turned an identity into an instance.
+  - `useCases[0]` on the service page (five things one submission becomes, one governor).
+- Not touched: the `reel` caption (above), `plate` and `plate-two` `alt` strings, the pull-quote
+  `text`, `REBUILT_CHAIN` labels, every `sourceText`/`sourceHref`, and all eight orchestrator fields
+  on the service page.
+
+## 3. AI VOICE AGENTS
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/ai-voice-agent-missed-calls-real-estate` | 7.0 -> **5.9** | 13w -> 12w | PASS (4880 -> 4938 words, x1.01) |
+| `/services/ai-voice-agents` | 7.0 -> **6.0** | 14w -> 12w | PASS (2384 -> 2442 words, x1.02) |
+
+` because ` over body + `voice-agent-scenes.ts` + `ai-voice-agents.ts`: **19 -> 19** (body 11 -> 11,
+scenes 7 -> 7, service 1 -> 1). `git diff 6eab055` on the scenes file changes **0 comment lines**.
+**`VOICE_FILM` is byte-identical** (0 diff lines touching that object), and the `reel` caption was
+left alone for the same reason as the workflow film. Vitest: PASS (388) FAIL (0). `updated:` set to
+2026-09-18.
+
+The service page landing at exactly 6.0 is deliberate. It carries two statutes, the FCC ruling and
+the consent rule in prose, and the remaining long sentences are the statutory ones. I stopped
+splitting rather than break a rule into fragments.
+
+**TWO INVARIANT FAILURES I CAUSED AND THEN REVERTED. Worth reading before batch-5 anything.**
+The invariants script pairs quote marks, so the text BETWEEN two quotations is itself recorded as a
+"quote" whenever it is 12 to 600 characters long. The legal section has three quotation marks close
+together (`"artificial"`, the 250.05 passage, the 250.00 passage), which makes two such spans:
+
+1. from the close of `"artificial"` to the open of `"when he unlawfully engages in wiretapping..."`;
+2. from the close of that passage to the open of `"a telephonic or telegraphic communication..."`.
+
+My first draft rewrote inside both spans and the script reported `quote BENT or LOST` twice. I
+reverted both edits to the BEFORE wording rather than work around the scorer:
+
+- "In practice that means the rules already governing prerecorded outbound calls, getting consent,
+  identifying who is calling, and honoring an opt-out, apply in exactly the same way when the voice
+  is generated." is back exactly as it was. (My draft had split the appositive into "Those rules
+  include ...", which was also a small risk of its own: the original list is an apposition, not an
+  exhaustive set, and any wording that implied "there are three rules" would have been a
+  strengthening.)
+- "The one of those three that governs a telephone call is defined in [section 250.00](...)**:**
+  wiretapping means recording ..." keeps its colon.
+
+Judgment calls, word for word:
+
+- **No gloss was added.** Nothing on this page needed one; every legal term is either quoted with its
+  citation or already explained in the sentence beside it.
+- Systematic `somebody/anybody/everybody` -> `someone/anyone/everyone` in prose, as in topic 1, EXCEPT
+  inside the quoted phrase "somebody at the office picked up", which is illustrative speech in quote
+  marks and stays.
+- Non-trivial word swaps: "resolve that ambiguity ... they resolve it badly" -> "settle that question
+  ... they settle it badly"; "looks identical to a wrong number" -> "looks exactly like a wrong
+  number"; "arithmetic" -> "sums" in the calculator note (with "it is far gentler" -> "they are far
+  gentler" to agree); "a volume amplifier" does not appear here. **"attorney" was NOT swapped to
+  "lawyer"**, in the body or in the offer scene, because the register is deliberate and both surfaces
+  have to say the same word.
+- **"commitment to wait" was kept.** I drafted "promise to wait" and threw it away: a commitment to
+  wait is something the caller takes on, and "promise" implies a promise made to somebody.
+- Colons reopened with their governor: "silence means one of three things" now introduces three
+  fragments that are plainly the three readings; "the entire difference between two things. One is
+  ... The other is ..."; the offer scene's "the line that says ... and the line that says ..." became
+  "One line says it is an assistant. The other says the call is recorded."; the outbound-legality FAQ's
+  three rules each keep their own modal ("You need ...", "You have to honor ...", "And the agent
+  identifies itself ...") under the governor sentence "The same rules that govern your own outbound
+  calling apply."
+- **Reporting verbs repeated rather than dropped**, twice: "Firms that tried to make contact within an
+  hour were nearly seven times likelier ... **They were** more than sixty times likelier than firms
+  that waited a day." and, in the calculator note, "**The same study found them** more than sixty times
+  likelier than firms that waited a day." Also "The authors **also note** that speakers are sensitive
+  to shifts of a hundred milliseconds."
+- "then" added to close an "if" in three places (`VENDOR_QUESTIONS[1]`, the body's past-client limit,
+  the service page's past-client limit).
+- **The three-item list "An unanswered call left no name, no number ..., and no record ..." kept its
+  verb on every item** ("It left no number ... And it left no record ...") so none of the three
+  becomes a claim about something else.
+- Places I deliberately did NOT split:
+  - The FCC declaratory-ruling sentence (36w). One reported ruling with its date, its release and its
+    holding; "confirmed that" governs all of it.
+  - Penal Law 250.05 and 250.00 and Penal Code 632, in the body and in `faqs[6]` on the service page.
+    Every "makes a person guilty", "makes it an offense", "without the consent of all parties" and
+    "may record" is untouched; I only split at sentence boundaries outside the quotations, and only
+    outside the two protected spans above.
+  - "If the caller is a past client, or your seller's neighbor, or anyone whose relationship is the
+    actual asset, then ..." (32w). Three alternatives under one condition.
+  - `IN_SHORT[1]` was left byte-identical. Its provenance comment records that "reach a decision
+    maker" was corrected to "get a meaningful conversation with a decision maker" in an earlier round,
+    and the sentence is the study's own definition.
+  - "even though someone who dialled you is warmer than someone who filled in a form" (a concession
+    clause) stays inside its sentence.
+  - `RESPONSE_AUDIT.basis` and `.note` were left as they were; both are already short-sentenced and
+    both are the chart's own caveat.
+- Not touched: the `reel` caption, `CALL_TURNS` (both the caller's lines and the agent's disclosure
+  lines, which say what is recorded and what it will not guess at), `CALL_EVENTS`, the pull-quote,
+  every `sourceText`/`sourceHref`, the `plate` alt, and all eight orchestrator fields.
+
+## 4. LEAD QUALIFICATION
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/ai-lead-qualification-real-estate-scoring` | 6.8 -> **5.9** | 13w -> 12w | PASS (4719 -> 4751 words, x1.01) |
+| `/services/lead-qualification` | 5.9 -> **5.7** | 12w -> 12w | PASS (1845 -> 1903 words, x1.03) |
+
+` because ` over body + `qualify-scenes.ts` + `lead-qualification.ts`: **20 -> 20** (body 10 -> 10,
+scenes 8 -> 8, service 2 -> 2). `git diff 6eab055` on the scenes file changes **0 comment lines**.
+**`QUALIFY_FILM` is byte-identical** (0 diff lines touching it); the `reel` caption is untouched.
+Vitest: PASS (388) FAIL (0). `updated:` set to 2026-09-18.
+
+The service page already passed at 5.9 before I touched it. I made five light splits on it rather
+than a full pass, because §3 of the house rules says touch only what you must and the page is on the
+site's hardest legal ground. They are listed below.
+
+Judgment calls, word for word:
+
+- **No gloss was added.** The only candidate was "median", which the page uses three times, and the
+  NAR sentences around it already define the idea by example.
+- Non-trivial word swaps: "the underlying population" -> "the group of people" (the assumption
+  paragraph; it means the set of leads, not a statistical population attached to a figure);
+  "somebody/anybody" -> "someone/anyone" in scene prose and in a few body sentences, as in topics 1
+  and 3. **"Anybody will type spring into a form" became "Anyone will type spring into a form"** and
+  keeps its universal force.
+- **"It is that ..." kept on the reported assumption.** "There is a comfortable assumption underneath
+  every CRM, which is that the leads ... are roughly interchangeable and that working them in order is
+  therefore fair" became "There is a comfortable assumption underneath every CRM. **It is that** the
+  leads in it are roughly interchangeable, **and that** working them in order is therefore fair." Both
+  "that"s survive, so neither half becomes the page's own claim one sentence before it is refuted.
+- **"They are not" was made explicit** as "They are not equally ready", because after the split the
+  bare "They are not" pointed at nothing.
+- **"three things follow" added as a count** in the traceability paragraph, so the three "You cannot
+  ..." sentences stay inside the "If you cannot open a lead ..." condition instead of becoming three
+  flat statements about the reader.
+- "then" added to close an "if" in six places: "If everybody were equally ready, **then** ...";
+  "If they got less of your SERVICE, **then** it stopped being a ranking"; "If you cannot open a lead
+  ..., **then** three things follow"; `FAIR_PLAY[0]` "If an input would be indefensible said out loud,
+  **then** it is indefensible in a weight"; `FAILURE_MODES[2]` "If the ranking had no relationship to
+  the outcome, **then** you do not have a scoring system"; the service page's `useCases[4]` "If they
+  got less of your service, **then** ...".
+- **Reported "said" kept on both halves** of `IN_SHORT[1]`: "Fifteen percent of sellers **said** they
+  needed to sell as quickly as possible. Forty three percent **said** they were in no hurry."
+- The three-alternative list in `howItWorks`-style prose ("a field update in some systems, an
+  integration project in others, and in one or two well-known ones ...") was split with its verb
+  repeated ("**It is** an integration project in others. **And in** one or two well-known ones **it
+  is** a support ticket and a fortnight."), so no alternative reads as the only one.
+- Places I deliberately did NOT split:
+  - **The whole 42 U.S.C. 3604 sentence (51w).** It reproduces two statutory prohibitions in quote
+    marks with the connective "and to represent to somebody, because of a protected characteristic"
+    between them. Splitting would have separated a prohibition from the phrase that scopes it, and it
+    is also the span the invariants script watches. Untouched, and it is the page's longest sentence
+    on purpose.
+  - The Article 10 sentence (37w), for the same reason; only the two short sentences after it moved.
+  - **The whole HUD-limits paragraph.** "It says nothing about CRMs, nothing about lead scoring, and
+    nothing about a real estate agent ordering their own call list, and it is not authority for
+    anything in this article." is the page's disowning sentence, and the sentence after it carries
+    the one recommendation it does transfer, with the quotation attached. Both left byte for byte.
+  - "The moment a low score results in fewer listings, a slower answer to a direct question, or a
+    person who can never reach a human being, you have stopped ranking your own time and started
+    rationing access to housing." (39w) Three alternatives inside one condition; any of them alone is
+    enough, which is exactly what the sentence says and exactly what a split would have blurred. Only
+    the trailing clause was moved into its own sentence.
+  - "A score you cannot trace is one you cannot explain to a client, cannot correct when it is wrong,
+    and cannot defend to anybody who asks a harder question than your client would." (`FAIR_PLAY[1]`)
+  - "Keep the inputs to the plans people describe, keep every score traceable to their own words, and
+    never let the ranking change what anybody is allowed to see or ask." (three joint rules)
+  - "It must never decide who gets to see a listing, who gets a straight answer, or who is allowed to
+    reach a human being." (normative, three items)
+  - The service page's `faqs[4]` (48w), which carries 42 U.S.C. 3604 and Article 10 in one sentence,
+    and `useCases[2]`'s area-routing rule.
+- The five service-page edits: `whatItIs[1]` split at "and routes it" with "Then it routes it: ...";
+  `whatItIs[2]` split at the last "and" ("And every point of it traces back ...");
+  `howItWorks[3]` split the "which is what makes it" relative clause into "That is what makes it ...";
+  `useCases[4]` gained a "then"; `faqs[0]` reopened its colon with "That is whether they are
+  pre-approved ...".
+- Not touched: the `reel` caption, the pull-quote, `QUALIFY_TURNS` and `QUALIFY_EVENTS`, the figure
+  `rows`/`tag` data on the service page, every `sourceText`/`sourceHref` (including the NAR
+  methodology line, which is the page's longest remaining scene sentence), the `plate` alt, and all
+  eight orchestrator fields.
+
+## 5. DATABASE REACTIVATION
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/database-reactivation-old-real-estate-leads` | 6.7 -> **5.8** | 12w -> 12w | PASS (4825 -> 4887 words, x1.01) |
+| `/services/database-reactivation` | 6.1 -> **5.5** | 12w -> 12w | PASS (1882 -> 1930 words, x1.03) |
+
+` because ` over body + `reactivation-scenes.ts` + `database-reactivation.ts`: **21 -> 21** (body 8 -> 8,
+scenes 9 -> 9, service 4 -> 4). `git diff 6eab055` on the scenes file changes **0 comment lines**.
+**`REACTIVATION_FILM` is byte-identical** (0 diff lines touching it); the `reel` caption is untouched.
+Vitest: PASS (388) FAIL (0). `updated:` set to 2026-09-18.
+
+Judgment calls, word for word:
+
+- **ONE GLOSS ADDED, and it is the only gloss in this batch.** In the TCPA paragraph, after "a court
+  that finds the violation was willful or knowing may treble it", I added: **"To treble a sum is to
+  make it three times as big."** It is plainly true, it adds no claim, the page does not say it
+  anywhere else, and it is the same move the invoicing exemplar made with "Treble damages means three
+  times the charge." The "may" in front of it is untouched, so the gloss does not turn a court's
+  discretion into a certainty. The word "three" is spelled out, so it introduces no digit string.
+- Non-trivial word swaps: "the rest is arithmetic, and it is arithmetic nobody can do for you" ->
+  "the rest is sums. And they are sums nobody can do for you"; "somebody/anybody" -> "someone" in the
+  cold open and a handful of places (the cold open now reads "someone filled in the home valuation
+  form", "Someone else listed it").
+- **The cold open's hardest sentence was rebuilt rather than trimmed.** BEFORE: "It is that following
+  up with a person who said not right now, three years later, in the one month it stopped being not
+  right now, is not a thing a human being is built to do." (53w, with the subject and the verb 40
+  words apart.) AFTER: "It is that a person who said not right now needs following up three years
+  later, in the one month it stopped being not right now. That is not a thing a human being is built
+  to do." Both halves survive and the claim is still about the timing, not about following up in
+  general. I drafted a version that said "following up is not a thing a human being is built to do"
+  and threw it away, because that is a much larger claim than the page makes.
+- Colons reopened with their governor: "What reactivation changes is **two things. One is that** ...
+  **The other is that** ..."; the calculator note's three refusals became "**There are three reasons.**
+  ..."; the service page's "Before a single message: ..." became "**Before a single message, three
+  things get checked.** ..."; the close's "Two earlier moments in the same story are written out
+  elsewhere:" now opens two sentences instead of one.
+- "then" added to close an "if" in seven places: "if that number is on the registry, **then** warmth
+  is not a defense"; "If a vendor cannot tell you ..., **then** the campaign is not ready to send";
+  "If the answer is a general assurance ..., **then** nothing has been checked"; "If the second message
+  goes out, **then** the suppression list is decoration"; "If the records do not carry a date and a
+  source, **then** the honest first project is not a campaign"; `FAILURE_MODES[1]` "If the first line
+  would work on anybody, **then** it will work on nobody"; the offer scene's "If you would rather have
+  a second pair of eyes on it, **then** tell us ...".
+- Places I deliberately did NOT split:
+  - The whole 47 CFR 64.1200(f)(5) sentence (58w, the page's longest). It reproduces the definition
+    verbatim, and both date windows live inside one quotation.
+  - "The same regulation, at paragraph (a)(2), **bars** a telemarketing call or text ... **unless** you
+    have the prior express written consent of the person you are calling." (43w) A prohibition and its
+    exception; splitting at "unless" would leave a flat ban.
+  - "Written consent is defined narrowly: a signed agreement, with a clear and conspicuous disclosure
+    that the person is authorizing automated calls, and a statement that agreeing is not a condition
+    of buying anything." Three joint parts of one definition.
+  - `CONSENT_CHECK[0]` (40w): "the rule wants a signed agreement **that says** ... **and that**
+    agreeing is not a condition of getting anything". Both "that" clauses are inside what the
+    agreement must say.
+  - "a person can recover their actual loss "or to receive $500 in damages for each such violation,
+    whichever is greater", and a court that finds the violation was willful or knowing **may** treble
+    it." The modal and the quotation stay in one sentence.
+  - `limits[0]` on the service page: "What changes is that somebody finally asked, and the few whose
+    situation moved get found in the week it moved." The second "that" is elided, so a split would
+    have stranded it. Left whole. (The post body's version of the same sentence WAS split, and there
+    the governor is repeated explicitly as "One is that ... The other is that ...".)
+  - The Twilio threshold quotation and its lead-in.
+- Not touched: the `reel` caption, the pull-quote, `REVIVAL_TURNS` and `REVIVAL_EVENTS`, the service
+  page's `figure.turns` transcript (both the AI's lines and the visitor's), every
+  `sourceText`/`sourceHref` including the NAR methodology line, the `plate` alt and its dated caption,
+  and all eight orchestrator fields.
+
+## 6. AI CHAT ASSISTANT (the story standard: language only)
+
+| surface | grade before -> after | median before -> after | invariants |
+|---|---|---|---|
+| `/blog/ai-chat-assistant-real-estate-website` | 6.5 -> **5.9** | 12w -> 11w | PASS (4756 -> 4798 words, x1.01) |
+| `/services/ai-chat-assistant` | 7.1 -> **5.9** | 14w -> 12w | PASS (1946 -> 2005 words, x1.03) |
+
+` because ` over body + `ai-chat-scenes.ts` + `ai-chat-assistant.ts`: **21 -> 21** (body 13 -> 13,
+scenes 6 -> 6, service 2 -> 2). Vitest: PASS (388) FAIL (0). `updated:` set to 2026-09-18.
+
+**`content/blog/ai-chat-scenes.ts` was NOT TOUCHED AT ALL.** `git status` does not list it. The brief
+says this post gets the lightest touch of the six and that its structure, scenes, order, cold open,
+people, times and details do not move; once the body alone brought the page to 5.9 with median 11w,
+no sentence in the scenes needed changing to pass, so none was changed. That also means `FILM`, the
+`reel` caption, `RESPONSE_CURVE` with its two quoted HBR fragments, `IN_SHORT`, `SELF_CHECKS`,
+`TEARDOWN_TURNS`, `TEARDOWN_EVENTS`, `FOUR_MOVES`, `FAILURE_MODES`, the leads-calculator note with its
+"deliberately not by the unsourced 78% figure this article declines to use" line, the pull-quote and
+the plate caption are all byte-identical.
+
+**The 78% retraction is untouched.** The sentence that states the retired figure is byte for byte
+where it was, and so is every sentence of the paragraph that refuses it. The only change inside that
+paragraph is one sentence boundary: "...no published report, no stated sample, and no methodology**.
+And** every citation leads to another article citing a third." The disowning sentences ("There is not
+one that anybody can produce", "nobody quoting it knows whether it is right", "So this article does
+not use it") are unchanged.
+
+Judgment calls, word for word:
+
+- **No gloss was added.**
+- **THE WHOLE "fine print" SECTION IS UNTOUCHED FROM ITS FIRST QUOTATION ONWARD.** Business and
+  Professions Code 17941, the escape-hatch sentence, the clear-and-conspicuous phrase, the
+  ten-million-visitor definition, the definition of online, the Core Web Vitals INP and LCP
+  thresholds, and the WCAG No Keyboard Trap criterion are all byte for byte, together with every
+  sentence between them. That is partly editorial (reproduced law and published thresholds) and
+  partly mechanical: see the note at the end of this batch about how the invariants script pairs
+  quote marks. The three longest sentences left on this page are those three quotations.
+- Non-trivial word swaps: exactly one, "That **distinction** matters more here" became "That
+  **difference** matters more here". Nothing else on this page had a word changed; every other edit
+  is a sentence boundary.
+- Colons reopened with their governor: "the harder half: what happens ..." became "the harder half.
+  **It is** what happens ..."; "What is not free is the reading: somebody has to ..." became "What is
+  not free is the reading. **Somebody** has to ...", with both of that sentence's reasons kept
+  ("That is because ... It is also because ..."); "On timing, the honest shape is **that** A, B and C"
+  became "On timing, the honest shape is **this.** A. B. And C."
+- "then" added to close an "if" in three places, twice in the body and once on the service page.
+- Counts introduced: "**There are three of them**, and only one is the software" (three listed, and
+  the sentence before it already said the number depends on three things).
+- Places I deliberately did NOT split:
+  - Everything named two bullets above.
+  - "It does not read a room, it does not know when a seller is lying about their timeline, and it
+    has no instinct for what is really going on in a divorce sale." in the POST body. On the service
+    page the same sentence WAS split into three, each keeping its own "It does not" or "it has no",
+    so the two surfaces say the same three things with the same force.
+  - The FAQ "The difference is whether it can answer a question nobody scripted in advance, and
+    whether the answer comes from live data or from a page written eight months ago." Two joint tests.
+  - The service page's "What the assistant changes is **that** the inquiry gets answered while the
+    person is still on the page", and "becomes a booked call **rather than** a confident wrong answer".
+- Service-page edits worth naming: `faqs[1]` carried the batch's longest sentence (61w). The study's
+  own definition of qualifying sat nested between the multiple and its comparison; it is now its own
+  sentence with the reporters kept ("**The researchers defined** qualifying the lead as a real
+  conversation with somebody who could decide"), and the multiple keeps its comparison intact
+  ("nearly seven times likelier to qualify the lead **than firms that waited one more hour**").
+  `whatItIs[0]`'s three example questions each kept the modal ("**They can** ask what the taxes look
+  like ... **And they can** get a straight answer to each one in the same conversation"), so the page
+  still describes what a visitor may do rather than what happens.
+
+---
+
+# BATCH 4 CLOSE-OUT
+
+**All twelve surfaces PASS both scorers**, re-run at the end of the batch in one pass:
+
+| surface | grade | median | invariants |
+|---|---|---|---|
+| `/blog/ai-appointment-booking-no-shows-real-estate` | 5.9 | 12w | PASS x1.01 |
+| `/services/ai-appointment-booking` | 5.8 | 11w | PASS x1.02 |
+| `/blog/workflow-automation-real-estate-business` | 5.8 | 12w | PASS x1.02 |
+| `/services/workflow-automation` | 5.9 | 12w | PASS x1.03 |
+| `/blog/ai-voice-agent-missed-calls-real-estate` | 5.9 | 12w | PASS x1.01 |
+| `/services/ai-voice-agents` | 6.0 | 12w | PASS x1.02 |
+| `/blog/ai-lead-qualification-real-estate-scoring` | 5.9 | 12w | PASS x1.01 |
+| `/services/lead-qualification` | 5.7 | 12w | PASS x1.03 |
+| `/blog/database-reactivation-old-real-estate-leads` | 5.8 | 12w | PASS x1.01 |
+| `/services/database-reactivation` | 5.5 | 12w | PASS x1.03 |
+| `/blog/ai-chat-assistant-real-estate-website` | 5.9 | 11w | PASS x1.01 |
+| `/services/ai-chat-assistant` | 5.9 | 12w | PASS x1.03 |
+
+` because ` over all three files per topic, before to after: booking 30 to 30, workflow 20 to 21,
+voice 19 to 19, qualification 20 to 20, reactivation 21 to 21, chat 21 to 21. **Nothing fell.**
+
+Scope, measured rather than asserted (`git diff` against HEAD `2cb5905`):
+
+- Files changed: `content/blog/ai-posts.ts`, five scenes files (booking, workflow, voice-agent,
+  qualify, reactivation), `content/blog/posts.ts`, six service files, this log. Nothing else.
+- `content/blog/ai-chat-scenes.ts` is **not** in the changed set.
+- `content/blog/posts.ts`: **6 insertions, 6 deletions, and every one is an `updated:` line** moving
+  2026-08-27 to 2026-09-18.
+- **Zero comment lines changed** in any content file. A grep for changed lines beginning with an
+  asterisk returns ten, and all ten are markdown bold lead-ins inside post bodies.
+- **Zero** changed `eyebrow`, `title`, `lede`, `specs`, `why`, `keywords`, `seo` or `stat` lines on
+  any service page.
+- **Zero** changed `sourceText`, `sourceHref`, `alt` or `credit` lines in any scenes file.
+- **Zero** lines touching any FILM object or any `reel` caption.
+- Zero em dashes, en dashes or arrow glyphs added; zero hype words added.
+
+## THE ONE THING THE NEXT BUILDER SHOULD READ
+
+`rewrite-invariants.mjs` finds quotations by scanning left to right and pairing each opening quote
+mark with a closing one, requiring between 12 and 600 characters in between. Normally that pairs each
+quotation with its own end and the prose BETWEEN quotations is never recorded. That holds **until a
+quoted string is shorter than twelve characters or longer than six hundred**. Then the match starting
+at its opening quote fails, the scan resumes at its CLOSING quote, and every pairing downstream is off
+by one: from that point the script records the prose BETWEEN quotations as if it were a quotation, and
+any rewrite inside those gaps is reported as `quote BENT or LOST`.
+
+That happened once in this batch, on the voice post, where the FCC ruling is quoted as the single word
+"artificial", ten characters long. Two gaps in the legal section became protected spans and my first
+draft rewrote inside both. I reverted to the BEFORE wording in both places rather than work around the
+scorer, and the page passes.
+
+Practical rule: before rewriting near a run of quotations, look for a quoted fragment under a dozen
+characters. If there is one, treat the prose between the quotations after it as frozen, or expect the
+gate to tell you. The chat post's fine-print section was left whole for the same reason, because it
+quotes the word online on its own; the reactivation and qualification posts were safe because every
+quoted fragment on them clears twelve characters.
+
+## Open items for the orchestrator
+
+1. `/services/ai-voice-agents` finishes at exactly 6.0. It passes, and its remaining long sentences
+   are Penal Law 250.05, section 250.00 and Penal Code 632 in `faqs[6]` and `limits[5]`. More
+   headroom there would have to come out of the statutes, and that trade did not look like mine.
+2. `/blog/ai-lead-qualification-real-estate-scoring` keeps a 51-word sentence (42 U.S.C. 3604 with
+   both prohibitions and the phrase that scopes the second one) and `/services/lead-qualification` a
+   48-word one (3604 plus Article 10). Both are deliberate and both pages pass.
+3. Nothing in this batch was left unresolved and nothing was worked around. The BEFORE snapshot and
+   the ALLOW file were not touched.

@@ -45,7 +45,7 @@ export const VOICE_FILM = {
  * a summary that claims something the article does not support is how a summary box becomes a
  * liability. */
 export const IN_SHORT: string[] = [
-  "A missed call is not a message waiting for you in the morning. Most callers never leave one, so it arrives as nothing at all: no name, no number worth calling back, no record that anybody wanted you.",
+  "A missed call is not a message waiting for you in the morning. Most callers never leave one, so it arrives as nothing at all: no name, no number worth calling back, no record that anyone wanted you.",
   /** ROUND I: "reach a decision maker" was a softening of what the study measured. The
    * operative sentence, read in the primary document and quoted in full in ai-chat-scenes.ts,
    * says firms were nearly seven times as likely "to qualify the lead (which we defined as
@@ -144,11 +144,11 @@ export const TURN_GAP = {
    * and every label is accurate, and that is not the same as the chart being true: bars sitting
    * side by side get read as one comparison unless the caption says otherwise. */
   basis:
-    "The grey track behind each bar is one full second. The outer two bars are the fastest and the slowest of the ten language averages; the inner two are the middle and the average of the whole dataset, which sit apart because the spread runs long. Ten languages on five continents, measured from video of ordinary unscripted conversation between two and six people. Yes or no questions were 67% of everything coded.",
+    "The grey track behind each bar is one full second. The outer two bars are the fastest and the slowest of the ten language averages. The inner two are the middle and the average of the whole dataset, which sit apart because the spread runs long. Ten languages on five continents, measured from video of ordinary unscripted conversation between two and six people. Yes or no questions were 67% of everything coded.",
   sourceText:
     "Stivers and ten co-authors, Universals and cultural variation in turn-taking in conversation, PNAS 2009.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2705608/",
-  note: "Read what this does not say. Every conversation in it happened face to face and not one of them was a phone call, and the same paper found responses came earlier when the questioner was looking at the recipient in nine of its ten languages, reaching significance in five, which is exactly what a phone takes away. It measures people answering people, so it has nothing at all to say about what a caller will put up with from a machine. What it does establish is the size of the window. Every one of the ten languages had its commonest gap somewhere between nothing and two tenths of a second, and the authors note that speakers are sensitive to shifts of a hundred milliseconds. An agent that thinks for a full second has left more than twice the gap of the slowest conversational culture in the study, and the caller does not hear that as thinking.",
+  note: "Read what this does not say. Every conversation in it happened face to face, and not one of them was a phone call. The same paper found responses came earlier when the questioner was looking at the recipient in nine of its ten languages, reaching significance in five, which is exactly what a phone takes away. It measures people answering people, so it has nothing at all to say about what a caller will put up with from a machine. What it does establish is the size of the window. Every one of the ten languages had its commonest gap somewhere between nothing and two tenths of a second. The authors also note that speakers are sensitive to shifts of a hundred milliseconds. An agent that thinks for a full second has left more than twice the gap of the slowest conversational culture in the study. And the caller does not hear that as thinking.",
 };
 
 /** SCENE copy — the four moves.
@@ -159,7 +159,7 @@ export const TURN_GAP = {
 export const FOUR_MOVES: GridItem[] = [
   {
     lead: "It answers every call, including the ones at nine on a Sunday.",
-    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It greets the caller, answers what it can from your listings, and never sends anybody to voicemail.",
+    body: "Inbound calls route to the agent whenever you are unavailable, or always, depending on how you set it up. It greets the caller, answers what it can from your listings, and never sends anyone to voicemail.",
   },
   {
     lead: "It calls new leads back in seconds, not in the morning.",
@@ -167,11 +167,11 @@ export const FOUR_MOVES: GridItem[] = [
   },
   {
     lead: "It qualifies inside a normal conversation.",
-    body: "Budget, area, timeline, whether they are pre-approved, whether they have a house to sell. Not a script read at somebody. The questions you would ask, in the order a conversation actually goes.",
+    body: "Budget, area, timeline, whether they are pre-approved, whether they have a house to sell. Not a script read at someone. The questions you would ask, in the order a conversation actually goes.",
   },
   {
     lead: "It books, and then it writes it down.",
-    body: "Real availability from your calendar, offered on the call and confirmed on the call. Afterwards the transcript, the qualification and the outcome go into your CRM, so the appointment you walk into is one you already understand.",
+    body: "Real availability from your calendar, offered on the call and confirmed on the call. Afterwards the transcript, the qualification and the outcome go into your CRM. So the appointment you walk into is one you already understand.",
   },
 ];
 
@@ -186,15 +186,15 @@ export const FOUR_MOVES: GridItem[] = [
 export const OUTBOUND: GridItem[] = [
   {
     lead: "You can point it at one person and tell it to call.",
-    body: "It does not have to wait for a trigger. Somebody registers, you want them spoken to before they open the next tab, so you tell the agent to dial that contact and it does, with the same qualifying conversation and the same booking at the end of it.",
+    body: "It does not have to wait for a trigger. Say someone registers, and you want them spoken to before they open the next tab. You tell the agent to dial that contact, and it does, with the same qualifying conversation and the same booking at the end of it.",
   },
   {
     lead: "It calls again, on a schedule, without getting discouraged.",
-    body: "Somebody who did not pick up at two in the afternoon was driving, not uninterested. Human follow-up tends to die at the second attempt, because a third one starts to feel like pestering. The agent tries the evening instead, and the evening is often the one that connects.",
+    body: "Someone who did not pick up at two in the afternoon was driving, not uninterested. Human follow-up tends to die at the second attempt, because a third one starts to feel like pestering. The agent tries the evening instead, and the evening is often the one that connects.",
   },
   {
     lead: "It can work the list you already gave up on.",
-    body: "Everybody who enquired last year and went quiet is the cheapest inventory you own, and nobody calls it because calling it is miserable. The agent works through it, has real conversations, and hands back the few who are ready to move now.",
+    body: "Everyone who enquired last year and went quiet is the cheapest inventory you own, and nobody calls it because calling it is miserable. The agent works through it, has real conversations, and hands back the few who are ready to move now.",
   },
   {
     lead: "It can tell a whole list at once, not one at a time.",
@@ -262,7 +262,7 @@ export const VENDOR_QUESTIONS: GridItem[] = [
   },
   {
     lead: "Ask what it does with a question it cannot answer.",
-    body: "You are listening for one specific behavior: it says so, and it books a call. If the demo never once shows the agent failing at something, you have been shown an advertisement rather than a product.",
+    body: "You are listening for one specific behavior: it says so, and it books a call. If the demo never once shows the agent failing at something, then you have been shown an advertisement rather than a product.",
   },
   {
     lead: "Ask to hear a call that went sideways.",
@@ -298,7 +298,7 @@ export const FAILURE_MODES: GridItem[] = [
   },
   {
     lead: "Nobody told it what it may not say.",
-    body: "The limits are the configuration. Give an agent no boundary on price, condition or anything legal and it will fill the silence, fluently, and you will hear about it from the client rather than from the log.",
+    body: "The limits are the configuration. Give an agent no boundary on price, condition or anything legal, and it will fill the silence, fluently. You will hear about it from the client rather than from the log.",
   },
   {
     lead: "The transcripts are never opened.",
@@ -478,7 +478,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       ],
       headline: 5,
       resultLabel: "Going to whoever picked up",
-      note: "Two things worth knowing about this arithmetic. The first is that it is far gentler than the research above would justify: the 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour, and more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe, so the callback curve here is a plain judgement and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though somebody who dialled you is warmer than somebody who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
+      note: "Two things are worth knowing about these sums. The first is that they are far gentler than the research above would justify. The 1.25 million lead study found firms contacting within an hour were nearly seven times likelier to get a meaningful conversation with a decision maker than firms that waited one more hour. The same study found them more than sixty times likelier than firms that waited a day. Turning odds like that into a slider would produce a number nobody should believe. So the callback curve here is a plain judgement, and yours to disagree with. The second is that the 5% close rate is the same conservative one the website chat piece uses, even though someone who dialled you is warmer than someone who filled in a form. Neither post gets to tune its own number. This counts inbound calls only, and the contacts already sitting cold in your CRM are a different population in a different article.",
       action: { label: "See how it is built", href: "/services/ai-voice-agents" },
       secondary: { label: "Ask about yours", href: "/connect" },
     },
@@ -490,7 +490,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The script itself",
-      text: "Ask and we will send you in writing the exact opening our agents use: the line that says it is an assistant, and the line that says the call is recorded. Give that to your attorney rather than a blank page.",
+      text: "Ask and we will send you in writing the exact opening our agents use. One line says it is an assistant. The other says the call is recorded. Give those to your attorney rather than a blank page.",
       reassure: "One page, no charge, and yours to use whoever ends up building the thing.",
       action: { label: "Ask for the script", href: "/connect" },
       ariaLabel: "Ask for the disclosure script",
@@ -503,7 +503,7 @@ export const AI_VOICE_FLAGSHIP: FlagshipContent = {
       // camera is standing on the stony shore looking out, not on the river.
       alt: "Dusk over the Hudson at Cold Spring, New York, four broken pilings and a slab of an old dock standing in the shallows in front of a stony shore, dark wooded hills closing the river on both sides and the sky going gold and pink between them",
       caption:
-        "Cold Spring, from the shore. The call at 9:42 is somebody deciding whether they are driving up on Saturday, and that decision does not wait until Monday to get made.",
+        "Cold Spring, from the shore. The call at 9:42 is someone deciding whether they are driving up on Saturday, and that decision does not wait until Monday to get made.",
       credit: "Photograph by eleephotography, CC BY 2.0.",
       ariaLabel: "A Hudson Valley river town",
     },

@@ -87,15 +87,15 @@ export const aiChatAssistant: Service = {
   },
 
   whatItIs: [
-    "It is a text chat on your own website, answered by Claude, that behaves like a well-briefed member of your team rather than a decision-tree bot. A visitor can ask for three bedrooms under $600k in Beacon, ask what the taxes look like, ask whether the seller will take a contingency, and get a straight answer to each one in the same conversation.",
-    "It is wired to the systems that make the answer real. Listing questions hit the MLS Grid feed, so the inventory it quotes is the inventory that exists this minute. When a visitor wants the listings in their hand, it sends them by SMS through Twilio. When the conversation gets serious enough to need a voice, it hands off to a Vapi call rather than leaving a form behind.",
-    "Everything it learns is captured. Name, number, price band, area, timeline, and the full transcript land in your CRM, so the follow-up starts from what the person actually said instead of a name and an email address.",
+    "It is a text chat on your own website, answered by Claude. It behaves like a well-briefed member of your team rather than a decision-tree bot. A visitor can ask for three bedrooms under $600k in Beacon. They can ask what the taxes look like. They can ask whether the seller will take a contingency. And they can get a straight answer to each one in the same conversation.",
+    "It is wired to the systems that make the answer real. Listing questions hit the MLS Grid feed. So the inventory it quotes is the inventory that exists this minute. When a visitor wants the listings in their hand, it sends them by SMS through Twilio. When the conversation gets serious enough to need a voice, it hands off to a Vapi call rather than leaving a form behind.",
+    "Everything it learns is captured. Name, number, price band, area, timeline, and the full transcript land in your CRM. So the follow-up starts from what the person actually said, instead of a name and an email address.",
   ],
 
   howItWorks: [
     {
       title: "It answers in seconds, at any hour",
-      body: "The assistant is live on every page of your site. Someone landing at 11:40pm gets the same reply speed as someone landing at lunchtime, which is the entire point: the inquiry never sits in an inbox waiting for morning.",
+      body: "The assistant is live on every page of your site. Someone landing at 11:40pm gets the same reply speed as someone landing at lunchtime. That is the entire point: the inquiry never sits in an inbox waiting for morning.",
     },
     {
       title: "It searches the real MLS, not a cached list",
@@ -103,11 +103,11 @@ export const aiChatAssistant: Service = {
     },
     {
       title: "It moves the conversation to a channel that converts",
-      body: "Matching listings go out by Twilio SMS, which people open. If the visitor wants to talk, a Vapi voice agent picks the conversation up on the phone with everything already known about them, so nobody has to start over.",
+      body: "Matching listings go out by Twilio SMS, which people open. If the visitor wants to talk, then a Vapi voice agent picks the conversation up on the phone, with everything already known about them. Nobody has to start over.",
     },
     {
       title: "It qualifies, books, and writes it all down",
-      body: "Budget, area, timeline, and motivation get asked naturally inside the conversation. The lead and the transcript are written to your CRM, and the appointment is booked while the visitor is still interested.",
+      body: "Budget, area, timeline, and motivation get asked naturally inside the conversation. The lead and the transcript are written to your CRM. The appointment is booked while the visitor is still interested.",
     },
   ],
 
@@ -117,19 +117,19 @@ export const aiChatAssistant: Service = {
       // ROUND 48: "Most home searching happens at night on a phone" is two magnitude claims
       // about the world with nothing under either, on the page whose own flagship argues that a
       // number nobody can check is a slogan. The scenario carries the point without them.
-      body: "The searching that happens after your office closes does not wait for it to open. The assistant answers at 11pm, sends four matching listings by text, and books a Saturday showing. In the morning you have a booked appointment instead of a contact form.",
+      body: "The searching that happens after your office closes does not wait for it to open. The assistant answers at 11pm. It sends four matching listings by text, and books a Saturday showing. In the morning you have a booked appointment instead of a contact form.",
     },
     {
       title: "The visitor who was about to bounce",
-      body: "Someone browses three listings and starts to leave. The assistant asks one useful question, gets a price band and an area, and turns an anonymous session into a named lead with a phone number.",
+      body: "Someone browses three listings and starts to leave. The assistant asks one useful question and gets a price band and an area. That turns an anonymous session into a named lead with a phone number.",
     },
     {
       title: "The listing inquiry you would have missed",
-      body: "A buyer asks about a specific address while you are at a closing. The assistant answers on the facts, captures the number, and hands you a person to call back rather than a missed call notification.",
+      body: "A buyer asks about a specific address while you are at a closing. The assistant answers on the facts and captures the number. It hands you a person to call back, rather than a missed call notification.",
     },
     {
       title: "The seller quietly checking their value",
-      body: "A homeowner asking what their street is selling for is a seller lead in disguise. The assistant recognises it, offers a valuation, and routes them to a listing conversation instead of a listings page.",
+      body: "A homeowner asking what their street is selling for is a seller lead in disguise. The assistant recognises it and offers a valuation. It routes them to a listing conversation instead of a listings page.",
     },
   ],
 
@@ -137,40 +137,40 @@ export const aiChatAssistant: Service = {
    * pretend to" (content/blog/ai-posts.ts). Already researched, already audited, already
    * argued with. Moving it is cheaper and truer than writing a second version. */
   limits: [
-    "It does not close. It does not read a room, it does not know when a seller is lying about their timeline, and it has no instinct for what is really going on in a divorce sale. Those are the reasons you have a job.",
-    "It does not answer what it cannot verify. Asked whether a seller will take a contingency, the honest answer is that nobody knows until it is asked, so it says so and books you the call.",
+    "It does not close. It does not read a room. It does not know when a seller is lying about their timeline. And it has no instinct for what is really going on in a divorce sale. Those are the reasons you have a job.",
+    "It does not answer what it cannot verify. Asked whether a seller will take a contingency, the honest answer is that nobody knows until it is asked. So it says so, and books you the call.",
     "It does not invent a listing, a price, or a legal opinion. Anything outside what it can check against the MLS or your own knowledge base becomes a booked call rather than a confident wrong answer.",
-    "It does not pretend to be a person. It introduces itself as an assistant, and in practice nobody minds. What people mind is waiting.",
+    "It does not pretend to be a person. It introduces itself as an assistant. In practice nobody minds. What people mind is waiting.",
   ],
 
   faqs: [
     {
       q: "Can an AI chatbot actually search the MLS?",
-      a: "Yes. This one queries the MLS Grid API live during the conversation, so it answers with the listings that are active at that moment rather than a stale export. It can filter by price, beds, baths, and area exactly as you would in the search bar, and it can text the results to the visitor over SMS.",
+      a: "Yes. This one queries the MLS Grid API live during the conversation. So it answers with the listings that are active at that moment, rather than a stale export. It can filter by price, beds, baths, and area exactly as you would in the search bar. And it can text the results to the visitor over SMS.",
     },
     {
       q: "How fast does an AI assistant reply to a website lead?",
-      a: "In seconds, at any hour. The research worth quoting here is Harvard Business Review's 2011 study of 1.25 million sales leads at 29 consumer and 13 business companies: firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead, which the researchers defined as a real conversation with somebody who could decide, than firms that waited one more hour. That is cross-industry work rather than a real estate study, so what carries over is the shape rather than the multiple. What the assistant changes is that the inquiry gets answered while the person is still on the page, instead of whenever somebody next opens the inbox.",
+      a: "In seconds, at any hour. The research worth quoting here is Harvard Business Review's 2011 study of 1.25 million sales leads at 29 consumer and 13 business companies. Firms that tried to make contact within an hour were nearly seven times likelier to qualify the lead than firms that waited one more hour. The researchers defined qualifying the lead as a real conversation with somebody who could decide. That is cross-industry work rather than a real estate study. So what carries over is the shape rather than the multiple. What the assistant changes is that the inquiry gets answered while the person is still on the page, instead of whenever somebody next opens the inbox.",
     },
     {
       q: "Will visitors know they are talking to an AI?",
-      a: "Yes, and we recommend it. The assistant introduces itself as an assistant. What people care about is whether the answer is correct and immediate, and it is. When a question genuinely needs the agent, it says so and books the call rather than pretending.",
+      a: "Yes, and we recommend it. The assistant introduces itself as an assistant. What people care about is whether the answer is correct and immediate. And it is. When a question genuinely needs the agent, it says so and books the call rather than pretending.",
     },
     {
       q: "What happens when the AI does not know the answer?",
-      a: "It says it does not know, then gets a human involved. It will not invent a listing, a price, or a legal opinion. Anything outside what it can verify against the MLS or your own knowledge base becomes a booked call with you, which is a better outcome than a confident wrong answer.",
+      a: "It says it does not know. Then it gets a human involved. It will not invent a listing, a price, or a legal opinion. Anything outside what it can verify against the MLS or your own knowledge base becomes a booked call with you. That is a better outcome than a confident wrong answer.",
     },
     {
       q: "Does an AI chat assistant replace an ISA?",
-      a: "It replaces the part of an ISA's job that is speed and repetition: answering instantly, qualifying on budget and timeline, and booking the appointment. It does not replace the judgment of an experienced agent on the call that follows. Most teams use it as the first responder and keep people for the conversations that matter.",
+      a: "It replaces the part of an ISA's job that is speed and repetition. That is answering instantly, qualifying on budget and timeline, and booking the appointment. It does not replace the judgment of an experienced agent on the call that follows. Most teams use it as the first responder and keep people for the conversations that matter.",
     },
     {
       q: "Can I add an AI chat assistant to my existing website?",
-      a: "Yes. It is a widget that drops into any site, including kvCORE, WordPress, Squarespace, and a custom build. It does not require rebuilding your website, and it connects to whatever CRM you already run.",
+      a: "Yes. It is a widget that drops into any site, including kvCORE, WordPress, Squarespace, and a custom build. It does not need your website rebuilt. And it connects to whatever CRM you already run.",
     },
     {
       q: "What does it do with the leads it captures?",
-      a: "It writes them to your CRM with the full transcript, the phone number, the price band, the area, and the timeline the person gave. The follow-up starts from what they actually said, which is why the callback converts better than a callback off a blank contact form.",
+      a: "It writes them to your CRM with the full transcript, the phone number, the price band, the area, and the timeline the person gave. The follow-up starts from what they actually said. That is why the callback converts better than a callback off a blank contact form.",
     },
   ],
 

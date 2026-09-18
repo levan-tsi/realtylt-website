@@ -44,9 +44,9 @@ export const REACTIVATION_FILM = {
  * that increasingly answer on somebody's behalf. Every line is argued in the body; a summary
  * that claims something the article does not support is how a summary box becomes a liability. */
 export const IN_SHORT: string[] = [
-  "The leads you already paid for are the cheapest pipeline you own, and almost nobody works them, because working them properly is repetitive misery rather than a discipline problem.",
+  "The leads you already paid for are the cheapest pipeline you own, and almost nobody works them. That is because working them properly is repetitive misery rather than a discipline problem.",
   "Two thirds of sellers hire an agent who was referred by somebody they know, or one they had already worked with. Your database is the only version of that group you hold a list of.",
-  "Before any of it there is a consent question with a date on it. An inquiry buys three months under the federal do-not-call rules, and an automated call or text to a mobile needs written consent that no amount of warmth substitutes for.",
+  "Before any of it there is a consent question with a date on it. An inquiry buys three months under the federal do-not-call rules. And an automated call or text to a mobile needs written consent that no amount of warmth substitutes for.",
 ];
 
 /** SCENE copy — how sellers found their agent. The page's cited data graphic.
@@ -102,7 +102,7 @@ export const AGENT_SOURCE = {
     "National Association of REALTORS, 2025 Home Buyers and Sellers Generational Trends Report, Exhibit 7-1, covering the twelve months to June 2024. Survey mailed to 167,750 recent buyers, 5,390 responses; seller answers come from those buyers who also sold a home, so the seller base is smaller.",
   sourceHref:
     "https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf",
-  note: "This measures how sellers found the agent they ended up hiring. It is not a measurement of how well any outreach method works, and it says nothing about reactivating a CRM. The reason it is here is the shape: the business goes to people who were already known, and the small bar for direct contact is the honest limit on that argument.",
+  note: "This measures how sellers found the agent they ended up hiring. It is not a measurement of how well any outreach method works, and it says nothing about reactivating a CRM. The reason it is here is the shape. The business goes to people who were already known, and the small bar for direct contact is the honest limit on that argument.",
 };
 
 /** SCENE copy — the four moves.
@@ -113,7 +113,7 @@ export const AGENT_SOURCE = {
 export const FOUR_MOVES: GridItem[] = [
   {
     lead: "It goes through the whole list, not the top of it.",
-    body: "Every dormant contact gets a genuine attempt rather than a blast. They are grouped by what they originally asked for and how long ago they went quiet, which is what lets the first message be specific instead of generic.",
+    body: "Every dormant contact gets a genuine attempt rather than a blast. They are grouped by what they originally asked for and how long ago they went quiet. That is what lets the first message be specific instead of generic.",
   },
   {
     lead: "It opens with something that is true about them.",
@@ -142,11 +142,11 @@ export const CONSENT_CHECK: GridItem[] = [
   },
   {
     lead: "Check the date, not how warm it feels.",
-    body: "An inquiry gives you three months of established business relationship. A closed transaction gives you eighteen. After that a number on the national registry is a number you may not solicit, and there is no version of that rule that cares how promising the lead looked in your CRM.",
+    body: "An inquiry gives you three months of established business relationship. A closed transaction gives you eighteen. After that a number on the national registry is a number you may not solicit. And there is no version of that rule that cares how promising the lead looked in your CRM.",
   },
   {
     lead: "Decide how a no gets recorded before the first message goes out.",
-    body: "Stop, quit, end, revoke, opt out, cancel and unsubscribe are opt-outs by definition, and so is anything else a person reasonably says. It has to be honored within ten business days, you cannot force people through one specific channel to do it, and it has to reach every list you hold rather than the one it arrived on.",
+    body: "Stop, quit, end, revoke, opt out, cancel and unsubscribe are opt-outs by definition, and so is anything else a person reasonably says. It has to be honored within ten business days. You cannot force people through one specific channel to do it. And it has to reach every list you hold rather than the one it arrived on.",
   },
 ];
 
@@ -219,15 +219,15 @@ export const REVIVAL_PATH: { label: string; connects: string; at?: string }[] = 
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "The whole list goes out on day one.",
-    body: "Thirty thousand messages from a business number that has never sent one is not a campaign, it is a filtering event. The carriers make that decision quietly and they do not tell you, so the first thing you notice is that your ordinary messages to real clients stopped arriving.",
+    body: "Thirty thousand messages from a business number that has never sent one is not a campaign. It is a filtering event. The carriers make that decision quietly and they do not tell you. So the first thing you notice is that your ordinary messages to real clients stopped arriving.",
   },
   {
     lead: "The opener is about you.",
-    body: "Just checking in. Wanted to touch base. Circling back. Those three phrases are what turns a follow-up into a blast, because none of them contain a single fact about the person receiving them. If the first line would work on anybody, it will work on nobody.",
+    body: "Just checking in. Wanted to touch base. Circling back. Those three phrases are what turns a follow-up into a blast, because none of them contain a single fact about the person receiving them. If the first line would work on anybody, then it will work on nobody.",
   },
   {
     lead: "The answers get thrown away.",
-    body: "A no with a reason attached is the most valuable thing the whole exercise produces. Bought last year. Waiting on rates. Moving out of state. That is a map of what your market is actually doing, written by the market, and most campaigns record it as a status change and delete the sentence.",
+    body: "A no with a reason attached is the most valuable thing the whole exercise produces. Bought last year. Waiting on rates. Moving out of state. That is a map of what your market is actually doing, written by the market. And most campaigns record it as a status change and delete the sentence.",
   },
 ];
 
@@ -420,7 +420,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "What working the list once might return",
-      note: "Every multiplier in this one is yours. There is not a single rate of ours in it, and that is deliberate rather than lazy: no independent study of cold database response rates in real estate exists, this article says a few paragraphs up that anybody quoting you a conversion rate before they have seen your database is quoting a number they made up, and we are not going to do it in a widget either. The defaults are set low on purpose so the first thing you do is argue with them. Note also that there is no row turning this into an annual figure. A database is finite. This is what working the list once might return, not a number that repeats every year, and a vendor who annualises it is selling you a subscription to a harvest.",
+      note: "Every multiplier in this one is yours. There is not a single rate of ours in it, and that is deliberate rather than lazy. There are three reasons. No independent study of cold database response rates in real estate exists. This article says a few paragraphs up that anybody quoting you a conversion rate before they have seen your database is quoting a number they made up. And we are not going to do it in a widget either. The defaults are set low on purpose so the first thing you do is argue with them. Note also that there is no row turning this into an annual figure. A database is finite. This is what working the list once might return, not a number that repeats every year. And a vendor who annualises it is selling you a subscription to a harvest.",
       action: { label: "See how it is built", href: "/services/database-reactivation" },
       secondary: { label: "Check yours with us", href: "/connect" },
     },
@@ -431,7 +431,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "Before the first message",
-      text: "Run your own list through the three checks above. If you would rather have a second pair of eyes on it, tell us roughly what is in there and where the records came from, and we will tell you which parts of it we would not touch.",
+      text: "Run your own list through the three checks above. If you would rather have a second pair of eyes on it, then tell us roughly what is in there and where the records came from. We will tell you which parts of it we would not touch.",
       reassure: "We do not need the file itself to answer that, and nothing gets sent to anybody.",
       action: { label: "Ask before you send", href: "/connect" },
       ariaLabel: "Ask us about your own list before sending",
@@ -490,7 +490,7 @@ export const REACTIVATION_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "That list is not going to get warmer on its own. Every month a few more of those people stop being not right now, and the ones who move are helped by whoever happened to be in front of them that week.",
+      text: "That list is not going to get warmer on its own. Every month a few more of those people stop being not right now. And the ones who move are helped by whoever happened to be in front of them that week.",
       actions: [
         { label: "See it on the AI page", href: "/ai#reactivation", variant: "light" },
         { label: "How it is built", href: "/services/database-reactivation", variant: "outline-light" },

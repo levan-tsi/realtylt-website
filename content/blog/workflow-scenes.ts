@@ -54,7 +54,7 @@ export const WORKFLOW_FILM = {
  * that increasingly answer on somebody's behalf. Each one is a number somebody else can check:
  * the first two are the cited field study, the third is Zapier's own documented default. */
 export const IN_SHORT: string[] = [
-  "The ninety seconds of typing is not the cost. Twenty four information workers were timed to the second at their desks, and the interrupted work that got picked up again the same day took an average of twenty five minutes and twenty six seconds to come back to.",
+  "The ninety seconds of typing is not the cost. Twenty four information workers were timed to the second at their desks. The interrupted work that got picked up again the same day took an average of twenty five minutes and twenty six seconds to come back to.",
   "You are not automating step four. You are automating one through eight, because the chain is where the reloading happens and a chain is exactly what these tools are good at.",
   "Zapier's own documentation says it pauses a chain that errors ninety five percent of the times it ran in the last seven days. Read that the other way: a chain failing one time in twenty is a chain nobody is going to tell you about.",
 ];
@@ -117,11 +117,11 @@ export const FRAGMENTED = {
    * A `max` here would draw all four short and lose the ratio that is the entire point. */
   lit: 2,
   basis:
-    "Average elapsed time, 24 information workers observed at their desks and timed to the second. All three resumption figures count work picked up again the same day, which was 77.2 percent of everything interrupted. The middle figure is not a third category: nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
+    "Average elapsed time, 24 information workers observed at their desks and timed to the second. All three resumption figures count work picked up again the same day, which was 77.2 percent of everything interrupted. The middle figure is not a third category. That is because nine resumptions in ten were self-started, and 90.1% at 21 min 28 sec with 9.9% at 61 min 37 sec averages out to exactly the 25 min 26 sec on the third bar.",
   sourceText:
     "Gloria Mark, Victor M. Gonzalez and Justin Harris, No Task Left Behind? Examining the Nature of Fragmented Work, Proceedings of CHI 2005, University of California, Irvine. Over 700 hours of observation; 57 percent of work segments ended in an interruption and 77.2 percent of interrupted work was resumed the same day.",
   sourceHref: "https://ics.uci.edu/~gmark/CHI2005.pdf",
-  note: "These were managers, analysts and software developers at one technology company, observed in a single field study, and not one of them sold a house. It measures how fragmented desk work is. It is not a measurement of how much of your week is copy and paste, it cannot be turned into one, and no automation should be sold to you on the back of it. What it establishes is the only thing this page needs it for: the interruption costs far more than the task that caused it.",
+  note: "These were managers, analysts and software developers at one technology company, observed in a single field study, and not one of them sold a house. It measures how fragmented desk work is. It is not a measurement of how much of your week is copy and paste. It cannot be turned into one, and no automation should be sold to you on the back of it. What it establishes is the only thing this page needs it for: the interruption costs far more than the task that caused it.",
 };
 
 /** SCENE copy — the three excuses.
@@ -135,7 +135,7 @@ export const THREE_LIES: GridItem[] = [
   },
   {
     lead: "I would rather do it myself, so I know it is done right.",
-    body: "This is the honest objection and the other two are excuses. Wanting to see the work is correct. The answer is not to trust a system blindly, it is to build one you can watch, and that is a different thing with a different price.",
+    body: "This is the honest objection, and the other two are excuses. Wanting to see the work is correct. The answer is not to trust a system blindly. It is to build one you can watch, and that is a different thing with a different price.",
   },
   {
     lead: "It is not worth automating something this small.",
@@ -196,7 +196,7 @@ export const REBUILT_CHAIN: { label: string; connects: string; at?: string }[] =
 export const WATCHABLE: GridItem[] = [
   {
     lead: "Every run gets logged.",
-    body: "If you cannot answer did it run, and what did it do, you have not built an automation. You have built a black box that mostly agrees with you. Every one of these platforms keeps a per-run history; the real question is whether anybody has opened it since the week it went live.",
+    body: "If you cannot answer did it run, and what did it do, then you have not built an automation. You have built a black box that mostly agrees with you. Every one of these platforms keeps a per-run history. The real question is whether anybody has opened it since the week it went live.",
   },
   {
     lead: "Failures shout.",
@@ -296,7 +296,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       // the photograph the whole article rests on and it was described wrongly.
       alt: "A person at a dark wooden desk with an accounting screen open on a laptop, a large desk calculator lying across the laptop's own keyboard and both of their hands at it, one keying the number pad and the other resting on its edge, with the laptop's trackpad visible and untouched, a potted plant and an orange folder at the left and a stack of ring binders and a glass of water at the right",
       caption:
-        "A number is on the screen. A person is typing it into something else. This is the entire subject of this article, and if the picture looks unremarkable, that is the finding: nobody in this business thinks they spend their week doing this, and everybody does.",
+        "A number is on the screen. A person is typing it into something else. This is the entire subject of this article. And if the picture looks unremarkable, then that is the finding: nobody in this business thinks they spend their week doing this, and everybody does.",
       credit: "Photograph by Wilfred Iven, CC0.",
       ariaLabel: "The busywork, photographed",
     },
@@ -398,7 +398,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Hours of typing, a year",
-      note: "This counts the typing and nothing else, which makes it the smallest honest version of the number. It deliberately does not multiply anything by twenty five minutes and twenty six seconds. That figure is real and it is on this page, but it was measured on twenty four desk workers at a technology company and none of them were selling houses, and this article says a few paragraphs up that anybody converting it into a dollar figure for your business has stopped citing it and started decorating with it. That applies to us. So the interruption cost, which is almost certainly the larger half, is missing from the number above on purpose, and the hourly figure is yours rather than an average we picked.",
+      note: "This counts the typing and nothing else, which makes it the smallest honest version of the number. It deliberately does not multiply anything by twenty five minutes and twenty six seconds. That figure is real and it is on this page. But it was measured on twenty four desk workers at a technology company, and none of them were selling houses. And this article says a few paragraphs up that anybody converting it into a dollar figure for your business has stopped citing it and started decorating with it. That applies to us. So the interruption cost, which is almost certainly the larger half, is missing from the number above on purpose. And the hourly figure is yours rather than an average we picked.",
       action: { label: "See how it is built", href: "/services/workflow-automation" },
       secondary: { label: "Bring us your week", href: "/connect" },
     },
@@ -410,7 +410,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The alarm, at least",
-      text: "Whatever you are running today, tell us which platform it is on and we will send back the exact setting that makes a failed chain tell a person instead of a log file.",
+      text: "Whatever you are running today, tell us which platform it is on. We will send back the exact setting that makes a failed chain tell a person instead of a log file.",
       reassure: "It works whether or not we ever build you anything, which is rather the point.",
       action: { label: "Ask for the setting", href: "/connect" },
       ariaLabel: "Ask for the failure-alert setting",
@@ -439,7 +439,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
       // gave a screen reader the place and none of the picture.
       alt: "The Hudson at dusk from a wooded height above West Point, the river running away between two dark forested headlands, a band of cloud lit orange and red low over the far reach, and deep blue sky with pale cloud above it",
       caption:
-        "This is what a chain failing one time in twenty looks like. It stays switched on, it stays green, and it is doing exactly what you think it is doing ninety five percent of the time. The two people a month it drops never appear anywhere, and nothing in the system has the job of telling you their names.",
+        "This is what a chain failing one time in twenty looks like. It stays switched on. It stays green, and it is doing exactly what you think it is doing ninety five percent of the time. The two people a month it drops never appear anywhere, and nothing in the system has the job of telling you their names.",
       credit: "Photograph by Wei Zhang@Hudson, CC BY 2.0.",
       ariaLabel: "The evening nothing went wrong",
     },
@@ -464,7 +464,7 @@ export const WORKFLOW_FLAGSHIP: FlagshipContent = {
         { label: "How it is built", href: "/services/workflow-automation", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page because there is no honest one: what a chain costs depends on how many systems it has to touch and how much of it needs a judgment rather than a field copy. The AI audit is the hour described above, done with you, and it ends with the first chain built rather than with a document.",
+        "There is no price on this page because there is no honest one. What a chain costs depends on two things. One is how many systems it has to touch. The other is how much of it needs a judgment rather than a field copy. The AI audit is the hour described above, done with you, and it ends with the first chain built rather than with a document.",
     },
   },
 

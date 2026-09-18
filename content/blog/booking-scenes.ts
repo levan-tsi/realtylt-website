@@ -28,8 +28,8 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines carrying the whole argument, each checkable by somebody else in the primary
  * document rather than in a summary of it. */
 export const IN_SHORT: string[] = [
-  "An appointment is not an outcome, it is a prediction, and the further away you put it the worse the prediction gets. In 51,529 appointments at one university eye clinic, the no-show rate at a lead time of six months was more than four times the rate at nought to two weeks.",
-  "One reminder, sent 72 hours ahead, moved attendance from 80.5% to 87.5% in a randomised trial of 1,848 people, and a text did the job as well as a phone call at roughly two thirds of the cost.",
+  "An appointment is not an outcome. It is a prediction, and the further away you put it the worse the prediction gets. In 51,529 appointments at one university eye clinic, the no-show rate at a lead time of six months was more than four times the rate at nought to two weeks.",
+  "One reminder, sent 72 hours ahead, moved attendance from 80.5% to 87.5% in a randomised trial of 1,848 people. A text did the job as well as a phone call, at roughly two thirds of the cost.",
   "A calendar invitation is a different object from a text message that mentions Thursday. One of them puts an event with an alarm on the other person's phone and tells you whether they accepted it. The other one hopes.",
 ];
 
@@ -74,7 +74,7 @@ export const LEAD_TIME = {
   sourceText:
     "Michael J McMullen and Peter A Netland, Lead time for appointment and the no-show rate in an ophthalmology clinic, Clinical Ophthalmology 2015;9:513-516, University of Virginia School of Medicine.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4370946/",
-  note: "This is an eye clinic, and a patient is not a buyer. Nobody has run this study on listing appointments and these percentages are not a benchmark for anything you do. What transfers is the direction, which is uncomfortable enough on its own: the appointment you push out to a date that suits everybody is measurably less likely to happen than the one you take tomorrow. The paper's own model makes the same point from the other side, estimating the clinic's no-show rate would fall by nearly 60% if every appointment were booked within two weeks.",
+  note: "This is an eye clinic, and a patient is not a buyer. Nobody has run this study on listing appointments, and these percentages are not a benchmark for anything you do. What transfers is the direction, which is uncomfortable enough on its own. The appointment you push out to a date that suits everyone is measurably less likely to happen than the one you take tomorrow. The paper's own model makes the same point from the other side. It estimates the clinic's no-show rate would fall by nearly 60% if every appointment were booked within two weeks.",
 };
 
 /** SCENE copy — why an appointment dies between the booking and the day.
@@ -85,15 +85,15 @@ export const LEAD_TIME = {
 export const WHY_THEY_DROP: GridItem[] = [
   {
     lead: "Their situation moves.",
-    body: "Nine days is long enough for an offer to be accepted on something else, for a mortgage conversation to go badly, or for a job to change. None of that is about you and none of it is recoverable. It is simply what happens to plans that are left out in the weather.",
+    body: "Nine days is long enough for an offer to be accepted on something else, for a mortgage conversation to go badly, or for a job to change. None of that is about you, and none of it can be won back. It is simply what happens to plans that are left out in the weather.",
   },
   {
     lead: "The commitment cools.",
-    body: "The person who agreed to Thursday was in the mood that made them message you at a quarter past eight on a Sunday. By the following Wednesday they are a different person with a different week, and the appointment is now an obligation rather than an impulse.",
+    body: "The person who agreed to Thursday was in the mood that made them message you at a quarter past eight on a Sunday. By the following Wednesday they are a different person with a different week. The appointment is now a duty rather than an impulse.",
   },
   {
     lead: "They forget, in the ordinary way.",
-    body: "Not carelessly. It went into a mental note rather than into a calendar, because you wrote it in a text message and they were walking at the time. This is the one reason on this list that a machine can fix outright, which is why the next section is about reminders.",
+    body: "Not carelessly. It went into a mental note rather than into a calendar, because you wrote it in a text message and they were walking at the time. This is the one reason on this list that a machine can fix outright. That is why the next section is about reminders.",
   },
   {
     lead: "They booked somebody else in the meantime.",
@@ -140,7 +140,7 @@ export const REMINDERS = {
   sourceText:
     "Zhou-wen Chen, Li-zheng Fang, Li-ying Chen and Hong-lei Dai, Comparison of an SMS text messaging and phone reminder to improve attendance at a health promotion center: A randomized controlled trial, Journal of Zhejiang University Science B 2008;9(1):34-38.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2170466/",
-  note: "China, 2007, routine health check-ups, and a population that had already gone as far as making a reservation and leaving two phone numbers for it. Seven points is what one reminder was worth there and it is not a number to expect on a listing appointment, because nobody has measured that. Two things do carry. A single reminder is the only intervention in this literature that is both cheap and reliably effective, and the cheap channel performed as well as the expensive one, at roughly two thirds of the cost per person who turned up.",
+  note: "China, 2007, routine health check-ups, and a population that had already gone as far as making a reservation and leaving two phone numbers for it. Seven points is what one reminder was worth there, and it is not a number to expect on a listing appointment, because nobody has measured that. Two things do carry. The first is that a single reminder is the only intervention in this literature that is both cheap and reliably effective. The second is that the cheap channel performed as well as the expensive one, at roughly two thirds of the cost per person who turned up.",
 };
 
 /** SCENE copy — the four moves.
@@ -151,11 +151,11 @@ export const REMINDERS = {
 export const FOUR_MOVES: GridItem[] = [
   {
     lead: "It answers while they are still holding the phone.",
-    body: "Seconds rather than the following morning. This part is the same argument the chat and voice pages make and it is genuinely the smaller half of this one, because answering fast and then agreeing on a date nine days out has solved the cheap problem and left the expensive one alone.",
+    body: "Seconds rather than the following morning. This part is the same argument the chat and voice pages make, and it is genuinely the smaller half of this one. That is because answering fast and then agreeing on a date nine days out has solved the cheap problem and left the expensive one alone.",
   },
   {
     lead: "It offers the soonest real slots, not a menu.",
-    body: "Read live from your calendar so it cannot offer a time you do not have, and ordered so the nearest one is the easy one to take. That ordering is a small decision with the whole of the chart above behind it.",
+    body: "Read live from your calendar, so it cannot offer a time you do not have. And ordered so the nearest one is the easy one to take. That ordering is a small decision with the whole of the chart above behind it.",
   },
   {
     lead: "It writes the appointment on both calendars.",
@@ -163,7 +163,7 @@ export const FOUR_MOVES: GridItem[] = [
   },
   {
     lead: "It reminds them, which is the part with a trial behind it.",
-    body: "A confirmation immediately and a reminder before the day. It is the least impressive item on this list and the only one where somebody randomised eighteen hundred people to find out whether it works.",
+    body: "A confirmation immediately and a reminder before the day. It is the least impressive item on this list, and the only one where someone randomised eighteen hundred people to find out whether it works.",
   },
 ];
 
@@ -180,7 +180,7 @@ export const FOUR_MOVES: GridItem[] = [
 export const THE_BOOKING = {
   eyebrow: "The mechanic",
   heading: "Sunday, a quarter past eight.",
-  note: "A staged illustration, not a client's messages. The address, the times and the wording are invented; the sequence is the one the service page describes.",
+  note: "A staged illustration, not a client's messages. The address, the times and the wording are invented. The sequence is the one the service page describes.",
   themLabel: "The buyer",
   usLabel: "The assistant",
   turnsHeading: "The exchange",
@@ -189,7 +189,7 @@ export const THE_BOOKING = {
     { who: "them" as const, at: "8:15 pm", text: "Is 32 Delavan still available? We would like to see it." },
     { who: "us" as const, at: "8:15 pm", text: "It is. I can get you in tomorrow at 6:30pm or Saturday at 10am. Which suits you better?" },
     { who: "them" as const, at: "8:19 pm", text: "Tomorrow works. Is it okay if my sister comes, she is the one who knows about roofs" },
-    { who: "us" as const, at: "8:19 pm", text: "Of course. You are booked for tomorrow, Monday, at 6:30pm at 32 Delavan. I have sent a calendar invitation to this number so it lands on your phone, and Levan will meet you there." },
+    { who: "us" as const, at: "8:19 pm", text: "Of course. You are booked for tomorrow, Monday, at 6:30pm at 32 Delavan. I have sent a calendar invitation to this number so it lands on your phone. Levan will meet you there." },
     { who: "them" as const, at: "8:20 pm", text: "got it, thanks" },
   ],
   events: [
@@ -226,15 +226,15 @@ export const BOOKING_PATH: { label: string; connects: string; at?: string }[] = 
 export const FAILURE_MODES: GridItem[] = [
   {
     lead: "It fills the week with the wrong people.",
-    body: "Booking is a volume amplifier and it does not read intent. If nothing sits between the inquiry and the calendar, you will spend Saturday driving to three houses for people who are eleven months away, which is a worse week than the one you had before.",
+    body: "Booking turns up the volume, and it does not read intent. If nothing sits between the inquiry and the calendar, then you will spend Saturday driving to three houses for people who are eleven months away. That is a worse week than the one you had before.",
   },
   {
     lead: "The calendar it reads is not the calendar you live in.",
-    body: "Half the appointments in a small business are agreed by voice and never written down anywhere a machine can see. A booking assistant reading a calendar with holes in it will offer a slot you are already standing in somebody's kitchen for, and it will do it politely.",
+    body: "Half the appointments in a small business are agreed by voice and never written down anywhere a machine can see. A booking assistant reading a calendar with holes in it will offer a slot you are already standing in someone's kitchen for. And it will do it politely.",
   },
   {
     lead: "The reminder is the first thing switched off.",
-    body: "It feels like nagging, somebody complains once, and it quietly comes off. It is also the only element of this whole system with a randomised controlled trial behind it, and taking it out leaves you paying for the impressive half and throwing away the half that was measured.",
+    body: "It feels like nagging, someone complains once, and it quietly comes off. It is also the only part of this whole system with a randomised controlled trial behind it. Taking it out leaves you paying for the impressive half and throwing away the half that was measured.",
   },
 ];
 
@@ -326,7 +326,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "From a message to an event on somebody's phone.",
-      lede: "Six hops, and the two timestamps are not the argument this time. The gap between the first hop and the last is what the chart above is about: this whole chain exists to make that gap a day rather than a fortnight.",
+      lede: "Six hops, and the two timestamps are not the argument this time. The gap between the first hop and the last is what the chart above is about. This whole chain exists to make that gap a day rather than a fortnight.",
       steps: BOOKING_PATH,
       altPrefix: "The path from an inquiry at 8:15pm to a reminder sent the following afternoon",
     },
@@ -396,7 +396,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "Appointments you actually keep, a year",
-      note: "There is no second column here and no line showing what this would become with reminders switched on, and the missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a reservation for a routine health check-up. Applying that to your listing appointments would be the most flattering arithmetic on this website and it would be arithmetic nobody has done. Every rate above is yours for the same reason: three of them have never been measured for this industry by anybody, and a default we typed in would quietly become the number you remember.",
+      note: "There is no second column here, and no line showing what this would become with reminders switched on. The missing row is the point. The trial on this page found one reminder worth about seven percentage points of attendance, in China, in 2007, among people who had made a reservation for a routine health check-up. Applying that to your listing appointments would be the most flattering sums on this website, and they would be sums nobody has done. Every rate above is yours for the same reason. Three of them have never been measured for this industry by anyone, and a default we typed in would quietly become the number you remember.",
       action: { label: "See how it is built", href: "/services/ai-appointment-booking" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -411,7 +411,7 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The count, at least",
-      text: "Tell us how you take appointments today and we will send back the two questions worth measuring first: your median gap between the ask and the slot, and how many of the last twenty were kept.",
+      text: "Tell us how you take appointments today, and we will send back the two questions worth measuring first. One is your median gap between the ask and the slot. The other is how many of the last twenty were kept.",
       reassure: "It is a short reply from a person, it costs nothing, and the answer is useful whether you buy anything or not.",
       action: { label: "Ask for the two questions", href: "/connect" },
       ariaLabel: "Ask for the two measurements worth taking",
@@ -447,13 +447,13 @@ export const BOOKING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Somewhere in your calendar is a slot you agreed to nine days ago, for a person who was certain on the Sunday and is now somebody else's client. It is not written down as a loss anywhere, and it will happen again inside the month.",
+      text: "Somewhere in your calendar is a slot you agreed to nine days ago, for a person who was certain on the Sunday and is now someone else's client. It is not written down as a loss anywhere, and it will happen again inside the month.",
       actions: [
         { label: "See it on the AI page", href: "/ai#book", variant: "light" },
         { label: "How it is built", href: "/services/ai-appointment-booking", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks two things that are yours rather than ours: how many calendars and systems have to agree with each other, and whether the reminders go by text, which is billed per message. The AI audit is an hour, done with you, and it ends with the first booking path live on one channel rather than with a document.",
+        "There is no price here, because the cost tracks two things that are yours rather than ours. The first is how many calendars and systems have to agree with each other. The second is whether the reminders go by text, which is billed per message. The AI audit is an hour, done with you, and it ends with the first booking path live on one channel rather than with a document.",
     },
   },
 
