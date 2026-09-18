@@ -132,7 +132,7 @@ export const dataEnrichment: Service = {
   ],
 
   limits: [
-    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable. A dead number that looks live costs you more than a blank field.",
+    "It does not invent a contact. A record that will not resolve comes back flagged as thin or unreachable. That is because a dead number that looks live costs you more than a blank field.",
     "It does not guarantee a match. How much resolves depends on the area, and on how much public record sits behind the address. No honest provider quotes a rate before seeing the list.",
     "It does not tell you how old a value is unless the provider passes that through. Freshness is the most useful thing an appended field could carry, and it is the one most often missing from the response. So it is worth asking for by name.",
     "It does not know which answer is right when two sources disagree. That is a decision about your business, and it gets made once. It is worth knowing which way the tooling leans. On HubSpot, keeping a value you already hold is a per-property checkbox you select at import time, rather than the resting state.",

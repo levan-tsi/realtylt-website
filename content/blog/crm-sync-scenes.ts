@@ -100,7 +100,7 @@ export const TWO_OF_HER: GridItem[] = [
 export const THREE_ANSWERS: GridItem[] = [
   {
     lead: "Above the line: merge them",
-    body: "The pattern of agreements is the kind only the same person produces. The two records become one, and the second history is folded into the first. When this one is wrong you have fused two people. Someone opens a contact expecting one conversation and finds a stranger's in it. That is the expensive mistake, and it is the one an over-confident setting produces.",
+    body: "The pattern of agreements is the kind only the same person produces. The two records become one, and the second history is folded into the first. When this one is wrong you have fused two people. Then someone opens a contact expecting one conversation and finds a stranger's in it. That is the expensive mistake, and it is the one an over-confident setting produces.",
   },
   {
     lead: "In the middle: ask somebody",

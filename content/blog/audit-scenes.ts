@@ -34,7 +34,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * that makes ranking by an average the wrong move. */
 export const IN_SHORT: string[] = [
   "The output of an audit is a decision, and most of the value in it is subtraction. A list of twelve things you could automate is not worth paying for. You can write that yourself in an afternoon. Knowing which four of the twelve to cross out, and being able to say why, is the part that takes someone who has watched these break.",
-  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey. It sampled over 850,000 firms, and answering is required by law. It found that 90.2 percent of the firms that collect any information at all held some of it digitally. Only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
+  "You are almost certainly not behind. The Census Bureau put a technology module on the 2018 Annual Business Survey. It sampled over 850,000 firms, and answering is required by law. It found that 90.2 percent of the firms that collect any information at all held some of it digitally. It found that only 10.3 percent used even one of the nine advanced business technologies on the list. Machine learning specifically was 2.9 percent.",
   "Rank by the average outcome and you will rank wrong, because the outcomes are not spread out like that. In a study of 1,471 information technology projects worth 241 billion dollars, the ordinary ones overran by 3.6 percent on average. And 17 percent of them landed in a fat right hand tail, where a thin-tailed distribution would have put 0.7 percent.",
 ];
 
@@ -114,7 +114,7 @@ export const ADOPTION = {
 export const SUBTRACTIONS: GridItem[] = [
   {
     lead: "Does it happen often enough to be worth owning?",
-    body: "Not often enough to save time. Often enough that someone would notice within a week if it stopped. The frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
+    body: "Not often enough to save time. Often enough that someone would notice within a week if it stopped. That is because the frequency of a job is what decides whether its failure ever gets found. Read this one as a question about detection rather than about payback.",
   },
   {
     lead: "Could you write the rule down for a new hire?",
@@ -203,7 +203,7 @@ export const DO_NOT: GridItem[] = [
   },
   {
     lead: "Anything whose failure is silent",
-    body: "A job that quietly stops running, a message that quietly stops sending, a field that quietly stops updating. If nothing in the business goes visibly wrong when it fails, then nobody will notice for months. The thing you automated has become a thing you believe is happening.",
+    body: "A job that quietly stops running, a message that quietly stops sending, a field that quietly stops updating. If nothing in the business goes visibly wrong when it fails, then nobody will notice for months. And then the thing you automated has become a thing you believe is happening.",
   },
 ];
 

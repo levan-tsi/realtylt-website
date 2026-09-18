@@ -130,7 +130,7 @@ export const aiScheduling: Service = {
     },
     {
       q: "If I move an appointment, does everybody have to confirm again?",
-      a: "Yes, and that is the correct behaviour rather than an inconvenience. The standard that governs how calendar servers do scheduling has a rule about this. A change to the start time, end time or duration resets every attendee's status to unanswered. That is because the agreement was to a particular time. A build that carries the old confirmations forward is carrying something that has been cleared.",
+      a: "Yes, and that is the correct behaviour rather than an inconvenience. The standard that governs how calendar servers do scheduling requires it. A change to the start time, end time or duration resets every attendee's status to unanswered. That is because the agreement was to a particular time. A build that carries the old confirmations forward is carrying something that has been cleared.",
     },
     {
       q: "Can people reschedule without calling me?",

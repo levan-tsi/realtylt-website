@@ -255,7 +255,7 @@ export const ENRICH_PATH: { label: string; connects: string; at?: string }[] = [
 export const WASTED: GridItem[] = [
   {
     lead: "The database looks finished",
-    body: "Before the pass, the gaps were visible. Everybody handled the list accordingly. Afterwards every row is full. Nothing in the interface tells apart a number a client typed in herself from a number a file suggested. The database now carries the confidence of its best row and the accuracy of its worst. And the only person who could tell the two apart has stopped being able to.",
+    body: "Before the pass, the gaps were visible. Everybody handled the list accordingly. Afterwards every row is full. In the interface, a number a client typed in herself looks exactly like a number a file suggested. The database now carries the confidence of its best row and the accuracy of its worst. And the only person who could tell the two apart has stopped being able to.",
   },
   {
     lead: "Nobody can undo it",

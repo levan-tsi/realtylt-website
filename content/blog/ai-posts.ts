@@ -561,17 +561,17 @@ Here is the whole method. It is kept small on purpose, so you can remember it wi
 
 Take them one at a time. Each removes a different kind of candidate, and the third removes the most.
 
-The frequency question is not really about the saving. It is about detection. Everything anyone builds has a day when it stops working. Usually something it depends on changed. Nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because someone is waiting for the output. A job that runs quarterly fails in March and is found in June by a person who is annoyed. The saving on the quarterly one may be larger. It is still the worse candidate.
+The frequency question is not really about the saving. It is about detection. Everything anyone builds has a day when it stops working. Usually something it depends on changed, and nobody sent a letter. A job that runs several times a week announces its own failure inside a few days, because someone is waiting for the output. A job that runs quarterly fails in March and is found in June by a person who is annoyed. The saving on the quarterly one may be larger. It is still the worse candidate.
 
 The rule question quietly turns into a management problem. It is the most useful thing an outsider can force. Asking three people how something gets decided, separately, and getting three answers is not a sign that anyone is doing it wrong. It is a sign that a decision was never made. Everyone filled the gap sensibly. Building software over the top of that does not settle it. It freezes whichever version the person writing the specification happened to hear. Then it removes everyone's ability to notice.
 
-The consequence question gets skipped. It gets skipped because it feels gloomy in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
+The consequence question gets skipped. It gets skipped because it feels like expecting the worst, in a conversation that is going well. It is also the only one whose answer does not improve as the software improves. Where a wrong answer lands is a fact about your business, not about a model.
 
 The framework the American standards body publishes for managing risk in AI systems makes the same point in a much drier voice. It is worth quoting for what it puts on the list of options.
 
 [[scene:pull-quote]]
 
-[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) is published by the National Institute of Standards and Technology. It is voluntary. It is aimed at organisations far larger than a brokerage. It is still worth ten minutes. It was written by people with nothing to sell. What it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
+[The AI Risk Management Framework](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf) is published by the National Institute of Standards and Technology. It is voluntary. It is aimed at organisations far larger than a brokerage. It is still worth ten minutes. That is because it was written by people with nothing to sell. What it keeps saying is what vendors never say. Its management function opens by requiring a determination as to whether the system achieves its intended purposes and stated objectives and whether its development or deployment should proceed. Its list of risk responses runs: mitigating, transferring, avoiding, or accepting. Avoiding is on the list.
 
 It is also honest about its own limits in a way worth copying. It says plainly that while it can be used to prioritise risk, it does not prescribe risk tolerance. It says that the level of risk which is acceptable is highly contextual and specific to the application. There is no universal answer to how careful to be. There is only your business, and what happens in it when something is wrong.
 
@@ -647,7 +647,7 @@ Then put the list away for a fortnight and read it again. Half of what looked ur
 
 ## What it costs, and how long it takes
 
-The audit itself is short. It is priced on purpose so that a no costs you almost nothing. It is an hour, done with you rather than at you. The written version comes back afterwards. It is an hour rather than a week. The questions above are quick, and the answers are already in your head. The costly part of a long engagement is someone learning your business. You already know your business.
+The audit itself is short. It is priced on purpose so that a no costs you almost nothing. It is an hour, done with you rather than at you. The written version comes back afterwards. It is an hour rather than a week because the questions above are quick, and the answers are already in your head. The costly part of a long engagement is someone learning your business. You already know your business.
 
 What actually varies is what happens next. It varies by a factor nobody can quote in advance, because it depends on which candidate survived. Connecting two systems that both have a decent way in is days. Something that has to read documents, or has to deal with an office that is not yours, is a different order of work. The honest answer to how much is that it is a different conversation with its own scope.
 
@@ -1173,7 +1173,7 @@ Then there is the other version. It is the one this article is about. A buyer wa
 
 That difference is not a matter of degree. It changes what the software is actually doing. When the only calendar involved is yours, a scheduling system reads a fact and writes a fact. You are free at two, so two is now taken. When other people are involved, the same system can read one fact and then has to send a message and wait. That is a completely different kind of operation with a completely different failure mode. Reading a calendar cannot fail halfway. Asking someone a question can fail in a great many ways. From your side they are indistinguishable, because every one of them looks like nothing happening.
 
-So the unit of this article is not the appointment. It is the agreement you do not have yet. And the whole argument is simple. A business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
+So the unit of this article is not the appointment. It is the agreement you do not have yet. And here is the whole argument. A business which does not track those separately from the ones it does have will eventually tell a client something that is not true.
 
 [[scene:not-the-booking]]
 
@@ -1313,7 +1313,7 @@ And it inherits whatever your own diary already gets wrong. Availability that ex
 
 ### What is AI scheduling, in plain terms?
 
-It is software that takes a request for an appointment. It works out what has to be true for it to happen. It proposes times to the people whose agreement it needs. It keeps track of who has actually replied. It blocks your own calendar while it waits. And it tells everyone once when it is settled. The intelligent part is narrow. It is understanding a request that arrives as three lines of lower case text. It is keeping one negotiation straight across several threads at once. Everything underneath that is unremarkable record keeping, which is what you want it to be, because record keeping behaves the same on a bad Saturday as on a quiet Tuesday.
+It is software that takes a request for an appointment. It works out what has to be true for it to happen. It proposes times to the people whose agreement it needs. It keeps track of who has actually replied. It blocks your own calendar while it waits. And it tells everyone once when it is settled. The intelligent part is narrow. It is understanding a request that arrives as three lines of lower case text. And it is keeping one negotiation straight across several threads at once. Everything underneath that is unremarkable record keeping, which is what you want it to be, because record keeping behaves the same on a bad Saturday as on a quiet Tuesday.
 
 ### How is this different from AI appointment booking?
 
@@ -1321,7 +1321,7 @@ Booking is about getting one person from interested to a time they have written 
 
 ### Can it stop a double booking?
 
-It can stop one kind and not the other. It can stop your own calendar being offered twice, because your calendar is the one it can read and write. Holding a slot the instant a proposal goes live is what makes that reliable. It cannot stop the listing side promising the same two o'clock to someone else. It has no visibility of their diary and no authority over it. Any product that says double booking cannot happen is describing the first kind and letting you hear the second.
+It can stop one kind and not the other. It can stop your own calendar being offered twice, because your calendar is the one it can read and write. Holding a slot the instant a proposal goes live is what makes that reliable. It cannot stop the listing side promising the same two o'clock to someone else. That is because it has no visibility of their diary and no authority over it. Any product that says double booking cannot happen is describing the first kind and letting you hear the second.
 
 ### What happens when somebody replies "maybe"?
 
@@ -1383,7 +1383,7 @@ Think about what actually has to happen for a phone number to appear in that col
 
 You send an identifier: a name, an address, an email. Someone else's system then decides which of its own records describes the same human being. It decides on partial information, with no way to ask anyone. Then it returns the value it holds against whichever record it picked.
 
-So the number in your CRM is the end of a chain of at least two guesses. This record is about your person, and this number belongs to that record. Neither guess is shown to you. What arrives is a bare string in a field, formatted exactly like the numbers your clients typed in themselves.
+So the number in your CRM is the end of a chain of at least two guesses. The first is that this record is about your person. The second is that this number belongs to that record. Neither guess is shown to you. What arrives is a bare string in a field, formatted exactly like the numbers your clients typed in themselves.
 
 That matching problem has its own long piece on this site, [the one about keeping two systems in step](/blog/crm-sync-real-estate-duplicate-contact-records). It is worth reading, because the published model for it has a third outcome that most builds throw away. One difference changes the whole picture here. In a sync, both systems belong to you and you can open both. In an enrichment response the other system is a black box. The threshold it used, the fields it weighed and the confidence it settled on are all facts about that company. You are merely a customer of it.
 
@@ -1427,7 +1427,7 @@ One set of underlying records, three shopfronts. The identity check, the marketi
 
 American law works the same way round. This is where this article stops and hands you to a different one. Two federal statutes decide what may be done with contact information about a person. They turn on where it came from and on what you intend it for, rather than on which fields are in the file. And the liability lands on the buyer rather than on the seller. All of that is worked through at length in [the article on skip tracing](/blog/skip-tracing-real-estate-legal-owner-phone-numbers), including the questions to put to any provider in writing. None of it is repeated here.
 
-What belongs in this article is the narrower half. The same data, relabelled at the point of sale. And a label that is a fact about the deal rather than about the record.
+What belongs in this article is the narrower half. The same data, relabelled at the point of sale. And a label that is a fact about the transaction rather than about the record.
 
 ## Nobody has published an honest decay rate, and we went and looked
 
@@ -1475,7 +1475,7 @@ The second is that yours wins and the response is discarded. Safe. And it quietl
 
 The third is that both are kept, in separate fields, with the outside one clearly marked as a suggestion. This is the one that costs least to be wrong about. It costs one extra column.
 
-The fourth is a review queue. Disagreements go to a short list, and a person settles them. That is right when the field matters and the volume is small. It is also worth knowing that it is the same shape as the clerical review step in the published record-linkage model. The CRM sync article covers that model, which exists for exactly this reason.
+The fourth is a review queue. Disagreements go to a short list, and a person settles them. That is right when the field matters and the volume is small. It is also worth knowing that it is the same shape as the clerical review step in the published record-linkage model, which the CRM sync article covers. That step exists for exactly this reason.
 
 Whichever you pick, one habit does more than the choice itself. Write down, on every enriched row, where the value came from and when it was written. Not in a log somewhere. In the record, beside the value, where the person about to dial it can see it. That single column is the difference between "I do not know where that number came from" and a one sentence answer. And it costs nothing on the day the build is done.
 
@@ -1878,7 +1878,7 @@ Almost everyone assumes American email marketing law works like a consent regime
 
 What it does require is worth knowing exactly. Three of the four requirements are things a normal marketing tool does not do for you on its own.
 
-The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed". A recipient uses it to ask not to receive future messages. That mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality. It is the thing the statute names.
+The message must contain "a functioning return electronic mail address or other Internet-based mechanism, clearly and conspicuously displayed". A recipient can use it to ask not to receive future messages. That mechanism must remain "capable of receiving such messages or communications for no less than 30 days after the transmission of the original message". So an unsubscribe link that dies when a campaign is archived is not a technicality. It is the thing the statute names.
 
 Once someone uses it, [section 7704(a)(4)](https://www.law.cornell.edu/uscode/text/15/7704) gives you a deadline. It becomes unlawful for the sender to send them a further commercial message in the scope of that request "more than 10 business days after the receipt of such request". Ten business days is roughly a fortnight. It is generous by the standards of anything else in this area. That is exactly why people trip over it. A fortnight is long enough for a sequence someone is already inside to fire once more.
 
@@ -1952,7 +1952,7 @@ Then the specification explains why that mattered, and this is the sentence to t
 
 > Operators of broadcast marketing lists tend to be primarily concerned about deliverability of their mail... Hence, the mailers want to make it as easy as possible for recipients to unsubscribe; if an unsubscription process is too difficult, the recipient's alternative is to report mail from the sender as junk until the mail no longer appears in the recipient's inbox.
 
-That is an internet standards document stating the business case for an easy exit, on the sender's behalf. Every extra step between someone deciding to leave and being gone is a step. During that step, their alternative is the button that costs you three tenths of a percent.
+That is an internet standards document stating the business case for an easy exit, on the sender's behalf. Every extra step between someone deciding to leave and being gone gives them another option. That option is the button that costs you three tenths of a percent.
 
 There is one detail with a practical result. Section 4 of the same document requires that the message carry a valid DKIM signature covering the unsubscribe headers. Without it, it says, "the mail receiver SHOULD NOT offer a one-click unsubscribe for that message". So the authentication work in the section above is not a separate project from the unsubscribe work. Get the signature wrong and the safest exit route is quietly not offered to your recipients at all.
 
@@ -1970,7 +1970,7 @@ Yahoo states how the figure is derived: "Spam rate is calculated in our system b
 
 That has an uncomfortable result. As your reputation falls, more of your mail is filtered. That shrinks the denominator. A smaller denominator raises the rate worked out from the complaints you still receive. The measurement moves against you at exactly the moment you would want it to hold still. And there is no version of the sums you can do at your own end that reproduces it.
 
-Google publishes yours to you through Postmaster Tools. It is free. It takes about ten minutes to set up if you control your sending domain's DNS. That is the most useful thing in this article in practice. For a sender without an enterprise deliverability contract, it is also the only measure of their own reputation available to them anywhere. That makes it worth ten minutes, whatever else you take from this.
+Google publishes yours to you through Postmaster Tools. It is free. It takes about ten minutes to set up if you control your sending domain's DNS. That is the most useful thing in this article in practice. For a sender without an enterprise deliverability contract, it is also the only measurement of their own reputation available to them anywhere. That makes it worth ten minutes, whatever else you take from this.
 
 ## What an open actually measures
 
@@ -2008,7 +2008,7 @@ There is no price on this page. The reason is that the costly part of this one i
 
 Three things are being paid for. The sending platform is a subscription priced per contact by whoever you use. It is the smallest number in the project by a distance. Then the set-up: audiences, triggers, delays, suppression rules, and the joins to wherever your contact data actually lives. Then the item nobody quotes. That is getting your sending domain into a state where two things are true. The three records above are correct, and the address in your From line is aligned with them.
 
-That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has in the past gone out from three different tools under two different subdomains set up by people who have left, it becomes a dig through history. The honest order is to finish it before writing a single campaign rather than after.
+That third part is where the time goes when it goes badly. If your domain's DNS is somewhere you control and nobody has set up anything unusual, it is an afternoon. If your mail has in the past gone out from three different tools under two different subdomains set up by people who have left, it becomes a long dig. The honest order is to finish it before writing a single campaign rather than after.
 
 The other real cost is a person. Audiences rot, and they rot quietly. So someone has to own the rules and look at them on a schedule. That is not a big job, and it is nobody's job by default. That is how a segment defined once outlives everyone's memory of what it was for.
 
@@ -2638,7 +2638,7 @@ The web has two ways of changing something that already exists. They are not var
 
 In plain terms: one of them says "here is the contact, make it look like this", and the other says "change these two fields and leave everything else alone".
 
-Say your sync uses the first one. The sending system has an empty box where the receiving system has a mobile number someone typed in by hand two years ago. The mobile number is gone. Nobody deleted it. The sending system simply described the whole contact. In its description that field was empty, and the receiving system did what it was asked. This is the single most common way a sync destroys information. The tell is always the same. The missing data is missing from exactly the fields the other system does not have.
+Say your sync uses the first one, and the sending system has an empty box where the receiving system has a mobile number someone typed in by hand two years ago. The mobile number is gone. Nobody deleted it. The sending system simply described the whole contact. In its description that field was empty, and the receiving system did what it was asked. This is the single most common way a sync destroys information. The tell is always the same. The missing data is missing from exactly the fields the other system does not have.
 
 The specification for the second method has a rule about this that is worth holding a vendor to. The server must apply the entire set of changes atomically and must never provide a partially modified representation, and if the whole patch cannot be applied then it must apply none of it. All of it or none of it. A half-updated contact is not a smaller version of a successful update. It is a record in a state that was never intended by anyone. The standard says it must not be allowed to exist.
 
@@ -2650,13 +2650,13 @@ Networks fail in the middle. That is not an edge case. It is a Tuesday. Every sy
 
 Apply that to your contact record and it stops being computer science. "Set this contact's stage to Under Contract" is idempotent. Send it five times and the stage is Under Contract. "Add a note to this contact" is not. Send it five times and there are five notes. The person who opens that record on Thursday sees the same message from you five times. They draw a conclusion about you.
 
-The standard also says what a careful system does about it. A client should not automatically retry a request that is not idempotent, unless it has some way of knowing that the request is safe to repeat, or some way of detecting that the original never landed. And then it says, drily, that some clients take a riskier approach and attempt to guess when an automatic retry is possible. That sentence describes a large amount of the integration software currently running inside small businesses. The symptom is duplicate activity on a contact record, rather than an error anyone sees.
+The specification also says what a careful system does about it. A client should not automatically retry a request that is not idempotent, unless it has some way of knowing that the request is safe to repeat, or some way of detecting that the original never landed. And then it says, drily, that some clients take a riskier approach and attempt to guess when an automatic retry is possible. That sentence describes a large amount of the integration software currently running inside small businesses. The symptom is duplicate activity on a contact record, rather than an error anyone sees.
 
 ## When both sides changed at once
 
 The last hard problem is the one with the best name. You open the contact in the CRM and change the phone number. At the same moment an automation, acting on what it read a second earlier, writes the whole contact back. Your change is gone. No error was raised. And nothing anywhere records that there was ever a disagreement.
 
-The standard calls this [the lost update problem](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match), and names it in exactly those words. It describes the mechanism that exists to prevent it: a conditional request. The sender includes a marker for the version it last saw. The receiving system is required not to perform the change if that marker no longer matches, refusing with a status code that exists for nothing else. The specification for partial updates goes further. It warns that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need to start from a known base point or they will corrupt what they are changing.
+The specification calls this [the lost update problem](https://www.rfc-editor.org/rfc/rfc9110.html#name-if-match), and names it in exactly those words. It describes the mechanism that exists to prevent it: a conditional request. The sender includes a marker for the version it last saw. The receiving system is required not to perform the change if that marker no longer matches, refusing with a status code that exists for nothing else. The specification for partial updates goes further. It warns that collisions between two of them can be more dangerous than collisions between two replaces, because some kinds of change need to start from a known base point or they will corrupt what they are changing.
 
 None of that is exotic. All of it is thirty years old, written down, free to read, and absent from most small business integrations. The cheap way to build a sync is to write the newest thing you have and not ask what was there before. That is a choice with a name: last write wins. It is a perfectly respectable choice for some fields and a disaster for others. The point is that someone has to make it deliberately, field by field, and be able to tell you what they picked.
 
@@ -2670,7 +2670,7 @@ Every two way sync eventually receives two different answers to the same questio
 
 A rule that works for a lot of small businesses has two halves. The most recently changed value wins for anything factual, such as a phone number or an address. And the CRM wins for anything about the relationship, such as the stage of the deal or the owner of the contact. A rule that works for others is that anything a human being typed beats anything a machine wrote, always, on the grounds that the human was looking at the person while they typed it.
 
-Neither is right. Three things matter. Your rule is written down somewhere you can read it. It was chosen by someone who understood what each field is for. And you can find out what it is without opening a support ticket. The service page for this says plainly that the sync does not decide which side is right, and that the conflict rules get agreed when it is built. That is not a caveat. It is the most important half hour of the project.
+Neither is right. Three things matter. That your rule is written down somewhere you can read it. That it was chosen by someone who understood what each field is for. And that you can find out what it is without opening a support ticket. The service page for this says plainly that the sync does not decide which side is right, and that the conflict rules get agreed when it is built. That is not a caveat. It is the most important half hour of the project.
 
 ## What the identity field actually is, in your CRM
 
@@ -2746,7 +2746,7 @@ Nothing, until someone decides what should happen. Reconciling an existing datab
 
 ### Can it merge records automatically?
 
-Some of them. The share depends on a threshold someone sets. That threshold is the honest conversation to have before the build starts. It is the dial between a system that leaves work for you and a system that occasionally fuses two people together. The safe default on a first build is to automate only the pairs that are not in any doubt. Put everything else in a review queue. Widen it later, once you have watched what the queue actually contains.
+Some of them. The share depends on a threshold someone sets. That threshold is the honest conversation to have before the build starts. It is the dial between a system that leaves work for you and a system that occasionally fuses two people together. The safe default on a first build is to automate only the pairs that are not in any doubt. Everything else goes in a review queue. You widen it later, once you have watched what the queue actually contains.
 
 ### Is this worth it for a one-person business?
 

@@ -196,7 +196,7 @@ export const WASTED: GridItem[] = [
   },
   {
     lead: "Reporting that measures the sending",
-    body: "Sends, opens, clicks. All three are counts of what your own software did, and the first is entirely under your control. A dashboard built out of them will show a healthy campaign right up to the point where the mail stops arriving. Nothing in it is a measurement of the only thing that matters. That is whether a person read something and thought better of you for it.",
+    body: "Sends, opens, clicks. All three are counts of what your own software did, and the first is entirely under your control. A dashboard built out of them will show a healthy campaign right up to the point where the mail stops arriving. That is because nothing in it is a measurement of the only thing that matters. That is whether a person read something and thought better of you for it.",
   },
 ];
 
@@ -405,7 +405,7 @@ export const MARKETING_AUTOMATION_FLAGSHIP: FlagshipContent = {
       ],
       headline: 2,
       resultLabel: "Complaints in one send that reach the published ceiling",
-      note: "The headline is the third row rather than the yearly figure. A single send is the unit a person actually decides about, and the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing. Read two and a half as between two and three. Three things this deliberately refuses. It will not work out your actual spam rate, and it cannot. Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see. So what you have here is a ceiling in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain. The section above shows what an open actually counts, and it is not attention. And there is no row for what a damaged sending reputation costs in money. Nobody has published a figure for that with a method under it. This article is not going to be the first to make one up.",
+      note: "The headline is the third row rather than the yearly figure. It is there because a single send is the unit a person actually decides about, and because the number is small enough to be startling. Shares of people produce fractions, and half a complaint is not a thing. Read two and a half as between two and three. Three things this deliberately refuses. It will not work out your actual spam rate, and it cannot. Yahoo states the rate is calculated in their system on mail that was delivered to the inbox, which is a denominator no sender can see. So what you have here is a ceiling in your own units rather than a measurement of you. There is no open rate and no click rate anywhere in this chain. The section above shows what an open actually counts, and it is not attention. And there is no row for what a damaged sending reputation costs in money. Nobody has published a figure for that with a method under it. This article is not going to be the first to make one up.",
       action: { label: "See how it is built", href: "/services/marketing-automation" },
       secondary: { label: "Ask us to look at your sending", href: "/connect" },
     },

@@ -44,7 +44,7 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
 export const IN_SHORT: string[] = [
   "A scheduling assistant ran for five months at Microsoft Research. It handled 39% of its requests inside its structured workflow, and needed a trained person for the other 61%. The three commonest reasons for calling that person in were all the same reason. An attendee answered in a way the system did not expect. An attendee could not take any of the offered times. Or an attendee never replied at all.",
   "The calendar standards already have a word for an appointment nobody has agreed to. It is the value every invitation starts life in. The only thing that moves it is a reply arriving. Not time passing, and not the absence of an objection.",
-  "And moving the time is not free. The standard that governs how calendar servers do scheduling has a rule about this. When the start time changes, every attendee's answer is thrown away and set back to unanswered. A reschedule does not carry the agreement with it. It asks for it again.",
+  "And moving the time is not free. The standard that governs how calendar servers do scheduling requires this. When the start time changes, every attendee's answer is thrown away and set back to unanswered. A reschedule does not carry the agreement with it. It asks for it again.",
 ];
 
 /** SCENE copy — the seam with topic 7, stated by contrast rather than by summary.

@@ -176,6 +176,33 @@ Smaller, same family: a qualifier is content ("at some point", "completely", "sp
 (legitimate is not "fair", innocuous is not "quite plain"). Do not add a fact to fill a rhythm
 ("The paragraph is short", "the monthly bill").
 
+## What batch 2's checker added (0 HIGH, 6 MED: the governor rule works, one level up it still bit)
+
+Batch 2 kept every reporting verb and every "and". Its six MED findings were the same idea
+wearing three other coats. **Before you split at a COLON, a "THAT", or a MODAL, ask what the
+first half was doing to the second half.**
+
+- A COLON that introduces a list of GUESSES, claims or options: "a chain of at least two
+  guesses: this record is about your person, and this number belongs to that record" was split
+  into two flat assertions the next sentence then withdrew. Open each item with the word the
+  colon was lending it: "The first is that ... The second is that ..."
+- A "THAT" that makes a REQUIREMENT: "What matters is that your rule is written down, that it
+  was chosen by somebody who understood ..., and that you can find it" became "Three things
+  matter. Your rule is written down." The page now tells the reader their rule IS written down.
+  Keep the "that": "Three things matter. That your rule is written down ..."
+- A MODAL or a normative verb from a source: the statute's mechanism a recipient "CAN use"
+  became "A recipient uses it"; the RFC that "REQUIRES that any change ... resets" became "has
+  a rule about this". A law's "may/must/shall" and a standard's "requires" are content.
+- A relative clause that lands on a new noun after the split: "the clerical review step in the
+  model that the other article covers, which exists for exactly this reason" became "the other
+  article covers that model, which exists ..." and the reason moved from the step to the model.
+- "because" fell from 158 to 110 across five topics. Dropping "which" is the job. Dropping
+  "because" silently turns a reason into a bare neighbour. When the second sentence was the
+  REASON for the first, start it with "That is because ...".
+- Do not add an evaluation to fill a rhythm ("And the whole argument is simple.").
+- A swap is only safe if the new word names the SAME thing on this page: "the specification"
+  became "the standard" where the nearest earlier "the standard" was a different document.
+
 ## Do not
 
 - Do not `git add`, commit or push. The orchestrator commits after verifying.
