@@ -1,5 +1,63 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 52 (2026-09-18, THE FINAL ROUND, website half): IN PROGRESS - READ THIS FIRST ====
+## NOTE: the /website command text is a STALE round-11 design brief. The live brief is
+## memory/project-final-round-brief-20260918.md. Beat 1 = /ai lane (DONE + LIVE there, R32).
+## Beat 4 (share) = done in 51f. THIS round = Beat 2 (10-year-old pass) + Beat 3 (SEO lap).
+##
+## SHAPE: ONE Fable orchestrator + ONE Opus sub at a time (the owner's standing grant, confirmed
+## in the brief): builder (5 topics, ~65 min) -> FRESH checker (full-text, ~17 min) -> Fable
+## fixes -> gates -> push -> headful prod probe. NEVER skip the checker (see below).
+##
+## THE FOUR SCORERS (all committed; run from the repo with the dev server on :3100):
+##   node scripts/readability-gate.mjs            FK grade <= 6 AND median <= 15w, 44 surfaces
+##   node scripts/rewrite-invariants.mjs          links/numbers/quotes/headings/length vs the
+##                                                BEFORE snapshot (HEAD 6eab055); ALLOW file
+##                                                has reasons; "/" is VOLATILE (live MLS cards)
+##   node scripts/seo-audit.mjs [--external]      70 surfaces as a no-JS crawler (Bingbot UA)
+##   node scripts/verify-final-round-prod.mjs     HEADFUL Chromium against realtylt.com
+##   (+ scripts/post-body.mjs extract|inject, the playbook docs/parity/SIMPLIFY-PLAYBOOK-
+##   20260918.md, builder log SIMPLIFY-LOG-, checker report SIMPLIFY-CHECK-batch1.md)
+##   In git-bash, `--only /path` needs MSYS_NO_PATHCONV=1 or the gate checks nothing.
+##
+## STATE AT ea9fb50 (pushed through 64007d9, prod 15/15 verified in a real browser):
+## * BEAT 2: readability 2/44 -> 12/44. BATCH 1 DONE + CHECKED + LIVE: invoicing, AI clone,
+##   skip tracing, local SEO, GEO pages (posts 9.1-9.5 -> 5.1-5.9, pages 7.7-8.4 -> 5.2-5.7;
+##   invariants 43/43; length x1.00-1.03). All 21 service `lede` + `why` are the /ai panels'
+##   grade-6 text BYTE FOR BYTE (their _sibling_diff: 21/21 SAME) - never edit those fields here.
+##   BATCH 2 (marketing, audit, enrichment, crm-sync, scheduling) = builder RUNNING at the time
+##   of writing. THEN batch 3 (agent-workforce, singularity, custom, document, review) and
+##   batch 4 (booking, workflow, voice, qualify, reactivation, ai-chat = the story standard:
+##   language only, 19/19 structure stays).
+## * THE LESSON THAT COSTS IF FORGOTTEN: batch 1 passed BOTH scorers on 10/10 pages and still
+##   carried 4 HIGH MEANING ERRORS a fresh full-text checker found (one was Fable's own gloss
+##   on 12 U.S.C. 2607(a)). Three were one move: a clause split away from its GOVERNOR (a
+##   reporting verb, a condition, a "rather than"). Rule + examples are in the playbook; each
+##   new builder reads the previous checker report. Push content ONLY after the checker.
+## * BEAT 3: seo-audit 0/70 -> 70/70 clean (394 findings -> 0, 15 adjudicated WITH reasons in
+##   docs/parity/SEO-AUDIT-ALLOW.json: keyword-in-first-100-words on 15 service pages would
+##   cost /ai sibling drift or a wrapped 11px figure label; title/description/URL carry it).
+##   Real defects fixed: 258 EMPTY ANCHORS (every overlay card link was aria-label-only = no
+##   anchor text for Google; now sr-only TEXT inside the same anchor - any NEW card must use
+##   that shape), 26 pages without og:url (layout "./" + explicit home override, the /index
+##   trap), post <title>s had no keywords (BlogPost.seoTitle; og:title keeps the story line),
+##   19 long descriptions, 7 long titles, 11 services whose primary keyword was nowhere in
+##   title/h1/description. 171 outbound links: 0 broken (11 bot-walled, all open in Chromium).
+## * RETIRED CLAIMS KILLED: skip-tracing "verified"/"callable" (lede, chip, 4 body fields,
+##   figure, meta); /services INDEX "rank ... by what it pays back" (zombie-claims.test.ts now
+##   reads app/services/page.tsx and the pattern covers the wording).
+## * /top-areas 57014s FIXED (02d26ba): getCountyActiveSlim selected listing->>listOfficeName;
+##   Queens offset-7000 page = 45,273 buffer hits/172ms with the key vs 8,271/47ms without,
+##   x10 pages per render for ONE median. Office now fetched by id for the <= 24 comps only.
+##   SAME CLASS, NOT TOUCHED, NOT MEASURED: the pins select (lib/idx/db.ts ~607) still carries
+##   office:listing->>listOfficeName across up to 15k pins; no timeout logged for it.
+## * Tests 1449 -> 1462, tsc clean. Reply to the /aipage handoff: docs/handoff/WEBSITE-TO-
+##   AIPAGE-20260918.md.
+## STILL OPEN: batches 2-4 (above) · when 44/44: re-run all four scorers + the external link
+## fetch, push, prod probe, then update memory/project-final-round-brief-20260918.md · Search
+## Console sitemap re-check (owner's Google login; "Couldn't fetch" right after submit is the
+## known quirk) · /who-we-are reads 7.4 on proper nouns alone (outside the gated set, left).
+
 ## == ROUND 51f (2026-09-18): FINAL-ROUND PREP + THE OWNER'S VOICE LIST, DONE ============
 ## The FINAL ROUND brief is memory/project-final-round-brief-20260918.md (+ two addenda by
 ## this session: the website-lane prep and the owner's voice additions). THE NEW CHAT RUNS
