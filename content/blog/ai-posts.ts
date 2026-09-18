@@ -33,7 +33,7 @@ In plain terms, one system stands up the other agents. It hands each of them its
 
 That second part is the one most descriptions of this category are careful to deny. Denying it is the easy way to sound responsible. The denial would also be false here, so it is not going to be made. What makes this safe to run is not a promise about what the thing will leave alone. It is that nothing it writes reaches anybody until two things have happened. A test suite that cannot be talked round has to run over it. And a person has to read the change and say yes.
 
-That is a smaller claim than the word usually carries, and a larger one than most vendors will make out loud. That is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any way at all of noticing that it has been wrong in the same way hundreds of times. That missing piece is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming. The rest of this piece is about whether the claim survives contact with the research.
+It is a smaller claim than the word usually carries, and a larger one than most vendors will make out loud. That is roughly where the truth about this sits. It is also, on its own terms, unusual. Almost nothing else a business buys has any way at all of noticing that it has been wrong in the same way hundreds of times. That missing piece is so normal that nobody thinks to ask about it. That is the whole of what the name is claiming. The rest of this piece is about whether the claim survives contact with the research.
 
 There are two halves to what is being bought, and they deserve to be argued separately. The shared memory works from the first week, and it is easy to check. The improving is the one worth being sceptical about, and the published evidence on it is not flattering.
 
@@ -63,7 +63,7 @@ Look at what happened between the first bar and the third. The model was not giv
 
 The mechanism is not mysterious, and it is worth naming. That is because it is the thing that will happen inside any product built the naive way. A model told to look for a problem in an answer will produce a problem, in the same way it produces everything else. It does that whether or not there is one there. When the answer was already right, the review makes up a reason to change it. That is why the effect is strongest where the wrong options look believable. On a multiple choice commonsense set in the same table, the older model fell from 75.8 percent to 38.1. That was after a single round of reviewing itself.
 
-There is an obvious objection to all of this, which is that grade school word problems are not a conversation about a house. That is right. It is also why this paper is here rather than a study of brokerages, which does not exist and is not going to. What carries over is not the percentage. It is the mechanism. The mechanism is about how these models behave when asked to grade themselves. It does not become a different mechanism because the subject changed to property taxes.
+There is an obvious objection to all of this, which is that grade school word problems are not a conversation about a house. That is right. It is also why this paper is here rather than a study of brokerages, which does not exist and is not going to. The percentage is not what carries over. It is the mechanism. The mechanism is about how these models behave when asked to grade themselves. It does not become a different mechanism because the subject changed to property taxes.
 
 ## What changed between those two numbers was not the model
 
@@ -183,9 +183,9 @@ This matters commercially rather than philosophically, because the gap between t
 
 ## What it costs, and how long it takes
 
-There is no price on this page, and there is not going to be one. That is because the number is set by things that cannot be seen from here. Three of them, and only one is the software.
+You will not find a price on this page, and you are not going to. That is because the number is set by things that cannot be seen from here. There are three, and the software is only one of them.
 
-The first is how many places have to be joined up before there is one record at all. This is the whole job on most builds. A brokerage running a phone system, a website, one CRM and a calendar is one piece of work. A brokerage running four CRMs, because three offices merged and nobody ever finished the move, is a different one. Anybody quoting before they have asked which of those you are has quoted a template.
+The first is how many places have to be joined up before there is one record at all. This is the whole job on most builds. A brokerage running a phone system, a website, one CRM and a calendar is one piece of work. A brokerage running four CRMs, because three offices merged and nobody ever finished the move, is a different one. Anybody who quotes before asking which of those you are has quoted a template.
 
 The second is the running cost of the loop itself, and it is the smallest of the three. Reading a week of conversations and replaying one proposed change against a few hundred of them costs a few dollars of model usage. Work that writes and tests software costs more than that, and it is still not the number that decides anything here. What is not free is the ten minutes of your week. Unlike the software, that cost never goes away, because it is the part that makes the rest of it safe.
 
@@ -2783,9 +2783,9 @@ Nobody did anything wrong here. Every one of those pages is grammatical, on bran
 
 It is worth being clear about what this is for. The obvious alternative is free, and most agents should do that one first.
 
-At the top of a local search there is a short list of businesses, with the map above it. It ranks businesses rather than pages. One of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office, and no amount of work moves it. So there is a hard edge to it. Past a certain distance you are competing against someone who is simply closer, and they win.
+At the top of a local search sits a short list of businesses. It is the one with the map above it. It ranks businesses rather than pages. One of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office, and no amount of work moves it. So there is a hard edge to it. Past a certain distance you are competing against someone who is simply closer, and they win.
 
-A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it. That is why one page per area is the oldest tactic in local marketing, and why every agency in the world offers it. It is also the reason this article exists. The tactic has a well-known failure mode with a name. And the name is in Google's published policy rather than in someone's blog post.
+A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it. This is why one page per area is the oldest tactic in local marketing, and why every agency in the world offers it. It is also the reason this article exists. The tactic has a well-known failure mode with a name. And the name is in Google's published policy rather than in someone's blog post.
 
 There is a second reason worth naming, and it is newer. A growing share of these questions never reach a list of links at all. Someone asks an assistant which agents work in a particular town, and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly, on a page that is truly about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable. That is convenient. It is also the only part of this whole subject where the two audiences want exactly the same thing.
 
