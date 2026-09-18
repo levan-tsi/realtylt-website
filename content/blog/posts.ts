@@ -307,12 +307,14 @@ export const POSTS: BlogPost[] = [
     title: "You Have Her Number. She Never Gave It to You.",
     seoTitle: "Skip Tracing in Real Estate: What the Law Says, What to Ask",
     date: "2026-08-25",
-    /** NO `updated`. Round 46 read this post in full and changed nothing in it, and round 47 left
-     * it alone as well, so there has been no revision to date. Same reason as elsewhere: a post written and shipped
-     * inside one day has not been revised, and score-flagship's D5 wants dateModified later
-     * than datePublished. Set it when the article takes its first real revision, never to
-     * satisfy a gate. With the absent film (C3), this slug ships at 17/19 and both reds are
-     * true statements about the page. */
+    updated: "2026-09-18",
+    /** `updated` was ABSENT until 2026-09-18, on purpose: rounds 46 and 47 read this post in full
+     * and changed nothing, and a date equal to the published date is a gate being fed, not a
+     * freshness signal ("set it when the article takes its first real revision, never to satisfy
+     * a gate"). The final round's readability pass IS that first revision: the body and the scene
+     * copy were rewritten sentence by sentence (grade 9.2 to 5.9, every link, number and quote
+     * held by scripts/rewrite-invariants.mjs), on a later day than it was published. The absent
+     * film (C3) is still a true red on this slug. */
     excerpt:
       "She picked up, she was polite, and she asked the one question nobody in this trade can answer: where did you get this number? Two federal statutes ask it too, and they ask it of you rather than of the tool. What skip tracing actually is, what the law permits, and the four questions to put to a provider in writing.",
     seoDescription:
@@ -374,7 +376,7 @@ export const POSTS: BlogPost[] = [
     title: "Nine Town Pages. The Only Thing That Changed Was the Town.",
     seoTitle: "GEO Landing Pages for Real Estate vs Doorway Pages",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the clause 24 CFR 100.70 actually hangs on to both places this post
      * summarises it; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays
@@ -395,7 +397,7 @@ export const POSTS: BlogPost[] = [
     title: "Three Businesses Show Up. Yours Is Not One of Them.",
     seoTitle: "Local SEO for Real Estate: Map Pack and Business Profile",
     date: "2026-08-25",
-    updated: "2026-08-27",
+    updated: "2026-09-18",
     /** `updated` SET IN ROUND 47. Published 2026-08-25, revised 2026-08-27 when the relevance
      * pass restored the exception Google's own service-area guideline carries in its very next
      * sentence; see docs/parity/ROUND47-RELEVANCE-PASS.md. First real revision. C3 stays red, no

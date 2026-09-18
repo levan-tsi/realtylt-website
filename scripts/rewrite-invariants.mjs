@@ -151,7 +151,17 @@ if (isMain) {
 
   const before = JSON.parse(fs.readFileSync(BEFORE_PATH, "utf8")).surfaces;
   const allowAll = fs.existsSync(ALLOW_PATH) ? JSON.parse(fs.readFileSync(ALLOW_PATH, "utf8")) : {};
-  const surfaces = only ? [only] : Object.keys(before);
+  // The home page carries two rails of LIVE MLS cards: its links and its numbers (addresses,
+  // prices) turn over with every hourly sync, so a ledger comparison against a morning snapshot
+  // reads inventory churn as lost facts (it reported "number LOST: 12", a street number). Its
+  // own copy was already grade 2.9 and was not rewritten. It is named here and left out of the
+  // count, which is not the same as passing it.
+  const VOLATILE = new Set(["/"]);
+  const surfaces = (only ? [only] : Object.keys(before)).filter((p) => {
+    if (!VOLATILE.has(p)) return true;
+    console.log(`SKIP  ${p}  live MLS cards; copy not rewritten; not counted`);
+    return false;
+  });
   let failed = 0;
   for (const p of surfaces) {
     // A surface the snapshot has never seen is a FAIL, not a skip: a gate that counts "could

@@ -39,9 +39,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. Policy, measurement,
  * regulation, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
-  "Google's spam policies name this tactic twice. Doorway abuse covers pages targeted at specific regions or cities that funnel users to one page, and scaled content abuse covers using generative AI tools to generate many pages without adding value for users. Neither entry says a page per area is forbidden. Both say what makes one worthless.",
-  "A page that repeats itself is machine readable. In a sample of 17,168 web pages classified by hand, 13.8% were judged spam overall, and among the pages that compressed to a quarter of their size or better, 70% were.",
-  "An area page is an advertisement about a community, and that is regulated separately from anything Google does. The fair housing rules name selecting locations for advertising that deny parts of the market information about housing opportunities, and discouraging somebody by exaggerating drawbacks or failing to inform them of a neighbourhood's desirable features. Both prohibitions hang on the same clause: because of race, colour, religion, sex, handicap, familial status or national origin.",
+  "Google's spam policies name this tactic twice. Doorway abuse covers pages targeted at specific regions or cities that funnel users to one page. Scaled content abuse covers using generative AI tools to generate many pages without adding value for users. Neither entry says a page per area is forbidden. Both say what makes one worthless.",
+  "A page that repeats itself is machine readable. In a sample of 17,168 web pages classified by hand, 13.8% were judged spam overall. Among the pages that compressed to a quarter of their size or better, 70% were.",
+  "An area page is an advertisement about a community. That is regulated separately from anything Google does. The fair housing rules name two practices. One is selecting locations for advertising that deny parts of the market information about housing opportunities. The other is discouraging someone by exaggerating drawbacks, or failing to inform them of a neighbourhood's desirable features. Both prohibitions hang on the same clause: because of race, colour, religion, sex, handicap, familial status or national origin.",
 ];
 
 /** SCENE copy — the two policy names.
@@ -74,19 +74,19 @@ export const IN_SHORT: string[] = [
 export const TWO_NAMES: GridItem[] = [
   {
     lead: "Where does the page send them?",
-    body: "The doorway entry turns on the handover rather than on the writing. If an area page is a landing strip whose job is to move somebody along to a general enquiry form or to one master page, the reader got an intermediate step instead of the thing they searched for. If the page answers the question on its own and somebody could stop there satisfied, it is not doing what that entry describes.",
+    body: "The doorway entry turns on the handover rather than on the writing. Say an area page is a landing strip. Its job is to move someone along to a general enquiry form, or to one master page. Then the reader got an intermediate step instead of the thing they searched for. Now say the page answers the question on its own, and someone could stop there satisfied. It is not doing what that entry describes.",
   },
   {
     lead: "What is on it at that number?",
-    body: "The other entry is about volume without substance, and the volume by itself is not the part being named. Twenty pages each carrying a closing, a street and a real answer are twenty pages. Twenty pages carrying the same four paragraphs are one page with twenty addresses, and changing the adjectives does not change which of those you have.",
+    body: "The other entry is about volume without substance. The volume by itself is not the part being named. Twenty pages each carrying a closing, a street and a real answer are twenty pages. Twenty pages carrying the same four paragraphs are one page with twenty addresses. Changing the adjectives does not change which of those you have.",
   },
   {
     lead: "Who read it before it went live?",
-    body: "The line runs through what was added between the generating and the publishing, which makes it a question about your process rather than about your software. What gets added, in practice, is a person who knows the place reading the page and changing it. If nobody in the chain has been there, nothing was added and the entry is describing you.",
+    body: "The line runs through what was added between the generating and the publishing. That makes it a question about your process rather than about your software. What gets added, in practice, is a person who knows the place reading the page and changing it. If nobody in the chain has been there, nothing was added. Then the entry is describing you.",
   },
   {
     lead: "And nobody is telling you not to do this.",
-    body: "Nothing in the policy says a business may not have one page for each place it works. Both entries describe pages that hand the reader on or say nothing, which is a judgement about quality rather than about structure. The structure is fine. The usual execution is the thing with a name.",
+    body: "Nothing in the policy says a business may not have one page for each place it works. Both entries describe pages that hand the reader on, or say nothing. That is a judgement about quality rather than about structure. The structure is fine. The usual execution is the thing with a name.",
   },
 ];
 
@@ -115,15 +115,15 @@ export const TWO_NAMES: GridItem[] = [
 export const THE_TEST: GridItem[] = [
   {
     lead: "Have you been there.",
-    body: "Google's own list asks whether the content demonstrates first-hand expertise, and its example of what that means is expertise that comes from having actually visited a place. Read that beside a page about a town you have never worked in. There is no writing technique that produces it and no model that can fake it, because the thing being asked for is a fact about you.",
+    body: "Google's own list asks whether the content demonstrates first-hand expertise. Its example of what that means is expertise that comes from having actually visited a place. Read that beside a page about a town you have never worked in. There is no writing technique that produces it, and no model that can fake it. The thing being asked for is a fact about you.",
   },
   {
     lead: "Are you making a lot of pages and hoping.",
-    body: "Two of the warning-sign questions are whether you are producing lots of content on many topics in the hope some of it performs, and whether you are using extensive automation to produce content on many topics. Answering yes to either is the document's own description of search-engine-first content, and the fix it suggests is not better writing. It is fewer pages.",
+    body: "Two of the warning-sign questions bite here. One asks whether you are producing lots of content on many topics in the hope some of it performs. The other asks whether you are using extensive automation to produce content on many topics. Answering yes to either is the document's own description of search-engine-first content. And the fix it suggests is not better writing. It is fewer pages.",
   },
   {
     lead: "Are you writing to a length.",
-    body: "One of the warning signs on the list is writing to a word count, and Google answers it in the same breath: it has no preferred one. That matters more here than anywhere else, because a target length is the only thing that can make a page about a town you know inside out and a page about a town you have never visited come out the same size.",
+    body: "One of the warning signs on the list is writing to a word count. Google answers it in the same breath: it has no preferred one. That matters more here than anywhere else. A target length is the only thing that can make two pages come out the same size. One is about a town you know inside out. The other is about a town you have never visited.",
   },
 ];
 
@@ -159,12 +159,12 @@ export const REDUNDANCY = {
   max: 100,
   lit: 1,
   basis:
-    "The share of pages a person judged to be spam. The sample is 17,168 English pages drawn uniformly at random from a 105 million page crawl and inspected one at a time; 2,364 of them were labelled spam. The second bar is the subset whose compression ratio was at least four, which is a machine's way of saying the page says the same thing several times.",
+    "The share of pages a person judged to be spam. The sample is 17,168 English pages, drawn uniformly at random from a 105 million page crawl and inspected one at a time. Of those, 2,364 were labelled spam. The second bar is the subset whose compression ratio was at least four. That is a machine's way of saying the page says the same thing several times.",
   sourceText:
     "Alexandros Ntoulas (UCLA), Marc Najork, Mark Manasse and Dennis Fetterly (Microsoft Research), Detecting Spam Web Pages through Content Analysis, WWW 2006, pages 83-92.",
   sourceHref:
     "https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf",
-  note: "This is the web of 2005 and a search engine that no longer exists under that name, and spam here means what four researchers judged it to be. Two limits matter more than the age. The paper measures repetition inside a single page, and a set of near-identical town pages is repetition across pages, which is a different thing that nobody has published a figure for. And an entirely honest page with a large navigation, a footer and a repeated call to action also compresses well, which is why the authors treat compressibility as one heuristic among the ten they test rather than as a rule. What it is worth carrying is the cheapness of the observation: sameness is the easiest quality in the world for a machine to measure.",
+  note: "This is the web of 2005, and a search engine that no longer exists under that name. Spam here means what four researchers judged it to be. Two limits matter more than the age. The paper measures repetition inside a single page. A set of near-identical town pages is repetition across pages, which is a different thing, and nobody has published a figure for it. And an entirely honest page with a large navigation, a footer and a repeated call to action also compresses well. That is why the authors treat compressibility as one heuristic among the ten they test, rather than as a rule. What is worth carrying is the cheapness of the observation. Sameness is the easiest quality in the world for a machine to measure.",
 };
 
 /** SCENE copy — the complaints. Cited data graphic TWO.
@@ -209,12 +209,12 @@ export const COMPLAINTS = {
   ],
   lit: 3,
   basis:
-    "Complaints received in 2024 by private fair housing organisations, HUD, state and local fair housing assistance agencies and the Department of Justice, counted by the kind of transaction they concerned. The total across all categories is 32,321. Rental accounts for 27,007 of those and is left off this chart on purpose, because plotting it would draw every bar above as a hairline.",
+    "Complaints received in 2024, counted by the kind of transaction they concerned. They came in to private fair housing organisations, HUD, state and local fair housing assistance agencies, and the Department of Justice. The total across all categories is 32,321. Rental accounts for 27,007 of those. It is left off this chart on purpose, because plotting it would draw every bar above as a hairline.",
   sourceText:
     "National Fair Housing Alliance, 2025 Fair Housing Trends Report, complaint data for 2024.",
   sourceHref:
     "https://nationalfairhousing.org/wp-content/uploads/2025/11/2025-NFHA-Fair-Housing-Trends-Report.pdf",
-  note: "These are complaints received, not findings of discrimination, and the difference is the whole distance between an allegation and a case. The compiler is a membership organisation of the fair housing groups that handle most of them, which it states in the report: 82 private organisations processed 74% of the 2024 total, so the counts describe who was collecting as much as what happened, and fewer organisations reported than the year before. An advertising complaint is not necessarily about a web page. The reason this chart is here is the fourth bar being small: advertising is the least complained-about category on the list, which is exactly why it is the one nobody building twenty area pages has thought about.",
+  note: "These are complaints received, not findings of discrimination. That difference is the whole distance between an allegation and a case. The compiler is a membership organisation of the fair housing groups that handle most of them, and it states so in the report. 82 private organisations processed 74% of the 2024 total. So the counts describe who was collecting as much as what happened. And fewer organisations reported than the year before. An advertising complaint is not necessarily about a web page. The reason this chart is here is the fourth bar being small. Advertising is the least complained-about category on the list, which is exactly why it is the one nobody building twenty area pages has thought about.",
 };
 
 /** SCENE copy — the three ways a set of area pages is wasted.
@@ -224,15 +224,15 @@ export const COMPLAINTS = {
 export const WASTED: GridItem[] = [
   {
     lead: "They are built for the towns you wish you worked in.",
-    body: "The list of areas nearly always starts as a list of ambitions, and the pages for the places you have never worked are the ones with nothing on them, which are the ones that read as filler, which are the ones that make the whole set look like a template. The pages you can actually fill are usually the ones you thought were too obvious to bother with.",
+    body: "The list of areas nearly always starts as a list of ambitions. The pages for the places you have never worked are the ones with nothing on them. Those are the ones that read as filler. And those are the ones that make the whole set look like a template. The pages you can actually fill are usually the ones you thought were too obvious to bother with.",
   },
   {
     lead: "They are written to a length instead of to a question.",
-    body: "Somebody decides the pages should be six hundred words and the writing becomes the job of reaching six hundred words. Google's own list of warning signs asks whether you are writing to a particular word count, and answers in a bracket that it has no preferred one. A page that answers its question in two hundred words and stops is a better page.",
+    body: "Someone decides the pages should be six hundred words. Then the writing becomes the job of reaching six hundred words. Google's own list of warning signs asks whether you are writing to a particular word count. It answers in a bracket that it has no preferred one. A page that answers its question in two hundred words and stops is a better page.",
   },
   {
     lead: "Nobody ever goes back to them.",
-    body: "The proof on an area page has a date on it whether or not the date is printed. The closing you cite, the street you name, the price you mention and the school you describe all age, and a page whose most recent fact is four years old is telling every reader exactly how long it has been since you worked there.",
+    body: "The proof on an area page has a date on it, whether or not the date is printed. The closing you cite, the street you name, the price you mention and the school you describe all age. A page whose most recent fact is four years old is telling every reader something. It says exactly how long it has been since you worked there.",
   },
 ];
 
@@ -301,7 +301,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       // than curtains, so the alt no longer says which.
       alt: "A green and teal painted Queen Anne Victorian with a pointed turret and tall arched windows in red painted surrounds glowing warm orange, a first-floor balcony hung with a row of red, white and blue fan bunting, a tall pink banner beside the entrance, standing against a bank of dark conifers",
       caption:
-        "Somebody in this town knows why there is bunting on that balcony this week. That is the whole difference between a page about a place and a page with a place name in it, and it is not a writing problem. It is a question of whether you have ever been there on a Saturday.",
+        "Someone in this town knows why there is bunting on that balcony this week. That is the whole difference between a page about a place and a page with a place name in it. And it is not a writing problem. It is a question of whether you have ever been there on a Saturday.",
       credit: "Photograph by Kathleen Tyler Conklin, CC BY 2.0.",
       ariaLabel: "The house that is somewhere in particular",
     },
@@ -326,7 +326,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       label: "The page",
       eyebrow: "The system",
       heading: "From a place you have worked to a lead that stays yours.",
-      lede: "Six hops, and the third one is where every cheap version of this service stops. A draft written in ninety seconds is not the problem. A draft nobody read before it went live is a page nobody read at all, which is the condition the spam policy is actually describing.",
+      lede: "Six hops, and the third one is where every cheap version of this service stops. A draft written in ninety seconds is not the problem. A draft nobody read before it went live is a page nobody read at all. That is the condition the spam policy is actually describing.",
       steps: PAGE_PATH,
       altPrefix: "The path from one area you have worked in to a published page and a lead on your own site",
     },
@@ -386,7 +386,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Pages that would actually be about somewhere",
-      note: "When the middle row lands between two whole numbers, read it as between two whole numbers rather than as a fraction of a page: five and a half means five you are sure of and one you are arguing with yourself about. This is the shortest calculator on this website and there is a reason for the length: there are only three numbers in this subject that anybody can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one. Nobody publishes the search volume for a service in your particular town with a stated method, Google publishes no model of how much traffic a page receives, and the only figures circulating in this category come from tools that estimate them and do not say how. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler, and it is almost always smaller than the number in the first meeting.",
+      note: "When the middle row lands between two whole numbers, read it as between two whole numbers rather than as a fraction of a page. Five and a half means five you are sure of, and one you are arguing with yourself about. This is the shortest calculator on this website, and there is a reason for the length. There are only three numbers in this subject that anyone can honestly supply, and all three of them are yours. There is no row for what a page is worth, and there was never going to be one. Nobody publishes the search volume for a service in your own town with a stated method. Google publishes no model of how much traffic a page receives. And the only figures circulating in this category come from tools that estimate them and do not say how. The number this does produce is the one that decides whether the whole exercise is a marketing asset or a folder of filler. It is almost always smaller than the number in the first meeting.",
       action: { label: "See how it is built", href: "/services/geo-landing-pages" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -407,8 +407,8 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest list",
-      text: "Send us the list of areas you want pages for and we will send back which of them we think you can fill, based on what is already public about where you have worked, and what each of the others would need before it was worth publishing.",
-      reassure: "It is a short reply from a person, it costs nothing, and a shorter list is a perfectly good answer.",
+      text: "Send us the list of areas you want pages for. We will send back which of them we think you can fill, based on what is already public about where you have worked. We will also say what each of the others would need before it was worth publishing.",
+      reassure: "It is a short reply from a person. It costs nothing. And a shorter list is a perfectly good answer.",
       action: { label: "Ask which ones are real", href: "/connect" },
       ariaLabel: "Ask which of your areas can carry a page",
     },
@@ -421,7 +421,7 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       // survives the plate's 21:9 crop: it cuts at the porch rail.
       alt: "A large white Victorian house with a conical turret roof, two brick chimneys and a wraparound porch carried on turned posts with scrollwork brackets, photographed from below against a deep blue sky, with a tall dark cypress at the right edge",
       caption:
-        "One page, about one place, with the name of a street on it and something on it that only somebody who has stood here would write. That is the entire product. Everything else in this article is about the pages you should not publish in order to have this one.",
+        "One page, about one place. It has the name of a street on it, and something on it that only someone who has stood here would write. That is the entire product. Everything else in this article is about the pages you should not publish in order to have this one.",
       credit: "Photograph by Jan Tik, CC BY 2.0.",
       ariaLabel: "The one page worth publishing",
     },
@@ -442,13 +442,13 @@ export const GEO_PAGES_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the two pages you are least sure about and read them out loud, one after the other, to somebody who lives in one of those towns. You will know inside a paragraph. The only thing a set of area pages can be built out of is the work you have already done, and the honest version of this project starts by finding out how much of that there is.",
+      text: "Open the two pages you are least sure about. Read them out loud, one after the other, to someone who lives in one of those towns. You will know inside a paragraph. The only thing a set of area pages can be built out of is the work you have already done. The honest version of this project starts by finding out how much of that there is.",
       actions: [
         { label: "See it on the AI page", href: "/ai#geopages", variant: "light" },
         { label: "How it is built", href: "/services/geo-landing-pages", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks the one thing that is yours rather than ours: how many areas you can genuinely fill, and how much of the material for them has to be gathered from you rather than written. The AI audit is an hour, done with you, and it ends with an honest list of areas rather than with a document.",
+        "There is no price here because the cost tracks the one thing that is yours rather than ours. How many areas you can genuinely fill. And how much of the material for them has to be gathered from you, rather than written. The AI audit is an hour, done with you. It ends with an honest list of areas rather than with a document.",
     },
   },
 

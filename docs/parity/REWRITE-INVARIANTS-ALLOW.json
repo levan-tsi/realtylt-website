@@ -1,0 +1,10 @@
+{
+  "/services/ai-clone": {
+    "numbers-": ["24", "7"],
+    "why": "The token is '24/7'. The lede was replaced byte for byte by the /ai panel's grade-6 text (COPY.clone.p, ai-page R32), which says 'follow up day and night'. Same claim in plain words; no fact lost. The digits appear nowhere else on the page."
+  },
+  "/services/ai-voice-agents": {
+    "numbers-": ["24", "7"],
+    "why": "Same '24/7' token. COPY.voice.p now reads 'picks up every call, day or night'. Same claim in plain words; no fact lost."
+  }
+}

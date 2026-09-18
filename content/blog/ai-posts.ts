@@ -713,163 +713,163 @@ What is left is usually two or three things, and it is now a shortlist rather th
 
 [[scene:funnel]]`;
 
-export const AI_CLONE_POST = `On Tuesday afternoon fourteen short videos went out, one to each person who had asked about the new listing on the ridge. Every one of them opened with that person's name. Every one of them was in your face and your voice, standing in a room you have been in, saying things you would say.
+export const AI_CLONE_POST = `On Tuesday afternoon fourteen short videos went out. One went to each person who had asked about the new listing on the ridge. Every one opened with that person's name. Every one was in your face and your voice. In each one you stand in a room you have been in, saying things you would say.
 
-You were at a closing in Poughkeepsie for most of the afternoon and you have not watched any of them.
+You were at a closing in Poughkeepsie for most of the afternoon. You have not watched any of them.
 
-Nothing went wrong. That is worth sitting with for a second, because the thing that makes this topic difficult is not the disaster, it is the ordinary Tuesday. Fourteen statements were published in your name, to fourteen people who now believe you said them, and the only person who could have caught a wrong one was in a title company's conference room signing things.
+Nothing went wrong. That is worth sitting with for a second. The hard part of this topic is not the disaster. It is the plain Tuesday. Fourteen statements went out in your name, to fourteen people who now believe you said them. The only person who could have caught a wrong one was in a title company's conference room, signing things.
 
-This article is about what a digital twin is allowed to do, which turns out to be a much more useful question than what it is able to do. The ability is not in doubt any more. Whether a particular use of somebody's face is lawful, whether the viewer has to be told, and who is left holding it when a sentence is wrong, are all questions with actual answers, and most of them are shorter than you would expect.
+This article is about what a digital twin is allowed to do. That turns out to be a far more useful question than what it is able to do. The ability is not in doubt any more. Is a given use of someone's face lawful? Does the viewer have to be told? Who is left holding it when a sentence is wrong? All three have real answers, and most are shorter than you would expect.
 
 [[scene:in-short]]
 
 ## What a digital twin actually is, and the line everything rests on
 
-A digital twin is two separate things sold as one word. There is a model of a face, built from a recording of somebody sitting still and talking, that can afterwards be made to say new words. And there is a model of a voice, built the same way from speech, that can afterwards read a script that person never read. Both are ordinary technology now, both are available to anybody, and neither is interesting on its own.
+A digital twin is two separate things sold as one word. One is a model of a face. It is built from a recording of a person sitting still and talking. It can later be made to say new words. The other is a model of a voice. It is built the same way, from speech. It can later read a script that person never read. Both are plain technology now. Both are open to anyone. Neither is interesting on its own.
 
 What is interesting is the second word. A twin of WHOM.
 
-Almost every difficult question in this subject collapses into that one, and it separates cleanly into four cases that behave completely differently in law and in practice. Confusing them is how a business acquires a problem it cannot buy its way out of, because the cheap version and the illegal version look identical from the outside and come out of exactly the same software.
+Almost every hard question in this subject folds into that one. It splits cleanly into four cases. They behave completely differently in law and in practice. Mixing them up is how a business gets a problem it cannot buy its way out of. The cheap version and the illegal version look the same from the outside. They come out of exactly the same software.
 
 [[scene:two-halves]]
 
 ## New York's answer is a statute, and it is a criminal one
 
-This is not a doctrine that grew up quietly in the courts and has to be inferred from a line of cases. It is [Civil Rights Law section 50](https://www.nysenate.gov/legislation/laws/CVR/50), the whole of it fits in a single sentence, and that sentence is short enough to read in a breath.
+This is not a rule that grew up quietly in the courts. It does not have to be worked out from a line of cases. It is [Civil Rights Law section 50](https://www.nysenate.gov/legislation/laws/CVR/50). The whole of it fits in a single sentence. That sentence is short enough to read in a breath.
 
 [[scene:pull-quote]]
 
 [[scene:plate]]
 
-Three words in that sentence do the work, and every summary of it softens at least one of them.
+Three words in that sentence do the work. Every summary of it softens at least one of them.
 
-The consent has to be WRITTEN. Not implied by a working relationship, not implied by somebody having been happy about it last year, not implied by an email that says sure. A written permission is the only kind this section recognises, and the reason that matters for a twin is that a twin is a thing you keep. Permission given for one video is not permission for a model that can make a thousand.
+The consent has to be WRITTEN. Not implied by a working relationship. Not implied by someone being happy about it last year. Not implied by an email that says sure. Written permission is the only kind this section takes. That matters for a twin because a twin is a thing you keep. Consent given for one video is not consent for a model that can make a thousand.
 
-The consent has to be obtained FIRST. You do not get to let the video go out on Tuesday and have the paperwork catch up on Friday, because the offence is complete at the moment of the use.
+The consent has to be obtained FIRST. You do not get to let the video go out on Tuesday and have the paperwork catch up on Friday. The offence is complete at the moment of the use.
 
-And the section is CRIMINAL. It says guilty of a misdemeanour, which is not how most people picture a marketing dispute. The civil half sits next door in [section 51](https://www.nysenate.gov/legislation/laws/CVR/51), which lets the person go to the supreme court of this state for an injunction and for damages, and adds that where the use was knowing, the jury in its discretion may award exemplary damages. Knowing is not a hard standard to meet when the whole product is a deliberate reproduction of a specific person.
+And the section is CRIMINAL. It says guilty of a misdemeanour. That is not how most people picture a marketing dispute. The civil half sits next door in [section 51](https://www.nysenate.gov/legislation/laws/CVR/51). It lets the person go to the supreme court of this state for an injunction and for damages. It adds that where the use was knowing, the jury in its discretion may award exemplary damages. Exemplary damages are an extra award meant to punish. Knowing is not a hard standard to meet here. The whole product is a deliberate copy of one named person.
 
-Two practical readings for somebody running a brokerage. If the face is yours, this section is a paperwork exercise you do once and file, and the paperwork is worth having anyway because it forces the questions about scope that nobody asks otherwise. If the face belongs to anybody else in your office, it is the same exercise with a second signature on it, and it should say what happens to the model when they leave, because section 50 does not stop applying on the day somebody changes firms.
+Two plain readings for someone running a brokerage. If the face is yours, this section is a paperwork job you do once and file. The paperwork is worth having anyway. It forces the questions about scope that nobody asks otherwise. If the face belongs to anyone else in your office, it is the same job with a second signature on it. It should say what happens to the model when they leave. Section 50 does not stop applying on the day a person changes firms.
 
-Nothing in this article is legal advice, and this is exactly the paragraph to take to somebody whose advice it is.
+Nothing in this article is legal advice. This is exactly the paragraph to take to someone whose advice it is.
 
 ## What happens to a likeness after the person has died
 
-The assumption is that death ends it. In New York the opposite is closer to true, and the statute that says so is recent enough to be easy to have missed.
+The assumption is that death ends it. In New York the opposite is closer to true. The statute that says so is new enough to be easy to have missed.
 
-[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) has been in force since 2020, on the version history its own page carries, and is titled, plainly, right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness, defining a deceased personality as a person domiciled in this state at death whose likeness had commercial value at the time of, or because of, their death. And it does something the older sections never had to: it defines the thing this article is about.
+[Civil Rights Law section 50-f](https://www.nysenate.gov/legislation/laws/CVR/50-F) has been in force since 2020, on the version history its own page carries. Its title is plain: right of publicity. It creates a property right in a deceased personality's name, voice, signature, photograph and likeness. It defines a deceased personality as a person domiciled in this state at death. Their likeness must have had commercial value at the time of, or because of, their death. And the statute does something the older sections never had to. It defines the thing this article is about.
 
-A digital replica, in the statute's own words, is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition and the second half is the part people miss. Altering what somebody actually said, past the point where it is still their performance, is inside the definition as surely as inventing it from nothing.
+Here is how it puts that, in its own words. A digital replica is a newly created, computer generated, highly realistic electronic representation that is readily identifiable as the voice or visual likeness of an individual, embodied in a sound recording, image, audiovisual work or transmission, in which either the individual did not actually perform, or did perform but the fundamental character of the performance has been materially altered. That is a careful definition. The second half is the part people miss. Changing what a person really said, past the point where it is still their performance, is inside the definition. Inventing it from nothing is no more caught than that is.
 
-The mechanics matter less than the fact that there are any, and three of them are worth carrying. The rights are property, so they are inherited, sold and licensed like anything else. Anybody claiming to hold them can record that claim on a public register kept by the secretary of state, which means there is somewhere to look. And the right runs for forty years after the death, with damages starting at two thousand dollars or the actual loss, whichever is larger.
+How it works matters less than the fact that it works at all. Three parts are worth carrying. The rights are property, so they are inherited, sold and licensed like anything else. Anyone claiming to hold them can record that claim on a public register kept by the secretary of state. So there is somewhere to look. And the right runs for forty years after the death. Damages start at two thousand dollars or the real loss, whichever is larger.
 
-There are broad exemptions, and they are the reason a documentary or a satire is not caught: works of political or newsworthy value, parody, satire, commentary, criticism, biographical work with some degree of fictionalisation. What is not exempted is the case that would tempt a business, which is using a likeness to sell something.
+There are broad exemptions. They are the reason a documentary or a satire is not caught. The statute names works of political or newsworthy value, parody, satire, commentary, criticism, biographical work with some degree of fictionalisation. What is not exempted is the case that would tempt a business. That case is using a likeness to sell something.
 
-So the honest summary for a brokerage is short. A dead person's face is not free, in this state it is somebody's property for forty years, there is a register you could check, and none of that is a project you want to be near.
+So the honest summary for a brokerage is short. A dead person's face is not free. In this state it is somebody's property for forty years. There is a register you could check. And none of that is a project you want to be near.
 
 ## The federal rule that covers businesses and does not yet cover people
 
-There is a federal rule about impersonation and it is newer than most of the software. It is also narrower than almost everybody assumes, and the gap is worth knowing precisely rather than roughly.
+There is a federal rule about impersonation. It is newer than most of the software. It is also narrower than almost everybody assumes. The gap is worth knowing precisely rather than roughly.
 
-[16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) was published in March 2024 and took effect on the first of April, under the title Rule on Impersonation of Government and Businesses. It has three short sections. It makes it an unfair or deceptive act to materially and falsely pose as a government entity or officer, or as a business or officer of one, in or affecting commerce, and equally to materially misrepresent affiliation with, endorsement by or sponsorship by either. Its definitions section is where the reach is: officer includes executives, officials, employees, and agents.
+[16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) was published in March 2024. It took effect on the first of April. Its title is Rule on Impersonation of Government and Businesses. It has three short sections. It makes it an unfair or deceptive act to materially and falsely pose as a government entity or officer, or as a business or officer of one, in or affecting commerce. The same goes for anyone who would materially misrepresent affiliation with, endorsement by or sponsorship by either. Its definitions section is where the reach is. There, officer includes executives, officials, employees, and agents.
 
-Read that against your own trade for a moment. A video that appears to be an agent of a brokerage, made by somebody who is not, is already within the plain words of this rule, because an agent of a business is an officer of it for these purposes.
+Read that against your own trade for a moment. A video that appears to be an agent of a brokerage, made by a person who is not, is already inside the plain words of this rule. An agent of a business is an officer of it for these purposes.
 
-What the rule does not cover is an individual, and that is not an oversight. On the same day the final rule was published, the Commission published a [supplementary notice of proposed rulemaking](https://www.federalregister.gov/documents/2024/03/01/2024-03793/trade-regulation-rule-on-impersonation-of-government-and-businesses) proposing to add exactly that. The proposal would rename the rule to cover individuals, define an individual as a person, entity or party, whether real or fictitious, other than a business or government, and add a new section making it a violation to materially and falsely pose as an individual in or affecting commerce.
+What the rule does not cover is an individual. That is not an oversight. On the same day the final rule was published, the Commission put out a [supplementary notice of proposed rulemaking](https://www.federalregister.gov/documents/2024/03/01/2024-03793/trade-regulation-rule-on-impersonation-of-government-and-businesses). It proposes to add exactly that. It would rename the rule to cover individuals. It would define an individual as a person, entity or party, whether real or fictitious, other than a business or government. And it would add a new section making it a violation to materially and falsely pose as an individual in or affecting commerce.
 
-The second half of that proposal is the one this business has to read carefully, because it is about us rather than about you. The Commission also proposed a means and instrumentalities section: that it would be a violation to provide goods or services with knowledge or reason to know that those goods or services will be used to impersonate. A rule in those terms would put the people who build a likeness inside the same rule as the people who publish one, and the standard is not intent, it is reason to know.
+The second half of that proposal is the one this business has to read with care. It is about us rather than about you. The Commission also proposed a means and instrumentalities section. Under it, it would be a violation to provide goods or services with knowledge or reason to know that those goods or services will be used to impersonate. A rule in those terms would put the people who build a likeness inside the same rule as the people who publish one. And the standard is not intent. It is reason to know.
 
-One thing has to be said plainly because it is the sort of claim that ages badly on a website. As of this writing, that proposal is still a proposal. The text in force at [16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) today is the three sections about government and businesses, and it has no section 461.4 in it. That was checked against the Code of Federal Regulations itself rather than against an article about it, and it is the kind of thing that could change between this being written and you reading it.
+One thing has to be said plainly, because it is the sort of claim that ages badly on a website. As of this writing, that proposal is still a proposal. The text in force at [16 CFR part 461](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-461) today is the three sections about government and businesses. It has no section 461.4 in it. That was checked against the Code of Federal Regulations itself, not against an article about it. And it is the kind of thing that could change between this being written and you reading it.
 
 ## Nobody can reliably tell, and that is measured rather than assumed
 
-There is a comfortable belief in this industry that a client would know. It is the belief a great deal of the informal ethics of AI video quietly rests on, and unlike most of what gets said in this area it has actually been tested.
+There is a comfortable belief in this trade that a client would know. A great deal of the informal ethics of AI video quietly rests on it. And unlike most of what gets said here, it has been tested.
 
-Two researchers at Lancaster University and the University of California, Berkeley ran a set of perceptual studies with real participants and published them in the Proceedings of the National Academy of Sciences in 2022. They took four hundred synthesised faces and matched each one to a real photograph of a similar person, then asked people to sort them.
+Two researchers ran a set of perceptual studies with real people. They are at Lancaster University and the University of California, Berkeley. They published the work in the Proceedings of the National Academy of Sciences in 2022. They took four hundred synthesised faces. They matched each one to a real photograph of a similar person. Then they asked people to sort them.
 
 [[scene:tell-apart]]
 
-The result is not that people are bad at this. It is that there is nothing there to be good at. The trained group had been shown what to look for and were told after every single answer whether they had got it right, which is about as favourable a condition as anybody could set up, and they ended the session no better than they started it. The paper attributes that to some of the synthetic faces simply containing no perceptible artefact to find.
+The result is not that people are bad at this. It is that there is nothing there to be good at. The trained group had been shown what to look for. They were told after every single answer whether they had got it right. That is about as kind a setup as anyone could build. They ended the session no better than they started it. The paper puts that down to some of the synthetic faces simply having no perceptible artefact to find.
 
-The natural response is that a machine should do the checking instead. That has been tested too, at a scale no individual company could manage.
+The natural response is that a machine should do the checking instead. That has been tested too, at a scale no single firm could manage.
 
-In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips made from three thousand four hundred and twenty six paid actors, and ran a public competition on it. The dataset is worth a sentence of its own for a reason that belongs on this page: the authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it, and note in the same paper that many previously released datasets in this field did not guarantee that. Two thousand one hundred and fourteen teams entered.
+In 2020, Facebook AI built and released a dataset of over one hundred thousand video clips. They were made from three thousand four hundred and twenty six paid actors. Facebook AI then ran a public competition on it. The dataset is worth a sentence of its own, for a reason that belongs on this page. The authors record that all recorded subjects agreed to participate in and have their likenesses modified during the construction of it. They note in the same paper that many earlier datasets in this field did not guarantee that. Two thousand one hundred and fourteen teams entered.
 
 [[scene:detector]]
 
-The organisers explain why they report precision rather than accuracy, and their reason is the useful part for a business. In realistic distributions, they write, the ratio of faked videos to real ones may be less than one in a million. When almost everything is genuine, a detector that is very accurate still produces far more false alarms than real catches, because there is so much more innocent material for it to be wrong about. That is a permanent property of the arithmetic rather than a temporary weakness in the models.
+The organisers explain why they report precision rather than accuracy. Their reason is the useful part for a business. In realistic distributions, they write, the ratio of faked videos to real ones may be less than one in a million. When almost everything is genuine, a very accurate detector still throws far more false alarms than real catches. There is simply so much more innocent material for it to be wrong about. That is a fixed property of the arithmetic. It is not a passing weakness in the models.
 
-Put the two studies together and one conclusion falls out that nothing since has softened. Neither the audience nor the software can be relied upon to work out what a video is. Which leaves exactly one party who reliably knows.
+Put the two studies together and one conclusion falls out. Nothing since has softened it. Neither the audience nor the software can be relied on to work out what a video is. That leaves exactly one party who reliably knows.
 
 ## So the telling has to come from you
 
-Once you accept that the viewer cannot tell, the disclosure question stops being a matter of taste and starts being the only mechanism there is. The good news is that it is cheap. The interesting news is that there is a technical standard for the durable version of it, and reading what that standard says about itself is more instructive than reading anything written about it.
+Once you accept that the viewer cannot tell, disclosure stops being a matter of taste. It becomes the only mechanism there is. The good news is that it is cheap. The odd news is that there is a technical standard for the lasting version of it. Reading what that standard says about itself teaches you more than anything written about it.
 
-The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html) for attaching signed, tamper evident provenance to a media file. It is a serious piece of engineering with serious companies behind it, and the useful thing about reading the document itself is how carefully it describes its own limits.
+The Coalition for Content Provenance and Authenticity publishes an open [technical specification](https://c2pa.org/specifications/specifications/2.1/specs/C2PA_Specification.html). It attaches signed, tamper evident provenance to a media file. Provenance here means a record of where the file came from and what was done to it. It is a serious piece of engineering with serious firms behind it. The useful thing about reading the document is how carefully it sets out its own limits.
 
 [[scene:credentials]]
 
-The sentence quoted in the middle of that scene is from the specification's own scope section, and it is worth noticing what a standards body chooses to refuse. It will not tell you whether provenance data is good or bad. It will tell you whether the assertions in it are correctly formed and have not been tampered with, and it says elsewhere that the basis for any trust decision is the identity of whoever signed.
+The sentence quoted in the middle of that scene is from the specification's own scope section. It is worth noticing what a standards body chooses to refuse. It will not tell you whether provenance data is good or bad. It will tell you whether the assertions in it are correctly formed and have not been tampered with. And it says elsewhere that the basis for any trust decision is the identity of whoever signed.
 
-That is a standard describing its own limits accurately, and it is the reason the technical answer and the practical answer are different. The technical answer is a credential that only works if somebody chooses to inspect it. The practical answer is a sentence at the start of the video in which a person says, in their own words, that this was recorded once and assembled by software. It costs four seconds, it cannot be stripped, and it converts the entire problem from something a viewer might discover into something you told them.
+That is a standard setting out its own limits with care. It is the reason the technical answer and the practical answer are different. The technical answer is a credential that only works if someone chooses to inspect it. The practical answer is a sentence at the start of the video. In it a person says, in their own words, that this was recorded once and put together by software. It costs four seconds. It cannot be stripped. And it turns the whole problem from something a viewer might discover into something you told them.
 
 ## What we will and will not build
 
-Everything above is about the world. This section is about us, and it is the one thing on this page that needs no citation because it is a commitment rather than a claim.
+Everything above is about the world. This section is about us. It is the one thing on this page that needs no citation. It is a commitment rather than a claim.
 
 [[scene:promise]]
 
-The /ai page already says that we do not build agents that pretend to be a specific human being, and that was written about voice on a telephone. It applies with more force to a face. A likeness of the person who sat in front of the camera and agreed in writing is a tool. A likeness of anybody else is the thing four separate bodies of law are pointed at, and no amount of the client being a good one moves that answer.
+The /ai page already says that we do not build agents that pretend to be a specific human being. That was written about voice on a telephone. It applies with more force to a face. A likeness of the person who sat in front of the camera and agreed in writing is a tool. A likeness of anyone else is the thing four separate bodies of law are pointed at. No amount of the client being a good one moves that answer.
 
-What that means concretely is a short list of things that are not negotiable, and the useful way to read it is as an order rather than as a policy. Each step below only makes sense if the one before it happened, which is why the ones at the end are the ones that get skipped.
+In practice that means a short list of things that are not negotiable. The useful way to read it is as an order rather than as a policy. Each step below only makes sense if the one before it happened. That is why the ones at the end are the ones that get skipped.
 
 [[scene:consent-path]]
 
 ## What a twin honestly does for a brokerage
 
-Strip out the excitement and there are three real jobs, and all three are smaller and more specific than the pitch.
+Strip out the excitement and three real jobs are left. All three are smaller and narrower than the pitch.
 
-It removes the recording session from things that were always scripted anyway. A market note, a new listing walkthrough, a short explanation of what happens after an offer is accepted. These are things where the words matter and the performance does not, which is exactly the case where a twin loses nothing.
+It takes the recording session out of things that were always scripted anyway. A market note. A new listing walkthrough. A short account of what happens after an offer is accepted. In all of these the words matter and the performance does not. That is exactly the case where a twin loses nothing.
 
-It makes an individually addressed version affordable. Not better than a personal video, just possible at a count where a personal video is not. This is the honest version of the pitch: fourteen people get something with their own name in it instead of one blast, and the alternative was never fourteen real recordings, it was one email.
+It makes a version addressed to one person affordable. Not better than a personal video. Just possible at a count where a personal video is not. This is the honest version of the pitch. Fourteen people get something with their own name in it instead of one blast. And the other option was never fourteen real recordings. It was one email.
 
-And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read. That is why so many agents intend to record more than they do.
+And it gets a face onto material that would otherwise have been text. A page of written follow up and a person saying the same words are not equally likely to be read. That is why so many agents mean to record more than they do.
 
-What none of those three needs is for anybody to be deceived. Every one of them survives being labelled, which is a good test of whether a use is a legitimate one: if telling the viewer would ruin it, the use was never about saving you a recording session.
+What none of those three needs is for anyone to be deceived. Every one of them survives being labelled. That is a good test of whether a use is a fair one. If telling the viewer would ruin it, the use was never about saving you a recording session.
 
 ## The cost nobody quotes, which is watching them
 
-Here is the part that does not appear in any pitch, and it is the reason the fourteen videos at the top of this page are the story rather than an anecdote.
+Here is the part that does not appear in any pitch. It is the reason the fourteen videos at the top of this page are the story rather than a stray tale.
 
-A twin does not reduce the amount of judgment a business has to apply. It moves that judgment from before the recording to after it. When you record something yourself, the checking happens automatically, because you cannot say a sentence without hearing it. When a script is generated and a model reads it, nothing about the process forces anybody to listen to the result, and the volume that makes the thing worth having is precisely the volume that makes reviewing it feel disproportionate.
+A twin does not cut the amount of judgment a business has to apply. It moves that judgment from before the recording to after it. When you record something yourself, the checking happens by itself. You cannot say a sentence without hearing it. When a script is generated and a model reads it, nothing in the process forces anyone to listen to the result. And the volume that makes the thing worth having is exactly the volume that makes reviewing it feel out of proportion.
 
 [[scene:videos-calculator]]
 
-What actually happens to that number is quieter than a refusal. The reviewing gets done for the first fortnight, then it gets done sometimes, then somebody says the last forty were all fine. Nobody ever decided to stop.
+What really happens to that number is quieter than a refusal. The reviewing gets done for the first fortnight. Then it gets done sometimes. Then someone says the last forty were all fine. Nobody ever decided to stop.
 
-The fix is not technology and it is not a bigger budget. It is naming a person and a moment. Somebody watches, before it sends. Where no one has been given that duty by name, the honest response is to produce fewer videos rather than to pretend the watching is happening.
+The fix is not technology. It is not a bigger budget either. It is naming a person and a moment. Somebody watches, before it sends. Where no one has been given that duty by name, the honest answer is to make fewer videos. Do not pretend the watching is happening.
 
 ## What nobody has measured, and what this page will not print because of it
 
-Every article about personalised video carries a number about how much better it performs. This one does not, and the absence is deliberate enough to be worth explaining.
+Every article about personalised video carries a number about how much better it performs. This one does not. The gap is deliberate enough to be worth explaining.
 
-The figures in circulation for what a personalised or AI generated video does to a reply rate, a click rate or a conversion rate come, without exception among the ones that could be traced, from companies that sell video software, and none of them states a sample, a method or a control. That is the same pattern as the data broker figures another article on this site had to refuse, and the same answer applies: a number with no method behind it is not a small number, it is not a number.
+Figures do circulate for what a personalised or AI generated video does to a reply rate, a click rate or a conversion rate. Among the ones that could be traced, every single one comes from a firm that sells video software. None of them states a sample, a method or a control. That is the same pattern as the data broker figures another article on this site had to refuse. The same answer applies. A number with no method behind it is not a small number. It is not a number.
 
-There is a second gap and it is more specific. The perceptual research quoted above measures whether people can sort synthetic faces from real ones. It does not measure whether your own clients, who have met you, would recognise a video of you as synthetic. Familiarity is a different task and it might cut either way. Nobody has published it, so this page says nothing about it.
+There is a second gap, and it is narrower. The perceptual research quoted above measures whether people can sort synthetic faces from real ones. It does not measure whether your own clients, who have met you, would spot a video of you as synthetic. Knowing a face is a different task and it might cut either way. Nobody has published it, so this page says nothing about it.
 
-And there is a third thing this article deliberately does not describe, which is how any particular avatar is produced, what software makes it, or how convincing the result is. Those are questions about a specific build rather than about the subject, and an article that answered them would be a product sheet wearing an argument.
+And there is a third thing this article does not describe, on purpose. That is how any one avatar is produced, what software makes it, or how convincing the result is. Those are questions about a specific build rather than about the subject. An article that answered them would be a product sheet wearing an argument.
 
 ## How to test one before you commission it
 
-Four questions, none of them technical, and the first two are about paper.
+Four questions, none of them technical. The first two are about paper.
 
-Ask to see the consent document. Not a description of it, the document. It should name the person, say what may be made from the recording, say how long that permission lasts, and say what happens when they revoke it. If the answer is that consent is handled in the terms of service of a tool, that is not a consent document, that is a company protecting itself.
+Ask to see the consent document. Not a description of it. The document. It should name the person. It should say what may be made from the recording. It should say how long that permission lasts. And it should say what happens when they revoke it. If the answer is that consent is handled in the terms of service of a tool, that is not a consent document. That is a firm protecting itself.
 
-Ask what happens when somebody leaves. A brokerage that builds twins of four agents has built four assets that belong to four people, and two of those people will work somewhere else within a few years. The right answer involves deletion and it involves somebody being responsible for it.
+Ask what happens when someone leaves. A brokerage that builds twins of four agents has built four assets that belong to four people. Two of those people will work somewhere else within a few years. The right answer involves deletion. It also involves a named person being responsible for it.
 
-Ask who decides what it is allowed to say. Watch for whether the answer describes a person or a prompt. Both are real answers, but only one of them is a person, and the sentences that get a brokerage in trouble are about schools, boundaries, taxes and permits rather than about anything the model would consider risky.
+Ask who decides what it is allowed to say. Watch for whether the answer describes a person or a prompt. Both are real answers, but only one of them is a person. The sentences that get a brokerage in trouble are about schools, boundaries, taxes and permits. They are not about anything the model would think risky.
 
-Ask how the viewer finds out. The correct answer is a sentence in the video. Anything about metadata or credentials as the primary mechanism is a description of something no viewer will ever see.
+Ask how the viewer finds out. The right answer is a sentence in the video. Anything that leans on metadata or credentials as the main mechanism describes something no viewer will ever see.
 
 [[scene:offer]]
 
@@ -877,25 +877,25 @@ Ask how the viewer finds out. The correct answer is a sentence in the video. Any
 
 ## What it costs, and how long it takes
 
-This divides into a part that is easy to quote and a part that decides whether the money was well spent, and only the first part ever appears in a proposal.
+This divides in two. One part is easy to quote. The other decides whether the money was well spent. Only the first part ever appears in a proposal.
 
-The predictable half is the recording session and the model. It is a short session, it happens once, and the ongoing cost is a per minute or per video charge from whichever platform renders the result. Vendor prices in this category move quickly and are quoted per product tier, so no figure is printed here, and what actually drives yours is volume and length rather than anything clever.
+The predictable half is the recording session and the model. It is a short session. It happens once. The running cost is a per minute or per video charge from whichever platform renders the result. Vendor prices here move quickly, and are quoted per product tier, so no figure is printed. What really drives yours is volume and length rather than anything clever.
 
-The unpredictable half is everything either side of it. Deciding what the twin may say, writing the script boundaries so they hold up when a listing has something unusual about it, and building the review step into the day so it survives month three. That work is a conversation rather than a build, and it decides whether you end up with a library of useful videos or a library nobody has watched.
+The unpredictable half is everything either side of it. Deciding what the twin may say. Writing the script boundaries so they hold up when a listing has something odd about it. And building the review step into the day so it survives month three. That work is a talk rather than a build. It decides whether you end up with a library of useful videos or a library nobody has watched.
 
-The recurring cost that is genuinely easy to underestimate is attention, and the calculator above is the honest way to size it. Everything else in this topic scales with volume and gets cheaper. That one scales with volume and does not.
+The running cost that is truly easy to underrate is attention. The calculator above is the honest way to size it. Everything else in this topic scales with volume and gets cheaper. That one scales with volume and does not.
 
 ## What it does not do, and should not pretend to
 
-It does not make you present. A twin can deliver information and it cannot notice that somebody is worried, which is most of what an agent is actually for in the moments that matter.
+It does not make you present. A twin can deliver information. It cannot notice that someone is worried. That noticing is most of what an agent is really for in the moments that matter.
 
-It does not speak for anybody who has not agreed in writing. That is a legal boundary in this state before it is a policy of ours, and the statute attached to it is a criminal one.
+It does not speak for anyone who has not agreed in writing. That is a legal line in this state before it is a policy of ours. And the statute attached to it is a criminal one.
 
-It does not decide what is safe to say. That list has to exist before anything is recorded, and writing it is a job for a person who has been in the transactions.
+It does not decide what is safe to say. That list has to exist before anything is recorded. Writing it is a job for a person who has been in the deals.
 
-It does not remove the need for somebody to watch what goes out. It increases that need, because it increases the volume, and a build that is working perfectly goes wrong here more often than it goes wrong anywhere else.
+It does not remove the need for someone to watch what goes out. It raises that need, because it raises the volume. A build that is working perfectly goes wrong here more often than anywhere else.
 
-And it does not stay honest by itself. A twin used with a sentence of disclosure is a tool. The same twin without that sentence is the same object doing something else entirely, and nothing in the software knows the difference.
+And it does not stay honest by itself. A twin used with a sentence of disclosure is a tool. The same twin without that sentence is the same object doing something else entirely. Nothing in the software knows the difference.
 
 [[scene:wasted]]
 
@@ -903,43 +903,43 @@ And it does not stay honest by itself. A twin used with a sentence of disclosure
 
 ### What is an AI clone for a real estate agent?
 
-It is a model of your face and a model of your voice, built from a recording of you, that can afterwards deliver new scripts as video without you being in front of a camera. It exists to remove the recording session from material that was always going to be scripted anyway. What it does not do is give you a second person: everything it says still has to be decided, bounded and checked by you.
+It is a model of your face and a model of your voice, built from a recording of you. It can later deliver new scripts as video without you being in front of a camera. It exists to take the recording session out of material that was always going to be scripted anyway. What it does not do is give you a second person. Everything it says still has to be decided, bounded and checked by you.
 
 ### Is it legal to use an AI video of myself in my marketing?
 
-Yes, and the paperwork is worth doing properly anyway. New York Civil Rights Law section 50 requires written consent obtained in advance before a living person's likeness or voice is used for advertising or trade, and when the person is you that is a document you sign once. Do it properly rather than informally, because a consent for one video is not a consent for a model that can produce a thousand, and the useful part of the exercise is being forced to write down what may be made.
+Yes, and the paperwork is worth doing properly anyway. New York Civil Rights Law section 50 requires written consent obtained in advance before a living person's likeness or voice is used for advertising or trade. When the person is you, that is a document you sign once. Do it properly rather than informally. A consent for one video is not a consent for a model that can make a thousand. The useful part is that it forces you to write down what may be made.
 
 ### Do I have to tell people the video was made with AI?
 
-Treat it as required regardless of what any particular rule says today, because the research is clear that the viewer cannot work it out. A single spoken sentence at the start costs four seconds and converts something a person could discover into something you told them. There are technical provenance standards for marking a file as machine generated, and they are useful, but they are not a substitute: no client is going to inspect a credential.
+Treat it as required whatever any particular rule says today. The research is clear that the viewer cannot work it out. A single spoken sentence at the start costs four seconds. It turns something a person could discover into something you told them. There are technical provenance standards for marking a file as machine generated, and they are useful. But they are not a substitute, because no client is going to inspect a credential.
 
 ### Can I use a video of an agent after they have left my brokerage?
 
-Ask, and get the answer in writing before you need it. Their likeness is theirs, not the firm's, and section 50 keeps applying after they change firms. The practical version is that the consent document should have said what happens on departure, and if it did not, the safe assumption is that the permission ended with the relationship.
+Ask, and get the answer in writing before you need it. Their likeness is theirs, not the firm's. Section 50 keeps applying after they change firms. In practice the consent document should have said what happens when they leave. If it did not, the safe assumption is that the permission ended with the relationship.
 
 ### What about a testimonial in a client's voice or face?
 
-A real client, recorded with their written permission, is ordinary marketing. A synthesised version of a client, or words they did not say assembled into their voice, is not a grey area in this state. The digital replica definition in section 50-f explicitly covers materially altering a performance somebody actually gave, so editing what they said into something better is inside the same territory as inventing it.
+A real client, recorded with their written permission, is plain marketing. A made up version of a client is not a grey area in this state. Nor are words they did not say, assembled into their voice. The digital replica definition in section 50-f expressly covers materially altering a performance a person really gave. So editing what they said into something better sits in the same territory as inventing it.
 
 ### Will my clients be able to tell it is not really me?
 
-Assume not. In published research, 315 people sorting synthetic faces from real ones averaged 48.2 percent against a 50 percent coin flip, and 219 people who were trained and told the answer after every attempt reached 59.0 percent and got no better with practice. Those were still images of strangers rather than video of somebody familiar, so the transfer is not exact, and there is no published measurement of the familiar case. Plan for the version where nobody notices.
+Assume not. In published research, 315 people sorted synthetic faces from real ones and averaged 48.2 percent, against a 50 percent coin flip. Another 219 people were trained and told the answer after every attempt. That group reached 59.0 percent. Practice made them no better. Those were still images of strangers, not video of a face you know. So the transfer is not exact, and nobody has published a measurement of the familiar case. Plan for the version where nobody notices.
 
 ### Who owns the model of my face and my voice?
 
-Split that in two, because the halves have different answers and running them together is how this gets sold wrong. The avatar and the voice engine belong to the vendors who built them, and a brokerage licenses the use of a platform the same way it licenses everything else it did not build. Nobody is selling you a model you own. What is yours is the material at both ends: your likeness, the recording the model was built from, the scripts, and the finished videos. So the three lines to get in writing before the recording happens are not about owning the software. They are that your likeness and your recording are used only on your own content, that they are not licensed on to anybody else or used to build anything for anybody else, and that both are deleted on request. A vendor unwilling to write those three lines down has told you something useful.
+Split that in two. The halves have different answers, and running them together is how this gets sold wrong. The avatar and the voice engine belong to the vendors who built them. A brokerage licenses the use of a platform the same way it licenses everything else it did not build. Nobody is selling you a model you own. What is yours is the material at both ends. That is your likeness, the recording the model was built from, the scripts, and the finished videos. So the three lines to get in writing before the recording happens are not about owning the software. First, that your likeness and your recording are used only on your own content. Second, that they are not licensed on to anybody else, or used to build anything for anybody else. Third, that both are deleted on request. A vendor who will not write those three lines down has told you something useful.
 
 ### Is this worth it for a one or two person brokerage?
 
-Sometimes, and the test is not size. It is whether you already have material that is scripted, repeated and currently not being recorded because the recording is the bottleneck. If the honest answer is that you would not have made these videos at all, a twin is worth considering. If the answer is that you would have recorded them yourself and just have not, the twin is being asked to solve a discipline problem, which is not what it is.
+Sometimes, and the test is not size. It is whether you already have material that is scripted, repeated, and not being recorded because the recording is the bottleneck. If the honest answer is that you would not have made these videos at all, a twin is worth thinking about. If the answer is that you would have recorded them yourself and just have not, the twin is being asked to solve a discipline problem. That is not what it is.
 
 ## What to do about it
 
 Take twenty minutes before you take a camera.
 
-Write down the three things you would put on video every week if recording cost nothing. Then write, beside each one, the single sentence in it that would be expensive to get wrong. A tax figure, a school, a boundary, a timeline, a condition of the property.
+Write down the three things you would put on video every week if recording cost nothing. Then write, beside each one, the single sentence in it that would be costly to get wrong. A tax figure. A school. A boundary. A timeline. A condition of the property.
 
-That second column is the actual specification for the build, and it is the part no vendor will write for you. It says which sentences a script may generate freely, which ones have to come from a source rather than from a model, and which ones a person has to approve before anything sends.
+That second column is the real specification for the build. It is the part no vendor will write for you. It says which sentences a script may generate freely. It says which ones have to come from a source rather than from a model. And it says which ones a person has to approve before anything sends.
 
 Then decide who watches. Not whether. Who.
 
@@ -2092,15 +2092,15 @@ That runs against how this category is sold, because a platform priced per conta
 [[scene:funnel]]
 `;
 
-export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town, every one of them owned by somebody who does not live there, and for a little over half of them a mobile phone number sitting in the next column along.
+export const SKIP_TRACING_POST = `The list arrived on a Monday and it was a good one. Three hundred and twelve properties in a single town. Every one of them owned by someone who does not live there. And for a little over half of them, a mobile phone number sat in the next column along.
 
-You worked down it the way anybody would. No answer. No answer. A voicemail. A man who was perfectly pleasant and said no. Then a woman picked up on the fourth ring, listened to the first two sentences, and asked a question in the middle of an ordinary reply.
+You worked down it the way anyone would. No answer. No answer. A voicemail. A man who was perfectly pleasant and said no. Then a woman picked up on the fourth ring. She listened to the first two sentences. And she asked a question in the middle of a plain reply.
 
 "Can I ask where you got this number?"
 
-You did not know. Not in the sense of not remembering, in the sense that there was nobody in the chain you could have asked. It came off the list. The list came out of a tool. The tool got it from somewhere. You said something about public records, which was probably half true, and she thanked you and hung up, and the call had been over for some time before the phone went down.
+You did not know. Not in the sense of not remembering. In the sense that there was nobody in the chain you could have asked. It came off the list. The list came out of a tool. The tool got it from somewhere. You said something about public records, which was probably half true. She thanked you and hung up. The call had been over for some time before the phone went down.
 
-That question is the subject of this article. Not because it is awkward, although it is. Because it is the same question two federal statutes ask, and they ask it of you rather than of the tool.
+That question is the subject of this article. Not because it is awkward, although it is. It is because two federal statutes ask the same question. And they ask it of you rather than of the tool.
 
 [[scene:in-short]]
 
@@ -2108,167 +2108,167 @@ That question is the subject of this article. Not because it is awkward, althoug
 
 ## What skip tracing is, and why it is a chain rather than a lookup
 
-Skip tracing is old and it has a plain meaning. It is the work of finding somebody who cannot be reached at the address you have for them. The name comes from debt collection, where the person had skipped, and the tracer's job was to find where they had gone. In real estate it does something narrower and less dramatic: you have a property, you want to speak to whoever owns it, and the public record gives you a name and a mailing address that may be years out of date and almost never gives you a telephone number.
+Skip tracing is old and it has a plain meaning. It is the work of finding someone who cannot be reached at the address you have for them. The name comes from debt collection. The person had skipped, and the tracer's job was to find where they had gone. In real estate it does something narrower and less dramatic. You have a property. You want to speak to whoever owns it. The public record gives you a name and a mailing address that may be years out of date. It almost never gives you a telephone number.
 
-The modern version is sold as a lookup. You put an address in and a name, a phone number and an email address come out, and the whole thing takes under a second, which makes it feel like consulting a directory. It is not a directory. Underneath, it is a chain of joins between files that were each assembled for their own reasons: a deed office, a credit bureau's identity records, a telephone carrier's assignments, an aggregator that bought some of them and licensed the rest.
+The modern version is sold as a lookup. You put an address in. A name, a phone number and an email address come out. The whole thing takes under a second, which makes it feel like reading a list. It is not a list. Underneath, it is a chain of joins between files. Each of those files was built for its own reasons. A deed office. A credit bureau's identity records. A telephone carrier's assignments. An aggregator that bought some of them and licensed the rest.
 
-Two things follow from that shape, and both of them matter more than the accuracy question everybody asks first.
+Two things follow from that shape. Both matter more than the accuracy question everyone asks first.
 
-The first is that the answer is a guess with a confidence attached, and the confidence is invisible. Every join in that chain is a decision about whether two records describe the same person, and those decisions are made by a system that has never met either of them. We have written about the arithmetic of that decision at length in [the article on two way CRM sync](/blog/crm-sync-real-estate-duplicate-contact-records), because it is the same problem, and the thing worth carrying over here is that a system tuned to return an answer for as many rows as possible is tuned to merge more aggressively, and merging more aggressively means more of the answers are the wrong person.
+The first is that the answer is a guess with a confidence attached, and you cannot see the confidence. Every join in that chain is a decision about whether two records describe the same person. Those decisions are made by a system that has never met either of them. We have written about the arithmetic of that decision at length in [the article on two way CRM sync](/blog/crm-sync-real-estate-duplicate-contact-records). It is the same problem. The part worth carrying over here is short. A system tuned to return an answer for as many rows as possible is tuned to merge harder. Merging harder means more of the answers are the wrong person.
 
-The second is that every link in that chain is a place where somebody, at some point, had to have a reason to release the information. The law that governs that is not the law everybody in this trade talks about. It is not about the call at all. It is about the acquisition.
+The second is about permission. Every link in that chain is a place where someone had to have a reason to release the information. The law that governs that is not the law everyone in this trade talks about. It is not about the call at all. It is about the acquisition, which is how the information was obtained in the first place.
 
 ## The record is not stale because anybody was careless
 
-Before the law, the reason the trade exists, because it is worth being precise about what is actually broken.
+Before the law, here is the reason the trade exists. It is worth being exact about what is actually broken.
 
-The county knows who owns the house because somebody recorded a deed. That record is durable and it is nobody's job to keep it current beyond ownership: it tells you who holds title, and if the owner moved out of state years ago the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
+The county knows who owns the house because someone recorded a deed. That record lasts, and it is nobody's job to keep it current beyond ownership. It tells you who holds title. If the owner moved out of state years ago, the roll may still carry the mailing address they gave at closing. Nothing about that is a failure. It is a record of a transaction, not a record of a person.
 
 Meanwhile the person moved.
 
 [[scene:movers]]
 
-The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county, which produces the hardest version of this problem: the record is wrong, the person is still local, and there are other people in the same county with the same surname. Think about what that does to a matching system. The candidate and the target now agree on surname, on county and on a good deal else, which is a great deal of agreement without any of it being evidence that they are the same person.
+The chart is the finding, and it is the first bar rather than the total. Most people who change address do not go far. They stay in the same county. That produces the hardest version of this problem. The record is wrong. The person is still local. And there are other people in the same county with the same surname. Think about what that does to a matching system. The candidate and the target now agree on surname, on county and on a good deal else. That is a great deal of agreement. None of it is evidence that they are the same person.
 
-There is a second thing in that chart, and it is in the note under it. A move breaks an address. It does not automatically break a phone number, and the reason is worth stating carefully because the usual explanation is wrong.
+There is a second thing in that chart, and it is in the note under it. A move breaks an address. It does not automatically break a phone number. The reason is worth stating carefully, because the usual explanation is wrong.
 
-People say numbers survive a move because numbers are portable. That is not what portability means. The regulatory definition at [47 CFR 52.21(m)](https://www.law.cornell.edu/cfr/text/47/52.21) is that number portability is "the ability of users of telecommunications services to retain, at the same location, existing telecommunications numbers without impairment of quality, reliability, or convenience when switching from one telecommunications carrier to another". At the same location. Portability is about changing carrier, not about changing address.
+People say numbers survive a move because numbers are portable. That is not what portability means. Here is the regulatory definition at [47 CFR 52.21(m)](https://www.law.cornell.edu/cfr/text/47/52.21). Number portability is "the ability of users of telecommunications services to retain, at the same location, existing telecommunications numbers without impairment of quality, reliability, or convenience when switching from one telecommunications carrier to another". At the same location. Portability is about changing carrier, not about changing address.
 
-The actual reason is simpler and it is a fact about mobile service rather than about the rules: a mobile number was never attached to a building in the first place, so moving out of one does not disturb it. Which means the mailing address on the tax roll and the phone number in the enrichment file go wrong for completely different reasons, at completely different rates, and a provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
+The real reason is simpler. It is a fact about mobile service rather than about the rules. A mobile number was never attached to a building, so moving out of one does not disturb it. So the mailing address on the tax roll and the phone number in the enrichment file go wrong for different reasons. They also go wrong at different rates. A provider quoting you one accuracy figure covering both is quoting a number that does not describe anything.
 
 [[scene:plate]]
 
 ## Where the number came from decides what you may do with it
 
-Here is the reframe that reorganises the whole subject, and it is why the legality question everybody asks has the wrong shape.
+Here is the turn that reorders the whole subject. It is why the legality question everyone asks has the wrong shape.
 
-The question usually gets put as "is skip tracing legal", and the answer that comes back is usually "yes, it uses public records". That was the answer on our own service page until this article was researched, and both halves of the exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use, and American law treats those as separate questions with separate rules and separate people liable.
+The question usually gets put as "is skip tracing legal". The answer that comes back is usually "yes, it uses public records". That was the answer on our own service page until this article was researched. Both halves of the exchange are doing something unhelpful. Skip tracing is not one act, so it does not have one legality. It is an acquisition followed by a use. American law treats those as separate questions, with separate rules and separate people liable.
 
-The acquisition is governed by rules about where the underlying information came from and what purpose it was released under. The use is governed by rules about consent and about calling. Almost everything written for real estate agents about this is about the second half, and almost nothing is about the first, which is unfortunate, because the first half is where the liquidated damages are and it is the half a tool cannot handle for you.
+The acquisition is governed by rules about where the underlying information came from, and what purpose it was released under. The use is governed by rules about consent and about calling. Almost everything written for real estate agents about this is about the second half. Almost nothing is about the first. That is a shame. The first half is where the liquidated damages are, and it is the half a tool cannot handle for you.
 
 Two federal statutes govern the acquisition side. Neither of them is mentioned on a single competitor page we could find.
 
 ## The statute nobody selling this will name
 
-The [Driver's Privacy Protection Act](https://www.law.cornell.edu/uscode/text/18/2721), 18 U.S.C. 2721 to 2725, exists because state motor vehicle departments were selling their files. It applies to personal information that came out of a motor vehicle record, and the definition of personal information at [18 U.S.C. 2725(3)](https://www.law.cornell.edu/uscode/text/18/2725) is deliberately wide. It "means information that identifies an individual, including an individual's photograph, social security number, driver identification number, name, address (but not the 5-digit zip code), telephone number, and medical or disability information".
+The [Driver's Privacy Protection Act](https://www.law.cornell.edu/uscode/text/18/2721), 18 U.S.C. 2721 to 2725, exists because state motor vehicle departments were selling their files. It applies to personal information that came out of a motor vehicle record. The definition of personal information at [18 U.S.C. 2725(3)](https://www.law.cornell.edu/uscode/text/18/2725) is deliberately wide. It "means information that identifies an individual, including an individual's photograph, social security number, driver identification number, name, address (but not the 5-digit zip code), telephone number, and medical or disability information".
 
 Name. Address. Telephone number. Those are the three fields a skip trace returns.
 
-The structure of the statute is the part worth understanding, because it is the opposite of how most people assume privacy law works. It does not list forbidden uses. It lists the permitted ones, fourteen of them, and everything not on the list is not permitted. [Section 2722(a)](https://www.law.cornell.edu/uscode/text/18/2722) then makes the consequence explicit: "It shall be unlawful for any person knowingly to obtain or disclose personal information, from a motor vehicle record, for any use not permitted under section 2721(b) of this title."
+The shape of the statute is the part worth knowing. It is the opposite of how most people assume privacy law works. It does not list forbidden uses. It lists the permitted ones, fourteen of them. Everything not on the list is not permitted. [Section 2722(a)](https://www.law.cornell.edu/uscode/text/18/2722) then makes the consequence explicit. "It shall be unlawful for any person knowingly to obtain or disclose personal information, from a motor vehicle record, for any use not permitted under section 2721(b) of this title."
 
 Read the list and three of the fourteen look, at a glance, as though they might cover a prospecting call. None of them does.
 
 [[scene:three-exceptions]]
 
-The teeth are in [section 2724](https://www.law.cornell.edu/uscode/text/18/2724), and this is the one figure in this article that is fixed by Congress rather than estimated by anybody. A person who knowingly obtains, discloses or uses that information for a purpose the chapter does not permit "shall be liable to the individual to whom the information pertains, who may bring a civil action in a United States district court". The court may award "actual damages, but not less than liquidated damages in the amount of $2,500", plus punitive damages on proof of willful or reckless disregard, plus attorneys' fees.
+The teeth are in [section 2724](https://www.law.cornell.edu/uscode/text/18/2724). This is the one figure in this article that is fixed by Congress rather than estimated by anyone. Take a person who knowingly obtains, discloses or uses that information for a purpose the chapter does not permit. That person "shall be liable to the individual to whom the information pertains, who may bring a civil action in a United States district court". The court may award "actual damages, but not less than liquidated damages in the amount of $2,500". It may add punitive damages on proof of willful or reckless disregard, plus attorneys' fees.
 
-Note what that sentence does and does not say. It is a private right of action, brought by the individual, not a regulator's fine. The floor is per person, not per call. And a court "may" award it, which is not the same as "will", so this is an exposure rather than an invoice. Those distinctions matter and they are the reason the figure at the top of this page is written as a floor for one person rather than as a total for a list.
+Note what that sentence does and does not say. It is a private right of action, brought by the individual. It is not a regulator's fine. The floor is per person, not per call. And a court "may" award it, which is not the same as "will". So this is an exposure rather than an invoice. Those distinctions matter. They are why the figure at the top of this page is written as a floor for one person, rather than as a total for a list.
 
-None of this means a traced number came out of a motor vehicle record. We have no way of knowing what share of them did, and the honest position is that nobody outside the compilers does. What it means is that if any link in the chain behind your list touched one, the obligation attaches to whoever obtained it, and the length of the chain is not a defence. Which brings us to the clause the trade points at.
+None of this means a traced number came out of a motor vehicle record. We have no way of knowing what share of them did. The honest position is that nobody outside the compilers does. What it means is this. If any link in the chain behind your list touched one, the duty attaches to whoever obtained it. The length of the chain is not a defence. Which brings us to the clause the trade points at.
 
 ## What a licence actually buys, and it is not a new permission
 
-If you have ever asked a data provider about this you will have been told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
+Ask a data provider about this and you will be told, quite correctly, that licensed private investigators have access under the DPPA. That is true. [Section 2721(b)(8)](https://www.law.cornell.edu/uscode/text/18/2721) permits disclosure "For use by any licensed private investigative agency or licensed security service for any purpose permitted under this subsection."
 
 Read the last seven words again.
 
 [[scene:pull-quote]]
 
-The clause is a loop. It says that a licensed agency may use the information for a purpose that the same subsection already permits. It does not add a fifteenth purpose called investigation. So the licence answers the question of who may act. The question of what for is still open, and it has to be closed by finding a purpose somewhere else on the same list of fourteen.
+The clause is a loop. It says that a licensed agency may use the information for a purpose that the same subsection already permits. It does not add a fifteenth purpose called investigation. So the licence answers the question of who may act. The question of what for is still open. It has to be closed by finding a purpose somewhere else on the same list of fourteen.
 
-That is not a technicality and it is not a gotcha. It is the whole design. A licence is an accountability mechanism: it means there is a regulator, a record and something to lose. It was never intended to be a key, and reading it as one turns an answer about who may act into an answer about what for, which are the two halves the statute deliberately keeps apart.
+That is not a technicality and it is not a gotcha. It is the whole design. A licence is a way of holding someone to account. It means there is a regulator, a record and something to lose. It was never intended to be a key. Reading it as one turns an answer about who may act into an answer about what for. Those are the two halves the statute deliberately keeps apart.
 
-There is a practical consequence and it is a good one. [Section 2721(c)](https://www.law.cornell.edu/uscode/text/18/2721) requires that any authorised recipient who resells or rediscloses this information "must keep for a period of 5 years records identifying each person or entity that receives information and the permitted purpose for which the information will be used and must make such records available to the motor vehicle department upon request."
+There is a practical consequence and it is a good one. Take any authorised recipient who resells or rediscloses this information. [Section 2721(c)](https://www.law.cornell.edu/uscode/text/18/2721) requires that they "must keep for a period of 5 years records identifying each person or entity that receives information and the permitted purpose for which the information will be used and must make such records available to the motor vehicle department upon request."
 
-Somebody wrote down a purpose. It exists. You are entitled to ask your provider what purpose your account was established under, and a provider who cannot answer that in a business day is telling you something useful about themselves.
+Somebody wrote down a purpose. It exists. You are entitled to ask your provider what purpose your account was established under. A provider who cannot answer that in a business day is telling you something useful about themselves.
 
 [[scene:plate-two]]
 
 ## The second statute turns on your purpose, not on the data
 
-The [Fair Credit Reporting Act](https://www.law.cornell.edu/uscode/text/15/1681b) is the other one, and it works in a way that surprises almost everybody, including people who have dealt with it before.
+The [Fair Credit Reporting Act](https://www.law.cornell.edu/uscode/text/15/1681b) is the other one. It works in a way that surprises almost everyone, including people who have dealt with it before.
 
-Most people assume the FCRA covers credit reports, meaning documents with credit scores in them, and that a name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
+Most people assume the FCRA covers credit reports, meaning documents with credit scores in them. A name and a phone number is obviously not one of those. That is not how the definition is built. Under [15 U.S.C. 1681a(d)(1)](https://www.law.cornell.edu/uscode/text/15/1681a) a consumer report is any communication by a consumer reporting agency of information "bearing on a consumer's credit worthiness, credit standing, credit capacity, character, general reputation, personal characteristics, or mode of living which is used or expected to be used or collected in whole or in part for the purpose of serving as a factor in establishing the consumer's eligibility for" credit, insurance, employment, or any other purpose authorised by section 1681b.
 
-The operative words are "which is used or expected to be used". The status is conferred by the purpose, not by the fields. The same file can be an ordinary commercial record in one transaction and a consumer report in the next, and what moves it across the line is what the person receiving it intends to do with it.
+The operative words are "which is used or expected to be used". The purpose confers the status, not the fields. The same file can be a plain commercial record in one transaction and a consumer report in the next. What moves it across the line is what the person receiving it intends to do with it.
 
-That has a specific consequence for real estate that is worth stating plainly, because it is the boundary that decides whether this whole subject is simple or complicated for you.
+That has one consequence for real estate worth stating plainly. It is the boundary that decides whether this whole subject is simple or hard for you.
 
-Building a list of owners in order to introduce yourself and ask whether they are thinking of selling is not, on its face, an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, and the filtering decides who gets an offer and who does not, the purpose has changed shape and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
+Say you build a list of owners in order to introduce yourself and ask whether they are thinking of selling. On its face, that is not an eligibility determination. Nobody is being approved or declined for anything. But the moment a list is filtered or ranked by something that bears on a person's financial standing, that changes. Say the filtering decides who gets an offer and who does not. The purpose has changed shape, and the question is no longer rhetorical. Equity position, lien status, distress signals and the phrase "financially motivated seller" all live very close to that line.
 
-[15 U.S.C. 1681b(f)](https://www.law.cornell.edu/uscode/text/15/1681b) is the prohibition and it is short: "A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the consumer report is authorized to be furnished under this section; and (2) the purpose is certified in accordance with section 1681e of this title by a prospective user of the report through a general or specific certification."
+[15 U.S.C. 1681b(f)](https://www.law.cornell.edu/uscode/text/15/1681b) is the prohibition and it is short. "A person shall not use or obtain a consumer report for any purpose unless (1) the consumer report is obtained for a purpose for which the consumer report is authorized to be furnished under this section; and (2) the purpose is certified in accordance with section 1681e of this title by a prospective user of the report through a general or specific certification."
 
-Look at the permissible purposes at [1681b(a)(3)](https://www.law.cornell.edu/uscode/text/15/1681b) and the one a business would reach for is (F)(i): a legitimate business need for the information "in connection with a business transaction that is initiated by the consumer". That phrase is the whole answer, and it is the reason cold prospecting does not fit. A person who has never heard of you has not initiated anything.
+Look at the permissible purposes at [1681b(a)(3)](https://www.law.cornell.edu/uscode/text/15/1681b). The one a business would reach for is (F)(i). It is a legitimate business need for the information "in connection with a business transaction that is initiated by the consumer". That phrase is the whole answer. It is the reason cold prospecting does not fit. A person who has never heard of you has not initiated anything.
 
-We are not your lawyers and this article cannot be legal advice for your business. What it can do is tell you the two questions to put in writing to any provider, because both of them have short answers that a serious company will give you: which permitted purpose is our account established under, and does anything you supply us derive from a consumer reporting agency.
+We are not your lawyers, and this article cannot be legal advice for your business. What it can do is give you the two questions to put in writing to any provider. Both have short answers that a serious company will give you. Which permitted purpose is our account established under? And does anything you supply us derive from a consumer reporting agency?
 
 ## Two hundred and fifty four million standing refusals
 
 Now the use side, briefly, because most of it belongs to a different article on this site.
 
-If you are working an old database of people who once contacted you, the rules about consent windows, autodialers and revocation are the subject of [the piece on database reactivation](/blog/database-reactivation-old-real-estate-leads), which carries the regulations and the dates in them and will not be repeated here. That article is about permission that may have gone stale. This one is about the situation where there was never any permission at all, and there is one thing about that situation which the other article does not cover.
+Say you are working an old database of people who once contacted you. The rules about consent windows, autodialers and revocation are the subject of [the piece on database reactivation](/blog/database-reactivation-old-real-estate-leads). It carries the regulations and the dates in them, and they will not be repeated here. That article is about permission that may have gone stale. This one is about the situation where there was never any permission at all. And there is one thing about that situation which the other article does not cover.
 
-The National Do Not Call Registry is a list of numbers whose owners have said, in advance and in writing, that they do not want telemarketing calls. The [Federal Trade Commission's Data Book for 2024](https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf) states its size directly: "As of September 30, 2024, there were 254 million active registrations."
+The National Do Not Call Registry is a list of numbers. Their owners have said, in advance and in writing, that they do not want telemarketing calls. The [Federal Trade Commission's Data Book for 2024](https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf) states its size directly. "As of September 30, 2024, there were 254 million active registrations."
 
-That is not a count of people, and the Commission says why in the same document: active registrations are those a consumer has placed and not deleted, the FTC removes numbers that have been disconnected and reassigned, and "numbers that have been disconnected but not reassigned remain on the registry". One person can register several numbers. So treat it as an order of magnitude rather than a headcount, and the order of magnitude is the point.
+That is not a count of people, and the Commission says why in the same document. Active registrations are those a consumer has placed and not deleted. The FTC removes numbers that have been disconnected and reassigned. And "numbers that have been disconnected but not reassigned remain on the registry". One person can register several numbers. So treat it as an order of magnitude rather than a headcount. The order of magnitude is the point.
 
-A traced number is a number you have never spoken to. You have no idea whether it is on that list until you check, and checking is a mechanical step that costs almost nothing and is skipped constantly.
+A traced number is a number you have never spoken to. You have no idea whether it is on that list until you check. Checking is a mechanical step. It costs almost nothing, and it is skipped constantly.
 
 [[scene:complaints]]
 
-The chart is deliberately not the one everybody draws. The conversation about unwanted calls is almost entirely a conversation about robots, and the second bar is three quarters of a million complaints in one year about a human being dialling. That is what a prospecting list is. It is not a robocall problem, it is not somebody else's problem, and the people making those complaints were, in every case, doing exactly what the registry told them to do.
+The chart is deliberately not the one everyone draws. The talk about unwanted calls is almost all talk about robots. The second bar is three quarters of a million complaints in one year about a human being dialling. That is what a prospecting list is. It is not a robocall problem. It is not somebody else's problem. And the people making those complaints were, in every case, doing exactly what the registry told them to do.
 
 [[scene:plate-three]]
 
 ## The number itself does not stay still
 
-There is one more thing about a traced number that nobody selling you one will bring up, and it is not about the law.
+There is one more thing about a traced number that nobody selling you one will bring up. It is not about the law.
 
-Telephone numbers get recycled. A person cancels a line, the number goes back into a pool, and after a waiting period the carrier assigns it to somebody new. The Federal Communications Commission built a national database to deal with the consequences of this, and the [order that created it](https://docs.fcc.gov/public/attachments/FCC-18-177A1.pdf) explains the mechanism in a sentence: "Once a consumer disconnects a number, he or she might not update all parties who have called in the past. When the old number is eventually reassigned, callers may inadvertently reach the new consumer who now has the reassigned number."
+Telephone numbers get recycled. A person cancels a line. The number goes back into a pool. After a waiting period the carrier assigns it to someone new. The Federal Communications Commission built a national database to deal with the consequences of this. The [order that created it](https://docs.fcc.gov/public/attachments/FCC-18-177A1.pdf) explains the mechanism in a sentence. "Once a consumer disconnects a number, he or she might not update all parties who have called in the past. When the old number is eventually reassigned, callers may inadvertently reach the new consumer who now has the reassigned number."
 
-The same order carries a scale figure, and the honest way to quote it is with the Commission's own footnote attached. The text says "Approximately 35 million numbers are disconnected and made available for reassignment to new consumers each year". The footnote says where that came from and then, remarkably, undercuts it: the figure is an average of the North American Numbering Plan Administrator's utilisation reports for 2013 to 2016, and "while a number of parties have cited this figure, we note that at least one party has questioned whether the figure accurately reflects the volume of number reassignments. In the Reassigned Numbers NOI we sought comment on whether this number accurately reflects the volume of number reassignments, but received no other credible estimate."
+The same order carries a scale figure. The honest way to quote it is with the Commission's own footnote attached. The text says "Approximately 35 million numbers are disconnected and made available for reassignment to new consumers each year". The footnote says where that came from and then, remarkably, undercuts it. The figure is an average of the North American Numbering Plan Administrator's utilisation reports for 2013 to 2016. And "while a number of parties have cited this figure, we note that at least one party has questioned whether the figure accurately reflects the volume of number reassignments. In the Reassigned Numbers NOI we sought comment on whether this number accurately reflects the volume of number reassignments, but received no other credible estimate."
 
-That is a regulator publishing a number, saying somebody has challenged it, and saying nobody offered anything better. It is a more useful thing to know than the number itself, and it is the reason this article puts it in a paragraph rather than in a chart. A figure the publishing body has flagged as contested is not a measurement, and drawing a bar for it would turn a caveat into a fact.
+That is a regulator publishing a number, saying someone has challenged it, and saying nobody offered anything better. It is a more useful thing to know than the number itself. It is also why this article puts it in a paragraph rather than in a chart. A figure the publishing body has flagged as contested is not a measurement. Drawing a bar for it would turn a caveat into a fact.
 
-What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large, and the enrichment file that told you this number belongs to that owner was assembled at a moment that has already passed. So a stranger answering and telling you it is the wrong person is not the vendor failing. It is the arrangement behaving exactly as everybody involved has described it.
+What you can take from it is the direction. Numbers move between people, at a scale nobody disputes is large. And the enrichment file that told you this number belongs to that owner was built at a moment that has already passed. So a stranger answering and telling you it is the wrong person is not the vendor failing. It is the arrangement behaving exactly as everyone involved has described it.
 
 [[scene:trace-path]]
 
 ## What a trace is actually made of
 
-The diagram above is the honest version of the pipeline, and the two hops that decide whether any of this is safe are the fourth and the fifth. Everything else is engineering.
+The diagram above is the honest version of the pipeline. The two hops that decide whether any of this is safe are the fourth and the fifth. Everything else is engineering.
 
-Our own service page described this in four steps until this article was written, and all four are on the left of that diagram: pull the properties, resolve the owner, append a number, clean the file. Those steps are real, they work, and they are not where anything goes wrong. What was missing was any account of where the appended number came from and under what purpose it was released, which is precisely the pair of facts the two statutes above turn on. It has a fifth step now, and that is what this article changed about the way we describe our own work.
+Our own service page described this in four steps until this article was written. All four are on the left of that diagram. Pull the properties. Resolve the owner. Append a number. Clean the file. Those steps are real, they work, and they are not where anything goes wrong. What was missing was any account of where the appended number came from, and under what purpose it was released. That is exactly the pair of facts the two statutes above turn on. It has a fifth step now. That is what this article changed about the way we describe our own work.
 
-Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start, and retrofitting it onto a database whose rows arrived from four places over six years is a genuinely miserable job.
+Put them in the build and they cost you almost nothing. A source field on every enriched row. A purpose recorded once, at the account level, in writing, from the provider. A suppression list that is checked before the file is handed to anything that dials. A suppression list is simply the list of people who have said no. None of that is difficult and none of it is expensive. It is only ever skipped because nobody asked for it at the start. Fitting it later onto a database whose rows arrived from four places over six years is a genuinely miserable job.
 
 [[scene:trace-calculator]]
 
 ## What it costs and how long it takes
 
-No figure is quoted here, and the reason is specific to this service: the dominant cost is a per record charge paid to somebody else, so most of what you would spend never passes through us at all.
+No figure is quoted here, and the reason is specific to this service. The dominant cost is a per record charge paid to someone else. So most of what you would spend never passes through us at all.
 
-Three things are being paid for. Enrichment is priced per record by whichever provider you use, and it is the only part that scales with volume. The pipeline pulls the properties, runs them through, validates and deduplicates what comes back, writes it where it needs to go and enforces the suppression check. And then the item almost nobody budgets for, which is the fields and the habit around them: a source and a date on every row, a purpose on file, an owned suppression list, and a person responsible for all three.
+Three things are being paid for. Enrichment is priced per record by whichever provider you use, and it is the only part that scales with volume. The pipeline pulls the properties and runs them through. It validates what comes back and drops the duplicates. It writes the result where it needs to go, and it enforces the suppression check. And then there is the item almost nobody budgets for, which is the fields and the habit around them. A source and a date on every row. A purpose on file. A suppression list you own. And a person responsible for all three.
 
-Two things drive the enrichment bill and neither is ours to negotiate. One is how many properties you run. The other is whether you are charged for attempts or for successes, which varies by provider and is a question with a one word answer that you should ask before signing rather than discover on an invoice: if it is attempts, a low resolve rate in your area spends money without producing anything. The second slider in the calculator is yours to fill in rather than ours to assert, and the most valuable half hour available before you sign anything is asking a provider to run two hundred addresses from your own farm and report what came back.
+Two things drive the enrichment bill, and neither is ours to negotiate. One is how many properties you run. The other is whether you are charged for attempts or for successes. That varies by provider. It is a question with a one word answer. Ask it before signing rather than discover it on an invoice. If it is attempts, a low resolve rate in your area spends money without producing anything. The second slider in the calculator is yours to fill in rather than ours to assert. And the most valuable half hour before you sign anything is this. Ask a provider to run two hundred addresses from your own farm and report what came back.
 
-On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a conversation rather than a configuration: deciding what your suppression rules are, agreeing where the source and purpose fields live, and getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup, which is a real cost and is better discovered before the work starts than after.
+On time, the build is not the long pole. Pulling, enriching and cleaning is a well understood piece of work. What takes the time is the part that is a talk rather than a configuration. Deciding what your suppression rules are. Agreeing where the source and purpose fields live. And getting a written answer out of the provider about the two questions in the section above. Businesses that already have a clean CRM move quickly. Businesses whose contact records arrived from four places over six years find that this project turns into a data cleanup. That is a real cost, and it is better discovered before the work starts than after.
 
-The one honest way to size any of it is the audit further down this page. It takes twenty minutes, it costs nothing, and it will tell you which of those two situations you are in.
+The one honest way to size any of it is the audit further down this page. It takes twenty minutes and it costs nothing. It will tell you which of those two situations you are in.
 
 ## What it does not do, and should not pretend to
 
-It does not give you a match rate in advance. Rates vary by area, by how much public record sits behind a property and by how long ago the owner acquired it. Figures do circulate, and we went and followed them rather than asserting that they cannot be sourced. What is out there is bands rather than measurements, usually 70 to 90 percent, and the pages carrying them are companies that sell skip tracing, pages ranking those companies, or in one case a skip-tracing company publishing a ranking of its own category with itself in it. One of them credits a trade association study by name and links to no report. None of them states a sample.
+It does not give you a match rate in advance. Rates vary by area. They vary by how much public record sits behind a property, and by how long ago the owner acquired it. Figures do circulate, and we went and followed them rather than asserting that they cannot be sourced. What is out there is bands rather than measurements, usually 70 to 90 percent. The pages carrying them are companies that sell skip tracing, or pages ranking those companies. In one case it is a skip-tracing company publishing a ranking of its own category with itself in it. One of them credits a trade association study by name and links to no report. None of them states a sample.
 
-There is a second number under those bands and it is the one worth carrying away, because a vendor put it on its own page: a phone hit rate and a connect rate are different quantities, and the second is much lower than the first. A match rate tells you how often a number came back. It does not tell you how often the number reached the person, and those two get quoted interchangeably. Your own provider can measure both for your own area in an afternoon, and that measurement is worth more than any band.
+There is a second number under those bands, and it is the one worth carrying away. A vendor put it on its own page. A phone hit rate and a connect rate are different quantities, and the second is much lower than the first. A match rate tells you how often a number came back. It does not tell you how often the number reached the person. Those two get quoted interchangeably. Your own provider can measure both for your own area in an afternoon. That measurement is worth more than any band.
 
-It does not tell you the number is current. Enrichment reports the best answer in the file at the moment it is asked. Whether that number still reaches that person is a separate fact that nobody in the chain has checked, which is the reassignment problem above and is not something better software fixes.
+It does not tell you the number is current. Enrichment reports the best answer in the file at the moment it is asked. Whether that number still reaches that person is a separate fact that nobody in the chain has checked. That is the reassignment problem above. Better software does not fix it.
 
-It does not resolve a legal question about your own use. The two statutes in this article attach to the person who obtains and uses the information. A provider's terms of service allocate risk between you and them; they do not answer the question a court would ask, which is what purpose you had.
+It does not resolve a legal question about your own use. The two statutes in this article attach to the person who obtains and uses the information. A provider's terms of service allocate risk between you and them. They do not answer the question a court would ask, which is what purpose you had.
 
-It does not confer permission to call. That is a separate body of rules with its own dates and its own private right of action, and honouring a do not call registration is a step in your process rather than a property of the data. It stays your obligation regardless of what the list cost.
+It does not confer permission to call. That is a separate body of rules with its own dates and its own private right of action. Honouring a do not call registration is a step in your process rather than a property of the data. It stays your obligation regardless of what the list cost.
 
-It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. Whatever signal there was came from the public record you started with, and if the pipeline does not carry it forward alongside the number then it has been thrown away, which is worth checking on your own output rather than assuming either way.
+It does not produce a reason for anybody to sell. Everything in this article is about reaching a person. A traced number carries no information whatsoever about whether that household is thinking of moving. Whatever signal there was came from the public record you started with. If the pipeline does not carry it forward alongside the number, it has been thrown away. That is worth checking on your own output rather than assuming either way.
 
 [[scene:wasted]]
 
@@ -2278,49 +2278,49 @@ It does not produce a reason for anybody to sell. Everything in this article is 
 
 Nothing here needs a tool, a consultant or a new subscription. Do it on the list you already have.
 
-1. **Pick one row at random.** Not the first one, not one you remember. Scroll and stop. This matters, because a list is only as defensible as its worst row and the worst row is never at the top.
+1. **Pick one row at random.** Not the first one, not one you remember. Scroll and stop. This matters, because a list is only as defensible as its worst row. And the worst row is never at the top.
 
 2. **Ask where that number came from.** Not "from public records". Which file, supplied by whom, under which account. If the answer takes longer than a business day to arrive, you have learned the important thing already.
 
-3. **Ask what purpose the account was established under.** Providers who resell information covered by the DPPA are required to keep exactly this, for five years. It is a normal question with a normal answer and asking it is not an accusation.
+3. **Ask what purpose the account was established under.** Providers who resell information covered by the DPPA are required to keep exactly this, for five years. It is a normal question with a normal answer, and asking it is not an accusation.
 
-4. **Ask whether anything they supply derives from a consumer reporting agency.** This is a yes or no question and it changes what you are allowed to do with the file. A vendor who does not understand the question is answering it.
+4. **Ask whether anything they supply derives from a consumer reporting agency.** This is a yes or no question, and it changes what you are allowed to do with the file. A vendor who does not understand the question is answering it.
 
-5. **Look for the source and date fields in your own CRM.** Open a contact that came off a purchased or traced list and one that came off your own website form. If the record does not tell you which is which, then your consent position for the whole database is currently unknowable, and that is a bigger problem than any list.
+5. **Look for the source and date fields in your own CRM.** Open a contact that came off a purchased or traced list. Then open one that came off your own website form. If the record does not tell you which is which, your consent position for the whole database is currently unknowable. That is a bigger problem than any list.
 
 6. **Find your suppression list and find out who owns it.** Not the CRM's built in unsubscribe flag. The list of people who have said no to your business, in any channel, held somewhere that survives changing software. If nobody owns it, nobody is maintaining it.
 
-7. **Ring one number yourself and listen for the question.** The one at the top of this article. If you cannot answer it in a sentence you would be comfortable having read back to you, that is the actual finding, and it is worth more than the rest of the audit put together.
+7. **Ring one number yourself and listen for the question.** The one at the top of this article. Try to answer it in a sentence you would be comfortable having read back to you. If you cannot, that is the actual finding. It is worth more than the rest of the audit put together.
 
 ## Common questions, answered honestly
 
 ### What is skip tracing in real estate, in plain terms?
 
-It is the work of turning a property into a person you can contact. Public records tell you who owns a house and where they get their post; they almost never tell you a phone number. Skip tracing is the set of joins between other files that produces a current telephone number and email address for that owner. In prospecting it is what turns a map into a list you can work.
+It is the work of turning a property into a person you can contact. Public records tell you who owns a house and where they get their post. They almost never tell you a phone number. Skip tracing is the set of joins between other files. Those joins produce a current telephone number and email address for that owner. In prospecting it is what turns a map into a list you can work.
 
 ### Is skip tracing legal?
 
-The honest answer is that it is not one thing, so it does not have one answer. Looking up a deed or a tax roll is unambiguously fine; those records are public because a legislature said so. The part that carries rules is the appended contact information, and the two statutes that govern it are the Driver's Privacy Protection Act, which permits release of motor vehicle record information only for listed purposes, and the Fair Credit Reporting Act, which turns on what you use the information for rather than on what it contains. Both attach to the person obtaining and using the data. Neither is answered by a provider's terms of service, and this article is not legal advice for your business.
+The honest answer is that it is not one thing, so it does not have one answer. Looking up a deed or a tax roll is plainly fine. Those records are public because a legislature said so. The part that carries rules is the appended contact information. Two statutes govern it. The Driver's Privacy Protection Act permits release of motor vehicle record information only for listed purposes. The Fair Credit Reporting Act turns on what you use the information for, rather than on what it contains. Both attach to the person obtaining and using the data. Neither is answered by a provider's terms of service. And this article is not legal advice for your business.
 
 ### Can I call a number I got from skip tracing?
 
-Getting a number and being allowed to ring it are separate questions with separate rules. Checking the national do not call registry before you dial is a mechanical step and it is not optional. The consent rules for calls and texts, including what an established business relationship is worth and how long it lasts, are covered in detail in [our article on database reactivation](/blog/database-reactivation-old-real-estate-leads). The short version for this article is that a traced number is the case with the least protection available to you, because there is no prior relationship of any kind to rely on.
+Getting a number and being allowed to ring it are separate questions with separate rules. Checking the national do not call registry before you dial is a mechanical step, and it is not optional. The consent rules for calls and texts are covered in detail in [our article on database reactivation](/blog/database-reactivation-old-real-estate-leads). That includes what an established business relationship is worth and how long it lasts. The short version for this article is that a traced number is the case with the least protection available to you. There is no prior relationship of any kind to rely on.
 
 ### How accurate is automated skip tracing?
 
-Figures circulate, and we followed them: they are bands of roughly 70 to 90 percent, published by companies that sell the service or by pages ranking those companies, and none of the ones we opened states a sample. So there is no independent measurement to quote and we are not going to invent one. What is measurable is your own resolve rate in your own area, which a provider can produce by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And because a matching system decides between merging and leaving alone by where a threshold sits, moving that threshold to return an answer for more rows necessarily returns the wrong person for more of them, so a headline match rate that sounds impressive may be describing a file with more wrong people in it rather than fewer.
+Figures circulate, and we followed them. What comes back is a band, roughly 70 to 90 percent. Those bands are published by companies that sell the service, or by pages ranking those companies. None of the ones we opened states a sample. So there is no independent measurement to quote, and we are not going to invent one. What is measurable is your own resolve rate in your own area. A provider can produce it by running a sample from your farm. Two things are worth understanding about accuracy here. A wrong number and a missing number are different failures, and the second is much cheaper than the first. And a matching system decides between merging and leaving alone by where a threshold sits. Moving that threshold to return an answer for more rows must return the wrong person for more of them. So a headline match rate that sounds impressive may describe a file with more wrong people in it rather than fewer.
 
 ### How is this different from buying a lead list?
 
-A purchased list was assembled on some date nobody tells you and sold to everybody who paid for it, which means the households on it can be worked by several people who have no idea about each other. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though: it is that building the list yourself makes you the person who obtained the information, so every question in this article becomes yours to answer and yours to be able to answer.
+A purchased list was assembled on some date nobody tells you, and sold to everyone who paid for it. So the households on it can be worked by several people who have no idea about each other. A trace runs on demand for the area you are working now. The difference that matters here is not freshness though. Building the list yourself makes you the person who obtained the information. So every question in this article becomes yours to answer, and yours to be able to answer.
 
 ### What is the difference between skip tracing and data enrichment?
 
-Skip tracing starts from a property and works towards a person who has never contacted you. Data enrichment starts from a person who is already in your database, usually because they contacted you, and fills in what you do not know about them. They use overlapping technology and they sit in completely different places legally, because one of them has a prior relationship behind it and the other has nothing at all.
+Skip tracing starts from a property and works towards a person who has never contacted you. Data enrichment starts from a person who is already in your database, usually because they contacted you. It fills in what you do not know about them. They use overlapping technology, and they sit in completely different places legally. One of them has a prior relationship behind it. The other has nothing at all.
 
 ### Does a licensed provider make this safe?
 
-It makes it accountable, which is not the same thing and is still worth having. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose that the statute does not list, because the clause that grants investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question and then ask the purpose question, in that order, and do not let the first answer stand in for the second.
+It makes it accountable, which is not the same thing, and it is still worth having. A licence means there is a regulator, a record and something to lose. What it does not do is create a permitted purpose that the statute does not list. The clause that grants investigators access grants it only for purposes already permitted elsewhere in the same subsection. Ask the licensing question and then ask the purpose question, in that order. Do not let the first answer stand in for the second.
 
 ### What should I ask a provider before I sign anything?
 
@@ -2328,12 +2328,11 @@ Four questions, all short, all answerable. Which permitted purpose is our accoun
 
 ## What to do about it
 
-Everything in this article comes back to one sentence you should be able to say without hesitating, to a stranger, on a Tuesday morning, about any row on any list in your business.
+Everything in this article comes back to one sentence. You should be able to say it without hesitating, to a stranger, on a Tuesday morning. It should hold for any row on any list in your business.
 
-It is not a legal formula and nobody is asking for one. It runs something like: this came from a provider we have a written agreement with, under a purpose they have on file, and we checked it against the do not call registry before I rang you. Every part of that is arrangeable, none of it is expensive, and all of it has to be arranged before the first call rather than after the first complaint.
+It is not a legal formula and nobody is asking for one. It runs something like this. This came from a provider we have a written agreement with, under a purpose they have on file. And we checked it against the do not call registry before I rang you. Every part of that can be arranged. None of it is expensive. And all of it has to be arranged before the first call rather than after the first complaint.
 
-[[scene:funnel]]
-`;
+[[scene:funnel]]`;
 
 export const AI_AGENT_WORKFORCE_POST = `The inbox assistant had drafted your morning replies for two weeks. Nine working days, nine sets of drafts, and every one of them was fine. Around day four you stopped reading them properly, which is not laziness. It is what anybody does with something that has been right nine times.
 
@@ -2773,69 +2772,69 @@ Katherine is one person. Your database is entitled to know that.
 
 [[scene:funnel]]`;
 
-export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Somebody points out that you could have a page for each of the other eight by Friday, and they are right, because a machine will write eight pages about eight towns in the time it takes to make coffee.
+export const GEO_LANDING_PAGES_POST = `You serve nine towns and you rank in one of them, which is the one your office sits in. Someone points out that you could have a page for each of the other eight by Friday. They are right. A machine will write eight pages about eight towns in the time it takes to make coffee.
 
-So the pages get made. Then, a few weeks later, you open two of them side by side to check something, and you read them properly for the first time.
+So the pages get made. Then, a few weeks later, you open two of them side by side to check something. And you read them properly for the first time.
 
-Page four and page five have the same four paragraphs in the same order. The same sentence about the character of the housing stock. The same promise about local expertise. The same three questions and the same three answers underneath them. The only thing that changed between the two is the name of the town, and it changed six times.
+Page four and page five have the same four paragraphs in the same order. The same sentence about the character of the housing stock. The same promise about local expertise. The same three questions and the same three answers underneath them. The only thing that changed between the two is the name of the town. And it changed six times.
 
-Nobody did anything wrong here. Every one of those pages is grammatical, on brand and technically correct. And a person who lives in either of those towns would put the page down after two sentences, which is the same conclusion a search engine is going to reach by a different route.
+Nobody did anything wrong here. Every one of those pages is grammatical, on brand and technically correct. And a person who lives in either of those towns would put the page down after two sentences. A search engine is going to reach the same conclusion by a different route.
 
 [[scene:in-short]]
 
 ## Why a page and not a profile
 
-It is worth being clear about what this is for, because the obvious alternative is free and most agents should do that one first.
+It is worth being clear about what this is for. The obvious alternative is free, and most agents should do that one first.
 
-The short list of businesses at the top of a local search, the one with the map above it, ranks businesses rather than pages, and one of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office and no amount of work moves it. Which means there is a hard edge to it: past a certain distance you are competing against somebody who is simply closer, and they win.
+At the top of a local search there is a short list of businesses, with the map above it. It ranks businesses rather than pages. One of the three inputs Google publishes for it is how far the searcher is standing from your front door. That is a physical fact about your office, and no amount of work moves it. So there is a hard edge to it. Past a certain distance you are competing against someone who is simply closer, and they win.
 
-A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it, which is why one page per area is the oldest tactic in local marketing and why every agency in the world offers it. It is also the reason this article exists, because the tactic has a well-known failure mode with a name, and the name is in Google's published policy rather than in somebody's blog post.
+A page has no such input. An ordinary indexable page about the work you do in a particular place competes on what is written on it. That is why one page per area is the oldest tactic in local marketing, and why every agency in the world offers it. It is also the reason this article exists. The tactic has a well-known failure mode with a name. And the name is in Google's published policy rather than in someone's blog post.
 
-There is a second reason worth naming and it is newer. A growing share of these questions never reach a list of links at all: somebody asks an assistant which agents work in a particular town and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly on a page that is genuinely about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable, which is convenient, and it is the only part of this whole subject where the two audiences want exactly the same thing.
+There is a second reason worth naming, and it is newer. A growing share of these questions never reach a list of links at all. Someone asks an assistant which agents work in a particular town, and gets a paragraph back. What gets quoted in that paragraph is text that answers a question directly, on a page that is truly about the thing. The same writing that makes an area page worth reading is the writing that makes it quotable. That is convenient. It is also the only part of this whole subject where the two audiences want exactly the same thing.
 
 ## What Google's spam policy actually names
 
-Most of what is written about location pages cites a Google policy that has since been rewritten. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name this tactic in two separate entries, and the second one did not exist when most of the advice you will find was published.
+Most of what is written about location pages cites a Google policy that has since been rewritten. The current [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name this tactic in two separate entries. The second one did not exist when most of the advice you will find was published.
 
-The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Read the mechanism rather than the label: the thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
+The first is doorway abuse. The policy defines it as sites or pages created to rank for specific, similar search queries, which lead users to intermediate pages that are not as useful as the final destination. Among its own examples is having multiple domain names or pages targeted at specific regions or cities that funnel users to one page. Read the mechanism rather than the label. The thing being described is a page that catches a query and passes the person along to somewhere else. The offence is the handover.
 
-The second is scaled content abuse, defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords, and stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
+The second is scaled content abuse. It is defined as many pages generated for the primary purpose of manipulating search rankings and not helping users. Its examples include creating many pages where the content makes little or no sense to a reader but contains search keywords. They also include stitching or combining content from different web pages without adding value. Here the offence is not the number of pages. It is what is on them at that number.
 
-Both entries are worth reading in full, because between them they put four questions to anybody who is about to build a set of these.
+Both entries are worth reading in full. Between them they put four questions to anyone who is about to build a set of these.
 
 [[scene:two-names]]
 
 ## The example that is about the thing we sell
 
-There is a sentence in the scaled content entry that anybody selling this service should be made to read out loud. The first illustration Google gives is using generative AI tools or other similar tools to generate many pages without adding value for users.
+There is a sentence in the scaled content entry that anyone selling this service should be made to read out loud. The first illustration Google gives is using generative AI tools or other similar tools to generate many pages without adding value for users.
 
-That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact product, and there is a version of ours that would fit it perfectly: hand over a list of towns, generate a page for each, publish. If somebody offers you that, the policy has already named it, and the fact that the pages were written by a good model rather than a bad one changes nothing, because the phrase in the policy is not about how the words were produced. It is about whether anything was added.
+That is not a description of a hypothetical bad actor. It is a description of the cheap version of this exact product. And there is a version of ours that would fit it perfectly. Hand over a list of towns, generate a page for each, publish. If someone offers you that, the policy has already named it. The fact that the pages were written by a good model rather than a bad one changes nothing. The phrase in the policy is not about how the words were produced. It is about whether anything was added.
 
-Google has said the same thing in plainer language elsewhere. Its guidance on helpful content is explicit that using automation is not the problem in itself, and the questions it tells creators to ask themselves are about the output rather than the tool. That is the honest position, and it is also ours: a draft written in ninety seconds is fine. A page published in ninety seconds is not, and the difference between them is a person who knows the place reading it before it goes live.
+Google has said the same thing in plainer language elsewhere. Its guidance on helpful content is explicit that using automation is not the problem in itself. The questions it tells creators to ask themselves are about the output rather than the tool. That is the honest position, and it is also ours. A draft written in ninety seconds is fine. A page published in ninety seconds is not. The difference between them is a person who knows the place reading it before it goes live.
 
 [[scene:plate]]
 
 ## What separates a real area page from a doorway
 
-Google publishes a self-assessment for exactly this question and almost nobody in this category has read it. Its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a list of questions to ask about your own work, and three of them land directly on area pages.
+Google publishes a self-assessment for exactly this question, and almost nobody in this category has read it. Its [guidance on creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a list of questions to ask about your own work. Three of them land directly on area pages.
 
-The first is whether the content clearly demonstrates first-hand expertise and a depth of knowledge, and the example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. It is the whole test, sitting in a parenthesis, and it cannot be written around, because what is being asked for is not a style of prose. It is a fact about whether you have been there.
+The first asks whether the content clearly demonstrates first-hand expertise and a depth of knowledge. The example Google gives inside the brackets is expertise that comes from having actually used a product or service, or visiting a place. Visiting a place. It is the whole test, sitting in a parenthesis. And it cannot be written around. What is being asked for is not a style of prose. It is a fact about whether you have been there.
 
-The second is a pair of warning signs: whether you are producing lots of content on many different topics in the hope that some of it might perform well, and whether you are using extensive automation to produce content on many topics. Answer yes to either and the document's own conclusion is that you are making search-engine-first content. Note what the suggested remedy is not. It is not better writing.
+The second is a pair of warning signs. One is whether you are producing lots of content on many different topics in the hope that some of it might perform well. The other is whether you are using extensive automation to produce content on many topics. Answer yes to either, and the document's own conclusion is that you are making search-engine-first content. Note what the suggested remedy is not. It is not better writing.
 
-The third is the one that quietly explains why every thin location page in this industry looks the same. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one, and then answers itself in a bracket: no, we do not. Somewhere a long time ago a number got into circulation and the whole category has been padding to reach it since.
+The third quietly explains why every thin location page in this industry looks the same. The list asks whether you are writing to a particular word count because you have heard Google has a preferred one. Then it answers itself in a bracket: no, we do not. Somewhere a long time ago a number got into circulation, and the whole category has been padding to reach it since.
 
 [[scene:the-test]]
 
 ## Repetition is measurable, and somebody measured it
 
-There is a temptation to treat all of this as a matter of taste, as if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure, and there is a paper that shows how cheap.
+There is a temptation to treat all of this as a matter of taste. As if the difference between a real page and a doorway were something only a human editor could feel. It is not. Sameness is one of the cheapest properties in the world for a machine to measure. And there is a paper that shows how cheap.
 
-In 2006 four researchers, three of them at Microsoft Research and one at UCLA, took a crawl of 105 million pages, drew a uniform random sample of 17,168 English pages out of it, and classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf): 2,364 of the pages, 13.8%, were judged to be spam.
+In 2006 four researchers took a crawl of 105 million pages. Three of them were at Microsoft Research and one was at UCLA. They drew a uniform random sample of 17,168 English pages out of it. Then they classified every one of them by hand as spam or not spam. That sample is the foundation of everything else in the [paper](https://www.ambuehler.ethz.ch/CDstore/www2006/devel-www2006.ecs.soton.ac.uk/programme/files/pdf/3052.pdf). Of those pages, 2,364 were judged to be spam, which is 13.8%.
 
-Then they went looking for properties that predicted it, and one of the properties is the interesting one here. They compressed every page and measured the compression ratio, on the reasoning that a page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
+Then they went looking for properties that predicted it. One of those properties is the interesting one here. They compressed every page and measured the compression ratio. The reasoning is simple. A page which says the same thing repeatedly compresses better than a page that does not. Among pages that compressed to a quarter of their size or better, 70% were judged spam.
 
-The honest limits are large and worth stating before anybody quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page, and a set of near-identical town pages is repetition across pages, which is a different measurement that nobody has published a figure for. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too, which is exactly why the authors test ten different content heuristics and treat this as one of them rather than as a rule.
+The honest limits are large, and worth stating before anyone quotes this at a client. This is the web of two decades ago. Spam is what four researchers judged it to be. The measurement is about repetition inside one page. A set of near-identical town pages is repetition across pages, which is a different measurement, and nobody has published a figure for it. And a perfectly good page with a large navigation, a footer and a repeated call to action compresses well too. That is exactly why the authors test ten different content heuristics, and treat this as one of them rather than as a rule.
 
 What survives all of that is the cheapness. You do not need a language model to notice that eight pages are the same page. You need a compression library and a few seconds.
 
@@ -2843,15 +2842,15 @@ What survives all of that is the cheapness. You do not need a language model to 
 
 ## What actually goes on a page that is about somewhere
 
-The useful question is not what to avoid. It is what a page has on it that a template cannot produce, and the answer is short enough to be uncomfortable, because everything on the list has to come from you.
+The useful question is not what to avoid. It is what a page has on it that a template cannot produce. The answer is short enough to be uncomfortable, because everything on the list has to come from you.
 
-It has the work you actually did there. A closing on a named street, a rental you managed, a listing that sat and then did not, a buyer who wanted one thing and bought another. Specific, checkable, and about a real transaction rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in, which is why the honest version of this project starts with a list of areas that is shorter than the one you wanted.
+It has the work you really did there. A closing on a named street. A rental you managed. A listing that sat and then did not. A buyer who wanted one thing and bought another. Specific, checkable, and about a real transaction rather than about your general enthusiasm for the area. This is the material that does not exist for a town you have never worked in. Which is why the honest version of this project starts with a list of areas that is shorter than the one you wanted.
 
-It has the questions people actually ask about that place, answered in the first sentence rather than in the fourth paragraph. What the taxes are like compared to the next town. Whether the trains are any good. Which streets flood. What the difference is between the village and the town of the same name, which in this valley is a real question with a real answer and one that catches people out.
+It has the questions people really ask about that place, answered in the first sentence rather than in the fourth paragraph. What the taxes are like compared to the next town. Whether the trains are any good. Which streets flood. What the difference is between the village and the town of the same name. In this valley that is a real question with a real answer, and one that catches people out.
 
-It has something a person who lives there would recognise. Not scenery. The thing everybody who lives there knows and nobody writes down: where the traffic actually backs up, which side of the road the good light is on in the afternoon, what happens to the main street in the third week of September.
+It has something a person who lives there would recognise. Not scenery. The thing everyone who lives there knows and nobody writes down. Where the traffic really backs up. Which side of the road the good light is on in the afternoon. What happens to the main street in the third week of September.
 
-And it has one way to get in touch that belongs to you. A form on your own page rather than a link into somebody else's directory, so that the person who read all of that arrives in your records rather than in a list you rent back later.
+And it has one way to get in touch that belongs to you. A form on your own page, rather than a link into someone else's directory. So the person who read all of that arrives in your records, rather than in a list you rent back later.
 
 [[scene:page-path]]
 
@@ -2859,17 +2858,17 @@ And it has one way to get in touch that belongs to you. A form on your own page 
 
 ## The part that is regulated, and it is not the search engine
 
-Everything above is a commercial question. This section is not, and it is the one nobody selling area pages will raise with you.
+Everything above is a commercial question. This section is not. And it is the one nobody selling area pages will raise with you.
 
-An area page is an advertisement, and it is an advertisement about a community rather than about a house. The regulations under the Fair Housing Act are specific about both halves of that, and they are older than any of this technology.
+An area page is an advertisement. It is an advertisement about a community rather than about a house. The regulations under the Fair Housing Act are specific about both halves of that, and they are older than any of this technology.
 
-The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect: the prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling, and written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
+The rule on advertising is [24 CFR 100.75](https://www.law.cornell.edu/cfr/text/24/100.75). Its second paragraph is broader than most people expect. The prohibitions apply to all written or oral notices or statements by a person engaged in the sale or rental of a dwelling. And written notices and statements are defined to include any applications, flyers, brochures, deeds, signs, banners, posters, billboards or any documents used with respect to the sale or rental of a dwelling. There is no list of technologies in that sentence, and there does not need to be one. A page on your website is a document used with respect to the sale of dwellings.
 
-Then comes the paragraph that is precisely about this service. Among the practices the rule names as prohibited is selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act, which is a different and more uncomfortable statement, and it means the reason for the list has to be a business reason you could say out loud.
+Then comes the paragraph that is precisely about this service. The rule names as prohibited the practice of selecting media or locations for advertising the sale or rental of dwellings which deny particular segments of the housing market information about housing opportunities because of race, colour, religion, sex, handicap, familial status or national origin. Read that beside a decision about which eight towns get a page and which four do not. Nobody is suggesting that choosing where to advertise is unlawful. What the rule says is that the choice is a regulated act. That is a different and more uncomfortable statement. It means the reason for the list has to be a business reason you could say out loud.
 
-The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices, and two of its examples are written as if somebody had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national origin, by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
+The second rule is about what the page says. [24 CFR 100.70](https://www.law.cornell.edu/cfr/text/24/100.70) covers what are generally referred to as unlawful steering practices. Two of its examples are written as if someone had an area page open. It names discouraging any person from inspecting, purchasing or renting a dwelling because of the race, colour, religion, sex, handicap, familial status or national origin of persons in a community, neighbourhood or development. And it names discouraging the purchase or rental of a dwelling because of race, colour, religion, sex, handicap, familial status or national origin, by exaggerating drawbacks or failing to inform any person of desirable features of a dwelling or of a community, neighbourhood or development.
 
-Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why, so uneven pages are not unlawful on their own and nobody should tell you they are. What they are is the record somebody would read the why off. A set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones describes some communities as more desirable than others, and it did that through effort rather than through a sentence anybody wrote, which is why the shape of the set is worth looking at before somebody else does.
+Sit with the second one, because it is not the one people expect. Failing to inform. Both examples hang on that same clause about why. So uneven pages are not unlawful on their own, and nobody should tell you they are. What they are is the record someone would read the why off. Take a set of pages where four towns get eight hundred enthusiastic words and two towns get two hundred flat ones. That describes some communities as more desirable than others. And it did that through effort, rather than through a sentence anyone wrote. Which is why the shape of the set is worth looking at before someone else does.
 
 [[scene:complaints]]
 
@@ -2877,25 +2876,25 @@ Sit with the second one, because it is not the one people expect. Failing to inf
 
 ## What an area page may and may not say
 
-The practical line is easier to hold than the regulation makes it sound, and it comes down to what the sentence is about.
+The practical line is easier to hold than the regulation makes it sound. It comes down to what the sentence is about.
 
-Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time, what a survey usually turns up on older properties in that part of the county, what you have actually sold there. Every one of those is a fact about property, it is checkable, and it is what somebody reading an agent's area page came for.
+Write about the housing and the transaction. Prices, taxes, inventory, how long things sit, what the commute costs in time. What a survey usually turns up on older properties in that part of the county. What you have really sold there. Every one of those is a fact about property. It is checkable. And it is what someone reading an agent's area page came for.
 
-Do not write about the people. This is the whole line and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere, who a place is suited to, what kind of family would be comfortable, which community a neighbourhood belongs to: none of that is about the housing, all of it is about the residents, and it is the exact territory the steering rule covers.
+Do not write about the people. This is the whole line, and it is simpler than the alternatives people reach for. Descriptions of who lives somewhere. Who a place is suited to. What kind of family would be comfortable. Which community a neighbourhood belongs to. None of that is about the housing. All of it is about the residents. And it is the exact territory the steering rule covers.
 
-Two habits deserve naming because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects, and if you publish them you have made a statement about desirability using somebody else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph, and the honest move is to say where to look rather than to characterise a community.
+Two habits deserve naming, because they are so common they read as neutral. School ratings pasted onto every page are a proxy that correlates strongly with things the Act protects. Publish them and you have made a statement about desirability using someone else's numbers. Crime data is the same shape and worse, because the summaries are usually unsourced. If a reader wants either, they can get both from the primary source in less time than it takes you to write a paragraph. The honest move is to say where to look, rather than to characterise a community.
 
-And treat the areas evenly. Not identically, because identical is the failure this whole article is about, but evenly: comparable effort, comparable honesty about the drawbacks, comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set rather than about any one page in it, and the shape of the set is a thing only you can see.
+And treat the areas evenly. Not identically, because identical is the failure this whole article is about. Evenly means comparable effort, comparable honesty about the drawbacks, and comparable enthusiasm where it is earned. The rule about failing to inform is a rule about the shape of the whole set, rather than about any one page in it. And the shape of the set is a thing only you can see.
 
 ## What it costs, and how long it takes
 
-The software is not the line that matters here. What the bill tracks is how much of the material has to be extracted from you, because you are the only place it exists.
+The software is not the line that matters here. What the bill tracks is how much of the material has to be extracted from you. You are the only place it exists.
 
-An agent with a tidy record of what they have closed, where, and for whom is a fast project: the facts are already written down and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one, and most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
+Take an agent with a tidy record of what they have closed, where, and for whom. That is a fast project. The facts are already written down, and the work is turning them into pages that answer questions. An agent whose knowledge of six towns lives entirely in their head is a slower one. Most of that time is a conversation rather than a keyboard. That conversation is worth having whether or not any pages come out of it, which is the second-best argument for doing this at all.
 
-There is a smaller ongoing cost that everybody forgets to budget for, which is going back. The proof on these pages ages: the closing was three years ago, the listing sold, the tax figure moved, the shop you mentioned closed. Most of them need a short sitting once a year, the ones that earn their keep need more than that, and a set of area pages nobody revisits becomes a public record of when you stopped paying attention.
+There is a smaller ongoing cost that everyone forgets to budget for, which is going back. The proof on these pages ages. The closing was three years ago. The listing sold. The tax figure moved. The shop you mentioned closed. Most of them need a short sitting once a year, and the ones that earn their keep need more than that. A set of area pages nobody revisits becomes a public record of when you stopped paying attention.
 
-The one thing we will not quote is a traffic estimate, and it is worth saying why rather than leaving a gap. Nobody publishes the number of people searching for your service in your particular town with a stated method; the figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
+The one thing we will not quote is a traffic estimate. It is worth saying why, rather than leaving a gap. Nobody publishes the number of people searching for your service in your own town with a stated method. The figures that circulate come from tools that estimate them and do not show their working. Every article in this category leans on those numbers. This one refuses them, which makes it less impressive and more useful.
 
 [[scene:plate-two]]
 
@@ -2903,15 +2902,15 @@ The one thing we will not quote is a traffic estimate, and it is worth saying wh
 
 ## What it does not do, and should not pretend to
 
-It does not rank a place you do not work. There is nothing true to put on that page, both a reader and a search engine notice, and the pages you cannot fill are the ones that make the whole set look like a template.
+It does not rank a place you do not work. There is nothing true to put on that page. Both a reader and a search engine notice. And the pages you cannot fill are the ones that make the whole set look like a template.
 
-It does not put you into an AI answer on request. Nobody controls what an assistant quotes and anybody who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
+It does not put you into an AI answer on request. Nobody controls what an assistant quotes, and anyone who says otherwise is describing an experiment rather than a product. Writing a page that answers questions directly makes it quotable. That is the only lever there is, and it is not a guarantee.
 
-It does not replace the rest of local search. A page for each area is one surface. The Business Profile, the reviews and the mentions on other people's websites are another, they are decided by different machinery, and the profile is usually the cheaper thing to fix first.
+It does not replace the rest of local search. A page for each area is one surface. The Business Profile, the reviews and the mentions on other people's websites are another. They are decided by different machinery, and the profile is usually the cheaper thing to fix first.
 
-It does not survive being left alone. Every fact on these pages has a date attached whether or not you print one, and the difference between a page that earns attention for years and a page that quietly embarrasses you is somebody going back to it.
+It does not survive being left alone. Every fact on these pages has a date attached, whether or not you print one. The difference between a page that earns attention for years and a page that quietly embarrasses you is someone going back to it.
 
-And it does not make the list of towns longer than it is. This is the one people find hardest, because the whole appeal of the tactic is scale. The number of areas you can write honestly about is a fact about your career so far, and no tool changes it.
+And it does not make the list of towns longer than it is. This is the one people find hardest, because the whole appeal of the tactic is scale. The number of areas you can write honestly about is a fact about your career so far. No tool changes it.
 
 [[scene:wasted]]
 
@@ -2919,65 +2918,65 @@ And it does not make the list of towns longer than it is. This is the one people
 
 Four checks. All of them are free, none of them need a tool, and any page in this industry can be run through them tonight.
 
-Delete the town name from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer, and so does everybody else. This is the single most useful thing in this article and it takes ninety seconds per page.
+Delete the town name from the page, everywhere it appears, and read what is left. If you cannot tell which town it was about, you have your answer. So does everyone else. This is the single most useful thing in this article, and it takes ninety seconds per page.
 
-Open two of your pages side by side and read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
+Open two of your pages side by side. Read the first paragraph of each out loud, one after the other. Sameness is much easier to hear than to see, which is why proofreading them one at a time never catches it.
 
-Count the checkable facts on the page: a street, a price, a date, a number, a name of something that exists. Then count the sentences that could have been written by somebody who has never been there. A page where the second number is larger than the first is a page you have not written yet.
+Count the checkable facts on the page. A street, a price, a date, a number, a name of something that exists. Then count the sentences that could have been written by someone who has never been there. A page where the second number is larger than the first is a page you have not written yet.
 
-Then hand it to somebody who lives there and watch their face. Not for approval, for recognition. The moment worth waiting for is the small one where they say that is true, or better, where they correct you, because a correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
+Then hand it to someone who lives there and watch their face. Not for approval. For recognition. The moment worth waiting for is the small one where they say that is true. Or better, where they correct you. A correction means the page was specific enough to be wrong, and specific enough to be wrong is the whole bar.
 
 ## Common questions, answered honestly
 
 ### What are GEO or area landing pages, in plain terms?
 
-They are ordinary pages on your own website, one for each place you work, written so that somebody searching for your service in that place finds a page that is genuinely about it rather than a page listing every town you cover. GEO now carries a second meaning as well, generative engine optimisation, which is the practice of writing pages that an AI assistant can quote when it answers a question. In practice the two want the same thing: direct answers to real questions, on a page that has something on it only somebody who works there would know.
+They are ordinary pages on your own website, one for each place you work. Each is written so that someone searching for your service in that place finds a page that is truly about it, rather than a page listing every town you cover. GEO now carries a second meaning as well, generative engine optimisation. That is the practice of writing pages an AI assistant can quote when it answers a question. In practice the two want the same thing. Direct answers to real questions, on a page that has something on it only someone who works there would know.
 
 ### How is this different from local SEO?
 
-They compete on different surfaces and are decided by different things. Local SEO is about your Business Profile and the short list of businesses at the top of a nearby search, where Google publishes three inputs and one of them is how far away the searcher is. Area pages are ordinary web pages competing on what is written on them, which is why they can reach places your profile cannot. Most businesses should finish the profile first, because it is cheaper, faster and does not carry the risk described in the rest of this article.
+They compete on different surfaces and are decided by different things. Local SEO is about your Business Profile, and the short list of businesses at the top of a nearby search. Google publishes three inputs for that list, and one of them is how far away the searcher is. Area pages are ordinary web pages competing on what is written on them. That is why they can reach places your profile cannot. Most businesses should finish the profile first. It is cheaper, it is faster, and it does not carry the risk described in the rest of this article.
 
 ### Are location pages considered doorway pages by Google?
 
-They are if they behave like doorways. The policy defines doorway abuse as pages created to rank for specific, similar queries which lead users to intermediate pages that are not as useful as the final destination, and it names pages targeted at specific regions or cities that funnel users to one page. A page that answers the question it was found for, on its own, is not doing that. A page whose only purpose is to catch the query and push the reader somewhere else is, whatever it looks like.
+They are if they behave like doorways. The policy defines doorway abuse as pages created to rank for specific, similar queries which lead users to intermediate pages that are not as useful as the final destination. It names pages targeted at specific regions or cities that funnel users to one page. A page that answers the question it was found for, on its own, is not doing that. A page whose only purpose is to catch the query and push the reader somewhere else is, whatever it looks like.
 
 ### Is it against the rules to use AI to write them?
 
-Not in itself, and Google says so directly in its guidance on helpful content, which frames automation as a question about the output rather than about the tool. What is named in the spam policy is using generative AI tools to generate many pages without adding value for users. The distinction is whether anything was added between the draft and the publication, and in practice that means a person who knows the place read it and changed it. A page nobody read is the case the policy is describing.
+Not in itself, and Google says so directly in its guidance on helpful content. That guidance frames automation as a question about the output rather than about the tool. What is named in the spam policy is using generative AI tools to generate many pages without adding value for users. The distinction is whether anything was added between the draft and the publication. In practice that means a person who knows the place read it and changed it. A page nobody read is the case the policy is describing.
 
 ### How many pages should I have?
 
-As many as you have something true to say about, which is almost always fewer than the list you started with. There is no threshold at which a set of pages becomes spam and no number that makes it safe. The calculator above is deliberately built on the only two things anybody can honestly supply, which are how many areas are on your list and how many of them you have actually worked in.
+As many as you have something true to say about, which is almost always fewer than the list you started with. There is no threshold at which a set of pages becomes spam, and no number that makes it safe. The calculator above is deliberately built on the only two things anyone can honestly supply. How many areas are on your list. And how many of them you have really worked in.
 
 ### Can I write a page for a town I want to work in but have not yet?
 
-You can, and it will be the weakest page in the set, and it is worth being deliberate about it rather than pretending otherwise. If you do, write it as what it is: a page about that market from somebody who works one town over, with the facts you can genuinely stand behind and no invented familiarity. That is a defensible page. A page claiming years of local expertise you do not have is not, and it is the kind of claim a person who lives there will spot in a sentence.
+You can. It will be the weakest page in the set. And it is worth being deliberate about it rather than pretending otherwise. If you do, write it as what it is. A page about that market from someone who works one town over, with the facts you can genuinely stand behind and no invented familiarity. That is a defensible page. A page claiming years of local expertise you do not have is not. It is the kind of claim a person who lives there will spot in a sentence.
 
 ### What about fair housing? Is any of this risky?
 
-The advertising rules apply to a web page exactly as they apply to a flyer, and the regulation is explicit that written statements include any documents used with respect to the sale of a dwelling. Two things follow. Write about the housing and the transaction, not about who lives somewhere or who a place would suit. And treat your areas evenly, because the rules name both selecting where to advertise in a way that denies parts of the market information, and discouraging somebody by failing to inform them of the desirable features of a neighbourhood. Both of those turn on whether the reason was one of the characteristics the Act protects, so an uneven set of pages is not unlawful by itself. It is the thing the reason would be read off, and it is invisible from inside any single page.
+The advertising rules apply to a web page exactly as they apply to a flyer. The regulation is explicit that written statements include any documents used with respect to the sale of a dwelling. Two things follow. Write about the housing and the transaction, not about who lives somewhere or who a place would suit. And treat your areas evenly. The rules name two practices here. One is selecting where to advertise in a way that denies parts of the market information. The other is discouraging someone by failing to inform them of the desirable features of a neighbourhood. Both of those turn on whether the reason was one of the characteristics the Act protects. So an uneven set of pages is not unlawful by itself. It is the thing the reason would be read off, and it is invisible from inside any single page.
 
 ### Will this get me quoted in ChatGPT or an AI answer?
 
-Sometimes, and nobody can promise it. What gets quoted is a passage that answers a question directly, in plain language, on a page an assistant can read. That means a real question as a heading and the answer in the sentence underneath it, rather than three paragraphs of positioning followed by the fact. It is worth doing because the same format is the one that works for a human being in a hurry, which means nothing here asks you to write worse in order to be quoted more.
+Sometimes, and nobody can promise it. What gets quoted is a passage that answers a question directly, in plain language, on a page an assistant can read. That means a real question as a heading, and the answer in the sentence underneath it. Not three paragraphs of positioning followed by the fact. It is worth doing because the same format is the one that works for a human being in a hurry. So nothing here asks you to write worse in order to be quoted more.
 
 ## What to do about it
 
-Take the list of areas you want pages for and put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
+Take the list of areas you want pages for. Put a mark next to every one where you can name a street you have worked on. Not a town you have driven through. A street.
 
-That shorter list is the project. It is probably half of what you wrote down, and it beats the long version outright, because every page on it can carry something checkable and every page you left off would have been the one that made a reader stop trusting the rest.
+That shorter list is the project. It is probably half of what you wrote down, and it beats the long version outright. Every page on it can carry something checkable. And every page you left off would have been the one that made a reader stop trusting the rest.
 
-Then take the two pages you already have that you are least sure about, delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this article in four minutes, and you have also found the first two pages worth rewriting.
+Then take the two pages you already have that you are least sure about. Delete every mention of the town from both, and read what remains. If the two documents are now the same document, you have learned the whole of this article in four minutes. You have also found the first two pages worth rewriting.
 
 [[scene:funnel]]`;
 
-export const LOCAL_SEO_POST = `On a Tuesday in February a woman sat in her car outside a school with eleven minutes to fill. Her sister had sold a house badly the year before, and that morning, in the way people actually decide things, she had decided she was going to get this right. She typed four words into her phone.
+export const LOCAL_SEO_POST = `On a Tuesday in February a woman sat in her car outside a school with eleven minutes to fill. Her sister had sold a house badly the year before. That morning, in the way people really decide things, she had decided she was going to get this right. She typed four words into her phone.
 
-Three businesses came back, with a small map above them and a row of stars under each name. She read them for about as long as it takes to read three names, tapped the second one, and left a voicemail.
+Three businesses came back, with a small map above them and a row of stars under each name. She read them for about as long as it takes to read three names. She tapped the second one, and left a voicemail.
 
-You were not on that screen. You have never known this happened and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
+You were not on that screen. You have never known this happened, and there is nowhere you could go to find out. It is not a lost lead, because it never became a lead. Nothing arrived in the CRM because nothing was sent. The most ordinary way a stranger picks an agent produced no record of you at all.
 
-The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it, in a paragraph almost nobody in this industry has read, and one of the three things it names is a fact about you that no amount of money or effort will change.
+The part worth knowing is that the order she saw was neither an accident nor a secret. Google publishes what decides it. The paragraph is short, and almost nobody in this industry has read it. And one of the three things it names is a fact about you that no amount of money or effort will change.
 
 [[scene:in-short]]
 
@@ -2985,81 +2984,81 @@ The part worth knowing is that the order she saw was neither an accident nor a s
 
 Every other way a client finds you leaves a trace. A referral comes with a name attached. A portal inquiry arrives with a timestamp. Even the person who does nothing at all with your open house has stood in a room you were in.
 
-Local search leaves nothing. A person types a phrase into a phone, three businesses appear, they choose one, and the two they did not choose are never told. There is no impression count on a search you lost, no notification, no weekly digest of the times your name was not in the list. This is the only meaningful channel in the business where the failures are completely silent, and silence is why it is so easy to believe nothing is happening.
+Local search leaves nothing. A person types a phrase into a phone. Three businesses appear. They choose one, and the two they did not choose are never told. There is no impression count on a search you lost. No notification. No weekly digest of the times your name was not in the list. This is the only meaningful channel in the business where the failures are completely silent. And silence is why it is so easy to believe nothing is happening.
 
-Something is happening. What you can see of it is one screen: the Business Profile's own performance report, which tells you how many people rang from the listing, how many asked for directions, how many tapped through to the website, and which searches surfaced you. It is not the whole picture and it is not a ranking report. It is the only genuinely first-party number in this entire subject, it is free, and in most small businesses nobody has opened it in a year.
+Something is happening. What you can see of it is one screen. It is the Business Profile's own performance report. It tells you how many people rang from the listing, how many asked for directions, and how many tapped through to the website. It also tells you which searches surfaced you. It is not the whole picture and it is not a ranking report. It is the only truly first-party number in this entire subject. It is free. And in most small businesses nobody has opened it in a year.
 
-It is worth separating two things that get called the same name. There is the map pack, which is the short list of businesses with the map above it, and there is the ordinary run of blue links underneath. They are ranked by different machinery and they are won in different ways. This article is about the first one, because it sits above everything else and because the person in the car never scrolled far enough to reach the second.
+It is worth separating two things that get called the same name. There is the map pack, which is the short list of businesses with the map above it. And there is the ordinary run of blue links under that. They are ranked by different machinery, and they are won in different ways. This article is about the first one. It sits above everything else, and the person in the car never scrolled far enough to reach the second.
 
 ## What Google actually publishes about this
 
-Most of what is written about local rankings is somebody's inference from watching results move. The document underneath it is short, public and free, and it is worth reading rather than reading about.
+Most of what is written about local rankings is someone's inference from watching results move. The document under it is short, public and free. It is worth reading rather than reading about.
 
-Google's [page on improving your local ranking](https://support.google.com/business/answer/7091) opens the section on ranking with a warning rather than a technique. There is no way to request or pay for a better local ranking on Google, it says, and it says the algorithm details are kept confidential to make the ranking system as fair as possible for everyone. Anybody offering to place you is either selling something that does not exist or selling something Google would suspend you for.
+Google's [page on improving your local ranking](https://support.google.com/business/answer/7091) opens the section on ranking with a warning rather than a technique. There is no way to request or pay for a better local ranking on Google, it says. And it says the algorithm details are kept confidential to make the ranking system as fair as possible for everyone. Anyone offering to place you is either selling something that does not exist, or selling something Google would suspend you for.
 
-Then comes the sentence the whole industry is built on top of. Local results, the page says, are mainly based on relevance, distance and popularity. Underneath, the three subheadings read Relevance, Distance and Prominence, and the third one has quietly changed names between the summary and the detail. That is a small thing, but it is the kind of small thing worth noticing on a page this heavily quoted, because the word people repeat is prominence and the word in the sentence is popularity, and neither one is defined anywhere with a number.
+Then comes the sentence the whole industry is built on top of. Local results, the page says, are mainly based on relevance, distance and popularity. Under that, the three subheadings read Relevance, Distance and Prominence. The third one has quietly changed names between the summary and the detail. That is a small thing. But it is the kind of small thing worth noticing on a page this heavily quoted. The word people repeat is prominence. The word in the sentence is popularity. And neither one is defined anywhere with a number.
 
-Relevance is described as how well a Business Profile matches what someone is searching for, and the advice for improving it is to provide complete and detailed business information. Distance is how far each business is from the customer who is searching, and when the customer has not said where they are, Google uses what it already knows about their location. Prominence is how well known a business is, and the page says it is based on information like how many websites link to your business and how many reviews you have.
+Relevance is described as how well a Business Profile matches what someone is searching for. The advice for improving it is to provide complete and detailed business information. Distance is how far each business is from the customer who is searching. When the customer has not said where they are, Google uses what it already knows about their location. Prominence is how well known a business is. The page says it is based on information like how many websites link to your business and how many reviews you have.
 
-That is the whole published model. Three inputs, no weights, no thresholds, and one sentence saying the details are deliberately withheld.
+That is the whole published model. Three inputs, no weights, no thresholds. And one sentence saying the details are deliberately withheld.
 
 [[scene:ranking-factors]]
 
 ## The input you cannot do anything about
 
-Distance is the one that changes how you should think about all of this, and it is the one nobody selling local search wants to dwell on.
+Distance is the one that changes how you should think about all of this. It is also the one nobody selling local search wants to dwell on.
 
-Your presence on the map has a shape. It is roughly centred on the address you verified, it fades as you move away from it, and it is competing against a different set of businesses in every direction. The person in the car was ranked against whoever was near that school. Fifteen minutes north, the same search produces a different three, and one of them may well be somebody you have beaten on service every time you have met them.
+Your presence on the map has a shape. It is roughly centred on the address you verified. It fades as you move away from it. And it is competing against a different set of businesses in every direction. The person in the car was ranked against whoever was near that school. Fifteen minutes north, the same search produces a different three. One of them may well be someone you have beaten on service every time you have met them.
 
-Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) put a number on the outer edge of this, and it is the only number in the whole subject that is stated plainly. The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from where the business is based. That is generous, and the very next sentence softens it further by allowing that larger areas may be appropriate for some businesses, so it is a boundary rather than a wall. What it is not is a marketing decision. A service area is a description of where you are.
+Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) put a number on the outer edge of this. It is the only number in the whole subject that is stated plainly. The boundaries of a profile's overall service area, the guidelines say, should not extend farther than about two hours of driving time from where the business is based. That is generous. The very next sentence softens it further, by allowing that larger areas may be appropriate for some businesses. So it is a boundary rather than a wall. What it is not is a marketing decision. A service area is a description of where you are.
 
-So there is a limit built into this work, and it is honest to say it early. Local search will help you win the ground around you. It will not put you on the map in a town twenty-five minutes away where somebody else's office actually sits, because the thing being ranked is a business with an address and the address is one of the three inputs. That is a real gap, and the answer to it is a different surface entirely, which is an indexable page for each area you genuinely serve. That has its own rules, its own risks and its own article.
+So there is a limit built into this work, and it is honest to say it early. Local search will help you win the ground around you. It will not put you on the map in a town twenty-five minutes away where someone else's office actually sits. The thing being ranked is a business with an address, and the address is one of the three inputs. That is a real gap. The answer to it is a different surface entirely, which is an indexable page for each area you truly serve. That has its own rules, its own risks and its own article.
 
 [[scene:plate]]
 
 ## Why the top of a very short list is worth more than it should be
 
-There is an assumption underneath everything written about ranking, which is that being first is worth more than being third for the sensible reason that people compare the options and the first one is usually the best. It is worth knowing that somebody tested that, and that it is only partly true.
+There is an assumption under everything written about ranking. It is that being first is worth more than being third. The sensible reason given is that people compare the options, and the first one is usually the best. It is worth knowing that someone tested that. And that it is only partly true.
 
-A group at Cornell put 22 people in front of Google with an eye tracker running, and put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched, some got the top two results swapped, and some got the whole page reversed. Nobody was told, and the paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anybody had clicked.
+A group at Cornell put 22 people in front of Google with an eye tracker running. They also put a proxy between them and the search engine that could quietly rewrite the results page. Sixteen of them produced usable data. Some got Google's ordering untouched. Some got the top two results swapped. And some got the whole page reversed. Nobody was told. The paper records that when asked afterwards, none of the subjects had suspected any manipulation. A separate panel of judges then rated the results by how promising each one looked, without knowing what anyone had clicked.
 
-The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf), published in 2005, reports the result as counts because the counts are small, and they are worth reading in that form. When the reader clicked exactly one of the top two links and the judges had rated the first one better, the click went to the top link nineteen times out of twenty, which is what you would hope. When the judges had rated the second one better, the click still went to the top link five times out of seven. And in the group where the pair had been secretly swapped, so the link on top was there for no reason at all, the click still went to the top link ten times out of seventeen.
+The [paper](https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf), published in 2005, reports the result as counts, because the counts are small. They are worth reading in that form. Take the readers who clicked exactly one of the top two links. Say the judges had rated the first one better. The click went to the top link nineteen times out of twenty, which is what you would hope. Now say the judges had rated the second one better. The click still went to the top link five times out of seven. And take the group where the pair had been secretly swapped, so the link on top was there for no reason at all. The click still went to the top link ten times out of seventeen.
 
-The authors call this a trust bias and their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first, and that share is not earned in any sense a person would recognise as merit. It is an inheritance.
+The authors call this a trust bias. Their conclusion is a single sentence: users have substantial trust in the search engine's ability to estimate the relevance of a page, which influences their clicking behaviour. Read that beside a list of three businesses on a phone. Some share of the first business's calls are arriving because it is first. That share is not earned in any sense a person would recognise as merit. It is an inheritance.
 
 [[scene:trust-bias]]
 
 ## What prominence is made of, and what it is not
 
-Here the industry consensus and the document disagree with each other, and there is no polite way to put it, particularly since this website was on the wrong side of the disagreement until this article was written.
+Here the industry consensus and the document disagree with each other. There is no polite way to put it. And this website was on the wrong side of the disagreement until this article was written.
 
-Ask anybody what moves the map pack and you will get three things: a complete profile, consistent name, address and phone details everywhere you appear online, and recent reviews. The middle item is the one that funds an entire category of software. It is not in Google's document. What the document names under prominence is how many websites link to your business and how many reviews you have.
+Ask anyone what moves the map pack and you will get three things. A complete profile. Consistent name, address and phone details everywhere you appear online. And recent reviews. The middle item is the one that funds an entire category of software. It is not in Google's document. What the document names under prominence is how many websites link to your business and how many reviews you have.
 
-That does not make directory tidying worthless. A phone number that is wrong in four places is wrong for the people who ring it, which is reason enough, and links and directory entries are not always separable. It does mean that a plan built mostly on submitting your details to ninety directories is a plan built on something the ranking document does not mention, while the two things it does mention are the two that are hardest to buy: somebody else choosing to link to you, and clients choosing to write about you.
+That does not make directory tidying worthless. A phone number that is wrong in four places is wrong for the people who ring it, which is reason enough. And links and directory entries are not always separable. It does mean something else. A plan built mostly on submitting your details to ninety directories is a plan built on something the ranking document does not mention. Meanwhile the two things it does mention are the two that are hardest to buy. Someone else choosing to link to you. And clients choosing to write about you.
 
-That is an uncomfortable answer for a service page and it is the true one. The prominence half of local search is mostly a consequence of being genuinely present somewhere, and the work that produces it looks like sponsoring the thing your town does in September, being the person a local reporter calls, and asking every single client for a review rather than the pleased ones. Software can keep all of that current. It cannot manufacture any of it.
+That is an uncomfortable answer for a service page, and it is the true one. The prominence half of local search is mostly a consequence of being truly present somewhere. The work that produces it looks like sponsoring the thing your town does in September. Being the person a local reporter calls. And asking every single client for a review rather than the pleased ones. Software can keep all of that current. It cannot manufacture any of it.
 
 ## The profile rules that decide whether you can have one at all
 
-Before ranking is worth thinking about, there is a shorter question that most agents have never checked, which is whether the profile they have is one they are allowed to have.
+Before ranking is worth thinking about, there is a shorter question that most agents have never checked. It is whether the profile they have is one they are allowed to have.
 
-The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners, which is the category that gets a profile of its own. In the next breath the guidelines say that sales associates or lead generation agents for corporations are not individual practitioners and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work rather than about what your card says.
+The same guidelines document names this business explicitly. Doctors, dentists, lawyers, financial planners and insurance or real estate agents are all listed together as individual practitioners. That is the category that gets a profile of its own. In the next breath the guidelines say something else. Sales associates or lead generation agents for corporations are not individual practitioners, and are not eligible for a Business Profile at all. Where you sit between those two sentences is a question about how you actually work, rather than about what your card says.
 
-The rest of the rules are the sort that get broken by somebody being clever. A practitioner is told not to hold several profiles to cover different specialisations. Where several public-facing practitioners share a location, the organisation gets its own profile and the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile rather than start a competing one. And an address has to be an address: a rented mailing address you do not operate from is a virtual office and is not eligible, while a desk in a co-working space needs signage, staff during business hours and the ability to receive customers.
+The rest of the rules are the sort that get broken by someone being clever. A practitioner is told not to hold several profiles to cover different specialisations. Say several public-facing practitioners share a location. Then the organisation gets its own profile. And the practitioner's profile should be titled with only the practitioner's name, not the brokerage's. A solo practitioner at a branded location is told it is best to share the organisation's profile. Do not start a competing one. And an address has to be an address. A rented mailing address you do not operate from is a virtual office, and is not eligible. A desk in a co-working space needs signage, staff during business hours, and the ability to receive customers.
 
-None of this is exotic and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it, and the appeal is a form.
+None of this is exotic, and all of it is enforced by suspension rather than by a warning letter. A profile that disappears takes its reviews and its position with it. And the appeal is a form.
 
 [[scene:profile-rules]]
 
 ## What local SEO actually does, week to week
 
-Under the category name it is four unglamorous jobs, and the AI part is not the clever part. It is the part that does not get bored.
+Under the category name it is four unglamorous jobs. The AI part is not the clever part. It is the part that does not get bored.
 
-The first job is finishing the profile, which almost nobody has. Categories, every service written out, the service area drawn honestly, the hours including the strange ones, the address, the attributes, real photographs of a real place. Google's own advice for the relevance half is simply to provide complete and detailed information, which is an unsatisfying instruction precisely because there is no trick in it.
+The first job is finishing the profile, which almost nobody has. Categories. Every service written out. The service area drawn honestly. The hours, including the strange ones. The address, the attributes, real photographs of a real place. For the relevance half, Google's own advice is simply to provide complete and detailed information. That is an unsatisfying instruction precisely because there is no trick in it.
 
-The second is keeping it true, which is where this decays. Businesses change quietly. A number moves, a service stops, an office is left, a holiday changes the hours, and none of those events tell the profile about themselves. A profile is at its most accurate on the day somebody fills it in and gets worse every day after that.
+The second is keeping it true, which is where this decays. Businesses change quietly. A number moves. A service stops. An office is left. A holiday changes the hours. None of those events tell the profile about themselves. A profile is at its most accurate on the day someone fills it in, and gets worse every day after that.
 
-The third is feeding the two inputs the document actually names, which means a steady flow of reviews and the slow accumulation of other people's pages mentioning yours. The fourth is reading the report: how many calls, how many direction requests, which searches, this month against last. That last one is the difference between a service you can judge and a service you have to trust.
+The third is feeding the two inputs the document actually names. That means a steady flow of reviews, and the slow build up of other people's pages mentioning yours. The fourth is reading the report. How many calls, how many direction requests, which searches, this month against last. That last one is the difference between a service you can judge and a service you have to trust.
 
 [[scene:the-work]]
 
@@ -3069,27 +3068,27 @@ The third is feeding the two inputs the document actually names, which means a s
 
 ## What renting the same attention costs
 
-The obvious alternative to all of this is to buy the position, and the honest comparison is not that ads are bad. It is that almost nobody has measured what their ads are actually adding, and the one organisation that ran the experiment properly got an answer that surprised everybody.
+The obvious alternative to all of this is to buy the position. The honest comparison is not that ads are bad. It is that almost nobody has measured what their ads are adding. And the one organisation that ran the experiment properly got an answer that surprised everyone.
 
-In March 2012 eBay stopped bidding on search queries containing its own name on two search engines, while continuing to buy exactly the same terms on a third. That third one is the control, which is the whole point: without it you are comparing this month against last month and calling seasonality a result. Three economists then wrote up what happened in a [working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) that was later published in Econometrica.
+In March 2012 eBay stopped bidding on search queries containing its own name on two search engines. It kept buying exactly the same terms on a third. That third one is the control, which is the whole point. Without it you are comparing this month against last month, and calling seasonality a result. Three economists then wrote up what happened in a [working paper](https://www.nber.org/system/files/working_papers/w20171/w20171.pdf) that was later published in Econometrica.
 
-The naive comparison, before and after, said click volume was 5.6% lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529% of the click traffic was actually lost, so 99.5% of it was retained. The people were still coming. They were simply arriving through the unpaid result sitting directly underneath the advert instead of through the advert.
+The naive comparison, before and after, said click volume was 5.6% lower once the ads stopped. Measured against the platform where the ads kept running, only 0.529% of the click traffic was lost. So 99.5% of it was retained. The people were still coming. They were simply arriving through the unpaid result sitting directly under the advert, instead of through the advert.
 
-The paper then does the same thing to the return on investment, and this is the number worth carrying out of it. Using ordinary regression on the observational data, the return came out at over 4,100% without controls and over 1,400% with time and geographic controls. Using the experiment, it came out at negative 63%, with a confidence interval that rejects the possibility of the channel yielding positive returns at all.
+The paper then does the same thing to the return on investment, and this is the number worth carrying out of it. Using ordinary regression on the observational data, the return came out at over 4,100% without controls. With time and geographic controls, it came out at over 1,400%. Using the experiment, it came out at negative 63%. The confidence interval rejects the possibility of the channel yielding positive returns at all.
 
-Be careful with this. It is eBay, a name tens of millions of people type deliberately, and the queries were ones containing that name. Nobody is typing your name, which is exactly why the brand-keyword half does not transfer. What does transfer is the shape of the mistake: the traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway, and no amount of dashboard staring will reveal that, because the dashboard is built from the observational data that produced the 4,100%.
+Be careful with this. It is eBay, a name tens of millions of people type deliberately, and the queries were ones containing that name. Nobody is typing your name, which is exactly why the brand-keyword half does not transfer. What does transfer is the shape of the mistake. The traffic that substitutes most cleanly for paid clicks is the traffic that was coming anyway. And no amount of dashboard staring will reveal that. The dashboard is built from the observational data that produced the 4,100%.
 
 [[scene:paid-search]]
 
 ## What it costs, and how long it takes
 
-The first month is mostly repair, and repair is priced by how wrong things currently are. A single profile that is two thirds filled in, one address, one set of hours and a handful of reviews is a short piece of work. Three agents, an office profile and two practitioner profiles that disagree with each other, a phone number that changed in 2023 and a service area drawn around a wish is a longer one, and most of the time in it goes on finding out what is true rather than on typing it in.
+The first month is mostly repair, and repair is priced by how wrong things currently are. Take a single profile that is two thirds filled in, one address, one set of hours and a handful of reviews. That is a short piece of work. Now take three agents, an office profile and two practitioner profiles that disagree with each other. Add a phone number that changed in 2023, and a service area drawn around a wish. That is a longer one. Most of the time in it goes on finding out what is true, rather than on typing it in.
 
-After that the cost is a monthly rhythm rather than a project, and what drives it is how many surfaces have to stay current and how much of the review asking you want handled rather than remembered. There is no software licence here that dwarfs the rest. The recurring number tracks attention.
+After that the cost is a monthly rhythm rather than a project. Two things drive it. How many surfaces have to stay current. And how much of the review asking you want handled rather than remembered. There is no software licence here that dwarfs the rest. The recurring number tracks attention.
 
-The honest answer on time is that the two halves move at different speeds. Fixing a profile changes what people see immediately, because the profile is a record rather than a ranking, and an accurate record with real photographs and current hours converts better on the day it goes up. Position is slower and it is not promised by anybody, including us, for the reason printed at the top of Google's own page.
+The honest answer on time is that the two halves move at different speeds. Fixing a profile changes what people see immediately, because the profile is a record rather than a ranking. An accurate record with real photographs and current hours converts better on the day it goes up. Position is slower. It is not promised by anybody, including us, for the reason printed at the top of Google's own page.
 
-There is one cost that never appears on a quote and it is the one that decides the outcome. Reviews arrive because somebody asks, every time, including on the deals that went sideways. If nobody in the business is willing to do that, the plan is missing one of the two inputs Google actually names, and no amount of profile maintenance replaces it.
+There is one cost that never appears on a quote, and it is the one that decides the outcome. Reviews arrive because someone asks, every time, including on the deals that went sideways. If nobody in the business is willing to do that, the plan is missing one of the two inputs Google actually names. And no amount of profile maintenance replaces it.
 
 [[scene:offer]]
 
@@ -3097,71 +3096,71 @@ There is one cost that never appears on a quote and it is the one that decides t
 
 ## What it does not do, and should not pretend to
 
-It does not buy a position, and this is not a disclaimer, it is a quotation. Google's page says in bold that there is no way to request or pay for a better local ranking. Any proposal that includes a promised position is either untrue or is describing something that will get the profile suspended.
+It does not buy a position. This is not a disclaimer, it is a quotation. Google's page says in bold that there is no way to request or pay for a better local ranking. Any proposal that includes a promised position is either untrue, or is describing something that will get the profile suspended.
 
-It does not move you closer to anybody. Distance is one of the three published inputs and it is a physical fact. A business on the eastern edge of a county will lose searches on the western edge to somebody who is simply standing there, and the correct response to that is a different tactic rather than a better profile.
+It does not move you closer to anybody. Distance is one of the three published inputs, and it is a physical fact. A business on the eastern edge of a county will lose searches on the western edge. It loses them to someone who is simply standing there. The correct response to that is a different tactic rather than a better profile.
 
-It does not survive a business that will not ask for reviews. Reviews are one of two things named in the ranking document, they cannot be bought without breaking policy, and the asking has to be systematic to produce a recent history rather than a cluster from 2023.
+It does not survive a business that will not ask for reviews. Reviews are one of two things named in the ranking document. They cannot be bought without breaking policy. And the asking has to be systematic to produce a recent history rather than a cluster from 2023.
 
-It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail, and the guidelines are explicit that a practitioner should be contactable at the verified location during the hours stated.
+It does not fix a business that is hard to reach. A profile is a promise about hours, a phone that gets answered, and an address a person can arrive at. Winning the search and then missing the call is an expensive way to fail. The guidelines are explicit that a practitioner should be contactable at the verified location during the hours stated.
 
-And it does not stay done. Everything above decays, quietly, in the direction of being wrong, and a profile nobody maintains is a profile slowly becoming a liability rather than an asset.
+And it does not stay done. Everything above decays, quietly, in the direction of being wrong. A profile nobody maintains is a profile slowly becoming a liability rather than an asset.
 
 [[scene:wasted]]
 
 ## How to find out where you actually stand, in ten minutes
 
-All of this is checkable tonight, for nothing, and the checking is more useful than any report anybody will sell you.
+All of this is checkable tonight, for nothing. And the checking is more useful than any report anyone will sell you.
 
-Open a browser you are not signed into, on a phone that is not yours if you can borrow one, and search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market and write down the three that come back there. The difference between the two lists is distance doing its work, and it is the single most useful thing you will learn all week.
+Open a browser you are not signed into, on a phone that is not yours if you can borrow one. Search the phrase a stranger would use for your service in the town you want to work in. Not your name. Write down the three businesses that come back. Do it again standing somewhere else in your market. Write down the three that come back there. The difference between the two lists is distance doing its work. It is the single most useful thing you will learn all week.
 
-Then open your own Business Profile and read the performance screen. Calls, direction requests, website taps, and the searches that surfaced you, this month against a year ago. If you have never seen it, the number will either be higher than you expected, which means something is already working, or close to nothing, which means the listing is not finished.
+Then open your own Business Profile and read the performance screen. Calls, direction requests, website taps, and the searches that surfaced you, this month against a year ago. If you have never seen it, the number will go one of two ways. It will be higher than you expected, which means something is already working. Or it will be close to nothing, which means the listing is not finished.
 
 Then go through the profile as if you were an inspector rather than the owner. Is the primary category the one a stranger would choose. Are all of your services written out. Are the hours right this week. Is the address one you actually sit in. Is the most recent review from this quarter or from two years ago.
 
-Finally, count the reviews and count the closings you had last year, and put the two numbers beside each other. Most agents in this business are asking a small fraction of their clients, usually the ones who were already delighted, and the gap between those two numbers is the clearest picture of the prominence half you will ever get.
+Finally, count the reviews and count the closings you had last year. Put the two numbers beside each other. Most agents in this business are asking a small fraction of their clients, usually the ones who were already delighted. The gap between those two numbers is the clearest picture of the prominence half you will ever get.
 
 ## Common questions, answered honestly
 
 ### What is local SEO for a real estate agent, in plain terms?
 
-It is the work of being the business that comes up when somebody nearby searches for what you do. Most of it is not writing. It is a Google Business Profile that is complete, correctly categorised and actually true, a steady flow of recent reviews, other people's websites mentioning yours, and real pages for the places and services you cover. The AI part is maintenance rather than magic: keeping the profile current, keeping the review requests going out, and watching what the profile's own report says, which are the three things that stop happening the moment a human gets busy.
+It is the work of being the business that comes up when someone nearby searches for what you do. Most of it is not writing. It is a Google Business Profile that is complete, correctly categorised and actually true. It is a steady flow of recent reviews. It is other people's websites mentioning yours. And it is real pages for the places and services you cover. The AI part is maintenance rather than magic. It keeps the profile current. It keeps the review requests going out. And it watches what the profile's own report says. Those are the three things that stop happening the moment a human gets busy.
 
 ### How is this different from getting my website to rank?
 
-They are two different competitions and they are decided by different things. The map pack ranks businesses, and the inputs Google publishes for it are relevance, distance and popularity, one of which is where the searcher is standing. The blue links below it rank pages, and distance is not one of the inputs in the same way. Practically, that means your website can be excellent and you can still be missing from the short list at the top, and your profile can be perfect and your website can still be invisible for everything except your own name. Most agents need both. Finishing the listing is normally the smaller job of the two.
+They are two different competitions, and they are decided by different things. The map pack ranks businesses. The inputs Google publishes for it are relevance, distance and popularity. One of those is where the searcher is standing. The blue links below it rank pages, and distance is not one of the inputs in the same way. In practice, your website can be excellent and you can still be missing from the short list at the top. And your profile can be perfect while your website is invisible for everything except your own name. Most agents need both. Finishing the listing is normally the smaller job of the two.
 
 ### How do I get into the map pack?
 
-Nobody can tell you how, because Google says out loud that it keeps the details confidential and that there is no way to request or pay for a place. What is known is the list of inputs it publishes. Finish the profile so relevance has something to work with, accept that distance is fixed, and work on the two things named under prominence, which are reviews and other websites linking to yours. Anybody giving you a more specific recipe than that is describing their own inference and should say so.
+Nobody can tell you how. Google says out loud that it keeps the details confidential. It also says there is no way to request or pay for a place. What is known is the list of inputs it publishes. Finish the profile so relevance has something to work with. Accept that distance is fixed. And work on the two things named under prominence, which are reviews and other websites linking to yours. Anyone giving you a more specific recipe than that is describing their own inference, and should say so.
 
 ### How long does it take?
 
-The accuracy half changes the day you do it: a finished profile with the right categories, real photographs and current hours is immediately more convincing to the person reading it, whatever it does to position. The position half is slow and is not guaranteed by anybody. The honest framing is that you are not buying a date, you are removing the reasons you are currently not eligible for a place, and then continuing to be the sort of business that accumulates reviews and mentions.
+The accuracy half changes the day you do it. A finished profile with the right categories, real photographs and current hours is immediately more convincing to the person reading it, whatever it does to position. The position half is slow, and is not guaranteed by anybody. The honest framing is that you are not buying a date. You are removing the reasons you are currently not eligible for a place. Then you carry on being the sort of business that gathers reviews and mentions.
 
 ### Can I rank in a town my office is not in?
 
-In the map pack, not really, and the reason is the distance input rather than any failing on your part. The other route is a normal web page, on your own site, covering what you have genuinely done in that town, because a page is judged by what is written on it. That is a separate piece of work carrying a separate risk, since a set of thin pages with the town name swapped is something Google's spam policy names specifically. Our article on area pages covers it properly instead of glossing it here.
+In the map pack, not really. The reason is the distance input rather than any failing on your part. The other route is a normal web page, on your own site, covering what you have truly done in that town. A page is judged by what is written on it. That is a separate piece of work carrying a separate risk. A set of thin pages with the town name swapped is something Google's spam policy names specifically. Our article on area pages covers it properly instead of glossing it here.
 
 ### Do citations and directory listings still matter?
 
-They matter for being correct and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence, and does not mention directory consistency at all. Keeping your details right everywhere is still worth doing, because a wrong phone number is a wrong phone number, and because some of those entries are links. What is not defensible is a plan whose main activity is submitting your details to a long list of directories while the two published inputs go untouched.
+They matter for being correct, and they are not what Google's ranking page names. That page lists links from other websites and reviews under prominence. It does not mention directory consistency at all. Keeping your details right everywhere is still worth doing. A wrong phone number is a wrong phone number, and some of those entries are links. What is not defensible is a plan whose main activity is submitting your details to a long list of directories, while the two published inputs go untouched.
 
 ### Is this better than running Google ads?
 
-They do different jobs and the honest comparison needs a measurement most people have never made. Ads deliver traffic the day you turn them on and nothing the day you turn them off. A ranking arrives slowly and keeps working. What the eBay experiment shows is not that ads do not work, it is that the returns most businesses believe they are getting come from observational data that overstates them by an enormous factor, and the only way to find out what yours are worth is to turn them off in one place and leave them on in another.
+They do different jobs, and the honest comparison needs a measurement most people have never made. Ads deliver traffic the day you turn them on, and nothing the day you turn them off. A ranking arrives slowly and keeps working. What the eBay experiment shows is not that ads do not work. It is that the returns most businesses believe they are getting come from observational data that overstates them by an enormous factor. And the only way to find out what yours are worth is to turn them off in one place and leave them on in another.
 
 ### Can anybody guarantee me a position?
 
-No, and the sentence to quote back is Google's own: there is no way to request or pay for a better local ranking on Google. What can be guaranteed is the work. A finished profile, a review request that actually goes out every time, the mentions that come from being present somewhere, and a report you can read every month. Position is the outcome of those, not a product anybody can sell you.
+No, and the sentence to quote back is Google's own. There is no way to request or pay for a better local ranking on Google. What can be guaranteed is the work. A finished profile. A review request that actually goes out every time. The mentions that come from being present somewhere. And a report you can read every month. Position is the outcome of those. It is not a product anyone can sell you.
 
 ## What to do about it
 
 Go and be the woman in the car for ten minutes.
 
-Borrow a phone, stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back and at how little information she had to choose between them. Then open your own profile beside it and see whether the thing she would have read is finished, current and honest.
+Borrow a phone. Stand somewhere in your market that is not your office, and run the search a stranger would run. Look at the three names that come back, and at how little information she had to choose between them. Then open your own profile beside it. See whether the thing she would have read is finished, current and honest.
 
-If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning, and it is not that you are worse than the second business she called. It is that a screen you have never opened is answering a question about you, over and over, to people you will never meet, and nobody has been checking the answer.
+If your name is in the three, the work is to stay there, which is duller and more important than getting there. If it is not, you now know something you did not know this morning. It is not that you are worse than the second business she called. It is that a screen you have never opened is answering a question about you, over and over, to people you will never meet. And nobody has been checking the answer.
 
 [[scene:funnel]]`;
 

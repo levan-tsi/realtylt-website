@@ -33,9 +33,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * of it. The first is Google's own sentence, the second is a 2005 Cornell experiment, the third
  * is a field experiment run inside eBay. */
 export const IN_SHORT: string[] = [
-  "Google publishes what decides the local results, in one sentence: they are mainly based on relevance, distance and popularity. One of those three is where the person searching happens to be standing, and nothing you do will move it.",
-  "Being at the top of a short list is worth something on its own. In a Cornell eye-tracking study where the top two results were secretly swapped, most readers still clicked the one on top even when a panel of judges had rated the other one better.",
-  "When eBay switched off the search ads it was buying against its own name, 99.5% of the clicks it had been paying for came back through unpaid search anyway. Renting attention and earning it are not the same purchase, and the difference is only visible if somebody runs the experiment.",
+  "Google publishes what decides the local results, in one sentence. They are mainly based on relevance, distance and popularity. One of those three is where the person searching happens to be standing. Nothing you do will move it.",
+  "Being at the top of a short list is worth something on its own. A Cornell eye-tracking study secretly swapped the top two results. Most readers still clicked the one on top, even when a panel of judges had rated the other one better.",
+  "eBay switched off the search ads it was buying against its own name. 99.5% of the clicks it had been paying for came back through unpaid search anyway. Renting attention and earning it are not the same purchase. And the difference is only visible if somebody runs the experiment.",
 ];
 
 /** SCENE copy — the three factors, in Google's own words.
@@ -62,15 +62,15 @@ export const IN_SHORT: string[] = [
 export const THREE_FACTORS: GridItem[] = [
   {
     lead: "Relevance, which is the boring one you control completely.",
-    body: "Google's page says relevance is how well a Business Profile matches what someone is searching for, and that the way to help is to provide complete and detailed business information. Categories, services, hours, the address. It is the least interesting item on this list and the only one you can finish in an afternoon.",
+    body: "Google's page says relevance is how well a Business Profile matches what someone is searching for. The way to help is to provide complete and detailed business information. Categories, services, hours, the address. It is the dullest item on this list, and the only one you can finish in an afternoon.",
   },
   {
     lead: "Distance, which you cannot touch at all.",
-    body: "How far each business is from the person searching, and when they have not said where they are, Google uses what it already knows about their location. There is no version of this work that changes where your office is or where somebody is standing when they reach for their phone.",
+    body: "How far each business is from the person searching. When they have not said where they are, Google uses what it already knows about their location. No version of this work changes where your office is. None of it changes where somebody is standing when they reach for their phone.",
   },
   {
     lead: "Prominence, which is links and reviews rather than the thing everybody says it is.",
-    body: "Google describes prominence as how well known a business is, based on information like how many websites link to your business and how many reviews you have. Directory listings that agree with each other are not named anywhere on that page. They may still be worth tidying. They are not what the document says is being measured.",
+    body: "Google describes prominence as how well known a business is. It says that is based on information like how many websites link to your business and how many reviews you have. Directory listings that agree with each other are not named anywhere on that page. They may still be worth tidying. They are not what the document says is being measured.",
   },
 ];
 
@@ -124,11 +124,11 @@ export const TRUST_BIAS = {
   max: 100,
   lit: 2,
   basis:
-    "Of the results pages where a reader clicked exactly one of the top two links, the share where the click landed on the link displayed first. Sixteen subjects, ten questions each, three conditions, with a proxy silently reordering Google's results. The three groups hold twenty, seven and seventeen pages between them, and the paper reports them as counts for that reason.",
+    "Take the results pages where a reader clicked exactly one of the top two links. This is the share where the click landed on the link displayed first. Sixteen subjects, ten questions each, three conditions, with a proxy silently reordering Google's results. The three groups hold twenty, seven and seventeen pages between them. The paper reports them as counts for that reason.",
   sourceText:
     "Thorsten Joachims, Laura Granka, Bing Pan, Helene Hembrooke and Geri Gay, Accurately Interpreting Clickthrough Data as Implicit Feedback, SIGIR 2005, Cornell University.",
   sourceHref: "https://www.cs.cornell.edu/people/tj/publications/joachims_etal_05a.pdf",
-  note: "Sixteen undergraduates in a laboratory, published in 2005, on ten blue links, twenty years before the results page looked anything like it looks now. Nobody has run this experiment on a map pack and these percentages are not a benchmark for one. What transfers is the mechanism, and it is uncomfortable: a share of the clicks at the top of a list are going there because the list said so, not because the reader compared anything. The paper was written to work out whether clicks can be trusted as feedback for a search engine, which is a different question from the one this article is asking, and its authors make no marketing claim anywhere in it.",
+  note: "Sixteen undergraduates in a laboratory, published in 2005, on ten blue links. That is twenty years before the results page looked anything like it looks now. Nobody has run this experiment on a map pack, and these percentages are not a benchmark for one. What transfers is the mechanism, and it is uncomfortable. A share of the clicks at the top of a list are going there because the list said so, not because the reader compared anything. The paper was written to work out whether clicks can be trusted as feedback for a search engine. That is a different question from the one this article is asking. And its authors make no marketing claim anywhere in it.",
 };
 
 /** SCENE copy — the eligibility rules. Cited from the primary.
@@ -161,19 +161,19 @@ export const TRUST_BIAS = {
 export const PROFILE_RULES: GridItem[] = [
   {
     lead: "An agent is a practitioner, and the guidelines say so by name.",
-    body: "Doctors, dentists, lawyers, financial planners and real estate agents are all listed in the same sentence as individual practitioners, which is the category that gets its own profile. Support staff are told not to create one. Sales associates and lead generation agents for corporations are named as not eligible at all.",
+    body: "Doctors, dentists, lawyers, financial planners and real estate agents are all listed in the same sentence as individual practitioners. That is the category that gets its own profile. Support staff are told not to create one. Sales associates and lead generation agents for corporations are named as not eligible at all.",
   },
   {
     lead: "One profile each, not one per thing you do.",
-    body: "A practitioner should not hold several profiles to cover their specialisations. The buyer's-agent profile, the listings profile and the investment profile are one profile with three services on it, and splitting them is a suspension risk rather than a clever way to cover more ground.",
+    body: "A practitioner should not hold several profiles to cover their specialisations. The buyer's-agent profile, the listings profile and the investment profile are one profile with three services on it. Splitting them is a suspension risk, not a clever way to cover more ground.",
   },
   {
     lead: "Your profile carries your name, not the brokerage's.",
-    body: "Where several public-facing practitioners work at one location, the guidelines say the organisation gets its own profile and the practitioner's title should include only the practitioner's name. The exception is the solo practitioner at a branded location, who is told it is best to share the organisation's profile rather than start a second one.",
+    body: "Say several public-facing practitioners work at one location. The guidelines say the organisation gets its own profile, and the practitioner's title should include only the practitioner's name. The exception is the solo practitioner at a branded location. They are told it is best to share the organisation's profile rather than start a second one.",
   },
   {
     lead: "An address you do not sit in is not an address.",
-    body: "A rented mailing address that you do not operate from is called a virtual office in the guidelines and is not eligible. A desk in a co-working space needs clear signage, staff during business hours and the ability to receive customers there. And the guidelines say a service area should not reach farther than about two hours of driving from where the business is based, while allowing that some businesses will need more.",
+    body: "A rented mailing address that you do not operate from is called a virtual office in the guidelines, and is not eligible. A desk in a co-working space needs clear signage, staff during business hours, and the ability to receive customers there. And the guidelines say a service area should not reach farther than about two hours of driving from where the business is based. They allow that some businesses will need more.",
   },
 ];
 
@@ -185,19 +185,19 @@ export const PROFILE_RULES: GridItem[] = [
 export const THE_WORK: GridItem[] = [
   {
     lead: "It finishes the profile, which is duller than it sounds.",
-    body: "Primary category and the secondary ones, every service written out, the service area drawn, the hours including the odd ones, the address, the attributes. Google's own advice for the relevance half is simply to provide complete and detailed information, and the reason that instruction is so unsatisfying is that there is no trick hiding inside it.",
+    body: "Primary category and the secondary ones. Every service written out. The service area drawn. The hours, including the odd ones. The address, the attributes. Google's own advice for the relevance half is simply to provide complete and detailed information. That instruction is so unsatisfying because there is no trick hiding inside it.",
   },
   {
     lead: "It keeps the profile true when the business changes.",
-    body: "New number, new hours over a holiday weekend, a service you stopped offering, a photograph of an office you moved out of. Nothing about this is clever and all of it goes stale silently, because a profile does not tell you when it has become wrong.",
+    body: "New number. New hours over a holiday weekend. A service you stopped offering. A photograph of an office you moved out of. Nothing about this is clever, and all of it goes stale silently. A profile does not tell you when it has become wrong.",
   },
   {
     lead: "It keeps the two things Google actually names moving.",
-    body: "Reviews, which is asking every client rather than the pleased ones, and mentions on other people's websites, which comes from the ordinary work of being somewhere: a local sponsorship, a chamber page, a piece of coverage. Both are named in the ranking document. Neither can be bought without buying a problem.",
+    body: "The first is reviews, which means asking every client rather than the pleased ones. The second is mentions on other people's websites. Those come from the ordinary work of being somewhere. A local sponsorship, a chamber page, a piece of coverage. Both are named in the ranking document. Neither can be bought without buying a problem.",
   },
   {
     lead: "It watches the searches you were actually shown for.",
-    body: "The profile reports what happened: how many people rang, asked for directions or tapped through to the site, and which searches surfaced you. That is the only measurement in this whole article that is genuinely yours, and it is sitting there whether anybody looks at it or not.",
+    body: "The profile reports what happened. How many people rang, asked for directions or tapped through to the site. And which searches surfaced you. That is the only measurement in this whole article that is genuinely yours. It is sitting there whether anybody looks at it or not.",
   },
 ];
 
@@ -246,11 +246,11 @@ export const PAID_SEARCH = {
   max: 10,
   lit: 1,
   basis:
-    "The share of click traffic that did not arrive after eBay stopped bidding on queries containing its own name in March 2012. The first bar is a before-and-after comparison on one search engine. The second is a difference-in-differences estimate using a second search engine, where eBay kept buying the same terms, as the control for seasonality. The axis runs to ten per cent, which is a ceiling we chose: neither figure has a natural maximum, and letting the chart scale itself would draw a 5.6% loss at full width.",
+    "The share of click traffic that did not arrive after eBay stopped bidding on queries containing its own name in March 2012. The first bar is a before-and-after comparison on one search engine. The second is a difference-in-differences estimate. It uses a second search engine, where eBay kept buying the same terms, as the control for seasonality. The axis runs to ten per cent, which is a ceiling we chose. Neither figure has a natural maximum, and letting the chart scale itself would draw a 5.6% loss at full width.",
   sourceText:
     "Thomas Blake, Chris Nosko and Steven Tadelis, Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment, NBER Working Paper 20171, published in Econometrica 2015;83(1):155-174.",
   sourceHref: "https://www.nber.org/system/files/working_papers/w20171/w20171.pdf",
-  note: "This is eBay, a name tens of millions of people type on purpose, and that matters more than anything else on the chart. The finding is about queries containing the word eBay, where the free result was sitting directly under the paid one and the person was going there anyway. Nobody is typing your name, which is precisely why this does not transfer as a promise and does transfer as a warning: the traffic that substitutes most cleanly is the traffic you were already going to get, and the only way anyone found that out was by switching the spend off in one place and leaving it on in another.",
+  note: "This is eBay, a name tens of millions of people type on purpose, and that matters more than anything else on the chart. The finding is about queries containing the word eBay. The free result was sitting directly under the paid one, and the person was going there anyway. Nobody is typing your name. That is precisely why this does not transfer as a promise, and does transfer as a warning. The traffic that substitutes most cleanly is the traffic you were already going to get. And the only way anyone found that out was by switching the spend off in one place and leaving it on in another.",
 };
 
 /** SCENE copy — the three ways the work is wasted.
@@ -261,15 +261,15 @@ export const PAID_SEARCH = {
 export const WASTED: GridItem[] = [
   {
     lead: "It is done once, in a burst, and then left.",
-    body: "A profile filled in properly in March and never opened again is a profile that is wrong by November, and wrong in the small ways nobody reports: an hour, a number, a service. The work is not the filling in. The work is the not stopping, which is the only part anybody finds boring enough to skip.",
+    body: "A profile filled in properly in March and never opened again is a profile that is wrong by November. It is wrong in the small ways nobody reports. An hour. A number. A service. The work is not the filling in. The work is the not stopping, which is the only part anybody finds boring enough to skip.",
   },
   {
     lead: "It chases the ranking and ignores the profile's own report.",
-    body: "There is a screen that tells you how many people rang, how many asked for directions and what they searched to find you. Businesses that never open it end up arguing about a position they cannot see instead of a call volume they can, and they have no idea whether anything they paid for made a difference.",
+    body: "There is a screen that tells you how many people rang, how many asked for directions, and what they searched to find you. Businesses that never open it argue about a position they cannot see, instead of a call volume they can. And they have no idea whether anything they paid for made a difference.",
   },
   {
     lead: "It gets the reviews by asking the happy ones.",
-    body: "Reviews are one of the two things the ranking document actually names, which is exactly why the temptation to curate them is strongest here. Asking selectively is against Google's own policy, it is the fastest way to lose a profile, and it produces a review history that reads as bought to anybody who scrolls it.",
+    body: "Reviews are one of the two things the ranking document actually names. That is exactly why the temptation to curate them is strongest here. Asking selectively is against Google's own policy. It is the fastest way to lose a profile. And it produces a review history that reads as bought to anybody who scrolls it.",
   },
 ];
 
@@ -327,7 +327,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       // house rather than rising through the middle of the roof.
       alt: "A brick and stone cottage with red-painted timbering, red window frames and a red front door, a wide stone chimney stack standing against the front of the house and rising past the roof, set in mature woodland behind a short mown lawn with deep shrub borders and a line of flat stepping stones leading toward the door",
       caption:
-        "Somebody within a few miles of this house is looking for an agent this week and will choose from three names on a phone screen. Whether yours is one of them is decided partly by a number nobody in this business ever writes down, which is how far away from them your front door happens to be.",
+        "Somebody within a few miles of this house is looking for an agent this week. They will choose from three names on a phone screen. Whether yours is one of them is decided partly by a number nobody in this business ever writes down. That number is how far away from them your front door happens to be.",
       credit: "Photograph by hoyasmeg, CC BY 2.0.",
       ariaLabel: "The house down the path",
     },
@@ -423,7 +423,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       ],
       headline: 4,
       resultLabel: "What the free listing is already producing",
-      note: "There is no row anywhere in this ladder for what a better position would add, and its absence is the honest part. Google's own page says local results are mainly based on relevance, distance and popularity, gives no weights, and states plainly that there is no way to request or pay for a better local ranking. Nobody outside Google has published a measurement of the map pack that states its sample and its method in the way this article demands of a number, so multiplying your calls by a ranking improvement would be arithmetic with a made-up number in the middle of it. What this does instead is measure the thing that is already happening, in the numbers on your own screen, so that whatever comes next has something honest to be compared against.",
+      note: "There is no row anywhere in this ladder for what a better position would add, and its absence is the honest part. Google's own page says local results are mainly based on relevance, distance and popularity. It gives no weights. And it states plainly that there is no way to request or pay for a better local ranking. Nobody outside Google has published a measurement of the map pack that states its sample and its method in the way this article demands of a number. So multiplying your calls by a ranking improvement would be arithmetic with a made-up number in the middle of it. What this does instead is measure the thing that is already happening, in the numbers on your own screen. Then whatever comes next has something honest to be compared against.",
       action: { label: "See how it is built", href: "/services/local-seo" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -446,8 +446,8 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The two screens",
-      text: "Send us the name of your business and the town you want to be found in, and we will send back what your profile looks like from outside it: the categories it claims, what is missing, and where it sits for the three searches your market actually types.",
-      reassure: "It is a short reply from a person, it costs nothing, and it is useful whether you buy anything or not.",
+      text: "Send us the name of your business and the town you want to be found in. We will send back what your profile looks like from outside it. The categories it claims. What is missing. And where it sits for the three searches your market actually types.",
+      reassure: "It is a short reply from a person. It costs nothing. And it is useful whether you buy anything or not.",
       action: { label: "Ask for the outside view", href: "/connect" },
       ariaLabel: "Ask for an outside view of your profile",
     },
@@ -467,7 +467,7 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       // and the brass lantern beside it were missing at either crop.
       alt: "The front of a white-painted stone house with black shutters, an octagonal window over a dark panelled front door and a brass lantern beside it, a mass of white flowering shrub arching over the entrance, two terracotta pots of red flowers standing either side of the door, and a white fretwork fence above clipped box hedges across the foreground",
       caption:
-        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment, reads the name, the hours and the last few things other people said, and decides whether to knock. Everything in this article is about that doorstep rather than about your website.",
+        "This is what a Business Profile is, and it is worth being unromantic about it. Somebody stands here for a moment. They read the name, the hours and the last few things other people said. Then they decide whether to knock. Everything in this article is about that doorstep rather than about your website.",
       credit: "Photograph by Wonderlane, CC BY 2.0.",
       ariaLabel: "The front door somebody arrives at",
     },
@@ -488,13 +488,13 @@ export const LOCAL_SEO_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Somewhere in your market this week, three names came up on a phone and a stranger picked one of them. There is no notification for that, no line in the CRM, and no way to know it happened. It will happen again tomorrow, and the only part of it you can do anything about is the part that is sitting unfinished on a screen you have not opened this year.",
+      text: "Somewhere in your market this week, three names came up on a phone and a stranger picked one of them. There is no notification for that. No line in the CRM. No way to know it happened. It will happen again tomorrow. And the only part of it you can do anything about is sitting unfinished on a screen you have not opened this year.",
       actions: [
         { label: "See it on the AI page", href: "/ai#localseo", variant: "light" },
         { label: "How it is built", href: "/services/local-seo", variant: "outline-light" },
       ],
       footnote:
-        "There is no price here because the cost tracks two things that are yours rather than ours: how much of the profile and the surrounding record is wrong today, and how many places you want to be genuinely present in rather than merely listed. The AI audit is an hour, done with you, and it ends with the profile finished and the report screen open rather than with a document.",
+        "There is no price here because the cost tracks two things that are yours rather than ours. How much of the profile and the surrounding record is wrong today. And how many places you want to be genuinely present in, rather than merely listed. The AI audit is an hour, done with you. It ends with the profile finished and the report screen open, rather than with a document.",
     },
   },
 

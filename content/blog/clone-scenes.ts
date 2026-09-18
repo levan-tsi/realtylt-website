@@ -35,9 +35,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * topic turns on, the criminal statute nobody expects, and the measurement that decides how the
  * disclosure question has to be answered. */
 export const IN_SHORT: string[] = [
-  "There are two completely different products under the same word. One reproduces your own face and voice, with your own written permission, on your own content. The other reproduces somebody else, and in New York that second one is not a grey area: using a living person's name, portrait, picture, likeness or voice for advertising or trade without their written consent first is a misdemeanour under a section of this state's Civil Rights Law.",
-  "Federal law is narrower here than it looks. The Federal Trade Commission's impersonation rule, in force since April 2024, prohibits falsely posing as a government body or as a business or an officer of one. It does not cover individuals. The Commission has proposed adding them, and has proposed making it a violation to supply goods or services knowing they will be used to impersonate, which would reach the people who build these things as well as the people who use them. Neither addition has been adopted, so today the federal rule leaves individuals to state law.",
-  "Whether the viewer can tell is not a matter of opinion. In a study of 315 people classifying real and synthetic faces one at a time, average accuracy was 48.2 percent against a chance level of 50. A second group of 219 people, given training and told after every single answer whether they were right, reached 59.0 percent and got no better with practice.",
+  "There are two completely different products under the same word. One reproduces your own face and voice, with your own written permission, on your own content. The other reproduces somebody else. In New York that second one is not a grey area. Using a living person's name, portrait, picture, likeness or voice for advertising or trade, without their written consent first, is a misdemeanour. That is a section of this state's Civil Rights Law.",
+  "Federal law is narrower here than it looks. The Federal Trade Commission's impersonation rule has been in force since April 2024. It prohibits falsely posing as a government body, or as a business or an officer of one. It does not cover individuals. The Commission has proposed adding them. It has also proposed making it a violation to supply goods or services knowing they will be used to impersonate. That would reach the people who build these things as well as the people who use them. Neither addition has been adopted. So today the federal rule leaves individuals to state law.",
+  "Whether the viewer can tell is not a matter of opinion. In one study, 315 people classified real and synthetic faces one at a time. Average accuracy was 48.2 percent, against a chance level of 50. A second group of 219 people was given training and told after every single answer whether they were right. They reached 59.0 percent, and got no better with practice.",
 ];
 
 /** SCENE copy — the distinction the article is built on.
@@ -47,19 +47,19 @@ export const IN_SHORT: string[] = [
 export const TWO_HALVES: GridItem[] = [
   {
     lead: "Your own face, on your own content",
-    body: "You sat in front of a camera, you agreed in writing what may be made from the recording, and what goes out is signed with your name on a page you control. This is the ordinary case and it is the only one this business builds. The interesting questions about it are not legal ones, they are about quality and about who checks what goes out.",
+    body: "You sat in front of a camera. You agreed in writing what may be made from the recording. And what goes out is signed with your name, on a page you control. This is the ordinary case, and it is the only one this business builds. The interesting questions about it are not legal ones. They are about quality, and about who checks what goes out.",
   },
   {
     lead: "A colleague's face, on the brokerage's content",
-    body: "Also ordinary, and it needs one more thing than people expect: their written permission, separately from their employment, and an answer to what happens to the model when they leave. An agent who moves to another firm has not stopped owning their own likeness, and a library of videos of a person who no longer works for you is a problem you built yourself.",
+    body: "Also ordinary, and it needs more than people expect. It needs their written permission, given apart from their employment. And it needs an answer to what happens to the model when they leave. An agent who moves to another firm has not stopped owning their own likeness. A library of videos of a person who no longer works for you is a problem you built yourself.",
   },
   {
     lead: "Somebody who never agreed",
-    body: "A client, a seller, a person on the other side of a transaction, a public figure whose endorsement would be useful. There is no version of this that is a product. It is the thing several statutes exist to stop, and one of them attaches a criminal penalty to it in this state.",
+    body: "A client. A seller. A person on the other side of a deal. A public figure whose endorsement would be useful. There is no version of this that is a product. It is the thing several statutes exist to stop. And one of them attaches a criminal penalty to it in this state.",
   },
   {
     lead: "Somebody who has died",
-    body: "The one people assume is free, and in New York it is the most precisely regulated of the four. A separate statute in force since 2020 defines a digital replica, gives the right to whoever inherited it, and lets an action be brought for up to forty years after the death. There is a public register of who holds those rights.",
+    body: "The one people assume is free. In New York it is the most precisely regulated of the four. A separate statute in force since 2020 defines a digital replica. It gives the right to whoever inherited it. And it lets an action be brought for up to forty years after the death. There is a public register of who holds those rights.",
   },
 ];
 
@@ -101,11 +101,11 @@ export const TELL_APART = {
   max: 100,
   lit: 0,
   basis:
-    "Percentage of faces correctly classified as real or synthesized, from two experiments on the same set of 800 faces, half of them generated and half of them real photographs matched to them for age, gender and appearance. Chance performance is 50 percent and is not drawn, because a coin is not a measurement. The first group saw the faces cold. The second group was trained first and told after every single answer whether they had been right, and the paper records that they got no better across the session.",
+    "Percentage of faces correctly classified as real or synthesized, from two experiments on the same set of 800 faces. Half of them were generated. Half were real photographs matched to them for age, gender and appearance. Chance performance is 50 percent and is not drawn, because a coin is not a measurement. The first group saw the faces cold. The second group was trained first, and told after every single answer whether they had been right. The paper records that they got no better across the session.",
   sourceText:
     "Nightingale and Farid, AI-synthesized faces are indistinguishable from real faces and more trustworthy, Proceedings of the National Academy of Sciences, 2022.",
   sourceHref: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8872790/",
-  note: "Two honest limits on what this can be used for. These were still photographs of people who do not exist, not video of somebody the viewer knows personally, and a face you have met every week for three years is a different task from a stranger's. And the same paper found the synthetic faces were rated slightly MORE trustworthy than the real ones, 4.82 against 4.48 on a seven point scale, which is a small effect and an uncomfortable one. What none of this measures is whether your own clients would spot a video of you, and nobody has published that.",
+  note: "Two honest limits on what this can be used for. These were still photographs of people who do not exist, not video of somebody the viewer knows personally. A face you have met every week for three years is a different task from a stranger's. And the same paper found the synthetic faces were rated slightly MORE trustworthy than the real ones. That was 4.82 against 4.48 on a seven point scale, which is a small effect and an uncomfortable one. What none of this measures is whether your own clients would spot a video of you. Nobody has published that.",
 };
 
 /** SCENE copy — can a machine tell? Cited data graphic TWO.
@@ -141,10 +141,10 @@ export const DETECTOR = {
   max: 100,
   lit: 2,
   basis:
-    "Precision, meaning the share of the videos it flagged that really were fakes, for the first placed entry in the DeepFake Detection Challenge, measured on real videos gathered outside the competition's own dataset rather than on the ones it was trained against. The three bars are the same model at three sensitivities, reported by the organisers at recall levels of one tenth, three tenths and nine tenths. Turning it up to catch more fakes is what makes it flag more things that were not fakes.",
+    "Precision means the share of the videos it flagged that really were fakes. These are the figures for the first placed entry in the DeepFake Detection Challenge. They were measured on real videos gathered outside the competition's own dataset, rather than on the ones it was trained against. The three bars are the same model at three sensitivities, reported by the organisers at recall levels of one tenth, three tenths and nine tenths. Turning it up to catch more fakes is what makes it flag more things that were not fakes.",
   sourceText: "Dolhansky and others, The DeepFake Detection Challenge (DFDC) Dataset, Facebook AI, 2020.",
   sourceHref: "https://arxiv.org/abs/2006.07397",
-  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it, and turning the dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And on the hidden test set the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on every video would have scored, with many of them simply random. That says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse: you cannot leave the disclosing to a detector.",
+  note: "The shape is the finding, not the decimals. A detector you can tune has a dial on it. Turning that dial toward catching more fakes is the same movement as turning it toward accusing more honest videos. At the setting where it caught nine in ten, about half of what it pointed at was innocent. Two things this cannot be stretched to say. It is a 2020 competition against 2020 fakes, and both sides of that race have moved since, in directions this article has no measurement of. And on the hidden test set, the organisers report that 60 percent of all submissions scored at or better than predicting a coin flip on every video would have scored. Many of them were simply random. That says more about the difficulty than any single number here does. The reason it is on this page at all is that it removes an excuse. You cannot leave the disclosing to a detector.",
 };
 
 /** SCENE copy — what a content credential is, and what it does not say.
@@ -155,15 +155,15 @@ export const DETECTOR = {
 export const CREDENTIALS: GridItem[] = [
   {
     lead: "It records what was done, cryptographically",
-    body: "A Content Credential is a set of signed statements travelling with the file: what created it, what was done to it afterwards, and whether any of that has been altered since it was signed. There is a specific value for a file that came out of a generative model, and it is a machine-readable string rather than a phrase somebody chose, which is the part that makes it checkable at all.",
+    body: "A Content Credential is a set of signed statements that travel with the file. They say what created it, what was done to it afterwards, and whether any of that has been altered since it was signed. There is a specific value for a file that came out of a generative model. It is a machine-readable string rather than a phrase somebody chose. That is the part that makes it checkable at all.",
   },
   {
     lead: "It does not tell anybody the video is honest",
-    body: "The specification refuses that job in its own guiding principles, and the wording is worth reading twice. It says the specifications should not provide value judgments about whether a given set of provenance data is good or bad, merely whether the assertions included within can be validated as associated with the underlying asset, correctly formed, and free from tampering. Signed and true are different words.",
+    body: "The specification refuses that job in its own guiding principles. The wording is worth reading twice. It says the specifications should not provide value judgments about whether a given set of provenance data is good or bad, merely whether the assertions included within can be validated as associated with the underlying asset, correctly formed, and free from tampering. Signed and true are different words.",
   },
   {
     lead: "And it can simply be absent",
-    body: "The trust decision rests on the identity of whoever signed the claim, so a file with no credential at all is not evidence of anything, and a great deal of ordinary honest video has none. Anybody stripping provenance on purpose is not going to be stopped by a standard. Which is why the useful version of this is not detection, it is you saying so in the first frame.",
+    body: "The trust decision rests on the identity of whoever signed the claim. So a file with no credential at all is not evidence of anything, and a great deal of ordinary honest video has none. Anybody stripping provenance on purpose is not going to be stopped by a standard. That is why the useful version of this is not detection. It is you saying so in the first frame.",
   },
 ];
 
@@ -196,15 +196,15 @@ export const CONSENT_PATH: { label: string; connects: string; at?: string }[] = 
 export const WASTED: GridItem[] = [
   {
     lead: "Nobody watches them any more",
-    body: "The first fortnight, every video gets checked. By the second month it is a pipeline, and a pipeline is exactly the thing whose output stops being read. The failure is not that the twin says something outrageous. It is that it says something slightly wrong about a property, in your face, to a person who now believes you said it.",
+    body: "The first fortnight, every video gets checked. By the second month it is a pipeline, and a pipeline is exactly the thing whose output stops being read. The failure is not that the twin says something wild. It is that it says something slightly wrong about a property, in your face, to a person who now believes you said it.",
   },
   {
     lead: "It answers a question it should have refused",
-    body: "A script generated from a listing will happily state a school district, a tax figure, a boundary or a permit status, and every one of those is a thing an agent gets asked and answers carefully. A twin has no sense of which sentences are the expensive ones, so the sentences it should decline to say have to be decided in advance by a person.",
+    body: "A script generated from a listing will happily state a school district, a tax figure, a boundary or a permit status. Every one of those is a thing an agent gets asked, and answers carefully. A twin has no sense of which sentences are the expensive ones. So the sentences it should decline to say have to be decided in advance by a person.",
   },
   {
     lead: "The library outlives the arrangement",
-    body: "A colleague's model, a client's testimonial, a video made for a listing that has since sold twice. Somebody has to own the question of what gets deleted and when, and if nobody does, the answer is nothing, forever, including the material of people who have long since left.",
+    body: "A colleague's model. A client's testimonial. A video made for a listing that has since sold twice. Somebody has to own the question of what gets deleted, and when. If nobody does, the answer is nothing, forever. That includes the material of people who left long ago.",
   },
 ];
 
@@ -268,7 +268,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       // ink and shadow. Round H's unresolvable-text class, described as a fact.
       alt: "Large letterpress type blocks lying face up and packed tightly together, photographed at a low angle so the rows recede, a few of them pale bare wood and most of them darkened with ink, with lowercase t, a, o and p legible across the middle of the frame, a question mark among the blocks along the top edge, a row of figures at the right hand edge, and a fold of pink and white checked cloth at the bottom right corner",
       caption:
-        "Every one of these blocks is a copy. Somebody cut a master letter once, and everything printed afterwards came from a duplicate of it, which is why the same q could be set in a thousand shops at once and still be that q. What the case does not settle is who is allowed to pick a block up. That has never been a property of the type.",
+        "Every one of these blocks is a copy. Somebody cut a master letter once, and everything printed afterwards came from a copy of it. That is why the same q could be set in a thousand shops at once and still be that q. What the case does not settle is who is allowed to pick a block up. That has never been a property of the type.",
       credit: "Photograph by Kyle Van Horn, CC BY 2.0.",
       ariaLabel: "Wooden letterpress type lying face up",
     },
@@ -310,7 +310,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       label: "The path",
       eyebrow: "The system",
       heading: "Six steps, and only two of them are technical.",
-      lede: "This is the whole of a lawful twin, drawn as the order it has to happen in. Every product in the category is sold on the third box. The first two are what make the third one lawful rather than lifted, and the last two are the entire difference between a tool and a problem. Note that the two nobody budgets for are at the end.",
+      lede: "This is the whole of a lawful twin, drawn as the order it has to happen in. Every product in the category is sold on the third box. The first two are what make the third one lawful rather than lifted. The last two are the entire difference between a tool and a problem. Note that the two nobody budgets for are at the end.",
       steps: CONSENT_PATH,
       /** The lede said "yours rather than borrowed" and this alt said "a model that stays
        * yours", which is the SAME false ownership claim the caption carried, on the prose
@@ -385,7 +385,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       ],
       headline: 3,
       resultLabel: "Hours a year to watch everything that goes out in your face",
-      note: "This is the only number in the whole topic that is definitely yours, and it is deliberately small at the settings it opens with. That is the argument rather than a weakness in it. A few hours a year is not a reason to say no to anything, which means there is no honest excuse for the second row going out unwatched, and the second row is the one that matters: those are statements published in your name to people who will remember them as yours. Watch the second row rather than the headline as you move the sliders. Four things this refuses to put a number on. There is no response rate, no reply rate and no conversion figure for personalised video anywhere on this page, because every figure of that kind that could be found is published by a company selling the software and none of them states a sample. There is no comparison against how long it takes to record one yourself, because nobody has timed that either. There is no dollar value, because the value depends entirely on what the video is for. And there is no estimate of how many viewers would notice, because the research on this page measures a different task.",
+      note: "This is the only number in the whole topic that is definitely yours. It is deliberately small at the settings it opens with. That is the argument rather than a weakness in it. A few hours a year is not a reason to say no to anything. So there is no honest excuse for the second row going out unwatched. And the second row is the one that matters. Those are statements published in your name, to people who will remember them as yours. Watch the second row rather than the headline as you move the sliders. Four things this refuses to put a number on. There is no response rate, no reply rate and no conversion figure for personalised video anywhere on this page. Every figure of that kind that could be found is published by a company selling the software, and none of them states a sample. There is no comparison against how long it takes to record one yourself, because nobody has timed that either. There is no dollar value, because the value depends entirely on what the video is for. And there is no estimate of how many viewers would notice, because the research on this page measures a different task.",
       action: { label: "See how it is built", href: "/services/ai-clone" },
       secondary: { label: "Talk it through with us", href: "/connect" },
     },
@@ -393,9 +393,9 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Tell us the three things you would put in front of a camera every week if the recording took no time at all. We will tell you which of them actually needs your face, which would be better as two lines of writing, and which one is the sort of thing you should never let a script write on your behalf.",
+      text: "Tell us the three things you would put in front of a camera every week if the recording took no time at all. We will tell you which of them really needs your face. We will tell you which would be better as two lines of writing. And we will tell you which one you should never let a script write on your behalf.",
       reassure:
-        "It is a short reply from a person, it costs nothing, we do not need a recording session to answer it, and the answer is often that one of the three is not worth building.",
+        "It is a short reply from a person. It costs nothing. We do not need a recording session to answer it. And the answer is often that one of the three is not worth building.",
       action: { label: "Send us the three", href: "/connect" },
       ariaLabel: "Send us the three things you would put on camera",
     },
@@ -415,7 +415,7 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       // The argument never needed the superlative.
       alt: "An antique wind-up gramophone standing against a plain yellow wall, its wide metal horn opening toward the left of the frame and mottled with age, the horn's neck curving down to a metal fitting on a reddish wooden box with a winding crank projecting from the right of it, all of it standing on a darker cabinet with canted corners and two small metal fittings on its front",
       caption:
-        "This is a machine for sending a voice somewhere its owner has never been. Nobody thought the singer was in the room, and nobody was fooled, because the horn is enormous and the whole object announces itself. That is the part worth keeping rather than the technology. A reproduction that is obviously a reproduction has never needed anybody's permission to be honest about what it is.",
+        "This is a machine for sending a voice somewhere its owner has never been. Nobody thought the singer was in the room. Nobody was fooled, because the horn is enormous and the whole object announces itself. That is the part worth keeping, rather than the technology. A copy that is obviously a copy has never needed anybody's permission to be honest about what it is.",
       credit: "Photograph by Vince Alongi, CC BY 2.0.",
       ariaLabel: "An antique wind-up gramophone against a yellow wall",
     },
@@ -436,13 +436,13 @@ export const CLONE_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Before you record anything, write two lists. On the first, every sentence you are happy for a machine to say in your voice without you hearing it first. On the second, every sentence you would want to be in the room for. The second list is usually the shorter one, and it tends to contain the only sentences that were ever worth saying on camera.",
+      text: "Before you record anything, write two lists. On the first, every sentence you are happy for a machine to say in your voice without you hearing it first. On the second, every sentence you would want to be in the room for. The second list is usually the shorter one. It also tends to hold the only sentences that were ever worth saying on camera.",
       actions: [
         { label: "See it on the AI page", href: "/ai#clone", variant: "light" },
         { label: "How it is built", href: "/services/ai-clone", variant: "outline-light" },
       ],
       footnote:
-        "There is no price on this page and the reason is unusually specific to this topic: the recording session and the model are the small, predictable part, and the work that decides whether the thing is any good is the script boundary and the review step, which are yours to set and take a conversation rather than a quote. The AI audit is an hour, done with you, and for this topic it starts with the two lists above rather than with a camera.",
+        "There is no price on this page, and the reason is unusually specific to this topic. The recording session and the model are the small, predictable part. The work that decides whether the thing is any good is the script boundary and the review step. Those are yours to set, and they take a conversation rather than a quote. The AI audit is an hour, done with you. For this topic it starts with the two lists above rather than with a camera.",
     },
   },
 

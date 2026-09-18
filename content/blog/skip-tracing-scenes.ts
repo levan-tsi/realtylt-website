@@ -40,9 +40,9 @@ import type { FlagshipContent, GridItem } from "@/lib/blog/flagship";
  * Three lines, each checkable by somebody else in the primary document. The acquisition, the
  * purpose, the standing refusal, which is the order the article itself runs in. */
 export const IN_SHORT: string[] = [
-  "A traced phone number is not a lead, it is a record with a history. Two federal statutes care about where it came from and what you intend to do with it, and neither of them is the one everybody in this trade talks about.",
-  "The Driver's Privacy Protection Act lists the purposes for which information out of a state motor vehicle record may be released. Selling somebody a house is not among them, and the exception for licensed investigators does not add a purpose, it only names who may act on one that already exists.",
-  "The Fair Credit Reporting Act does not turn on what the data is. It turns on what you use it for, which means the same name and address can be an ordinary public record in one hand and a consumer report in another.",
+  "A traced phone number is not a lead. It is a record with a history. Two federal statutes care about where it came from, and about what you intend to do with it. Neither of them is the one everybody in this trade talks about.",
+  "The Driver's Privacy Protection Act lists the purposes for which information out of a state motor vehicle record may be released. Selling someone a house is not among them. And the exception for licensed investigators does not add a purpose. It only names who may act on one that already exists.",
+  "The Fair Credit Reporting Act does not turn on what the data is. It turns on what you use it for. So the same name and address can be an ordinary public record in one hand, and a consumer report in another.",
 ];
 
 /** SCENE copy — the four honest answers to the only question that matters.
@@ -56,19 +56,19 @@ export const IN_SHORT: string[] = [
 export const WHERE_FROM: GridItem[] = [
   {
     lead: "From a public record you can name",
-    body: "A deed, a tax roll, a recorded mortgage, a probate filing. These are public because a legislature decided they should be, the county will tell you the same thing over the counter, and there is nothing to be uncomfortable about. What a public record almost never carries is a mobile number, which is precisely why the chain does not stop here.",
+    body: "A deed, a tax roll, a recorded mortgage, a probate filing. These are public because a legislature decided they should be. The county will tell you the same thing over the counter. There is nothing to be uncomfortable about. What a public record almost never carries is a mobile number. That is precisely why the chain does not stop here.",
   },
   {
     lead: "From the person, at some earlier point",
-    body: "They filled in a form, they rang the office, they signed something at an open house. This is the strongest answer there is and it is the one a good CRM can evidence with a date and a source. It is also the answer that makes this whole article unnecessary, and it is available for a vanishingly small share of any prospecting list.",
+    body: "They filled in a form. They rang the office. They signed something at an open house. This is the strongest answer there is, and a good CRM can evidence it with a date and a source. It is also the answer that makes this whole article unnecessary. And it is available for a vanishingly small share of any prospecting list.",
   },
   {
     lead: "From a compiler, under a purpose the compiler recorded",
-    body: "Data resellers are required by law to keep records of who received information and the permitted purpose it was taken under, and to keep them for five years. That means there is an answer written down somewhere. Ask your provider what purpose your account was set up under and you will learn more in five minutes than any article can tell you.",
+    body: "Data resellers are required by law to keep records of who received information, and of the permitted purpose it was taken under. They must keep them for five years. So there is an answer written down somewhere. Ask your provider what purpose your account was set up under. You will learn more in five minutes than any article can tell you.",
   },
   {
     lead: "Nobody knows, and nobody asked",
-    body: "This is the usual answer and it is the reason this article exists. The list came from a tool, the tool bought from an aggregator, the aggregator bought from somebody else, and at no point did a person in your business form a view about which permitted purpose the request sat under. The obligation does not disappear because the chain is long.",
+    body: "This is the usual answer, and it is the reason this article exists. The list came from a tool. The tool bought from an aggregator. The aggregator bought from someone else. At no point did a person in your business form a view about which permitted purpose the request sat under. The obligation does not disappear because the chain is long.",
   },
 ];
 
@@ -98,15 +98,15 @@ export const WHERE_FROM: GridItem[] = [
 export const THREE_EXCEPTIONS: GridItem[] = [
   {
     lead: "The legitimate business one has a second half",
-    body: "It permits a business to check information a person gave it directly, and then, if that information turns out to be wrong, to go and find the right version. The clause names what for: preventing fraud, pursuing a legal remedy, or recovering a debt. Prospecting somebody who has never contacted you is not the first half, and selling them a house is not the second.",
+    body: "It permits a business to check information a person gave it directly. Then, if that information turns out to be wrong, it may go and find the right version. The clause names what for. Preventing fraud, pursuing a legal remedy, or recovering a debt. Prospecting somebody who has never contacted you is not the first half. And selling them a house is not the second.",
   },
   {
     lead: "The investigator one is a loop, not a door",
-    body: "This is the clause the trade leans on, and read in full it does not do what it is asked to do. It permits a licensed investigative agency to use the information for any purpose already permitted by the same subsection. The licence answers who is allowed to act. It does not add a purpose to the list, so the purpose still has to be found somewhere else on it.",
+    body: "This is the clause the trade leans on. Read in full, it does not do what it is asked to do. It permits a licensed investigative agency to use the information for any purpose already permitted by the same subsection. The licence answers who is allowed to act. It does not add a purpose to the list. So the purpose still has to be found somewhere else on it.",
   },
   {
     lead: "The marketing one exists, with a condition attached",
-    body: "There is an exception for bulk distribution for surveys, marketing or solicitations, so the statute clearly contemplates this. The condition is that the state has obtained the express consent of the person the information is about, and express consent is separately defined as consent in writing. That is an opt in held by the state, not a box anybody in your office can tick.",
+    body: "There is an exception for bulk distribution for surveys, marketing or solicitations. So the statute clearly contemplates this. The condition is that the state has obtained the express consent of the person the information is about. And express consent is separately defined as consent in writing. That is an opt in held by the state. It is not a box anybody in your office can tick.",
   },
 ];
 
@@ -149,7 +149,7 @@ export const MOVERS = {
   ],
   lit: 0,
   basis:
-    "People aged one and over who were living at a different address a year earlier, counted by the Current Population Survey and published by the Census Bureau as Table A-1. The four bars are the four destinations the Bureau distinguishes, and together they are the 25.6 million people the survey counts as movers in 2023.",
+    "People aged one and over who were living at a different address a year earlier. They are counted by the Current Population Survey and published by the Census Bureau as Table A-1. The four bars are the four destinations the Bureau distinguishes. Together they are the 25.6 million people the survey counts as movers in 2023.",
   sourceText:
     "U.S. Census Bureau, Current Population Survey Annual Social and Economic Supplement, Table A-1, Annual Geographic Mobility Rates by Type of Movement, 1948 to 2023.",
   sourceHref:
@@ -160,7 +160,7 @@ export const MOVERS = {
    * location" when switching CARRIER, so it is not about moving house at all. The true reason is
    * that a mobile number is not attached to a building. Recorded because giving a wrong REASON
    * for a right conclusion is the exact defect Round D's second pass caught twice. */
-  note: "This counts people, not records, and the distinction matters more here than anywhere else in this article. A move breaks an address. It does not automatically break a mobile number, because a mobile number was never attached to a building. So read the first bar as the reason a mailing address goes wrong, not as a rate at which phone numbers go wrong, and treat the two as separate problems with separate answers. The Bureau also states that estimates may not sum to totals due to rounding, and that this is a survey rather than a count, so these are estimates with sampling error around them rather than exact figures.",
+  note: "This counts people, not records. That difference matters more here than anywhere else in this article. A move breaks an address. It does not automatically break a mobile number, because a mobile number was never attached to a building. So read the first bar as the reason a mailing address goes wrong. Do not read it as a rate at which phone numbers go wrong. Treat the two as separate problems with separate answers. The Bureau also states that estimates may not sum to totals due to rounding, and that this is a survey rather than a count. So these are estimates with sampling error around them rather than exact figures.",
 };
 
 /** SCENE copy — who people complained about. Cited data graphic TWO.
@@ -204,7 +204,7 @@ export const COMPLAINTS = {
   sourceText:
     "Federal Trade Commission, National Do Not Call Registry Data Book 2024, November 2024.",
   sourceHref: "https://www.ftc.gov/system/files/ftc_gov/pdf/DNC-Data-Book-2024.pdf",
-  note: "The Commission states plainly what this is and is not: the complaint data is based on unverified complaints reported by consumers rather than on a consumer survey, so these are reports rather than findings, and nobody has checked each one. There is no denominator here either, so this cannot tell you what share of calls draw a complaint, only how many complaints arrived. Read the second bar rather than the first. A recorded call is the thing everybody legislates about, and three quarters of a million of these complaints were about a person dialling by hand, which is what a prospecting list is for.",
+  note: "The Commission states plainly what this is and is not. The complaint data is based on unverified complaints reported by consumers, not on a consumer survey. So these are reports rather than findings, and nobody has checked each one. There is no denominator here either. So this cannot tell you what share of calls draw a complaint. It can only tell you how many complaints arrived. Read the second bar rather than the first. A recorded call is the thing everybody legislates about. Three quarters of a million of these complaints were about a person dialling by hand, which is what a prospecting list is for.",
 };
 
 /** SCENE copy — three ways a technically clean trace produces nothing worth having.
@@ -215,15 +215,15 @@ export const COMPLAINTS = {
 export const WASTED: GridItem[] = [
   {
     lead: "A list nobody can say no to",
-    body: "If a person asks not to be contacted again and there is no field for it, no owner of that field and no check before the next run, then the same list will produce the same call in six weeks. That is worse than never having called, because the first call was a nuisance and the second one is evidence. The suppression list is the least interesting part of this and it is the part that decides whether you are safe.",
+    body: "Say a person asks not to be contacted again. If there is no field for it, no owner of that field and no check before the next run, the same list will produce the same call in six weeks. That is worse than never having called. The first call was a nuisance. The second one is evidence. The suppression list is the dullest part of this. It is also the part that decides whether you are safe.",
   },
   {
     lead: "Volume standing in for a reason to ring",
-    body: "The pipeline makes it cheap to produce three hundred numbers, and cheap production quietly changes the question from who should I speak to into how many can I get through. A traced number carries no signal at all about whether that person is thinking of moving. Whatever you might have known about that came from the public record you started from, and whether the pipeline carries it forward alongside the number is a thing to check on your own output rather than to assume.",
+    body: "The pipeline makes it cheap to produce three hundred numbers. Cheap production quietly changes the question. Who should I speak to becomes how many can I get through. A traced number carries no signal at all about whether that person is thinking of moving. Whatever you might have known about that came from the public record you started from. Whether the pipeline carries it forward alongside the number is a thing to check on your own output rather than to assume.",
   },
   {
     lead: "A file with no memory of where it came from",
-    body: "Rows arrive with a name and a number and nothing else, get pasted into a CRM, and six months later nobody can tell them apart from the people who filled in a form on your website. At that point every consent question about your whole database has become unanswerable, and the honest fix is a cleanup rather than a campaign. Carry the source and the date with every row from the first minute, because you cannot add them later.",
+    body: "Rows arrive with a name and a number and nothing else. They get pasted into a CRM. Six months later nobody can tell them apart from the people who filled in a form on your website. At that point every consent question about your whole database has become unanswerable. The honest fix is a cleanup rather than a campaign. Carry the source and the date with every row from the first minute, because you cannot add them later.",
   },
 ];
 
@@ -301,7 +301,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       // the valley with a pale cliff face standing at its top.
       alt: "Four metal rural mailboxes standing in a row on a rough grey plank carried on splayed timber legs, one small and rust streaked, one pale and ribbed with writing along its side, one rust brown with U S MAIL and APPROVED BY THE POSTMASTER-GENERAL embossed on its door and a large hand painted 70 across the same door, and one silver with a small 60 written low on its door, all of them standing in long grass in front of a green field, with orange and gold autumn woodland rising behind it, two small farm buildings at the treeline and a long ridge closing the valley with a pale cliff face at its top",
       caption:
-        "Two of these carry a number that anybody driving past can read, which is the whole point of a mailbox. Not one of them carries a telephone number, and that is not an oversight either. The information a person puts where the public can see it is a decision they made, and the information they did not put there is also a decision.",
+        "Two of these carry a number that anyone driving past can read. That is the whole point of a mailbox. Not one of them carries a telephone number, and that is not an oversight either. The information a person puts where the public can see it is a decision they made. The information they did not put there is also a decision.",
       credit: "Photograph by _Imaji_, CC BY 2.0.",
       ariaLabel: "Four mailboxes on a plank",
     },
@@ -340,7 +340,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       // limit of what the shipped crop resolves.
       alt: "A single sheet of an old pay roll photographed close up, the paper aged to a deep yellow and torn away down its right edge, ruled into columns whose heads read Names, Commencing and Ending above narrow money columns, two columns of personal names written in brown ink cursive down the sheet, each name followed by dates and a short row of figures",
       caption:
-        "Every line here is a person, written down by somebody whose job it was to be accurate, on a sheet that was never meant to leave the room it was kept in. A list of names has always been easy to make and easy to move. What has changed is that the list now arrives with a telephone number attached to it, and nothing about the list tells you where that part came from.",
+        "Every line here is a person. Each was written down by someone whose job it was to be accurate, on a sheet that was never meant to leave the room it was kept in. A list of names has always been easy to make and easy to move. What has changed is that the list now arrives with a telephone number attached to it. And nothing about the list tells you where that part came from.",
       credit: "Photograph by peagreengirl, CC BY 2.0.",
       ariaLabel: "A sheet of names from an old pay roll",
     },
@@ -356,7 +356,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       label: "The chain",
       eyebrow: "The system",
       heading: "From a house on a map to a phone ringing.",
-      lede: "Six hops, and the two that decide whether this is safe are the fourth and the fifth. Everything else is engineering that either works or does not. The source under each number and the purpose the request sat under are the two nobody asks about, they are answerable in writing, and they are the two you will be asked about if anything ever goes wrong.",
+      lede: "Six hops, and the two that decide whether this is safe are the fourth and the fifth. Everything else is engineering that either works or does not. The source under each number and the purpose the request sat under are the two nobody asks about. Both are answerable in writing. And both are what you will be asked about if anything ever goes wrong.",
       steps: TRACE_PATH,
       altPrefix:
         "The chain from a property on a map to a telephone ringing, through the record, the owner, the source of the number and the purpose it was released for",
@@ -385,7 +385,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
           kind: "range",
           id: "resolve",
           label: "Share where a phone number comes back at all",
-          hint: "Your own provider can tell you this for your own area, and it is the one number on this page you should not accept from anybody who has not run it for you.",
+          hint: "Your own provider can tell you this for your own area. It is the one number on this page you should not accept from anybody who has not run it for you.",
           min: 10,
           max: 100,
           step: 5,
@@ -458,7 +458,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       ],
       headline: 1,
       resultLabel: "Numbers whose source you would have to be able to name",
-      note: "The headline is the second row rather than the hours, because the hours are the easy half and everybody already knows roughly what they are. The number that matters is how many records you would be holding, because each one of them is a thing somebody could ask you about, and the answer has to be the same for the first as for the last. Two things this deliberately will not do. It will not tell you a match rate. The second slider is yours to set, and that is a checked refusal rather than a shrug: the circulating figures were followed, they are bands of roughly 70 to 90 percent, every page carrying one is a company that sells skip tracing or a page ranking such companies, and none of the ones opened states a sample. Your own provider can measure it for your own area in an afternoon, which is worth more than any band. And there is no row that turns calls into appointments or appointments into commission. Nobody has published a rate for cold outreach to traced numbers in this industry with a method under it, and inventing one here would undo the only argument this article is making.",
+      note: "The headline is the second row rather than the hours. The hours are the easy half, and everybody already knows roughly what they are. The number that matters is how many records you would be holding. Each one of them is a thing somebody could ask you about, and the answer has to be the same for the first as for the last. Two things this deliberately will not do. It will not tell you a match rate. The second slider is yours to set, and that is a checked refusal rather than a shrug. The circulating figures were followed. They are bands of roughly 70 to 90 percent. Every page carrying one is a company that sells skip tracing, or a page ranking such companies. None of the ones opened states a sample. Your own provider can measure it for your own area in an afternoon, which is worth more than any band. And there is no row that turns calls into appointments, or appointments into commission. Nobody has published a rate for cold outreach to traced numbers in this industry with a method under it. Inventing one here would undo the only argument this article is making.",
       action: { label: "See how it is built", href: "/services/skip-tracing-lead-generation" },
       secondary: { label: "Ask us what your list would need", href: "/connect" },
     },
@@ -473,9 +473,9 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       kind: "offer",
       band: "light",
       eyebrow: "The honest read",
-      text: "Tell us what you would use a list for and where you would work, and send the name of the provider you are considering. We will send back the questions to put to them in writing, what a good answer looks like, and which parts of what you want are ordinary public record work and which parts are not.",
+      text: "Tell us what you would use a list for and where you would work. Send the name of the provider you are considering. We will send back the questions to put to them in writing, and what a good answer looks like. We will also say which parts of what you want are plain public record work, and which parts are not.",
       reassure:
-        "It is a short reply from a person, it costs nothing, we do not need access to any list, and if the honest answer is that you do not need this we will say so.",
+        "It is a short reply from a person. It costs nothing. We do not need access to any list. And if the honest answer is that you do not need this, we will say so.",
       action: { label: "Ask what your list would need", href: "/connect" },
       ariaLabel: "Ask what your list would need",
     },
@@ -508,7 +508,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       // wrong the day FY2025 publishes.
       alt: "A weathered red metal sign filling the frame, scratched and faded, carrying a large white outlined triangle with a white pictogram inside it of a figure striding to the right with a case in one hand and its broad hat flying off above its head with a motion line over it, and beneath the triangle the words exclamation mark WARNING exclamation mark above the words NO SOLICITATION, both in white capitals, and below those, between two short rules, the words Thank You! in a white script hand, with a pale grey surface showing at each edge of the frame",
       caption:
-        "Somebody bought this, drilled it to their own wall and looked at it every day, which is a considerable amount of trouble to go to in order to say one thing. The Federal Trade Commission counted two million complaints saying it in a single fiscal year, and 254 million numbers are registered saying it in advance. Neither of those is a headcount. This is one person, and it still says thank you at the bottom.",
+        "Somebody bought this, drilled it to their own wall, and looked at it every day. That is a considerable amount of trouble to go to in order to say one thing. The Federal Trade Commission counted two million complaints saying it in a single fiscal year. And 254 million numbers are registered saying it in advance. Neither of those is a headcount. This is one person, and it still says thank you at the bottom.",
       credit: "Photograph by upyernoz, CC BY 2.0.",
       ariaLabel: "A no solicitation sign",
     },
@@ -529,7 +529,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
       tone: "close",
       glow: true,
       ariaLabel: "What to do next",
-      text: "Open the last list anybody in your office worked and pick one row at random. Ask where that person's number came from and under what purpose it was released. If the answer arrives in a minute you have a good provider and a process. If it does not, you have found the actual project, and it is smaller and duller and far more useful than buying more rows.",
+      text: "Open the last list anyone in your office worked, and pick one row at random. Ask where that person's number came from, and under what purpose it was released. If the answer arrives in a minute, you have a good provider and a process. If it does not, you have found the actual project. It is smaller and duller and far more useful than buying more rows.",
       actions: [
         { label: "See it on the AI page", href: "/ai#data", variant: "light" },
         {
@@ -539,7 +539,7 @@ export const SKIP_TRACING_FLAGSHIP: FlagshipContent = {
         },
       ],
       footnote:
-        "There is no price on this page because the cost tracks four things nobody can guess from an article: how many properties you would run, what your enrichment provider charges per resolved record in your area, whether the suppression and consent fields already exist in your CRM or have to be built, and whether anything calls the list afterwards. The AI audit is an hour, done with you, and it ends with a list of the questions to put to your provider rather than with a document.",
+        "There is no price on this page, because the cost tracks four things nobody can guess from an article. How many properties you would run. What your enrichment provider charges per resolved record in your area. Whether the suppression and consent fields already exist in your CRM, or have to be built. And whether anything calls the list afterwards. The AI audit is an hour, done with you. It ends with a list of the questions to put to your provider rather than with a document.",
     },
   },
 
