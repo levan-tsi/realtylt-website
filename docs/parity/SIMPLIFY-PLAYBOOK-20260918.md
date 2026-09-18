@@ -143,6 +143,39 @@ in `content/blog/posts.ts` to `"2026-09-18"`. Nothing else in that file changes.
   x1.01-1.02. Glosses that worked: "Treble damages means three times the charge." "a wire, which
   is a direct bank transfer." One short sentence, plainly true, right after the hard word.
 
+## THE RULE BATCH 1 PAID FOR: never split a clause away from its governor
+
+A fresh checker read batch 1 in full after both scorers had passed every page, and found four
+HIGH meaning errors. Three were the same move: **a subordinate clause promoted to its own
+sentence loses the word that governed it**, and the page then says something it never meant.
+
+- A REPORTED BELIEF became the page's own claim. "Most people assume X, and that Y." was split
+  into "Most people assume X. Y." The page now asserts Y, one sentence before refuting it.
+  Keep the governor: "Most people assume X. They assume Y."
+- TWO JOINT CONDITIONS became one. "The moment A, and B, the purpose changes." was split into
+  "The moment A, that changes. Say B." Now A alone is enough. Keep "and" inside one sentence.
+- A RECOMMENDATION became an order. "It is best to share the profile rather than start a
+  competing one." became "...share the profile. Do not start a competing one."
+- A COMPARISON flipped. "as surely as inventing it from nothing" became "inventing it from
+  nothing is no more caught than that is", which reads as the reverse.
+
+Before you split at "and that", "and", "which", "rather than", "unless", "if", "because",
+"as ... as", ask: what word in the first half makes the second half true? If it is a reporting
+verb (assume, say, report, claim, found), a condition (if, when, the moment, unless), a hedge
+(may, often, probably) or a comparison, either keep one sentence or REPEAT the governor in the
+second one. A grade of 6.2 with the meaning intact beats 5.8 with it bent.
+
+The fourth HIGH was a gloss: "In plain words, nobody may pay for a referral" after a statute
+whose exceptions the article relies on five paragraphs later. **A plain-words sentence after a
+quotation must carry the quotation's limits too** ("...unless the law's own exceptions cover
+it"). If you cannot say it plainly AND completely in one short sentence, do not add it.
+
+Smaller, same family: a qualifier is content ("at some point", "completely", "specific",
+"purchase", "among the practices"). An aside inside a reported finding keeps its reporter
+("The organisers add that ..."). Do not swap a word that carries legal weight for a casual one
+(legitimate is not "fair", innocuous is not "quite plain"). Do not add a fact to fill a rhythm
+("The paragraph is short", "the monthly bill").
+
 ## Do not
 
 - Do not `git add`, commit or push. The orchestrator commits after verifying.
