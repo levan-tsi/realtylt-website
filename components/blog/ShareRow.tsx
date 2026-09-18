@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /** Share cluster: copy-link (with a confirmed state) plus the places this actually gets sent.
  *
@@ -33,6 +33,23 @@ export function ShareRow({
   tone?: "light" | "dark";
 }) {
   const [copied, setCopied] = useState(false);
+  // navigator.share exists on phones and not on most desktops. Decided after mount so the
+  // server render and the first client paint agree (a hydration mismatch here would be the
+  // whole row flickering); until then the button simply is not there, which is also the
+  // correct desktop state. Final-round beat 4: the mobile contract is the OS share sheet.
+  const [canNativeShare, setCanNativeShare] = useState(false);
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") setCanNativeShare(true);
+  }, []);
+
+  const nativeShare = async () => {
+    try {
+      await navigator.share({ title, url });
+    } catch {
+      // The visitor closed the sheet (AbortError) or the platform refused - the row of
+      // per-network links right beside this button is the fallback, so nothing to do.
+    }
+  };
 
   const copy = async () => {
     try {
@@ -92,6 +109,18 @@ export function ShareRow({
 
   return (
     <div className="flex flex-wrap items-center gap-2.5">
+      {canNativeShare && (
+        <button
+          type="button"
+          onClick={nativeShare}
+          className={`inline-flex h-9 items-center gap-1.5 rounded-full border px-3.5 text-xs font-bold uppercase tracking-[0.1em] transition-colors ${iconBtn}`}
+        >
+          <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 15V4m0 0 3.5 3.5M12 4 8.5 7.5M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7" />
+          </svg>
+          Share
+        </button>
+      )}
       <button
         type="button"
         onClick={copy}
