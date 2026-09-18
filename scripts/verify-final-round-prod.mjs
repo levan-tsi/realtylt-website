@@ -69,6 +69,18 @@ ok("service pages: the shared 'touch it' paragraph is split", d.text.includes("b
 d = await open("/blog/crm-sync-real-estate-duplicate-contact-records");
 ok("CRM sync post: three requirements, not three descriptions", d.text.includes("That your rule is written down somewhere you can read it."));
 
+// ---- batch 3 (website 52e6229) -------------------------------------------------------------
+d = await open("/blog/the-singularity-self-improving-ai-system");
+ok("Singularity post: the 'if ... then ... and then' condition is whole", d.text.includes("And then nothing can be undone in six weeks"));
+ok("Singularity post: nothing ships on its own", d.text.includes("It does not ship anything on its own."));
+
+d = await open("/blog/ai-agent-workforce-real-estate-assistants");
+ok("agent workforce post: the annotators are independent", d.text.includes("They had independent annotators apply it"));
+
+d = await open("/blog/automated-google-review-requests-real-estate");
+ok("review post: the 465.7 example needs three things together", d.text.includes("when three things are true together"));
+ok("review CTA: a list of three, in English", d.text.includes("That is three things. The date on your newest review."));
+
 d = await open("/top-areas/queens");
 const median = d.text.match(/\$[\d,.]+[KM]?/);
 ok("/top-areas/queens renders with a median", /median/i.test(d.text) && !!median, median ? median[0] : "none");
