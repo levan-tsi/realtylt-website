@@ -18,7 +18,7 @@ export const aiScheduling: Service = {
   title: "Appointments that book themselves",
   lede: "The AI can tell from a chat or a call when someone wants to meet. It offers real open slots from your Google or Outlook calendar. It books the showing or the consult, then sends the confirmations and reminders. It reschedules on request without a phone call.",
   specs: ["Google + Outlook calendar", "live availability", "auto reminders", "self-serve reschedule"],
-  why: "The gap between “interested” and “on the calendar” is where leads go cold. Instant booking closes that gap in the same conversation that opened it. It also holds the slot the moment it is taken. Your calendar is never offered twice.",
+  why: "The gap between “interested” and “on the calendar” is where leads go cold. Instant booking closes that gap in the same conversation that opened it. It also holds the slot the moment it is taken. So your own calendar is never offered twice.",
   keywords: [
     "ai appointment scheduling real estate",
     "automated showing scheduling",

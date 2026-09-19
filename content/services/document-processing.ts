@@ -16,7 +16,7 @@ export const documentProcessing: Service = {
 
   eyebrow: "Documents · Parse + Extract",
   title: "Contracts and disclosures, read in seconds",
-  lede: "Drop in a purchase agreement, a disclosure, or a lease. The AI pulls out the terms, the dates, and the names of the people in the deal. It flags what is missing. Then it files the details in your CRM and your deal folder. Nobody types the same fields in ten times.",
+  lede: "Drop in a purchase agreement, a disclosure, or a lease. The AI pulls out the terms, the dates, and the names of the people in the deal. It flags what is missing. Then it files the details in your deal folder and in your CRM, the app that holds your contacts. Nobody types the same fields in ten times.",
   specs: ["contract + disclosure parsing", "key-date extraction", "missing-field flags", "auto-filed to CRM"],
   why: "Deal paperwork is slow, and it is easy to get wrong. It is a tax on every deal. The AI pulls the key dates and terms out on the way in. A deadline gets flagged the day the contract lands, not the week it runs out.",
   keywords: [

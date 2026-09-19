@@ -9,9 +9,9 @@ export const customAutomation: Service = {
 
   eyebrow: "Sky's the limit · Anything",
   title: "If it's repetitive, it can run itself",
-  lede: "Agents that take calls and make them. Tools that fill in missing contact info, sort your leads, and book your calendar. Tools that keep your CRM in sync and read your documents. It all runs together in n8n, a tool that links apps, wired to the software you already use. The same machine drops into almost any workflow.",
+  lede: "Agents that take calls and make them. Tools that fill in missing contact info, sort your leads, and book your calendar. Tools that read your documents and keep your CRM, the app that holds your contacts, in sync. It all runs together in n8n, a tool that links apps, wired to the software you already use. The same machine drops into almost any kind of work.",
   specs: ["n8n orchestration", "your workflow", "your tools", "your scale"],
-  why: "Every team has one slow spot that no store-bought tool fixes. Custom automation removes the step done by hand that quietly caps your growth. From the day it works, it is a thing you own. It runs. Somebody understands it. And it stands on software that belongs to other companies.",
+  why: "Every team has one slow spot that no store-bought tool fixes. Custom automation removes the step done by hand that quietly caps your growth. From the day it works, it is a thing you own: it runs, somebody understands it, and it stands on software that belongs to other companies.",
   keywords: [
     "real estate workflow automation",
     "custom ai automation for realtors",

@@ -9,7 +9,7 @@ export const geoLandingPages: Service = {
 
   eyebrow: "Local / GEO Pages · Get found nearby",
   title: "A landing page for every area you serve",
-  lede: "Tell us the areas you serve, and we build a real page for each one, in your own look. Each page says what you do there, shows local proof, and has a booking form. It is written to show up in Google and in AI answers when someone nearby searches for what you offer. These pages keep working year after year. They pull in local customers around the clock.",
+  lede: "Tell us your service areas, and we build a real page for each one, in your own look. Each page says what you do there, shows local proof, and has a booking form. It is written to show up in Google and in AI answers when someone nearby searches for what you offer. These pages keep working year after year. They pull in local customers around the clock.",
   specs: ["one page per area you serve", "built to rank locally", "tuned for AI search too", "built-in lead capture"],
   why: "People search for services by where they are. They type “near me,” or their town by name. A page for each area you cover meets them right where they are looking, in Google and in AI answers. And the lead lands on your own site, not on a directory’s.",
   keywords: [
