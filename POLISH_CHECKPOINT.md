@@ -1,5 +1,46 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 52b (2026-09-19): THE DAY AFTER - GOOGLE IS READING US, ONE PEER COMMIT VERIFIED ==
+## STATE: website main = bf87cf2 (+ this checkpoint commit). Production verified in a REAL
+## headful browser TODAY: 31/31 (node scripts/verify-final-round-prod.mjs). All scorers re-run
+## today on the dev server: readability 44/44, invariants 43/43, SEO audit 70/70 (15
+## adjudicated), byte-siblings with /ai 21/21. Nothing is blocking client acquisition.
+##
+## GOOGLE SEARCH CONSOLE (read-only look in the owner's Chrome, 2026-09-19):
+## * Sitemaps: /sitemap.xml = **Success, 71 discovered pages, last read Sep 19** (submitted Sep
+##   18). Yesterday's "Couldn't fetch" WAS the post-submit quirk: Googlebot gets through the
+##   Vercel bot challenge. That carried item is CLOSED.
+## * Page indexing report: "Processing data, please check again in a day or so" - normal one day
+##   after verification. Look again ~Sep 21; there is no number to report yet.
+## * URL Inspection: NOT done. The inspect box did not take typed text through the extension
+##   (two tries, stopped). "Request indexing" for the key pages (home, /services, /blog, top
+##   services) is a submit in the owner's Google account with a small daily quota: ASKED, his
+##   go is pending. Optional: the sitemap is already being read.
+##
+## A PEER SESSION'S COMMIT, VERIFIED HERE RATHER THAN TRUSTED: bf87cf2 (2026-09-19 17:45,
+## "five service pages re-mirror the /ai panels' R32b polish"): ai-scheduling says your OWN
+## calendar again, the custom-automation caveat sits inside the ownership sentence, CRM is
+## explained on documents + custom, a local-seo gloss reflow, and GEO pages' lede now opens
+## "Tell us your service areas" (the one suggestion in docs/handoff/WEBSITE-TO-AIPAGE-
+## 20260918.md, taken on both sides). It touched ONLY `lede`/`why`-class strings in 5 service
+## files (6 lines). My own re-run after it: ai-page `_sibling_diff.mjs` 21/21 SAME, readability
+## 44/44, invariants 43/43, SEO audit 70/70, and the phrase is live on prod (probe check 31).
+##
+## ONE MORE INSTRUMENT FIX: seo-audit.mjs died with a Node trace when one dev-server fetch timed
+## out (a crash is not a verdict). A page that cannot be fetched is now a reported finding,
+## after one retry (a cold compile is the usual cause).
+##
+## WHAT IS NEXT FOR THIS LANE (all small, none urgent):
+## 1. ~Sep 21: read the Page indexing report; if pages sit in "Discovered - currently not
+##    indexed" for long, that is when Request indexing on the key pages earns its quota.
+## 2. OWNER'S: the noreply@ Gmail alias · one real spoken voice test on /ai.
+## 3. The /website command file still loads the round-11 design brief; it should point at this
+##    top block (his config - I offered, not done).
+## 4. Unmeasured, same class as the fixed borough query: the pins select (lib/idx/db.ts ~607)
+##    carries office:listing->>listOfficeName across up to 15k pins. No timeout logged.
+## 5. /who-we-are reads grade 7.4 on proper nouns alone (outside the gated set).
+## NOTHING NEEDS TO RUN IN THE AI-PAGE REPO for this lane: the handoff went both ways and is closed.
+
 ## == ROUND 52 (2026-09-18): THE FINAL ROUND, WEBSITE HALF - DONE, LIVE, PROD-VERIFIED ======
 ## NOTE FOR WHOEVER RUNS /website NEXT: the command text is a STALE round-11 design brief.
 ## The live brief is ALWAYS this top block + memory/project-final-round-brief-20260918.md.
@@ -89,14 +130,12 @@
 ## in memory/infra-vercel-push-did-not-deploy-diagnosis.md. The dropped webhook DID replay 45
 ## minutes later for an older SHA, so always confirm which build is aliased (the probe does).
 ##
-## STILL OPEN (none blocks client acquisition):
-## * OWNER: re-check Search Console > Sitemaps in a day or two (post-submit "Couldn't fetch" is
-##   the known quirk; if it persists, suspect the bot challenge vs Googlebot) · the noreply@
-##   Gmail alias · one real spoken voice test on /ai.
+## STILL OPEN AS OF 09-18 (SUPERSEDED by the 52b block above; kept for the record):
+## * [CLOSED 09-19: sitemap reads Success, 71 pages] OWNER: re-check Search Console > Sitemaps
+##   · the noreply@ Gmail alias · one real spoken voice test on /ai.
 ## * /who-we-are reads grade 7.4 on proper nouns alone (15 sentences; outside the gated set).
-## * /ai session, if it ever touches COPY.geopages.p again: "Tell us your service areas" would
-##   carry the "local service area pages" keyword on both sides (docs/handoff/WEBSITE-TO-
-##   AIPAGE-20260918.md). I put the phrase back in the page body, which is website-only.
+## * [CLOSED 09-19 by bf87cf2: both sides now say "Tell us your service areas"] the /ai
+##   COPY.geopages.p keyword suggestion (docs/handoff/WEBSITE-TO-AIPAGE-20260918.md).
 ## * the pins select's JSONB key (above), unmeasured.
 ## * the /website command file still carries the round-11 design brief; it should point here.
 

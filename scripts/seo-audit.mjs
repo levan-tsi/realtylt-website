@@ -67,9 +67,18 @@ const words = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).f
 const stem = (w) => (w.length <= 4 ? w : w.replace(/ies$/, "y").replace(/(?:ing|ion|ed|es|s|e)$/, ""));
 const hasAll = (needle, hay) => { const h = new Set(words(hay).map(stem)); return words(needle).filter((w) => !STOP.has(w)).every((w) => h.has(stem(w))); };
 
+/** A page that cannot be fetched is a FINDING ("STATUS fetch failed: ..."), never a crash: on
+ * 2026-09-19 one dev-server timeout threw out of this function and the whole audit died with a
+ * Node trace instead of a verdict. One retry, because a cold compile is the usual cause. */
 async function get(path, ua = BOT) {
-  const res = await fetch(`${BASE}${path}`, { headers: { "user-agent": ua }, redirect: "manual", signal: AbortSignal.timeout(90_000) });
-  return { status: res.status, html: res.status === 200 ? await res.text() : "" };
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(`${BASE}${path}`, { headers: { "user-agent": ua }, redirect: "manual", signal: AbortSignal.timeout(90_000) });
+      return { status: res.status, html: res.status === 200 ? await res.text() : "" };
+    } catch (e) {
+      if (attempt === 2) return { status: `fetch failed: ${String(e.cause?.code || e.name || e).slice(0, 40)}`, html: "" };
+    }
+  }
 }
 
 /** Everything the checks need from one page, parsed once. Pure. */

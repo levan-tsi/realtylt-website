@@ -95,6 +95,10 @@ ok("qualification post: the HUD guidance is about how the ACT applies", d.text.i
 d = await open("/blog/geo-landing-pages-real-estate-doorway-pages");
 ok("GEO post: the sibling-overlap rewording is live", d.text.includes("It is the one with the map above it."));
 
+// ---- the R32b re-mirror (website bf87cf2, 2026-09-19, another session) ----------------------
+d = await open("/services/geo-landing-pages");
+ok("GEO service page: the lede keeps 'service areas' (the /ai R32b text)", d.text.includes("Tell us your service areas"));
+
 d = await open("/top-areas/queens");
 const median = d.text.match(/\$[\d,.]+[KM]?/);
 ok("/top-areas/queens renders with a median", /median/i.test(d.text) && !!median, median ? median[0] : "none");
