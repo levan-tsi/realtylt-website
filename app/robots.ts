@@ -14,7 +14,18 @@ export default function robots(): MetadataRoute.Robots {
     // and listing URLs are not in the sitemap (the live feed rotates). So the facets are
     // crawlable and marked `noindex, follow` in app/search/page.tsx instead: seen, followed,
     // not indexed.
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/"] }],
+    // Listing photos are the ONE /api/ path a visitor's browser actually loads: every tile and
+    // gallery renders /api/media/{id}/{n} (the only compliant way to show MLS photos — the raw
+    // MediaURL must not appear on the site). Blocking them cost real search surface, measured
+    // 2026-09-20 in Search Console's live test on /api/media/KEY1048465/0: "Page cannot be
+    // crawled: Blocked by robots.txt". So no listing photo could reach Google Images (24 on the
+    // home page, 100 on /search, 28 on a listing page), and worse, every listing page's JSON-LD
+    // `image` named a URL Google was forbidden to fetch. The longest matching rule wins, so this
+    // allow beats the /api/ block for photos only; lead, revalidate, cron, idx and reports stay
+    // shut. Crawling here is cheap and does NOT touch MLS: the route is storage-first (mirrored
+    // photos 302 to the public Supabase bucket), CDN-cached for a day, and its stale-source gate
+    // refuses to proxy rows whose signed URLs have expired.
+    rules: [{ userAgent: "*", allow: ["/", "/api/media/"], disallow: ["/api/"] }],
     sitemap: `${SITE.url.replace(/\/$/, "")}/sitemap.xml`,
   };
 }
