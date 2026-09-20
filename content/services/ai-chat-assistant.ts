@@ -32,8 +32,8 @@ export const aiChatAssistant: Service = {
 
   eyebrow: "Website AI Assistant",
   title: "The assistant your visitors actually talk to",
-  lede: "A real chat on your website, run by an AI called Claude. It searches the MLS, the shared list of homes for sale, while the visitor waits. It can text them the homes that match, or switch to a voice call. It saves their contact info before they leave. This is the one you can touch right now.",
-  specs: ["Claude", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
+  lede: "A real AI chat on your website. It searches the MLS, the shared list of homes for sale, while the visitor waits. It can text them the homes that match, or switch to a voice call. It saves their contact info before they leave. This is the one you can touch right now.",
+  specs: ["live AI chat", "MLS Grid API", "Twilio SMS", "Vapi handoff"],
   why: "Harvard Business Review studied this. Firms that contacted a lead inside the hour were nearly seven times likelier to have a meaningful conversation with a decision maker. That is compared with waiting one more hour. This one replies in seconds, asks the right questions, and books a time. No inquiry dies overnight.",
   keywords: [
     "ai chatbot for real estate website",
@@ -87,7 +87,7 @@ export const aiChatAssistant: Service = {
   },
 
   whatItIs: [
-    "It is a text chat on your own website, answered by Claude. It behaves like a well-briefed member of your team rather than a decision-tree bot. A visitor can ask for three bedrooms under $600k in Beacon. They can ask what the taxes look like. They can ask whether the seller will take a contingency. And they can get a straight answer to each one in the same conversation.",
+    "It is a text chat on your own website, answered by AI. It behaves like a well-briefed member of your team rather than a decision-tree bot. A visitor can ask for three bedrooms under $600k in Beacon. They can ask what the taxes look like. They can ask whether the seller will take a contingency. And they can get a straight answer to each one in the same conversation.",
     "It is wired to the systems that make the answer real. Listing questions hit the MLS Grid feed. So the inventory it quotes is the inventory that exists this minute. When a visitor wants the listings in their hand, it sends them by SMS through Twilio. When the conversation gets serious enough to need a voice, it hands off to a Vapi call rather than leaving a form behind.",
     "Everything it learns is captured. Name, number, price band, area, timeline, and the full transcript land in your CRM. So the follow-up starts from what the person actually said, instead of a name and an email address.",
   ],

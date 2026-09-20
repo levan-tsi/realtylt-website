@@ -9,8 +9,8 @@ export const leadQualification: Service = {
 
   eyebrow: "Qualification · Score + Route",
   title: "The hot leads reach you first",
-  lede: "Every new lead gets a score. The score comes from what they really say and do: how serious they are, their budget, and their timeline. Then each lead is sent to the right agent or the right follow-up track. Claude, the AI, reads the conversation, ranks your list, and shows you who to call now.",
-  specs: ["intent + budget + timeline scoring", "Claude-read conversations", "auto-routing", "live pipeline ranking"],
+  lede: "Every new lead gets a score. The score comes from what they really say and do: how serious they are, their budget, and their timeline. Then each lead is sent to the right agent or the right follow-up track. The AI reads the conversation, ranks your list, and shows you who to call now.",
+  specs: ["intent + budget + timeline scoring", "AI-read conversations", "auto-routing", "live pipeline ranking"],
   why: "Treating every lead the same wastes your best hours on tire-kickers, the people who only look. Sorting leads this way is called qualification. It puts the sellers and buyers who are ready to move at the top. Your best hours go to them.",
   keywords: [
     "ai lead qualification real estate",
@@ -52,7 +52,7 @@ export const leadQualification: Service = {
 
   whatItIs: [
     "It is the difference between a list of leads and a ranked pipeline. Every inbound lead looks the same on a form. What separates them is what they say next, and that is where the intent, the budget, and the timeline actually live.",
-    "Claude reads the conversation, the chat, or the call transcript, and scores the lead on those three things. Then it routes it: to you if it is hot, to a nurture track if it is not. The list you look at in the morning is ordered by who is worth calling.",
+    "The AI reads the conversation, the chat, or the call transcript, and scores the lead on those three things. Then it routes it: to you if it is hot, to a nurture track if it is not. The list you look at in the morning is ordered by who is worth calling.",
     "There is a line under all of this and it belongs on the page that sells it: change your order, never their access. Qualification decides who you call first. It must never decide who gets to see a listing, who gets a straight answer, or who is allowed to reach a human being. The Fair Housing Act, at 42 U.S.C. 3604, contains no software exemption, and Article 10 of the NAR Code of Ethics is broader still. So the score reads the plan and never the person, never a name, a language or a neighborhood. And every point of it traces back to a sentence the lead actually wrote.",
   ],
 
