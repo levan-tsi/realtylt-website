@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { LightBox } from "@/lib/idx/lights";
 import { loadLights } from "@/lib/idx/lights-client";
 import { HUDSON_CENTRELINE, SHORELINES } from "@/lib/geo/hudson-water";
+import { SERVED_REGION } from "@/components/idx/county-bounds";
 
 /** THE HOME HERO'S MAP OF LIGHTS (round 53).
  *
@@ -422,6 +423,21 @@ export function HeroLights({ className = "" }: { className?: string }) {
       }
     };
 
+    // The water first. The river and the shore need only the region's box, which is fixed, not
+    // the listings, so they are drawn at once: on a slow connection the visitor sees the Hudson
+    // at dusk while the lights are still on their way, which is the intro's own first beat.
+    box = SERVED_REGION;
+    {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width > 2 && rect.height > 2) {
+        geo = fit(rect.width, rect.height, box);
+        canvas.width = Math.round(rect.width * geo.dpr);
+        canvas.height = Math.round(rect.height * geo.dpr);
+        ctx.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
+        drawWater(ctx);
+      }
+    }
+
     const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
     const idle = w.requestIdleCallback ? w.requestIdleCallback(load, { timeout: 1200 }) : window.setTimeout(load, 300);
 
@@ -445,7 +461,9 @@ export function HeroLights({ className = "" }: { className?: string }) {
       <div
         data-js-only
         className={`absolute inset-0 transition-opacity duration-[2400ms] ease-out motion-reduce:transition-none ${lit ? "opacity-0" : "opacity-100"}`}
-        style={{ background: "linear-gradient(to bottom, #1c3658 0%, #14294a 45%, rgba(11,26,46,0) 100%)" }}
+        // A glow with no edges: this layer covers the map's own box, and on a slow connection it
+        // is on screen before the lights are, so a plain gradient read as a lighter rectangle.
+        style={{ background: "radial-gradient(60% 55% at 55% 42%, rgba(28,54,88,0.95) 0%, rgba(20,41,74,0.55) 45%, rgba(11,26,46,0) 80%)" }}
       />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
       {/* Without JavaScript there is no canvas to light, so the picture of it stands in: the same

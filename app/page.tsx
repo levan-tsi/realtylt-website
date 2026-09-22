@@ -87,7 +87,7 @@ export default async function HomePage() {
           className="absolute inset-0"
           style={{ background: "radial-gradient(90% 50% at 68% 92%, rgba(40,74,118,0.5), rgba(11,26,46,0) 70%)" }}
         />
-        <HeroLights className="absolute inset-x-0 bottom-[168px] top-[92px] lg:inset-y-auto lg:bottom-6 lg:left-auto lg:right-0 lg:top-[104px] lg:w-[62%] xl:w-[60%]" />
+        <HeroLights className="absolute inset-x-0 bottom-[168px] top-[92px] lg:inset-y-auto lg:bottom-6 lg:left-auto lg:right-0 lg:top-[104px] lg:w-[58%] xl:w-[60%]" />
         {/* No JavaScript, no canvas: the night, the glow and the words still stand, and the
             search box is a plain GET form. The count does not need the map to be true. */}
         {/* A PHONE splits the words around the map instead of laying them over it: the
@@ -100,7 +100,9 @@ export default async function HomePage() {
             the section ends, so the intake below reads as the same night, not a new band. */}
         <div aria-hidden className="absolute inset-x-0 bottom-0 hidden h-28 bg-gradient-to-t from-paper to-transparent lg:block" />
         <div className="pointer-events-none relative mx-auto flex min-h-[max(680px,100svh)] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-center lg:px-8 lg:pb-24 lg:pt-40">
-          <div className="pointer-events-auto max-w-[35rem]">
+          {/* 28rem at lg: from 1024 to 1279 the map takes the right 58%, and a 35rem column set
+              the headline on one line across the map's western counties. */}
+          <div className="pointer-events-auto max-w-[35rem] lg:max-w-[28rem] xl:max-w-[35rem]">
             <h1 id="home-hero" className="t-display rise text-ink">
               Let&rsquo;s find home.
             </h1>
@@ -116,7 +118,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="pointer-events-auto max-w-[35rem] lg:mt-10">
+          <div className="pointer-events-auto max-w-[35rem] lg:mt-10 lg:max-w-[28rem] xl:max-w-[35rem]">
             {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px body,
                 8px inset, 8px gap, so the action never touches the field, the owner's standing
                 note). Glass over the night rather than a black shelf. */}
@@ -156,14 +158,15 @@ export default async function HomePage() {
                 Sell with us
               </Link>
             </p>
+            {/* What the lights are, said once and small, with the data's source: this is
+                listing data on a map, so it carries the MLS credit the rails below carry. In
+                the text column rather than on the map, where at 1024 it sat on the city. */}
+            <p className="mt-12 hidden max-w-[24rem] text-[13px] leading-snug text-stone lg:block">
+              Each light is a home listed on OneKey&reg; MLS, placed at its address. Point at one
+              to see the town.
+            </p>
           </div>
         </div>
-        {/* What the lights are, said once and small, with the data's source: this is listing
-            data on a map, so it carries the MLS credit the rails below carry. */}
-        <p className="pointer-events-none absolute bottom-6 right-28 hidden max-w-[17rem] text-right text-[13px] leading-snug text-stone lg:block">
-          Each light is a home listed on OneKey&reg; MLS, placed at its address. Point at one to see
-          the town.
-        </p>
         <div className="absolute inset-x-0 bottom-3 flex justify-center">
           <ScrollCue targetId="value" label="Scroll to the next section" />
         </div>
