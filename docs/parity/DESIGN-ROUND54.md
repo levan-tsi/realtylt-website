@@ -87,6 +87,40 @@ Listing cards talk to the scene: hovering a card lights that home's point in the
 - Safety carried from round 53: no MLS Grid call anywhere, `/api/lead` aborted in probes,
   `/api/media` blocked unless a shot needs photos.
 
+## 5b. Section by section (the integration spec)
+
+- **Header.** Transparent over the scene on `/` (as now), white type, the logo and the AI item keep
+  the R blue (the owner's call), everything else white/grey. Scrolls away with the hero.
+- **Hero.** Full-bleed scene. Copy bottom-left on a laptop (where /ai puts its words), headline top
+  and search bottom on a phone. A small grey line above the headline ("Hudson Valley and New York
+  City"), the headline in Bricolage at display size, the live count sentence, the search instrument
+  (glass over the scene: black at ~55% with blur, a hairline frame, the white action; the 16 = 8 + 8
+  geometry stays pinned by its test), the two quiet links. The lantern hint and the data credit
+  small in a corner, never over the city.
+- **Intake.** The camera arrives over Dutchess, where one labelled point is the office itself (1097
+  Route 55, Lagrangeville: 41.671802, -73.800132, US Census geocoder exact match, 2026-09-22). The
+  question panel is a raised glass panel (24px
+  radius, hairline), the heading beside it. Nothing about the intake's logic changes.
+- **Featured listings / New listings.** The scene is veiled (dimmed in the shader, not covered by a
+  band), still moving. Cards: near-black body, hairline, 16px photo radius, full-colour photographs
+  (the photographs are the page's colour). Headings white, attribution grey.
+- **Testimonial.** No veil: one held, slow shot between the two rails. The quote may stay the serif
+  italic: the page's one editorial voice.
+- **Where we work.** The scene is the content. A list of the eleven areas (two groups), each with its
+  live count and a link to its page; the current area is lit in the scene (its lights brighter, the
+  rest dimmer) and the camera frames it. Scroll advances through the areas on a laptop; hover and
+  focus on a row fly there at once. On a phone the list stays plain and tappable (no long pinned
+  scroll); the scene above it frames the area last touched.
+- **Why us + ledger.** Over the harbour. The ledger rows stay (the number, the claim, the action).
+  The carousel's two screenshots show the navy /search; they are re-shot after /search goes black and
+  white (phase 5), or the section loses the carousel. Decide on the rendered page.
+- **Footer.** Transparent on `/`, so the last camera move (the pull-back to the whole region) is
+  behind it. Its contents unchanged.
+- **Motion vocabulary.** Headings rise from a line mask once, cards arrive with a short stagger, the
+  veil eases with the section, the camera is spring-damped toward the scroll target. Durations 400-
+  700 ms, one ease-out curve. Nothing loops except the lights' faint twinkle and the idle drift, and
+  reduced motion stops both.
+
 ## 6. Keep from round 53 (behaviour, not styling)
 
 Pre-hydration typing kept in the search box; parallel suggest index with a cold retry; suggested
