@@ -1,13 +1,16 @@
 /** THE NIGHT FLIGHT SCENE (round 54): renderer, camera, loop. Framework-free; the React wrapper
- * (./NightScene.tsx) imports this module dynamically, so three.js never blocks first paint.
+ * (./NightScene.tsx) imports this module dynamically, so three.js never blocks first paint, and the
+ * clouds themselves are generated in a worker (./build.worker.ts).
  *
- * What it draws: the land as silver dust (./dust.ts), every home for sale as a warm light
- * (./lights.ts), black water and a black sky. What moves: the camera between SHOTS (./shots.ts),
- * a very slow drift and a small pointer parallax (off under reduced motion), the intro (dust fades
- * in, then the lights come on from the harbour up the valley), and the lantern under a mouse.
+ * What it draws: the land as contours of silver dust (./dust.ts), every home for sale as a warm
+ * light with the city's own glow over it (./lights.ts), black water and a black sky. What moves:
+ * the camera between SHOTS (./shots.ts), the intro (the dust fades in, then the lights come on from
+ * the harbour up the valley), and — where there is a mouse — the lantern, a small pointer parallax,
+ * a slow drift and a few breathing windows. Reduced motion: everything simply on, and a flight cuts.
  *
- * It renders only while something moves (intro, a flight, the drift, the lantern) and never while
- * the tab is hidden or the canvas is off screen. */
+ * It renders only while something moves, at half rate when only the drift and the twinkle do, never
+ * while the tab is hidden or the canvas is off screen, and not at all on a phone at rest. An
+ * adaptive governor steps the quality down if the frames it measures are slow. */
 import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
 import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
@@ -35,7 +38,7 @@ export interface NightSceneOptions {
   initialShot?: ShotName;
   /** Everything on at once (for stills); reduced motion implies it. */
   skipIntro?: boolean;
-  /** The idle drift (default: on unless reduced motion). */
+  /** The idle drift (default: on where there is a mouse and motion is allowed). */
   drift?: boolean;
   onTownHover?: (t: TownHover | null) => void;
   onReady?: () => void;
