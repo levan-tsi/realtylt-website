@@ -124,7 +124,7 @@ function PinLayer({ pins, selectedId, onSelect, onToggleSave }: MapViewProps) {
             key={p.id}
             position={[p.lat, p.lng]}
             icon={priceIcon(p.price, active, !!p.saved)}
-            title={`${chipPrice(p.price)} — ${p.address}, ${p.city}`}
+            title={`${chipPrice(p.price)}, ${p.address}, ${p.city}`}
             zIndexOffset={active ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(p.id) }}
           >
@@ -247,8 +247,8 @@ function ThinnedLayer({
           <Marker
             key={m.pin.id}
             position={[m.pin.lat, m.pin.lng]}
-            icon={dotIcon(`${m.label} — ${m.pin.address}, ${m.pin.city}`, !!m.pin.saved, m.pin.status === "Pending" || m.pin.status === "Under Contract")}
-            title={`${m.label} — ${m.pin.address}, ${m.pin.city}`}
+            icon={dotIcon(`${m.label}, ${m.pin.address}, ${m.pin.city}`, !!m.pin.saved, m.pin.status === "Pending" || m.pin.status === "Under Contract")}
+            title={`${m.label}, ${m.pin.address}, ${m.pin.city}`}
             eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
           >
             <Popup minWidth={252}>
@@ -260,7 +260,7 @@ function ThinnedLayer({
             key={m.pin.id}
             position={[m.pin.lat, m.pin.lng]}
             icon={priceIcon(m.pin.price, m.pin.id === selectedId, !!m.pin.saved)}
-            title={`${m.label} — ${m.pin.address}, ${m.pin.city}`}
+            title={`${m.label}, ${m.pin.address}, ${m.pin.city}`}
             zIndexOffset={m.pin.id === selectedId ? 1000 : 0}
             eventHandlers={{ click: () => onSelect?.(m.pin.id) }}
           >

@@ -58,7 +58,7 @@ export function priceLabel(l: { price: number | null | undefined; propertyType?:
  * as a hard frame around it while the image decoded. */
 export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
   // Both cuts ship and the ground picks one (round 53): on a blue-hour page the light panel read
-  // as a white card punched out of the night, so there the night cut shows instead.
+  // as a white card punched out of the night, so there the night cut (below) shows instead.
   return (
     <div className="absolute inset-0 bg-mist" aria-hidden>
       <Image
@@ -69,14 +69,13 @@ export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className="object-cover night:hidden"
       />
-      <Image
-        src={caption ? "/images/mls/coming-soon-night.svg" : "/images/mls/coming-soon-notext-night.svg"}
-        alt=""
-        fill
-        unoptimized
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="hidden object-cover night:block"
-      />
+      {/* The night cut is TEXT, not the SVG: an SVG loaded as an image cannot reach the page's
+          web fonts, so it set these words in Georgia with an uppercase Lato wordmark, the old
+          site's type on the new page (fresh-eyes review). Same words, the page's own face. */}
+      <div className="absolute inset-0 hidden flex-col items-center justify-center bg-mist text-center night:flex">
+        {caption && <p className="font-display text-[clamp(1.125rem,0.9rem+0.8vw,1.375rem)] font-medium leading-tight tracking-[-0.015em] text-ink-soft">Photograph coming soon</p>}
+        <p className={`${caption ? "mt-2" : ""} text-[13px] font-medium text-stone`}>RealtyLT</p>
+      </div>
     </div>
   );
 }
@@ -225,7 +224,15 @@ export function ListingCard({
         <div className="flex flex-1 flex-col p-3 lg:pb-2 lg:pt-2">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
             <p className="text-xl font-bold leading-7 text-ink night:font-semibold night:tracking-[-0.02em] lg:text-lg lg:leading-6">{priceLabel(l)}</p>
-            {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
+            {/* Night pages set the card's facts one way everywhere ("4 bd · 3.5 ba · 3,127
+                sqft", the home rails' form); the day pages keep the long form as they had it.
+                Only one of the two is ever displayed, so it is read once. */}
+            {statsLong && (
+              <p className="text-xs text-stone">
+                <span className="night:hidden">{statsLong}</span>
+                <span className="hidden night:inline">{statsShort}</span>
+              </p>
+            )}
           </div>
           {/* The two-line address lockup (see the component comment). Street carries the weight;
               the city line drops a step and a shade, so the pair reads as one object with a

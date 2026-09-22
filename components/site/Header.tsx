@@ -184,6 +184,9 @@ export function Header() {
           <button
             ref={menuTrigger}
             type="button"
+            // Night pages: without JavaScript this button can do nothing, and the folded link
+            // list under the row is the menu there, so it steps aside (globals.css data-js-only).
+            {...(night ? { "data-js-only": "" } : {})}
             className={`-mr-2 p-2 text-stone hover:text-ink xl:hidden ${PRESS}`}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -336,20 +339,38 @@ export function Header() {
           as a plain, always-open list instead. Plain <a> rather than <Link>: prefetch is
           meaningless here and it keeps hydration away from the noscript subtree. */}
       <noscript>
-        <nav aria-label="Site links" className="border-b border-line bg-paper">
-          <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] night:text-[15px] night:font-medium night:normal-case night:tracking-normal lg:px-8">
-            {[
-              ...NAV.map((i) => ({ label: i.label, href: i.href, area: false })),
-              ...TOP_AREA_GROUPS.flatMap((g) => g.items.map((it) => ({ ...it, area: true }))),
-            ].map((i) => (
-              <li key={`ns-${i.href}`}>
-                <a href={i.href} className="block py-1 text-stone hover:text-ink">
-                  {night && i.area ? areaName(i.label) : i.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {(() => {
+          const list = (
+            <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] night:text-[15px] night:font-medium night:normal-case night:tracking-normal lg:px-8">
+              {[
+                ...NAV.map((i) => ({ label: i.label, href: i.href, area: false })),
+                ...TOP_AREA_GROUPS.flatMap((g) => g.items.map((it) => ({ ...it, area: true }))),
+              ].map((i) => (
+                <li key={`ns-${i.href}`}>
+                  <a href={i.href} className="block py-1 text-stone hover:text-ink">
+                    {night && i.area ? areaName(i.label) : i.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          );
+          // Night pages (round 53): the 24 links fold into a native disclosure, which opens
+          // without JavaScript. Always open they were six rows on a phone and pushed the hero's
+          // headline out of the first screen. From xl the main nav above is plain links that
+          // work without scripting, so the fold is not repeated there.
+          return night ? (
+            <nav aria-label="Site links" className="border-b border-line bg-paper xl:hidden">
+              <details className="mx-auto max-w-[1250px]">
+                <summary className="cursor-pointer px-4 py-3 text-[15px] font-medium text-ink lg:px-8">Menu</summary>
+                {list}
+              </details>
+            </nav>
+          ) : (
+            <nav aria-label="Site links" className="border-b border-line bg-paper">
+              {list}
+            </nav>
+          );
+        })()}
       </noscript>
 
       {open && (

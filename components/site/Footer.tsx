@@ -4,6 +4,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { EqualHousingMark } from "@/components/site/EqualHousingMark";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 import { FooterShell } from "@/components/site/FooterShell";
+import { NightLabel } from "@/components/site/NightLabel";
 
 /** Site footer.
  *
@@ -111,7 +112,7 @@ export function Footer() {
                       href={item.href}
                       className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
                     >
-                      {item.label}
+                      <NightLabel text={item.label} />
                     </a>
                   </li>
                 ) : (
@@ -120,7 +121,7 @@ export function Footer() {
                       href={item.href}
                       className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
                     >
-                      {item.label}
+                      <NightLabel text={item.label} />
                     </Link>
                   </li>
                 ),
@@ -176,7 +177,9 @@ export function Footer() {
             office is independently owned and operated." two strips apart. One of them had to
             go, and it is this one: the other names the legal entity and carries the franchise
             disclaimer, and it belongs with the Equal Housing and REALTOR® marks it sits beside. */}
-        <div className="mx-auto flex max-w-[1250px] flex-col gap-3 px-4 py-4 text-xs md:flex-row md:items-center md:justify-center lg:px-8">
+        {/* max-sm:night:pb-24: on a night page's phone the chat launcher sat on "Site Map"; the
+            strip ends clear of it. */}
+        <div className="mx-auto flex max-w-[1250px] flex-col gap-3 px-4 py-4 text-xs max-sm:night:pb-24 md:flex-row md:items-center md:justify-center lg:px-8">
           {/* inline-flex min-h-[24px]: text-xs links with no padding were ~13px tall, under the
               WCAG 2.5.8 (24px) pointer-target minimum on mobile. */}
           <ul className="flex flex-wrap gap-x-4 gap-y-1">

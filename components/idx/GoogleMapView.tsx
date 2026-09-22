@@ -379,7 +379,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
          * style, which is fine because `look` gates it to the draws where something changed. */
         const paint = (rec: MarkerRec, m: PlannedMarker, active: boolean, saved: boolean, spokenFor: boolean) => {
           const p = m.pin;
-          rec.el.setAttribute("aria-label", spokenFor ? `${m.label} — ${p.address} — ${p.status}` : `${m.label} — ${p.address}`);
+          rec.el.setAttribute("aria-label", spokenFor ? `${m.label}, ${p.address}, ${p.status}` : `${m.label}, ${p.address}`);
           rec.kind = m.kind;
           if (m.kind === "dot") {
             // A dot is the same home wearing less ink — same colour language, same interaction

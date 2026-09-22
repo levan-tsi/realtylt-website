@@ -74,3 +74,14 @@ describe("the search box keeps what was typed before hydration", () => {
     expect(src).toMatch(/value=\{value\}\s*\n\s*suppressHydrationWarning/);
   });
 });
+
+describe("sentence case for night labels", () => {
+  it("drops plain Title-case words after the first, and leaves acronyms and names alone", async () => {
+    const { sentenceCase } = await import("./site");
+    expect(sentenceCase("Plan Your Purchase")).toBe("Plan your purchase");
+    expect(sentenceCase("Who We Are")).toBe("Who we are");
+    expect(sentenceCase("AI Services")).toBe("AI services");
+    expect(sentenceCase("RealtyLT AI")).toBe("RealtyLT AI");
+    expect(sentenceCase("Home")).toBe("Home");
+  });
+});

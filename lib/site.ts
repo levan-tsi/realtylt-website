@@ -108,19 +108,30 @@ export const NIGHT_ROUTES = ["/", "/search"] as const;
 export const isNightRoute = (pathname: string | null | undefined): boolean =>
   (NIGHT_ROUTES as readonly string[]).includes(pathname ?? "");
 
+/** "Plan Your Purchase" -> "Plan your purchase", for labels a night page shows but a day page
+ * must keep as written. Only plain Title-case words drop: an acronym or a name with inner
+ * capitals ("AI", "DMCA", "RealtyLT") is left alone, and so is the first word. */
+export const sentenceCase = (label: string): string =>
+  label
+    .split(" ")
+    .map((w, i) => (i > 0 && /^[A-Z][a-z]+$/.test(w) ? w.toLowerCase() : w))
+    .join(" ");
+
+// Labels in sentence case (round 53). Every DAY render of this list is `uppercase`, so the case
+// here only shows on the blue-hour pages, which set every label in sentence case.
 export const NAV = [
   { label: "Home", href: "/" },
-  { label: "Search Listings", href: "/search" },
+  { label: "Search listings", href: "/search" },
   { label: "Buying", href: "/buying" },
   { label: "Selling", href: "/selling" },
   {
-    label: "Top Areas",
+    label: "Top areas",
     href: "/top-areas",
     groups: TOP_AREA_GROUPS,
   },
   { label: "Financing", href: "/financing" },
-  { label: "Home Value", href: "/home-value" },
-  { label: "Who We Are", href: "/who-we-are" },
+  { label: "Home value", href: "/home-value" },
+  { label: "Who we are", href: "/who-we-are" },
   { label: "Blog", href: "/blog" },
   // The owner, 2026-08-28: "add AI before connect on top menu bar and give it purple outline or
   // our logo R blue so people notice". The logo-R blue (porchlight), outlined: the anti-slop

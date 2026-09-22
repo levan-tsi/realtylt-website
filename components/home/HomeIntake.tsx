@@ -74,7 +74,11 @@ export function HomeIntake() {
   const question = step !== "intent" && step !== "details" ? QUESTIONS[step as IntakeQuestion["id"]] : null;
 
   return (
-    <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:items-start lg:gap-16 lg:px-8">
+    // lg:gap-y-0: the second row is the answer trail, empty until the visitor answers, and a
+    // 64px row gap above an empty row was 64px of night under the section (a fresh-eyes review
+    // measured the 288px gap to Featured against 176-224px everywhere else). The trail brings
+    // its own top margin when it appears.
+    <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-16 lg:gap-y-0 lg:px-8">
       <Reveal>
         <SectionHeading as="h2" eyebrow="Start here">
           <span id="value-heading">Tell us what you&rsquo;re planning.</span>
@@ -101,7 +105,7 @@ export function HomeIntake() {
           answer land without the focus leaving the panel. */}
       <div aria-live="polite" className="order-last empty:hidden lg:order-none lg:col-start-1 lg:row-start-2">
         {lines.length > 0 && (
-            <div className="rlt-pop-in -mt-4 max-w-md border-t border-line pt-6 lg:mt-0">
+            <div className="rlt-pop-in -mt-4 max-w-md border-t border-line pt-6 lg:mt-12">
               <p className="t-eyebrow text-stone">What you&rsquo;ve told us</p>
               <dl className="mt-4">
                 {lines.map((l) => (

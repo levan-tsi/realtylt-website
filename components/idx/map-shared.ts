@@ -265,7 +265,11 @@ export function popupNode(
   // Edge-to-edge: both engines' popup chrome is stripped to a bare 16px-rounded shell
   // (globals.css), so the photo IS the popup's top — no white mat around it (owner: "white
   // box is too big… make it little bit bigger than pics and info").
-  root.style.cssText = `position:relative;width:252px;font-family:${MAP_FONT}`;
+  // COLOURS ARE PAGE VARIABLES WITH THE DAY'S VALUES AS FALLBACKS (round 53). This card is built
+  // outside React, so it cannot read a className; it reads custom properties the page sets. The
+  // blue-hour pages (.nocturne in globals.css) set a night card; everywhere else the fallbacks
+  // are exactly the values this card always had.
+  root.style.cssText = `position:relative;width:252px;font-family:var(--rlt-pop-font,${MAP_FONT});background:var(--rlt-pop-bg,#fff)`;
 
   // The photo's two corner controls (owner: "one side X exit and one side heart to save"):
   // heart top-LEFT toggles the favorite (flips locally at once; the chips follow via the
@@ -317,7 +321,7 @@ export function popupNode(
     const n = Math.max(1, p.photoCount);
     const frame = document.createElement("div");
     frame.style.cssText =
-      "position:relative;width:252px;height:158px;overflow:hidden;background:#eceff3";
+      "position:relative;width:252px;height:158px;overflow:hidden;background:var(--rlt-pop-frame,#eceff3)";
     const img = document.createElement("img");
     img.alt = `${p.address}, ${p.city}`;
     img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block";
@@ -326,7 +330,8 @@ export function popupNode(
     // branded still instead, once, no retry loop. (Owner-reported: "34 pics… letting me
     // switch but not loading.")
     img.addEventListener("error", () => {
-      if (!img.src.endsWith("/images/mls/coming-soon-notext.svg")) img.src = "/images/mls/coming-soon-notext.svg";
+      const still = img.closest(".nocturne") ? "/images/mls/coming-soon-notext-night.svg" : "/images/mls/coming-soon-notext.svg";
+      if (!img.src.endsWith(still)) img.src = still;
     });
     let idx = 0;
     const show = (to: number) => {
@@ -350,8 +355,8 @@ export function popupNode(
       const badge = document.createElement("span");
       badge.textContent = p.status;
       badge.style.cssText =
-        "position:absolute;left:6px;bottom:6px;padding:3px 8px;border-radius:8px;background:#000000;" +
-        `color:#fff;font:700 10px/1.4 ${MAP_FONT};letter-spacing:.14em;text-transform:uppercase`;
+        "position:absolute;left:6px;bottom:6px;padding:3px 8px;border-radius:8px;background:var(--rlt-pop-action,#000000);" +
+        `color:var(--rlt-pop-action-ink,#fff);font:700 var(--rlt-pop-badge-size,10px)/1.4 var(--rlt-pop-font,${MAP_FONT});letter-spacing:var(--rlt-pop-track,.14em);text-transform:var(--rlt-pop-case,uppercase)`;
       frame.appendChild(badge);
     }
     if (n > 1) {
@@ -388,9 +393,9 @@ export function popupNode(
     el.textContent = txt;
     root.appendChild(el);
   };
-  line(`${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}`, "margin:10px 12px 0;font-weight:700;font-size:14px;color:#000000");
-  line(`${p.address}, ${p.city} ${p.zip}`, "margin:3px 12px 0;font-size:12px;color:#000000");
-  line(`Listed with ${p.office}`, "margin:3px 12px 0;font-size:11px;color:#6E7681");
+  line(`${chipPrice(p.price)}${bb ? ` · ${bb}` : ""}`, "margin:10px 12px 0;font-weight:700;font-size:var(--rlt-pop-title,14px);color:var(--rlt-pop-ink,#000000)");
+  line(`${p.address}, ${p.city} ${p.zip}`, "margin:3px 12px 0;font-size:var(--rlt-pop-text,12px);color:var(--rlt-pop-ink,#000000)");
+  line(`Listed with ${p.office}`, "margin:3px 12px 0;font-size:var(--rlt-pop-small,11px);color:var(--rlt-pop-muted,#6E7681)");
 
   const link = document.createElement("a");
   link.href = listingPath(p);
@@ -399,10 +404,10 @@ export function popupNode(
   // engine writes the viewport result set here so the listing page can walk the map's homes.
   if (onNavigate) link.addEventListener("click", onNavigate);
   link.style.cssText =
-    "display:block;margin:10px 12px 12px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
+    "display:block;margin:10px 12px 12px;padding:var(--rlt-pop-pad,8px) 0;border-radius:var(--rlt-pop-radius,8px);background:var(--rlt-pop-action,#000000);color:var(--rlt-pop-action-ink,#fff);" +
     // The case, tracking and size read the page's variables (round 53): the blue-hour page sets
     // its labels in sentence case, and this popup is built outside React, so it asks the page.
-    `text-align:center;font:700 var(--rlt-pop-size,11px)/1.4 ${MAP_FONT};letter-spacing:var(--rlt-pop-track,.12em);text-transform:var(--rlt-pop-case,uppercase);text-decoration:none`;
+    `text-align:center;font:700 var(--rlt-pop-size,11px)/1.4 var(--rlt-pop-font,${MAP_FONT});letter-spacing:var(--rlt-pop-track,.12em);text-transform:var(--rlt-pop-case,uppercase);text-decoration:none`;
   root.appendChild(link);
 
   return root;

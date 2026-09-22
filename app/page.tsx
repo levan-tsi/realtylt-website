@@ -99,14 +99,18 @@ export default async function HomePage() {
         {/* The hero hands over to the page with no edge: the city's glow falls to night before
             the section ends, so the intake below reads as the same night, not a new band. */}
         <div aria-hidden className="absolute inset-x-0 bottom-0 hidden h-28 bg-gradient-to-t from-paper to-transparent lg:block" />
-        <div className="pointer-events-none relative mx-auto flex min-h-[max(680px,100svh)] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-center lg:px-8 lg:pb-24 lg:pt-40">
+        {/* rlt-hero-pad: without JavaScript the header carries one more row (the folded link
+            list), so the words start one row lower there (app/globals.css). */}
+        <div className="rlt-hero-pad pointer-events-none relative mx-auto flex min-h-[max(680px,100svh)] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-center lg:px-8 lg:pb-24 lg:pt-40">
           {/* 28rem at lg: from 1024 to 1279 the map takes the right 58%, and a 35rem column set
               the headline on one line across the map's western counties. */}
-          <div className="pointer-events-auto max-w-[35rem] lg:max-w-[28rem] xl:max-w-[35rem]">
+          <div data-hero-copy className="pointer-events-auto max-w-[35rem] lg:max-w-[28rem] xl:max-w-[35rem]">
             <h1 id="home-hero" className="t-display rise text-ink">
               Let&rsquo;s find home.
             </h1>
-            <p className="t-lead rise rise-2 mt-5 max-w-[29rem] text-stone lg:mt-6">
+            {/* ink-soft on a phone, where this line is read over the map; stone from lg, where the
+                map is beside it. */}
+            <p className="t-lead rise rise-2 mt-5 max-w-[29rem] text-ink-soft lg:mt-6 lg:text-stone">
               {activeCount ? (
                 <>
                   <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale

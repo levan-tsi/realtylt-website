@@ -27,8 +27,8 @@ function sprite(): HTMLCanvasElement {
   c.width = c.height = 24;
   const g = c.getContext("2d")!;
   const grad = g.createRadialGradient(12, 12, 0, 12, 12, 12);
-  grad.addColorStop(0, "rgba(255,246,228,1)");
-  grad.addColorStop(0.18, "rgba(252,221,160,0.9)");
+  grad.addColorStop(0, "rgba(255,236,200,1)");
+  grad.addColorStop(0.18, "rgba(252,216,152,0.9)");
   grad.addColorStop(0.45, "rgba(246,199,129,0.22)");
   grad.addColorStop(1, "rgba(246,199,129,0)");
   g.fillStyle = grad;
@@ -62,13 +62,23 @@ function draw(canvas: HTMLCanvasElement, pts: LightPoints, slug: string, dot: HT
   const oy = pad + (H - 2 * pad - (y1 - y0) * s) / 2 - y0 * s;
   // A small area drawn at a large scale spreads its homes apart; keep each light a light.
   const size = Math.max(3.2, Math.min(5.5, 40 / Math.sqrt(idx.length)));
-  const a = Math.min(0.95, 0.35 + 18 / Math.sqrt(idx.length));
+  const a = Math.min(1, 0.55 + 22 / Math.sqrt(idx.length));
+  // The hero's tone map, per tile: a light's strength falls with how many share its few
+  // pixels, so a dense borough (Queens, 5,700 homes in one tile) reads as windows, not white.
+  const X = idx.map((i) => ox + pts.x[i] * bw * s);
+  const Y = idx.map((i) => oy + pts.y[i] * bh * s);
+  const gw = Math.ceil(W / 3) + 1;
+  const dense = new Uint16Array(gw * (Math.ceil(rect.height / 3) + 1));
+  const cellOf = (k: number) => Math.max(0, Math.floor(Y[k] / 3)) * gw + Math.max(0, Math.floor(X[k] / 3));
+  for (let k = 0; k < idx.length; k++) dense[cellOf(k)]++;
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
   g.clearRect(0, 0, W, rect.height);
   g.globalCompositeOperation = "lighter";
-  for (const i of idx) {
-    g.globalAlpha = a * (0.55 + 0.45 * ((i * 0.618) % 1));
-    g.drawImage(dot, ox + pts.x[i] * bw * s - size / 2, oy + pts.y[i] * bh * s - size / 2, size, size);
+  for (let k = 0; k < idx.length; k++) {
+    // Square root, gentler than the hero's 0.8: a tile's lights are few and small, so the hero's
+    // curve dimmed them to dust; this one only reins in the boroughs.
+    g.globalAlpha = Math.min(1, (a * (0.55 + 0.45 * ((idx[k] * 0.618) % 1))) / Math.sqrt(dense[cellOf(k)]));
+    g.drawImage(dot, X[k] - size / 2, Y[k] - size / 2, size, size);
   }
 }
 

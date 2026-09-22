@@ -480,7 +480,20 @@ body {
   /* ...and the map popup's action, built outside React, sets its label in sentence case. */
   --rlt-pop-case: none;
   --rlt-pop-track: normal;
-  --rlt-pop-size: 13px;
+  --rlt-pop-size: 14px;
+  --rlt-pop-badge-size: 12px;
+  --rlt-pop-font: var(--font-grotesk);
+  --rlt-pop-bg: #122640;
+  --rlt-pop-frame: #0f2036;
+  --rlt-pop-ink: #e8eef6;
+  --rlt-pop-muted: #93a3b8;
+  --rlt-pop-action: #e8eef6;
+  --rlt-pop-action-ink: #0b1a2e;
+  --rlt-pop-radius: 12px;
+  --rlt-pop-pad: 9px;
+  --rlt-pop-title: 15px;
+  --rlt-pop-text: 13px;
+  --rlt-pop-small: 12px;
 }
 /* The ground itself, in @layer base so a utility on the same element (the home header's
    bg-transparent over the hero) still wins; the token re-points above stay unlayered. */
@@ -497,6 +510,17 @@ body {
    body goes to night with them rather than flashing white at the edges of a dark page. */
 body:has(.nocturne) {
   background-color: var(--color-night);
+}
+/* The chat launcher (public/rlt-chat.js, byte-exact from the live site, which paints it #1557b0)
+   was a second, off-palette blue on the night pages. There it wears the page's own action blue
+   with a night glyph (the icon strokes currentColor): 6.47:1. Specificity beats the widget's own
+   injected rule; every other page keeps the widget exactly as shipped. */
+body:has(.nocturne) .rlt-bubble {
+  background: var(--color-porchlight);
+  color: var(--color-night);
+}
+body:has(.nocturne) .rlt-bubble:hover {
+  background: #4dbbe9;
 }
 /* ...and the way back out. A few things on a night page are white BY NATURE and must keep the
    day's ink: a white pill on a photograph (the card pager, the carousel arrows), the Google map
@@ -694,6 +718,12 @@ article.lift > a:focus-visible {
 .rlt-seg [aria-pressed="true"]:focus-visible {
   outline-color: var(--color-paper);
 }
+/* On a blue-hour page the pressed segment is the moonlight pill, and a ring drawn at its very
+   edge in the night's colour read as the pill shrinking by 2px, not as focus (fresh-eyes review,
+   round 53). Set 5px in, it is a ring of its own, night on moonlight, 15:1. */
+.nocturne .rlt-seg [aria-pressed="true"]:focus-visible {
+  outline-offset: -5px;
+}
 
 /* WHOLE-CARD LINKS. Six surfaces draw a card as <article class="overflow-hidden"> with one
  * <a class="absolute inset-0"> over its face. An outline is painted OUTSIDE the element's
@@ -773,6 +803,14 @@ body.rlt-quiz-open .rlt-panel {
 @media (scripting: none) {
   [data-js-only] {
     display: none !important;
+  }
+}
+/* The home hero's words start below the header, and without JavaScript the night header carries
+   one more row below xl (its folded link list, components/site/Header.tsx), so they start that
+   much lower. */
+@media (scripting: none) and (max-width: 1279px) {
+  .rlt-hero-pad {
+    padding-top: 11rem;
   }
 }
 
@@ -1385,6 +1423,24 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .gm-style .gm-style-iw-d {
   overflow: hidden !important; /* fixed-size card — the pane's scrollbars are dead chrome */
   padding: 0 !important;
+}
+/* The shell and its tail wear the card's own ground on a blue-hour page (round 53); Google
+   paints them white otherwise. The border is the page's hairline so the card sits ON the map. */
+.nocturne .gm-style .gm-style-iw-c {
+  background: #122640;
+  box-shadow: 0 0 0 1px #34496a, 0 18px 40px -18px rgb(16 24 32 / 0.8);
+}
+.nocturne .gm-style .gm-style-iw-tc::after {
+  background: #122640;
+}
+/* Google's own map buttons (fullscreen, the camera/zoom controls) are white squares with dark
+   glyphs; on the night basemap they were the brightest things on the map. Inverted and turned
+   back through 180 degrees of hue, the white becomes a dark tile and the glyph light, with the
+   same shapes, hit areas and behaviour Google ships. */
+.nocturne .gm-style .gm-fullscreen-control,
+.nocturne .gm-style .gm-bundled-control .gmnoprint,
+.nocturne .gm-style .gm-svpc {
+  filter: invert(0.92) hue-rotate(180deg);
 }
 /* The stock InfoWindow close X floats in dead white space above the content — the shared
    popup card carries its own close, on the photo. The header row it lived in (gm-style-iw-ch,

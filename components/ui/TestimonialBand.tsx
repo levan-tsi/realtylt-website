@@ -16,13 +16,17 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
   return (
     <section aria-label="Client reviews" className="bg-mist night:bg-transparent">
       <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16">
+        {/* The same round chevron buttons the rails' pager and the carousel use (round 53): bare
+            "‹ ›" glyphs at 24x48 read as stray characters beside a quotation. */}
         <button
           type="button"
           aria-label="Previous review"
           onClick={() => step(-1)}
-          className={`absolute left-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone ${PRESS} hover:text-ink lg:left-6`}
+          className={`absolute left-1 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:left-6`}
         >
-          ‹
+          <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
         </button>
         <blockquote>
           <div className="mb-5 flex items-center justify-center gap-2.5">
@@ -40,9 +44,11 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           type="button"
           aria-label="Next review"
           onClick={() => step(1)}
-          className={`absolute right-3 top-1/2 flex min-w-6 -translate-y-1/2 items-center justify-center p-2 text-2xl text-stone ${PRESS} hover:text-ink lg:right-6`}
+          className={`absolute right-1 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:right-6`}
         >
-          ›
+          <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
         </button>
       </div>
     </section>

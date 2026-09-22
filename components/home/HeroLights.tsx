@@ -50,8 +50,10 @@ function makeSprite(): HTMLCanvasElement {
   c.width = c.height = 32;
   const g = c.getContext("2d")!;
   const grad = g.createRadialGradient(16, 16, 0, 16, 16, 16);
-  grad.addColorStop(0, "rgba(255,246,228,1)");
-  grad.addColorStop(0.16, "rgba(252,221,160,0.95)");
+  // The core is warm, not white: where many windows overlap, "lighter" adds them up, and a
+  // white core saturates the blue channel first, which turned the boroughs into a white smear.
+  grad.addColorStop(0, "rgba(255,236,200,1)");
+  grad.addColorStop(0.16, "rgba(252,216,152,0.95)");
   grad.addColorStop(0.42, "rgba(246,199,129,0.28)");
   grad.addColorStop(1, "rgba(246,199,129,0)");
   g.fillStyle = grad;
@@ -195,7 +197,27 @@ export function HeroLights({ className = "" }: { className?: string }) {
         cell[i] = Math.max(0, Math.floor(py[i] / 3)) * gw + Math.max(0, Math.floor(px[i] / 3));
         dense[cell[i]]++;
       }
-      for (let i = 0; i < px.length; i++) alpha[i] = (0.5 + 0.5 * rand(i)) / Math.sqrt(dense[cell[i]]);
+      // Tone-mapped harder than 1/sqrt: measured, 1/sqrt left 4.6% (1440) to 11.3% (390) of the lit
+      // pixels burned to white over Queens and Brooklyn. dense^0.8 keeps the city the brightest
+      // place on the map and keeps it the colour of windows.
+      for (let i = 0; i < px.length; i++) alpha[i] = (0.5 + 0.5 * rand(i)) / Math.pow(dense[cell[i]], 0.8);
+      // THE WORDS COME FIRST. On a phone the headline and its sentence sit over the northern
+      // counties, and a fresh-eyes review sampled the pixels under the sentence: 13% (390) to
+      // 20% (320) of them under 3:1, worst 2.57:1. So lights under the copy's own box burn at
+      // about a tenth of their strength, easing back to full over 56px outside it: still a
+      // map beneath the words, never a light through a letter. Measured from the real element,
+      // so it holds at every width and after every wrap.
+      const copy = document.querySelector("[data-hero-copy]")?.getBoundingClientRect();
+      if (copy) {
+        const l = copy.left - rect.left, r = copy.right - rect.left, t = copy.top - rect.top, b = copy.bottom - rect.top;
+        const EASE = 56, FLOOR = 0.1;
+        for (let i = 0; i < px.length; i++) {
+          const dx = Math.max(l - px[i], 0, px[i] - r);
+          const dy = Math.max(t - py[i], 0, py[i] - b);
+          const d = Math.hypot(dx, dy);
+          if (d < EASE) alpha[i] *= FLOOR + (1 - FLOOR) * (d / EASE) * (d / EASE);
+        }
+      }
       // The lantern's lookup grid, only where there is a lantern.
       grid = new Map();
       if (mouse) {
@@ -471,7 +493,13 @@ export function HeroLights({ className = "" }: { className?: string }) {
           fits it to. Only a browser with scripting off ever loads it. */}
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element -- noscript-only still */}
-        <img src="/images/hero/lights-poster.webp" alt="" className="absolute inset-[4%] h-[92%] w-[92%] object-contain" />
+        {/* Below lg the words sit over the north of this picture, and the canvas dims its own
+            lights there; the picture cannot, so its top fades instead. */}
+        <img
+          src="/images/hero/lights-poster.webp"
+          alt=""
+          className="absolute inset-[4%] h-[92%] w-[92%] object-contain max-lg:[mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.12)_0%,rgba(0,0,0,0.12)_38%,#000_58%)]"
+        />
       </noscript>
       <div
         ref={labelRef}

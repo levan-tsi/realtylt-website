@@ -355,22 +355,28 @@ export function LocationSuggest({
                 onClick={() => pick(s)}
                 onMouseEnter={() => setActive(i)}
                 className={`flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-sm ${
+                  // Night: the active row carries a 3px bar in the action blue (5.6:1 on the list)
+                  // and a tint of it. The first cut used the page ground (bg-paper) on the
+                  // raised list, 1.14:1, so a keyboard visitor could not see which row the
+                  // arrows were on. Every row reserves the bar's width, so nothing shifts.
                   night
-                    ? i === active ? "bg-paper text-ink" : "text-ink-soft"
+                    ? i === active ? "border-l-[3px] border-porchlight bg-porchlight/15 text-ink" : "border-l-[3px] border-transparent text-ink-soft"
                     : dark
                       ? i === active ? "bg-white/15 text-paper" : "text-paper/90"
                       : i === active ? "bg-mist text-ink" : "text-ink-soft"
                 }`}
               >
                 <span>{s.label}</span>
-                <span className={`shrink-0 ${night ? "text-[13px] capitalize text-stone" : `text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}`}>
+                <span className={`shrink-0 ${night ? "text-[13px] text-stone" : `text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}`}>
                   {s.count
                     ? `${s.count.toLocaleString("en-US")} homes`
                     : s.kind === "address"
                       ? "View home"
                       : s.kind === "text"
                         ? ""
-                        : s.kind}
+                        : night
+                          ? s.kind.charAt(0).toUpperCase() + s.kind.slice(1)
+                          : s.kind}
                 </span>
               </button>
             </li>

@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { isNightRoute } from "@/lib/site";
 import { useAuth } from "@/components/auth/AuthProvider";
 
 const MENU = [
@@ -19,6 +20,9 @@ export function AccountMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  // Sentence case on the blue-hour pages (round 53); the day header keeps its Title Case.
+  // Up here with the other hooks: below the early return it would be a conditional hook.
+  const night = isNightRoute(usePathname());
 
   useEffect(() => {
     if (!open) return;
@@ -40,7 +44,7 @@ export function AccountMenu() {
         onClick={() => openSignIn("signin")}
         className="inline-flex min-h-[24px] items-center text-sm font-semibold text-stone transition-colors hover:text-ink"
       >
-        Sign In
+        {night ? "Sign in" : "Sign In"}
       </button>
     );
   }

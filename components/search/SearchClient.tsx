@@ -1217,7 +1217,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           secondary expander so the default view stays scoped to the Hudson Valley. */}
       <div className="mt-4">
         {/* One swipeable row on a phone (round 53): wrapped, the seven chips took four rows. */}
-        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" aria-label="Filter by county">
+        {/* The right edge fades on a phone, so a chip cut by the edge reads as "more this way". */}
+        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:[mask-image:none]" aria-label="Filter by county">
           {COUNTY_CHIPS.map(renderChip)}
           <li>
             <button
@@ -1293,7 +1294,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   const first = (result.page - 1) * size + 1;
                   return (
                     <span className="text-stone">
-                      · showing {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
+                      {/* The bullet only where the phrase follows on the same line; on a phone
+                          it wraps to a line of its own and a line must not open with a bullet. */}
+                      <span className="max-sm:hidden">· </span>showing {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
                     </span>
                   );
                 })()}
@@ -1315,7 +1318,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               they cost the phone two rows before the first home. The scroller holds the width
               inside the panel instead (-mx-4 against the panel's own px-4), so the document
               still cannot widen; from 640px it is an ordinary wrapping row again. */}
-          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0">
+          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
           <div role="group" aria-label="Quick filter" className="flex shrink-0 items-center gap-1 sm:flex-wrap">
             {([["all", "All listings"], ["active", "Active"], ["new", "New listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button
@@ -1371,6 +1374,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <label htmlFor="f-sort" className="sr-only text-[14px] text-stone sm:not-sr-only">
             Sort by
           </label>
+          {/* A phone keeps one word of it, so the select does not read as a bare "Mixed". */}
+          <span aria-hidden className="-mr-2 text-[14px] text-stone sm:hidden">
+            Sort
+          </span>
           <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={`${selectCls} min-w-0 max-w-[11rem]`}>
             <option value="mixed">Mixed</option>
             <option value="newest">Newest</option>

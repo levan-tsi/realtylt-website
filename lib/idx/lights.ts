@@ -45,7 +45,9 @@ export function townName(raw: string): string {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, " ")
-    .replace(/(^|[\s-])([a-z])/g, (_, sep: string, ch: string) => sep + ch.toUpperCase());
+    .replace(/(^|[\s-])([a-z])/g, (_, sep: string, ch: string) => sep + ch.toUpperCase())
+    // "Croton-On-Hudson" is "Croton-on-Hudson": the joining words of a hyphenated town stay low.
+    .replace(/-(On|Of|In|The|By)-/g, (m) => m.toLowerCase());
 }
 
 /** `geocoded: false` rows count toward their town and are not drawn (a zip-centroid position

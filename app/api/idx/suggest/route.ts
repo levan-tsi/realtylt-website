@@ -46,18 +46,28 @@ async function buildIndex(): Promise<void> {
   // It closes a second hole for free. The 20-page cap silently truncated at 20,000 of 27,632
   // rows in id.asc order, so every town late in that order was undercounted as well as
   // over-counted — Beacon suggested 128 rather than either true figure. Active fits in 18
-  // pages, and the cap is now 40 so it keeps fitting; the loop still stops on the first short
-  // page, so the extra headroom costs nothing until the inventory needs it.
-  for (let page = 0; page < 40; page++) {
-    const res = await fetch(
-      `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&status=eq.Active&order=id.asc&limit=1000&offset=${page * 1000}`,
-      {
-        headers: { apikey: key, Authorization: `Bearer ${key}` },
-        signal: AbortSignal.timeout(10_000),
-      },
-    );
-    if (!res.ok) throw new Error(`suggest index: Supabase REST ${res.status}`);
-    const rows = (await res.json()) as { city?: string; zip?: string }[];
+  // pages, and the cap is now 40 so it keeps fitting; the page count comes from the exact total,
+  // so the extra headroom costs nothing until the inventory needs it.
+  //
+  // IN PARALLEL since round 53. The pages used to be fetched one after another (18 of them, a
+  // few hundred ms each), so a cold instance spent seconds building while the first keystrokes
+  // were answered from the 350ms race below without any towns: typing "Pough" offered four
+  // street addresses and not Poughkeepsie (3 of 6 cold runs in a fresh-eyes review). The first
+  // page now also asks for the exact count, and every other page is fetched at once.
+  const base = `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&status=eq.Active&order=id.asc&limit=1000`;
+  const page = async (n: number, count = false) => {
+    const res = await fetch(`${base}&offset=${n * 1000}`, {
+      headers: { apikey: key, Authorization: `Bearer ${key}`, ...(count ? { Prefer: "count=exact" } : {}) },
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok && res.status !== 416) throw new Error(`suggest index: Supabase REST ${res.status}`);
+    const total = Number(res.headers.get("content-range")?.split("/")[1]);
+    return { rows: res.status === 416 ? [] : ((await res.json()) as { city?: string; zip?: string }[]), total };
+  };
+  const first = await page(0, true);
+  const pageCount = Math.min(40, Math.ceil((Number.isFinite(first.total) ? first.total : 40_000) / 1000));
+  const rest = await Promise.all(Array.from({ length: Math.max(0, pageCount - 1) }, (_, i) => page(i + 1).then((r) => r.rows)));
+  for (const rows of [first.rows, ...rest]) {
     for (const r of rows) {
       const city = r.city?.trim();
       const zip = r.zip?.trim();
@@ -68,7 +78,6 @@ async function buildIndex(): Promise<void> {
         else zips.set(zip, { city: city ?? "", count: 1 });
       }
     }
-    if (rows.length < 1000) break;
   }
   cityIndex = [...cities.entries()]
     .map(([name, count]) => ({ name, count }))
@@ -124,7 +133,9 @@ export async function GET(req: Request) {
       });
   }
   if (indexBuilding && cityIndex.length === 0) {
-    await Promise.race([indexBuilding, new Promise((r) => setTimeout(r, 350))]);
+    // 800ms, up from 350 (round 53): with the pages now fetched in parallel a cold build is two
+    // round trips, so this wait usually ends with the towns in hand instead of without them.
+    await Promise.race([indexBuilding, new Promise((r) => setTimeout(r, 800))]);
   }
 
   const out: Suggestion[] = [];

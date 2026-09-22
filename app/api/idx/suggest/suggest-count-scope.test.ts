@@ -41,7 +41,8 @@ describe("the suggest index counts the same homes /search shows", () => {
   /** The page loop must have headroom over the live Active row count (17,727 on the day this
    * was written) or it truncates in silence again. 40 pages of 1000 is 40,000. */
   it("pages far enough to reach every Active row", () => {
-    const cap = Number(route.match(/for \(let page = 0; page < (\d+); page\+\+\)/)?.[1]);
+    // Round 53 fetches the pages in parallel; the cap is the Math.min over the exact total.
+    const cap = Number(route.match(/const pageCount = Math\.min\((\d+), /)?.[1]);
     expect(cap, "no page cap found").toBeGreaterThan(0);
     expect(cap * 1000, "the index would truncate before it reached every Active listing").toBeGreaterThan(25_000);
   });

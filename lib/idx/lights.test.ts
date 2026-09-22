@@ -34,7 +34,7 @@ describe("the hero's packed lights", () => {
       ],
       BOX,
     );
-    expect(p.towns).toEqual(["Beacon", "Wappingers Falls", "Croton-On-Hudson"]);
+    expect(p.towns).toEqual(["Beacon", "Wappingers Falls", "Croton-on-Hudson"]);
     const pts = unpackLights(p);
     expect([...pts.town]).toEqual([0, 0, 1, 2]);
     expect(townName("  NEW   paltz ")).toBe("New Paltz");

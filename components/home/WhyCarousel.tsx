@@ -16,22 +16,20 @@ import { wrapIndex } from "@/lib/carousel";
 // — the seller-transaction-dashboard slide has no equivalent here and was replaced with
 // /home-value rather than staged, and the live captions' "virtual tours, 3D walkthroughs and
 // videos" went with it because our listing pages carry photos, not tours.
+//
+// ROUND 53: TWO SLIDES, BECAUSE THE HOME PAGE NOW WEARS THE BLUE-HOUR LOOK AND THREE OF THE FIVE
+// SURFACES DO NOT YET. The listing gallery, /home-value and the market insights are still the
+// day design, so their screenshots showed a visitor the 2020 site under a heading that says
+// every screen is our product (a fresh-eyes review ranked it the strongest "2020" signal left
+// on the page). They come back, re-shot, when those pages get the same treatment:
+//   /images/why/our-listing-gallery.webp  "Every photo, the map, the schools and the monthly payment on one page"
+//   /images/why/our-home-value.webp       "Find out what your home is worth, from fifteen real comps"
+//   /images/why/our-market-insights.webp  "Market insights for the neighborhood around every listing"
+// (node scripts/build-why-slides.mjs --only=... re-shoots any of them.)
 const SLIDES = [
   {
-    src: "/images/why/our-listing-gallery.webp",
-    caption: "Every photo, the map, the schools and the monthly payment on one page",
-  },
-  {
     src: "/images/why/our-search.webp",
-    caption: "Search all available homes for sale",
-  },
-  {
-    src: "/images/why/our-home-value.webp",
-    caption: "Find out what your home is worth, from fifteen real comps",
-  },
-  {
-    src: "/images/why/our-market-insights.webp",
-    caption: "Market insights for the neighborhood around every listing",
+    caption: "Search every home for sale, on one map",
   },
   {
     src: "/images/why/our-save-search.webp",
@@ -45,9 +43,8 @@ const SLIDES = [
 
 const N = SLIDES.length;
 const AUTO_ADVANCE_MS = 6000;
-// Live's Bootstrap carousel opens on the SECOND slide ("Search all available homes for
-// sale" — the `item active` in the source markup); match that as the starting frame.
-const INITIAL_INDEX = 1;
+// The search slide leads: it is the one live's carousel opened on too.
+const INITIAL_INDEX = 0;
 
 export function WhyCarousel() {
   const [index, setIndex] = useState(INITIAL_INDEX);
