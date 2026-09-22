@@ -15,9 +15,9 @@ import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
 import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
 import { decodeElevation, loadElevationPixels, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
-import { buildHaze, buildLights, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
+import { buildHaze, buildLights, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
 import { DEPTH_FRAGMENT, DEPTH_VERTEX, DUST_FRAGMENT, DUST_VERTEX, HAZE_FRAGMENT, HAZE_VERTEX, LIGHT_FRAGMENT, LIGHT_VERTEX } from "./shaders";
-import { blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type ShotName } from "./shots";
+import { AREA_COUNTY_OF, AREA_FLIGHT, areaShot, blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type Shot, type ShotName } from "./shots";
 import { EXAGGERATION, lngLatToWorld, worldToLngLat, type Vec3 } from "./world";
 
 export interface TownHover {
@@ -63,6 +63,21 @@ export interface Look {
   contourGain: number;
   indexGain: number;
   shoreGain: number;
+  /** THE LIGHT LEADS, THE LAND IS THE PAPER. What each kind (fill, contour, index, shore) keeps of
+   * its brightness once the camera is CLOSE to its subject, where a contour would otherwise be a
+   * white rope across the frame and the homes would be lost between the ropes. */
+  kindLow: [number, number, number, number];
+  /** Camera-to-subject distance (world km) at which "close" begins and "far" is reached: inside
+   * `near` the land is at kindLow, beyond `far` it is at full strength. */
+  lowNearKm: number;
+  lowFarKm: number;
+  /** Close in, what a home standing on its own gains, and what a home in a dense block keeps. */
+  lowLightGain: number;
+  lowCityGain: number;
+  /** Contour grains are thinned where their lines crowd on screen: gone below `crowdMinPx` css
+   * pixels apart, whole above `crowdFullPx`. (This is where the moire comb came from.) */
+  crowdMinPx: number;
+  crowdFullPx: number;
   /** Level of detail by kind (fill, contour, index contour, shore): how much longer each survives
    * with distance. */
   kindKeep: [number, number, number, number];
@@ -116,6 +131,13 @@ export const DEFAULT_LOOK: Look = {
   contourGain: 0.65,
   indexGain: 1.6,
   shoreGain: 0.55,
+  kindLow: [0.26, 0.12, 0.22, 1.5],
+  lowNearKm: 40,
+  lowFarKm: 110,
+  lowLightGain: 2.1,
+  lowCityGain: 0.62,
+  crowdMinPx: 2.5,
+  crowdFullPx: 9,
   kindKeep: [0.4, 0.7, 2.5, 2.5],
   ridge: 0.5,
   dustAlpha: 2,
@@ -235,6 +257,10 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uSheen: { value: look.dustSheen },
     uKindGain: { value: new THREE.Vector4(look.fillGain, look.contourGain, look.indexGain, look.shoreGain) },
     uKindKeep: { value: new THREE.Vector4(...look.kindKeep) },
+    uKindLow: { value: new THREE.Vector4(...look.kindLow) },
+    uLowAlt: { value: 0 },
+    uContourKm: { value: look.contourInterval / 1000 },
+    uCrowd: { value: new THREE.Vector2(look.crowdMinPx, look.crowdFullPx) },
     uFocus: { value: 0 },
     uFocusMix: { value: 0 },
     uMoon: { value: moonDir },
@@ -250,6 +276,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uSpread: { value: look.lightSpread },
     uFocus: dustU.uFocus,
     uFocusMix: dustU.uFocusMix,
+    uLowAlt: dustU.uLowAlt,
+    uLowGain: { value: look.lowLightGain },
+    uLowCity: { value: look.lowCityGain },
   };
   const hazeU = {
     ...shared,
@@ -258,6 +287,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uHazeSize: { value: look.hazeSize },
     uHazeLow: { value: 7 },
     uHazeHigh: { value: 26 },
+    uFocusMix: dustU.uFocusMix,
   };
   const additive = {
     transparent: true,
@@ -307,8 +337,13 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   }
   let buildMs = 0;
 
+  // The area shots are re-framed on the homes themselves once the lights have loaded (a county's
+  // bounding box holds mountains where nothing is for sale); until then they stand on the box.
+  const areaFrames: Partial<Record<ShotName, Shot>> = {};
+  const shotOf = (n: ShotName): Shot => areaFrames[n] ?? SHOTS[n];
+
   let aspect = 1;
-  let goal: Framing = framingFor(SHOTS[opts.initialShot ?? "hero"], aspect);
+  let goal: Framing = framingFor(shotOf(opts.initialShot ?? "hero"), aspect);
   let goalName: ShotName | null = opts.initialShot ?? "hero";
   let cur: Framing = copyF(goal);
   let flight: { from: Framing; to: ShotName; t0: number; ms: number; done: () => void } | null = null;
@@ -340,7 +375,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     aspect = cssW / cssH;
     shared.uPixelRatio.value = dpr;
     shared.uAspect.value = aspect;
-    if (goalName && !flight) goal = framingFor(SHOTS[goalName], aspect);
+    if (goalName && !flight) goal = framingFor(shotOf(goalName), aspect);
     // Before the first frame the camera simply stands at its shot (no approach from a guess).
     if (frames === 0) cur = copyF(goal);
     kick();
@@ -486,6 +521,16 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     scene.add(hazePoints);
     counties = countyRaster(cloud);
     paintDustCounties();
+    // Re-frame the area chapter on the homes themselves, now that we know where they stand.
+    const boxes = countyLightBoxes(cloud);
+    for (const a of AREA_FLIGHT) {
+      const b = boxes[AREA_COUNTY_OF[a]];
+      if (b) areaFrames[a] = areaShot(b);
+    }
+    if (goalName && areaFrames[goalName]) {
+      goal = framingFor(shotOf(goalName), aspect);
+      if (frames === 0 || reduce) cur = copyF(goal);
+    }
     towns = townCentroids(pts);
     townWorld = new Float32Array(towns.length * 3);
     towns.forEach((t, i) => {
@@ -535,6 +580,14 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     shared.uFocal.value = focal;
     shared.uFog.value.set(dist * look.fogNear, Math.min(560, dist * look.fogFar + 20));
     shared.uNear.value = dist * look.nearFade;
+    // How CLOSE this shot stands to its subject, 1 (a county, a chapter) to 0 (the establishing
+    // shots). The land's contours fall back as it rises and the lights come forward: the hero's
+    // balance, held at every altitude.
+    const lowT = (dist - look.lowNearKm) / Math.max(1e-3, look.lowFarKm - look.lowNearKm);
+    const lowE = lowT <= 0 ? 0 : lowT >= 1 ? 1 : lowT * lowT * (3 - 2 * lowT);
+    // The area chapter is always a CLOSE shot by intent, however high the camera has to stand to
+    // hold a county: there the land is the paper and the county's homes are the whole picture.
+    dustU.uLowAlt.value = Math.max(1 - lowE, dustU.uFocusMix.value);
     const rho = dustCount / Math.max(1, landKm2);
     // Grains per CSS pixel, not per device pixel: a grain's smallest size is a fixed number of CSS
     // pixels, so counting device pixels put four times the grains (and four times the light) into
@@ -548,7 +601,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     let moving = false;
     if (flight) {
       const t = Math.min(1, (now - flight.t0) / flight.ms);
-      goal = blendFramings(flight.from, framingFor(SHOTS[flight.to], aspect), t, grid ? ground : undefined);
+      goal = blendFramings(flight.from, framingFor(shotOf(flight.to), aspect), t, grid ? ground : undefined);
       cur = copyF(goal);
       moving = true;
       if (t >= 1) {
@@ -726,7 +779,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     flight?.done();
     flight = null;
     goalName = name;
-    goal = framingFor(SHOTS[name], aspect);
+    goal = framingFor(shotOf(name), aspect);
     if (o?.immediate || reduce) cur = copyF(goal);
     kick();
   }
@@ -749,7 +802,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       flight?.done();
       flight = null;
       goalName = null;
-      const frames = names.map((n) => framingFor(SHOTS[n], aspect));
+      const frames = names.map((n) => framingFor(shotOf(n), aspect));
       // Reduced motion never scrubs through the air: the sequence cuts to its nearest shot.
       goal = reduce ? frames[Math.round(Math.min(frames.length - 1, Math.max(0, s)))] : sequenceFraming(frames, s, grid ? ground : undefined);
       if (o?.immediate || reduce) cur = copyF(goal);
@@ -814,6 +867,11 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       shared.uExag.value = look.exaggeration;
       dustU.uKindGain.value.set(look.fillGain, look.contourGain, look.indexGain, look.shoreGain);
       dustU.uKindKeep.value.set(...look.kindKeep);
+      dustU.uKindLow.value.set(...look.kindLow);
+      dustU.uContourKm.value = look.contourInterval / 1000;
+      dustU.uCrowd.value.set(look.crowdMinPx, look.crowdFullPx);
+      lightU.uLowGain.value = look.lowLightGain;
+      lightU.uLowCity.value = look.lowCityGain;
       if (grid && dustKey() !== builtKey) void buildDustCloud();
       lightU.uAlpha.value = look.lightAlpha;
       lightU.uSize.value = look.lightSize;

@@ -3,7 +3,7 @@
  * a point cloud. */
 import type { LightPoints } from "@/lib/idx/lights";
 import { sampleHeight, type ElevationGrid } from "./elevation";
-import { boxUVToLngLat, lngLatToWorld } from "./world";
+import { boxUVToLngLat, lngLatToWorld, worldToLngLat, type LngLatBox } from "./world";
 
 /** The served areas, in the order the "where we work" chapter flies them; a light's county is
  * its index here plus one (0 = not known). The slugs are the feed's (lib/idx/lights.ts townCounty). */
@@ -62,6 +62,34 @@ export function buildLights(pts: LightPoints, grid: ElevationGrid | null, introS
   }
   for (let i = 0; i < n; i++) gains[i] = (0.55 + 0.45 * seeds[i]) / Math.pow(dense.get(cellOf[i]) ?? 1, 0.4);
   return { count: n, positions, delays, gains, seeds, counties };
+}
+
+/** WHERE A COUNTY'S HOMES ACTUALLY ARE: the middle `1 - 2 * tail` of its lights in longitude and
+ * in latitude. The area chapter frames a county on this, not on its bounding box, because the box
+ * is the extent of the listings' ZIP centroids and a county like Ulster spends most of its box on
+ * the Catskills, where nothing is for sale: framed on the box, the county arrives as a field of
+ * contour lines with a few lamps at one edge; framed on its homes, it arrives as its own shape of
+ * light. Counties with fewer than `min` drawn lights are left out (the caller keeps the box). */
+export function countyLightBoxes(cloud: LightCloud, tail = 0.04, min = 12): Partial<Record<CountySlugName, LngLatBox>> {
+  const lngs = new Map<number, number[]>();
+  const lats = new Map<number, number[]>();
+  for (let i = 0; i < cloud.count; i++) {
+    const c = cloud.counties[i];
+    if (!c) continue;
+    const [lng, lat] = worldToLngLat(cloud.positions[i * 3], cloud.positions[i * 3 + 2]);
+    (lngs.get(c) ?? lngs.set(c, []).get(c)!).push(lng);
+    (lats.get(c) ?? lats.set(c, []).get(c)!).push(lat);
+  }
+  const at = (sorted: number[], q: number) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.round(q * (sorted.length - 1))))];
+  const out: Partial<Record<CountySlugName, LngLatBox>> = {};
+  for (const [c, xs] of lngs) {
+    const ys = lats.get(c)!;
+    if (xs.length < min) continue;
+    xs.sort((a, b) => a - b);
+    ys.sort((a, b) => a - b);
+    out[COUNTY_SLUGS[c - 1]] = { west: at(xs, tail), east: at(xs, 1 - tail), south: at(ys, tail), north: at(ys, 1 - tail) };
+  }
+  return out;
 }
 
 export interface HazeCloud {

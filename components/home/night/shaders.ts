@@ -24,6 +24,17 @@ uniform vec2 uPointer, uFog;
 uniform vec3 uMoon;
 uniform vec4 uKindGain;
 uniform vec4 uKindKeep;
+// THE LAND IS THE PAPER, NOT THE SUBJECT. uLowAlt is 0 when the camera is far from its subject (the
+// establishing shots, where the region is one shape and the contours are a fine texture) and 1 when
+// it is close (a county, a chapter), where a 20 m contour becomes a wide white rope and the homes
+// vanish between the ropes. At 1 each kind of grain keeps only uKindLow of its brightness: the
+// ordinary contours all but go, the index contours and the shoreline stay, so the land still reads
+// as land and the lights lead. uContourKm + uCrowd thin the contours wherever they CROWD on screen
+// (steep ground, or far away): below uCrowd.x css pixels apart they are gone, which is where the
+// moire comb on the Catskills and in the Highlands gorge came from.
+uniform vec4 uKindLow;
+uniform float uLowAlt, uContourKm;
+uniform vec2 uCrowd;
 uniform float uFocus, uFocusMix;
 attribute vec2 aSlope;
 attribute float aSeed, aRidge, aKind, aCounty;
@@ -57,6 +68,14 @@ void main() {
   float facing = max(abs(dot(n, toCam)), 0.08);
   float kindKeep = aKind < 0.5 ? uKindKeep.x : aKind < 1.5 ? uKindKeep.y : aKind < 2.5 ? uKindKeep.z : uKindKeep.w;
   float keep = uLodK * kindKeep * facing / max(d * d, 1e-4);
+  // How far apart this grain's contour and its neighbour land ON SCREEN: the elevation interval
+  // divided by the ground's slope, projected. Index contours stand five intervals apart.
+  float crowd = 1.0;
+  if (aKind > 0.5 && aKind < 2.5) {
+    float sepKm = (uContourKm / max(length(aSlope), 1e-4)) * (aKind > 1.5 ? 5.0 : 1.0);
+    crowd = smoothstep(uCrowd.x, uCrowd.y, sepKm * uFocal / max(d, 1e-4) / uPixelRatio);
+    keep *= crowd;
+  }
   if (d < 0.02 || aSeed > keep) {
     gl_Position = vec4(0.0, 0.0, 2.0, 1.0);
     gl_PointSize = 0.0;
@@ -85,8 +104,11 @@ void main() {
   float glint = step(aSeed, uGlint);
   vSize *= 1.0 + 0.6 * glint;
   float kind = aKind < 0.5 ? uKindGain.x : aKind < 1.5 ? uKindGain.y : aKind < 2.5 ? uKindGain.z : uKindGain.w;
-  // AREA FOCUS: the land of the county the page is on comes up, the rest settles back.
-  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 1.3 : 0.38, uFocusMix);
+  float kindLow = aKind < 0.5 ? uKindLow.x : aKind < 1.5 ? uKindLow.y : aKind < 2.5 ? uKindLow.z : uKindLow.w;
+  kind *= mix(1.0, kindLow, uLowAlt);
+  // AREA FOCUS: the land of the county the page is on comes up, the rest goes to near black, so
+  // which area the page is showing is never in doubt.
+  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 0.95 : 0.12, uFocusMix);
   vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.8 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
   gl_PointSize = vSize;
   gl_Position = clip;
@@ -113,6 +135,12 @@ void main() {
 
 export const LIGHT_VERTEX = /* glsl */ `
 uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uTime, uSize, uAlpha, uTwinkle, uSpread, uFocus, uFocusMix;
+// The counterpart of the dust's uLowAlt. Close in, the picture's dynamic range is stretched from
+// BOTH ends: a home standing on its own in the valley carries more of the frame (uLowGain), and a
+// home in a block of five hundred carries less (uLowCity), so Ulster never reads as empty and
+// Queens never reads as one saturated flare. aGain is already tone-mapped by how many homes share
+// a light's few hundred metres, so it is the measure of how alone this one stands.
+uniform float uLowAlt, uLowGain, uLowCity;
 uniform vec2 uPointer, uFog;
 attribute float aDelay, aGain, aSeed, aCounty;
 varying float vA;
@@ -145,15 +173,17 @@ void main() {
   float lantern = uPointerOn * exp(-dot(dp, dp) * 30.0);
   // The sprite is a lamp: a hot core of the light's world size (floored at ~1.3 px) inside a soft
   // halo four times as wide. A far light is a spark with a breath of glow; a near one a soft lamp.
-  float core = max(uSize * uFocal / d, 1.3 * uPixelRatio);
+  float lone = clamp(aGain * 1.25, 0.0, 1.0);
+  float presence = mix(1.0, mix(uLowCity, uLowGain, lone * lone), uLowAlt);
+  float core = max(uSize * mix(1.0, mix(0.9, 1.4, lone * lone), uLowAlt) * uFocal / d, 1.3 * uPixelRatio);
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
   // AREA FOCUS: while the page is on one county, its homes burn a little brighter and the rest of
   // the map's fall back, so the area reads as a shape of light.
   float inFocus = abs(aCounty - uFocus) < 0.5 ? 1.0 : 0.0;
-  float focus = mix(1.0, mix(0.28, 1.5, inFocus), uFocusMix);
-  vA = uAlpha * aGain * on * tw * fog * energy * focus * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
+  float focus = mix(1.0, mix(0.09, 1.6, inFocus), uFocusMix);
+  vA = uAlpha * presence * aGain * on * tw * fog * energy * focus * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
   gl_PointSize = size * (1.0 + 0.15 * lantern) * (1.0 + 0.3 * inFocus * uFocusMix);
   gl_Position = clip;
 }
@@ -179,7 +209,7 @@ void main() {
 `;
 
 export const HAZE_VERTEX = /* glsl */ `
-uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear, uHazeLow, uHazeHigh;
+uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear, uHazeLow, uHazeHigh, uFocusMix;
 uniform vec2 uFog;
 attribute float aStrength;
 varying float vA;
@@ -195,7 +225,9 @@ void main() {
   // height in world km, uHazeLow to uHazeHigh), and when the eye runs along the ground, where a row
   // of patches would stack into a bank of fog on the horizon.
   float down = -normalize(p - cameraPosition).y;
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
+  // While one county is lit the glow of the cities outside it settles back with their windows (the
+  // patches carry no county of their own, so the whole haze eases down together).
+  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
   gl_PointSize = size;
   gl_Position = projectionMatrix * mv;
 }

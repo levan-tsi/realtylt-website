@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { LightPoints } from "@/lib/idx/lights";
 import { decodeElevation, encodeElevation } from "./elevation";
-import { buildHaze, buildLights, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, townCentroids } from "./lights";
+import { buildHaze, buildLights, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, townCentroids } from "./lights";
 import { boxUVToLngLat, lngLatToWorld } from "./world";
 
 const BOX = { west: -74, east: -73, south: 41, north: 42 };
@@ -138,5 +138,40 @@ describe("the county raster (which land belongs to the county the page is on)", 
     expect(at(0.65)).toBe(COUNTY_SLUGS.indexOf("dutchess") + 1);
     // Halfway (~21 km from both): past the 6 km reach, no county.
     expect(at(0.45)).toBe(0);
+  });
+});
+
+describe("where a county's homes actually are (the area chapter's framing)", () => {
+  // Ninety-five homes along the east edge of the box, five stragglers far to the west and south:
+  // the robust box must follow the ninety-five (a county's bounding box holds mountains where
+  // nothing is for sale, and the chapter frames the homes, not the mountains).
+  const list = [
+    ...Array.from({ length: 95 }, (_, i) => ({ x: 0.8 + (i % 10) * 0.004, y: 0.3 + (i % 9) * 0.01, town: 0 })),
+    ...Array.from({ length: 5 }, (_, i) => ({ x: 0.02 + i * 0.001, y: 0.95, town: 1 })),
+  ];
+  const pts: LightPoints = { ...points(list, ["Kingston", "Far"], [95, 5]), townCounty: ["ulster", "ulster"] };
+  const box = countyLightBoxes(buildLights(pts, null), 0.06)["ulster"]!;
+
+  it("cuts the outliers off both ends", () => {
+    expect(box.west).toBeGreaterThan(boxUVToLngLat(0.5, 0, BOX)[0]);
+    expect(box.east).toBeLessThanOrEqual(BOX.east);
+    // The stragglers sit at the very south of the box; the kept homes do not reach it.
+    expect(box.south).toBeGreaterThan(boxUVToLngLat(0, 0.9, BOX)[1]);
+  });
+
+  it("keeps the whole spread when nothing is trimmed", () => {
+    const all = countyLightBoxes(buildLights(pts, null), 0)["ulster"]!;
+    expect(all.west).toBeLessThan(box.west);
+    expect(all.south).toBeLessThan(box.south);
+  });
+
+  it("leaves out a county with too few homes to frame", () => {
+    const thin: LightPoints = { ...points([{ x: 0.5, y: 0.5, town: 0 }], ["One"], [1]), townCounty: ["putnam"] };
+    expect(countyLightBoxes(buildLights(thin, null))["putnam"]).toBeUndefined();
+  });
+
+  it("ignores lights whose county is not known", () => {
+    const none: LightPoints = { ...points(list, ["Kingston", "Far"], [90, 10]), townCounty: ["", ""] };
+    expect(Object.keys(countyLightBoxes(buildLights(none, null)))).toHaveLength(0);
   });
 });

@@ -5,7 +5,10 @@ import sharp from "sharp";
 import { decodeElevation, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
 import {
   AREA_FLIGHT,
+  AREA_MIN_KM,
+  AREA_TILT,
   ARC_PER_KM,
+  areaShot,
   blendFramings,
   CLEARANCE_KM,
   FLIGHT,
@@ -108,6 +111,50 @@ describe("the shots", () => {
 
   it("looks down at its subject (targets below the camera)", () => {
     for (const n of [...FLIGHT, ...AREA_FLIGHT]) for (const k of ["wide", "tall"] as const) expect(SHOTS[n][k].pos[1]).toBeGreaterThan(SHOTS[n][k].target[1]);
+  });
+});
+
+describe("an area framed as its own shape of light", () => {
+  const box = { south: 41.4, north: 41.9, west: -74.1, east: -73.6 };
+  const shot = areaShot(box);
+  const R = Math.PI / 180;
+
+  it("stands high above the area, leaning AREA_TILT off vertical, looking at its middle", () => {
+    for (const k of ["wide", "tall"] as const) {
+      const f = shot[k];
+      const over = [f.pos[0] - f.target[0], f.pos[2] - f.target[2]];
+      const tilt = Math.atan2(Math.hypot(over[0], over[1]), f.pos[1] - f.target[1]) / R;
+      expect(tilt, k).toBeCloseTo(AREA_TILT, 6);
+      // South of the middle, looking north: world z runs south, so the camera's z is the greater.
+      expect(f.pos[2], k).toBeGreaterThan(f.target[2]);
+      expect(Math.abs(f.pos[0] - f.target[0]), k).toBeLessThan(1e-9);
+    }
+  });
+
+  it("holds the whole area inside the frame, at either shape of window", () => {
+    const wKm = (box.east - box.west) * 83.594, hKm = (box.north - box.south) * 111.132;
+    for (const [k, aspect] of [["wide", 1440 / 900], ["tall", 390 / 844]] as const) {
+      const f = shot[k];
+      const d = Math.hypot(f.pos[0] - f.target[0], f.pos[1] - f.target[1], f.pos[2] - f.target[2]);
+      const fovV = f.fov * R;
+      // The north-south extent is foreshortened by the lean; the frame must still cover it.
+      expect((hKm * Math.cos(AREA_TILT * R)) / d, k).toBeLessThan(fovV);
+      // A phone is allowed to crop a broad county's sides; a laptop is not.
+      if (k === "wide") expect(wKm / d).toBeLessThan(2 * Math.atan(aspect * Math.tan(fovV / 2)));
+    }
+  });
+
+  it("never comes closer than AREA_MIN_KM, however small the area", () => {
+    const tiny = areaShot({ south: 40.7, north: 40.71, west: -74.01, east: -74 });
+    for (const k of ["wide", "tall"] as const) {
+      const f = tiny[k];
+      expect(Math.hypot(f.pos[0] - f.target[0], f.pos[1] - f.target[1], f.pos[2] - f.target[2]), k).toBeCloseTo(AREA_MIN_KM, 6);
+    }
+  });
+
+  it("frames a wider area from further back", () => {
+    const wider = areaShot({ ...box, west: -74.6 });
+    expect(wider.wide.pos[1]).toBeGreaterThan(shot.wide.pos[1]);
   });
 });
 

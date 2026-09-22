@@ -64,24 +64,30 @@ export const CHAPTERS: Record<FlightShot, Shot> = {
     wide: f(over(-73.95, 40.0, 55), over(-74.03, 41.2, 0), 40),
     tall: f(over(-73.97, 39.98, 62), over(-74.02, 41.15, 0), 58),
   },
-  // Up the river to Dutchess: low over Newburgh Bay, looking straight up the river, the black channel
-  // running up the middle of the frame to Poughkeepsie's lights (Lagrangeville, the office, beyond
-  // them to the right).
+  // Up the river to Dutchess: high over Newburgh Bay, looking up the valley. The Hudson runs up the
+  // middle of the frame as a black thread with a lit shore, Poughkeepsie burns to the right of it
+  // (Lagrangeville, the office, beyond), and the left of the frame stays dark for the page's words.
+  // (Round 54 builder 2: the old shot stood at 8 km, where a 20 m contour is a white rope across the
+  // whole frame and the homes disappeared between the ropes. Raised, the light leads.)
   dutchess: {
-    wide: f(over(-73.96, 41.47, 8), over(-73.93, 41.72, 0), 46),
-    tall: f(over(-73.965, 41.43, 11), over(-73.93, 41.7, 0), 64),
+    wide: f(over(-73.95, 41.32, 18), over(-73.92, 41.72, 0), 40),
+    tall: f(over(-73.95, 41.26, 23), over(-73.93, 41.76, 0), 58),
   },
-  // Into the Highlands: over the Peekskill bend, looking up the gorge past Bear Mountain and
-  // Anthony's Nose to Storm King and Breakneck, with the moon round in the south-south-east so the
-  // gorge walls facing the camera are the lit ones (looked at: from the west they were silhouettes).
+  // Into the Highlands: from over Newburgh Bay looking SOUTH down the gorge. The river leaves the
+  // burning bend at Peekskill as a black ribbon and threads between Storm King, Breakneck and Bear
+  // Mountain, which stand as dark masses against the light beyond them: the one shot on the page
+  // where a ridge is a silhouette. (Looking north up the gorge, tried at five heights, gave a field
+  // of contour lines and no subject.)
   highlands: {
-    wide: f(over(-73.99, 41.3, 5.5), over(-73.96, 41.46, 0.5), 48, [160, 20]),
-    tall: f(over(-73.985, 41.27, 7), over(-73.96, 41.45, 0.5), 66, [160, 20]),
+    wide: f(over(-73.94, 41.62, 16), over(-73.95, 41.2, 0.3), 40),
+    tall: f(over(-73.94, 41.7, 21), over(-73.95, 41.16, 0.3), 58),
   },
-  // Westchester and Rockland across the Tappan Zee, from over the Sound, looking west.
+  // Westchester and Rockland across the Tappan Zee, from over the Sound looking west: the river a
+  // wide black band cut diagonally through the frame with Yonkers' lights along its near shore and
+  // Rockland's beyond, and the top left dark.
   westchester: {
-    wide: f(over(-73.6, 40.97, 8), over(-73.92, 41.1, 0), 44),
-    tall: f(over(-73.62, 40.9, 12), over(-73.9, 41.08, 0), 64),
+    wide: f(over(-73.6, 41.12, 16), over(-73.95, 41.05, 0), 42),
+    tall: f(over(-73.54, 41.14, 21), over(-73.95, 41.03, 0), 60),
   },
   // The harbour: over the Upper Bay, looking up Manhattan. The densest light on the map.
   harbour: {
@@ -91,7 +97,7 @@ export const CHAPTERS: Record<FlightShot, Shot> = {
   // The whole region from high above the ocean: where the page ends, the way it began, higher.
   region: {
     wide: f(over(-74.1, 40.0, 140), over(-74.1, 41.3, 0), 40),
-    tall: f(over(-74.1, 40.3, 200), over(-74.1, 41.28, 0), 52),
+    tall: f(over(-74.13, 40.28, 212), over(-74.13, 41.28, 0), 56),
   },
 };
 
@@ -110,23 +116,38 @@ export const AREA_COUNTY_OF: Record<AreaShot, keyof typeof COUNTY_BOUNDS> = {
   "staten-island": "staten-island",
 };
 
-/** A county or borough, framed from its listings' extent (COUNTY_BOUNDS): the camera stands south
- * of the area's middle, as far back and as high as the area is big, looking a little north. */
-export function areaShot(b: { south: number; north: number; west: number; east: number }): Shot {
+/** How far the area shots lean off vertical, degrees: 40 is high enough that a county reads as its
+ * own shape of light (the way the hero reads the region) and tilted enough that the land still has
+ * relief. A low oblique turns a county into a field of contour lines. */
+export const AREA_TILT = 40;
+/** Never closer than this, so a small borough is a borough and not a street. */
+export const AREA_MIN_KM = 15;
+
+/** A county or borough as its own SHAPE OF LIGHT: the camera stands high above it, AREA_TILT off
+ * vertical, south of it, far enough back that the area's extent fills `fill` of the frame. The
+ * extent it is given is where the HOMES are (lights.ts countyLightBoxes), falling back to the
+ * listings' bounding box before the lights have loaded. */
+export function areaShot(b: { south: number; north: number; west: number; east: number }, opts?: { tilt?: number }): Shot {
+  const tilt = ((opts?.tilt ?? AREA_TILT) * Math.PI) / 180;
   const lng = (b.west + b.east) / 2, lat = (b.south + b.north) / 2;
-  const spanKm = Math.max((b.east - b.west) * 83.6, (b.north - b.south) * 111.1);
-  const back = 0.62 * spanKm + 3;
-  const up = 0.5 * spanKm + 2.5;
-  return {
-    wide: f(over(lng, lat - back / 111.1, up), over(lng, lat + 0.08 * spanKm / 111.1, 0), 44),
-    tall: f(over(lng, lat - (1.25 * back) / 111.1, up * 1.35), over(lng, lat, 0), 62),
+  const wKm = (b.east - b.west) * 83.594, hKm = (b.north - b.south) * 111.132;
+  const frame = (fovDeg: number, aspect: number, fillV: number, fillH: number): Framing => {
+    const fovV = (fovDeg * Math.PI) / 180;
+    const fovH = 2 * Math.atan(aspect * Math.tan(fovV / 2));
+    // The north-south extent is foreshortened by the lean; the east-west extent is not.
+    const d = Math.max(AREA_MIN_KM, (hKm * Math.cos(tilt)) / (fillV * fovV), wKm / (fillH * fovH));
+    return f(over(lng, lat - (d * Math.sin(tilt)) / 111.132, d * Math.cos(tilt)), over(lng, lat, 0), fovDeg);
   };
+  // A phone's frame is narrow: a broad county is allowed to run past its sides rather than shrink
+  // into a thin band across the middle of it.
+  return { wide: frame(40, 1440 / 900, 0.78, 0.78), tall: frame(56, 390 / 844, 0.74, 1.15) };
 }
 
-export const SHOTS: Record<ShotName, Shot> = {
-  ...CHAPTERS,
-  ...(Object.fromEntries(AREA_FLIGHT.map((a) => [a, areaShot(COUNTY_BOUNDS[AREA_COUNTY_OF[a]])])) as Record<AreaShot, Shot>),
-};
+/** The area shots from the listings' bounding boxes: what the scene flies before the lights have
+ * loaded, and what the tests measure. The scene refines them from the lights themselves. */
+export const AREA_SHOTS: Record<AreaShot, Shot> = Object.fromEntries(AREA_FLIGHT.map((a) => [a, areaShot(COUNTY_BOUNDS[AREA_COUNTY_OF[a]])])) as Record<AreaShot, Shot>;
+
+export const SHOTS: Record<ShotName, Shot> = { ...CHAPTERS, ...AREA_SHOTS };
 
 // ---- the maths ---------------------------------------------------------------------------------
 
