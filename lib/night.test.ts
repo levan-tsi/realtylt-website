@@ -83,5 +83,61 @@ describe("sentence case for night labels", () => {
     expect(sentenceCase("AI Services")).toBe("AI services");
     expect(sentenceCase("RealtyLT AI")).toBe("RealtyLT AI");
     expect(sentenceCase("Home")).toBe("Home");
+    // The footer's utility strip (round 53 polish): the one label there that is not a legal name.
+    expect(sentenceCase("Site Map")).toBe("Site map");
+  });
+});
+
+/** ROUND 53 POLISH. The control styling added for the night pages is written as plain CSS in
+ * globals.css (a checkbox, a select without its arrow, the search box's clear button, the skip
+ * link), where no Tailwind variant scopes it. Every one of those rules must carry the night scope
+ * in its own selector, or it restyles the same control on every day page. */
+describe("the night pages' control rules stay on the night pages", () => {
+  const css = read("app/globals.css").replace(/\/\*[\s\S]*?\*\//g, "");
+  const selectorsFor = (needle: string) =>
+    [...css.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim()).filter((s) => s.includes(needle) && !s.startsWith("@"));
+
+  it.each([
+    ['input[type="checkbox"]'],
+    ["select.appearance-none"],
+    [":placeholder-shown::-webkit-search-cancel-button"],
+    ['a[href="#main"]'],
+  ])("every rule for %s is scoped to a night page", (needle) => {
+    const selectors = selectorsFor(needle);
+    expect(selectors.length, `no rule found for ${needle}`).toBeGreaterThan(0);
+    for (const sel of selectors) {
+      for (const part of sel.split(",")) expect(part.trim(), `unscoped: ${part.trim()}`).toMatch(/^(\.nocturne|body:has\(\.nocturne\))\s/);
+    }
+  });
+
+  it("gives forced-colours mode the native checkbox back", () => {
+    expect(css).toMatch(/@media \(forced-colors: active\)\s*\{\s*\.nocturne input\[type="checkbox"\]\s*\{[^}]*appearance:\s*auto/);
+  });
+});
+
+describe("the night hero's scroll cue can be seen", () => {
+  // `text-paper/70` is the night ground itself on a blue-hour page: the cue was a Tab stop drawn
+  // in the colour of what it sat on.
+  it("paints in haze on night pages", () => {
+    expect(read("components/ui/ScrollCue.tsx")).toMatch(/night:text-stone/);
+  });
+});
+
+describe("/search's pending state is drawn in the page's own frame", () => {
+  // The skeleton used to be a 1400px column with a 3 x 2 card grid while the page is a 1600px
+  // column with a list beside a map, so the page jumped when it arrived. The skeleton now copies
+  // the page's container and split; these assertions keep the copy from drifting.
+  const skeleton = read("components/search/SearchSkeleton.tsx");
+  const client = read("components/search/SearchClient.tsx");
+  it.each([["max-w-[1600px] px-4 pb-16 lg:px-5"], ["lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[0.9fr_1.1fr] 2xl:grid-cols-[0.85fr_1.15fr]"]])(
+    "shares %s with the page",
+    (cls) => {
+      expect(client).toContain(cls);
+      expect(skeleton).toContain(cls);
+    },
+  );
+  it("is what both the route's loading state and the page's own fallback render", () => {
+    expect(read("app/search/loading.tsx")).toMatch(/<SearchSkeleton \/>/);
+    expect(read("app/search/page.tsx")).toMatch(/fallback=\{[\s\S]*?<SearchSkeleton \/>/);
   });
 });
