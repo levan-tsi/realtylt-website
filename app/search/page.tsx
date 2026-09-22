@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import { Suspense } from "react";
 import { SearchClient, type SearchPayload } from "@/components/search/SearchClient";
 import { getIdxClient, isSampleData } from "@/lib/idx";
@@ -58,6 +59,9 @@ async function loadFirstPage(q: URLSearchParams): Promise<SearchPayload | null> 
 }
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<RawParams> }) {
+  // The blue-hour face, fetched with the page instead of discovered by the stylesheet (round 53):
+  // without it the header's text swapped face after first paint and moved /search's content.
+  preload("/fonts/bricolage.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   const q = toUrlParams(await searchParams);
   const initial = await loadFirstPage(q);
 

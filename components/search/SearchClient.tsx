@@ -1281,7 +1281,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 <span className="text-ink">
                   {activeViewportQs ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
                 </span>
-                {!hasActiveFilters && !activeViewportQs && <span>across the Hudson Valley and NYC</span>}
+                {/* lg:hidden (round 53): on a laptop the map beside the list lands its viewport
+                    within ~1.5s and this label becomes "homes in this map area"; the longer
+                    phrase in between wrapped the row to two lines and back, and every card
+                    below jumped 44px (CLS 0.46, measured on a production build). The map shows
+                    the scope there; a phone, where the map is further down, keeps the words. */}
+                {!hasActiveFilters && !activeViewportQs && <span className="lg:hidden">across the Hudson Valley and NYC</span>}
                 {/* The map draws every home in view; the list carries a page of them. Without
                     this the two disagree in silence — the count says 400, the column holds 150,
                     and paging looks like it repeats the same homes. Naming the slice is the
