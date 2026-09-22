@@ -522,6 +522,11 @@ body:has(.nocturne) .rlt-bubble {
 body:has(.nocturne) .rlt-bubble:hover {
   background: #4dbbe9;
 }
+/* The launcher lives outside every .nocturne wrapper, so its ring kept the day's river: navy on
+   the night ground, 1.26:1 (round 53 check). */
+body:has(.nocturne) .rlt-bubble:focus-visible {
+  outline-color: var(--color-porchlight);
+}
 /* The skip link sits outside every page wrapper (app/layout.tsx), so on a night page the first Tab
    met the day's black pill in Lato with a navy ring at 1.26:1 on the night header. There it is the
    night's own moonlit control with the porchlight ring (round 53 polish). */
@@ -574,6 +579,13 @@ body:has(.nocturne) > a[href="#main"]:focus-visible {
 .bg-ink :focus-visible,
 .bg-ink-soft :focus-visible {
   outline-color: var(--color-paper);
+}
+/* ...except the footer's utility strip at blue hour (components/site/Footer.tsx): it is bg-ink by
+   day and night-deep on a night page, so the rule above drew its links' rings in paper, which there
+   IS the night: 1.08:1 on night-deep, measured by a real Tab. The page's focus colour instead,
+   ~7:1 (round 53 check). */
+.nocturne .bg-ink.night\:bg-night-deep :focus-visible {
+  outline-color: var(--color-porchlight);
 }
 
 /* A RING ON A PHOTOGRAPH CANNOT BE ONE COLOUR.

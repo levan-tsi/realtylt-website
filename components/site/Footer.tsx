@@ -102,6 +102,8 @@ export function Footer() {
                 ends ~220px above the strip below it — the space to breathe was already there
                 and unused. The pairs are horizontal and meant to be (Buying|Selling,
                 Financing|Home Value), so the row gap is the one to open, not the column gap. */}
+            {/* night:hover:text-ink: at blue hour stone is haze, so the day's hover dimmed these
+                links while every other link on the night page brightens (round 53 check). */}
             <ul className="grid grid-cols-2 gap-x-8 gap-y-2.5 text-sm font-light">
               {FOOTER_NAV.map((item) =>
                 "external" in item && item.external ? (
@@ -110,7 +112,7 @@ export function Footer() {
                   <li key={item.href}>
                     <a
                       href={item.href}
-                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
+                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone night:hover:text-ink"
                     >
                       <NightLabel text={item.label} />
                     </a>
@@ -119,7 +121,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone"
+                      className="inline-flex min-h-[24px] items-center text-ink-soft transition-colors hover:text-stone night:hover:text-ink"
                     >
                       <NightLabel text={item.label} />
                     </Link>

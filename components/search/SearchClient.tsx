@@ -1223,7 +1223,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       <div className="mt-4">
         {/* One swipeable row on a phone (round 53): wrapped, the seven chips took four rows. */}
         {/* The right edge fades on a phone, so a chip cut by the edge reads as "more this way". */}
-        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:[mask-image:none]" aria-label="Filter by county">
+        {/* max-sm:py-1 / -my-1: a scroller (and its mask) clips what paints outside it, so a
+            focused chip's ring lost its top and bottom. 4px of room inside, taken back outside:
+            the row sits where it did (round 53 check). */}
+        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 max-sm:-my-1 max-sm:py-1 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:[mask-image:none]" aria-label="Filter by county">
           {COUNTY_CHIPS.map(renderChip)}
           <li>
             <button
@@ -1329,8 +1332,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               inside the panel instead (-mx-4 against the panel's own px-4), so the document
               still cannot widen; from 640px it is an ordinary wrapping row again.
               px-2, not px-4 (round 53 polish): each answer carries 8px of its own padding, so a
-              16px inset put "All listings" 8px right of the count and "Sort" above and below it. */}
-          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-2 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
+              16px inset put "All listings" 8px right of the count and "Sort" above and below it.
+              max-sm:py-1 / -my-1 (round 53 check): the same clip took the top and bottom off a
+              focused answer's ring; the room is made inside and taken back outside. */}
+          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-2 max-sm:-my-1 max-sm:py-1 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
           <div role="group" aria-label="Quick filter" className="flex shrink-0 items-center gap-1 sm:flex-wrap">
             {([["all", "All listings"], ["active", "Active"], ["new", "New listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button

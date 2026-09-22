@@ -141,3 +141,19 @@ describe("/search's pending state is drawn in the page's own frame", () => {
     expect(read("app/search/page.tsx")).toMatch(/fallback=\{[\s\S]*?<SearchSkeleton \/>/);
   });
 });
+
+describe("focus rings the night would otherwise swallow (round 53 check)", () => {
+  const css = read("app/globals.css");
+  it("rings the footer strip's links in porchlight, and the strip still wears the classes that rule matches", () => {
+    expect(css).toMatch(/\.nocturne \.bg-ink\.night\\:bg-night-deep :focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
+    expect(read("components/site/Footer.tsx")).toMatch(/className="bg-ink [^"]*night:bg-night-deep/);
+  });
+  it("rings the chat launcher in porchlight on a night page (it sits outside every .nocturne wrapper)", () => {
+    expect(css).toMatch(/body:has\(\.nocturne\) \.rlt-bubble:focus-visible\s*\{\s*outline-color:\s*var\(--color-porchlight\)/);
+  });
+  it("leaves ring room inside /search's two phone scrollers, which clip what paints outside them", () => {
+    const rows = read("components/search/SearchClient.tsx").match(/className="-mx-4 flex [^"]*overflow-x-auto[^"]*"/g) ?? [];
+    expect(rows.length).toBe(2);
+    for (const row of rows) expect(row).toMatch(/max-sm:-my-1 max-sm:py-1/);
+  });
+});
