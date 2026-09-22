@@ -92,6 +92,13 @@ describe("no layout property is animated on the home page", () => {
     expect(why).toMatch(/clip-path:inset\(0_8px_round_4px\)/);
     expect(why).toMatch(/clip-path:inset\(0_round_4px\)/);
   });
+
+  // Round 53 walkthrough: at 390 one caption is one line and the other two, so rendering only
+  // the current caption moved everything under the carousel 28px on every auto-advance.
+  it("sizes the caption box to the tallest caption, so an auto-advance moves nothing below it", () => {
+    expect(why).toMatch(/\[grid-area:1\/1\]/);
+    expect(why).not.toMatch(/\{SLIDES\[index\]\.caption\}\s*<\/p>/);
+  });
 });
 
 describe("a swap of eight cards is not a hard cut", () => {

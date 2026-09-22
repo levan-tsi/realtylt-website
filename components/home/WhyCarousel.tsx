@@ -153,8 +153,16 @@ export function WhyCarousel() {
       </div>
 
       {/* Caption + slide indicator (matches live's h3 caption under the device). */}
-      <p className="mx-auto mt-6 max-w-xl text-center text-lg font-medium text-ink">
-        {SLIDES[index].caption}
+      {/* Every caption sits in the same grid cell and only the current one shows, so the box is
+          always the tallest caption's height (round 53 walkthrough): at 390 the second caption
+          wraps to two lines and the first does not, and each auto-advance moved the ledger,
+          "Talk to us" and the footer 28px while a phone was reading them. */}
+      <p className="mx-auto mt-6 grid max-w-xl text-balance text-center text-lg font-medium text-ink">
+        {SLIDES.map((s, i) => (
+          <span key={s.src} className={`[grid-area:1/1] ${i === index ? "" : "invisible"}`}>
+            {s.caption}
+          </span>
+        ))}
       </p>
 
       {/* Dots — clickable, each a 24px+ tap target. */}
