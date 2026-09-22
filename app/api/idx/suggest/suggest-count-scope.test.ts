@@ -23,6 +23,7 @@ import { describe, expect, it } from "vitest";
  */
 
 const route = fs.readFileSync(path.join(process.cwd(), "app/api/idx/suggest/route.ts"), "utf8");
+const hero = fs.readFileSync(path.join(process.cwd(), "components/home/HeroLights.tsx"), "utf8");
 const query = fs.readFileSync(path.join(process.cwd(), "lib/idx/query.ts"), "utf8");
 
 describe("the suggest index counts the same homes /search shows", () => {
@@ -68,6 +69,14 @@ describe("the suggest index counts the same homes /search shows", () => {
   /** Round 53 walkthrough: a cold instance that loses the 800ms race answers without towns. It
    * must say so (the box then asks once more), and decide that BEFORE the address lookup, which
    * can outlast the build and would make the finished index look like it had been there. */
+  /** The hero's lantern prints a town's count too ("Harrison, 19 homes for sale"). Its click
+   * opened /search?q=Harrison, free text, 40 homes along every Harrison Street (round 53
+   * walkthrough). It opens the exact city, the homes it counted. */
+  it("sends the lantern's click to the exact city it counted", () => {
+    expect(hero).toMatch(/push\(`\/search\?city=\$\{encodeURIComponent\(towns\[hover\]\)\}`\)/);
+    expect(hero).not.toMatch(/\/search\?q=\$\{encodeURIComponent\(towns/);
+  });
+
   it("flags an answer given before the towns were ready", () => {
     const get = route.slice(route.indexOf("export async function GET"));
     const flag = get.indexOf("const partial = indexBuilding !== null && cityIndex.length === 0");

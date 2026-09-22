@@ -393,8 +393,10 @@ export function HeroLights({ className = "" }: { className?: string }) {
       showLabel();
       kick();
     };
+    // The town's EXACT city, the homes the lantern just counted (round 53 walkthrough): as free
+    // text, "Harrison, 19 homes" opened a page of 40 that ran through every Harrison Street.
     const onClick = () => {
-      if (hover >= 0) routerRef.current.push(`/search?q=${encodeURIComponent(towns[hover])}`);
+      if (hover >= 0) routerRef.current.push(`/search?city=${encodeURIComponent(towns[hover])}`);
     };
 
     const ro = new ResizeObserver(() => {
