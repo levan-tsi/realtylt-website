@@ -92,7 +92,8 @@ export const CHAPTERS: Record<FlightShot, Shot> = {
   },
 };
 
-const AREA_COUNTY: Record<AreaShot, keyof typeof COUNTY_BOUNDS> = {
+/** Each area shot's county, by the feed's slug (lights.ts COUNTY_SLUGS; scene setFocus). */
+export const AREA_COUNTY_OF: Record<AreaShot, keyof typeof COUNTY_BOUNDS> = {
   ulster: "ulster",
   "dutchess-county": "dutchess",
   orange: "orange",
@@ -111,8 +112,8 @@ const AREA_COUNTY: Record<AreaShot, keyof typeof COUNTY_BOUNDS> = {
 export function areaShot(b: { south: number; north: number; west: number; east: number }): Shot {
   const lng = (b.west + b.east) / 2, lat = (b.south + b.north) / 2;
   const spanKm = Math.max((b.east - b.west) * 83.6, (b.north - b.south) * 111.1);
-  const back = 0.95 * spanKm + 4;
-  const up = 0.75 * spanKm + 3;
+  const back = 0.62 * spanKm + 3;
+  const up = 0.5 * spanKm + 2.5;
   return {
     wide: f(over(lng, lat - back / 111.1, up), over(lng, lat + 0.08 * spanKm / 111.1, 0), 44),
     tall: f(over(lng, lat - (1.25 * back) / 111.1, up * 1.35), over(lng, lat, 0), 62),
@@ -121,7 +122,7 @@ export function areaShot(b: { south: number; north: number; west: number; east: 
 
 export const SHOTS: Record<ShotName, Shot> = {
   ...CHAPTERS,
-  ...(Object.fromEntries(AREA_FLIGHT.map((a) => [a, areaShot(COUNTY_BOUNDS[AREA_COUNTY[a]])])) as Record<AreaShot, Shot>),
+  ...(Object.fromEntries(AREA_FLIGHT.map((a) => [a, areaShot(COUNTY_BOUNDS[AREA_COUNTY_OF[a]])])) as Record<AreaShot, Shot>),
 };
 
 // ---- the maths ---------------------------------------------------------------------------------

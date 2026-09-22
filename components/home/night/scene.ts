@@ -12,7 +12,7 @@ import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
 import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
 import { decodeElevation, loadElevationPixels, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
-import { buildHaze, buildLights, townCentroids, type TownMark } from "./lights";
+import { buildHaze, buildLights, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
 import { DEPTH_FRAGMENT, DEPTH_VERTEX, DUST_FRAGMENT, DUST_VERTEX, HAZE_FRAGMENT, HAZE_VERTEX, LIGHT_FRAGMENT, LIGHT_VERTEX } from "./shaders";
 import { blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type ShotName } from "./shots";
 import { EXAGGERATION, lngLatToWorld, worldToLngLat, type Vec3 } from "./world";
@@ -121,8 +121,8 @@ export const DEFAULT_LOOK: Look = {
   lightSize: 0.045,
   lightHalo: 0.45,
   lightSpread: 5,
-  haze: 0.07,
-  hazeSize: 6,
+  haze: 0.045,
+  hazeSize: 8,
   fogNear: 0.9,
   fogFar: 2.6,
   nearFade: 0.14,
@@ -143,6 +143,9 @@ export interface NightSceneHandle {
    * none): the scene dims beneath them, easing back over ~70 px, so no contour runs through a
    * letter. Call it again after a resize or a reflow. */
   setQuiet(rects: readonly { left: number; top: number; right: number; bottom: number }[]): void;
+  /** The "where we work" chapter: light one county's homes and let the rest fall back (null: all
+   * equal). Eased; under reduced motion it switches. */
+  setFocus(county: CountySlugName | null): void;
   /** The lantern, in css px from the canvas's top left. */
   setPointer(x: number, y: number): void;
   clearPointer(): void;
@@ -214,6 +217,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uSheen: { value: look.dustSheen },
     uKindGain: { value: new THREE.Vector4(look.fillGain, 1, look.indexGain, look.shoreGain) },
     uKindKeep: { value: new THREE.Vector4(...look.kindKeep) },
+    uFocus: { value: 0 },
+    uFocusMix: { value: 0 },
     uMoon: { value: moonDir },
   };
   const lightU = {
@@ -225,6 +230,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uTwinkle: { value: hover && !reduce ? 1 : 0 },
     uHalo: { value: look.lightHalo },
     uSpread: { value: look.lightSpread },
+    uFocus: dustU.uFocus,
+    uFocusMix: dustU.uFocusMix,
   };
   const hazeU = {
     ...shared,
@@ -268,6 +275,16 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let ready = false;
   let landKm2 = 17000;
   let dustCount = 0;
+  let counties: CountyRaster | null = null;
+  /** Each grain learns its county from the homes around it (for the area focus). */
+  function paintDustCounties() {
+    if (!dustPoints || !counties) return;
+    const attr = dustPoints.geometry.getAttribute("aCounty") as THREE.BufferAttribute;
+    const pos = dustPoints.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const a = attr.array as Float32Array, p = pos.array as Float32Array;
+    for (let i = 0; i < attr.count; i++) a[i] = countyAt(counties, p[i * 3], p[i * 3 + 2]);
+    attr.needsUpdate = true;
+  }
   let buildMs = 0;
 
   let aspect = 1;
@@ -276,6 +293,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let cur: Framing = copyF(goal);
   let flight: { from: Framing; to: ShotName; t0: number; ms: number; done: () => void } | null = null;
   let veilGoal = 0;
+  let focusGoal = 0;
+  let focusNext = 0;
   let pointer: { x: number; y: number } | null = null;
   const par = { x: 0, y: 0 }; // damped parallax, -1..1
   let hovered: TownHover | null = null;
@@ -399,11 +418,13 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     g.setAttribute("aRidge", new THREE.BufferAttribute(dust.ridges, 1));
     g.setAttribute("aSeed", new THREE.BufferAttribute(dust.seeds, 1));
     g.setAttribute("aKind", new THREE.BufferAttribute(dust.kinds, 1));
+    g.setAttribute("aCounty", new THREE.BufferAttribute(new Float32Array(dust.count), 1));
     dustPoints = new THREE.Points(g, dustMat);
     dustPoints.frustumCulled = false;
     dustPoints.renderOrder = 1;
     scene.add(dustPoints);
     dustCount = dust.count;
+    paintDustCounties();
     if (!depthMesh) {
       const mg = new THREE.BufferGeometry();
       mg.setAttribute("position", new THREE.BufferAttribute(mesh.positions, 3));
@@ -427,6 +448,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     g.setAttribute("aDelay", new THREE.BufferAttribute(cloud.delays, 1));
     g.setAttribute("aGain", new THREE.BufferAttribute(cloud.gains, 1));
     g.setAttribute("aSeed", new THREE.BufferAttribute(cloud.seeds, 1));
+    g.setAttribute("aCounty", new THREE.BufferAttribute(cloud.counties, 1));
     lightPoints = new THREE.Points(g, lightMat);
     lightPoints.frustumCulled = false;
     lightPoints.renderOrder = 3;
@@ -439,6 +461,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     hazePoints.frustumCulled = false;
     hazePoints.renderOrder = 2;
     scene.add(hazePoints);
+    counties = countyRaster(cloud);
+    paintDustCounties();
     towns = townCentroids(pts);
     townWorld = new Float32Array(towns.length * 3);
     towns.forEach((t, i) => {
@@ -489,7 +513,11 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     shared.uFog.value.set(dist * look.fogNear, Math.min(560, dist * look.fogFar + 20));
     shared.uNear.value = dist * look.nearFade;
     const rho = dustCount / Math.max(1, landKm2);
-    dustU.uLodK.value = (look.dustDensity * focal * focal) / Math.max(1e-3, rho);
+    // Grains per CSS pixel, not per device pixel: a grain's smallest size is a fixed number of CSS
+    // pixels, so counting device pixels put four times the grains (and four times the light) into
+    // the same patch of a 2x phone screen as a desktop's (looked at: the phone frames read white).
+    const focalCss = focal / dpr;
+    dustU.uLodK.value = (look.dustDensity * focalCss * focalCss) / Math.max(1e-3, rho);
   }
 
   const approach = (a: number, b: number, k: number) => a + (b - a) * k;
@@ -521,6 +549,17 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       err += (Math.abs(dAz) + Math.abs(goal.moon[1] - cur.moon[1])) * 0.001;
       if (err > 0.002) moving = true;
       else cur = copyF(goal);
+    }
+    // Area focus: ease out, swap the county when it is dimmest, ease back in.
+    if (lightU.uFocus.value !== focusNext && focusNext && lightU.uFocusMix.value > 0.02) {
+      lightU.uFocusMix.value = approach(lightU.uFocusMix.value, 0, 1 - Math.exp(-dt / 0.12));
+      moving = true;
+    } else {
+      if (focusNext) lightU.uFocus.value = focusNext;
+      const kf = 1 - Math.exp(-dt / 0.3);
+      lightU.uFocusMix.value = approach(lightU.uFocusMix.value, focusGoal, kf);
+      if (Math.abs(lightU.uFocusMix.value - focusGoal) > 0.003) moving = true;
+      else lightU.uFocusMix.value = focusGoal;
     }
     // Veil and lantern fade.
     const kv = 1 - Math.exp(-dt / 0.25);
@@ -677,6 +716,17 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       else shared.uQuietA.value.set(0, 0, 0, 0);
       if (rects[1]) toNdc(rects[1], shared.uQuietB.value);
       else shared.uQuietB.value.set(0, 0, 0, 0);
+      kick();
+    },
+    setFocus(county) {
+      const idx = county ? COUNTY_SLUGS.indexOf(county) + 1 : 0;
+      if (idx) {
+        // A new county while one is lit: the switch happens at the dimmest moment of the ease.
+        focusNext = idx;
+        focusGoal = 1;
+        if (!lightU.uFocus.value || reduce) lightU.uFocus.value = idx;
+      } else focusGoal = 0;
+      if (reduce) lightU.uFocusMix.value = focusGoal;
       kick();
     },
     setPointer(x, y) {

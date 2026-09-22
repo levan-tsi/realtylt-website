@@ -5,6 +5,11 @@ import type { LightPoints } from "@/lib/idx/lights";
 import { sampleHeight, type ElevationGrid } from "./elevation";
 import { boxUVToLngLat, lngLatToWorld } from "./world";
 
+/** The served areas, in the order the "where we work" chapter flies them; a light's county is
+ * its index here plus one (0 = not known). The slugs are the feed's (lib/idx/lights.ts townCounty). */
+export const COUNTY_SLUGS = ["ulster", "dutchess", "orange", "putnam", "rockland", "westchester", "bronx", "manhattan", "queens", "brooklyn", "staten-island"] as const;
+export type CountySlugName = (typeof COUNTY_SLUGS)[number];
+
 /** How high a light sits above the dust, in real metres (it is exaggerated with the land). */
 export const LIGHT_LIFT_M = 12;
 
@@ -18,6 +23,8 @@ export interface LightCloud {
    * as a sea of windows rather than one white flare. */
   gains: Float32Array;
   seeds: Float32Array;
+  /** 1 + the light's county in COUNTY_SLUGS (by its town's county), 0 when not known. */
+  counties: Float32Array;
 }
 
 /** Deterministic 0..1 per index, so every visit shows the same windows twinkling. */
@@ -34,6 +41,8 @@ export function buildLights(pts: LightPoints, grid: ElevationGrid | null, introS
   const delays = new Float32Array(n);
   const gains = new Float32Array(n);
   const seeds = new Float32Array(n);
+  const counties = new Float32Array(n);
+  const countyOfTown = (pts.townCounty ?? []).map((c) => (COUNTY_SLUGS as readonly string[]).indexOf(c) + 1);
   const cellOf = new Int32Array(n);
   const dense = new Map<number, number>();
   for (let i = 0; i < n; i++) {
@@ -46,12 +55,13 @@ export function buildLights(pts: LightPoints, grid: ElevationGrid | null, introS
     // y is 0 at the north edge and 1 at the south: the harbour (south) lights first.
     delays[i] = (1 - pts.y[i]) * introSpan + hash01(i + 1) * jitter;
     seeds[i] = hash01(i + 7);
+    counties[i] = countyOfTown[pts.town[i]] ?? 0;
     const k = Math.floor(x / cellKm) * 100003 + Math.floor(z / cellKm);
     cellOf[i] = k;
     dense.set(k, (dense.get(k) ?? 0) + 1);
   }
   for (let i = 0; i < n; i++) gains[i] = (0.55 + 0.45 * seeds[i]) / Math.pow(dense.get(cellOf[i]) ?? 1, 0.4);
-  return { count: n, positions, delays, gains, seeds };
+  return { count: n, positions, delays, gains, seeds, counties };
 }
 
 export interface HazeCloud {
@@ -117,4 +127,78 @@ export function townCentroids(pts: Pick<LightPoints, "x" | "y" | "town" | "towns
     out.push({ town: t, name: pts.towns[t], count: pts.counts[t] ?? n[t], lng, lat, lit: n[t] });
   }
   return out;
+}
+
+export interface CountyRaster {
+  x0: number;
+  z0: number;
+  cellKm: number;
+  w: number;
+  h: number;
+  /** 1 + county index (COUNTY_SLUGS), 0 = none within reach. */
+  data: Uint8Array;
+}
+
+/** Which county each patch of land belongs to, as far as the homes say: every cell takes the
+ * county of the nearest cell holding lights (a breadth-first flood from all of them at once, so
+ * the border falls about halfway between two counties' homes), up to `reachKm` from any home. No
+ * county polygons are shipped; the listings draw the map. Used to light the land of the county
+ * the page is talking about. */
+export function countyRaster(cloud: LightCloud, cellKm = 1.5, reachKm = 6): CountyRaster {
+  let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+  for (let i = 0; i < cloud.count; i++) {
+    const x = cloud.positions[i * 3], z = cloud.positions[i * 3 + 2];
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (z < minZ) minZ = z;
+    if (z > maxZ) maxZ = z;
+  }
+  const pad = reachKm + cellKm;
+  const x0 = minX - pad, z0 = minZ - pad;
+  const w = Math.max(1, Math.ceil((maxX - minX + 2 * pad) / cellKm));
+  const h = Math.max(1, Math.ceil((maxZ - minZ + 2 * pad) / cellKm));
+  const data = new Uint8Array(w * h);
+  const dist = new Uint16Array(w * h).fill(65535);
+  // Votes per cell: the county with the most homes in it seeds the cell.
+  const votes = new Map<number, Map<number, number>>();
+  for (let i = 0; i < cloud.count; i++) {
+    const c = cloud.counties[i];
+    if (!c) continue;
+    const cx = Math.floor((cloud.positions[i * 3] - x0) / cellKm), cz = Math.floor((cloud.positions[i * 3 + 2] - z0) / cellKm);
+    const k = cz * w + cx;
+    const v = votes.get(k) ?? new Map<number, number>();
+    v.set(c, (v.get(c) ?? 0) + 1);
+    votes.set(k, v);
+  }
+  let queue: number[] = [];
+  for (const [k, v] of votes) {
+    let best = 0, n = 0;
+    for (const [c, m] of v) if (m > n) (best = c), (n = m);
+    data[k] = best;
+    dist[k] = 0;
+    queue.push(k);
+  }
+  const maxSteps = Math.ceil(reachKm / cellKm);
+  for (let step = 1; step <= maxSteps && queue.length; step++) {
+    const next: number[] = [];
+    for (const k of queue) {
+      const cx = k % w, cz = Math.floor(k / w);
+      for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = cx + dx, nz = cz + dz;
+        if (nx < 0 || nz < 0 || nx >= w || nz >= h) continue;
+        const j = nz * w + nx;
+        if (dist[j] <= step) continue;
+        dist[j] = step;
+        data[j] = data[k];
+        next.push(j);
+      }
+    }
+    queue = next;
+  }
+  return { x0, z0, cellKm, w, h, data };
+}
+
+export function countyAt(r: CountyRaster, x: number, z: number): number {
+  const cx = Math.floor((x - r.x0) / r.cellKm), cz = Math.floor((z - r.z0) / r.cellKm);
+  return cx < 0 || cz < 0 || cx >= r.w || cz >= r.h ? 0 : r.data[cz * r.w + cx];
 }

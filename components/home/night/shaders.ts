@@ -24,8 +24,9 @@ uniform vec2 uPointer, uFog;
 uniform vec3 uMoon;
 uniform vec4 uKindGain;
 uniform vec4 uKindKeep;
+uniform float uFocus, uFocusMix;
 attribute vec2 aSlope;
-attribute float aSeed, aRidge, aKind;
+attribute float aSeed, aRidge, aKind, aCounty;
 varying float vA;
 varying float vSize;
 // QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
@@ -84,7 +85,9 @@ void main() {
   float glint = step(aSeed, uGlint);
   vSize *= 1.0 + 0.6 * glint;
   float kind = aKind < 0.5 ? uKindGain.x : aKind < 1.5 ? uKindGain.y : aKind < 2.5 ? uKindGain.z : uKindGain.w;
-  vA = uAlpha * kind * shade * fog * fog * intro * (1.0 - 0.8 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
+  // AREA FOCUS: the land of the county the page is on comes up, the rest settles back.
+  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 1.3 : 0.38, uFocusMix);
+  vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.8 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
   gl_PointSize = vSize;
   gl_Position = clip;
 }
@@ -109,9 +112,9 @@ void main() {
 `;
 
 export const LIGHT_VERTEX = /* glsl */ `
-uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uTime, uSize, uAlpha, uTwinkle, uSpread;
+uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uTime, uSize, uAlpha, uTwinkle, uSpread, uFocus, uFocusMix;
 uniform vec2 uPointer, uFog;
-attribute float aDelay, aGain, aSeed;
+attribute float aDelay, aGain, aSeed, aCounty;
 varying float vA;
 varying float vCore;
 // QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
@@ -146,8 +149,12 @@ void main() {
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
-  vA = uAlpha * aGain * on * tw * fog * energy * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
-  gl_PointSize = size * (1.0 + 0.15 * lantern);
+  // AREA FOCUS: while the page is on one county, its homes burn a little brighter and the rest of
+  // the map's fall back, so the area reads as a shape of light.
+  float inFocus = abs(aCounty - uFocus) < 0.5 ? 1.0 : 0.0;
+  float focus = mix(1.0, mix(0.28, 1.5, inFocus), uFocusMix);
+  vA = uAlpha * aGain * on * tw * fog * energy * focus * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
+  gl_PointSize = size * (1.0 + 0.15 * lantern) * (1.0 + 0.3 * inFocus * uFocusMix);
   gl_Position = clip;
 }
 `;

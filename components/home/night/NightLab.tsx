@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { NightScene } from "./NightScene";
 import type { Look, NightSceneHandle } from "./scene";
-import { AREA_FLIGHT, FLIGHT, MOON, type ShotName } from "./shots";
+import type { CountySlugName } from "./lights";
+import { AREA_COUNTY_OF, AREA_FLIGHT, FLIGHT, MOON, type AreaShot, type ShotName } from "./shots";
 
 /** The night flight's lab (/lab/night, only with RLT_LAB=1): the scene alone, full screen, to be
  * judged. Buttons fly to each shot; "Scroll flight" turns page scroll into the home page's flight
@@ -54,6 +55,7 @@ function Lab({ params }: { params: URLSearchParams }) {
       const max = el.scrollHeight - el.clientHeight;
       const s = max > 0 ? (el.scrollTop / max) * (seq.length - 1) : 0;
       handle.current?.setSequence(seq, s);
+      handle.current?.setFocus(mode === "areas" ? AREA_COUNTY_OF[seq[Math.round(s)] as AreaShot] : null);
       setCurrent(`${seq[Math.round(s)]} (${s.toFixed(2)})`);
     };
     const sParam = params.get("s");
@@ -69,6 +71,7 @@ function Lab({ params }: { params: URLSearchParams }) {
   const fly = (name: ShotName) => {
     setMode("shots");
     setCurrent(name);
+    handle.current?.setFocus((AREA_COUNTY_OF as Record<string, CountySlugName>)[name] ?? null);
     void handle.current?.flyTo(name, 3000);
   };
 
@@ -91,6 +94,8 @@ function Lab({ params }: { params: URLSearchParams }) {
           const f = params.get("f")?.split(",").map(Number);
           if (f && f.length === 7) h.setFraming({ pos: [f[0], f[1], f[2]], target: [f[3], f[4], f[5]], fov: f[6], moon: MOON }, { immediate: true });
           (window as unknown as { __night?: NightSceneHandle }).__night = h;
+          const first = params.get("shot") as AreaShot | null;
+          if (first && first in AREA_COUNTY_OF) h.setFocus(AREA_COUNTY_OF[first]);
           // The mock words ask the scene for quiet beneath them, measured from the real boxes.
           const quiet = () =>
             h.setQuiet(

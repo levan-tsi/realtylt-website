@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { LightPoints } from "@/lib/idx/lights";
 import { decodeElevation, encodeElevation } from "./elevation";
-import { buildHaze, buildLights, LIGHT_LIFT_M, townCentroids } from "./lights";
+import { buildHaze, buildLights, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, townCentroids } from "./lights";
 import { boxUVToLngLat, lngLatToWorld } from "./world";
 
 const BOX = { west: -74, east: -73, south: 41, north: 42 };
@@ -100,5 +100,43 @@ describe("the light cloud", () => {
     const s = Array.from(haze.strengths).sort((a, b) => a - b);
     expect(s[1]).toBeGreaterThan(s[0]);
     expect(s[1]).toBeLessThanOrEqual(1);
+  });
+});
+
+describe("the county raster (which land belongs to the county the page is on)", () => {
+  const grid = decodeElevation(new Array(9).fill(encodeElevation(100, 900)), { box: BOX, w: 3, h: 3, maxM: 900, metresPerCell: { x: 100, y: 100 } });
+  // Two towns 40 km apart, one in Dutchess, one in Orange.
+  const pts: LightPoints = {
+    ...points(
+      [
+        ...Array.from({ length: 5 }, () => ({ x: 0.2, y: 0.5, town: 0 })),
+        ...Array.from({ length: 5 }, () => ({ x: 0.7, y: 0.5, town: 1 })),
+      ],
+      ["West", "East"],
+      [5, 5],
+    ),
+    townCounty: ["orange", "dutchess"],
+  };
+  const cloud = buildLights(pts, grid);
+  const r = countyRaster(cloud, 1.5, 6);
+  const at = (u: number) => {
+    const [lng, lat] = boxUVToLngLat(u, 0.5, BOX);
+    const [x, , z] = lngLatToWorld(lng, lat);
+    return countyAt(r, x, z);
+  };
+
+  it("tags each light with its town's county", () => {
+    expect(cloud.counties[0]).toBe(COUNTY_SLUGS.indexOf("orange") + 1);
+    expect(cloud.counties[9]).toBe(COUNTY_SLUGS.indexOf("dutchess") + 1);
+  });
+
+  it("gives the land around each town to its county, out to the reach, and nothing beyond", () => {
+    expect(at(0.2)).toBe(COUNTY_SLUGS.indexOf("orange") + 1);
+    expect(at(0.7)).toBe(COUNTY_SLUGS.indexOf("dutchess") + 1);
+    // ~4 km from each town: still its own.
+    expect(at(0.25)).toBe(COUNTY_SLUGS.indexOf("orange") + 1);
+    expect(at(0.65)).toBe(COUNTY_SLUGS.indexOf("dutchess") + 1);
+    // Halfway (~21 km from both): past the 6 km reach, no county.
+    expect(at(0.45)).toBe(0);
   });
 });
