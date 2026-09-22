@@ -140,6 +140,8 @@ function lerpMoon(a: [number, number], b: [number, number], t: number): [number,
   return [(a[0] + d * t + 360) % 360, lerp(a[1], b[1], t)];
 }
 
+const copyFraming = (f: Framing): Framing => ({ pos: [...f.pos], target: [...f.target], fov: f.fov, moon: [f.moon[0], f.moon[1]] });
+
 /** Portrait below 0.62, landscape above 1.0, blended between. */
 export function framingFor(shot: Shot, aspect: number): Framing {
   const k = smootherstep((aspect - 0.62) / (1.0 - 0.62));
@@ -161,6 +163,8 @@ export const CLEARANCE_KM = 0.6;
  * mid-flight. `ground(x, z)` (world height of the terrain) keeps the camera CLEARANCE_KM above it. */
 export function blendFramings(a: Framing, b: Framing, t: number, ground?: (x: number, z: number) => number): Framing {
   const e = smootherstep(t);
+  if (e <= 0) return copyFraming(a);
+  if (e >= 1) return copyFraming(b);
   const pos = lerp3(a.pos, b.pos, e);
   const travel = Math.hypot(b.pos[0] - a.pos[0], b.pos[2] - a.pos[2]);
   pos[1] += ARC_PER_KM * travel * Math.sin(Math.PI * e);

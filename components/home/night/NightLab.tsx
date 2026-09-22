@@ -12,8 +12,9 @@ import { AREA_FLIGHT, FLIGHT, MOON, type ShotName } from "./shots";
  *
  * Query parameters, for probes: ?shot=<name> start there; ?still=1 no intro and no drift;
  * ?mode=scroll|areas; ?s=<n> sequence position; ?dust=<grains>; ?look=<json>; ?guides=1 outlines
- * where the home page's words will sit; ?ui=0 hides the controls; ?f=px,py,pz,tx,ty,tz,fov a raw framing in world km. `window.__night` is the
- * handle. */
+ * where the home page's words will sit; ?mock=1 draws stand-in words there (and asks the scene for
+ * quiet beneath them); ?ui=0 hides the controls; ?f=px,py,pz,tx,ty,tz,fov a raw framing in world
+ * km. `window.__night` is the handle. */
 
 type Mode = "shots" | "scroll" | "areas";
 
@@ -89,6 +90,15 @@ function Lab({ params }: { params: URLSearchParams }) {
           const f = params.get("f")?.split(",").map(Number);
           if (f && f.length === 7) h.setFraming({ pos: [f[0], f[1], f[2]], target: [f[3], f[4], f[5]], fov: f[6], moon: MOON }, { immediate: true });
           (window as unknown as { __night?: NightSceneHandle }).__night = h;
+          // The mock words ask the scene for quiet beneath them, measured from the real boxes.
+          const quiet = () =>
+            h.setQuiet(
+              [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
+                .map((el) => el.getBoundingClientRect())
+                .filter((r) => r.width > 0 && r.height > 0),
+            );
+          quiet();
+          window.addEventListener("resize", quiet);
           setReady(true);
           document.documentElement.dataset.nightReady = "1";
         }}
@@ -100,6 +110,22 @@ function Lab({ params }: { params: URLSearchParams }) {
           <div className="absolute hidden border border-dashed border-white/40 md:block" style={{ left: 72, bottom: 72, width: 560, height: 300 }} />
           <div className="absolute border border-dashed border-white/40 md:hidden" style={{ left: 20, right: 20, top: 84, height: 120 }} />
           <div className="absolute border border-dashed border-white/40 md:hidden" style={{ left: 20, right: 20, bottom: 40, height: 250 }} />
+        </div>
+      )}
+      {params.get("mock") === "1" && (
+        // A stand-in for the home hero's words, only to judge the composition (not the real copy).
+        <div aria-hidden className="pointer-events-none fixed inset-0" style={{ fontFamily: "'Bricolage Grotesque', system-ui, sans-serif", color: "#f6f4ef" }}>
+          <div data-quiet className="absolute left-5 right-5 top-[88px] md:hidden">
+            <p className="text-[15px] opacity-70">Hudson Valley and New York City</p>
+          </div>
+          <div data-quiet className="absolute bottom-10 left-5 right-5 md:bottom-[72px] md:left-[72px] md:right-auto md:w-[560px]">
+            <p className="hidden text-[15px] opacity-70 md:block">Hudson Valley and New York City</p>
+            <h1 className="mt-3 text-[44px] font-semibold leading-[1.02] tracking-[-0.03em] md:text-[76px]">Let&apos;s find home.</h1>
+            <p className="mt-4 text-[17px] leading-snug opacity-75 md:text-[19px]">Every home for sale across six counties and five boroughs, lit where it stands.</p>
+            <div className="mt-6 flex h-14 items-center rounded-xl px-4 text-[16px] opacity-90" style={{ background: "rgba(10,10,10,0.72)", border: "1px solid rgba(255,255,255,0.28)" }}>
+              Town, ZIP or address
+            </div>
+          </div>
         </div>
       )}
       {showUi && (

@@ -78,6 +78,8 @@ export interface Look {
   shadeFlat: number;
   /** Light that is not the moon's: the shadowed flanks keep this share of a lit one. */
   ambient: number;
+  /** Share of grains that glint (brighter, larger). */
+  glint: number;
   lightAlpha: number;
   lightSize: number;
   /** A light's halo: strength, and width as a multiple of its core. */
@@ -102,18 +104,19 @@ export const DEFAULT_LOOK: Look = {
   contourSmooth: 2,
   fillGain: 0.25,
   indexGain: 1.6,
-  shoreGain: 0.85,
+  shoreGain: 0.55,
   kindKeep: [0.4, 0.7, 4, 4],
   ridge: 0.5,
-  dustAlpha: 1,
+  dustAlpha: 2,
   dustSize: 0.2,
   dustMaxPx: 14,
   dustCore: 0.7,
   dustSheen: 0.1,
   dustDensity: 0.1,
-  shadeGamma: 1.4,
+  shadeGamma: 1.8,
   shadeFlat: 0.45,
   ambient: 0.22,
+  glint: 0.02,
   lightAlpha: 2.2,
   lightSize: 0.045,
   lightHalo: 0.45,
@@ -136,6 +139,10 @@ export interface NightSceneHandle {
   setFraming(f: Framing, opts?: { immediate?: boolean }): void;
   /** 0 = the full scene, 1 = dimmed under page content. Eased. */
   setVeil(v: number, opts?: { immediate?: boolean }): void;
+  /** Where the page's words sit (up to two boxes, css px from the canvas's top left; [] for
+   * none): the scene dims beneath them, easing back over ~70 px, so no contour runs through a
+   * letter. Call it again after a resize or a reflow. */
+  setQuiet(rects: readonly { left: number; top: number; right: number; bottom: number }[]): void;
   /** The lantern, in css px from the canvas's top left. */
   setPointer(x: number, y: number): void;
   clearPointer(): void;
@@ -201,6 +208,10 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uAspect: { value: 1 },
     uFog: { value: new THREE.Vector2(80, 220) },
     uNear: { value: 1 },
+    uQuietA: { value: new THREE.Vector4(0, 0, 0, 0) },
+    uQuietB: { value: new THREE.Vector4(0, 0, 0, 0) },
+    uQuietSoft: { value: 0.16 },
+    uQuietFloor: { value: 0.22 },
   };
   const dustU = {
     ...shared,
@@ -212,6 +223,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uShadeFlat: { value: look.shadeFlat },
     uRidge: { value: look.ridge },
     uAmbient: { value: look.ambient },
+    uGlint: { value: look.glint },
     uMaxPx: { value: phone ? Math.min(look.dustMaxPx, 16) : look.dustMaxPx },
     uCore: { value: look.dustCore },
     uSheen: { value: look.dustSheen },
@@ -343,14 +355,14 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       dustPoints.geometry.dispose();
     }
     const t0 = performance.now();
-    const budget = opts.dustCount ?? (phone ? 300_000 : 700_000);
+    const budget = opts.dustCount ?? (phone ? 400_000 : 1_000_000);
     const parts: DustCloud[] = [];
     if (look.dustMode !== "stipple")
       parts.push(
         buildContourDust(grid, {
           intervalM: look.contourInterval,
           spacingKm: look.contourSpacing,
-          shoreDensity: 1.6,
+          shoreDensity: 1.1,
           jitterKm: 0.012,
           smoothPasses: look.contourSmooth,
           maxPoints: look.dustMode === "mix" ? Math.round(budget * 0.75) : budget,
@@ -625,6 +637,15 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       if (o?.immediate || reduce) shared.uVeil.value = veilGoal;
       kick();
     },
+    setQuiet(rects) {
+      const toNdc = (r: { left: number; top: number; right: number; bottom: number }, v: THREE.Vector4) =>
+        v.set((r.left / cssW) * 2 - 1, 1 - (r.bottom / cssH) * 2, (r.right / cssW) * 2 - 1, 1 - (r.top / cssH) * 2);
+      if (rects[0]) toNdc(rects[0], shared.uQuietA.value);
+      else shared.uQuietA.value.set(0, 0, 0, 0);
+      if (rects[1]) toNdc(rects[1], shared.uQuietB.value);
+      else shared.uQuietB.value.set(0, 0, 0, 0);
+      kick();
+    },
     setPointer(x, y) {
       pointer = { x, y };
       kick();
@@ -639,6 +660,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       Object.assign(look, l);
       dustU.uAlpha.value = look.dustAlpha;
       dustU.uAmbient.value = look.ambient;
+      dustU.uGlint.value = look.glint;
       dustU.uSize.value = look.dustSize;
       dustU.uShadeGamma.value = look.shadeGamma;
       dustU.uShadeFlat.value = look.shadeFlat;

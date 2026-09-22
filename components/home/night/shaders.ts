@@ -19,7 +19,7 @@
  */
 
 export const DUST_VERTEX = /* glsl */ `
-uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uNear, uAmbient;
+uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uNear, uAmbient, uGlint;
 uniform vec2 uPointer, uFog;
 uniform vec3 uMoon;
 uniform vec4 uKindGain;
@@ -28,6 +28,19 @@ attribute vec2 aSlope;
 attribute float aSeed, aRidge, aKind;
 varying float vA;
 varying float vSize;
+// QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
+// scene dims under them, easing back to full over uQuietSoft (NDC height units), so a headline never
+// has a bright contour through a letter. The integration measures the real text boxes.
+uniform vec4 uQuietA, uQuietB;
+uniform float uQuietSoft, uQuietFloor;
+float quietAt(vec2 ndc) {
+  vec2 a = max(max(uQuietA.xy - ndc, ndc - uQuietA.zw), 0.0) * vec2(uAspect, 1.0);
+  vec2 b = max(max(uQuietB.xy - ndc, ndc - uQuietB.zw), 0.0) * vec2(uAspect, 1.0);
+  float da = uQuietA.z > uQuietA.x ? length(a) : 1e3;
+  float db = uQuietB.z > uQuietB.x ? length(b) : 1e3;
+  float t = clamp(min(da, db) / max(uQuietSoft, 1e-3), 0.0, 1.0);
+  return mix(uQuietFloor, 1.0, t * t * (3.0 - 2.0 * t));
+}
 void main() {
   vec3 p = vec3(position.x, position.y * uExag, position.z);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -67,8 +80,11 @@ void main() {
   // ~1.3 px spark, drawn in the fragment shader: the dust's grain.
   float px = uSize * uFocal / d;
   vSize = clamp(px, 2.0 * uPixelRatio, uMaxPx * uPixelRatio);
+  // A few grains in a hundred are GLINTS: brighter, a touch larger, the way frost catches the moon.
+  float glint = step(aSeed, uGlint);
+  vSize *= 1.0 + 0.6 * glint;
   float kind = aKind < 0.5 ? uKindGain.x : aKind < 1.5 ? uKindGain.y : aKind < 2.5 ? uKindGain.z : uKindGain.w;
-  vA = uAlpha * kind * shade * fog * fog * intro * (1.0 - 0.8 * uVeil) * (1.0 + 1.4 * lantern);
+  vA = uAlpha * kind * shade * fog * fog * intro * (1.0 - 0.8 * uVeil) * (1.0 + 1.4 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
   gl_PointSize = vSize;
   gl_Position = clip;
 }
@@ -98,6 +114,19 @@ uniform vec2 uPointer, uFog;
 attribute float aDelay, aGain, aSeed;
 varying float vA;
 varying float vCore;
+// QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
+// scene dims under them, easing back to full over uQuietSoft (NDC height units), so a headline never
+// has a bright contour through a letter. The integration measures the real text boxes.
+uniform vec4 uQuietA, uQuietB;
+uniform float uQuietSoft, uQuietFloor;
+float quietAt(vec2 ndc) {
+  vec2 a = max(max(uQuietA.xy - ndc, ndc - uQuietA.zw), 0.0) * vec2(uAspect, 1.0);
+  vec2 b = max(max(uQuietB.xy - ndc, ndc - uQuietB.zw), 0.0) * vec2(uAspect, 1.0);
+  float da = uQuietA.z > uQuietA.x ? length(a) : 1e3;
+  float db = uQuietB.z > uQuietB.x ? length(b) : 1e3;
+  float t = clamp(min(da, db) / max(uQuietSoft, 1e-3), 0.0, 1.0);
+  return mix(uQuietFloor, 1.0, t * t * (3.0 - 2.0 * t));
+}
 void main() {
   vec3 p = vec3(position.x, position.y * uExag, position.z);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -117,7 +146,7 @@ void main() {
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
-  vA = uAlpha * aGain * on * tw * fog * energy * (1.0 - 0.65 * uVeil) * (1.0 + 1.2 * lantern);
+  vA = uAlpha * aGain * on * tw * fog * energy * (1.0 - 0.65 * uVeil) * (1.0 + 1.2 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
   gl_PointSize = size * (1.0 + 0.3 * lantern);
   gl_Position = clip;
 }
@@ -155,8 +184,10 @@ void main() {
   float on = smoothstep(0.6, 2.6, uIntro);
   float px = uHazeSize * uFocal / d;
   float size = min(px, 420.0 * uPixelRatio);
-  // The glow is a thing seen from afar: it thins away as the camera comes down into it.
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * smoothstep(uNear * 1.5, uNear * 5.0, d);
+  // The glow is seen from above: it thins away as the camera comes down into it, and when the eye
+  // runs along the ground, where a row of patches would stack into a bank of fog on the horizon.
+  float down = -normalize(p - cameraPosition).y;
+  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * smoothstep(uNear * 1.5, uNear * 5.0, d) * smoothstep(0.12, 0.45, down);
   gl_PointSize = size;
   gl_Position = projectionMatrix * mv;
 }
