@@ -107,7 +107,11 @@ function FieldShell({ label, error, dark = false, hideLabel = false, id, childre
     <div>
       <label
         htmlFor={id}
-        className={`mb-1.5 block text-xs font-bold uppercase tracking-[0.1em] ${
+        // The night pages set no label in capitals (round 53's rule, already carried by Button
+        // and the save-search dialog). This branch reaches a night surface in exactly one place
+        // — the sign-in modal, which now wears the scope itself — where "EMAIL" and "PASSWORD"
+        // were the last two shouted labels on a black page. Day pages keep their capitals.
+        className={`mb-1.5 block text-xs font-bold uppercase tracking-[0.1em] night:text-[13px] night:font-medium night:normal-case night:tracking-normal ${
           hideLabel ? "sr-only" : ""
         } ${dark ? "text-paper/70" : "text-stone"}`}
       >
