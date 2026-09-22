@@ -36,11 +36,14 @@ describe("the AI nav item", () => {
 
   it("the header draws an accented item as a plain <a>, outlined in the R-blue, desktop and drawer", () => {
     // Two render sites (desktop row, mobile drawer), each a plain anchor carrying the outline.
-    const anchors = header.match(/<a\s+href=\{item\.href\}\s+className=\{`[^`]*border-porchlight[^`]*`\}/g) ?? [];
+    // brand-r (round 54): the black-and-white pages re-point porchlight to white, and this item
+    // keeps the logo's blue there too, so it paints with a token nothing re-points.
+    const anchors = header.match(/<a\s+href=\{item\.href\}\s+className=\{`[^`]*border-brand-r[^`]*`\}/g) ?? [];
     expect(anchors.length, "desktop + drawer").toBe(2);
     for (const a of anchors) {
       expect(a).toContain("text-porchlight-deep"); // 5.0:1 on paper; the pure R-blue fails AA at 13px
-      expect(a).toContain("hover:bg-porchlight");
+      expect(a).toContain("night:text-brand-r"); // 7.54:1 on the black ground
+      expect(a).toContain("hover:bg-brand-r");
       expect(a).not.toMatch(/purple|violet|#8b5cf6/i);
     }
     // Both are gated on the accent flag, not on a label string that could drift.

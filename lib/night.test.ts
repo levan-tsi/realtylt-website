@@ -45,6 +45,46 @@ describe("the night routes", () => {
   });
 });
 
+/** ROUND 54: BLACK AND WHITE. The owner turned the navy down ("black and white ... was better")
+ * and chose a black ground with white type. A cast creeping back into the ground, the text or the
+ * hairlines is exactly how the navy arrived, one "slightly cooler" value at a time. */
+describe("the night is black and white", () => {
+  const css = read("app/globals.css");
+  const theme = css.slice(css.indexOf("@theme {"), css.indexOf("\n}", css.indexOf("@theme {")));
+  const night = css.slice(css.indexOf(".nocturne {"), css.indexOf("}", css.indexOf(".nocturne {")));
+  const hex = (src: string, token: string) => src.match(new RegExp(`${token}:\\s*(#[0-9a-f]{6})`, "i"))?.[1];
+  const cast = (h: string) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+    return Math.max(r, g, b) - Math.min(r, g, b);
+  };
+
+  it.each(["--color-night", "--color-night-deep", "--color-night-raise", "--color-moon", "--color-haze"])(
+    "%s carries no hue (channels within 6 of each other)",
+    (token) => {
+      const v = hex(theme, token);
+      expect(v, `${token} is a literal hex in @theme`).toBeDefined();
+      expect(cast(v!)).toBeLessThanOrEqual(6);
+    },
+  );
+
+  it.each(["--color-ink-soft", "--color-line", "--color-line-strong", "--color-card"])("%s inside the scope carries no hue", (token) => {
+    const v = hex(night, token);
+    expect(v, `${token} is a literal hex inside .nocturne`).toBeDefined();
+    expect(cast(v!)).toBeLessThanOrEqual(6);
+  });
+
+  it("turns the action and focus colour white inside the scope", () => {
+    expect(night).toMatch(/--color-porchlight:\s*var\(--color-moon\)/);
+    expect(night).toMatch(/--color-river:\s*var\(--color-moon\)/);
+  });
+
+  it("keeps the logo's R blue as a brand mark nothing re-points (the header's AI item wears it)", () => {
+    expect(hex(theme, "--color-brand-r")).toBe(hex(theme, "--color-porchlight"));
+    expect(night).not.toMatch(/--color-brand-r\s*:/);
+    expect(css.slice(css.indexOf(".daylight {"), css.indexOf("}", css.indexOf(".daylight {")))).not.toMatch(/--color-brand-r\s*:/);
+  });
+});
+
 describe("area labels on a night page", () => {
   it("sets the day nav's capitals in sentence case", () => {
     expect(areaName("THE BRONX")).toBe("The Bronx");

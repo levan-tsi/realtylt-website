@@ -34,25 +34,26 @@ declare global {
   var google: any;
 }
 
-/** The night basemap (round 53): land in the page's own night, water a step darker, roads as
- * faint lines, and the clutter a home search does not need (businesses, parcel lines) switched
+/** The night basemap (round 53, black and white since round 54): land one step above the page's
+ * black, water the black itself (as on the home page's scene, where the water is the absence of
+ * land), roads as faint lines, and the clutter a home search does not need (businesses, parcel lines) switched
  * off. Rail stays: in the Hudson Valley the Metro-North line is part of where a home is. */
 const NIGHT_MAP_STYLE = [
-  { elementType: "geometry", stylers: [{ color: "#0f2036" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#93a3b8" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#0b1a2e" }, { weight: 3 }] },
+  { elementType: "geometry", stylers: [{ color: "#121212" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#9b9b96" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#050505" }, { weight: 3 }] },
   { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-  { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#2a3f5c" }] },
+  { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#333333" }] },
   { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
-  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#c9d4e2" }] },
+  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#cfcfca" }] },
   { featureType: "poi", stylers: [{ visibility: "off" }] },
-  { featureType: "road", elementType: "geometry", stylers: [{ color: "#1a2d47" }] },
-  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#6f829c" }] },
-  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#233a58" }] },
-  { featureType: "transit.line", elementType: "geometry", stylers: [{ color: "#2c4466" }] },
-  { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#93a3b8" }] },
-  { featureType: "water", elementType: "geometry", stylers: [{ color: "#07121f" }] },
-  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#4d6180" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#222222" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#7a7a76" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#2c2c2c" }] },
+  { featureType: "transit.line", elementType: "geometry", stylers: [{ color: "#353535" }] },
+  { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#9b9b96" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#000000" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#555552" }] },
 ];
 
 /** google.maps.LatLngBounds has its OWN accessors — getNorthEast()/getSouthWest(), each a
@@ -158,7 +159,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           zoom: 9,
           // On a blue-hour page the basemap is night too (round 53). Raster styling, not a
           // mapId: this map has none, and the chips are our own overlay either way.
-          ...(el.closest(".nocturne") ? { styles: NIGHT_MAP_STYLE, backgroundColor: "#0b1a2e" } : {}),
+          ...(el.closest(".nocturne") ? { styles: NIGHT_MAP_STYLE, backgroundColor: "#050505" } : {}),
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: true,

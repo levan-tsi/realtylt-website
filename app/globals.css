@@ -54,12 +54,20 @@
                                          down yellow CTAs on /ai, and this is /ai's own grammar
                                          (violet = action there, gold = light in the scene).
      The actions stay the logo's porchlight blue (6.47:1 on night). */
-  --color-night: #0b1a2e;
-  --color-night-deep: #07121f;
-  --color-night-raise: #122640;
-  --color-moon: #e8eef6;
-  --color-haze: #93a3b8;
+  /* ROUND 54: the owner turned the navy down ("black and white ... was better", 2026-09-22) and
+     chose a black ground with white type. The names stay (every night-scoped call site keeps
+     working); the values are now neutral: no blue cast in the ground, the text a warm white.
+     moon 18.16:1 and haze 7.30:1 on night, measured. The light in the scene stays warm. */
+  --color-night: #050505;
+  --color-night-deep: #000000;
+  --color-night-raise: #111111;
+  --color-moon: #f2f2ee;
+  --color-haze: #9b9b96;
   --color-window: #f6c781;
+  /* The logo's R blue as a brand mark that never re-points: the header's AI item wears it by the
+     owner's request ("our logo R blue so people notice", lib/site.ts) on day and night pages alike,
+     while .nocturne turns every other porchlight use (actions, rings) white. */
+  --color-brand-r: #28a8e0;
   /* A listing card's own body. White by day; .nocturne re-points it, so the one card component
      sits correctly on both grounds without knowing which page it is on. */
   --color-card: #ffffff;
@@ -460,35 +468,39 @@ body {
   --color-paper: var(--color-night);
   --color-mist: var(--color-night-raise);
   --color-ink: var(--color-moon);
-  --color-ink-soft: #c9d4e2;
+  --color-ink-soft: #cfcfca;
   --color-stone: var(--color-haze);
-  --color-line: #22354f;
-  --color-line-strong: #34496a;
-  --color-river: var(--color-porchlight);
-  --color-porchlight-deep: var(--color-porchlight);
-  --color-card: #10213a;
+  --color-line: #242424;
+  --color-line-strong: #5e5e5a;
+  /* Black and white (round 54): the action and focus colour inside the scope is the white itself,
+     so every ring, underline, active row and progress bar that said porchlight reads white here.
+     The AI nav item escapes through --color-brand-r. */
+  --color-porchlight: var(--color-moon);
+  --color-river: var(--color-moon);
+  --color-porchlight-deep: var(--color-moon);
+  --color-card: #0d0d0d;
   --font-display: var(--font-grotesk);
   --font-sans: var(--font-grotesk);
   --font-mono: var(--font-grotesk);
   /* The map's pins on the night basemap (components/idx/map-shared.ts): moonlight chips with
      night ink, the chosen one in porchlight, dots ringed in night so they sit on the map. */
-  --rlt-chip-bg: #e8eef6;
-  --rlt-chip-ink: #0b1a2e;
-  --rlt-chip-active: #28a8e0;
-  --rlt-chip-active-ink: #07121f;
-  --rlt-dot-ring: #0b1a2e;
+  --rlt-chip-bg: #f2f2ee;
+  --rlt-chip-ink: #050505;
+  --rlt-chip-active: #050505;
+  --rlt-chip-active-ink: #f2f2ee;
+  --rlt-dot-ring: #050505;
   /* ...and the map popup's action, built outside React, sets its label in sentence case. */
   --rlt-pop-case: none;
   --rlt-pop-track: normal;
   --rlt-pop-size: 14px;
   --rlt-pop-badge-size: 12px;
   --rlt-pop-font: var(--font-grotesk);
-  --rlt-pop-bg: #122640;
-  --rlt-pop-frame: #0f2036;
-  --rlt-pop-ink: #e8eef6;
-  --rlt-pop-muted: #93a3b8;
-  --rlt-pop-action: #e8eef6;
-  --rlt-pop-action-ink: #0b1a2e;
+  --rlt-pop-bg: #111111;
+  --rlt-pop-frame: #1c1c1c;
+  --rlt-pop-ink: #f2f2ee;
+  --rlt-pop-muted: #9b9b96;
+  --rlt-pop-action: #f2f2ee;
+  --rlt-pop-action-ink: #050505;
   --rlt-pop-radius: 12px;
   --rlt-pop-pad: 9px;
   --rlt-pop-title: 15px;
