@@ -115,4 +115,27 @@ describe("LocationSuggest — a portalled popup has to be dismissable", () => {
   it("is a real named input so the plain form still submits", () => {
     expect(CODE).toMatch(/name=\{name\}/);
   });
+
+  /** Round 53 walkthrough: the mount guard was a "has run once" flag, and development StrictMode
+   * runs a mount effect twice, so the second run treated the URL's value as typing and opened the
+   * list over /search after every search. The guard compares against the mounted value instead. */
+  it("never opens on mount, even when the mount effect runs twice", () => {
+    expect(CODE).toMatch(/mountValueRef = useRef<string \| null>\(value\)/);
+    expect(CODE).toMatch(/if \(value === mountValueRef\.current\) return;/);
+    expect(CODE).not.toMatch(/firstRunRef/);
+  });
+
+  /** Round 53 walkthrough: a cold server answered "Beacon" with four street addresses and no
+   * Beacon, and nothing refreshed the list. The route now flags that answer `partial`, and the
+   * box asks exactly once more; a stale answer (the visitor typed on, or picked) is dropped. */
+  it("asks once more when the server says its towns were not ready, and drops stale answers", () => {
+    expect(CODE).toMatch(/data\.partial && again/);
+    expect(CODE).toMatch(/ask\(false\)/);
+    expect(CODE).toMatch(/if \(!alive\) return;/);
+    expect(CODE).toMatch(/clearTimeout\(retry\)/);
+  });
+
+  it("opens an answer only while the box still has focus", () => {
+    expect(CODE).toMatch(/document\.activeElement\?\.id === id/);
+  });
 });

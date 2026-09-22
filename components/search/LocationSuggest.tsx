@@ -66,9 +66,6 @@ export function LocationSuggest({
   /** The label `pick` just wrote into the input, so the query effect can tell a choice from
    * typing. Null whenever the next change is genuinely the visitor's. */
   const pickedRef = useRef<string | null>(null);
-  /** True until the query effect has run once, so a value that arrived from the URL is never
-   * treated as something the visitor typed. */
-  const firstRunRef = useRef(true);
   // TEXT TYPED BEFORE HYDRATION IS KEPT. The box is server-rendered and usable at once, but
   // hydration used to reset it to this state's "" and wipe whatever the visitor had typed while
   // the scripts loaded (measured 2026-09-21 on the live home page: "Beacon" typed early, Enter
@@ -80,6 +77,12 @@ export function LocationSuggest({
     const el = document.getElementById(id);
     return el instanceof HTMLInputElement ? el.value : defaultValue;
   });
+  /** The value the box mounted with, until the visitor changes it, so a value that arrived from
+   * the URL is never treated as something the visitor typed. A value rather than a "has run
+   * once" flag (round 53 walkthrough): development StrictMode runs every effect twice on mount,
+   * the flag let the second run through, and after each search on /search the remounted box
+   * reopened its Recent panel over the county chips. */
+  const mountValueRef = useRef<string | null>(value);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
@@ -131,9 +134,9 @@ export function LocationSuggest({
     // its own results. This is also the second half of the picked-value problem below: choosing
     // a city on /search rewrites the URL, which remounts this component with the chosen name as
     // its defaultValue — a fresh instance, a fresh ref, and the list reopened 2.6s later.
-    if (firstRunRef.current) {
-      firstRunRef.current = false;
-      return;
+    if (mountValueRef.current !== null) {
+      if (value === mountValueRef.current) return;
+      mountValueRef.current = null;
     }
     // A value we put in the box ourselves is a CHOICE, not a query. `pick` closes the list and
     // then writes the chosen label into the input, which used to look exactly like typing: the
@@ -148,23 +151,38 @@ export function LocationSuggest({
       setItems([]);
       // Clearing the box does not mean "go away" — it means they are starting over, which is
       // exactly when the recent/saved panel is useful again. Only close if there is nothing to
-      // show. (This never fires on mount: the first-run guard above returns before it.)
+      // show. (This never fires on mount: the mount guard above returns before it.)
       setActive(-1);
       setOpen(loadHistory().length > 0);
       return;
     }
-    const t = setTimeout(async () => {
+    // `alive`: an answer for a needle the visitor has already typed past is dropped, and so is
+    // the one retry below.
+    let alive = true;
+    let retry: ReturnType<typeof setTimeout> | undefined;
+    const ask = async (again: boolean) => {
       try {
         const res = await fetch(`/api/idx/suggest?q=${encodeURIComponent(needle)}`);
-        const data = (await res.json()) as { suggestions: Suggestion[] };
+        const data = (await res.json()) as { suggestions: Suggestion[]; partial?: boolean };
+        if (!alive) return;
         setItems(data.suggestions);
-        setOpen(data.suggestions.length > 0);
+        // Only while the box still has focus: an answer landing after Tab moved on must not
+        // float the list over the control focus went to.
+        setOpen(data.suggestions.length > 0 && document.activeElement?.id === id);
         setActive(-1);
+        // A cold server answers before its towns are ready and says so (app/api/idx/suggest).
+        // Ask once more, so "Beacon" does not stay four street addresses without Beacon itself.
+        if (data.partial && again) retry = setTimeout(() => ask(false), 1200);
       } catch {
-        setOpen(false);
+        if (alive) setOpen(false);
       }
-    }, 150);
-    return () => clearTimeout(t);
+    };
+    const t = setTimeout(() => ask(true), 150);
+    return () => {
+      alive = false;
+      clearTimeout(t);
+      clearTimeout(retry);
+    };
     // loadHistory is stable per saved-search list; including it would re-run the query on every
     // provider render and re-fetch the same needle.
     // eslint-disable-next-line react-hooks/exhaustive-deps

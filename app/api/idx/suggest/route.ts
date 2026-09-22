@@ -137,6 +137,10 @@ export async function GET(req: Request) {
     // round trips, so this wait usually ends with the towns in hand instead of without them.
     await Promise.race([indexBuilding, new Promise((r) => setTimeout(r, 800))]);
   }
+  // Lost that race: this answer has counties and addresses but no towns. Say so, and the box asks
+  // once more a moment later (round 53 walkthrough: typing "Beacon" on a fresh server offered four
+  // Beacon street addresses and not Beacon, and nothing refreshed the list until another key).
+  const partial = indexBuilding !== null && cityIndex.length === 0;
 
   const out: Suggestion[] = [];
   // Borough areas ("The Bronx") and their postal cities ("Bronx") would double up —
@@ -193,5 +197,5 @@ export async function GET(req: Request) {
   const ordered = startsWithNumber
     ? [...out.filter((s) => s.kind === "address"), ...out.filter((s) => s.kind !== "address")]
     : out;
-  return NextResponse.json({ suggestions: ordered.slice(0, 8) });
+  return NextResponse.json({ suggestions: ordered.slice(0, 8), ...(partial ? { partial: true } : {}) });
 }

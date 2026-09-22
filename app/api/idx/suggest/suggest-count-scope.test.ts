@@ -60,4 +60,15 @@ describe("the suggest index counts the same homes /search shows", () => {
     expect(route).not.toMatch(/mlsgrid/i);
     expect(route).toContain("/rest/v1/idx_listings");
   });
+
+  /** Round 53 walkthrough: a cold instance that loses the 800ms race answers without towns. It
+   * must say so (the box then asks once more), and decide that BEFORE the address lookup, which
+   * can outlast the build and would make the finished index look like it had been there. */
+  it("flags an answer given before the towns were ready", () => {
+    const get = route.slice(route.indexOf("export async function GET"));
+    const flag = get.indexOf("const partial = indexBuilding !== null && cityIndex.length === 0");
+    expect(flag, "no partial flag").toBeGreaterThan(0);
+    expect(flag).toBeLessThan(get.indexOf("await addressMatches"));
+    expect(get).toMatch(/partial \? \{ partial: true \} : \{\}/);
+  });
 });
