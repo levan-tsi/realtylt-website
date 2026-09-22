@@ -21,7 +21,10 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           on the page's content edge (lg: 32px, where the text above and below starts) rather
           than 8px outside it. */}
       <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16 night:px-4 night:md:px-20">
-        <blockquote>
+        {/* data-quiet: on the home page's night flight this band is the one place the scene is
+            NOT veiled (the held shot between the two rails), so the quote asks the scene to settle
+            beneath its own box instead (components/home/night/NightGround.tsx). */}
+        <blockquote data-quiet>
           <div className="mb-5 flex items-center justify-center gap-2.5">
             <GoogleLogo height={18} />
             <Stars />

@@ -23,7 +23,8 @@ import { describe, expect, it } from "vitest";
  */
 
 const route = fs.readFileSync(path.join(process.cwd(), "app/api/idx/suggest/route.ts"), "utf8");
-const hero = fs.readFileSync(path.join(process.cwd(), "components/home/HeroLights.tsx"), "utf8");
+const lantern = fs.readFileSync(path.join(process.cwd(), "components/home/night/lights.ts"), "utf8");
+const lanternCallers = ["components/home/night/NightScene.tsx", "components/home/night/NightGround.tsx"].map((f) => fs.readFileSync(path.join(process.cwd(), f), "utf8"));
 const query = fs.readFileSync(path.join(process.cwd(), "lib/idx/query.ts"), "utf8");
 
 describe("the suggest index counts the same homes /search shows", () => {
@@ -71,10 +72,15 @@ describe("the suggest index counts the same homes /search shows", () => {
    * can outlast the build and would make the finished index look like it had been there. */
   /** The hero's lantern prints a town's count too ("Harrison, 19 homes for sale"). Its click
    * opened /search?q=Harrison, free text, 40 homes along every Harrison Street (round 53
-   * walkthrough). It opens the exact city, the homes it counted. */
+   * walkthrough). It opens the exact city, the homes it counted. Round 54 moved the lantern into
+   * the 3D night flight, where two places answer a click (the page's hero and the lab's canvas),
+   * so the href is ONE function and both call it. */
   it("sends the lantern's click to the exact city it counted", () => {
-    expect(hero).toMatch(/push\(`\/search\?city=\$\{encodeURIComponent\(towns\[hover\]\)\}`\)/);
-    expect(hero).not.toMatch(/\/search\?q=\$\{encodeURIComponent\(towns/);
+    expect(lantern).toMatch(/return `\/search\?city=\$\{encodeURIComponent\(town\)\}`;/);
+    for (const caller of lanternCallers) {
+      expect(caller).toContain("townSearchHref(");
+      expect(caller).not.toMatch(/\/search\?q=/);
+    }
   });
 
   it("flags an answer given before the towns were ready", () => {

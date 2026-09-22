@@ -135,7 +135,7 @@ export const DEFAULT_LOOK: Look = {
   lowNearKm: 40,
   lowFarKm: 110,
   lowLightGain: 2.1,
-  lowCityGain: 0.62,
+  lowCityGain: 0.42,
   crowdMinPx: 2.5,
   crowdFullPx: 9,
   kindKeep: [0.4, 0.7, 2.5, 2.5],
@@ -237,8 +237,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uNear: { value: 1 },
     uQuietA: { value: new THREE.Vector4(0, 0, 0, 0) },
     uQuietB: { value: new THREE.Vector4(0, 0, 0, 0) },
-    uQuietSoft: { value: 0.16 },
-    uQuietFloor: { value: 0.22 },
+    uQuietSoft: { value: 0.2 },
+    uQuietFloor: { value: 0.12 },
   };
   const dustU = {
     ...shared,

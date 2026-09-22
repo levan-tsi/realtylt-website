@@ -157,6 +157,14 @@ export function townCentroids(pts: Pick<LightPoints, "x" | "y" | "town" | "towns
   return out;
 }
 
+/** Where the lantern's click goes: the town's EXACT city, the homes the label just counted.
+ * (Round 53's hero opened `/search?q=Harrison`, free text, which answered with forty homes on
+ * every Harrison Street; guarded by app/api/idx/suggest/suggest-count-scope.test.ts.) Both the
+ * page's hero and the lab's canvas call this, so there is one answer to copy wrong. */
+export function townSearchHref(town: string): string {
+  return `/search?city=${encodeURIComponent(town)}`;
+}
+
 export interface CountyRaster {
   x0: number;
   z0: number;

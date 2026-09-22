@@ -4,6 +4,7 @@ import { LeadForm } from "@/components/leads/LeadForm";
 import { EqualHousingMark } from "@/components/site/EqualHousingMark";
 import { FOOTER_NAV, SITE } from "@/lib/site";
 import { FooterShell } from "@/components/site/FooterShell";
+import { SceneCredit } from "@/components/site/SceneCredit";
 import { NightLabel } from "@/components/site/NightLabel";
 
 /** Site footer.
@@ -214,6 +215,9 @@ export function Footer() {
               </Link>
             </li>
           </ul>
+          {/* The home page's night flight draws its land from public-domain elevation data whose
+              sources ask to be named (public/images/ATTRIBUTIONS.md). Renders on `/` only. */}
+          <SceneCredit />
         </div>
       </div>
     </FooterShell>

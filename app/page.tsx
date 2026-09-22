@@ -10,14 +10,16 @@ import { DriftRail } from "@/components/idx/DriftRail";
 import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
-import { HeroLights } from "@/components/home/HeroLights";
-import { AreaLights, type AreaGroup } from "@/components/home/AreaLights";
+import { NightGround } from "@/components/home/night/NightGround";
+import { AreaChapter } from "@/components/home/night/AreaChapter";
+import { AREA_ROWS } from "@/components/home/night/areas";
+import { AREA_FLIGHT } from "@/components/home/night/shots";
 import { HomeIntake } from "@/components/home/HomeIntake";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
-import { BOROUGHS, COUNTIES, OG_DEFAULTS, SITE, TOP_AREA_GROUPS } from "@/lib/site";
+import { OG_DEFAULTS, SITE } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -39,23 +41,8 @@ export const metadata: Metadata = {
   openGraph: { ...OG_DEFAULTS, images: [...OG_DEFAULTS.images], url: "/" },
 };
 
-/** The area tiles, in the order and with the links the nav's Top Areas uses (TOP_AREA_GROUPS
- * is built from COUNTIES and BOROUGHS in this same order), plus the feed slug each tile draws. */
-const AREA_TILES: AreaGroup[] = [
-  {
-    id: "hudson-valley",
-    label: "Hudson Valley",
-    items: COUNTIES.map((c, i) => ({ slug: c.slug, name: c.name.replace(" County", ""), href: TOP_AREA_GROUPS[0].items[i].href })),
-  },
-  {
-    id: "nyc",
-    label: "New York City",
-    items: BOROUGHS.map((b, i) => ({ slug: b.slug, name: b.name, href: TOP_AREA_GROUPS[1].items[i].href })),
-  },
-];
-
 export default async function HomePage() {
-  // The blue-hour face, fetched with the page instead of discovered by the stylesheet (round 53):
+  // The display face, fetched with the page instead of discovered by the stylesheet (round 53):
   // without it the header's text swapped face after first paint and moved /search's content.
   preload("/fonts/bricolage.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   const idx = getIdxClient();
@@ -72,295 +59,272 @@ export default async function HomePage() {
   const activeCount = isDbConfigured() ? await getActiveSaleCount().catch(() => null) : null;
 
   return (
-    // Blue hour (round 53): this wrapper re-points the colour and type tokens for everything
-    // inside it (app/globals.css `.nocturne`); lib/site.ts NIGHT_ROUTES dresses the chrome to match.
-    <div className="nocturne">
-      {/* ── Hero: BLUE HOUR ON THE HUDSON (round 53). The owner's developer friend said the /ai page
-          reads futuristic and this one reads 2020, and it did: a greyscale photograph under a
-          serif headline with one bold word, uppercase pills, a white shelf of a header. The new
-          first screen is one living picture instead: the territory at night, drawn only in light,
-          where every light is an active listing at its address (components/home/HeroLights.tsx).
-          The words sit where the map is quiet: left of it on a laptop, under it on a phone.
-          The number is rendered HERE, on the server, from the same scope a default /search
-          counts, so it is true with JavaScript off and it matches the page the search opens. */}
-      <section className="relative isolate overflow-hidden bg-paper" aria-labelledby="home-hero">
-        {/* The city's own glow on the low sky, where the lights are densest. Its source is the
-            five boroughs at the bottom of the map. */}
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(90% 50% at 68% 92%, rgba(40,74,118,0.5), rgba(11,26,46,0) 70%)" }}
-        />
-        <HeroLights className="absolute inset-x-0 bottom-[168px] top-[92px] lg:inset-y-auto lg:bottom-6 lg:left-auto lg:right-0 lg:top-[104px] lg:w-[58%] xl:w-[60%]" />
-        {/* No JavaScript, no canvas: the night, the glow and the words still stand, and the
-            search box is a plain GET form. The count does not need the map to be true. */}
-        {/* A PHONE splits the words around the map instead of laying them over it: the
-            headline over the quiet north (Ulster and Dutchess are sparse, and a scrim holds
-            it), the search box under the harbour, where the city's lights have ended and a
-            thumb already is. Over the city itself no line of text could hold its contrast. */}
-        <div aria-hidden className="absolute inset-x-0 top-0 h-[46%] bg-gradient-to-b from-paper via-paper/80 to-transparent lg:hidden" />
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[24%] bg-gradient-to-t from-paper via-paper/90 to-transparent lg:hidden" />
-        {/* The hero hands over to the page with no edge: the city's glow falls to night before
-            the section ends, so the intake below reads as the same night, not a new band. */}
-        <div aria-hidden className="absolute inset-x-0 bottom-0 hidden h-28 bg-gradient-to-t from-paper to-transparent lg:block" />
-        {/* rlt-hero-pad: without JavaScript the header carries one more row (the folded link
-            list), so the words start one row lower there (app/globals.css). */}
-        <div className="rlt-hero-pad pointer-events-none relative mx-auto flex min-h-[max(680px,100svh)] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-center lg:px-8 lg:pb-24 lg:pt-40">
-          {/* 28rem at lg: from 1024 to 1279 the map takes the right 58%, and a 35rem column set
-              the headline on one line across the map's western counties. */}
-          <div data-hero-copy className="pointer-events-auto max-w-[35rem] lg:max-w-[28rem] xl:max-w-[35rem]">
-            <h1 id="home-hero" className="t-display rise text-ink">
-              Let&rsquo;s find home.
-            </h1>
-            {/* ink-soft on a phone, where this line is read over the map; stone from lg, where the
-                map is beside it. */}
-            <p className="t-lead rise rise-2 mt-5 max-w-[29rem] text-ink-soft lg:mt-6 lg:text-stone">
-              {activeCount ? (
-                <>
-                  <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                  right now, from Poughkeepsie to the five boroughs. Every light on the map is one of them.
-                </>
-              ) : (
-                <>Homes for sale right now, from Poughkeepsie to the five boroughs. Every light on the map is one of them.</>
-              )}
-            </p>
-          </div>
-
-          <div className="pointer-events-auto max-w-[35rem] lg:mt-10 lg:max-w-[28rem] xl:max-w-[35rem]">
-            {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px body,
-                8px inset, 8px gap, so the action never touches the field, the owner's standing
-                note). Glass over the night rather than a black shelf. */}
-            <form
-              action="/search"
-              role="search"
-              className="search-instrument rise rise-3 relative flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
-            >
-              <label htmlFor="home-search" className="sr-only">
-                Search for homes by town, zip, or address
-              </label>
-              <LocationSuggest
-                id="home-search"
-                dark
-                anchor="form"
-                placeholder="Town, zip or address"
-                // max-[359px]: at 320 the placeholder read "Town, zip or ac": 152px of words in
-                // 108px, because the empty field also reserved the clear button's 23px. The night
-                // rule in globals.css drops that reserve while the placeholder shows, and 8px off
-                // the field's inset and 16px off the action's bring the room to 155px.
-                className="w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none max-[359px]:px-3"
-              />
-              <button
-                type="submit"
-                className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft max-[359px]:px-4`}
-              >
-                Search
-              </button>
-            </form>
-            <p className="rise rise-4 mt-5 flex flex-wrap gap-x-7 gap-y-3 text-[15px] lg:mt-6">
-              <Link
-                href="/home-value"
-                className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
-              >
-                What is my home worth?
-              </Link>
-              <Link
-                href="/selling"
-                className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
-              >
-                Sell with us
-              </Link>
-            </p>
-            {/* What the lights are, said once and small, with the data's source: this is
-                listing data on a map, so it carries the MLS credit the rails below carry. In
-                the text column rather than on the map, where at 1024 it sat on the city. */}
-            <p className="mt-12 hidden max-w-[24rem] text-[13px] leading-snug text-stone lg:block">
-              Each light is a home listed on OneKey&reg; MLS, placed at its address. Point at one
-              to see the town.
-            </p>
-          </div>
-        </div>
-        {/* From lg only. On a phone the search box and its two links already end the first
-            screen, and the cue sat on top of "What is my home worth?" (overlapping its tap box
-            by 12 x 8px), so a thumb on "worth?" could scroll the page instead of opening it. */}
-        <div className="absolute inset-x-0 bottom-3 hidden justify-center lg:flex">
-          <ScrollCue targetId="value" label="Scroll to the next section" />
-        </div>
-      </section>
-
-      {/* ── The intake (round 50, owner-directed). This was "Find Your Home Value" beside a
-          "Tell Us About Your Home" form, and the footer then asked the same six fields again:
-          "the same feeling in form" twice on one page. Now the section asks one question (buy,
-          sell, or both), follows the answer with the two or three that matter, and only then
-          asks for a name, on the page rather than in a pop-up. The seller copy that stood here
-          is not lost: the ledger under "Why Work With Us" carries the 24h offer and the 100+
-          sites, and the details step says what a seller gets back. id="value" stays: it is the
-          scroll cue's target and the section's job is still the same first conversation. */}
-      <section id="value" className="sec bg-paper" aria-labelledby="value-heading">
-        <HomeIntake />
-      </section>
-
-      {/* ── Featured listings. Heading stays centred: it sits over a symmetric card grid, which
-          is the one case where centring is structure rather than decoration. */}
-      <section className="sec bg-paper" aria-labelledby="featured-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            <SectionHeading align="center" as="h2">
-              <span id="featured-heading">Featured listings</span>
-            </SectionHeading>
-          </Reveal>
-          {/* FEATURED DRIFTS, NEW LISTINGS DOES NOT, and that asymmetry is the point. Round 31
-              made these two sections differ in WEIGHT so a visitor can tell they have moved:
-              Featured is the loud one (centred heading over a symmetric set), New Listings is
-              deliberately quiet. Giving both of them ambient motion would collapse that back into
-              one repeated shape, which is the exact defect that decision fixed. The showcase
-              moves; the quiet one stays a paged grid. */}
-          <DriftRail listings={featured} ariaLabel="Featured listings" />
-          <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
-          <div className="mt-10 text-center">
-            <Button href="/search" variant="outline">See more listings</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Testimonial band — live: ONE centered quote with arrows between the two rails */}
-      <TestimonialBand items={TESTIMONIALS} />
-
-      {/* ── New listings. Deliberately NOT the same section again.
-          This and Featured above were identical objects — centred heading, card grid, MLS
-          attribution, and a centred outline pill carrying the same four words, "See More
-          Listings", twice on one page. A visitor scrolling past could not tell they had moved.
-          The fix is hierarchy, not new wording: Featured stays the loud one (centred heading
-          over a symmetric grid, which is the one place centring is structure rather than
-          decoration, and a pill), and this one is quiet — heading left, its link inline beside
-          it, no second pill. Two sections that differ in WEIGHT read as two sections; two that
-          differ only in their heading text read as one repeated shape. The link is also named
-          for where it actually goes, since it does not lead to the same place Featured's does. */}
-      <section className="sec bg-paper" aria-labelledby="new-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            {/* Last baselines, not box bottoms (round 53 polish): bottom-aligned, the link's words
-                sat 12px above the heading's baseline at 1440 (and "Where we work"'s paragraph
-                2.7px below its heading's). The words now share one line of type. */}
-            <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
-              <SectionHeading as="h2">
-                <span id="new-heading">New listings</span>
-              </SectionHeading>
-              <Button href="/search?sort=newest" variant="ghost">
-                See all new listings
-              </Button>
+    // ── THE NIGHT FLIGHT (round 54). The page is one aerial scene and scrolling is the camera
+    // flying through it: the harbour, up the river to Dutchess, the Highlands, the Tappan Zee,
+    // the eleven areas one at a time, back over the harbour and out to the whole region. The
+    // scene is a fixed canvas BEHIND everything (components/home/night/NightGround.tsx); every
+    // section below says which shot it holds the camera on and how far it dims the scene so its
+    // own words can be read. Nothing here needs the scene: the headline, the count, the search
+    // box, the listings and every link are server-rendered and work with no JavaScript at all.
+    //
+    // `isolate` makes this element the stacking context, so the fixed canvas (z-0) sits above
+    // the ground colour and below the content (z-10) without escaping into the footer.
+    // `.nocturne` re-points the site's tokens to the night (app/globals.css).
+    <div className="nocturne isolate relative">
+      <NightGround poster="/images/home-night-poster.webp">
+        {/* ── Hero. The establishing shot: high over the harbour looking north up the valley,
+            the whole territory one shape of light. The words sit bottom left, over New Jersey,
+            where the scene has no lights; on a phone the headline is high and the search box is
+            low, with the region burning between them. */}
+        <section
+          data-shot="hero"
+          data-veil="0"
+          className="relative min-h-[100svh]"
+          aria-labelledby="home-hero"
+        >
+          {/* The lantern's field. The canvas is behind the page and takes no pointer events, so
+              this empty layer forwards them: near the cursor the land brightens, the nearest
+              town is named with its real count, and a click opens that town's search. It sits
+              UNDER the words and the form, which are the only things here worth clicking. */}
+          <div data-lantern aria-hidden className="absolute inset-0 z-0" />
+          {/* rlt-hero-pad: without JavaScript the header carries one more row (the folded link
+              list), so the words start one row lower there (app/globals.css). */}
+          <div className="rlt-hero-pad relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
+            <div data-quiet className="max-w-[36rem]">
+              <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
+              <h1 id="home-hero" className="t-display rise mt-4 text-ink">
+                Let&rsquo;s find home.
+              </h1>
             </div>
-          </Reveal>
-          <div className="mt-10">
-            <RailPager listings={fresh} ariaLabel="New listings" />
-          </div>
-          <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
-        </div>
-      </section>
 
-      {/* ── Where we work (round 53). It used to be eleven uppercase pills in two labelled rows,
-          which said the names and nothing else. Now each area is a tile that draws its own homes
-          for sale as lights, from the same data as the hero (components/home/AreaLights.tsx),
-          with its real count: the hero's night, one place at a time. The two groups stay
-          apart, because the distinction is the business's real footprint (lib/site.ts). */}
-      <section className="sec bg-paper" aria-labelledby="areas-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
-              <SectionHeading as="h2">
-                <span id="areas-heading">Where we work</span>
-              </SectionHeading>
-              <p className="max-w-md text-stone">
-                Six counties of the Hudson Valley and all five boroughs. Every light is a home
-                for sale there right now.
+            <div data-quiet className="mt-10 max-w-[36rem] lg:mt-9">
+              <p className="t-lead rise rise-2 max-w-[30rem] text-ink-soft">
+                {activeCount ? (
+                  <>
+                    <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
+                    right now, from Poughkeepsie to the five boroughs. Every light below is one of them.
+                  </>
+                ) : (
+                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. Every light below is one of them.</>
+                )}
+              </p>
+              {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
+                  body, 8px inset, 8px gap, so the action never touches the field, the owner's
+                  standing note). Glass over the night rather than a black shelf. */}
+              <form
+                action="/search"
+                role="search"
+                className="search-instrument rise rise-3 relative mt-7 flex w-full max-w-[34rem] items-center gap-2 rounded-2xl border border-line-strong bg-night-deep/70 p-2 backdrop-blur-md transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight"
+              >
+                <label htmlFor="home-search" className="sr-only">
+                  Search for homes by town, zip, or address
+                </label>
+                <LocationSuggest
+                  id="home-search"
+                  dark
+                  anchor="form"
+                  placeholder="Town, zip or address"
+                  // max-[359px]: at 320 the placeholder read "Town, zip or ac": 152px of words in
+                  // 108px, because the empty field also reserved the clear button's 23px. The night
+                  // rule in globals.css drops that reserve while the placeholder shows, and 8px off
+                  // the field's inset and 16px off the action's bring the room to 155px.
+                  className="w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none max-[359px]:px-3"
+                />
+                <button
+                  type="submit"
+                  className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft max-[359px]:px-4`}
+                >
+                  Search
+                </button>
+              </form>
+              <p className="rise rise-4 mt-5 flex flex-wrap gap-x-7 gap-y-3 text-[15px]">
+                <Link
+                  href="/home-value"
+                  className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
+                >
+                  What is my home worth?
+                </Link>
+                <Link
+                  href="/selling"
+                  className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
+                >
+                  Sell with us
+                </Link>
+              </p>
+              {/* What the lights are, said once and small, with the data's source: this is
+                  listing data drawn on the land, so it carries the MLS credit the rails below
+                  carry. In the text column, never over the city. */}
+              <p className="mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block">
+                Every light is a home listed on OneKey&reg; MLS, standing where it stands. Point at
+                one to see the town.
               </p>
             </div>
-          </Reveal>
-          <div className="mt-10">
-            <AreaLights groups={AREA_TILES} />
           </div>
-        </div>
-      </section>
+          {/* From lg only. On a phone the search box and its two links already end the first
+              screen, and the cue sat on top of "What is my home worth?". */}
+          <div className="absolute inset-x-0 bottom-3 z-10 hidden justify-center lg:flex">
+            <ScrollCue targetId="value" label="Scroll to the next section" />
+          </div>
+        </section>
 
-      {/* ── Why work with us — live: light gray section, centered heading.
-          .sec, not .sec-lg (round 36): the closing band used to trail ~200px of empty mist
-          under TALK TO US — the largest padding step wrapped around the page's least dense
-          block. The ledger gives the section real mass, so it takes the middle step. */}
-      <section className="sec bg-mist" aria-labelledby="why-heading">
-        <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <Reveal>
-            <SectionHeading align="center" as="h2">
-              <span id="why-heading">Why work with us?</span>
-            </SectionHeading>
-          </Reveal>
-          {/* Our own product screenshots in a laptop carousel. */}
-          <Reveal>
-            <div className="mt-12">
-              <WhyCarousel />
+        {/* ── The intake (round 50, owner-directed). One question (buy, sell, or both), then the
+            two or three that matter, then a name. The camera has climbed the river to Dutchess,
+            where our office is; the scene dims a third so the panel reads over it. */}
+        <section id="value" data-shot="dutchess" data-veil="0.5" data-veil-phone="0.62" className="sec" aria-labelledby="value-heading">
+          <HomeIntake />
+        </section>
+
+        {/* ── Featured listings, over the Highlands: the gorge looking south, with Storm King and
+            Bear Mountain dark against the light beyond them. Cards need to be read, so the scene
+            is veiled here (dimmed in the shader, not covered by a band) and keeps moving behind. */}
+        <section data-shot="highlands" data-veil="0.74" className="sec" aria-labelledby="featured-heading">
+          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+            <Reveal>
+              <SectionHeading align="center" as="h2">
+                <span id="featured-heading">Featured listings</span>
+              </SectionHeading>
+            </Reveal>
+            {/* FEATURED DRIFTS, NEW LISTINGS DOES NOT, and that asymmetry is the point (round 31):
+                two sections that differ in WEIGHT read as two sections. */}
+            <DriftRail listings={featured} ariaLabel="Featured listings" />
+            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+            <div className="mt-10 text-center">
+              <Button href="/search" variant="outline">See more listings</Button>
             </div>
-          </Reveal>
-          {/* "From the best tools and technology… we're the top choice for buyers and sellers"
-              was the last vendor sentence on the page — a superlative with nothing behind it,
-              sitting over the most templated block on the web: four big numbers, four small
-              caps labels ("11 / 24h / 100+ / 7"), four across. Round 36 replaced the device
-              with a LEDGER: each fact is a hairline-ruled row — the number in the display
-              face, the claim as a sentence, and the thing a visitor can DO about it — because
-              the assessment's rule was that a number that stays must be one a visitor can act
-              on. "11 counties & boroughs" is gone as a numeral: the areas strip above states
-              it by name, interactively, which is a better version of the same fact.
-              The numbers still render on the SERVER with no count-up, no observer and no
-              interim state — StatCounter's "never show a number that is not true" rule carries
-              over by construction, and components/ui/field-float.test.ts now guards it here. */}
-          <Reveal>
-            <p className="mx-auto mt-10 max-w-xl text-center leading-[1.75] text-stone">
-              Every screen above is our own product, running on live MLS data. The rest of the
-              case is three numbers.
-            </p>
-          </Reveal>
-          <Reveal>
-            <ul className="mt-16 border-t border-line">
-              {[
-                {
-                  n: "24h",
-                  claim: "A written cash offer on your home, inside twenty-four hours.",
-                  act: "See your number",
-                  href: "/home-value",
-                },
-                {
-                  n: "100+",
-                  claim: "Search sites your listing reaches when we take it to market.",
-                  act: "How we sell",
-                  href: "/selling",
-                },
-                {
-                  n: "7",
-                  claim: "Days a week a person answers the phone.",
-                  act: `Call ${SITE.phone}`,
-                  href: SITE.phoneHref,
-                },
-              ].map((f) => (
-                <li
-                  key={f.n}
-                  className="flex flex-col gap-2 border-b border-line py-8 md:grid md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-x-8"
-                >
-                  {/* The figure in the display face at section size (round 53): on the night
-                      page the ledger is the one place numbers lead, so they are set to be read
-                      from across the room. */}
-                  <span className="t-h2 tabular-nums text-ink">{f.n}</span>
-                  <p className="leading-[1.7] text-stone">{f.claim}</p>
-                  {/* self-start: in the stacked phone row the Button would stretch and centre
-                      its text against an otherwise left-aligned ledger. */}
-                  <Button href={f.href} variant="ghost" className="self-start md:self-baseline">
-                    {f.act}
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <div className="mt-12 text-center">
-            <Button href="/connect">Talk to us</Button>
           </div>
+        </section>
+
+        {/* ── Testimonial: the one held shot on the page. No veil, so the Highlands stand at full
+            strength behind a single quote, and the camera only drifts. */}
+        <div data-shot="highlands" data-veil="0" data-veil-phone="0.3">
+          <TestimonialBand items={TESTIMONIALS} />
         </div>
-      </section>
+
+        {/* ── New listings, over the Tappan Zee: the river cut diagonally through the frame with
+            Westchester near and Rockland beyond. Deliberately NOT Featured again — heading left,
+            its link inline beside it, no second pill. */}
+        <section data-shot="westchester" data-veil="0.74" className="sec" aria-labelledby="new-heading">
+          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+            <Reveal>
+              {/* Last baselines, not box bottoms (round 53 polish). */}
+              <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
+                <SectionHeading as="h2">
+                  <span id="new-heading">New listings</span>
+                </SectionHeading>
+                <Button href="/search?sort=newest" variant="ghost">
+                  See all new listings
+                </Button>
+              </div>
+            </Reveal>
+            <div className="mt-10">
+              <RailPager listings={fresh} ariaLabel="New listings" />
+            </div>
+            <MlsAttribution dataLastUpdated={dataLastUpdated} fixtureMode={fixture} className="mt-6" />
+          </div>
+        </section>
+
+        {/* ── Where we work: THE chapter where the scene is the content. The camera arrives over
+            each area in turn as the list scrolls (this section holds eleven shots, one per row),
+            that area's homes burn and the rest of the map falls to near black. Hovering a row or
+            reaching it with the keyboard flies there at once. On a phone it is a plain tappable
+            list; the scene frames whichever row was last touched.
+            The tall block and the sticky list give the flight room to breathe on a laptop; on a
+            phone the section is its natural height and nothing is pinned. */}
+        <section
+          data-shot={AREA_FLIGHT.join(",")}
+          data-veil="0.2"
+          data-veil-phone="0.6"
+          className="sec lg:min-h-[240vh]"
+          aria-labelledby="areas-heading"
+        >
+          <div className="mx-auto max-w-[1250px] px-4 lg:sticky lg:top-24 lg:px-8">
+            {/* The index keeps to the left half from lg and the scene owns the right, where the
+                county the page is on is burning on its own. `data-quiet` hands the scene that
+                box so the words never have a contour through them. */}
+            <div data-quiet className="lg:max-w-[38rem]">
+              <Reveal>
+                <SectionHeading as="h2">
+                  <span id="areas-heading">Where we work</span>
+                </SectionHeading>
+                <p className="mt-5 max-w-md text-stone">
+                  Six counties of the Hudson Valley and all five boroughs. Every light is a home
+                  for sale there right now.
+                </p>
+              </Reveal>
+              <AreaChapter rows={AREA_ROWS} />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Why work with us: arriving over the harbour, the densest light on the map, and then
+            the camera rises and pulls back to the whole region as the page ends. */}
+        <section data-shot="harbour,region" data-veil="0.7" className="sec" aria-labelledby="why-heading">
+          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+            <Reveal>
+              <SectionHeading align="center" as="h2">
+                <span id="why-heading">Why work with us?</span>
+              </SectionHeading>
+            </Reveal>
+            {/* Our own product screenshots in a laptop carousel. */}
+            <Reveal>
+              <div className="mt-12">
+                <WhyCarousel />
+              </div>
+            </Reveal>
+            {/* A LEDGER, not four big numbers: each fact is a hairline-ruled row — the number in
+                the display face, the claim as a sentence, and the thing a visitor can DO about
+                it. Rendered on the SERVER with no count-up and no interim state. */}
+            <Reveal>
+              <p className="mx-auto mt-10 max-w-xl text-center leading-[1.75] text-stone">
+                Every screen above is our own product, running on live MLS data. The rest of the
+                case is three numbers.
+              </p>
+            </Reveal>
+            <Reveal>
+              <ul className="mt-16 border-t border-line">
+                {[
+                  {
+                    n: "24h",
+                    claim: "A written cash offer on your home, inside twenty-four hours.",
+                    act: "See your number",
+                    href: "/home-value",
+                  },
+                  {
+                    n: "100+",
+                    claim: "Search sites your listing reaches when we take it to market.",
+                    act: "How we sell",
+                    href: "/selling",
+                  },
+                  {
+                    n: "7",
+                    claim: "Days a week a person answers the phone.",
+                    act: `Call ${SITE.phone}`,
+                    href: SITE.phoneHref,
+                  },
+                ].map((f) => (
+                  <li
+                    key={f.n}
+                    className="flex flex-col gap-2 border-b border-line py-8 md:grid md:grid-cols-[11rem_1fr_auto] md:items-baseline md:gap-x-8"
+                  >
+                    {/* The figure in the display face at section size: on the night page the
+                        ledger is the one place numbers lead. */}
+                    <span className="t-h2 tabular-nums text-ink">{f.n}</span>
+                    <p className="leading-[1.7] text-stone">{f.claim}</p>
+                    {/* self-start: in the stacked phone row the Button would stretch and centre
+                        its text against an otherwise left-aligned ledger. */}
+                    <Button href={f.href} variant="ghost" className="self-start md:self-baseline">
+                      {f.act}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <div className="mt-12 text-center">
+              <Button href="/connect">Talk to us</Button>
+            </div>
+          </div>
+        </section>
+      </NightGround>
     </div>
   );
 }

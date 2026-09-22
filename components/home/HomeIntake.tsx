@@ -80,6 +80,8 @@ export function HomeIntake() {
     // its own top margin when it appears.
     <div className="mx-auto grid max-w-[1250px] gap-12 px-4 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:items-start lg:gap-x-16 lg:gap-y-0 lg:px-8">
       <Reveal>
+        {/* data-quiet: the home page's scene settles under this column (NightGround.tsx). */}
+        <div data-quiet>
         <SectionHeading as="h2" eyebrow="Start here">
           <span id="value-heading">Tell us what you&rsquo;re planning.</span>
         </SectionHeading>
@@ -94,6 +96,7 @@ export function HomeIntake() {
           Selling gets real comps and a number. Buying gets homes that fit and a plan for the
           money. Either way, someone answers seven days a week.
         </p>
+        </div>
       </Reveal>
 
       {/* THE TRAIL. A grid child of its own so it can sit in two different places: under the

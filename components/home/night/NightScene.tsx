@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { townSearchHref } from "./lights";
 import type { Look, NightSceneHandle, TownHover } from "./scene";
 import type { ShotName } from "./shots";
 
@@ -26,10 +27,13 @@ export interface NightSceneProps {
   dustCount?: number;
   look?: Partial<Look>;
   onReady?: (h: NightSceneHandle) => void;
+  /** Also told when the town under the pointer changes, for a page that draws its own cursor
+   * affordance (the home page forwards pointer moves from over its own content). */
+  onTownHover?: (t: TownHover | null) => void;
 }
 
 export const NightScene = forwardRef<NightSceneHandle | null, NightSceneProps>(function NightScene(
-  { className = "", initialShot = "hero", skipIntro, drift, dustCount, look, onReady },
+  { className = "", initialShot = "hero", skipIntro, drift, dustCount, look, onReady, onTownHover },
   ref,
 ) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,6 +45,8 @@ export const NightScene = forwardRef<NightSceneHandle | null, NightSceneProps>(f
   routerRef.current = router;
   const onReadyRef = useRef(onReady);
   onReadyRef.current = onReady;
+  const onHoverRef = useRef(onTownHover);
+  onHoverRef.current = onTownHover;
   // The first props win: the scene is built once per mount.
   const initial = useRef({ initialShot, skipIntro, drift, dustCount, look });
 
@@ -58,6 +64,7 @@ export const NightScene = forwardRef<NightSceneHandle | null, NightSceneProps>(f
 
     const showLabel = (t: TownHover | null) => {
       hovered = t;
+      onHoverRef.current?.(t);
       if (!t) {
         label.style.opacity = "0";
         canvas.style.cursor = "";
@@ -78,7 +85,7 @@ export const NightScene = forwardRef<NightSceneHandle | null, NightSceneProps>(f
     };
     const onLeave = () => h?.clearPointer();
     const onClick = () => {
-      if (hovered) routerRef.current.push(`/search?city=${encodeURIComponent(hovered.name)}`);
+      if (hovered) routerRef.current.push(townSearchHref(hovered.name));
     };
 
     (async () => {

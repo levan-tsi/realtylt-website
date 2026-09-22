@@ -108,8 +108,8 @@ void main() {
   kind *= mix(1.0, kindLow, uLowAlt);
   // AREA FOCUS: the land of the county the page is on comes up, the rest goes to near black, so
   // which area the page is showing is never in doubt.
-  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 0.95 : 0.12, uFocusMix);
-  vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.8 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
+  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 0.95 : 0.045, uFocusMix);
+  vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.94 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
   gl_PointSize = vSize;
   gl_Position = clip;
 }
@@ -183,7 +183,7 @@ void main() {
   // the map's fall back, so the area reads as a shape of light.
   float inFocus = abs(aCounty - uFocus) < 0.5 ? 1.0 : 0.0;
   float focus = mix(1.0, mix(0.09, 1.6, inFocus), uFocusMix);
-  vA = uAlpha * presence * aGain * on * tw * fog * energy * focus * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
+  vA = uAlpha * presence * aGain * on * tw * fog * energy * focus * (1.0 - 0.9 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.94);
   gl_PointSize = size * (1.0 + 0.15 * lantern) * (1.0 + 0.3 * inFocus * uFocusMix);
   gl_Position = clip;
 }
@@ -227,7 +227,7 @@ void main() {
   float down = -normalize(p - cameraPosition).y;
   // While one county is lit the glow of the cities outside it settles back with their windows (the
   // patches carry no county of their own, so the whole haze eases down together).
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
+  vA = uHaze * aStrength * fog * on * (1.0 - 0.92 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
   gl_PointSize = size;
   gl_Position = projectionMatrix * mv;
 }

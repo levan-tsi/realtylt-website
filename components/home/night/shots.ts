@@ -131,16 +131,21 @@ export function areaShot(b: { south: number; north: number; west: number; east: 
   const tilt = ((opts?.tilt ?? AREA_TILT) * Math.PI) / 180;
   const lng = (b.west + b.east) / 2, lat = (b.south + b.north) / 2;
   const wKm = (b.east - b.west) * 83.594, hKm = (b.north - b.south) * 111.132;
-  const frame = (fovDeg: number, aspect: number, fillV: number, fillH: number): Framing => {
+  /** `bias` pushes the area away from the middle of the frame, as a share of the frame's half
+   * width: on a laptop the page's own index of the eleven areas takes the left of the window, so
+   * the county being named burns to the RIGHT of it rather than underneath it. */
+  const frame = (fovDeg: number, aspect: number, fillV: number, fillH: number, bias: number): Framing => {
     const fovV = (fovDeg * Math.PI) / 180;
-    const fovH = 2 * Math.atan(aspect * Math.tan(fovV / 2));
-    // The north-south extent is foreshortened by the lean; the east-west extent is not.
-    const d = Math.max(AREA_MIN_KM, (hKm * Math.cos(tilt)) / (fillV * fovV), wKm / (fillH * fovH));
-    return f(over(lng, lat - (d * Math.sin(tilt)) / 111.132, d * Math.cos(tilt)), over(lng, lat, 0), fovDeg);
+    const half = aspect * Math.tan(fovV / 2); // half the frame's width, per km of distance
+    // The north-south extent is foreshortened by the lean; the east-west extent is not, and it
+    // has to fit BESIDE the bias.
+    const d = Math.max(AREA_MIN_KM, (hKm * Math.cos(tilt)) / (fillV * fovV), wKm / (2 * (fillH - bias) * half));
+    const aim = lng - (bias * d * half) / 83.594;
+    return f(over(aim, lat - (d * Math.sin(tilt)) / 111.132, d * Math.cos(tilt)), over(aim, lat, 0), fovDeg);
   };
-  // A phone's frame is narrow: a broad county is allowed to run past its sides rather than shrink
-  // into a thin band across the middle of it.
-  return { wide: frame(40, 1440 / 900, 0.78, 0.78), tall: frame(56, 390 / 844, 0.74, 1.15) };
+  // A phone's frame is narrow and its list sits below the scene, so the area stays in the middle
+  // and a broad county is allowed to run past the sides rather than shrink into a thin band.
+  return { wide: frame(40, 1440 / 900, 0.78, 0.94, 0.34), tall: frame(56, 390 / 844, 0.74, 1.13, 0) };
 }
 
 /** The area shots from the listings' bounding boxes: what the scene flies before the lights have

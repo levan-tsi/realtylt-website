@@ -15,7 +15,9 @@ const pageFile = (route: string) => (route === "/" ? "app/page.tsx" : `app${rout
 
 describe("the night routes", () => {
   it.each(NIGHT_ROUTES.map((r) => [r]))("%s wears the night on its page wrapper", (route) => {
-    expect(read(pageFile(route))).toMatch(/className="nocturne"/);
+    // Round 54: the home page's wrapper also carries the stacking utilities its fixed scene
+    // needs (`isolate relative`), so the class is first in the list rather than alone.
+    expect(read(pageFile(route))).toMatch(/className="nocturne(?=[ "])/);
   });
 
   it("dresses /search's pending state too, so a slow navigation never flashes a white skeleton", () => {
@@ -24,7 +26,9 @@ describe("the night routes", () => {
 
   it("is read by the chrome", () => {
     expect(read("components/site/Header.tsx")).toMatch(/isNightRoute\(pathname\)/);
-    expect(read("components/site/FooterShell.tsx")).toMatch(/isNightRoute\(usePathname\(\)\)/);
+    const shell = read("components/site/FooterShell.tsx");
+    expect(shell).toMatch(/usePathname\(\)/);
+    expect(shell).toMatch(/isNightRoute\(pathname\)/);
   });
 
   it("matches the routes exactly, not by prefix", () => {
