@@ -444,7 +444,12 @@ const selectCls =
   // to opt out of it via .rlt-compact-control, back when this row scrolled horizontally; since
   // round 24b stacked it into a grid, 16px measures clean at 390 and 320 and the opt-out was
   // only costing an iOS focus-zoom on every tap. Desktop still renders these at text-xs.
-  "cursor-pointer border-0 bg-transparent py-2 text-[15px] font-medium text-stone transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
+  // sm:[field-sizing:content] (round 53 polish): a select is as wide as its LONGEST option, so the
+  // arrow sat 21px after "Min price" and 74px after "Type" in the same row of labels. Sized to the
+  // label it shows, every arrow sits the same step after its word. From 640px only: a phone lays
+  // these out in a two-column grid where the arrows already line up. Browsers without
+  // field-sizing keep the old widths.
+  "cursor-pointer border-0 bg-transparent py-2 text-[15px] font-medium text-stone transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river sm:[field-sizing:content]";
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
@@ -1322,8 +1327,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               document overflow four un-wrappable buttons caused at 320 (round 41b), but stacked
               they cost the phone two rows before the first home. The scroller holds the width
               inside the panel instead (-mx-4 against the panel's own px-4), so the document
-              still cannot widen; from 640px it is an ordinary wrapping row again. */}
-          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
+              still cannot widen; from 640px it is an ordinary wrapping row again.
+              px-2, not px-4 (round 53 polish): each answer carries 8px of its own padding, so a
+              16px inset put "All listings" 8px right of the count and "Sort" above and below it. */}
+          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-2 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
           <div role="group" aria-label="Quick filter" className="flex shrink-0 items-center gap-1 sm:flex-wrap">
             {([["all", "All listings"], ["active", "Active"], ["new", "New listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button
@@ -1508,7 +1515,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             // took a row from 243px to 259px — measured, 3 x 259 + 2 x 12 gap + panel padding
             // = 809px = 90vh of a 900 viewport. The map below carries the same value so the two
             // panels keep sharing one bottom edge.
-            className={`rlt-view-in grid content-start gap-5 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:max-h-[90vh] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
+            // -ml-1 / -mt-1 (round 53 polish): that 4px of ring room had moved every card 4px in
+            // from the filter bar, chips and count panel above (x 24 against their 20) and 4px
+            // below the map's top edge beside it. The box now steps out by the room it makes,
+            // and 90vh + 4px keeps its bottom on the map's.
+            className={`rlt-view-in grid content-start gap-5 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:-ml-1 lg:-mt-1 lg:max-h-[calc(90vh+0.25rem)] lg:gap-x-2.5 lg:gap-y-3 lg:overflow-y-auto lg:pb-1 lg:pl-1 lg:pr-2 lg:pt-1 ${state === "loading" ? "opacity-60" : ""}`}
           >
             {state === "error" ? (
               // THE MAP STAYS, part two. The failure belongs to the results column, not to the
@@ -1601,10 +1612,19 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className={`rounded-lg border border-line bg-paper px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            // The drawn chevron the rails, the review band and the carousel use (round 53 polish):
+            // a "«" set in the text face read as a stray character at 14px, and it was the only
+            // typed arrow left on the page. The 1lh box keeps the button the numbers' height at
+            // any size, and px-1.5 keeps the old glyph's width, so the row still fits one line
+            // at 390.
+            className={`rounded-lg border border-line bg-paper px-1.5 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Previous page"
           >
-            «
+            <span aria-hidden className="grid h-[1lh] place-items-center">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </span>
           </button>
           {/* Live realtylt.com pages in a run of six consecutive numbers with chevrons on
               either side — no "1 … 150" ellipsis. pageWindow() clamps the run inside the
@@ -1639,10 +1659,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className={`rounded-lg border border-line bg-paper px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            className={`rounded-lg border border-line bg-paper px-1.5 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Next page"
           >
-            »
+            <span aria-hidden className="grid h-[1lh] place-items-center">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </span>
           </button>
         </nav>
       )}

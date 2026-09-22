@@ -1,4 +1,5 @@
 import { SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
+import { SearchSkeleton } from "@/components/search/SearchSkeleton";
 
 /** Route-level pending state for /search — and the only thing on this route a visitor without
  * JavaScript ever sees.
@@ -20,9 +21,9 @@ import { SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
  * has nothing to fall back FROM yet and the previous page simply stays put. `loading.tsx` is the
  * one thing Next renders the instant the transition starts.
  *
- * Geometry deliberately mirrors that Suspense fallback (88vh reserve, same max-width and
- * padding) so the two boundaries cannot disagree and the swap stays off-screen — the same CLS
- * lesson round 14 paid for.
+ * Geometry deliberately mirrors that Suspense fallback (both render SearchSkeleton, which also
+ * mirrors the page itself since round 53) so the two boundaries cannot disagree and the swap
+ * stays off-screen — the same CLS lesson round 14 paid for.
  *
  * WHY THE NO-JS BLOCK LIVES HERE, of all places. This file is also what makes /search unusable
  * without scripting, and the two facts are the same fact. A loading.tsx wraps the whole route in
@@ -50,26 +51,13 @@ export default function Loading() {
     // The pending state wears the page's own night (round 53), so a slow navigation into
     // /search does not flash a white skeleton between two dark pages.
     <div className="nocturne">
-      <div
-        data-js-only
-        className="mx-auto min-h-[88vh] max-w-[1400px] px-4 py-16 lg:px-8"
-        role="status"
-        aria-live="polite"
-      >
+      <div data-js-only role="status" aria-live="polite">
         <span className="sr-only">Loading search results</span>
-        {/* A quiet stand-in for the filter bar and the first row of cards. Not an animated
-            shimmer: this surface can appear for half a second or for six, and a pulsing skeleton
-            reads as agitation at the long end. Motion here would also have to be silenced for
-            reduced-motion visitors, for no gain. */}
-        <div aria-hidden className="rounded-2xl border border-line bg-mist p-6">
-          <div className="h-10 w-full max-w-[560px] rounded-xl bg-line/60" />
-        </div>
-        <div aria-hidden className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="aspect-[3/2] rounded-2xl border border-line bg-mist" />
-          ))}
-        </div>
-        <p className="mt-8 text-sm text-stone">Loading search…</p>
+        {/* A quiet stand-in for the page's own frame: filter bar, chips, count, list and map,
+            each where the page will put it (components/search/SearchSkeleton.tsx). Not an
+            animated shimmer: this surface can appear for half a second or for six, and a pulsing
+            skeleton reads as agitation at the long end. */}
+        <SearchSkeleton />
       </div>
 
       <noscript>

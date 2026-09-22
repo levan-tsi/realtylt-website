@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { preload } from "react-dom";
 import { Suspense } from "react";
 import { SearchClient, type SearchPayload } from "@/components/search/SearchClient";
+import { SearchSkeleton } from "@/components/search/SearchSkeleton";
 import { getIdxClient, isSampleData } from "@/lib/idx";
 import { parseSearchRequest } from "@/lib/idx/query";
 
@@ -85,8 +86,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           same 0.62 CLS lesson from round 14). */}
       <Suspense
         fallback={
-          <div data-js-only className="mx-auto min-h-[88vh] max-w-[1400px] px-4 py-16 text-sm text-stone lg:px-8">
-            Loading search…
+          <div data-js-only role="status">
+            <span className="sr-only">Loading search results</span>
+            <SearchSkeleton />
           </div>
         }
       >
