@@ -140,3 +140,18 @@ works with JavaScript off (a static picture of the lights and a plain form).
 | Photos develop on scroll (CSS view timeline) | `app/globals.css` | no JS; off under reduced motion |
 | No-JS picture of the lights | `scripts/make-lights-poster.mjs`, `public/images/hero/lights-poster.webp` | 218KB, loaded only inside `<noscript>` |
 | Bugs found on the way | pre-hydration typing wiped (live), invisible night focus ring on the hero search, white-on-white Save search field, the carousel advertising the OLD /search | each fixed + verified |
+
+## 6. Rounds after the build (all re-verified by the orchestrator)
+
+| round | who | what | result |
+|---|---|---|---|
+| review | fresh-eyes subagent | 17 findings, ranked, measured | 16 fixed (cc063b6), 1 pre-existing carried |
+| perf | orchestrator | next build + next start | /search CLS 0.477 -> 0.015; home LCP 144-212ms; font preloaded |
+| polish 2 | builder subagent | checkboxes/select/skip link on night, cue, 320 search box, rail clipping, review band, baselines, even dropdowns, panel edges, pager, pending state in the page's frame | 4 commits, 1483 -> 1492 tests |
+| check | checker subagent | verified the 4; day pages equal live (12/12 x 8); fixed 4 focus/hover defects | 1 commit, 1495 tests |
+| leftovers | orchestrator | phone "Showing 1-50" line, map note into the legend, typographic apostrophe | f7f09cd |
+| walkthrough | visitor subagent (seller + phone buyer) | carousel shift, cold towns, town counts = page counts, exact-city picks + lantern, Recent rows, count keeps shape | 5 commits, 1504 tests; flows 11/11 re-driven |
+
+Open for the owner: the phone /search 50 -> 150 growth when the map mounts (it also costs page 2 on a
+laptop's first settle and changes what Back restores); the listing page is still the day design (next
+round's first move); the home footer form repeats the intake fields; a county chip keeps a typed town.

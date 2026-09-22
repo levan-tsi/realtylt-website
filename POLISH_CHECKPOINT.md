@@ -1,5 +1,65 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 53 (2026-09-21/22): BLUE HOUR ON THE HUDSON, home + /search redesigned, LOCAL ONLY ==
+## STATE: branch `design/futuristic-r53` in the worktree `C:\Users\Levan\realtylt-website-r53`
+## (its own dev server on :3101; a production build can be served with `next start -p 3102`).
+## NOT merged, NOT pushed, NOT deployed: a push to main deploys realtylt.com, and the owner said
+## "only locally don't deploy it yet ... show it to me locally if its good we might deploy later".
+## main is untouched at 784dea6 (+ whatever other sessions push). Full record with every number:
+## docs/parity/DESIGN-ROUND53.md (on the branch).
+##
+## THE ASK: the owner's developer friend said /ai looks futuristic and high-level while the
+## real-estate home "looks like it was built in 2020" (it was: the 2020 site carried over). Make
+## home and search listings "really, really good and amazing futuristic", at least /ai's level;
+## ONLY home + search, never /ai or the other pages; local; multiple rounds with subagents to build,
+## check and polish.
+##
+## FIRST, THE FINAL TEST OF THE LIVE SITE (before any design work): prod probe 31/31; every sitemap
+## URL (71) + 4 extras at 1440/390 (+320 on nine) = 0 real failures, 0 console errors; live flows
+## 11/11 with 0 requests reaching /api/lead. One real LIVE bug found: text typed into the search
+## box before hydration is wiped (fixed on the branch; still on live until a deploy).
+##
+## WHAT WAS BUILT (branch): a scoped night theme (`.nocturne` re-points the site's tokens; `night:`
+## variant; `.daylight` escape; lib/site.ts NIGHT_ROUTES) so every other page is byte-identical
+## (a checker compared 4 day pages against live: 12/12 computed-style checks equal in 8 cases).
+## Bricolage Grotesque (the /ai file) in sentence case. The hero is a map of every active listing as
+## a warm light (app/api/lights: static, hourly, our DB only; lantern names a town + count; click =
+## that town's search). "Where we work" draws each county/borough in its own lights. /search: night
+## bar, phone Filters fold, night basemap + moonlight chips + night popup. Photos develop on scroll.
+##
+## ROUNDS: build -> fresh-eyes review (17 findings, 16 fixed, re-measured) -> polish subagent (4
+## commits) -> checker subagent (1 commit; verified the 4) -> my fixes for its 3 leftovers ->
+## walkthrough subagent (pass 3: a seller and a phone buyer, 5 commits: carousel caption no longer
+## moves the page, cold-server towns retried, suggested town counts = page counts (Beacon 80/80), a
+## picked town and a lantern click open the EXACT city, Recent/Saved rows re-run their search, the
+## count keeps its shape while loading). Every subagent "done" was re-verified here: gates re-run,
+## diffs read, flows re-driven (11/11), lantern click checked (Poughkeepsie 288 -> page 287, the one
+## being a listing with no map position outside "this map area").
+## MEASURED: production build home LCP 144-212ms (1440) / ~560ms (390, 4x CPU), CLS 0; /search CLS
+## 0.477 -> 0.015; intro p95 66.7 -> 16.8ms; phone hero sentence sub-3:1 pixels 12.9% -> 0.00%; city
+## white-burn 4.58% -> 0.32%. tsc clean; vitest 1466 -> 1504.
+##
+## OWNER DECISIONS WAITING:
+## 1. Look at it locally and say deploy / change. (How to see it: see the hand-off message; the
+##    production build is the one to judge, the dev server shows a Next "N" badge and is slower.)
+## 2. /search on a phone: the list shows 50, and when the map (below the list) mounts its viewport
+##    the list becomes 150 and the count changes. Pre-existing. Should the phone list follow the
+##    map at all?
+## 3. The chat launcher is porchlight on the two night pages (his widget blue elsewhere). OK?
+## 4. The walkthrough's verdict: the home page reads high-end and futuristic; /search is a competent
+##    dark surface, but the phone loop (page, open a home, come back) is unsteady because of item 2,
+##    and every search ends on the old DAY listing page. Two more calls it left for him: the home
+##    footer form repeats the intake's contact fields; a county chip keeps a typed town in the box.
+## 5. Three "Why work with us" slides (listing gallery, home value, market insights) are held back
+##    until those pages get the night look; the carousel shows search + save search.
+## DEPLOY PATH when he says go: merge design/futuristic-r53 into main (fast-forward or a merge
+## commit, check for other sessions' commits first), run tsc + vitest in the foreground, push main
+## (auto-deploys), then run scripts/verify-final-round-prod.mjs + a headful look at / and /search.
+##
+## NEXT ROUND (if he likes it): extend the night look to the listing page first (the search -> listing
+## hop is now night -> day), then /home-value, /selling, /buying; re-shoot the three carousel slides.
+
+
 ## == ROUND 52b (2026-09-19): THE DAY AFTER - GOOGLE IS READING US, ONE PEER COMMIT VERIFIED ==
 ## STATE: website main = bf87cf2 (+ this checkpoint commit). Production verified in a REAL
 ## headful browser TODAY: 31/31 (node scripts/verify-final-round-prod.mjs). All scorers re-run
