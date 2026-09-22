@@ -229,24 +229,40 @@ export function LocationSuggest({
   }, [savedSearches]);
 
   function pick(s: Suggestion) {
+    // Where the pick goes when nothing on the page handles it. A town is its EXACT city, as
+    // /search treats the same pick (round 53 walkthrough): as free text, the hero's "Beacon, NY
+    // 111 homes" opened a page that also held a Bronx home with "Beacon" in its street.
+    const dest =
+      s.href ??
+      (s.kind === "city" ? `/search?city=${encodeURIComponent(s.q)}` : `/search?q=${encodeURIComponent(s.q)}`);
     // Remember it, unless it came FROM the history panel — recordRecentSearch already moves a
     // repeat to the top, so this only avoids re-stamping a row the visitor merely re-ran.
     recordRecentSearch({
       label: s.label,
-      href: s.href ?? `/search?q=${encodeURIComponent(s.q)}`,
+      href: dest,
       kind: s.kind,
     });
     setOpen(false);
+    // What the box shows after the pick. A Recent or Saved row carries its search as a URL, so
+    // the box shows that search's place (its city or text, nothing for a county), not the row's
+    // label: "Beacon, NY" left in the box searched as text on the next Search press, and matched
+    // nothing.
+    const history = s.group ? new URLSearchParams(s.href?.split("?")[1] ?? "") : null;
+    const shown = history ? (history.get("city") ?? history.get("q") ?? "") : s.q;
     // Tell the query effect that this next value change is ours. Cleared the moment it is used,
     // so editing the text afterwards searches normally again.
-    pickedRef.current = s.q.trim();
-    setValue(s.q);
+    pickedRef.current = shown.trim();
+    setValue(shown);
     // An ADDRESS is a destination, not a filter. On /search, onPick would swallow it and
     // re-filter the grid the visitor is already looking at, when what they asked for was
     // that one house. Areas still hand off to onPick so the search page can filter in place.
     if (s.kind === "address" && s.href) return router.push(s.href);
+    // A Recent or Saved row is a whole search, stored as its URL: run THAT. Handed to onPick,
+    // its label became the place ("Beacon, NY" as a city, a saved search's summary as free
+    // text) and /search answered with no homes at all (round 53 walkthrough).
+    if (s.group && s.href) return router.push(s.href);
     if (onPick) return onPick(s);
-    router.push(s.href ?? `/search?q=${encodeURIComponent(s.q)}`);
+    router.push(dest);
   }
 
   /** One list drives rendering AND the arrow keys. Keeping `items` and `history` as separate

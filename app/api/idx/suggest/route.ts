@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { SERVED_AREAS } from "@/lib/site";
 import { listingPath } from "@/lib/idx/listing-url";
 import { addressFilterClause, addressTokens } from "@/lib/idx/address-query";
+import { searchFilters } from "@/lib/idx/db";
 
 /** Location autocomplete for the hero + search inputs — live-site parity (its quick-search
  * suggests areas as you type). Suggestions come from OUR replicated inventory: county names
@@ -54,7 +55,10 @@ async function buildIndex(): Promise<void> {
   // were answered from the 350ms race below without any towns: typing "Pough" offered four
   // street addresses and not Poughkeepsie (3 of 6 cold runs in a fresh-eyes review). The first
   // page now also asks for the exact count, and every other page is fetched at once.
-  const base = `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&status=eq.Active&order=id.asc&limit=1000`;
+  // The WHOLE default /search scope, not only Active (round 53 walkthrough): the served counties,
+  // the $10k sale floor and no rentals, the scope the hero's number and lights already use. With
+  // Active alone the dropdown offered "Beacon, NY 111 homes" and the page it opened said 81.
+  const base = `${url.replace(/\/+$/, "")}/rest/v1/idx_listings?select=city,zip&${searchFilters({ status: "Active" })}&order=id.asc&limit=1000`;
   const page = async (n: number, count = false) => {
     const res = await fetch(`${base}&offset=${n * 1000}`, {
       headers: { apikey: key, Authorization: `Bearer ${key}`, ...(count ? { Prefer: "count=exact" } : {}) },

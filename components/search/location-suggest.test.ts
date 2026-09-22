@@ -135,6 +135,17 @@ describe("LocationSuggest — a portalled popup has to be dismissable", () => {
     expect(CODE).toMatch(/clearTimeout\(retry\)/);
   });
 
+  /** Round 53 walkthrough: the hero sent a picked town to /search as free text (?q=), while
+   * /search itself files the same pick as an exact city; and a Recent row picked ON /search had
+   * its label ("Beacon, NY") applied as the city, which matched no home at all. */
+  it("sends a picked town to its exact city, and re-runs a Recent or Saved row by its URL", () => {
+    const pickFn = CODE.slice(CODE.indexOf("function pick"), CODE.indexOf("const visible"));
+    expect(pickFn).toMatch(/s\.kind === "city" \? `\/search\?city=\$\{encodeURIComponent\(s\.q\)\}`/);
+    const history = pickFn.indexOf("if (s.group && s.href) return router.push(s.href);");
+    expect(history, "history rows must navigate by their stored URL").toBeGreaterThan(0);
+    expect(history, "...before onPick can treat the label as a place").toBeLessThan(pickFn.indexOf("if (onPick) return onPick(s);"));
+  });
+
   it("opens an answer only while the box still has focus", () => {
     expect(CODE).toMatch(/document\.activeElement\?\.id === id/);
   });

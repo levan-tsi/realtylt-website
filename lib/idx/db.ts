@@ -152,8 +152,9 @@ const PARKING_COLUMNS: Record<ParkingType, string> = {
   assigned: "has_park_assigned",
 };
 
-/** SearchParams → PostgREST filter string over the generated columns. */
-function searchFilters(p: SearchParams): string {
+/** SearchParams → PostgREST filter string over the generated columns. Exported for the suggest
+ * index (app/api/idx/suggest), so a town's suggested count is the count /search then shows. */
+export function searchFilters(p: SearchParams): string {
   const parts: string[] = [];
   // No explicit area picked → scope the whole /search experience (grid, count, map pins) to
   // DEFAULT_COUNTY_SLUGS, which since round 23 is every area we serve: the six Hudson Valley

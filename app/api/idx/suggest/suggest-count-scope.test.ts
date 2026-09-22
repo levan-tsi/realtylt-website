@@ -26,9 +26,13 @@ const route = fs.readFileSync(path.join(process.cwd(), "app/api/idx/suggest/rout
 const query = fs.readFileSync(path.join(process.cwd(), "lib/idx/query.ts"), "utf8");
 
 describe("the suggest index counts the same homes /search shows", () => {
-  it("scopes the city/zip index to Active", () => {
+  /** Round 53 walkthrough: Active alone still counted rentals, sub-$10k rows and towns outside
+   * the served counties, so the dropdown said "Beacon, NY 111 homes" over a page of 81. The index
+   * now reads through the same filter builder a default /search does. */
+  it("scopes the city/zip index to a default /search (Active, for sale, served counties)", () => {
     const build = route.slice(route.indexOf("async function buildIndex"), route.indexOf("async function addressMatches"));
-    expect(build, "the index query lost its status scope").toContain("status=eq.Active");
+    expect(build, "the index query lost its scope").toContain('${searchFilters({ status: "Active" })}');
+    expect(route).toMatch(/import \{ searchFilters \} from "@\/lib\/idx\/db";/);
   });
 
   /** If /search's default ever stops being Active, this count is wrong again — and it will be
