@@ -488,7 +488,20 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             // its centre, so 16px clears it without leaving a moat. Below: the tip lands
             // measured+40 under the anchor, so the body (whose bottom sits a tail's height
             // above the tip) starts just beneath the marker instead of overlapping it.
-            pixelOffset: new google.maps.Size(0, placement === "above" ? (rec.kind === "dot" ? -16 : -26) : measured + 40),
+            // Sideways too (round 53): a preview from a chip near the map's left or right edge
+            // was cut off by the map's own clip (seen on /search at 1440, the address and the
+            // action half gone). The card is 252px wide and centred on its tip, so it shifts
+            // just far enough to sit inside the map, 12px from the edge; the tail shifts with it.
+            pixelOffset: new google.maps.Size(
+              (() => {
+                const half = 126 + 12;
+                const cx = chipRect.left + chipRect.width / 2;
+                if (cx + half > mapRect.right) return Math.round(mapRect.right - half - cx);
+                if (cx - half < mapRect.left) return Math.round(mapRect.left + half - cx);
+                return 0;
+              })(),
+              placement === "above" ? (rec.kind === "dot" ? -16 : -26) : measured + 40,
+            ),
             // A PINNED popup may pan the map to keep itself fully in view — the flip
             // handles the common top-edge case without motion, the pan covers everything
             // else (horizontal edges included). A passing hover must never lurch the map,

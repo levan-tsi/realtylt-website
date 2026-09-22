@@ -477,6 +477,10 @@ body {
   --rlt-chip-active: #28a8e0;
   --rlt-chip-active-ink: #07121f;
   --rlt-dot-ring: #0b1a2e;
+  /* ...and the map popup's action, built outside React, sets its label in sentence case. */
+  --rlt-pop-case: none;
+  --rlt-pop-track: normal;
+  --rlt-pop-size: 13px;
 }
 /* The ground itself, in @layer base so a utility on the same element (the home header's
    bg-transparent over the hero) still wins; the token re-points above stay unlayered. */

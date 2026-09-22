@@ -394,13 +394,15 @@ export function popupNode(
 
   const link = document.createElement("a");
   link.href = listingPath(p);
-  link.textContent = "View Listing";
+  link.textContent = "View listing";
   // Fires BEFORE the browser follows the href (default action runs after listeners) — the
   // engine writes the viewport result set here so the listing page can walk the map's homes.
   if (onNavigate) link.addEventListener("click", onNavigate);
   link.style.cssText =
     "display:block;margin:10px 12px 12px;padding:8px 0;border-radius:8px;background:#000000;color:#fff;" +
-    `text-align:center;font:700 11px/1.4 ${MAP_FONT};letter-spacing:.12em;text-transform:uppercase;text-decoration:none`;
+    // The case, tracking and size read the page's variables (round 53): the blue-hour page sets
+    // its labels in sentence case, and this popup is built outside React, so it asks the page.
+    `text-align:center;font:700 var(--rlt-pop-size,11px)/1.4 ${MAP_FONT};letter-spacing:var(--rlt-pop-track,.12em);text-transform:var(--rlt-pop-case,uppercase);text-decoration:none`;
   root.appendChild(link);
 
   return root;
