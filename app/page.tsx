@@ -173,14 +173,14 @@ export default async function HomePage() {
         {/* ── The intake (round 50, owner-directed). One question (buy, sell, or both), then the
             two or three that matter, then a name. The camera has climbed the river to Dutchess,
             where our office is; the scene dims a third so the panel reads over it. */}
-        <section id="value" data-shot="dutchess" data-veil="0.5" data-veil-phone="0.62" className="sec" aria-labelledby="value-heading">
+        <section id="value" data-shot="dutchess" data-veil="0.5" data-veil-phone="0.68" className="sec" aria-labelledby="value-heading">
           <HomeIntake />
         </section>
 
         {/* ── Featured listings, over the Highlands: the gorge looking south, with Storm King and
             Bear Mountain dark against the light beyond them. Cards need to be read, so the scene
             is veiled here (dimmed in the shader, not covered by a band) and keeps moving behind. */}
-        <section data-shot="highlands" data-veil="0.74" className="sec" aria-labelledby="featured-heading">
+        <section data-shot="highlands" data-veil="0.74" data-veil-phone="0.85" className="sec" aria-labelledby="featured-heading">
           <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               <SectionHeading align="center" as="h2">
@@ -206,7 +206,7 @@ export default async function HomePage() {
         {/* ── New listings, over the Tappan Zee: the river cut diagonally through the frame with
             Westchester near and Rockland beyond. Deliberately NOT Featured again — heading left,
             its link inline beside it, no second pill. */}
-        <section data-shot="westchester" data-veil="0.74" className="sec" aria-labelledby="new-heading">
+        <section data-shot="westchester" data-veil="0.74" data-veil-phone="0.85" className="sec" aria-labelledby="new-heading">
           <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               {/* Last baselines, not box bottoms (round 53 polish). */}
@@ -236,7 +236,7 @@ export default async function HomePage() {
         <section
           data-shot={AREA_FLIGHT.join(",")}
           data-veil="0.2"
-          data-veil-phone="0.6"
+          data-veil-phone="0.72"
           className="sec lg:min-h-[240vh]"
           aria-labelledby="areas-heading"
         >
@@ -261,7 +261,7 @@ export default async function HomePage() {
 
         {/* ── Why work with us: arriving over the harbour, the densest light on the map, and then
             the camera rises and pulls back to the whole region as the page ends. */}
-        <section data-shot="harbour,region" data-veil="0.7" className="sec" aria-labelledby="why-heading">
+        <section data-shot="harbour,region" data-veil="0.7" data-veil-phone="0.9" className="sec" aria-labelledby="why-heading">
           <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               <SectionHeading align="center" as="h2">
