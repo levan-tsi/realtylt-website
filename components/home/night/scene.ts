@@ -186,6 +186,11 @@ export interface NightSceneHandle {
   setPointer(x: number, y: number): void;
   clearPointer(): void;
   hoveredTown(): TownHover | null;
+  /** performance.now() at which the intro (the dust appearing, then the lights coming on from the
+   * harbour up the valley) is over, so a page holding a still of this scene knows when the live
+   * one is as bright as the still and can dissolve between them without a dip. `now` when there
+   * is no intro (reduced motion, skipIntro); 0 while the lights have not been built. */
+  introEndsAt(): number;
   setLook(l: Partial<Look>): void;
   stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number; buildWhere: string; quality: number; dpr: number };
   dispose(): void;
@@ -851,6 +856,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       kick();
     },
     hoveredTown: () => hovered,
+    // 850 ms for the dust to settle before the lights begin (buildLightCloud), then the wave from
+    // the harbour to the north edge plus each window's own moment (lights.ts buildLights).
+    introEndsAt: () => (reduce || opts.skipIntro ? performance.now() : lightsStart < 0 ? 0 : lightsStart + 2600),
     setLook(l) {
       Object.assign(look, l);
       dustU.uAlpha.value = look.dustAlpha;

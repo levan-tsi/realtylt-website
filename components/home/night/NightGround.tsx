@@ -17,7 +17,8 @@ import { AREA_COUNTY_OF, type AreaShot, type ShotName } from "./shots";
  *  - The POSTER (a still of the establishing shot, rendered from this very scene by
  *    scripts/make-night-poster.mjs) covers the first screen from the first byte, so nobody ever
  *    meets a black rectangle — with no JavaScript, with no WebGL, or while three.js loads.
- *  - The CANVAS fades in over it once the terrain and the lights are there.
+ *  - It DISSOLVES once the scene's own intro has finished underneath it, so the still and the
+ *    live scene are equally bright when one becomes the other and the hero never blinks.
  *  - Every section says which shot it holds the camera on (`data-shot`) and how far it dims the
  *    scene (`data-veil`); ./driver.ts turns the scroll position into both. Nothing is pinned and
  *    nothing is hijacked: the page scrolls exactly as it would without this file.
@@ -55,7 +56,9 @@ export function NightGround({ poster, children }: { poster: string; children: Re
   const focused = useRef<string | null>(null);
   const hovered = useRef<TownHover | null>(null);
   const frame = useRef(0);
-  const [ready, setReady] = useState(false);
+  const posterTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const [live, setLive] = useState(false);
+  const [posterGone, setPosterGone] = useState(false);
   const [current, setCurrent] = useState<AreaShot | null>(null);
 
   /** Read the sections' real boxes. Called on mount, on resize and whenever the page reflows. */
@@ -139,7 +142,7 @@ export function NightGround({ poster, children }: { poster: string; children: Re
 
   // The lantern, over the hero only.
   useEffect(() => {
-    if (!ready) return;
+    if (!live) return;
     const el = document.querySelector<HTMLElement>("[data-lantern]");
     const h = handle.current;
     if (!el || !h) return;
@@ -159,7 +162,9 @@ export function NightGround({ poster, children }: { poster: string; children: Re
       el.removeEventListener("pointerleave", onLeave);
       el.removeEventListener("click", onClick);
     };
-  }, [ready]);
+  }, [live]);
+
+  useEffect(() => () => clearTimeout(posterTimer.current), []);
 
   const point = useCallback((area: AreaShot | null) => {
     override.current = area;
@@ -177,16 +182,7 @@ export function NightGround({ poster, children }: { poster: string; children: Re
 
   return (
     <AreaChapterContext.Provider value={{ current, point }}>
-      {/* The first screen, before anything runs: a still of the same scene. */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 z-0 h-[100svh] bg-cover bg-[position:58%_50%] bg-no-repeat"
-        style={{ backgroundImage: `url(${poster})` }}
-      />
-      <div
-        aria-hidden
-        className={`pointer-events-none fixed inset-0 z-0 transition-opacity duration-700 ease-out motion-reduce:transition-none ${ready ? "opacity-100" : "opacity-0"}`}
-      >
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
         <NightScene
           className="absolute inset-0"
           onTownHover={(t) => {
@@ -198,10 +194,25 @@ export function NightGround({ poster, children }: { poster: string; children: Re
             handle.current = h;
             measure();
             apply();
-            setReady(true);
+            setLive(true);
+            // Hold the poster until the live scene is as bright as it is (see below).
+            posterTimer.current = setTimeout(() => setPosterGone(true), Math.max(0, h.introEndsAt() - performance.now()));
           }}
         />
       </div>
+      {/* THE FIRST SCREEN, BEFORE ANYTHING RUNS: a still of this very scene's establishing shot,
+          over the canvas rather than under it. It is there in the first bytes of HTML, so nobody
+          meets a black rectangle with JavaScript off, without WebGL, or while three.js loads; it
+          covers the first screen only and scrolls away with the hero.
+          It dissolves only once the scene's own intro is over (the dust settling, then the lights
+          coming on from the harbour up the valley), so the two pictures are equally bright when
+          one becomes the other and the hero never dips. Measured frame by frame: fading the canvas
+          IN on ready took the hero's mean luminance from 17 to 10 and back, a visible blink. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity duration-[1100ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        style={{ backgroundImage: `url(${poster})` }}
+      />
       <div className="relative z-10">{children}</div>
     </AreaChapterContext.Provider>
   );

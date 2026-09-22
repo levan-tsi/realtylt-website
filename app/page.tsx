@@ -89,15 +89,18 @@ export default async function HomePage() {
           <div data-lantern aria-hidden className="absolute inset-0 z-0" />
           {/* rlt-hero-pad: without JavaScript the header carries one more row (the folded link
               list), so the words start one row lower there (app/globals.css). */}
-          <div className="rlt-hero-pad relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
-            <div data-quiet className="max-w-[36rem]">
+          {/* pointer-events-none on the column, auto on the two blocks of words: the lantern's field
+              lies under this and would otherwise never see the pointer, because a full-width
+              column covers the whole first screen whether or not it has words at that point. */}
+          <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
+            <div data-quiet className="pointer-events-auto max-w-[36rem]">
               <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
               <h1 id="home-hero" className="t-display rise mt-4 text-ink">
                 Let&rsquo;s find home.
               </h1>
             </div>
 
-            <div data-quiet className="mt-10 max-w-[36rem] lg:mt-9">
+            <div data-quiet className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
               <p className="t-lead rise rise-2 max-w-[30rem] text-ink-soft">
                 {activeCount ? (
                   <>
