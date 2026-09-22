@@ -1,0 +1,41 @@
+{
+  "v": 1,
+  "box": {
+    "south": 40.37,
+    "north": 42.26,
+    "west": -74.91,
+    "east": -73.35
+  },
+  "served": {
+    "south": 40.49,
+    "north": 42.14,
+    "west": -74.75,
+    "east": -73.51
+  },
+  "w": 652,
+  "h": 1050,
+  "metresPerCell": {
+    "x": 200.1,
+    "y": 200
+  },
+  "encoding": "R: 0 = water, else 1 + round(254 * sqrt(e / maxM)), e in metres; G: water fraction of the cell, 0..255 (>= 128 exactly where R = 0); B: 0",
+  "maxM": 1250,
+  "minLandM": 0.5,
+  "water": {
+    "atOrBelowM": 0.5,
+    "nhdRiverPolygons": 70,
+    "lakesFlatToM": 0.02,
+    "lakes": 49,
+    "hudsonWithin600mPct": 90.7,
+    "hudsonGapSamples": 0,
+    "burnedCells": 0
+  },
+  "source": "AWS Terrain Tiles (Mapzen/Tilezen terrarium), zoom 11",
+  "sourceFamilies": {
+    "ned13": 125,
+    "ned": 82,
+    "srtm": 44,
+    "gmted": 40,
+    "etopo1": 4
+  }
+}

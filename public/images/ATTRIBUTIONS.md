@@ -187,3 +187,23 @@ vendor contract ever surfaces saying otherwise, this row is where to revisit.
 | public/images/hero/lights-poster.webp | The home hero's map of lights, rendered from our own listing coordinates for visitors without JavaScript (scripts/make-lights-poster.mjs); the water lines are Natural Earth, public domain | RealtyLT | Our own artwork | — |
 | public/images/mls/coming-soon.webp | RETIRED 2026-08-02, kept on purpose — "coming soon" placeholder, moonlit manor | Levan Tsiklauri, Google Nano Banana Pro via ElevenLabs | Owner's own generated artwork | [source](https://elevenlabs.io/) |
 | public/images/mls/coming-soon-notext.webp | RETIRED 2026-08-02, kept on purpose — wordless cut (sky text removed with local Mage-Flow edit) | Levan Tsiklauri + RealtyLT | Owner's own generated artwork | [source](https://elevenlabs.io/) |
+
+## `public/geo/` -- the home page's night-flight terrain (round 54), not photography
+
+These files are data, not images of anything, so they sit outside the table above (the table's
+test only scans `public/images/`). Recorded here so the licence lives with the rest.
+
+| file | what | source | licence |
+|---|---|---|---|
+| `public/geo/valley-elevation.webp` + `.json` | The served region's elevation (R) and water fraction (G) on a 200 m grid, built by `scripts/build-elevation.mjs` | AWS Terrain Tiles (Mapzen/Tilezen "terrarium", AWS Open Data), zoom 11. Every tile's own `x-amz-meta-x-imagery-sources` header was read on 2026-09-22 (150 tiles): USGS 3DEP/NED 1/3 arc-second (125 tiles) and 1/9 arc-second Hudson LiDAR (82), SRTM (44), GMTED2010 (40), NOAA ETOPO1 (4). Water: USGS National Hydrography Dataset river polygons (hydro.nationalmap.gov, NHD "Area - Small Scale", StreamRiver) plus lakes found flat in the DEM | Public domain (USGS 3DEP, SRTM, GMTED2010, NHD; NOAA ETOPO1) |
+
+Credits the sources ask for, verbatim:
+- Tilezen, `github.com/tilezen/joerd/blob/master/docs/attribution.md`, "Required attribution when using
+  Mapzen's hosted service": "Mapzen", "United States 3DEP (formerly NED) and global GMTED2010 and SRTM
+  terrain data courtesy of the U.S. Geological Survey.", "Global ETOPO1 terrain data U.S. National
+  Oceanic and Atmospheric Administration".
+- USGS, for 3DEP (quoted on the same page): "3DEP data courtesy of the U.S. Geological Survey".
+
+The page that shows the scene must carry a short credit line where it is reasonable to look for one
+(the Tilezen page's words), e.g. in the footer: "Terrain: Mapzen; USGS 3DEP, SRTM, GMTED2010 and NHD;
+NOAA ETOPO1."
