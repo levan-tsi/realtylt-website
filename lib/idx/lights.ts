@@ -17,9 +17,14 @@ export interface PackedLights {
   /** Homes for sale in each town, INCLUDING the ones too imprecisely placed to be a light, so
    * the number the lantern prints is the town's real count. */
   counts: number[];
+  /** The county (feed slug, e.g. "dutchess", "staten-island") each town's homes mostly sit in,
+   * by town index, and every county's own total. Drives the home page's area tiles. */
+  townCounty?: string[];
+  countyCounts?: Record<string, number>;
 }
 
 export interface LightPoints {
+  box: LightBox;
   /** 0..1 across the box, west to east. */
   x: Float32Array;
   /** 0..1 down the box, north to south (screen order). */
@@ -27,6 +32,8 @@ export interface LightPoints {
   town: Uint16Array;
   towns: string[];
   counts: number[];
+  townCounty: string[];
+  countyCounts: Record<string, number>;
 }
 
 const STEP = 65535;
@@ -45,7 +52,7 @@ export function townName(raw: string): string {
  * is a guess, and a few dozen guesses in one jitter box draw a square). A row without the flag
  * is treated as measured. */
 export function packLights(
-  rows: readonly { lat: number; lng: number; city: string; geocoded?: boolean }[],
+  rows: readonly { lat: number; lng: number; city: string; county?: string; geocoded?: boolean }[],
   box: LightBox,
 ): PackedLights {
   const towns: string[] = [];
@@ -64,7 +71,20 @@ export function packLights(
   };
   const inBox = (r: { lat: number; lng: number }) =>
     !!r.lat && !!r.lng && r.lat >= box.south && r.lat <= box.north && r.lng >= box.west && r.lng <= box.east;
-  for (const r of rows) if (inBox(r)) counts[townOf(r.city)]++;
+  // A town belongs to the county most of its homes are in (a few postal towns straddle a line).
+  const votes = new Map<number, Map<string, number>>();
+  const countyCounts: Record<string, number> = {};
+  for (const r of rows) {
+    if (!inBox(r)) continue;
+    const t = townOf(r.city);
+    counts[t]++;
+    if (r.county) {
+      countyCounts[r.county] = (countyCounts[r.county] ?? 0) + 1;
+      const v = votes.get(t) ?? new Map<string, number>();
+      v.set(r.county, (v.get(r.county) ?? 0) + 1);
+      votes.set(t, v);
+    }
+  }
   const lit = rows.filter((r) => r.geocoded !== false && inBox(r));
   const view = new DataView(new ArrayBuffer(lit.length * 6));
   lit.forEach((r, i) => {
@@ -73,7 +93,13 @@ export function packLights(
     view.setUint16(i * 6 + 2, Math.round(((box.north - r.lat) / (box.north - box.south)) * STEP), true);
     view.setUint16(i * 6 + 4, t, true);
   });
-  return { v: 1, box, data: toBase64(new Uint8Array(view.buffer)), towns, counts };
+  const townCounty = towns.map((_, t) => {
+    let best = "";
+    let n = 0;
+    for (const [c, k] of votes.get(t) ?? []) if (k > n) (best = c), (n = k);
+    return best;
+  });
+  return { v: 1, box, data: toBase64(new Uint8Array(view.buffer)), towns, counts, townCounty, countyCounts };
 }
 
 export function unpackLights(p: PackedLights): LightPoints {
@@ -88,7 +114,7 @@ export function unpackLights(p: PackedLights): LightPoints {
     y[i] = view.getUint16(i * 6 + 2, true) / STEP;
     town[i] = view.getUint16(i * 6 + 4, true);
   }
-  return { x, y, town, towns: p.towns, counts: p.counts ?? [] };
+  return { box: p.box, x, y, town, towns: p.towns, counts: p.counts ?? [], townCounty: p.townCounty ?? [], countyCounts: p.countyCounts ?? {} };
 }
 
 function toBase64(bytes: Uint8Array): string {

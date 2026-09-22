@@ -1005,9 +1005,9 @@ export async function getSyncWatermark(): Promise<{ watermark: string; baselineC
  * at the hero's scale a few dozen of those draw a square no real street makes. The unmeasured
  * rows still count toward their town's number. `geocoded` is the generated boolean column, so no
  * JSONB is read. Our own database only; this never touches MLS Grid. */
-export type LightRow = { lat: number; lng: number; city: string; geocoded: boolean };
+export type LightRow = { lat: number; lng: number; city: string; county: string; geocoded: boolean };
 export async function getLightRows(): Promise<LightRow[]> {
-  const base = `idx_listings?select=lat,lng,city,geocoded&${searchFilters({ status: "Active" })}&order=id.asc`;
+  const base = `idx_listings?select=lat,lng,city,county,geocoded&${searchFilters({ status: "Active" })}&order=id.asc`;
   const first = await onceRetried(() => rest<LightRow>(`${base}&limit=${PIN_CHUNK}`, { count: true }));
   const pages = Math.ceil(Math.min(first.total, MAX_PINS * 2) / PIN_CHUNK);
   const more = await Promise.all(

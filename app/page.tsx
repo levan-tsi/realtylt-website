@@ -10,12 +10,13 @@ import { RailPager } from "@/components/idx/RailPager";
 import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { HeroLights } from "@/components/home/HeroLights";
+import { AreaLights, type AreaGroup } from "@/components/home/AreaLights";
 import { HomeIntake } from "@/components/home/HomeIntake";
 import { WhyCarousel } from "@/components/home/WhyCarousel";
 import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
-import { OG_DEFAULTS, SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
+import { BOROUGHS, COUNTIES, OG_DEFAULTS, SITE, TOP_AREA_GROUPS } from "@/lib/site";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
@@ -36,6 +37,21 @@ export const metadata: Metadata = {
   // layout's block, so the shared card fields ride along. Guarded by app/canonical.test.ts.
   openGraph: { ...OG_DEFAULTS, images: [...OG_DEFAULTS.images], url: "/" },
 };
+
+/** The area tiles, in the order and with the links the nav's Top Areas uses (TOP_AREA_GROUPS
+ * is built from COUNTIES and BOROUGHS in this same order), plus the feed slug each tile draws. */
+const AREA_TILES: AreaGroup[] = [
+  {
+    id: "hudson-valley",
+    label: "Hudson Valley",
+    items: COUNTIES.map((c, i) => ({ slug: c.slug, name: c.name.replace(" County", ""), href: TOP_AREA_GROUPS[0].items[i].href })),
+  },
+  {
+    id: "nyc",
+    label: "New York City",
+    items: BOROUGHS.map((b, i) => ({ slug: b.slug, name: b.name, href: TOP_AREA_GROUPS[1].items[i].href })),
+  },
+];
 
 export default async function HomePage() {
   const idx = getIdxClient();
@@ -220,60 +236,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Areas strip. No top padding of its own: the hairline rule is what separates it
-          from the listings above, and a second gap on top of that rule reads as a mistake.
-
-          It used to be eleven identical pills centre-justified into one bag, which wrapped 7 + 4
-          so the second row read as an orphaned remnant, and which silently mixed two different
-          kinds of place — "THE BRONX" sat at the end of the county row as though it were a
-          county. The distinction is true and it is the business's actual footprint, so the
-          structure now carries it instead of throwing it away. lib/site.ts already said these
-          are "presented separately (Top Areas flyout, home areas strip)"; only the flyout was
-          doing it. Sharing TOP_AREA_GROUPS also means this strip and the nav flyout can never
-          drift, and it retires the borough-slug branch this file was reimplementing inline.
-
-          Left-aligned on purpose — but NOT for the reason this comment used to give. It said
-          "every other section below the hero centres its heading", and that stopped being true
-          when New Listings was deliberately made the quiet one and moved its heading left. The
-          page's actual rule is the one Featured states: a heading centres only where it sits over
-          a symmetric grid, and reads left everywhere else. This strip is a left label against a
-          ragged row of pills, so it reads left. */}
-      <section className="bg-paper pb-20 md:pb-28" aria-labelledby="areas-heading">
+      {/* ── Where we work (round 53). It used to be eleven uppercase pills in two labelled rows,
+          which said the names and nothing else. Now each area is a tile that draws its own homes
+          for sale as lights, from the same data as the hero (components/home/AreaLights.tsx),
+          with its real count: the hero's night, one place at a time. The two groups stay
+          apart, because the distinction is the business's real footprint (lib/site.ts). */}
+      <section className="sec bg-paper" aria-labelledby="areas-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
-          <h2 id="areas-heading" className="sr-only">
-            Areas we serve
-          </h2>
-          <div className="space-y-8 border-t border-line pt-12">
-            {TOP_AREA_GROUPS.map((group) => (
-              <div key={group.id} className="flex flex-col gap-3 md:flex-row md:gap-10">
-                {/* pt-2.5 optically sets the 11px label against the pills' text rather than
-                    their box, which sits 36px tall. */}
-                <h3 className="t-eyebrow shrink-0 text-ink md:w-36 md:pt-2">{group.label}</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className={`inline-flex min-h-[40px] items-center rounded-full border border-line px-4 text-[15px] font-medium text-ink-soft ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
-                      >
-                        {areaName(item.label)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                {/* The row's terminal (round 36). At 1440 the pills ended ~360px short of the
-                    container and the strip read as if it had run out of content rather than
-                    finished — an index row with no terminal. The count is the terminal: it
-                    states something true (the footprint's size), it brackets the pills between
-                    two labels the way the left one opens them, and it is derived from the data
-                    so it can never drift from the pill count. md+ only; stacked phone rows
-                    need no balancing. */}
-                <p aria-hidden className="t-eyebrow ml-auto hidden shrink-0 text-stone md:block md:pt-2">
-                  {["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"][group.items.length]}{" "}
-                  {group.id === "nyc" ? "boroughs" : "counties"}
-                </p>
-              </div>
-            ))}
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+              <SectionHeading as="h2">
+                <span id="areas-heading">Where we work</span>
+              </SectionHeading>
+              <p className="max-w-md text-stone">
+                Six counties of the Hudson Valley and all five boroughs. Every light is a home
+                for sale there right now.
+              </p>
+            </div>
+          </Reveal>
+          <div className="mt-10">
+            <AreaLights groups={AREA_TILES} />
           </div>
         </div>
       </section>

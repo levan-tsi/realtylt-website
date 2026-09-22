@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { unpackLights, type LightBox, type PackedLights } from "@/lib/idx/lights";
+import type { LightBox } from "@/lib/idx/lights";
+import { loadLights } from "@/lib/idx/lights-client";
 import { HUDSON_CENTRELINE, SHORELINES } from "@/lib/geo/hudson-water";
 
 /** THE HOME HERO'S MAP OF LIGHTS (round 53).
@@ -385,12 +386,10 @@ export function HeroLights({ className = "" }: { className?: string }) {
 
     const load = async () => {
       try {
-        const res = await fetch("/api/lights");
-        const packed = (await res.json()) as PackedLights;
+        const pts = await loadLights();
         if (disposed) return;
-        const pts = unpackLights(packed);
-        if (!pts.x.length) throw new Error("no lights");
-        box = packed.box;
+        if (!pts) throw new Error("no lights");
+        box = pts.box;
         xs = pts.x;
         ys = pts.y;
         town = pts.town;

@@ -55,6 +55,20 @@ describe("the hero's packed lights", () => {
     expect(p.counts).toEqual([2, 1]);
   });
 
+  it("gives each town the county most of its homes are in, and totals every county", () => {
+    const p = packLights(
+      [
+        { lat: 41.5, lng: -73.97, city: "Beacon", county: "dutchess" },
+        { lat: 41.5, lng: -73.97, city: "Beacon", county: "dutchess", geocoded: false },
+        { lat: 41.5, lng: -73.97, city: "Beacon", county: "putnam" },
+        { lat: 40.7, lng: -73.9, city: "Brooklyn", county: "brooklyn" },
+      ],
+      BOX,
+    );
+    expect(p.townCounty).toEqual(["dutchess", "brooklyn"]);
+    expect(p.countyCounts).toEqual({ dutchess: 2, putnam: 1, brooklyn: 1 });
+  });
+
   it("drops a home outside the served region instead of pinning it to the edge", () => {
     const pts = unpackLights(packLights([{ lat: 43.0, lng: -74, city: "Far" }, { lat: 41, lng: -74, city: "Near" }], BOX));
     expect(pts.x.length).toBe(1);
