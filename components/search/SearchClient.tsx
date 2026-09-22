@@ -1273,8 +1273,16 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               the display face the rest of the site uses for anything that leads. Sized to the
               strip's existing height rather than above it: the owner's density target is three
               full rows of cards beside the map, and a headline row would eat one. */}
-          <p className="flex flex-wrap items-baseline gap-x-2 text-sm text-stone" role="status">
-            {state === "loading" ? "Searching…" : state === "error" ? "" : (
+          {/* While a new answer loads, the last count stays and dims with the cards below it
+              (round 53 walkthrough). Swapping it for "Searching…" folded this box from 50px to
+              21px on a phone, so every filter change moved the whole list up 29px and, 360ms
+              later, back down. "Searching…" remains for the one case with nothing to show. */}
+          <p
+            className={`flex flex-wrap items-baseline gap-x-2 text-sm text-stone transition-opacity duration-200 ease-out motion-reduce:transition-none ${state === "loading" && result ? "opacity-60" : ""}`}
+            role="status"
+            aria-busy={state === "loading"}
+          >
+            {state === "loading" && !result ? "Searching…" : state === "error" ? "" : (
               <>
                 <strong className="font-display text-[28px] font-semibold leading-none tracking-[-0.025em] tabular-nums text-ink">
                   {(result?.total ?? 0).toLocaleString()}
