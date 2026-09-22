@@ -71,11 +71,12 @@ export const CHAPTERS: Record<FlightShot, Shot> = {
     wide: f(over(-73.96, 41.47, 8), over(-73.93, 41.72, 0), 46),
     tall: f(over(-73.965, 41.43, 11), over(-73.93, 41.7, 0), 64),
   },
-  // Down into the Highlands: over the Peekskill bend, looking up the gorge between Bear Mountain and
-  // Anthony's Nose to Storm King and Breakneck.
+  // Into the Highlands: over the Peekskill bend, looking up the gorge past Bear Mountain and
+  // Anthony's Nose to Storm King and Breakneck, with the moon round in the south-south-east so the
+  // gorge walls facing the camera are the lit ones (looked at: from the west they were silhouettes).
   highlands: {
-    wide: f(over(-73.955, 41.278, 3.2), over(-73.968, 41.405, 0.5), 54, [205, 22]),
-    tall: f(over(-73.952, 41.262, 4.4), over(-73.968, 41.4, 0.5), 70, [205, 22]),
+    wide: f(over(-73.99, 41.3, 5.5), over(-73.96, 41.46, 0.5), 48, [160, 20]),
+    tall: f(over(-73.985, 41.27, 7), over(-73.96, 41.45, 0.5), 66, [160, 20]),
   },
   // Westchester and Rockland across the Tappan Zee, from over the Sound, looking west.
   westchester: {
