@@ -29,7 +29,10 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
           {/* Night (round 53): a person's own words are the one thing set in the serif, in its
               italic, so a quotation reads as a voice and not as more of the page. */}
           <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-ink md:text-2xl night:font-[family-name:var(--font-newsreader)] night:text-[clamp(1.625rem,1.2rem+1.5vw,2.375rem)] night:font-light night:italic night:leading-[1.3] night:tracking-[-0.01em]">
-            &ldquo;{t.quote}&rdquo;
+            {/* Typographic apostrophes in the large italic, where a straight one reads as a typing
+                slip. Here only: the review text is shared with /reviews and /selling, which keep
+                it exactly as it is. */}
+            &ldquo;{t.quote.replace(/'/g, "’")}&rdquo;
           </p>
         </blockquote>
         <div className="mt-5 night:mt-7 night:flex night:items-center night:justify-between night:gap-4 night:md:block">

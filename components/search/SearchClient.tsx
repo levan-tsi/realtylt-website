@@ -1306,10 +1306,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   const size = activeViewportQs ? VIEWPORT_PAGE_SIZE : SEARCH_PAGE_SIZE;
                   const first = (result.page - 1) * size + 1;
                   return (
-                    <span className="text-stone">
-                      {/* The bullet only where the phrase follows on the same line; on a phone
-                          it wraps to a line of its own and a line must not open with a bullet. */}
-                      <span className="max-sm:hidden">· </span>showing {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
+                    <span className="text-stone max-sm:basis-full">
+                      {/* On a phone this is a line of its own, "Showing 1-50": the phrase before it
+                          wraps at some widths and not at others, and a bullet or a comma then
+                          either opened a line or ran the two phrases together. From sm it follows
+                          on the same line after a bullet, as before. */}
+                      <span className="max-sm:hidden">· showing </span>
+                      <span className="sm:hidden">Showing </span>
+                      {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
                     </span>
                   );
                 })()}

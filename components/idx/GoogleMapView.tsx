@@ -814,19 +814,18 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
             centroid. Absent `geocoded` counts as approximate: never claim precision we have
             not measured. */}
         {someApproximate && <span>Some locations approximate</span>}
+        {/* The "N of M" note is a line of the legend now (round 53). As its own card at
+            bottom-9 right-2 it sat over Google's map-view button at 1440 and 1024 (a check
+            measured the overlap), and every other free corner is Google's: the logo
+            bottom-left, fullscreen top-right, the terms line bottom-right. drawnCount (markers
+            actually painted after thinning), not the fetch size: a visitor can count what is on
+            screen, so the note reports exactly that. */}
+        {viewportTotal !== null && drawnCount !== null && viewportTotal > drawnCount && (
+          <span className="basis-full text-ink-soft">
+            {drawnCount.toLocaleString()} of {viewportTotal.toLocaleString()} homes shown. Zoom in for more
+          </span>
+        )}
       </div>
-      {viewportTotal !== null && drawnCount !== null && viewportTotal > drawnCount && (
-        // bottom-9, one value at every width: Google's own copyright/Terms line owns the
-        // bottom-right corner (14px tall at 1440, taller when it wraps on phones) and at
-        // sm:bottom-2 this banner sat on it by a measured 605px². 36px clears the strip with
-        // margin, and with the legend now docked top-left the old phone-only bottom-14 fork
-        // (which existed to clear the legend) has nothing left to clear.
-        // drawnCount (markers actually painted after thinning), not the fetch size — a
-        // visitor can count what is on screen, so the banner reports exactly that.
-        <p className="pointer-events-none absolute bottom-9 right-2 z-[5] rounded-lg border border-line bg-paper/85 px-2.5 py-1.5 text-[12px] text-stone backdrop-blur-sm">
-          {drawnCount.toLocaleString()} of {viewportTotal.toLocaleString()} homes shown. Zoom in for more
-        </p>
-      )}
       <div ref={divRef} className="h-full min-h-96 w-full" />
     </div>
   );
