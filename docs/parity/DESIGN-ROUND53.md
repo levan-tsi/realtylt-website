@@ -126,3 +126,17 @@ works with JavaScript off (a static picture of the lights and a plain form).
    screen shows homes, night map style, result count in the display face.
 7. Photo develop-on-scroll.
 8. Three polish passes at 1440 / 390 / 320, reduced motion, no-JS, keyboard.
+
+## 5. What was built (build pass 1, local commits on `design/futuristic-r53`)
+
+| move | where | measured |
+|---|---|---|
+| Blue-hour hero: map of 15,084 listing lights, the river (Natural Earth, public domain), lights come on N to S, lantern names the town + real count, click = that town's search | `components/home/HeroLights.tsx`, `app/api/lights` (static, hourly, our DB only), `lib/idx/lights.ts` | payload ~72KB brotli; intro p95 66.7ms -> 16.8ms at 1440 after the accumulate rewrite; throttled-phone max frame 733ms -> 267ms (a no-lights control run carries 9 of the remaining long frames) |
+| Night tokens + Bricolage, scoped by `.nocturne`; `night:` variant; `.daylight` escape | `app/globals.css`, `lib/site.ts` NIGHT_ROUTES | every other page byte-identical; tests pin the scope (`lib/night.test.ts`) |
+| Header over the hero, light logo, sentence-case nav; footer on night | `Header.tsx`, `FooterShell.tsx`, `public/logo-realtylt-night.png` | |
+| Home sections re-set: intake tiles, sentence-case headings, serif-italic testimonial, ledger figures in display size, ghost links on the text edge | `app/page.tsx`, `TestimonialBand`, `Button` | |
+| "Where we work": a tile per area drawing its own lights + count | `components/home/AreaLights.tsx` | Queens 5,721 / Manhattan 369 / Staten Island 107 ... |
+| /search: night bar, phone "Filters" fold, swipeable chips + quick filters, night basemap + moonlight chips, night "coming soon" tile, popups kept inside the map | `SearchClient.tsx`, `GoogleMapView.tsx`, `map-shared.ts` | phone: first home ~575px down (was below 900px); overflow 0 at 390 / 320 |
+| Photos develop on scroll (CSS view timeline) | `app/globals.css` | no JS; off under reduced motion |
+| No-JS picture of the lights | `scripts/make-lights-poster.mjs`, `public/images/hero/lights-poster.webp` | 218KB, loaded only inside `<noscript>` |
+| Bugs found on the way | pre-hydration typing wiped (live), invisible night focus ring on the hero search, white-on-white Save search field, the carousel advertising the OLD /search | each fixed + verified |
