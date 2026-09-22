@@ -24,7 +24,7 @@ const TMP = "docs/why-carousel/_raw";
 const OUT = "public/images/why";
 fs.mkdirSync(TMP, { recursive: true });
 
-const BASE = "http://localhost:3100";
+const BASE = process.env.BASE || "http://localhost:3100";
 
 /** Each slide: where to go, what to bring into frame, and the asset name. */
 const SLIDES = [

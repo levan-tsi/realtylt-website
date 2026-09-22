@@ -92,7 +92,7 @@ export function SaveSearchDialog({
 
   return (
     <div
-      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm sm:items-center sm:py-6"
+      className="rlt-fade-in fixed inset-0 z-[1000000] flex items-end justify-center bg-ink/70 px-4 py-4 backdrop-blur-sm night:bg-night-deep/80 sm:items-center sm:py-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -103,7 +103,7 @@ export function SaveSearchDialog({
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-paper text-ink shadow-float"
+        className="rlt-pop-in relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-paper text-ink shadow-float night:border night:border-line night:bg-mist"
       >
         <button
           type="button"
@@ -126,7 +126,7 @@ export function SaveSearchDialog({
             <h2 id={titleId} className="t-h3 mt-4 text-ink">Search saved.</h2>
             <p className="mx-auto mt-2 max-w-xs t-small leading-relaxed text-stone">
               {signedIn
-                ? "It's on your account — we'll alert you when new homes match."
+                ? "It's on your account. We'll alert you when new homes match."
                 : "It's saved to this device. Sign in to sync it everywhere and get email alerts."}
             </p>
             <div className="mt-6 flex flex-col items-center gap-3">
@@ -137,7 +137,7 @@ export function SaveSearchDialog({
                     onClose();
                     onSignIn();
                   }}
-                  className="w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:w-auto"
+                  className="w-full rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper night:text-[15px] night:font-semibold night:normal-case night:tracking-normal transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:w-auto"
                 >
                   Sign in to sync + get alerts
                 </button>
@@ -162,14 +162,14 @@ export function SaveSearchDialog({
             {summary.length > 0 && (
               <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Filters in this search">
                 {summary.map((s) => (
-                  <li key={s} className="rounded-full bg-mist px-2.5 py-1 text-xs text-ink-soft">
+                  <li key={s} className="rounded-full bg-mist px-2.5 py-1 text-xs text-ink-soft night:border night:border-line night:bg-paper night:text-[13px]">
                     {s}
                   </li>
                 ))}
               </ul>
             )}
 
-            <label htmlFor="save-search-name" className="mt-5 block text-[11px] font-bold uppercase tracking-[0.14em] text-stone">
+            <label htmlFor="save-search-name" className="mt-5 block text-[11px] font-bold uppercase tracking-[0.14em] text-stone night:text-[14px] night:font-medium night:normal-case night:tracking-normal">
               Search name
             </label>
             <input
@@ -179,7 +179,7 @@ export function SaveSearchDialog({
               onChange={(e) => setName(e.target.value)}
               maxLength={80}
               placeholder="Name this search"
-              className="mt-1.5 w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
+              className="mt-1.5 w-full rounded-xl border border-line-strong bg-white px-3.5 py-3 text-base text-ink-soft night:bg-paper night:text-ink transition-colors placeholder:text-stone focus:border-ink/50 focus:outline-none focus:ring-1 focus:ring-ink/40"
             />
 
             {accountsEnabled && !signedIn && (
@@ -203,13 +203,13 @@ export function SaveSearchDialog({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-stone transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-[0.1em] text-stone night:text-[15px] night:font-medium night:normal-case night:tracking-normal transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="rounded-xl bg-ink px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-paper night:text-[15px] night:font-semibold night:normal-case night:tracking-normal transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Save search
               </button>
