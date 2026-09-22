@@ -1,19 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Photograph coming soon">
-  <!-- The night cut of coming-soon-notext.svg (round 53), for the map popup on the blue-hour
-       /search when a photo cannot be shown. The wordmark is set as the site sets it now: sentence
-       case, no tracking, a plain system sans (an SVG image cannot reach the page's web fonts). -->
-  <defs>
-    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#15294a"/>
-      <stop offset="1" stop-color="#0f2036"/>
-    </linearGradient>
-  </defs>
-
-  <rect width="1000" height="1000" fill="url(#wash)"/>
+  <!-- The night cut of coming-soon-notext.svg, for the map popup on /search when a photo cannot
+       be shown. The wordmark is set as the site sets it now: sentence case, no tracking, a plain
+       system sans (an SVG image cannot reach the page's web fonts).
+       ROUND 54: it was a navy gradient (#15294a -> #0f2036) with #7d8ea5 type — round 53's
+       palette, left behind when the pages went black and white, and on a map of white chips and
+       warm lights it was the one blue rectangle on screen. Flat night raise (#111111, the same
+       surface the popup card itself sits on) with the page's muted grey. Flat rather than a new
+       wash: the site does not paint gradients, and a placeholder is the last place to start. -->
+  <rect width="1000" height="1000" fill="#111111"/>
 
   <text x="500" y="512" text-anchor="middle"
         font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
-        font-size="34" font-weight="600" fill="#7d8ea5">
+        font-size="34" font-weight="600" fill="#9b9b96">
     RealtyLT
   </text>
 </svg>

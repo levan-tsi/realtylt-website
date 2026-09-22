@@ -198,6 +198,9 @@ describe("focus rings the night would otherwise swallow (round 53 check)", () =>
   it("leaves ring room inside /search's two phone scrollers, which clip what paints outside them", () => {
     const rows = read("components/search/SearchClient.tsx").match(/className="-mx-4 flex [^"]*overflow-x-auto[^"]*"/g) ?? [];
     expect(rows.length).toBe(2);
-    for (const row of rows) expect(row).toMatch(/max-sm:-my-1 max-sm:py-1/);
+    // The room is the same 4px in and 4px back out; the two rows stop scrolling at different
+    // widths (round 54 took the county chips to 768, where their seven pills stop wrapping to
+    // two rows), so the rule each one needs is the one that matches its own breakpoint.
+    for (const row of rows) expect(row).toMatch(/max-(sm|md):-my-1 max-(sm|md):py-1/);
   });
 });

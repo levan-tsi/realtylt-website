@@ -156,8 +156,15 @@ fix; map popups kept inside the map; the scoped-theme mechanism; the packed ligh
 
 ## 9. Open owner decisions carried from round 53
 
-1. /search on a phone: the list shows 50, then 150 when the map mounts. Recommendation for phase 5:
-   on a phone the list does not follow the map until the visitor moves the map.
+1. ~~/search on a phone: the list shows 50, then 150 when the map mounts.~~ **SETTLED AND BUILT in
+   phase 5.** On a phone the list does not follow the map until the visitor MOVES it: the map's own
+   first frame is remembered, not adopted, and any later box that differs from it is a move
+   (`components/search/map-follow.ts`, unit-tested; engine-agnostic because neither Google's nor
+   Leaflet's idle event says whether a human caused it). Measured on production builds at 390 with
+   `?page=3`: before, scrolling to the map silently replaced page 3's fifty homes with a hundred and
+   fifty and dropped `page=3` from the URL; after, both survive, and one drag or wheel-zoom hands the
+   list over exactly as a laptop does. A laptop is untouched — there the map is beside the list and
+   scoping it is the owner's own round-23 ask.
 2. The listing page stays the day design (out of scope by his instruction).
 3. The home footer form repeats the intake's contact fields.
 4. A county chip keeps a typed town in the box.

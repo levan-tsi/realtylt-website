@@ -156,7 +156,16 @@ export function ListingCard({
 
   if (variant === "plain") {
     return (
-      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card">
+      /* ROUND 54 — THE CARD IS A CONTROL AND IT HAD NO FOCUS STYLE. It is the most numerous one on
+         /search (fifty of them), and tabbing through the results moved a focus nobody could see: the
+         only change was the card lifting 4px on a dark ground, which is not an indicator you can
+         find. The ring is drawn on the CARD, not on the overlay link inside it — this box is
+         `overflow-hidden`, which clips a descendant's outline away entirely (measured: the first
+         attempt rendered nothing), while an element's own outline is never clipped by its own
+         overflow. It is the site's ring colour, so it is navy on a day page and moonlight on a night
+         one (18.2:1 there), and the 4px it needs inside the map view's scrolling results panel is the
+         same 4px that panel already reserves. Nothing changes at rest. */
+      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card has-[>a:focus-visible]:outline-2 has-[>a:focus-visible]:outline-offset-2 has-[>a:focus-visible]:outline-river">
         {/* The overlay link carries its name as TEXT, not aria-label: a crawler reads anchor
             text, img alt or title and nothing else, so an aria-label-only anchor told Google
             nothing about the listing it points at (seo-audit.mjs ANCHORS). Same accessible
@@ -263,8 +272,17 @@ export function ListingCard({
   }
 
   return (
-    <article className="lift group relative overflow-hidden rounded-2xl bg-white">
-      <Link href={listingPath(l)} className="absolute inset-0 z-10">
+    /* ROUND 54 — THE CARD IS A CONTROL AND IT HAD NO FOCUS STYLE. It is the most numerous one on
+       /search (fifty of them), and tabbing through the results moved a focus nobody could see: the
+       only change was the card lifting 4px on a dark ground, which is not an indicator you can
+       find. The ring is drawn on the CARD, not on the overlay link inside it — this box is
+       `overflow-hidden`, which clips a descendant's outline away entirely (measured: the first
+       attempt rendered nothing), while an element's own outline is never clipped by its own
+       overflow. It is the site's ring colour, so it is navy on a day page and moonlight on a night
+       one (18.2:1 there), and the 4px it needs inside the map view's scrolling results panel is the
+       same 4px that panel already reserves. Nothing changes at rest. */
+    <article className="lift group relative overflow-hidden rounded-2xl bg-white has-[>a:focus-visible]:outline-2 has-[>a:focus-visible]:outline-offset-2 has-[>a:focus-visible]:outline-river">
+        <Link href={listingPath(l)} className="absolute inset-0 z-10">
         <span className="sr-only">{`${l.address}, ${l.city}, ${formatPrice(l.price)}`}</span>
       </Link>
       {/* Live home-rail tiles are portrait — measured 283×450 (aspect ≈ 63/100) @1280 */}

@@ -2,14 +2,24 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { SITE } from "@/lib/site";
+import { isNightRoute, SITE } from "@/lib/site";
 
 type Notice = { kind: "error" | "info"; text: string } | null;
 
 export function SignInModal() {
+  /** THE DOOR HAS TO BE ON THE SAME BUILDING (round 54). This modal is mounted by AuthProvider in
+   * the root layout, so it sits OUTSIDE the page's `.nocturne` wrapper — which meant that on the
+   * two night routes "Save search -> Sign in to sync" opened a white card with navy links and an
+   * all-caps black button, floating on a black page. It was the loudest thing on /search.
+   * The panel carries the class itself on those routes, exactly as the suggestion list does when
+   * it portals to <body> (LocationSuggest): every token inside re-points at once, so the fields,
+   * the buttons and the type all take the night's own values without a second design. The
+   * BACKDROP stays outside it on purpose — `bg-ink/60` inside the scope would be a white scrim. */
+  const night = isNightRoute(usePathname());
   const {
     modalOpen,
     modalMode,
@@ -177,13 +187,17 @@ export function SignInModal() {
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         onKeyDown={onPanelKeyDown}
-        className="relative w-full max-w-[400px] rounded-2xl bg-white p-7 shadow-float"
+        className={`relative w-full max-w-[400px] rounded-2xl p-7 shadow-float ${
+          night ? "nocturne border border-line bg-mist text-ink" : "bg-white"
+        }`}
       >
         <button
           type="button"
           onClick={closeSignIn}
           aria-label="Close"
-          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-xl leading-none text-stone transition-colors hover:bg-mist hover:text-ink"
+          // night:hover:bg-ink/10 — the night panel IS bg-mist, so the day's mist hover had
+          // nothing to change; a wash of the page's own white is the step up from it.
+          className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-xl leading-none text-stone transition-colors hover:bg-mist hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river night:hover:bg-ink/10"
         >
           ×
         </button>
@@ -219,7 +233,7 @@ export function SignInModal() {
                 type="button"
                 onClick={() => onOAuth("google")}
                 disabled={busy}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-paper px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river disabled:opacity-50 night:font-semibold"
               >
                 <svg aria-hidden viewBox="0 0 48 48" className="h-[18px] w-[18px]">
                   <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.3 13.3 17.6 9.5 24 9.5z" />
@@ -239,7 +253,7 @@ export function SignInModal() {
                 type="button"
                 onClick={() => onOAuth("apple")}
                 disabled={busy}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-white px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-paper px-5 py-3 text-sm font-bold text-ink-soft transition-colors hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river disabled:opacity-50 night:font-semibold"
               >
                 <svg aria-hidden viewBox="0 0 384 512" className="h-[18px] w-[18px]" fill="currentColor">
                   <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
@@ -318,8 +332,11 @@ export function SignInModal() {
               role={notice.kind === "error" ? "alert" : "status"}
               className={`rounded-xl px-3 py-2 text-sm ${
                 notice.kind === "error"
-                  ? "bg-red-50 text-red-700"
-                  : "bg-mist text-ink-soft"
+                  // Night keeps it monochrome: a pale pink box is the one piece of colour a
+                  // page of black, white and one warm light cannot absorb, and the words are
+                  // doing the work anyway (role=alert announces them either way).
+                  ? "bg-red-50 text-red-700 night:bg-paper night:text-ink night:ring-1 night:ring-line-strong"
+                  : "bg-mist text-ink-soft night:ring-1 night:ring-line"
               }`}
             >
               {notice.text}

@@ -150,14 +150,18 @@ for (const s of SLIDES) {
     .lid {
       width: 700px; margin: 0 auto; background: #16181d;
       border-radius: 12px 12px 4px 4px; padding: 9px 8px 14px;
-      box-shadow: 0 18px 28px -12px rgba(16, 44, 84, 0.3);
+      /* ROUND 54: the shadow hue was rgba(16,44,84) — the site's RIVER NAVY. Composited onto a
+         transparent canvas and dropped on the home page's black ground, it read as a blue halo
+         around the laptop: on a page whose only colour is a warm light, the marketing art was
+         glowing blue. It is the site's own shadow hue now (--shadow-lift, rgb(16 24 32)). */
+      box-shadow: 0 18px 28px -12px rgb(16 24 32 / 0.45);
     }
     .cam { width: 4px; height: 4px; border-radius: 50%; background: #34383f; margin: 0 auto 5px; }
     .screen { border-radius: 4px; overflow: hidden; background: #ffffff; line-height: 0; }
     .screen img { width: 100%; display: block; }
     .base {
       width: 780px; height: 9px; background: #c3c8d0; border-radius: 0 0 7px 7px;
-      position: relative; box-shadow: 0 10px 16px -8px rgba(16, 44, 84, 0.28);
+      position: relative; box-shadow: 0 10px 16px -8px rgb(16 24 32 / 0.42);
     }
     .base::after {
       content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%);

@@ -486,8 +486,13 @@ body {
      night ink, the chosen one in porchlight, dots ringed in night so they sit on the map. */
   --rlt-chip-bg: #f2f2ee;
   --rlt-chip-ink: #050505;
-  --rlt-chip-active: #050505;
-  --rlt-chip-active-ink: #f2f2ee;
+  /* Round 54: the CHOSEN home is the one that is lit. Warm face, night ink (12.6:1), a night
+     outline so it separates from the basemap, and the halo — the same mark the plain dots wear,
+     one step brighter. Before this the active chip was black-on-black-basemap with a white
+     outline, which read as a chip that had gone OUT rather than one that had come on. */
+  --rlt-chip-active: var(--color-window);
+  --rlt-chip-active-ink: #050505;
+  --rlt-chip-active-shadow: 0 0 0 2px #050505, 0 0 22px 2px rgb(246 199 129 / 0.55), 0 3px 12px rgb(0 0 0 / 0.5);
   --rlt-dot-ring: #050505;
   /* ...and the map popup's action, built outside React, sets its label in sentence case. */
   --rlt-pop-case: none;
@@ -507,6 +512,21 @@ body {
   --rlt-pop-text: 13px;
   --rlt-pop-small: 12px;
 }
+/* ── /search only (round 54). `color-scheme: dark` hands the browser its own selection colour,
+   and on this page you meet it immediately: the Save-search dialog opens with the name already
+   selected, so the first thing a visitor sees in it is a band of Chrome's blue-green on a page
+   that has no colour but a warm light. Selecting a price or an address in the results does the
+   same. The page picks instead: its own white, with the night as the ink. Scoped to this route
+   rather than to `.nocturne`, because the home page is finished and is not mine to re-tint. */
+.rlt-search ::selection {
+  background-color: var(--color-moon);
+  color: var(--color-night);
+}
+.rlt-search::selection {
+  background-color: var(--color-moon);
+  color: var(--color-night);
+}
+
 /* The ground itself, in @layer base so a utility on the same element (the home header's
    bg-transparent over the hero) still wins; the token re-points above stay unlayered. */
 @layer base {
@@ -957,7 +977,9 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .nocturne select.appearance-none {
   padding-block: 14px;
   padding-inline-end: 2.5rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' stroke='%2393a3b8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  /* %239b9b96 = haze. It was %2393a3b8, round 53's NAVY haze, left behind when the palette went
+     black and white — a blue-grey arrow on every select of every night page (round 54). */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' stroke='%239b9b96' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 12px 12px;
@@ -988,7 +1010,10 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 .nocturne input[type="checkbox"]:checked {
   border-color: var(--color-porchlight);
-  background: var(--color-porchlight) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.4l2.8 2.8 5.6-6.2' stroke='%230b1a2e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+  /* %23050505 = night. The tick was drawn in %230b1a2e, round 53's NAVY ground: on the white box
+     the palette change left behind, a checked feature filter in the MORE panel wore a blue tick
+     (round 54). */
+  background: var(--color-porchlight) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.4l2.8 2.8 5.6-6.2' stroke='%23050505' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
 }
 @media (forced-colors: active) {
   .nocturne input[type="checkbox"] {
@@ -1469,6 +1494,14 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .rlt-price-chip:focus-visible .rlt-chip-face {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a !important;
 }
+/* The day ring is white-then-azure. On the night basemap that azure is a blue no other control
+   on the page uses, and it measured 1.3:1 against the ground beside it — a ring nobody can find
+   is not a ring. Night gets the page's own white, held off the chip by a night-coloured inner
+   line so it reads on a white chip and on a warm one alike (round 54). */
+.nocturne .rlt-price-chip:focus-visible .rlt-chip-face,
+.nocturne .leaflet-marker-icon:focus-visible .rlt-price-chip {
+  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #f2f2ee !important;
+}
 /* Map dots (Zillow-style thinning, round 23): a home whose price pill has no pixel room wears
    less ink — a 12px mark centred in a 24px hit target (the tap-target gate binds on a map
    too). Same colour language as .rlt-price-chip so a dot reads as "the same thing, smaller":
@@ -1490,9 +1523,11 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   width: 12px;
   height: 12px;
   border-radius: 9999px;
-  background: var(--dot-bg, var(--rlt-chip-bg, #000));
+  /* --rlt-dot-bg (round 54) sits between the per-marker override and the chip colour so the
+     night map can make a plain dot a LIGHT without touching the day map or the price chips. */
+  background: var(--dot-bg, var(--rlt-dot-bg, var(--rlt-chip-bg, #000)));
   border: 2px solid var(--dot-ring, var(--rlt-dot-ring, #fff));
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+  box-shadow: var(--rlt-dot-shadow, 0 1px 4px rgb(0 0 0 / 0.35));
 }
 @media (hover: hover) and (pointer: fine) {
   .rlt-map-dot:hover {
@@ -1516,6 +1551,34 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 .rlt-map-dot:focus-visible::before {
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1c729a;
+}
+
+/* ── ROUND 54: ON THE NIGHT MAP, A HOME FOR SALE IS A LIGHT.
+   That is the home page's own language — every listing there is a warm point on the black
+   valley — and /search's map was speaking a different one: a neutral white dot with a black
+   ring, the same mark a grey UI would draw. The price chips stay white, because a price has to
+   be READ and warm type on a dark basemap is a legibility trade nobody wins; the plain dot, the
+   dot that IS just "a home is here", carries the light instead, with the faint halo a light
+   has. The glow's source is the thing itself, which is the rule the site holds itself to.
+   Saved and Pending keep their own marks (a red ring, a grey ring on white): they are saying
+   something the colour would drown out. */
+.nocturne {
+  --rlt-dot-bg: var(--color-window);
+  --rlt-dot-shadow: 0 0 0 1px rgb(5 5 5 / 0.55), 0 0 9px -1px rgb(246 199 129 / 0.75);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nocturne .rlt-map-dot:hover::before {
+    box-shadow: 0 0 0 1px rgb(5 5 5 / 0.55), 0 0 16px 1px rgb(246 199 129 / 0.9);
+  }
+}
+.nocturne .rlt-map-dot:active::before {
+  box-shadow: 0 0 0 1px rgb(5 5 5 / 0.55), 0 0 16px 1px rgb(246 199 129 / 0.9);
+}
+/* The day map's ring is white-then-blue, which on the night basemap is a blue nobody else on
+   this page uses and only 1.3:1 against the ground around it. Night: the page's own white ring,
+   held off the light by a night-coloured inner ring, so it reads at 15:1 on the basemap. */
+.nocturne .rlt-map-dot:focus-visible::before {
+  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #f2f2ee, 0 0 16px 1px rgb(246 199 129 / 0.7);
 }
 
 /* THE PREVIEW ARRIVES FROM THE PIN IT BELONGS TO.
@@ -1557,12 +1620,16 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 /* The shell and its tail wear the card's own ground on a blue-hour page (round 53); Google
    paints them white otherwise. The border is the page's hairline so the card sits ON the map. */
+/* ROUND 54: these were round 53's NAVY (#122640 shell, #34496a ring) and survived the palette
+   change — so every map preview on a black-and-white page opened inside a blue box, with a blue
+   tail pointing at the pin. They now read the popup's own tokens, which the .nocturne block
+   already sets to the night's raised surface and hairline. */
 .nocturne .gm-style .gm-style-iw-c {
-  background: #122640;
-  box-shadow: 0 0 0 1px #34496a, 0 18px 40px -18px rgb(16 24 32 / 0.8);
+  background: var(--rlt-pop-bg);
+  box-shadow: 0 0 0 1px var(--rlt-pop-frame), 0 18px 40px -18px rgb(0 0 0 / 0.85);
 }
 .nocturne .gm-style .gm-style-iw-tc::after {
-  background: #122640;
+  background: var(--rlt-pop-bg);
 }
 /* Google's own map buttons (fullscreen, the camera/zoom controls) are white squares with dark
    glyphs; on the night basemap they were the brightest things on the map. Inverted and turned

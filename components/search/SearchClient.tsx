@@ -17,6 +17,7 @@ import { boundsForCounty, SERVED_REGION } from "@/components/idx/county-bounds";
 // the server render so both sides ask the feed the same question.
 import { NEW_LISTING_DAYS } from "@/lib/idx/query";
 import { LISTED_DAY_OPTS, snapListedDays } from "@/components/search/listed-days";
+import { followsMap, NO_FOLLOW, settleBox } from "@/components/search/map-follow";
 import { SERVED_AREAS, SITE, type CountySlug } from "@/lib/site";
 import { listingPath } from "@/lib/idx/listing-url";
 import { saveResultSet } from "@/lib/idx/result-set";
@@ -466,6 +467,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // when a fetch LANDS, never when a filter is merely chosen, so the map refits with the new
   // place's pins already in hand rather than the old ones.
   const [resultPlace, setResultPlace] = useState(() => placeKey(filters));
+  /** Was the answer ON SCREEN produced by a map-scoped query? (round 54.)
+   *
+   * The count line used to read this off `activeViewportQs`, which is a property of the QUESTION
+   * being asked, not of the answer being shown — and the two are apart for the 350ms debounce
+   * plus a round trip every time the map moves. In that window the row said "N homes in this map
+   * area" over a list that was still the place-scoped one, and worse, it computed the range from
+   * the wrong page size: on page 2 of a 50-per-page search, fifty homes were labelled "showing
+   * 151-200". The server's first render is never map-scoped, so this starts false. */
+  const [resultScoped, setResultScoped] = useState(false);
   // The map's settled viewport, tagged with the place it was showing when it settled. The tag
   // is the validity check: a box captured over Dutchess must not scope a brand-new Queens
   // search (results would be Queens ∩ Dutchess-viewport = nothing) — a stale box simply goes
@@ -475,20 +485,54 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   placeRef.current = placeKey(filters);
   const viewportRef = useRef(viewport);
   viewportRef.current = viewport;
+  // Is the map BELOW the list rather than beside it? components/search/map-follow.ts has the
+  // whole argument; the short version is that a phone's list must not silently re-scope itself
+  // to a viewport the visitor has not looked at, let alone touched. Starts false so the server
+  // render and the first client render agree (hydration), and the map cannot report a box
+  // before this effect has run.
+  const [narrow, setNarrow] = useState(false);
+  const narrowRef = useRef(false);
+  narrowRef.current = narrow;
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const sync = () => setNarrow(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  const [follow, setFollow] = useState(NO_FOLLOW);
+  const followRef = useRef(follow);
+  followRef.current = follow;
+  // A new place means the map is about to reframe itself, so whatever the visitor did to the
+  // old frame says nothing about the new one. Keyed on the place the RESULTS are showing —
+  // the same key the map refits on (fitKey) — so the reset and the refit happen together.
+  useEffect(() => {
+    setFollow(NO_FOLLOW);
+  }, [resultPlace]);
   const onMapBounds = useCallback((b: MapBounds) => {
     const qs = `north=${b.north}&south=${b.south}&east=${b.east}&west=${b.west}`;
     const prev = viewportRef.current;
     if (prev && prev.place === placeRef.current && prev.qs === qs) return; // settle, no movement
+    const before = followRef.current;
+    const after = settleBox(before, qs);
+    if (after !== before) {
+      followRef.current = after;
+      setFollow(after);
+    }
     setViewport({ place: placeRef.current, qs });
-    // A moved viewport is a new question — page 1 of it is the only honest answer. (This also
-    // runs on the map's first settle, so a ?page=3 deep link resets once the map takes over:
-    // that page belonged to the place-scoped list, which the map view no longer shows.)
-    setFilters((f) => (f.page === 1 ? f : { ...f, page: 1 }));
+    // A moved viewport is a new question — page 1 of it is the only honest answer. Only when the
+    // list will actually ADOPT the box, though: on a phone the map's own opening frame changes
+    // nothing on screen, so resetting the page there was what broke a ?page=3 deep link and the
+    // Back button.
+    if (followsMap(narrowRef.current, after)) setFilters((f) => (f.page === 1 ? f : { ...f, page: 1 }));
   }, []);
   // A viewport that matches the CURRENT place scopes the grid (map view only — the grid view
-  // has no map to agree with). This string is also the fetch effect's dependency.
+  // has no map to agree with), and on a phone only once the visitor has moved the map. This
+  // string is also the fetch effect's dependency.
   const activeViewportQs =
-    filters.view === "map" && viewport && viewport.place === placeKey(filters) ? viewport.qs : null;
+    filters.view === "map" && viewport && viewport.place === placeKey(filters) && followsMap(narrow, follow)
+      ? viewport.qs
+      : null;
   const [saveOpen, setSaveOpen] = useState(false);
   const { saveSearch, signedIn, favorites, toggleFavorite } = useSaved();
   const { openSignIn, enabled: accountsEnabled } = useAuth();
@@ -605,6 +649,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           if (cancelled) return;
           setResult(data);
           setResultPlace(placeKey(filters));
+          // …tagged with the scope THIS request was made under, so the row describing it cannot
+          // run ahead of it (see resultScoped).
+          setResultScoped(!!activeViewportQs);
           setState("ready");
         })
         .catch(() => !cancelled && setState("error"));
@@ -735,13 +782,22 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   const renderChip = (slug: CountySlug) => {
     const area = SERVED_AREAS.find((c) => c.slug === slug)!;
     const active = filters.county === slug;
+    // ROUND 54, the noise the orchestrator caught at 1440: seven pills reading "Orange County,
+    // NY", "Dutchess County, NY", "Westchester County, NY"… — 21 of the row's 28 words were the
+    // same two words repeated, so the eye had to strip them off every chip to find the one
+    // thing that differs. The names alone are unambiguous in a row headed "Filter by county",
+    // and the full name stays as the button's accessible name, so a screen reader still hears
+    // "Orange County, New York" rather than a bare word. The five borough chips read their own
+    // names, which never carried "County" anyway.
+    const short = area.name.replace(/ County$/, "");
     return (
       <li key={slug}>
         <button
           type="button"
           aria-pressed={active}
+          aria-label={`${area.name}, New York`}
           onClick={() => apply({ county: active ? "" : slug })}
-          className={`whitespace-nowrap rounded-full border px-4 py-2 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             // Three raw literals lived here — #555555 and #e2e6ea — and they were the only
             // off-token colour the rubric found painted on /search (D5, x6). `stone` is the
             // site's secondary-text token and was picked precisely so it clears AA on mist
@@ -752,7 +808,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             active ? "border-ink bg-ink text-paper" : "border-line text-ink-soft hover:border-ink hover:text-ink"
           }`}
         >
-          {area.name}, NY
+          {short}
         </button>
       </li>
     );
@@ -901,9 +957,23 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           )}
         </button>
 
-        <div className="flex min-w-36 grow basis-40 items-center gap-2">
-          {/* Live prefixes the place field with a map pin. */}
-          <svg aria-hidden viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0 text-stone" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
+        {/* ROUND 54 — THE SAME INSTRUMENT AS THE HOME PAGE'S HERO. The field and its action were
+            two separate boxes at opposite ends of this bar, with six dropdowns between them, so
+            the control a visitor arrives from the home page holding was not on the page they
+            landed on. It is now literally the same object: `search-instrument`, the round-27
+            geometry the shared test pins (16px body = 8px inset + 8px gap around the 8px action),
+            the same field and the same white action. A searcher who types in the hero and lands
+            here finds their own box still under their hands.
+            On a phone it takes the whole second line, which is also what retired the third row.
+            data-suggest-anchor: the suggestion list hangs off THIS box rather than off the whole
+            1,400px bar (see LocationSuggest's measure effect). */}
+        <div
+          data-suggest-anchor
+          className="search-instrument flex w-full min-w-0 items-center gap-2 rounded-2xl border border-line-strong bg-paper p-2 transition-colors focus-within:border-stone hover:border-stone/70 has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-offset-2 has-[input:focus-visible]:outline-porchlight sm:w-auto sm:min-w-[16rem] sm:flex-1"
+        >
+          {/* Live prefixes the place field with a map pin. Dropped below 360px: it is decoration,
+              and its 26px is the difference between "Town, zip or address" and "Town, zip or ad". */}
+          <svg aria-hidden viewBox="0 0 20 20" className="ml-1 h-[18px] w-[18px] shrink-0 text-stone max-[359px]:hidden" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
             <path d="M10 17.5s5.5-4.9 5.5-9a5.5 5.5 0 1 0-11 0c0 4.1 5.5 9 5.5 9Z" />
             <circle cx="10" cy="8.4" r="2.1" />
           </svg>
@@ -913,9 +983,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <LocationSuggest
             id="search-q"
             key={filters.city || filters.q}
+            anchor="form"
             defaultValue={filters.city || filters.q}
             placeholder="Town, zip or address"
-            className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-[15px] text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
+            className="w-full bg-transparent px-1 py-1.5 text-[16px] text-ink placeholder:text-stone focus:outline-none"
             /* PICKING a place is a different act from typing one. A county picks its first-class
                filter, a city picks an exact city, and a ZIP stays free text (search_hay covers
                it exactly anyway). Each clears the other two so the three can never stack. */
@@ -927,6 +998,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   : apply({ q: s.q, city: "" })
             }
           />
+          <button
+            type="submit"
+            className={`shrink-0 rounded-lg bg-ink px-5 py-2.5 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river max-[359px]:px-4`}
+          >
+            Search
+          </button>
         </div>
 
         {/* On a phone these six sit in two aligned columns instead of wrapping ragged — measured
@@ -988,14 +1065,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         )}
         </div>
 
-        {/* The three actions travel together. MORE opens the panel, SEARCH commits the text
-            field, SAVE SEARCH sets up the alert — and before this they could split across a
-            wrap: at 1440 SAVE SEARCH sat alone on a second line under a full row, which reads
-            as an accident rather than a decision. Grouped and pushed right, the bar is filters
-            on the left and actions on the right at every width, and when they do wrap they
-            wrap as one right-aligned cluster. */}
-        <div className="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto sm:flex-nowrap">
-        {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity. */}
+        {/* MORE — advanced filters (garage / sqft / lot / year / tax + photos). Live parity.
+            It no longer travels in an action cluster with SEARCH and SAVE SEARCH: SEARCH moved
+            into the instrument above (where the thing it acts on is), and SAVE SEARCH moved to
+            the results row beside Saved and Plan — it is an action ABOUT the answer, not one
+            that asks the question. On a phone, taking both out of the bar is what let the
+            location field stop costing a third row before the first home. */}
         <button
           type="button"
           aria-expanded={moreOpen}
@@ -1023,27 +1098,6 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             with it). Both carry the same 2px border so the two boxes are exactly the same
             height — the outline treatment is the site's existing secondary button, the one
             "Clear All Filters" already uses. */}
-        <button
-          type="submit"
-          className={`grow rounded-xl border border-ink bg-ink px-4 py-2 text-[15px] font-semibold text-paper ${PRESS} hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0`}
-        >
-          Search
-        </button>
-        <button
-          type="button"
-          onClick={() => setSaveOpen(true)}
-          className={`inline-flex items-center gap-2 rounded-xl border border-line-strong bg-transparent px-3.5 py-2 text-[15px] font-medium text-ink ${PRESS} hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
-        >
-          {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
-              for new matches, which is what a bell reads as (the heart means "favorite"
-              and is already the card action). */}
-          <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
-            <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
-          </svg>
-          Save search
-        </button>
-        </div>
       </form>
 
       {/* ── MORE panel: advanced filters. In-flow (pushes results down) so it stays keyboard-
@@ -1226,7 +1280,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         {/* max-sm:py-1 / -my-1: a scroller (and its mask) clips what paints outside it, so a
             focused chip's ring lost its top and bottom. 4px of room inside, taken back outside:
             the row sits where it did (round 53 check). */}
-        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 max-sm:-my-1 max-sm:py-1 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:[mask-image:none]" aria-label="Filter by county">
+        {/* The swipeable row now runs to 768, not 640 (round 54). At 640 the seven chips wrapped
+            to two rows — 46px of extra chrome at the one width where the page still has no map
+            beside it to justify it — while one scrolling row is exactly as usable there as it is
+            on a phone. Measured at 640: first card 570px -> 524px. */}
+        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 max-md:-my-1 max-md:py-1 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:[mask-image:none]" aria-label="Filter by county">
           {COUNTY_CHIPS.map(renderChip)}
           <li>
             <button
@@ -1234,7 +1292,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               aria-expanded={showBoroughs}
               aria-controls="borough-chips"
               onClick={() => setBoroughsOpen((o) => !o)}
-              className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+              className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                 boroughActive
                   ? "border border-ink bg-ink text-paper"
                   : "border border-line text-ink-soft hover:border-ink hover:text-ink"
@@ -1261,9 +1319,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         )}
       </div>
 
-      {/* ── Result meta row — live: light gray strip, "N listings found" + quick filter left,
-          Sort By + view toggle right */}
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
+      {/* ── Result meta row: the count and what it is on the left, sort and view on the right.
+          ROUND 54 — no fill. It was a second grey box stacked under the filter bar's, and the
+          home page this route now belongs to has no grey boxes at all: there a count is set in
+          the display face straight onto the black, with a hairline where a rule is needed. The
+          count is the only CONTENT on this row, so it reads better as the page's headline than
+          as a label inside a tray, and losing the fill also lifts the muted line from 6.6:1 on
+          #111111 to 7.3:1 on the ground. The controls keep their own edges, so nothing floats. */}
+      <div data-meta-row className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-b border-line pb-3 max-sm:gap-y-2">
         {/* w-full min-w-0 on a phone: the sideways-scrolling row inside sizes itself from THIS
             box, and a content-sized box let it widen the document by 129px at 390. */}
         <div className="flex w-full min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:w-auto">
@@ -1295,14 +1358,29 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                     on it. "active" is also the word on the control beside it, so the page
                     uses one vocabulary for one thing. */}
                 <span className="text-ink">
-                  {activeViewportQs ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
+                  {resultScoped ? "homes in this map area" : hasActiveFilters ? "listings found" : "active listings"}
                 </span>
                 {/* lg:hidden (round 53): on a laptop the map beside the list lands its viewport
                     within ~1.5s and this label becomes "homes in this map area"; the longer
                     phrase in between wrapped the row to two lines and back, and every card
                     below jumped 44px (CLS 0.46, measured on a production build). The map shows
-                    the scope there; a phone, where the map is further down, keeps the words. */}
-                {!hasActiveFilters && !activeViewportQs && <span className="lg:hidden">across the Hudson Valley and NYC</span>}
+                    the scope there; a phone, where the map is further down, keeps the words.
+                    Round 54: "across the Hudson Valley and NYC" became "Hudson Valley and NYC",
+                    which is a LABEL rather than a sentence — the same register as the grey line
+                    over the home page's headline — and it is what lets the range that follows
+                    share this second line instead of taking a third. Measured at 320 the pair
+                    is 230px in a 288px column. */}
+                {!hasActiveFilters && !resultScoped && (
+                  <>
+                    {/* An empty full-basis item is a line BREAK in a wrapping flex row: it ends
+                        the count's line without taking one of its own, so the scope label and
+                        the range that follows it share the phone's second line. Giving the
+                        label itself basis-full would have consumed the line and pushed the
+                        range onto a third (measured: 174px of results row, against 145 now). */}
+                    <span aria-hidden className="basis-full sm:hidden" />
+                    <span className="lg:hidden">Hudson Valley and NYC</span>
+                  </>
+                )}
                 {/* The map draws every home in view; the list carries a page of them. Without
                     this the two disagree in silence — the count says 400, the column holds 150,
                     and paging looks like it repeats the same homes. Naming the slice is the
@@ -1311,17 +1389,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 {result && result.listings.length < result.total && (() => {
                   // The page SIZE, not this page's length — the last page is short, and using
                   // its length would slide the whole range backwards.
-                  const size = activeViewportQs ? VIEWPORT_PAGE_SIZE : SEARCH_PAGE_SIZE;
+                  const size = resultScoped ? VIEWPORT_PAGE_SIZE : SEARCH_PAGE_SIZE;
                   const first = (result.page - 1) * size + 1;
                   return (
-                    <span className="text-stone max-sm:basis-full">
-                      {/* On a phone this is a line of its own, "Showing 1-50": the phrase before it
-                          wraps at some widths and not at others, and a bullet or a comma then
-                          either opened a line or ran the two phrases together. From sm it follows
-                          on the same line after a bullet, as before. */}
-                      <span className="max-sm:hidden">· showing </span>
-                      <span className="sm:hidden">Showing </span>
-                      {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
+                    <span className="text-stone">
+                      {/* One form at every width now (round 54). It used to open its own line on a
+                          phone, which cost the first screen a whole row; it follows the scope
+                          label on the second line instead, and when no scope label is shown
+                          (a filtered search) the whole count fits one line. */}
+                      · showing {first.toLocaleString()}–{(first + result.listings.length - 1).toLocaleString()}
                     </span>
                   );
                 })()}
@@ -1349,11 +1425,18 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               focused answer's ring; the room is made inside and taken back outside. */}
           <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-2 max-sm:-my-1 max-sm:py-1 [mask-image:linear-gradient(to_right,#000_calc(100%-40px),transparent)] [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0 sm:[mask-image:none]">
           <div role="group" aria-label="Quick filter" className="flex shrink-0 items-center gap-1 sm:flex-wrap">
-            {([["all", "All listings"], ["active", "Active"], ["new", "New listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
+            {/* Two labels, one answer. A phone reads this row inside a 390px scroller, where
+                "All listings" and "New listings" spend 90px each saying a word the three
+                answers beside them already imply — and they pushed Save search clean off the
+                rail. The long form stays from 640px, where there is room for it, and the
+                accessible name is always the long one so nothing is shortened for a screen
+                reader. */}
+            {([["all", "All listings", "All"], ["active", "Active", "Active"], ["new", "New listings", "New"], ["pending", "Pending", "Pending"]] as const).map(([val, label, short]) => (
               <button
                 key={val}
                 type="button"
                 aria-pressed={filters.quick === val}
+                aria-label={label}
                 onClick={() => apply({ quick: val })}
                 className={`whitespace-nowrap px-2 py-1.5 text-[14px] font-medium ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                   filters.quick === val
@@ -1361,7 +1444,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                     : "text-stone hover:text-ink"
                 }`}
               >
-                {label}
+                <span aria-hidden className="sm:hidden">{short}</span>
+                <span aria-hidden className="hidden sm:inline">{label}</span>
               </button>
             ))}
           </div>
@@ -1370,6 +1454,22 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               now beside the controls the eye already reads; the rail's width went to the
               cards and the map. Plan keeps the ?quiz=1 entry ("click on things, popup quiz"). */}
           <span aria-hidden className="hidden h-4 w-px bg-line-strong sm:block" />
+          {/* SAVE SEARCH, moved out of the filter bar (round 54). It sets up an alert for new
+              matches of the answer on screen, so it belongs with the count it would save and
+              with the two destinations it reads as a set with: save this search, see the homes
+              you saved, plan the purchase. A bell, not a heart — the heart is the card action
+              and means "favourite". */}
+          <button
+            type="button"
+            onClick={() => setSaveOpen(true)}
+            className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap px-2 py-1.5 text-[14px] font-medium text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+          >
+            <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
+              <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
+            </svg>
+            Save search
+          </button>
           <Link
             href="/saved"
             className={`relative inline-flex items-center gap-1.5 px-2 py-1.5 text-[14px] font-medium text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
@@ -1407,7 +1507,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <span aria-hidden className="-mr-2 text-[14px] text-stone sm:hidden">
             Sort
           </span>
-          <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={`${selectCls} min-w-0 max-w-[11rem]`}>
+          {/* [field-sizing:content] at every width, not just from 640 like the bar's dropdowns
+              (round 54). Those sit in a two-column grid on a phone where the arrows already line
+              up; this one has a row to itself, so a fixed-width box left its chevron floating
+              90px after the word "Mixed" with nothing between them. Sized to the label it shows,
+              "Mixed ⌄" reads as one object. The 11rem cap still holds "Price: low to high". */}
+          <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={`${selectCls} min-w-0 max-w-[11rem] [field-sizing:content]`}>
             <option value="mixed">Mixed</option>
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
@@ -1474,11 +1579,16 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         // replaced the whole split — deleting a working map, drawn from its OWN endpoint
         // (/api/idx/pins), because a different endpoint failed. Reproduced with a settled
         // 77-marker map and a single aborted refetch.
-        <div role="alert" className="mt-10 rounded-2xl border border-red-500/40 bg-red-500/5 p-10 text-center">
-          <p className="text-xl font-light text-ink">Search is temporarily unavailable.</p>
-          <p className="mt-2 t-small text-stone">
+        // ROUND 54: no red wash. A tinted red panel is the one piece of colour a page of black,
+        // white and photographs cannot absorb, and it made an ordinary "try again" read like a
+        // system failure. The page says it plainly instead, in its own display face, with the
+        // phone number as the thing you can actually do — an underlined link, not bold text
+        // that happens to be clickable.
+        <div role="alert" className="mt-8 rounded-3xl border border-line-strong px-6 py-14 text-center sm:mt-10">
+          <p className="font-display text-[26px] font-semibold leading-tight tracking-[-0.02em] text-ink">Search is temporarily unavailable.</p>
+          <p className="mx-auto mt-2.5 max-w-sm text-[15px] leading-relaxed text-stone">
             Try again in a moment, or call us at{" "}
-            <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run it for you.
+            <a href={SITE.phoneHref} className={`font-medium text-ink underline decoration-line-strong underline-offset-4 ${PRESS} hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}>{SITE.phone}</a> and we&rsquo;ll run it for you.
           </p>
         </div>
       ) : state === "loading" && !result ? (
@@ -1495,13 +1605,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           ))}
         </ul>
       ) : listings.length === 0 && filters.view !== "map" ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-line-strong p-12 text-center">
-          <p className="text-xl font-light text-ink">No homes match those filters.</p>
-          <p className="mt-2 t-small text-stone">Try widening a range or clearing a filter.</p>
+        <div className="mt-8 rounded-3xl border border-dashed border-line-strong px-6 py-14 text-center sm:mt-10">
+          <p className="font-display text-[26px] font-semibold leading-tight tracking-[-0.02em] text-ink">No homes match those filters.</p>
+          <p className="mt-2.5 text-[15px] leading-relaxed text-stone">Try widening a range or clearing a filter.</p>
           <button
             type="button"
             onClick={() => apply(CLEARED_FILTERS)}
-            className={`mt-5 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
+            className={`mt-6 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             Clear all filters
           </button>
@@ -1514,7 +1624,10 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         // tightened card (aspect 21/10 photo, slimmer body) brings three FULL rows into the
         // 756px panel where the old geometry fit two. lg (small laptops) keeps the old split —
         // two 300px cards need the width more than the map does there.
-        <div className="mt-8 grid gap-5 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[0.9fr_1.1fr] 2xl:grid-cols-[0.85fr_1.15fr]">
+        // mt-5 on a phone (round 54): the 32px step under the results row was written for a
+        // filled grey panel that needed air around it. The row is a hairline now, and on a
+        // phone every one of those pixels stands between the visitor and the first home.
+        <div className="mt-5 grid gap-5 sm:mt-8 lg:grid-cols-[1.2fr_1fr] xl:grid-cols-[0.9fr_1.1fr] 2xl:grid-cols-[0.85fr_1.15fr]">
           <ul
             ref={panelRef}
             aria-label="Search results"
@@ -1544,11 +1657,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               // a good pin set, so deleting it because /api/idx/search returned nothing leaves
               // the visitor with no instrument AND no way to retry except a reload. Panning or
               // zooming re-fires the scoped fetch, which is the actual recovery.
-              <li role="alert" className="col-span-full rounded-2xl border border-red-500/40 bg-red-500/5 p-8 text-center">
-                <p className="text-lg font-light text-ink">The list is temporarily unavailable.</p>
-                <p className="mt-2 t-small text-stone">
+              <li role="alert" className="col-span-full rounded-3xl border border-line-strong px-5 py-10 text-center">
+                <p className="font-display text-[22px] font-semibold leading-tight tracking-[-0.02em] text-ink">The list is temporarily unavailable.</p>
+                <p className="mx-auto mt-2.5 max-w-sm text-[15px] leading-relaxed text-stone">
                   The map is still live. Move it to try again, or call us at{" "}
-                  <a href={SITE.phoneHref} className="font-bold text-ink">{SITE.phone}</a> and we&rsquo;ll run the search for you.
+                  <a href={SITE.phoneHref} className={`font-medium text-ink underline decoration-line-strong underline-offset-4 ${PRESS} hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}>{SITE.phone}</a> and we&rsquo;ll run the search for you.
                 </p>
               </li>
             ) : listings.length === 0 ? (
@@ -1559,12 +1672,12 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               // instrument you need to fix the situation is the one that was removed. The empty
               // state belongs in the RESULTS column; the map keeps drawing, keeps its viewport,
               // and one scroll-back-out is the whole recovery.
-              <li className="col-span-full rounded-2xl border border-dashed border-line-strong p-8 text-center">
-                <p className="text-lg font-light text-ink">
-                  {activeViewportQs ? "No homes in this map area." : "No homes match those filters."}
+              <li className="col-span-full rounded-3xl border border-dashed border-line-strong px-5 py-10 text-center">
+                <p className="font-display text-[22px] font-semibold leading-tight tracking-[-0.02em] text-ink">
+                  {resultScoped ? "No homes in this map area." : "No homes match those filters."}
                 </p>
-                <p className="mt-2 t-small text-stone">
-                  {activeViewportQs
+                <p className="mt-2.5 text-[15px] leading-relaxed text-stone">
+                  {resultScoped
                     ? "Zoom out or move the map to see more homes."
                     : "Try widening a range or clearing a filter."}
                 </p>
@@ -1572,7 +1685,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   <button
                     type="button"
                     onClick={() => apply(CLEARED_FILTERS)}
-                    className={`mt-5 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
+                    className={`mt-6 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
                   >
                     Clear all filters
                   </button>
@@ -1607,14 +1720,18 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         <ul
           aria-label="Search results"
           aria-busy={state === "loading"}
-          className={`rlt-view-in mt-8 grid gap-6 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}
+          className={`rlt-view-in mt-5 grid gap-6 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${state === "loading" ? "opacity-60" : ""}`}
         >
           {listings.map(renderCard)}
         </ul>
       )}
 
-      {/* ── Pagination */}
-      {result && result.totalPages > 1 && (
+      {/* ── Pagination. Hidden while the search is failing (round 54): the pager is drawn from
+          the LAST good answer, so under "Search is temporarily unavailable" it offered six
+          numbered pages of a result set the page can no longer fetch — every one of them a
+          click that ends in the same message. The error panel carries the two things that do
+          work (wait, or call us). */}
+      {result && result.totalPages > 1 && state !== "error" && (
         <nav
           id="results-pages"
           tabIndex={-1}

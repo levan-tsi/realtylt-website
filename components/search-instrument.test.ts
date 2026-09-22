@@ -47,7 +47,14 @@ function instrumentClassNames(file: string): string[] {
 
 describe("the search instrument", () => {
   it("exists on the surfaces this test knows about", () => {
-    expect(files.sort()).toEqual(["app/page.tsx", "components/leads/HomeValueForm.tsx"]);
+    // /search joined in round 54: the place field and SEARCH were two boxes at opposite ends of
+    // the filter bar, so the control a visitor arrives from the hero holding was not on the page
+    // they landed on. It is the same instrument now, and it is pinned like the other two.
+    expect(files.sort()).toEqual([
+      "app/page.tsx",
+      "components/leads/HomeValueForm.tsx",
+      "components/search/SearchClient.tsx",
+    ]);
   });
 
   it("keeps the round-27 geometry at every call site", () => {

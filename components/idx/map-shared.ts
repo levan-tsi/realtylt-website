@@ -211,7 +211,11 @@ export function dotStyleVars(saved: boolean, spokenFor: boolean): string {
  * the FACE string sets the ink. Shared by both engines so the two cannot drift. */
 export function chipStateStyles(s: { active: boolean; saved: boolean; spokenFor: boolean }): { outer: string; face: string } {
   if (s.active)
-    return { outer: "--chip-bg:var(--rlt-chip-active,#1c729a);z-index:1000", face: "background:var(--chip-bg);color:var(--rlt-chip-active-ink,#fff);box-shadow:0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45)" };
+    // --rlt-chip-active-shadow (round 54): on the night map the chosen home is a LIT one — a
+    // warm face with a night outline and the halo a light has — while the day map keeps the
+    // white outline it has always had, through the fallback. One var rather than three so the
+    // two looks cannot drift into half-states.
+    return { outer: "--chip-bg:var(--rlt-chip-active,#1c729a);z-index:1000", face: "background:var(--chip-bg);color:var(--rlt-chip-active-ink,#fff);box-shadow:var(--rlt-chip-active-shadow,0 0 0 2px #fff,0 3px 12px rgb(0 0 0/.45))" };
   if (s.saved)
     return { outer: "--chip-bg:#ffffff;z-index:500", face: "background:var(--chip-bg);color:#000;box-shadow:0 0 0 1.5px #ef4444,0 3px 10px rgb(0 0 0/.35)" };
   if (s.spokenFor)

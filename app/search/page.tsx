@@ -67,8 +67,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const initial = await loadFirstPage(q);
 
   return (
-    // Blue hour (round 53): see app/globals.css `.nocturne` and lib/site.ts NIGHT_ROUTES.
-    <div className="nocturne">
+    // The night look (round 53): see app/globals.css `.nocturne` and lib/site.ts NIGHT_ROUTES.
+    // `rlt-search` scopes the handful of rules that belong to THIS page and not to the home page
+    // that shares the theme (round 54) — see app/globals.css.
+    <div className="nocturne rlt-search">
       {/* Live search page has no hero band — filters start right under the nav. */}
       <h1 className="sr-only">Search Listings: Hudson Valley homes for sale</h1>
       {/* THE NO-JS MESSAGE MOVED TO loading.tsx, and it had to. A <noscript> here read "The homes

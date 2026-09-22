@@ -85,6 +85,19 @@ export function LocationSuggest({
   const mountValueRef = useRef<string | null>(value);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
+  /** TYPING SOMETHING WE DO NOT KNOW USED TO PRODUCE NOTHING AT ALL (round 54). The list simply
+   * never opened, so a visitor who typed a misspelling, a neighbourhood we do not index, or a
+   * street in a town we do not cover got the same silence as one whose request was still in
+   * flight — and the fastest reading of silence is "this box is broken". It is also not true
+   * that there is nothing to do: the box ALSO accepts free text, and pressing Search runs it
+   * against the listing text, where "Hasbrouck" or a development's name often does answer. So
+   * the box says both halves out loud.
+   * A separate panel rather than a row inside the listbox: a combobox popup holding no options
+   * is a popup that should not be open (ARIA APG), and `aria-expanded` would be lying. This is a
+   * live region beside the control instead, which is what a status message is.
+   * Never shown while the suggest index is still warming (`partial`): "no match" from a server
+   * that has not finished loading its towns is a guess, not an answer. */
+  const [noMatch, setNoMatch] = useState(false);
   const [active, setActive] = useState(-1);
   /** What the box offers BEFORE anything is typed: the searches this visitor ran, and the ones
    * they deliberately saved. Loaded on focus rather than on mount, so a page that nobody
@@ -100,9 +113,16 @@ export function LocationSuggest({
    * text field inside it. Re-measured on scroll and resize because the popup is fixed: it does
    * not travel with the page on its own. */
   useEffect(() => {
-    if (!open) return;
+    if (!open && !noMatch) return;
     const measure = () => {
-      const el = anchor === "form" ? wrapRef.current?.closest("form") ?? wrapRef.current : wrapRef.current;
+      // `[data-suggest-anchor]` first (round 54): on /search the instrument is a box INSIDE the
+      // filter bar's form, and a list the width of that whole 1,400px bar would be a list with
+      // no relationship to the field it belongs to. The hero has no such box, so it still
+      // resolves to its form and is unchanged.
+      const el =
+        anchor === "form"
+          ? wrapRef.current?.closest("[data-suggest-anchor], form") ?? wrapRef.current
+          : wrapRef.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
       // Bound it to the space that actually exists, and open UPWARDS when there is more of it
@@ -125,7 +145,7 @@ export function LocationSuggest({
       window.removeEventListener("scroll", measure, true);
       window.removeEventListener("resize", measure);
     };
-  }, [open, anchor, items.length]);
+  }, [open, noMatch, anchor, items.length]);
 
   useEffect(() => {
     const needle = value.trim();
@@ -149,6 +169,7 @@ export function LocationSuggest({
     }
     if (needle.length < 2) {
       setItems([]);
+      setNoMatch(false);
       // Clearing the box does not mean "go away" — it means they are starting over, which is
       // exactly when the recent/saved panel is useful again. Only close if there is nothing to
       // show. (This never fires on mount: the mount guard above returns before it.)
@@ -168,13 +189,20 @@ export function LocationSuggest({
         setItems(data.suggestions);
         // Only while the box still has focus: an answer landing after Tab moved on must not
         // float the list over the control focus went to.
-        setOpen(data.suggestions.length > 0 && document.activeElement?.id === id);
+        const focused = document.activeElement?.id === id;
+        setOpen(data.suggestions.length > 0 && focused);
+        // …and the same guard for the empty answer, plus the `partial` one: see the state above.
+        setNoMatch(data.suggestions.length === 0 && !data.partial && focused);
         setActive(-1);
         // A cold server answers before its towns are ready and says so (app/api/idx/suggest).
         // Ask once more, so "Beacon" does not stay four street addresses without Beacon itself.
         if (data.partial && again) retry = setTimeout(() => ask(false), 1200);
       } catch {
-        if (alive) setOpen(false);
+        // A failed request is not "no such place" — say nothing rather than something false.
+        if (alive) {
+          setOpen(false);
+          setNoMatch(false);
+        }
       }
     };
     const t = setTimeout(() => ask(true), 150);
@@ -197,6 +225,7 @@ export function LocationSuggest({
       // unmounts, and the click never lands on anything.
       if (wrapRef.current?.contains(t) || listRef.current?.contains(t)) return;
       setOpen(false);
+      setNoMatch(false);
     }
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -252,6 +281,7 @@ export function LocationSuggest({
     // Tell the query effect that this next value change is ours. Cleared the moment it is used,
     // so editing the text afterwards searches normally again.
     pickedRef.current = shown.trim();
+    setNoMatch(false);
     setValue(shown);
     // An ADDRESS is a destination, not a filter. On /search, onPick would swallow it and
     // re-filter the grid the visitor is already looking at, when what they asked for was
@@ -313,8 +343,11 @@ export function LocationSuggest({
           const next = e.relatedTarget as Node | null;
           if (next && listRef.current?.contains(next)) return;
           setOpen(false);
+          setNoMatch(false);
         }}
         onKeyDown={(e) => {
+          // Escape dismisses the no-match note too, whether or not a list is open.
+          if (e.key === "Escape") setNoMatch(false);
           if (!open) return;
           if (e.key === "ArrowDown") {
             e.preventDefault();
@@ -416,6 +449,36 @@ export function LocationSuggest({
             </li>
           ))}
         </ul>
+      )}
+      {/* The answer to "we have never heard of that": what happened, and the one thing that still
+          works. Same box, same anchor and same surface as the list it stands in for, so it reads
+          as the list arriving empty rather than as a new object. role=status announces it once;
+          pointer-events-none because there is nothing here to press — the action is the Search
+          button the sentence names. */}
+      {noMatch && !open && portal(
+        <div
+          role="status"
+          style={
+            anchorRect
+              ? {
+                  position: "fixed",
+                  left: anchorRect.left,
+                  ...(anchorRect.top !== undefined ? { top: anchorRect.top } : { bottom: anchorRect.bottom }),
+                  width: anchorRect.width,
+                }
+              : undefined
+          }
+          className={`pointer-events-none px-4 py-3 ${anchorRect ? "z-[60]" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} rounded-xl border shadow-lift ${
+            night ? "nocturne border-line-strong bg-mist" : dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
+          }`}
+        >
+          <p className={`text-sm ${night ? "text-ink" : dark ? "text-paper" : "text-ink"}`}>
+            No place matches &ldquo;{value.trim()}&rdquo;.
+          </p>
+          <p className={`mt-1 text-[13px] ${night ? "text-stone" : dark ? "text-paper/70" : "text-stone"}`}>
+            Press Search to look for it in the listings themselves.
+          </p>
+        </div>,
       )}
     </div>
   );

@@ -797,9 +797,14 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           and ≥sm the map is wide enough that the cap has nothing to do. */}
       <div className="pointer-events-none absolute left-2 top-2 z-[5] flex max-w-[calc(100%-80px)] flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-paper/85 px-2.5 py-1.5 text-[12px] text-stone backdrop-blur-sm sm:max-w-none">
         <span className="flex items-center gap-1.5">
-          {/* @design-allow the swatch is a MINIATURE of the map's price chip, which is 8px at
-              ~26px tall — so at 10px tall it is 3px. On the UI scale it would read as a pill. */}
-          <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-[var(--rlt-chip-bg,#000)]" />
+          {/* The swatch is a MINIATURE of the map's price chip, which is 8px at ~26px tall — so
+              at 10px tall it is 3px. On the UI scale it would read as a pill.
+              ROUND 54, night only: a home for sale is drawn as a LIGHT where its price has no
+              room, so the key shows the light — a warm 10px dot with the halo the real mark
+              wears, at its own size rather than as a miniature of the other one. The day map is
+              untouched, and the halo is a light, not a raised box, so it is not on the shadow
+              scale. @design-allow, for both of those. */}
+          <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-[var(--rlt-chip-bg,#000)] night:h-2.5 night:w-2.5 night:rounded-full night:bg-[var(--color-window)] night:shadow-[0_0_7px_-1px_rgb(246_199_129/0.8)]" />
           For sale
         </span>
         <span className="flex items-center gap-1.5">
