@@ -55,8 +55,9 @@ export interface Look {
   contourSpacing: number;
   /** Blur passes on the heights the contours follow (rebuilds). */
   contourSmooth: number;
-  /** Brightness of the scattered fill, an index contour and the shoreline, relative to a contour. */
+  /** Brightness of the scattered fill, an ordinary contour, an index contour and the shoreline. */
   fillGain: number;
+  contourGain: number;
   indexGain: number;
   shoreGain: number;
   /** Level of detail by kind (fill, contour, index contour, shore): how much longer each survives
@@ -65,10 +66,16 @@ export interface Look {
   /** How much crests brighten and hollows dim, -1..1 of local relief. */
   ridge: number;
   dustAlpha: number;
-  /** World size of a grain's sheen, km. */
+  /** World size of a grain's sheen, km; a phone's is finer (its frame holds the same land in a
+   * quarter of the width, so desktop-sized grains read as white speckle there). */
   dustSize: number;
+  dustSizePhone: number;
   /** Largest sheen, css px (fill rate). */
   dustMaxPx: number;
+  /** Smallest grain, css px; a phone's is finer (its frame holds the same land in a quarter of the
+   * width, so desktop-sized grains read as chunky white speckle there). */
+  dustMinPx: number;
+  dustMinPxPhone: number;
   /** Strength of a grain's spark and of its sheen. */
   dustCore: number;
   dustSheen: number;
@@ -103,26 +110,30 @@ export const DEFAULT_LOOK: Look = {
   contourSpacing: 0.03,
   contourSmooth: 2,
   fillGain: 0.25,
+  contourGain: 0.65,
   indexGain: 1.6,
   shoreGain: 0.55,
-  kindKeep: [0.4, 0.7, 4, 4],
+  kindKeep: [0.4, 0.7, 2.5, 2.5],
   ridge: 0.5,
   dustAlpha: 2,
   dustSize: 0.2,
+  dustSizePhone: 0.13,
   dustMaxPx: 14,
+  dustMinPx: 2,
+  dustMinPxPhone: 1.4,
   dustCore: 0.7,
   dustSheen: 0.1,
   dustDensity: 0.1,
   shadeGamma: 1.8,
   shadeFlat: 0.45,
   ambient: 0.22,
-  glint: 0.02,
+  glint: 0.008,
   lightAlpha: 2.2,
   lightSize: 0.045,
   lightHalo: 0.45,
   lightSpread: 5,
-  haze: 0.045,
-  hazeSize: 8,
+  haze: 0.08,
+  hazeSize: 10,
   fogNear: 0.9,
   fogFar: 2.6,
   nearFade: 0.14,
@@ -206,16 +217,17 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uIntro: { value: 0 },
     uLodK: { value: 1e4 },
     uAlpha: { value: look.dustAlpha },
-    uSize: { value: look.dustSize },
+    uSize: { value: phone ? look.dustSizePhone : look.dustSize },
     uShadeGamma: { value: look.shadeGamma },
     uShadeFlat: { value: look.shadeFlat },
     uRidge: { value: look.ridge },
     uAmbient: { value: look.ambient },
     uGlint: { value: look.glint },
     uMaxPx: { value: phone ? Math.min(look.dustMaxPx, 16) : look.dustMaxPx },
+    uMinPx: { value: phone ? look.dustMinPxPhone : look.dustMinPx },
     uCore: { value: look.dustCore },
     uSheen: { value: look.dustSheen },
-    uKindGain: { value: new THREE.Vector4(look.fillGain, 1, look.indexGain, look.shoreGain) },
+    uKindGain: { value: new THREE.Vector4(look.fillGain, look.contourGain, look.indexGain, look.shoreGain) },
     uKindKeep: { value: new THREE.Vector4(...look.kindKeep) },
     uFocus: { value: 0 },
     uFocusMix: { value: 0 },
@@ -238,6 +250,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uIntro: lightU.uIntro,
     uHaze: { value: look.haze },
     uHazeSize: { value: look.hazeSize },
+    uHazeLow: { value: 7 },
+    uHazeHigh: { value: 26 },
   };
   const additive = {
     transparent: true,
@@ -744,15 +758,16 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       dustU.uAlpha.value = look.dustAlpha;
       dustU.uAmbient.value = look.ambient;
       dustU.uGlint.value = look.glint;
-      dustU.uSize.value = look.dustSize;
+      dustU.uSize.value = phone ? look.dustSizePhone : look.dustSize;
       dustU.uShadeGamma.value = look.shadeGamma;
       dustU.uShadeFlat.value = look.shadeFlat;
       dustU.uRidge.value = look.ridge;
       dustU.uMaxPx.value = phone ? Math.min(look.dustMaxPx, 16) : look.dustMaxPx;
+      dustU.uMinPx.value = phone ? look.dustMinPxPhone : look.dustMinPx;
       dustU.uCore.value = look.dustCore;
       dustU.uSheen.value = look.dustSheen;
       shared.uExag.value = look.exaggeration;
-      dustU.uKindGain.value.set(look.fillGain, 1, look.indexGain, look.shoreGain);
+      dustU.uKindGain.value.set(look.fillGain, look.contourGain, look.indexGain, look.shoreGain);
       dustU.uKindKeep.value.set(...look.kindKeep);
       if (grid && dustKey() !== builtKey) void buildDustCloud();
       lightU.uAlpha.value = look.lightAlpha;

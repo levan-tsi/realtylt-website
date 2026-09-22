@@ -19,7 +19,7 @@
  */
 
 export const DUST_VERTEX = /* glsl */ `
-uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uNear, uAmbient, uGlint;
+uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uMinPx, uNear, uAmbient, uGlint;
 uniform vec2 uPointer, uFog;
 uniform vec3 uMoon;
 uniform vec4 uKindGain;
@@ -80,7 +80,7 @@ void main() {
   // at any distance), floored at a couple of pixels and capped (fill rate). Its CORE is a fixed
   // ~1.3 px spark, drawn in the fragment shader: the dust's grain.
   float px = uSize * uFocal / d;
-  vSize = clamp(px, 2.0 * uPixelRatio, uMaxPx * uPixelRatio);
+  vSize = clamp(px, uMinPx * uPixelRatio, uMaxPx * uPixelRatio);
   // A few grains in a hundred are GLINTS: brighter, a touch larger, the way frost catches the moon.
   float glint = step(aSeed, uGlint);
   vSize *= 1.0 + 0.6 * glint;
@@ -179,7 +179,7 @@ void main() {
 `;
 
 export const HAZE_VERTEX = /* glsl */ `
-uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear;
+uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear, uHazeLow, uHazeHigh;
 uniform vec2 uFog;
 attribute float aStrength;
 varying float vA;
@@ -191,10 +191,11 @@ void main() {
   float on = smoothstep(0.6, 2.6, uIntro);
   float px = uHazeSize * uFocal / d;
   float size = min(px, 420.0 * uPixelRatio);
-  // The glow is seen from above: it thins away as the camera comes down into it, and when the eye
-  // runs along the ground, where a row of patches would stack into a bank of fog on the horizon.
+  // The glow is seen from high above: it thins away as the camera comes down into it (the camera's
+  // height in world km, uHazeLow to uHazeHigh), and when the eye runs along the ground, where a row
+  // of patches would stack into a bank of fog on the horizon.
   float down = -normalize(p - cameraPosition).y;
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * smoothstep(uNear * 1.5, uNear * 5.0, d) * smoothstep(0.12, 0.45, down);
+  vA = uHaze * aStrength * fog * on * (1.0 - 0.7 * uVeil) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
   gl_PointSize = size;
   gl_Position = projectionMatrix * mv;
 }

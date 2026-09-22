@@ -56,18 +56,20 @@ const f = (pos: Vec3, target: Vec3, fov: number, moon: [number, number] = MOON):
 /** The named chapters. Places are [longitude, latitude]; heights are world km (the terrain is
  * lifted 6x, so the Highlands' 400 m ridges stand ~2.4 km tall and the Catskills ~7.5 km). */
 export const CHAPTERS: Record<FlightShot, Shot> = {
-  // Establishing: high over the Lower Bay, looking north up the valley. The boroughs burn in the
-  // foreground right of centre, the river is the black ribbon running off toward the Catskills, and
-  // the lower left (New Jersey: land, no listings, so no lights) stays quiet for the headline.
+  // Establishing: high over the ocean south of the harbour, looking north up the valley. The whole
+  // region is one shape of light floating in the dark, the way /ai opens on its galaxy: the boroughs
+  // burn in the foreground with the city's own glow over them, the river is the black ribbon up the
+  // middle, and the lower left (New Jersey: land, no listings, so no lights) takes the headline.
   hero: {
-    wide: f(over(-73.9, 40.28, 30), over(-74.02, 41.2, 0), 40),
-    tall: f(over(-73.95, 40.18, 40), over(-74.0, 41.1, 0), 62),
+    wide: f(over(-73.95, 40.0, 55), over(-74.03, 41.2, 0), 40),
+    tall: f(over(-73.97, 39.98, 62), over(-74.02, 41.15, 0), 58),
   },
-  // Up the river to Dutchess: over the Highlands' north gate, looking north-east to Poughkeepsie
-  // and Lagrangeville (the office).
+  // Up the river to Dutchess: low over Newburgh Bay, looking straight up the river, the black channel
+  // running up the middle of the frame to Poughkeepsie's lights (Lagrangeville, the office, beyond
+  // them to the right).
   dutchess: {
-    wide: f(over(-74.02, 41.36, 11), over(-73.86, 41.68, 0), 44),
-    tall: f(over(-74.0, 41.3, 15), over(-73.88, 41.66, 0), 64),
+    wide: f(over(-73.96, 41.47, 8), over(-73.93, 41.72, 0), 46),
+    tall: f(over(-73.965, 41.43, 11), over(-73.93, 41.7, 0), 64),
   },
   // Down into the Highlands: over the Peekskill bend, looking up the gorge between Bear Mountain and
   // Anthony's Nose to Storm King and Breakneck.
