@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { LightPoints } from "@/lib/idx/lights";
 import { decodeElevation, encodeElevation } from "./elevation";
-import { buildHaze, buildLights, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, townCentroids } from "./lights";
+import { buildHaze, buildLights, countyAreaGains, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, townCentroids } from "./lights";
 import { boxUVToLngLat, lngLatToWorld } from "./world";
 
 const BOX = { west: -74, east: -73, south: 41, north: 42 };
@@ -173,5 +173,44 @@ describe("where a county's homes actually are (the area chapter's framing)", () 
   it("ignores lights whose county is not known", () => {
     const none: LightPoints = { ...points(list, ["Kingston", "Far"], [90, 10]), townCounty: ["", ""] };
     expect(Object.keys(countyLightBoxes(buildLights(none, null)))).toHaveLength(0);
+  });
+});
+
+describe("how hard each county's homes have to burn for its own chapter", () => {
+  /** A tight borough (many homes in a small box) and a sprawling county (the same number spread
+   * over sixteen times the ground). */
+  const cloud = {
+    count: 400,
+    counties: Float32Array.from(Array.from({ length: 400 }, (_, i) => (i < 200 ? 10 : 1))), // brooklyn, ulster
+  };
+  const boxes = {
+    brooklyn: { west: -74.0, east: -73.9, south: 40.6, north: 40.7 },
+    ulster: { west: -74.4, east: -74.0, south: 41.7, north: 42.1 },
+  } as const;
+  const gains = countyAreaGains(cloud, boxes, { pow: 0.25, max: 2.1 });
+
+  it("leaves the densest county exactly as it is", () => {
+    expect(gains.brooklyn).toBe(1);
+  });
+
+  it("lifts the sparse one, by the fourth root of how much emptier its frame is", () => {
+    // Sixteen times the ground, the same homes: 16 ^ 0.25 = 2.
+    expect(gains.ulster).toBeCloseTo(2, 6);
+    expect(gains.ulster!).toBeGreaterThan(gains.brooklyn!);
+  });
+
+  it("never runs away: the lift is capped and never dims a county", () => {
+    const empty = {
+      count: 300,
+      counties: Float32Array.from(Array.from({ length: 300 }, (_, i) => (i < 299 ? 10 : 1))),
+    };
+    const wide = { brooklyn: boxes.brooklyn, ulster: { west: -76, east: -73, south: 40, north: 43 } } as const;
+    const g = countyAreaGains(empty, wide, { pow: 0.25, max: 2.1 });
+    expect(g.ulster).toBe(2.1);
+    for (const v of Object.values(g)) expect(v).toBeGreaterThanOrEqual(1);
+  });
+
+  it("says nothing about a county with no frame of its own", () => {
+    expect(countyAreaGains(cloud, { brooklyn: boxes.brooklyn }, { pow: 0.25, max: 2.1 }).ulster).toBeUndefined();
   });
 });

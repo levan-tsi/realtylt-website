@@ -16,10 +16,50 @@
  *   uPointer     the lantern, in normalised device coordinates; uPointerOn fades it in and out
  *   uAspect      width / height, so the lantern is round
  *   uFog         (near, far) in world km: past `near` everything fades to black by `far`
+ *   uQuietA/B    up to two screen boxes where the page's words sit (see QUIET below)
+ *   uQuietSoft   how far, in NDC, the quiet eases back to the full scene: (across, down)
  */
 
+/** QUIET ZONES, shared by every cloud.
+ *
+ * Up to FOUR screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. `quietAt` returns
+ * how OPEN the scene is there: 1 outside, 0 in the core, eased between. Each cloud decides for
+ * itself how dark 0 is, because the land and the lights are not equally in the way of a sentence:
+ * a contour under a letter is a texture, a window under a letter is a hole in it.
+ *
+ * (Two was not enough: a window that holds a section's heading and the section below it has four
+ * boxes worth quieting, and taking the two largest left a 60 px heading sitting on the harbour.)
+ *
+ * The shape matters as much as the depth. A rectangle's edge, drawn across a 1,100 px quote, reads
+ * as a BAND drawn on the page (round 54, builder 3: the orchestrator saw exactly that line at the
+ * top of the testimonial). So the easing runs a long way — a quarter of the window's height and
+ * more — the two overhangs are combined with a rounded norm so there are no corners, and the ramp's
+ * length breathes slightly along the box, so no iso-line in it is ever perfectly straight. */
+const QUIET = /* glsl */ `
+uniform vec4 uQuietA, uQuietB, uQuietC, uQuietD;
+uniform vec2 uQuietSoft;
+float quietOne(vec4 r, vec2 ndc) {
+  if (r.z <= r.x) return 1.0;
+  vec2 s = vec2(uAspect, 1.0);
+  vec2 c = (r.xy + r.zw) * 0.5 * s;
+  vec2 h = (r.zw - r.xy) * 0.5 * s;
+  vec2 p = abs(ndc * s - c);
+  // The ramp's length breathes +-14% along the box (two incommensurate waves, so it never
+  // repeats): a gradient that wanders cannot be read as a line, and at this amplitude nobody
+  // sees the wander itself.
+  vec2 soft = uQuietSoft * (1.0 + 0.14 * sin(ndc.x * 4.7 + 1.3) * cos(ndc.y * 3.1 - 0.4));
+  vec2 d = max(p - h, 0.0) / max(soft, vec2(1e-3));
+  float t = clamp(length(d), 0.0, 1.0);
+  return t * t * (3.0 - 2.0 * t);
+}
+/** 1 where the scene is free, 0 under the page's words. */
+float quietAt(vec2 ndc) {
+  return min(min(quietOne(uQuietA, ndc), quietOne(uQuietB, ndc)), min(quietOne(uQuietC, ndc), quietOne(uQuietD, ndc)));
+}
+`;
+
 export const DUST_VERTEX = /* glsl */ `
-uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uMinPx, uNear, uAmbient, uGlint;
+uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uLodK, uAlpha, uSize, uShadeGamma, uShadeFlat, uRidge, uMaxPx, uMinPx, uNear, uAmbient, uGlint, uQuietFloor, uAreaLand, uAreaOut;
 uniform vec2 uPointer, uFog;
 uniform vec3 uMoon;
 uniform vec4 uKindGain;
@@ -40,19 +80,7 @@ attribute vec2 aSlope;
 attribute float aSeed, aRidge, aKind, aCounty;
 varying float vA;
 varying float vSize;
-// QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
-// scene dims under them, easing back to full over uQuietSoft (NDC height units), so a headline never
-// has a bright contour through a letter. The integration measures the real text boxes.
-uniform vec4 uQuietA, uQuietB;
-uniform float uQuietSoft, uQuietFloor;
-float quietAt(vec2 ndc) {
-  vec2 a = max(max(uQuietA.xy - ndc, ndc - uQuietA.zw), 0.0) * vec2(uAspect, 1.0);
-  vec2 b = max(max(uQuietB.xy - ndc, ndc - uQuietB.zw), 0.0) * vec2(uAspect, 1.0);
-  float da = uQuietA.z > uQuietA.x ? length(a) : 1e3;
-  float db = uQuietB.z > uQuietB.x ? length(b) : 1e3;
-  float t = clamp(min(da, db) / max(uQuietSoft, 1e-3), 0.0, 1.0);
-  return mix(uQuietFloor, 1.0, t * t * (3.0 - 2.0 * t));
-}
+__QUIET__
 void main() {
   vec3 p = vec3(position.x, position.y * uExag, position.z);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -107,13 +135,19 @@ void main() {
   float kindLow = aKind < 0.5 ? uKindLow.x : aKind < 1.5 ? uKindLow.y : aKind < 2.5 ? uKindLow.z : uKindLow.w;
   kind *= mix(1.0, kindLow, uLowAlt);
   // AREA FOCUS: the land of the county the page is on comes up, the rest goes to near black, so
-  // which area the page is showing is never in doubt.
-  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 0.95 : 0.045, uFocusMix);
-  vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.94 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
+  // which area the page is showing is never in doubt. uAreaLand is how far the SUBJECT's own ground
+  // steps back (the lights lead in every chapter); uAreaOut is how far everything else does.
+  // Measured, round 54, builder 3: the white spaghetti over Ulster and Orange was the shoreline
+  // grain — every stream and lake edge in the Catskills, at 2.4x its usual gain this close in —
+  // and almost all of it lies OUTSIDE the county's own homes, so no change to the subject's land
+  // ever touched it. The rest of the map has to fall much further than a twentieth for a chapter
+  // over empty country to read as one county rather than as a contour drawing.
+  float focus = mix(1.0, abs(aCounty - uFocus) < 0.5 ? 0.95 * uAreaLand : uAreaOut, uFocusMix);
+  vA = uAlpha * kind * shade * fog * fog * intro * focus * (1.0 - 0.94 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * mix(uQuietFloor, 1.0, quietAt(clip.xy / clip.w));
   gl_PointSize = vSize;
   gl_Position = clip;
 }
-`;
+`.replace("__QUIET__", QUIET);
 
 export const DUST_FRAGMENT = /* glsl */ `
 uniform float uPixelRatio, uCore, uSheen;
@@ -134,7 +168,7 @@ void main() {
 `;
 
 export const LIGHT_VERTEX = /* glsl */ `
-uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uTime, uSize, uAlpha, uTwinkle, uSpread, uFocus, uFocusMix;
+uniform float uExag, uPixelRatio, uFocal, uIntro, uVeil, uPointerOn, uAspect, uTime, uSize, uAlpha, uTwinkle, uSpread, uFocus, uFocusMix, uQuietFloor, uAreaGain, uLampVary;
 // The counterpart of the dust's uLowAlt. Close in, the picture's dynamic range is stretched from
 // BOTH ends: a home standing on its own in the valley carries more of the frame (uLowGain), and a
 // home in a block of five hundred carries less (uLowCity), so Ulster never reads as empty and
@@ -145,19 +179,8 @@ uniform vec2 uPointer, uFog;
 attribute float aDelay, aGain, aSeed, aCounty;
 varying float vA;
 varying float vCore;
-// QUIET ZONES: up to two screen rectangles (NDC: x0, y0, x1, y1) where the page's words sit. The
-// scene dims under them, easing back to full over uQuietSoft (NDC height units), so a headline never
-// has a bright contour through a letter. The integration measures the real text boxes.
-uniform vec4 uQuietA, uQuietB;
-uniform float uQuietSoft, uQuietFloor;
-float quietAt(vec2 ndc) {
-  vec2 a = max(max(uQuietA.xy - ndc, ndc - uQuietA.zw), 0.0) * vec2(uAspect, 1.0);
-  vec2 b = max(max(uQuietB.xy - ndc, ndc - uQuietB.zw), 0.0) * vec2(uAspect, 1.0);
-  float da = uQuietA.z > uQuietA.x ? length(a) : 1e3;
-  float db = uQuietB.z > uQuietB.x ? length(b) : 1e3;
-  float t = clamp(min(da, db) / max(uQuietSoft, 1e-3), 0.0, 1.0);
-  return mix(uQuietFloor, 1.0, t * t * (3.0 - 2.0 * t));
-}
+varying float vWarm;
+__QUIET__
 void main() {
   vec3 p = vec3(position.x, position.y * uExag, position.z);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -175,24 +198,39 @@ void main() {
   // halo four times as wide. A far light is a spark with a breath of glow; a near one a soft lamp.
   float lone = clamp(aGain * 1.25, 0.0, 1.0);
   float presence = mix(1.0, mix(uLowCity, uLowGain, lone * lone), uLowAlt);
-  float core = max(uSize * mix(1.0, mix(0.9, 1.8, lone * lone), uLowAlt) * uFocal / d, 1.3 * uPixelRatio);
+  // EVERY LAMP IS NOT THE SAME LAMP (round 54, builder 3). Close up the city was one bead stamped
+  // fifteen thousand times. Two draws from the light's own seed, decorrelated from the one that
+  // decides which windows breathe: how wide its bulb is, and how hard it burns. The pair is
+  // energy-preserving on purpose — burn carries a 1/bulb, so a lamp's FLUX (burn x bulb^2) keeps
+  // the mean the tone-mapping set, and a borough is exactly as bright as it was. What changes is
+  // that the same patch of city now holds lamps of several sizes and two shades of warm.
+  float s1 = fract(sin(aSeed * 91.37 + 3.1) * 43758.5453);
+  float s2 = fract(sin(aSeed * 27.13 + 8.7) * 24634.6345);
+  float bulb = mix(1.0, (0.74 + 0.63 * s1 * s1) / 0.95, uLampVary);
+  float burn = mix(1.0, (0.70 + 0.60 * s2) / bulb, uLampVary);
+  vWarm = mix(0.5, s1 * 0.85 + s2 * 0.15, uLampVary);
+  // AREA FOCUS: while the page is on one county, its homes burn a little brighter and the rest of
+  // the map's fall back, so the area reads as a shape of light. uAreaGain lifts the SPARSE
+  // counties, where the same shot holds a tenth of the lamps (round 54: Ulster, Orange and Putnam
+  // arrived as contour drawings). It never adds a light; it only decides how hard one burns.
+  float inFocus = abs(aCounty - uFocus) < 0.5 ? 1.0 : 0.0;
+  float lift = mix(1.0, uAreaGain, inFocus * uFocusMix);
+  float core = max(uSize * bulb * pow(lift, 0.4) * mix(1.0, mix(0.9, 1.8, lone * lone), uLowAlt) * uFocal / d, 1.3 * uPixelRatio);
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
-  // AREA FOCUS: while the page is on one county, its homes burn a little brighter and the rest of
-  // the map's fall back, so the area reads as a shape of light.
-  float inFocus = abs(aCounty - uFocus) < 0.5 ? 1.0 : 0.0;
-  float focus = mix(1.0, mix(0.09, 1.6, inFocus), uFocusMix);
-  vA = uAlpha * presence * aGain * on * tw * fog * energy * focus * (1.0 - 0.9 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.94);
+  float focus = mix(1.0, mix(0.09, 1.6, inFocus), uFocusMix) * pow(lift, 0.6);
+  vA = uAlpha * presence * aGain * burn * on * tw * fog * energy * focus * (1.0 - 0.9 * uVeil) * (1.0 + 0.55 * lantern) * mix(uQuietFloor, 1.0, quietAt(clip.xy / clip.w));
   gl_PointSize = size * (1.0 + 0.15 * lantern) * (1.0 + 0.3 * inFocus * uFocusMix);
   gl_Position = clip;
 }
-`;
+`.replace("__QUIET__", QUIET);
 
 export const LIGHT_FRAGMENT = /* glsl */ `
 uniform float uHalo;
 varying float vA;
 varying float vCore;
+varying float vWarm;
 void main() {
   vec2 c = gl_PointCoord - 0.5;
   float r = length(c) * 2.0;
@@ -200,19 +238,24 @@ void main() {
   // Core: a tight pale-gold disc of the light's own size. Halo: an amber breath that falls to
   // nothing at the sprite's rim. Where many overlap the red channel saturates first, so the city
   // goes pale gold, never white.
+  // vWarm is the lamp's own shade, from its seed: sodium at one end, a colder porch LED at the
+  // other. Both are still warm white — the lights stay the only warm tone on the page — but a
+  // street of them no longer reads as one colour stamped repeatedly.
   float k = r / max(vCore, 0.02);
   float core = exp(-k * k * 2.2);
   float halo = exp(-r * r * 5.5) * (1.0 - r) * uHalo;
-  vec3 col = vec3(1.0, 0.88, 0.68) * core + vec3(1.0, 0.66, 0.34) * halo;
+  vec3 hot = mix(vec3(1.0, 0.845, 0.60), vec3(1.0, 0.925, 0.795), vWarm);
+  vec3 col = hot * core + vec3(1.0, 0.66, 0.34) * halo;
   gl_FragColor = vec4(col * vA, 1.0);
 }
 `;
 
 export const HAZE_VERTEX = /* glsl */ `
-uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear, uHazeLow, uHazeHigh, uFocusMix;
+uniform float uExag, uFocal, uPixelRatio, uIntro, uVeil, uHaze, uHazeSize, uNear, uHazeLow, uHazeHigh, uFocusMix, uAspect, uQuietFloor;
 uniform vec2 uFog;
 attribute float aStrength;
 varying float vA;
+__QUIET__
 void main() {
   vec3 p = vec3(position.x, position.y * uExag, position.z);
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -227,11 +270,15 @@ void main() {
   float down = -normalize(p - cameraPosition).y;
   // While one county is lit the glow of the cities outside it settles back with their windows (the
   // patches carry no county of their own, so the whole haze eases down together).
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.92 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down);
+  // The glow is the widest thing in the picture, so it is also the one most likely to sit behind a
+  // sentence; it takes the same quiet as the windows under it (round 54, builder 3: it did not,
+  // and a city's breath behind the count sentence was a grey wash nobody could design around).
+  vec4 clip = projectionMatrix * mv;
+  vA = uHaze * aStrength * fog * on * (1.0 - 0.92 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down) * mix(uQuietFloor, 1.0, quietAt(clip.xy / clip.w));
   gl_PointSize = size;
-  gl_Position = projectionMatrix * mv;
+  gl_Position = clip;
 }
-`;
+`.replace("__QUIET__", QUIET);
 
 export const HAZE_FRAGMENT = /* glsl */ `
 varying float vA;

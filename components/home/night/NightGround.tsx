@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { NightScene } from "./NightScene";
-import { countyOfShot, shotPosition, shotStops, veilAt, type ShotSection, type ShotStop } from "./driver";
+import { countyOfShot, shotPosition, shotStops, veilAt, withTail, type ShotSection, type ShotStop } from "./driver";
 import { townSearchHref } from "./lights";
 import type { NightSceneHandle, TownHover } from "./scene";
 import { AREA_COUNTY_OF, type AreaShot, type ShotName } from "./shots";
@@ -44,7 +44,17 @@ export const useAreaChapter = () => useContext(AreaChapterContext);
 
 const isArea = (n: ShotName): n is AreaShot => n in AREA_COUNTY_OF;
 
-export function NightGround({ poster, children }: { poster: string; children: ReactNode }) {
+/** The flight below the page's last section, which is the footer: the shot it holds and how far
+ * the scene is dimmed there. Without it the scene stops dead at the footer's top edge. */
+export interface NightTail {
+  shot: ShotName;
+  veil: number;
+  veilPhone: number;
+}
+
+export function NightGround({ poster, tail, children }: { poster: string; tail?: NightTail; children: ReactNode }) {
+  const tailRef = useRef(tail);
+  tailRef.current = tail;
   const router = useRouter();
   const routerRef = useRef(router);
   routerRef.current = router;
@@ -67,7 +77,7 @@ export function NightGround({ poster, children }: { poster: string; children: Re
     // A phone's content covers the WHOLE frame where a laptop's covers a third of it, so a
     // section may name a second veil for a narrow window (`data-veil-phone`).
     const narrow = window.innerWidth < 1024;
-    sections.current = [...document.querySelectorAll<HTMLElement>("[data-shot]")].map((el) => {
+    const found: ShotSection[] = [...document.querySelectorAll<HTMLElement>("[data-shot]")].map((el) => {
       const r = el.getBoundingClientRect();
       return {
         shots: (el.dataset.shot ?? "hero").split(",").filter(Boolean) as ShotName[],
@@ -76,20 +86,26 @@ export function NightGround({ poster, children }: { poster: string; children: Re
         veil: Number((narrow ? el.dataset.veilPhone : undefined) ?? el.dataset.veil ?? 0),
       };
     });
+    const t = tailRef.current;
+    sections.current = t
+      ? withTail(found, document.documentElement.scrollHeight, { shots: [t.shot], veil: narrow ? t.veilPhone : t.veil })
+      : found;
     const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
     stops.current = shotStops(sections.current, window.innerHeight, maxScroll);
     names.current = stops.current.map((s) => s.name);
   }, []);
 
   /** Where the page's words sit, in css pixels from the top left of the window (which is the
-   * canvas): the two largest boxes on screen. */
+   * canvas): the four largest boxes on screen. Four, because a window straddling two sections
+   * holds a heading, a lede, an index and a quote at once, and with two slots the heading lost —
+   * "Why work with us?" was sitting on the harbour at 1.1:1 (round 54, builder 3). */
   const quiet = useCallback((h: NightSceneHandle) => {
     const vh = window.innerHeight;
     const rects = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
       .map((el) => el.getBoundingClientRect())
       .filter((r) => r.width > 8 && r.height > 8 && r.bottom > 0 && r.top < vh)
       .sort((a, b) => b.width * b.height - a.width * a.height)
-      .slice(0, 2);
+      .slice(0, 4);
     h.setQuiet(rects);
   }, []);
 
@@ -195,7 +211,12 @@ export function NightGround({ poster, children }: { poster: string; children: Re
             measure();
             apply();
             setLive(true);
-            // Hold the poster until the live scene is as bright as it is (see below).
+            // Hold the poster until the live scene is as bright as it is (see below) — and if the
+            // scene came up with NO LIGHTS (the packed listings did not answer, or the terrain
+            // image did not), never dissolve it at all. The scene reports ready either way, and
+            // without this the still faded out into an empty canvas: the hero went black on a
+            // failure whose whole point was that the page should not notice it.
+            if (!h.stats().lights) return;
             posterTimer.current = setTimeout(() => setPosterGone(true), Math.max(0, h.introEndsAt() - performance.now()));
           }}
         />
@@ -212,7 +233,31 @@ export function NightGround({ poster, children }: { poster: string; children: Re
         aria-hidden
         className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity duration-[1100ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
         style={{ backgroundImage: `url(${poster})` }}
-      />
+      >
+        {/* THE POSTER'S OWN QUIET (round 54, builder 3). The live scene is told where the words
+            are and settles under them; a still cannot be told anything, so with JavaScript off —
+            and for the first moment of every cold visit — the count sentence sat straight on the
+            brightest part of the city and could not be read (measured: 1.3:1 at 390). These two
+            scrims are the still's answer, and they follow the words, not the picture: on a phone
+            the page puts the headline high and the count and the search box low, so the scrim is
+            vertical; on a laptop every word is in the bottom left, over New Jersey, so it is one
+            soft ellipse there and the harbour is untouched. They are children of the poster, so
+            they dissolve with it in the same 1100 ms and leave nothing behind. */}
+        <div
+          className="absolute inset-0 lg:hidden"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden lg:block"
+          style={{
+            background:
+              "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)",
+          }}
+        />
+      </div>
       <div className="relative z-10">{children}</div>
     </AreaChapterContext.Provider>
   );

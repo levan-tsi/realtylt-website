@@ -31,8 +31,13 @@ import { NightLabel } from "@/components/site/NightLabel";
 export function Footer() {
   return (
     <FooterShell className="border-t border-line bg-paper text-stone">
+      {/* data-quiet: on the home page the footer stands over the night flight's last shot, the
+          whole region from 140 km up (components/home/night/NightGround.tsx reads these boxes and
+          asks the scene to settle beneath them). Measured over the harbour's lights the address
+          block ran at 1.4:1 with nothing but the veil. The attribute is inert on every other page
+          and in every other theme: nothing outside the home page's scene looks for it. */}
       <div className="mx-auto grid max-w-[1250px] gap-16 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
-        <section aria-labelledby="footer-form-heading">
+        <section data-quiet aria-labelledby="footer-form-heading">
           <h2 id="footer-form-heading" className="t-h3 text-ink">
             Tell us what you&rsquo;re looking for
           </h2>
@@ -49,7 +54,7 @@ export function Footer() {
           </div>
         </section>
 
-        <div>
+        <div data-quiet>
           {/* Both cuts are in the HTML and the ground picks one, so the footer stays a server
               component; the night cut is the same artwork with the navy lit (round 53). */}
           <Image
@@ -150,7 +155,7 @@ export function Footer() {
           responsive fork. The row's type steps up with it (12 -> 13px) so the mark labels
           words of its own weight rather than towering over fine print. */}
       <div className="mx-auto max-w-[1250px] px-4 pb-10 lg:px-8">
-        <div className="flex flex-col gap-5 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+        <div data-quiet className="flex flex-col gap-5 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
           <div className="flex items-center gap-5">
             <EqualHousingMark className="h-11 w-auto shrink-0 text-stone" />
             {/* text-sm, not an arbitrary text-[13px]: this is running prose, and 13px is not a

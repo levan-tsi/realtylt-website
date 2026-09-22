@@ -549,8 +549,13 @@ body:has(.nocturne) > a[href="#main"]:focus {
   font-weight: 600;
   border-radius: 12px;
 }
+/* ...and its ring. `var(--color-porchlight)` was the intent, but the skip link is a direct child
+   of BODY and so sits outside every `.nocturne` scope: the variable resolves to the root's value,
+   which is the brand blue, and the first Tab on a black page met an off-palette blue ring at
+   2.4:1 against its own white pill (round 54, builder 3, measured). The moon is named outright.
+   The ring reads against the 2px of night the offset leaves between it and the pill. */
 body:has(.nocturne) > a[href="#main"]:focus-visible {
-  outline-color: var(--color-porchlight);
+  outline-color: var(--color-moon);
 }
 /* ...and the way back out. A few things on a night page are white BY NATURE and must keep the
    day's ink: a white pill on a photograph (the card pager, the carousel arrows), the Google map
@@ -829,6 +834,40 @@ body.rlt-quiz-open .rlt-panel {
 @media (scripting: none), (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}
+
+/* ── A HEADING RISES ONCE FROM A LINE (round 54's motion vocabulary, night pages only).
+   The words start a line below where they belong and come up into a box clipped to their own
+   line, so none of them is ever seen outside it — a title card landing rather than a paragraph
+   fading in. It rides the same Reveal the rest of the page uses, so it fires when the section
+   arrives and never again, on the one ease-out curve, inside the round's 400-700 ms.
+   The padding/margin pair gives descenders their room back after `overflow: hidden` took it.
+   The wrapper stays `.reveal`'s child, and that wrapper's own 16px slide is dropped where a
+   mask is present: two movements on one heading read as a wobble. */
+.nocturne .reveal:has(.mask-line) {
+  translate: 0 0;
+}
+.nocturne .mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.nocturne .mask-line > span {
+  display: block;
+  translate: 0 110%;
+  transition: translate 0.62s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.nocturne .reveal.is-visible .mask-line > span {
+  translate: 0 0;
+}
+/* No observer, or no appetite for movement: the words are simply where they belong. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  .nocturne .mask-line > span {
     translate: 0 0;
     transition: none;
   }

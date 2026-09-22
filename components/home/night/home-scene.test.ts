@@ -29,10 +29,20 @@ describe("the home page's sections and the scene's shots", () => {
     expect(page).toContain('data-shot={AREA_FLIGHT.join(",")}');
   });
 
-  it("opens on the establishing shot and ends on the whole region", () => {
+  it("opens on the establishing shot and ends on the whole region, which is the footer's leg", () => {
     const named = attrs("shot");
     expect(named[0]).toBe("hero");
-    expect(named[named.length - 1].split(",").pop()).toBe("region");
+    // The last SECTION arrives over the harbour; the pull-back to the whole region is the tail,
+    // the leg of the flight that runs below the last section — which is the footer. Before that
+    // existed the scene stopped dead at the footer's top edge and cut the region in half.
+    expect(named[named.length - 1].split(",").pop()).toBe("harbour");
+    const tail = /tail=\{\{\s*shot:\s*"([^"]+)",\s*veil:\s*([\d.]+),\s*veilPhone:\s*([\d.]+)\s*\}\}/.exec(page);
+    expect(tail, "the flight lost its last leg behind the footer").not.toBeNull();
+    expect(tail![1]).toBe("region");
+    expect(SHOTS[tail![1] as ShotName]).toBeDefined();
+    // Veiled hard: the footer's own words are read over it.
+    expect(Number(tail![2])).toBeGreaterThan(0.8);
+    expect(Number(tail![3])).toBeGreaterThanOrEqual(Number(tail![2]));
   });
 
   it("keeps every veil between none and all, on a window and on a phone", () => {
@@ -66,6 +76,31 @@ describe("the home page's sections and the scene's shots", () => {
     // The lantern's field is UNDER the words and the form: it must never take their clicks.
     const lantern = page.indexOf("data-lantern");
     expect(page.indexOf('id="home-hero"')).toBeGreaterThan(lantern);
+  });
+
+  it("gives the STILL the quiet the live scene gets, since a still cannot be told where the words are", () => {
+    const ground = fs.readFileSync(path.join(ROOT, "components/home/night/NightGround.tsx"), "utf8");
+    // The two scrims live INSIDE the poster element, so they fade with it and leave nothing behind,
+    // and they follow the words: vertical on a phone (headline high, search low), one soft ellipse
+    // in the bottom left on a laptop. Without them the count sentence sat on the brightest part of
+    // the city with JavaScript off (round 54, builder 3: measured at 1.3:1 at 390).
+    const poster = ground.slice(ground.indexOf("backgroundImage: `url(${poster})`"));
+    expect(poster).toContain("lg:hidden");
+    expect(poster).toContain("hidden lg:block");
+    expect((poster.match(/rgba\(5,5,5,/g) ?? []).length).toBeGreaterThanOrEqual(8);
+    // ...and the poster is never dissolved into an empty canvas.
+    expect(ground).toContain("if (!h.stats().lights) return;");
+  });
+
+  it("rises each section heading once from a line, on the night page only", () => {
+    const css = fs.readFileSync(path.join(ROOT, "app/globals.css"), "utf8");
+    expect(css).toContain(".nocturne .mask-line");
+    expect(css).toMatch(/\.nocturne \.reveal\.is-visible \.mask-line > span/);
+    // Reduced motion and no scripting put the words where they belong with no movement at all.
+    const guard = css.slice(css.indexOf(".nocturne .mask-line"));
+    expect(guard).toMatch(/@media \(scripting: none\), \(prefers-reduced-motion: reduce\) \{\s*\.nocturne \.mask-line/);
+    // Every section heading on the home page uses it.
+    expect((page.match(/className="mask-line"/g) ?? []).length).toBeGreaterThanOrEqual(4);
   });
 
   it("carries a still of the scene for a visitor with no JavaScript and no WebGL", () => {
@@ -125,6 +160,11 @@ describe("the footer over the scene", () => {
 
   it("is positioned on the home page only, so no other page's stacking changes", () => {
     expect(shell).toContain('pathname === "/" ? "relative z-10 " : ""');
+  });
+
+  it("lets the scene through on the home page only, and by inline style so class order cannot decide it", () => {
+    expect(shell).toContain('pathname === "/" ? { backgroundColor: "transparent" as const } : undefined');
+    expect(shell).toContain("style={style}");
   });
 
   it("carries the terrain credit on the home page only, in the words the sources ask for", () => {

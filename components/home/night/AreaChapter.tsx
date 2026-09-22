@@ -83,7 +83,13 @@ export function AreaChapter({ rows }: { rows: readonly AreaRow[] }) {
                     >
                       {row.name}
                     </span>
-                    <span className={`shrink-0 text-[13px] tabular-nums transition-colors duration-200 motion-reduce:transition-none ${on ? "text-ink-soft" : "text-stone"}`}>
+                    {/* The count is the one thing in this list that is a MEASUREMENT, and at night
+                        it sat over the constellation in `text-stone` at 13px: measured on the real
+                        pixels behind it, 1.5:1 over the boroughs (round 54, builder 3). A muted
+                        grey needs a background under 0.034 relative luminance to clear 4.5:1,
+                        which is not something a live city can promise; ink-soft has twice the
+                        head-room, and 14px is a number somebody actually reads. */}
+                    <span className={`shrink-0 text-[14px] tabular-nums transition-colors duration-200 motion-reduce:transition-none ${on ? "text-ink" : "text-ink-soft"}`}>
                       {n ? `${n.toLocaleString("en-US")} ${n === 1 ? "home" : "homes"}` : " "}
                     </span>
                   </Link>

@@ -15,7 +15,7 @@ import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
 import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
 import { decodeElevation, loadElevationPixels, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
-import { buildHaze, buildLights, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
+import { buildHaze, buildLights, countyAreaGains, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
 import { DEPTH_FRAGMENT, DEPTH_VERTEX, DUST_FRAGMENT, DUST_VERTEX, HAZE_FRAGMENT, HAZE_VERTEX, LIGHT_FRAGMENT, LIGHT_VERTEX } from "./shaders";
 import { AREA_COUNTY_OF, AREA_FLIGHT, areaShot, blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type Shot, type ShotName } from "./shots";
 import { EXAGGERATION, lngLatToWorld, worldToLngLat, type Vec3 } from "./world";
@@ -107,6 +107,24 @@ export interface Look {
   glint: number;
   lightAlpha: number;
   lightSize: number;
+  /** How far a lamp is allowed to differ from its neighbours in width, brightness and shade
+   * (0 = one bead stamped everywhere, 1 = the full seeded spread). Energy-preserving: a city's
+   * total light does not change with it, so the tone-mapping still holds. */
+  lampVary: number;
+  /** THE SPARSE COUNTIES. A chapter over Ulster holds a tenth of the lamps a chapter over Brooklyn
+   * does, over a frame of the same contours, so it arrived as a contour drawing with a few sparks
+   * in it. When a county is the subject its homes are lifted by (the densest county's homes per
+   * square kilometre / its own) ^ areaGainPow, capped at areaGainMax. No light is ever added: only
+   * how hard the ones that are there burn. */
+  areaGainPow: number;
+  areaGainMax: number;
+  /** ...and in EVERY area chapter the land is paper: whichever county is the subject, its own
+   * ground keeps this share of its brightness while the chapter holds. One number, not a function
+   * of density — Dutchess at a fifth showed what the chapter wants to look like, and the Catskills
+   * are loud because they are steep, which has nothing to do with how many homes stand on them. */
+  areaLand: number;
+  /** ...and how far the land OUTSIDE it falls while the chapter holds. */
+  areaOut: number;
   /** A light's halo: strength, and width as a multiple of its core. */
   lightHalo: number;
   lightSpread: number;
@@ -155,6 +173,11 @@ export const DEFAULT_LOOK: Look = {
   glint: 0.008,
   lightAlpha: 2.8,
   lightSize: 0.06,
+  lampVary: 1,
+  areaGainPow: 0.3,
+  areaGainMax: 2.3,
+  areaLand: 0.14,
+  areaOut: 0.012,
   lightHalo: 0.45,
   lightSpread: 5,
   haze: 0.08,
@@ -175,9 +198,10 @@ export interface NightSceneHandle {
   setFraming(f: Framing, opts?: { immediate?: boolean }): void;
   /** 0 = the full scene, 1 = dimmed under page content. Eased. */
   setVeil(v: number, opts?: { immediate?: boolean }): void;
-  /** Where the page's words sit (up to two boxes, css px from the canvas's top left; [] for
-   * none): the scene dims beneath them, easing back over ~70 px, so no contour runs through a
-   * letter. Call it again after a resize or a reflow. */
+  /** Where the page's words sit (up to FOUR boxes, css px from the canvas's top left; [] for
+   * none): the scene dims beneath them and eases back over a long way, so no contour runs through
+   * a letter and no edge of the easing can be read as a band. Call it again after a resize or a
+   * reflow. Boxes past the fourth are ignored, so the caller passes the ones that matter first. */
   setQuiet(rects: readonly { left: number; top: number; right: number; bottom: number }[]): void;
   /** The "where we work" chapter: light one county's homes and let the rest fall back (null: all
    * equal). Eased; under reduced motion it switches. */
@@ -192,13 +216,31 @@ export interface NightSceneHandle {
    * is no intro (reduced motion, skipIntro); 0 while the lights have not been built. */
   introEndsAt(): number;
   setLook(l: Partial<Look>): void;
-  stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number; buildWhere: string; quality: number; dpr: number };
+  stats(): {
+    dust: number;
+    lights: number;
+    towns: number;
+    frames: number;
+    ready: boolean;
+    gpu: string;
+    buildMs: number;
+    buildWhere: string;
+    quality: number;
+    dpr: number;
+    /** What each county's chapter lifts its homes by (lights.ts countyAreaGains). Measured from
+     * the listings themselves, so it is worth being able to read. */
+    areaGains: Partial<Record<CountySlugName, number>>;
+  };
   dispose(): void;
 }
 
 const copyF = (f: Framing): Framing => ({ pos: [...f.pos] as Vec3, target: [...f.target] as Vec3, fov: f.fov, moon: [f.moon[0], f.moon[1]] });
 
 const isPhone = () => window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 700;
+
+/** How far a quiet box is grown before it reaches the shader, in css px: half the widest sprite
+ * the lights are allowed to draw, so a lamp centred just outside a box cannot paint into it. */
+const QUIET_PAD_PX = 18;
 
 export async function createNightScene(opts: NightSceneOptions): Promise<NightSceneHandle> {
   const { canvas } = opts;
@@ -242,9 +284,25 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uNear: { value: 1 },
     uQuietA: { value: new THREE.Vector4(0, 0, 0, 0) },
     uQuietB: { value: new THREE.Vector4(0, 0, 0, 0) },
-    uQuietSoft: { value: 0.2 },
-    uQuietFloor: { value: 0.12 },
+    uQuietC: { value: new THREE.Vector4(0, 0, 0, 0) },
+    uQuietD: { value: new THREE.Vector4(0, 0, 0, 0) },
+    // How far the quiet eases back to the open scene, in NDC: across, and DOWN. The vertical
+    // number is the one that matters — a short ramp above a 1,100 px quote draws a line across the
+    // page (round 54, builder 3), so it runs a quarter of the window's height and the horizontal
+    // ramp is shorter, where a page's own column edge is expected anyway.
+    uQuietSoft: { value: new THREE.Vector2(0.3, 0.56) },
   };
+  // Each cloud decides how dark its own quiet goes, and the three are far apart on purpose: under
+  // a sentence the LAND stays (a contour behind a letter is paper, and the page keeps its ground)
+  // while the WINDOWS step aside almost entirely.
+  //
+  // The lights' number looks brutal and is not. They are drawn additively with no tone mapping
+  // above 1, so a borough's core is many times over white before it is clamped: measured behind
+  // the areas index, a pixel that reads as white there is carrying about fourteen times the
+  // brightness the screen can show. Multiplying it by a twentieth still leaves it bright enough to
+  // read a 14 px number against, which is exactly what the first pass got wrong (round 54, builder
+  // 3: "369 homes" at 1.7:1 with the quiet already on). A hundredth puts it away.
+  const quietFloor = { dust: { value: 0.1 }, light: { value: 0.012 }, haze: { value: 0.02 } };
   const dustU = {
     ...shared,
     uIntro: { value: 0 },
@@ -268,6 +326,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uCrowd: { value: new THREE.Vector2(look.crowdMinPx, look.crowdFullPx) },
     uFocus: { value: 0 },
     uFocusMix: { value: 0 },
+    uAreaLand: { value: look.areaLand },
+    uAreaOut: { value: look.areaOut },
+    uQuietFloor: quietFloor.dust,
     uMoon: { value: moonDir },
   };
   const lightU = {
@@ -284,6 +345,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uLowAlt: dustU.uLowAlt,
     uLowGain: { value: look.lowLightGain },
     uLowCity: { value: look.lowCityGain },
+    uAreaGain: { value: 1 },
+    uLampVary: { value: look.lampVary },
+    uQuietFloor: quietFloor.light,
   };
   const hazeU = {
     ...shared,
@@ -293,6 +357,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     uHazeLow: { value: 7 },
     uHazeHigh: { value: 26 },
     uFocusMix: dustU.uFocusMix,
+    uQuietFloor: quietFloor.haze,
   };
   const additive = {
     transparent: true,
@@ -355,6 +420,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let veilGoal = 0;
   let focusGoal = 0;
   let focusNext = 0;
+  let areaGains: Partial<Record<CountySlugName, number>> = {};
+  let areaNext = 1;
   let pointer: { x: number; y: number } | null = null;
   const par = { x: 0, y: 0 }; // damped parallax, -1..1
   let hovered: TownHover | null = null;
@@ -526,8 +593,10 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     scene.add(hazePoints);
     counties = countyRaster(cloud);
     paintDustCounties();
-    // Re-frame the area chapter on the homes themselves, now that we know where they stand.
+    // Re-frame the area chapter on the homes themselves, now that we know where they stand, and
+    // measure how hard each county's homes have to burn to carry a frame of that size.
     const boxes = countyLightBoxes(cloud);
+    areaGains = countyAreaGains(cloud, boxes, { pow: look.areaGainPow, max: look.areaGainMax });
     for (const a of AREA_FLIGHT) {
       const b = boxes[AREA_COUNTY_OF[a]];
       if (b) areaFrames[a] = areaShot(b);
@@ -636,7 +705,12 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       lightU.uFocusMix.value = approach(lightU.uFocusMix.value, 0, 1 - Math.exp(-dt / 0.12));
       moving = true;
     } else {
-      if (focusNext) lightU.uFocus.value = focusNext;
+      if (focusNext) {
+        lightU.uFocus.value = focusNext;
+        // The county's own lift changes at the same instant its identity does, which is the
+        // dimmest moment of the ease, so no frame shows one county lit at another's gain.
+        lightU.uAreaGain.value = areaNext;
+      }
       const kf = 1 - Math.exp(-dt / 0.3);
       lightU.uFocusMix.value = approach(lightU.uFocusMix.value, focusGoal, kf);
       if (Math.abs(lightU.uFocusMix.value - focusGoal) > 0.003) moving = true;
@@ -827,21 +901,32 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       kick();
     },
     setQuiet(rects) {
+      // GROWN BY A SPRITE'S RADIUS. The quiet is decided per point, at the point's own position,
+      // but a near lamp is drawn as a disc up to ~34 px across: a window whose CENTRE is just
+      // outside the box still paints into it, which is how "369 homes" ended up with a lamp
+      // through it at the right edge of the areas index (round 54, builder 3, measured at 1.7:1).
+      // Growing the box by that radius puts those centres inside the quiet as well.
+      const pad = QUIET_PAD_PX;
       const toNdc = (r: { left: number; top: number; right: number; bottom: number }, v: THREE.Vector4) =>
-        v.set((r.left / cssW) * 2 - 1, 1 - (r.bottom / cssH) * 2, (r.right / cssW) * 2 - 1, 1 - (r.top / cssH) * 2);
-      if (rects[0]) toNdc(rects[0], shared.uQuietA.value);
-      else shared.uQuietA.value.set(0, 0, 0, 0);
-      if (rects[1]) toNdc(rects[1], shared.uQuietB.value);
-      else shared.uQuietB.value.set(0, 0, 0, 0);
+        v.set(((r.left - pad) / cssW) * 2 - 1, 1 - ((r.bottom + pad) / cssH) * 2, ((r.right + pad) / cssW) * 2 - 1, 1 - ((r.top - pad) / cssH) * 2);
+      const slots = [shared.uQuietA, shared.uQuietB, shared.uQuietC, shared.uQuietD];
+      slots.forEach((slot, i) => {
+        if (rects[i]) toNdc(rects[i], slot.value);
+        else slot.value.set(0, 0, 0, 0);
+      });
       kick();
     },
     setFocus(county) {
       const idx = county ? COUNTY_SLUGS.indexOf(county) + 1 : 0;
-      if (idx) {
+      if (idx && county) {
         // A new county while one is lit: the switch happens at the dimmest moment of the ease.
         focusNext = idx;
         focusGoal = 1;
-        if (!lightU.uFocus.value || reduce) lightU.uFocus.value = idx;
+        areaNext = areaGains[county] ?? 1;
+        if (!lightU.uFocus.value || reduce) {
+          lightU.uFocus.value = idx;
+          lightU.uAreaGain.value = areaNext;
+        }
       } else focusGoal = 0;
       if (reduce) lightU.uFocusMix.value = focusGoal;
       kick();
@@ -883,6 +968,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       if (grid && dustKey() !== builtKey) void buildDustCloud();
       lightU.uAlpha.value = look.lightAlpha;
       lightU.uSize.value = look.lightSize;
+      lightU.uLampVary.value = look.lampVary;
+      dustU.uAreaLand.value = look.areaLand;
+      dustU.uAreaOut.value = look.areaOut;
       lightU.uHalo.value = look.lightHalo;
       lightU.uSpread.value = look.lightSpread;
       hazeU.uHaze.value = look.haze;
@@ -893,7 +981,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       if (depthMesh) depthMesh.visible = look.occlude;
       kick();
     },
-    stats: () => ({ quality: qualityLevel, dpr, buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu }),
+    stats: () => ({ quality: qualityLevel, dpr, buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu, areaGains }),
     dispose() {
       disposed = true;
       if (raf) cancelAnimationFrame(raf);

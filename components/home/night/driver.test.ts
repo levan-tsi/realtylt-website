@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countyOfShot, shotPosition, shotStops, veilAt, type ShotSection } from "./driver";
+import { countyOfShot, shotPosition, shotStops, veilAt, withTail, type ShotSection } from "./driver";
 import { AREA_FLIGHT } from "./shots";
 
 const VH = 900;
@@ -112,6 +112,45 @@ describe("the veil schedule", () => {
   it("is zero when nothing is on screen", () => {
     expect(veilAt(page, 99999, VH)).toBe(0);
     expect(veilAt([], 0, VH)).toBe(0);
+  });
+});
+
+describe("the last leg, below the page's last section (the footer)", () => {
+  const DOC = 9000; // the page's sections end at 6900; the footer runs to 9000
+  const tail = { shots: ["region"] as const, veil: 0.86 };
+
+  it("carries the flight to the end of the document", () => {
+    const withIt = withTail(page, DOC, tail);
+    expect(withIt).toHaveLength(page.length + 1);
+    const last = withIt[withIt.length - 1];
+    expect(last.top).toBe(6900);
+    expect(last.height).toBe(2100);
+    expect(last.veil).toBe(0.86);
+    expect(last.shots).toEqual(["region"]);
+    // The page's own sections are untouched.
+    expect(withIt.slice(0, -1)).toEqual(page);
+  });
+
+  it("veils the scene under the footer instead of leaving it at full strength", () => {
+    // Deep in the footer, where no [data-shot] section reaches: without the tail the weighted
+    // average has nothing to average and the scene comes back to full.
+    expect(veilAt(page, 8000, VH)).toBe(0);
+    expect(veilAt(withTail(page, DOC, tail), 8000, VH)).toBeCloseTo(0.86, 9);
+  });
+
+  it("keeps the flight monotone and anchors the last shot inside the page", () => {
+    const stops = shotStops(withTail(page, DOC, tail), VH, DOC - VH);
+    for (let i = 1; i < stops.length; i++) expect(stops[i].anchor).toBeGreaterThanOrEqual(stops[i - 1].anchor);
+    expect(stops[stops.length - 1].name).toBe("region");
+    expect(stops[stops.length - 1].anchor).toBeLessThanOrEqual(DOC - VH);
+    // ...and it is reached by the time the page is scrolled to the bottom.
+    expect(shotPosition(stops, DOC - VH).index).toBe(stops.length - 1);
+  });
+
+  it("leaves a page with no footer worth the name alone", () => {
+    expect(withTail(page, 6930, tail)).toEqual(page);
+    expect(withTail([], 9000, tail)).toEqual([]);
+    expect(withTail(page, DOC, { shots: [], veil: 0.9 })).toEqual(page);
   });
 });
 

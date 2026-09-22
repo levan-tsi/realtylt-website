@@ -34,6 +34,30 @@ export interface ShotStop {
   anchor: number;
 }
 
+/** THE PAGE ENDS WHERE IT BEGAN, FROM HIGHER UP.
+ *
+ * The sections stop where the page's own content does, and everything below them — the footer — was
+ * outside the flight: the scene simply stopped at the footer's top edge, which cut the region shot
+ * in half with a straight line across the window (round 54, builder 3 saw it at the bottom of the
+ * page). This makes that region the flight's last section: the same shot the page ended on, held,
+ * under a veil of its own, so the territory fades out behind the footer instead of being sliced. A
+ * tail shorter than `min` (no footer, or a stub) is left alone. */
+export function withTail(
+  sections: readonly ShotSection[],
+  docHeight: number,
+  tail: { shots: readonly ShotName[]; veil: number },
+  min = 80,
+): ShotSection[] {
+  const out = [...sections];
+  const last = out[out.length - 1];
+  if (!last || !tail.shots.length) return out;
+  const top = last.top + last.height;
+  const height = docHeight - top;
+  if (height < min) return out;
+  out.push({ shots: tail.shots, top, height, veil: tail.veil });
+  return out;
+}
+
 /** Where each shot's anchor falls. A section's span runs from "its top reaches the middle of the
  * window" to "its bottom does"; anchors sit at the middle of each shot's share of that span. Every
  * anchor is kept inside the page (0 .. maxScroll) and forced not to run backwards, so a section

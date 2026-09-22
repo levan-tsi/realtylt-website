@@ -53,6 +53,12 @@ if (!ready) {
   process.exit(1);
 }
 await page.addStyleTag({ content: "nextjs-portal,.rlt-bubble,[data-js-only]{display:none!important}" });
+// THE POSTER IS THE SCENE WITH NOTHING ON IT. Every page that carries the scene tells it where its
+// words sit (`data-quiet`) and the scene settles underneath them — including the site footer, which
+// the lab route renders like any other page. Shot without clearing that, the still has the page's
+// quiet zones baked in, and since round 54 takes the lights to a hundredth under a sentence the
+// result came out a near-black picture (measured: frame mean 0.0011 against 0.0202 cleared).
+await page.evaluate(() => (window.__night ? window.__night.setQuiet([]) : undefined));
 await page.waitForTimeout(1200);
 const png = await page.screenshot({ type: "png" });
 await ctx.close();

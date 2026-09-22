@@ -92,6 +92,41 @@ export function countyLightBoxes(cloud: LightCloud, tail = 0.04, min = 12): Part
   return out;
 }
 
+/** HOW HARD A COUNTY'S HOMES HAVE TO BURN for its own chapter to read.
+ *
+ * The "where we work" chapter gives every area the same frame: the camera stands back until the
+ * county fills it. That means a chapter over Ulster holds a tenth of the lamps a chapter over
+ * Brooklyn does, each one further away and so smaller, over a frame of exactly the same contours —
+ * and it arrived as a contour drawing with a few sparks in it (round 54, builder 3, measured).
+ *
+ * The lift is the ratio of the DENSEST county's homes per square kilometre to this one's, raised to
+ * `pow` and capped at `max`, so the densest borough is untouched (gain 1) and the emptiest county
+ * is lifted the most. No light is invented — one light is still one home. Only how hard it burns
+ * changes. */
+export function countyAreaGains(
+  cloud: Pick<LightCloud, "count" | "counties">,
+  boxes: Partial<Record<CountySlugName, LngLatBox>>,
+  opts: { pow: number; max: number },
+): Partial<Record<CountySlugName, number>> {
+  const counts = new Map<number, number>();
+  for (let i = 0; i < cloud.count; i++) {
+    const c = cloud.counties[i];
+    if (c) counts.set(c, (counts.get(c) ?? 0) + 1);
+  }
+  const density: [CountySlugName, number][] = [];
+  for (const [c, n] of counts) {
+    const slug = COUNTY_SLUGS[c - 1];
+    const b = slug ? boxes[slug] : undefined;
+    if (!b) continue;
+    const km2 = Math.max(1, (b.east - b.west) * 83.594 * ((b.north - b.south) * 111.132));
+    density.push([slug, n / km2]);
+  }
+  const ref = Math.max(...density.map(([, d]) => d), 1e-9);
+  const out: Partial<Record<CountySlugName, number>> = {};
+  for (const [slug, d] of density) out[slug] = Math.min(opts.max, Math.max(1, (ref / Math.max(d, 1e-9)) ** opts.pow));
+  return out;
+}
+
 export interface HazeCloud {
   count: number;
   /** World x, z and the real height in km (y) of each patch of glow. */

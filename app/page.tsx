@@ -71,7 +71,11 @@ export default async function HomePage() {
     // the ground colour and below the content (z-10) without escaping into the footer.
     // `.nocturne` re-points the site's tokens to the night (app/globals.css).
     <div className="nocturne isolate relative">
-      <NightGround poster="/images/home-night-poster.webp">
+      {/* `tail`: the flight does not stop where the page's sections do. Everything below them is
+          the footer, and without a last leg the scene simply ended at the footer's top edge —
+          a straight line straight through the middle of the region shot. The camera holds the
+          region there, veiled hard, so the territory fades out behind the footer instead. */}
+      <NightGround poster="/images/home-night-poster.webp" tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}>
         {/* ── Hero. The establishing shot: high over the harbour looking north up the valley,
             the whole territory one shape of light. The words sit bottom left, over New Jersey,
             where the scene has no lights; on a phone the headline is high and the search box is
@@ -181,10 +185,17 @@ export default async function HomePage() {
             Bear Mountain dark against the light beyond them. Cards need to be read, so the scene
             is veiled here (dimmed in the shader, not covered by a band) and keeps moving behind. */}
         <section data-shot="highlands" data-veil="0.74" data-veil-phone="0.85" className="sec" aria-labelledby="featured-heading">
-          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+          {/* data-quiet on the COLUMN, not just the heading. The veil dims the whole scene evenly,
+              which is right for a card (it has a body of its own) and not enough for a heading or
+              a credit line standing straight on the lights: measured, "Featured listings" ran at
+              1.1:1 and the MLS credit under the rail at 2.2:1. The scene settles under the column
+              the words live in, and stays open in the page's gutters and between the sections. */}
+          <div data-quiet className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               <SectionHeading align="center" as="h2">
-                <span id="featured-heading">Featured listings</span>
+                <span id="featured-heading" className="mask-line">
+                  <span>Featured listings</span>
+                </span>
               </SectionHeading>
             </Reveal>
             {/* FEATURED DRIFTS, NEW LISTINGS DOES NOT, and that asymmetry is the point (round 31):
@@ -207,12 +218,14 @@ export default async function HomePage() {
             Westchester near and Rockland beyond. Deliberately NOT Featured again — heading left,
             its link inline beside it, no second pill. */}
         <section data-shot="westchester" data-veil="0.74" data-veil-phone="0.85" className="sec" aria-labelledby="new-heading">
-          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+          <div data-quiet className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               {/* Last baselines, not box bottoms (round 53 polish). */}
               <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
                 <SectionHeading as="h2">
-                  <span id="new-heading">New listings</span>
+                  <span id="new-heading" className="mask-line">
+                    <span>New listings</span>
+                  </span>
                 </SectionHeading>
                 <Button href="/search?sort=newest" variant="ghost">
                   See all new listings
@@ -247,7 +260,9 @@ export default async function HomePage() {
             <div data-quiet className="lg:max-w-[38rem]">
               <Reveal>
                 <SectionHeading as="h2">
-                  <span id="areas-heading">Where we work</span>
+                  <span id="areas-heading" className="mask-line">
+                    <span>Where we work</span>
+                  </span>
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-stone">
                   Six counties of the Hudson Valley and all five boroughs. Every light is a home
@@ -259,13 +274,19 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── Why work with us: arriving over the harbour, the densest light on the map, and then
-            the camera rises and pulls back to the whole region as the page ends. */}
-        <section data-shot="harbour,region" data-veil="0.7" data-veil-phone="0.9" className="sec" aria-labelledby="why-heading">
-          <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
+        {/* ── Why work with us: arriving over the harbour, the densest light on the map. The pull
+            back to the whole region is the NightGround's `tail` now, so it happens as the footer
+            arrives rather than half a section early. */}
+        <section data-shot="harbour" data-veil="0.7" data-veil-phone="0.9" className="sec" aria-labelledby="why-heading">
+          {/* The harbour is the densest light on the map and this section is nearly all words, so
+              the column asks the scene to settle under it. No veil can do this on its own: at the
+              measured brightness here even a veil of 1.0 leaves the ledger's grey under 3:1. */}
+          <div data-quiet className="mx-auto max-w-[1250px] px-4 lg:px-8">
             <Reveal>
               <SectionHeading align="center" as="h2">
-                <span id="why-heading">Why work with us?</span>
+                <span id="why-heading" className="mask-line">
+                  <span>Why work with us?</span>
+                </span>
               </SectionHeading>
             </Reveal>
             {/* Our own product screenshots in a laptop carousel. */}
