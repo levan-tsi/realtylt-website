@@ -175,7 +175,7 @@ void main() {
   // halo four times as wide. A far light is a spark with a breath of glow; a near one a soft lamp.
   float lone = clamp(aGain * 1.25, 0.0, 1.0);
   float presence = mix(1.0, mix(uLowCity, uLowGain, lone * lone), uLowAlt);
-  float core = max(uSize * mix(1.0, mix(0.9, 1.4, lone * lone), uLowAlt) * uFocal / d, 1.3 * uPixelRatio);
+  float core = max(uSize * mix(1.0, mix(0.9, 1.8, lone * lone), uLowAlt) * uFocal / d, 1.3 * uPixelRatio);
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
