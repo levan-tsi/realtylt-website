@@ -57,6 +57,8 @@ export function priceLabel(l: { price: number | null | undefined; propertyType?:
  * reason this is an SVG. bg-mist, not bg-ink: the panel is light, and a black backing plate showed
  * as a hard frame around it while the image decoded. */
 export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
+  // Both cuts ship and the ground picks one (round 53): on a blue-hour page the light panel read
+  // as a white card punched out of the night, so there the night cut shows instead.
   return (
     <div className="absolute inset-0 bg-mist" aria-hidden>
       <Image
@@ -65,7 +67,15 @@ export function NoPhoto({ caption = true }: { caption?: boolean } = {}) {
         fill
         unoptimized
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className="object-cover"
+        className="object-cover night:hidden"
+      />
+      <Image
+        src={caption ? "/images/mls/coming-soon-night.svg" : "/images/mls/coming-soon-notext-night.svg"}
+        alt=""
+        fill
+        unoptimized
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="hidden object-cover night:block"
       />
     </div>
   );
@@ -147,7 +157,7 @@ export function ListingCard({
 
   if (variant === "plain") {
     return (
-      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
+      <article className="lift group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-card">
         {/* The overlay link carries its name as TEXT, not aria-label: a crawler reads anchor
             text, img alt or title and nothing else, so an aria-label-only anchor told Google
             nothing about the listing it points at (seo-audit.mjs ANCHORS). Same accessible

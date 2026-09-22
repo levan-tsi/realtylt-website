@@ -53,13 +53,15 @@ export const PRESS =
 export const PRESS_GROUP =
   "transition-[scale] duration-150 ease-out [&:has(button:active)]:scale-[0.97] motion-reduce:transition-none motion-reduce:[&:has(button:active)]:scale-100";
 
-const base = `inline-flex items-center justify-center gap-2 font-sans font-bold ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river disabled:cursor-not-allowed disabled:opacity-50`;
+// Night (round 53): sentence case at text size, the way the blue-hour pages set every label;
+// the day pages keep the live-parity uppercase untouched.
+const base = `inline-flex items-center justify-center gap-2 font-sans font-bold night:font-semibold night:normal-case night:tracking-[-0.005em] night:text-[15px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river disabled:cursor-not-allowed disabled:opacity-50`;
 
 const variants: Record<Variant, string> = {
   primary:
     "rounded-xl uppercase tracking-[0.1em] bg-ink text-paper hover:-translate-y-0.5 hover:bg-ink-soft hover:shadow-lift",
   outline:
-    "rounded-xl uppercase tracking-[0.1em] border-2 border-ink text-ink hover:bg-ink hover:text-paper",
+    "rounded-xl uppercase tracking-[0.1em] border-2 border-ink text-ink hover:bg-ink hover:text-paper night:border night:border-line-strong night:hover:border-ink",
   "outline-light":
     "rounded-xl uppercase tracking-[0.1em] border border-paper text-paper hover:bg-paper hover:text-ink",
   light:

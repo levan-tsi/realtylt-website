@@ -14,7 +14,7 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
   const step = (d: number) => setI((i + d + items.length) % items.length);
 
   return (
-    <section aria-label="Client reviews" className="bg-mist">
+    <section aria-label="Client reviews" className="bg-mist night:bg-transparent">
       <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16">
         <button
           type="button"
@@ -29,11 +29,13 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
             <GoogleLogo height={18} />
             <Stars />
           </div>
-          <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-ink md:text-2xl">
+          {/* Night (round 53): a person's own words are the one thing set in the serif, in its
+              italic, so a quotation reads as a voice and not as more of the page. */}
+          <p className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-ink md:text-2xl night:font-[family-name:var(--font-newsreader)] night:text-[clamp(1.625rem,1.2rem+1.5vw,2.375rem)] night:font-light night:italic night:leading-[1.3] night:tracking-[-0.01em]">
             &ldquo;{t.quote}&rdquo;
           </p>
         </blockquote>
-        <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-ink-soft">{t.name}</p>
+        <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-ink-soft night:mt-7 night:text-[15px] night:font-medium night:normal-case night:tracking-normal night:text-stone">{t.name}</p>
         <button
           type="button"
           aria-label="Next review"

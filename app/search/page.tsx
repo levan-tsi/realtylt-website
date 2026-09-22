@@ -62,7 +62,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const initial = await loadFirstPage(q);
 
   return (
-    <>
+    // Blue hour (round 53): see app/globals.css `.nocturne` and lib/site.ts NIGHT_ROUTES.
+    <div className="nocturne">
       {/* Live search page has no hero band — filters start right under the nav. */}
       <h1 className="sr-only">Search Listings: Hudson Valley homes for sale</h1>
       {/* THE NO-JS MESSAGE MOVED TO loading.tsx, and it had to. A <noscript> here read "The homes
@@ -90,6 +91,6 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             the freed width went to the cards and the map. */}
         <SearchClient initial={initial} />
       </Suspense>
-    </>
+    </div>
   );
 }

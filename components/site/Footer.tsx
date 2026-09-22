@@ -3,6 +3,7 @@ import Image from "next/image";
 import { LeadForm } from "@/components/leads/LeadForm";
 import { EqualHousingMark } from "@/components/site/EqualHousingMark";
 import { FOOTER_NAV, SITE } from "@/lib/site";
+import { FooterShell } from "@/components/site/FooterShell";
 
 /** Site footer.
  *
@@ -27,7 +28,7 @@ import { FOOTER_NAV, SITE } from "@/lib/site";
  */
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-paper text-stone">
+    <FooterShell className="border-t border-line bg-paper text-stone">
       <div className="mx-auto grid max-w-[1250px] gap-16 px-4 py-16 md:grid-cols-[1.25fr_1fr] md:gap-20 md:py-24 lg:px-8">
         <section aria-labelledby="footer-form-heading">
           <h2 id="footer-form-heading" className="t-h3 text-ink">
@@ -42,20 +43,29 @@ export function Footer() {
           </p>
           {/* First/Last split matches the rest of the site's lead forms. */}
           <div className="mt-7">
-            <LeadForm splitName submitLabel="Send Us A Message" />
+            <LeadForm splitName submitLabel="Send us a message" />
           </div>
         </section>
 
         <div>
+          {/* Both cuts are in the HTML and the ground picks one, so the footer stays a server
+              component; the night cut is the same artwork with the navy lit (round 53). */}
           <Image
             src="/logo-realtylt.png"
             alt="RealtyLT"
             width={200}
             height={41}
-            className="h-auto w-44"
+            className="h-auto w-44 night:hidden"
+          />
+          <Image
+            src="/logo-realtylt-night.png"
+            alt="RealtyLT"
+            width={200}
+            height={41}
+            className="hidden h-auto w-44 night:block"
           />
 
-          <p className="t-eyebrow mt-9 text-ink">Reach Out</p>
+          <p className="t-eyebrow mt-9 text-ink">Reach out</p>
           <address className="mt-4 space-y-1 text-sm font-light not-italic">
             <p>{SITE.address.street}</p>
             <p>
@@ -160,7 +170,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="bg-ink text-paper/70">
+      <div className="bg-ink text-paper/70 night:bg-night-deep night:text-haze">
         {/* A pure utility strip. It used to open with a second copyright notice — "© 2026
             RealtyLT" sitting directly under "© 2026 Levan Tsiklauri | United Real Estate. Each
             office is independently owned and operated." two strips apart. One of them had to
@@ -173,7 +183,7 @@ export function Footer() {
             <li>
               <Link
                 href="/privacy-policy"
-                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper night:hover:text-moon"
               >
                 Privacy Policy
               </Link>
@@ -181,7 +191,7 @@ export function Footer() {
             <li>
               <Link
                 href="/dmca-terms"
-                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper night:hover:text-moon"
               >
                 DMCA &amp; Terms of Service
               </Link>
@@ -192,7 +202,7 @@ export function Footer() {
                   opening defect. */}
               <Link
                 href="/sitemap"
-                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper"
+                className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper night:hover:text-moon"
               >
                 Site Map
               </Link>
@@ -200,6 +210,6 @@ export function Footer() {
           </ul>
         </div>
       </div>
-    </footer>
+    </FooterShell>
   );
 }

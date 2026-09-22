@@ -43,7 +43,8 @@ export function CardPhotos({
   // ring inside a white pill: 36 invisible focus stops on /search, measured in round 34. Ink here
   // is >=15:1 over any photograph, because the 0.9 alpha floors the pill at rgb(230).
   const arrowCls =
-    "absolute top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full " +
+    // `daylight`: a white pill keeps the day's ink on a blue-hour page too (round 53).
+    "daylight absolute top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full " +
     "bg-white/90 text-ink shadow-raise ring-1 ring-black/10 transition-opacity " +
     "opacity-0 group-hover:opacity-100 focus-visible:opacity-100 [@media(pointer:coarse)]:opacity-100 " +
     "hover:bg-white [--rlt-ring-on-photo:var(--color-ink)]";

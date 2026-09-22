@@ -50,8 +50,20 @@ export function MlsAttribution({
         width={width}
         height={Math.round(width / LOGO_ASPECT)}
         unoptimized
-        className="mt-0.5 shrink-0"
+        className={`mt-0.5 shrink-0 ${dark ? "" : "night:hidden"}`}
       />
+      {/* On a blue-hour page the light cut of the mark is the legible one (round 53): the dark
+          cut measured as a smudge on the night ground, and the mark is part of the credit. */}
+      {!dark && (
+        <Image
+          src="/images/mls/onekey-mls-on-dark.svg"
+          alt="One Key MLS"
+          width={width}
+          height={Math.round(width / LOGO_ASPECT)}
+          unoptimized
+          className="mt-0.5 hidden shrink-0 night:block"
+        />
+      )}
       <div className="min-w-0">
         {fixtureMode && (
           <p className={`mb-1 font-mono text-[10px] uppercase tracking-[0.14em] ${dark ? "text-porchlight/80" : "text-porchlight-deep"}`}>

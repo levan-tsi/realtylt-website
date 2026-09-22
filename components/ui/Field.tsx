@@ -71,7 +71,7 @@ function tone(dark: boolean, error?: string, floating = false) {
   // `hover:` variants behind `@media (hover: hover)`, so a tap on a phone cannot stick it on.
   return dark
     ? `border-paper/40 text-paper hover:border-paper/55 focus:border-paper/70 ${floating ? "" : "placeholder:text-paper/60"}`
-    : "border-line-strong text-ink-soft hover:border-ink/30 focus:border-ink/50 bg-white";
+    : "border-line-strong text-ink-soft hover:border-ink/30 focus:border-ink/50 bg-white night:bg-night-deep/70";
 }
 
 interface FieldShellProps {

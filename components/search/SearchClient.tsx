@@ -437,17 +437,18 @@ const CLEARED_FILTERS: Record<(typeof MORE_KEYS)[number] | (typeof MORE_FLAGS)[n
   basementFinished: false, basementWalkout: false, nearTransit: false, views: false,
 };
 
-/* Live filter bar: slim uppercase text dropdowns (BED ▾ BATH ▾ PRICE ▾ …), no boxes. */
+/* The filter bar's text dropdowns (Bed ▾ Bath ▾ Min price ▾ …), no boxes. Sentence case at text
+   size since round 53: the page wears the blue-hour look, which sets no label in capitals. */
 const selectCls =
   // These take the global mobile 16px floor (globals.css) like every other control. They used
   // to opt out of it via .rlt-compact-control, back when this row scrolled horizontally; since
   // round 24b stacked it into a grid, 16px measures clean at 390 and 320 and the opt-out was
   // only costing an iOS focus-zoom on every tap. Desktop still renders these at text-xs.
-  "cursor-pointer border-0 bg-transparent py-2 text-xs font-bold uppercase tracking-[0.12em] text-stone transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
+  "cursor-pointer border-0 bg-transparent py-2 text-[15px] font-medium text-stone transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-river";
 
 /* MORE-panel dropdowns are boxed (like live's) so min/max pairs read clearly. */
 const panelSelectCls =
-  "min-w-0 flex-1 cursor-pointer rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
+  "min-w-0 flex-1 cursor-pointer rounded-xl border border-line-strong bg-paper px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out hover:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river";
 
 export function SearchClient({ initial = null }: { initial?: SearchPayload | null }) {
   const searchParams = useSearchParams();
@@ -504,6 +505,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   // "MORE" filters panel (garage / sqft / lot / year / tax + without-photos). Collapsed by
   // default; the button carries a count of the active advanced filters.
   const [moreOpen, setMoreOpen] = useState(false);
+  // Phones only (round 53): the six bar dropdowns fold behind one "Filters" control. It opens by
+  // itself when any of them already holds a value, so a visitor arriving on a filtered URL sees
+  // what is filtering the results.
+  const barFilterCount = [filters.bedsMin, filters.bathsMin, filters.priceMin, filters.priceMax, filters.sqftMin, filters.propertyType].filter(Boolean).length;
+  const [filtersOpen, setFiltersOpen] = useState(() => barFilterCount > 0);
   const moreCount =
     MORE_KEYS.filter((k) => filters[k] !== "").length +
     MORE_FLAGS.filter((k) => filters[k]).length +
@@ -730,14 +736,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           type="button"
           aria-pressed={active}
           onClick={() => apply({ county: active ? "" : slug })}
-          className={`rounded-xl px-3.5 py-2 text-[13px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`whitespace-nowrap rounded-full border px-4 py-2 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             // Three raw literals lived here — #555555 and #e2e6ea — and they were the only
             // off-token colour the rubric found painted on /search (D5, x6). `stone` is the
             // site's secondary-text token and was picked precisely so it clears AA on mist
             // (4.60:1, see the @theme note); `line` is the next step down the neutral ramp and
             // gives the hover a definite change rather than a near-miss of mist. The hover pairs
             // it with ink, which is 15.3:1 on line — stone on line would not have cleared AA.
-            active ? "bg-ink text-paper" : "bg-mist text-stone hover:bg-line hover:text-ink"
+            // Round 53: outlined pills on the night ground, filled only when chosen.
+            active ? "border-ink bg-ink text-paper" : "border-line text-ink-soft hover:border-ink hover:text-ink"
           }`}
         >
           {area.name}, NY
@@ -761,7 +768,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   type NumKey = "sqftMin" | "sqftMax" | "garageMin" | "garageMax" | "lotMin" | "lotMax" | "yearMin" | "yearMax" | "taxMax" | "listedMinDays" | "listedDays";
   const rangeRow = (label: string, minKey: NumKey, maxKey: NumKey, opts: number[], fmt: (n: number) => string) => (
     <div>
-      <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
+      <p className="mb-1.5 text-[13px] font-medium text-stone">{label}</p>
       <div className="flex items-center gap-2">
         <select
           aria-label={`Minimum ${label.toLowerCase()}`}
@@ -772,7 +779,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <option value="">No min</option>
           {opts.map((n) => (<option key={n} value={n}>{fmt(n)}</option>))}
         </select>
-        <span aria-hidden className="shrink-0 text-[11px] uppercase tracking-wide text-stone">to</span>
+        <span aria-hidden className="shrink-0 text-[13px] text-stone">to</span>
         <select
           aria-label={`Maximum ${label.toLowerCase()}`}
           value={filters[maxKey]}
@@ -791,7 +798,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
   type SelKey = "heating" | "parking";
   const selectRow = (label: string, key: SelKey, anyLabel: string, opts: { value: string; label: string }[]) => (
     <div>
-      <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">{label}</p>
+      <p className="mb-1.5 text-[13px] font-medium text-stone">{label}</p>
       <div className="flex">
         <select
           aria-label={label}
@@ -824,7 +831,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         // gap-x-3 (was 4): at 1440 the action cluster missed the first row by a whisker and
         // the whole bar wrapped two lines tall — the owner's "unused empty big spots". The
         // trimmed gaps fit filters AND actions on one line, and content starts a row higher.
-        className={`mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-white px-3.5 py-2 ${
+        className={`mt-3 flex flex-wrap items-center gap-x-2 gap-y-2 border border-line bg-mist px-3 py-2 min-[360px]:gap-x-3 min-[360px]:px-3.5 ${
           moreOpen ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
@@ -833,7 +840,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         {/* `rlt-seg`: the group's own overflow clip eats its segments' focus rings — see the
             measurement in globals.css. The class moves each ring inside its segment. */}
         <div role="group" aria-label="Sale or rent" className={`rlt-seg flex shrink-0 overflow-hidden rounded-xl border border-line ${PRESS_GROUP}`}>
-          {([["For Sale", false], ["For Rent", true]] as const).map(([label, isRent]) => {
+          {([["For sale", false], ["For rent", true]] as const).map(([label, isRent]) => {
             const active = filters.rental === isRent;
             return (
               <button
@@ -857,8 +864,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                             : filters.homeType,
                       })
                 }
-                className={`min-h-6 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-[color,border-color,background-color] duration-150 ease-out focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
-                  active ? "bg-ink text-white" : "bg-white text-stone hover:text-ink"
+                className={`min-h-6 px-3 py-2 text-[14px] font-medium min-[360px]:px-3.5 transition-[color,border-color,background-color] duration-150 ease-out focus:outline-none focus-visible:outline-2 focus-visible:outline-river ${
+                  active ? "bg-ink text-paper" : "bg-transparent text-stone hover:text-ink"
                 }`}
               >
                 {label}
@@ -866,6 +873,28 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             );
           })}
         </div>
+
+        <button
+          type="button"
+          aria-expanded={filtersOpen}
+          aria-controls="bar-filters"
+          onClick={() => setFiltersOpen((o) => !o)}
+          className={`ml-auto inline-flex min-h-9 items-center gap-2 rounded-xl border px-3 py-2 text-[14px] font-medium sm:hidden ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+            filtersOpen || barFilterCount > 0 ? "border-ink text-ink" : "border-line-strong text-ink-soft"
+          }`}
+        >
+          <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            <path d="M3 6.5h4M11 6.5h6M3 13.5h8M15 13.5h2" />
+            <circle cx="9" cy="6.5" r="1.7" fill="currentColor" stroke="none" />
+            <circle cx="13" cy="13.5" r="1.7" fill="currentColor" stroke="none" />
+          </svg>
+          Filters
+          {barFilterCount > 0 && (
+            <span className="grid h-4 min-w-4 place-items-center rounded-full bg-ink px-1 text-[10px] font-bold leading-none text-paper">
+              {barFilterCount}
+            </span>
+          )}
+        </button>
 
         <div className="flex min-w-36 grow basis-40 items-center gap-2">
           {/* Live prefixes the place field with a map pin. */}
@@ -880,8 +909,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             id="search-q"
             key={filters.city || filters.q}
             defaultValue={filters.city || filters.q}
-            placeholder="Find a Place"
-            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
+            placeholder="Town, zip or address"
+            className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-[15px] text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none"
             /* PICKING a place is a different act from typing one. A county picks its first-class
                filter, a city picks an exact city, and a ZIP stays free text (search_hay covers
                it exactly anyway). Each clears the other two so the three can never stack. */
@@ -899,7 +928,11 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             before: Bed alone beside the place field, then Bath+Min Price, then Max Price+Sqft,
             then Type+More+Search, each row starting at a different x. `sm:contents` dissolves
             this wrapper from 640px up, so the desktop row is byte-identical to before. */}
-        <div className="grid w-full grid-cols-2 items-center gap-x-4 sm:contents">
+        {/* ...and on a phone they fold behind "Filters" (round 53). Open, the six stacked
+            dropdowns were the whole first screen of the page, 620px of controls and not one
+            home; folded, a phone shows the place box, the action and the first cards. From
+            640px the wrapper dissolves as before and the row is unchanged. */}
+        <div id="bar-filters" className={`${filtersOpen ? "grid" : "hidden"} w-full grid-cols-2 items-center gap-x-4 sm:contents`}>
         <label htmlFor="f-beds" className="sr-only">Minimum beds</label>
         <select id="f-beds" value={filters.bedsMin} onChange={(e) => apply({ bedsMin: e.target.value })} className={selectCls}>
           <option value="">Bed</option>
@@ -916,14 +949,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
         </select>
         <label htmlFor="f-priceMin" className="sr-only">Minimum price</label>
         <select id="f-priceMin" value={filters.priceMin} onChange={(e) => apply({ priceMin: e.target.value })} className={selectCls}>
-          <option value="">Min Price</option>
+          <option value="">Min price</option>
           {(filters.rental ? RENT_PRICE_STEPS : PRICE_STEPS).map((p) => (
             <option key={p} value={p}>{filters.rental ? fmtRent(p) : `${fmtK(p)}+`}</option>
           ))}
         </select>
         <label htmlFor="f-priceMax" className="sr-only">Maximum price</label>
         <select id="f-priceMax" value={filters.priceMax} onChange={(e) => apply({ priceMax: e.target.value })} className={selectCls}>
-          <option value="">Max Price</option>
+          <option value="">Max price</option>
           {(filters.rental ? RENT_PRICE_STEPS : PRICE_STEPS).map((p) => (
             <option key={p} value={p}>{filters.rental ? `Under ${fmtRent(p)}` : `Under ${fmtK(p)}`}</option>
           ))}
@@ -963,7 +996,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           aria-expanded={moreOpen}
           aria-controls="more-panel"
           onClick={() => setMoreOpen((o) => !o)}
-          className={`inline-flex items-center gap-1.5 py-2 text-xs font-bold uppercase tracking-[0.12em] ${PRESS} focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+          className={`${filtersOpen ? "inline-flex" : "hidden"} items-center gap-1.5 py-2 text-[15px] font-medium sm:inline-flex ${PRESS} focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
             moreOpen || moreCount > 0 ? "text-ink" : "text-stone hover:text-ink"
           }`}
         >
@@ -987,14 +1020,14 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             "Clear All Filters" already uses. */}
         <button
           type="submit"
-          className={`grow rounded-xl border-2 border-ink bg-ink px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-paper ${PRESS} hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0`}
+          className={`grow rounded-xl border border-ink bg-ink px-4 py-2 text-[15px] font-semibold text-paper ${PRESS} hover:border-ink-soft hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:grow-0`}
         >
           Search
         </button>
         <button
           type="button"
           onClick={() => setSaveOpen(true)}
-          className={`inline-flex items-center gap-2 rounded-xl border-2 border-ink bg-white px-3 py-2 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+          className={`inline-flex items-center gap-2 rounded-xl border border-line-strong bg-transparent px-3.5 py-2 text-[15px] font-medium text-ink ${PRESS} hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
         >
           {/* Live pairs SAVE SEARCH with a bell, not a heart — the action sets up an alert
               for new matches, which is what a bell reads as (the heart means "favorite"
@@ -1003,7 +1036,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <path d="M5.5 8.2a4.5 4.5 0 0 1 9 0c0 3.2.9 4.6 1.5 5.3H4c.6-.7 1.5-2.1 1.5-5.3Z" />
             <path d="M8.4 16a1.8 1.8 0 0 0 3.2 0" />
           </svg>
-          Save Search
+          Save search
         </button>
         </div>
       </form>
@@ -1012,7 +1045,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           friendly and overflow-safe at every width — cleaner than live's overlay; filters
           apply live (no "apply" step), a divergence noted in the parity file. */}
       {moreOpen && (
-        <div id="more-panel" className="rounded-b-2xl border border-t-0 border-line bg-white px-4 py-5 sm:px-6">
+        <div id="more-panel" className="rounded-b-2xl border border-t-0 border-line bg-mist px-4 py-5 sm:px-6">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
             <label className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ink-soft">
               <input
@@ -1027,7 +1060,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               <button
                 type="button"
                 onClick={clearMore}
-                className="text-xs font-bold uppercase tracking-[0.12em] text-stone underline underline-offset-4 transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
+                className="text-[14px] font-medium text-stone underline underline-offset-4 transition-[color,border-color,background-color] duration-150 ease-out hover:text-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
               >
                 Reset advanced
               </button>
@@ -1041,7 +1074,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 co-ops and multi-families are ALL "Residential", which is exactly why this
                 exists. */}
             <div>
-              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Home type</p>
+              <p className="mb-1.5 text-[13px] font-medium text-stone">Home type</p>
               {/* The flex wrapper is load-bearing: panelSelectCls is `flex-1`, which does
                   nothing outside a flex container, so a standalone select collapses to the
                   width of its longest option while every rangeRow select fills its column. */}
@@ -1068,7 +1101,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                 every other pair in this panel is read. */}
             {rangeRow("Days on market", "listedMinDays", "listedDays", LISTED_DAY_OPTS, fmtDays)}
             <div>
-              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Max annual tax</p>
+              <p className="mb-1.5 text-[13px] font-medium text-stone">Max annual tax</p>
               {/* Same flex wrapper, and this one is a pre-existing defect the new Home type
                   control inherited: at 1440 this select measured ~95px against its
                   neighbours' ~315px, which reads as a broken cell rather than a choice. */}
@@ -1089,7 +1122,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             {selectRow("Heating fuel", "heating", "Any heating", HEATING_OPTS)}
             {selectRow("Parking", "parking", "Any parking", PARKING_OPTS)}
             <div>
-              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Basement</p>
+              <p className="mb-1.5 text-[13px] font-medium text-stone">Basement</p>
               {/* ONE select drives three URL flags, exactly one ever set: "Yes" is the old
                   basement toggle (REAL_BASEMENT semantics), the deeper cuts are exact feed
                   values — Finished 6,545 · Walk-out 4,193, measured in-surface. */}
@@ -1114,7 +1147,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               </div>
             </div>
             <div>
-              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">Keywords</p>
+              <p className="mb-1.5 text-[13px] font-medium text-stone">Keywords</p>
               {/* Zillow's Keywords box (round 24b): websearch full text over the listing
                   remarks — 99.8% of the surface carries them, so "pool" (3,388) and
                   "fireplace" (3,620) finally answer without a sync change. Applies on Enter
@@ -1136,7 +1169,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   onBlur={(e) => {
                     if (e.target.value !== filters.keywords) apply({ keywords: e.target.value });
                   }}
-                  className="min-w-0 flex-1 rounded-xl border border-line-strong bg-white px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
+                  className="min-w-0 flex-1 rounded-xl border border-line-strong bg-paper px-2.5 py-2 text-sm text-ink-soft transition-[color,border-color,background-color] duration-150 ease-out placeholder:text-stone hover:border-ink focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-river"
                 />
               </div>
             </div>
@@ -1150,7 +1183,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               "pool" lives only in free text, where it also says "no pool" and "pool table"). */}
           <fieldset className="mt-6 border-t border-line pt-5">
             <legend className="sr-only">Features</legend>
-            <p aria-hidden className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone">
+            <p aria-hidden className="mb-2.5 text-[13px] font-medium text-stone">
               Features
             </p>
             <div className="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
@@ -1172,7 +1205,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <button
               type="button"
               onClick={() => setMoreOpen(false)}
-              className={`rounded-xl bg-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-paper ${PRESS} hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+              className={`rounded-xl bg-ink px-5 py-2.5 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             >
               {state === "ready" && result ? `View ${result.total.toLocaleString()} results` : "View results"}
             </button>
@@ -1183,7 +1216,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       {/* ── Area chips: the six Top-Areas counties up front; the NYC boroughs sit behind a
           secondary expander so the default view stays scoped to the Hudson Valley. */}
       <div className="mt-4">
-        <ul className="flex flex-wrap items-center gap-2" aria-label="Filter by county">
+        {/* One swipeable row on a phone (round 53): wrapped, the seven chips took four rows. */}
+        <ul className="-mx-4 flex items-center gap-2 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" aria-label="Filter by county">
           {COUNTY_CHIPS.map(renderChip)}
           <li>
             <button
@@ -1191,13 +1225,13 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               aria-expanded={showBoroughs}
               aria-controls="borough-chips"
               onClick={() => setBoroughsOpen((o) => !o)}
-              className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-[13px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+              className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[14px] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                 boroughActive
-                  ? "bg-ink text-paper"
-                  : "border border-line-strong bg-white text-stone hover:border-ink hover:text-ink"
+                  ? "border border-ink bg-ink text-paper"
+                  : "border border-line text-ink-soft hover:border-ink hover:text-ink"
               }`}
             >
-              NYC Boroughs
+              NYC boroughs
               <svg
                 aria-hidden="true"
                 viewBox="0 0 12 12"
@@ -1221,7 +1255,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
       {/* ── Result meta row — live: light gray strip, "N listings found" + quick filter left,
           Sort By + view toggle right */}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-mist px-4 py-2.5">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        {/* w-full min-w-0 on a phone: the sideways-scrolling row inside sizes itself from THIS
+            box, and a content-sized box let it widen the document by 129px at 390. */}
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:w-auto">
           {/* This strip is a row of instruments — quick filter, sort, view — and the count was
               dressed exactly like them: small, bold, the same weight as a control label. It is
               the only CONTENT here, the answer the whole page exists to give, so it is set in
@@ -1231,7 +1267,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <p className="flex flex-wrap items-baseline gap-x-2 text-sm text-stone" role="status">
             {state === "loading" ? "Searching…" : state === "error" ? "" : (
               <>
-                <strong className="font-display text-2xl font-light leading-none text-ink">
+                <strong className="font-display text-[28px] font-semibold leading-none tracking-[-0.025em] tabular-nums text-ink">
                   {(result?.total ?? 0).toLocaleString()}
                 </strong>
                 {/* Say what the number IS. Once the map has settled, the grid is scoped to its
@@ -1273,21 +1309,23 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               Open Houses + Price Reduced stay omitted: our OneKey feed replicates neither the
               OpenHouse resource nor a price-drop field, and a filter that cannot answer is
               worse than no filter. */}
-          {/* flex-wrap, and it is load-bearing at 320: this group grew from two answers to four
-              last round, and four un-wrappable buttons ("All Listings / Active / New Listings /
-              Pending") measure wider than a 320px viewport can hold, so /search pushed the whole
-              document 22px sideways. Wrapping is the honest fix — the row is a set of peers, and
-              a phone is allowed to stack them. */}
-          <div role="group" aria-label="Quick filter" className="flex flex-wrap items-center gap-1">
-            {([["all", "All Listings"], ["active", "Active"], ["new", "New Listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
+          {/* The four answers plus Saved and Plan, as ONE row that scrolls sideways on a phone
+              (round 53). They used to wrap there, which was the honest fix for the 22px of
+              document overflow four un-wrappable buttons caused at 320 (round 41b), but stacked
+              they cost the phone two rows before the first home. The scroller holds the width
+              inside the panel instead (-mx-4 against the panel's own px-4), so the document
+              still cannot widen; from 640px it is an ordinary wrapping row again. */}
+          <div className="-mx-4 flex w-[calc(100%+2rem)] items-center gap-x-1 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:gap-x-3 sm:overflow-visible sm:px-0">
+          <div role="group" aria-label="Quick filter" className="flex shrink-0 items-center gap-1 sm:flex-wrap">
+            {([["all", "All listings"], ["active", "Active"], ["new", "New listings"], ["pending", "Pending"]] as const).map(([val, label]) => (
               <button
                 key={val}
                 type="button"
                 aria-pressed={filters.quick === val}
                 onClick={() => apply({ quick: val })}
-                className={`px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
+                className={`whitespace-nowrap px-2 py-1.5 text-[14px] font-medium ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river ${
                   filters.quick === val
-                    ? "text-ink underline decoration-2 underline-offset-4"
+                    ? "text-ink underline decoration-porchlight decoration-2 underline-offset-[7px]"
                     : "text-stone hover:text-ink"
                 }`}
               >
@@ -1302,7 +1340,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <span aria-hidden className="hidden h-4 w-px bg-line-strong sm:block" />
           <Link
             href="/saved"
-            className={`relative inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            className={`relative inline-flex items-center gap-1.5 px-2 py-1.5 text-[14px] font-medium text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
@@ -1316,7 +1354,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           </Link>
           <Link
             href="/plan?quiz=1"
-            className={`inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            className={`inline-flex items-center gap-1.5 px-2 py-1.5 text-[14px] font-medium text-stone ${PRESS} hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
           >
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <circle cx="6" cy="19" r="2" />
@@ -1325,12 +1363,15 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             </svg>
             Plan
           </Link>
+          </div>
         </div>
-        <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
-          <label htmlFor="f-sort" className="text-xs font-bold uppercase tracking-[0.12em] text-stone">
-            Sort By
+        {/* Sort and view share one line on a phone: the visible "Sort by" is dropped there
+            (the select still carries its label for assistive tech) so the pair fits at 320. */}
+        <div className="flex w-full items-center justify-between gap-x-3 sm:w-auto sm:justify-end">
+          <label htmlFor="f-sort" className="sr-only text-[14px] text-stone sm:not-sr-only">
+            Sort by
           </label>
-          <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={selectCls}>
+          <select id="f-sort" value={filters.sort} onChange={(e) => apply({ sort: e.target.value })} className={`${selectCls} min-w-0 max-w-[11rem]`}>
             <option value="mixed">Mixed</option>
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
@@ -1338,7 +1379,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             <option value="price-asc">Price: low to high</option>
             <option value="price-desc">Price: high to low</option>
           </select>
-          <div role="group" aria-label="View" className={`rlt-seg flex overflow-hidden rounded-xl border border-line-strong ${PRESS_GROUP}`}>
+          <div role="group" aria-label="View" className={`rlt-seg flex shrink-0 overflow-hidden rounded-xl border border-line-strong ${PRESS_GROUP}`}>
             {(["grid", "map"] as const).map((v) => (
               <button
                 key={v}
@@ -1361,8 +1402,8 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                     60,
                   );
                 }}
-                className={`px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] transition-[color,border-color,background-color] duration-150 ease-out ${
-                  filters.view === v ? "bg-ink text-paper" : "bg-white text-stone hover:text-ink"
+                className={`px-4 py-2 text-[14px] font-medium capitalize transition-[color,border-color,background-color] duration-150 ease-out ${
+                  filters.view === v ? "bg-ink text-paper" : "bg-transparent text-stone hover:text-ink"
                 }`}
               >
                 {v}
@@ -1424,9 +1465,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
           <button
             type="button"
             onClick={() => apply(CLEARED_FILTERS)}
-            className={`mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper`}
+            className={`mt-5 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
           >
-            Clear All Filters
+            Clear all filters
           </button>
         </div>
       ) : filters.view === "map" ? (
@@ -1491,9 +1532,9 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
                   <button
                     type="button"
                     onClick={() => apply(CLEARED_FILTERS)}
-                    className={`mt-5 rounded-xl border-2 border-ink px-5 py-2.5 text-sm font-bold uppercase tracking-[0.1em] text-ink ${PRESS} hover:bg-ink hover:text-paper`}
+                    className={`mt-5 rounded-xl border border-line-strong px-5 py-2.5 text-[15px] font-medium text-ink ${PRESS} hover:border-ink hover:bg-ink hover:text-paper`}
                   >
-                    Clear All Filters
+                    Clear all filters
                   </button>
                 )}
               </li>
@@ -1548,7 +1589,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page <= 1}
             onClick={() => apply({ page: filters.page - 1 })}
-            className={`rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            className={`rounded-lg border border-line bg-paper px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Previous page"
           >
             «
@@ -1576,7 +1617,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
               className={`min-w-9 rounded-lg border px-2.5 py-2 text-sm ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river sm:px-3.5 ${
                 p === filters.page
                   ? "border-ink bg-ink font-bold text-paper"
-                  : "border-line bg-white text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
+                  : "border-line bg-paper text-ink-soft hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20"
               }`}
             >
               {p}
@@ -1586,7 +1627,7 @@ export function SearchClient({ initial = null }: { initial?: SearchPayload | nul
             type="button"
             disabled={filters.page >= result.totalPages}
             onClick={() => apply({ page: filters.page + 1 })}
-            className={`rounded-lg border border-line bg-white px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
+            className={`rounded-lg border border-line bg-paper px-3 py-2 text-sm text-stone ${PRESS} hover:border-ink hover:bg-ink/10 hover:text-ink active:bg-ink/20 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`}
             aria-label="Next page"
           >
             »

@@ -34,6 +34,27 @@ declare global {
   var google: any;
 }
 
+/** The night basemap (round 53): land in the page's own night, water a step darker, roads as
+ * faint lines, and the clutter a home search does not need (businesses, parcel lines) switched
+ * off. Rail stays: in the Hudson Valley the Metro-North line is part of where a home is. */
+const NIGHT_MAP_STYLE = [
+  { elementType: "geometry", stylers: [{ color: "#0f2036" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#93a3b8" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#0b1a2e" }, { weight: 3 }] },
+  { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
+  { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#2a3f5c" }] },
+  { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
+  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#c9d4e2" }] },
+  { featureType: "poi", stylers: [{ visibility: "off" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#1a2d47" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#6f829c" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#233a58" }] },
+  { featureType: "transit.line", elementType: "geometry", stylers: [{ color: "#2c4466" }] },
+  { featureType: "transit.station", elementType: "labels.text.fill", stylers: [{ color: "#93a3b8" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#07121f" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#4d6180" }] },
+];
+
 /** google.maps.LatLngBounds has its OWN accessors — getNorthEast()/getSouthWest(), each a
  * LatLng with lat()/lng() methods — NOT Leaflet's getNorth/getSouth/getEast/getWest. Module
  * scope so both the mount effect's viewport fetch and the filtersQuery-change effect share one
@@ -135,6 +156,9 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         const map = new google.maps.Map(el, {
           center: { lat: 41.5, lng: -74.0 },
           zoom: 9,
+          // On a blue-hour page the basemap is night too (round 53). Raster styling, not a
+          // mapId: this map has none, and the chips are our own overlay either way.
+          ...(el.closest(".nocturne") ? { styles: NIGHT_MAP_STYLE, backgroundColor: "#0b1a2e" } : {}),
           mapTypeControl: false,
           streetViewControl: false,
           fullscreenControl: true,
@@ -757,11 +781,11 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
           full one-line legend is 348px wide and reached under the 40px fullscreen control at
           390 (measured 1,600px² of overlap); reserving 80px makes the card wrap clear of it,
           and ≥sm the map is wide enough that the cap has nothing to do. */}
-      <div className="pointer-events-none absolute left-2 top-2 z-[5] flex max-w-[calc(100%-80px)] flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone sm:max-w-none">
+      <div className="pointer-events-none absolute left-2 top-2 z-[5] flex max-w-[calc(100%-80px)] flex-wrap items-center gap-x-3 gap-y-1 rounded-lg border border-line bg-paper/85 px-2.5 py-1.5 text-[12px] text-stone backdrop-blur-sm sm:max-w-none">
         <span className="flex items-center gap-1.5">
           {/* @design-allow the swatch is a MINIATURE of the map's price chip, which is 8px at
               ~26px tall — so at 10px tall it is 3px. On the UI scale it would read as a pill. */}
-          <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-black" />
+          <span aria-hidden className="inline-block h-2.5 w-4 rounded-[3px] bg-[var(--rlt-chip-bg,#000)]" />
           For sale
         </span>
         <span className="flex items-center gap-1.5">
@@ -786,7 +810,7 @@ export default function GoogleMapView({ pins, selectedId, onSelect, onToggleSave
         // (which existed to clear the legend) has nothing left to clear.
         // drawnCount (markers actually painted after thinning), not the fetch size — a
         // visitor can count what is on screen, so the banner reports exactly that.
-        <p className="pointer-events-none absolute bottom-9 right-2 z-[5] rounded-lg border border-line bg-white/95 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-stone">
+        <p className="pointer-events-none absolute bottom-9 right-2 z-[5] rounded-lg border border-line bg-paper/85 px-2.5 py-1.5 text-[12px] text-stone backdrop-blur-sm">
           {drawnCount.toLocaleString()} of {viewportTotal.toLocaleString()} homes shown. Zoom in for more
         </p>
       )}

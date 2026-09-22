@@ -997,3 +997,29 @@ export async function getSyncWatermark(): Promise<{ watermark: string; baselineC
   if (!rows[0]) throw new Error("idx_sync_state row missing");
   return { watermark: rows[0].watermark, baselineComplete: rows[0].baseline_complete };
 }
+
+/** The home hero's lights (round 53): where every active for-sale home stands, and nothing else.
+ * The same scope as a default /search (searchFilters owns it: the served counties, the $10k sale
+ * floor, rentals excluded) narrowed to Active. `geocoded` rides along because only a MEASURED
+ * address becomes a light (lib/idx/lights.ts): a zip-centroid fallback sits in a jitter box, and
+ * at the hero's scale a few dozen of those draw a square no real street makes. The unmeasured
+ * rows still count toward their town's number. `geocoded` is the generated boolean column, so no
+ * JSONB is read. Our own database only; this never touches MLS Grid. */
+export type LightRow = { lat: number; lng: number; city: string; geocoded: boolean };
+export async function getLightRows(): Promise<LightRow[]> {
+  const base = `idx_listings?select=lat,lng,city,geocoded&${searchFilters({ status: "Active" })}&order=id.asc`;
+  const first = await onceRetried(() => rest<LightRow>(`${base}&limit=${PIN_CHUNK}`, { count: true }));
+  const pages = Math.ceil(Math.min(first.total, MAX_PINS * 2) / PIN_CHUNK);
+  const more = await Promise.all(
+    Array.from({ length: Math.max(0, pages - 1) }, (_, i) =>
+      onceRetried(() => rest<LightRow>(`${base}&limit=${PIN_CHUNK}&offset=${(i + 1) * PIN_CHUNK}`)).then((r) => r.rows),
+    ),
+  );
+  return first.rows.concat(...more);
+}
+
+/** How many homes a default /search would call active and for sale: the number the hero says. */
+export async function getActiveSaleCount(): Promise<number> {
+  const { total } = await onceRetried(() => rest<{ id: string }>(`idx_listings?select=id&${searchFilters({ status: "Active" })}&limit=1`, { count: true }));
+  return total;
+}

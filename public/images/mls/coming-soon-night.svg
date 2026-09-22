@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Photograph coming soon">
+  <!--
+    The night cut of coming-soon.svg (round 53), for the blue-hour pages (home, /search). Same
+    drawing and same words; only the ground and the ink change, so a listing still waiting for
+    its photographs reads as a quiet tile on the night page instead of a white card punched out
+    of it. The ground is the page's own night-raise, the ink its moonlight. Georgia stands in for
+    the display face exactly as it does in the day cut, because an SVG loaded as an image cannot
+    reach the page's web fonts.
+  -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15294a"/>
+      <stop offset="1" stop-color="#0f2036"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#wash)"/>
+
+  <text text-anchor="middle" font-family="Newsreader, Georgia, 'Times New Roman', serif"
+        font-size="66" font-weight="300" letter-spacing="-0.5" fill="#e8eef6">
+    <tspan x="500" y="470">Photograph</tspan>
+    <tspan x="500" y="548">coming soon</tspan>
+  </text>
+
+  <text x="500" y="628" text-anchor="middle"
+        font-family="Lato, Helvetica, Arial, sans-serif"
+        font-size="23" font-weight="700" letter-spacing="3.6" fill="#93a3b8">
+    REALTYLT
+  </text>
+</svg>

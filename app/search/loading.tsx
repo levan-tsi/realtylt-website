@@ -1,4 +1,4 @@
-import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
+import { SITE, TOP_AREA_GROUPS, areaName } from "@/lib/site";
 
 /** Route-level pending state for /search — and the only thing on this route a visitor without
  * JavaScript ever sees.
@@ -47,7 +47,9 @@ import { SITE, TOP_AREA_GROUPS } from "@/lib/site";
  * rare and are now handed working pages rather than a wall of grey boxes. */
 export default function Loading() {
   return (
-    <>
+    // The pending state wears the page's own night (round 53), so a slow navigation into
+    // /search does not flash a white skeleton between two dark pages.
+    <div className="nocturne">
       <div
         data-js-only
         className="mx-auto min-h-[88vh] max-w-[1400px] px-4 py-16 lg:px-8"
@@ -91,9 +93,9 @@ export default function Loading() {
                     <li key={item.href}>
                       <a
                         href={item.href}
-                        className="inline-flex min-h-[36px] items-center rounded-full border border-line px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-stone hover:border-ink hover:bg-ink hover:text-paper"
+                        className="inline-flex min-h-[40px] items-center rounded-full border border-line px-4 text-[15px] font-medium text-ink-soft hover:border-ink hover:bg-ink hover:text-paper"
                       >
-                        {item.label}
+                        {areaName(item.label)}
                       </a>
                     </li>
                   ))}
@@ -111,6 +113,6 @@ export default function Loading() {
           </p>
         </div>
       </noscript>
-    </>
+    </div>
   );
 }

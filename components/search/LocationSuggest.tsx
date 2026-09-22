@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { isNightRoute } from "@/lib/site";
 import { getRecentSearches, recordRecentSearch } from "@/lib/saved";
 import { useSaved } from "@/components/auth/SavedProvider";
 
@@ -55,6 +56,9 @@ export function LocationSuggest({
   anchor?: "input" | "form";
 }) {
   const router = useRouter();
+  // The list is portalled to <body>, outside the page's blue-hour wrapper, so on a night route it
+  // carries the class itself and paints from the night tokens (round 53).
+  const night = isNightRoute(usePathname());
   const { searches: savedSearches } = useSaved();
   const listId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -65,7 +69,17 @@ export function LocationSuggest({
   /** True until the query effect has run once, so a value that arrived from the URL is never
    * treated as something the visitor typed. */
   const firstRunRef = useRef(true);
-  const [value, setValue] = useState(defaultValue);
+  // TEXT TYPED BEFORE HYDRATION IS KEPT. The box is server-rendered and usable at once, but
+  // hydration used to reset it to this state's "" and wipe whatever the visitor had typed while
+  // the scripts loaded (measured 2026-09-21 on the live home page: "Beacon" typed early, Enter
+  // then searched for nothing). On the client's first render the server's input is still in the
+  // document, so its current value IS what the visitor typed; the state starts from it.
+  // suppressHydrationWarning on the input below covers the one attribute that then differs.
+  const [value, setValue] = useState(() => {
+    if (defaultValue || typeof document === "undefined") return defaultValue;
+    const el = document.getElementById(id);
+    return el instanceof HTMLInputElement ? el.value : defaultValue;
+  });
   const [items, setItems] = useState<Suggestion[]>([]);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
@@ -241,6 +255,7 @@ export function LocationSuggest({
         autoComplete="off"
         placeholder={placeholder}
         value={value}
+        suppressHydrationWarning
         onChange={(e) => setValue(e.target.value)}
         /* Clicking into an empty box offers the searches they already ran and the ones they
            saved. That is the single most likely thing somebody wants from a property search --
@@ -317,7 +332,7 @@ export function LocationSuggest({
               : undefined
           }
           className={`${anchorRect ? "z-[60] overflow-y-auto overscroll-contain" : `absolute inset-x-0 top-full z-30 ${anchor === "form" ? "mt-2" : "mt-1"}`} overflow-x-hidden rounded-xl border shadow-lift ${
-            dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
+            night ? "nocturne border-line-strong bg-mist" : dark ? "border-paper/20 bg-ink" : "border-ink/15 bg-white"
           }`}
         >
           {visible.map((s, i) => (
@@ -327,8 +342,8 @@ export function LocationSuggest({
               {showingHistory && s.group !== visible[i - 1]?.group && (
                 <span
                   aria-hidden
-                  className={`block px-4 pb-1 pt-3 text-[11px] font-bold uppercase tracking-[0.12em] ${
-                    dark ? "text-paper/40" : "text-stone"
+                  className={`block px-4 pb-1 pt-3 ${
+                    night ? "text-[13px] font-medium text-stone" : `text-[11px] font-bold uppercase tracking-[0.12em] ${dark ? "text-paper/40" : "text-stone"}`
                   }`}
                 >
                   {s.group}
@@ -340,13 +355,15 @@ export function LocationSuggest({
                 onClick={() => pick(s)}
                 onMouseEnter={() => setActive(i)}
                 className={`flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-sm ${
-                  dark
-                    ? i === active ? "bg-white/15 text-paper" : "text-paper/90"
-                    : i === active ? "bg-mist text-ink" : "text-ink-soft"
+                  night
+                    ? i === active ? "bg-paper text-ink" : "text-ink-soft"
+                    : dark
+                      ? i === active ? "bg-white/15 text-paper" : "text-paper/90"
+                      : i === active ? "bg-mist text-ink" : "text-ink-soft"
                 }`}
               >
                 <span>{s.label}</span>
-                <span className={`shrink-0 text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}>
+                <span className={`shrink-0 ${night ? "text-[13px] capitalize text-stone" : `text-[11px] uppercase tracking-[0.12em] ${dark ? "text-paper/50" : "text-stone"}`}`}>
                   {s.count
                     ? `${s.count.toLocaleString("en-US")} homes`
                     : s.kind === "address"

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" role="img" aria-label="Photograph coming soon">
+  <!-- The night cut of coming-soon-notext.svg (round 53); see coming-soon-night.svg. -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15294a"/>
+      <stop offset="1" stop-color="#0f2036"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#wash)"/>
+
+  <text x="500" y="512" text-anchor="middle"
+        font-family="Lato, Helvetica, Arial, sans-serif"
+        font-size="30" font-weight="700" letter-spacing="4.6" fill="#7d8ea5">
+    REALTYLT
+  </text>
+</svg>

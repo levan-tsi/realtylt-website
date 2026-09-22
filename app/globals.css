@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* `night:` = "inside a blue-hour surface" (round 53). A component shared with the day pages
+   states its night look next to its day look instead of the page overriding it from outside. */
+@custom-variant night (&:where(.nocturne, .nocturne *));
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/fonts/bricolage.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── RealtyLT design tokens — matched to the LIVE realtylt.com (Brivity) look.
    Extracted 2026-07-10 via Playwright getComputedStyle — see docs/DESIGN-MATCH.md.
    Live values: body/nav gray #808080, headings/CTAs black, alt-section bg #f3f5f8,
@@ -30,6 +42,31 @@
   --color-river: #102c54;
   --color-porchlight: #28a8e0;
   --color-porchlight-deep: #1c729a;
+
+  /* ── ROUND 53: BLUE HOUR (home + /search only, via .nocturne below). Luxury homes are
+     photographed at blue hour: a deep blue sky and warm lit windows. These are that hour's
+     colours, taken from the logo rather than from a framework. Each has ONE job:
+       night / night-deep / night-raise  the ground, the far end of it, and what sits on it
+                                         (the logo navy #0f2e53 taken down to blue hour)
+       moon / haze                       text and quieter text (14.98:1 and 6.80:1 on night)
+       window                            the light IN THE SCENE only, the lights on the hero
+                                         map. Never a button and never text: the owner turned
+                                         down yellow CTAs on /ai, and this is /ai's own grammar
+                                         (violet = action there, gold = light in the scene).
+     The actions stay the logo's porchlight blue (6.47:1 on night). */
+  --color-night: #0b1a2e;
+  --color-night-deep: #07121f;
+  --color-night-raise: #122640;
+  --color-moon: #e8eef6;
+  --color-haze: #93a3b8;
+  --color-window: #f6c781;
+  /* A listing card's own body. White by day; .nocturne re-points it, so the one card component
+     sits correctly on both grounds without knowing which page it is on. */
+  --color-card: #ffffff;
+  /* Bricolage Grotesque, the face the owner picked for /ai (2026-07-14), byte-identical file, so
+     realtylt.com and realtylt.com/ai set type as one company. Variable: opsz 12-96, wght
+     200-800. SIL Open Font License 1.1 (Mathieu Triay). Used only inside .nocturne. */
+  --font-grotesk: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   /* Display = headlines only. Body/UI stays Lato. See docs/parity/DESIGN-ROUND11.md.
      Georgia is the fallback because it is the metric-nearest serif everyone already has,
@@ -322,6 +359,57 @@
   }
 }
 
+/* ── The same four steps at blue hour (round 53). The day scale is a LIGHT serif (200-300),
+   which is right for Newsreader and wrong for a grotesque: Bricolage at 200 is a hairline. So
+   the night steps are set heavy and tight, the way /ai sets its headlines, and the one-bold-
+   word device (`strong` inside a headline) flattens to the same weight: accenting one word is
+   the commonest generated-headline tell, and the night pages do not use it. Sizes follow
+   Bringhurst's scale: display 56 -> 100, h1 44 -> 72, h2 36 -> 60, h3 24 -> 30. */
+.nocturne .t-display {
+  font-size: clamp(3.5rem, 2.3rem + 5vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.034em;
+  font-weight: 600;
+}
+.nocturne .t-h1 {
+  font-size: clamp(2.75rem, 1.9rem + 3.6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 620;
+}
+.nocturne .t-h2 {
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+.nocturne .t-h3 {
+  font-size: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 580;
+}
+.nocturne :is(.t-display, .t-h1, .t-h2, .t-h3) :is(strong, b) {
+  font-weight: inherit;
+}
+/* The eyebrow stops shouting: sentence case, text size, the quiet tone. It stays a label. */
+.nocturne .t-eyebrow {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  line-height: 1.4;
+}
+.nocturne .t-title {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.nocturne .t-lead {
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.45;
+}
+
 /* ── Vertical rhythm. Three steps, and every full-width section picks one. Replaces the
    five ad-hoc paddings that were shipping (60px / 64px / 64-32 / 64-96 / 80px). */
 .sec-sm {
@@ -357,6 +445,72 @@ body {
      only relaxes un-classed body copy toward live's spacing. */
   font-size: 16px;
   line-height: 1.72222;
+}
+
+/* ── BLUE HOUR, SCOPED (round 53). Home and /search wear it; every other page is untouched.
+   The trick is that the site's components already paint with TOKENS (bg-paper, text-ink,
+   border-line, text-stone...), so re-pointing the tokens inside this class re-lights every
+   one of them at once: paper becomes the night, ink becomes moonlight, a primary button
+   (bg-ink text-paper) becomes a moonlit button with night text. Anything that must stay
+   literal on a photograph already says text-white / bg-black and is unaffected. River is the
+   site's focus-ring colour; navy on night would be invisible, so here the ring is porchlight
+   (6.47:1). The Header, the Footer and each page's wrapper carry the class on the same
+   routes (lib/site.ts NIGHT_ROUTES). */
+.nocturne {
+  --color-paper: var(--color-night);
+  --color-mist: var(--color-night-raise);
+  --color-ink: var(--color-moon);
+  --color-ink-soft: #c9d4e2;
+  --color-stone: var(--color-haze);
+  --color-line: #22354f;
+  --color-line-strong: #34496a;
+  --color-river: var(--color-porchlight);
+  --color-porchlight-deep: var(--color-porchlight);
+  --color-card: #10213a;
+  --font-display: var(--font-grotesk);
+  --font-sans: var(--font-grotesk);
+  --font-mono: var(--font-grotesk);
+  /* The map's pins on the night basemap (components/idx/map-shared.ts): moonlight chips with
+     night ink, the chosen one in porchlight, dots ringed in night so they sit on the map. */
+  --rlt-chip-bg: #e8eef6;
+  --rlt-chip-ink: #0b1a2e;
+  --rlt-chip-active: #28a8e0;
+  --rlt-chip-active-ink: #07121f;
+  --rlt-dot-ring: #0b1a2e;
+}
+/* The ground itself, in @layer base so a utility on the same element (the home header's
+   bg-transparent over the hero) still wins; the token re-points above stay unlayered. */
+@layer base {
+  .nocturne {
+    color-scheme: dark;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+  }
+}
+/* The overscroll bounce and any sliver between header, page and footer show the body, so the
+   body goes to night with them rather than flashing white at the edges of a dark page. */
+body:has(.nocturne) {
+  background-color: var(--color-night);
+}
+/* ...and the way back out. A few things on a night page are white BY NATURE and must keep the
+   day's ink: a white pill on a photograph (the card pager, the carousel arrows), the Google map
+   popup, which Google paints white whatever the page is. Inside them the tokens return to their
+   day values (the same values as @theme above; a custom property cannot read the value it
+   overrides, so they are restated). */
+.daylight {
+  --color-paper: #ffffff;
+  --color-mist: #f3f5f8;
+  --color-ink: #000000;
+  --color-ink-soft: #222222;
+  --color-stone: #6f6f6f;
+  --color-line: #dddddd;
+  --color-line-strong: #cccccc;
+  --color-river: #102c54;
+  --color-porchlight-deep: #1c729a;
+  --color-card: #ffffff;
+  color-scheme: light;
 }
 
 /* Visible keyboard focus everywhere (a11y floor).
@@ -1134,8 +1288,8 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   width: 12px;
   height: 12px;
   border-radius: 9999px;
-  background: var(--dot-bg, #000);
-  border: 2px solid var(--dot-ring, #fff);
+  background: var(--dot-bg, var(--rlt-chip-bg, #000));
+  border: 2px solid var(--dot-ring, var(--rlt-dot-ring, #fff));
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
 }
 @media (hover: hover) and (pointer: fine) {

@@ -276,5 +276,5 @@ export function HomeIntake() {
    hover is gated behind (hover:hover) by Tailwind v4, so a tap cannot leave it stuck on. */
 const OPTION =
   `flex min-h-12 w-full items-center rounded-xl border px-4 py-3 text-left text-[15px] font-medium ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river`;
-const OPTION_OFF = "border-line-strong bg-white text-ink hover:border-ink hover:bg-ink hover:text-paper";
+const OPTION_OFF = "border-line-strong bg-white night:bg-paper text-ink hover:border-ink hover:bg-ink hover:text-paper";
 const OPTION_ON = "border-ink bg-ink text-paper";

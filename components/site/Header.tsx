@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { PRESS } from "@/components/ui/Button";
-import { NAV, SITE, TOP_AREA_GROUPS } from "@/lib/site";
+import { NAV, SITE, TOP_AREA_GROUPS, areaName, isNightRoute } from "@/lib/site";
 
 /** A plus that becomes a minus — the affordance the owner asked for on the phone menu.
  * Drawn rather than typed so it stays crisp and carries no glyph baggage. */
@@ -73,6 +73,12 @@ export function Header() {
   const flyoutTrigger = useRef<HTMLButtonElement>(null);
   const areasTrigger = useRef<HTMLButtonElement>(null);
   const menuTrigger = useRef<HTMLButtonElement>(null);
+  // Round 53: on the blue-hour routes the header wears the night tokens, and on HOME it lies
+  // over the hero map instead of standing on a white shelf above it, so the first screen is one
+  // picture. It scrolls away with the page (not sticky): the map is the page's first statement
+  // and a bar pinned across it forever would be the loudest thing on it.
+  const night = isNightRoute(pathname);
+  const overHero = pathname === "/";
 
   const closeMobile = () => {
     setOpen(false);
@@ -114,7 +120,7 @@ export function Header() {
   }, [flyout]);
 
   return (
-    <header className="bg-paper">
+    <header className={`${night ? "nocturne" : ""} ${overHero ? "absolute inset-x-0 top-0 z-40 bg-transparent" : "bg-paper"}`}>
       {/* ONE utility bar. This used to be two stacked strips — phone/Saved/Sign-in on #f3f5f8,
           then the Fair Housing Notice on #d3d6d9 — so every page opened with two greys close
           enough to read as an accident, and pushed the logo 42px further down. Merged: same
@@ -123,7 +129,7 @@ export function Header() {
           in the mobile menu, in the footer and on every CTA on the page; the Fair Housing
           Notice is a legal link and stays at every width.
           min-h + inline-flex give each link a >=24px pointer target (WCAG 2.5.8). */}
-      <div className="bg-mist">
+      <div className={overHero ? "bg-transparent" : "bg-mist"}>
         <div className="mx-auto flex h-10 max-w-[1250px] items-center justify-between gap-4 px-4 lg:px-8">
           <a
             href={SITE.phoneHref}
@@ -162,11 +168,11 @@ export function Header() {
       </div>
 
       {/* Logo + primary nav, one row, vertically centred. */}
-      <div className="border-b border-line">
+      <div className={`border-b ${overHero ? "border-transparent" : "border-line"}`}>
         <div className="mx-auto flex max-w-[1250px] items-center justify-between gap-6 px-4 py-4 lg:px-8">
           <Link href="/" aria-label="RealtyLT home" className="shrink-0">
             <Image
-              src="/logo-realtylt.png"
+              src={night ? "/logo-realtylt-night.png" : "/logo-realtylt.png"}
               alt="RealtyLT"
               width={300}
               height={62}
@@ -204,7 +210,7 @@ export function Header() {
           {/* Nav — live: bold uppercase #808080, hover #000, boxed CONNECT. Sized down from
               15px/gap-6 so ten items and the logo share one 1250px row without wrapping. */}
           <nav aria-label="Primary" className="hidden xl:block">
-            <ul className="flex items-center gap-4 text-[13px] font-bold uppercase tracking-[0.03em]">
+            <ul className="flex items-center gap-4 text-[13px] font-bold uppercase tracking-[0.03em] night:gap-5 night:text-[15px] night:font-medium night:normal-case night:tracking-[-0.005em]">
               {NAV.map((item) => {
                 const boxed = item.label === "Connect";
                 const active = pathname === item.href;
@@ -297,7 +303,7 @@ export function Header() {
                             key={g.id}
                             className={gi > 0 ? "border-l border-line pl-6" : undefined}
                           >
-                            <p className="whitespace-nowrap px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-stone/70">
+                            <p className="whitespace-nowrap px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-stone/70 night:text-[13px] night:font-medium night:normal-case night:tracking-normal">
                               {g.label}
                             </p>
                             <ul>
@@ -306,9 +312,9 @@ export function Header() {
                                   <Link
                                     href={c.href}
                                     onClick={closeFlyout}
-                                    className={`block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone hover:bg-ink hover:text-paper ${PRESS}`}
+                                    className={`block whitespace-nowrap rounded-xl px-3 py-2 text-[13px] text-stone night:text-[15px] hover:bg-ink hover:text-paper ${PRESS}`}
                                   >
-                                    {c.label}
+                                    {night ? areaName(c.label) : c.label}
                                   </Link>
                                 </li>
                               ))}
@@ -359,7 +365,7 @@ export function Header() {
                   <li key={item.href}>
                     <a
                       href={item.href}
-                      className={`my-1.5 inline-flex min-h-9 items-center rounded-xl border border-porchlight px-4 text-sm font-bold uppercase tracking-wide text-porchlight-deep hover:border-porchlight hover:bg-porchlight hover:text-paper ${PRESS}`}
+                      className={`my-1.5 inline-flex min-h-9 items-center rounded-xl border border-porchlight px-4 text-sm font-bold uppercase tracking-wide night:text-base night:font-medium night:normal-case night:tracking-normal text-porchlight-deep hover:border-porchlight hover:bg-porchlight hover:text-paper ${PRESS}`}
                     >
                       {item.label}
                     </a>
@@ -372,7 +378,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       onClick={closeMobile}
-                      className={`block py-3 text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
+                      className={`block py-3 text-sm font-bold uppercase tracking-wide night:text-base night:font-medium night:normal-case night:tracking-normal text-stone hover:text-ink ${PRESS}`}
                     >
                       {item.label}
                     </Link>
@@ -390,7 +396,7 @@ export function Header() {
                     aria-expanded={areasOpen}
                     aria-controls="mobile-top-areas"
                     onClick={() => setAreasOpen((v) => !v)}
-                    className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
+                    className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide night:text-base night:font-medium night:normal-case night:tracking-normal text-stone hover:text-ink ${PRESS}`}
                   >
                     {item.label}
                     <PlusMinus open={areasOpen} />
@@ -403,9 +409,9 @@ export function Header() {
                             <Link
                               href={c.href}
                               onClick={closeMobile}
-                              className="block py-2 text-sm uppercase text-stone hover:text-ink"
+                              className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case hover:text-ink"
                             >
-                              {c.label}
+                              {night ? areaName(c.label) : c.label}
                             </Link>
                           </li>
                         ))}
@@ -415,7 +421,7 @@ export function Header() {
                         aria-expanded={boroughsOpen}
                         aria-controls="mobile-boroughs"
                         onClick={() => setBoroughsOpen((v) => !v)}
-                        className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide text-stone hover:text-ink ${PRESS}`}
+                        className={`flex w-full items-center justify-between gap-2 py-3 text-left text-sm font-bold uppercase tracking-wide night:text-base night:font-medium night:normal-case night:tracking-normal text-stone hover:text-ink ${PRESS}`}
                       >
                         {boroughs.label}
                         <PlusMinus open={boroughsOpen} />
@@ -427,9 +433,9 @@ export function Header() {
                               <Link
                                 href={c.href}
                                 onClick={closeMobile}
-                                className="block py-2 text-sm uppercase text-stone hover:text-ink"
+                                className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case hover:text-ink"
                               >
-                                {c.label}
+                                {night ? areaName(c.label) : c.label}
                               </Link>
                             </li>
                           ))}
@@ -438,7 +444,7 @@ export function Header() {
                       <Link
                         href={item.href}
                         onClick={closeMobile}
-                        className="block py-2 text-sm uppercase text-stone underline underline-offset-4 hover:text-ink"
+                        className="block py-2 text-sm uppercase text-stone night:text-base night:normal-case underline underline-offset-4 hover:text-ink"
                       >
                         All Top Areas
                       </Link>
