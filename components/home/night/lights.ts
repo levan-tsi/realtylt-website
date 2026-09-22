@@ -35,7 +35,7 @@ export function hash01(i: number): number {
 
 /** Light positions and attributes. `introSpan` is how long the wave takes from the harbour to the
  * north edge; each light also gets up to `jitter` seconds of its own. */
-export function buildLights(pts: LightPoints, grid: ElevationGrid | null, introSpan = 1.9, jitter = 0.5, cellKm = 0.3): LightCloud {
+export function buildLights(pts: LightPoints, grid: ElevationGrid | null, introSpan = 1.6, jitter = 0.45, cellKm = 0.3): LightCloud {
   const n = pts.x.length;
   const positions = new Float32Array(n * 3);
   const delays = new Float32Array(n);

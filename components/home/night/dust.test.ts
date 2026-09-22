@@ -133,3 +133,35 @@ describe("smoothing and edges", () => {
     expect([a(), a(), a()]).toEqual([b(), b(), b()]);
   });
 });
+
+describe("seed order", () => {
+  it("shuffles the grains and numbers the seeds in array order, keeping each grain whole", async () => {
+    const { shuffleBySeed } = await import("./dust");
+    const n = 1000;
+    const c = {
+      count: n,
+      positions: Float32Array.from({ length: n * 3 }, (_, i) => Math.floor(i / 3)),
+      slopes: Float32Array.from({ length: n * 2 }, (_, i) => Math.floor(i / 2)),
+      ridges: Float32Array.from({ length: n }, (_, i) => i),
+      seeds: new Float32Array(n),
+      kinds: Float32Array.from({ length: n }, (_, i) => i),
+    };
+    shuffleBySeed(c);
+    let moved = 0;
+    for (let i = 0; i < n; i++) {
+      const id = c.ridges[i];
+      // Every attribute of a grain travelled together.
+      expect(c.positions[i * 3]).toBe(id);
+      expect(c.positions[i * 3 + 2]).toBe(id);
+      expect(c.slopes[i * 2 + 1]).toBe(id);
+      expect(c.kinds[i]).toBe(id);
+      if (id !== i) moved++;
+      if (i) expect(c.seeds[i]).toBeGreaterThan(c.seeds[i - 1]);
+    }
+    expect(moved).toBeGreaterThan(900);
+    // The first half of the array is a fair sample of the whole (ids spread across the range).
+    const firstHalf = Array.from(c.ridges.subarray(0, n / 2));
+    expect(firstHalf.filter((id) => id < n / 2).length).toBeGreaterThan(200);
+    expect(firstHalf.filter((id) => id < n / 2).length).toBeLessThan(300);
+  });
+});

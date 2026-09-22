@@ -162,7 +162,7 @@ export interface NightSceneHandle {
   clearPointer(): void;
   hoveredTown(): TownHover | null;
   setLook(l: Partial<Look>): void;
-  stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number; buildWhere: string };
+  stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number; buildWhere: string; quality: number; dpr: number };
   dispose(): void;
 }
 
@@ -185,6 +185,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   const dbg = gl.getExtension("WEBGL_debug_renderer_info");
   const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "unknown";
   const dprCap = phone ? 2 : 1.5;
+  let qualityScale = 1; // adaptive quality (govern, below)
+  let qualityDensity = 1;
+  let qualityLevel = 0;
   let dpr = Math.min(window.devicePixelRatio || 1, dprCap);
 
   const scene = new THREE.Scene();
@@ -312,7 +315,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let pointer: { x: number; y: number } | null = null;
   const par = { x: 0, y: 0 }; // damped parallax, -1..1
   let hovered: TownHover | null = null;
-  const drift = opts.drift ?? !reduce;
+  // The idle drift (and the twinkle) run only where there is a mouse: a phone gets the intro, the
+  // flights its page asks for, and otherwise a still frame, so nothing runs on its battery at rest.
+  const drift = opts.drift ?? (!reduce && hover);
 
   const ground = (x: number, z: number) => {
     if (!grid) return 0;
@@ -326,7 +331,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     const r = canvas.getBoundingClientRect();
     cssW = Math.max(1, r.width);
     cssH = Math.max(1, r.height);
-    dpr = Math.min(window.devicePixelRatio || 1, dprCap);
+    dpr = Math.min(window.devicePixelRatio || 1, dprCap) * qualityScale;
     renderer.setPixelRatio(dpr);
     renderer.setSize(cssW, cssH, false);
     aspect = cssW / cssH;
@@ -433,6 +438,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     g.setAttribute("aSeed", new THREE.BufferAttribute(dust.seeds, 1));
     g.setAttribute("aKind", new THREE.BufferAttribute(dust.kinds, 1));
     g.setAttribute("aCounty", new THREE.BufferAttribute(new Float32Array(dust.count), 1));
+    g.setDrawRange(0, Math.floor(dust.count * qualityDensity));
     dustPoints = new THREE.Points(g, dustMat);
     dustPoints.frustumCulled = false;
     dustPoints.renderOrder = 1;
@@ -625,12 +631,44 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     if (changed) opts.onTownHover?.(h);
   }
 
+  // ---- adaptive quality ------------------------------------------------------------------------
+  // Measured, not assumed: once the scene is ready, while frames run back to back (a flight, the
+  // drift), if the median of 30 is slower than ~40 fps, render fewer pixels (x0.8) and fewer grains
+  // (x0.65), one step at a time, at most three.
+  // (Measured: a desktop GPU and a 4x-throttled phone hold vsync; software GL does not.)
+  const samples: number[] = [];
+  function govern(dtMs: number, chained: boolean) {
+    if (!chained || !ready || qualityLevel >= 3) return;
+    samples.push(dtMs);
+    if (samples.length < 30) return;
+    const med = [...samples].sort((a, b) => a - b)[15];
+    samples.length = 0;
+    if (med <= 25) return;
+    qualityLevel++;
+    qualityScale *= 0.8;
+    qualityDensity *= 0.65;
+    // The grains are in seed order (dust.ts shuffleBySeed), so a shorter draw range is a uniform
+    // thinning, and it saves the vertex work too.
+    dustPoints?.geometry.setDrawRange(0, Math.floor(dustCount * qualityDensity));
+    resize();
+  }
+
   // ---- loop ------------------------------------------------------------------------------------
   let visible = true;
+  let chained = false; // this frame follows the previous one directly (not the first after a pause)
+  let restFrame = false; // nothing but the drift and the twinkle moved last frame
+  let skipToggle = false;
   function frame(now: number) {
     raf = 0;
     if (disposed) return;
+    // At rest on a desktop only the drift and the twinkle move, both far slower than a frame: they
+    // are drawn at half rate (the loop stays alive, every other frame is skipped).
+    if (restFrame && chained && (skipToggle = !skipToggle)) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
     const dt = Math.min(0.1, (now - last) / 1000);
+    govern(now - last, chained && !restFrame);
     last = now;
     const moving = step(now, dt);
     const t = now / 1000;
@@ -648,11 +686,15 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     frames++;
     const introRunning = (!reduce && !opts.skipIntro && ((dustStart >= 0 && introDust < 2) || (lightsStart >= 0 && introLights < 3.2))) || (lightsStart < 0 && !reduce);
     const alive = moving || introRunning || drift || !!pointer || lightU.uTwinkle.value > 0;
-    if (alive && visible && !document.hidden) raf = requestAnimationFrame(frame);
+    restFrame = !moving && !introRunning && !pointer;
+    chained = alive && visible && !document.hidden;
+    if (chained) raf = requestAnimationFrame(frame);
   }
   function kick() {
+    restFrame = false; // something asked for a frame: the next one is drawn
     if (!raf && !disposed && visible && !document.hidden) {
       last = performance.now();
+      chained = false;
       raf = requestAnimationFrame(frame);
     }
   }
@@ -782,7 +824,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       if (depthMesh) depthMesh.visible = look.occlude;
       kick();
     },
-    stats: () => ({ buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu }),
+    stats: () => ({ quality: qualityLevel, dpr, buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu }),
     dispose() {
       disposed = true;
       if (raf) cancelAnimationFrame(raf);

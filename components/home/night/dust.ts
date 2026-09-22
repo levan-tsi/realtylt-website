@@ -402,5 +402,29 @@ export function buildTerrainClouds(grid: ElevationGrid, p: TerrainParams): { dus
   const used = parts.reduce((n, c) => n + c.count, 0);
   const fill = p.dustMode === "stipple" ? p.budget : p.dustMode === "mix" ? Math.max(0, p.budget - used) : 0;
   if (fill > 0) parts.push(buildDust(grid, { count: fill, reliefBias: p.reliefBias, fields }));
-  return { dust: joinClouds(parts), mesh: buildDepthMesh(grid, p.meshStride) };
+  return { dust: shuffleBySeed(joinClouds(parts)), mesh: buildDepthMesh(grid, p.meshStride) };
+}
+
+/** Shuffles the grains into a random order and gives grain i the seed (i + 0.5) / n, so the seed
+ * ORDER is the array order: drawing only the first k grains (a draw range) is the same as keeping
+ * the grains whose seed is under k / n, a uniform thinning that also saves the vertex work. */
+export function shuffleBySeed(c: DustCloud, seed = 99): DustCloud {
+  const rand = prng(seed);
+  const n = c.count;
+  const swap = (a: Float32Array, i: number, j: number, w: number) => {
+    for (let k = 0; k < w; k++) {
+      const t = a[i * w + k];
+      a[i * w + k] = a[j * w + k];
+      a[j * w + k] = t;
+    }
+  };
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    swap(c.positions, i, j, 3);
+    swap(c.slopes, i, j, 2);
+    swap(c.ridges, i, j, 1);
+    swap(c.kinds, i, j, 1);
+  }
+  for (let i = 0; i < n; i++) c.seeds[i] = (i + 0.5) / n;
+  return c;
 }
