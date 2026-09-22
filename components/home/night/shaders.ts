@@ -84,7 +84,7 @@ void main() {
   float glint = step(aSeed, uGlint);
   vSize *= 1.0 + 0.6 * glint;
   float kind = aKind < 0.5 ? uKindGain.x : aKind < 1.5 ? uKindGain.y : aKind < 2.5 ? uKindGain.z : uKindGain.w;
-  vA = uAlpha * kind * shade * fog * fog * intro * (1.0 - 0.8 * uVeil) * (1.0 + 1.4 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
+  vA = uAlpha * kind * shade * fog * fog * intro * (1.0 - 0.8 * uVeil) * (1.0 + 0.9 * lantern) * (1.0 + 1.6 * glint) * quietAt(clip.xy / clip.w);
   gl_PointSize = vSize;
   gl_Position = clip;
 }
@@ -146,8 +146,8 @@ void main() {
   float size = min(core * uSpread, 34.0 * uPixelRatio);
   vCore = core / size;
   float energy = clamp(uSize * uFocal / d / (1.3 * uPixelRatio), 0.35, 1.0);
-  vA = uAlpha * aGain * on * tw * fog * energy * (1.0 - 0.65 * uVeil) * (1.0 + 1.2 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
-  gl_PointSize = size * (1.0 + 0.3 * lantern);
+  vA = uAlpha * aGain * on * tw * fog * energy * (1.0 - 0.65 * uVeil) * (1.0 + 0.55 * lantern) * mix(1.0, quietAt(clip.xy / clip.w), 0.8);
+  gl_PointSize = size * (1.0 + 0.15 * lantern);
   gl_Position = clip;
 }
 `;

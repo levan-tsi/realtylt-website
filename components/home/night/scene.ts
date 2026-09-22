@@ -10,8 +10,8 @@
  * the tab is hidden or the canvas is off screen. */
 import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
-import { buildContourDust, buildDepthMesh, buildDust, type DustCloud } from "./dust";
-import { loadElevation, sampleHeight, type ElevationGrid } from "./elevation";
+import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
+import { decodeElevation, loadElevationPixels, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
 import { buildHaze, buildLights, townCentroids, type TownMark } from "./lights";
 import { DEPTH_FRAGMENT, DEPTH_VERTEX, DUST_FRAGMENT, DUST_VERTEX, HAZE_FRAGMENT, HAZE_VERTEX, LIGHT_FRAGMENT, LIGHT_VERTEX } from "./shaders";
 import { blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type ShotName } from "./shots";
@@ -148,27 +148,11 @@ export interface NightSceneHandle {
   clearPointer(): void;
   hoveredTown(): TownHover | null;
   setLook(l: Partial<Look>): void;
-  stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number };
+  stats(): { dust: number; lights: number; towns: number; frames: number; ready: boolean; gpu: string; buildMs: number; buildWhere: string };
   dispose(): void;
 }
 
 const copyF = (f: Framing): Framing => ({ pos: [...f.pos] as Vec3, target: [...f.target] as Vec3, fov: f.fov, moon: [f.moon[0], f.moon[1]] });
-
-function joinClouds(parts: DustCloud[]): DustCloud {
-  if (parts.length === 1) return parts[0];
-  const n = parts.reduce((a, p) => a + p.count, 0);
-  const out: DustCloud = { count: n, positions: new Float32Array(n * 3), slopes: new Float32Array(n * 2), ridges: new Float32Array(n), seeds: new Float32Array(n), kinds: new Float32Array(n) };
-  let o = 0;
-  for (const p of parts) {
-    out.positions.set(p.positions, o * 3);
-    out.slopes.set(p.slopes, o * 2);
-    out.ridges.set(p.ridges, o);
-    out.seeds.set(p.seeds, o);
-    out.kinds.set(p.kinds, o);
-    o += p.count;
-  }
-  return out;
-}
 
 const isPhone = () => window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 700;
 
@@ -179,6 +163,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   const phone = isPhone();
   const look: Look = { ...DEFAULT_LOOK, ...opts.look };
 
+  performance.mark("night:start");
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance", stencil: false });
   renderer.setClearColor(0x000000, 1);
   renderer.sortObjects = false;
@@ -321,59 +306,93 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   }
 
   // ---- building the clouds -----------------------------------------------------------------------
+  let pixels: { rgba: Uint8ClampedArray; meta: ElevationMeta } | null = null;
   async function buildTerrain() {
     try {
-      grid = await loadElevation(opts.elevationBase);
+      pixels = await loadElevationPixels(opts.elevationBase);
+      performance.mark("night:pixels");
+      grid = decodeElevation(pixels.rgba, pixels.meta, 4);
+      performance.mark("night:grid");
     } catch {
-      grid = null; // lights still stand on a flat sea level
+      grid = null; // no terrain: the lights still stand, on a flat sea level
       return;
     }
     if (disposed) return;
-    buildDustCloud();
     // The land's area, for the level-of-detail uniform.
     let land = 0;
     for (let i = 0; i < grid.water.length; i++) if (!grid.water[i]) land++;
     landKm2 = (land * grid.cellM.x * grid.cellM.y) / 1e6;
-    const mesh = buildDepthMesh(grid, phone ? 2 : 1);
-    const mg = new THREE.BufferGeometry();
-    mg.setAttribute("position", new THREE.BufferAttribute(mesh.positions, 3));
-    mg.setIndex(new THREE.BufferAttribute(mesh.index, 1));
-    depthMesh = new THREE.Mesh(mg, depthMat);
-    depthMesh.frustumCulled = false;
-    depthMesh.renderOrder = 0;
-    depthMesh.visible = look.occlude;
-    scene.add(depthMesh);
+    await buildDustCloud();
     dustStart = performance.now();
   }
 
   let builtKey = "";
+  let buildWhere = "";
   const dustKey = () => [look.reliefBias, look.dustMode, look.contourInterval, look.contourSpacing, look.contourSmooth].join("|");
-  function buildDustCloud() {
-    if (!grid) return;
+  const terrainParams = (): TerrainParams => ({
+    budget: opts.dustCount ?? (phone ? 400_000 : 1_000_000),
+    dustMode: look.dustMode,
+    contourInterval: look.contourInterval,
+    contourSpacing: look.contourSpacing,
+    contourSmooth: look.contourSmooth,
+    reliefBias: look.reliefBias,
+    meshStride: phone ? 2 : 1,
+  });
+
+  type Built = { dust: DustCloud; mesh: { positions: Float32Array; index: Uint32Array }; ms: number; where: string };
+  /** The build runs in a worker; if no worker can start (or it fails), on the main thread. */
+  function runBuild(params: TerrainParams): Promise<Built> {
+    return new Promise((resolve) => {
+      let done = false;
+      let worker: Worker | null = null;
+      const finish = (b: Built) => {
+        if (done) return;
+        done = true;
+        worker?.terminate();
+        resolve(b);
+      };
+      const onMain = () => {
+        if (done || !grid) return;
+        const t0 = performance.now();
+        const { dust, mesh } = buildTerrainClouds(grid, params);
+        finish({ dust, mesh, ms: performance.now() - t0, where: "main thread" });
+      };
+      try {
+        worker = new Worker(new URL("./build.worker.ts", import.meta.url));
+      } catch {
+        onMain();
+        return;
+      }
+      worker.onmessage = (e: MessageEvent) => {
+        const d = e.data;
+        if (d.error) return onMain();
+        finish({
+          dust: { count: d.count, positions: d.positions, slopes: d.slopes, ridges: d.ridges, seeds: d.seeds, kinds: d.kinds },
+          mesh: { positions: d.meshPositions, index: d.meshIndex },
+          ms: d.ms,
+          where: "worker",
+        });
+      };
+      worker.onerror = () => onMain();
+      // A copy goes to the worker; the page keeps its own for the next rebuild.
+      const rgba = pixels!.rgba.slice();
+      worker.postMessage({ rgba, meta: pixels!.meta, params }, [rgba.buffer]);
+    });
+  }
+
+  async function buildDustCloud() {
+    if (!grid || !pixels) return;
+    const key = dustKey();
+    const built = await runBuild(terrainParams());
+    if (disposed || key !== dustKey()) return; // a newer look asked for another build
+    buildMs = built.ms;
+    buildWhere = built.where;
+    builtKey = key;
+    const { dust, mesh } = built;
     if (dustPoints) {
       scene.remove(dustPoints);
       dustPoints.geometry.dispose();
     }
-    const t0 = performance.now();
-    const budget = opts.dustCount ?? (phone ? 400_000 : 1_000_000);
-    const parts: DustCloud[] = [];
-    if (look.dustMode !== "stipple")
-      parts.push(
-        buildContourDust(grid, {
-          intervalM: look.contourInterval,
-          spacingKm: look.contourSpacing,
-          shoreDensity: 1.1,
-          jitterKm: 0.012,
-          smoothPasses: look.contourSmooth,
-          maxPoints: look.dustMode === "mix" ? Math.round(budget * 0.75) : budget,
-        }),
-      );
-    const used = parts.reduce((n, p) => n + p.count, 0);
-    const fill = look.dustMode === "stipple" ? budget : look.dustMode === "mix" ? Math.max(0, budget - used) : 0;
-    if (fill > 0) parts.push(buildDust(grid, { count: fill, reliefBias: look.reliefBias }));
-    const dust = joinClouds(parts);
-    buildMs = performance.now() - t0;
-    builtKey = dustKey();
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(dust.positions, 3));
     g.setAttribute("aSlope", new THREE.BufferAttribute(dust.slopes, 2));
@@ -385,11 +404,23 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     dustPoints.renderOrder = 1;
     scene.add(dustPoints);
     dustCount = dust.count;
+    if (!depthMesh) {
+      const mg = new THREE.BufferGeometry();
+      mg.setAttribute("position", new THREE.BufferAttribute(mesh.positions, 3));
+      mg.setIndex(new THREE.BufferAttribute(mesh.index, 1));
+      depthMesh = new THREE.Mesh(mg, depthMat);
+      depthMesh.frustumCulled = false;
+      depthMesh.renderOrder = 0;
+      depthMesh.visible = look.occlude;
+      scene.add(depthMesh);
+    }
+    kick();
   }
 
   async function buildLightCloud() {
     const pts = await loadLights();
     if (!pts || disposed) return;
+    performance.mark("night:lights-data");
     const cloud = buildLights(pts, grid);
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(cloud.positions, 3));
@@ -586,7 +617,9 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   kick();
 
   await buildTerrain();
+  performance.mark("night:terrain");
   await buildLightCloud();
+  performance.mark("night:lights");
   ready = true;
   opts.onReady?.();
   kick();
@@ -671,7 +704,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       shared.uExag.value = look.exaggeration;
       dustU.uKindGain.value.set(look.fillGain, 1, look.indexGain, look.shoreGain);
       dustU.uKindKeep.value.set(...look.kindKeep);
-      if (grid && dustKey() !== builtKey) buildDustCloud();
+      if (grid && dustKey() !== builtKey) void buildDustCloud();
       lightU.uAlpha.value = look.lightAlpha;
       lightU.uSize.value = look.lightSize;
       lightU.uHalo.value = look.lightHalo;
@@ -684,7 +717,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       if (depthMesh) depthMesh.visible = look.occlude;
       kick();
     },
-    stats: () => ({ buildMs, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu }),
+    stats: () => ({ buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu }),
     dispose() {
       disposed = true;
       if (raf) cancelAnimationFrame(raf);

@@ -116,9 +116,9 @@ export function sampleField(grid: Pick<ElevationGrid, "box" | "w" | "h">, field:
   return bilinear(field, grid.w, grid.h, gx, gy);
 }
 
-/** Browser only: fetch the asset and its metadata, decode the pixels exactly (no colour
- * management, no premultiplication), and build the grid. */
-export async function loadElevation(base = "/geo/valley-elevation", signal?: AbortSignal): Promise<ElevationGrid> {
+/** Browser only: fetch the asset and its metadata and decode the pixels exactly (no colour
+ * management, no premultiplication). RGBA, four bytes a cell. */
+export async function loadElevationPixels(base = "/geo/valley-elevation", signal?: AbortSignal): Promise<{ rgba: Uint8ClampedArray; meta: ElevationMeta }> {
   const [metaRes, imgRes] = await Promise.all([fetch(`${base}.json`, { signal }), fetch(`${base}.webp`, { signal })]);
   if (!metaRes.ok || !imgRes.ok) throw new Error("elevation asset missing");
   const meta = (await metaRes.json()) as ElevationMeta;
@@ -130,6 +130,10 @@ export async function loadElevation(base = "/geo/valley-elevation", signal?: Abo
   if (!ctx) throw new Error("no 2d context");
   ctx.drawImage(bitmap, 0, 0);
   bitmap.close?.();
-  const rgba = ctx.getImageData(0, 0, meta.w, meta.h).data;
+  return { rgba: ctx.getImageData(0, 0, meta.w, meta.h).data, meta };
+}
+
+export async function loadElevation(base?: string, signal?: AbortSignal): Promise<ElevationGrid> {
+  const { rgba, meta } = await loadElevationPixels(base, signal);
   return decodeElevation(rgba, meta, 4);
 }

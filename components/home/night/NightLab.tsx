@@ -75,6 +75,7 @@ function Lab({ params }: { params: URLSearchParams }) {
   return (
     <div
       ref={scroller}
+      data-lab-scroller
       className="fixed inset-0 z-[200]"
       style={{ background: "#000", overflowY: mode === "shots" ? "hidden" : "auto", color: "#f6f4ef", fontFamily: "system-ui, sans-serif" }}
     >

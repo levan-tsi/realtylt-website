@@ -125,8 +125,20 @@ function trim(c: DustCloud, k: number): DustCloud {
   return { count: k, positions: c.positions.subarray(0, k * 3), slopes: c.slopes.subarray(0, k * 2), ridges: c.ridges.subarray(0, k), seeds: c.seeds.subarray(0, k), kinds: c.kinds.subarray(0, k) };
 }
 
+/** The per-cell fields both builders sample (computed once, shared). */
+export interface TerrainFields {
+  east: Float32Array;
+  north: Float32Array;
+  relief: Float32Array;
+}
+export function terrainFields(grid: ElevationGrid): TerrainFields {
+  const { east, north } = gradients(grid);
+  return { east, north, relief: localRelief(grid) };
+}
+
 export interface DustOptions {
   count: number;
+  fields?: TerrainFields;
   seed?: number;
   /** Extra density on steep ground: weight = 1 + reliefBias * min(1, slope / 0.25)^0.8. */
   reliefBias?: number;
@@ -139,8 +151,7 @@ export function buildDust(grid: ElevationGrid, opts: DustOptions): DustCloud {
   const { w, h, box } = grid;
   const rand = prng(opts.seed ?? 54);
   const reliefBias = opts.reliefBias ?? 1.3;
-  const { east, north } = gradients(grid);
-  const relief = localRelief(grid);
+  const { east, north, relief } = opts.fields ?? terrainFields(grid);
   const weight = new Float64Array(w * h);
   let total = 0;
   for (let r = 0; r < h; r++)
@@ -208,6 +219,7 @@ export interface ContourOptions {
   edgeFade?: boolean;
   /** Blur passes on the heights the contours follow (smoothLand). */
   smoothPasses?: number;
+  fields?: TerrainFields;
 }
 
 /** CONTOURS OF DUST, by marching triangles over the grid (two triangles a cell: no ambiguous
@@ -272,8 +284,7 @@ export function buildContourDust(grid: ElevationGrid, opts: ContourOptions): Dus
   const spacing = Math.max(opts.spacingKm, weighted / Math.max(1, opts.maxPoints * 0.985));
 
   // Pass 2: string the grains.
-  const { east, north } = gradients(grid);
-  const relief = localRelief(grid);
+  const { east, north, relief } = opts.fields ?? terrainFields(grid);
   const out = emptyCloud(opts.maxPoints);
   let k = 0;
   walk((ax, ay, bx, by, kind, elev) => {
@@ -341,4 +352,55 @@ export function buildDepthMesh(grid: ElevationGrid, stride = 2): { positions: Fl
       index[k++] = e;
     }
   return { positions, index };
+}
+
+export function joinClouds(parts: DustCloud[]): DustCloud {
+  if (parts.length === 1) return parts[0];
+  const n = parts.reduce((a, p) => a + p.count, 0);
+  const out = emptyCloud(n);
+  out.count = n;
+  let o = 0;
+  for (const p of parts) {
+    out.positions.set(p.positions, o * 3);
+    out.slopes.set(p.slopes, o * 2);
+    out.ridges.set(p.ridges, o);
+    out.seeds.set(p.seeds, o);
+    out.kinds.set(p.kinds, o);
+    o += p.count;
+  }
+  return out;
+}
+
+/** Everything the scene needs from the terrain, in one call: the dust (contours plus fill, to a
+ * budget) and the depth mesh. Pure, so it runs the same in a worker (./build.worker.ts, the normal
+ * path: ~1 s of work on a desktop, ~4 s on a 4x-throttled phone, kept off the main thread so the
+ * search box never waits for the scene) or, if no worker can start, on the main thread. */
+export interface TerrainParams {
+  budget: number;
+  dustMode: "stipple" | "contour" | "mix";
+  contourInterval: number;
+  contourSpacing: number;
+  contourSmooth: number;
+  reliefBias: number;
+  meshStride: number;
+}
+export function buildTerrainClouds(grid: ElevationGrid, p: TerrainParams): { dust: DustCloud; mesh: { positions: Float32Array; index: Uint32Array } } {
+  const fields = terrainFields(grid);
+  const parts: DustCloud[] = [];
+  if (p.dustMode !== "stipple")
+    parts.push(
+      buildContourDust(grid, {
+        intervalM: p.contourInterval,
+        spacingKm: p.contourSpacing,
+        shoreDensity: 1.1,
+        jitterKm: 0.012,
+        smoothPasses: p.contourSmooth,
+        maxPoints: p.dustMode === "mix" ? Math.round(p.budget * 0.75) : p.budget,
+        fields,
+      }),
+    );
+  const used = parts.reduce((n, c) => n + c.count, 0);
+  const fill = p.dustMode === "stipple" ? p.budget : p.dustMode === "mix" ? Math.max(0, p.budget - used) : 0;
+  if (fill > 0) parts.push(buildDust(grid, { count: fill, reliefBias: p.reliefBias, fields }));
+  return { dust: joinClouds(parts), mesh: buildDepthMesh(grid, p.meshStride) };
 }
