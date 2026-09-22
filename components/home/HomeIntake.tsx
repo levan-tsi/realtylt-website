@@ -130,7 +130,9 @@ export function HomeIntake() {
                           });
                         }}
                         aria-label={`Change: ${l.label}, ${l.value}`}
-                        className={`inline-flex min-h-6 items-center text-xs font-bold uppercase tracking-[0.14em] text-stone underline-offset-4 hover:text-ink hover:underline ${PRESS}`}
+                        // Sentence case at the trail's own 14px (round 53 polish): the last
+                        // capitals-and-tracking label left on the home page.
+                        className={`inline-flex min-h-6 items-center text-[14px] font-medium text-stone underline-offset-4 hover:text-ink hover:underline ${PRESS}`}
                       >
                         Change
                       </button>

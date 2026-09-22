@@ -74,8 +74,13 @@ export function DriftRail({ listings, ariaLabel }: { listings: Listing[]; ariaLa
   return (
     <div role="group" aria-roledescription="carousel" aria-label={ariaLabel}>
       <ResultSetScope listings={shown} backHref="/">
+        {/* Room inside, the same room taken back outside (mt-7 + py-3 = the old mt-10, -mb-3 and
+            -mx-1 net the rest out): the rail is a scroll container, so it clipped a card's 4px
+            hover lift (flat top, square corners) and three sides of its 4px focus ring (the
+            first card's ring lost its left edge at the rail's start). The cards and everything
+            around them sit exactly where they did. */}
         <div
-          className="rlt-drift mt-10"
+          className="rlt-drift -mx-1 -mb-3 mt-7 px-1 py-3"
           style={{ ["--drift-duration" as string]: `${shown.length * SECONDS_PER_CARD}s` }}
         >
           <div className="rlt-drift-track">

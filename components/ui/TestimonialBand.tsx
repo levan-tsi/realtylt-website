@@ -15,19 +15,12 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
 
   return (
     <section aria-label="Client reviews" className="bg-mist night:bg-transparent">
-      <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16">
-        {/* The same round chevron buttons the rails' pager and the carousel use (round 53): bare
-            "‹ ›" glyphs at 24x48 read as stray characters beside a quotation. */}
-        <button
-          type="button"
-          aria-label="Previous review"
-          onClick={() => step(-1)}
-          className={`absolute left-1 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:left-6`}
-        >
-          <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m15 18-6-6 6-6" />
-          </svg>
-        </button>
+      {/* Night (round 53 polish): below md the quote takes the page's own 16px gutters and the
+          two arrows move down beside the name, where they no longer squeeze a 26px italic into
+          a 278px column (8 lines at 390, 10 at 320). From md they sit at the band's sides again,
+          on the page's content edge (lg: 32px, where the text above and below starts) rather
+          than 8px outside it. */}
+      <div className="relative mx-auto max-w-[1250px] px-14 py-14 text-center md:py-16 night:px-4 night:md:px-20">
         <blockquote>
           <div className="mb-5 flex items-center justify-center gap-2.5">
             <GoogleLogo height={18} />
@@ -39,17 +32,31 @@ export function TestimonialBand({ items }: { items: Testimonial[] }) {
             &ldquo;{t.quote}&rdquo;
           </p>
         </blockquote>
-        <p className="mt-5 text-xs font-bold uppercase tracking-[0.16em] text-ink-soft night:mt-7 night:text-[15px] night:font-medium night:normal-case night:tracking-normal night:text-stone">{t.name}</p>
-        <button
-          type="button"
-          aria-label="Next review"
-          onClick={() => step(1)}
-          className={`absolute right-1 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:right-6`}
-        >
-          <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        </button>
+        <div className="mt-5 night:mt-7 night:flex night:items-center night:justify-between night:gap-4 night:md:block">
+          {/* The same round chevron buttons the rails' pager and the carousel use (round 53): bare
+              "‹ ›" glyphs at 24x48 read as stray characters beside a quotation. */}
+          <button
+            type="button"
+            aria-label="Previous review"
+            onClick={() => step(-1)}
+            className={`absolute left-1 top-1/2 grid h-10 w-10 shrink-0 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:left-6 night:static night:translate-y-0 night:md:absolute night:md:left-4 night:md:top-1/2 night:md:-translate-y-1/2 night:lg:left-8`}
+          >
+            <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-ink-soft night:min-w-0 night:text-[15px] night:font-medium night:normal-case night:tracking-normal night:text-stone">{t.name}</p>
+          <button
+            type="button"
+            aria-label="Next review"
+            onClick={() => step(1)}
+            className={`absolute right-1 top-1/2 grid h-10 w-10 shrink-0 -translate-y-1/2 place-items-center rounded-full border border-line-strong text-stone ${PRESS} hover:border-ink hover:text-ink lg:right-6 night:static night:translate-y-0 night:md:absolute night:md:right-4 night:md:top-1/2 night:md:-translate-y-1/2 night:lg:right-8`}
+          >
+            <svg aria-hidden viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
   );

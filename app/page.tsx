@@ -143,11 +143,15 @@ export default async function HomePage() {
                 dark
                 anchor="form"
                 placeholder="Town, zip or address"
-                className="w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none"
+                // max-[359px]: at 320 the placeholder read "Town, zip or ac": 152px of words in
+                // 108px, because the empty field also reserved the clear button's 23px. The night
+                // rule in globals.css drops that reserve while the placeholder shows, and 8px off
+                // the field's inset and 16px off the action's bring the room to 155px.
+                className="w-full bg-transparent px-4 py-3 text-[17px] text-ink placeholder:text-stone focus:outline-none max-[359px]:px-3"
               />
               <button
                 type="submit"
-                className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft`}
+                className={`shrink-0 rounded-lg bg-ink px-6 py-3 text-[15px] font-semibold text-paper ${PRESS} hover:bg-ink-soft max-[359px]:px-4`}
               >
                 Search
               </button>
@@ -175,7 +179,10 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
-        <div className="absolute inset-x-0 bottom-3 flex justify-center">
+        {/* From lg only. On a phone the search box and its two links already end the first
+            screen, and the cue sat on top of "What is my home worth?" (overlapping its tap box
+            by 12 x 8px), so a thumb on "worth?" could scroll the page instead of opening it. */}
+        <div className="absolute inset-x-0 bottom-3 hidden justify-center lg:flex">
           <ScrollCue targetId="value" label="Scroll to the next section" />
         </div>
       </section>
@@ -231,7 +238,10 @@ export default async function HomePage() {
       <section className="sec bg-paper" aria-labelledby="new-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+            {/* Last baselines, not box bottoms (round 53 polish): bottom-aligned, the link's words
+                sat 12px above the heading's baseline at 1440 (and "Where we work"'s paragraph
+                2.7px below its heading's). The words now share one line of type. */}
+            <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
               <SectionHeading as="h2">
                 <span id="new-heading">New listings</span>
               </SectionHeading>
@@ -255,7 +265,7 @@ export default async function HomePage() {
       <section className="sec bg-paper" aria-labelledby="areas-heading">
         <div className="mx-auto max-w-[1250px] px-4 lg:px-8">
           <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+            <div className="flex flex-wrap items-baseline-last justify-between gap-x-8 gap-y-3">
               <SectionHeading as="h2">
                 <span id="areas-heading">Where we work</span>
               </SectionHeading>
