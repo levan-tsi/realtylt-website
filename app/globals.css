@@ -522,6 +522,19 @@ body:has(.nocturne) .rlt-bubble {
 body:has(.nocturne) .rlt-bubble:hover {
   background: #4dbbe9;
 }
+/* The skip link sits outside every page wrapper (app/layout.tsx), so on a night page the first Tab
+   met the day's black pill in Lato with a navy ring at 1.26:1 on the night header. There it is the
+   night's own moonlit control with the porchlight ring (round 53 polish). */
+body:has(.nocturne) > a[href="#main"]:focus {
+  background-color: var(--color-moon);
+  color: var(--color-night);
+  font-family: var(--font-grotesk);
+  font-weight: 600;
+  border-radius: 12px;
+}
+body:has(.nocturne) > a[href="#main"]:focus-visible {
+  outline-color: var(--color-porchlight);
+}
 /* ...and the way back out. A few things on a night page are white BY NATURE and must keep the
    day's ink: a white pill on a photograph (the card pager, the carousel arrows), the Google map
    popup, which Google paints white whatever the page is. Inside them the tokens return to their
@@ -864,6 +877,61 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 input[type="search"]::-webkit-search-cancel-button:hover {
   opacity: 1;
+}
+/* An EMPTY field has nothing to clear, but the hidden button still held its 23px (15 + 8), and on
+   the blue-hour hero at 320 that cut the placeholder to "Town, zip or ac". While the placeholder
+   shows, the button is gone; it returns with the first keystroke. Night pages only (round 53
+   polish), so no day page's field changes width. */
+.nocturne input[type="search"]:placeholder-shown::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* A select with its native arrow taken away (components/ui/Field.tsx, `appearance-none`) gave no
+   sign that it opens: on the night footer "I'm interested in buying a home" read as a text box
+   someone had already filled in, and it stood 4px shorter than the four fields above it (47 vs
+   51px; 50 vs 54 on a phone). On night pages the arrow is drawn back in haze and the select takes
+   the floating fields' 28px of vertical padding. Day pages are untouched (round 53 polish). */
+.nocturne select.appearance-none {
+  padding-block: 14px;
+  padding-inline-end: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' stroke='%2393a3b8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 12px;
+}
+
+/* Checkboxes at blue hour (round 53 polish). Chromium drew them in its own dark scheme: a neutral
+   grey square (#3b3b3b) that belongs to nothing else on the page, and ticked they came out in two
+   colours (porchlight on the consent box, moonlight on /search's features). On night pages they are
+   the night's own: a haze edge (6.8:1 on night, 5.9:1 on the raised panels, over the 3:1 a control's
+   boundary needs), moonlight under the pointer, porchlight when ticked with the tick in night. The
+   4px corner is the box's glyph shape, as the native box has one, not a panel radius. Size, margins
+   and the focus ring are the elements' own. Forced-colours mode gets the native control back: the
+   tick is a background image, which a system palette would erase. */
+.nocturne input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-grid;
+  border: 1.5px solid var(--color-haze);
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    border-color 0.15s var(--ease-out),
+    background-color 0.15s var(--ease-out);
+}
+.nocturne input[type="checkbox"]:hover {
+  border-color: var(--color-moon);
+}
+.nocturne input[type="checkbox"]:checked {
+  border-color: var(--color-porchlight);
+  background: var(--color-porchlight) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.4l2.8 2.8 5.6-6.2' stroke='%230b1a2e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+}
+@media (forced-colors: active) {
+  .nocturne input[type="checkbox"] {
+    -webkit-appearance: auto;
+    appearance: auto;
+  }
 }
 :root {
   --rlt-clear-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 3.5l9 9M12.5 3.5l-9 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");

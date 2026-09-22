@@ -207,7 +207,8 @@ export function Footer() {
                 href="/sitemap"
                 className="inline-flex min-h-[24px] items-center transition-colors hover:text-paper night:hover:text-moon"
               >
-                Site Map
+                {/* Not a legal document's name, so the night pages set it in sentence case. */}
+                <NightLabel text="Site Map" />
               </Link>
             </li>
           </ul>
