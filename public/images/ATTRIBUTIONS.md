@@ -185,5 +185,6 @@ vendor contract ever surfaces saying otherwise, this row is where to revisit.
 | public/images/mls/coming-soon-notext.svg | Wordless cut of the same panel, for overlay tiles that print their own price | RealtyLT | Our own artwork | — |
 | public/images/mls/coming-soon-night.svg | Night cut of the "Photograph coming soon" panel (round 53), for the blue-hour pages: same drawing, night ground, moonlight ink | RealtyLT | Our own artwork | — |
 | public/images/mls/coming-soon-notext-night.svg | Night cut of the wordless panel (round 53) | RealtyLT | Our own artwork | — |
+| public/images/hero/lights-poster.webp | The home hero's map of lights, rendered from our own listing coordinates for visitors without JavaScript (scripts/make-lights-poster.mjs); the water lines are Natural Earth, public domain | RealtyLT | Our own artwork | — |
 | public/images/mls/coming-soon.webp | RETIRED 2026-08-02, kept on purpose — "coming soon" placeholder, moonlit manor | Levan Tsiklauri, Google Nano Banana Pro via ElevenLabs | Owner's own generated artwork | [source](https://elevenlabs.io/) |
 | public/images/mls/coming-soon-notext.webp | RETIRED 2026-08-02, kept on purpose — wordless cut (sky text removed with local Mage-Flow edit) | Levan Tsiklauri + RealtyLT | Owner's own generated artwork | [source](https://elevenlabs.io/) |

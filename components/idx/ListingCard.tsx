@@ -208,7 +208,7 @@ export function ListingCard({
               {[...chips, ...(cut ? [cut] : [])].map((c) => (
                 <span
                   key={c}
-                  className="rounded-lg bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper"
+                  className="rounded-lg bg-ink px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper night:text-[12px] night:font-semibold night:normal-case night:tracking-normal"
                 >
                   {c}
                 </span>
@@ -224,7 +224,7 @@ export function ListingCard({
             lands; phones keep the roomier scale. */}
         <div className="flex flex-1 flex-col p-3 lg:pb-2 lg:pt-2">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <p className="text-xl font-bold leading-7 text-ink lg:text-lg lg:leading-6">{priceLabel(l)}</p>
+            <p className="text-xl font-bold leading-7 text-ink night:font-semibold night:tracking-[-0.02em] lg:text-lg lg:leading-6">{priceLabel(l)}</p>
             {statsLong && <p className="text-xs text-stone">{statsLong}</p>}
           </div>
           {/* The two-line address lockup (see the component comment). Street carries the weight;
@@ -291,12 +291,12 @@ export function ListingCard({
         {(badge || cut) && (
           <div className="absolute left-3 top-3 flex flex-col items-start gap-1">
             {badge && (
-              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal">
                 {badge}
               </span>
             )}
             {cut && (
-              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur">
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal">
                 {cut}
               </span>
             )}
@@ -304,7 +304,7 @@ export function ListingCard({
         )}
         <FavoriteButton id={l.id} className="absolute right-3 top-3 z-20" />
         <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-          <p className="text-2xl font-bold leading-tight">{priceLabel(l)}</p>
+          <p className="text-2xl font-bold leading-tight night:font-semibold night:tracking-[-0.02em]">{priceLabel(l)}</p>
           {/* The two-line address lockup (component comment): street, then "City, NY zip" a
               step down. Every line of this block is single-line for effectively every listing
               (measured over 27,719 active rows), so nothing here is clamped or reserved and

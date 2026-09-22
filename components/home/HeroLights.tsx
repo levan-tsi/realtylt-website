@@ -79,6 +79,9 @@ export function HeroLights({ className = "" }: { className?: string }) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const mouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const sprite = makeSprite();
+    // The shimmer runs only where there is a mouse, which is where the lantern lives too. On a
+    // phone the map comes on and then holds still: nothing runs on its battery after the intro.
+    const shimmerOn = !reduce && mouse;
 
     let disposed = false;
     let raf = 0;
@@ -136,14 +139,35 @@ export function HeroLights({ className = "" }: { className?: string }) {
       g.drawImage(sprite, px[i] - s / 2, py[i] - s / 2, s, s);
     }
 
-    /** t = seconds since the lights began; Infinity = the finished frame. */
-    function drawLights(g: CanvasRenderingContext2D, t: number, skipShimmer: boolean) {
+    /** Every light at full strength, for the cached finished frame. */
+    function drawAllLights(g: CanvasRenderingContext2D, skipShimmer: boolean) {
       g.globalCompositeOperation = "lighter";
       const skip = skipShimmer ? new Set(shimmer) : null;
+      for (let i = 0; i < px.length; i++) if (!skip?.has(i)) stamp(g, i, alpha[i]);
+      g.globalCompositeOperation = "source-over";
+      g.globalAlpha = 1;
+    }
+
+    // THE INTRO ACCUMULATES instead of redrawing. Redrawing all ~15,000 lights every frame
+    // measured p95 67ms a frame on this PC and 133ms (worst 750ms) on a 4x-throttled phone.
+    // Because the lights blend with "lighter", which ADDS, a light drawn four times at a quarter
+    // of its strength is the same pixels as one drawn once at full strength. So each frame only
+    // stamps the lights whose ramp crossed a step since the last one (a few hundred), onto a
+    // canvas that is never cleared until the intro ends. The ramp stays eased: the step sizes
+    // follow k squared, so every light still comes on slow-then-fast.
+    const STEPS = 4;
+    const stepFrac = Array.from({ length: STEPS + 1 }, (_, j) => (j / STEPS) ** 2);
+    let drawn = new Uint8Array(0);
+    let introFresh = true; // the next intro frame starts from a clean canvas
+
+    function accumulate(g: CanvasRenderingContext2D, t: number) {
+      g.globalCompositeOperation = "lighter";
       for (let i = 0; i < px.length; i++) {
-        if (skip?.has(i)) continue;
-        const k = t === Infinity ? 1 : Math.min(1, Math.max(0, (t - delay[i]) / 0.45));
-        stamp(g, i, alpha[i] * k * k);
+        const k = Math.min(1, Math.max(0, (t - delay[i]) / 0.45));
+        const target = Math.floor(k * STEPS + 1e-6);
+        if (target <= drawn[i]) continue;
+        stamp(g, i, alpha[i] * (stepFrac[target] - stepFrac[drawn[i]]));
+        drawn[i] = target;
       }
       g.globalCompositeOperation = "source-over";
       g.globalAlpha = 1;
@@ -160,26 +184,35 @@ export function HeroLights({ className = "" }: { className?: string }) {
         py[i] = geo.oy + ys[i] * geo.h;
       }
       // Dense places would burn to a white blob: a light's own brightness falls with how many
-      // share its few pixels, so Manhattan reads as a city of windows, not a flare.
-      const dense = new Map<number, number>();
-      const key = (i: number) => Math.floor(px[i] / 3) * 100000 + Math.floor(py[i] / 3);
-      for (let i = 0; i < px.length; i++) dense.set(key(i), (dense.get(key(i)) ?? 0) + 1);
-      for (let i = 0; i < px.length; i++) alpha[i] = (0.5 + 0.5 * rand(i)) / Math.sqrt(dense.get(key(i))!);
-      grid = new Map();
+      // share its few pixels, so Manhattan reads as a city of windows, not a flare. A flat
+      // typed grid, 3px a cell, rather than a Map: this runs on every resize.
+      const gw = Math.ceil(rect.width / 3) + 1;
+      const dense = new Uint16Array(gw * (Math.ceil(rect.height / 3) + 1));
+      const cell = new Int32Array(px.length);
       for (let i = 0; i < px.length; i++) {
-        const k = Math.floor(px[i] / CELL) * 10000 + Math.floor(py[i] / CELL);
-        const b = grid.get(k);
-        if (b) b.push(i);
-        else grid.set(k, [i]);
+        cell[i] = Math.max(0, Math.floor(py[i] / 3)) * gw + Math.max(0, Math.floor(px[i] / 3));
+        dense[cell[i]]++;
       }
-      // Cache the finished frame once; afterwards a frame is one drawImage plus a few hundred.
-      base = document.createElement("canvas");
-      base.width = canvas!.width;
-      base.height = canvas!.height;
-      const bg = base.getContext("2d")!;
-      bg.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
-      drawWater(bg);
-      drawLights(bg, Infinity, !reduce);
+      for (let i = 0; i < px.length; i++) alpha[i] = (0.5 + 0.5 * rand(i)) / Math.sqrt(dense[cell[i]]);
+      // The lantern's lookup grid, only where there is a lantern.
+      grid = new Map();
+      if (mouse) {
+        for (let i = 0; i < px.length; i++) {
+          const k = Math.floor(px[i] / CELL) * 10000 + Math.floor(py[i] / CELL);
+          const b = grid.get(k);
+          if (b) b.push(i);
+          else grid.set(k, [i]);
+        }
+      }
+      // The cached finished frame is built when it is first needed (ensureBase), not here: at
+      // the start of the intro it would cost 15,000 draws in the very frame the lights begin.
+      base = null;
+      // A resize empties the canvas: an intro in progress starts its accumulation over (the next
+      // frame catches every light up to where it should be), and a finished map repaints once.
+      drawn = new Uint8Array(px.length);
+      introFresh = true;
+      staticDrawn = false;
+      introDone = false;
     }
 
     function near(x: number, y: number, r: number, visit: (i: number, d: number) => void) {
@@ -196,58 +229,103 @@ export function HeroLights({ className = "" }: { className?: string }) {
         }
     }
 
+    /** The finished frame, cached. Without a shimmer it is exactly what the intro has just
+     * accumulated on screen, so it is one copy of the canvas rather than 15,000 draws; with a
+     * shimmer (desktop) it must leave the shimmering lights out, so it is drawn. */
+    function ensureBase(accumulatedOnScreen: boolean) {
+      if (base) return base;
+      base = document.createElement("canvas");
+      base.width = canvas!.width;
+      base.height = canvas!.height;
+      const bg = base.getContext("2d")!;
+      if (accumulatedOnScreen && !shimmerOn) {
+        bg.drawImage(canvas!, 0, 0);
+      } else {
+        bg.setTransform(geo!.dpr, 0, 0, geo!.dpr, 0, 0);
+        drawWater(bg);
+        drawAllLights(bg, shimmerOn);
+      }
+      return base;
+    }
+
     let lastDraw = 0;
+    let staticDrawn = false; // the finished map is on the canvas and nothing is moving
+    let introDone = false; // the intro ran to its end on this canvas (so the canvas IS the frame)
     function frame(now: number) {
       raf = 0;
-      if (disposed || !geo || !base) return;
+      if (disposed || !geo) return;
       const t = reduce ? Infinity : (now - introStart) / 1000;
+      const live = onScreen && !document.hidden;
+      if (t < INTRO_S + 0.5) {
+        ctx!.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
+        if (introFresh) {
+          ctx!.clearRect(0, 0, geo.W, geo.H);
+          drawWater(ctx!);
+          introFresh = false;
+        }
+        accumulate(ctx!, t);
+        staticDrawn = false;
+        introDone = false;
+        if (live) raf = requestAnimationFrame(frame);
+        return;
+      }
+      // The first frame after the intro: finish any light a hidden tab or a stalled frame left
+      // short, so the canvas is exactly the finished map before it is cached or cleared.
+      if (!introDone && !reduce && !introFresh) {
+        ctx!.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
+        accumulate(ctx!, Infinity);
+        introDone = true;
+      }
+      const cached = ensureBase(introDone && !introFresh);
+      // Nothing alive (no shimmer on this device, no lantern): paint the finished map once, stop.
+      if (!shimmerOn && !pointer) {
+        if (!staticDrawn) {
+          ctx!.setTransform(1, 0, 0, 1, 0, 0);
+          ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+          ctx!.drawImage(cached, 0, 0);
+          staticDrawn = true;
+        }
+        return;
+      }
       // A shimmer does not need 60 frames a second; ~24 is indistinguishable and half the work.
-      // The intro and the lantern answer at the display's own rate.
-      if (t > INTRO_S + 0.5 && !pointer && now - lastDraw < 40) {
-        raf = requestAnimationFrame(frame);
+      // The lantern answers at the display's own rate.
+      if (!pointer && now - lastDraw < 40) {
+        if (live) raf = requestAnimationFrame(frame);
         return;
       }
       lastDraw = now;
+      staticDrawn = false;
       ctx!.setTransform(1, 0, 0, 1, 0, 0);
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      ctx!.drawImage(cached, 0, 0);
       ctx!.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
-      const intro = t < INTRO_S + 0.5;
-      if (intro) {
-        drawWater(ctx!);
-        drawLights(ctx!, t, false);
-      } else {
-        ctx!.setTransform(1, 0, 0, 1, 0, 0);
-        ctx!.drawImage(base, 0, 0);
-        ctx!.setTransform(geo.dpr, 0, 0, geo.dpr, 0, 0);
-        ctx!.globalCompositeOperation = "lighter";
-        if (!reduce) {
-          // The shimmer: a slow dip in brightness, each light on its own clock.
-          const s = now / 1000;
-          for (const i of shimmer) {
-            const p = 3 + rand(i + 7) * 5;
-            const dip = 0.5 + 0.5 * Math.cos((s / p + rand(i + 3)) * Math.PI * 2);
-            stamp(ctx!, i, alpha[i] * (0.45 + 0.55 * dip));
-          }
+      ctx!.globalCompositeOperation = "lighter";
+      if (shimmerOn) {
+        // The shimmer: a slow dip in brightness, each light on its own clock.
+        const s = now / 1000;
+        for (const i of shimmer) {
+          const p = 3 + rand(i + 7) * 5;
+          const dip = 0.5 + 0.5 * Math.cos((s / p + rand(i + 3)) * Math.PI * 2);
+          stamp(ctx!, i, alpha[i] * (0.45 + 0.55 * dip));
         }
-        if (pointer) {
-          // The lantern's own light: faint and warm, so it reads as something you are holding
-          // over the map even where the homes are sparse. Its source is the pointer.
-          const g = ctx!.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, LANTERN_R * 1.3);
-          g.addColorStop(0, "rgba(246,199,129,0.075)");
-          g.addColorStop(1, "rgba(246,199,129,0)");
-          ctx!.globalAlpha = 1;
-          ctx!.fillStyle = g;
-          ctx!.fillRect(pointer.x - LANTERN_R * 1.3, pointer.y - LANTERN_R * 1.3, LANTERN_R * 2.6, LANTERN_R * 2.6);
-          near(pointer.x, pointer.y, LANTERN_R, (i, d) => {
-            const f = 1 - d / LANTERN_R;
-            stamp(ctx!, i, f * 1.1, 1 + f);
-          });
-        }
-        ctx!.globalCompositeOperation = "source-over";
-        ctx!.globalAlpha = 1;
       }
-      // Keep drawing while there is something alive to draw: the intro, the shimmer, a lantern.
-      if (onScreen && !document.hidden && (intro || !reduce || pointer)) raf = requestAnimationFrame(frame);
+      if (pointer) {
+        // The lantern's own light: faint and warm, so it reads as something you are holding
+        // over the map even where the homes are sparse. Its source is the pointer.
+        const g = ctx!.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, LANTERN_R * 1.3);
+        g.addColorStop(0, "rgba(246,199,129,0.075)");
+        g.addColorStop(1, "rgba(246,199,129,0)");
+        ctx!.globalAlpha = 1;
+        ctx!.fillStyle = g;
+        ctx!.fillRect(pointer.x - LANTERN_R * 1.3, pointer.y - LANTERN_R * 1.3, LANTERN_R * 2.6, LANTERN_R * 2.6);
+        near(pointer.x, pointer.y, LANTERN_R, (i, d) => {
+          const f = 1 - d / LANTERN_R;
+          stamp(ctx!, i, f * 1.1, 1 + f);
+        });
+      }
+      ctx!.globalCompositeOperation = "source-over";
+      ctx!.globalAlpha = 1;
+      if (live && (shimmerOn || pointer)) raf = requestAnimationFrame(frame);
     }
 
     const kick = () => {
@@ -366,10 +444,18 @@ export function HeroLights({ className = "" }: { className?: string }) {
       {/* Dusk: the sky before the lights, the last of the light after sunset. It fades to night
           as they come on, so the arrival is one event. Its source is the sun below the horizon. */}
       <div
+        data-js-only
         className={`absolute inset-0 transition-opacity duration-[2400ms] ease-out motion-reduce:transition-none ${lit ? "opacity-0" : "opacity-100"}`}
         style={{ background: "linear-gradient(to bottom, #1c3658 0%, #14294a 45%, rgba(11,26,46,0) 100%)" }}
       />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      {/* Without JavaScript there is no canvas to light, so the picture of it stands in: the same
+          map rendered by scripts/make-lights-poster.mjs, contained in the same box the canvas
+          fits it to. Only a browser with scripting off ever loads it. */}
+      <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element -- noscript-only still */}
+        <img src="/images/hero/lights-poster.webp" alt="" className="absolute inset-[4%] h-[92%] w-[92%] object-contain" />
+      </noscript>
       <div
         ref={labelRef}
         className="pointer-events-none absolute left-0 top-0 rounded-xl border border-line-strong bg-night-deep/85 px-3.5 py-2 opacity-0 backdrop-blur-sm transition-opacity duration-150 motion-reduce:transition-none"

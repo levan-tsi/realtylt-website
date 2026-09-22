@@ -571,6 +571,12 @@ body:has(.nocturne) {
 .search-instrument input:focus-visible {
   outline: none;
 }
+/* On the blue-hour hero the ground IS the paper token, so a paper ring would be drawn in the
+   night's own colour: invisible (measured by a real Tab, round 53). The page's action colour
+   instead, 6.47:1 on night. */
+.nocturne .search-instrument:has(input:focus-visible) {
+  outline-color: var(--color-porchlight);
+}
 
 /* ...but the ring's colour has to be judged against the surface it LANDS ON, not the section
  * it belongs to. Round 27 gave /home-value the same instrument, and there the bar is solid
@@ -894,6 +900,29 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 @media (hover: hover) and (pointer: fine) {
   .photo-zoom:hover img {
     scale: 1.045;
+  }
+}
+
+/* ── Blue hour: a photograph DEVELOPS as it arrives (round 53). On the night pages a listing's
+   picture comes up out of the dark the way the hero's lights come on, over the first stretch of
+   its way into view, driven by the scroll itself (no observer, no JavaScript, no layout: filter
+   only). A photo already in view at load has passed its range and is simply there. Browsers
+   without scroll timelines, and reduced-motion visitors, get the photograph as it is. */
+@keyframes rlt-develop {
+  from {
+    filter: brightness(0.32) saturate(0.35);
+  }
+  to {
+    filter: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nocturne .photo-zoom img {
+      animation: rlt-develop linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
   }
 }
 

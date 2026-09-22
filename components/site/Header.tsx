@@ -337,14 +337,14 @@ export function Header() {
           meaningless here and it keeps hydration away from the noscript subtree. */}
       <noscript>
         <nav aria-label="Site links" className="border-b border-line bg-paper">
-          <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] lg:px-8">
+          <ul className="mx-auto flex max-w-[1250px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-[13px] font-bold uppercase tracking-[0.03em] night:text-[15px] night:font-medium night:normal-case night:tracking-normal lg:px-8">
             {[
-              ...NAV.map((i) => ({ label: i.label, href: i.href })),
-              ...TOP_AREA_GROUPS.flatMap((g) => g.items),
+              ...NAV.map((i) => ({ label: i.label, href: i.href, area: false })),
+              ...TOP_AREA_GROUPS.flatMap((g) => g.items.map((it) => ({ ...it, area: true }))),
             ].map((i) => (
               <li key={`ns-${i.href}`}>
                 <a href={i.href} className="block py-1 text-stone hover:text-ink">
-                  {i.label}
+                  {night && i.area ? areaName(i.label) : i.label}
                 </a>
               </li>
             ))}
