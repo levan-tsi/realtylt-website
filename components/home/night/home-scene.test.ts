@@ -254,3 +254,25 @@ describe("the footer over the scene", () => {
     expect(meta.sources?.nightLights?.licence).toContain("NASA should be acknowledged as the source of the material.");
   });
 });
+
+describe("the poster, the still that covers the first screen", () => {
+  const ground = fs.readFileSync(path.join(ROOT, "components/home/night/NightGround.tsx"), "utf8");
+
+  it("leaves at once when the visitor scrolls, instead of sitting as a frozen strip until the intro ends (round 55, the owner's freeze)", () => {
+    // The still is absolute to the page, so a scroll before the intro's end left it as a frozen
+    // picture across the top of the window with a hard seam, for up to four seconds. A visitor
+    // who scrolls has stopped waiting: the still drops on the first scroll, quickly.
+    expect(ground).toMatch(/addEventListener\("scroll", onScroll/);
+    expect(ground).toMatch(/window\.scrollY > 24\)\s*\{\s*dropPosterNow\(\)/);
+    expect(ground).toContain('posterQuick ? "duration-[400ms]" : "duration-[1100ms]"');
+  });
+
+  it("drops it on ready too, when the visitor scrolled while the clouds were building", () => {
+    expect(ground).toMatch(/if \(window\.scrollY > 24\) \{\s*dropPosterNow\(\);\s*return;/);
+  });
+
+  it("only where WebGL exists, because without it the still is the hero", () => {
+    expect(ground).toMatch(/glOk\.current && window\.scrollY > 24/);
+    expect(ground).toMatch(/getContext\("webgl2"\) \|\| c\.getContext\("webgl"\)/);
+  });
+});

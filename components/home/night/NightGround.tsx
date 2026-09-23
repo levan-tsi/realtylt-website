@@ -69,7 +69,23 @@ export function NightGround({ poster, tail, children }: { poster: string; tail?:
   const posterTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const [live, setLive] = useState(false);
   const [posterGone, setPosterGone] = useState(false);
+  /** The poster leaves QUICKLY (400 ms, not the intro's 1,100 ms luminance-matched dissolve) when
+   * the visitor scrolls before the intro is over. Round 55, the owner: "when I scroll down, that
+   * first page kind of freezes in the middle, and after a few seconds it disappears". Measured:
+   * the still is absolute to the page, so a scroll at 1.5 s left it as a frozen strip across the
+   * top third of the window, with a hard seam, until the intro's end at ~5.5 s. A visitor who
+   * scrolls has stopped waiting for the intro, so the still goes at once and the live scene (or,
+   * for a moment, its dark ground while the clouds are still building) is what moves. Only where
+   * WebGL exists: without it the still IS the hero, and it stays. */
+  const [posterQuick, setPosterQuick] = useState(false);
+  const glOk = useRef(false);
   const [current, setCurrent] = useState<AreaShot | null>(null);
+
+  const dropPosterNow = useCallback(() => {
+    clearTimeout(posterTimer.current);
+    setPosterQuick(true);
+    setPosterGone(true);
+  }, []);
 
   /** Read the sections' real boxes. Called on mount, on resize and whenever the page reflows. */
   const measure = useCallback(() => {
@@ -143,18 +159,33 @@ export function NightGround({ poster, tail, children }: { poster: string; tail?:
       schedule();
     };
     onResize();
-    window.addEventListener("scroll", schedule, { passive: true });
+    // Can this browser draw the scene at all? Decided once; a scroll only drops the still where
+    // something live will take its place.
+    try {
+      const c = document.createElement("canvas");
+      glOk.current = !!(c.getContext("webgl2") || c.getContext("webgl"));
+    } catch {
+      glOk.current = false;
+    }
+    const onScroll = () => {
+      schedule();
+      if (glOk.current && window.scrollY > 24) {
+        dropPosterNow();
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     // Cards, rails and fonts change the page's height after first paint; the anchors follow.
     const ro = new ResizeObserver(onResize);
     ro.observe(document.body);
     return () => {
-      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       ro.disconnect();
       if (frame.current) cancelAnimationFrame(frame.current);
     };
-  }, [measure, schedule]);
+  }, [measure, schedule, dropPosterNow]);
 
   // The lantern, over the hero only.
   useEffect(() => {
@@ -217,6 +248,12 @@ export function NightGround({ poster, tail, children }: { poster: string; tail?:
             // without this the still faded out into an empty canvas: the hero went black on a
             // failure whose whole point was that the page should not notice it.
             if (!h.stats().lights) return;
+            // Already scrolled while the clouds were building: the still goes now, not at the
+            // intro's end.
+            if (window.scrollY > 24) {
+              dropPosterNow();
+              return;
+            }
             posterTimer.current = setTimeout(() => setPosterGone(true), Math.max(0, h.introEndsAt() - performance.now()));
           }}
         />
@@ -231,7 +268,7 @@ export function NightGround({ poster, tail, children }: { poster: string; tail?:
           IN on ready took the hero's mean luminance from 17 to 10 and back, a visible blink. */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity duration-[1100ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity ease-out motion-reduce:transition-none ${posterQuick ? "duration-[400ms]" : "duration-[1100ms]"} ${posterGone ? "opacity-0" : "opacity-100"}`}
         style={{ backgroundImage: `url(${poster})` }}
       >
         {/* THE POSTER'S OWN QUIET (round 54, builder 3). The live scene is told where the words
