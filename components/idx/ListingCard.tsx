@@ -313,15 +313,19 @@ export function ListingCard({
           aria-hidden
           className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-black/90 via-black/45 to-transparent"
         />
+        {/* night:backdrop-blur-none (round 55): under 80% ink a blur of the photograph is
+            invisible on a 20px chip, and every backdrop filter is a readback of the card behind
+            it when the GPU rasters the rail, which is where the featured rail's stall was
+            measured. Night pages only, so every day page's pixels stay as they were. */}
         {(badge || cut) && (
           <div className="absolute left-3 top-3 flex flex-col items-start gap-1">
             {badge && (
-              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal">
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal night:backdrop-blur-none">
                 {badge}
               </span>
             )}
             {cut && (
-              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal">
+              <span className="rounded-lg bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-paper backdrop-blur night:text-[12px] night:font-semibold night:normal-case night:tracking-normal night:backdrop-blur-none">
                 {cut}
               </span>
             )}

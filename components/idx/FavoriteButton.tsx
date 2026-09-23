@@ -47,7 +47,10 @@ export function FavoriteButton({
       } ${PRESS} focus-visible:outline-2 focus-visible:outline-offset-2 ${showLabel ? "" : "hover:scale-110"} ${
         onLight
           ? "text-stone hover:bg-mist hover:text-ink focus-visible:outline-river"
-          : "rlt-ring-onmedia bg-ink/55 backdrop-blur hover:bg-ink/75"
+          : // On a night page the disc is the badges' solid 80% ink with no backdrop blur (round
+            // 55): a 36px control over a photograph reads the same, and each backdrop filter was
+            // a readback of the card when the GPU rastered the featured rail. Day pages unchanged.
+            "rlt-ring-onmedia bg-ink/55 backdrop-blur hover:bg-ink/75 night:bg-ink/80 night:backdrop-blur-none night:hover:bg-ink/90"
       } ${className}`}
     >
       <svg

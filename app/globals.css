@@ -1105,7 +1105,11 @@ input[type="search"]::-webkit-search-cancel-button:hover {
    picture comes up out of the dark the way the hero's lights come on, over the first stretch of
    its way into view, driven by the scroll itself (no observer, no JavaScript, no layout: filter
    only). A photo already in view at load has passed its range and is simply there. Browsers
-   without scroll timelines, and reduced-motion visitors, get the photograph as it is. */
+   without scroll timelines, and reduced-motion visitors, get the photograph as it is.
+   `backwards`, not `both` (round 55): past its range the photo must carry no filter at all. With
+   `both` every developed photo went on holding the interpolation's end value, `brightness(1)
+   saturate(1)`, an identity filter that still costs a filter pass per photograph when the GPU
+   rasters a card (measured in the owner's Chrome). Before its range the photo is dark either way. */
 @keyframes rlt-develop {
   from {
     filter: brightness(0.32) saturate(0.35);
@@ -1117,7 +1121,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .nocturne .photo-zoom img {
-      animation: rlt-develop linear both;
+      animation: rlt-develop linear backwards;
       animation-timeline: view();
       animation-range: entry 0% entry 70%;
     }
@@ -1277,29 +1281,24 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   animation: rlt-view-in 0.2s var(--ease-out) both;
 }
 
-/* ── The drifting listing rail (components/idx/DriftRail.tsx).
-   Linear, not eased: this is ambient motion with no beginning or end, and any easing curve would
-   make the loop visibly "breathe" at the seam. The track holds the set TWICE and travels exactly
-   -50%, so the moment it lands it is pixel-identical to where it started and the restart cannot
-   be seen. Only `transform` moves, so it stays on the compositor.
-   Duration comes from the component as a custom property, scaled by card count, so a rail of four
-   homes and a rail of eight drift at the same speed rather than the same tempo. */
-@keyframes rlt-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
+/* ── The drifting listing rail (components/idx/DriftRail.tsx, moved by DriftScroller.tsx).
+   ROUND 55: THE DRIFT IS A SCROLL POSITION, NOT A TRANSFORM. Until this round the rail was one
+   CSS animation translating a doubled, 5,760px `will-change: transform` track, -50% in cards x 7 s.
+   Measured in the owner's Chrome on the real GPU (docs/parity/DESIGN-ROUND55.md §2.3), entering
+   the rail cost 62 to 132 ms frames: the compositor rastered the track's card chrome for the run
+   of the animation at once, in one Skia flush of 55 to 95 ms. Now a small script advances the
+   rail's scrollLeft at the same speed (linear, no easing: ambient motion with no beginning or
+   end) and wraps it by one set width, the second copy of the set making the wrap seamless, and
+   the browser rasters only what is near the scrollport. With scripting off the rail is a plain
+   scroller holding both copies. */
 /* `auto`, NOT `hidden`. Hidden was the obvious choice and it was wrong: eight 340px cards are
    ~2,800px of track, so past the fourth card the rail clips them — and a keyboard tabbing along
    the row would land focus on a card nobody can see, with no way to bring it into view. Pausing
    on :focus-within does not help if the thing you focused is off-screen. Caught by
    scripts/verify-focus-paint.mjs, which measured 0.00% change on exactly those clipped cards.
    Scrollable means the browser scrolls a focused card into view by itself, and it hands touch
-   users a rail they can flick. The animation still does the drifting; the scroll port only moves
-   when something asks it to. */
+   users a rail they can flick; the script scrolls it the rest of the time and stands aside for
+   a hand. */
 .rlt-drift {
   overflow-x: auto;
   scrollbar-width: none;
@@ -1336,47 +1335,46 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 .rlt-drift-track {
   display: flex;
   width: max-content;
-  will-change: transform;
-  animation: rlt-drift var(--drift-duration, 56s) linear infinite;
 }
-/* Nobody should have to read a moving target, or chase a button walking away from the cursor. */
-.rlt-drift:hover .rlt-drift-track,
-.rlt-drift:focus-within .rlt-drift-track {
-  animation-play-state: paused;
+/* THE CARDS OUT OF VIEW PAINT NOTHING. `content-visibility: auto` skips the layout and paint of
+   every card that is not near the scrollport (the track holds sixteen; a laptop shows three and
+   a half), so a wrap or a flick rasters a card or two, never a set. It brings paint containment
+   with it, which clips at the li's edge: the li carries 8px of padding (DriftRail.tsx, with the
+   gap and the container's margins 8px smaller, so every card sits exactly where it did) and a
+   card's 4px hover lift and 4px focus ring stay in frame. The intrinsic block size is the card's
+   own height by construction (the photo box is aspect 63/100 and the words sit over it), one
+   rule per card width, so a skipped card holds its exact place and nothing shifts when it is
+   drawn. */
+.rlt-drift-track > ul > li {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto calc(78vw / 0.63 + 16px);
+}
+@media (min-width: 640px) {
+  .rlt-drift-track > ul > li {
+    contain-intrinsic-block-size: auto calc(340px / 0.63 + 16px);
+  }
 }
 
-/* KEYBOARD FOCUS HAS TO BE ABLE TO SEE WHAT IT FOCUSED. Pausing is not enough, and the reasoning
-   a few rules up ("scrollable means the browser scrolls a focused card into view by itself") has
-   a hole in it that round 38 measured: scrolling and the marquee's transform are independent.
-   The scroll port can only reach a card's LAYOUT box; the animation moves the track past that box
-   with `transform`, so a card translated off the left edge cannot be scrolled back — pausing just
-   freezes it there, invisible. The rubric caught it as focus stops with no visible ring at
-   x = -190, -388 and -44 on three consecutive runs, the coordinate changing each time because it
-   depends on where the loop happened to be. That is WCAG 2.2 AA 2.4.11 (Focus Not Obscured), and
-   a keyboard visitor genuinely could not see the card they were on.
-
-   So on KEYBOARD focus the animation is removed rather than paused. Losing the animation drops its
-   transform, the track returns to its layout position, and the scroll port can then do exactly
-   what the comment above always claimed. The edge mask goes with it: it fades the outer ~72px to
-   transparent, which would leave a focused card at the edge half-faded and its ring along with it.
+/* KEYBOARD FOCUS HAS TO BE ABLE TO SEE WHAT IT FOCUSED (round 38, WCAG 2.2 AA 2.4.11). The
+   transform animation used to carry a focused card off the left edge where no scroll could reach
+   it (measured: focus stops with no visible ring at x = -190, -388 and -44 on three runs, the
+   coordinate depending on where the loop happened to be), so it was removed on keyboard focus. A
+   scroll position has no such hole: the browser scrolls a focused card into view by itself and
+   the script pauses while focus is inside. What remains is the edge mask: it fades the outer
+   ~72px to transparent and would leave a focused card at the edge half-faded and its ring along
+   with it, so it drops on KEYBOARD focus.
 
    `:has(:focus-visible)` and not `:focus-within`, deliberately — a mouse click on a card's save
-   button sets focus too, and snapping the rail back to the start under someone's cursor would be
-   a worse bug than the one being fixed. Keyboard only. */
+   button sets focus too, and dropping the mask under someone's cursor would be a flash for
+   nothing. Keyboard only. */
 .rlt-drift:has(:focus-visible) {
   -webkit-mask-image: none;
   mask-image: none;
 }
-.rlt-drift:has(:focus-visible) .rlt-drift-track {
-  animation: none;
-}
 @media (prefers-reduced-motion: reduce) {
-  .rlt-drift-track {
-    animation: none;
-  }
-  /* Killing the animation alone would strand every home past the fold behind `overflow:hidden`,
-     so the rail becomes an ordinary scroller instead. Reduced motion means less movement, not
-     less content. */
+  /* The script does not run under reduced motion (DriftScroller.tsx), and a still rail with the
+     homes past the fold out of reach would be less content, not less movement: it is an ordinary
+     scroller instead. */
   .rlt-drift {
     overflow-x: auto;
     scroll-snap-type: x mandatory;

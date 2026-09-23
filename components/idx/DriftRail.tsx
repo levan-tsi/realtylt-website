@@ -1,4 +1,5 @@
 import type { Listing } from "@/lib/idx/types";
+import { DriftScroller } from "./DriftScroller";
 import { ListingCard } from "./ListingCard";
 import { ResultSetScope } from "./ResultSetScope";
 
@@ -11,20 +12,26 @@ import { ResultSetScope } from "./ResultSetScope";
  * movement is what he was after; the perspective was the part that would have cost readability.
  * So the cards stay flat and the RAIL moves.
  *
- * NO JAVASCRIPT. The whole thing is one CSS animation on a flex track, which means it costs
- * nothing in the bundle, runs on the compositor, and still moves for a visitor with scripting
- * off — the same visitor /search had to be rescued for this round.
+ * A SCROLL POSITION, NOT A TRANSFORM (round 55). Until this round the rail was one CSS animation
+ * translating a doubled, 5,760px `will-change: transform` track: no script, and it moved with
+ * scripting off. Measured in the owner's Chrome on the real GPU, entering it cost 62 to 132 ms
+ * frames, the compositor rastering the whole track's card chrome at once for the run of the
+ * animation (docs/parity/DESIGN-ROUND55.md §2.3). Now ./DriftScroller.tsx advances the rail's
+ * scrollLeft at the same speed and the browser rasters only what is near the scrollport; with
+ * scripting off the rail is a plain scroller holding every home.
  *
  * THE THINGS THAT MAKE A MARQUEE ACCEPTABLE RATHER THAN ANNOYING, all of which it does:
  *  · It pauses on hover AND on focus-within, so nobody has to read a moving target or chase a
- *    button that is walking away from their cursor.
- *  · Under `prefers-reduced-motion` it does not animate at all, and the container becomes a
- *    normal horizontal SCROLLER so every home is still reachable. A reduced-motion visitor must
- *    not simply lose the listings past the fold, which is what `overflow:hidden` plus a dead
- *    animation would have done.
- *  · The second copy of the track exists only to make the loop seamless. It is `aria-hidden` and
+ *    button that is walking away from their cursor; and it stands aside for a finger on it and
+ *    for a moment after any scroll of its own, so a flick is never fought.
+ *  · Under `prefers-reduced-motion` it does not move at all, and the container is a normal
+ *    horizontal SCROLLER so every home is still reachable. A reduced-motion visitor must not
+ *    simply lose the listings past the fold, which is what `overflow:hidden` plus a dead drift
+ *    would have done.
+ *  · The second copy of the track exists only to make the wrap seamless. It is `aria-hidden` and
  *    every focusable thing inside it is taken out of the tab order, so a screen reader and a
- *    keyboard each meet the set exactly once.
+ *    keyboard each meet the set exactly once. Cards out of view paint nothing
+ *    (`content-visibility: auto`, globals.css), so the copy costs nothing until it is seen.
  *
  * CAPPED AT 8, deliberately. MLS media is rate-limit sensitive and this site has already been
  * measured bursting the media host into 429s. Eight unique cards is exactly what RailPager
@@ -49,13 +56,17 @@ export function DriftRail({ listings, ariaLabel }: { listings: Listing[]; ariaLa
   }
 
   const shown = listings.slice(0, MAX);
+  // The li wears 8px of padding (box-content, so the card keeps its width) because
+  // `content-visibility: auto` brings paint containment, which clips at the li's edge, and a
+  // card's 4px hover lift and 4px focus ring have to stay in frame. The gap and the trailing pad
+  // are 8px smaller to match, so every card sits exactly where it did.
   const track = (duplicate: boolean) => (
     <ul
-      className="flex shrink-0 gap-5 pr-5"
+      className="flex shrink-0 gap-1 pr-3"
       {...(duplicate ? { "aria-hidden": true as const } : {})}
     >
       {shown.map((l, i) => (
-        <li key={`${duplicate ? "dup" : "real"}-${l.id}`} className="w-[78vw] shrink-0 sm:w-[340px]">
+        <li key={`${duplicate ? "dup" : "real"}-${l.id}`} className="box-content w-[78vw] shrink-0 p-2 sm:w-[340px]">
           {/* inert: the duplicate is scenery. Without it `aria-hidden` would be wrapping focusable
               links, which is the one thing aria-hidden must never do — a keyboard would tab into
               cards a screen reader has been told do not exist.
@@ -74,20 +85,19 @@ export function DriftRail({ listings, ariaLabel }: { listings: Listing[]; ariaLa
   return (
     <div role="group" aria-roledescription="carousel" aria-label={ariaLabel}>
       <ResultSetScope listings={shown} backHref="/">
-        {/* Room inside, the same room taken back outside (mt-7 + py-3 = the old mt-10, -mb-3 and
-            -mx-1 net the rest out): the rail is a scroll container, so it clipped a card's 4px
-            hover lift (flat top, square corners) and three sides of its 4px focus ring (the
-            first card's ring lost its left edge at the rail's start). The cards and everything
-            around them sit exactly where they did. */}
-        <div
-          className="rlt-drift -mx-1 -mb-3 mt-7 px-1 py-3"
-          style={{ ["--drift-duration" as string]: `${shown.length * SECONDS_PER_CARD}s` }}
-        >
+        {/* Room inside, the same room taken back outside: the rail is a scroll container, so it
+            clipped a card's 4px hover lift (flat top, square corners) and three sides of its 4px
+            focus ring (the first card's ring lost its left edge at the rail's start). The li's
+            own 8px padding now holds both; -mx-2 puts the scrollport's edge that far out so the
+            first and last card's ring is inside it, and mt-7 + py-1 + the li's 8px = the old 40px
+            above the cards, -mb-3 nets the rest out. The cards and everything around them sit
+            exactly where they did. */}
+        <DriftScroller className="rlt-drift -mx-2 -mb-3 mt-7 py-1" secondsPerCard={SECONDS_PER_CARD}>
           <div className="rlt-drift-track">
             {track(false)}
             {track(true)}
           </div>
-        </div>
+        </DriftScroller>
       </ResultSetScope>
       <p className="sr-only">
         These homes scroll on their own. They stop when you hover or focus them, and you can scroll
