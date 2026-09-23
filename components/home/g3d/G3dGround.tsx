@@ -11,8 +11,10 @@ import { AREA_COUNTY_OF, AREA_FLIGHT, type AreaShot, type ShotName } from "../ni
 import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
 import { nearestLight } from "./thinning";
+import { GOOGLE_CITY_LABELS, TERRITORY_LABELS, labelItems, placeLabels, type Box } from "./labels";
 
-/** THE REAL MAP AS THE PAGE'S GROUND (round 56, the /lab/g3d prototype).
+/** THE REAL MAP AS THE PAGE'S GROUND (round 56's /lab/g3d prototype; the home page's ground since
+ * round 57, app/page.tsx and lib/home-map.ts).
  *
  * The owner, on round 55's valley: "find that Google Maps 3D API ... that we can get just that
  * area for our map and then add our dots ... interactive when the mouse is there, and smooth
@@ -50,7 +52,16 @@ export type Look = "scrim" | "veil";
 
 export interface G3dTail {
   shot: ShotName;
+  /** How dark the map goes behind the site footer (round 57: the footer is transparent on the home
+   * page, FooterShell.tsx, so the last shot fades out under its words instead of being cut). */
+  veil?: number;
+  veilPhone?: number;
 }
+
+/** Our names for the territory (labels.ts), drawn over the hero shot only. */
+const LABEL_SHADOW = "0 0 1px rgba(0,0,0,1), 0 0 3px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8)";
+/** Google's logo and legal link, bottom left: no name of ours goes there. */
+const LOGO_CORNER = { w: 180, h: 54 };
 
 /** The hole the looks leave for Google's logo and legal link, bottom left (policy: visible and
  * unobscured). Measured on the frames: the logo runs x 12..116, the (i) to x 150, y within 36 px
@@ -141,6 +152,67 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
   const hovered = useRef<{ i: number; href: string } | null>(null);
   const hoverCost = useRef({ tests: 0, totalMs: 0, maxMs: 0 });
   const scheduleRef = useRef<() => void>(() => {});
+  const tailVeil = useRef<HTMLDivElement>(null);
+  const footerEl = useRef<HTMLElement | null>(null);
+  /** The map failed (no key, no WebGL, the script blocked, gmp-error): our poster stays for good. */
+  const failed = useRef(false);
+
+  // ---- THE TERRITORY'S NAMES (round 57, labels.ts) ------------------------------------------------
+  // Drawn only while the page sits at its top and the map holds the hero shot still: they fade out
+  // (250 ms) as soon as the reader scrolls or the camera leaves, and come back only when both are
+  // true again. Placed from the camera the map is actually on, re-placed on every resize.
+  const labelLayer = useRef<HTMLDivElement>(null);
+  const labelEls = useRef(new Map<string, HTMLSpanElement>());
+  const labelsPlaced = useRef(false);
+
+  const placeTerritory = useCallback(() => {
+    const c = ctl.current;
+    const cam = c?.camera() as { fov?: number } | null | undefined;
+    if (!c || !cam) return;
+    const vp = { width: window.innerWidth, height: window.innerHeight, fov: cam.fov ?? 40 };
+    const els = labelEls.current;
+    const byText = new Map([...els.values()].map((e) => [e.textContent ?? "", e]));
+    const items = labelItems(c.camera()!, vp, (text) => {
+      const e = byText.get(text);
+      return { w: e ? Math.ceil(e.offsetWidth) : text.length * 9, h: e ? Math.ceil(e.offsetHeight) : 20 };
+    });
+    const avoid: Box[] = [];
+    const push = (r: DOMRect | { left: number; top: number; width: number; height: number }) => {
+      if (r.width > 0 && r.height > 0) avoid.push({ x: r.left, y: r.top, w: r.width, h: r.height });
+    };
+    document.querySelectorAll("header, [data-g3d-avoid], .rlt-bubble").forEach((e) => push(e.getBoundingClientRect()));
+    // The hero's words by their LINES, not their column: a label may stand beside a short line.
+    document.querySelectorAll<HTMLElement>('[data-shot="hero"] [data-quiet] :is(p, h1, form)').forEach((e) => {
+      if (e.tagName === "FORM") return push(e.getBoundingClientRect());
+      const range = document.createRange();
+      range.selectNodeContents(e);
+      for (const r of range.getClientRects()) push(r);
+    });
+    push({ left: 0, top: vp.height - LOGO_CORNER.h, width: LOGO_CORNER.w, height: LOGO_CORNER.h });
+    for (const g of labelItems(c.camera()!, vp, (t) => ({ w: t.length * 12 + 12, h: 30 }), GOOGLE_CITY_LABELS)) {
+      avoid.push({ x: g.x - g.w / 2, y: g.y - g.h / 2, w: g.w, h: g.h });
+    }
+    const placed = new Map(placeLabels(items, avoid, vp).map((p) => [p.id, p]));
+    for (const [id, e] of els) {
+      const p = placed.get(id);
+      e.style.visibility = p ? "visible" : "hidden";
+      if (p) e.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+    }
+    labelsPlaced.current = true;
+    const layer = labelLayer.current;
+    if (layer) layer.dataset.placed = [...placed.keys()].join(",");
+  }, []);
+
+  const showTerritory = useCallback(() => {
+    const layer = labelLayer.current;
+    if (!layer) return;
+    const on = !failed.current && ctl.current?.heldShot() === "hero" && window.scrollY <= 24;
+    if (on && !labelsPlaced.current) placeTerritory();
+    layer.style.opacity = on ? "1" : "0";
+    layer.dataset.on = on ? "1" : "0";
+  }, [placeTerritory]);
+  const showTerritoryRef = useRef(showTerritory);
+  showTerritoryRef.current = showTerritory;
 
   // The look, from the query string (the lab's switch).
   useEffect(() => {
@@ -158,6 +230,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     });
     const t = tailRef.current;
     sections.current = t ? withTail(found, document.documentElement.scrollHeight, { shots: [t.shot], veil: 0 }) : found;
+    footerEl.current = document.querySelector("footer");
     const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
     stops.current = shotStops(sections.current, window.innerHeight, maxScroll);
     names.current = stops.current.map((s) => s.name);
@@ -181,6 +254,16 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     // The header's words stand on the map's sky and labels: a shade under them that scrolls away
     // with the header (it is not sticky).
     if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
+    // The tail: the map darkens as the footer comes up, fully once its top is half a window up.
+    const t = tailRef.current;
+    if (tailVeil.current && t?.veil) {
+      const f = footerEl.current;
+      const vh = window.innerHeight;
+      const top = f ? f.getBoundingClientRect().top : Infinity;
+      const k = Math.min(1, Math.max(0, (vh - top) / (vh * 0.5)));
+      const max = window.innerWidth < 1024 ? (t.veilPhone ?? t.veil) : t.veil;
+      tailVeil.current.style.opacity = String(Math.round(k * max * 1000) / 1000);
+    }
     if (lookRef.current !== "scrim") return;
     const vh = window.innerHeight;
     const rects = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
@@ -214,6 +297,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
 
   const apply = useCallback(() => {
     placeScrims();
+    showTerritoryRef.current();
     if (!stops.current.length || override.current) return;
     const { index } = shotPosition(stops.current, window.scrollY);
     const name = names.current[index];
@@ -253,8 +337,19 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     measure();
     const initial = stops.current.length ? names.current[shotPosition(stops.current, window.scrollY).index] ?? "hero" : "hero";
     target.current = initial;
-    if (!key) {
-      setError("no key");
+    // THE FALLBACK ORDER (round 57, the orchestrator's decision): no key, no WebGL, a blocked script
+    // or gmp-error each leave OUR poster in place for good, a still of our own artwork. The night
+    // scene is not loaded after the map failed (a second WebGL scene where the first could not run
+    // is waste), and without WebGL the Maps script is not even fetched (it would be a billed load
+    // that cannot draw).
+    let glOk = false;
+    try {
+      const cv = document.createElement("canvas");
+      glOk = !!(cv.getContext("webgl2") || cv.getContext("webgl"));
+    } catch {}
+    if (!key || !glOk) {
+      failed.current = true;
+      setError(!key ? "no key" : "no webgl");
       return;
     }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -280,15 +375,29 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       holdFlights: q.get("gate") === "1",
       maxWaitMs: Number(q.get("maxWait") ?? 1200),
       flightMs: (q.get("flight") ?? "1600,2600").split(",").map(Number) as unknown as readonly [number, number],
+      firstStep: q.get("ladder") === "first",
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
         setPosterGone((g) => g || "dissolve");
+        labelsPlaced.current = false;
+        showTerritoryRef.current();
       },
-      onLand: () => {},
-      onFlightStart: () => hideHover(),
+      onLand: () => {
+        labelsPlaced.current = false;
+        showTerritoryRef.current();
+      },
+      onFlightStart: () => {
+        hideHover();
+        showTerritoryRef.current();
+      },
       onError: (m) => {
+        // Once, whatever fails: the poster comes back (or never left) and stays.
+        if (failed.current) return;
+        failed.current = true;
         setError(m);
+        setPosterGone(false);
+        showTerritoryRef.current();
         console.warn("[g3d]", m);
       },
     });
@@ -300,6 +409,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       fly: (n: ShotName) => flyTo(n),
       hovered: () => hovered.current,
       stops: () => stops.current.map((x) => ({ name: x.name, anchor: Math.round(x.anchor) })),
+      territory: () => ({ on: labelLayer.current?.dataset.on === "1", placed: (labelLayer.current?.dataset.placed ?? "").split(",").filter(Boolean) }),
     };
     void c.start(el);
     // Our homes, and the terrain the hover maths stands them on.
@@ -331,17 +441,18 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     const onResize = () => {
       measure();
       scrimSizes.current = [];
+      labelsPlaced.current = false;
       schedule();
     };
     onResize();
-    // The poster goes at once on the first real scroll, where a live map can take its place.
-    let glOk = false;
-    try {
-      const c = document.createElement("canvas");
-      glOk = !!(c.getContext("webgl2") || c.getContext("webgl"));
-    } catch {}
+    // The poster goes at once on the first real scroll, where a live map can take its place (never
+    // when the map has failed: then the poster is the picture).
     const onFirstScroll = () => {
-      if (glOk && window.scrollY > 24) {
+      if (failed.current) {
+        window.removeEventListener("scroll", onFirstScroll);
+        return;
+      }
+      if (window.scrollY > 24) {
         setPosterGone((g) => g || "scroll");
         ctl.current?.abortWarm();
         window.removeEventListener("scroll", onFirstScroll);
@@ -556,6 +667,29 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
           className="absolute inset-x-0 top-0 h-[230px]"
           style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
         />
+        {tail?.veil ? <div ref={tailVeil} aria-hidden className="absolute inset-0 bg-black" style={{ opacity: 0, ...mask }} /> : null}
+        {/* The territory's names (labels.ts): over the map and its lights, under the words. Sentence
+            case in the page's own grotesque, white on a soft black halo rather than a box, so they
+            read over imagery without looking like Google's chips. Two tiers by SIZE only: the
+            counties at 15px, the boroughs at 13px (five of them share the city and must not
+            outshout the six that span the valley), both semibold in the full white; a softer white
+            for the boroughs was tried and did not read over the city's lights. */}
+        <div ref={labelLayer} aria-hidden data-g3d-territory className="absolute inset-0 transition-opacity duration-[250ms] ease-out motion-reduce:transition-none" style={{ opacity: 0 }}>
+          {TERRITORY_LABELS.map((l) => (
+            <span
+              key={l.id}
+              ref={(el) => {
+                if (el) labelEls.current.set(l.id, el);
+                else labelEls.current.delete(l.id);
+              }}
+              data-area={l.id}
+              className={`absolute left-0 top-0 whitespace-nowrap leading-[1.3] ${l.tier === "county" ? "text-[15px] font-semibold tracking-[-0.005em] text-ink" : "text-[13px] font-semibold tracking-[0.005em] text-ink"}`}
+              style={{ visibility: "hidden", textShadow: LABEL_SHADOW }}
+            >
+              {l.text}
+            </span>
+          ))}
+        </div>
         {/* The hovered home, brightened: a larger warm light over the marker. */}
         <div
           ref={halo}
@@ -577,6 +711,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
         </div>
       </div>
       {/* THE LOAD COVER: our poster (see posterGone above), over the map and under the words,
+          shot from the map's own hero camera (round 57, scripts/make-night-poster.mjs). A phone
+          sees a crop of it; 78% puts the city and Westchester in that crop, where the phone's
+          own camera has them, so the dissolve keeps the city where it was.
           absolute to the page like the night flight's, with the same two scrims under the words
           (a still cannot be told where the words are). Its image is preloaded by the page. */}
       <div
@@ -586,7 +723,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
         data-state={posterGone ? "gone" : "on"}
         data-drop={posterGone || undefined}
         {...{ elementtiming: "g3d-poster" }}
-        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-[position:78%_50%] bg-no-repeat lg:bg-[position:58%_50%] transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
         style={{ backgroundImage: `url(${poster})` }}
       >
         <div

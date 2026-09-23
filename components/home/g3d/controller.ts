@@ -148,6 +148,9 @@ export class G3dController {
       maxWaitMs: number;
       /** A section flight's shortest and longest duration (camera.ts flightMillis). */
       flightMs: readonly [number, number];
+      /** Let the hero's first step exceed MAX_RANGE_RATIO (cameras.ts FIRST_STEP_RATIO; measured
+       * worse on the phone in round 57, so off unless `?ladder=first`). */
+      firstStep?: boolean;
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
@@ -195,6 +198,7 @@ export class G3dController {
     el.addEventListener("gmp-error", this.onMapError);
     host.append(el);
     this.shot = this.opts.initial;
+    this.at = this.goingTo = this.opts.initial;
     this.cam = open;
     if (reused) {
       // The same element, handed to a new owner (a remount): it is already drawn (and warm).
@@ -338,7 +342,8 @@ export class G3dController {
     }
     if (this.stopped) return;
     // Back to the page's own shot (the reader may have scrolled meanwhile), drawn, then shown.
-    this.jump(this.cameraOf(this.shot ?? this.opts.initial));
+    this.at = this.goingTo = this.shot ?? this.opts.initial;
+    this.jump(this.cameraOf(this.at));
     if (!this.warmAbort) await this.settle(4000);
     this.warmMs = Math.round(performance.now() - t0);
     performance.mark("g3d:warm-end");
@@ -353,7 +358,13 @@ export class G3dController {
 
   cameraOf(name: ShotName): G3dCamera {
     const { width, height } = this.opts.viewport();
-    return cameraFor(name, width / Math.max(1, height));
+    return cameraFor(name, width / Math.max(1, height), { firstStep: this.opts.firstStep });
+  }
+
+  /** The page's shot the map is holding still at, or null (flying, not shown yet, or at a camera of
+   * its own such as a featured home). The hero's area names are drawn only while this is "hero". */
+  heldShot(): ShotName | null {
+    return this.revealed && !this.flying && !this.warming ? this.at : null;
   }
 
   /** Fly to a shot. A flight to where the map already is, or is going, does nothing. */
@@ -365,6 +376,7 @@ export class G3dController {
       if (name !== this.shot && !this.warming) this.jump(target);
       this.shot = name;
       this.flown = name;
+      this.at = this.goingTo = name;
       return;
     }
     this.shot = name;
@@ -387,6 +399,10 @@ export class G3dController {
   private waits: number[] = [];
   /** The shot the camera is at or flying to (`shot` is the one the page asked for last). */
   private flown: ShotName | null = null;
+  /** The shot the camera is AT once landed (null: a camera of its own), and the one a flight in
+   * the air is taking it to. */
+  private at: ShotName | null = null;
+  private goingTo: ShotName | null = null;
 
   private request(job: FlightJob) {
     if (sameCamera(this.cam, job.cam)) {
@@ -420,6 +436,7 @@ export class G3dController {
     this.waits.push(Math.round(performance.now() - this.requestedAt));
     if (this.waits.length > 24) this.waits.shift();
     if (job.shot) this.flown = job.shot;
+    this.goingTo = job.shot;
     this.fly(job.cam, job.ms);
   }
 
@@ -461,6 +478,7 @@ export class G3dController {
   private land() {
     clearTimeout(this.landTimer);
     this.flying = false;
+    this.at = this.goingTo;
     this.opts.onLand();
     const next = this.gate.landed(performance.now());
     if (next) return this.go(next);
