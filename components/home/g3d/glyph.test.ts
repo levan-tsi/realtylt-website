@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FEATURED_GLYPH, glyphFor, lightSvg } from "./glyph";
+import { FEATURED_GLYPH, glyphFor, glyphKey, lightSvg, litSvg } from "./glyph";
 
 /** Round 57.2: the light's size and halo follow the range, so at altitude the lights stay points
  * and never merge into a glow. */
@@ -34,5 +34,30 @@ describe("the light's glyph by range", () => {
 
   it("keeps the featured homes a touch larger than the county lights", () => {
     expect(FEATURED_GLYPH).toBeGreaterThan(glyphFor(72_500).size);
+  });
+
+  it("draws the phone's far lights stronger, and only the phone's (round 57.3)", () => {
+    const desk = glyphFor(156_000), phone = glyphFor(156_000, { narrow: true });
+    expect(phone.size).toBeGreaterThan(desk.size);
+    expect(phone.halo).toBeGreaterThan(desk.halo);
+    expect(phone.core / phone.size).toBeGreaterThanOrEqual(desk.core / desk.size);
+    expect(phone.size).toBeLessThanOrEqual(14);
+    expect(glyphFor(60_000, { narrow: true })).toEqual(glyphFor(60_000));
+    expect(glyphKey(phone)).not.toBe(glyphKey(glyphFor(60_000)));
+  });
+});
+
+describe("the light, lit (round 57.3)", () => {
+  it("keeps its size and anchor, goes to a white core and a 1.6x halo", () => {
+    const g = glyphFor(60_000);
+    const svg = litSvg(g.size, g.halo, g.core);
+    expect(svg).toContain(`width="${g.size}" height="${g.size}"`);
+    expect(svg).toContain(`stop-opacity="${Math.round(g.halo * 1.6 * 100) / 100}"`);
+    expect(svg).toContain('fill="#ffffff"');
+    expect(svg).toContain(`r="${Math.min(5.6, Math.round((g.core + 1.6) * 10) / 10)}"`);
+  });
+
+  it("never pushes the halo past nearly opaque", () => {
+    expect(litSvg(18, 0.9)).toContain('stop-opacity="0.95"');
   });
 });

@@ -24,10 +24,11 @@ import { loadMaps } from "@/lib/idx/maps-loader";
 import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";
 import { cameraFrame, flightMillis, projectWith, type MapCamera } from "./camera";
-import { budgetFor, cameraFor, focusOf, lightGap, type G3dCamera } from "./cameras";
+import { budgetFor, cameraFor, focusOf, isNarrow, lightGap, type G3dCamera } from "./cameras";
 import { FlightGate } from "./gate";
 import { modeFor, type MapMode, type ModeChoice } from "./map-options";
-import { FEATURED_GLYPH, glyphFor, lightSvg, type Glyph } from "./glyph";
+import { FEATURED_GLYPH, glyphFor, glyphKey, lightSvg, litSvg, type Glyph } from "./glyph";
+import { FLY_IN_MS, flyInCamera } from "./interaction";
 import { diffLights, lightPins, planLights, type LightSet } from "./thinning";
 import type { MapPin } from "@/lib/idx/types";
 
@@ -46,6 +47,12 @@ export interface FeaturedHome {
   /** "$649,000, 18 Harrison Street, Poughkeepsie": what a screen reader and the tooltip say. */
   title: string;
   href: string;
+  /** What its label says when its card has focus (round 57.3, interaction.ts labelContent). */
+  price?: number;
+  beds?: number;
+  baths?: number;
+  address?: string;
+  city?: string;
 }
 
 export interface G3dStats {
@@ -110,6 +117,8 @@ export class G3dController {
   private drawn = new Map<number, El>();
   /** The glyph size each drawn home was drawn with (glyph.ts: size follows range, in tiers). */
   private drawnSize = new Map<number, number>();
+  /** Which glyph each drawn home was drawn with (glyph.ts glyphKey): a change of glyph re-adds it. */
+  private drawnKey = new Map<number, string>();
   private glyph: Glyph = glyphFor(Infinity);
   private planned: number[] = [];
   private job = 0;
@@ -230,6 +239,7 @@ export class G3dController {
     for (const m of this.drawn.values()) m.remove();
     this.drawn.clear();
     this.drawnSize.clear();
+    this.drawnKey.clear();
     el.removeEventListener("gmp-steadychange", this.onSteady as EventListener);
     el.removeEventListener("gmp-animationend", this.onAnimationEnd);
     el.removeEventListener("gmp-error", this.onMapError);
@@ -559,6 +569,8 @@ export class G3dController {
     const el = this.el;
     if (!el || !this.lib) return;
     for (const m of this.featuredEls) m.remove();
+    this.featuredById.clear();
+    this.litFeatured = null;
     const big = lightSvg(FEATURED_GLYPH, 0.5, 3.1);
     this.featuredEls = list.map((h) => {
       const m = new this.lib.Marker3DElement({ position: { lat: h.lat, lng: h.lng }, altitudeMode: "CLAMP_TO_GROUND", collisionBehavior: "REQUIRED", sizePreserved: true }) as El;
@@ -566,7 +578,97 @@ export class G3dController {
       t.innerHTML = big;
       m.append(t);
       el.append(m);
+      this.featuredById.set(h.id, m);
       return m;
+    });
+  }
+
+  // ---- the light answers (round 57.3) -------------------------------------------------------------
+  // One light lit at a time: the hovered home's, or the featured home whose card has focus. The
+  // marker stays; its <template> is swapped for the lit glyph and back (glyph.ts litSvg).
+
+  private featuredById = new Map<string, El>();
+  private litHome: number | null = null;
+  private litFeatured: string | null = null;
+  /** How long the last template swaps took (the probe reads them), ms. */
+  litCost = { swaps: 0, totalMs: 0, maxMs: 0 };
+
+  private swap(m: El | undefined, svg: string) {
+    if (!m) return;
+    const t0 = performance.now();
+    m.querySelector("template")?.remove();
+    const t = document.createElement("template");
+    t.innerHTML = svg;
+    m.append(t);
+    const ms = performance.now() - t0;
+    const c = this.litCost;
+    c.swaps++;
+    c.totalMs += ms;
+    c.maxMs = Math.max(c.maxMs, ms);
+  }
+
+  private unlightHome() {
+    if (this.litHome === null) return;
+    const i = this.litHome;
+    this.litHome = null;
+    const g = this.glyphs.get(this.drawnKey.get(i) ?? "");
+    if (g) this.swap(this.drawn.get(i), this.svgOf(g));
+  }
+
+  private unlightFeatured() {
+    if (this.litFeatured === null) return;
+    this.swap(this.featuredById.get(this.litFeatured), lightSvg(FEATURED_GLYPH, 0.5, 3.1));
+    this.litFeatured = null;
+  }
+
+  /** Light one drawn home (its index in the homes), or put the lit home out. */
+  lightHome(i: number | null) {
+    if (i !== null && i === this.litHome) return;
+    this.unlightHome();
+    if (i === null) return;
+    const g = this.glyphs.get(this.drawnKey.get(i) ?? "");
+    if (!g || !this.drawn.has(i)) return;
+    this.unlightFeatured();
+    this.litHome = i;
+    this.swap(this.drawn.get(i), litSvg(g.size, g.halo, g.core));
+  }
+
+  /** Light one featured home (its listing id), or put the lit featured home out. */
+  lightFeatured(id: string | null) {
+    if (id !== null && id === this.litFeatured) return;
+    this.unlightFeatured();
+    if (id === null || !this.featuredById.has(id)) return;
+    this.unlightHome();
+    this.litFeatured = id;
+    this.swap(this.featuredById.get(id), litSvg(FEATURED_GLYPH, 0.5, 3.1));
+  }
+
+  /** Which light is lit (the probes read it). */
+  lit(): { home: number | null; featured: string | null } {
+    return { home: this.litHome, featured: this.litFeatured };
+  }
+
+  /** The map is shown, drawn, still and not about to move: a click may fly in first. */
+  isSteadyStill(): boolean {
+    return this.revealed && !this.flying && !this.warming && this.steadyNow;
+  }
+
+  /** THE FLY-IN (round 57.3): a short descent over a home before its listing opens. Resolves when
+   * the map lands, or at the fly-in's length plus a margin whatever the map says, so the route
+   * change that follows is never held by a map that does not report its landing. */
+  flyIn(home: { lat: number; lng: number }): Promise<void> {
+    const cam = this.cam;
+    if (!cam || !this.revealed) return Promise.resolve();
+    this.request({ cam: flyInCamera(home, cam), shot: null, ms: FLY_IN_MS });
+    const el = this.el;
+    return new Promise((resolve) => {
+      const done = () => {
+        clearTimeout(cap);
+        el?.removeEventListener("gmp-animationend", done);
+        resolve();
+      };
+      el?.addEventListener("gmp-animationend", done);
+      const cap = setTimeout(done, FLY_IN_MS + 120);
     });
   }
 
@@ -598,11 +700,13 @@ export class G3dController {
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     this.planned = plan;
     // A home drawn at another tier's size is taken away and drawn again at this one.
-    this.glyph = glyphFor(range);
+    this.glyph = glyphFor(range, { narrow: isNarrow(vp) });
+    const want = glyphKey(this.glyph);
+    this.glyphs.set(want, this.glyph);
     const keep = new Set<number>();
     const stale: number[] = [];
-    for (const [i, size] of this.drawnSize) {
-      if (size === this.glyph.size) keep.add(i);
+    for (const [i, key] of this.drawnKey) {
+      if (key === want) keep.add(i);
       else stale.push(i);
     }
     const { add, remove } = diffLights(keep, plan);
@@ -627,9 +731,11 @@ export class G3dController {
       if (job !== this.job) return;
       const end = Math.min(remove.length, r + REMOVE_PER_FRAME);
       for (; r < end; r++) {
+        if (remove[r] === this.litHome) this.litHome = null;
         this.drawn.get(remove[r])?.remove();
         this.drawn.delete(remove[r]);
         this.drawnSize.delete(remove[r]);
+        this.drawnKey.delete(remove[r]);
       }
       if (r >= remove.length) {
         const stop = Math.min(add.length, a + ADD_PER_FRAME);
@@ -646,7 +752,15 @@ export class G3dController {
     this.raf = requestAnimationFrame(step);
   }
 
-  private svgs = new Map<number, string>();
+  private svgs = new Map<string, string>();
+  private glyphs = new Map<string, Glyph>();
+
+  private svgOf(g: Glyph): string {
+    const key = glyphKey(g);
+    let svg = this.svgs.get(key);
+    if (!svg) this.svgs.set(key, (svg = lightSvg(g.size, g.halo, g.core)));
+    return svg;
+  }
 
   private addHome(i: number) {
     const h = this.homes!;
@@ -657,14 +771,13 @@ export class G3dController {
       sizePreserved: true,
     }) as El;
     const g = this.glyph;
-    let svg = this.svgs.get(g.size);
-    if (!svg) this.svgs.set(g.size, (svg = lightSvg(g.size, g.halo, g.core)));
     const t = document.createElement("template");
-    t.innerHTML = svg;
+    t.innerHTML = this.svgOf(g);
     m.append(t);
     this.el!.append(m);
     this.drawn.set(i, m);
     this.drawnSize.set(i, g.size);
+    this.drawnKey.set(i, glyphKey(g));
     if (this.firstMarkerAt === null) {
       this.firstMarkerAt = performance.now();
       performance.mark("g3d:first-marker");
@@ -694,6 +807,11 @@ export class G3dController {
       k++;
     }
     this.xyCount = k;
+  }
+
+  /** The ground's height at a place, in the altitudes the camera maths uses. */
+  groundAlt(lat: number, lng: number): number {
+    return this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0;
   }
 
   /** The screen position of any place for the landed camera (the featured homes). */

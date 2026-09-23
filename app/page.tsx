@@ -92,7 +92,7 @@ export default async function HomePage() {
         featured={featured
           .filter((l) => l.lat && l.lng)
           .slice(0, 8)
-          .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l) }))}
+          .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l), price: l.price, beds: l.beds, baths: l.baths, address: l.address, city: l.city }))}
       >
         {children}
       </G3dGround>
