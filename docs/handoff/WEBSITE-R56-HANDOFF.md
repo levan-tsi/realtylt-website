@@ -72,9 +72,18 @@ Fable orchestrator from now" (`docs/parity/DESIGN-ROUND56.md` §1 has it verbati
    record `DESIGN-ROUND56.md` §7): the scrim look wins on contrast, the region reads at a
    glance, hover and tap work, BUT Google's renderer stalls 50 to 100 ms (326 cold) while it
    streams tiles during the section flights, with or without our markers, against the night
-   flight's 7 ms. **The owner decides between §7.1's three options** (mitigate and re-measure /
-   the night flight moves and Google's map holds still in the county and harbour shots / stills)
-   before phase 2 (integration behind `NEXT_PUBLIC_HOME_MAP=g3d`) starts. Cost: 5,000 free
+   flight's 7 ms. **Phase 1b (option 1, mitigate) is BUILT and measured too** (commits `53c592d` `f6efd69`
+   `f2f5e30` `93505f1` `6e92e55` `128e127` `e5f4757` `362c9d2`, vitest 1720, record §8): our
+   poster covers the load instead of black, a one-shot pre-warm removes the cold first flight's
+   300 ms stall, markers never move during a flight, soft scrims, the logo corner kept clear,
+   honest copy. What it could NOT do: on a laptop every flight still hitches 40 to 90 ms (the
+   orchestrator re-measured warm: harbour flight worst 90 ms, 19 frames over 34); on a phone the
+   whole scroll is clean (35 ms worst). Pre-warming every shot, a steady gate, longer flights and
+   a gentler ladder each changed nothing on the laptop: the stall is Google's renderer. So **the
+   owner decides between §7.1's options 2 and 3, or accepts the laptop hitches** (the night flight
+   moves and Google's map holds still in the county and harbour shots / stills / accept) before
+   phase 2 (integration behind `NEXT_PUBLIC_HOME_MAP=g3d`) starts. He should also see the
+   night-poster-to-daylight-map dissolve in the videos (`docs/design-r56-video/lab1b-*.mp4`). Cost: 5,000 free
    loads a month, then $7 per 1,000; the owner ordered it knowing it is Google's.
 2. The freeze he saw is already fixed (`d86e43f`): the poster still drops on the first scroll.
 3. The lamp carpet of round 55 (phase 2) is NOT to be carried onto the real map; it stays only in
