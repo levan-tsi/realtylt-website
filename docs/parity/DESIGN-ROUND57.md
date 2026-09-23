@@ -609,3 +609,50 @@ Defects for the polish list (not blocking the round):
 - Option: fade the hero words during the 600 ms fly-in (they stand over the diving map today).
 
 Round 3 accepted.
+
+### Round 4 brief (for builder 4): the hitch, on this machine's terms
+
+What the orchestrator tried first (2026-09-23): the Claude-in-Chrome extension IS connected on
+this PC, so the page was opened in the owner's own Chrome at `http://127.0.0.1:3102/` to run an
+in-page frame probe. It could not measure: the extension's tab reported `visibilityState:
+"hidden"` for over 100 s (its window is not the active one on this desktop and could not be
+raised from here), so Chrome paused rendering and Google's map never reached steady (`drawn 0`,
+no error, WebGL fine: "ANGLE NVIDIA GeForce RTX 2060 D3D11"). The tab was closed. So the
+measurement in his Chrome needs him to keep the tab in front, and his MacBook stays unmeasured.
+For the Windows side this PC IS his machine: the headed Playwright Chrome uses the same binary,
+the same GPU and the same 144 Hz screen, only the profile differs. Round 4 decides on those
+numbers and leaves the other option one switch away.
+
+The numbers that decide (orchestrator's own cold runs on `067b735` and the builders' tables):
+flights at p50 7 ms with 0 to 3 frames over 34 each; ONE frame of 236 to 278 ms on the flight
+from the Highlands to Westchester, cold only, every run (nine of nine for builder 1, two of two
+for the orchestrator), unchanged by homes off, our layers hidden, Westchester pre-warmed, split
+mode or the lighter markers; warm runs' worst 104 to 139 ms; the phone (390, emulated) worst 91
+cold / 49 warm with no such stall; boot's 430 to 500 ms frames sit under the cover.
+
+1. **Diagnose the Westchester stall by experiment**, cold, five runs each, the lag probe's
+   per-flight window, before touching anything else: (a) the Westchester camera at three
+   variants (range 40 / 48 / 60 km, tilt 45 / 50, the heading kept or turned): does the stall
+   follow the camera or the destination? (b) a two-leg flight through an intermediate camera at
+   the geometric mean range (two `flyCameraTo`): does splitting the level-of-detail change split
+   the stall? (c) the flight's duration 2.35 s to 3.2 s; (d) a pre-warm that flies the exact
+   Highlands-to-Westchester path once under the cover (today's pre-warm flies the hero only);
+   (e) the mode change: HYBRID at the hero and SATELLITE below since round 2; does forcing one
+   mode for the whole page move the stall? Every experiment its own table row; the best one
+   ships if it removes the stall at no cost elsewhere (the other flights, boot, the phone), with
+   a test where there is logic.
+2. **If nothing removes it, build the CUT option behind a flag**, `NEXT_PUBLIC_HOME_FLIGHTS`
+   = `fly` (default) | `cut`, and `?flights=cut` for a look: a section change dips the veil to
+   near black over 200 ms, the camera jumps (the reduced-motion path already does this: no
+   `flyCameraTo`), and the veil lifts when the map reports steady, so the visitor sees a fade,
+   never tiles filling in. Measured cold at 1440: the worst frame during a cut, and the time from
+   the scroll to the lifted veil. Phones keep flying whatever the flag says (their flights are
+   clean).
+3. **Record and report**: the experiment table, the option shipped as default and why, the
+   owner's sentence (what he will see on a laptop, cold, on the first visit, and on a phone), and
+   what the MacBook measurement would need from him.
+
+Gates: the lag probe cold x5 and warm x2 at 1440 and cold x2 at 390 on the shipped build (per
+flight worst / over 34, boot, marker adds); frames at every stop both widths if any camera moved
+(and the contrast kit at that stop); tsc; vitest only up; overflow. Do not touch the address
+lights, the labels, the covers, CSP, `/search`, the day pages.
