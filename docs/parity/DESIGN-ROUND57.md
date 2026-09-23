@@ -113,3 +113,89 @@ key; every word of copy; the ledger re-run and written here.
 ## 4. Measured after each round (orchestrator)
 
 (appended as the rounds close)
+
+### Round 1, the builder's numbers (commits `4ee3fde` `dd07ca6` `5de2953` `ae83446`; for the orchestrator to re-run)
+
+Instruments (gitignored): `scripts/_scratch-r57-frames.mjs` (every stop on `/`, reports how many
+territory names are placed), `-lag.mjs` (the round-56b probe on `/`, `--path=`), `-table.mjs`,
+`-contrast.mjs` (`--only=`, `--css=`), `-daypages.mjs` / `-daydiff.mjs` (ten day pages),
+`-nojs.mjs`, `-blocked.mjs`, `-reduced.mjs`, `-dissolve.mjs`, `-night.mjs`, `-overflow.mjs`,
+`-explore.mjs` + `-solve*.mjs` (the composition search), `-count.mjs` (label placement offline).
+
+**The territory shot.** Solved by our projection (ten points of the territory fitted into the
+window's free side), then looked at. Kept: 1440 = from south of the harbour looking north (145 km,
+tilt 55, heading 8, fov 40); 390 = 156 km, tilt 50, heading 340, fov 62 (the phone's words leave
+a ~220 px band; looking NNW puts the city, Long Island and the Sound in it). Frames:
+`scripts/_scratch-r57/1/hero-{1440,390}.png`, contact sheets `1/sheet-{1440,390}.png`. Lost
+(`scripts/_scratch-r57/1/losing/`): straight down at 15 and 25 degrees (`B15`, `B25`: a road
+atlas of New Jersey with the city in a corner); 45 degrees from further back (`A45`: the city
+small); on the phone, heading 10 at tilt 35 to 45 (`T35`, `T40`, `T45`: the city under the
+count), tilt 60 to 65 (`P60`, `P65`: Montreal and Quebec on the horizon), and a 230 km pull-back
+(`Q45`: the territory too small to read). Our names: 11 of 11 placed at 1440, 7 at 390 (on the
+phone Google's own "New York" carries Manhattan; the Bronx and Staten Island find no clear spot
+beside Google's town names), on at the hero only, off at the other 17 stops at both widths.
+
+**The ladder, measured** (headed, RTX 2060, 144 Hz; the FIRST flight, hero to Dutchess, worst
+frame ms / frames over 34 ms; cold twice):
+
+| | exception (Dutchess 60 km, `?ladder=first`) | ladder (Dutchess 72.5 / 78 km, default) |
+|---|---|---|
+| cold 1440 | 83/27, 63/39 | 76/29, 56/33 |
+| warm 1440 | 90/46 | 63/39 |
+| cold 390 | **243/5, 271/4** | 118/7, 70/3 |
+| warm 390 | 56/6 | 49/4 |
+
+**The lag probe, before (the round-56 lab page, `/lab/g3d`) and after (`/`, final build)**, per
+phase worst ms / over 34 ms, and the flights summed. Run-to-run noise on the same build is up to
+1.5x on the over-34 counts (round 56 §8).
+
+| | cold 1440 | warm 1440 | cold 390 | warm 390 |
+|---|---|---|---|---|
+| boot | 500/41 -> 444/51 | 167/55 -> 243/76 | 396/23 -> 542/44 | 174/28 -> 201/46 |
+| first flight (to Dutchess) | 118/37 -> 90/53 | 69/49 -> 77/42 | 111/14 -> 90/7 | 70/17 -> 49/1 |
+| worst frame, whole scroll | 118 -> **250** | 111 -> 104 | 111 -> 97 | 70 -> 56 |
+| flights: sum over 34 | 268 -> 449 | 494 -> 381 | 73 -> 51 | 75 -> 38 |
+| over 34 per flight | 15.8 -> 24.9 | 27.4 -> 21.2 | 4.9 -> 3.6 | 5.4 -> 2.5 |
+| poster painted / map steady / cover gone (s) | 1.2 / 8.9 / 12.7 -> 0.4 / 8.7 / 12.0 | 0.8 / 7.3 / 10.6 -> 0.4 / 8.0 / 11.6 | 1.0 / 6.3 / 8.9 -> 0.5 / 7.3 / 10.1 | 1.0 / 6.2 / 8.9 -> 0.4 / 5.5 / 9.4 |
+
+**Open: a cold-laptop stall on the flight to Westchester.** Every cold 1440 run on the new build
+(nine of nine, including the four diagnostic runs) shows ONE frame of 243 to 264 ms on the flight from the Highlands to Westchester
+(before: 118). Not ours by three experiments: no main-thread long task in that window (longtask
+observer), the same 257 ms with `?homes=0` (map only), the same 257 ms with our new layers hidden
+(the names and the tail veil), and the same 257 ms with Westchester pre-warmed (`?warmBudget=5000`
+walks Dutchess, the Highlands and Westchester). Warm runs do not show it (warm 1440 worst: 104).
+Hypothesis, unmeasured inside Google's renderer: the higher hero no longer brings in the
+mid-level tiles over Westchester that the old 120 km hero did. Round 4's question.
+
+**Contrast** (round-54 kit on the real map pixels, all 18 stops, texts under the floor at p99
+outside the logo corner): 1440 = 2 (AI and Connect: the kit reading the pills' own borders, as in
+round 56) plus, in one of three runs, the carousel caption caught mid-crossfade at the harbour
+(re-run twice: 11.82:1); 390 = **0** (10 text-stops inside the logo hole, faded out on purpose).
+Before `ae83446` the phone headline read 1.51:1 because our "Dutchess" stood inside its
+column-wide box; with the names hidden it read 11.85:1; the h1 is now `w-fit`.
+
+**Day pages** (ten pages, 1440 and 390, `before` and `before2` rendered on the old build, `final`
+and `final2` on this one): 15 of 20 renders 0 px against both. The rest are the instrument or the
+data: /buying matches one of the two befores at each width (the two befores differ by 806 / 758
+px themselves); /blog 1440 differs 89 to 581 px in its photo cards (the befores differ 492 px from
+each other; photo resampling); /connect 1440 differed once by 33,536 px when Google's booking
+iframe loaded before the shot, 0 px on the re-run; the listing page differs because the MLS data
+changed between the renders ("Data last updated 2:09 -> 3:09 PM", "See all 170 -> 171", one more
+photo tile). No file a day page renders changed (`git diff --stat 89a12be` outside the home page:
+the deleted lab, lib/site.ts and Header.tsx back to their pre-round-56 bytes, one test).
+
+**No JS** (`/`, 1440 and 390): the poster at opacity 1 carries the hero, the form is a plain GET
+(`name="q"`, lands on `/search?q=Beacon`), the featured rail 16 items and the new rail 8, 0 Maps
+requests. **Blocked Maps script**: the poster stays on at the top and after scrolling the whole
+page, one `[g3d]` warning, no loop, the page scrolls to the footer and reads. **Reduced motion**:
+0 `flyCameraTo` calls, the element at Dutchess (72.5 km) 400 ms after the scroll, no console
+error, the names on at the top and off after. **`NEXT_PUBLIC_HOME_MAP=night`** (a real production
+build): the night flight's canvas, its own copy, 0 Maps requests; rebuilt without the flag.
+**Overflow**: 0 px at 1440, 768, 640, 390 and 320, at five scroll positions each. **Gates**: tsc
+clean; vitest 1720 -> **1748** (129 files).
+
+**The dissolve**, looked at (`scripts/_scratch-r57/1/dissolve/`): at 1440 the poster is shot from
+the map's hero camera and the city's light sits where the map's city appears; the change of look
+(night still to daylight imagery) stays the owner's decision (round 2). On the phone the poster is
+still the landscape still cropped at 78%, and the phone's camera looks NNW, so the composition
+shifts at the dissolve: a portrait poster from the tall camera is the fix (not built).
