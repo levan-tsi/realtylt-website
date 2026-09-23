@@ -83,7 +83,7 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
   tailRef.current = tail;
   const [look, setLook] = useState<Look>("scrim");
   const [veil, setVeil] = useState(0.42);
-  const [scrim, setScrim] = useState(0.62);
+  const [scrim, setScrim] = useState(0.8);
   const lookRef = useRef<Look>("scrim");
   lookRef.current = look;
   const [revealed, setRevealed] = useState(false);
@@ -223,8 +223,10 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
     };
     void c.start(el);
     // Our homes, and the terrain the hover maths stands them on.
+    // `?homes=0`: the map alone, for the frame-time probe to tell the map's cost from ours.
+    const noHomes = new URLSearchParams(window.location.search).get("homes") === "0";
     void loadLights().then((pts) => {
-      if (!pts) return;
+      if (!pts || noHomes) return;
       const n = pts.x.length;
       const lat = new Float64Array(n), lng = new Float64Array(n);
       const county: string[] = new Array(n);
@@ -368,13 +370,17 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
       over = e.target as Element | null;
       if (!raf) raf = requestAnimationFrame(test);
     };
+    // A touch sends its own tap as a click too; the touch path below decides what a tap does
+    // (the first names the home, the second opens it), so the click only acts for a mouse.
+    let lastPointer = "mouse";
     const onClick = (e: MouseEvent) => {
-      if (!hovered.current || blocked(e.target as Element)) return;
+      if (lastPointer !== "mouse" || !hovered.current || blocked(e.target as Element)) return;
       window.location.assign(hovered.current.href);
     };
     // A touch: the tap names the home; a second tap on the same home opens it.
     let down: { x: number; y: number } | null = null;
     const onDown = (e: PointerEvent) => {
+      lastPointer = e.pointerType;
       if (e.pointerType !== "mouse") down = { x: e.clientX, y: e.clientY };
     };
     const onUp = (e: PointerEvent) => {
@@ -449,8 +455,8 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
         <div
           ref={topScrim}
           aria-hidden
-          className="absolute inset-x-0 top-0 h-[190px]"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
+          className="absolute inset-x-0 top-0 h-[230px]"
+          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
         />
         {/* The hovered home, brightened: a larger warm light over the marker. */}
         <div
