@@ -383,3 +383,82 @@ vitest 1748 -> **1767** (131 files).
 not gone; the next lever is a soft share on the count block with its own text-shadow, measured);
 Queens and Brooklyn at 1440 read as a lattice and might take a wider near-tier gap; the cover (A or
 B) and the map ID are the owner's.
+
+### Round 2, the orchestrator's verification (2026-09-23, HEAD `067b735`, :3102 on that build)
+
+Re-run, not read: tsc clean; vitest **1767 / 1767** (131 files); `/` answers 200; fresh frames
+from the running server (`scripts/_scratch-r57/verify2/`): hero 1440 = 130 lights, 11 names;
+hero 390 = 32 lights, 7 names (Manhattan now placed); Queens 1440 = 230; hero at 320 x 640 = 20
+lights, names off, the h1 breaks "Let's find / home." cleanly, no overflow. The cold lag probe at
+1440, my run: flights at p50 7 ms, most with 0 to 3 frames over 34 (round 1: 12 to 34), marker
+adds 518 (round 1: 697), the flight to Westchester still one frame of 236 ms (Google's stall,
+unchanged as the builder said), the fling up 111 ms. The builder's before/after table holds.
+
+Looked at: `2/final/hero-1440.png`: the lights are a scatter of small points and the imagery
+is the picture; the territory still reads; the left scrim still reads as a soft column over New
+Jersey (lighter than round 1). `2/final/hero-390.png`: Ottawa gone (Syracuse remains at the
+very top, dim), seven names, the band reads; **the 32 phone lights are faint to invisible while
+the copy says "every light on the map is one of them"** (round 3 fixes this). `2/final/
+sheet-1440.png`: the county chapters and the city shots sit on satellite imagery with a scatter
+of lights, no POI pins, no carpet; they carry no town names now (SATELLITE), which reads as the
+picture but gives a stranger no orientation inside a county (a round 3/5 option: our own names
+for a county's two or three principal towns at the chapter shot, by frames). `2/dissolve/
+sheet-1440.png`: cover A (dusk) keeps the composition and softens the night-to-day jolt; B (day)
+matches tone but reads as a relief model; A shipped, B one flag away, the owner picks. Round 2
+accepted.
+
+### Round 3 brief, refined (for builder 3): the address lights, finished
+
+His words: "the idea ... where it shows the addresses and you could click and it takes you to
+that listing, that's great, but it needs more polishing and work."
+
+1. **The hover label.** Appears when the pointer rests over a light (the projection + 14 px hit
+   test in `controller.ts`), within 100 ms, one at a time. Content in this order: the town, the
+   price, then beds and baths when both are known ("3 bd, 2 ba"; no glyph separators beyond a
+   comma or a middle dot). Our type: 13 to 14 px, white on the site's black panel at 8 px radius
+   (a chip), a 1 px hairline at low alpha, no shadow blur wider than 12 px, no arrow glyph, no
+   "View" verb on desktop (the cursor is the pointer). Placed above and to the right of the light
+   with a 10 px offset, flipped left or below when within 24 px of an edge, NEVER covering the
+   light or the Google logo corner. Transform-only positioning (no layout on pointermove), 120 ms
+   in, 160 ms out, `motion-reduce` = no fade. Fixed and tested: the placement maths (flip rules,
+   the never-cover rule) as a pure function.
+2. **The light answers.** On hover and on its featured card's focus the light brightens (the
+   core to white, the halo about 1.6x) and returns on leave; only one light lit at a time; the
+   change is a class or attribute swap on the marker's SVG, never a marker remove/add.
+3. **The click.** If the map is steady: a short fly-in (600 to 900 ms, to about 1.5 km range,
+   tilt about 60, heading kept) and then the route change to `listingPath(home)`; if the map is
+   mid-flight or not steady: route at once. From click to route change never more than 1.0 s.
+   Modifier clicks (ctrl, cmd, middle) open the listing in a new tab with no fly-in; the light is
+   rendered with a real `href` in its label so "open in new tab" is honest. The fly-in must
+   never leave the visitor stranded: if the route change fails, the map stays usable.
+4. **The phone.** Tap-then-open: the first tap on a light shows the label with the listing's
+   address line as the tap target ("View" is allowed here, no arrow); a second tap on the label
+   opens; a tap elsewhere dismisses; the hit target is at least 28 px (the 14 px radius). No
+   hover state sticks after a touch. Measured on the 390 probe with `hasTouch`.
+5. **Keyboard.** The featured cards already fly the map on focus; on focus the card's light also
+   brightens and shows its label; Escape hides it. Google's markers cannot take focus (measured in
+   round 56), so the cards are the keyboard path; say so in a comment and in the record.
+6. **The county chapters from the list.** In "Where we work", clicking or pressing Enter on a
+   county row flies the map to that county and marks the row current, without scrolling the page
+   away; the existing scroll-driven chapter flight stays.
+7. **Cost.** pointermove work under 2 ms at 1440 with the county carpet's marker count (the
+   round-2 ceilings), the label's paint transform-only (no layout in the pointermove path,
+   checked in a trace), the fly-in's frames in the lag table, boot unchanged.
+
+Gates: frames of hover (three lights at 1440 including one near the right edge and one near the
+logo corner), of the phone's tap state (two at 390), of the focus state (one), and of the fly-in
+(three frames); a pointer probe hovering 20 lights at 1440 and tapping 10 at 390 with the click
+path timed steady and mid-flight; the lag probe cold and warm at 1440; contrast on the label
+(4.5:1+ on the real pixels); tsc; vitest only up with the placement maths and the click policy
+tested; overflow at 390 and 320 with a label open near the right edge.
+
+Added after round 2's frames:
+8. **The phone's lights must be seen.** At 390 the territory shot draws 32 lights that are faint
+   to invisible against the imagery while the copy promises "every light on the map is one of
+   them". Raise the phone's territory ceiling and the glyph's smallest tier's brightness until a
+   visitor sees a scatter of lights in the band between the words (frames decide, the count and
+   the tier in the commit), without going back to a blob; the 1440 shot stays as it is.
+9. **Orientation inside a county (optional, by frames).** The chapters are SATELLITE and carry
+   no names. Try our own quiet names for two or three principal towns per county at the chapter
+   shot (the same label style as the territory names, a smaller size), and keep them only if the
+   frames read better; if not, say so and leave it.
