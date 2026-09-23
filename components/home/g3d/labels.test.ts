@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 import { BOROUGHS, COUNTIES } from "@/lib/site";
 import { cameraFor } from "./cameras";
-import { GOOGLE_CITY_LABELS, TERRITORY_LABELS, labelItems, placeLabels, type Box } from "./labels";
+import { TERRITORY_LABELS, googleBoxes, labelItems, placeLabels, type Box } from "./labels";
 
 const overlap = (a: Box, b: Box, gap = 0) => a.x < b.x + b.w + gap && b.x < a.x + a.w + gap && a.y < b.y + b.h + gap && b.y < a.y + a.h + gap;
 
@@ -41,9 +41,9 @@ const measure = (text: string, tier: "county" | "borough") => {
 function placeAt(width: number, height: number, obstacles: Box[]) {
   const cam = cameraFor("hero", width / height);
   const items = labelItems(cam, { width, height, fov: cam.fov }, measure);
-  const google = labelItems(cam, { width, height, fov: cam.fov }, (t) => ({ w: t.length * 12 + 12, h: 30 }), GOOGLE_CITY_LABELS);
-  const placed = placeLabels(items, [...obstacles, ...google.map((g) => ({ x: g.x - g.w / 2, y: g.y - g.h / 2, w: g.w, h: g.h }))], { width, height });
-  return { items, placed };
+  const google = googleBoxes(cam, { width, height, fov: cam.fov });
+  const placed = placeLabels(items, obstacles, { width, height }, { google });
+  return { items, placed, google };
 }
 
 describe("the territory labels", () => {
@@ -67,10 +67,10 @@ describe("the territory labels", () => {
 
   for (const [w, h, words, floor] of [
     [1440, 900, WORDS_1440, 11],
-    [390, 844, WORDS_390, 8],
+    [390, 844, WORDS_390, 7],
   ] as const) {
     describe(`at ${w}x${h}, from the hero camera`, () => {
-      const { items, placed } = placeAt(w, h, [...words]);
+      const { items, placed, google } = placeAt(w, h, [...words]);
 
       it("projects every area into the window", () => {
         for (const it of items) {
@@ -81,9 +81,12 @@ describe("the territory labels", () => {
         }
       });
 
-      it(`places at least ${floor} of the eleven, Manhattan and Westchester always`, () => {
+      it(`places at least ${floor} of the eleven, Westchester and Dutchess always`, () => {
         expect(placed.length).toBeGreaterThanOrEqual(floor);
-        expect(placed.map((p) => p.id)).toEqual(expect.arrayContaining(["manhattan", "westchester", "dutchess"]));
+        expect(placed.map((p) => p.id)).toEqual(expect.arrayContaining(["westchester", "dutchess"]));
+        // On the phone Google's own "New York" sits on lower Manhattan and carries it; on a laptop
+        // there is room for both.
+        if (w >= 1024) expect(placed.map((p) => p.id)).toContain("manhattan");
       });
 
       it("never lets two labels touch", () => {
@@ -92,6 +95,11 @@ describe("the territory labels", () => {
 
       it("never puts a label on the words, the header or the corners", () => {
         for (const p of placed) for (const o of words) expect(overlap(p, o), `${p.id}`).toBe(false);
+      });
+
+      it("never puts a label on one of Google's own city or town names", () => {
+        expect(google.length).toBeGreaterThan(5);
+        for (const p of placed) for (const o of google) expect(overlap(p, o), `${p.id}`).toBe(false);
       });
 
       it("keeps every label inside the window and near its own area", () => {

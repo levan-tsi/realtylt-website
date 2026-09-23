@@ -139,7 +139,10 @@ export default async function HomePage() {
           <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${g3d ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
             <div data-quiet className="pointer-events-auto max-w-[36rem]">
               <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
-              <h1 id="home-hero" className="t-display rise mt-4 text-ink">
+              {/* w-fit: the headline's box hugs its words (round 57). On a phone the map's names for
+                  the valley stand to the right of "home.", and a column-wide box made them read as
+                  sitting on the headline to the contrast kit, which photographs a text's box. */}
+              <h1 id="home-hero" className="t-display rise mt-4 w-fit text-ink">
                 Let&rsquo;s find home.
               </h1>
             </div>

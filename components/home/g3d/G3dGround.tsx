@@ -11,7 +11,7 @@ import { AREA_COUNTY_OF, AREA_FLIGHT, type AreaShot, type ShotName } from "../ni
 import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
 import { nearestLight } from "./thinning";
-import { GOOGLE_CITY_LABELS, TERRITORY_LABELS, labelItems, placeLabels, type Box } from "./labels";
+import { TERRITORY_LABELS, googleBoxes, labelItems, placeLabels, type Box } from "./labels";
 
 /** THE REAL MAP AS THE PAGE'S GROUND (round 56's /lab/g3d prototype; the home page's ground since
  * round 57, app/page.tsx and lib/home-map.ts).
@@ -189,10 +189,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       for (const r of range.getClientRects()) push(r);
     });
     push({ left: 0, top: vp.height - LOGO_CORNER.h, width: LOGO_CORNER.w, height: LOGO_CORNER.h });
-    for (const g of labelItems(c.camera()!, vp, (t) => ({ w: t.length * 12 + 12, h: 30 }), GOOGLE_CITY_LABELS)) {
-      avoid.push({ x: g.x - g.w / 2, y: g.y - g.h / 2, w: g.w, h: g.h });
-    }
-    const placed = new Map(placeLabels(items, avoid, vp).map((p) => [p.id, p]));
+    const placed = new Map(placeLabels(items, avoid, vp, { google: googleBoxes(c.camera()!, vp) }).map((p) => [p.id, p]));
     for (const [id, e] of els) {
       const p = placed.get(id);
       e.style.visibility = p ? "visible" : "hidden";
