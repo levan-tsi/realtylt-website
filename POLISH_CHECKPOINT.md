@@ -26,8 +26,13 @@
 ## THE CONFLICT (re-measured): Google's renderer stalls 50-100 ms warm (326 cold) while streaming
 ## tiles during flights, with or without our homes; the night flight ran at 7 ms. HIS CALL among
 ## DESIGN-ROUND56.md section 7.1: mitigate + re-measure / hybrid (our scene moves, Google's map
-## holds still) / stills. Recommendation: mitigate one round, then hybrid. Phase 2 (integration
-## behind NEXT_PUBLIC_HOME_MAP=g3d) waits for that call.
+## holds still) / stills. PHASE 1b (option 1, mitigate) DONE AND MEASURED
+## (8 commits to 362c9d2, vitest 1720, record section 8): our poster covers the load, pre-warm kills
+## the cold first-flight 300 ms stall, markers never move in a flight, soft scrims, logo corner
+## clear, honest copy. NOT achieved: laptop flights still hitch 40-90 ms (Google's renderer; nothing
+## we tried moves it); phone is clean (35 ms). HIS CALL: option 2 (night flight moves, Google's map
+## in the still shots) / option 3 (stills) / accept the laptop hitches. Phase 2 waits. Videos
+## docs/design-r56-video/lab1b-*.mp4.
 ##
 ## == ROUND 55 DONE (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT; NEXT R56 ==
 ## READ docs/parity/DESIGN-ROUND55.md FIRST, then docs/handoff/WEBSITE-R56-HANDOFF.md (the next brief;
