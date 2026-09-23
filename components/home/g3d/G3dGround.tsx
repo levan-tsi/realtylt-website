@@ -57,6 +57,46 @@ export interface G3dTail {
  * of the bottom. */
 const LOGO_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, transparent 62%, #000 100%)";
 
+/** THE SCRIMS (round 56 phase 1b): up to SCRIMS blocks of words at once, each shaded SCRIM_PAD px
+ * past its box and fading to nothing over the next SCRIM_FEATHER px, so no edge reads as a
+ * rectangle. Six, not four: at the Dutchess stop the hero's two blocks are still on screen with the
+ * intake's, and "Start here" fell off the end of four (2.8:1 at p99). */
+const SCRIMS = 6;
+const SCRIM_PAD = 28;
+const SCRIM_FEATHER = 80;
+const SCRIM_REACH = SCRIM_PAD + SCRIM_FEATHER;
+/** An eased ramp (smoothstep through five stops), not a straight one: a linear fade leaves a
+ * visible band where it meets the solid shade (seen on the first frames). */
+const ramp = (dir: string) => {
+  const e = [0, 0.1, 0.36, 0.72, 1].map((a, k) => `rgba(0,0,0,${a}) ${Math.round((SCRIM_FEATHER * k) / 4)}px`);
+  const back = [1, 0.72, 0.36, 0.1, 0].map((a, k) => `rgba(0,0,0,${a}) calc(100% - ${Math.round(SCRIM_FEATHER - (SCRIM_FEATHER * k) / 4)}px)`);
+  return `linear-gradient(${dir}, ${e.join(", ")}, ${back.join(", ")})`;
+};
+const FEATHER = `${ramp("to right")}, ${ramp("to bottom")}`;
+
+/** THE LOGO'S CORNER, CLEAR OF THE WORDS (policy: Google's logo and legal link visible and
+ * unobscured). Measured on the frames: the logo runs x 12..116 and the (i) to x 150, within 36 px
+ * of the bottom. The words scroll over the fixed map, so on a phone a row of text crossed the
+ * corner at most stops. The words' layer is masked there: a soft quarter-ellipse whose solid part
+ * holds the whole 180 x 48 px corner, pinned to the bottom left of the WINDOW by a mask position
+ * that follows the scroll (`--g3d-hole-y`, set in placeScrims). Words crossing the corner fade out
+ * there and come back past it; nothing of ours is ever over the logo. */
+const HOLE_W = 320;
+const HOLE_H = 88; // solid to 80%: 256 x 70 px, which contains (180, 48)
+const HOLE = "radial-gradient(closest-side, #000 0, #000 80%, transparent 100%)"; // centred on the corner
+const CLEAR_STYLE = {
+  WebkitMaskImage: `${HOLE}, linear-gradient(#000, #000)`,
+  maskImage: `${HOLE}, linear-gradient(#000, #000)`,
+  WebkitMaskSize: `${HOLE_W * 2}px ${HOLE_H * 2}px, 100% 100%`,
+  maskSize: `${HOLE_W * 2}px ${HOLE_H * 2}px, 100% 100%`,
+  WebkitMaskPosition: `${-HOLE_W}px var(--g3d-hole-y, -9999px), 0 0`,
+  maskPosition: `${-HOLE_W}px var(--g3d-hole-y, -9999px), 0 0`,
+  WebkitMaskRepeat: "no-repeat",
+  maskRepeat: "no-repeat",
+  WebkitMaskComposite: "xor",
+  maskComposite: "exclude",
+} as const;
+
 /** How long the scroll must rest on a new stop before the map flies there: a fling across three
  * sections is one flight, not three. */
 const SETTLE_MS = 110;
@@ -70,6 +110,8 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
   const scrimEls = useRef<(HTMLDivElement | null)[]>([]);
   const scrimSizes = useRef<string[]>([]);
   const topScrim = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const holeY = useRef(-1);
   const ctl = useRef<G3dController | null>(null);
   const sections = useRef<ShotSection[]>([]);
   const stops = useRef<ShotStop[]>([]);
@@ -121,9 +163,21 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     names.current = stops.current.map((s) => s.name);
   }, []);
 
-  /** The scrims follow the four largest blocks of words on screen, by transform only (their size
-   * changes only when the set of boxes does, so the soft edge is rastered once, not per frame). */
+  /** The scrims follow the largest blocks of words on screen (SCRIMS of them), by transform only
+   * (their size changes only when the set of boxes does, so the soft edge is rastered once, not
+   * per frame). Each is the words' box grown by SCRIM_PAD of solid shade and SCRIM_FEATHER of
+   * fade, the fade drawn by a mask of two crossed ramps, so there is no rectangle to see. */
   const placeScrims = useCallback(() => {
+    // The logo's corner: the words' layer is masked there (see LOGO_CLEAR); the hole follows the
+    // window, the layer scrolls, so its position is the scroll.
+    const content = contentRef.current;
+    if (content) {
+      const y = Math.round(window.scrollY + window.innerHeight - HOLE_H);
+      if (y !== holeY.current) {
+        holeY.current = y;
+        content.style.setProperty("--g3d-hole-y", `${y}px`);
+      }
+    }
     // The header's words stand on the map's sky and labels: a shade under them that scrolls away
     // with the header (it is not sticky).
     if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
@@ -131,10 +185,10 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     const vh = window.innerHeight;
     const rects = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
       .map((el) => el.getBoundingClientRect())
-      .filter((r) => r.width > 8 && r.height > 8 && r.bottom > -40 && r.top < vh + 40)
+      .filter((r) => r.width > 8 && r.height > 8 && r.bottom > -SCRIM_REACH && r.top < vh + SCRIM_REACH)
       .sort((a, b) => b.width * b.height - a.width * a.height)
-      .slice(0, 4);
-    for (let k = 0; k < 4; k++) {
+      .slice(0, SCRIMS);
+    for (let k = 0; k < SCRIMS; k++) {
       const el = scrimEls.current[k];
       if (!el) continue;
       const r = rects[k];
@@ -145,10 +199,10 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       const size = `${Math.round(r.width)}x${Math.round(r.height)}`;
       if (scrimSizes.current[k] !== size) {
         scrimSizes.current[k] = size;
-        el.style.width = `${Math.round(r.width)}px`;
-        el.style.height = `${Math.round(r.height)}px`;
+        el.style.width = `${Math.round(r.width) + 2 * SCRIM_REACH}px`;
+        el.style.height = `${Math.round(r.height) + 2 * SCRIM_REACH}px`;
       }
-      el.style.transform = `translate3d(${Math.round(r.left)}px, ${Math.round(r.top)}px, 0)`;
+      el.style.transform = `translate3d(${Math.round(r.left) - SCRIM_REACH}px, ${Math.round(r.top) - SCRIM_REACH}px, 0)`;
       el.style.opacity = "1";
     }
   }, []);
@@ -476,17 +530,20 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
           <div aria-hidden className="absolute inset-0" style={{ background: `rgba(0,0,0,${veil})`, ...mask }} />
         ) : (
           <div aria-hidden className="absolute inset-0 overflow-hidden" style={mask}>
-            {[0, 1, 2, 3].map((k) => (
+            {Array.from({ length: SCRIMS }, (_, k) => (
               <div
                 key={k}
                 ref={(el) => {
                   scrimEls.current[k] = el;
                 }}
-                className="absolute left-0 top-0 rounded-3xl"
+                className="absolute left-0 top-0"
                 style={{
                   opacity: 0,
                   background: `rgba(0,0,0,${scrim})`,
-                  boxShadow: `0 0 72px 44px rgba(0,0,0,${scrim})`,
+                  WebkitMaskImage: FEATHER,
+                  maskImage: FEATHER,
+                  WebkitMaskComposite: "source-in",
+                  maskComposite: "intersect",
                   willChange: "transform",
                 }}
               />
@@ -555,7 +612,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
         className="pointer-events-none fixed left-0 top-0 z-[15] whitespace-nowrap rounded-lg px-3 py-1.5 text-[16px] font-medium leading-tight text-ink transition-opacity duration-150 motion-reduce:transition-none"
         style={{ opacity: 0, background: "rgba(8,8,8,0.86)", border: "1px solid rgba(255,255,255,0.18)", marginTop: 0 }}
       />
-      <div className="relative z-10">{children}</div>
+      <div ref={contentRef} className="relative z-10" style={CLEAR_STYLE}>
+        {children}
+      </div>
     </AreaContext.Provider>
   );
 }
