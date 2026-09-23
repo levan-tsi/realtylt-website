@@ -1,0 +1,477 @@
+/** The real map behind the page (round 56): Google's Map3DElement, driven one flight per section,
+ * with our homes on it. Imperative, owned by G3dGround.tsx; no React in here.
+ *
+ * What the API does and does not do (maps JS 3.66, measured in Chrome with the site's key; the
+ * experiments are scripts/_scratch-r56-api.mjs, -exp.mjs and -proj.mjs):
+ *  - The steady event is `gmp-steadychange` with `isSteady` (the docs' `gmp-steadystate` never
+ *    fires on this version). The first `isSteady: true` is when the map is drawn.
+ *  - `mode: "HYBRID"`, `gestureHandling: "COOPERATIVE"` (upper case: lower case throws inside the
+ *    element's async init with no console line), `defaultUIHidden: true` hides the compass and the
+ *    fullscreen control and KEEPS the "Google Maps" logo and the legal link (the policy requires
+ *    them; `googleLogoDisabled` exists and is never touched here). `fov` is vertical, settable,
+ *    and animates inside `flyCameraTo`.
+ *  - After a flight the element reports its camera as the EYE (center = eye, range 0); camera.ts
+ *    treats both forms as one camera.
+ *  - Markers: Marker3DElement with an SVG in a <template> draws a small image anchored bottom-centre.
+ *    ~0.35 ms each in total, most of it in a task after the append: 1,500 appended at once was a
+ *    547 ms freeze, 25 per frame was 1.07 s with a worst frame of 21 ms. So they go in by the
+ *    frame. `collisionBehavior: "REQUIRED"` draws them over the map's own labels without hiding
+ *    any (OPTIONAL_AND_HIDES_LOWER_PRIORITY erased the street and place names under them); the
+ *    thinning is ours (thinning.ts).
+ *  - Nothing reports a marker's screen position and no hover event exists on markers, so hover is
+ *    our projection of the homes we drew, hit-tested against the pointer (G3dGround.tsx). */
+import { loadMaps } from "@/lib/idx/maps-loader";
+import { sampleHeight, type ElevationGrid } from "../night/elevation";
+import type { ShotName } from "../night/shots";
+import { cameraFrame, flightMillis, projectWith, type MapCamera } from "./camera";
+import { budgetFor, cameraFor, focusOf, type G3dCamera } from "./cameras";
+import { GLYPH, LIGHT_SVG } from "./glyph";
+import { diffLights, lightPins, planLights, type LightSet } from "./thinning";
+import type { MapPin } from "@/lib/idx/types";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type El = HTMLElement & Record<string, any>;
+
+export interface Homes extends LightSet {
+  town: Uint16Array;
+  towns: readonly string[];
+}
+
+export interface FeaturedHome {
+  id: string;
+  lat: number;
+  lng: number;
+  /** "$649,000, 18 Harrison Street, Poughkeepsie": what a screen reader and the tooltip say. */
+  title: string;
+  href: string;
+}
+
+export interface G3dStats {
+  loads: number;
+  navToSteady: number | null;
+  navToFirstMarker: number | null;
+  drawn: number;
+  planned: number;
+  lastPlanMs: number;
+  lastAddMs: number;
+  flights: number;
+  flying: boolean;
+  /** The map's last gmp-steadychange said it has finished drawing. */
+  steady: boolean;
+  /** Homes are still being added or taken away. */
+  busy: boolean;
+  shot: string | null;
+  error: string | null;
+}
+
+/** The element is created ONCE per page view, whatever React does (a re-render, a remount, dev's
+ * double effects): each creation is a billed Immersive Maps load. */
+let singleton: El | null = null;
+let loads = 0;
+
+/** The mean height of the geoid above the ellipsoid here: the ground at sea level is ~32 m below
+ * the ellipsoid Google's altitudes (and camera.ts) measure from. */
+const GEOID = -32;
+/** Homes added per frame, and taken away per frame. */
+const ADD_PER_FRAME = 25;
+const REMOVE_PER_FRAME = 60;
+
+export class G3dController {
+  el: El | null = null;
+  private lib: any = null;
+  private cam: G3dCamera | null = null;
+  private shot: ShotName | null = null;
+  private flying = false;
+  private flights = 0;
+  private landTimer: ReturnType<typeof setTimeout> | undefined;
+  private homes: Homes | null = null;
+  private pins: MapPin[] = [];
+  private elev: ElevationGrid | null = null;
+  private drawn = new Map<number, El>();
+  private planned: number[] = [];
+  private job = 0;
+  private raf = 0;
+  private revealed = false;
+  private steadyAt: number | null = null;
+  private firstMarkerAt: number | null = null;
+  private lastPlanMs = 0;
+  private lastAddMs = 0;
+  private error: string | null = null;
+  /** Screen positions of the drawn homes (x, y pairs; the light's centre, not the anchor) and
+   * which home each pair is, valid for the camera the map landed on. */
+  xy = new Float32Array(0);
+  xyIndex = new Int32Array(0);
+  xyCount = 0;
+
+  constructor(
+    private opts: {
+      key: string;
+      reduced: boolean;
+      /** Width / height of the window, read fresh each time. */
+      viewport: () => { width: number; height: number };
+      onReveal: () => void;
+      onLand: () => void;
+      onFlightStart: () => void;
+      onError: (msg: string) => void;
+      /** The shot the map should open on (the page may be reloaded mid-scroll). */
+      initial: ShotName;
+      /** Fly in from further out on the first steady frame. */
+      intro: boolean;
+      description: string;
+    },
+  ) {}
+
+  private stopped = false;
+
+  async start(host: HTMLElement) {
+    try {
+      await loadMaps(this.opts.key, ["maps3d"]);
+      const g = (globalThis as any).google;
+      this.lib = await g.maps.importLibrary("maps3d");
+    } catch (e) {
+      this.fail(`load: ${(e as Error).message}`);
+      return;
+    }
+    if (this.stopped) return;
+    const first = this.cameraOf(this.opts.initial);
+    const open = this.opts.intro && !this.opts.reduced ? introCamera(first) : first;
+    let el = singleton;
+    const reused = !!el;
+    if (!el) {
+      el = new this.lib.Map3DElement({
+        center: open.center,
+        range: open.range,
+        tilt: open.tilt,
+        heading: open.heading,
+        fov: open.fov,
+        mode: "HYBRID",
+        gestureHandling: "COOPERATIVE",
+        defaultUIHidden: true,
+        description: this.opts.description,
+      }) as El;
+      loads++;
+      singleton = el;
+    }
+    this.el = el;
+    el.style.width = "100%";
+    el.style.height = "100%";
+    el.style.display = "block";
+    el.addEventListener("gmp-steadychange", this.onSteady as EventListener);
+    el.addEventListener("gmp-animationend", this.onAnimationEnd);
+    el.addEventListener("gmp-error", this.onMapError);
+    host.append(el);
+    this.shot = this.opts.initial;
+    this.cam = open;
+    if (reused) {
+      // The same element, handed to a new owner (a remount): it is already drawn.
+      this.cam = first;
+      this.jump(first);
+      this.onSteady(Object.assign(new Event("gmp-steadychange"), { isSteady: true }));
+    }
+  }
+
+  stop() {
+    this.stopped = true;
+    cancelAnimationFrame(this.raf);
+    clearTimeout(this.landTimer);
+    const el = this.el;
+    if (!el) return;
+    for (const m of this.drawn.values()) m.remove();
+    this.drawn.clear();
+    el.removeEventListener("gmp-steadychange", this.onSteady as EventListener);
+    el.removeEventListener("gmp-animationend", this.onAnimationEnd);
+    el.removeEventListener("gmp-error", this.onMapError);
+  }
+
+  private fail(msg: string) {
+    this.error = msg;
+    this.opts.onError(msg);
+  }
+
+  private onMapError = (e: Event) => {
+    const d = (e as any).detail ?? (e as any).error ?? (this.el as any)?.error;
+    this.fail(`gmp-error: ${d ? String(d.message ?? d) : "unknown"}`);
+  };
+
+  private steadyNow = false;
+
+  private onSteady = (e: Event & { isSteady?: boolean }) => {
+    this.steadyNow = !!e.isSteady;
+    if (!e.isSteady || this.revealed) return;
+    this.revealed = true;
+    this.steadyAt = performance.now();
+    performance.mark("g3d:steady");
+    this.opts.onReveal();
+    const target = this.cameraOf(this.shot ?? this.opts.initial);
+    if (this.opts.intro && !this.opts.reduced && !sameCamera(this.cam, target)) {
+      this.fly(target, 2600);
+    } else {
+      this.land();
+    }
+  };
+
+  private onAnimationEnd = () => {
+    if (this.flying) this.land();
+  };
+
+  cameraOf(name: ShotName): G3dCamera {
+    const { width, height } = this.opts.viewport();
+    return cameraFor(name, width / Math.max(1, height));
+  }
+
+  /** Fly to a shot. A flight to where the map already is, or is going, does nothing. */
+  flyToShot(name: ShotName) {
+    const target = this.cameraOf(name);
+    if (!this.revealed) {
+      // Before the first steady frame there is nothing to see: go there directly (unless it is
+      // the shot the map is already opening on, whose intro flight is still to come).
+      if (name !== this.shot) this.jump(target);
+      this.shot = name;
+      return;
+    }
+    this.shot = name;
+    if (sameCamera(this.cam, target)) return;
+    this.fly(target);
+  }
+
+  /** Fly to any camera (a home, for the keyboard): the shot stays what the page is on. */
+  flyToCamera(target: G3dCamera, ms?: number) {
+    if (!this.revealed || sameCamera(this.cam, target)) return;
+    this.fly(target, ms);
+  }
+
+  private jump(c: G3dCamera) {
+    const el = this.el;
+    this.cam = c;
+    if (!el) return;
+    el.center = c.center;
+    el.range = c.range;
+    el.tilt = c.tilt;
+    el.heading = c.heading;
+    el.fov = c.fov;
+  }
+
+  private fly(target: G3dCamera, ms?: number) {
+    const el = this.el;
+    if (!el) return;
+    const from = this.cam ?? target;
+    this.cam = target;
+    this.cancelJob();
+    this.flights++;
+    this.flying = true;
+    this.opts.onFlightStart();
+    clearTimeout(this.landTimer);
+    if (this.opts.reduced) {
+      // Reduced motion: a cut, not a flight.
+      this.jump(target);
+      this.land();
+      return;
+    }
+    const dur = ms ?? flightMillis(from, target);
+    el.flyCameraTo({ endCamera: { center: target.center, range: target.range, tilt: target.tilt, heading: target.heading, fov: target.fov }, durationMillis: dur });
+    // gmp-animationend is the landing; this is the net under it (an interrupted flight may not
+    // report one).
+    this.landTimer = setTimeout(() => this.flying && this.land(), dur + 500);
+  }
+
+  private land() {
+    clearTimeout(this.landTimer);
+    this.flying = false;
+    this.replan();
+    this.opts.onLand();
+  }
+
+  isFlying() {
+    return this.flying || !this.revealed;
+  }
+
+  // ---- homes ------------------------------------------------------------------------------------
+
+  setHomes(h: Homes) {
+    this.homes = h;
+    this.pins = lightPins(h);
+    if (this.revealed && !this.flying) this.replan();
+  }
+
+  setElevation(g: ElevationGrid) {
+    this.elev = g;
+    if (this.revealed && !this.flying) this.reproject();
+  }
+
+  private featuredEls: El[] = [];
+
+  /** The featured homes, drawn a little larger than the rest whatever the shot. Measured in Chrome
+   * (scripts/_scratch-r56-tab.mjs): Marker3DInteractiveElement is NOT reachable by Tab on this
+   * version (Tab stops once on the map element itself, then leaves it; no focus event reaches a
+   * marker), and the map takes no pointer events here anyway, so these are plain markers and the
+   * keyboard reaches the featured homes through their cards on the page (G3dGround). */
+  setFeatured(list: readonly FeaturedHome[]) {
+    const el = this.el;
+    if (!el || !this.lib) return;
+    for (const m of this.featuredEls) m.remove();
+    const big = LIGHT_SVG.replace(`width="${GLYPH}" height="${GLYPH}"`, `width="${GLYPH + 6}" height="${GLYPH + 6}"`);
+    this.featuredEls = list.map((h) => {
+      const m = new this.lib.Marker3DElement({ position: { lat: h.lat, lng: h.lng }, altitudeMode: "CLAMP_TO_GROUND", collisionBehavior: "REQUIRED", sizePreserved: true }) as El;
+      const t = document.createElement("template");
+      t.innerHTML = big;
+      m.append(t);
+      el.append(m);
+      return m;
+    });
+  }
+
+  townOf(i: number): string {
+    const h = this.homes;
+    return h ? h.towns[h.town[i]] ?? "" : "";
+  }
+
+  homeAt(i: number): { lat: number; lng: number } | null {
+    const h = this.homes;
+    return h ? { lat: h.lat[i], lng: h.lng[i] } : null;
+  }
+
+  private viewport() {
+    const { width, height } = this.opts.viewport();
+    return { width, height, fov: this.cam?.fov ?? 35 };
+  }
+
+  private replan() {
+    const h = this.homes;
+    const cam = this.cam;
+    if (!h || !cam || !this.lib || !this.el) return;
+    const t0 = performance.now();
+    const name = this.shot ?? "hero";
+    const plan = planLights({ lights: h, pins: this.pins, camera: cam, viewport: this.viewport(), budget: budgetFor(name, cam.range, this.viewport()), focus: focusOf(name) });
+    this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
+    this.planned = plan;
+    const { add, remove } = diffLights(new Set(this.drawn.keys()), plan);
+    this.run(add, remove);
+  }
+
+  private cancelJob() {
+    this.job++;
+    cancelAnimationFrame(this.raf);
+  }
+
+  /** Take away, then add, a frame's worth at a time; a new flight cancels what is left. */
+  private busy = false;
+
+  private run(add: number[], remove: number[]) {
+    const job = ++this.job;
+    this.busy = true;
+    cancelAnimationFrame(this.raf);
+    const t0 = performance.now();
+    let r = 0, a = 0;
+    const step = () => {
+      if (job !== this.job) return;
+      const end = Math.min(remove.length, r + REMOVE_PER_FRAME);
+      for (; r < end; r++) {
+        this.drawn.get(remove[r])?.remove();
+        this.drawn.delete(remove[r]);
+      }
+      if (r >= remove.length) {
+        const stop = Math.min(add.length, a + ADD_PER_FRAME);
+        for (; a < stop; a++) this.addHome(add[a]);
+      }
+      if (r < remove.length || a < add.length) {
+        this.raf = requestAnimationFrame(step);
+      } else {
+        this.busy = false;
+        this.lastAddMs = Math.round(performance.now() - t0);
+        this.reproject();
+      }
+    };
+    this.raf = requestAnimationFrame(step);
+  }
+
+  private addHome(i: number) {
+    const h = this.homes!;
+    const m = new this.lib.Marker3DElement({
+      position: { lat: h.lat[i], lng: h.lng[i] },
+      altitudeMode: "CLAMP_TO_GROUND",
+      collisionBehavior: "REQUIRED",
+      sizePreserved: true,
+    }) as El;
+    const t = document.createElement("template");
+    t.innerHTML = LIGHT_SVG;
+    m.append(t);
+    this.el!.append(m);
+    this.drawn.set(i, m);
+    if (this.firstMarkerAt === null) {
+      this.firstMarkerAt = performance.now();
+      performance.mark("g3d:first-marker");
+    }
+  }
+
+  /** Where each drawn home's light is on screen, for the camera the map is on. */
+  reproject() {
+    const cam = this.cam;
+    const h = this.homes;
+    if (!cam || !h) return;
+    const frame = cameraFrame(cam);
+    const vp = this.viewport();
+    const n = this.drawn.size;
+    if (this.xy.length < n * 2) {
+      this.xy = new Float32Array(n * 2);
+      this.xyIndex = new Int32Array(n);
+    }
+    let k = 0;
+    for (const i of this.drawn.keys()) {
+      const alt = this.elev ? sampleHeight(this.elev, h.lng[i], h.lat[i]) + GEOID : 0;
+      const p = projectWith(frame, vp, h.lat[i], h.lng[i], alt);
+      if (!p) continue;
+      this.xy[2 * k] = p.x;
+      this.xy[2 * k + 1] = p.y - GLYPH / 2;
+      this.xyIndex[k] = i;
+      k++;
+    }
+    this.xyCount = k;
+  }
+
+  /** The screen position of any place for the landed camera (the featured homes). */
+  screenOf(lat: number, lng: number): { x: number; y: number } | null {
+    if (!this.cam) return null;
+    const alt = this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0;
+    const p = projectWith(cameraFrame(this.cam), this.viewport(), lat, lng, alt);
+    return p ? { x: p.x, y: p.y - GLYPH / 2 } : null;
+  }
+
+  stats(): G3dStats {
+    return {
+      loads,
+      navToSteady: this.steadyAt === null ? null : Math.round(this.steadyAt),
+      navToFirstMarker: this.firstMarkerAt === null ? null : Math.round(this.firstMarkerAt),
+      drawn: this.drawn.size,
+      planned: this.planned.length,
+      lastPlanMs: this.lastPlanMs,
+      lastAddMs: this.lastAddMs,
+      flights: this.flights,
+      flying: this.flying,
+      steady: this.steadyNow,
+      busy: this.busy,
+      shot: this.shot,
+      error: this.error,
+    };
+  }
+
+  camera(): MapCamera | null {
+    return this.cam;
+  }
+}
+
+/** The opening: the hero's camera from further out and turned a little, so the first thing the map
+ * does once it is drawn is arrive. */
+export function introCamera(c: G3dCamera): G3dCamera {
+  return { ...c, range: Math.round(c.range * 1.45), tilt: Math.max(0, c.tilt - 12), heading: (c.heading + 348) % 360 };
+}
+
+export function sameCamera(a: MapCamera | null, b: MapCamera): boolean {
+  if (!a) return false;
+  return (
+    Math.abs(a.center.lat - b.center.lat) < 1e-6 &&
+    Math.abs(a.center.lng - b.center.lng) < 1e-6 &&
+    Math.abs(a.range - b.range) < 1 &&
+    Math.abs(a.tilt - b.tilt) < 0.01 &&
+    Math.abs(a.heading - b.heading) < 0.01
+  );
+}

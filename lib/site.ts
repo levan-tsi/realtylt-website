@@ -109,9 +109,14 @@ export const areaName = (label: string): string =>
 /** The routes that wear the round-53 blue-hour look (app/globals.css `.nocturne`). The page's
  * own wrapper carries the class; the Header and Footer read this list so the chrome around the
  * page matches it. Extending the look to another page is one entry here plus its wrapper. */
-export const NIGHT_ROUTES = ["/", "/search"] as const;
+export const NIGHT_ROUTES = ["/", "/search", "/lab/g3d"] as const;
 export const isNightRoute = (pathname: string | null | undefined): boolean =>
   (NIGHT_ROUTES as readonly string[]).includes(pathname ?? "");
+
+/** The pages whose header lies over a full-window ground instead of standing on a shelf above it:
+ * the home page, and (round 56) the real-map lab that prototypes the home page's next ground
+ * (it answers 404 unless RLT_LAB=1, so production never shows it). */
+export const isOverGroundRoute = (pathname: string | null | undefined): boolean => pathname === "/" || pathname === "/lab/g3d";
 
 /** "Plan Your Purchase" -> "Plan your purchase", for labels a night page shows but a day page
  * must keep as written. Only plain Title-case words drop: an acronym or a name with inner

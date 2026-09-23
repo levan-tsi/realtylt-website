@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { useSaved } from "@/components/auth/SavedProvider";
 import { PRESS } from "@/components/ui/Button";
-import { NAV, SITE, TOP_AREA_GROUPS, areaName, isNightRoute } from "@/lib/site";
+import { NAV, SITE, TOP_AREA_GROUPS, areaName, isNightRoute, isOverGroundRoute } from "@/lib/site";
 
 /** A plus that becomes a minus — the affordance the owner asked for on the phone menu.
  * Drawn rather than typed so it stays crisp and carries no glyph baggage. */
@@ -78,7 +78,7 @@ export function Header() {
   // picture. It scrolls away with the page (not sticky): the map is the page's first statement
   // and a bar pinned across it forever would be the loudest thing on it.
   const night = isNightRoute(pathname);
-  const overHero = pathname === "/";
+  const overHero = isOverGroundRoute(pathname);
 
   const closeMobile = () => {
     setOpen(false);
