@@ -22,14 +22,22 @@ started).
    footer's stall was Chrome's native textarea resize grip, a stroked path, now a filled glyph on
    night pages) and matter for first visits and after Chrome/driver updates. On a WARM profile the
    baseline already had those two under 28 ms. Numbers: `DESIGN-ROUND55.md` §2.4a and §2.4c.
-3. **The city glow** (phase 2): NASA Black Marble 2016 (public domain-class NASA content,
-   credited in the footer) cropped to the served region and written into the terrain asset's blue
-   channel (asset 281 -> 365 KB, R and G byte-identical), so the haze can glow where the cities
-   really are. Scene integration: see `R55-PHASE2-NIGHTLIGHTS.md` §5 for what shipped and the
-   frames.
-4. Gates at the end of phase 1: tsc clean, vitest 1621 -> 1639 (-> 1657 after the asset), ten
-   day pages 0 differing pixels at 1440 and 390, the round-54 verify probe clean at 1440/390/320,
-   reduced motion and no-JS.
+3. **The city glow** (phase 2, DONE and gated, head `9c034a3`): NASA Black Marble 2016 (NASA
+   content, credited in the footer) cropped to the served region and written into the terrain
+   asset's blue channel (asset 281 -> 365 KB, R and G byte-identical). The brief's haze plan was
+   built, measured and rejected by the builder (grey fog over land with no homes); what shipped
+   is a CARPET of 116,176 faint warm street lamps in proportion to the satellite glow, kept to the
+   served territory with a soft fade, plus a lighter haze over the densest light only. Manhattan
+   is lit for the first time, the valley towns read as towns, the Catskills and the river stay
+   dark. Three lines of copy that said "every light is a home" now say the BRIGHT lights are the
+   homes and the faint ones the towns' own light. The owner has NOT seen it yet: his verdict on
+   the frames (`scripts/_scratch-r55/glow/pairs/`) decides the carpet's weight. Record:
+   `R55-PHASE2-NIGHTLIGHTS.md` §5. The phase-2 builder was cut off by the session limit; its
+   last tweaks were gated and committed by the orchestrator.
+4. Gates at the end of round 55: tsc clean, vitest 1621 -> 1662, ten day pages 0 differing
+   pixels at 1440 and 390 (after phase 1; phase 2 touched nothing they render), the round-54
+   verify probe clean at 1440/390/320, reduced motion and no-JS on the final build, cold boot
+   worst 76 ms (was 235 to 291), warm section changes 21 ms or under.
 
 ## 2. The one thing still unexplained, and how to settle it
 

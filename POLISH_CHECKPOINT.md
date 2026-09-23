@@ -1,6 +1,6 @@
 # Website polish checkpoint (read/updated by the /website command)
 
-## == ROUND 55 IN PROGRESS (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT ==
+## == ROUND 55 DONE (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT; NEXT R56 ==
 ## READ docs/parity/DESIGN-ROUND55.md FIRST, then docs/handoff/WEBSITE-R56-HANDOFF.md (the next brief;
 ## WEBSITE-R55-HANDOFF.md keeps "where everything is" and the ledger). Branch design/futuristic-r53,
 ## NOTHING pushed, main untouched. Session shape by his order: Fable orchestrates + ONE Fable subagent
@@ -23,10 +23,15 @@
 ## - What HE sees as "lag when a section changes" on his warm machine is NOT yet explained: settle it
 ##   in HIS browser (connect the extension; his MacBook is the primary machine). Suspects in the R56
 ##   handoff (React ~150ms during the rail's scroll-in, the camera's deliberate 0.16s spring).
-## - The city glow (phase 2): NASA Black Marble 2016 cropped to the region and written into the
-##   terrain asset's blue channel (281 -> 365 KB, R/G byte-identical, credited in the footer), so the
-##   haze can glow where the cities really are. Scene integration: docs/parity/R55-PHASE2-NIGHTLIGHTS.md
-##   section 5 records what shipped and the frames (in progress when this block was written).
+## - The city glow (phase 2) DONE AND GATED (head 9c034a3): NASA Black Marble 2016 in the terrain
+##   asset's blue channel (281 -> 365 KB, R/G byte-identical, credited in the footer); the haze plan
+##   was rejected on frames (grey fog) and replaced by a carpet of 116,176 faint street lamps in
+##   proportion to the satellite glow, kept to the served territory, plus a lighter haze over the
+##   densest light. Manhattan lit for the first time, valley towns read as towns, Catskills/river
+##   dark; the copy now says the BRIGHT lights are the homes and the faint ones the towns' own light.
+##   Gate: cold boot worst 76ms, warm section phases <= 21ms, contrast p95 unchanged, verify clean,
+##   vitest 1662. HE HAS NOT SEEN IT: frames in scripts/_scratch-r55/glow/pairs/ decide the weight.
+##   Record: docs/parity/R55-PHASE2-NIGHTLIGHTS.md section 5.
 ##
 ## NEXT (R56 handoff section 3): phase 3 interactions (docs/parity/R55-PHASE3-INTERACTIONS.md), the
 ## 3D-when-close prototype from NYC building footprints in /lab/night, the fresh-eyes walkthrough
