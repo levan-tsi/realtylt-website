@@ -194,13 +194,14 @@ export const DEFAULT_LOOK: Look = {
   // Measured in the lab (round 55, lab6c against round 54): the harbour's Manhattan strip 97 -> 132
   // mean, Brooklyn's foreground 36 -> 59, Poughkeepsie 52 -> 57, Kingston 46 -> 58, the hero's
   // valley +1.5 and its dark New Jersey corner unchanged (7.2 -> 8.0); the homes stay the larger,
-  // brighter lamps. streetLowGain is the boost for the DENSE lamps (the metro's carry the highest
-  // gains) and stays at 1; streetLowCity lifts the sparse ones, a valley town's, close in.
+  // brighter lamps. streetLowGain is the close-in factor for the DENSE lamps (the metro's carry
+  // the highest gains): under 1, so a borough's carpet steps back as its homes do (lowCityGain)
+  // and Queens does not become one flare; streetLowCity lifts the sparse ones, a valley town's.
   streetSize: 0.03,
   streetAlpha: 0.8,
   streetSpread: 2.4,
   streetLowCity: 6,
-  streetLowGain: 1,
+  streetLowGain: 0.6,
   // Half of round 54's weight: the towns' carpet now carries the glow, and the haze is only the
   // breath over the densest light (measured at the hero: at 0.06 it took the metro from 70 to 116
   // mean and painted Staten Island grey, 18 -> 45).

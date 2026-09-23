@@ -246,7 +246,10 @@ export function buildStreetLights(grid: ElevationGrid, within: CountyRaster | nu
         const lng = box.west + ((c + hash01(s * 2 + 11)) / w) * (box.east - box.west);
         const lat = box.north - ((r + hash01(s * 2 + 12)) / h) * (box.north - box.south);
         const [x, , z] = lngLatToWorld(lng, lat);
-        const county = within ? countyAt(within, x, z) : 0;
+        // The county is read a little off the lamp (up to 0.4 km, its own hash), so the line where
+        // one county's carpet dims for another's chapter is a soft band of mixed lamps, not the
+        // raster's stair of cells (measured at the Queens and Westchester chapters).
+        const county = within ? countyAt(within, x + (hash01(s + 16) - 0.5) * 0.8, z + (hash01(s + 17) - 0.5) * 0.8) : 0;
         if (within && !county) continue;
         pos.push(x, (grid.heights[i] + liftM) / 1000, z);
         // The same wave as the homes: the harbour (south) first, then up the valley.
@@ -321,8 +324,8 @@ export interface CountyRaster {
  * the page is talking about, and (round 55) to keep the towns' glow and street lights to the
  * served land: `reach` lets them fade over the flood's last rings rather than stop at a stair of
  * cells (measured at the hero: a 1.5 km staircase down Staten Island's shore and a straight cut
- * across Nassau). The cells are 0.75 km so those rings are fine enough to read as a gradient. */
-export function countyRaster(cloud: LightCloud, cellKm = 0.75, reachKm = 6): CountyRaster {
+ * across Nassau). The cells are 0.5 km so those rings are fine enough to read as a gradient. */
+export function countyRaster(cloud: LightCloud, cellKm = 0.5, reachKm = 6): CountyRaster {
   let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
   for (let i = 0; i < cloud.count; i++) {
     const x = cloud.positions[i * 3], z = cloud.positions[i * 3 + 2];
