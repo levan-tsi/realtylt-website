@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { homeMap } from "./home-map";
+import { COVERS, homeCover, homeMap } from "./home-map";
 
 /** Round 57: which ground the home page stands on, decided in one place. */
 describe("homeMap", () => {
@@ -30,5 +30,22 @@ describe("homeMap", () => {
     expect(homeMap({ NEXT_PUBLIC_HOME_MAP: "G3D", NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: KEY })).toBe("g3d");
     expect(homeMap({ NEXT_PUBLIC_HOME_MAP: "", NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: KEY })).toBe("g3d");
     expect(homeMap({ NEXT_PUBLIC_HOME_MAP: "something", NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: KEY })).toBe("g3d");
+  });
+});
+
+/** Round 57.2: the real map's load cover, A (dusk, the default) or B (day), one flag apart. */
+describe("homeCover", () => {
+  it("is dusk unless the flag says day", () => {
+    expect(homeCover({})).toBe("dusk");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "" })).toBe("dusk");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "night" })).toBe("dusk");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: " Day " })).toBe("day");
+  });
+
+  it("names a wide and a tall still for each, all under public/images", () => {
+    for (const c of ["dusk", "day"] as const) {
+      expect(COVERS[c].wide).toMatch(/^\/images\/home-.+\.webp$/);
+      expect(COVERS[c].tall).toMatch(/^\/images\/home-.+-tall\.webp$/);
+    }
   });
 });
