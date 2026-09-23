@@ -66,7 +66,7 @@ export default async function G3dLabPage() {
       >
         <section data-shot="hero" data-veil="0" className="relative min-h-[100svh]" aria-labelledby="home-hero">
           <div data-lantern aria-hidden className="absolute inset-0 z-0" />
-          <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
+          <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-24 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
             <div data-quiet className="pointer-events-auto max-w-[36rem]">
               <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
               <h1 id="home-hero" className="t-display rise mt-4 text-ink">
