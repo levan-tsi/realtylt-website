@@ -1,5 +1,20 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == NEXT SESSION = ROUND 57: THE REAL MAP BECOMES THE HOME PAGE AND GETS FINISHED (2026-09-23) ==
+## READ docs/handoff/WEBSITE-R57-HANDOFF.md FIRST. His verdict on round 56's lab (verbatim there):
+## "getting better, but still not what I want" - the opening shot must SHOW THE TERRITORY from higher
+## (the five boroughs, Westchester and up, everything we cover) so a stranger reads where it is; the
+## map must be MORE REALISTIC (it "switched to more lights"); the address lights + click-to-listing
+## are "great" and need polishing. Process he named: Fable orchestrates, ~FIVE Opus 5.5 builder rounds
+## (one at a time), then the orchestrator's OWN final polish round, then his look.
+## The five rounds (handoff section 4): 1 the territory shot + the real map becomes the home page
+## behind NEXT_PUBLIC_HOME_MAP=g3d (night flight = fallback only, carpet gone); 2 more realistic (the
+## map is the picture: fewer lights at altitude, a cloud map style, the load cover decided); 3 the
+## address lights finished (hover label, fly-in click, tap, keyboard); 4 the laptop hitch measured on
+## HIS machine and decided (keep flying / hybrid / stills); 5 the fresh-eyes walkthrough + ledger.
+## State: branch design/futuristic-r53, 82 commits over main, NOTHING pushed; preview :3102 with
+## RLT_LAB=1 (home = night flight, real map at /lab/g3d); tsc clean, vitest 1720.
+##
 ## == ROUND 56 IN PROGRESS (2026-09-23): THE REAL MAP. HIS VERDICT ON ROUND 55: "I DON'T LIKE IT" ==
 ## READ docs/parity/DESIGN-ROUND56.md FIRST (his verdict verbatim, what was proven with our key, the
 ## facts with sources, the decisions, the phases), then docs/handoff/WEBSITE-R56-HANDOFF.md section 3.
