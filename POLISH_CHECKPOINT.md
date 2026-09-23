@@ -1,5 +1,40 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 54 DONE AND APPROVED IN DIRECTION (2026-09-22). NEXT: ROUND 55, FABLE + OPUS ==
+## READ docs/handoff/WEBSITE-R55-HANDOFF.md FIRST. The /website command's own brief is stale.
+##
+## The owner saw round 54 locally (videos + http://localhost:3102) and said: "I definitely like the
+## design, is definitely better, and this is what I wanted, and it's kind of on the level of our AI
+## page, but it definitely needs multiple more rounds for polishing everything, because some
+## transitions lag, and I think map could be better, maybe we could find a 3D type of map on New York
+## that we could copy ... and maybe make it a little bit more interactive as well ... if it would be
+## like full 3D, that would be great and amazing ... I think you could do way better, especially with
+## Fable and Opus now ... do heavy and good things with Fable and then let Opus build and check their
+## work ... [don't] go backwards or degrade."
+##
+## WHAT ROUND 54 BUILT (local only, branch design/futuristic-r53, 20 commits, nothing pushed):
+## the home page is ONE 3D scene (Three.js) fixed behind the page - the valley drawn as contour dust
+## from public-domain USGS elevation, the water simply where no land is drawn, every active listing a
+## warm light at its address, each section a camera shot, "Where we work" a flight county by county,
+## and /search rebuilt in the same language (one instrument, short chips, a one-line meta row, the
+## map's listings as warm lights). Black ground, white type, white actions; the logo, the header's AI
+## item and the chat bubble keep the R blue.
+##
+## VERIFIED BY THE ORCHESTRATOR, NOT JUST CLAIMED: tsc clean, vitest 1504 -> 1621, home LCP 144-364ms
+## (text) / CLS 0.0002 / scroll p95 16.8ms at 1440 AND at 390 with 4x CPU, no overflow at 1440/768/
+## 640/390/320, works with JavaScript off and with no WebGL, reduced motion cuts instead of flying,
+## day pages pixel-identical.
+##
+## ROUND 55 (his order): fix the transitions he sees lagging (our probes show 16.8ms p95, so measure
+## in HIS Chrome), make the map better and ideally FULL 3D (his idea: start from an existing 3D map of
+## New York - NYC Open Data building footprints are the strongest free candidate - and put our lights
+## on it), make it more interactive, brainstorm what else to add, and run the fresh-eyes check that
+## round 54 never got (he stopped it to switch models). Fable orchestrates and gates; ONE Opus
+## subagent at a time builds; nothing regresses (the ledger is section 6 of the handoff).
+##
+## OPEN OWNER DECISIONS: the lights are warm gold (the only colour) - keep or cool them; the chat
+## launcher covers a card's save heart at 390 and Google's "report a map error" at 1440 (site-wide).
+##
 ## == ROUND 53 VERDICT (2026-09-22): REJECTED AS "NOT EVEN NEAR" /ai; BLACK AND WHITE WAS BETTER ==
 ## The owner saw round 53 locally and said: "to be honest, black and white color is on each other was
 ## better. And it's not even near close to our AI page. Um, it needs way more multiple rounds of
