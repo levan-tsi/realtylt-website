@@ -101,6 +101,85 @@ costs under 1 ms per frame in every trace.
 5. Then re-run the whole ledger at 390 (`--phone`) and with `--throttle=4`, and record the numbers
    here. The owner's other machine is a MacBook; the raster budget is what carries there.
 
+### 2.4a Measured after (builder, 2026-09-23; branch head `c3664ae`, four commits `d40e9b0`,
+`04f588a`, `2018ca0`, `c3664ae`)
+
+Same instrument, same machine (RTX 2060, ANGLE D3D11, 144 Hz), the same wheel and flings. One
+thing the method did not say in §2.1 and turned out to decide half the numbers: **every run
+launches a fresh Chrome profile, so its GPU shader cache is empty and every Skia and ANGLE
+pipeline the page needs is compiled during the run.** A `--persist=DIR` mode of the probe copy
+(`scripts/_scratch-r55b-lag.mjs`) keeps the profile, and the second run on it is "warm", which
+is what the owner's Chrome is except right after a Chrome or driver update. Both columns are
+below; the cold column is the one §2.3 measured.
+
+1440x900, worst frame in ms (over34 in brackets where it matters), before = `a6d8408`, after = head:
+
+| phase | before, cold | before, warm | after, cold | after, warm |
+|---|---|---|---|---|
+| boot: the frame that receives the clouds (2.0 s) | 235 (the link stall) | 104 | 7 to 28 across 6 runs | 21 |
+| boot over100 / long-task ms | 1 to 2 / 414 to 493 | 1 / 173 | 0 to 1 / 89 to 274 | 0 / 208 |
+| to:highlands (the featured rail) | 76 to 90 [4] | 20.8 [0] | 41.5 to 56 [2 to 4] | 20.8 and 14 [0] |
+| to:harbour | 14 | 13.8 | 35 to 49 [1] | 13.8 |
+| fling:up | 90 to 111 | 27.9 | 42 to 63 [1 to 2] | 14 |
+| fling:down (the footer) | 76 to 90 | 13.9 | **13.9** [0] | 13.9 |
+
+The boot's `over100` after is the page's own hydration when it is 1 (first `Layout` of ~1,400
+boxes 50 to 86 ms plus two `EvaluateScript` of ~38 ms and `RunMicrotasks` ~35 ms, unchanged in
+content across every run; the worst single rAF gap there varies 63 to 167 ms with how those
+tasks fall between frames). The scene's own frames from `night:start` on are 7 ms except the
+frame the first dust piece is uploaded in (14 to 28) and three.js's 44 ms module evaluation,
+which was there before.
+
+390x844 `--phone` (DPR 3, touch), worst frame: before cold / warm, after cold / warm:
+boot scene phase 201 / 83 (the link), 7 / 7; to:highlands 34.8 / 7.2, 34.7 / 14; to:harbour
+20.9 / 20.8, 41.6 / 13.8; fling:up 7.2 / 7.2, 14 / 7.2; fling:down 76.2 / 13.9, 13.9 / 14.
+
+1440 `--throttle=4` (one cold run each; noisy, the boot alone has 24 to 36 frames over 34):
+before boot 458 max (over100 9), to:highlands 104 then 62.6 (p50 13.9 / 27.7), to:harbour 41.6,
+flings 55.6 / 62.5; after boot 417 (over100 7), to:highlands 104 then 125 (p50 20.9 / 20.9),
+to:harbour 48.6, flings 76.3 / 62.5. **Not better under a 4x CPU**: there the rail's entry is
+main-thread bound, and the profile of the unthrottled run puts ~150 ms of React rendering into
+the 342 ms window of `to:highlands` (present before and after; §2.4b), plus `content-visibility`
+now lays the cards out during the scroll-in instead of at load.
+
+What each item did, with the attribution after it:
+1. `compileAsync` against stand-in geometries the moment the materials exist, then the uniform
+   locations fetched off-frame. The 141 ms link and the ~14 ms introspection left the first
+   frame; `night:programs` is marked ~110 ms after `night:start`, 1.3 s before the terrain.
+2. The light math (`buildLightBundle`) runs in the worker, the dust goes up in 160k-grain
+   pieces one per frame. No `HandlePostMessage` over 12 ms in the profiled run; the first
+   render is 14 to 28 ms (one 5.8 MB piece plus VAO setup); `night:terrain` to `night:lights` is
+   76 ms of the worker's wall time (was 61 ms of the main thread's).
+3. The rail scrolls instead of translating, its cards skip paint out of view, the badges and
+   heart lose their backdrop blur on night pages and the develop animation fills backwards.
+   Cold: FillRectOp x66 to 70 per flush (was x180 to x576), one op of ~20 ms in a 23 ms flush,
+   i.e. a pipeline compile; a 3 px gradient in a rounded box pre-rastered at load did not remove
+   it, so it is not the scrim's gradient alone. Warm: 20.8 and 14 ms.
+4. The footer's stall was `StrokeTessellateOp` x4, one of 79 to 80 ms: Skia's hardware-
+   tessellation stroke pipeline compiling for Chrome's native textarea resize grip (short
+   diagonal stroked lines). Removing every SVG stroke on the page changed nothing; `resize:
+   none` dropped the fling to 41.8. `.nocturne textarea::-webkit-resizer` now carries a filled
+   two-capsule glyph (Blink paints that box instead of the platform lines; dragging still
+   resizes), and the three stroked data-URI glyphs are filled paths too. 13.9 ms cold.
+
+### 2.4b Seen on the way, not fixed (outside the brief)
+
+- **The section-change stalls of §2.3 were cold-cache compiles.** On a warm profile the baseline
+  already had the rail at 20.8 ms, the footer at 13.9 and both flings under 28, so on the
+  owner's warm Chrome those two stalls did not exist as measured; the boot stall (104 ms warm)
+  did. What he sees as "lag when a section changes" on his machine is therefore not yet
+  explained by the probe, and its cold profile is a measuring artefact to keep in mind
+  (`--persist`, two runs).
+- **React renders ~150 ms during the rail's scroll-in** (profile: `uv`/`ug` in the React chunk,
+  `window.scrollY` forcing layout for 11 ms, `page-*.js:622` 14 ms), against nothing of the
+  kind at `to:dutchess`. Something re-renders as the featured section arrives; on a 4x CPU this
+  is what holds the rail at 20 ms a frame. Worth a profile with source maps.
+- The heart on night cards is now the badges' ink/80 solid, slightly lighter and more opaque
+  than ink/55 with blur (frames in `scripts/_scratch-r55/rail-{before,after}-*.png`); one line
+  (`night:bg-ink/55`) restores the old tone if that is preferred.
+- With scripting off the rail no longer moves (it is a 16-card scroller); a CSS-only drift was
+  the promoted layer this round removed.
+
 ## 3. The map: what it can honestly become
 
 The owner's words leave two bars: "as realistic as possible", "3D if we go close", and "if it's
