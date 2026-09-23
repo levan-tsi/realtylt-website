@@ -14,7 +14,7 @@ import { NightGround } from "@/components/home/night/NightGround";
 import { AreaChapter } from "@/components/home/night/AreaChapter";
 import { G3dGround } from "@/components/home/g3d/G3dGround";
 import { G3dAreaChapter } from "@/components/home/g3d/G3dAreaChapter";
-import { homeMap } from "@/lib/home-map";
+import { COVERS, homeCover, homeMap } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
 import { AREA_ROWS } from "@/components/home/night/areas";
 import { AREA_FLIGHT } from "@/components/home/night/shots";
@@ -29,8 +29,8 @@ import type { ReactNode } from "react";
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
 
-/** The night flight's still (scripts/make-night-poster.mjs): our artwork, the first screen before
- * either ground has drawn, and the whole picture with JavaScript off or when the map fails. */
+/** The night flight's still (scripts/make-night-poster.mjs): our artwork, the night ground's first
+ * screen and its whole picture with JavaScript off. The real map has its own covers (COVERS). */
 const POSTER = "/images/home-night-poster.webp";
 
 export const metadata: Metadata = {
@@ -72,13 +72,22 @@ export default async function HomePage() {
   // so neither version says something untrue about what is behind it.
   const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
   const g3d = ground === "g3d";
-  // On the real map our poster is the load cover for 5 to 7 s: fetched with the document, not when
-  // the CSS asks (G3dGround).
-  if (g3d) preload(POSTER, { as: "image", fetchPriority: "high" });
+  // Round 57.2: on the real map the hero's small words carry their own soft shadow, so the scrim
+  // under them can be lighter and read as shade rather than a panel (G3dGround SCRIM_*).
+  const halo = g3d ? "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]" : "";
+  // On the real map our cover is the load cover for 5 to 9 s: fetched with the document, not when
+  // the CSS asks (G3dGround), the tall still for a phone and the wide one for a laptop (round 57.2,
+  // lib/home-map.ts COVERS; `NEXT_PUBLIC_HOME_COVER=day` is the owner's B).
+  const cover = COVERS[homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER })];
+  if (g3d) {
+    preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
+    preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });
+  }
   const Ground = ({ children }: { children: ReactNode }) =>
     g3d ? (
       <G3dGround
-        poster={POSTER}
+        poster={cover}
+        covers={COVERS}
         tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}
         featured={featured
           .filter((l) => l.lat && l.lng)
@@ -137,18 +146,25 @@ export default async function HomePage() {
           {/* On the real map the phone's words stop 96 px above the bottom so the two links sit
               above Google's logo corner, which nothing of ours may cover (round 56 phase 1b). */}
           <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${g3d ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
-            <div data-quiet className="pointer-events-auto max-w-[36rem]">
-              <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
+            {/* Round 57.2: the eyebrow and the headline are each their own quiet block, so the map's
+                shadow can be lighter under the large, bold headline ("soft", G3dGround SOFT_SHARE, at
+                lg) and full under the small grey eyebrow (measured with the contrast kit). */}
+            <div className="pointer-events-auto max-w-[36rem]">
+              <p data-quiet className={`t-eyebrow w-fit text-stone ${halo}`}>Hudson Valley and New York City</p>
               {/* w-fit: the headline's box hugs its words (round 57). On a phone the map's names for
                   the valley stand to the right of "home.", and a column-wide box made them read as
-                  sitting on the headline to the contrast kit, which photographs a text's box. */}
-              <h1 id="home-hero" className="t-display rise mt-4 w-fit text-ink">
-                Let&rsquo;s find home.
+                  sitting on the headline to the contrast kit, which photographs a text's box. The
+                  break is explicit (round 57.2): with the words wrapping on their own, w-fit's
+                  max-content was the one-line width and the box took the whole column again. */}
+              <h1 id="home-hero" data-quiet="soft" className="t-display rise mt-4 w-fit text-ink">
+                Let&rsquo;s find{" "}
+                <br />
+                home.
               </h1>
             </div>
 
             <div data-quiet className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
-              <p className="t-lead rise rise-2 max-w-[30rem] text-ink-soft">
+              <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft ${halo}`}>
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
@@ -187,7 +203,7 @@ export default async function HomePage() {
                   Search
                 </button>
               </form>
-              <p className="rise rise-4 mt-5 flex flex-wrap gap-x-7 gap-y-3 text-[15px]">
+              <p className={`rise rise-4 mt-5 flex flex-wrap gap-x-7 gap-y-3 text-[15px] ${halo}`}>
                 <Link
                   href="/home-value"
                   className={`inline-flex min-h-[24px] items-center text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-porchlight ${PRESS}`}
@@ -204,10 +220,15 @@ export default async function HomePage() {
               {/* What the lights are, said once and small, with the data's source: this is
                   listing data drawn on the land, so it carries the MLS credit the rails below
                   carry. In the text column, never over the city. */}
-              <p className="mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block">
+              <p className={`mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
                 {g3d ? (
                   <>
-                    Map: Google. Every light is a home listed on OneKey&reg; MLS, standing where it stands.
+                    {/* The claim follows the runtime (round 57.2): hidden until Google's map has
+                        drawn (G3dGround shows it), so JS off or a failed map says nothing untrue. */}
+                    <span data-map-claim hidden>
+                      Map: Google.{" "}
+                    </span>
+                    Every light is a home listed on OneKey&reg; MLS, standing where it stands.
                     Point at one to see its town and price.
                   </>
                 ) : (

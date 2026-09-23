@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { loadLights } from "@/lib/idx/lights-client";
 import { listingPath } from "@/lib/idx/listing-url";
 import type { MapPin } from "@/lib/idx/types";
@@ -12,6 +12,15 @@ import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
 import { nearestLight } from "./thinning";
 import { TERRITORY_LABELS, googleBoxes, labelItems, placeLabels, type Box } from "./labels";
+import { mapIdFrom, modeChoice, type ModeChoice } from "./map-options";
+
+/** The map's mode by default (map-options.ts), decided by frames in round 57.2
+ * (scripts/_scratch-r57/2/mode/ab-{1440,390}.png, docs/parity/DESIGN-ROUND57.md §4 "Round 2"):
+ * HYBRID at the territory shot, where Google's town names orient a stranger beside our own; SATELLITE
+ * everywhere else, where HYBRID's coloured POI pins, route shields and street names cluttered the
+ * county and city shots and competed with our words, while SATELLITE reads as the photograph the
+ * owner asked for ("the map has to be more realistic"). `?mode=hybrid|satellite|split` compares. */
+const MODE: ModeChoice = "split";
 
 /** THE REAL MAP AS THE PAGE'S GROUND (round 56's /lab/g3d prototype; the home page's ground since
  * round 57, app/page.tsx and lib/home-map.ts).
@@ -73,17 +82,23 @@ const LOGO_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, trans
  * rectangle. Six, not four: at the Dutchess stop the hero's two blocks are still on screen with the
  * intake's, and "Start here" fell off the end of four (2.8:1 at p99). */
 const SCRIMS = 6;
-const SCRIM_PAD = 28;
-const SCRIM_FEATHER = 80;
-const SCRIM_REACH = SCRIM_PAD + SCRIM_FEATHER;
+/** Round 57.2 (the owner's "the map is the picture"; round 57.1's frames showed the hero's scrim as
+ * a dark column over New Jersey): less solid shade and a much longer fade, so a scrim reads as a
+ * shadow the words cast, not a panel. Tuned on the real pixels with the contrast kit (0 texts under
+ * 4.5:1 outside the logo corner at 1440 and 390); `?pad=` and `?feather=` are the tuning switches. */
+const SCRIM_PAD = 20;
+const SCRIM_FEATHER = 150;
+/** A block marked `data-quiet="soft"` (large, bold words: the hero's headline) casts a lighter
+ * shadow, this share of the full one. */
+const SOFT_SHARE = 0.62;
 /** An eased ramp (smoothstep through five stops), not a straight one: a linear fade leaves a
  * visible band where it meets the solid shade (seen on the first frames). */
-const ramp = (dir: string) => {
-  const e = [0, 0.1, 0.36, 0.72, 1].map((a, k) => `rgba(0,0,0,${a}) ${Math.round((SCRIM_FEATHER * k) / 4)}px`);
-  const back = [1, 0.72, 0.36, 0.1, 0].map((a, k) => `rgba(0,0,0,${a}) calc(100% - ${Math.round(SCRIM_FEATHER - (SCRIM_FEATHER * k) / 4)}px)`);
+const ramp = (dir: string, f: number) => {
+  const e = [0, 0.1, 0.36, 0.72, 1].map((a, k) => `rgba(0,0,0,${a}) ${Math.round((f * k) / 4)}px`);
+  const back = [1, 0.72, 0.36, 0.1, 0].map((a, k) => `rgba(0,0,0,${a}) calc(100% - ${Math.round(f - (f * k) / 4)}px)`);
   return `linear-gradient(${dir}, ${e.join(", ")}, ${back.join(", ")})`;
 };
-const FEATHER = `${ramp("to right")}, ${ramp("to bottom")}`;
+const featherMask = (f: number) => `${ramp("to right", f)}, ${ramp("to bottom", f)}`;
 
 /** THE LOGO'S CORNER, CLEAR OF THE WORDS (policy: Google's logo and legal link visible and
  * unobscured). Measured on the frames: the logo runs x 12..116 and the (i) to x 150, within 36 px
@@ -112,7 +127,30 @@ const CLEAR_STYLE = {
  * sections is one flight, not three. */
 const SETTLE_MS = 110;
 
-export function G3dGround({ poster, tail, featured = [], children }: { poster: string; tail?: G3dTail; featured?: readonly FeaturedHome[]; children: ReactNode }) {
+export interface Cover {
+  wide: string;
+  tall: string;
+}
+
+export function G3dGround({
+  poster,
+  covers,
+  tail,
+  featured = [],
+  children,
+}: {
+  poster: Cover;
+  /** Every cover the page knows, so `?cover=dusk|day` can show the other for comparison. */
+  covers?: Record<string, Cover>;
+  tail?: G3dTail;
+  featured?: readonly FeaturedHome[];
+  children: ReactNode;
+}) {
+  const [cover, setCover] = useState(poster);
+  useEffect(() => {
+    const c = new URLSearchParams(window.location.search).get("cover");
+    if (c && covers?.[c]) setCover(covers[c]);
+  }, [covers]);
   const featuredRef = useRef(featured);
   featuredRef.current = featured;
   const host = useRef<HTMLDivElement>(null);
@@ -121,6 +159,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
   const scrimEls = useRef<(HTMLDivElement | null)[]>([]);
   const scrimSizes = useRef<string[]>([]);
   const topScrim = useRef<HTMLDivElement>(null);
+  const footShade = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const holeY = useRef(-1);
   const ctl = useRef<G3dController | null>(null);
@@ -136,6 +175,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
   const [look, setLook] = useState<Look>("scrim");
   const [veil, setVeil] = useState(0.42);
   const [scrim, setScrim] = useState(0.8);
+  const [shape, setShape] = useState({ pad: SCRIM_PAD, feather: SCRIM_FEATHER, soft: SOFT_SHARE });
+  const shapeRef = useRef(shape);
+  shapeRef.current = shape;
   const lookRef = useRef<Look>("scrim");
   lookRef.current = look;
   const [revealed, setRevealed] = useState(false);
@@ -182,7 +224,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     };
     document.querySelectorAll("header, [data-g3d-avoid], .rlt-bubble").forEach((e) => push(e.getBoundingClientRect()));
     // The hero's words by their LINES, not their column: a label may stand beside a short line.
-    document.querySelectorAll<HTMLElement>('[data-shot="hero"] [data-quiet] :is(p, h1, form)').forEach((e) => {
+    document.querySelectorAll<HTMLElement>('[data-shot="hero"] :is([data-quiet] :is(p, h1, form), p[data-quiet], h1[data-quiet])').forEach((e) => {
       if (e.tagName === "FORM") return push(e.getBoundingClientRect());
       const range = document.createRange();
       range.selectNodeContents(e);
@@ -217,6 +259,8 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     if (q.get("look") === "veil") setLook("veil");
     if (q.get("veil")) setVeil(Number(q.get("veil")));
     if (q.get("scrim")) setScrim(Number(q.get("scrim")));
+    if (q.get("pad") || q.get("feather") || q.get("soft"))
+      setShape({ pad: Number(q.get("pad") ?? SCRIM_PAD), feather: Number(q.get("feather") ?? SCRIM_FEATHER), soft: Number(q.get("soft") ?? SOFT_SHARE) });
   }, []);
 
   const measure = useCallback(() => {
@@ -251,6 +295,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     // The header's words stand on the map's sky and labels: a shade under them that scrolls away
     // with the header (it is not sticky).
     if (topScrim.current) topScrim.current.style.transform = `translate3d(0, ${-Math.min(window.scrollY, 400)}px, 0)`;
+    // The phone's territory shot ends in the ocean's pale haze under the search (round 57.2): a
+    // shade at the window's foot while the hero is up, gone by the time the next section arrives.
+    if (footShade.current) footShade.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 320));
     // The tail: the map darkens as the footer comes up, fully once its top is half a window up.
     const t = tailRef.current;
     if (tailVeil.current && t?.veil) {
@@ -263,27 +310,30 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     }
     if (lookRef.current !== "scrim") return;
     const vh = window.innerHeight;
-    const rects = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
-      .map((el) => el.getBoundingClientRect())
-      .filter((r) => r.width > 8 && r.height > 8 && r.bottom > -SCRIM_REACH && r.top < vh + SCRIM_REACH)
-      .sort((a, b) => b.width * b.height - a.width * a.height)
+    const { pad, feather, soft } = shapeRef.current;
+    const reach = pad + feather;
+    const blocks = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
+      .map((el) => ({ r: el.getBoundingClientRect(), soft: el.dataset.quiet === "soft" && window.innerWidth >= 1024 }))
+      .filter(({ r }) => r.width > 8 && r.height > 8 && r.bottom > -reach && r.top < vh + reach)
+      .sort((a, b) => b.r.width * b.r.height - a.r.width * a.r.height)
       .slice(0, SCRIMS);
     for (let k = 0; k < SCRIMS; k++) {
       const el = scrimEls.current[k];
       if (!el) continue;
-      const r = rects[k];
-      if (!r) {
+      const b = blocks[k];
+      if (!b) {
         el.style.opacity = "0";
         continue;
       }
+      const r = b.r;
       const size = `${Math.round(r.width)}x${Math.round(r.height)}`;
       if (scrimSizes.current[k] !== size) {
         scrimSizes.current[k] = size;
-        el.style.width = `${Math.round(r.width) + 2 * SCRIM_REACH}px`;
-        el.style.height = `${Math.round(r.height) + 2 * SCRIM_REACH}px`;
+        el.style.width = `${Math.round(r.width) + 2 * reach}px`;
+        el.style.height = `${Math.round(r.height) + 2 * reach}px`;
       }
-      el.style.transform = `translate3d(${Math.round(r.left) - SCRIM_REACH}px, ${Math.round(r.top) - SCRIM_REACH}px, 0)`;
-      el.style.opacity = "1";
+      el.style.transform = `translate3d(${Math.round(r.left) - reach}px, ${Math.round(r.top) - reach}px, 0)`;
+      el.style.opacity = b.soft ? String(soft) : "1";
     }
   }, []);
 
@@ -373,9 +423,12 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       maxWaitMs: Number(q.get("maxWait") ?? 1200),
       flightMs: (q.get("flight") ?? "1600,2600").split(",").map(Number) as unknown as readonly [number, number],
       firstStep: q.get("ladder") === "first",
+      mapId: mapIdFrom(process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID),
+      mode: modeChoice(q.get("mode"), MODE),
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
+        claimMap(true);
         setPosterGone((g) => g || "dissolve");
         labelsPlaced.current = false;
         showTerritoryRef.current();
@@ -392,6 +445,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
         // Once, whatever fails: the poster comes back (or never left) and stays.
         if (failed.current) return;
         failed.current = true;
+        claimMap(false);
         setError(m);
         setPosterGone(false);
         showTerritoryRef.current();
@@ -471,8 +525,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
   }, [measure, schedule]);
 
   useEffect(() => {
+    scrimSizes.current = [];
     placeScrims();
-  }, [look, placeScrims]);
+  }, [look, shape, placeScrims]);
 
   // HOVER: the pointer against the homes we drew, where the pointer is on the ground (not over
   // words, a card or a control).
@@ -648,8 +703,8 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
                 style={{
                   opacity: 0,
                   background: `rgba(0,0,0,${scrim})`,
-                  WebkitMaskImage: FEATHER,
-                  maskImage: FEATHER,
+                  WebkitMaskImage: featherMask(shape.feather),
+                  maskImage: featherMask(shape.feather),
                   WebkitMaskComposite: "source-in",
                   maskComposite: "intersect",
                   willChange: "transform",
@@ -663,6 +718,12 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
           aria-hidden
           className="absolute inset-x-0 top-0 h-[230px]"
           style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
+        />
+        <div
+          ref={footShade}
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-[26svh] lg:hidden"
+          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.86) 100%)", ...mask }}
         />
         {tail?.veil ? <div ref={tailVeil} aria-hidden className="absolute inset-0 bg-black" style={{ opacity: 0, ...mask }} /> : null}
         {/* The territory's names (labels.ts): over the map and its lights, under the words. Sentence
@@ -707,12 +768,13 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
           />
         </div>
       </div>
-      {/* THE LOAD COVER: our poster (see posterGone above), over the map and under the words,
-          shot from the map's own hero camera (round 57, scripts/make-night-poster.mjs). A phone
-          sees a crop of it; 78% puts the city and Westchester in that crop, where the phone's
-          own camera has them, so the dissolve keeps the city where it was.
-          absolute to the page like the night flight's, with the same two scrims under the words
-          (a still cannot be told where the words are). Its image is preloaded by the page. */}
+      {/* THE LOAD COVER: our still (see posterGone above), over the map and under the words,
+          drawn from the map's own hero camera (round 57.2, scripts/make-map-cover.mjs): the wide
+          one from the laptop's camera, the tall one from the phone's, each shown whole, so the
+          dissolve keeps the composition at both widths (round 57.1 cropped one landscape still
+          for the phone, and the city jumped at the dissolve). Absolute to the page like the night
+          flight's, with the same two scrims under the words (a still cannot be told where the
+          words are). Its images are preloaded by the page, each for its own width. */}
       <div
         aria-hidden
         data-g3d-poster
@@ -720,8 +782,8 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
         data-state={posterGone ? "gone" : "on"}
         data-drop={posterGone || undefined}
         {...{ elementtiming: "g3d-poster" }}
-        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-[position:78%_50%] bg-no-repeat lg:bg-[position:58%_50%] transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
-        style={{ backgroundImage: `url(${poster})` }}
+        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-center bg-no-repeat bg-[image:var(--g3d-tall)] lg:bg-[image:var(--g3d-wide)] transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        style={{ "--g3d-tall": `url(${cover.tall})`, "--g3d-wide": `url(${cover.wide})` } as CSSProperties}
       >
         <div
           className="absolute inset-0 lg:hidden"
@@ -729,6 +791,12 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
             background:
               "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)",
           }}
+        />
+        {/* The header's shade, as the map has it (topScrim): the cover sits above the map's own
+            layers, and cover B's hazy daylight sky left the header's links on a light ground. */}
+        <div
+          className="absolute inset-x-0 top-0 h-[230px]"
+          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)" }}
         />
         <div
           className="absolute inset-0 hidden lg:block"
@@ -751,6 +819,14 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       </div>
     </AreaContext.Provider>
   );
+}
+
+/** "Map: Google." is said only while Google's map is what stands behind the page (app/page.tsx
+ * renders it hidden: no claim with JS off, before the map has drawn, or after it failed). */
+function claimMap(on: boolean) {
+  document.querySelectorAll<HTMLElement>("[data-map-claim]").forEach((e) => {
+    e.hidden = !on;
+  });
 }
 
 // ---- the hovered home's price ---------------------------------------------------------------------
