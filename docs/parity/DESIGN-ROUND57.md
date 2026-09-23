@@ -261,3 +261,125 @@ Do not touch: `labels.ts` placement (only its fade timing if a shot changes), th
 CSP, `/search`, the day pages. Gates as round 1 (frames at every stop both widths, the lag probe
 cold and warm both widths, the contrast kit, day pages at 1440, no-JS, tsc, vitest only up with
 tests for the ceiling and glyph rules and the map ID resolution, overflow).
+
+### Round 2, the builder's numbers (commits `5bf1943` `73e356d` `ca8a0dc` `9befadd`; for the orchestrator to re-run)
+
+Instruments (gitignored, copies of round 1's as `scripts/_scratch-r57b-*.mjs`, outputs in
+`scripts/_scratch-r57/2/`): `-frames` (now prints the mode and glyph per stop), `-lag` (`--q=?mode=`),
+`-table`, `-contrast`, `-daypages`/`-daydiff`, `-nojs` (expects the dusk cover), `-blocked`,
+`-overflow`, `-dissolve` (`--q=cover=dusk|day`), plus `-phonecam` (sets candidate cameras on the
+live element), `-count` (label placement for candidate phone cameras, offline), `-claim` ("Map:
+Google." with JS off, the Maps script blocked, the map drawn), `-h1` (the background behind the
+phone headline). Baselines on HEAD `6151b2a` before any change: `2/lag/before-*`, `2/day/before-*`.
+
+**1. Lights, calm.** Count, screen gap and glyph follow the range (`cameras.ts` `pxPerLight`,
+`ceilingFor`, `budgetFor`, `lightGap`; `glyph.ts` `glyphFor`; tested). Ceiling: one light per
+`2000 * (range / 25 km)^0.9` sq px, clamped 2,000..10,000, and 130 from 100 km up, 380 from 25 km,
+900 closer. Gap: `17 * (range / 25 km)^0.45` px, clamped 14..30. Glyph: 12 px / halo 0.30 / core 3.7
+(of 18 units) from 100 km, 14 / 0.38 / 3.3 from 40 km, 18 / 0.50 / 2.9 closer; featured 16 px (was
+24). A first pass at 11 px with the 2.9 core lost the lights on the imagery (`2/a/hero-crop.png`).
+Drawn per stop (`1/frames-*.txt` -> `2/final/report-*.json`):
+
+| stop | 1440 before -> after | 390 before -> after |
+|---|---|---|
+| hero (territory) | 339 -> **130** | 200 -> **32** |
+| Dutchess / Highlands / Westchester | 800 / 795 / 796 -> 248 / 380 / 360 | 203 / 201 / 199 -> 59 / 110 / 74 |
+| Ulster / Dutchess Co. / Orange / Putnam / Rockland / Westchester Co. | 395 / 495 / 447 / 218 / 359 / 536 -> 148 / 159 / 120 / 112 / 180 / 147 | 192 / 205 / 194 / 133 / 196 / 200 -> 39 / 64 / 34 / 42 / 97 / 69 |
+| Bronx / Manhattan / Queens / Brooklyn / Staten Island | 234 / 145 / 655 / 476 / 80 -> 88 / 72 / 228 / 286 / 65 | 168 / 121 / 197 / 200 / 68 -> 67 / 69 / 65 / 138 / 47 |
+| harbour / region | 782 / 346 -> 380 / 294 | 204 / 201 -> 124 / 74 |
+
+Looked at (`2/final/sheet-{1440,390}.png`, `2/final/hero-1440.png`): the territory shot is a
+scatter of small warm points over the valley and the city, no blob; the county chapters are points
+with ground between them; Queens and Brooklyn at 1440 still read as an even lattice (228 / 286), not
+a carpet. On the phone the territory's 32 lights are faint beside the words; the phone's chapters
+are mostly covered by words anyway.
+
+**2. Clutter.** `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` is wired (`map-options.ts` `mapIdFrom`: absent,
+blank or not shaped like a map ID = unstyled; tested). **The owner's recipe** (Cloud console, the
+project that owns the site's Maps key): (1) Google Maps Platform > Map Management > Create map ID,
+map type **JavaScript**, name it "RealtyLT home"; (2) Map Styles > Create style, choose **2D
+hybrid** (3D preview is unavailable; dark mode is unsupported for 3D); (3) in the style, turn Points
+of interest off or down (Business, Attractions, Transit stations), keep Locality and Neighborhood
+labels, save; (4) Map Management > the new map ID > associate the style; (5) Publish, then put the
+map ID in Vercel as `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` and redeploy (a `NEXT_PUBLIC_` variable is read
+at build time). Until then the map is unstyled.
+
+**The mode, by frames** (`2/mode/ab-1440.png`, `ab-390.png`: Westchester Co., Orange, Manhattan,
+Brooklyn; HYBRID top row, SATELLITE bottom): HYBRID draws coloured POI pins, route shields and street
+names over every chapter and they fight our words and lights; SATELLITE is the photograph. `mode`
+**is settable at runtime on 3.66**: with `?mode=split` the element reports HYBRID at the hero and
+SATELLITE after the first flight, and the frames show the pins gone (`2/mode/split/`). Chosen:
+**split** (HYBRID at the territory shot for orientation, SATELLITE everywhere else). Cost, the
+headed lag probe on the same build (flights: worst ms / sum of frames over 34 ms):
+
+| | cold 1440 | warm 1440 | cold 390 | warm 390 |
+|---|---|---|---|---|
+| hybrid everywhere (`?mode=hybrid`) | 243 / 310 | 70 / 145 | 90 / 13 | 56 / 7 |
+| split (shipped) | 236 / **111** | 139 / **66** | 91 / 18 | 49 / 8 |
+
+**3. Scrims.** Pad 28 -> 20 px, feather 80 -> 150 px, opacity 0.8 kept: 0.72 and 0.62 with pad 0
+failed the chapter list's 15 px labels (3.5 to 4.0:1). The eyebrow and the headline are now their
+own quiet blocks; the headline's shade is 0.62 of the full at lg only; the hero's small words carry
+a soft text-shadow; the h1's break is explicit so `w-fit` hugs "Let's find" (it had taken the
+column, 358 px, and on the phone our Dutchess and Putnam labels sat inside its box: 1.45:1). Mean
+brightness of the 1440 words column (x 0..700) 35.6 -> 40.4 (the map right of it 88): lighter under
+the headline, but the column still reads darker than the map; see "left". The harbour stop now
+shows the map through its words (`2/final/harbour-1440.png`, was near-black); the tail veil is
+unchanged (behind the footer's form). Phone: a foot shade while the hero is up takes most of the
+ocean's pale band; the logo corner stays clear by the mask, so a little of the band shows there.
+
+**Contrast kit** (18 stops, p99, outside the logo corner): **1440 = 2** (AI and Connect, the pills
+the kit misreads, as in rounds 56 and 57.1); **390 = 0** (8 text-stops inside the logo hole, faded
+on purpose). Hero at 1440: eyebrow 6.99, h1 7.22, count 10.2, note 5.08. (Run on the build before
+the cover's header shade was added; that change touches only the cover, which is gone by then.)
+
+**4. The cover.** `scripts/make-map-cover.mjs` draws each pixel as a ray from the map's hero camera
+to the ellipsoid, shaded from our own `public/geo/valley-elevation` (USGS relief, water mask, Black
+Marble glow). **A (default, dusk)**: that land at dusk with the night still from the same camera
+screen-blended over it; **B (day)**: the same land by day, no lights, `NEXT_PUBLIC_HOME_COVER=day`
+(or `?cover=day` to compare). Both wide (1600x1000) and **tall** (780x1688, from the phone's own
+camera): dusk 156.8 / 120.2 KB, day 19.1 / 16.3 KB. Dissolve frames (`2/dissolve/sheet-1440.png`,
+`sheet-390.png`: before / 150 ms into the fade / 600 ms after, A top, B bottom): the composition
+holds at both widths now (the phone's city stays mid-frame); A is still night-to-day but warm and
+lit, a softer turn; B meets the daylight imagery in tone but reads as a relief model, not a
+photograph. The owner chooses.
+
+**5. The phone's two edges.** Tilt 50 / fov 62 -> tilt 46 / fov 58 (`2/phonecam/sheet*.png`):
+Ottawa, Kingston ON and Watertown are gone from the top; the city, Long Island and the Sound stay in
+the band. Names placed at 390: 7 (floor 7; fov 56 placed 6). The bottom's pale band is the ocean at
+every candidate, so it is shaded (above), not framed away.
+
+**6. Honest note** (`-claim`): JS off: no "Map: Google"; Maps script blocked: none (`load: Google
+Maps failed to load`); before the map draws: none; after: shown.
+
+**Lag, before (HEAD `6151b2a`) -> after (final)**, headed, per phase worst ms / over 34:
+
+| | cold 1440 | warm 1440 | cold 390 | warm 390 |
+|---|---|---|---|---|
+| boot | 542/50 -> 431/40 | 188/41 -> 181/40 | 438/37 -> 403/27 | 180/33 -> 160/22 |
+| first flight (to Dutchess) | 90/36 -> 56/7 | 104/46 -> 35/5 | 97/9 -> 35/2 | 49/7 -> 49/2 |
+| flight to Westchester, worst | 257 -> **236** | 76, 111 -> 56 | 111 -> 91 | 49 -> 35 |
+| flights: worst / sum over 34 | 257/607 -> 236/111 | 118/551 -> 139/66 | 111/82 -> 91/18 | 63/63 -> 49/8 |
+| marker adds (whole scroll) | 1046 -> 518 | 1046 -> 518 | 343 -> 150 | 343 -> 150 |
+| poster painted / map steady / cover gone (s) | 0.5/9.2/12.4 -> 0.5/7.2/10.4 | 0.5/7.1/10.5 -> 0.5/6.7/10.0 | 0.5/6.7/9.4 -> 0.5/5.3/9.5 | 0.3/5.6/8.2 -> 0.3/4.5/7.1 |
+
+Fewer markers are cheaper: with the new lights and HYBRID kept, the flights' over-34 sum fell 607
+-> 310 cold and 551 -> 145 warm at 1440; SATELLITE took it to 111 and 66. The cold 1440 stall on the
+flight to Westchester is unchanged in kind (257 before, 243 hybrid, 236 split): not ours, as round 1
+found. The warm 1440 worst of 139 was one frame in the upward fling. One run each: round 56 §8
+puts run-to-run noise at up to 1.5x on the over-34 counts; these drops are 4x to 8x.
+
+**Day pages** (1440 and 390, `before` on HEAD vs `after`): 16 of 20 at 0 px. /buying 1440 806 px,
+and a re-render of the same build (`after2`) is 0 px against `before`; /blog 1440 458 px, and two
+renders of the same build differ 62,264 px (photo cards); the listing page is live MLS data (26,726
+px at 1440, 57 at 390). No file a day page renders changed (`git diff --stat 6151b2a` outside the
+home page's files is empty). **No-JS**: 1440 and 390 OK (the dusk cover at opacity 1, wide and tall
+respectively, form GET to `/search?q=Beacon`, rails 16 and 8, 0 Maps requests, no Google claim).
+**Blocked script**: the cover stays at the top and after scrolling, one `[g3d]` warning.
+**Overflow**: 0 px at 1440, 768, 640, 390, 320 at five scroll positions. **Gates**: tsc clean;
+vitest 1748 -> **1767** (131 files).
+
+**Left for the next round**: the 1440 words column still reads as shade over New Jersey (lighter,
+not gone; the next lever is a soft share on the count block with its own text-shadow, measured);
+Queens and Brooklyn at 1440 read as a lattice and might take a wider near-tier gap; the cover (A or
+B) and the map ID are the owner's.
