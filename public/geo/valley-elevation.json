@@ -18,7 +18,7 @@
     "x": 200.1,
     "y": 200
   },
-  "encoding": "R: 0 = water, else 1 + round(254 * sqrt(e / maxM)), e in metres; G: water fraction of the cell, 0..255 (>= 128 exactly where R = 0); B: 0",
+  "encoding": "R: 0 = water, else 1 + round(254 * sqrt(e / maxM)), e in metres; G: water fraction of the cell, 0..255 (>= 128 exactly where R = 0); B: night lights, 255 * (S / max S) * sqrt(E / max E), S and E Gaussian blurs (1.75 km, 6 km) of the Black Marble 2016 luminance less a floor of 20; water cells keep theirs",
   "maxM": 1250,
   "minLandM": 0.5,
   "water": {
@@ -37,5 +37,13 @@
     "srtm": 44,
     "gmted": 40,
     "etopo1": 4
+  },
+  "sources": {
+    "nightLights": {
+      "name": "NASA Earth Observatory, Black Marble 2016 (Suomi NPP VIIRS day-night band, cloud-free composite)",
+      "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/144000/144898/BlackMarble_2016_B1_geo.tif",
+      "tile": "BlackMarble_2016_B1_geo.tif",
+      "licence": "NASA Media Usage Guidelines (nasa.gov/nasa-brand-center/images-and-media/, read 2026-09-22): NASA content used in a factual manner that does not imply endorsement may be used without needing explicit permission. NASA should be acknowledged as the source of the material."
+    }
   }
 }

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 import { SERVED_REGION } from "@/components/idx/county-bounds";
-import { decodeElevation, encodeElevation, gradients, isWater, sampleHeight, waterness, type ElevationGrid, type ElevationMeta } from "./elevation";
+import { decodeElevation, encodeElevation, gradients, isWater, sampleGlow, sampleHeight, waterness, type ElevationGrid, type ElevationMeta } from "./elevation";
 
 /** A tiny grid: 3 x 3 cells over a 3 x 3 degree box, so cell centres fall on whole degrees + 0.5. */
 const BOX = { west: 0, east: 3, south: 0, north: 3 };
@@ -45,6 +45,17 @@ describe("elevation encoding", () => {
     expect(g.water[1]).toBe(1);
     expect(g.waterFrac[1]).toBeCloseTo(200 / 255, 6);
   });
+
+  it("reads the night glow from the third channel when there is one, 0 otherwise", () => {
+    const px = [encodeElevation(50, 900), 64, 255, 255, 0, 200, 51, 255];
+    const g = decodeElevation(px, { ...META, w: 2, h: 1 }, 4);
+    expect(g.glow[0]).toBe(1);
+    expect(g.glow[1]).toBeCloseTo(51 / 255, 6);
+    const one = decodeElevation([encodeElevation(50, 900)], { ...META, w: 1, h: 1 });
+    expect(one.glow[0]).toBe(0);
+    const two = decodeElevation([encodeElevation(50, 900), 64], { ...META, w: 1, h: 1 }, 2);
+    expect(two.glow[0]).toBe(0);
+  });
 });
 
 describe("elevation sampling (synthetic 3 x 3 grid)", () => {
@@ -81,6 +92,18 @@ describe("elevation sampling (synthetic 3 x 3 grid)", () => {
 
   it("clamps outside the grid to its edge", () => {
     expect(sampleHeight(grid, -5, 1.5)).toBeCloseTo(exact(0, 1), 6);
+  });
+
+  it("samples the glow bilinearly, like the height", () => {
+    // RGB cells: the top row glows 255, 0, 255; everything else dark.
+    const rgb = heights.flat().flatMap((e, i) => [encodeElevation(e, 900), 0, i === 0 || i === 2 ? 255 : 0]);
+    const g = decodeElevation(rgb, META, 3);
+    const [lng0, lat0] = at(0, 0);
+    expect(sampleGlow(g, lng0, lat0)).toBe(1);
+    expect(sampleGlow(g, lng0 + 0.5, lat0)).toBeCloseTo(0.5, 6);
+    expect(sampleGlow(g, lng0 + 1, lat0)).toBe(0);
+    expect(sampleGlow(g, lng0, lat0 - 0.5)).toBeCloseTo(0.5, 6);
+    expect(sampleGlow(g, lng0, lat0 - 2)).toBe(0);
   });
 
   it("finds the water, with the shore halfway between a wet and a dry cell", () => {
@@ -121,7 +144,26 @@ describe("the committed terrain asset", () => {
     expect(meta.box.east).toBeGreaterThan(SERVED_REGION.east);
     expect(meta.box.south).toBeLessThan(SERVED_REGION.south);
     expect(meta.box.north).toBeGreaterThan(SERVED_REGION.north);
-    expect(fs.statSync(path.join(dir, "valley-elevation.webp")).size).toBeLessThan(300 * 1024);
+    // 281 KB with R and G (round 54); the night lights in B took it to the size below (round 55).
+    expect(fs.statSync(path.join(dir, "valley-elevation.webp")).size).toBeLessThan(400 * 1024);
+  });
+
+  it("has the night lights where the cities are: the metro brightest, the valley towns as towns, the Catskills dark", async () => {
+    const g = await load();
+    const glowAt = (lng: number, lat: number) => sampleGlow(g, lng, lat);
+    const midtown = glowAt(-73.985, 40.755), flushing = glowAt(-73.83, 40.76), yonkers = glowAt(-73.87, 40.93);
+    const newburgh = glowAt(-74.02, 41.5), poughkeepsie = glowAt(-73.92, 41.7), kingston = glowAt(-73.99, 41.93);
+    const slide = glowAt(-74.39, 42.0), harriman = glowAt(-74.1, 41.25), ashokan = glowAt(-74.2, 41.95);
+    expect(midtown).toBeGreaterThan(0.95);
+    expect(flushing).toBeGreaterThan(0.9);
+    expect(yonkers).toBeGreaterThan(0.75);
+    // The valley towns: the brief's 60..130 of 255, and each one below the metro.
+    for (const [name, v] of [["Newburgh", newburgh], ["Poughkeepsie", poughkeepsie], ["Kingston", kingston]] as const) {
+      expect(v, name).toBeGreaterThan(60 / 255);
+      expect(v, name).toBeLessThan(135 / 255);
+    }
+    expect(kingston).toBeLessThan(newburgh);
+    for (const [name, v] of [["Slide Mountain", slide], ["Harriman", harriman], ["the Ashokan", ashokan]] as const) expect(v, name).toBeLessThan(0.02);
   });
 
   it("has the Hudson as water all the way up, and the harbour", async () => {

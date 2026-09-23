@@ -20,6 +20,8 @@
 //      by 1.6/255 RMS (measured), so the moonlight is computed there, where it can also move.
 //   G  how much of the cell is water (0..255 of 36 subsamples): an anti-aliased coast, so the
 //      shoreline is drawn between cells, not along their stair-stepped edges.
+//   B  the region's light at night (round 55): written by scripts/build-nightlights.mjs, which this
+//      script runs at its end, so one run builds the whole asset.
 //
 // WATER. Three rules, each measured against the source:
 //   1. at or below WATER_M (0.5 m): the harbour, the Sound, the Kills, the tidal marsh;
@@ -357,3 +359,5 @@ console.log(
   `wrote public/geo/${OUT}.webp ${W}x${H} (${cellX.toFixed(0)} x ${cellY.toFixed(0)} m cells) ${(img.length / 1024).toFixed(1)} KB; ` +
     `water ${((100 * waterCells) / (W * H)).toFixed(1)}%, land ${minLand.toFixed(1)}..${maxE.toFixed(1)} m`,
 );
+// The blue channel: the night lights, from the file just written (R and G are proved unchanged).
+await (await import("./build-nightlights.mjs")).buildNightLights({ root: ROOT });

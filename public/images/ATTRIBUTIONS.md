@@ -189,16 +189,26 @@ vendor contract ever surfaces saying otherwise, this row is where to revisit.
 | public/images/mls/coming-soon.webp | RETIRED 2026-08-02, kept on purpose — "coming soon" placeholder, moonlit manor | Levan Tsiklauri, Google Nano Banana Pro via ElevenLabs | Owner's own generated artwork | [source](https://elevenlabs.io/) |
 | public/images/mls/coming-soon-notext.webp | RETIRED 2026-08-02, kept on purpose — wordless cut (sky text removed with local Mage-Flow edit) | Levan Tsiklauri + RealtyLT | Owner's own generated artwork | [source](https://elevenlabs.io/) |
 
-## `public/geo/` -- the home page's night-flight terrain (round 54), not photography
+## `public/geo/` -- the home page's night-flight terrain (round 54) and night lights (round 55), not photography
 
 These files are data, not images of anything, so they sit outside the table above (the table's
 test only scans `public/images/`). Recorded here so the licence lives with the rest.
 
 | file | what | source | licence |
 |---|---|---|---|
-| `public/geo/valley-elevation.webp` + `.json` | The served region's elevation (R) and water fraction (G) on a 200 m grid, built by `scripts/build-elevation.mjs` | AWS Terrain Tiles (Mapzen/Tilezen "terrarium", AWS Open Data), zoom 11. Every tile's own `x-amz-meta-x-imagery-sources` header was read on 2026-09-22 (150 tiles): USGS 3DEP/NED 1/3 arc-second (125 tiles) and 1/9 arc-second Hudson LiDAR (82), SRTM (44), GMTED2010 (40), NOAA ETOPO1 (4). Water: USGS National Hydrography Dataset river polygons (hydro.nationalmap.gov, NHD "Area - Small Scale", StreamRiver) plus lakes found flat in the DEM | Public domain (USGS 3DEP, SRTM, GMTED2010, NHD; NOAA ETOPO1) |
+| `public/geo/valley-elevation.webp` + `.json`, red and green channels | The served region's elevation (R) and water fraction (G) on a 200 m grid, built by `scripts/build-elevation.mjs` | AWS Terrain Tiles (Mapzen/Tilezen "terrarium", AWS Open Data), zoom 11. Every tile's own `x-amz-meta-x-imagery-sources` header was read on 2026-09-22 (150 tiles): USGS 3DEP/NED 1/3 arc-second (125 tiles) and 1/9 arc-second Hudson LiDAR (82), SRTM (44), GMTED2010 (40), NOAA ETOPO1 (4). Water: USGS National Hydrography Dataset river polygons (hydro.nationalmap.gov, NHD "Area - Small Scale", StreamRiver) plus lakes found flat in the DEM | Public domain (USGS 3DEP, SRTM, GMTED2010, NHD; NOAA ETOPO1) |
+| `public/geo/valley-elevation.webp`, blue channel | The light the region gives off at night (B) on the same grid: the towns' glow, ranked by how large a lit area is, built by `scripts/build-nightlights.mjs` (round 55). Luminance only; the tile's colour ramp is not used | NASA Earth Observatory, "Black Marble" 2016: Suomi NPP VIIRS day-night band, cloud-free composite; the 500 m tile `BlackMarble_2016_B1_geo.tif` (0..90 N, 90 W..0) from `eoimages.gsfc.nasa.gov/images/imagerecords/144000/144898/`, fetched 2026-09-22 | NASA Media Usage Guidelines (below): not subject to copyright in the United States; NASA to be acknowledged as the source |
 
 Credits the sources ask for, verbatim:
+- NASA Media Usage Guidelines, `nasa.gov/nasa-brand-center/images-and-media/`, read 2026-09-22: "NASA
+  content – images, audio, video, and media files used in the rendition of 3-dimensional models, such
+  as texture maps and polygon data in any format – generally are not subject to copyright in the
+  United States. ... NASA content used in a factual manner that does not imply endorsement may be
+  used without needing explicit permission.
+  NASA should be acknowledged as the source of the material."
+  The NASA insignia, logotype and seal are protected and are NOT used anywhere on the site: the
+  acknowledgement is a text line in the footer, "Night lights: NASA Earth Observatory (Black Marble
+  2016, Suomi NPP VIIRS)."
 - Tilezen, `github.com/tilezen/joerd/blob/master/docs/attribution.md`, "Required attribution when using
   Mapzen's hosted service": "Mapzen", "United States 3DEP (formerly NED) and global GMTED2010 and SRTM
   terrain data courtesy of the U.S. Geological Survey.", "Global ETOPO1 terrain data U.S. National

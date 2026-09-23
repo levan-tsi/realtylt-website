@@ -241,4 +241,16 @@ describe("the footer over the scene", () => {
     );
     expect(fs.readFileSync(path.join(ROOT, "components/site/Footer.tsx"), "utf8")).toContain("<SceneCredit />");
   });
+
+  it("acknowledges NASA as the source of the night lights, as its usage guidelines ask, in text and never as an insignia", () => {
+    const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
+    expect(credit).toContain("Night lights: NASA Earth Observatory (Black Marble 2016, Suomi NPP VIIRS).");
+    expect(credit).not.toMatch(/<(img|Image|svg)\b/);
+    const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
+    expect(attributions).toContain("NASA should be acknowledged as the source of the material.");
+    expect(attributions).toContain("BlackMarble_2016_B1_geo.tif");
+    const meta = JSON.parse(fs.readFileSync(path.join(ROOT, "public/geo/valley-elevation.json"), "utf8")) as { sources?: { nightLights?: { url?: string; licence?: string } } };
+    expect(meta.sources?.nightLights?.url).toContain("eoimages.gsfc.nasa.gov");
+    expect(meta.sources?.nightLights?.licence).toContain("NASA should be acknowledged as the source of the material.");
+  });
 });

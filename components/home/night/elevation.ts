@@ -2,7 +2,9 @@
  *
  * The asset (scripts/build-elevation.mjs) is an equirectangular grid over the served region plus a
  * margin, row 0 = north. Red: 0 = water, else 1 + round(254 * sqrt(e / maxM)). Green: how much of
- * the cell is water, 0..255, so the coast is an anti-aliased edge. Everything here but
+ * the cell is water, 0..255, so the coast is an anti-aliased edge. Blue: the region's own light at
+ * night, 0..255, from NASA's Black Marble 2016 (scripts/build-nightlights.mjs: the town glow, ranked
+ * by how large a lit area is, so the metro is 255 and a valley town 60..130). Everything here but
  * `loadElevation` is pure, so it is tested on tiny synthetic grids. */
 import type { LngLatBox } from "./world";
 
@@ -28,15 +30,20 @@ export interface ElevationGrid {
   water: Uint8Array;
   /** How much of each cell is water, 0..1 (>= 0.5 exactly where `water` is 1). */
   waterFrac: Float32Array;
+  /** The light the cell gives off at night, 0..1 (1 = the metro; a valley town ~0.25..0.5; the
+   * Catskills 0), from the asset's blue channel. All 0 when the asset has no third channel. */
+  glow: Float32Array;
 }
 
 /** Interleaved pixels, `channels` bytes a cell (4 for canvas RGBA): the first byte is the height,
- * the second (when there is one) the water fraction. With one channel the fraction is 0 or 1. */
+ * the second (when there is one) the water fraction, the third (when there is one) the night
+ * glow. With one channel the fraction is 0 or 1 and the glow is 0. */
 export function decodeElevation(values: ArrayLike<number>, meta: Pick<ElevationMeta, "box" | "w" | "h" | "maxM" | "metresPerCell">, channels = 1): ElevationGrid {
   const n = meta.w * meta.h;
   const heights = new Float32Array(n);
   const water = new Uint8Array(n);
   const waterFrac = new Float32Array(n);
+  const glow = new Float32Array(n);
   for (let i = 0; i < n; i++) {
     const v = values[i * channels];
     if (v === 0) water[i] = 1;
@@ -45,8 +52,9 @@ export function decodeElevation(values: ArrayLike<number>, meta: Pick<ElevationM
       heights[i] = meta.maxM * f * f;
     }
     waterFrac[i] = channels > 1 ? values[i * channels + 1] / 255 : water[i];
+    if (channels > 2) glow[i] = values[i * channels + 2] / 255;
   }
-  return { box: meta.box, w: meta.w, h: meta.h, cellM: meta.metresPerCell, heights, water, waterFrac };
+  return { box: meta.box, w: meta.w, h: meta.h, cellM: meta.metresPerCell, heights, water, waterFrac, glow };
 }
 
 /** The encoding, for tests and tools: metres (or null for water) to the stored byte. */
@@ -92,6 +100,12 @@ export function waterness(grid: ElevationGrid, lng: number, lat: number): number
 
 export function isWater(grid: ElevationGrid, lng: number, lat: number): boolean {
   return waterness(grid, lng, lat) >= 0.5;
+}
+
+/** The night glow at a place, 0..1, bilinear between cell centres like the height. */
+export function sampleGlow(grid: ElevationGrid, lng: number, lat: number): number {
+  const [gx, gy] = gridCoord(grid, lng, lat);
+  return bilinear(grid.glow, grid.w, grid.h, gx, gy);
 }
 
 /** Slope per cell, Horn's 3x3: rise over run in metres per metre, east and NORTH. */
