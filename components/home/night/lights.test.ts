@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { LightPoints } from "@/lib/idx/lights";
 import { decodeElevation, encodeElevation } from "./elevation";
-import { buildHaze, buildLightBundle, buildLights, bundleTransfer, countyAreaGains, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, paintCounties, townCentroids } from "./lights";
-import { boxUVToLngLat, lngLatToWorld } from "./world";
+import { buildGlowHaze, buildHaze, buildLightBundle, buildLights, buildStreetLights, bundleTransfer, countyAreaGains, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, LIGHT_LIFT_M, paintCounties, townCentroids } from "./lights";
+import { boxUVToLngLat, lngLatToWorld, worldToLngLat } from "./world";
 
 const BOX = { west: -74, east: -73, south: 41, north: 42 };
 
@@ -103,6 +103,142 @@ describe("the light cloud", () => {
   });
 });
 
+describe("the towns' glow (from the asset's night-lights channel)", () => {
+  // A 4 x 4 grid of 100 m cells: with 0.2 km patches, four blocks of 2 x 2 cells. The top-left
+  // block glows (its cells 0.8 and 0.4, mean 0.6) at 100 m; the bottom-right block is faint (mean
+  // 0.03); everything else is dark. Heights 100 m everywhere but the glowing block's 200 m.
+  const meta = { box: BOX, w: 4, h: 4, maxM: 900, metresPerCell: { x: 100, y: 100 } };
+  const rgb: number[] = [];
+  for (let r = 0; r < 4; r++)
+    for (let c = 0; c < 4; c++) {
+      const topLeft = r < 2 && c < 2, bottomRight = r >= 2 && c >= 2;
+      rgb.push(encodeElevation(topLeft ? 200 : 100, 900), 0, topLeft ? (c === 0 ? 204 : 102) : bottomRight ? 8 : 0);
+    }
+  const grid = decodeElevation(rgb, meta, 3);
+
+  it("puts one patch on each block whose mean glow clears the floor, inside the block on the terrain, strength the mean", () => {
+    const haze = buildGlowHaze(grid, null, 0.2, 0.06, 0.12);
+    expect(haze.count).toBe(1);
+    // Somewhere inside the top-left block (it is jittered off the centre on purpose).
+    const [x0, , z0] = lngLatToWorld(BOX.west, BOX.north);
+    const [x1, , z1] = lngLatToWorld(BOX.west + 0.5 * (BOX.east - BOX.west), BOX.north - 0.5 * (BOX.north - BOX.south));
+    expect(haze.positions[0]).toBeGreaterThan(x0);
+    expect(haze.positions[0]).toBeLessThan(x1);
+    expect(haze.positions[2]).toBeGreaterThan(z0);
+    expect(haze.positions[2]).toBeLessThan(z1);
+    expect(haze.positions[1]).toBeCloseTo(grid.heights[0] / 1000 + 0.12, 6);
+    // The strength runs from the floor (0) to the metro's 1.
+    expect(haze.strengths[0]).toBeCloseTo(((204 + 102) / 2 / 255 - 0.06) / (1 - 0.06), 5);
+  });
+
+  it("lets the floor down to the faint block, and up past the bright one", () => {
+    expect(buildGlowHaze(grid, null, 0.2, 0.02).count).toBe(2);
+    expect(buildGlowHaze(grid, null, 0.2, 0.7).count).toBe(0);
+  });
+
+  it("keeps the glow to the served land when given the county raster", () => {
+    const [x0, , z0] = lngLatToWorld(BOX.west, BOX.north);
+    const everywhere = { x0: x0 - 1, z0: z0 - 1, cellKm: 1000, w: 1, h: 1, data: Uint8Array.from([1]), reach: Uint8Array.from([0]), maxSteps: 8 };
+    const nowhere = { ...everywhere, data: Uint8Array.from([0]), reach: Uint8Array.from([255]) };
+    expect(buildGlowHaze(grid, everywhere, 0.2).count).toBe(1);
+    expect(buildGlowHaze(grid, nowhere, 0.2).count).toBe(0);
+    // On the flood's outer rings the glow eases out instead of stopping.
+    const edge = { ...everywhere, reach: Uint8Array.from([7]) };
+    const eased = buildGlowHaze(grid, edge, 0.2, 0.2);
+    expect(eased.count).toBe(1);
+    expect(eased.strengths[0]).toBeGreaterThan(0);
+    expect(eased.strengths[0]).toBeLessThan(0.2 * ((0.6 - 0.2) / 0.8));
+  });
+
+  it("is what the bundle carries when the terrain glows, and the homes' own haze when it does not", () => {
+    // A grid at the asset's own scale (16 x 16 cells of 200 m, so the bundle's 1.6 km patches are
+    // 8 x 8 cells): the north-west patch glows 1, the rest is dark. Homes AT that patch, in a real
+    // county, so the served land's raster has a seed where the patch is.
+    const box16 = { west: -74, east: -74 + 3.2 / 83.594, south: 41, north: 41 + 3.2 / 111.132 };
+    const rgb16: number[] = [];
+    for (let r = 0; r < 16; r++) for (let c = 0; c < 16; c++) rgb16.push(encodeElevation(50, 900), 0, r < 8 && c < 8 ? 255 : 0);
+    const grid16 = decodeElevation(rgb16, { box: box16, w: 16, h: 16, maxM: 900, metresPerCell: { x: 200, y: 200 } }, 3);
+    const free = buildGlowHaze(grid16, null);
+    expect(free.count).toBe(1);
+    const [pLng, pLat] = worldToLngLat(free.positions[0], free.positions[2]);
+    const u = (pLng - box16.west) / (box16.east - box16.west), v = (box16.north - pLat) / (box16.north - box16.south);
+    const pts = { ...points(Array.from({ length: 8 }, () => ({ x: u, y: v, town: 0 })), ["T"], [8]), box: box16, townCounty: ["dutchess"] };
+    const withGlow = buildLightBundle(pts, grid16, null, { pow: 0.3, max: 2.3 });
+    expect(withGlow.haze.count).toBe(1);
+    // The glow's strength (1 at the metro's glow, on the served land), not the homes' count curve.
+    expect(withGlow.haze.strengths[0]).toBeCloseTo(1, 5);
+    expect(withGlow.streets.count).toBeGreaterThan(0);
+    const dark = decodeElevation(new Array(9).fill(encodeElevation(100, 900)), { box: BOX, w: 3, h: 3, maxM: 900, metresPerCell: { x: 100, y: 100 } });
+    const withoutGlow = buildLightBundle(pts, dark, null, { pow: 0.3, max: 2.3 });
+    expect(withoutGlow.haze.count).toBe(buildHaze(withoutGlow.cloud).count);
+    expect(withoutGlow.haze.count).toBe(1);
+  });
+
+  it("scales the haze's strength from the floor to the metro's 1", () => {
+    const one = buildGlowHaze(grid, null, 0.2, 0.2);
+    expect(one.strengths[0]).toBeCloseTo((0.6 - 0.2) / 0.8, 5);
+  });
+});
+
+describe("the street lights (the towns' carpet, from the same channel)", () => {
+  // 10 x 10 cells of 200 m; the west half glows 1, the east half 0.25, one dark cell in each.
+  const box = { west: -74, east: -73.976, south: 41, north: 41.018 };
+  const meta = { box, w: 10, h: 10, maxM: 900, metresPerCell: { x: 200, y: 200 } };
+  const rgb: number[] = [];
+  for (let r = 0; r < 10; r++)
+    for (let c = 0; c < 10; c++) rgb.push(encodeElevation(50, 900), 0, r === 0 && (c === 0 || c === 9) ? 0 : c < 5 ? 255 : 64);
+  const grid = decodeElevation(rgb, meta, 3);
+
+  it("lays about perCell lamps on a cell at glow 1 and a quarter as many at glow 0.25, none on a dark cell, each on its own cell", () => {
+    const s = buildStreetLights(grid, null, 4, 0.08);
+    // 49 cells at 1 (4 each) + 49 at 0.25 (64/255 * 4 = 1.004: 1 each, plus a hash's chance of a
+    // second on the 0.004): the totals are within a few of exact.
+    expect(s.count).toBeGreaterThanOrEqual(49 * 4 + 49);
+    expect(s.count).toBeLessThanOrEqual(49 * 4 + 49 + 3);
+    const [xw, , zn] = lngLatToWorld(box.west, box.north);
+    const [xe, , zs] = lngLatToWorld(box.east, box.south);
+    for (let i = 0; i < s.count; i++) {
+      expect(s.positions[i * 3]).toBeGreaterThanOrEqual(xw);
+      expect(s.positions[i * 3]).toBeLessThanOrEqual(xe);
+      expect(s.positions[i * 3 + 2]).toBeGreaterThanOrEqual(zn);
+      expect(s.positions[i * 3 + 2]).toBeLessThanOrEqual(zs);
+      expect(s.positions[i * 3 + 1]).toBeCloseTo((grid.heights[0] + 6) / 1000, 6);
+      expect(s.gains[i]).toBeGreaterThan(0.15);
+      expect(s.gains[i]).toBeLessThanOrEqual(1);
+      expect(s.delays[i]).toBeGreaterThanOrEqual(0);
+      expect(s.seeds[i]).toBeGreaterThanOrEqual(0);
+    }
+    // The west half's lamps burn harder than the east half's.
+    const west: number[] = [], east: number[] = [];
+    for (let i = 0; i < s.count; i++) (s.positions[i * 3] < (xw + xe) / 2 ? west : east).push(s.gains[i]);
+    const mean = (a: number[]) => a.reduce((p, q) => p + q, 0) / a.length;
+    expect(mean(west)).toBeGreaterThan(mean(east) * 3);
+  });
+
+  it("is deterministic, keeps to the served land with each lamp's county, and is empty on a grid with no glow", () => {
+    const a = buildStreetLights(grid, null, 2), b = buildStreetLights(grid, null, 2);
+    expect(Array.from(a.positions)).toEqual(Array.from(b.positions));
+    const [x0, , z0] = lngLatToWorld(box.west, box.north);
+    const nowhere = { x0: x0 - 1, z0: z0 - 1, cellKm: 1000, w: 1, h: 1, data: Uint8Array.from([0]), reach: Uint8Array.from([255]), maxSteps: 8 };
+    expect(buildStreetLights(grid, nowhere, 2).count).toBe(0);
+    const everywhere = { ...nowhere, data: Uint8Array.from([7]), reach: Uint8Array.from([0]) };
+    const within = buildStreetLights(grid, everywhere, 2);
+    expect(within.count).toBe(a.count);
+    expect(within.counties.every((c) => c === 7)).toBe(true);
+    const dark = decodeElevation(new Array(9).fill(encodeElevation(100, 900)), { box: BOX, w: 3, h: 3, maxM: 900, metresPerCell: { x: 100, y: 100 } });
+    expect(buildStreetLights(dark, null).count).toBe(0);
+  });
+
+  it("rides in the bundle and its transfer list", () => {
+    // Homes on the grid itself, in a real county, so its cells are within the served land's reach.
+    const pts = { ...points(Array.from({ length: 8 }, () => ({ x: 0.5, y: 0.5, town: 0 })), ["T"], [8]), box, townCounty: ["dutchess"] };
+    const withGlow = buildLightBundle(pts, grid, null, { pow: 0.3, max: 2.3 });
+    expect(withGlow.streets.count).toBeGreaterThan(0);
+    expect(bundleTransfer(withGlow)).toContain(withGlow.streets.positions.buffer);
+    expect(buildLightBundle(pts, null, null, { pow: 0.3, max: 2.3 }).streets.count).toBe(0);
+  });
+});
+
 describe("the county raster (which land belongs to the county the page is on)", () => {
   const grid = decodeElevation(new Array(9).fill(encodeElevation(100, 900)), { box: BOX, w: 3, h: 3, maxM: 900, metresPerCell: { x: 100, y: 100 } });
   // Two towns 40 km apart, one in Dutchess, one in Orange.
@@ -198,12 +334,14 @@ describe("the light bundle (what the worker hands the scene in one message)", ()
   it("owns every buffer it carries, so a worker can transfer the lot without a copy", () => {
     const buffers = bundleTransfer(b);
     // The cloud's five, the haze's two, the raster, the towns and the dust: ten distinct buffers.
-    expect(buffers).toHaveLength(10);
-    expect(new Set(buffers).size).toBe(10);
+    // Five for the homes, two for the haze, two for the raster, the towns, the painted dust, and
+    // five for the streets (empty arrays on this dark grid, still their own buffers).
+    expect(buffers).toHaveLength(16);
+    expect(new Set(buffers).size).toBe(16);
     for (const buf of buffers) expect(buf).toBeInstanceOf(ArrayBuffer);
     expect(buffers).toContain(b.cloud.positions.buffer);
     expect(buffers).toContain(b.dustCounties!.buffer);
-    expect(bundleTransfer(buildLightBundle(pts, grid, null, { pow: 0.3, max: 2.3 }))).toHaveLength(9);
+    expect(bundleTransfer(buildLightBundle(pts, grid, null, { pow: 0.3, max: 2.3 }))).toHaveLength(15);
   });
 });
 

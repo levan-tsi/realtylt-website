@@ -159,6 +159,106 @@ export function buildHaze(cloud: LightCloud, cellKm = 1.6, min = 6, liftKm = 0.1
   return { count: kept.length, positions, strengths };
 }
 
+/** THE TOWNS' OWN GLOW (round 55): the region's real light at night, from the terrain asset's
+ * blue channel (elevation.ts `glow`: NASA's Black Marble 2016 draped on the grid, the metro 1, a
+ * valley town ~0.3..0.5, the Catskills 0). One patch per `cellKm` square whose mean glow clears
+ * `floor`, on the terrain (the square's mean height + `liftKm`), strength the mean glow. buildHaze
+ * above hung the glow only where many homes FOR SALE stood together, so it drew the market, not
+ * the region: Manhattan (370 homes) was nearly dark and Newburgh, Poughkeepsie and Kingston had no
+ * glow at all. This is where the cities are, whether or not anything is for sale there; the
+ * listings stay the warm points on top.
+ *
+ * `within` keeps the glow to the served territory: the county raster the area chapter paints the
+ * land with (every cell within reach of a home). Without it the satellite lights all of northern
+ * New Jersey and Nassau, which are as bright as Queens in the tile and NOT where we work: measured
+ * in the first frame, that flooded the hero's lower left (the headline's dark ground since round
+ * 54) and the whole foreground with grey. With it the metro's glow bleeds a little across the
+ * Hudson and the county line, then stops, as round 54's own lights do.
+ *
+ * Each patch is moved a deterministic fraction of its square off the grid: rows of patches at one
+ * spacing, seen at a grazing angle, drew as horizontal bands (measured, the same frame). */
+export function buildGlowHaze(grid: ElevationGrid, within: CountyRaster | null = null, cellKm = 1.6, floor = 0.35, liftKm = 0.12): HazeCloud {
+  const stepC = Math.max(1, Math.round((cellKm * 1000) / grid.cellM.x));
+  const stepR = Math.max(1, Math.round((cellKm * 1000) / grid.cellM.y));
+  const pos: number[] = [], str: number[] = [];
+  const { box, w, h } = grid;
+  for (let r0 = 0; r0 < h; r0 += stepR)
+    for (let c0 = 0; c0 < w; c0 += stepC) {
+      const r1 = Math.min(h, r0 + stepR), c1 = Math.min(w, c0 + stepC);
+      let g = 0, m = 0, n = 0;
+      for (let r = r0; r < r1; r++)
+        for (let c = c0; c < c1; c++) {
+          const i = r * w + c;
+          g += grid.glow[i];
+          m += grid.heights[i];
+          n++;
+        }
+      g /= n;
+      if (g < floor) continue;
+      // Cell (c, r)'s centre is at grid coordinate (c, r) (elevation.ts gridCoord), so the block's
+      // centre is the mean of its first and one-past-last cell edges; then the jitter, up to 40% of
+      // the block each way.
+      const jc = (hash01(r0 * 7919 + c0 + 1) - 0.5) * 0.8 * (c1 - c0);
+      const jr = (hash01(r0 + c0 * 104729 + 3) - 0.5) * 0.8 * (r1 - r0);
+      const lng = box.west + (((c0 + c1) / 2 + jc) / w) * (box.east - box.west);
+      const lat = box.north - (((r0 + r1) / 2 + jr) / h) * (box.north - box.south);
+      const [x, , z] = lngLatToWorld(lng, lat);
+      const edge = within ? reachAt(within, x, z) : 1;
+      if (edge <= 0) continue;
+      pos.push(x, m / n / 1000 + liftKm, z);
+      // The breath over the DENSEST light only: from the floor up to the metro's 1. Below the floor
+      // a town is carried by its street lights alone (buildStreetLights); the haze drawn over every
+      // lit cell was grey fog wherever no warm light sat under it (measured, the first frames).
+      str.push(((g - floor) / (1 - floor)) * edge);
+    }
+  return { count: str.length, positions: Float32Array.from(pos), strengths: Float32Array.from(str) };
+}
+
+/** THE STREETS (round 55): the region's real light at night as a carpet of faint warm points on
+ * the ground, one to a few per 200 m cell in proportion to the cell's glow (elevation.ts `glow`:
+ * NASA's Black Marble draped on the grid). From high up a city is a dense carpet of small lights,
+ * which is exactly what the satellite saw and what the haze could not be (a haze with no lights
+ * under it is fog); close in they are the street lights between the homes for sale, which stay
+ * the brighter, larger points. Same buffers as the listing lights, drawn with the same shader,
+ * a smaller and dimmer lamp. `within` keeps them to the served land (the county raster), and
+ * gives each its county so an area chapter lifts a county's streets with its homes.
+ *
+ * Deterministic: every visit lays the same streets. `perCell` is the count at glow 1; a cell's
+ * expected count is perCell * glow, the fraction drawn by a hash. */
+export function buildStreetLights(grid: ElevationGrid, within: CountyRaster | null, perCell = 2.4, floor = 0.08, liftM = 6, introSpan = 1.6, jitter = 0.45): LightCloud {
+  const { box, w, h } = grid;
+  const pos: number[] = [], delays: number[] = [], gains: number[] = [], seeds: number[] = [], counties: number[] = [];
+  for (let r = 0; r < h; r++)
+    for (let c = 0; c < w; c++) {
+      const i = r * w + c;
+      const g = grid.glow[i];
+      if (g < floor) continue;
+      // Fewer lamps toward the edge of the served land, so the carpet thins out instead of ending.
+      const cLng = box.west + ((c + 0.5) / w) * (box.east - box.west);
+      const cLat = box.north - ((r + 0.5) / h) * (box.north - box.south);
+      const [cx, , cz] = lngLatToWorld(cLng, cLat);
+      const edge = within ? reachAt(within, cx, cz) : 1;
+      if (edge <= 0) continue;
+      const expected = perCell * g * edge;
+      const n = Math.floor(expected) + (hash01(i * 3 + 1) < expected - Math.floor(expected) ? 1 : 0);
+      for (let k = 0; k < n; k++) {
+        const s = i * 5 + k;
+        const lng = box.west + ((c + hash01(s * 2 + 11)) / w) * (box.east - box.west);
+        const lat = box.north - ((r + hash01(s * 2 + 12)) / h) * (box.north - box.south);
+        const [x, , z] = lngLatToWorld(lng, lat);
+        const county = within ? countyAt(within, x, z) : 0;
+        if (within && !county) continue;
+        pos.push(x, (grid.heights[i] + liftM) / 1000, z);
+        // The same wave as the homes: the harbour (south) first, then up the valley.
+        delays.push((1 - (r + 0.5) / h) * introSpan + hash01(s + 13) * jitter);
+        gains.push(g * (0.7 + 0.3 * hash01(s + 14)));
+        seeds.push(hash01(s + 15));
+        counties.push(county);
+      }
+    }
+  return { count: gains.length, positions: Float32Array.from(pos), delays: Float32Array.from(delays), gains: Float32Array.from(gains), seeds: Float32Array.from(seeds), counties: Float32Array.from(counties) };
+}
+
 export interface TownMark {
   town: number;
   name: string;
@@ -208,14 +308,21 @@ export interface CountyRaster {
   h: number;
   /** 1 + county index (COUNTY_SLUGS), 0 = none within reach. */
   data: Uint8Array;
+  /** How many flood steps from the nearest cell holding homes, 0 at the homes; 255 = beyond reach. */
+  reach: Uint8Array;
+  /** The flood's last step (reachKm / cellKm). */
+  maxSteps: number;
 }
 
 /** Which county each patch of land belongs to, as far as the homes say: every cell takes the
  * county of the nearest cell holding lights (a breadth-first flood from all of them at once, so
  * the border falls about halfway between two counties' homes), up to `reachKm` from any home. No
  * county polygons are shipped; the listings draw the map. Used to light the land of the county
- * the page is talking about. */
-export function countyRaster(cloud: LightCloud, cellKm = 1.5, reachKm = 6): CountyRaster {
+ * the page is talking about, and (round 55) to keep the towns' glow and street lights to the
+ * served land: `reach` lets them fade over the flood's last rings rather than stop at a stair of
+ * cells (measured at the hero: a 1.5 km staircase down Staten Island's shore and a straight cut
+ * across Nassau). The cells are 0.75 km so those rings are fine enough to read as a gradient. */
+export function countyRaster(cloud: LightCloud, cellKm = 0.75, reachKm = 6): CountyRaster {
   let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
   for (let i = 0; i < cloud.count; i++) {
     const x = cloud.positions[i * 3], z = cloud.positions[i * 3 + 2];
@@ -230,6 +337,7 @@ export function countyRaster(cloud: LightCloud, cellKm = 1.5, reachKm = 6): Coun
   const h = Math.max(1, Math.ceil((maxZ - minZ + 2 * pad) / cellKm));
   const data = new Uint8Array(w * h);
   const dist = new Uint16Array(w * h).fill(65535);
+  const reach = new Uint8Array(w * h).fill(255);
   // Votes per cell: the county with the most homes in it seeds the cell.
   const votes = new Map<number, Map<number, number>>();
   for (let i = 0; i < cloud.count; i++) {
@@ -247,6 +355,7 @@ export function countyRaster(cloud: LightCloud, cellKm = 1.5, reachKm = 6): Coun
     for (const [c, m] of v) if (m > n) (best = c), (n = m);
     data[k] = best;
     dist[k] = 0;
+    reach[k] = 0;
     queue.push(k);
   }
   const maxSteps = Math.ceil(reachKm / cellKm);
@@ -260,18 +369,30 @@ export function countyRaster(cloud: LightCloud, cellKm = 1.5, reachKm = 6): Coun
         const j = nz * w + nx;
         if (dist[j] <= step) continue;
         dist[j] = step;
+        reach[j] = step;
         data[j] = data[k];
         next.push(j);
       }
     }
     queue = next;
   }
-  return { x0, z0, cellKm, w, h, data };
+  return { x0, z0, cellKm, w, h, data, reach, maxSteps };
 }
 
 export function countyAt(r: CountyRaster, x: number, z: number): number {
   const cx = Math.floor((x - r.x0) / r.cellKm), cz = Math.floor((z - r.z0) / r.cellKm);
   return cx < 0 || cz < 0 || cx >= r.w || cz >= r.h ? 0 : r.data[cz * r.w + cx];
+}
+
+/** How much of the served land a place is on: 1 near the homes, easing to 0 over the flood's
+ * outer rings (from `from` of the reach), 0 beyond it. */
+export function reachAt(r: CountyRaster, x: number, z: number, from = 0.4): number {
+  const cx = Math.floor((x - r.x0) / r.cellKm), cz = Math.floor((z - r.z0) / r.cellKm);
+  if (cx < 0 || cz < 0 || cx >= r.w || cz >= r.h) return 0;
+  const s = r.reach[cz * r.w + cx];
+  if (s === 255) return 0;
+  const t = Math.min(1, Math.max(0, (s / r.maxSteps - from) / (1 - from)));
+  return 1 - t * t * (3 - 2 * t);
 }
 
 /** 1 + the county of each grain of dust, read off the raster, so the "where we work" chapter can
@@ -291,6 +412,8 @@ export function paintCounties(positions: Float32Array, count: number, r: CountyR
 export interface LightBundle {
   cloud: LightCloud;
   haze: HazeCloud;
+  /** The street lights (buildStreetLights); empty when the terrain carries no glow. */
+  streets: LightCloud;
   raster: CountyRaster;
   /** paintCounties over the dust, when the dust was given; null when there is no dust to paint. */
   dustCounties: Float32Array | null;
@@ -308,8 +431,13 @@ export function buildLightBundle(
   areaGain: { pow: number; max: number },
 ): LightBundle {
   const cloud = buildLights(pts, grid);
-  const haze = buildHaze(cloud);
   const raster = countyRaster(cloud);
+  // The towns' real glow when the terrain carries it, kept to the land the homes say is ours; the
+  // homes' own haze when there is no terrain (the page then draws on a flat sea) or the asset has
+  // no night-lights channel.
+  const glowHaze = grid ? buildGlowHaze(grid, raster) : null;
+  const haze = glowHaze && glowHaze.count ? glowHaze : buildHaze(cloud);
+  const streets = grid ? buildStreetLights(grid, raster) : buildStreetLights({ ...EMPTY_GRID }, null);
   const dustCounties = dust ? paintCounties(dust.positions, dust.count, raster) : null;
   const boxes = countyLightBoxes(cloud);
   const areaGains = countyAreaGains(cloud, boxes, areaGain);
@@ -322,12 +450,16 @@ export function buildLightBundle(
     townWorld[i * 3 + 1] = h / 1000;
     townWorld[i * 3 + 2] = z;
   });
-  return { cloud, haze, raster, dustCounties, boxes, areaGains, towns, townWorld };
+  return { cloud, haze, streets, raster, dustCounties, boxes, areaGains, towns, townWorld };
 }
+
+/** A grid with nothing on it, for a bundle built with no terrain: no streets. */
+const EMPTY_GRID: ElevationGrid = { box: { west: 0, east: 1, south: 0, north: 1 }, w: 1, h: 1, cellM: { x: 1, y: 1 }, heights: new Float32Array(1), water: new Uint8Array(1), waterFrac: new Float32Array(1), glow: new Float32Array(1) };
 
 /** The bundle's buffers, for postMessage's transfer list (each once, whatever shares one). */
 export function bundleTransfer(b: LightBundle): ArrayBuffer[] {
-  const arrays = [b.cloud.positions, b.cloud.delays, b.cloud.gains, b.cloud.seeds, b.cloud.counties, b.haze.positions, b.haze.strengths, b.raster.data, b.townWorld];
+  const arrays = [b.cloud.positions, b.cloud.delays, b.cloud.gains, b.cloud.seeds, b.cloud.counties, b.haze.positions, b.haze.strengths, b.raster.data, b.raster.reach, b.townWorld];
+  for (const s of [b.streets]) arrays.push(s.positions, s.delays, s.gains, s.seeds, s.counties);
   if (b.dustCounties) arrays.push(b.dustCounties);
   return [...new Set(arrays.map((a) => a.buffer as ArrayBuffer))];
 }

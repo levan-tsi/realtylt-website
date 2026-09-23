@@ -129,6 +129,16 @@ export interface Look {
   /** A light's halo: strength, and width as a multiple of its core. */
   lightHalo: number;
   lightSpread: number;
+  /** The street lights (lights.ts buildStreetLights): the same lamp shader, a smaller, dimmer,
+   * tighter lamp, so the homes for sale stay the brighter points on top of the towns' carpet.
+   * streetLowCity / streetLowGain are the carpet's own close-in range stretch (the homes'
+   * lowCityGain / lowLightGain): from far away the carpet is many lamps summed, close in it is a
+   * few lamps a pixel, so it has to burn harder there for a town to read as lit. */
+  streetSize: number;
+  streetAlpha: number;
+  streetSpread: number;
+  streetLowCity: number;
+  streetLowGain: number;
   /** The city's glow: strength and world size (km) of each patch. */
   haze: number;
   hazeSize: number;
@@ -181,7 +191,20 @@ export const DEFAULT_LOOK: Look = {
   areaOut: 0.012,
   lightHalo: 0.45,
   lightSpread: 5,
-  haze: 0.08,
+  // Measured in the lab (round 55, lab6c against round 54): the harbour's Manhattan strip 97 -> 132
+  // mean, Brooklyn's foreground 36 -> 59, Poughkeepsie 52 -> 57, Kingston 46 -> 58, the hero's
+  // valley +1.5 and its dark New Jersey corner unchanged (7.2 -> 8.0); the homes stay the larger,
+  // brighter lamps. streetLowGain is the boost for the DENSE lamps (the metro's carry the highest
+  // gains) and stays at 1; streetLowCity lifts the sparse ones, a valley town's, close in.
+  streetSize: 0.03,
+  streetAlpha: 0.8,
+  streetSpread: 2.4,
+  streetLowCity: 6,
+  streetLowGain: 1,
+  // Half of round 54's weight: the towns' carpet now carries the glow, and the haze is only the
+  // breath over the densest light (measured at the hero: at 0.06 it took the metro from 70 to 116
+  // mean and painted Staten Island grey, 18 -> 45).
+  haze: 0.045,
   hazeSize: 10,
   fogNear: 0.9,
   fogFar: 2.6,
@@ -377,8 +400,20 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     blendDst: THREE.OneFactor,
     blendEquation: THREE.AddEquation,
   } as const;
+  // The streets share every uniform OBJECT with the homes (intro, veil, quiet, focus, lantern) and
+  // own only their lamp: size, alpha, spread, and no twinkle or close-in range stretch.
+  const streetU = {
+    ...lightU,
+    uSize: { value: look.streetSize },
+    uAlpha: { value: look.streetAlpha },
+    uSpread: { value: look.streetSpread },
+    uTwinkle: { value: 0 },
+    uLowGain: { value: look.streetLowGain },
+    uLowCity: { value: look.streetLowCity },
+  };
   const dustMat = new THREE.ShaderMaterial({ uniforms: dustU, vertexShader: DUST_VERTEX, fragmentShader: DUST_FRAGMENT, depthTest: look.occlude, ...additive });
   const lightMat = new THREE.ShaderMaterial({ uniforms: lightU, vertexShader: LIGHT_VERTEX, fragmentShader: LIGHT_FRAGMENT, depthTest: look.occlude, ...additive });
+  const streetMat = new THREE.ShaderMaterial({ uniforms: streetU, vertexShader: LIGHT_VERTEX, fragmentShader: LIGHT_FRAGMENT, depthTest: look.occlude, ...additive });
   const hazeMat = new THREE.ShaderMaterial({ uniforms: hazeU, vertexShader: HAZE_VERTEX, fragmentShader: HAZE_FRAGMENT, depthTest: look.occlude, ...additive });
   const depthMat = new THREE.ShaderMaterial({
     uniforms: { uExag: shared.uExag, uSink: { value: 0.04 } },
@@ -405,7 +440,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(3), 3));
       return g;
     };
-    const objects = [new THREE.Points(stub(), dustMat), new THREE.Points(stub(), lightMat), new THREE.Points(stub(), hazeMat), new THREE.Mesh(stub(), depthMat)];
+    const objects = [new THREE.Points(stub(), dustMat), new THREE.Points(stub(), lightMat), new THREE.Points(stub(), streetMat), new THREE.Points(stub(), hazeMat), new THREE.Mesh(stub(), depthMat)];
     for (const o of objects) warm.add(o);
     try {
       // A driver that never reports the link complete must not hold the clouds forever.
@@ -413,7 +448,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       // ...and the uniform and attribute locations are fetched now as well. three does that on a
       // program's first use, one synchronous GL query per uniform (measured: ~14 ms for the four
       // programs), which would otherwise land in the first frame that draws the clouds.
-      for (const m of [dustMat, lightMat, hazeMat, depthMat]) {
+      for (const m of [dustMat, lightMat, streetMat, hazeMat, depthMat]) {
         (renderer.properties.get(m) as { currentProgram?: { getUniforms(): unknown } } | undefined)?.currentProgram?.getUniforms();
       }
     } catch {
@@ -436,6 +471,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let dustBuild = 0;
   let lightPoints: THREE.Points | null = null;
   let hazePoints: THREE.Points | null = null;
+  let streetPoints: THREE.Points | null = null;
   let depthMesh: THREE.Mesh | null = null;
   let dustStart = -1;
   let lightsStart = -1;
@@ -696,6 +732,18 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     hazePoints.frustumCulled = false;
     hazePoints.renderOrder = 2;
     scene.add(hazePoints);
+    if (b.streets.count) {
+      const sg = new THREE.BufferGeometry();
+      sg.setAttribute("position", new THREE.BufferAttribute(b.streets.positions, 3));
+      sg.setAttribute("aDelay", new THREE.BufferAttribute(b.streets.delays, 1));
+      sg.setAttribute("aGain", new THREE.BufferAttribute(b.streets.gains, 1));
+      sg.setAttribute("aSeed", new THREE.BufferAttribute(b.streets.seeds, 1));
+      sg.setAttribute("aCounty", new THREE.BufferAttribute(b.streets.counties, 1));
+      streetPoints = new THREE.Points(sg, streetMat);
+      streetPoints.frustumCulled = false;
+      streetPoints.renderOrder = 3;
+      scene.add(streetPoints);
+    }
     counties = b.raster;
     paintDustCounties(b.dustCounties);
     // Re-frame the area chapter on the homes themselves, now that we know where they stand, and
@@ -1073,15 +1121,35 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       dustU.uAreaOut.value = look.areaOut;
       lightU.uHalo.value = look.lightHalo;
       lightU.uSpread.value = look.lightSpread;
+      streetU.uSize.value = look.streetSize;
+      streetU.uAlpha.value = look.streetAlpha;
+      streetU.uSpread.value = look.streetSpread;
+      streetU.uLowGain.value = look.streetLowGain;
+      streetU.uLowCity.value = look.streetLowCity;
       hazeU.uHaze.value = look.haze;
       hazeU.uHazeSize.value = look.hazeSize;
       dustMat.depthTest = look.occlude;
       lightMat.depthTest = look.occlude;
+      streetMat.depthTest = look.occlude;
       hazeMat.depthTest = look.occlude;
       if (depthMesh) depthMesh.visible = look.occlude;
       kick();
     },
-    stats: () => ({ quality: qualityLevel, dpr, buildMs, buildWhere, dust: dustCount, lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0, towns: towns.length, frames, ready, gpu, areaGains }),
+    stats: () => ({
+      quality: qualityLevel,
+      dpr,
+      buildMs,
+      buildWhere,
+      dust: dustCount,
+      lights: lightPoints ? (lightPoints.geometry.getAttribute("position").count as number) : 0,
+      streets: streetPoints ? (streetPoints.geometry.getAttribute("position").count as number) : 0,
+      haze: hazePoints ? (hazePoints.geometry.getAttribute("position").count as number) : 0,
+      towns: towns.length,
+      frames,
+      ready,
+      gpu,
+      areaGains,
+    }),
     dispose() {
       disposed = true;
       if (raf) cancelAnimationFrame(raf);
@@ -1090,9 +1158,10 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       document.removeEventListener("visibilitychange", onVis);
       flight?.done();
       dropLink();
-      for (const o of [...dustChunks, lightPoints, hazePoints, depthMesh]) o?.geometry.dispose();
+      for (const o of [...dustChunks, lightPoints, streetPoints, hazePoints, depthMesh]) o?.geometry.dispose();
       dustMat.dispose();
       lightMat.dispose();
+      streetMat.dispose();
       hazeMat.dispose();
       depthMat.dispose();
       renderer.dispose();

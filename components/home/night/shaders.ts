@@ -273,8 +273,13 @@ void main() {
   // The glow is the widest thing in the picture, so it is also the one most likely to sit behind a
   // sentence; it takes the same quiet as the windows under it (round 54, builder 3: it did not,
   // and a city's breath behind the count sentence was a grey wash nobody could design around).
+  // And it never sits in the foreground: a patch nearer than a few times the shot's near distance
+  // thins away (round 55, measured at the hero: Staten Island's patches, 28 km from a camera whose
+  // subject is 135 km off, stacked into a grey wash across the lower left, the headline's corner;
+  // the metro proper stands 45 to 70 km out and keeps its breath).
+  float near = smoothstep(uNear * 1.5, uNear * 4.0, d);
   vec4 clip = projectionMatrix * mv;
-  vA = uHaze * aStrength * fog * on * (1.0 - 0.92 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down) * mix(uQuietFloor, 1.0, quietAt(clip.xy / clip.w));
+  vA = uHaze * aStrength * fog * near * on * (1.0 - 0.92 * uVeil) * (1.0 - 0.75 * uFocusMix) * smoothstep(uHazeLow, uHazeHigh, cameraPosition.y) * smoothstep(0.12, 0.45, down) * mix(uQuietFloor, 1.0, quietAt(clip.xy / clip.w));
   gl_PointSize = size;
   gl_Position = clip;
 }
