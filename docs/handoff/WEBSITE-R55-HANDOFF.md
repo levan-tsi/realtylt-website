@@ -84,6 +84,19 @@ So, for round 55:
 
 ### 4.1 The lag he sees (highest priority — it is his own experience of the page)
 
+**HE LOCATED IT (asked directly, 2026-09-22): "right after the page loads" and "when a section
+changes", plus "it needs more smoother transition maybe better map too, overall everything should be
+upgraded and polished multiple times".** That is two specific places, not general slowness:
+- **Right after load**: the worker builds the terrain clouds (~1 s, measured), the poster dissolves into
+  the live scene (1,100 ms), and the intro runs the lights on. Any of those can read as a stutter on a
+  cold load. Measure time-to-first-smooth-frame on HIS machine, and consider building the clouds in two
+  passes (a coarse one that can fly immediately, refined after) so the first flight never waits.
+- **When a section changes**: the hand-off between shots. Suspects, in order: the camera's spring
+  damping re-targeting when `setSequence`'s index crosses an anchor; the veil and quiet boxes being
+  recomputed at the boundary (a forced layout read per frame); long flights (hero -> dutchess is a big
+  jump) arriving too fast at the end of their arc; and the area chapter, where `flyTo` and the scroll
+  driver can both be steering at once. Trace a real section change frame by frame before changing code.
+
 What we measured in round 54 does NOT show it: headless Chromium with ANGLE D3D11 on the RTX 2060
 gave scroll-frame p95 **16.8 ms** at 1440 and at 390 with 4x CPU throttle, 0 frames over 34 ms. So the
 lag is either (a) somewhere our probe does not look, or (b) specific to HIS machine and browser.
