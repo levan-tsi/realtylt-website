@@ -79,10 +79,10 @@ export default async function G3dLabPage() {
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now, from Poughkeepsie to the five boroughs. The bright lights below are them.
+                    right now, from Poughkeepsie to the five boroughs. Every light on the map is one of them.
                   </>
                 ) : (
-                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. The bright lights below are them.</>
+                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. Every light on the map is one of them.</>
                 )}
               </p>
               <form
@@ -113,8 +113,8 @@ export default async function G3dLabPage() {
                 </Link>
               </p>
               <p className="mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block">
-                The bright lights are homes listed on OneKey&reg; MLS, each standing where it stands;
-                the faint ones are the towns' own light, seen from orbit. Point at a home to see its town.
+                Map: Google. Every light is a home listed on OneKey&reg; MLS, standing where it stands.
+                Point at one to see its town and price.
               </p>
             </div>
           </div>
@@ -179,8 +179,8 @@ export default async function G3dLabPage() {
                   </span>
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-stone">
-                  Six counties of the Hudson Valley and all five boroughs. Every bright light is a
-                  home for sale there right now.
+                  Six counties of the Hudson Valley and all five boroughs. Every light is a home for
+                  sale there right now.
                 </p>
               </Reveal>
               <G3dAreaChapter rows={AREA_ROWS} />
