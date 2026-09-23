@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
+import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, PHONE_FLOOR, budgetFor, cameraFor, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
@@ -133,8 +133,16 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
     const phone = budgetFor(cameraFor("hero", PHONE).range, MOBILE);
     expect(desk).toBeLessThanOrEqual(150);
     expect(desk).toBeGreaterThanOrEqual(60);
-    expect(phone).toBeLessThanOrEqual(60);
-    expect(phone).toBeGreaterThanOrEqual(20);
+    // Round 57.3: the phone's territory lights must be SEEN (PHONE_FLOOR), still a scatter.
+    expect(phone).toBe(PHONE_FLOOR);
+    expect(phone).toBeGreaterThanOrEqual(60);
+    expect(phone).toBeLessThanOrEqual(100);
+  });
+
+  it("gives only a narrow window the phone's floor; the laptop's territory stays as it was", () => {
+    expect(budgetFor(cameraFor("hero", LAPTOP).range, DESK)).toBe(130);
+    expect(budgetFor(145_000, { width: 768, height: 1024 })).toBe(Math.floor((768 * 1024) / pxPerLight(145_000)));
+    expect(budgetFor(145_000, { width: 320, height: 640 })).toBe(PHONE_FLOOR);
   });
 
   it("never lays a carpet over a county chapter", () => {
@@ -152,14 +160,15 @@ describe("how many homes a shot draws (round 57.2: the count follows the range)"
     for (const vp of [DESK, MOBILE]) {
       const b = RANGES.map((r) => budgetFor(r, vp));
       for (let i = 1; i < b.length; i++) expect(b[i]).toBeGreaterThanOrEqual(b[i - 1]);
-      expect(budgetFor(12_000, vp)).toBeGreaterThanOrEqual(3 * budgetFor(145_000, vp));
+      // 3x on a laptop; 2x on a phone, whose territory floor (round 57.3) lifts the far end.
+      expect(budgetFor(12_000, vp)).toBeGreaterThanOrEqual((vp === DESK ? 3 : 2) * budgetFor(145_000, vp));
     }
   });
 
   it("never more than one light per pxPerLight(range) square pixels of window", () => {
     for (const r of RANGES) {
       expect(budgetFor(r, DESK)).toBeLessThanOrEqual(Math.floor((1440 * 900) / pxPerLight(r)));
-      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.floor((390 * 844) / pxPerLight(r)));
+      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.max(PHONE_FLOOR, Math.floor((390 * 844) / pxPerLight(r))));
     }
   });
 

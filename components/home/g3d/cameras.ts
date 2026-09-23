@@ -179,10 +179,22 @@ export function ceilingFor(rangeMetres: number): number {
   return rangeMetres >= 100_000 ? 130 : rangeMetres >= 25_000 ? 380 : 900;
 }
 
+/** THE PHONE'S TERRITORY, SEEN (round 57.3). At 390 x 844 the density rule leaves the territory
+ * shot 32 lights, and in the ~220 px band between the phone's words they were faint to invisible
+ * while the copy says "every light on the map is one of them" (round 2's frames). A narrow window
+ * draws at least this many at any height; closer in the density rule already draws more, so the
+ * count still only grows as the camera comes down. Chosen by frames at 390 (the record in
+ * docs/parity/DESIGN-ROUND57.md §4 "Round 3"). */
+export const PHONE_FLOOR = 72;
+/** Below this width a window is a phone for the lights' count and glyph (glyph.ts `narrow`). */
+export const NARROW = 640;
+export const isNarrow = (viewport?: { width: number }) => !!viewport && viewport.width < NARROW;
+
 export function budgetFor(rangeMetres: number, viewport?: { width: number; height: number }): number {
   const hard = ceilingFor(rangeMetres);
   if (!viewport) return hard;
-  return Math.min(hard, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres)));
+  const byDensity = Math.min(hard, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres)));
+  return isNarrow(viewport) ? Math.max(byDensity, Math.min(hard, PHONE_FLOOR)) : byDensity;
 }
 
 /** The least distance, in css px, between two lights on screen (thinning.ts): wide apart at the
