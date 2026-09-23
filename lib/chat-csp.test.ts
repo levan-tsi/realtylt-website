@@ -71,6 +71,17 @@ describe("the chat widget and the site's CSP", () => {
     }
   });
 
+  it("allows the three hosts Google's 3D map needs, measured on the lab page (round 56), and no wider Google wildcard", () => {
+    // The map stayed blank under the policy and the console refused exactly these three under
+    // connect-src: the photorealistic tiles and the map's own assets. Exact hosts, so a wildcard
+    // over googleapis.com or gstatic.com never slips in by convenience.
+    const sources = connectSrc();
+    for (const origin of ["https://keyhole-pa.googleapis.com", "https://mw1.gstatic.com", "https://www.gstatic.com"]) {
+      expect(allows(sources, origin), `connect-src does not allow ${origin}, so the 3D map cannot load its tiles`).toBe(true);
+    }
+    expect(sources.some((s) => /\*\.googleapis\.com|\*\.gstatic\.com/.test(s))).toBe(false);
+  });
+
   it("recognises a wildcard source, so the matcher is not accidentally exact-only", () => {
     expect(allows(["https://*.example.com"], "https://a.example.com")).toBe(true);
     expect(allows(["https://*.example.com"], "https://example.com")).toBe(true);

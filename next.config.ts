@@ -74,7 +74,13 @@ const CSP = [
   // widget's five endpoint URLs at the CRM's real domain (DNS cut over that morning; SSL and
   // the OPTIONS preflight from this origin verified 204 before the switch). The vercel host
   // stays: it is the same deployment and the documented rollback target.
-  "connect-src 'self' https://app.realtylt.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
+  // 2026-09-23 (round 56): the home page's ground becomes Google's 3D map (Maps JS `maps3d`,
+  // the owner's order after round 55). MEASURED on the lab page under this policy before the
+  // change: the map stayed blank and the console refused exactly three hosts under connect-src,
+  // `keyhole-pa.googleapis.com` (the photorealistic 3D tiles), `mw1.gstatic.com` and
+  // `www.gstatic.com` (its assets). Those three, exact, nothing wider. maps.googleapis.com was
+  // already here for /search's 2D map.
+  "connect-src 'self' https://app.realtylt.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://keyhole-pa.googleapis.com https://mw1.gstatic.com https://www.gstatic.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
