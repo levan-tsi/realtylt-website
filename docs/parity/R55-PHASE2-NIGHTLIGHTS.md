@@ -28,6 +28,25 @@ light the region gives off at night, from satellite, draped on the same terrain 
   CC BY 4.0, "cite EOG as the data source" (https://eogdata.mines.edu/products/vnl/), but its
   downloads sit behind a free registration. Not needed unless NASA's 2016 tile fails.
 
+### 1a. The tile, read (orchestrator, 2026-09-22 late)
+
+The B1 tile is already in the cache: `node_modules/.cache/blackmarble/BlackMarble_2016_B1_geo.tif`
+(310,401,888 bytes, 21600x21600, RGB 8-bit; 240 px per degree = ~348 m per pixel east-west at
+41.3 N). The served box is the window `left 3621, top 11457, 376 x 455` px (probe script:
+`scripts/_scratch-r55-blackmarble-check.mjs`, preview `scripts/_scratch-r55/blackmarble-window.png`,
+looked at: the metro blazing at the bottom, the Hudson a dark ribbon up the middle, Poughkeepsie,
+Newburgh and Kingston as clusters, the Catskills black). Probed luminance: Midtown 255, Flushing
+255, Yonkers 255, White Plains 255, Newburgh 255, Poughkeepsie 255, Kingston 255, Slide Mountain
+10, Harriman woods 16, the river at the Tappan Zee 115.
+
+**So this file is an 8-bit visualisation, not radiance: every town saturates at 255.** Intensity
+cannot rank Midtown above Poughkeepsie. Rank by EXTENT instead: blur the luminance with a
+Gaussian of about 1.5 to 2 km before resampling, so a large lit area keeps a high peak and a small
+town's peak falls with its size; take luminance only (the RGB is a warm tint) and drop the water
+tint by masking with the G channel where it is mostly water. If a truer ranking is wanted later,
+the radiance products need a free registration (EOG VNL, or NASA VNP46A4 via Earthdata); not this
+round.
+
 ## 2. The asset: one more channel in the file we already ship
 
 `public/geo/valley-elevation.webp` is a lossless RGB WebP (652x1050, 200 m cells, row 0 north,
