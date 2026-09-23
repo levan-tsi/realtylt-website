@@ -162,6 +162,30 @@ What each item did, with the attribution after it:
    two-capsule glyph (Blink paints that box instead of the platform lines; dragging still
    resizes), and the three stroked data-URI glyphs are filled paths too. 13.9 ms cold.
 
+### 2.4c The orchestrator's own gate (2026-09-23, head `93cbc18`, every number re-measured)
+
+- Probe re-run on the head's production build (same instrument, own copy of the profile dir):
+  cold 1440: boot worst 104 ms (hydration; was 235 to 291 at the link), `to:highlands` 34.7
+  (was 111), `to:harbour` 34.7, `fling:up` 55.6 (was 111), `fling:down` 13.9 (was 90). Warm
+  (second run on a kept profile): boot worst 90 (hydration), `to:highlands` 20.7 / 14, harbour 14,
+  flings 13.9 / 7.2, every phase `over34` 0. The builder's table stands.
+- `npx tsc --noEmit` clean; `npx vitest run` **1639 passing, 0 failing** (foreground).
+- Day pages rendered from a build of the pre-builder commit `51789a4` (a throwaway worktree,
+  removed afterwards with its env copy) against the head, full page at 1440 and 390, animations
+  off, media blocked: `/buying`, `/selling`, `/who-we-are`, `/financing`, `/home-value`, `/plan`,
+  `/reviews`, `/blog`, `/search?q=Poughkeepsie`, `/top-areas/dutchess` **0 differing pixels** at
+  both widths; `/connect` differed only inside Google's calendar embed (painted in one capture,
+  blank in the other; crops in `scripts/_scratch-r55/daydiff/`), third-party timing, not ours.
+- Round-54 verification probe (`_scratch-r54c-verify.mjs`): 1440, 390, 320, reduced motion and
+  no-JS drives all clean: horizontal overflow 0 at every scroll stop and width, console errors 0,
+  the search instrument in view, the poster carrying the hero with no JS. Frames in
+  `scripts/_scratch-r55/verify/`, looked at (390 at the featured rail and the testimonial).
+- Rail frames before/after (the builder's `rail-*`): cards, badges and text sit where they did;
+  the heart disc is the badges' ink/80 solid now (a shade lighter than ink/55 with blur), a
+  consistency choice worth one look from the owner; the branded photo placeholder appears later
+  in the after-shot only because its jittered retries had not settled (media is blocked in the
+  probe), not a change.
+
 ### 2.4b Seen on the way, not fixed (outside the brief)
 
 - **The section-change stalls of §2.3 were cold-cache compiles.** On a warm profile the baseline
