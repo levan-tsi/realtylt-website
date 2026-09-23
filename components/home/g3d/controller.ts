@@ -237,6 +237,7 @@ export class G3dController {
     for (const w of [...this.steadyWaiters]) w(this.steadyNow);
     const next = this.gate.setSteady(this.steadyNow, performance.now());
     if (next && this.revealed) this.go(next);
+    else this.markNow();
     if (!e.isSteady || this.revealed || this.warming) return;
     if (this.firstSteadyAt === null) {
       this.firstSteadyAt = performance.now();
@@ -464,6 +465,21 @@ export class G3dController {
     const next = this.gate.landed(performance.now());
     if (next) return this.go(next);
     this.pump();
+    this.stale = true;
+    this.markNow();
+  }
+
+  // ---- marker work off the flight (round 56 phase 1b, gate.ts canMark) ----------------------------
+  // Homes are planned and added only once the flight has ended (gmp-animationend) AND the map says
+  // it is steady AND no flight is waiting; a flight that starts cancels whatever is left of the job
+  // (fly -> cancelJob). A job, once started, runs to its end at ADD_PER_FRAME a frame.
+
+  /** A replan is owed (a landing, new homes) and waits for a steady, still map. */
+  private stale = false;
+
+  private markNow() {
+    if (!this.stale || !this.revealed || !this.gate.canMark()) return;
+    this.stale = false;
     this.replan();
   }
 
@@ -476,7 +492,8 @@ export class G3dController {
   setHomes(h: Homes) {
     this.homes = h;
     this.pins = lightPins(h);
-    if (this.revealed && !this.flying) this.replan();
+    this.stale = true;
+    this.markNow();
   }
 
   setElevation(g: ElevationGrid) {
