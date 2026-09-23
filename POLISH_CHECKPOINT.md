@@ -1,5 +1,41 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 55 IN PROGRESS (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT ==
+## READ docs/parity/DESIGN-ROUND55.md FIRST, then docs/handoff/WEBSITE-R56-HANDOFF.md (the next brief;
+## WEBSITE-R55-HANDOFF.md keeps "where everything is" and the ledger). Branch design/futuristic-r53,
+## NOTHING pushed, main untouched. Session shape by his order: Fable orchestrates + ONE Fable subagent
+## per phase for the five-hour window, then back to Opus builders.
+##
+## DONE AND GATED BY THE ORCHESTRATOR:
+## - Contact: the CRM line (914) 875-2424 everywhere (lib/site.ts + three hardcoded copies), and
+##   info@realtylt.com beside the phone in the header; info@ delivery PROVEN (a test from his account
+##   landed in the levan@ inbox as the same thread). d15ee73.
+## - The lag, measured in his installed Chrome headed on the real GPU (the Chrome extension was not
+##   connected): boot = three.js linking two shader programs on first render (199-235ms) + the
+##   geometry build after the worker (60-91ms) -> both gone (compileAsync before the assets, the
+##   light math in the worker, dust uploaded in pieces). Section changes = Chrome GPU-rasterising the
+##   featured rail (a promoted 5,760px layer) and the footer (Chrome's native textarea resize grip,
+##   a stroked path) -> fixed; BUT those two were COLD shader-cache compiles (fresh profile per probe
+##   run); on a warm profile the baseline already had them under 28ms. Re-measured: cold boot worst
+##   104ms (hydration; was 235-291), rail 34.7 (was 111), fling 55.6 (was 111), footer 13.9 (was 90);
+##   WARM every phase <= 21ms. tsc clean, vitest 1621 -> 1639, ten day pages 0 differing pixels at
+##   1440 and 390, verify probe clean at 1440/390/320, reduced motion, no-JS.
+## - What HE sees as "lag when a section changes" on his warm machine is NOT yet explained: settle it
+##   in HIS browser (connect the extension; his MacBook is the primary machine). Suspects in the R56
+##   handoff (React ~150ms during the rail's scroll-in, the camera's deliberate 0.16s spring).
+## - The city glow (phase 2): NASA Black Marble 2016 cropped to the region and written into the
+##   terrain asset's blue channel (281 -> 365 KB, R/G byte-identical, credited in the footer), so the
+##   haze can glow where the cities really are. Scene integration: docs/parity/R55-PHASE2-NIGHTLIGHTS.md
+##   section 5 records what shipped and the frames (in progress when this block was written).
+##
+## NEXT (R56 handoff section 3): phase 3 interactions (docs/parity/R55-PHASE3-INTERACTIONS.md), the
+## 3D-when-close prototype from NYC building footprints in /lab/night, the fresh-eyes walkthrough
+## skipped twice, more polish rounds judged on frames against realtylt.com/ai.
+##
+## OPEN OWNER DECISIONS: lights warm gold or cool; the chat launcher covering a save heart at 390 and
+## the testimonial's last word; the night card's heart disc tone (ink/80 solid now); info@ everywhere
+## or header only; the rail no longer drifts with scripting off (accepted).
+##
 ## == ROUND 54 DONE AND APPROVED IN DIRECTION (2026-09-22). NEXT: ROUND 55, FABLE + OPUS ==
 ## READ docs/handoff/WEBSITE-R55-HANDOFF.md FIRST. The /website command's own brief is stale.
 ##
