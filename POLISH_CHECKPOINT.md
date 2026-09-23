@@ -1,5 +1,30 @@
 # Website polish checkpoint (read/updated by the /website command)
 
+## == ROUND 56 IN PROGRESS (2026-09-23): THE REAL MAP. HIS VERDICT ON ROUND 55: "I DON'T LIKE IT" ==
+## READ docs/parity/DESIGN-ROUND56.md FIRST (his verdict verbatim, what was proven with our key, the
+## facts with sources, the decisions, the phases), then docs/handoff/WEBSITE-R56-HANDOFF.md section 3.
+## Branch design/futuristic-r53, NOTHING pushed. Process from now, his order: Fable orchestrates,
+## OPUS builds (model:"opus"), one at a time; the orchestrator re-measures every claim.
+##
+## WHAT HE SAID: the first screen freezes mid-scroll then disappears (FIXED, d86e43f: the poster
+## still drops on the first scroll; proven in his Chrome); the contour valley is not realistic and
+## no one can tell which area they are looking at; the round-55 lamp carpet overcrowds and pixelates
+## up close; find Google's 3D map API (like /search uses), take our area, put OUR lights on it,
+## hover-interactive, smooth transitions, area recognisable when zoomed out.
+##
+## PROVEN TONIGHT: Google's 3D map (Maps JS `maps3d`, Map3DElement, HYBRID) renders with the site's
+## EXISTING key: Manhattan and Poughkeepsie photorealistic with labels, the valley at 60 km names
+## every town (frames scripts/_scratch-r56/g3d/). Immersive Maps SKU: 5,000 free loads/month then
+## $7 per 1,000. Traps: define the loader callback BEFORE the async tag; gestureHandling is an
+## UPPER-CASE enum. Policy: the Google Maps attribution stays visible; no screenshots stored.
+##
+## PHASE 1 (Opus, running): the /lab/g3d prototype - the map fixed behind the page, six shots +
+## eleven county chapters as cameras, flyCameraTo per section, our homes as thinned Marker3DElements,
+## hover, both looks (bright map + scrims under the words / dimmed map) as frames at every shot,
+## contrast on the real pixels, frame budget headed, CSP violations listed (orchestrator decides).
+## PHASE 2: integration behind NEXT_PUBLIC_HOME_MAP=g3d with the night flight as the fallback.
+## PHASE 3: polish on frames and videos until it is wow next to realtylt.com/ai.
+##
 ## == ROUND 55 DONE (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT; NEXT R56 ==
 ## READ docs/parity/DESIGN-ROUND55.md FIRST, then docs/handoff/WEBSITE-R56-HANDOFF.md (the next brief;
 ## WEBSITE-R55-HANDOFF.md keeps "where everything is" and the ledger). Branch design/futuristic-r53,
