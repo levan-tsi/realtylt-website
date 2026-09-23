@@ -32,7 +32,7 @@ confirmation email, and — if you want it — a Google OAuth credential.
 
 **The site no longer offers what it cannot do.** Until you flip the toggle, the sign-in box
 shows the email form plus one line: *"New accounts aren't open yet. Call or text
-(917) 905-7923 and we'll set one up for you."* The Google button is hidden entirely, and the
+(914) 875-2424 and we'll set one up for you."* The Google button is hidden entirely, and the
 "Create account" buttons on `/saved` and `/portal` are hidden. The site reads the project's
 settings live and refreshes within a minute, so **the moment you finish step 1 the site turns
 those controls back on by itself. No deploy, no developer.**

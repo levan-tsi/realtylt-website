@@ -143,7 +143,15 @@ export function Header() {
           >
             {SITE.phone}
           </a>
-          <div className="flex min-w-0 items-center gap-4">
+          {/* The general inbox beside the phone (owner's order 2026-09-22). Same width rule as the
+              phone: both are in the footer and the mobile menu already, so below sm they drop out. */}
+          <a
+            href={`mailto:${SITE.infoEmail}`}
+            className={`hidden min-h-[24px] items-center text-sm text-stone hover:text-ink sm:inline-flex ${PRESS}`}
+          >
+            {SITE.infoEmail}
+          </a>
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-4">
             <a
               href={SITE.fairHousingPdf}
               target="_blank"

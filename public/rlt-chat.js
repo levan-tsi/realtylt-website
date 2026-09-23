@@ -1331,8 +1331,8 @@
     } catch (err) {
       hideTyping();
       const msg = err.name === 'AbortError'
-        ? 'That took longer than expected. Try again, or text Levan directly at (917) 905-7923.'
-        : 'Something went wrong on my end. Try again, or reach Levan at (917) 905-7923.';
+        ? 'That took longer than expected. Try again, or text Levan directly at (914) 875-2424.'
+        : 'Something went wrong on my end. Try again, or reach Levan at (914) 875-2424.';
       addError(msg);
       console.error('[RealtyLT chat]', err);
     } finally {

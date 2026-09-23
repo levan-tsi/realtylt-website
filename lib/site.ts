@@ -11,10 +11,15 @@ export const SITE = {
     region: "NY",
     postalCode: "12540",
   },
-  phone: "(917) 905-7923",
-  phoneHref: "tel:+19179057923",
-  phoneE164: "+19179057923",
+  // The CRM's own line (2026-09-22, owner's order): texts and calls land in app.realtylt.com and
+  // forward to him. The old Twilio number (917) 905-7923 is retired from every visitor-facing surface.
+  phone: "(914) 875-2424",
+  phoneHref: "tel:+19148752424",
+  phoneE164: "+19148752424",
   email: "levan@realtylt.com",
+  /** The general inbox shown beside the phone in the header (owner's order 2026-09-22). Proven to
+   * deliver into levan@realtylt.com the same day (test token RLT-0922-A7 landed in his inbox). */
+  infoEmail: "info@realtylt.com",
   disclaimer: "Each office is independently owned and operated.",
   /** The STABLE landing path, not a dated file path. The old link
    *  (`/system/files/documents/2025/04/fairhousingnotice.pdf`) 404'd on 2026-08-02: NY DOS moved

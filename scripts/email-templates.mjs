@@ -18,7 +18,7 @@ const headline = (h, sub) => `<tr><td class="rlt-pad" style="padding:32px 32px 0
 const para = (t, top = 20) => `<tr><td class="rlt-pad" style="padding:${top}px 32px 0;"><div style="font-family:${FONT};font-size:15px;line-height:1.6;color:#33404f;">${esc(t).replace(/\r?\n/g, "<br>\n")}</div></td></tr>`;
 const bullets = (items) => `<tr><td class="rlt-pad" style="padding:16px 32px 0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0">${items.map((t) => `<tr><td valign="top" style="padding:4px 10px 4px 0;font-family:${FONT};font-size:15px;color:${LT};">&bull;</td><td style="padding:4px 0;font-family:${FONT};font-size:15px;line-height:1.5;color:#33404f;">${esc(t)}</td></tr>`).join("\n")}</table></td></tr>`;
 const cta = (href, label) => `<tr><td class="rlt-pad" align="center" style="padding:28px 32px 8px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background:${NAVY};border-radius:10px;"><a href="${esc(href)}" style="display:inline-block;padding:14px 32px;font-family:${FONT};font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">${esc(label)}</a></td></tr></table></td></tr>\n<tr><td class="rlt-pad" align="center" style="padding:0 32px 6px;"><div style="font-family:${FONT};font-size:12px;color:#8a93a3;word-break:break-all;"><a href="${esc(href)}" style="color:${ACCENT};text-decoration:none;">${esc(href)}</a></div></td></tr>`;
-const SIG = { closing: "Best Regards!", name: "Levan Tsiklauri (LT)", designation: "Realtor", phoneDisplay: "(917) 905-7923", phoneHref: "tel:+19179057923", email: "levan@realtylt.com", siteDisplay: "www.realtylt.com", siteHref: "https://realtylt.com", bookingLabel: "Book a Consultation", bookingHref: "https://realtylt.com/connect", address: "1097 Route 55, Suite 9, Lagrangeville, NY 12540" };
+const SIG = { closing: "Best Regards!", name: "Levan Tsiklauri (LT)", designation: "Realtor", phoneDisplay: "(914) 875-2424", phoneHref: "tel:+19148752424", email: "levan@realtylt.com", siteDisplay: "www.realtylt.com", siteHref: "https://realtylt.com", bookingLabel: "Book a Consultation", bookingHref: "https://realtylt.com/connect", address: "1097 Route 55, Suite 9, Lagrangeville, NY 12540" };
 const link = (href, label, w = 400) => `<a href="${esc(href)}" style="color:${ACCENT};font-weight:${w};text-decoration:none;">${esc(label)}</a>`;
 const SEP = '<span style="color:#b8c0cc;">&nbsp;|&nbsp;</span>';
 const signature = () => [
@@ -60,7 +60,7 @@ export function composeThankYou({ first, consented }) {
   const bookHref = SIG.bookingHref;
   const body = consented
     ? "Here is what happens next: first, a quick call from my AI assistant. It confirms it is really you and sets the exact day for your appointment. If you still have questions, the assistant can put me on the line right there. Otherwise we talk at the time you chose, by phone or in person."
-    : "You asked us not to call, so everything stays in email: I read what you sent and reply here myself, usually within the hour, seven days a week. If you ever prefer a call after all, (917) 905-7923 reaches me any day.";
+    : "You asked us not to call, so everything stays in email: I read what you sent and reply here myself, usually within the hour, seven days a week. If you ever prefer a call after all, (914) 875-2424 reaches me any day.";
   const note = "You are receiving this note because you reached out on realtylt.com.";
   const html = shell({
     title: `Thank you, ${first}`,
