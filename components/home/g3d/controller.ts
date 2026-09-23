@@ -115,8 +115,6 @@ export class G3dController {
       onError: (msg: string) => void;
       /** The shot the map should open on (the page may be reloaded mid-scroll). */
       initial: ShotName;
-      /** Fly in from further out on the first steady frame. */
-      intro: boolean;
       description: string;
     },
   ) {}
@@ -133,8 +131,10 @@ export class G3dController {
       return;
     }
     if (this.stopped) return;
-    const first = this.cameraOf(this.opts.initial);
-    const open = this.opts.intro && !this.opts.reduced ? introCamera(first) : first;
+    // The map opens on the page's own shot, under our poster (G3dGround): there is no intro flight
+    // any more, because under the poster nobody would see it and it was one more flight of tiles
+    // streaming during motion. The poster dissolves when the map is drawn at this camera.
+    const open = this.cameraOf(this.opts.initial);
     let el = singleton;
     const reused = !!el;
     if (!el) {
@@ -164,8 +164,7 @@ export class G3dController {
     this.cam = open;
     if (reused) {
       // The same element, handed to a new owner (a remount): it is already drawn.
-      this.cam = first;
-      this.jump(first);
+      this.jump(open);
       this.onSteady(Object.assign(new Event("gmp-steadychange"), { isSteady: true }));
     }
   }
@@ -202,12 +201,7 @@ export class G3dController {
     this.steadyAt = performance.now();
     performance.mark("g3d:steady");
     this.opts.onReveal();
-    const target = this.cameraOf(this.shot ?? this.opts.initial);
-    if (this.opts.intro && !this.opts.reduced && !sameCamera(this.cam, target)) {
-      this.fly(target, 2600);
-    } else {
-      this.land();
-    }
+    this.land();
   };
 
   private onAnimationEnd = () => {
@@ -223,8 +217,8 @@ export class G3dController {
   flyToShot(name: ShotName) {
     const target = this.cameraOf(name);
     if (!this.revealed) {
-      // Before the first steady frame there is nothing to see: go there directly (unless it is
-      // the shot the map is already opening on, whose intro flight is still to come).
+      // Before the first steady frame there is nothing to see (our poster covers it): go there
+      // directly.
       if (name !== this.shot) this.jump(target);
       this.shot = name;
       return;
@@ -457,12 +451,6 @@ export class G3dController {
   camera(): MapCamera | null {
     return this.cam;
   }
-}
-
-/** The opening: the hero's camera from further out and turned a little, so the first thing the map
- * does once it is drawn is arrive. */
-export function introCamera(c: G3dCamera): G3dCamera {
-  return { ...c, range: Math.round(c.range * 1.45), tilt: Math.max(0, c.tilt - 12), heading: (c.heading + 348) % 360 };
 }
 
 export function sameCamera(a: MapCamera | null, b: MapCamera): boolean {

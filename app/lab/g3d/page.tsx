@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Button, PRESS } from "@/components/ui/Button";
@@ -32,6 +33,9 @@ import { listingPath } from "@/lib/idx/listing-url";
  * `?look=scrim` (default) or `?look=veil`, `?veil=0.42`, `?scrim=0.62` for the two looks. */
 export const dynamic = "force-dynamic";
 
+/** The night flight's still (scripts/make-night-poster.mjs): our artwork, the map's load cover. */
+const POSTER = "/images/home-night-poster.webp";
+
 export const metadata: Metadata = {
   title: "Real map lab",
   robots: { index: false, follow: false },
@@ -39,6 +43,8 @@ export const metadata: Metadata = {
 
 export default async function G3dLabPage() {
   if (process.env.RLT_LAB !== "1") notFound();
+  // Our poster is the load cover (G3dGround): fetched with the document, not when the CSS asks.
+  preload(POSTER, { as: "image", fetchPriority: "high" });
   const idx = getIdxClient();
   const [featured, fresh] = await Promise.all([idx.getFeatured(24), idx.getNew(24)]);
   const fixture = isSampleData();
@@ -51,6 +57,7 @@ export default async function G3dLabPage() {
           home page (components/site/FooterShell.tsx does that for "/" only). Lab-only. */}
       <style>{`footer{position:relative;z-index:10}`}</style>
       <G3dGround
+        poster={POSTER}
         tail={{ shot: "region" }}
         featured={featured
           .filter((l) => l.lat && l.lng)

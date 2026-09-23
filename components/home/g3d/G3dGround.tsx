@@ -61,11 +61,10 @@ const LOGO_HOLE = "radial-gradient(210px 64px at 84px 100%, transparent 0, trans
  * sections is one flight, not three. */
 const SETTLE_MS = 110;
 
-export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; featured?: readonly FeaturedHome[]; children: ReactNode }) {
+export function G3dGround({ poster, tail, featured = [], children }: { poster: string; tail?: G3dTail; featured?: readonly FeaturedHome[]; children: ReactNode }) {
   const featuredRef = useRef(featured);
   featuredRef.current = featured;
   const host = useRef<HTMLDivElement>(null);
-  const cover = useRef<HTMLDivElement>(null);
   const halo = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLDivElement>(null);
   const scrimEls = useRef<(HTMLDivElement | null)[]>([]);
@@ -87,6 +86,14 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
   const lookRef = useRef<Look>("scrim");
   lookRef.current = look;
   const [revealed, setRevealed] = useState(false);
+  /** OUR POSTER is the load cover (round 56 phase 1b): the night flight's own still, our artwork,
+   * in the first bytes of HTML, until the map has drawn the page's first shot. A still of Google's
+   * map may never be stored or shipped (policy), so the cover is ours. It dissolves in 400 ms once
+   * the map is drawn; it goes AT ONCE when the visitor scrolls past 24 px (the round-55 rule of
+   * the night flight, components/home/night/NightGround.tsx: a still that stays while the page
+   * moves reads as a freeze); and it stays for good if the map cannot load (no key, `gmp-error`),
+   * so a failure leaves our picture, not a black screen. */
+  const [posterGone, setPosterGone] = useState<false | "dissolve" | "scroll">(false);
   const [error, setError] = useState<string | null>(null);
   const [current, setCurrent] = useState<AreaShot | null>(null);
   const hovered = useRef<{ i: number; href: string } | null>(null);
@@ -202,9 +209,11 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
       reduced,
       viewport: () => ({ width: window.innerWidth, height: window.innerHeight }),
       initial,
-      intro: window.scrollY < 24,
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
-      onReveal: () => setRevealed(true),
+      onReveal: () => {
+        setRevealed(true);
+        setPosterGone((g) => g || "dissolve");
+      },
       onLand: () => {},
       onFlightStart: () => hideHover(),
       onError: (m) => {
@@ -254,12 +263,26 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
       schedule();
     };
     onResize();
+    // The poster goes at once on the first real scroll, where a live map can take its place.
+    let glOk = false;
+    try {
+      const c = document.createElement("canvas");
+      glOk = !!(c.getContext("webgl2") || c.getContext("webgl"));
+    } catch {}
+    const onFirstScroll = () => {
+      if (glOk && window.scrollY > 24) {
+        setPosterGone((g) => g || "scroll");
+        window.removeEventListener("scroll", onFirstScroll);
+      }
+    };
     window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scroll", onFirstScroll, { passive: true });
     window.addEventListener("resize", onResize);
     const ro = new ResizeObserver(onResize);
     ro.observe(document.body);
     return () => {
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("scroll", onFirstScroll);
       window.removeEventListener("resize", onResize);
       ro.disconnect();
       if (frame.current) cancelAnimationFrame(frame.current);
@@ -477,11 +500,33 @@ export function G3dGround({ tail, featured = [], children }: { tail?: G3dTail; f
             }}
           />
         </div>
-        {/* Before the map's first finished frame: black, then the map comes up under it. */}
+      </div>
+      {/* THE LOAD COVER: our poster (see posterGone above), over the map and under the words,
+          absolute to the page like the night flight's, with the same two scrims under the words
+          (a still cannot be told where the words are). Its image is preloaded by the page. */}
+      <div
+        aria-hidden
+        data-g3d-poster
+        data-g3d-cover
+        data-state={posterGone ? "gone" : "on"}
+        data-drop={posterGone || undefined}
+        {...{ elementtiming: "g3d-poster" }}
+        className={`pointer-events-none absolute inset-x-0 top-0 z-[1] h-[100svh] bg-black bg-cover bg-[position:58%_50%] bg-no-repeat transition-opacity duration-[400ms] ease-out motion-reduce:transition-none ${posterGone ? "opacity-0" : "opacity-100"}`}
+        style={{ backgroundImage: `url(${poster})` }}
+      >
         <div
-          ref={cover}
-          aria-hidden
-          className={`absolute inset-0 bg-black transition-opacity duration-[900ms] ease-out motion-reduce:transition-none ${revealed ? "opacity-0" : "opacity-100"}`}
+          className="absolute inset-0 lg:hidden"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(5,5,5,0.80) 0%, rgba(5,5,5,0.46) 14%, rgba(5,5,5,0.12) 30%, rgba(5,5,5,0.12) 46%, rgba(5,5,5,0.55) 60%, rgba(5,5,5,0.86) 72%, rgba(5,5,5,0.9) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 hidden lg:block"
+          style={{
+            background:
+              "radial-gradient(66% 88% at 14% 74%, rgba(5,5,5,0.93) 0%, rgba(5,5,5,0.88) 30%, rgba(5,5,5,0.6) 56%, rgba(5,5,5,0.22) 80%, rgba(5,5,5,0) 100%)",
+          }}
         />
       </div>
       {/* The hovered home's price and town: our own words, above the page, never taking the pointer. */}
