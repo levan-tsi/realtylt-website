@@ -48,6 +48,11 @@ export interface FeaturedHome {
 
 export interface G3dStats {
   loads: number;
+  /** The map's first finished frame (under the poster). */
+  navToFirstSteady: number | null;
+  /** How long the pre-warm walk took, and each step (null: no walk). */
+  warmMs: number | null;
+  warmSteps: { shot: string; ms: number; ok: boolean }[];
   navToSteady: number | null;
   navToFirstMarker: number | null;
   drawn: number;
@@ -116,6 +121,13 @@ export class G3dController {
       /** The shot the map should open on (the page may be reloaded mid-scroll). */
       initial: ShotName;
       description: string;
+      /** THE PRE-WARM: the shots to visit under the poster before it dissolves, so the tiles the
+       * page's flights need are already resident (empty: none). `jump` sets each camera and waits
+       * for the map to be drawn there; `fly` flies there in 400 ms (the path's tiles too) and waits
+       * the same way. The walk stops at `warmBudgetMs` wherever it is. */
+      warm: readonly ShotName[];
+      warmMode: "jump" | "fly";
+      warmBudgetMs: number;
     },
   ) {}
 
@@ -163,7 +175,8 @@ export class G3dController {
     this.shot = this.opts.initial;
     this.cam = open;
     if (reused) {
-      // The same element, handed to a new owner (a remount): it is already drawn.
+      // The same element, handed to a new owner (a remount): it is already drawn (and warm).
+      this.warmed = true;
       this.jump(open);
       this.onSteady(Object.assign(new Event("gmp-steadychange"), { isSteady: true }));
     }
@@ -194,15 +207,119 @@ export class G3dController {
 
   private steadyNow = false;
 
+  private steadyWaiters = new Set<(steady: boolean) => void>();
+
   private onSteady = (e: Event & { isSteady?: boolean }) => {
     this.steadyNow = !!e.isSteady;
-    if (!e.isSteady || this.revealed) return;
+    for (const w of [...this.steadyWaiters]) w(this.steadyNow);
+    if (!e.isSteady || this.revealed || this.warming) return;
+    if (this.firstSteadyAt === null) {
+      this.firstSteadyAt = performance.now();
+      performance.mark("g3d:first-steady");
+    }
+    if (!this.warmed && this.opts.warm.length && !this.warmAbort) {
+      void this.prewarm();
+      return;
+    }
+    this.reveal();
+  };
+
+  private reveal() {
     this.revealed = true;
     this.steadyAt = performance.now();
     performance.mark("g3d:steady");
     this.opts.onReveal();
     this.land();
-  };
+  }
+
+  // ---- the pre-warm (round 56 phase 1b) ----------------------------------------------------------
+  //
+  // Phase 1 measured Google's renderer stalling 50 to 100 ms while it streams tiles during a flight.
+  // The experiment: before the poster dissolves, visit every camera the page will fly to, so the
+  // tiles are resident when the reader scrolls. Nobody sees the walk (the poster is over it); it
+  // is ordinary use of the map in this page, nothing is stored by us.
+
+  private warming = false;
+  private warmed = false;
+  private warmAbort = false;
+  private wake: (() => void) | null = null;
+  private firstSteadyAt: number | null = null;
+  private warmMs: number | null = null;
+  private warmSteps: { shot: string; ms: number; ok: boolean }[] = [];
+
+  /** The visitor scrolled during the walk: stop it, go to the page's shot, show the map. */
+  abortWarm() {
+    this.warmAbort = true;
+    this.wake?.();
+  }
+
+  /** After a camera change: resolves true when the map has redrawn and is steady again, false at
+   * `maxMs` (or on an abort). A camera whose tiles are all resident may never report unsteady, so a
+   * steady map with no change in 300 ms counts as drawn. */
+  private settle(maxMs: number): Promise<boolean> {
+    return new Promise((resolve) => {
+      let sawUnsteady = false;
+      const done = (ok: boolean) => {
+        clearTimeout(grace);
+        clearTimeout(cap);
+        this.steadyWaiters.delete(onChange);
+        this.wake = null;
+        resolve(ok);
+      };
+      const onChange = (steady: boolean) => {
+        if (!steady) sawUnsteady = true;
+        else if (sawUnsteady) done(true);
+      };
+      this.steadyWaiters.add(onChange);
+      this.wake = () => done(false);
+      const grace = setTimeout(() => !sawUnsteady && this.steadyNow && done(true), 300);
+      const cap = setTimeout(() => done(false), maxMs);
+    });
+  }
+
+  private landed(): Promise<void> {
+    return new Promise((resolve) => {
+      const el = this.el!;
+      const done = () => {
+        clearTimeout(cap);
+        el.removeEventListener("gmp-animationend", done);
+        this.wake = null;
+        resolve();
+      };
+      el.addEventListener("gmp-animationend", done);
+      this.wake = done;
+      const cap = setTimeout(done, 1200);
+    });
+  }
+
+  private async prewarm() {
+    this.warming = true;
+    const t0 = performance.now();
+    performance.mark("g3d:warm-start");
+    for (const name of this.opts.warm) {
+      if (this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
+      const s0 = performance.now();
+      const c = this.cameraOf(name);
+      if (this.opts.warmMode === "fly") {
+        this.el!.flyCameraTo({ endCamera: { center: c.center, range: c.range, tilt: c.tilt, heading: c.heading, fov: c.fov }, durationMillis: 400 });
+        this.cam = c;
+        await this.landed();
+      } else {
+        this.jump(c);
+      }
+      const ok = this.warmAbort ? false : await this.settle(4000);
+      this.warmSteps.push({ shot: name, ms: Math.round(performance.now() - s0), ok });
+    }
+    if (this.stopped) return;
+    // Back to the page's own shot (the reader may have scrolled meanwhile), drawn, then shown.
+    this.jump(this.cameraOf(this.shot ?? this.opts.initial));
+    if (!this.warmAbort) await this.settle(4000);
+    this.warmMs = Math.round(performance.now() - t0);
+    performance.mark("g3d:warm-end");
+    this.warming = false;
+    this.warmed = true;
+    if (!this.stopped) this.reveal();
+  }
 
   private onAnimationEnd = () => {
     if (this.flying) this.land();
@@ -217,9 +334,9 @@ export class G3dController {
   flyToShot(name: ShotName) {
     const target = this.cameraOf(name);
     if (!this.revealed) {
-      // Before the first steady frame there is nothing to see (our poster covers it): go there
-      // directly.
-      if (name !== this.shot) this.jump(target);
+      // Before the map is shown there is nothing to see (our poster covers it): go there directly,
+      // or, during the pre-warm, once the walk is over.
+      if (name !== this.shot && !this.warming) this.jump(target);
       this.shot = name;
       return;
     }
@@ -433,6 +550,9 @@ export class G3dController {
   stats(): G3dStats {
     return {
       loads,
+      navToFirstSteady: this.firstSteadyAt === null ? null : Math.round(this.firstSteadyAt),
+      warmMs: this.warmMs,
+      warmSteps: this.warmSteps,
       navToSteady: this.steadyAt === null ? null : Math.round(this.steadyAt),
       navToFirstMarker: this.firstMarkerAt === null ? null : Math.round(this.firstMarkerAt),
       drawn: this.drawn.size,

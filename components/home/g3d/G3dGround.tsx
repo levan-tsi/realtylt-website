@@ -7,7 +7,7 @@ import type { MapPin } from "@/lib/idx/types";
 import { shotPosition, shotStops, withTail, type ShotSection, type ShotStop } from "../night/driver";
 import { loadElevation } from "../night/elevation";
 import { townSearchHref } from "../night/lights";
-import { AREA_COUNTY_OF, type AreaShot, type ShotName } from "../night/shots";
+import { AREA_COUNTY_OF, AREA_FLIGHT, type AreaShot, type ShotName } from "../night/shots";
 import { boxUVToLngLat } from "../night/world";
 import { G3dController, type FeaturedHome, type Homes } from "./controller";
 import { nearestLight } from "./thinning";
@@ -204,11 +204,25 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       return;
     }
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // THE PRE-WARM WALK (controller.ts): the shots the page will fly to, in the page's order, under
+    // the poster, until the budget runs out. Measured (docs/parity/DESIGN-ROUND56.md §8): the whole
+    // walk takes 20 to 30 s even on a warm profile (each shot 1.4 to 2.1 s to draw) and leaves the
+    // flights' hitches where they were; ONE shot, the first the reader flies to, takes 2 to 4 s and
+    // removes the cold first flight's 300 ms stall. So the budget is 1.5 s: the walk visits the next
+    // shot and stops. `?warm=0|lite|full|fly` and `?warmBudget=` are the lab's switches (lite: the
+    // six chapters and the first two counties; fly: flown in 400 ms instead of set).
+    const q = new URLSearchParams(window.location.search);
+    const warmQ = q.get("warm") ?? "full";
+    const pageShots = [...new Set(names.current)].filter((n) => n !== initial);
+    const warm = warmQ === "0" ? [] : warmQ === "lite" ? pageShots.filter((n) => !isArea(n) || AREA_FLIGHT.indexOf(n) < 2) : pageShots;
     const c = new G3dController({
       key,
       reduced,
       viewport: () => ({ width: window.innerWidth, height: window.innerHeight }),
       initial,
+      warm,
+      warmMode: warmQ === "fly" ? "fly" : "jump",
+      warmBudgetMs: Number(q.get("warmBudget") ?? 1500),
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);
@@ -272,6 +286,7 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
     const onFirstScroll = () => {
       if (glOk && window.scrollY > 24) {
         setPosterGone((g) => g || "scroll");
+        ctl.current?.abortWarm();
         window.removeEventListener("scroll", onFirstScroll);
       }
     };
