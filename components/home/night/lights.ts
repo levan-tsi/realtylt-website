@@ -273,3 +273,61 @@ export function countyAt(r: CountyRaster, x: number, z: number): number {
   const cx = Math.floor((x - r.x0) / r.cellKm), cz = Math.floor((z - r.z0) / r.cellKm);
   return cx < 0 || cz < 0 || cx >= r.w || cz >= r.h ? 0 : r.data[cz * r.w + cx];
 }
+
+/** 1 + the county of each grain of dust, read off the raster, so the "where we work" chapter can
+ * light a county's land along with its homes. A plain loop, but over a million grains: the worker
+ * runs it (build.worker.ts), so the frame that receives the lights never pays for it. */
+export function paintCounties(positions: Float32Array, count: number, r: CountyRaster, out: Float32Array = new Float32Array(count)): Float32Array {
+  for (let i = 0; i < count; i++) out[i] = countyAt(r, positions[i * 3], positions[i * 3 + 2]);
+  return out;
+}
+
+/** EVERYTHING THE LIGHTS NEED, built in one place so the worker and the main-thread fallback
+ * cannot disagree: the cloud, the haze over it, the county raster, the dust painted with its
+ * counties, each county's own frame and lift, and the towns the lantern names. Measured in the
+ * owner's Chrome (round 55): built on the main thread this was 50 to 70 ms in the very frame
+ * that received the terrain. Every array is fresh and owns its buffer (bundleTransfer lists
+ * them), so a worker hands the whole thing over without a copy. */
+export interface LightBundle {
+  cloud: LightCloud;
+  haze: HazeCloud;
+  raster: CountyRaster;
+  /** paintCounties over the dust, when the dust was given; null when there is no dust to paint. */
+  dustCounties: Float32Array | null;
+  boxes: Partial<Record<CountySlugName, LngLatBox>>;
+  areaGains: Partial<Record<CountySlugName, number>>;
+  towns: TownMark[];
+  /** World x, the REAL height in km, z per town, in `towns` order (the lantern's picking). */
+  townWorld: Float32Array;
+}
+
+export function buildLightBundle(
+  pts: LightPoints,
+  grid: ElevationGrid | null,
+  dust: { positions: Float32Array; count: number } | null,
+  areaGain: { pow: number; max: number },
+): LightBundle {
+  const cloud = buildLights(pts, grid);
+  const haze = buildHaze(cloud);
+  const raster = countyRaster(cloud);
+  const dustCounties = dust ? paintCounties(dust.positions, dust.count, raster) : null;
+  const boxes = countyLightBoxes(cloud);
+  const areaGains = countyAreaGains(cloud, boxes, areaGain);
+  const towns = townCentroids(pts);
+  const townWorld = new Float32Array(towns.length * 3);
+  towns.forEach((t, i) => {
+    const h = grid ? sampleHeight(grid, t.lng, t.lat) : 0;
+    const [x, , z] = lngLatToWorld(t.lng, t.lat);
+    townWorld[i * 3] = x;
+    townWorld[i * 3 + 1] = h / 1000;
+    townWorld[i * 3 + 2] = z;
+  });
+  return { cloud, haze, raster, dustCounties, boxes, areaGains, towns, townWorld };
+}
+
+/** The bundle's buffers, for postMessage's transfer list (each once, whatever shares one). */
+export function bundleTransfer(b: LightBundle): ArrayBuffer[] {
+  const arrays = [b.cloud.positions, b.cloud.delays, b.cloud.gains, b.cloud.seeds, b.cloud.counties, b.haze.positions, b.haze.strengths, b.raster.data, b.townWorld];
+  if (b.dustCounties) arrays.push(b.dustCounties);
+  return [...new Set(arrays.map((a) => a.buffer as ArrayBuffer))];
+}

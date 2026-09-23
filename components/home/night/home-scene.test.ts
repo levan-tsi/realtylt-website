@@ -185,6 +185,41 @@ describe("the scene's programs are compiled before the clouds arrive", () => {
   });
 });
 
+describe("the frame that receives the clouds does as little as possible", () => {
+  // Measured in the owner's Chrome (round 55): the worker's terrain reply was consumed in one
+  // 60 to 91 ms frame (the light math on the main thread, then a 43 ms upload of the dust's
+  // 36 MB in the first frame that drew it). The light math now runs in the worker, in one bundle
+  // shared with the main-thread fallback, and the dust goes up in pieces, one per frame.
+  const scene = fs.readFileSync(path.join(ROOT, "components/home/night/scene.ts"), "utf8");
+  const worker = fs.readFileSync(path.join(ROOT, "components/home/night/build.worker.ts"), "utf8");
+
+  it("asks the worker for the lights and builds the same bundle itself only when it cannot", () => {
+    expect(worker).toContain("buildLightBundle(req.pts, grid, dust, req.areaGain)");
+    expect(worker).toContain("bundleTransfer(bundle)");
+    expect(scene).toContain('ask({ kind: "lights", pts, areaGain })');
+    expect(scene).toMatch(/: buildLightBundle\(pts, grid, /);
+    // The scene no longer does the light math itself.
+    for (const fn of ["buildLights(", "buildHaze(", "countyRaster(", "countyLightBoxes(", "countyAreaGains(", "townCentroids("]) expect(scene).not.toContain(fn);
+  });
+
+  it("holds the dust as pieces of a bounded size and adds one per frame", () => {
+    const m = /const DUST_CHUNK = ([\d_]+);/.exec(scene);
+    expect(m).not.toBeNull();
+    const grains = Number(m![1].replace(/_/g, ""));
+    // 36 bytes a grain: under 8 MB a piece, and not so small that a phone's 400k cloud dribbles in.
+    expect(grains * 36).toBeLessThan(8 * 1024 * 1024);
+    expect(grains).toBeGreaterThanOrEqual(100_000);
+    const loop = scene.slice(scene.indexOf("for (const c of chunks.slice(1))"), scene.indexOf("async function buildLightCloud()"));
+    expect(loop).toContain("await nextFrame();");
+    expect(loop.indexOf("await nextFrame();")).toBeLessThan(loop.indexOf("add(c);"));
+  });
+
+  it("fetches the programs' uniform locations off-frame, after the link", () => {
+    const warm = scene.slice(scene.indexOf("const programsReady"), scene.indexOf('performance.mark("night:programs")'));
+    expect(warm.indexOf("compileAsync(")).toBeLessThan(warm.indexOf("getUniforms()"));
+  });
+});
+
 describe("the footer over the scene", () => {
   const shell = fs.readFileSync(path.join(ROOT, "components/site/FooterShell.tsx"), "utf8");
 

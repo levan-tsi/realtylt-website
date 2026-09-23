@@ -15,10 +15,11 @@ import * as THREE from "three";
 import { loadLights } from "@/lib/idx/lights-client";
 import { buildTerrainClouds, type DustCloud, type TerrainParams } from "./dust";
 import { decodeElevation, loadElevationPixels, sampleHeight, type ElevationGrid, type ElevationMeta } from "./elevation";
-import { buildHaze, buildLights, countyAreaGains, countyLightBoxes, COUNTY_SLUGS, countyAt, countyRaster, townCentroids, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
+import type { BuildReply, BuildRequest } from "./build.worker";
+import { buildLightBundle, COUNTY_SLUGS, paintCounties, type CountyRaster, type CountySlugName, type TownMark } from "./lights";
 import { DEPTH_FRAGMENT, DEPTH_VERTEX, DUST_FRAGMENT, DUST_VERTEX, HAZE_FRAGMENT, HAZE_VERTEX, LIGHT_FRAGMENT, LIGHT_VERTEX } from "./shaders";
 import { AREA_COUNTY_OF, AREA_FLIGHT, areaShot, blendFramings, framingFor, sequenceFraming, SHOTS, type Framing, type Shot, type ShotName } from "./shots";
-import { EXAGGERATION, lngLatToWorld, worldToLngLat, type Vec3 } from "./world";
+import { EXAGGERATION, worldToLngLat, type Vec3 } from "./world";
 
 export interface TownHover {
   name: string;
@@ -235,8 +236,17 @@ export interface NightSceneHandle {
 }
 
 const copyF = (f: Framing): Framing => ({ pos: [...f.pos] as Vec3, target: [...f.target] as Vec3, fov: f.fov, moon: [f.moon[0], f.moon[1]] });
+const nextFrame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
 
 const isPhone = () => window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 700;
+
+/** THE DUST GOES TO THE GPU IN PIECES. A million grains carry 36 bytes each, and three.js uploads
+ * a geometry's every attribute in the first frame that draws it: one 43 ms `bufferData` burst
+ * (measured, round 55), on top of everything else that frame did. The cloud is held as several
+ * Points sharing one material, each this many grains (~5.8 MB), and one is added per frame. The
+ * grains are in seed order (dust.ts shuffleBySeed), so a contiguous slice is a uniform sample of
+ * the land and the governor's thinning works chunk by chunk exactly as it did on the whole. */
+const DUST_CHUNK = 160_000;
 
 /** How far a quiet box is grown before it reaches the shader, in css px: half the widest sprite
  * the lights are allowed to draw, so a lamp centred just outside a box cannot paint into it. */
@@ -400,6 +410,12 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     try {
       // A driver that never reports the link complete must not hold the clouds forever.
       await Promise.race([renderer.compileAsync(warm, camera), new Promise((r) => setTimeout(r, 3000))]);
+      // ...and the uniform and attribute locations are fetched now as well. three does that on a
+      // program's first use, one synchronous GL query per uniform (measured: ~14 ms for the four
+      // programs), which would otherwise land in the first frame that draws the clouds.
+      for (const m of [dustMat, lightMat, hazeMat, depthMat]) {
+        (renderer.properties.get(m) as { currentProgram?: { getUniforms(): unknown } } | undefined)?.currentProgram?.getUniforms();
+      }
     } catch {
       // A lost context: the first render links, as it always did.
     }
@@ -410,8 +426,14 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   // ---- state ---------------------------------------------------------------------------------
   let grid: ElevationGrid | null = null;
   let towns: TownMark[] = [];
-  let townWorld = new Float32Array(0);
-  let dustPoints: THREE.Points | null = null;
+  let townWorld: Float32Array = new Float32Array(0);
+  /** The dust, as DUST_CHUNK-sized Points (see the constant), all sharing dustMat. */
+  let dustChunks: THREE.Points[] = [];
+  /** The whole cloud's positions, and 1 + county per grain: every chunk's aCounty attribute is a
+   * view into the latter, so painting it once paints them all. */
+  let dustPositions: Float32Array = new Float32Array(0);
+  let dustCounty: Float32Array = new Float32Array(0);
+  let dustBuild = 0;
   let lightPoints: THREE.Points | null = null;
   let hazePoints: THREE.Points | null = null;
   let depthMesh: THREE.Mesh | null = null;
@@ -425,14 +447,14 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   let landKm2 = 17000;
   let dustCount = 0;
   let counties: CountyRaster | null = null;
-  /** Each grain learns its county from the homes around it (for the area focus). */
-  function paintDustCounties() {
-    if (!dustPoints || !counties) return;
-    const attr = dustPoints.geometry.getAttribute("aCounty") as THREE.BufferAttribute;
-    const pos = dustPoints.geometry.getAttribute("position") as THREE.BufferAttribute;
-    const a = attr.array as Float32Array, p = pos.array as Float32Array;
-    for (let i = 0; i < attr.count; i++) a[i] = countyAt(counties, p[i * 3], p[i * 3 + 2]);
-    attr.needsUpdate = true;
+  /** Each grain learns its county from the homes around it (for the area focus): from the array
+   * the worker painted when there is one, otherwise painted here (no worker, or a rebuild). */
+  function paintDustCounties(painted?: Float32Array | null) {
+    if (!dustCounty.length) return;
+    if (painted && painted.length === dustCounty.length) dustCounty.set(painted);
+    else if (counties) paintCounties(dustPositions, dustCounty.length, counties, dustCounty);
+    else return;
+    for (const c of dustChunks) (c.geometry.getAttribute("aCounty") as THREE.BufferAttribute).needsUpdate = true;
   }
   let buildMs = 0;
 
@@ -516,75 +538,88 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     meshStride: phone ? 2 : 1,
   });
 
-  type Built = { dust: DustCloud; mesh: { positions: Float32Array; index: Uint32Array }; ms: number; where: string };
-  /** The build runs in a worker; if no worker can start (or it fails), on the main thread. */
-  function runBuild(params: TerrainParams): Promise<Built> {
-    return new Promise((resolve) => {
-      let done = false;
-      let worker: Worker | null = null;
-      const finish = (b: Built) => {
-        if (done) return;
-        done = true;
-        worker?.terminate();
-        resolve(b);
-      };
-      const onMain = () => {
-        if (done || !grid) return;
-        const t0 = performance.now();
-        const { dust, mesh } = buildTerrainClouds(grid, params);
-        finish({ dust, mesh, ms: performance.now() - t0, where: "main thread" });
-      };
+  // ---- the worker --------------------------------------------------------------------------------
+  // One worker for the boot (the terrain, then the lights), released once both are in; a rebuild
+  // from the lab starts another. Replies come back in request order. `null` means do not try
+  // again: after any failure the rest is built here, because the lights must stand on the terrain
+  // the page actually drew, and after an error the worker holds no terrain at all.
+  let link: { w: Worker; waiting: ((r: BuildReply | null) => void)[] } | null | undefined;
+  function ask(msg: BuildRequest, transfer: Transferable[] = []): Promise<BuildReply | null> {
+    if (link === undefined) {
       try {
-        worker = new Worker(new URL("./build.worker.ts", import.meta.url));
+        const l = { w: new Worker(new URL("./build.worker.ts", import.meta.url)), waiting: [] as ((r: BuildReply | null) => void)[] };
+        l.w.onmessage = (e: MessageEvent<BuildReply>) => l.waiting.shift()?.(e.data);
+        l.w.onerror = () => dropLink();
+        link = l;
       } catch {
-        onMain();
-        return;
+        link = null;
       }
-      worker.onmessage = (e: MessageEvent) => {
-        const d = e.data;
-        if (d.error) return onMain();
-        finish({
-          dust: { count: d.count, positions: d.positions, slopes: d.slopes, ridges: d.ridges, seeds: d.seeds, kinds: d.kinds },
-          mesh: { positions: d.meshPositions, index: d.meshIndex },
-          ms: d.ms,
-          where: "worker",
-        });
-      };
-      worker.onerror = () => onMain();
-      // A copy goes to the worker; the page keeps its own for the next rebuild.
-      const rgba = pixels!.rgba.slice();
-      worker.postMessage({ rgba, meta: pixels!.meta, params }, [rgba.buffer]);
+    }
+    if (!link) return Promise.resolve(null);
+    const l = link;
+    return new Promise((resolve) => {
+      l.waiting.push((r) => {
+        if (!r || "error" in r) {
+          dropLink();
+          resolve(null);
+        } else resolve(r);
+      });
+      l.w.postMessage(msg, transfer);
     });
+  }
+  function dropLink() {
+    const l = link;
+    link = null;
+    if (!l) return;
+    l.w.terminate();
+    for (const r of l.waiting.splice(0)) r(null);
+  }
+  function releaseLink() {
+    link?.w.terminate();
+    link = undefined;
+  }
+
+  type Built = { dust: DustCloud; mesh: { positions: Float32Array; index: Uint32Array }; ms: number; where: string };
+  /** The build runs in the worker; if none can start (or it fails), on the main thread. */
+  async function runBuild(params: TerrainParams): Promise<Built> {
+    // A copy goes to the worker; the page keeps its own for the next rebuild.
+    const rgba = pixels!.rgba.slice();
+    const r = await ask({ kind: "terrain", rgba, meta: pixels!.meta, params }, [rgba.buffer]);
+    if (r && r.kind === "terrain" && !("error" in r)) {
+      return {
+        dust: { count: r.count, positions: r.positions, slopes: r.slopes, ridges: r.ridges, seeds: r.seeds, kinds: r.kinds },
+        mesh: { positions: r.meshPositions, index: r.meshIndex },
+        ms: r.ms,
+        where: "worker",
+      };
+    }
+    const t0 = performance.now();
+    const { dust, mesh } = buildTerrainClouds(grid!, params);
+    return { dust, mesh, ms: performance.now() - t0, where: "main thread" };
   }
 
   async function buildDustCloud() {
     if (!grid || !pixels) return;
     const key = dustKey();
+    const build = ++dustBuild;
     const built = await runBuild(terrainParams());
+    if (ready) releaseLink(); // a rebuild after the boot: nothing else is coming
     await programsReady; // never add a cloud its program cannot draw without a stall
-    if (disposed || key !== dustKey()) return; // a newer look asked for another build
+    if (disposed || build !== dustBuild) return; // a newer look asked for another build
     buildMs = built.ms;
     buildWhere = built.where;
     builtKey = key;
     const { dust, mesh } = built;
-    if (dustPoints) {
-      scene.remove(dustPoints);
-      dustPoints.geometry.dispose();
+    for (const c of dustChunks) {
+      scene.remove(c);
+      c.geometry.dispose();
     }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(dust.positions, 3));
-    g.setAttribute("aSlope", new THREE.BufferAttribute(dust.slopes, 2));
-    g.setAttribute("aRidge", new THREE.BufferAttribute(dust.ridges, 1));
-    g.setAttribute("aSeed", new THREE.BufferAttribute(dust.seeds, 1));
-    g.setAttribute("aKind", new THREE.BufferAttribute(dust.kinds, 1));
-    g.setAttribute("aCounty", new THREE.BufferAttribute(new Float32Array(dust.count), 1));
-    g.setDrawRange(0, Math.floor(dust.count * qualityDensity));
-    dustPoints = new THREE.Points(g, dustMat);
-    dustPoints.frustumCulled = false;
-    dustPoints.renderOrder = 1;
-    scene.add(dustPoints);
+    dustChunks = [];
+    dustPositions = dust.positions;
+    dustCounty = new Float32Array(dust.count);
     dustCount = dust.count;
-    paintDustCounties();
+    // A rebuild after the lights: the counties are known, so they are painted before the upload.
+    if (counties) paintCounties(dustPositions, dust.count, counties, dustCounty);
     if (!depthMesh) {
       const mg = new THREE.BufferGeometry();
       mg.setAttribute("position", new THREE.BufferAttribute(mesh.positions, 3));
@@ -595,7 +630,40 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       depthMesh.visible = look.occlude;
       scene.add(depthMesh);
     }
-    kick();
+    const chunks: THREE.Points[] = [];
+    for (let s = 0; s < dust.count; s += DUST_CHUNK) {
+      const e = Math.min(dust.count, s + DUST_CHUNK);
+      const g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.BufferAttribute(dust.positions.subarray(s * 3, e * 3), 3));
+      g.setAttribute("aSlope", new THREE.BufferAttribute(dust.slopes.subarray(s * 2, e * 2), 2));
+      g.setAttribute("aRidge", new THREE.BufferAttribute(dust.ridges.subarray(s, e), 1));
+      g.setAttribute("aSeed", new THREE.BufferAttribute(dust.seeds.subarray(s, e), 1));
+      g.setAttribute("aKind", new THREE.BufferAttribute(dust.kinds.subarray(s, e), 1));
+      g.setAttribute("aCounty", new THREE.BufferAttribute(dustCounty.subarray(s, e), 1));
+      g.setDrawRange(0, Math.floor((e - s) * qualityDensity));
+      const p = new THREE.Points(g, dustMat);
+      p.frustumCulled = false;
+      p.renderOrder = 1;
+      chunks.push(p);
+    }
+    // The first piece now, so the land is there and the intro can begin; the rest one per frame
+    // behind it (DUST_CHUNK), while the worker goes on to the lights.
+    const add = (c: THREE.Points) => {
+      scene.add(c);
+      dustChunks.push(c);
+      kick();
+    };
+    add(chunks[0]);
+    void (async () => {
+      for (const c of chunks.slice(1)) {
+        await nextFrame();
+        if (disposed || build !== dustBuild) {
+          for (const rest of chunks) if (!dustChunks.includes(rest)) rest.geometry.dispose();
+          return;
+        }
+        add(c);
+      }
+    })();
   }
 
   async function buildLightCloud() {
@@ -604,7 +672,13 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     performance.mark("night:lights-data");
     await programsReady; // (the lights can be the first thing drawn when the terrain failed)
     if (disposed) return;
-    const cloud = buildLights(pts, grid);
+    // Everything the lights need comes back from the worker in one bundle (lights.ts
+    // buildLightBundle), or is built here when there is no worker to ask.
+    const areaGain = { pow: look.areaGainPow, max: look.areaGainMax };
+    const r = await ask({ kind: "lights", pts, areaGain });
+    if (disposed) return;
+    const b = r && r.kind === "lights" && !("error" in r) ? r.bundle : buildLightBundle(pts, grid, dustCount ? { positions: dustPositions, count: dustCount } : null, areaGain);
+    const { cloud, haze } = b;
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(cloud.positions, 3));
     g.setAttribute("aDelay", new THREE.BufferAttribute(cloud.delays, 1));
@@ -615,7 +689,6 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     lightPoints.frustumCulled = false;
     lightPoints.renderOrder = 3;
     scene.add(lightPoints);
-    const haze = buildHaze(cloud);
     const hg = new THREE.BufferGeometry();
     hg.setAttribute("position", new THREE.BufferAttribute(haze.positions, 3));
     hg.setAttribute("aStrength", new THREE.BufferAttribute(haze.strengths, 1));
@@ -623,27 +696,21 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     hazePoints.frustumCulled = false;
     hazePoints.renderOrder = 2;
     scene.add(hazePoints);
-    counties = countyRaster(cloud);
-    paintDustCounties();
+    counties = b.raster;
+    paintDustCounties(b.dustCounties);
     // Re-frame the area chapter on the homes themselves, now that we know where they stand, and
-    // measure how hard each county's homes have to burn to carry a frame of that size.
-    const boxes = countyLightBoxes(cloud);
-    areaGains = countyAreaGains(cloud, boxes, { pow: look.areaGainPow, max: look.areaGainMax });
+    // take how hard each county's homes have to burn to carry a frame of that size.
+    areaGains = b.areaGains;
     for (const a of AREA_FLIGHT) {
-      const b = boxes[AREA_COUNTY_OF[a]];
-      if (b) areaFrames[a] = areaShot(b);
+      const box = b.boxes[AREA_COUNTY_OF[a]];
+      if (box) areaFrames[a] = areaShot(box);
     }
     if (goalName && areaFrames[goalName]) {
       goal = framingFor(shotOf(goalName), aspect);
       if (frames === 0 || reduce) cur = copyF(goal);
     }
-    towns = townCentroids(pts);
-    townWorld = new Float32Array(towns.length * 3);
-    towns.forEach((t, i) => {
-      const h = grid ? sampleHeight(grid, t.lng, t.lat) : 0;
-      const [x, , z] = lngLatToWorld(t.lng, t.lat);
-      townWorld.set([x, h / 1000, z], i * 3);
-    });
+    towns = b.towns;
+    townWorld = b.townWorld;
     // The lights follow the dust: they begin once the land has had most of a second to appear.
     const now = performance.now();
     lightsStart = Math.max(now, (dustStart < 0 ? now : dustStart) + 850);
@@ -816,7 +883,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     qualityDensity *= 0.65;
     // The grains are in seed order (dust.ts shuffleBySeed), so a shorter draw range is a uniform
     // thinning, and it saves the vertex work too.
-    dustPoints?.geometry.setDrawRange(0, Math.floor(dustCount * qualityDensity));
+    for (const c of dustChunks) c.geometry.setDrawRange(0, Math.floor(c.geometry.getAttribute("position").count * qualityDensity));
     resize();
   }
 
@@ -882,6 +949,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
   performance.mark("night:terrain");
   await buildLightCloud();
   performance.mark("night:lights");
+  releaseLink();
   ready = true;
   opts.onReady?.();
   kick();
@@ -1021,7 +1089,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
       flight?.done();
-      for (const o of [dustPoints, lightPoints, hazePoints, depthMesh]) o?.geometry.dispose();
+      dropLink();
+      for (const o of [...dustChunks, lightPoints, hazePoints, depthMesh]) o?.geometry.dispose();
       dustMat.dispose();
       lightMat.dispose();
       hazeMat.dispose();
