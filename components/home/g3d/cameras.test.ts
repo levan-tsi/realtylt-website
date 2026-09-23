@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, PX_PER_LIGHT, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, rawCamera } from "./cameras";
+import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, PX_PER_LIGHT, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, rawCamera } from "./cameras";
 import { project } from "./camera";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
@@ -92,6 +92,14 @@ describe("the ladder (phase 1b: fewer new tiles per flight)", () => {
       }
     });
 
+    it(`with the first-step exception, lets only hero -> dutchess reach ${FIRST_STEP_RATIO}x (${label})`, () => {
+      for (let i = 1; i < LADDER.length; i++) {
+        const a = cameraFor(LADDER[i - 1], aspect, { firstStep: true }), b = cameraFor(LADDER[i], aspect, { firstStep: true });
+        const ratio = Math.max(a.range, b.range) / Math.min(a.range, b.range);
+        expect(ratio, `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual((i === 1 ? FIRST_STEP_RATIO : MAX_RANGE_RATIO) + 1e-3);
+      }
+    });
+
     it(`only ever pulls a shot back, never closer, and changes nothing but its range (${label})`, () => {
       for (const n of LADDER) {
         const raw = rawCamera(n, aspect), c = cameraFor(n, aspect);
@@ -101,9 +109,17 @@ describe("the ladder (phase 1b: fewer new tiles per flight)", () => {
     });
   }
 
-  it("pulls back only the shots that needed it on a laptop (Putnam after Orange, the Bronx after Westchester County)", () => {
+  it("pulls back only the shots that needed it on a laptop (Dutchess and the Highlands behind the round-57 hero, Putnam after Orange, the Bronx after Westchester County)", () => {
     const moved = LADDER.filter((n) => cameraFor(n, LAPTOP).range > rawCamera(n, LAPTOP).range);
-    expect(moved).toEqual(["putnam", "bronx"]);
+    expect(moved).toEqual(["dutchess", "highlands", "putnam", "bronx"]);
+    expect(cameraFor("dutchess", LAPTOP).range).toBe(72_500);
+    expect(cameraFor("highlands", LAPTOP).range).toBe(36_250);
+  });
+
+  it("with the first-step exception, leaves Dutchess at its own 60 km (round 57, measured and not chosen)", () => {
+    const hero = cameraFor("hero", LAPTOP, { firstStep: true }), dutchess = cameraFor("dutchess", LAPTOP, { firstStep: true });
+    expect(hero.range / dutchess.range).toBeGreaterThan(MAX_RANGE_RATIO);
+    expect(dutchess.range).toBe(rawCamera("dutchess", LAPTOP).range);
   });
 });
 

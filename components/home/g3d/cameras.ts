@@ -37,7 +37,23 @@ export const TUNED: Partial<Record<ShotName, { wide: G3dCamera; tall?: G3dCamera
   // harbour to 30 (the Upper Bay, lower Manhattan and Brooklyn), and the tail is no longer the
   // whole region from 200 km but the city and the river from 60 km (the page's last flight
   // was a 12x pull-back).
-  hero: { wide: cam(41.05, -74.2, 120_000, 50, 0, 40), tall: cam(41.12, -73.97, 135_000, 45, 0, 58) },
+  //
+  // Round 57, THE TERRITORY SHOT (the owner: "show everything from higher: those five boroughs and
+  // Westchester and those areas that we cover"). The camera stands south of the harbour and looks
+  // north, so the city, the harbour and Staten Island are at the front and the valley runs up the
+  // frame to Kingston with the Catskills on the horizon. Solved, not guessed: ten points of the
+  // territory (Staten Island's south shore, the Rockaways, Nassau's west, Port Chester, the
+  // Westchester and Dutchess corners on the state line, Poughkeepsie, New Paltz, Middletown,
+  // Rockland) fitted by our own projection into the window's free side (1440: x 640..1420, right
+  // of the words), then looked at. The losing composition, straight down at 15 to 25 degrees,
+  // read as a road atlas of New Jersey with the city in a corner (frames in
+  // docs/parity/DESIGN-ROUND57.md §4).
+  // The phone is the hard one: its words take the top third and the bottom half, leaving a band
+  // of ~220 px (y 280..500). Fitted there from the south looking NORTH-NORTH-WEST (heading 340),
+  // the city, Long Island and the Sound sit in the band, "New York" readable, and the river runs
+  // up to Poughkeepsie beside the headline; looking north (heading 10) put the city under the
+  // count, where nobody could see it.
+  hero: { wide: cam(41.0093, -74.3582, 145_000, 55, 8, 40), tall: cam(40.8319, -73.858, 156_000, 50, 340, 62) },
   dutchess: { wide: cam(41.62, -73.95, 60_000, 50, 0, 40) },
   highlands: { wide: cam(41.4, -73.97, 30_000, 52, 185, 40) },
   westchester: { wide: cam(41.07, -73.87, 48_000, 50, 250, 40) },
@@ -75,21 +91,31 @@ export const aspectMix = (aspect: number) => Math.min(1, Math.max(0, (aspect - 0
 export const LADDER: readonly ShotName[] = ["hero", "dutchess", "highlands", "westchester", ...AREA_FLIGHT, "harbour", "region"];
 export const MAX_RANGE_RATIO = 2;
 export const MAX_TILT_STEP = 15;
+/** Round 57: the hero rose to 145 to 156 km to hold the whole territory, and the ladder pulls
+ * Dutchess back behind it (60 -> 72.5 km at 1440, 78 km at 390). The alternative, letting the
+ * FIRST step (hero to Dutchess) differ by up to this ratio and Dutchess stay at 60 km, was built
+ * and measured with the headed lag probe, cold, twice at each width (docs/parity/DESIGN-ROUND57.md
+ * §4): on the phone the first flight's worst frame was 243 and 271 ms with the exception against
+ * 118 and 70 ms on the ladder; at 1440, 83 and 63 against 76 and 56. It costs, so the ladder
+ * holds. `{ firstStep: true }` (the page's `?ladder=first`) keeps the exception one switch away. */
+export const FIRST_STEP_RATIO = 2.75;
 
-const ladderCache = new Map<number, Map<ShotName, G3dCamera>>();
+const ladderCache = new Map<string, Map<ShotName, G3dCamera>>();
 
 /** Every shot on the ladder at this aspect, with the range floors applied. */
-export function ladderCameras(aspect: number): Map<ShotName, G3dCamera> {
-  const key = Math.round(aspect * 1000);
+export function ladderCameras(aspect: number, opts: { firstStep?: boolean } = {}): Map<ShotName, G3dCamera> {
+  const key = `${Math.round(aspect * 1000)}${opts.firstStep ? "f" : ""}`;
   const hit = ladderCache.get(key);
   if (hit) return hit;
   const cams = LADDER.map((n) => rawCamera(n, aspect));
+  // The allowed ratio between rung i and rung i + 1.
+  const ratio = (i: number) => (i === 0 && opts.firstStep ? FIRST_STEP_RATIO : MAX_RANGE_RATIO);
   // Raise the nearer of any two neighbours until the ratio holds, both ways, until nothing moves
   // (raising only, so it converges; each pass can only lift a range to half a neighbour's).
   for (let pass = 0; pass < LADDER.length; pass++) {
     let moved = false;
     for (let i = 0; i < cams.length; i++) {
-      const floor = Math.max(i > 0 ? cams[i - 1].range : 0, i + 1 < cams.length ? cams[i + 1].range : 0) / MAX_RANGE_RATIO;
+      const floor = Math.max(i > 0 ? cams[i - 1].range / ratio(i - 1) : 0, i + 1 < cams.length ? cams[i + 1].range / ratio(i) : 0);
       if (cams[i].range < floor - 0.5) {
         cams[i] = { ...cams[i], range: Math.ceil(floor) };
         moved = true;
@@ -103,8 +129,8 @@ export function ladderCameras(aspect: number): Map<ShotName, G3dCamera> {
 }
 
 /** The camera for a shot in a window of this aspect (width / height), on the ladder. */
-export function cameraFor(name: ShotName, aspect: number): G3dCamera {
-  return ladderCameras(aspect).get(name) ?? rawCamera(name, aspect);
+export function cameraFor(name: ShotName, aspect: number, opts: { firstStep?: boolean } = {}): G3dCamera {
+  return ladderCameras(aspect, opts).get(name) ?? rawCamera(name, aspect);
 }
 
 /** The shot's own camera, before the ladder's range floors. */

@@ -12,6 +12,14 @@
 //        dev:   RLT_LAB=1 npx next dev -p 3101
 //        build: RLT_LAB=1 npx next build && RLT_LAB=1 npx next start -p 3102
 //   2. node scripts/make-night-poster.mjs [--base=http://127.0.0.1:3101] [--out=public/images/home-night-poster.webp]
+//      [--from=g3d|night]
+//
+// ROUND 57: the home page's ground is Google's 3D map, and the poster is its load cover, so by
+// default (`--from=g3d`) the still is shot from the MAP's hero camera (components/home/g3d/
+// cameras.ts at the poster's aspect), converted to a night framing by camera.ts cameraToFraming
+// and handed to the lab as `?f=`: the dissolve from our still to the map keeps the composition.
+// `--from=night` shoots the night flight's own hero, as before round 57. The TypeScript is read
+// through jiti (installed with Tailwind), so no build step is needed.
 //
 // It writes ONE landscape still (1600x1000, ~55 KB of webp) that both the laptop and the phone
 // crop from: the establishing shot puts the region across the middle of the frame, so a narrow
@@ -32,6 +40,18 @@ const base = flag("base", process.env.BASE || "http://127.0.0.1:3101");
 const out = flag("out", "public/images/home-night-poster.webp");
 const W = Number(flag("width", 1600));
 const H = Number(flag("height", 1000));
+const from = flag("from", "g3d");
+let framing = "";
+if (from === "g3d") {
+  const { createJiti } = await import("jiti");
+  const jiti = createJiti(import.meta.url, { alias: { "@": process.cwd() } });
+  const { cameraFor } = await jiti.import(path.resolve("components/home/g3d/cameras.ts"));
+  const { cameraToFraming } = await jiti.import(path.resolve("components/home/g3d/camera.ts"));
+  const cam = cameraFor("hero", W / H);
+  const f = cameraToFraming(cam, cam.fov);
+  framing = `&f=${[...f.pos, ...f.target, f.fov].map((x) => +x.toFixed(4)).join(",")}`;
+  console.log("from the map's hero camera", JSON.stringify(cam), framing);
+}
 
 const browser = await chromium.launch({ args: ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist", "--enable-webgl"] });
 const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
@@ -42,7 +62,7 @@ page.on("pageerror", (e) => errors.push(e.message.slice(0, 160)));
 
 let ready = false;
 for (let attempt = 1; attempt <= 3 && !ready; attempt++) {
-  await page.goto(`${base}/lab/night?shot=hero&still=1&ui=0`, { waitUntil: "load", timeout: 180_000 });
+  await page.goto(`${base}/lab/night?shot=hero&still=1&ui=0${framing}`, { waitUntil: "load", timeout: 180_000 });
   ready = await page
     .waitForFunction(() => document.documentElement.dataset.nightReady === "1", null, { timeout: 120_000 })
     .then(() => true, () => false);

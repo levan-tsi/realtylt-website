@@ -19,8 +19,8 @@
  * approximation would put tens of pixels wrong). Heights are above the ellipsoid; the ground in
  * this region is 30 m below it at sea level (geoid) to a few hundred metres above it in the
  * Highlands, which moves a projected home by a pixel or two at the ranges the page flies. */
-import { EXAGGERATION, worldToLngLat } from "../night/world";
-import type { Framing } from "../night/shots";
+import { EXAGGERATION, lngLatToWorld, worldToLngLat } from "../night/world";
+import { MOON, type Framing } from "../night/shots";
 
 export interface LatLngAlt {
   lat: number;
@@ -140,6 +140,20 @@ export function framingToCamera(f: Framing): MapCamera {
 }
 
 const round2 = (x: number) => Math.round(x * 100) / 100;
+
+/** The inverse of framingToCamera (round 57): a map camera as a night-flight framing, so our poster
+ * (scripts/make-night-poster.mjs, the night scene's still) is shot from the map's own hero camera
+ * and the dissolve from the poster to the map does not also change the composition. The night
+ * world is flat; at the hero's 145 km the earth's curve moves the far edge by a few pixels. */
+export function cameraToFraming(cam: MapCamera, fov: number, moon: [number, number] = MOON): Framing {
+  const [tx, , tz] = lngLatToWorld(cam.center.lng, cam.center.lat);
+  const targetKm = cam.center.altitude / 1000;
+  const km = cam.range / 1000;
+  const t = (cam.tilt * Math.PI) / 180, h = (cam.heading * Math.PI) / 180;
+  const ground = km * Math.sin(t), drop = km * Math.cos(t);
+  const east = ground * Math.sin(h), north = ground * Math.cos(h);
+  return { pos: [tx - east, targetKm + drop, tz + north], target: [tx, targetKm * EXAGGERATION, tz], fov, moon };
+}
 
 /** The short way round between two headings, in degrees (-180..180]. */
 export function headingDelta(a: number, b: number): number {

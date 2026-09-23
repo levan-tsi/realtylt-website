@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cameraFrame, eyeOf, flightMillis, framingToCamera, fromEcef, headingDelta, project, toEcef, type MapCamera } from "./camera";
+import { cameraFrame, cameraToFraming, eyeOf, flightMillis, framingToCamera, fromEcef, headingDelta, project, toEcef, type MapCamera } from "./camera";
 import { lngLatToWorld, over } from "../night/world";
 
 const VP = { width: 1440, height: 900, fov: 35 };
@@ -101,6 +101,24 @@ describe("a night framing as Google's camera", () => {
     const target: [number, number, number] = [0, 0.3, 0]; // 300 m of world height = 50 m of ground
     const f = { pos: [0, 10, 10] as [number, number, number], target, fov: 40, moon: [0, 0] as [number, number] };
     expect(framingToCamera(f).center.altitude).toBe(50);
+  });
+
+  it("goes back the other way: a map camera as a night framing, for our poster (round 57)", () => {
+    for (const c of [
+      { center: { lat: 41.0093, lng: -74.3582, altitude: 0 }, range: 145_000, tilt: 55, heading: 8 },
+      { center: { lat: 40.9961, lng: -73.9345, altitude: 0 }, range: 157_000, tilt: 40, heading: 10 },
+      { center: { lat: 41.5, lng: -73.95, altitude: 50 }, range: 30_000, tilt: 52, heading: 185 },
+    ]) {
+      const f = cameraToFraming(c, 40);
+      expect(f.fov).toBe(40);
+      const back = framingToCamera(f);
+      expect(back.center.lat).toBeCloseTo(c.center.lat, 6);
+      expect(back.center.lng).toBeCloseTo(c.center.lng, 6);
+      expect(back.center.altitude).toBe(c.center.altitude);
+      expect(Math.abs(back.range - c.range)).toBeLessThanOrEqual(1);
+      expect(back.tilt).toBeCloseTo(c.tilt, 1);
+      expect(back.heading).toBeCloseTo(c.heading, 1);
+    }
   });
 });
 
