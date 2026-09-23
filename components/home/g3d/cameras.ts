@@ -53,7 +53,13 @@ export const TUNED: Partial<Record<ShotName, { wide: G3dCamera; tall?: G3dCamera
   // the city, Long Island and the Sound sit in the band, "New York" readable, and the river runs
   // up to Poughkeepsie beside the headline; looking north (heading 10) put the city under the
   // count, where nobody could see it.
-  hero: { wide: cam(41.0093, -74.3582, 145_000, 55, 8, 40), tall: cam(40.8319, -73.858, 156_000, 50, 340, 62) },
+  // Round 57.2, the phone's two edges: at tilt 50 / fov 62 the top of the frame reached Ottawa,
+  // Kingston ON and Watertown under the header's shade. Tilt 46 and fov 58 from the same place end
+  // the frame at the Mohawk (Utica, faint, under the shade) and keep the city, Long Island and the
+  // Sound where they were in the band between the words (frames scripts/_scratch-r57/2/phonecam/;
+  // tilt 45 at 172 km and 48 at 162 km lost, one showing Schenectady, one Syracuse). The pale band
+  // at the bottom is the ocean at every candidate, so it is shaded, not framed away (G3dGround).
+  hero: { wide: cam(41.0093, -74.3582, 145_000, 55, 8, 40), tall: cam(40.8319, -73.858, 156_000, 46, 340, 58) },
   dutchess: { wide: cam(41.62, -73.95, 60_000, 50, 0, 40) },
   highlands: { wide: cam(41.4, -73.97, 30_000, 52, 185, 40) },
   westchester: { wide: cam(41.07, -73.87, 48_000, 50, 250, 40) },
@@ -152,18 +158,38 @@ export function rawCamera(name: ShotName, aspect: number): G3dCamera {
   };
 }
 
-/** How many homes a shot draws at most, so the map is never a carpet. Two ceilings, the lower wins:
- * by shot (the establishing shots a few hundred, a chapter or a county up to 1,500, a close shot,
- * the eye under 25 km away, up to 2,500), and by the WINDOW: one light per PX_PER_LIGHT square
- * pixels. The frames at 1,500 per county read as a carpet over Westchester, the Bronx and Queens
- * (scripts/_scratch-r56/g3d/lab/scrim/, first pass); the owner asked for "minimalistic, not too
- * overcrowded ... still balanced". Screen spacing is pin-thinning's job; this is the ceiling. */
-export const PX_PER_LIGHT = 1600;
+/** HOW MANY HOMES A SHOT DRAWS, BY ALTITUDE (round 57.2). The owner: "minimalistic, not too
+ * overcrowded ... still balanced", and round 57.1's frames showed why the old rule failed it: 339
+ * lights at the territory shot read as one blob over the city, and the county chapters drew up to
+ * 810 (the old one-per-1,600-px window cap) as a white carpet over Westchester, the Bronx and
+ * Queens. So the count, the spacing on screen and the glyph (glyph.ts) all follow the RANGE: high
+ * up, few lights, far apart and small; they grow only as the camera comes down.
+ *
+ * Two ceilings, the lower wins: one light per `pxPerLight(range)` square pixels of window (2,000
+ * close in, rising smoothly to 10,000 at the territory's height), and a hard count by altitude.
+ * Numbers tuned by frames at every stop, 1440 and 390 (scripts/_scratch-r57/2/, the record in
+ * docs/parity/DESIGN-ROUND57.md §4 "Round 2"). */
+export function pxPerLight(rangeMetres: number): number {
+  return Math.round(Math.min(10_000, Math.max(2_000, 2_000 * Math.pow(rangeMetres / 25_000, 0.9))));
+}
 
-export function budgetFor(name: ShotName, rangeMetres: number, viewport?: { width: number; height: number }): number {
-  const byShot = name === "hero" || name === "region" ? 350 : rangeMetres < 25_000 ? 2500 : 1500;
-  if (!viewport) return byShot;
-  return Math.min(byShot, Math.floor((viewport.width * viewport.height) / PX_PER_LIGHT));
+/** The hard count by altitude: the territory (100 km and up), every chapter and county (25 to 100
+ * km: Queens at 35 km drew 655 in round 57.1, the carpet), and a close shot under 25 km. */
+export function ceilingFor(rangeMetres: number): number {
+  return rangeMetres >= 100_000 ? 130 : rangeMetres >= 25_000 ? 380 : 900;
+}
+
+export function budgetFor(rangeMetres: number, viewport?: { width: number; height: number }): number {
+  const hard = ceilingFor(rangeMetres);
+  if (!viewport) return hard;
+  return Math.min(hard, Math.floor((viewport.width * viewport.height) / pxPerLight(rangeMetres)));
+}
+
+/** The least distance, in css px, between two lights on screen (thinning.ts): wide apart at the
+ * territory's height so the city reads as a scatter of points, never a glow; closer as the camera
+ * comes down. */
+export function lightGap(rangeMetres: number): number {
+  return Math.round(Math.min(30, Math.max(14, 17 * Math.pow(rangeMetres / 25_000, 0.45))));
 }
 
 /** The county an area shot keeps its homes to (the others are not drawn there), or null. */

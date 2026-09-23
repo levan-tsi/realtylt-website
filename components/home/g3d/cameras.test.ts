@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, PX_PER_LIGHT, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, rawCamera } from "./cameras";
+import { FIRST_STEP_RATIO, LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, lightGap, pxPerLight, rawCamera } from "./cameras";
 import { project } from "./camera";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
@@ -123,18 +123,51 @@ describe("the ladder (phase 1b: fewer new tiles per flight)", () => {
   });
 });
 
-describe("how many homes a shot draws", () => {
-  it("draws a few hundred for the whole region and more when close", () => {
-    expect(budgetFor("hero", 120_000)).toBe(350);
-    expect(budgetFor("region", 200_000)).toBe(350);
-    expect(budgetFor("putnam", 42_000)).toBe(1500);
-    expect(budgetFor("bronx", 21_000)).toBe(2500);
+describe("how many homes a shot draws (round 57.2: the count follows the range)", () => {
+  const DESK = { width: 1440, height: 900 };
+  const MOBILE = { width: 390, height: 844 };
+  const RANGES = [300_000, 156_000, 145_000, 120_000, 90_000, 72_500, 60_000, 48_000, 36_250, 30_000, 25_000, 21_000, 12_000, 5_000];
+
+  it("draws a scatter at the territory shot, not a city blob", () => {
+    const desk = budgetFor(cameraFor("hero", LAPTOP).range, DESK);
+    const phone = budgetFor(cameraFor("hero", PHONE).range, MOBILE);
+    expect(desk).toBeLessThanOrEqual(150);
+    expect(desk).toBeGreaterThanOrEqual(60);
+    expect(phone).toBeLessThanOrEqual(60);
+    expect(phone).toBeGreaterThanOrEqual(20);
   });
 
-  it("never more than one light per PX_PER_LIGHT square pixels of window", () => {
-    expect(budgetFor("bronx", 21_000, { width: 1440, height: 900 })).toBe(Math.floor((1440 * 900) / PX_PER_LIGHT));
-    expect(budgetFor("hero", 120_000, { width: 390, height: 844 })).toBe(Math.floor((390 * 844) / PX_PER_LIGHT));
-    expect(budgetFor("hero", 120_000, { width: 1440, height: 900 })).toBe(350);
+  it("never lays a carpet over a county chapter", () => {
+    // Every county shot but a close one (under 25 km, Staten Island: a close shot may grow, and it
+    // has ~100 homes to draw anyway).
+    for (const name of AREA_FLIGHT) {
+      const d = cameraFor(name, LAPTOP).range, p = cameraFor(name, PHONE).range;
+      if (d >= 25_000) expect(budgetFor(d, DESK), name).toBeLessThanOrEqual(400);
+      if (p >= 25_000) expect(budgetFor(p, MOBILE), name).toBeLessThanOrEqual(170);
+    }
+    expect(AREA_FLIGHT.filter((n) => cameraFor(n, LAPTOP).range >= 25_000).length).toBeGreaterThanOrEqual(9);
+  });
+
+  it("grows only as the camera comes down, and a close shot may draw more", () => {
+    for (const vp of [DESK, MOBILE]) {
+      const b = RANGES.map((r) => budgetFor(r, vp));
+      for (let i = 1; i < b.length; i++) expect(b[i]).toBeGreaterThanOrEqual(b[i - 1]);
+      expect(budgetFor(12_000, vp)).toBeGreaterThanOrEqual(3 * budgetFor(145_000, vp));
+    }
+  });
+
+  it("never more than one light per pxPerLight(range) square pixels of window", () => {
+    for (const r of RANGES) {
+      expect(budgetFor(r, DESK)).toBeLessThanOrEqual(Math.floor((1440 * 900) / pxPerLight(r)));
+      expect(budgetFor(r, MOBILE)).toBeLessThanOrEqual(Math.floor((390 * 844) / pxPerLight(r)));
+    }
+  });
+
+  it("keeps lights further apart on screen the higher the camera", () => {
+    const g = RANGES.map((r) => lightGap(r));
+    for (let i = 1; i < g.length; i++) expect(g[i]).toBeLessThanOrEqual(g[i - 1]);
+    expect(lightGap(145_000)).toBeGreaterThanOrEqual(24);
+    expect(lightGap(10_000)).toBeGreaterThanOrEqual(10);
   });
 
   it("keeps a county shot to that county's homes", () => {

@@ -24,9 +24,10 @@ import { loadMaps } from "@/lib/idx/maps-loader";
 import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";
 import { cameraFrame, flightMillis, projectWith, type MapCamera } from "./camera";
-import { budgetFor, cameraFor, focusOf, type G3dCamera } from "./cameras";
+import { budgetFor, cameraFor, focusOf, lightGap, type G3dCamera } from "./cameras";
 import { FlightGate } from "./gate";
-import { GLYPH, LIGHT_SVG } from "./glyph";
+import { modeFor, type MapMode, type ModeChoice } from "./map-options";
+import { FEATURED_GLYPH, glyphFor, lightSvg, type Glyph } from "./glyph";
 import { diffLights, lightPins, planLights, type LightSet } from "./thinning";
 import type { MapPin } from "@/lib/idx/types";
 
@@ -71,6 +72,9 @@ export interface G3dStats {
   held: string | null;
   waits: number[];
   error: string | null;
+  /** The element's mode now, and the glyph size the last plan drew with (round 57.2). */
+  mode: string | null;
+  glyph: number;
 }
 
 interface FlightJob {
@@ -104,6 +108,9 @@ export class G3dController {
   private pins: MapPin[] = [];
   private elev: ElevationGrid | null = null;
   private drawn = new Map<number, El>();
+  /** The glyph size each drawn home was drawn with (glyph.ts: size follows range, in tiers). */
+  private drawnSize = new Map<number, number>();
+  private glyph: Glyph = glyphFor(Infinity);
   private planned: number[] = [];
   private job = 0;
   private raf = 0;
@@ -151,6 +158,10 @@ export class G3dController {
       /** Let the hero's first step exceed MAX_RANGE_RATIO (cameras.ts FIRST_STEP_RATIO; measured
        * worse on the phone in round 57, so off unless `?ladder=first`). */
       firstStep?: boolean;
+      /** The owner's cloud style (map-options.ts mapIdFrom), or null: Google's unstyled map. */
+      mapId?: string | null;
+      /** HYBRID, SATELLITE, or HYBRID at the territory shot only (map-options.ts). */
+      mode?: ModeChoice;
     },
   ) {
     this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
@@ -181,10 +192,11 @@ export class G3dController {
         tilt: open.tilt,
         heading: open.heading,
         fov: open.fov,
-        mode: "HYBRID",
+        mode: this.modeOf(this.opts.initial),
         gestureHandling: "COOPERATIVE",
         defaultUIHidden: true,
         description: this.opts.description,
+        ...(this.opts.mapId ? { mapId: this.opts.mapId } : {}),
       }) as El;
       loads++;
       singleton = el;
@@ -217,6 +229,7 @@ export class G3dController {
     if (!el) return;
     for (const m of this.drawn.values()) m.remove();
     this.drawn.clear();
+    this.drawnSize.clear();
     el.removeEventListener("gmp-steadychange", this.onSteady as EventListener);
     el.removeEventListener("gmp-animationend", this.onAnimationEnd);
     el.removeEventListener("gmp-error", this.onMapError);
@@ -343,6 +356,7 @@ export class G3dController {
     if (this.stopped) return;
     // Back to the page's own shot (the reader may have scrolled meanwhile), drawn, then shown.
     this.at = this.goingTo = this.shot ?? this.opts.initial;
+    this.setMode(this.at);
     this.jump(this.cameraOf(this.at));
     if (!this.warmAbort) await this.settle(4000);
     this.warmMs = Math.round(performance.now() - t0);
@@ -373,7 +387,10 @@ export class G3dController {
     if (!this.revealed) {
       // Before the map is shown there is nothing to see (our poster covers it): go there directly,
       // or, during the pre-warm, once the walk is over.
-      if (name !== this.shot && !this.warming) this.jump(target);
+      if (name !== this.shot && !this.warming) {
+        this.setMode(name);
+        this.jump(target);
+      }
       this.shot = name;
       this.flown = name;
       this.at = this.goingTo = name;
@@ -437,7 +454,19 @@ export class G3dController {
     if (this.waits.length > 24) this.waits.shift();
     if (job.shot) this.flown = job.shot;
     this.goingTo = job.shot;
+    this.setMode(job.shot);
     this.fly(job.cam, job.ms);
+  }
+
+  private modeOf(shot: ShotName | null): MapMode {
+    return modeFor(shot, this.opts.mode ?? "hybrid");
+  }
+
+  /** The mode for where the map is going, set as the flight starts (a no-op when unchanged). */
+  private setMode(shot: ShotName | null) {
+    const el = this.el;
+    const m = this.modeOf(shot);
+    if (el && el.mode !== m) el.mode = m;
   }
 
   private jump(c: G3dCamera) {
@@ -530,7 +559,7 @@ export class G3dController {
     const el = this.el;
     if (!el || !this.lib) return;
     for (const m of this.featuredEls) m.remove();
-    const big = LIGHT_SVG.replace(`width="${GLYPH}" height="${GLYPH}"`, `width="${GLYPH + 6}" height="${GLYPH + 6}"`);
+    const big = lightSvg(FEATURED_GLYPH, 0.5, 3.1);
     this.featuredEls = list.map((h) => {
       const m = new this.lib.Marker3DElement({ position: { lat: h.lat, lng: h.lng }, altitudeMode: "CLAMP_TO_GROUND", collisionBehavior: "REQUIRED", sizePreserved: true }) as El;
       const t = document.createElement("template");
@@ -562,11 +591,22 @@ export class G3dController {
     if (!h || !cam || !this.lib || !this.el) return;
     const t0 = performance.now();
     const name = this.flown ?? this.shot ?? "hero";
-    const plan = planLights({ lights: h, pins: this.pins, camera: cam, viewport: this.viewport(), budget: budgetFor(name, cam.range, this.viewport()), focus: focusOf(name) });
+    // A camera of its own (a featured home) has no range of the page's; its eye distance stands in.
+    const range = cam.range > 0 ? cam.range : 25_000;
+    const vp = this.viewport();
+    const plan = planLights({ lights: h, pins: this.pins, camera: cam, viewport: vp, budget: budgetFor(range, vp), gap: lightGap(range), focus: focusOf(name) });
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     this.planned = plan;
-    const { add, remove } = diffLights(new Set(this.drawn.keys()), plan);
-    this.run(add, remove);
+    // A home drawn at another tier's size is taken away and drawn again at this one.
+    this.glyph = glyphFor(range);
+    const keep = new Set<number>();
+    const stale: number[] = [];
+    for (const [i, size] of this.drawnSize) {
+      if (size === this.glyph.size) keep.add(i);
+      else stale.push(i);
+    }
+    const { add, remove } = diffLights(keep, plan);
+    this.run(add, [...stale, ...remove]);
   }
 
   private cancelJob() {
@@ -589,6 +629,7 @@ export class G3dController {
       for (; r < end; r++) {
         this.drawn.get(remove[r])?.remove();
         this.drawn.delete(remove[r]);
+        this.drawnSize.delete(remove[r]);
       }
       if (r >= remove.length) {
         const stop = Math.min(add.length, a + ADD_PER_FRAME);
@@ -605,6 +646,8 @@ export class G3dController {
     this.raf = requestAnimationFrame(step);
   }
 
+  private svgs = new Map<number, string>();
+
   private addHome(i: number) {
     const h = this.homes!;
     const m = new this.lib.Marker3DElement({
@@ -613,11 +656,15 @@ export class G3dController {
       collisionBehavior: "REQUIRED",
       sizePreserved: true,
     }) as El;
+    const g = this.glyph;
+    let svg = this.svgs.get(g.size);
+    if (!svg) this.svgs.set(g.size, (svg = lightSvg(g.size, g.halo, g.core)));
     const t = document.createElement("template");
-    t.innerHTML = LIGHT_SVG;
+    t.innerHTML = svg;
     m.append(t);
     this.el!.append(m);
     this.drawn.set(i, m);
+    this.drawnSize.set(i, g.size);
     if (this.firstMarkerAt === null) {
       this.firstMarkerAt = performance.now();
       performance.mark("g3d:first-marker");
@@ -642,7 +689,7 @@ export class G3dController {
       const p = projectWith(frame, vp, h.lat[i], h.lng[i], alt);
       if (!p) continue;
       this.xy[2 * k] = p.x;
-      this.xy[2 * k + 1] = p.y - GLYPH / 2;
+      this.xy[2 * k + 1] = p.y - (this.drawnSize.get(i) ?? 0) / 2;
       this.xyIndex[k] = i;
       k++;
     }
@@ -654,7 +701,7 @@ export class G3dController {
     if (!this.cam) return null;
     const alt = this.elev ? sampleHeight(this.elev, lng, lat) + GEOID : 0;
     const p = projectWith(cameraFrame(this.cam), this.viewport(), lat, lng, alt);
-    return p ? { x: p.x, y: p.y - GLYPH / 2 } : null;
+    return p ? { x: p.x, y: p.y - FEATURED_GLYPH / 2 } : null;
   }
 
   stats(): G3dStats {
@@ -677,6 +724,8 @@ export class G3dController {
       held: this.gate.held()?.shot ?? null,
       waits: this.waits,
       error: this.error,
+      mode: this.el?.mode ?? null,
+      glyph: this.glyph.size,
     };
   }
 

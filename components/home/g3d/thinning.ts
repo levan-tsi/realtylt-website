@@ -5,9 +5,10 @@
  * thinned the way /search thins its pins (components/idx/pin-thinning.ts `planMarkers`): every
  * home is projected to the window with our own camera maths, and a home is drawn only where it
  * does not crowd one already accepted, in a stable hash order (the same frame always draws the same
- * homes, and a sample that is not biased toward any price band). On top of that a CEILING per shot
- * (cameras.ts `budgetFor`): a few hundred for the whole region, a county's homes up to ~1,500, every
- * home in view when close. A county chapter draws only that county's homes.
+ * homes, and a sample that is not biased toward any price band). On top of that, since round 57.2,
+ * a CEILING and a least SCREEN GAP by altitude (cameras.ts `budgetFor`, `lightGap`): ~130 lights
+ * 30 px apart at the territory shot, a few hundred at a chapter, more when close. A county chapter
+ * draws only that county's homes.
  *
  * Pure: the lights come in as arrays, the camera as numbers; tested without a map. */
 import type { MapPin } from "@/lib/idx/types";
@@ -40,17 +41,48 @@ export function planLights(opts: {
   viewport: Viewport;
   budget: number;
   focus?: string | null;
+  /** Round 57.2: the least distance, css px, between two lights on screen (cameras.ts lightGap).
+   * Applied over the planner's output in its own stable order, so the same frame still draws the
+   * same homes; 0 leaves pin-thinning's own spacing alone. */
+  gap?: number;
 }): number[] {
-  const { lights, camera, viewport, budget, focus } = opts;
+  const { lights, camera, viewport, budget, focus, gap = 0 } = opts;
   const pins = focus ? opts.pins.filter((p) => lights.county[Number(p.id)] === focus) : opts.pins;
   const frame = cameraFrame(camera);
   const planned = planMarkers({
     pins,
     project: (lat, lng) => projectWith(frame, viewport, lat, lng),
     viewport: { left: 0, top: 0, right: viewport.width, bottom: viewport.height },
-    maxMarkers: budget,
+    maxMarkers: gap > 0 ? Infinity : budget,
   });
-  return planned.map((m) => Number(m.pin.id));
+  if (gap <= 0) return planned.map((m) => Number(m.pin.id));
+  // A grid of gap-sized cells: a light is kept only when no kept light within `gap` px stands in
+  // its cell or the eight around it.
+  const cells = new Map<number, { x: number; y: number }[]>();
+  const key = (cx: number, cy: number) => cx * 100003 + cy;
+  const out: number[] = [];
+  const g2 = gap * gap;
+  for (const m of planned) {
+    if (out.length >= budget) break;
+    const cx = Math.floor(m.x / gap), cy = Math.floor(m.y / gap);
+    let clear = true;
+    for (let dx = -1; dx <= 1 && clear; dx++)
+      for (let dy = -1; dy <= 1 && clear; dy++)
+        for (const p of cells.get(key(cx + dx, cy + dy)) ?? []) {
+          const ex = p.x - m.x, ey = p.y - m.y;
+          if (ex * ex + ey * ey < g2) {
+            clear = false;
+            break;
+          }
+        }
+    if (!clear) continue;
+    const k = key(cx, cy);
+    const bin = cells.get(k);
+    if (bin) bin.push({ x: m.x, y: m.y });
+    else cells.set(k, [{ x: m.x, y: m.y }]);
+    out.push(Number(m.pin.id));
+  }
+  return out;
 }
 
 /** What to change on the map to get from the homes drawn now to the homes planned: which to take

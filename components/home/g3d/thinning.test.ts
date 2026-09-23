@@ -25,6 +25,31 @@ const VP = { width: 1440, height: 900, fov: 40 };
 const WIDE: MapCamera = { center: { lat: 40.95, lng: -73.95, altitude: 0 }, range: 90_000, tilt: 45, heading: 0 };
 const CLOSE: MapCamera = { center: { lat: 40.75, lng: -73.98, altitude: 0 }, range: 9_000, tilt: 45, heading: 0 };
 
+describe("the screen gap (round 57.2)", () => {
+  it("keeps every two lights at least `gap` px apart on screen", async () => {
+    const { cameraFrame, projectWith } = await import("./camera");
+    const gap = 28;
+    const idx = planLights({ lights: L, pins: PINS, camera: WIDE, viewport: VP, budget: 5000, gap });
+    const f = cameraFrame(WIDE);
+    const pts = idx.map((i) => projectWith(f, VP, L.lat[i], L.lng[i])!);
+    expect(pts.length).toBeGreaterThan(20);
+    for (let a = 0; a < pts.length; a++)
+      for (let b = a + 1; b < pts.length; b++) expect(Math.hypot(pts[a].x - pts[b].x, pts[a].y - pts[b].y)).toBeGreaterThanOrEqual(gap);
+  });
+
+  it("draws fewer with a wider gap, and the budget still caps it", () => {
+    const n = (gap: number, budget = 5000) => planLights({ lights: L, pins: PINS, camera: WIDE, viewport: VP, budget, gap }).length;
+    expect(n(30)).toBeLessThan(n(12));
+    expect(n(12, 40)).toBe(40);
+  });
+
+  it("is stable: the same camera draws the same homes", () => {
+    const a = planLights({ lights: L, pins: PINS, camera: WIDE, viewport: VP, budget: 200, gap: 20 });
+    const b = planLights({ lights: L, pins: PINS, camera: WIDE, viewport: VP, budget: 200, gap: 20 });
+    expect(a).toEqual(b);
+  });
+});
+
 describe("the thinning ladder", () => {
   it("never draws more than the ceiling", () => {
     expect(planLights({ lights: L, pins: PINS, camera: WIDE, viewport: VP, budget: 350 }).length).toBeLessThanOrEqual(350);
