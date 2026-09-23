@@ -186,3 +186,122 @@ The orchestrator's recommendation: **option 1 for one polish round, measured; if
 still stall over 34 ms on a warm profile, option 2.** Either way the black load cover becomes
 our poster now.
 
+
+## 8. Phase 1b measured (builder, 2026-09-23; commits `53c592d` `f6efd69` `f2f5e30` `93505f1` `6e92e55` `128e127` and the hero fix)
+
+Option 1 of §7.1 built and measured. Instrument: `scripts/_scratch-r56b-lag.mjs` (gitignored), the
+phase-1 probe's phases and wheel unchanged so its per-phase table compares with §7, plus every
+`flyCameraTo` logged as its own window (so a flight is judged by its own frames), every marker
+add/remove timestamped against the map's last `gmp-steadychange`, element timing on our poster,
+paint timings. Headed Chrome, RTX 2060, 144 Hz; cold = fresh profile, warm = persisted profile
+after one untimed pass; `--phone` = 390x844 at DPR 3, touch. Tables: `scripts/_scratch-r56b-table.mjs`,
+summaries in `scripts/_scratch-r56/lag1b/`. **Run-to-run noise on the same build is up to 1.5x on the
+over-34 counts**, so single-run differences under that are not claims.
+
+### 8.1 Before (phase 1, `f7cfc32`) and after (all of 1b), worst frame ms / frames over 34 ms
+
+| phase | cold 1440 | warm 1440 | cold 390 | warm 390 |
+|---|---|---|---|---|
+| boot | 410/27 -> 472/26 | 160/22 -> 167/23 | 396/22 -> 403/20 | 160/17 -> 167/23 |
+| hold at dutchess (first flight) | **299/5 -> 42/13** | 90/7 -> 49/5 | **299/6 -> 49/1** | 56/2 -> 35/1 |
+| to highlands | 49/7 -> 62/2 | 42/7 -> 49/6 | 35/1 -> 35/1 | 21/0 -> 21/0 |
+| to the areas chapter | 70/10 -> 56/11 | 77/13 -> 49/10 | 42/2 -> 28/0 | 28/0 -> 35/1 |
+| to the harbour | 63/8 -> 69/15 | 76/14 -> 63/17 | 35/1 -> 35/1 | 21/0 -> 21/0 |
+| fling up / down | 69/17, 28/0 -> 63/4, 49/14 | 56/17, 42/7 -> 42/3, 49/22 | 21/0, 35/1 -> 28/0, 35/1 | 28/0, 21/0 -> 21/0, 28/0 |
+| worst frame of the whole scroll | 299 -> 104 | 104 -> 63 | 299 -> 90 | 56 -> 35 |
+| flights: over 34 per flight | 11.4 -> 11.1 | 15.3 -> 12.4 | 1.5 -> 2.0 | 1.1 -> 0.4 |
+
+What changed for the visitor: the cold first flight's 300 ms stall is gone (the pre-warm), the
+worst frame anywhere drops to ~100 ms cold / ~60 ms warm, the black cover is our poster. What did
+NOT change: on a laptop every flight still runs at 48 to 72 fps with 50 to 70 ms hitches (10 to 12
+frames over 34 ms per flight). On the phone the flights are already near clean (Google draws less
+there). **Option 1 does not reach "no freezing" on a laptop.** By §7.1's own rule the next step is
+option 2 (the night flight moves; Google's map holds still where it pays).
+
+### 8.2 Item 1, our poster as the load cover
+
+First paint and our poster are the same frame (element timing = FCP): 0.8 to 1.0 s warm, 0.8 to
+1.2 s cold. The map's first steady frame: 6.0 to 7.3 s at 1440, 4.5 to 6.6 s at 390. The poster
+dissolves 400 ms after the map is drawn at the page's first camera, goes at once on a scroll past
+24 px, or stays if the map fails (that path is written, not exercised by a probe). With the one-shot
+pre-warm (8.3) the cover leaves at 9.6 s warm / 10.5 s cold at 1440, 8.0 / 8.6 s at 390 (it was a
+black cover to 5 to 7 s). The intro flight is gone. The look jump at the dissolve is large: a night
+still becomes a daylight satellite map (see the videos); the owner should see it.
+
+### 8.3 Item 2, the pre-warm (the experiment)
+
+| | none | full walk (17 shots) | lite (6 + 2) | full, flown 400 ms | ONE shot (default) |
+|---|---|---|---|---|---|
+| walk, warm 1440 | - | 29.5 s | 15.5 s | 45 s+ | 3.0 s |
+| walk, warm 390 | - | 20.3 s | 10.9 s | 45 s+ | 2.5 to 3.9 s |
+| first flight, cold 1440 | 319/6 | 42/3 | 35/6 | 49/12 | 49/5 |
+| first flight, cold 390 | 292/8 | 35/1 | 48/1 | 21/0 | 49/1 |
+| flights over-34 sum, warm 1440 | 174 | 205 | 211 | 464 | 139 |
+| flights over-34 sum, warm 390 | 28 | 7 | 13 | 14 | 10 |
+
+Verdict: **partly**. Each shot takes 1.4 to 2.1 s to draw even from a warm disk cache, so the whole
+walk is far over the 6 s cap, and on a laptop it does not clean the flights (having visited every
+shot, the flights still hitch as before; that tiles on disk are not tiles on the GPU is a
+hypothesis, not measured inside Google's renderer). It removes the cold first flight's 300 ms
+stall, and one shot is enough for that; on the phone the full walk makes the flights nearly clean
+but costs 20 s. Default: a 1.5 s budget (the walk visits the next shot and stops). Policy question
+for the orchestrator: the walk renders the map in the page under our poster, nothing is stored by
+us, but it does render views before the visitor asks for them.
+
+### 8.4 Item 3, flight discipline (each measured alone; before = items 1 and 2)
+
+- **Steady gate** (`gate.ts`, 9 tests): with a 1.2 s wait, 5 flights in the run instead of 15,
+  over-34 per flight 9.3 -> 16.8 (warm 1440), and the map trailing the page by 2.0 s on average,
+  4.0 s at worst; with 0.3 s and longer flights, 16.7 per flight and 1.1 s / 1.9 s behind. Holding
+  never made a flight cleaner (the map re-streams during every flight whatever state it started
+  from). Built, tested, **off by default** (`?gate=1`).
+- **Longer flights** 2.6 to 3.2 s: flights over-34 cold 1440 82 -> 177, warm 139 -> 109, 390
+  22 -> 21 and 10 -> 1: inside the noise. Default stays 1.6 to 2.6 s.
+- **The ladder** (`cameras.ts LADDER`, 8 tests): neighbours within 2x in range and 15 degrees in
+  tilt (Dutchess 38 -> 60 km, Highlands 28 -> 30, Westchester 30 -> 48, Putnam 43 -> 56, Bronx
+  22 -> 39, harbour 16 -> 30, the tail 200 -> 60 km: the city and the river instead of the whole
+  region). Flights over-34: 82/139 -> 121/161 at 1440, 22/10 -> 11/8 at 390. Neutral on the
+  laptop: the stalls do not scale with the range change. Kept (the shots stay recognisable,
+  frames `scripts/_scratch-r56/g3d/lab1b/ladder/`); one commit to revert.
+
+### 8.5 Item 4, marker work off the flight
+
+Removals while the map was unsteady 851/270/125/125 -> 0 (cold/warm 1440, cold/warm 390); adds
+inside a flight's duration 0 before and after; no job starts on an unsteady map. The remaining
+"adds while unsteady" (993 at 1440, 250 at 390) are a job's own later frames (our first homes make
+the map redraw; the job carries on at 25 a frame). Frame numbers unchanged beyond noise: our
+markers were never the stalls.
+
+### 8.6 Item 5, the look (contrast, round-54 kit, p99 of the real map pixels, 18 stops)
+
+| | 1440 under the floor | 390 under the floor |
+|---|---|---|
+| phase 1 (§7) | 3 of 150 (AI, Connect = pill borders; "Start here" 2.8) | 10 of 90 |
+| before item 5 (item-4 build) | 3 of 150 ("Start here" 3.33) | 8 of 90 ("Start here" 2.91; six index rows and the MLS line in the logo corner; "What is my home worth?" 2.43) |
+| after (final) | **2 of 147** (AI, Connect: the kit reading the pills' own borders) | **0 of 82** outside the logo hole; 7 text-stops inside it, faded out on purpose |
+
+Scrims: 28 px solid plus an 80 px eased fade (two crossed smoothstep ramps as a mask), six slots,
+the header shade kept. They read as soft shadows now, still as a darker column behind the words
+(`lab1b/i5c/cmp.jpg`). The logo corner: the words' layer is masked by a soft quarter-ellipse (solid
+256 x 70 px) pinned to the window's bottom left and following the scroll, so "Google Maps (i)" is
+clear at every scroll position, not only at the stops; A/B of the mask on the same build: no frame
+cost above the noise. The phone hero's bottom padding grows 40 -> 96 px so its two links sit above
+the corner.
+
+### 8.7 Items 6 and 7
+
+Copy: the hero count, the note under the search ("Map: Google. Every light is a home listed on
+OneKey® MLS, standing where it stands. Point at one to see its town and price.") and the area line
+now say every light is a home. Frames: all 18 stops at both widths,
+`scripts/_scratch-r56/g3d/lab1b/*.png`. Videos (untracked): `docs/design-r56-video/lab1b-desktop.mp4`
+(104 s) and `lab1b-phone.mp4` (82 s): the poster, the dissolve, a hover ("$997,000 · Mahopac") or a
+tap ("$859,900 · Yorktown Heights"), every section, Queens from the list, back to the top. Gates:
+tsc clean, vitest 1703 -> 1720.
+
+### 8.8 Open
+
+- The decision of §7.1 stands, now with numbers: on a laptop Google's flights hitch whatever we
+  do around them; option 2 is the next measured step if "no freezing" is the bar.
+- The night poster to daylight map dissolve is a hard change of look.
+- Not exercised: the no-key / `gmp-error` path keeping the poster, reduced motion with the
+  pre-warm, the owner's own machine (MacBook, 120 Hz), JS off.
