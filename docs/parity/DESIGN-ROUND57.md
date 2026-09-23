@@ -462,3 +462,119 @@ Added after round 2's frames:
    no names. Try our own quiet names for two or three principal towns per county at the chapter
    shot (the same label style as the territory names, a smaller size), and keep them only if the
    frames read better; if not, say so and leave it.
+
+### Round 3, the builder's numbers (commits `bea3e46` `b7087d0`; for the orchestrator to re-run)
+
+Instruments (gitignored): `scripts/_scratch-r57c-lights.mjs --mode=desk|phone [--w=320]` (hover
+frames, label latency and contrast, the 20-light cost + a 400-move sweep + a trace, the clicks,
+the keyboard, the taps, the overflow), `-cost.mjs` (the cost part alone), `-rows.mjs [--phone]`,
+`-towns.mjs [--phone]`, `-lag.mjs` (round 2's, plus a `flyin` phase: a click on a light at the
+territory shot, its flight logged as its own window; `flyin-setup` is the scroll back up), `-table`,
+`-contrast`, `-markerexp.mjs` (can a drawn marker change its look). Outputs in
+`scripts/_scratch-r57/3/`. The "before" build is HEAD `3373b62` built in a throwaway worktree and
+served on :3103 for the lag probe only (removed after).
+
+**What Google allows, measured first** (`-markerexp.mjs`, `3/exp/sheet.png`): an attribute change
+inside a drawn marker's `<template>` does nothing; REPLACING the template redraws the same marker
+(no remove/add). So the lit light is a template swap (`controller.ts lightHome/lightFeatured`),
+the same size and anchor (it brightens in place: core to pure white, radius +1.6 units, halo x1.6),
+and round 56's DOM halo overlay is gone. The same experiment showed our projection ~8 px off
+Google's drawing in x at the territory shot, so the label keeps 4 px of slack around the lit glyph.
+
+**1. The hover label** (`interaction.ts placeHoverLabel`, 32 tests incl. "never covers the light"
+over a grid at 1440/390/320 and "never on the logo corner"): town (13 px, ink-soft), then price
+(14 px semibold) with "3 bd, 2 ba" (13 px) when both are known, on rgba(8,8,8,0.94), 8 px radius,
+1 px white/14 hairline, 0 6 12 shadow; above-right, 10 px clear; flips; the last resort keeps a
+vertical side. Frames `3/lights/desk/hover-{middle,right-edge,logo-corner}.png` (+ `-full`,
+`zoom-*`): middle "Pearl River $1,900,000" above-right; right edge "Far Rockaway $449,000 2 bd, 1 ba"
+flipped above-left; logo corner (a light at x 117, y 756 at the Highlands stop) above-right, clear
+of the logo. Covers the light: 0 of 3; on the logo: 0. Label shown 4 to 8 ms after the pointer
+arrives (p50 5 ms over 20 lights; the town at once, the price when the pins route answers).
+Contrast on the real pixels (text hidden, panel kept): town 11.9:1, price 16.5:1 at p99.
+
+**2. The light answers**: `lit()` reports the hovered home on every hover and the featured id on
+focus; one at a time; swaps 174 in the cost run, max 0.4 ms each.
+
+**3. The click** (click -> route asked / -> URL changed, ms): steady, fly-in: 616/918, 624/680,
+617/669 (the 918 is the first, cold listing render); not steady: 0/32, 0/28. Phone tap-then-open:
+steady 700 (390), 665 (320); not steady 39, 39. All under 1,000. The fly-in: 600 ms to a sixth of
+the range (floor 1.5 km), tilt 60, heading kept. **Decided by frames**: straight to 1.5 km from the
+territory's 145 km, the middle frame was a grey smear of unstreamed tiles; to 24 km it stays the
+Hudson all the way (`3/lights/desk/flyin-{120,380,640}.png`, `flyin-sheet.png`: the territory, the
+river at the Tappan Zee, the listing). "Not steady" was produced by setting the controller's steady
+flag false with the pointer on a light (hover is off while the map flies, so a true mid-flight
+click on a light cannot happen); the policy itself is tested.
+
+**4. The phone** (390, `hasTouch`, `3/lights/phone/`): 10 of 10 taps showed the label (4 to 11 ms),
+all with the street address and "View", 0 covering the light, the lit light the tapped one; a tap
+elsewhere closed 10 of 10 and put the light out; the document cursor stayed "" (no stuck hover).
+Frames `tap-1.png` ("New Windsor $69,900 2 bd, 2 ba / 3146 Route 9w #8A View", it covers the
+headline for as long as it is open), `tap-2-crop.png`, `tap-right-edge.png`. Label contrast at
+390: 11.6 to 18.0:1. The first right-edge frame put the label at y -97 (the header pushed it up
+off screen); the last resort was rewritten and tested ("stays on screen and off the phone's
+header"); now y 183 at 390 and 153 at 320, inside the window.
+
+**5. Keyboard** (`focus-card.png`, `focus-escape.png`): Tab from "Featured listings" into the rail:
+each card's focus lit its featured light and, on landing, showed "Pleasant Valley $1,395,000 3 bd,
+2.5 ba" (and the next two cards'); Escape put the label and the light out with the focus still on
+the card; Tabbing on left the rail (no trap) and the map went back to the scroll's shot with nothing
+lit. The first frame had the home in the middle of the window, under a card, with its label over
+the NEXT card; the focus now flies the map so the home stands on open map (`openPoint` +
+`cameraShowing`, tested to 2 px): the lit light in the left gutter with its label above the focused
+card. Markers cannot take focus on 3.66 (round 56); the comment is in `interaction.ts` and
+`G3dGround.tsx`.
+
+**6. Where we work** (`-rows.mjs`, `3/lights/rows/`): click Putnam -> path "/", held "putnam", map
+at putnam, row `aria-current`, count "See 373 homes"; Enter on Brooklyn -> same, page scroll moved
+0; a 400 px wheel let go (held null); Orange click held, a second click opened `/top-areas/orange`.
+(The 34 px on the first click is Playwright scrolling the row into view.)
+
+**7. Cost** at 1440 over Queens (230 lights drawn, the county ceiling): the pointer's whole frame
+(hit test + label + glyph swap) over 20 lights and a 400-move sweep: p50 0 / p95 0.5 / **max 0.7
+ms**; hit test max 0.1 ms. Trace of 8 hovers: 0 layouts and 0 style recalcs inside pointermove or
+rAF handlers. (Before the fix, 2.8 to 3.7 ms max: the canvas font set after the text writes forced a
+recalc; measuring first and deferring the price fetch by a task took it under 1 ms.)
+
+**Lag, before (HEAD `3373b62`, :3103) -> after**, headed, per phase worst ms / over 34 (two cold
+runs after):
+
+| | cold 1440 | warm 1440 |
+|---|---|---|
+| boot | 479/30 -> 486/28, 431/29 | 167/31 -> 167/29 |
+| to:highlands | 49/3 -> 42/5, 56/2 | 28/0 -> 28/0 |
+| to:ulster... / to:harbour | 35/2, 35/2 -> 28/0 + 35/1, 28/0 + 35/1 | 28/0, 21/0 -> 28/0, 28/0 |
+| fling:up / fling:down | 77/8, 56/4 -> 139/8 + 56/5, 97/6 + 56/3 | 111/6, 62/15 -> 69/7, 56/6 |
+| over-34 per flight / worst per flight (mean) | 4.1 / 64 -> 4.7 / 80, 5.1 / 72 | 5.0 / 57 -> 5.2 / 62 |
+| poster / map steady / cover gone (s) | 0.6/7.0/10.2 -> 0.4/6.7/9.9 | 0.3/6.7/9.8 -> 0.3/5.9/9.1 |
+| **fly-in** (600 ms flight + 250 ms) | - -> 52 frames, p50 13.9, max 146, 1 over 34 | - -> 71 frames, p50 7, max 139, 1 over 34 |
+
+Boot unchanged. The flights are within round 56's 1.5x run-to-run noise. The fly-in's one long
+frame (139 to 153 ms) sits where the route is asked for (620 ms after the click): the listing page's
+render; the descent itself runs at p50 7 to 14 ms. (An earlier "after" pair folded the fly-in's
+scroll back up into `fling:down`, which read as a regression; the `flyin-setup` phase separates it.)
+
+**8. The phone's lights**: 32 -> **61** drawn at 390 (floor 72, the 30 px gap plans 61), 44 at 320;
+the far tier on a phone 14 px / halo 0.46 / core 4.4 (laptop 12 / 0.30 / 3.7, unchanged, 130 at
+1440). `3/lights/phone/hero-390.png`: a scatter of points up the valley and across the city between
+the headline and the count, no blob. Contrast kit, all 18 stops: **390 = 0 under the floor** (8
+text-stops in the logo hole, faded on purpose); 1440 = 2 (AI and Connect, the pills the kit
+misreads, as in rounds 56 to 57.2).
+
+**9. Town names, kept** (`3/towns/{orange,queens}-1440-{on,off}.png`): at Orange "Newburgh" on the
+river, "Goshen" and "Middletown" inland turn a green photograph into a place; at Queens "Flushing"
+and "Jamaica" read among the lights ("Astoria" falls under the words and is not drawn). At 390 the
+list covers the map at every county stop, so none is placed (`placed: []`), which is right. Their
+contrast is not in the kit (the ground layer is `aria-hidden`, like the territory names); they use
+the territory names' shadow.
+
+**Gates**: tsc clean; vitest 1767 -> **1807** (133 files); overflow 0 px at 1440/768/640/390/320
+at five scroll positions, and with a label open at the right edge at 390 and 320.
+
+**Probe caveat**: a second page load in the same emulated-phone browser twice stalled before the
+map was steady (60 to 150 s); the same load in a fresh browser was fine every time, so the phone
+probes start a fresh browser per load. Not seen on a real phone; noted for the orchestrator.
+
+**Left**: the lit light is a real brightening but small at the territory's 12 px (a larger lit
+glyph would need a taller SVG whose anchor shifts; not tried); the focus label's gap to its light
+is ~30 px at the rail (projection error at 2.6 km); the first click's listing render (918 ms to
+the URL) is the thin margin under 1 s; the owner has not seen the fly-in depth decision.
