@@ -578,3 +578,34 @@ probes start a fresh browser per load. Not seen on a real phone; noted for the o
 glyph would need a taller SVG whose anchor shifts; not tried); the focus label's gap to its light
 is ~30 px at the rail (projection error at 2.6 km); the first click's listing render (918 ms to
 the URL) is the thin margin under 1 s; the owner has not seen the fly-in depth decision.
+
+### Round 3, the orchestrator's verification (2026-09-23, HEAD `4cb883f`, :3102 on `b7087d0`)
+
+Re-run, not read: tsc clean; vitest **1807 / 1807** (133 files); `/` answers 200; no stray
+worktree (the builder's temporary :3103 worktree is gone); a fresh phone hero from the running
+server: 61 lights drawn, 7 names (`scripts/_scratch-r57/verify3/`).
+
+Looked at: `3/lights/desk/hover-right-edge-full.png`: "Far Rockaway, $449,000, 2 bd, 1 ba" on a
+black chip above-left of the light near the right edge, quiet, in the site's type; reads well.
+`3/lights/desk/flyin-sheet.png`: the territory, then the Hudson at the Tappan Zee 380 ms in with
+the hero words still standing, then the listing page; reads as a dive to the home. `3/towns/
+orange-1440-ab.png`: Middletown, Goshen and Newburgh in small quiet type turn the Orange chapter
+into a place; kept. `3/lights/phone/hero-390.png` and `tap-1.png`: the phone's lights are now a
+visible scatter between the words.
+
+Defects for the polish list (not blocking the round):
+- **The phone's tap label lands on the headline** (`3/lights/phone/tap-1.png`: the chip for a
+  light at New Windsor sits over "Let's find"). The placement avoids the light, the logo corner
+  and the header, not the words' boxes. Fix: the label avoids the hero's text boxes the way it
+  avoids the header (flip below or beside), tested.
+- **The county row's two-click dance.** A row was a link; now the first click holds the map and
+  turns the count into an underlined "See N homes", and the second click navigates. Defensible,
+  but a link that does not navigate on the first click is a hesitation. Decide in the polish
+  round on the running page: keep with a clearer affordance, or make the name the flight and the
+  count the link at all times.
+- The builder reports our projection about 8 px off Google's drawing at the territory shot and
+  about 30 px at the featured rail (the label's anchor drifts from its light). Calibrate in the
+  polish round or round 5.
+- Option: fade the hero words during the 600 ms fly-in (they stand over the diving map today).
+
+Round 3 accepted.
