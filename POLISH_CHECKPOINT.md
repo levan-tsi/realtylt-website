@@ -18,12 +18,16 @@
 ## $7 per 1,000. Traps: define the loader callback BEFORE the async tag; gestureHandling is an
 ## UPPER-CASE enum. Policy: the Google Maps attribution stays visible; no screenshots stored.
 ##
-## PHASE 1 (Opus, running): the /lab/g3d prototype - the map fixed behind the page, six shots +
-## eleven county chapters as cameras, flyCameraTo per section, our homes as thinned Marker3DElements,
-## hover, both looks (bright map + scrims under the words / dimmed map) as frames at every shot,
-## contrast on the real pixels, frame budget headed, CSP violations listed (orchestrator decides).
-## PHASE 2: integration behind NEXT_PUBLIC_HOME_MAP=g3d with the night flight as the fallback.
-## PHASE 3: polish on frames and videos until it is wow next to realtylt.com/ai.
+## PHASE 1 DONE AND MEASURED (Opus 8288958 + 0280a26, CSP deda59b by the orchestrator, vitest 1703):
+## /lab/g3d on :3102 (RLT_LAB=1) = the map behind the page's own sections, one flyCameraTo per
+## section, eleven county chapters, our homes as thinned lights (hero 339, sections ~800), hover by
+## our projection, a tap that names then opens; the SCRIM look wins (3/150 texts under the floor,
+## the veil look fails at 46/150); zero CSP violations. Videos docs/design-r56-video/lab-*.mp4.
+## THE CONFLICT (re-measured): Google's renderer stalls 50-100 ms warm (326 cold) while streaming
+## tiles during flights, with or without our homes; the night flight ran at 7 ms. HIS CALL among
+## DESIGN-ROUND56.md section 7.1: mitigate + re-measure / hybrid (our scene moves, Google's map
+## holds still) / stills. Recommendation: mitigate one round, then hybrid. Phase 2 (integration
+## behind NEXT_PUBLIC_HOME_MAP=g3d) waits for that call.
 ##
 ## == ROUND 55 DONE (2026-09-22/23): THE LAG MEASURED AND FIXED, THE CITY GLOW, THE CONTACT; NEXT R56 ==
 ## READ docs/parity/DESIGN-ROUND55.md FIRST, then docs/handoff/WEBSITE-R56-HANDOFF.md (the next brief;

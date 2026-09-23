@@ -117,3 +117,72 @@ balanced and minimal, interactive on hover, smooth camera; (4) Opus builds.
   policy. A cloud style can calm the point-of-interest clutter.
 - Each view of the home page is a metered Google load after the free 5,000 a month.
 - The night flight does not disappear: it is the fallback and the poster.
+
+## 7. Phase 1 measured (orchestrator, 2026-09-23; commits `8288958`, `0280a26`, CSP `deda59b`)
+
+The lab is real: `/lab/g3d` on the production preview (`:3102`, `RLT_LAB=1`) renders Google's
+3D map under the site's own CSP with zero violations, the page's own sections over it, our homes
+as thinned warm lights (hero 339, section shots ~800, counties 80 to 658, phone ~200), hover by
+our own projection (0.02 to 0.04 ms a test), a tap that names a home before it opens it, one
+`flyCameraTo` per section, the eleven counties from the list. Videos for the owner:
+`docs/design-r56-video/lab-desktop.mp4` (98 s) and `lab-phone.mp4` (79 s), untracked. Frames of
+both looks at all 18 stops: `scripts/_scratch-r56/g3d/lab/{scrim,veil}/`, contact sheets
+`lab/sheet-{1440,390}.png`. tsc clean, vitest 1665 -> **1703**.
+
+**The look:** the scrim look (the map at full brightness, dark glass under the word columns and a
+header shade) is the one that reads; measured with the round-54 kit on the real map pixels,
+3 of 150 texts under the floor at 1440 (two are the kit reading button borders; one real:
+"Start here" 2.8 at p99), 10 of 90 at 390 (rows passing the logo's hole). The veil look fails
+(46 of 150) and muddies the lights. Seen in the frames: the region is recognisable at a glance,
+NYC, the Hudson, Peekskill, Newburgh, Poughkeepsie named; the scrims still read as rectangles and
+Google's POI labels show through them (a cloud map style thins those).
+
+**The frame budget, re-measured by the orchestrator** (headed Chrome, RTX 2060, 144 Hz; worst
+frame ms / frames over 34 ms per phase; the builder's numbers agree):
+
+| phase | cold 1440 | warm 1440 | night flight (round 55, warm) |
+|---|---|---|---|
+| boot (to steady, ~6 s) | 417 / 33 | 160 / 20 | 118 / 3 |
+| hold at dutchess (tiles streaming) | 326 / 11 | 104 / 10 | 7 / 0 |
+| to highlands | 76 / 12 | 56 / 9 | 21 / 0 |
+| to the areas chapter | 83 / 20 | 70 / 12 | 7 / 0 |
+| to the harbour | 111 / 20 | 28 / 0 | 14 / 0 |
+| flings | 56 / 5, 42 / 17 | 56 / 3, 56 / 13 | 14 / 0 |
+
+**These stalls are Google's renderer streaming and decoding tiles during camera motion**: the
+map-only run (`?homes=0`) shows the same numbers, none of them are main-thread long tasks, and
+`qualityMode` does nothing on this version (3.66). Idle holds sit at 7 ms. A warm disk cache
+does not remove them. This is the direct conflict with the owner's "it has to be smooth, no
+freezing or anything like that", and it is Google's, not ours.
+
+**Not possible on this version:** Tab into the map's markers (the featured cards fly the map on
+focus instead); a poster of the map (policy forbids storing its content; the first 5 to 7 s are
+a black cover today); a hover event on markers (ours works instead).
+
+**Also seen:** page content scrolling past covers the Google logo (a layout rule is needed for
+that corner: policy), the hero copy about "the towns' own light" is wrong on this map (the
+lights are all homes again), and `lib/site.ts` / `Header.tsx` carry a lab-only route rule that
+phase 2 removes.
+
+### 7.1 The decision the owner has to make now
+
+He asked for two things that the measurements put in tension: the real, recognisable 3D map,
+and no freezing. On this map the section flights run at 30 to 70 fps with 50 to 100 ms hitches
+while tiles stream, and the first screen is a black cover for 5 to 7 s. Three honest options:
+
+1. **Take the real map and mitigate**: pre-warm every shot's tiles during the load (fly the
+   camera through all shots under the cover before the page shows, then measure whether the
+   flights are clean; untested), keep flights long (2.6 s) and altitudes similar so fewer tiles
+   change, fly only after `gmp-steadychange`, and cover the first 5 to 7 s with OUR poster (the
+   night-flight still, allowed) instead of black. Expected: better, not 7 ms.
+2. **The real map only where it is still, our scene where it moves**: the night flight (7 ms,
+   no vendor, no stalls) carries the scrolling page; Google's 3D map appears in the shots that
+   hold still (the county chapters on hover, the harbour), where its realism pays and where its
+   stalls cannot be felt.
+3. **The real map as a still**: no camera flights at all; one photorealistic view per section,
+   cut rather than flown, so nothing streams during motion. Loses "smooth transitions".
+
+The orchestrator's recommendation: **option 1 for one polish round, measured; if the flights
+still stall over 34 ms on a warm profile, option 2.** Either way the black load cover becomes
+our poster now.
+

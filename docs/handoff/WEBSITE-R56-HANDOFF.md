@@ -65,12 +65,17 @@ Fable orchestrator from now" (`docs/parity/DESIGN-ROUND56.md` §1 has it verbati
 
 1. **The real map** (`DESIGN-ROUND56.md`): Google's 3D map in HYBRID mode becomes the hero's
    ground, our listing lights on it as thinned markers, hover-interactive, one `flyCameraTo` per
-   section, the night flight kept as the fallback and the poster. Proven tonight with the site's
-   own key: Manhattan AND Poughkeepsie have photorealistic coverage, the valley at 60 km shows
-   every town's name. Phase 1 = the `/lab/g3d` prototype with frames of both looks (bright map
-   with scrims under the words, or a dimmed map), phase 2 = integration behind
-   `NEXT_PUBLIC_HOME_MAP=g3d`, phase 3 = polish on frames and videos. Cost: 5,000 free loads a
-   month, then $7 per 1,000; the owner ordered it knowing it is Google's.
+   section, the night flight kept as the fallback and the poster. Proven with the site's own key:
+   Manhattan AND Poughkeepsie have photorealistic coverage, the valley at 60 km shows every
+   town's name. **Phase 1 is BUILT and measured** (`/lab/g3d` on :3102 with `RLT_LAB=1`, commits
+   `8288958` `0280a26`, CSP `deda59b`, vitest 1703; videos `docs/design-r56-video/lab-*.mp4`;
+   record `DESIGN-ROUND56.md` §7): the scrim look wins on contrast, the region reads at a
+   glance, hover and tap work, BUT Google's renderer stalls 50 to 100 ms (326 cold) while it
+   streams tiles during the section flights, with or without our markers, against the night
+   flight's 7 ms. **The owner decides between §7.1's three options** (mitigate and re-measure /
+   the night flight moves and Google's map holds still in the county and harbour shots / stills)
+   before phase 2 (integration behind `NEXT_PUBLIC_HOME_MAP=g3d`) starts. Cost: 5,000 free
+   loads a month, then $7 per 1,000; the owner ordered it knowing it is Google's.
 2. The freeze he saw is already fixed (`d86e43f`): the poster still drops on the first scroll.
 3. The lamp carpet of round 55 (phase 2) is NOT to be carried onto the real map; it stays only in
    the night-flight fallback, where its weight is still his call.
