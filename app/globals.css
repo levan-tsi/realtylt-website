@@ -978,8 +978,14 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   padding-block: 14px;
   padding-inline-end: 2.5rem;
   /* %239b9b96 = haze. It was %2393a3b8, round 53's NAVY haze, left behind when the palette went
-     black and white — a blue-grey arrow on every select of every night page (round 54). */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' stroke='%239b9b96' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+     black and white — a blue-grey arrow on every select of every night page (round 54).
+     A FILLED path, not a stroked one (round 55): the outline of the same 1.6px round-capped
+     chevron (two capsules), because a stroked path is rastered by Skia's hardware-tessellation
+     stroke pipeline, and compiling that pipeline the first time a profile meets it cost 79 ms in
+     one frame as the footer arrived (measured in the owner's Chrome, StrokeTessellateOp). A fill
+     needs no such pipeline. The two draw the same pixels (scripts/_scratch-r55/glyphs-stroke-vs-
+     fill.png). */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1.93 5.07L5.43 8.57A.8 .8 0 0 0 6.57 7.43L3.07 3.93A.8 .8 0 0 0 1.93 5.07ZM6.57 8.57L10.07 5.07A.8 .8 0 0 0 8.93 3.93L5.43 7.43A.8 .8 0 0 0 6.57 8.57Z' fill='%239b9b96'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 12px 12px;
@@ -1012,8 +1018,8 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   border-color: var(--color-porchlight);
   /* %23050505 = night. The tick was drawn in %230b1a2e, round 53's NAVY ground: on the white box
      the palette change left behind, a checked feature filter in the MORE panel wore a blue tick
-     (round 54). */
-  background: var(--color-porchlight) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.4l2.8 2.8 5.6-6.2' stroke='%23050505' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+     (round 54). Filled, not stroked, for the reason the select's chevron gives (round 55). */
+  background: var(--color-porchlight) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.09 9.11L5.89 11.91A1 1 0 0 0 7.31 10.49L4.51 7.69A1 1 0 0 0 3.09 9.11ZM7.34 11.87L12.94 5.67A1 1 0 0 0 11.46 4.33L5.86 10.53A1 1 0 0 0 7.34 11.87Z' fill='%23050505'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
 }
 @media (forced-colors: active) {
   .nocturne input[type="checkbox"] {
@@ -1021,8 +1027,22 @@ input[type="search"]::-webkit-search-cancel-button:hover {
     appearance: auto;
   }
 }
+
+/* THE MESSAGE BOX'S RESIZE GRIP, DRAWN AS A FILL (round 55). Chrome paints a textarea's native
+   grip as short diagonal STROKED lines, and the first stroked path a profile meets is rastered
+   through Skia's hardware-tessellation stroke pipeline, whose compile cost one 80 ms frame as the
+   footer arrived at the end of a fling (measured in the owner's Chrome: StrokeTessellateOp x4,
+   gone with `resize: none`, unmoved with every SVG stroke on the page removed). Styling the
+   grip's pseudo-element makes Blink paint this box instead of the platform lines, and the box
+   still resizes when dragged. Two filled capsules in haze, the shape the native grip has. Night
+   pages only, so no day page's form changes a pixel. */
+.nocturne textarea::-webkit-resizer {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.42 15.42L15.42 4.42A.6 .6 0 0 0 14.58 3.58L3.58 14.58A.6 .6 0 0 0 4.42 15.42ZM9.92 15.42L15.42 9.92A.6 .6 0 0 0 14.58 9.08L9.08 14.58A.6 .6 0 0 0 9.92 15.42Z' fill='%239b9b96'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
 :root {
-  --rlt-clear-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 3.5l9 9M12.5 3.5l-9 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+  /* Filled, not stroked, for the reason the select's chevron gives (round 55): the same 1.8px
+     round-capped cross as two capsules. */
+  --rlt-clear-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.86 4.14L11.86 13.14A.9 .9 0 0 0 13.14 11.86L4.14 2.86A.9 .9 0 0 0 2.86 4.14ZM11.86 2.86L2.86 11.86A.9 .9 0 0 0 4.14 13.14L13.14 4.14A.9 .9 0 0 0 11.86 2.86Z' fill='%23000'/%3E%3C/svg%3E");
 }
 
 /* ── Service constellation "live signal" — a sonar ping on the lit hub node. The global
