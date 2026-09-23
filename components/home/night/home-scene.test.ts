@@ -104,7 +104,8 @@ describe("the home page's sections and the scene's shots", () => {
   });
 
   it("carries a still of the scene for a visitor with no JavaScript and no WebGL", () => {
-    const m = /poster="([^"]+)"/.exec(page);
+    // Round 57: one poster for both grounds, named once (`const POSTER`) and handed to each.
+    const m = /(?:poster="|const POSTER = ")([^"]+)"/.exec(page);
     expect(m, "the hero lost its poster").not.toBeNull();
     expect(fs.existsSync(path.join(ROOT, "public", m![1]))).toBe(true);
     // ...and the licence lives with the rest of the artwork.

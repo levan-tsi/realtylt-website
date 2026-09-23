@@ -12,6 +12,10 @@ import { MlsAttribution } from "@/components/idx/MlsAttribution";
 import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { NightGround } from "@/components/home/night/NightGround";
 import { AreaChapter } from "@/components/home/night/AreaChapter";
+import { G3dGround } from "@/components/home/g3d/G3dGround";
+import { G3dAreaChapter } from "@/components/home/g3d/G3dAreaChapter";
+import { homeMap } from "@/lib/home-map";
+import { listingPath } from "@/lib/idx/listing-url";
 import { AREA_ROWS } from "@/components/home/night/areas";
 import { AREA_FLIGHT } from "@/components/home/night/shots";
 import { HomeIntake } from "@/components/home/HomeIntake";
@@ -20,9 +24,14 @@ import { TESTIMONIALS } from "@/content/testimonials";
 import { getDataLastUpdated, getIdxClient, isSampleData } from "@/lib/idx";
 import { getActiveSaleCount, isDbConfigured } from "@/lib/idx/db";
 import { OG_DEFAULTS, SITE } from "@/lib/site";
+import type { ReactNode } from "react";
 
 // Re-render hourly in live mode so the listing rails + "Data last updated" stay honest.
 export const revalidate = 600; // keep listing rails + "Data last updated" fresh in live mode
+
+/** The night flight's still (scripts/make-night-poster.mjs): our artwork, the first screen before
+ * either ground has drawn, and the whole picture with JavaScript off or when the map fails. */
+const POSTER = "/images/home-night-poster.webp";
 
 export const metadata: Metadata = {
   title: "RealtyLT | Hudson Valley & NYC Homes for Sale",
@@ -57,8 +66,37 @@ export default async function HomePage() {
   // The hero's number. Null when there is no database or it does not answer: the sentence then
   // simply says "Homes for sale", rather than print a number nobody measured.
   const activeCount = isDbConfigured() ? await getActiveSaleCount().catch(() => null) : null;
+  // THE GROUND (round 57, lib/home-map.ts): Google's 3D map with our homes lit on it whenever the
+  // browser key is present, our own night flight when `NEXT_PUBLIC_HOME_MAP=night` or there is no
+  // key. One page, one set of sections; the few words that describe the picture follow the ground,
+  // so neither version says something untrue about what is behind it.
+  const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
+  const g3d = ground === "g3d";
+  // On the real map our poster is the load cover for 5 to 7 s: fetched with the document, not when
+  // the CSS asks (G3dGround).
+  if (g3d) preload(POSTER, { as: "image", fetchPriority: "high" });
+  const Ground = ({ children }: { children: ReactNode }) =>
+    g3d ? (
+      <G3dGround
+        poster={POSTER}
+        tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}
+        featured={featured
+          .filter((l) => l.lat && l.lng)
+          .slice(0, 8)
+          .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l) }))}
+      >
+        {children}
+      </G3dGround>
+    ) : (
+      <NightGround poster={POSTER} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}>
+        {children}
+      </NightGround>
+    );
 
   return (
+    // ── THE GROUND. Since round 57 it is Google's 3D map by default (components/home/g3d/, one
+    // `flyCameraTo` per section, the same `data-shot` contract below); the night flight is the
+    // fallback. What follows describes the night flight, whose shots the map's cameras derive from.
     // ── THE NIGHT FLIGHT (round 54). The page is one aerial scene and scrolling is the camera
     // flying through it: the harbour, up the river to Dutchess, the Highlands, the Tappan Zee,
     // the eleven areas one at a time, back over the harbour and out to the whole region. The
@@ -75,7 +113,7 @@ export default async function HomePage() {
           the footer, and without a last leg the scene simply ended at the footer's top edge —
           a straight line straight through the middle of the region shot. The camera holds the
           region there, veiled hard, so the territory fades out behind the footer instead. */}
-      <NightGround poster="/images/home-night-poster.webp" tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}>
+      <Ground>
         {/* ── Hero. The establishing shot: high over the harbour looking north up the valley,
             the whole territory one shape of light. The words sit bottom left, over New Jersey,
             where the scene has no lights; on a phone the headline is high and the search box is
@@ -96,7 +134,9 @@ export default async function HomePage() {
           {/* pointer-events-none on the column, auto on the two blocks of words: the lantern's field
               lies under this and would otherwise never see the pointer, because a full-width
               column covers the whole first screen whether or not it has words at that point. */}
-          <div className="rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 pb-10 pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40">
+          {/* On the real map the phone's words stop 96 px above the bottom so the two links sit
+              above Google's logo corner, which nothing of ours may cover (round 56 phase 1b). */}
+          <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${g3d ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
             <div data-quiet className="pointer-events-auto max-w-[36rem]">
               <p className="t-eyebrow text-stone">Hudson Valley and New York City</p>
               <h1 id="home-hero" className="t-display rise mt-4 text-ink">
@@ -109,10 +149,10 @@ export default async function HomePage() {
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now, from Poughkeepsie to the five boroughs. The bright lights below are them.
+                    right now, from Poughkeepsie to the five boroughs. {g3d ? "Every light on the map is one of them." : "The bright lights below are them."}
                   </>
                 ) : (
-                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. The bright lights below are them.</>
+                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {g3d ? "Every light on the map is one of them." : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -162,14 +202,23 @@ export default async function HomePage() {
                   listing data drawn on the land, so it carries the MLS credit the rails below
                   carry. In the text column, never over the city. */}
               <p className="mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block">
-                The bright lights are homes listed on OneKey&reg; MLS, each standing where it stands;
-                the faint ones are the towns' own light, seen from orbit. Point at a home to see its town.
+                {g3d ? (
+                  <>
+                    Map: Google. Every light is a home listed on OneKey&reg; MLS, standing where it stands.
+                    Point at one to see its town and price.
+                  </>
+                ) : (
+                  <>
+                    The bright lights are homes listed on OneKey&reg; MLS, each standing where it stands;
+                    the faint ones are the towns' own light, seen from orbit. Point at a home to see its town.
+                  </>
+                )}
               </p>
             </div>
           </div>
           {/* From lg only. On a phone the search box and its two links already end the first
               screen, and the cue sat on top of "What is my home worth?". */}
-          <div className="absolute inset-x-0 bottom-3 z-10 hidden justify-center lg:flex">
+          <div data-g3d-avoid className="absolute inset-x-0 bottom-3 z-10 hidden justify-center lg:flex">
             <ScrollCue targetId="value" label="Scroll to the next section" />
           </div>
         </section>
@@ -265,11 +314,11 @@ export default async function HomePage() {
                   </span>
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-stone">
-                  Six counties of the Hudson Valley and all five boroughs. Every bright light is a
+                  Six counties of the Hudson Valley and all five boroughs. Every {g3d ? "" : "bright "}light is a
                   home for sale there right now.
                 </p>
               </Reveal>
-              <AreaChapter rows={AREA_ROWS} />
+              {g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
             </div>
           </div>
         </section>
@@ -348,7 +397,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-      </NightGround>
+      </Ground>
     </div>
   );
 }

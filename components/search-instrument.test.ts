@@ -50,10 +50,9 @@ describe("the search instrument", () => {
     // /search joined in round 54: the place field and SEARCH were two boxes at opposite ends of
     // the filter bar, so the control a visitor arrives from the hero holding was not on the page
     // they landed on. It is the same instrument now, and it is pinned like the other two.
-    // The round-56 real-map lab carries a copy of the home hero (lab-only, RLT_LAB=1), so the
-    // geometry test below pins it too.
+    // Round 57: the round-56 real-map lab's copy of the home hero is gone; the real map is the home
+    // page's own ground now (app/page.tsx, lib/home-map.ts), one hero for both grounds.
     expect(files.sort()).toEqual([
-      "app/lab/g3d/page.tsx",
       "app/page.tsx",
       "components/leads/HomeValueForm.tsx",
       "components/search/SearchClient.tsx",
