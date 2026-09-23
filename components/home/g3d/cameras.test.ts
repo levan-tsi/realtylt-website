@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_FLIGHT, FLIGHT, SHOTS, type ShotName } from "../night/shots";
-import { MAX_TILT, PX_PER_LIGHT, TUNED, budgetFor, cameraFor, derivedCamera, focusOf } from "./cameras";
+import { LADDER, MAX_RANGE_RATIO, MAX_TILT, MAX_TILT_STEP, PX_PER_LIGHT, TUNED, budgetFor, cameraFor, derivedCamera, focusOf, rawCamera } from "./cameras";
 import { project } from "./camera";
 import { COUNTY_BOUNDS } from "@/components/idx/county-bounds";
 
@@ -27,7 +27,7 @@ describe("the shots as cameras", () => {
 
   it("tunes the six chapters and leaves the eleven county shots as derived", () => {
     expect(Object.keys(TUNED).sort()).toEqual([...FLIGHT].sort());
-    for (const a of AREA_FLIGHT) expect(cameraFor(a, LAPTOP)).toEqual({ ...derivedCamera(a, LAPTOP), tilt: Math.min(MAX_TILT, derivedCamera(a, LAPTOP).tilt) });
+    for (const a of AREA_FLIGHT) expect(rawCamera(a, LAPTOP)).toEqual({ ...derivedCamera(a, LAPTOP), tilt: Math.min(MAX_TILT, derivedCamera(a, LAPTOP).tilt) });
   });
 
   it("keeps each tuned chapter looking the way the night flight looked (heading within 15 degrees)", () => {
@@ -71,6 +71,39 @@ describe("the shots as cameras", () => {
       expect(p.y).toBeLessThan(900);
     }
     expect(manhattan.y).toBeGreaterThan(newburgh.y); // the city in front, the valley beyond
+  });
+});
+
+describe("the ladder (phase 1b: fewer new tiles per flight)", () => {
+  it("holds every shot the page flies, in the page's order", () => {
+    expect(new Set(LADDER)).toEqual(new Set(ALL));
+    expect(LADDER.slice(0, 4)).toEqual(["hero", "dutchess", "highlands", "westchester"]);
+    expect(LADDER.slice(4, 15)).toEqual([...AREA_FLIGHT]);
+    expect(LADDER.slice(-2)).toEqual(["harbour", "region"]);
+  });
+
+  for (const [label, aspect] of [["laptop", LAPTOP], ["phone", PHONE], ["square", 1]] as const) {
+    it(`keeps neighbours within ${MAX_RANGE_RATIO}x in range and ${MAX_TILT_STEP} degrees in tilt (${label})`, () => {
+      for (let i = 1; i < LADDER.length; i++) {
+        const a = cameraFor(LADDER[i - 1], aspect), b = cameraFor(LADDER[i], aspect);
+        const ratio = Math.max(a.range, b.range) / Math.min(a.range, b.range);
+        expect(ratio, `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual(MAX_RANGE_RATIO + 1e-3);
+        expect(Math.abs(a.tilt - b.tilt), `${LADDER[i - 1]} -> ${LADDER[i]}`).toBeLessThanOrEqual(MAX_TILT_STEP);
+      }
+    });
+
+    it(`only ever pulls a shot back, never closer, and changes nothing but its range (${label})`, () => {
+      for (const n of LADDER) {
+        const raw = rawCamera(n, aspect), c = cameraFor(n, aspect);
+        expect(c.range).toBeGreaterThanOrEqual(raw.range);
+        expect({ ...c, range: 0 }).toEqual({ ...raw, range: 0 });
+      }
+    });
+  }
+
+  it("pulls back only the shots that needed it on a laptop (Putnam after Orange, the Bronx after Westchester County)", () => {
+    const moved = LADDER.filter((n) => cameraFor(n, LAPTOP).range > rawCamera(n, LAPTOP).range);
+    expect(moved).toEqual(["putnam", "bronx"]);
   });
 });
 

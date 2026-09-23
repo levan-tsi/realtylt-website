@@ -10,7 +10,7 @@
  * The night flight lifted its terrain 6x and its lights were drawn on a black ground, so the six
  * chapters framed for that world read differently over real imagery: TUNED holds them as set by
  * eye, with the reason. The eleven county shots are the derived cameras unchanged. */
-import { AREA_COUNTY_OF, FLIGHT, SHOTS, framingFor, type ShotName } from "../night/shots";
+import { AREA_COUNTY_OF, AREA_FLIGHT, FLIGHT, SHOTS, framingFor, type ShotName } from "../night/shots";
 import { framingToCamera, type MapCamera } from "./camera";
 
 export interface G3dCamera extends MapCamera {
@@ -28,12 +28,21 @@ export interface G3dCamera extends MapCamera {
  * `tall` is the portrait phone; a shot without one uses `wide` with the phone's wider lens. */
 export const TUNED: Partial<Record<ShotName, { wide: G3dCamera; tall?: G3dCamera }>> = {
   // The phone puts its words above and below the map, so the valley stands in the middle.
+  //
+  // Round 56 phase 1b, THE LADDER (below): the ranges were 120, 38, 28, 30 km, then the counties at
+  // 21 to 113 km, the harbour at 16 and the region at 200; they are now within 2x of their
+  // neighbours and the tilts within 15 degrees (50 for the chapters, 40 for the counties), so each
+  // flight brings in fewer new tiles. Dutchess pulls back to 60 km (the bend at Newburgh to
+  // Poughkeepsie), the Highlands to 30, Westchester to 48 (the Tappan Zee with both shores), the
+  // harbour to 30 (the Upper Bay, lower Manhattan and Brooklyn), and the tail is no longer the
+  // whole region from 200 km but the city and the river from 60 km (the page's last flight
+  // was a 12x pull-back).
   hero: { wide: cam(41.05, -74.2, 120_000, 50, 0, 40), tall: cam(41.12, -73.97, 135_000, 45, 0, 58) },
-  dutchess: { wide: cam(41.62, -73.95, 38_000, 52, 0, 40) },
-  highlands: { wide: cam(41.4, -73.97, 28_000, 55, 185, 40) },
-  westchester: { wide: cam(41.07, -73.87, 30_000, 52, 250, 40) },
-  harbour: { wide: cam(40.71, -74.0, 16_000, 55, 30, 40), tall: cam(40.72, -73.99, 20_000, 50, 30, 58) },
-  region: { wide: cam(41.3, -74.1, 200_000, 30, 0, 40) },
+  dutchess: { wide: cam(41.62, -73.95, 60_000, 50, 0, 40) },
+  highlands: { wide: cam(41.4, -73.97, 30_000, 52, 185, 40) },
+  westchester: { wide: cam(41.07, -73.87, 48_000, 50, 250, 40) },
+  harbour: { wide: cam(40.7, -74.02, 30_000, 50, 30, 40), tall: cam(40.7, -74.0, 34_000, 48, 30, 58) },
+  region: { wide: cam(40.98, -73.98, 60_000, 48, 10, 40) },
 };
 
 function cam(lat: number, lng: number, range: number, tilt: number, heading: number, fov: number): G3dCamera {
@@ -56,8 +65,50 @@ export function derivedCamera(name: ShotName, aspect: number): G3dCamera {
 /** Portrait below 0.62, landscape above 1.0, blended between (the night flight's own rule). */
 export const aspectMix = (aspect: number) => Math.min(1, Math.max(0, (aspect - 0.62) / (1.0 - 0.62)));
 
-/** The camera for a shot in a window of this aspect (width / height). */
+/** THE LADDER (round 56 phase 1b). The order a reader meets the shots, one flight after another:
+ * the chapters, the eleven counties of "Where we work", the harbour, the tail. Phase 1 measured
+ * Google's renderer stalling while it streams tiles during a flight, and a flight that changes
+ * range 3x or 12x brings in a whole new level of detail. So neighbours on the ladder differ in range
+ * by at most MAX_RANGE_RATIO (the nearer shot is pulled back until they do; pulling back never
+ * crops a county, it only shows more round it) and in tilt by at most MAX_TILT_STEP (tuned by hand
+ * in TUNED and the area tilt, tested). */
+export const LADDER: readonly ShotName[] = ["hero", "dutchess", "highlands", "westchester", ...AREA_FLIGHT, "harbour", "region"];
+export const MAX_RANGE_RATIO = 2;
+export const MAX_TILT_STEP = 15;
+
+const ladderCache = new Map<number, Map<ShotName, G3dCamera>>();
+
+/** Every shot on the ladder at this aspect, with the range floors applied. */
+export function ladderCameras(aspect: number): Map<ShotName, G3dCamera> {
+  const key = Math.round(aspect * 1000);
+  const hit = ladderCache.get(key);
+  if (hit) return hit;
+  const cams = LADDER.map((n) => rawCamera(n, aspect));
+  // Raise the nearer of any two neighbours until the ratio holds, both ways, until nothing moves
+  // (raising only, so it converges; each pass can only lift a range to half a neighbour's).
+  for (let pass = 0; pass < LADDER.length; pass++) {
+    let moved = false;
+    for (let i = 0; i < cams.length; i++) {
+      const floor = Math.max(i > 0 ? cams[i - 1].range : 0, i + 1 < cams.length ? cams[i + 1].range : 0) / MAX_RANGE_RATIO;
+      if (cams[i].range < floor - 0.5) {
+        cams[i] = { ...cams[i], range: Math.ceil(floor) };
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  const out = new Map(LADDER.map((n, i) => [n, cams[i]]));
+  ladderCache.set(key, out);
+  return out;
+}
+
+/** The camera for a shot in a window of this aspect (width / height), on the ladder. */
 export function cameraFor(name: ShotName, aspect: number): G3dCamera {
+  return ladderCameras(aspect).get(name) ?? rawCamera(name, aspect);
+}
+
+/** The shot's own camera, before the ladder's range floors. */
+export function rawCamera(name: ShotName, aspect: number): G3dCamera {
   const t = TUNED[name];
   if (!t) {
     const d = derivedCamera(name, aspect);

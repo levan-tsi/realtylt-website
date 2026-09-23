@@ -223,6 +223,9 @@ export function G3dGround({ poster, tail, featured = [], children }: { poster: s
       warm,
       warmMode: warmQ === "fly" ? "fly" : "jump",
       warmBudgetMs: Number(q.get("warmBudget") ?? 1500),
+      holdFlights: q.get("gate") === "1",
+      maxWaitMs: Number(q.get("maxWait") ?? 1200),
+      flightMs: (q.get("flight") ?? "1600,2600").split(",").map(Number) as unknown as readonly [number, number],
       description: "Map of the Hudson Valley and New York City, with the homes for sale lit where they stand.",
       onReveal: () => {
         setRevealed(true);

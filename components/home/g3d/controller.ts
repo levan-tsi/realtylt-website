@@ -25,6 +25,7 @@ import { sampleHeight, type ElevationGrid } from "../night/elevation";
 import type { ShotName } from "../night/shots";
 import { cameraFrame, flightMillis, projectWith, type MapCamera } from "./camera";
 import { budgetFor, cameraFor, focusOf, type G3dCamera } from "./cameras";
+import { FlightGate } from "./gate";
 import { GLYPH, LIGHT_SVG } from "./glyph";
 import { diffLights, lightPins, planLights, type LightSet } from "./thinning";
 import type { MapPin } from "@/lib/idx/types";
@@ -66,7 +67,17 @@ export interface G3dStats {
   /** Homes are still being added or taken away. */
   busy: boolean;
   shot: string | null;
+  /** A flight waiting for the map to settle (its shot), and how long the last flights waited. */
+  held: string | null;
+  waits: number[];
   error: string | null;
+}
+
+interface FlightJob {
+  cam: G3dCamera;
+  /** The page's shot, or null for a camera of its own (a featured home). */
+  shot: ShotName | null;
+  ms?: number;
 }
 
 /** The element is created ONCE per page view, whatever React does (a re-render, a remount, dev's
@@ -128,8 +139,19 @@ export class G3dController {
       warm: readonly ShotName[];
       warmMode: "jump" | "fly";
       warmBudgetMs: number;
+      /** Hold section changes until the map is steady and not flying (gate.ts). Measured in phase 1b
+       * (DESIGN-ROUND56.md §8): holding made the map trail the page by 1 to 2 s (up to 5 s) and did
+       * not make any flight cleaner, so it is OFF by default; off, a new section redirects the
+       * flight in the air, as in phase 1. The gate still tracks flying and steady for the markers. */
+      holdFlights: boolean;
+      /** The longest a held section change waits for a map that will not settle. */
+      maxWaitMs: number;
+      /** A section flight's shortest and longest duration (camera.ts flightMillis). */
+      flightMs: readonly [number, number];
     },
-  ) {}
+  ) {
+    this.gate = new FlightGate<FlightJob>(opts.maxWaitMs);
+  }
 
   private stopped = false;
 
@@ -186,6 +208,7 @@ export class G3dController {
     this.stopped = true;
     cancelAnimationFrame(this.raf);
     clearTimeout(this.landTimer);
+    clearTimeout(this.pollTimer);
     const el = this.el;
     if (!el) return;
     for (const m of this.drawn.values()) m.remove();
@@ -212,6 +235,8 @@ export class G3dController {
   private onSteady = (e: Event & { isSteady?: boolean }) => {
     this.steadyNow = !!e.isSteady;
     for (const w of [...this.steadyWaiters]) w(this.steadyNow);
+    const next = this.gate.setSteady(this.steadyNow, performance.now());
+    if (next && this.revealed) this.go(next);
     if (!e.isSteady || this.revealed || this.warming) return;
     if (this.firstSteadyAt === null) {
       this.firstSteadyAt = performance.now();
@@ -338,17 +363,63 @@ export class G3dController {
       // or, during the pre-warm, once the walk is over.
       if (name !== this.shot && !this.warming) this.jump(target);
       this.shot = name;
+      this.flown = name;
       return;
     }
     this.shot = name;
-    if (sameCamera(this.cam, target)) return;
-    this.fly(target);
+    this.request({ cam: target, shot: name });
   }
 
   /** Fly to any camera (a home, for the keyboard): the shot stays what the page is on. */
   flyToCamera(target: G3dCamera, ms?: number) {
-    if (!this.revealed || sameCamera(this.cam, target)) return;
-    this.fly(target, ms);
+    if (!this.revealed) return;
+    this.request({ cam: target, shot: null, ms });
+  }
+
+  // ---- flight discipline (round 56 phase 1b, gate.ts) ---------------------------------------------
+  // A flight starts only over a steady map that is not already flying; a section change that comes
+  // meanwhile waits (the latest one only), at most `maxWaitMs` for a map that will not settle.
+
+  private gate: FlightGate<FlightJob>;
+  private pollTimer: ReturnType<typeof setTimeout> | undefined;
+  private requestedAt = 0;
+  private waits: number[] = [];
+  /** The shot the camera is at or flying to (`shot` is the one the page asked for last). */
+  private flown: ShotName | null = null;
+
+  private request(job: FlightJob) {
+    if (sameCamera(this.cam, job.cam)) {
+      // Already there, or on the way: whatever was waiting is no longer wanted.
+      this.gate.clear();
+      return;
+    }
+    const now = performance.now();
+    if (!this.opts.holdFlights) {
+      this.requestedAt = now;
+      return this.go(job);
+    }
+    if (this.gate.held() === null) this.requestedAt = now;
+    const go = this.gate.request(job, now);
+    if (go) return this.go(go);
+    clearTimeout(this.pollTimer);
+    this.pollTimer = setTimeout(() => this.pump(), this.gate.maxWaitMs + 20);
+  }
+
+  /** A held flight may be free to go (a landing, a steady map, the time limit). */
+  private pump(job: FlightJob | null = this.gate.poll(performance.now())) {
+    if (job) this.go(job);
+    else if (this.gate.held() !== null) {
+      clearTimeout(this.pollTimer);
+      this.pollTimer = setTimeout(() => this.pump(), 120);
+    }
+  }
+
+  private go(job: FlightJob) {
+    clearTimeout(this.pollTimer);
+    this.waits.push(Math.round(performance.now() - this.requestedAt));
+    if (this.waits.length > 24) this.waits.shift();
+    if (job.shot) this.flown = job.shot;
+    this.fly(job.cam, job.ms);
   }
 
   private jump(c: G3dCamera) {
@@ -370,6 +441,7 @@ export class G3dController {
     this.cancelJob();
     this.flights++;
     this.flying = true;
+    this.gate.started();
     this.opts.onFlightStart();
     clearTimeout(this.landTimer);
     if (this.opts.reduced) {
@@ -378,7 +450,7 @@ export class G3dController {
       this.land();
       return;
     }
-    const dur = ms ?? flightMillis(from, target);
+    const dur = ms ?? flightMillis(from, target, this.opts.flightMs[0], this.opts.flightMs[1]);
     el.flyCameraTo({ endCamera: { center: target.center, range: target.range, tilt: target.tilt, heading: target.heading, fov: target.fov }, durationMillis: dur });
     // gmp-animationend is the landing; this is the net under it (an interrupted flight may not
     // report one).
@@ -388,8 +460,11 @@ export class G3dController {
   private land() {
     clearTimeout(this.landTimer);
     this.flying = false;
-    this.replan();
     this.opts.onLand();
+    const next = this.gate.landed(performance.now());
+    if (next) return this.go(next);
+    this.pump();
+    this.replan();
   }
 
   isFlying() {
@@ -451,7 +526,7 @@ export class G3dController {
     const cam = this.cam;
     if (!h || !cam || !this.lib || !this.el) return;
     const t0 = performance.now();
-    const name = this.shot ?? "hero";
+    const name = this.flown ?? this.shot ?? "hero";
     const plan = planLights({ lights: h, pins: this.pins, camera: cam, viewport: this.viewport(), budget: budgetFor(name, cam.range, this.viewport()), focus: focusOf(name) });
     this.lastPlanMs = Math.round((performance.now() - t0) * 10) / 10;
     this.planned = plan;
@@ -563,7 +638,9 @@ export class G3dController {
       flying: this.flying,
       steady: this.steadyNow,
       busy: this.busy,
-      shot: this.shot,
+      shot: this.flown ?? this.shot,
+      held: this.gate.held()?.shot ?? null,
+      waits: this.waits,
       error: this.error,
     };
   }
