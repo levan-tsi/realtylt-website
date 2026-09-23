@@ -55,16 +55,28 @@ browser, not ours:
   scroll-velocity-aware time constant is untested. Make a video A/B (tight vs today) for him
   rather than guessing.
 
-## 3. What comes next, in order
+## 3. What comes next, in order (REWRITTEN 2026-09-23 after the owner's verdict on round 55)
 
-1. Phase 3, interactions, from `R55-PHASE3-INTERACTIONS.md`: the hover beam, fly-to-listing,
-   tap-to-fly on the area index; then orbit and "new today" if those land clean.
-2. The 3D-when-close prototype: NYC Open Data Building Footprints (`height_roof`) extruded as
-   faint prisms over the boroughs in `/lab/night` only, frames side by side; the terms-of-use page
-   must be read by hand (it 403s scripted reads) and cited in `ATTRIBUTIONS.md` before anything
-   ships. Google's Immersive Maps SKU is not for the home page (`DESIGN-ROUND55.md` §3.2).
-3. The fresh-eyes walkthrough that has now been skipped twice (`WEBSITE-R55-HANDOFF.md` §4.4).
-4. Many more polish rounds, judged on frames and videos against realtylt.com/ai.
+The owner saw round 55 and rejected the picture: "I don't like it ... the map doesn't look
+realistic at all ... you won't really understand which area you're looking at ... find that
+Google Maps 3D API ... add our dots ... interactive ... smooth transitions ... Opus builder and
+Fable orchestrator from now" (`docs/parity/DESIGN-ROUND56.md` §1 has it verbatim, memory
+`feedback-website-r55-verdict-real-3d-map`). So:
+
+1. **The real map** (`DESIGN-ROUND56.md`): Google's 3D map in HYBRID mode becomes the hero's
+   ground, our listing lights on it as thinned markers, hover-interactive, one `flyCameraTo` per
+   section, the night flight kept as the fallback and the poster. Proven tonight with the site's
+   own key: Manhattan AND Poughkeepsie have photorealistic coverage, the valley at 60 km shows
+   every town's name. Phase 1 = the `/lab/g3d` prototype with frames of both looks (bright map
+   with scrims under the words, or a dimmed map), phase 2 = integration behind
+   `NEXT_PUBLIC_HOME_MAP=g3d`, phase 3 = polish on frames and videos. Cost: 5,000 free loads a
+   month, then $7 per 1,000; the owner ordered it knowing it is Google's.
+2. The freeze he saw is already fixed (`d86e43f`): the poster still drops on the first scroll.
+3. The lamp carpet of round 55 (phase 2) is NOT to be carried onto the real map; it stays only in
+   the night-flight fallback, where its weight is still his call.
+4. The fresh-eyes walkthrough, still owed, runs on the real-map build, not before.
+5. `R55-PHASE3-INTERACTIONS.md` (hover beam, fly-to-listing) is re-read against the real map:
+   the hover and the click-to-fly ideas transfer; the beam and the orbit do not.
 
 ## 4. Decisions waiting on the owner
 
