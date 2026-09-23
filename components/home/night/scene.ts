@@ -378,6 +378,35 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     depthWrite: true,
   });
 
+  // ---- the programs, compiled before there is anything to draw ---------------------------------
+  // The first render with a material LINKS its program, and three.js blocks on that link
+  // (`getUniforms -> getProgramParameter(LINK_STATUS)`). Measured in the owner's Chrome on the
+  // real GPU (round 55): one 199 to 227 ms frame the moment the clouds arrived, mid-intro, the
+  // stutter he saw "right after the page loads". So the four programs are compiled NOW, against
+  // one-vertex stand-in geometries in a scene of their own, through `compileAsync`, which links
+  // on the GPU process's own threads (KHR_parallel_shader_compile) and polls instead of blocking.
+  // The clouds wait for it before they are added (the worker takes longer to build them than the
+  // link takes, so in practice they never wait), and the poster covers the whole time. A browser
+  // without the extension resolves at once and stalls on first use exactly as before.
+  const programsReady = (async () => {
+    const warm = new THREE.Scene();
+    const stub = () => {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(3), 3));
+      return g;
+    };
+    const objects = [new THREE.Points(stub(), dustMat), new THREE.Points(stub(), lightMat), new THREE.Points(stub(), hazeMat), new THREE.Mesh(stub(), depthMat)];
+    for (const o of objects) warm.add(o);
+    try {
+      // A driver that never reports the link complete must not hold the clouds forever.
+      await Promise.race([renderer.compileAsync(warm, camera), new Promise((r) => setTimeout(r, 3000))]);
+    } catch {
+      // A lost context: the first render links, as it always did.
+    }
+    for (const o of objects) o.geometry.dispose();
+    performance.mark("night:programs");
+  })();
+
   // ---- state ---------------------------------------------------------------------------------
   let grid: ElevationGrid | null = null;
   let towns: TownMark[] = [];
@@ -532,6 +561,7 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     if (!grid || !pixels) return;
     const key = dustKey();
     const built = await runBuild(terrainParams());
+    await programsReady; // never add a cloud its program cannot draw without a stall
     if (disposed || key !== dustKey()) return; // a newer look asked for another build
     buildMs = built.ms;
     buildWhere = built.where;
@@ -572,6 +602,8 @@ export async function createNightScene(opts: NightSceneOptions): Promise<NightSc
     const pts = await loadLights();
     if (!pts || disposed) return;
     performance.mark("night:lights-data");
+    await programsReady; // (the lights can be the first thing drawn when the terrain failed)
+    if (disposed) return;
     const cloud = buildLights(pts, grid);
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(cloud.positions, 3));

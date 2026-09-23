@@ -155,6 +155,36 @@ describe("the eleven areas the chapter names", () => {
   });
 });
 
+describe("the scene's programs are compiled before the clouds arrive", () => {
+  // Measured in the owner's Chrome on the real GPU (round 55): the first render with the light
+  // and haze materials linked their programs and blocked on it for 199 to 227 ms, mid-intro. The
+  // link now runs through compileAsync (KHR_parallel_shader_compile) against stand-in geometries
+  // while the worker builds, and neither cloud is added until it is done.
+  const scene = fs.readFileSync(path.join(ROOT, "components/home/night/scene.ts"), "utf8");
+
+  it("starts the compile as soon as the materials exist, before the terrain is even fetched", () => {
+    const compile = scene.indexOf("renderer.compileAsync(");
+    expect(compile).toBeGreaterThan(0);
+    expect(compile).toBeLessThan(scene.indexOf("await buildTerrain()"));
+    expect(compile).toBeLessThan(scene.indexOf("loadElevationPixels("));
+  });
+
+  it("compiles all four programs: dust, lights, haze and the depth mesh", () => {
+    const warm = scene.slice(scene.indexOf("const programsReady"), scene.indexOf("renderer.compileAsync("));
+    for (const m of ["dustMat", "lightMat", "hazeMat", "depthMat"]) expect(warm).toContain(m);
+  });
+
+  it("adds no cloud before the programs are ready, and never waits on a driver that stays silent", () => {
+    const dust = scene.slice(scene.indexOf("async function buildDustCloud()"), scene.indexOf("async function buildLightCloud()"));
+    const lights = scene.slice(scene.indexOf("async function buildLightCloud()"), scene.indexOf("// ---- camera"));
+    expect(dust.indexOf("await programsReady")).toBeGreaterThan(0);
+    expect(dust.indexOf("await programsReady")).toBeLessThan(dust.indexOf("new THREE.Points("));
+    expect(lights.indexOf("await programsReady")).toBeGreaterThan(0);
+    expect(lights.indexOf("await programsReady")).toBeLessThan(lights.indexOf("new THREE.Points("));
+    expect(scene).toMatch(/Promise\.race\(\[renderer\.compileAsync\(warm, camera\), new Promise\(\(r\) => setTimeout\(r, \d+\)\)\]\)/);
+  });
+});
+
 describe("the footer over the scene", () => {
   const shell = fs.readFileSync(path.join(ROOT, "components/site/FooterShell.tsx"), "utf8");
 
