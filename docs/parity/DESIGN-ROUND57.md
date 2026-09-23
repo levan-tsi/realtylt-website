@@ -199,3 +199,65 @@ the map's hero camera and the city's light sits where the map's city appears; th
 (night still to daylight imagery) stays the owner's decision (round 2). On the phone the poster is
 still the landscape still cropped at 78%, and the phone's camera looks NNW, so the composition
 shifts at the dissolve: a portrait poster from the tall camera is the fix (not built).
+
+### Round 1, the orchestrator's verification (2026-09-23, HEAD `7044771`, :3102 on that build)
+
+Re-run, not read: tsc clean; vitest **1748 / 1748** (129 files); `/` answers 200 with the map
+ground (`g3d-poster`, the honest caption) and `/lab/g3d` answers 404; fresh hero frames from the
+running server (`scripts/_scratch-r57/verify1/`): 1440 = 339 lights drawn, 11 names placed, settle
+818 ms; 390 = 200 lights, 7 names, settle 820 ms. The lag probe cold at 1440, my run: the flight
+to Westchester's worst frame **277.8 ms** (builder: 243 to 264 on nine runs), the Highlands 131.7,
+the rest under 112; so the cold stall is real and reproducible, and the builder's three
+experiments (homes off, our layers hidden, Westchester pre-warmed: unchanged) put it inside
+Google's renderer. Round 4 owns it.
+
+Looked at: `1/hero-1440.png` reads as the territory (the harbour and Staten Island at the front,
+the boroughs, Long Island's west end, the Sound, the valley to Kingston, our eleven names on
+land); `1/hero-390.png` reads too (the city, Long Island and the Sound in the band between the
+words, seven names). The bar of §1.1 is met at both widths. `1/sheet-1440.png` shows what round
+2 is for: the county chapters draw a white carpet of 1,500 lights over Westchester, the Bronx,
+Queens and Brooklyn, Google's coloured POI pins clutter the city shots, the hero's left scrim
+reads as a dark column over New Jersey, and the harbour and tail stops are near-black under their
+veils. `1/dissolve/sheet-390.png` shows the phone's composition jump at the dissolve (the night
+still's city glow lower-left, the map's city mid-frame). Round 1 accepted.
+
+### Round 2 brief, refined after round 1 (for builder 2)
+
+Facts first (read in Google's docs in a real browser, `scripts/_scratch-r57-gdocs.mjs`): a cloud
+style for a 3D map is made ONLY in the Cloud console (create a map ID on the Map Management page,
+create a style choosing "2D hybrid" since 3D preview is unavailable, associate, publish; dark mode
+unsupported); there is no API; `map3DElement.mapId` can be set at runtime. The 2D search map has
+no map ID. So the builder cannot create one; the owner will, from a five-step recipe in the
+report, and the code takes `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` (absent = unstyled) so his ID is one
+env var away.
+
+1. **Lights, calm.** Ceilings by altitude, tuned by frames, tested: the territory shot a scatter
+   (today 339 at 1440 / 200 at 390 reads as a city blob; the owner's words are "minimalistic,
+   not too overcrowded, still balanced"); a county chapter never a carpet (today 1,500); a close
+   shot may grow. The glyph smaller and its halo fainter at range (size follows range, tested),
+   so lights never merge into blobs; warm white stays. Fewer markers is also cheaper: the boot's
+   marker adds and the flights' over-34 counts go in the table, before and after.
+2. **Clutter.** Wire the map ID env var. Then decide the mode by frames, since the style is not
+   in our hands today: HYBRID (Google's names and POI pins, today) against SATELLITE (imagery
+   only) at the county chapters and the city shots, at both widths; check whether `mode` can
+   change at runtime (the territory shot may keep HYBRID for orientation while the chapters go
+   SATELLITE), and what each costs in frames. Keep the one that reads as the picture; say why.
+3. **Scrims and veils.** The hero's left scrim must read as shadow, not a column: wider
+   feather, less opacity where the type is large and bold, measured on the real pixels (0 texts
+   under 4.5:1 outside the logo corner stays the rule). The harbour and tail veils: let the map
+   show through where the words allow, by frames.
+4. **The load cover.** Render A: our night still re-graded toward dusk (warmer, lighter, so the
+   dissolve into daylight imagery is not a jolt) and, if our own assets allow it, B: the page's
+   top made day-consistent (never a Google screenshot). And a PORTRAIT poster shot from the tall
+   camera for the phone, so the dissolve keeps the composition at 390 as it does at 1440. Frames
+   of the dissolve (before, during, after) at both widths for each; the owner chooses A or B.
+5. **The phone territory shot, two edges.** The top edge shows Ottawa, Kingston ON and Watertown
+   under the header shade; the bottom shows a pale haze band under the search control. Try tilt
+   45 to 48 and a slightly narrower fov, keeping the city, Long Island and the Sound in the band;
+   frames decide; the names' placement must still pass its test.
+6. **Honest note.** "Map: Google." follows the runtime state (no map, JS off: no claim).
+
+Do not touch: `labels.ts` placement (only its fade timing if a shot changes), the fallback order,
+CSP, `/search`, the day pages. Gates as round 1 (frames at every stop both widths, the lag probe
+cold and warm both widths, the contrast kit, day pages at 1440, no-JS, tsc, vitest only up with
+tests for the ceiling and glyph rules and the map ID resolution, overflow).
