@@ -1129,7 +1129,12 @@ export function G3dGround({
           aria-hidden
           className="absolute inset-x-0 top-0 h-[230px]"
           style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.78) 42%, rgba(0,0,0,0.3) 75%, rgba(0,0,0,0) 100%)", willChange: "transform" }}
-        />
+        >
+          {/* Round 57.5 (defect A8): on a phone the territory's top edge is far upstate, and Google's
+              "Syracuse" read through the shade above the header's links as if it were a place we
+              name. A touch more shade in the top 72 px there (0.86 to 0.94 at the edge). */}
+          <div className="absolute inset-x-0 top-0 h-[72px] lg:hidden" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0) 100%)" }} />
+        </div>
         <div
           ref={footShade}
           aria-hidden
