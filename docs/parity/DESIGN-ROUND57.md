@@ -1494,3 +1494,19 @@ old ones nearly a subset, the same hash order) and the glow. Round 9's re-render
 loop radius at `reachOf(g)`, `densityGap(range, narrow)` for the phone, and the glow steps. A kept
 light's glow step can change at a flight's start (its share of the homes changes with the view), a
 small step in a faint glow; not measured as visible. The plan costs 1 to 8 ms once per flight.
+
+### Round 8, the orchestrator's verification (2026-09-24, HEAD `38d54dd`, :3102 on `17161cc`)
+
+Re-run, not read: tsc clean; vitest **1861 / 1861**; fresh frames from the running server:
+the territory shot **445** lights and 11 names at 1440 (was 130), **251** and 7 at 390 (was
+72), Queens 481, Manhattan 109, marker adds 0; my cold lag run at 1440: the Westchester flight
+34.9 ms max, the worst flight frame 83.3 (the Highlands), first steady 5.3 s, cover gone 9.1 s.
+Looked at `8/after/hero-1440.png`, `hero-390.png`, `queens-1440.png`, `manhattan-1440.png`:
+the territory reads as the market (a warm city, a scattered valley), Queens is full with its
+parks dark and every light distinct at the 14 px gap, Manhattan a lit island; the
+neighbourhood glow at 0.12 warms the clusters without a haze. Accepted, with the builder's two
+honest misses noted: the phone layer's p95 is 1.2 ms on two flights (mean under 1 ms), and the
+Bronx, Manhattan, Staten Island and Putnam draw fewer lights than round 7 because the 14 px
+gap, not the count, now limits the boroughs (his own rule: "not too close so people can move
+the mouse"). For round 9: the cover still carries round 7's 130 lights and no glow; the
+re-render must use round 8's plan (`reachOf`, `densityGap`, the glow steps).
