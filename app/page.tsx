@@ -77,7 +77,7 @@ export default async function HomePage() {
   const halo = g3d ? "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]" : "";
   // On the real map our cover is the load cover for 5 to 9 s: fetched with the document, not when
   // the CSS asks (G3dGround), the tall still for a phone and the wide one for a laptop (round 57.2,
-  // lib/home-map.ts COVERS; `NEXT_PUBLIC_HOME_COVER=day` is the owner's B).
+  // lib/home-map.ts COVERS; since round 57.6 the night map's own first frame).
   const cover = COVERS[homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER })];
   if (g3d) {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });

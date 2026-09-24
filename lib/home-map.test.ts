@@ -33,17 +33,20 @@ describe("homeMap", () => {
   });
 });
 
-/** Round 57.2: the real map's load cover, A (dusk, the default) or B (day), one flag apart. */
+/** Round 57.6: the real map's load cover is the night map's first frame; round 57.2's dusk (A) and
+ * day (B) stay one flag (or `?cover=`) away for comparison. */
 describe("homeCover", () => {
-  it("is dusk unless the flag says day", () => {
-    expect(homeCover({})).toBe("dusk");
-    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "" })).toBe("dusk");
-    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "night" })).toBe("dusk");
+  it("is night unless the flag names dusk or day", () => {
+    expect(homeCover({})).toBe("night");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "" })).toBe("night");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "night" })).toBe("night");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "purple" })).toBe("night");
     expect(homeCover({ NEXT_PUBLIC_HOME_COVER: " Day " })).toBe("day");
+    expect(homeCover({ NEXT_PUBLIC_HOME_COVER: "dusk" })).toBe("dusk");
   });
 
   it("names a wide and a tall still for each, all under public/images", () => {
-    for (const c of ["dusk", "day"] as const) {
+    for (const c of ["night", "dusk", "day"] as const) {
       expect(COVERS[c].wide).toMatch(/^\/images\/home-.+\.webp$/);
       expect(COVERS[c].tall).toMatch(/^\/images\/home-.+-tall\.webp$/);
     }
