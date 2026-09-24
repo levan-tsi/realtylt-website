@@ -509,6 +509,8 @@ export function MlGround({ poster, tail, featured = [], children }: { poster: Co
       buildings: q.get("buildings") !== "0",
       hillshade: q.get("hillshade") !== "0",
       exaggeration: num("exag"),
+      demTile: q.get("dem") ? Number(q.get("dem")!.split(":")[0]) || undefined : undefined,
+      demMaxzoom: q.get("dem") ? Number(q.get("dem")!.split(":")[1]) || undefined : undefined,
       glow: num("glow"),
       cityGap: num("gap"),
       onReveal: () => {

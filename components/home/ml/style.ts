@@ -22,6 +22,9 @@ import type { StyleSpecification } from "maplibre-gl";
 
 export const ML_HOSTS = ["tiles.openfreemap.org", "s3.amazonaws.com"] as const;
 
+/** The library, served from our own origin (public/maplibre/<version>/, the package's files). */
+export const MAPLIBRE_URL = "/maplibre/6.11.2/maplibre-gl.mjs";
+
 /** What the map's corner says (openfreemap.org's required wording, OpenStreetMap's own form). */
 export const ATTRIBUTION = "© OpenStreetMap contributors · © OpenMapTiles · OpenFreeMap";
 
@@ -70,7 +73,16 @@ const rgba = (hex: string, a: number) => {
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
 };
 
-export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean } = {}): StyleSpecification {
+/** THE TERRAIN'S DETAIL, the heaviest thing the map loads (measured on the running lab: 20 terrarium
+ * PNGs, 1.5 MB, before the territory was drawn; 405, 38 MB, over a walk through every stop, against
+ * 13 and 524 vector tiles). A terrarium PNG is 256 px; declared as 512 the map asks for the tiles one
+ * zoom lower (a quarter as many, half the ground resolution), and past DEM_MAXZOOM it stretches the
+ * last level. At night the relief is a soft moonlit shading, so the lower detail is chosen by frames
+ * (the record's round 12). `?dem=256:15` puts back the full detail. */
+export const DEM_TILE = 512;
+export const DEM_MAXZOOM = 12;
+
+export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggeration?: number; hillshade?: boolean; demTile?: number; demMaxzoom?: number } = {}): StyleSpecification {
   const terrain = o.terrain ?? true;
   const buildings = o.buildings ?? true;
   const hillshade = o.hillshade ?? true;
@@ -160,7 +172,7 @@ export function nightStyle(o: { terrain?: boolean; buildings?: boolean; exaggera
     name: "RealtyLT night",
     sources: {
       omt: { type: "vector", url: OFM, attribution: ATTRIBUTION },
-      dem: { type: "raster-dem", tiles: [DEM], encoding: "terrarium", tileSize: 256, maxzoom: 15 },
+      dem: { type: "raster-dem", tiles: [DEM], encoding: "terrarium", tileSize: o.demTile ?? DEM_TILE, maxzoom: Math.min(15, o.demMaxzoom ?? DEM_MAXZOOM) },
     },
     ...(terrain ? { terrain: { source: "dem", exaggeration: o.exaggeration ?? EXAGGERATION } } : {}),
     sky: {

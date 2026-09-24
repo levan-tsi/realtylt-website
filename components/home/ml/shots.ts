@@ -31,8 +31,11 @@ export const LENS = { wide: 40, tall: 58 } as const;
 export const MIN_PITCH = 55;
 export const MAX_PITCH = 65;
 
+/* The phone's territory: the Google map's tall camera (156 km, tilt 46) at the brief's 55 degrees
+ * put the city small at the foot of the band between the words; 140 km from a little further north
+ * fills the band (frames scripts/_scratch-r57/12/compose-phone/). */
 export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
-  hero: { wide: s(41.0093, -74.3582, 145_000, 55, 8), tall: s(40.8319, -73.858, 156_000, 55, 340) },
+  hero: { wide: s(41.0093, -74.3582, 145_000, 55, 8), tall: s(40.93, -73.9, 140_000, 55, 340) },
   dutchess: { wide: s(41.7259, -73.964, 16_000, 60, 5), tall: s(41.71, -73.945, 16_000, 60, 5) },
   highlands: { wide: s(41.43, -73.975, 20_000, 60, 190), tall: s(41.43, -73.975, 20_000, 60, 190) },
   westchester: { wide: s(41.07, -73.895, 16_000, 60, 265), tall: s(41.07, -73.895, 16_000, 60, 265) },
@@ -46,7 +49,10 @@ export const ML_SHOTS: Record<ShotName, { wide: MlShot; tall: MlShot }> = {
   manhattan: { wide: s(40.7885, -73.9894, 9_000, 60, 30), tall: s(40.774, -73.9708, 9_000, 60, 30) },
   queens: { wide: s(40.7593, -73.8689, 10_000, 60, 20), tall: s(40.7461, -73.8448, 10_000, 60, 20) },
   brooklyn: { wide: s(40.6586, -73.9986, 10_000, 60, 340), tall: s(40.6602, -73.969, 10_000, 60, 340) },
-  "staten-island": { wide: s(40.6465, -74.109, 12_000, 60, 350), tall: s(40.6437, -74.0736, 12_000, 60, 350) },
+  // Staten Island looks south-west over the island from the harbour (St. George in the foreground):
+  // looking north from St. George, as the Google map did, left 22 of its 107 homes in the window at
+  // 1440 and 46 at 390; this holds 97 and 89 (scripts/_scratch-r57k-count.mjs).
+  "staten-island": { wide: s(40.6054, -74.0566, 14_000, 60, 200), tall: s(40.58, -74.15, 18_000, 60, 230) },
   harbour: { wide: s(40.685, -74.03, 10_000, 60, 40), tall: s(40.682, -74.042, 10_000, 60, 40) },
   region: { wide: s(40.98, -73.98, 60_000, 55, 10), tall: s(40.98, -73.98, 60_000, 55, 10) },
 };

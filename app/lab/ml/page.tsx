@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { preload } from "react-dom";
+import { preconnect, preload, preloadModule } from "react-dom";
 import Link from "next/link";
 import { Button, PRESS } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,6 +13,7 @@ import { LocationSuggest } from "@/components/search/LocationSuggest";
 import { notFound } from "next/navigation";
 import { MlGround } from "@/components/home/ml/MlGround";
 import { MlAreaChapter } from "@/components/home/ml/MlAreaChapter";
+import { MAPLIBRE_URL } from "@/components/home/ml/style";
 import { COVERS } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
 import { AREA_ROWS } from "@/components/home/night/areas";
@@ -58,6 +59,15 @@ export default async function MapLibreLabPage() {
   const halo = "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]";
   // The load cover: today's night cover (the Google map's first frame at the same territory camera),
   // fetched with the document, over the map until its opening shot is drawn (MlGround).
+  // The map's code and first bytes asked for with the document, not after hydration (measured: the
+  // import started 0.5 to 0.8 s after DOMContentLoaded without these): the library's two modules
+  // (the worker imports the same shared file from the cache), the vector tiles' TileJSON, and a
+  // connection to each tile host.
+  preloadModule(MAPLIBRE_URL, { as: "script" });
+  preloadModule(MAPLIBRE_URL.replace("maplibre-gl.mjs", "maplibre-gl-shared.mjs"), { as: "script" });
+  preload("https://tiles.openfreemap.org/planet", { as: "fetch", crossOrigin: "anonymous" });
+  preconnect("https://tiles.openfreemap.org", { crossOrigin: "anonymous" });
+  preconnect("https://s3.amazonaws.com", { crossOrigin: "anonymous" });
   const cover = COVERS.night;
   preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
   preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });

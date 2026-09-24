@@ -25,9 +25,10 @@ import type { FeaturedHome, Homes } from "../g3d/controller";
 import { FLY_IN_DEPTH, FLY_IN_MS } from "../g3d/interaction";
 import { matrixFrame, mercX, mercY, mlFrame, projectMl, rangeForZoom, zoomForRange, type MlCamera, type MlFrame } from "./geo";
 import { flightMs, lensFor, mlShot } from "./shots";
-import { EXAGGERATION, nightStyle } from "./style";
+import { EXAGGERATION, MAPLIBRE_URL, nightStyle } from "./style";
 
-export const MAPLIBRE_URL = "/maplibre/6.11.2/maplibre-gl.mjs";
+export { MAPLIBRE_URL };
+
 
 export interface MlStats {
   /** ms from navigation start: the library imported, the map created, its style loaded, the first
@@ -114,6 +115,9 @@ export class MlController {
       buildings: boolean;
       hillshade: boolean;
       exaggeration?: number;
+      /** The terrain tiles' declared size and last zoom (style.ts DEM_TILE, DEM_MAXZOOM). */
+      demTile?: number;
+      demMaxzoom?: number;
       glow?: number;
       cityGap?: number;
     },
@@ -162,7 +166,7 @@ export class MlController {
     try {
       map = new lib.Map({
         container: host,
-        style: nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined }) as StyleSpecification,
+        style: nightStyle({ terrain: this.opts.terrain, buildings: this.opts.buildings, hillshade: this.opts.hillshade, exaggeration: this.exaggeration || undefined, demTile: this.opts.demTile, demMaxzoom: this.opts.demMaxzoom }) as StyleSpecification,
         center: [first.lng, first.lat],
         zoom: first.zoom,
         pitch: first.pitch,

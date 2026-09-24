@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ATTRIBUTION, BUILDINGS_MINZOOM, EXAGGERATION, ML_HOSTS, NIGHT, nightStyle } from "./style";
+import { ATTRIBUTION, BUILDINGS_MINZOOM, DEM_MAXZOOM, DEM_TILE, EXAGGERATION, ML_HOSTS, NIGHT, nightStyle } from "./style";
 
 /** The colours a style value names (hex or rgba), as [r, g, b]. */
 function rgbOf(v: string): [number, number, number] | null {
@@ -77,6 +77,15 @@ describe("the night style", () => {
       expect(widths.length, l.id).toBe(2);
       for (const x of widths) expect(x, l.id).toBeLessThanOrEqual(1.6);
     }
+  });
+  it("asks for the terrain at a detail the night needs (fewer, lower tiles), and can ask for the full one", () => {
+    const dem = s.sources.dem as { tileSize: number; maxzoom: number; encoding: string };
+    expect(dem.encoding).toBe("terrarium");
+    expect(dem.tileSize).toBe(DEM_TILE);
+    expect(dem.maxzoom).toBe(DEM_MAXZOOM);
+    const full = nightStyle({ demTile: 256, demMaxzoom: 15 }).sources.dem as { tileSize: number; maxzoom: number };
+    expect(full).toMatchObject({ tileSize: 256, maxzoom: 15 });
+    expect((nightStyle({ demMaxzoom: 20 }).sources.dem as { maxzoom: number }).maxzoom).toBe(15);
   });
   it("has a dark sky and a fog", () => {
     expect(s.sky?.["sky-color"]).toBe(NIGHT.sky);
