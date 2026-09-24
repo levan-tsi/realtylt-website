@@ -32,11 +32,15 @@ import { describe, expect, it } from "vitest";
 const ROOT = process.cwd();
 
 /** The figures this repo has checked and refused. Adding one here is how a retraction sticks. */
-const ZOMBIES: { name: string; pattern: RegExp; why: string }[] = [
+const ZOMBIES: { name: string; pattern: RegExp; why: string; legit?: RegExp }[] = [
   {
     name: "the unsourceable 78%",
     pattern: /(seventy[ -]eight percent|\b78\s?(%|percent))/i,
     why: "attributed on hundreds of pages to a survey with no published report, no stated sample and no methodology",
+    // A DIFFERENT 78%, and a cited statute: the Homeowners Protection Act ends private mortgage
+    // insurance when the balance is scheduled to reach 78% of the home's original value (CFPB,
+    // cited in the reposted mortgage articles, 2026-09-24). Allowed only in that exact context.
+    legit: /(original value|PMI|private mortgage insurance|Homeowners Protection Act)/i,
   },
   {
     name: "23 minutes 15 seconds",
@@ -489,6 +493,7 @@ describe("retracted claims stay retracted", () => {
           // The whole statement, not just the line: our refusals run long and wrap.
           const window = lines.slice(Math.max(0, i - 2), i + 3).join(" ");
           if (DISOWNED.test(window)) return;
+          if (z.legit && z.legit.test(line)) return;
           offences.push(
             `line ${i + 1}: ${z.name} (${z.why})\n      ${line.trim().slice(0, 140)}`,
           );

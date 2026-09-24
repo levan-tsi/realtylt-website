@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { ArticleBody } from "@/components/blog/ArticleBody";
 import { ArticleToc } from "@/components/blog/ArticleToc";
@@ -11,7 +11,7 @@ import { AuthorCard } from "@/components/blog/AuthorCard";
 import { ColdOpen } from "@/components/blog/scenes/ColdOpen";
 import { FlagshipToc } from "@/components/blog/FlagshipToc";
 import { renderScene, sceneBand } from "@/components/blog/scenes/registry";
-import { fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
+import { aliasTarget, fmtDate, getArticle, getArticles, type Article } from "@/lib/blog";
 import { flagshipToc } from "@/lib/blog/flagship";
 import { hasScenes, parseOutline, renderFlagshipBands } from "@/lib/blog/markdown";
 import { relatedArticles } from "@/lib/blog/related";
@@ -42,7 +42,12 @@ function bodyText(post: Article): string {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getArticle(slug);
-  if (!post) return { title: "Post not found" };
+  if (!post) {
+    // An old URL (a drip email's link, a stub's slug) moves permanently to the article.
+    const target = aliasTarget(slug);
+    if (target) permanentRedirect(`/blog/${target}`);
+    return { title: "Post not found" };
+  }
   // TWO TITLES, ON PURPOSE. The <title> tag is what a search engine ranks and prints, so it takes
   // the keyword-bearing `seoTitle`. The share card is what a PERSON sees in a feed, so og:title and
   // twitter:title keep the story headline the page actually shows (and that the share audit and
@@ -86,7 +91,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getArticle(slug);
-  if (!post) notFound();
+  if (!post) {
+    const target = aliasTarget(slug);
+    if (target) permanentRedirect(`/blog/${target}`);
+    notFound();
+  }
 
   const url = articleUrl(post);
   const minutes = readingTime(bodyText(post));
