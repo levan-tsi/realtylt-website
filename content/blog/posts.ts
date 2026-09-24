@@ -40,6 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
+import { FIRST_RENTAL_POST } from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
@@ -663,6 +664,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "how-to-buy-your-first-rental-property-in-the-hudson-valley",
+    cluster: "investing",
+    title: "How to Buy Your First Rental Property in the Hudson Valley (A Step-by-Step Guide)",
+    seoTitle: "How to Buy Your First Rental Property in the Hudson Valley",
+    /** Investing #1, reposted 2026-09-24. Slug = the CRM drip link (day 232) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2025-09-25",
+    updated: "2026-09-24",
+    excerpt:
+      "Financing, strategy, finding the property, a worked 2026 cash flow example, due diligence and becoming a landlord: the step-by-step plan for a first Hudson Valley rental.",
+    seoDescription:
+      "How to buy your first rental property in the Hudson Valley: investor loan rules, house hacking, 2026 rents and rates, a cash flow example and NY landlord rules.",
+    cover: "/images/counties/orange.jpg",
+    body: [],
+    placeholder: false,
+    markdown: FIRST_RENTAL_POST,
+    aliases: ["beginners-guide-buying-first-rental-property"],
   },
   {
     slug: "fsbo-vs-agent-new-york-guide",
