@@ -610,7 +610,7 @@ Toiletries, medications, chargers, basic tools, a coffee maker, snacks, pet supp
 
 Checked against these sources on September 24, 2026.`;
 
-/** Moving #3 (published order): "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing"
+/** Moving #2: "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing"
  * (Drive draft, 2025). Corrections: the draft said released value (60 cents a pound) is the free default "by
  * law"; under NYSDOT's tariff rules the default for a move within New York is a higher lump sum ($2,500 or
  * your declared value on hourly moves; $1.25 a pound on weight moves) unless you sign it down, and full value
@@ -716,5 +716,113 @@ NYSDOT advises filing within 90 days of delivery, unless there are unusual circu
 - New York State Department of Transportation, [registration and licensing](https://www.dot.ny.gov/divisions/operating/osss/truck/registration-licensing) and [The Mover's Guide to Transporting Household Goods in New York State](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf), including the consumer "Summary of Information"
 - Federal Motor Carrier Safety Administration, [Protect Your Move](https://www.fmcsa.dot.gov/protect-your-move)
 - 49 CFR [375.201](https://www.law.cornell.edu/cfr/text/49/375.201) and [375.407](https://www.law.cornell.edu/cfr/text/49/375.407) (Cornell Legal Information Institute)
+
+Checked against these sources on September 24, 2026.`;
+
+/** Moving: "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move" (Drive draft, 2025).
+ * Corrections: removed the invented "90% of people get it wrong" and "one hour of prep saves three"; the
+ * do-not-pack list now follows NYSDOT's mover guide (valuables carry no mover liability; paints, propane, oil
+ * and flammables cannot be shipped; perishables are not accepted). Added New York's 50-mile firewood rule and
+ * DEC's household hazardous waste disposal route. */
+export const PACKING_POST = `Packing is the part of moving most people dread: the sea of boxes, the tape that disappears, the decisions about every object you own. It goes faster with a system. These packing tips for moving are the habits and hacks professional movers use, plus a first-night box checklist and the New York rules on what should never go on the truck.
+
+## Before you pack: set up the system
+
+### 1. Declutter first
+
+The easiest item to pack is one you no longer own. About a month out, go room by room with three bins: donate, sell, discard. Ask one question: have I used this in the last year, and do I want to pay to move it? Every item you let go of is one less to wrap, carry and unpack.
+
+### 2. Build a packing station
+
+Set up one table with everything: boxes in three sizes (small for books and heavy items, medium for kitchenware, large for light, bulky things like pillows), good tape and a tape gun, packing paper, markers and a box cutter. Bring things to the station, pack, seal, label, repeat.
+
+### 3. Color-code by room
+
+Give each room in the new home a color of tape or sticker. Mark each box on two sides, and put the matching color on each room's door frame at the new house. Movers can match colors at a glance without reading every label.
+
+## Packing hacks that save time
+
+### 4. Use linens and clothes as padding
+
+Wrap glasses in clean socks, line a box with towels for a lamp or vase, and wrap bowls in T-shirts. You pack soft goods and protect breakables in the same box, and nothing rattles.
+
+### 5. Leave light clothing in the dresser
+
+For sturdy dressers holding light clothes, remove the drawers, wrap them in stretch wrap, and move them as units. Ask your mover first; some prefer drawers emptied, and heavy items should always come out.
+
+### 6. Move hanging clothes on their hangers
+
+Bundle 10 to 15 hangers, secure the hooks with a zip tie, pull a large drawstring trash bag up from the bottom, and tie it around the hooks. At the new house, hang the bundle and pull off the bag.
+
+### 7. Pack plates on edge
+
+Line a small or medium box with crumpled paper, wrap each plate, and stand them on edge like records, filling every gap. Plates on edge handle bumps far better than a flat stack.
+
+### 8. Cover trays with cling wrap
+
+Utensil trays, jewelry organizers and makeup trays can move as they are: stretch a sheet of press-and-seal wrap over the top and everything stays in its compartment.
+
+### 9. Label two sides, not the top
+
+A label on the lid disappears the moment another box goes on top. Write the room and contents on at least two sides.
+
+### 10. Photograph the wiring
+
+Before you unplug the TV, sound system or computer, take a photo of the back. It is your map for reconnecting everything.
+
+## The first-night box
+
+Pack it last and keep it in your car, not on the truck. It holds what you need for the first 24 hours:
+
+- **Bathroom:** toilet paper, soap, toothbrushes and toothpaste, towels, a shower curtain, basic toiletries and prescription medications
+- **Kitchen:** coffee maker and coffee, paper towels, trash bags, disposable plates and cups, snacks, water, pet food and bowls
+- **Tools and tech:** phone and laptop chargers, a screwdriver, pliers, a box cutter, a flashlight (see our [new homeowner toolkit](/blog/new-homeowner-toolkit-essentials))
+- **Comfort:** a change of clothes and pajamas for everyone, sheets, pillows and blankets
+- **For the kids:** a favorite toy or blanket, a night light, books
+
+## What not to pack on the moving truck
+
+- **Valuables and documents.** New York's guide for household goods moves says not to pack money, jewelry or important papers, and that the mover has no liability for them ([NYSDOT](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf)). Keep passports, birth certificates, Social Security cards, deeds, closing papers, checkbooks, laptops and hard drives with you.
+- **Hazardous materials.** The same guide says paints, propane tanks, oil and other flammables cannot be shipped. That includes gasoline, kerosene, lighter fluid, aerosols, pool chemicals and pesticides. Use them up, give them away, or take them to a household hazardous waste facility or collection event; New York's Department of Environmental Conservation lists them ([NYSDEC](https://dec.ny.gov/environmental-protection/waste-management/solid-waste-types/household-hazardous-waste)).
+- **Perishables.** Movers do not accept perishable articles. Eat down the freezer and pantry in the last two weeks.
+- **Firewood.** Untreated firewood grown in New York may not be moved more than 50 miles from its source, and untreated firewood may not be brought into New York from another state; heat-treated wood labeled "New York Approved Heat-Treated Firewood/Pest Free" is exempt ([NYSDEC](https://dec.ny.gov/nature/animals-fish-plants/invasive-species/terrestrial/firewood)). Leave the woodpile behind.
+- **Plants and pets.** A closed truck is no place for either. Move them in your car.
+
+## Your packing plan
+
+- **Declutter before you tape a single box.**
+- **Go room by room**, starting with the least-used rooms (guest room, storage, office) and ending with the kitchen and bedrooms in the final week.
+- **Label everything**: room, contents and color, on two sides.
+- **Pack the first-night box last**, and carry it in first.
+
+For the full schedule, from booking a mover to moving day, use our [8-week moving checklist](/blog/ultimate-8-week-moving-checklist), and before you book, read [how to hire local movers](/blog/how-to-hire-local-movers-ny). If you need a recommendation for a mover in the Hudson Valley, [get in touch](/connect); still house hunting? [Search homes for sale](/search).
+
+## Frequently asked questions
+
+### What is the fastest way to pack a house?
+
+Declutter first, set up one packing station, pack room by room from the least-used rooms, and use shortcuts: clothes on hangers in trash bags, light clothing left in dresser drawers, and linens as padding.
+
+### What should you not pack when moving?
+
+Money, jewelry and important papers, which the mover is not liable for; hazardous materials such as paint, propane, oil, aerosols and other flammables; perishable food; untreated firewood; plants and pets.
+
+### What goes in a first-night box?
+
+Toiletries, medications, toilet paper, chargers, basic tools, a coffee maker, snacks, pet food, a change of clothes and bedding.
+
+### Can I take my firewood when I move in New York?
+
+Only within 50 miles of where it was grown, with proof of its source, unless it is heat-treated and labeled as New York approved. Untreated firewood may not be brought into New York from another state.
+
+### How do I pack plates so they do not break?
+
+Wrap each one, stand them on edge in a small or medium box lined with crumpled paper, and fill every gap so nothing shifts.
+
+## Sources
+
+- New York State Department of Transportation, [The Mover's Guide to Transporting Household Goods in New York State](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf), including the consumer "Summary of Information"
+- New York State Department of Environmental Conservation, [household hazardous waste](https://dec.ny.gov/environmental-protection/waste-management/solid-waste-types/household-hazardous-waste)
+- New York State Department of Environmental Conservation, [firewood and invasive pests](https://dec.ny.gov/nature/animals-fish-plants/invasive-species/terrestrial/firewood)
 
 Checked against these sources on September 24, 2026.`;

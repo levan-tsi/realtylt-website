@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, PACKING_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1222,15 +1222,23 @@ export const POSTS: BlogPost[] = ([
     aliases: ["how-to-hire-best-local-movers-7-questions", "how-to-hire-best-local-movers"],
   },
   {
-    slug: "packing-101-pro-tips-organized-move",
+    slug: "packing-tips-hacks-for-moving",
     cluster: "moving",
     title: "Packing 101: Pro Tips and Hacks for a Faster, More Organized Move",
-    date: "2025-09-12",
+    seoTitle: "Packing Tips for Moving: 10 Hacks for a Faster Move",
+    /** Moving #3, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
+     * here. Dated 2026-05-13, ahead of the summer moving season. */
+    date: "2026-05-13",
+    updated: "2026-09-24",
     excerpt:
-      "Label systems, box strategy, and the one room you should pack last. Practical packing habits that make unpacking almost pleasant.",
+      "Ten packing hacks that save hours, a first-night box checklist, and what New York says should never go on the moving truck, from propane to untreated firewood.",
+    seoDescription:
+      "Packing tips for moving: 10 hacks that save time, a first-night box checklist, and what not to pack under New York rules, from propane to untreated firewood.",
     cover: "/images/listings/house-15.jpg",
-    body: PLACEHOLDER_BODY("packing strategies that save time and prevent broken-box regrets on moving day"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: PACKING_POST,
+    aliases: ["packing-101-pro-tips-organized-move", "packing-101-pro-tips-hacks"],
   },
   {
     slug: "ultimate-8-week-moving-checklist",
