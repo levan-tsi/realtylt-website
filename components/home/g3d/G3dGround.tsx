@@ -108,8 +108,17 @@ const SCRIMS = 6;
 const SCRIM_PAD = 20;
 const SCRIM_FEATHER = 150;
 /** A block marked `data-quiet="soft"` (large, bold words: the hero's headline) casts a lighter
- * shadow, this share of the full one. */
-const SOFT_SHARE = 0.62;
+ * shadow, this share of the full one (0.62 until round 57.5). */
+const SOFT_SHARE = 0.4;
+/** A block marked `data-quiet="lead"` (the hero's count, search and links at lg, whose words carry
+ * their own text-shadow) casts this share. Round 57.5 (defect A6): the 1440 hero's shade read as a
+ * dark column over New Jersey (mean brightness 21 against the map's 95 on the bare frame). The
+ * small grey caption now casts its own full, small shadow (app/page.tsx), so the large block can go
+ * lighter, and the headline lighter still; tuned with the contrast kit on the real pixels
+ * (scripts/_scratch-r57/5/contrast/): lead 0.6 and headline 0.4 keep every hero text 4.3:1 or more
+ * at p99 (large-text floor 3, small 4.5) and take the column to 33; 0.5 and 0.3 (38) left the count
+ * at 3.4:1, too thin a margin over a map that changes. */
+const LEAD_SHARE = 0.6;
 /** An eased ramp (smoothstep through five stops), not a straight one: a linear fade leaves a
  * visible band where it meets the solid shade (seen on the first frames). */
 const ramp = (dir: string, f: number) => {
@@ -202,7 +211,7 @@ export function G3dGround({
   const [look, setLook] = useState<Look>("scrim");
   const [veil, setVeil] = useState(0.42);
   const [scrim, setScrim] = useState(0.8);
-  const [shape, setShape] = useState({ pad: SCRIM_PAD, feather: SCRIM_FEATHER, soft: SOFT_SHARE });
+  const [shape, setShape] = useState({ pad: SCRIM_PAD, feather: SCRIM_FEATHER, soft: SOFT_SHARE, lead: LEAD_SHARE });
   const shapeRef = useRef(shape);
   shapeRef.current = shape;
   const lookRef = useRef<Look>("scrim");
@@ -347,8 +356,8 @@ export function G3dGround({
     if (q.get("look") === "veil") setLook("veil");
     if (q.get("veil")) setVeil(Number(q.get("veil")));
     if (q.get("scrim")) setScrim(Number(q.get("scrim")));
-    if (q.get("pad") || q.get("feather") || q.get("soft"))
-      setShape({ pad: Number(q.get("pad") ?? SCRIM_PAD), feather: Number(q.get("feather") ?? SCRIM_FEATHER), soft: Number(q.get("soft") ?? SOFT_SHARE) });
+    if (q.get("pad") || q.get("feather") || q.get("soft") || q.get("lead"))
+      setShape({ pad: Number(q.get("pad") ?? SCRIM_PAD), feather: Number(q.get("feather") ?? SCRIM_FEATHER), soft: Number(q.get("soft") ?? SOFT_SHARE), lead: Number(q.get("lead") ?? LEAD_SHARE) });
   }, []);
 
   const measure = useCallback(() => {
@@ -400,10 +409,13 @@ export function G3dGround({
     }
     if (lookRef.current !== "scrim") return;
     const vh = window.innerHeight;
-    const { pad, feather, soft } = shapeRef.current;
+    const { pad, feather, soft, lead } = shapeRef.current;
     const reach = pad + feather;
+    const wide = window.innerWidth >= 1024;
+    const shareOf = (q: string | undefined) => (!wide ? 1 : q === "soft" ? soft : q === "lead" ? lead : 1);
     const blocks = [...document.querySelectorAll<HTMLElement>("[data-quiet]")]
-      .map((el) => ({ r: el.getBoundingClientRect(), soft: el.dataset.quiet === "soft" && window.innerWidth >= 1024 }))
+      .map((el) => ({ r: el.getBoundingClientRect(), share: shareOf(el.dataset.quiet) }))
+      .filter(({ share }) => share > 0)
       .filter(({ r }) => r.width > 8 && r.height > 8 && r.bottom > -reach && r.top < vh + reach)
       .sort((a, b) => b.r.width * b.r.height - a.r.width * a.r.height)
       .slice(0, SCRIMS);
@@ -423,7 +435,7 @@ export function G3dGround({
         el.style.height = `${Math.round(r.height) + 2 * reach}px`;
       }
       el.style.transform = `translate3d(${Math.round(r.left) - reach}px, ${Math.round(r.top) - reach}px, 0)`;
-      el.style.opacity = b.soft ? String(soft) : "1";
+      el.style.opacity = String(b.share);
     }
   }, []);
 

@@ -163,7 +163,7 @@ export default async function HomePage() {
               </h1>
             </div>
 
-            <div data-quiet className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
+            <div data-quiet="lead" className="pointer-events-auto mt-10 max-w-[36rem] lg:mt-9">
               <p className={`t-lead rise rise-2 max-w-[30rem] text-ink-soft ${halo}`}>
                 {activeCount ? (
                   <>
@@ -220,7 +220,7 @@ export default async function HomePage() {
               {/* What the lights are, said once and small, with the data's source: this is
                   listing data drawn on the land, so it carries the MLS credit the rails below
                   carry. In the text column, never over the city. */}
-              <p className={`mt-10 hidden max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
+              <p data-quiet className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
                 {g3d ? (
                   <>
                     {/* The claim follows the runtime (round 57.2): hidden until Google's map has
