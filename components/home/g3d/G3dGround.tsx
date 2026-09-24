@@ -428,6 +428,7 @@ export function G3dGround({
   }, []);
 
   const apply = useCallback(() => {
+    wordBoxes.current = null;
     placeScrims();
     showTerritoryRef.current();
     // The places move with the words only while they are shown (the phone's list scrolls over them).
@@ -492,6 +493,7 @@ export function G3dGround({
     return c.measureText(text).width;
   };
   const headerRect = useRef<Rect | null>(null);
+  const wordBoxes = useRef<Rect[] | null>(null);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const hideLabel = useCallback(() => {
@@ -519,6 +521,9 @@ export function G3dGround({
     const avoid: Rect[] = [{ x: 0, y: vp.height - LOGO_CORNER.h, w: LOGO_CORNER.w, h: LOGO_CORNER.h }];
     const hr = headerRect.current;
     if (hr && hr.y + hr.h - window.scrollY > 0) avoid.push({ ...hr, y: hr.y - window.scrollY });
+    // Round 57.5: the page's words too (the phone's tap label sat on "Let's find"): read once per
+    // scroll position, while the document is clean, and dropped on the next scroll or resize.
+    avoid.push(...(wordBoxes.current ??= readWordBoxes(vp)));
     const p = placeHoverLabel(at, { w, h }, vp, { keep, avoid });
     // Then the writes: text, which rows show, the place (a transform), the link.
     const same = el.dataset.open === "1";
@@ -690,6 +695,7 @@ export function G3dGround({
     const onResize = () => {
       measure();
       scrimSizes.current = [];
+      wordBoxes.current = null;
       labelsPlaced.current = false;
       schedule();
     };
@@ -1236,6 +1242,26 @@ function claimMap(on: boolean) {
   document.querySelectorAll<HTMLElement>("[data-map-claim]").forEach((e) => {
     e.hidden = !on;
   });
+}
+
+/** The page's words on screen, by their LINES (a label may stand beside a short line), plus the
+ * search form's whole box: what the hover label must not stand on (interaction.ts placeHoverLabel's
+ * `avoid`). Only the blocks of words over the map (`data-quiet`), and only those on screen. */
+function readWordBoxes(vp: { width: number; height: number }): Rect[] {
+  const out: Rect[] = [];
+  const onScreen = (r: DOMRect) => r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < vp.height && r.right > 0 && r.left < vp.width;
+  document.querySelectorAll<HTMLElement>("[data-quiet] :is(p, h1, h2, h3, li, form), p[data-quiet], h1[data-quiet]").forEach((e) => {
+    const b = e.getBoundingClientRect();
+    if (!onScreen(b)) return;
+    if (e.tagName === "FORM") {
+      out.push({ x: b.left, y: b.top, w: b.width, h: b.height });
+      return;
+    }
+    const range = document.createRange();
+    range.selectNodeContents(e);
+    for (const r of range.getClientRects()) if (r.width > 1 && r.height > 1) out.push({ x: r.left, y: r.top, w: r.width, h: r.height });
+  });
+  return out;
 }
 
 // ---- the hovered home's price ---------------------------------------------------------------------

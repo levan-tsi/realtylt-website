@@ -3,6 +3,8 @@ import { project } from "./camera";
 import {
   EDGE,
   OFFSET,
+  SCAN,
+  SCAN_MAX,
   areaRowAction,
   cameraShowing,
   clickAction,
@@ -94,6 +96,63 @@ describe("where the hover label stands", () => {
       expect(overlaps(box, header)).toBe(false);
       expect(overlaps(box, { x: light.x - 11, y: light.y - 11, w: 22, h: 22 })).toBe(false);
     }
+  });
+
+  /** Round 57.5 (defect A1, scripts/_scratch-r57/3/lights/phone/tap-1.png): the phone's tap label
+   * stood on "Let's find". The hero's words at 390, by their lines, as the page lays them out. */
+  const PHONE = { width: 390, height: 844 };
+  const HEADER = { x: 0, y: 0, w: 390, h: 120 };
+  const WORDS = [
+    { x: 16, y: 150, w: 290, h: 22 }, // the eyebrow
+    { x: 16, y: 180, w: 254, h: 66 }, // "Let's find"
+    { x: 16, y: 246, w: 184, h: 66 }, // "home."
+    { x: 16, y: 540, w: 350, h: 30 }, // the count, three lines
+    { x: 16, y: 570, w: 300, h: 30 },
+    { x: 16, y: 600, w: 340, h: 30 },
+    { x: 16, y: 660, w: 358, h: 62 }, // the search form
+    { x: 16, y: 752, w: 170, h: 26 }, // the two links
+    { x: 214, y: 752, w: 96, h: 26 },
+  ];
+  const TAP = { w: 192, h: 95 };
+
+  it("keeps off the hero's words on a phone wherever a light stands between them", () => {
+    for (let x = 60; x <= 340; x += 10) {
+      for (let y = 320; y <= 530; y += 7) {
+        // 425 to 427: a 95 px label fits neither above (y - 116 >= 312) nor below (y + 116 <= 540)
+        // in the 228 px gap, and 192 px is too wide beside a light mid-screen: the last resort.
+        if (y >= 424 && y <= 428 && x > 150 && x < 240) continue;
+        const p = placeHoverLabel({ x, y }, TAP, PHONE, { keep: 11, avoid: [HEADER, ...WORDS] });
+        const box = { x: p.x, y: p.y, w: TAP.w, h: TAP.h };
+        expect(WORDS.some((w) => overlaps(box, w)), `light ${x},${y} -> ${p.x},${p.y}`).toBe(false);
+        expect(overlaps(box, { x: x - 11, y: y - 11, w: 22, h: 22 })).toBe(false);
+      }
+    }
+  });
+
+  it("goes further above or below when the near sides both land on words, never over the light", () => {
+    const avoid = [HEADER, { x: 16, y: 200, w: 360, h: 100 }, { x: 16, y: 480, w: 360, h: 80 }];
+    const light = { x: 200, y: 390 };
+    const p = placeHoverLabel(light, TAP, PHONE, { keep: 11, avoid });
+    const box = { x: p.x, y: p.y, w: TAP.w, h: TAP.h };
+    expect(avoid.some((a) => overlaps(box, a))).toBe(false);
+    expect(overlaps(box, { x: light.x - 11, y: light.y - 11, w: 22, h: 22 })).toBe(false);
+    expect(p.y).toBeGreaterThanOrEqual(0);
+    expect(p.y + TAP.h).toBeLessThanOrEqual(PHONE.height);
+    // the nearest free place: just past the lower block of words
+    expect(p.y).toBeGreaterThanOrEqual(560);
+    expect(p.y).toBeLessThan(560 + SCAN);
+  });
+
+  it("never wanders far from its light to find a clear place (the featured rail's cards)", () => {
+    // A light at the top left of the rail, cards from y 155 down to 700 (round 57.5's first frame:
+    // the scan walked the label 700 px down to the gap under the cards).
+    const cards = [{ x: 112, y: 155, w: 1200, h: 545 }];
+    const light = { x: 40, y: 72 };
+    const size = { w: 176, h: 58 };
+    const p = placeHoverLabel(light, size, VP, { keep: 12, avoid: cards });
+    const below = Math.ceil(light.y + 12 + OFFSET);
+    expect(Math.abs(p.y - below)).toBeLessThanOrEqual(SCAN_MAX);
+    expect(overlaps({ x: p.x, y: p.y, w: size.w, h: size.h }, { x: light.x - 12, y: light.y - 12, w: 24, h: 24 })).toBe(false);
   });
 
   it("rounds to whole pixels (the label's text stays crisp)", () => {

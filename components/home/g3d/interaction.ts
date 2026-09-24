@@ -20,17 +20,22 @@ export interface Rect {
 export const OFFSET = 10;
 /** A label closer than this to an edge of the window flips to the other side. */
 export const EDGE = 24;
+/** The step, css px, of the search for a place further from the light (round 57.5). */
+export const SCAN = 8;
+/** How much further than its near side the label may go (round 57.5): past this a label reads as
+ * belonging to nothing, so the last resort (which may overlap words) is the better answer. */
+export const SCAN_MAX = 160;
 
-export type LabelSide = "above-right" | "above-left" | "below-right" | "below-left";
+export type LabelSide = "above-right" | "above-left" | "below-right" | "below-left" | "right" | "left";
 
 const hits = (a: Rect, b: Rect) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
 
 /** Where the hovered home's label stands: above and to the right of its light, OFFSET px clear of
  * the light's keep-out box (`keep`: half its side, the lit glyph's radius plus a little for the
  * projection's error), flipped left or below within EDGE px of an edge, and never on `avoid` (the
- * Google logo's corner). Whatever happens, it never covers the light: every side stands wholly
- * above or wholly below the keep-out box, and the last resort only slides sideways or further
- * away. Whole pixels, so the text stays crisp. */
+ * Google logo's corner, the header, and since round 57.5 the page's words). Whatever happens, it
+ * never covers the light: every side stands wholly above, below or beside the keep-out box, and the
+ * last resort only slides sideways or further away. Whole pixels, so the text stays crisp. */
 export function placeHoverLabel(
   light: { x: number; y: number },
   size: { w: number; h: number },
@@ -53,6 +58,22 @@ export function placeHoverLabel(
   const fits = (x: number, y: number) =>
     x >= EDGE && x + w <= vp.width - EDGE && y >= EDGE && y + h <= vp.height - EDGE && !avoid.some((a) => hits({ x, y, w, h }, a));
   for (const [side, x, y] of order) if (fits(x, y)) return { x, y, side };
+  // Round 57.5: beside the light, level with it and wholly to one side of its keep-out box (a light
+  // in a narrow gap between two blocks of words has no room above or below).
+  const mid = Math.round(light.y - h / 2);
+  const besideR = Math.ceil(light.x + k + OFFSET), besideL = Math.floor(light.x - k - OFFSET - w);
+  for (const [side, x] of (wantRight ? [["right", besideR], ["left", besideL]] : [["left", besideL], ["right", besideR]]) as [LabelSide, number][]) {
+    if (fits(x, mid)) return { x, y: mid, side };
+  }
+  // Round 57.5: when the near sides land on words (the phone's hero: the headline above, the count
+  // below), the label moves further up or down, in SCAN px steps, nearest first, still wholly above
+  // or wholly below the light, at the preferred side, the other, or slid inside the window.
+  const scanXs = [wantRight ? right : left, wantRight ? left : right, Math.min(Math.max(wantRight ? right : left, EDGE), vp.width - EDGE - w)];
+  for (let d = SCAN; d <= SCAN_MAX; d += SCAN) {
+    for (const [vn, y] of vs.map(([vn, y]) => [vn, vn === "above" ? y - d : y + d] as const)) {
+      for (const x of scanXs) if (fits(x, y)) return { x, y, side: `${vn}-${x >= light.x ? "right" : "left"}` as LabelSide };
+    }
+  }
   // The last resort (a small window, a light in a corner, the phone's header): keep a vertical
   // side, which is what keeps the light clear, prefer one wholly on screen and off `avoid`, and
   // slide the label along it inside the window; past an avoided box sideways if it must.
