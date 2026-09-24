@@ -860,6 +860,127 @@ Added after round 4:
     on a simulated failure (abort the script route on the first request only, then let it
     through on reload), no console error loop, the caption honest.
 
+### Round 5, the builder's numbers (commits `42592fe`..`69fe7bf`; for the orchestrator to re-run)
+
+Production build on :3102 (HEAD `69fe7bf`), headed Chrome, RTX 2060, cold profiles. Instruments
+(gitignored): `scripts/_scratch-r57e-*.mjs`; outputs under `scripts/_scratch-r57/5/`. The
+orchestrator's re-scope (the next round turns the map dark) arrived after A5 to A8 were already
+built and committed; they stand as commits and can be reverted one by one if the dark round
+replaces them. The LCP ledger and the contrast kit at six stops were NOT re-run (re-scope).
+
+**A3, the projection (the next round depends on it).** Measured by pixel (`-calib.mjs`: each drawn
+light's template swapped for a red dot, its centroid against our projection's anchor).
+
+| stop | before dx / dy, max | after dx / dy, max |
+|---|---|---|
+| hero, Dutchess County, Orange, Queens, Manhattan (5 to 7 lights each) | -8.5 to -8.7 / -1.6 to -2.2, 9.1 px | -1.0 to -1.3 / -1.3 to -1.5, **2.3 px** |
+| featured rail (2.6 km, the focused card's light) | (after the first fix) -0.9 / **-8.7** | 1.8 / 0.6, **1.9 px** |
+
+Two causes, both found by the SHAPE of the error: (1) a constant 8.6 px in x at every range = the
+window, not the maths: `innerWidth` counts the 17 px scrollbar, the map element does not, so our
+centre sat half a scrollbar right of Google's (`controller.view()` now reads the element's client
+size; the territory names, the towns and the focus camera use it). (2) 8.7 px in y only close up =
+height: Google's landed camera reports its centre altitude as 185 m where our USGS grid reads 187 m
+above sea level, so Google's altitudes are sea-level heights like ours and the -32 m geoid offset
+was wrong (`GEOID = 0`). The remaining ~1.3 px is the red dot's anti-aliasing and the glyph anchor.
+
+**A1** (`-tapwords.mjs`, every lone light at the territory shot tapped): 390 px, labels on the hero's
+words 15 of 24 -> **0 of 24**, 0 over their light, 0 off screen (`a1-tapwords/after-frames-390/
+tap-1.png`: "New Windsor $69,900" below its light, clear of "home."). 320 px: 15 of 15 -> 13 of 15:
+at 320 the words fill the column and a 190 px label has no word-free place within 160 px of its
+light, so the last resort (which may overlap words) stands; not fixable without a smaller label.
+
+**A2, the row policy decided: every click (or Enter, or tap) opens the county page; hover and focus
+fly the map.** `-rows.mjs`: hover Putnam -> map at putnam; click -> `/top-areas/putnam` in 54 ms;
+focus Brooklyn -> map at brooklyn; Enter -> `/top-areas/brooklyn`; phone tap Orange -> `/top-areas/
+orange` in 112 ms. (A pointer left resting on a row after Back fires that row's hover when the page
+re-renders; a probe artefact, the pointer's own choice wins.)
+
+**A4** (`flyin/sheet.png`): words and scrims fade over 200 ms at a fly-in click (content opacity 0.41
+at the first sample, 0 at the next); the dive is the picture; Back returns the page at opacity 1.
+
+**A5 to A8** (done before the re-scope): town names 20 of 25 under 4.5:1 -> 0 of 24 (lowest 4.92);
+the 1440 hero's column mean 21 -> 33 against the map's 95 (every hero text still 4.3:1+ at p99); the
+phone's foot shade eases to 0.15 so the logo sits on a faint band of sea (`foot/sheet.png`);
+"Syracuse" at the phone's top edge max 32 -> 13 of 255.
+
+**Item 9, decided by numbers: let the scroll lift the cover and accept one freeze; no hold.** Cold,
+1440, the scroll starting N s after navigation (`-lag.mjs --early=`):
+
+| scroll at | first steady | cover gone | warm walk | Westchester flight worst | worst frame of the scroll |
+|---|---|---|---|---|---|
+| 3.0 s (before, `0b901fa`) | 7.5 s | 4.9 s | aborted | 236 | 236 |
+| 3.0 s | 7.6 s | 5.2 s | aborted | **257** | 257 |
+| 4.5 s | 8.4 s | 6.2 s | aborted | **250** | 250 |
+| 6.0 s | 8.1 s | 7.7 s | aborted | **236** | 236 |
+| 6.0 s (before) | 6.8 s | 7.7 s | ran (scroll registered late) | 21 | 21 |
+| 8.0 s | 8.3 s | 9.7 s | ran, 1.3 s | 35 / 56 | **257, under the cover, the walk's own 400 ms compile flight** |
+
+Why no hold: the stall is a one-time shader compile that happens on the first FLIGHT along that
+path, wherever it is flown. A visitor who scrolls before the walk has run meets it either at the
+Westchester flight (3 to 6 s) or as a scroll hitch during the walk under the cover (8 s); holding
+the cover cannot hide it (the cover is the first screen only and scrolls away with the hero; the
+walk would fly visibly behind the next sections). The cover never held past 11.7 s in any cold run;
+with Google's script delayed 3 s (slow network) it stayed until the map drew, 16.1 s, and was not
+capped at 14 s on purpose: lifting it earlier shows an undrawn map.
+
+**Item 10** (`-states.mjs --case=firstfail`): the script aborted on the first request only: the
+cover stays ("load: Google Maps failed to load"), the caption says only "Every light is a home listed
+on OneKey MLS, standing where it stands." (no Google, no pointing), the page scrolls to the footer,
+the search lands on `/search?q=Beacon`, 4 console lines in 25 s (no loop); reload -> map drawn, 130
+lights. `maps-loader.ts` now forgets a failed load so a later caller on the same page view retries.
+
+**The sweep.**
+- Every page at 1440/390/320 (`pages/sheet-*.png`, 51 loads): all 200, horizontal overflow 0 on
+  every one, the only console error `/_vercel/insights` (local server only).
+- Tab walk at 1440 (`-tab.mjs`): FOUND the map element taking four invisible Tab stops between the
+  header and the search; fixed (`inert` host, `b6ce0f0`). After: 219 stops in a sensible order,
+  no trap, every stop on screen, the chat launcher reachable, the featured card lights its home and
+  names it on landing, Escape puts light and label out with the focus kept. Rings: every outline
+  measured 5:1+ except the kit's misreads (the heart's dark ring beside its light disc, the carousel's
+  ring on its own white border, the skip link which IS a white box) and one real one: the hero's
+  scroll cue, white ring 2.5:1 over the daylight map (left for the dark round).
+- The seams (`-seams.mjs`): home at Orange -> light click -> listing -> Back: ONE Maps script load,
+  ONE Map3DElement (`loads` 1; the element re-attached, not rebuilt), back at the same scroll (4317)
+  and the Orange shot, words at opacity 1. Home -> search "Beacon" -> `/search?q=Beacon` (the query
+  carried; the form's GET is a full page load, so `/search` loads the script for its 2D map: 2nd load)
+  -> Back: a full reload of home (3rd load, the cover again; Playwright runs without the back-forward
+  cache, so on a real Chrome this Back may be a bfcache restore; unmeasured).
+- Failed `/api/lights` (500 and abort): the map draws with 0 lights; the three light sentences leave,
+  the caption reads "Map: Google." only; no console loop (3 lines). **Decided: at 0 lights on the live
+  map the words claim nothing about lights** (`claims.ts`, 6 tests); under our cover (JS off, before
+  the map, failed map) they stay, since the cover's lights are drawn from the same listings.
+- Failed map (`gmp-error` dispatched, and the script blocked): the cover returns / stays, no Google
+  claim, the page reads to the footer, the search works.
+- The reveal moved the caption (CLS 0.0009 at 7.2 s): fixed (`69fe7bf`, the claims shown by
+  visibility): CLS **0.0002**. In the 0-lights failure state the light sentences leave the flow:
+  CLS 0.011 there.
+- Empty rails (`states/empty-*.png`, the component's empty markup put in place): "No listings to show
+  right now. Browse all homes." in its dashed box over the map, no blank band. A failed fetch serves
+  the committed snapshot (lib/idx/db.ts), so a rail is never empty from an error.
+- 200 % zoom (720 x 450 css): overflow 0 at five stops, the words wrap, the territory names off (the
+  page is past its top). FOUND, not fixed: at this height the search field sits in Google's logo
+  corner, where the words' layer is masked by policy, so the field's left half fades out.
+- Reduced motion: 0 `flyCameraTo`, a cut (camera = element), no errors. No JS (1440, 390): the cover,
+  the h1, GET form `q`, both rails, 0 Maps requests. No key (`NEXT_PUBLIC_HOME_MAP=night`, dev on
+  :3101 from a temporary worktree, removed): the night flight with its own copy ("The bright lights
+  below are them."), 0 Maps requests (`states/nokey-night-1440.png`).
+- Copy read (193 lines of the rendered home page): no em or en dash, no arrow glyph, no vendor URL;
+  Google named once, "Map: Google.". Note: the footer's scene credit still names NASA's night lights,
+  true of the cover (the night still re-graded), not of the live map.
+- Day pages: against this round's base `ce84d84` (built in a temporary worktree with this worktree's
+  env, removed): 17 of 20 identical; `/blog`, `/buying` and the listing at 1440 differ, and differ
+  the SAME way between two renders of the same build (the listing's gallery placeholders with media
+  blocked, 8,788 px run to run), so nothing of this round. Against `main`: the branch's phone line
+  ((914) 875-2424 and info@ in the header and footer, `d15ee73`) on every page, and `/connect`'s
+  Google Calendar embed painting on the branch and blank on main (both load the iframe).
+- Overflow on `/` at 1440/768/640/390/320, five scroll positions each: 0. Controls at 390/320: every
+  field 16 px; one target under 24 px, the footer's 16 x 16 consent checkbox (shared, pre-existing).
+- Cold lag at 1440 on the final build: Westchester flight **34.7 ms** (1 frame over 34), worst flight
+  frame of the scroll **139 ms** (Staten Island and the fling up, round 56's streaming hitches), marker
+  adds 518, 0 in flights; first steady 7.9 s, cover gone 11.7 s.
+- Gates: `npx tsc --noEmit` clean; `npx vitest run` **1827 passing** (1819 - 2 row-hold tests + 10).
+
 ## 5. The owner's verdict mid-round (2026-09-23, verbatim, after rounds 1 to 4)
 
 > "It's definitely getting better, the real map is better, but you have to work on the light
