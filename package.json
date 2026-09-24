@@ -18,6 +18,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.110.3",
     "leaflet": "^1.9.4",
+    "maplibre-gl": "^6.11.2",
     "next": "^15.3.3",
     "posthog-js": "^1.418.16",
     "react": "^19.1.0",
