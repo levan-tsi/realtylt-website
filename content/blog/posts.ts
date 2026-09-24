@@ -40,6 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
+import { SELLING_TIMELINE_POST } from "./seller-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -656,6 +657,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "timeline-selling-a-house-ny",
+    cluster: "selling",
+    title: "From Listing to Closing: A Step-by-Step Timeline for Selling Your Home",
+    seoTitle: "Timeline for Selling a House in NY, from Listing to Closing",
+    /** Seller Education #6, reposted 2026-09-24. Slug = the CRM drip link (day 92) and the
+     * draft's; the old site's title slug redirects here. */
+    date: "2026-03-05",
+    updated: "2026-09-24",
+    excerpt:
+      "Every phase of a New York home sale, from pricing and the disclosure form to the attorneys' contract, the buyer's inspection and appraisal, and closing day.",
+    seoDescription:
+      "The timeline for selling a house in New York: preparation, listing, the attorney contract stage, inspection, appraisal and closing, with 2026 disclosure rules.",
+    cover: "/images/lifestyle/selling.jpg",
+    body: [],
+    placeholder: false,
+    markdown: SELLING_TIMELINE_POST,
+    aliases: ["from-listing-to-closing-a-step-by-step-timeline-for-selling-your-home", "listing-to-closing-timeline-selling-home"],
   },
   {
     slug: "final-walk-through-checklist",
