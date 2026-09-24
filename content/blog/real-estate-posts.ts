@@ -816,3 +816,103 @@ Letters carry an expiration date set by the lender, and your documents go stale 
 - HUD, [FHA minimum credit score](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined)
 
 Checked against these sources on September 24, 2026. Individual lenders can add requirements on top of these program rules.`;
+
+export const BUYER_CLOSING_COSTS_POST = `You have saved for the down payment and found the house. The last financial hurdle before the keys is closing costs, and in New York they include a few items buyers from other states do not expect. This guide is a line-by-line breakdown of buyer closing costs in New York: what each fee is for, which ones are New York specific, including the mortgage recording tax and the mansion tax, and how to lower the total.
+
+## How much are buyer closing costs in New York?
+
+Freddie Mac suggests budgeting 2% to 5% of the purchase price for closing costs ([Freddie Mac](https://myhome.freddiemac.com/blog/homebuying/what-are-closing-costs-and-how-much-will-i-pay)), paid in addition to your down payment. In dollars:
+
+- **$400,000 home:** $8,000 to $20,000
+- **$600,000 home:** $12,000 to $30,000
+- **$800,000 home:** $16,000 to $40,000
+- **$1,000,000 home:** $20,000 to $50,000, plus New York's 1% mansion tax
+
+Your actual figure depends heavily on your loan amount, your county, your property taxes and your lender. The exact numbers come from two federal forms: the Loan Estimate you receive within three business days of applying, and the Closing Disclosure you receive at least three business days before closing ([CFPB](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/)).
+
+## Where the money goes: a line-by-line breakdown
+
+### 1. Lender and loan costs
+
+- **Origination charges.** The lender's fee for processing and underwriting the loan, shown in Section A of the Loan Estimate. It varies widely between lenders and is one of the easiest costs to shop.
+- **Discount points,** if you choose to pay upfront to lower your rate.
+- **Appraisal.** The lender orders an independent appraisal to confirm the home is worth the loan. Larger or unusual properties cost more to appraise.
+- **Credit report** and similar small charges.
+
+### 2. New York taxes on the purchase
+
+- **Mortgage recording tax.** New York taxes the recording of a mortgage, which surprises many out-of-state buyers. In the Metropolitan Commuter Transportation District (Westchester, Putnam, Rockland, Dutchess, Orange and the five boroughs, among others) the combined rate is $1.05 per $100 of the mortgage, made up of a basic tax, a special additional tax and an additional tax. For a one- or two-family home, the first $10,000 of the loan is deducted in computing the basic tax ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/pit/mortgage/mtgidx.htm)). New York City and some other counties have different rates, listed on the state's Form MT-15. Ask your attorney for the exact amount and how it is split between you and your lender.
+- **Mansion tax.** On a residence bought for $1 million or more, the buyer pays an additional tax of 1% of the price ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/bus/transfer/rptidx.htm)). It is a cliff: $999,999 carries no mansion tax, $1,000,000 carries $10,000, and $1,500,000 carries $15,000. In New York City, residential purchases of $2 million or more also carry a buyer-paid supplemental tax at graduated rates between 0.25% and 2.9%. The base state transfer tax ($2 per $500 of price) is normally paid by the seller.
+
+### 3. Legal, title and third-party costs
+
+- **Your real estate attorney.** Almost every New York buyer hires one; downstate, the seller's attorney drafts the contract and yours negotiates it, handles title and represents you at closing. Most charge a flat fee; get a written quote. See [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny).
+- **Title search and title insurance.** The title company searches public records for liens, judgments and other defects. The lender's title policy protects the lender and is required with a mortgage; the owner's policy protects you and is strongly recommended. Title insurance premiums in New York are based on rates filed with the state, so ask your attorney for an estimate early.
+- **Recording fees.** The county clerk charges to record the deed and the mortgage.
+- **Inspections.** Not a lender requirement, but essential. In the Hudson Valley, budget for more than the general inspection when the house has a well, septic system or older systems: see our [home inspection checklist](/blog/home-inspection-checklist-hudson-valley-ny).
+- **Survey,** if your attorney or the title company requires a new one.
+
+### 4. Prepaids and escrow
+
+These are not fees for services; they pre-pay bills that come with owning the house.
+
+- **Homeowners insurance.** Your lender requires a policy in force at closing, and you typically pay the first year's premium upfront.
+- **Escrow deposit for property taxes and insurance.** Most lenders collect taxes and insurance monthly and pay the bills from an escrow account. At closing they fund that account with enough to cover the next bills plus a cushion; federal rules cap the cushion at one-sixth of the estimated annual payments, about two months ([12 CFR 1024.17](https://www.consumerfinance.gov/rules-policy/regulations/1024/17/)). Because Hudson Valley tax bills vary so much between towns, two houses at the same price can need very different checks at closing.
+- **Prepaid interest.** You pay interest from the closing date to the end of that month; your first full payment is usually due on the first of the month after next.
+
+## Who pays the real estate agents?
+
+Since August 17, 2024, buyers working with an agent who uses the MLS sign a written agreement before touring homes. It states the agent's compensation, and commissions are fully negotiable ([National Association of REALTORS](https://www.nar.realtor/the-facts/what-the-nar-settlement-means-for-home-buyers-and-sellers)). A seller may still agree to pay some or all of your agent's compensation, often negotiated as part of the offer, but it is no longer something to assume. Read your agreement and discuss with your agent how it will be handled on each offer. More on how we work with buyers is on our [buying page](/buying).
+
+## Are closing costs tax deductible?
+
+Mostly not in the year you buy, with two main exceptions ([IRS Publication 530](https://www.irs.gov/publications/p530)):
+
+- **Points** you pay to lower your rate are generally deductible as mortgage interest, subject to IRS conditions.
+- **Property taxes** you pay at closing are deductible if you itemize, within the state and local tax (SALT) cap. For 2026 that cap is $40,400 ($20,200 if married filing separately), reduced for higher incomes but not below $10,000 ([IRS](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill)).
+
+Many other costs, such as title insurance and recording fees, are added to your home's cost basis, which can reduce taxable gain when you sell. Talk to a tax professional about your own return.
+
+## How to reduce your closing costs
+
+1. **Negotiate seller concessions.** The seller pays part of your closing costs, often in exchange for a slightly higher price that the appraisal must support. Limits apply: on a Fannie Mae conventional loan for a home you will live in, 3% of the price with less than 10% down, 6% with 10% to 25% down, and 9% with more than 25% down ([Fannie Mae Selling Guide B3-4.1-02](https://selling-guide.fanniemae.com/sel/b3-4.1-02/interested-party-contributions-ipcs)). FHA allows interested-party contributions of up to 6% of the sales price ([HUD](https://answers.hud.gov/FHA/s/article/What-costs-can-a-seller-or-other-interested-party-pay-on-behalf-of-the-Borrower)).
+2. **Compare Loan Estimates.** Get Loan Estimates from several lenders and compare origination charges line by line. Mortgage credit checks within a 45-day window count as a single inquiry ([CFPB](https://www.consumerfinance.gov/ask-cfpb/what-exactly-happens-when-a-mortgage-lender-checks-my-credit-en-2005/)).
+3. **Use assistance programs.** SONYMA's DPAL, the Homebuyer Dream Program and NYC's HomeFirst can go toward closing costs; see [how much you really need for a down payment](/blog/down-payment-hudson-valley-ny).
+4. **Close late in the month** to reduce prepaid interest, if the rest of the timeline allows.
+
+## Your next step
+
+Closing costs are predictable once each line has a name. For a personal estimate for your price range and county, [talk with us](/connect), and our [financing page](/financing) explains how we work with lenders.
+
+## Frequently asked questions
+
+### How much are closing costs for a buyer in New York?
+
+Plan for 2% to 5% of the price, on top of the down payment. New York adds the mortgage recording tax and, at $1 million and above, the 1% mansion tax.
+
+### What is the New York mansion tax?
+
+A 1% tax paid by the buyer on a residence bought for $1 million or more. It applies to the full price once the threshold is reached, so $1,000,000 carries $10,000.
+
+### What is the mortgage recording tax in New York?
+
+A state and local tax on recording a mortgage. In the Metropolitan Commuter Transportation District counties, including Westchester, Putnam, Rockland, Dutchess, Orange and New York City, the combined rate is $1.05 per $100 of the loan, with a $10,000 deduction from the basic tax for one- and two-family homes. Rates differ in some other counties and for larger loans in New York City.
+
+### Who pays the buyer's agent in New York?
+
+It is set by your written buyer agreement and is negotiable. A seller may agree to cover some or all of it, but since August 2024 buyers should not assume so.
+
+### Can the seller pay my closing costs?
+
+Yes, as a negotiated concession, within your loan program's limits: for Fannie Mae conventional loans on a primary home, 3% to 9% depending on your down payment, and for FHA up to 6%.
+
+## Sources
+
+- Freddie Mac, [what are closing costs](https://myhome.freddiemac.com/blog/homebuying/what-are-closing-costs-and-how-much-will-i-pay)
+- Consumer Financial Protection Bureau, [Closing Disclosure](https://www.consumerfinance.gov/ask-cfpb/what-is-a-closing-disclosure-en-1983/), [Regulation X 1024.17, escrow accounts](https://www.consumerfinance.gov/rules-policy/regulations/1024/17/) and [credit checks when shopping](https://www.consumerfinance.gov/ask-cfpb/what-exactly-happens-when-a-mortgage-lender-checks-my-credit-en-2005/)
+- NYS Department of Taxation and Finance, [mortgage recording tax](https://www.tax.ny.gov/pit/mortgage/mtgidx.htm) and [real estate transfer tax and mansion tax](https://www.tax.ny.gov/bus/transfer/rptidx.htm)
+- National Association of REALTORS, [what the settlement means for buyers and sellers](https://www.nar.realtor/the-facts/what-the-nar-settlement-means-for-home-buyers-and-sellers)
+- IRS, [Publication 530](https://www.irs.gov/publications/p530) and [2026 inflation adjustments](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill)
+- Fannie Mae, [Selling Guide B3-4.1-02](https://selling-guide.fanniemae.com/sel/b3-4.1-02/interested-party-contributions-ipcs); HUD, [what a seller can pay for an FHA borrower](https://answers.hud.gov/FHA/s/article/What-costs-can-a-seller-or-other-interested-party-pay-on-behalf-of-the-Borrower)
+
+Checked against these sources on September 24, 2026. This is general information, not tax or legal advice.`;

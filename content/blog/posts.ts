@@ -29,6 +29,7 @@ import {
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import {
+  BUYER_CLOSING_COSTS_POST,
   DOWN_PAYMENT_POST,
   FIRST_TIME_BUYER_CHECKLIST_POST,
   HOW_MUCH_HOUSE_POST,
@@ -653,6 +654,23 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "buyer-closing-costs-new-york",
+    cluster: "buying",
+    title: "What Are Buyer's Closing Costs in New York? A Complete, No-Surprise Breakdown",
+    seoTitle: "Buyer Closing Costs in New York: A 2026 Breakdown",
+    /** Buyer Education #4, reposted 2026-09-24 at the draft's own slug. */
+    date: "2025-12-03",
+    updated: "2026-09-24",
+    excerpt:
+      "Every line a New York buyer pays at closing, including the mortgage recording tax and the mansion tax, who pays the agents since 2024, and four ways to lower the total.",
+    seoDescription:
+      "Buyer closing costs in New York, line by line: lender fees, the mortgage recording tax, the mansion tax, title, escrow and how to lower the total in 2026.",
+    cover: "/images/listings/house-04.jpg",
+    body: [],
+    placeholder: false,
+    markdown: BUYER_CLOSING_COSTS_POST,
   },
   {
     slug: "mortgage-pre-approval-requirements-ny",
