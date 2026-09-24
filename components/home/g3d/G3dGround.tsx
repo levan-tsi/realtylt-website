@@ -173,6 +173,8 @@ export function G3dGround({
   const scrimEls = useRef<(HTMLDivElement | null)[]>([]);
   const scrimSizes = useRef<string[]>([]);
   const topScrim = useRef<HTMLDivElement>(null);
+  /** The scrims (or the veil): they go with the words during a fly-in (round 57.5). */
+  const scrimLayer = useRef<HTMLDivElement>(null);
   const footShade = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const holeY = useRef(-1);
@@ -836,7 +838,18 @@ export function G3dGround({
         return;
       }
       const home = c.homeAt(h.i);
-      const fly = act === "fly" && home ? c.flyIn(home) : Promise.resolve();
+      const diving = act === "fly" && !!home;
+      // Round 57.5: the page's words (and the shade under them) step aside over the dive's first
+      // 200 ms, so the descent is the picture (they stood over the diving map, 3/lights/desk/flyin-sheet.png); back if the route
+      // never comes. No fly-in with reduced motion, so no fade either.
+      const words = [contentRef.current, scrimLayer.current];
+      if (diving)
+        for (const w of words) {
+          if (!w) continue;
+          w.style.transition = "opacity 200ms ease-out";
+          w.style.opacity = "0";
+        }
+      const fly = diving ? c.flyIn(home) : Promise.resolve();
       const wait = (ms: number) => new Promise<null>((r) => setTimeout(() => r(null), ms));
       const pin = h.pin ? Promise.resolve(h.pin) : Promise.race([h.pending ?? Promise.resolve(null), wait(900)]);
       const fallback = h.href;
@@ -849,6 +862,7 @@ export function G3dGround({
         // map flown down to one house: the map goes back to the section's shot.
         setTimeout(() => {
           if (window.location.pathname !== "/" || !ctl.current) return;
+          for (const w of words) if (w) w.style.opacity = "";
           hideHover();
           override.current = null;
           target.current = null;
@@ -1053,9 +1067,9 @@ export function G3dGround({
       <div className="pointer-events-none fixed inset-0 z-0" data-g3d-ground data-g3d-error={error ?? undefined}>
         <div ref={host} className="absolute inset-0" />
         {look === "veil" ? (
-          <div aria-hidden className="absolute inset-0" style={{ background: `rgba(0,0,0,${veil})`, ...mask }} />
+          <div ref={scrimLayer} aria-hidden className="absolute inset-0" style={{ background: `rgba(0,0,0,${veil})`, ...mask }} />
         ) : (
-          <div aria-hidden className="absolute inset-0 overflow-hidden" style={mask}>
+          <div ref={scrimLayer} aria-hidden className="absolute inset-0 overflow-hidden" style={mask}>
             {Array.from({ length: SCRIMS }, (_, k) => (
               <div
                 key={k}
