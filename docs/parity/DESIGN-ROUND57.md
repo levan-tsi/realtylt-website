@@ -2071,3 +2071,65 @@ stretch at every stop; on a normal line and on the phone every stop lifts sharp)
 the next session: retry Google's script once after a failed load (twice in about forty runs it
 never loaded and the page stayed on the cover); an adaptive lift bound from the measured tile
 arrival rate; the phone's Westchester flight at 90 ms (every round, never under 60).
+
+## 9. The owner's fourth verdict (2026-09-24 evening, verbatim), and the change of engine
+
+> "On the website, I tested it, and the first page is still like that. It takes like 10, 15
+> seconds to load it, and the first impression is like this page was built in the 90s or
+> something. It's really bad. Is it the code, or are we connected to an API and it needs
+> loading every time, because it is taking so long. And even with the zoom in, most of the
+> areas still look really, really bad. So is there code, or free, open source, that we can copy
+> and load, like we did on the brain in the AI page, a 3D map of those areas, or not the real
+> map, or maybe a Google map type; it's really bad, I don't like it; the idea is great if it was
+> showing better. Maybe we can just load a picture and add geolocations. It needs to be really,
+> really fast, because it takes a lot of time to load, and even after the loading it still looks
+> like shit."
+
+**The honest answer.** It is Google's engine, not our code: every first visit downloads
+Google's 3D renderer (828 KB of wasm) and then streams photographic tiles, 5 to 7 s on a fast
+line and 10 to 15 s on the line he tested on; the browser cache helps only repeat visits, and
+nothing on our side can make a first visit fast. And high up, the photographic tiles are coarse
+by nature (§8); only close in are they sharp, which is why the eleven rounds kept moving the
+cameras down. Both facts are properties of the photorealistic 3D map, so the tool is wrong for
+a home-page hero that must be instant and beautiful at every altitude.
+
+**The decision: change the engine, keep the design.** The design he approved stays (a dark
+night territory, our lights at true coordinates with the glow, our names, the flights between
+chapters, the click to a listing); the ground becomes a VECTOR map with real terrain,
+open-source, keyless, fast:
+- MapLibre GL JS (open source, MIT-style), vector tiles from OpenFreeMap (free, no key, fair
+  use; OpenStreetMap data, attribution required), 3D terrain and hillshade from AWS Terrain
+  Tiles (free, no key), 3D buildings from the tiles' building layer close in, a fog and sky
+  layer, `flyTo` camera flights with pitch and bearing, and our light layer above it. A dark
+  night style of our own (near-black land with faint hillshade, blue-black water, roads as
+  hairlines, the warm lights the only warmth). No Google load on the home page at all (the
+  Immersive Maps cost goes to zero; Google stays on /search and the listing pages).
+- The higher-wow variant if he wants it: Mapbox GL with the Standard style's "night" light
+  preset (a lit city with 3D buildings and terrain, 50,000 free loads a month) needs HIS Mapbox
+  token; asked in the report; MapLibre needs nothing and is built first.
+- Rejected again: a still picture with geolocated lights (no flights, no click, no zoom: the
+  idea he called great dies with it), and the night-flight scene (rejected in round 55).
+
+### Round 12 brief (for builder 12): the MapLibre night map, in a lab route
+
+Build `/lab/ml` (RLT_LAB=1, never indexed, the home page untouched): the home page's sections
+over a MapLibre ground. The style: our own dark night (the /ai page's black and one glow):
+land near black with a subtle hillshade from terrain, water blue-black, roads as faint
+hairlines brighter in cities, no labels from the style except what we place (our territory
+names and town names as today, in our type via an HTML layer), 3D buildings (fill-extrusion
+from the tiles' building layer) only below a zoom where they read, fog and a dark sky. Terrain
+on (`setTerrain` with the raster-dem source, exaggeration tuned by frames). Our light layer
+(`light-layer.ts`) drawn above the map from `map.project()` on every `render`/`move` event; the
+same counts, gap and glow as round 8; hover, tap, click and the label as today. The six section
+shots and the eleven county shots re-composed for this map (`flyTo` with center, zoom, pitch 55
+to 65, bearing), the territory shot showing the whole covered area, the chapters close over the
+same signature places as round 11. The cover: keep today's night cover for the first paint if
+the map needs more than 1 s, else none (measure). Attribution: "© OpenStreetMap contributors ·
+© OpenFreeMap" in the corner, nothing else vendor-named. CSP: the probe adds the tile, terrain
+and glyph hosts for the lab only and the report names them; `next.config.ts` unchanged.
+Measure: first map paint and full tiles per stop, cold, fast line and Slow 4G (target: the
+territory drawn under 2 s fast, under 6 s slow); frames during every flight (the lag probe
+adapted; worst frame under 60 ms cold); the bundle added (maplibre-gl gzipped); frames at every
+stop both widths next to round 11's Google frames; a video. Gates: tsc, vitest only up (the
+shot table, the style's tokens), overflow, contrast on the words. Report which hosts, which
+licences, the numbers, and the frames.
