@@ -609,3 +609,101 @@ Generally no. Letters can expose the seller to fair housing claims, and many age
 - U.S. Department of Housing and Urban Development, [Fair Housing Act](https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview)
 
 Checked on September 24, 2026. Local sale-to-list figures change month to month, so ask your agent for the current numbers in your town.`;
+
+export const DOWN_PAYMENT_POST = `Have you been staring at your savings, working out 20% of a Hudson Valley house price, and watching the goal drift further away? For most buyers here, 20% down is not a requirement. This guide explains how much you really need for a down payment in the Hudson Valley and New York City in 2026: the loan programs that ask for 3.5%, 3% or nothing at all, the assistance that can cover part of what is left, and the real dollar amounts on an example home.
+
+## Where the 20% down payment idea comes from
+
+Twenty percent is not a legal minimum. It is the point at which a conventional loan no longer needs private mortgage insurance (PMI). A conventional loan is not insured by the government, so when a borrower puts down less than 20%, the lender usually requires PMI, which protects the lender, not you, if the loan defaults. You pay for it, typically as part of the monthly payment.
+
+PMI is not permanent. Under the federal Homeowners Protection Act, you can ask to cancel it when your balance is scheduled to reach 80% of the home's original value, and the servicer must end it automatically at 78% if you are current ([CFPB](https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/)). For many buyers, paying PMI for a few years is a reasonable trade for buying years sooner instead of saving while prices and rents move. Ask your lender to quote the PMI on your loan so you can weigh it with real numbers.
+
+## Your real down payment options in New York
+
+### FHA loans: 3.5% down
+
+FHA loans are insured by the Federal Housing Administration and popular with first-time buyers. The minimum down payment is 3.5% ([HUD](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA)). A credit score of 580 or higher qualifies for that minimum; 500 to 579 requires 10% down ([HUD](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined)).
+
+The trade-off is FHA mortgage insurance: an upfront premium of 1.75% of the loan, usually financed, and an annual premium that lasts the life of the loan when you put down less than 10% ([HUD Mortgagee Letter 2023-05](https://www.hud.gov/sites/dfiles/OCHCO/documents/2023-05hsgml.pdf)). Our guide to [FHA, VA and conventional loans](/blog/fha-va-conventional-mortgage-loans-ny) compares the long-run cost.
+
+### Conventional loans: as little as 3% down
+
+Conventional loans follow Fannie Mae and Freddie Mac rules. Two programs allow 3% down for buyers with income at or below 80% of the area median: Fannie Mae's HomeReady ([Fannie Mae](https://yourhome.fanniemae.com/buy/homeready)) and Freddie Mac's Home Possible ([Freddie Mac](https://sf.freddiemac.com/working-with-us/origination-underwriting/mortgage-products/home-possible)). Other conventional loans commonly start at 5% down. The long-term advantage over FHA is that PMI can be cancelled.
+
+### VA loans: 0% down for those who served
+
+Eligible veterans, service members and some surviving spouses can buy with no down payment and no monthly mortgage insurance. Most borrowers pay a one-time funding fee, which is waived for veterans receiving compensation for a service-connected disability, among others ([VA](https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs/)). Since 2020 there is no VA loan limit for borrowers with full entitlement ([VA](https://www.va.gov/housing-assistance/home-loans/loan-limits/)).
+
+### USDA loans: 0% down in eligible areas
+
+The USDA's Single Family Housing Guaranteed Loan Program backs 100% financing, with no money down, for low- and moderate-income households buying in eligible rural areas ([USDA Rural Development](https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-guaranteed-loan-program)). "Rural" is USDA's own definition, based on population rather than farmland, so it is worth checking addresses outside the larger Hudson Valley cities rather than assuming they cannot qualify. Eligibility depends on both the address and your household income, so check any property on [USDA's eligibility site](https://eligibility.sc.egov.usda.gov/) before you rule it out.
+
+## The math on a $450,000 home
+
+Percentages become clearer as dollars. Take a $450,000 house, a realistic price in much of the mid-Hudson Valley:
+
+- **0% (VA, USDA):** $0 down, for eligible borrowers and, for USDA, eligible areas.
+- **3% (HomeReady, Home Possible):** $13,500.
+- **3.5% (FHA):** $15,750.
+- **5% (conventional):** $22,500.
+- **10% (conventional):** $45,000, with a lower payment and PMI that ends sooner.
+- **20% (conventional):** $90,000, with no PMI from the start.
+
+For the buyer who thought the number was $90,000, the difference between that and $15,750 is often the difference between buying this year and in five years. To see what monthly payment fits your income, read [how much house you can afford](/blog/how-much-house-can-i-afford-ny-guide).
+
+## Assistance that can cover part of the rest
+
+### SONYMA's Down Payment Assistance Loan (DPAL)
+
+Paired with a SONYMA mortgage, DPAL provides the greater of $3,000 or 3% of the price, up to $15,000, for the down payment or closing costs, with no interest and no monthly payment, forgiven over ten years of living in the home. A SONYMA loan with DPAL carries a rate 0.40% higher than one without ([NYS Homes and Community Renewal](https://hcr.ny.gov/down-payment-assistant-loan-dpal)). On the $450,000 example, 3% is $13,500.
+
+### The Homebuyer Dream Program
+
+The Federal Home Loan Bank of New York's Homebuyer Dream Program provides grants of up to $30,000 per household in 2026 toward the down payment, closing costs and homebuyer counseling, for first-time buyers at or below 80% of area median income (HDP Plus reaches up to 120% of area median income in New York). It is available only through participating member lenders, and the funds are limited: the 2026 rounds run through November 27, 2026 ([FHLBNY](https://www.fhlbny.com/community/housing-programs/hdp-suite)). Ask early which local banks and credit unions participate.
+
+### HomeFirst in New York City
+
+Buying in the five boroughs? HPD's HomeFirst provides up to $100,000 toward the down payment or closing costs for qualifying first-time buyers, with income up to 120% of area median income as of 2026 ([NYC HPD](https://www.nyc.gov/site/hpd/services-and-information/homefirst-down-payment-assistance-program.page)).
+
+Some programs can be combined and some cannot; each has its own income limits and price caps, and your lender decides what works together on your loan. Our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist) covers how to ask.
+
+## The down payment is not the only cash you need
+
+You also need closing costs: the attorney, title insurance, the appraisal, lender fees and New York's mortgage recording tax. Freddie Mac suggests budgeting 2% to 5% of the price ([Freddie Mac](https://myhome.freddiemac.com/blog/homebuying/what-are-closing-costs-and-how-much-will-i-pay)), which is $9,000 to $22,500 on the $450,000 example. Several assistance programs can go toward these costs too. Read our full [guide to buyer closing costs in New York](/blog/buyer-closing-costs-new-york).
+
+## Your next step
+
+The 20% rule is a myth for most buyers. The right loan, and any assistance you qualify for, can change your timeline by years. Our [financing page](/financing) explains how we work with lenders, and you can [talk with us](/connect) to build a plan around your savings and the towns you like.
+
+## Frequently asked questions
+
+### Can you buy a house with 5% down in New York?
+
+Yes. Conventional loans commonly allow 5% down, and programs such as HomeReady and Home Possible allow 3% for eligible buyers. FHA allows 3.5%. VA and USDA loans can require nothing down for eligible borrowers.
+
+### How can I avoid PMI?
+
+Put 20% down on a conventional loan, or use a VA loan, which has no monthly mortgage insurance. With a conventional loan below 20%, you can ask to cancel PMI when your balance is scheduled to reach 80% of the original value, and it ends automatically at 78%.
+
+### What is the minimum down payment for an FHA loan?
+
+3.5% with a credit score of 580 or higher, and 10% with a score from 500 to 579.
+
+### Are there USDA-eligible areas in the Hudson Valley?
+
+It depends on the exact address. USDA sets eligible areas by its own population-based definition, and eligibility also depends on household income, so check a specific property on USDA's eligibility site.
+
+### Can down payment assistance be used for closing costs?
+
+Often, yes. SONYMA's DPAL, the Homebuyer Dream Program and NYC's HomeFirst can each be used toward closing costs as well as the down payment, subject to their rules.
+
+## Sources
+
+- Consumer Financial Protection Bureau, [when can I remove PMI](https://www.consumerfinance.gov/ask-cfpb/when-can-i-remove-private-mortgage-insurance-pmi-from-my-loan-en-202/)
+- HUD, [FHA minimum down payment](https://answers.hud.gov/FHA/s/article/What-is-the-minimum-down-payment-requirement-for-FHA), [credit score](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined) and [Mortgagee Letter 2023-05](https://www.hud.gov/sites/dfiles/OCHCO/documents/2023-05hsgml.pdf)
+- Fannie Mae, [HomeReady](https://yourhome.fanniemae.com/buy/homeready); Freddie Mac, [Home Possible](https://sf.freddiemac.com/working-with-us/origination-underwriting/mortgage-products/home-possible) and [closing costs](https://myhome.freddiemac.com/blog/homebuying/what-are-closing-costs-and-how-much-will-i-pay)
+- U.S. Department of Veterans Affairs, [funding fee](https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs/) and [loan limits](https://www.va.gov/housing-assistance/home-loans/loan-limits/)
+- USDA Rural Development, [guaranteed loan program](https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-guaranteed-loan-program) and [eligibility site](https://eligibility.sc.egov.usda.gov/)
+- NYS Homes and Community Renewal, [DPAL](https://hcr.ny.gov/down-payment-assistant-loan-dpal); Federal Home Loan Bank of New York, [Homebuyer Dream Program](https://www.fhlbny.com/community/housing-programs/hdp-suite); NYC HPD, [HomeFirst](https://www.nyc.gov/site/hpd/services-and-information/homefirst-down-payment-assistance-program.page)
+
+Program figures were checked against these sources on September 24, 2026. Assistance programs change their limits and funding every year; confirm with your lender.`;

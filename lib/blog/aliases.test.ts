@@ -86,7 +86,6 @@ const PENDING_CRM = new Set<string>([
  * Same rule: may only shrink, and must be empty when the round is done. */
 const PENDING_LINK_TARGETS = new Set<string>([
   "buyer-closing-costs-new-york",
-  "down-payment-hudson-valley-ny",
   "mortgage-pre-approval-requirements-ny",
   "home-inspection-checklist-hudson-valley-ny",
   "final-walk-through-checklist",

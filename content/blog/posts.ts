@@ -29,6 +29,7 @@ import {
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
 import {
+  DOWN_PAYMENT_POST,
   FIRST_TIME_BUYER_CHECKLIST_POST,
   HOW_MUCH_HOUSE_POST,
   MORTGAGE_TYPES_POST,
@@ -651,6 +652,23 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "down-payment-hudson-valley-ny",
+    cluster: "buying",
+    title: "How Much Do You Really Need for a Down Payment in the Hudson Valley, NY?",
+    seoTitle: "Down Payment in the Hudson Valley, NY: What You Need in 2026",
+    /** Buyer Education #2, reposted 2026-09-24 at the draft's own slug. */
+    date: "2025-11-06",
+    updated: "2026-09-24",
+    excerpt:
+      "Twenty percent down is not a rule. The 3.5%, 3% and 0% loan programs, the 2026 assistance that can cover part of the rest, and the real dollar amounts on a $450,000 home.",
+    seoDescription:
+      "How much down payment you need in the Hudson Valley, NY: FHA, conventional, VA and USDA minimums, 2026 assistance programs, and the dollars on a real example.",
+    cover: "/images/listings/house-13.jpg",
+    body: [],
+    placeholder: false,
+    markdown: DOWN_PAYMENT_POST,
   },
   {
     slug: "winning-offer-competitive-market-ny-hudson-valley",
