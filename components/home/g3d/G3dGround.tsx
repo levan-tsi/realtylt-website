@@ -240,7 +240,7 @@ export function G3dGround({
     const c = ctl.current;
     const cam = c?.camera() as { fov?: number } | null | undefined;
     if (!c || !cam) return;
-    const vp = { width: window.innerWidth, height: window.innerHeight, fov: cam.fov ?? 40 };
+    const vp = { ...c.view(), fov: cam.fov ?? 40 };
     const els = labelEls.current;
     const byText = new Map([...els.values()].map((e) => [e.textContent ?? "", e]));
     const items = labelItems(c.camera()!, vp, (text) => {
@@ -302,7 +302,7 @@ export function G3dGround({
       layer.dataset.on = "0";
       return;
     }
-    const vp = { width: window.innerWidth, height: window.innerHeight, fov: cam.fov ?? 40 };
+    const vp = { ...c!.view(), fov: cam.fov ?? 40 };
     const els = townEls.current;
     // Each name's size is read once (a read after the transforms below would force a layout on
     // every scroll frame while the names are up).
@@ -765,7 +765,8 @@ export function G3dGround({
       // Put the home on OPEN map (interaction.ts openPoint): at the rail the cards cover the middle of
       // the window, and a home flown to the middle sat under a card with its label on the next one.
       const base = { center: { lat: h.lat, lng: h.lng, altitude: 0 }, range: 2600, tilt: 55, heading: 0, fov: 40 };
-      const vp = { width: window.innerWidth, height: window.innerHeight };
+      const { width: vw, height: vh } = c.view();
+      const vp = { width: vw, height: vh };
       const card = (e.target as Element).closest("a")?.getBoundingClientRect();
       const solids: Rect[] = [];
       document.querySelectorAll("header, a[href*=\"bid-38-\"], h1, h2, h3, p, button, [data-g3d-avoid], .rlt-bubble").forEach((el) => {

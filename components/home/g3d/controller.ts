@@ -96,9 +96,14 @@ interface FlightJob {
 let singleton: El | null = null;
 let loads = 0;
 
-/** The mean height of the geoid above the ellipsoid here: the ground at sea level is ~32 m below
- * the ellipsoid Google's altitudes (and camera.ts) measure from. */
-const GEOID = -32;
+/** What to add to our elevation (metres above sea level, USGS) to stand a home where Google draws
+ * it. Until round 57.5 this was the geoid's -32 m (the ground at sea level lies ~32 m below the
+ * ellipsoid). Measured by pixel at the featured rail (2.6 km, scripts/_scratch-r57e-calib.mjs
+ * --featured=1): every featured light stood 8.7 px above our projection; Google's camera, once
+ * landed, reports its centre at 185 m where our grid reads 187 m above sea level, so its altitudes
+ * (and the camera's) are the same sea-level heights as ours, and the offset is 0. At the territory
+ * shot 32 m is a third of a pixel either way. */
+const GEOID = 0;
 /** Homes added per frame, and taken away per frame. */
 const ADD_PER_FRAME = 25;
 const REMOVE_PER_FRAME = 60;
@@ -721,9 +726,21 @@ export class G3dController {
     return h ? { lat: h.lat[i], lng: h.lng[i] } : null;
   }
 
-  private viewport() {
-    const { width, height } = this.opts.viewport();
+  /** THE MAP'S OWN SIZE, the viewport every projection uses (round 57.5). Measured by pixel
+   * (scripts/_scratch-r57e-calib.mjs: each light swapped for a red dot, its centroid found): at
+   * 1440 every drawn light stood 8.6 px LEFT of our projection at every stop, the same at the
+   * territory and at a borough, whatever the glyph's size. A constant screen offset is not the
+   * projection's maths, it is the window: `innerWidth` counts the page's 17 px scrollbar, the map
+   * element does not, so our centre sat half a scrollbar right of Google's. The element's own
+   * client size is the truth (a phone's overlay scrollbar makes the two equal). */
+  view(): { width: number; height: number; fov: number } {
+    const el = this.el;
+    const { width, height } = el && el.clientWidth > 0 ? { width: el.clientWidth, height: el.clientHeight } : this.opts.viewport();
     return { width, height, fov: this.cam?.fov ?? 35 };
+  }
+
+  private viewport() {
+    return this.view();
   }
 
   private replan() {
