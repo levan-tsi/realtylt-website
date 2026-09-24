@@ -48,6 +48,7 @@ import {
   HOUSE_HACKING_POST,
   MULTI_VS_SINGLE_POST,
   ROI_CAP_RATE_POST,
+  TENANT_SCREENING_POST,
 } from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
@@ -672,6 +673,23 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "how-to-find-screen-tenants-ny",
+    cluster: "investing",
+    title: "Managing Your First Rental: A Guide to Finding and Screening Tenants in New York",
+    seoTitle: "How to Find and Screen Tenants in New York: A 2026 Guide",
+    /** Investing #8, reposted 2026-09-24. Slug = the CRM drip link (day 330). */
+    date: "2026-04-22",
+    updated: "2026-09-24",
+    excerpt:
+      "Written criteria, the $20 screening fee cap, housing court records, source of income, NYC's Fair Chance Housing Law, deposits, late fees and adverse action notices.",
+    seoDescription:
+      "How to find and screen tenants in New York lawfully: written criteria, the $20 fee cap, source of income rules, deposits, late fees and denial notices.",
+    cover: "/images/editorial/index-drawers.jpg",
+    body: [],
+    placeholder: false,
+    markdown: TENANT_SCREENING_POST,
   },
   {
     slug: "1031-exchange-rules-new-york",

@@ -763,3 +763,111 @@ New York's personal income tax starts from federal adjusted gross income, so gai
 - NYS Department of Taxation and Finance, [tax rates and tables](https://www.tax.ny.gov/pit/file/tax-tables/)
 
 Checked against these sources on September 24, 2026.`;
+
+export const TENANT_SCREENING_POST = `Choosing the tenant is the most important decision you make as a landlord. A good choice makes a rental a steady business; a poor one can mean months of lost rent and legal costs. New York's rules on screening are among the most tenant-protective in the country, so the process has to be consistent and lawful as well as careful. This guide explains how to find and screen tenants in New York in 2026, step by step.
+
+## Step 1: Write your rental criteria before you advertise
+
+Treat the rental as a business with written, objective criteria applied the same way to every applicant. Typical criteria:
+
+- **Income.** Many landlords look for gross monthly income of about three times the rent. If an applicant uses a housing voucher, see the source-of-income rules below: the test applies differently.
+- **Credit.** Look at payment history and current obligations, not just a score.
+- **Rental history.** Verified references from prior landlords.
+- **Property policies.** Occupancy limits consistent with local codes, pets, smoking, parking.
+
+Write them down and keep them. Consistency is your best protection: an exception for one applicant that you deny another can look like discrimination.
+
+## Step 2: Prepare and market the property
+
+Make the unit rent-ready (clean, repaired, safe, with working smoke and carbon monoxide alarms), photograph it well, and write an accurate listing with the rent, the key terms and your screening criteria. Advertising must comply with fair housing law; describe the property, not the tenant you want.
+
+## Step 3: Screen, the lawful way
+
+### Application and screening fees
+
+New York caps what you may charge. The only permitted fee for a background or credit check is the actual cost or $20, whichever is less; you must give the applicant a copy of the report and the receipt or invoice, and you must waive the fee if the applicant gives you a check done within the past 30 days ([Real Property Law 238-a](https://www.nysenate.gov/legislation/laws/RPP/238-A)).
+
+### Credit and income
+
+Review the credit report with the applicant's consent, and verify income with recent pay stubs, tax returns or benefit letters. Call employers only with permission.
+
+### Housing court records
+
+You may not refuse to rent because an applicant was involved in a past or pending landlord-tenant case, and a landlord who reviews such records and then denies the applicant is presumed to have violated the law ([Real Property Law 227-f](https://www.nysenate.gov/legislation/laws/RPP/227-F)). Focus instead on verified rental references and payment history.
+
+### Criminal history
+
+State law prohibits discrimination based on certain records, including sealed convictions, youthful offender adjudications and arrests resolved in the person's favor ([NYS Division of Human Rights](https://dhr.ny.gov/protected-characteristics)). In New York City, since January 1, 2025, the Fair Chance Housing Law allows criminal background checks only after a conditional offer, limits them to certain convictions within set lookback periods, and bars questions about criminal history in ads and applications ([NYC Commission on Human Rights](https://www.nyc.gov/site/cchr/media/fair-chance-housing-campaign.page)). Check local rules before running any criminal screening.
+
+### Landlord references
+
+Call previous landlords, not only the current one (who may want the tenant gone). Ask whether rent was paid on time, how the unit was left, and whether they would rent to the applicant again.
+
+## Step 4: Fair housing, the rule above all others
+
+The federal Fair Housing Act protects against discrimination based on race, color, religion, sex, national origin, familial status and disability ([HUD](https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview)). New York's Human Rights Law adds many more protected characteristics, including age, marital status, sexual orientation, gender identity or expression, citizenship or immigration status, status as a victim of domestic violence, certain arrest and sealed records, and lawful source of income ([NYS Division of Human Rights](https://dhr.ny.gov/protected-characteristics)).
+
+### Source of income
+
+It is illegal in New York to refuse an applicant because they will pay rent with a housing voucher, Social Security, child support or other lawful income. You must accept the voucher and cooperate with the program's requirements, such as an inspection. Where the voucher agency has determined the tenant's share of the rent, you cannot substitute your own determination, and income requirements cannot be used to get around the law ([NYS Division of Human Rights](https://dhr.ny.gov/nysdhr-source-income)). In practice, apply any income test only to the portion of the rent the tenant pays.
+
+Some owner-occupied two-family homes and room rentals in the owner's own home are exempt from parts of the state law, but federal rules, advertising rules and local laws can still apply; ask an attorney before relying on an exemption.
+
+### What not to ask
+
+Questions about religion, national origin, pregnancy or children, marital status, disability or sexual orientation, or demanding documents that reveal them, invite a complaint. Ask everyone the same questions about the same criteria.
+
+## Step 5: Deposits, fees and the lease
+
+- **Security deposit:** no more than one month's rent. Offer a joint move-in inspection and document the unit's condition. After move-out, return the deposit with an itemized statement of any deductions within 14 days, or you forfeit the right to keep any of it ([General Obligations Law 7-108](https://www.nysenate.gov/legislation/laws/GOB/7-108)).
+- **Late fees:** only after rent is more than five days late, and no more than $50 or 5% of the monthly rent, whichever is less ([Real Property Law 238-a](https://www.nysenate.gov/legislation/laws/RPP/238-A)).
+- **The lease:** rent, due date, payment methods, term, utilities, maintenance responsibilities, rules, and required disclosures, including the federal lead paint disclosure for housing built before 1978 ([EPA](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)). Have a New York attorney review your template.
+
+## Step 6: The decision, and denials done right
+
+Offer the unit to the first applicant who meets your written criteria, in the order applications were completed. If you deny an applicant, or require a co-signer or a larger deposit, based even partly on a consumer report, federal law requires an adverse action notice that names the reporting company and explains the applicant's rights ([FTC](https://www.ftc.gov/business-guidance/resources/using-consumer-reports-what-landlords-need-know)).
+
+## Common mistakes
+
+- Making exceptions to your criteria for some applicants and not others.
+- Refusing voucher holders, or applying the income test to the full rent.
+- Charging more than the $20 screening limit, or asking for more than one month's deposit.
+- Denying applicants because of housing court records.
+- Missing the 14-day deposit return and itemization.
+
+For the wider picture, read [how to buy your first rental property](/blog/how-to-buy-your-first-rental-property-in-the-hudson-valley) and our guide to [hiring a property management company](/blog/hiring-property-management-company-hudson-valley), or [talk with us](/connect).
+
+This article is general information, not legal advice. Landlord-tenant law changes, and local rules vary; consult a New York attorney.
+
+## Frequently asked questions
+
+### How much can a landlord charge for a rental application in New York?
+
+Nothing beyond the cost of a background or credit check, capped at $20 or the actual cost if lower, and only if the landlord gives the applicant a copy of the report and the receipt. The fee must be waived if the applicant provides a check from the past 30 days.
+
+### Can a landlord refuse a Section 8 voucher in New York?
+
+No. Refusing an applicant because of a lawful source of income, including a housing voucher, is illegal under the New York State Human Rights Law.
+
+### Can I deny an applicant for a prior eviction case?
+
+Not because of involvement in a past or pending landlord-tenant case: Real Property Law 227-f prohibits it. You can consider verified rental references and payment history under consistent criteria.
+
+### How much security deposit can I collect in New York?
+
+No more than one month's rent. It must be returned, with an itemized statement of any deductions, within 14 days after the tenant moves out.
+
+### What late fee is allowed in New York?
+
+Only after rent is more than five days late, and at most $50 or 5% of the monthly rent, whichever is less.
+
+## Sources
+
+- New York Real Property Law [238-a](https://www.nysenate.gov/legislation/laws/RPP/238-A) and [227-f](https://www.nysenate.gov/legislation/laws/RPP/227-F); General Obligations Law [7-108](https://www.nysenate.gov/legislation/laws/GOB/7-108)
+- NYS Division of Human Rights, [protected characteristics](https://dhr.ny.gov/protected-characteristics) and [source of income discrimination](https://dhr.ny.gov/nysdhr-source-income)
+- NYC Commission on Human Rights, [Fair Chance Housing](https://www.nyc.gov/site/cchr/media/fair-chance-housing-campaign.page)
+- HUD, [Fair Housing Act overview](https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview)
+- Federal Trade Commission, [using consumer reports: what landlords need to know](https://www.ftc.gov/business-guidance/resources/using-consumer-reports-what-landlords-need-know)
+- U.S. Environmental Protection Agency, [lead disclosure](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)
+
+Checked against these sources on September 24, 2026.`;
