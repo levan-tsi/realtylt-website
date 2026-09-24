@@ -18,6 +18,15 @@ export interface LayerCamera extends MapCamera {
   fov: number;
 }
 
+/** ANOTHER MAP'S PROJECTION (round 57.12, the MapLibre lab): where the homes are in that map's own
+ * space (`places`, three numbers a home) and, once a frame, how that space projects to the window
+ * (`frame`: a function from a place to css px, or null with no camera). Without one the layer is the
+ * Google map's, exactly as before: earth-centred places and camera.ts's projection. */
+export interface LayerProjector {
+  places(lat: ArrayLike<number>, lng: ArrayLike<number>, height: (lat: number, lng: number) => number): Float64Array<ArrayBuffer>;
+  frame(): ((pts: Float64Array, i: number, out: { x: number; y: number; z: number }) => boolean) | null;
+}
+
 type Rect = { x: number; y: number; w: number; h: number };
 
 /** ONE LIGHT, BAKED at its own device-pixel size (glyph.ts glyphAdd, the cover's own sum), core and
@@ -125,6 +134,7 @@ export class LightLayer {
     private canvas: HTMLCanvasElement,
     private readCamera: () => LayerCamera | null,
     private narrow: () => boolean,
+    private projector?: LayerProjector,
   ) {
     this.ctx = canvas.getContext("2d");
     this.resize();
@@ -148,7 +158,7 @@ export class LightLayer {
 
   /** The homes (their places, heights included). A new set clears what is drawn. */
   setHomes(lat: ArrayLike<number>, lng: ArrayLike<number>, height: (lat: number, lng: number) => number) {
-    this.ecef = homesEcef(lat, lng, height);
+    this.ecef = this.projector ? this.projector.places(lat, lng, height) : homesEcef(lat, lng, height);
     this.xy = new Float32Array(lat.length * 2);
     this.xyIndex = new Int32Array(lat.length);
     this.level = new Uint8Array(lat.length).fill(2);
@@ -162,7 +172,8 @@ export class LightLayer {
   }
 
   setFeatured(list: readonly { id: string; lat: number; lng: number }[], height: (lat: number, lng: number) => number) {
-    this.featEcef = homesEcef(list.map((h) => h.lat), list.map((h) => h.lng), height);
+    const lat = list.map((h) => h.lat), lng = list.map((h) => h.lng);
+    this.featEcef = this.projector ? this.projector.places(lat, lng, height) : homesEcef(lat, lng, height);
     this.featIds = list.map((h) => h.id);
     this.kick();
   }
@@ -283,6 +294,9 @@ export class LightLayer {
     const fr = cameraFrame(cam);
     const vp = { width: this.w, height: this.h, fov: cam.fov };
     const f = focalOf(vp);
+    const other = this.projector ? this.projector.frame() : null;
+    if (this.projector && !other) return;
+    const at = (pts: Float64Array, i: number, out: { x: number; y: number; z: number }) => (other ? other(pts, i, out) : projectHome(fr, vp, f, pts, i, out));
     ctx.globalCompositeOperation = "lighter";
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "low";
@@ -299,7 +313,7 @@ export class LightLayer {
     for (const [key, v] of this.litK) if (key.startsWith("h:")) litHomes.set(Number(key.slice(2)), v);
     let k = 0;
     for (const [i, fd] of this.fades) {
-      if (!projectHome(fr, vp, f, this.ecef, i, p)) continue;
+      if (!at(this.ecef, i, p)) continue;
       if (p.x < -reach || p.y < -reach || p.x > this.w + reach || p.y > this.h + reach) continue;
       // Nothing in Google's logo corner: not drawn, and so not hoverable either.
       if (av && blocked(p.x, p.y, r0)) continue;
@@ -318,7 +332,7 @@ export class LightLayer {
     this.xyCount = k;
     const fg = featuredGlyph(g);
     for (let j = 0; j < this.featIds.length; j++) {
-      if (!projectHome(fr, vp, f, this.featEcef, j, p)) continue;
+      if (!at(this.featEcef, j, p)) continue;
       if (p.x < -reach || p.y < -reach || p.x > this.w + reach || p.y > this.h + reach) continue;
       const lk = this.litK.get(`f:${this.featIds[j]}`) ?? 0;
       const gl = lk > 0 ? litGlyph(fg, this.litEase(`f:${this.featIds[j]}`, lk)) : fg;
@@ -377,6 +391,10 @@ export class LightLayer {
     if (!cam || this.w === 0) return null;
     const vp = { width: this.w, height: this.h, fov: cam.fov };
     const p = { x: 0, y: 0, z: 0 };
+    if (this.projector) {
+      const at = this.projector.frame();
+      return at && at(ecef, i, p) ? { x: p.x, y: p.y } : null;
+    }
     return projectHome(cameraFrame(cam), vp, focalOf(vp), ecef, i, p) ? { x: p.x, y: p.y } : null;
   }
 }
