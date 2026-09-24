@@ -62,7 +62,6 @@ const PENDING_CRM = new Set<string>([
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
   "how-to-hire-local-movers-ny",
-  "hiring-property-management-company-hudson-valley",
   "relocating-to-hudson-valley-ny-guide",
   "rent-vs-buy-hudson-valley-ny",
   "new-homeowner-toolkit-essentials",
@@ -70,9 +69,7 @@ const PENDING_CRM = new Set<string>([
 
 /** Internal /blog/ links written into a reposted body ahead of the article they point at.
  * Same rule: may only shrink, and must be empty when the round is done. */
-const PENDING_LINK_TARGETS = new Set<string>([
-  "hiring-property-management-company-hudson-valley",
-]);
+const PENDING_LINK_TARGETS = new Set<string>([]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));
 const resolves = (slug: string) => LIVE.has(slug) || aliasTarget(slug) !== undefined;

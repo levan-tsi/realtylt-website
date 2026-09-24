@@ -1006,3 +1006,117 @@ Generally it is steadier: lower costs, fewer rules to track and less exposure to
 - Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
 
 Checked against these sources on September 24, 2026. Local rules change often; the example uses stated assumptions.`;
+
+export const PROPERTY_MANAGEMENT_POST = `For most Hudson Valley investors there comes a turning point: the 10 p.m. call about a burst pipe in a Poughkeepsie rental when you live in White Plains, the growing list of New York landlord rules, the weekends spent on showings. Hiring a property management company is not an admission of defeat; it is a business decision that trades part of your cash flow for time, systems and legal care. This guide sets out the pros and cons of hiring a property management company in the Hudson Valley, what it costs, and how to decide.
+
+## What a property manager does
+
+- **Marketing and leasing:** rent analysis, listings, showings and lease signing.
+- **Screening:** consistent, lawful screening of every applicant; see [finding and screening tenants in New York](/blog/how-to-find-screen-tenants-ny).
+- **Rent collection:** online payment, late notices, and follow-up on arrears.
+- **Maintenance:** a single point of contact for tenants and a network of vendors, including emergencies.
+- **Accounting:** monthly statements, invoices and year-end reports.
+- **Compliance and disputes:** deposits, notices and, when needed, coordinating with an attorney on eviction proceedings.
+
+A New York licensing point worth knowing: a company that collects rent or leases property for others for a fee generally must be licensed as a real estate broker ([Real Property Law 440](https://www.nysenate.gov/legislation/laws/RPP/440)). Ask for the license.
+
+## The case for hiring a pro
+
+### Your time back
+
+Every hour spent chasing a repair or a late payment is an hour not spent on your career, family or the next deal.
+
+### Systems and consistency
+
+Managers apply written criteria to every applicant, which improves tenant quality and reduces fair housing risk.
+
+### New York's rules
+
+The rules reward precision. For example, if rent is not received within five days of the due date, the landlord must send the tenant a written notice by certified mail, and failing to do so can be a defense in a nonpayment case ([Real Property Law 235-e](https://www.nysenate.gov/legislation/laws/RPP/235-E)). Deposits must be returned with an itemized statement within 14 days ([General Obligations Law 7-108](https://www.nysenate.gov/legislation/laws/GOB/7-108)). In New York City, and in municipalities that have opted in (in the Hudson Valley, as of May 2026: Beacon, Hudson, Kingston, Middletown, New Rochelle, Newburgh, the City and Town of Poughkeepsie, White Plains, the Town of Fishkill, and the villages of Croton-on-Hudson, New Paltz, Nyack and Tarrytown), the state's Good Cause Eviction law limits rent increases and evictions for covered units, with local variations in the rent threshold and the small-landlord exemption ([NYS Homes and Community Renewal](https://hcr.ny.gov/system/files/documents/2026/07/gce-fact-sheet-05.04.26-update.pdf)). A manager who handles these every day reduces the chance of a costly procedural mistake.
+
+### Vendor networks
+
+A manager who sends a plumber dozens of jobs a year usually gets faster service, and during a vacancy speed is money.
+
+### Room to scale
+
+Self-managing one or two nearby properties is realistic; five or ten, with a full-time job, rarely is.
+
+## The case for managing it yourself
+
+### Cost
+
+Management fees reduce cash flow directly. Common structures include a monthly fee as a percentage of collected rent, a leasing fee when a new tenant is placed, and sometimes renewal fees, maintenance markups and eviction coordination fees. Get every fee in writing and compare several companies.
+
+### Control
+
+A manager applies uniform policies; you give up case-by-case judgment on tenants and repairs.
+
+### Incentives
+
+Managers are paid when the unit is occupied, which aligns well with you. But a large leasing fee can reward filling the unit fast rather than well, and a markup on vendor invoices can blunt the drive to find the lowest repair cost. Read the agreement and check references.
+
+## What it costs: a White Plains example
+
+A hypothetical three-bedroom single-family rental. Every figure is an assumption for illustration.
+
+- **Rent:** $4,500 a month.
+- **Mortgage, taxes, insurance and other costs:** $2,800 a month.
+- **Before management:** $1,700 a month.
+- **A 10% management fee:** $450 a month, or **$5,400 a year**.
+- **After management:** $1,250 a month.
+- **A leasing fee** in a year the unit turns over would add more.
+
+The real question is whether your time, the lower legal risk and the ability to grow are worth about $5,400 a year on this property.
+
+## Is it time? A checklist
+
+Two or more "yes" answers suggest professional management deserves a serious look:
+
+1. **Distance:** do you live more than about half an hour from the property?
+2. **Portfolio:** do you own, or plan to own, more than two rentals?
+3. **Time:** do your job and family leave little room for landlord work?
+4. **Expertise:** are you unsure of New York's notice, deposit and eviction rules, or whether Good Cause Eviction applies to your units?
+5. **Stress:** is the property affecting your health or relationships?
+
+## Choosing a manager
+
+- Confirm the real estate broker license.
+- Get the full fee schedule and a sample management agreement.
+- Ask how they screen, how they handle maintenance approvals, and how they report.
+- Call owner references with properties like yours.
+- Understand how you can end the agreement.
+
+For the investing fundamentals, see [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny) and [how to buy your first rental property](/blog/how-to-buy-your-first-rental-property-in-the-hudson-valley), or [talk with us](/connect) about your portfolio.
+
+This article is general information, not legal or financial advice.
+
+## Frequently asked questions
+
+### What does a property manager do?
+
+Markets and leases the property, screens tenants, collects rent, coordinates maintenance, keeps the books and handles compliance and disputes, usually coordinating with an attorney on evictions.
+
+### Does a property manager need a license in New York?
+
+Generally yes. Collecting rent or leasing property for others for a fee falls within New York's definition of real estate brokerage under Real Property Law 440.
+
+### How much do property managers charge in the Hudson Valley?
+
+It varies by company and property. Expect a monthly fee tied to collected rent plus a leasing fee for new tenants, and ask about renewal fees, markups and eviction fees. Compare written quotes from several firms.
+
+### When should I hire a property manager?
+
+When distance, portfolio size, time or legal complexity make self-management costly or risky, usually when two or more of the checklist questions above apply.
+
+### Does Good Cause Eviction apply to my rental?
+
+It applies in New York City and in municipalities that have opted in, which in the Hudson Valley include Beacon, Kingston, Newburgh, New Rochelle, White Plains and the City and Town of Poughkeepsie, among others, subject to rent thresholds and small-landlord exemptions that vary locally. Check the current HCR notice and ask an attorney.
+
+## Sources
+
+- New York Real Property Law [440](https://www.nysenate.gov/legislation/laws/RPP/440) and [235-e](https://www.nysenate.gov/legislation/laws/RPP/235-E); General Obligations Law [7-108](https://www.nysenate.gov/legislation/laws/GOB/7-108)
+- NYS Homes and Community Renewal, [Good Cause Eviction law fact sheet](https://hcr.ny.gov/system/files/documents/2026/07/gce-fact-sheet-05.04.26-update.pdf)
+- New York Attorney General, [Good Cause Eviction law](https://ag.ny.gov/publications/new-york-state-good-cause-eviction-law)
+
+Checked against these sources on September 24, 2026. The example uses stated assumptions.`;

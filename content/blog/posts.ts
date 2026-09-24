@@ -47,6 +47,7 @@ import {
   FIRST_RENTAL_POST,
   HOUSE_HACKING_POST,
   MULTI_VS_SINGLE_POST,
+  PROPERTY_MANAGEMENT_POST,
   ROI_CAP_RATE_POST,
   STR_VS_LTR_POST,
   TENANT_SCREENING_POST,
@@ -674,6 +675,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "hiring-property-management-company-hudson-valley",
+    cluster: "investing",
+    title: "The Pros and Cons of Hiring a Property Management Company in the Hudson Valley",
+    seoTitle: "Hiring a Property Management Company in the Hudson Valley",
+    /** Investing #10, reposted 2026-09-24. Slug = the CRM drip link (day 410) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2026-08-12",
+    updated: "2026-09-24",
+    excerpt:
+      "What a manager does, what it costs, the New York rules it helps you get right (including Good Cause Eviction where it applies), and a checklist for deciding when to hire one.",
+    seoDescription:
+      "Hiring a property management company in the Hudson Valley: services, costs, NY licensing, notice and Good Cause Eviction rules, and when to hire one.",
+    cover: "/images/editorial/office-stamps.jpg",
+    body: [],
+    placeholder: false,
+    markdown: PROPERTY_MANAGEMENT_POST,
+    aliases: ["pros-cons-hiring-property-management-company"],
   },
   {
     slug: "short-term-vs-long-term-rentals-hudson-valley",
