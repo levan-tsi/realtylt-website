@@ -30,7 +30,7 @@ import { lightPins, planLights, type LightSet } from "./thinning";
 import { LightLayer, type LayerCamera } from "./light-layer";
 import { focalOf, glowLevel, homesEcef, keyOrder, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
 import { backWaitMs, earlyScroll } from "./warm-plan";
-import { COVER_CAP_MS, QUIET_MIN_MS, holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
+import { QUIET_MIN_MS, coverCap, holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
 import type { MapPin } from "@/lib/idx/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -475,11 +475,14 @@ export class G3dController {
     // Round 57.10: the cover never holds past 14 s once the map has drawn, so a walk that cannot
     // finish by then is not started (a slow network: the visitor meets the stall once instead).
     const sharp = this.opts.sharp !== false;
-    const fits = !sharp || walkFits(t0);
+    // Round 57.11: the cap is the later of 14 s and the first draw plus the walk's room, so the
+    // compile walk always runs once the map has drawn (sharp-gate.ts coverCap).
+    const cap = coverCap(this.firstSteadyAt);
+    const fits = !sharp || walkFits(t0, cap);
     for (const [k, name] of this.opts.warm.entries()) {
       if (!fits || this.warmAbort || this.stopped || performance.now() - t0 > this.opts.warmBudgetMs) break;
       // No room left for a step and the return: stop here.
-      if (sharp && !walkFits(performance.now(), COVER_CAP_MS, 2 * QUIET_MIN_MS)) break;
+      if (sharp && !walkFits(performance.now(), cap, 2 * QUIET_MIN_MS)) break;
       const s0 = performance.now();
       const c = this.cameraOf(name);
       // `path`: the first shot is set, each next one FLOWN as the page flies it (its own duration,
@@ -495,7 +498,7 @@ export class G3dController {
         this.jump(c);
       }
       // A step's wait ends QUIET_MIN_MS before the cap, so the return still fits under it.
-      const ok = this.warmAbort ? false : await this.settle(sharp ? holdLeft(performance.now(), this.opts.warmSettleMs ?? 4000, COVER_CAP_MS - QUIET_MIN_MS) : (this.opts.warmSettleMs ?? 4000));
+      const ok = this.warmAbort ? false : await this.settle(sharp ? holdLeft(performance.now(), this.opts.warmSettleMs ?? 4000, cap - QUIET_MIN_MS) : (this.opts.warmSettleMs ?? 4000));
       this.warmSteps.push({ shot: name, ms: Math.round(performance.now() - s0), ok });
     }
     if (this.stopped) return;
@@ -509,7 +512,7 @@ export class G3dController {
     // Drawn by quiet only on the way back to the shot the map first drew (its tiles resident; measured
     // 0.94 to 0.96 sharp 250 ms after the jump); a visitor's new section waits for Google's steady.
     const how = { by: null as "steady" | "quiet" | "cap" | null, quiet: quietBack({ back: this.at, drawn: this.drawnShot }) };
-    if (moved || !this.warmAbort) await this.settle(sharp ? holdLeft(performance.now(), back0) : back0, how);
+    if (moved || !this.warmAbort) await this.settle(sharp ? holdLeft(performance.now(), back0, cap) : back0, how);
     this.backBy = how.by;
     this.warmMs = Math.round(performance.now() - t0);
     performance.mark("g3d:warm-end");

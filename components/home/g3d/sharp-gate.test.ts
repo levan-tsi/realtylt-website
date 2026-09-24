@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { COVER_CAP_MS, QUIET_MIN_MS, QUIET_MS, WALK_ROOM_MS, holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
+import { COVER_CAP_MS, QUIET_MIN_MS, QUIET_MS, WALK_ROOM_MS, coverCap, holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
 
 /** Round 57.10: the map is shown when its tiles have stopped arriving (measured sharp), not when
  * Google's steady event comes 0.6 to 1.7 s later; the cover never holds past 14 s once the map can
@@ -34,6 +34,17 @@ describe("the sharp gate", () => {
     expect(COVER_CAP_MS).toBe(14_000);
     expect(walkFits(COVER_CAP_MS - WALK_ROOM_MS)).toBe(true);
     expect(walkFits(COVER_CAP_MS - WALK_ROOM_MS + 1)).toBe(false);
+  });
+
+  it("the cap is the later of 14 s and the first draw plus the walk's room, so the walk always runs once the map has drawn (round 57.11)", () => {
+    expect(coverCap(null)).toBe(COVER_CAP_MS);
+    expect(coverCap(6_000)).toBe(COVER_CAP_MS);
+    // The slow line of round 10: first draw at 11.8 s, the old cap skipped the walk.
+    expect(walkFits(11_800)).toBe(false);
+    expect(coverCap(11_800)).toBe(11_800 + WALK_ROOM_MS);
+    expect(walkFits(11_800, coverCap(11_800))).toBe(true);
+    // A very late draw still gets its walk.
+    expect(walkFits(30_000, coverCap(30_000))).toBe(true);
   });
 
   it("a wait under the cover is cut at the cap, never below a short floor", () => {

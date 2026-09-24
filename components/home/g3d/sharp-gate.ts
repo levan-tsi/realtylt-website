@@ -47,6 +47,15 @@ export function walkFits(now: number, capMs = COVER_CAP_MS, roomMs = WALK_ROOM_M
   return now + roomMs <= capMs;
 }
 
+/** THE CAP, ONCE THE MAP HAS DRAWN (round 57.11): the later of COVER_CAP_MS and the first draw plus
+ * the walk's own room. Round 10's fixed 14 s skipped the compile walk whenever the first draw came
+ * after ~11.4 s (a slow line), and the visitor met the 250 ms Westchester stall later instead; now a
+ * slow-line visitor waits the walk's two seconds more under the breathing cover. Before the first
+ * draw (null) the cap is COVER_CAP_MS (the cover stays until the map has drawn anyway). */
+export function coverCap(firstDraw: number | null, capMs = COVER_CAP_MS, roomMs = WALK_ROOM_MS): number {
+  return firstDraw === null ? capMs : Math.max(capMs, firstDraw + roomMs);
+}
+
 /** How long a wait under the cover may still take: `want`, cut at the cap, never below QUIET_MIN_MS. */
 export function holdLeft(now: number, want: number, capMs = COVER_CAP_MS): number {
   return Math.max(QUIET_MIN_MS, Math.min(want, capMs - now));
