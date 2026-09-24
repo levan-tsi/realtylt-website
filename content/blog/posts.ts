@@ -40,7 +40,13 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { FIRST_RENTAL_POST, HOUSE_HACKING_POST, MULTI_VS_SINGLE_POST, ROI_CAP_RATE_POST } from "./investing-posts";
+import {
+  BRRRR_POST,
+  FIRST_RENTAL_POST,
+  HOUSE_HACKING_POST,
+  MULTI_VS_SINGLE_POST,
+  ROI_CAP_RATE_POST,
+} from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
@@ -664,6 +670,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "brrrr-method-hudson-valley",
+    cluster: "investing",
+    title: "BRRRR Method 101: How to Build Your Real Estate Portfolio Faster in NY",
+    seoTitle: "BRRRR Method in the Hudson Valley, NY: 2026 Guide",
+    /** Investing #5, reposted 2026-09-24. Slug = the CRM drip link (day 288) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2026-03-18",
+    updated: "2026-09-24",
+    excerpt:
+      "Buy, rehab, rent, refinance, repeat: how BRRRR recycles capital, the 2026 cash-out refinance rules that govern it, and an honest Westchester example with its risks.",
+    seoDescription:
+      "The BRRRR method in the Hudson Valley, NY: the 70% rule, 2026 cash-out refinance limits and seasoning, a worked Westchester example and the real risks.",
+    cover: "/images/editorial/tool-wall.jpg",
+    body: [],
+    placeholder: false,
+    markdown: BRRRR_POST,
+    aliases: ["brrrr-method-101-ny"],
   },
   {
     slug: "multi-family-vs-single-family-investing-ny",

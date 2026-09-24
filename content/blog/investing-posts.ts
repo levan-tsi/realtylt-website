@@ -475,3 +475,111 @@ Not for a property you will not live in. FHA requires owner occupancy, but you c
 - Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
 
 Checked against these sources on September 24, 2026. Example figures are assumptions, computed with the standard amortization formula.`;
+
+export const BRRRR_POST = `Many investors stall after the first or second rental: their cash is tied up as equity, and saving another down payment takes years. The BRRRR method is a way to recycle the same capital: Buy, Rehab, Rent, Refinance, Repeat. It is not a shortcut; it is a demanding system with real risks, and in the Hudson Valley's high-cost markets it only works with discipline. This guide explains the BRRRR method for Hudson Valley investors, the 2026 refinance rules that govern it, and a worked Westchester example.
+
+## The five steps
+
+### 1. Buy: the profit is made on the purchase
+
+You look for undervalued property: estate sales, foreclosures, homes that are sound but badly dated. A common underwriting guideline is the 70% rule:
+
+Maximum offer = (after-repair value x 0.70) - rehab cost
+
+It is a rule of thumb, not a law, but it forces a margin for the costs and risks between purchase and refinance.
+
+### 2. Rehab: force the appreciation
+
+Renovate for the rental market and the appraiser, not for your own taste: kitchens and baths, flooring, lighting, curb appeal, and safe, updated mechanical systems. Don't over-improve for the neighborhood, and carry a contingency for surprises. In older Hudson Valley houses, hidden problems behind walls are common.
+
+### 3. Rent: stabilize the property
+
+Place a qualified tenant with a signed lease. Lenders underwriting the refinance want to see the property performing. Screening must follow New York rules; see [finding and screening tenants in New York](/blog/how-to-find-screen-tenants-ny).
+
+### 4. Refinance: recover your capital
+
+A cash-out refinance replaces your short-term financing with a long-term loan based on the new appraised value. Under Fannie Mae's rules in 2026:
+
+- **Maximum loan-to-value** on a cash-out refinance of an investment property is 75% for one unit and 70% for two to four units ([Fannie Mae Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf)).
+- **Six months on title:** at least one borrower must have been on title for six months before the new loan closes.
+- **Twelve months for the old mortgage:** if you are paying off an existing first mortgage, such as a hard money loan used to buy, it must be at least 12 months old, note date to note date.
+- **Delayed financing exception:** if you bought with cash, you can refinance sooner, but the new loan is limited to your documented investment plus financing of closing costs, within the maximum loan-to-value ([Fannie Mae Selling Guide B2-1.3-03](https://selling-guide.fanniemae.com/sel/b2-1.3-03/cash-out-refinance-transactions)).
+
+That 12-month rule matters: a BRRRR bought with a hard money loan and refinanced into a conventional loan now usually takes at least a year. Other lenders offer loans outside Fannie Mae's rules, on their own terms; compare the full cost before relying on them.
+
+### 5. Repeat
+
+The cash returned at the refinance funds the next purchase. Loan proceeds are borrowed money rather than income; ask your tax professional how a refinance affects your situation.
+
+## The math of the refinance
+
+The appraiser values the finished, rented property from comparable sales, not from what you spent. Then:
+
+Cash returned = (appraised value x maximum LTV) - your total investment - refinance costs
+
+When that number is at or above zero, you have recovered your capital.
+
+## A worked Westchester example
+
+A hypothetical, dated three-bedroom single-family house in Ossining, bought as an estate sale. All figures are assumptions for illustration.
+
+- **Buy:** $550,000, plus $15,000 closing costs.
+- **Rehab:** $125,000. **Total invested: $690,000.**
+- **Rent:** $5,000 a month.
+- **Refinance:** appraised after-repair value $925,000; new loan at 75%: **$693,750**, before refinance closing costs.
+
+On paper, the new loan returns almost everything invested. But look closer:
+
+- **The 70% rule says the price was too high.** $925,000 x 0.70 - $125,000 = $522,500. Paying $550,000 leaves no margin, so any setback leaves money in the deal.
+- **Appraisal risk.** If the appraisal comes in at $875,000, the loan is $656,250, and about $33,750 of your own money stays in the property.
+- **Cash flow after the refinance.** At an assumed 7.5% investor rate (the 30-year survey average was 7.03% on September 24, 2026, [Freddie Mac PMMS](https://www.freddiemac.com/pmms)), principal and interest on $693,750 is about $4,851 a month before property taxes and insurance, more than the $5,000 rent can carry once those are added. You would have your capital back, but a property that costs you money every month.
+
+That is the honest shape of BRRRR in a high-cost market: it can recycle capital, but only when the purchase is genuinely discounted and the rent supports the new, larger loan. Run the full numbers with [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny).
+
+## Is BRRRR right for you?
+
+- **Buying right is the hard part.** Discounted properties in Westchester are scarce and contested; deal flow comes from networks, estates, off-market leads and properties others avoid.
+- **It takes capital.** Purchase, rehab and holding costs come before the refinance, often with short-term, higher-cost financing.
+- **Appraisal risk** can trap capital.
+- **Financing risk.** Rates, lender rules (such as the 12-month seasoning) and your own credit can change between purchase and refinance.
+
+## Your action plan
+
+1. **Build the team:** an agent who can estimate after-repair value from real comps, a licensed and insured contractor, a lender experienced with investor refinances, and a real estate attorney.
+2. **Line up financing** for the purchase and rehab, and confirm with your refinance lender, before you buy, what seasoning and loan-to-value will apply.
+3. **Underwrite conservatively:** after-repair value from renovated comparable sales nearby, and a contractor's written scope and price.
+4. **Build deal flow,** including off-market sources.
+5. **Execute patiently:** manage the budget and schedule, lease the property, and plan for a timeline of a year or more.
+
+If you are ready to look at real opportunities, see [how to buy your first rental property](/blog/how-to-buy-your-first-rental-property-in-the-hudson-valley) for the fundamentals, or [talk with us](/connect).
+
+This article is general information, not financial, tax or legal advice.
+
+## Frequently asked questions
+
+### Does the BRRRR method still work in a high-cost market?
+
+It can, but margins are thin. It needs a genuinely discounted purchase, a controlled rehab budget, an appraisal that supports the after-repair value, and rent that can carry the refinanced loan.
+
+### How long does a BRRRR take?
+
+Plan on a year or more if you buy with a mortgage such as a hard money loan: Fannie Mae requires the existing first mortgage to be at least 12 months old for a cash-out refinance. Cash purchases can use the delayed financing exception sooner, with limits.
+
+### What is the 70% rule?
+
+A guideline that your maximum offer should be 70% of the after-repair value minus rehab costs, leaving room for holding costs, surprises and refinance limits.
+
+### How much can I borrow on a cash-out refinance of a rental?
+
+Under Fannie Mae's 2026 rules, up to 75% of the appraised value for a one-unit investment property and 70% for two to four units, subject to credit and other requirements.
+
+### How do I estimate after-repair value?
+
+From recent sales of comparable, fully renovated homes nearby, adjusted for size, layout and finish. Automated online estimates are not a substitute.
+
+## Sources
+
+- Fannie Mae, [Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf) and [Selling Guide B2-1.3-03, cash-out refinance](https://selling-guide.fanniemae.com/sel/b2-1.3-03/cash-out-refinance-transactions)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+
+Checked against these sources on September 24, 2026. Example figures are assumptions; payments are computed with the standard amortization formula.`;
