@@ -33,6 +33,7 @@ import {
   HOW_MUCH_HOUSE_POST,
   MORTGAGE_TYPES_POST,
   REAL_ESTATE_ATTORNEY_POST,
+  WINNING_OFFER_POST,
 } from "./real-estate-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
@@ -650,6 +651,28 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "winning-offer-competitive-market-ny-hudson-valley",
+    cluster: "buying",
+    title: "How to Make a Winning Offer in the NY Hudson Valley's Competitive Market",
+    seoTitle: "How to Make a Winning Offer in a Competitive NY Market",
+    /** Buyer Education #6, reposted 2026-09-24. Slug = the CRM drip link (day 650) and the
+     * draft's; the old site's title-derived slug and the drip doc's alternate redirect here. */
+    date: "2026-04-08",
+    updated: "2026-09-24",
+    excerpt:
+      "In a multiple-offer situation the strongest offer is often not the highest. Price from the comps, escalation clauses, narrower contingencies, the deposit and the terms that win.",
+    seoDescription:
+      "How to make a winning offer in a competitive New York market: pricing from comps, escalation clauses, appraisal gaps, safer inspection terms and deposits.",
+    cover: "/images/listings/house-06.jpg",
+    body: [],
+    placeholder: false,
+    markdown: WINNING_OFFER_POST,
+    aliases: [
+      "how-to-make-winning-offer-ny",
+      "how-to-make-a-winning-offer-in-the-ny-hudson-valleys-competitive-market",
+    ],
   },
   {
     slug: "why-you-need-real-estate-attorney-ny",

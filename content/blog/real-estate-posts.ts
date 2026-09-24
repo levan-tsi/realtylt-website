@@ -516,3 +516,96 @@ It is strongly discouraged. The two sides' interests conflict, and each should h
 - NYS Department of Taxation and Finance, [real estate transfer tax](https://www.tax.ny.gov/bus/transfer/rptidx.htm)
 
 Checked against these sources on September 24, 2026.`;
+
+export const WINNING_OFFER_POST = `You walk through a front door and it clicks: this is the one. Then your agent says, "They're expecting multiple offers." In the Hudson Valley's most competitive towns, finding the house is only half the job. This guide explains how to make a winning offer in a competitive New York market, and the strongest offer is often not simply the highest one. It is the one that gives the seller the most certainty of a smooth closing at a price they accept.
+
+## Start with a pre-approval a seller can trust
+
+A pre-approval is not a strategy; it is the ticket to the game. It should come from a lender that has verified your income, assets, employment and credit, not a quick online pre-qualification. Many listing agents give more weight to a letter from a lender they can reach by phone and ask about your file. See [what lenders look for in a pre-approval](/blog/mortgage-pre-approval-requirements-ny).
+
+## A winning offer is a package, not a price
+
+Each part of an offer is a lever. Price matters most, but the terms decide close contests.
+
+### 1. Price it from the comps, not from the list price
+
+In a hot pocket of the market, the list price can be the start of the conversation rather than the ceiling. Your agent should pull comparable sales that went under contract in the last one to two months, not six months ago, and look at how recent sales closed against their list prices in that specific town and price range. That tells you whether "at asking" is competitive or a non-starter there. Search current listings and recent activity on our [home search](/search).
+
+A small detail: round, confident numbers read better in a stack of offers than numbers that look like they were shaved to the dollar.
+
+### 2. The escalation clause
+
+An escalation clause says you will beat any other bona fide offer by a set increment, up to a maximum you choose.
+
+- **Example:** you offer $500,000 and will pay $5,000 more than any competing bona fide offer, up to $550,000.
+- If the next best offer is $510,000, your price becomes $515,000.
+- If another offer reaches $550,000 or more, you are at your cap, and the seller will likely ask the top bidders for their highest and best.
+
+Always require a copy of the competing offer that triggers the escalation. And know the trade-off: an escalation clause shows the seller your ceiling. Some sellers answer it with a counteroffer near your cap. It is a tool, not a guarantee, and your attorney should draft or approve the wording, since the contract is negotiated by the attorneys in New York (see [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny)).
+
+### 3. Strengthen contingencies without taking reckless risks
+
+Contingencies let you cancel and recover your deposit if something specific goes wrong. Sellers see each one as a way the deal could fall apart. Waiving them entirely can win a house and lose you a great deal of money; the professional approach is to narrow them.
+
+**The inspection.** The New York State Bar Association's consumer guidance is that any buyer should arrange professional inspections, and that the purchase can be conditioned on satisfactory reports ([NYSBA](https://nysba.org/legalease-buying-and-selling-real-estate/)). Instead of dropping the inspection, consider:
+
+- **An informational inspection.** You still inspect, but you agree not to use minor findings to renegotiate; your remaining choice is to proceed or to cancel if something serious turns up.
+- **A repair threshold.** You agree to raise only items above a set cost, for example structural, mechanical, environmental or safety problems estimated at more than $10,000. That tells the seller you will not haggle over a sticky window while still protecting you from a failing roof.
+
+Before you decide, read our [home inspection checklist for the Hudson Valley](/blog/home-inspection-checklist-hudson-valley-ny), especially the well, septic and radon sections.
+
+**The appraisal.** If the appraisal comes in below your price, the lender lends against the lower value and you need cash to cover the difference. Offering appraisal gap coverage ("buyer will cover up to $20,000 of any shortfall between the appraised value and the price") is one of the strongest signals you can send, but only offer what you can genuinely pay on top of your down payment and closing costs.
+
+**The mortgage contingency.** NYSBA advises that the contract should in most cases let a buyer cancel and recover the deposit if the buyer cannot obtain the mortgage. This is the contingency to keep.
+
+### 4. A meaningful deposit
+
+The earnest money or contract deposit shows commitment. NAR notes that deposits typically range from 1% to 10% of the price and are held in escrow by a third party, such as an attorney or title agent, until closing ([National Association of REALTORS](https://www.nar.realtor/the-facts/consumer-guide-escrow-and-earnest-money)). Customs vary by county, so ask your agent and attorney what is usual where you are buying; a deposit above the local norm can strengthen your position. Remember it is at risk if you walk away for a reason the contract does not protect. It counts toward your down payment at closing; our [down payment guide](/blog/down-payment-hudson-valley-ny) covers the rest of the cash you will need.
+
+### 5. Flexibility costs you nothing
+
+- **A flexible closing date** can matter more to a seller who is also buying than a few thousand dollars.
+- **A rent-back** (a short post-closing occupancy, often 30 to 60 days) lets the seller close, receive their money, and move once. It needs a written agreement prepared by the attorneys, covering the daily charge, the deposit held back and what happens if the seller does not leave on time.
+
+## A note on "buyer love letters"
+
+Personal letters to sellers can reveal a buyer's race, religion, national origin, familial status or other characteristics protected by fair housing law. If a seller chooses an offer based on that information, the seller could be violating the law. NAR has suggested that listing agents tell clients they will not deliver buyer love letters ([NAR](https://www.nar.realtor/magazine/broker-news/network/how-to-handle-buyer-love-letters)), and many New York agents and attorneys now advise against them. Let the offer speak for you.
+
+## Your winning offer blueprint
+
+1. **The pre-offer huddle.** With your agent, learn what the seller needs beyond price: a quick close, a later close, certainty of financing.
+2. **Build the package.** Price, escalation or not, how you narrow the inspection, appraisal gap coverage, deposit size, closing date and any rent-back.
+3. **Set your walk-away number first.** Decide your maximum price and the risks you will not take before the bidding starts, and write them down.
+4. **Present it well.** Your agent should call the listing agent and walk through the offer's strengths, not just email a PDF.
+
+If you are early in the process, start with our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist). When you find the house, [talk with us](/connect) and we will build the offer together.
+
+## Frequently asked questions
+
+### Is an escalation clause allowed in New York?
+
+Escalation clauses are used in New York offers. Because the contract of sale is negotiated by the parties' attorneys, have your attorney draft or approve the escalation language, including the requirement to see the competing offer.
+
+### Should I waive the home inspection to win?
+
+It is rarely wise. Consider an informational inspection or a repair threshold instead, which reassure the seller while still letting you walk away from a serious defect.
+
+### What is an appraisal gap?
+
+The difference between the price you agreed and a lower appraised value. The lender lends against the appraisal, so the buyer must cover the gap in cash or renegotiate. Offering to cover a set amount makes an offer stronger.
+
+### How big should my deposit be in New York?
+
+Nationally, deposits typically range from 1% to 10% of the price, held in escrow by a third party such as an attorney. What is customary differs by county, so ask your agent and attorney, and remember a larger deposit is a stronger signal.
+
+### Should I write a letter to the seller?
+
+Generally no. Letters can expose the seller to fair housing claims, and many agents will not pass them on. A clean, strong offer does the persuading.
+
+## Sources
+
+- New York State Bar Association, [buying and selling real estate](https://nysba.org/legalease-buying-and-selling-real-estate/)
+- National Association of REALTORS, [escrow and earnest money](https://www.nar.realtor/the-facts/consumer-guide-escrow-and-earnest-money) and [how to handle buyer love letters](https://www.nar.realtor/magazine/broker-news/network/how-to-handle-buyer-love-letters)
+- U.S. Department of Housing and Urban Development, [Fair Housing Act](https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview)
+
+Checked on September 24, 2026. Local sale-to-list figures change month to month, so ask your agent for the current numbers in your town.`;
