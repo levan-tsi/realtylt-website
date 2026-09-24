@@ -871,3 +871,138 @@ Only after rent is more than five days late, and at most $50 or 5% of the monthl
 - U.S. Environmental Protection Agency, [lead disclosure](https://www.epa.gov/lead/real-estate-disclosures-about-potential-lead-hazards)
 
 Checked against these sources on September 24, 2026.`;
+
+export const STR_VS_LTR_POST = `Short-term rentals promise high nightly rates to Hudson Valley visitors; long-term rentals promise a steady tenant and a quiet phone. Which is more profitable depends less on a spreadsheet than on the town the property sits in, because local short-term rental rules decide whether the higher revenue is even available. This guide compares short-term vs long-term rentals in the Hudson Valley: revenue, real costs, workload, the 2025 and 2026 rule changes, and a worked comparison.
+
+## Long-term rentals: stability and simplicity
+
+### Pros
+
+- **Predictable income** from a 12-month lease.
+- **Lower operating costs:** tenants usually pay their own utilities; turnover happens yearly at most; no furnishing.
+- **Lighter management:** rent collection, occasional repairs, renewals.
+- **Fewer rules to track** than short-term rentals, though New York's tenant protections are extensive; see [finding and screening tenants in New York](/blog/how-to-find-screen-tenants-ny).
+
+### Cons
+
+- **Lower gross revenue** than a busy short-term rental.
+- **Less flexibility** for your own use.
+- **Tenant risk:** a problem tenancy can be slow and costly to resolve.
+
+## Short-term rentals: a hospitality business
+
+### Pros
+
+- **Higher gross revenue potential** in peak seasons.
+- **Personal use** between bookings.
+- **Dynamic pricing** around foliage season, holidays and events.
+
+### Cons
+
+- **Seasonality** and income volatility.
+- **Much higher operating costs:** management commissions, cleaning after every stay, utilities, supplies, platform fees, specialized insurance, furnishing.
+- **Hands-on work:** guest messages at all hours, turnovers, reviews.
+- **Regulation,** the deciding factor below.
+
+## The deciding factor: the rules
+
+### State level
+
+- **Sales tax:** since March 1, 2025, New York State and local sales tax applies to short-term rental unit occupancy; booking platforms that facilitate a stay collect it, and operators renting directly must register as sales tax vendors unless an exception applies ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/pubs_and_bulls/publications/sales/short-term-rental.htm)).
+- **Registries and reporting:** a 2024 state law requires booking platforms to report activity and lets counties set up short-term rental registries and collect their occupancy taxes ([New York State Senate](https://www.nysenate.gov/newsroom/press-releases/2024/michelle-hinchey/hinchey-fahy-deliver-first-its-kind-short-term-rental)).
+
+### County level
+
+Counties levy hotel and short-term rental occupancy taxes. Ulster County, for example, charges a 4% occupancy tax and requires operators to register with its Department of Finance ([Ulster County](https://www.ulstercountyny.gov/Departments/Finance/Tax-Information/Occupancy-Tax)). These taxes are charged to guests but must be collected and remitted correctly.
+
+### Town, city and village level
+
+This is where the rules differ most, and they change often. Three examples:
+
+- **Kingston** caps full-time short-term rentals at 106 permits, about 1% of the city's housing units, while limited rentals of fewer than 30 days a year and resident-occupied rentals are not capped; permits require registration and inspection ([City of Kingston](https://www.kingston-ny.gov/filestorage/8399/8469/48370/STR_Fact_Sheet_-_City_of_Kingston_Form-Based_Code.pdf)).
+- **Woodstock** requires registration, caps non-owner-occupied permits, limits non-owner-occupied rentals to 180 days and 26 weekends a year, and allows one non-owner-occupied unit per owner ([Town of Woodstock FAQ](https://www.townofwoodstock.org/fileadmin/files/Archive/2024/03/STR-FAQ.pdf)).
+- **The Town of Rhinebeck** has required the rental to be the owner's primary residence, occupied by the owner during the rental, with a permit and inspection ([Town of Rhinebeck application](https://www.rhinebeckny.gov/uploads/3/9/4/4/39447425/str_application_final.pdf)); the town has since rewritten its law, so confirm the current version.
+
+The lesson: before you model a dollar of short-term income, get the current ordinance from the building or code enforcement office of the exact town or village, and confirm a permit is actually available.
+
+## A worked comparison
+
+A hypothetical two-bedroom house bought for $550,000. Every figure is an assumption for illustration; test your own.
+
+**Shared costs**
+
+- Loan: $440,000 at an assumed 7.5% investor rate (the 30-year survey average was 7.03% on September 24, 2026, [Freddie Mac PMMS](https://www.freddiemac.com/pmms)): about $36,919 a year.
+- Property taxes: $11,000 a year.
+
+**Long-term rental**
+
+- Rent $2,800 a month, 3% vacancy: $32,592 a year.
+- Management 9%, repairs 5%, insurance $1,500, an annualized leasing fee $2,100, taxes: $19,163.
+- **Net operating income: $13,429.** After the mortgage: about minus $23,490.
+
+**Short-term rental**
+
+- $350 a night average, 50% occupancy: $63,875 a year.
+- Management 25%, cleaning $125 per stay (four-night average), utilities $6,000, insurance $2,000, supplies $2,400, repairs 5%, platform fees 3%, taxes: $48,182. (Sales and occupancy taxes are charged to guests on top of the rate.)
+- **Net operating income: $15,693.** After the mortgage: about minus $21,226. Add about $25,000 of furnishing before the first guest.
+
+What the numbers say:
+
+- At these prices and rates, **neither** covers the mortgage with 20% down; both are bets on paydown and appreciation.
+- The short-term rental only beats the long-term rental's net operating income above about **47% occupancy** at $350 a night. At 40% it nets about $8,275; at 60%, about $23,112.
+- The short-term rental is far more sensitive to revenue: a soft season hits it much harder because so many costs are fixed.
+
+Use the formulas in [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny) to test your own property.
+
+## Which fits you?
+
+**A short-term rental may fit if** you can meet local residency or permit rules, you want to manage a hospitality business or pay someone 20% or more of revenue to do it, and you can absorb income swings.
+
+**A long-term rental may fit if** you live elsewhere, want steadier income and less work, or are buying in a town where short-term permits are capped or restricted to owner-occupants.
+
+A **hybrid** (short-term in peak season, 30-day-plus furnished stays or a lease the rest of the year) can work where rules allow, but check how your town defines and counts short-term days.
+
+## Due diligence before you buy
+
+1. Get the current short-term rental law and permit availability from the municipality.
+2. Confirm the county and state tax registrations you will need.
+3. Model both strategies conservatively, and stress-test a weak year.
+4. Get insurance quotes for the exact use.
+5. Talk to two local managers about realistic rates, occupancy and costs.
+6. Confirm the property meets code for its intended use: egress, smoke and carbon monoxide alarms, septic capacity.
+
+Browse properties on our [home search](/search), or [talk with us](/connect) about a specific town.
+
+This article is general information, not legal, tax or financial advice.
+
+## Frequently asked questions
+
+### Are short-term rentals more profitable than long-term rentals in the Hudson Valley?
+
+They can gross much more, but costs are far higher and rules are stricter. In the worked example, the short-term rental only out-earns the long-term rental above roughly 47% occupancy, and many towns limit or cap short-term rentals.
+
+### Do short-term rentals in New York pay sales tax?
+
+Yes. Since March 1, 2025, state and local sales tax applies to short-term rental occupancy; booking platforms collect it on the stays they facilitate, and county occupancy taxes may also apply.
+
+### Which Hudson Valley towns regulate short-term rentals?
+
+Many do, and the rules differ town by town. Kingston caps full-time permits, Woodstock caps non-owner-occupied permits and limits rental days, and the Town of Rhinebeck has required owner occupancy. Always check the current ordinance.
+
+### What are the hidden costs of an Airbnb?
+
+Management commissions, cleaning after every stay, utilities, supplies, platform fees, specialized insurance, furnishing, permits, and the time to run it.
+
+### Is a long-term rental a safer investment?
+
+Generally it is steadier: lower costs, fewer rules to track and less exposure to tourism swings, in exchange for lower gross revenue.
+
+## Sources
+
+- NYS Department of Taxation and Finance, [sales tax on short-term rental unit occupancy](https://www.tax.ny.gov/pubs_and_bulls/publications/sales/short-term-rental.htm)
+- New York State Senate, [short-term rental law, 2024](https://www.nysenate.gov/newsroom/press-releases/2024/michelle-hinchey/hinchey-fahy-deliver-first-its-kind-short-term-rental)
+- Ulster County, [hotel, motel and short-term rental occupancy tax](https://www.ulstercountyny.gov/Departments/Finance/Tax-Information/Occupancy-Tax)
+- City of Kingston, [short-term rental fact sheet](https://www.kingston-ny.gov/filestorage/8399/8469/48370/STR_Fact_Sheet_-_City_of_Kingston_Form-Based_Code.pdf); Town of Woodstock, [short-term rental FAQ](https://www.townofwoodstock.org/fileadmin/files/Archive/2024/03/STR-FAQ.pdf); Town of Rhinebeck, [short-term rental application](https://www.rhinebeckny.gov/uploads/3/9/4/4/39447425/str_application_final.pdf)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+
+Checked against these sources on September 24, 2026. Local rules change often; the example uses stated assumptions.`;

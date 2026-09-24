@@ -62,7 +62,6 @@ const PENDING_CRM = new Set<string>([
   "packing-tips-hacks-for-moving",
   "ultimate-8-week-moving-checklist",
   "how-to-hire-local-movers-ny",
-  "short-term-vs-long-term-rentals-hudson-valley",
   "hiring-property-management-company-hudson-valley",
   "relocating-to-hudson-valley-ny-guide",
   "rent-vs-buy-hudson-valley-ny",

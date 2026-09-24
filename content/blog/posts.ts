@@ -48,6 +48,7 @@ import {
   HOUSE_HACKING_POST,
   MULTI_VS_SINGLE_POST,
   ROI_CAP_RATE_POST,
+  STR_VS_LTR_POST,
   TENANT_SCREENING_POST,
 } from "./investing-posts";
 import {
@@ -673,6 +674,23 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "short-term-vs-long-term-rentals-hudson-valley",
+    cluster: "investing",
+    title: "Short-Term vs. Long-Term Rentals in the Hudson Valley: What's More Profitable?",
+    seoTitle: "Short-Term vs Long-Term Rentals in the Hudson Valley",
+    /** Investing #9, reposted 2026-09-24. Slug = the CRM drip link (day 370) and the draft's. */
+    date: "2026-06-24",
+    updated: "2026-09-24",
+    excerpt:
+      "Revenue, true costs, workload and the rules that decide it: the 2025 state sales tax, county occupancy taxes, Kingston, Woodstock and Rhinebeck, and a worked break-even comparison.",
+    seoDescription:
+      "Short-term vs long-term rentals in the Hudson Valley: 2025 STR sales tax, county occupancy tax, Kingston and Woodstock rules and a worked profit comparison.",
+    cover: "/images/counties/putnam.jpg",
+    body: [],
+    placeholder: false,
+    markdown: STR_VS_LTR_POST,
   },
   {
     slug: "how-to-find-screen-tenants-ny",
