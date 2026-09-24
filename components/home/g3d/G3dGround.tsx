@@ -77,6 +77,17 @@ export interface G3dTail {
 
 /** Our names for the territory (labels.ts), drawn over the hero shot only. */
 const LABEL_SHADOW = "0 0 1px rgba(0,0,0,1), 0 0 3px rgba(0,0,0,0.95), 0 0 12px rgba(0,0,0,0.8)";
+/** THE TOWN NAMES' OWN SHADE (round 57.5, defect A5). Measured on the real pixels at the eleven
+ * chapters (scripts/_scratch-r57e-towns.mjs, halo kept): with the halo alone 20 of 25 names were
+ * under 4.5:1 at p99 (Jamaica, Williamsburg, Carmel, Goshen down to 1.5:1: a white name over the
+ * city's lights). A soft dark ellipse behind each name, solid to half its reach and gone at the
+ * edge, the scrims' language at a name's size: 0 of 25 under 4.5:1 (lowest 4.59). The padding
+ * carries the ellipse past the letters; the placement (towns.ts, labels.ts) reads the padded box, so
+ * the name stays centred on its place and the shade keeps clear of the page's words too. */
+const TOWN_SHADE = {
+  background: "radial-gradient(closest-side, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%)",
+  padding: "8px 16px",
+} as const;
 /** Google's logo and legal link, bottom left: no name of ours goes there. */
 const LOGO_CORNER = { w: 180, h: 54 };
 
@@ -1136,7 +1147,7 @@ export function G3dGround({
                 else townEls.current.delete(t.id);
               }}
               className="absolute left-0 top-0 whitespace-nowrap text-[13px] font-medium leading-[1.3] tracking-[0.005em] text-ink"
-              style={{ visibility: "hidden", textShadow: LABEL_SHADOW }}
+              style={{ visibility: "hidden", textShadow: LABEL_SHADOW, ...TOWN_SHADE }}
             >
               {t.text}
             </span>
