@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
+import { BASEMENT_POST, EIGHT_WEEK_POST, ENERGY_POST, MOVERS_POST, SEASONAL_MAINTENANCE_POST, TOOLKIT_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -1203,15 +1203,23 @@ export const POSTS: BlogPost[] = ([
     placeholder: true,
   },
   {
-    slug: "how-to-hire-best-local-movers-7-questions",
+    slug: "how-to-hire-local-movers-ny",
     cluster: "moving",
     title: "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing",
-    date: "2025-09-13",
+    seoTitle: "How to Hire Local Movers in NY: 7 Questions to Ask",
+    /** Moving, reposted 2026-09-24. Slug = the CRM drip link and the draft's; the stub's slug redirects
+     * here. Dated 2025-10-22. */
+    date: "2025-10-22",
+    updated: "2026-09-24",
     excerpt:
-      "Not all moving companies are equal, and the cheap quote is rarely the cheap move. Seven questions that separate the pros from the problems.",
+      "Seven questions that separate a licensed, accountable mover from a problem, with New York's own rules on licenses, estimates, valuation coverage and damage claims.",
+    seoDescription:
+      "How to hire local movers in New York: 7 questions to ask, how to verify a NYSDOT or USDOT license, binding estimates, valuation coverage and damage claims.",
     cover: "/images/listings/house-09.jpg",
-    body: PLACEHOLDER_BODY("the seven questions that protect you when hiring a local moving company"),
-    placeholder: true,
+    body: [],
+    placeholder: false,
+    markdown: MOVERS_POST,
+    aliases: ["how-to-hire-best-local-movers-7-questions", "how-to-hire-best-local-movers"],
   },
   {
     slug: "packing-101-pro-tips-organized-move",

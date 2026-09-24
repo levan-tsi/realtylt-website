@@ -609,3 +609,112 @@ Toiletries, medications, chargers, basic tools, a coffee maker, snacks, pet supp
 - New York State DMV, [change your address](https://dmv.ny.gov/records/change-your-address) and [exchange an out-of-state license](https://dmv.ny.gov/driver-license/exchange-out-of-state-driver-license)
 
 Checked against these sources on September 24, 2026.`;
+
+/** Moving #3 (published order): "How to Hire the Best Local Movers: 7 Questions You Must Ask Before Signing"
+ * (Drive draft, 2025). Corrections: the draft said released value (60 cents a pound) is the free default "by
+ * law"; under NYSDOT's tariff rules the default for a move within New York is a higher lump sum ($2,500 or
+ * your declared value on hourly moves; $1.25 a pound on weight moves) unless you sign it down, and full value
+ * is the federal default. The claim timelines are New York's (file within 90 days; acknowledged in 30; paid,
+ * declined or offered in 90), not the draft's "120 days" and "nine months". The invented sample license
+ * numbers, the "regulatory gap" and the unmarked-rental-truck claim are removed. */
+export const MOVERS_POST = `The moving company you hire will handle everything you own, yet many people spend less time checking a mover than choosing a restaurant. Most movers are honest; the few who are not rely on rushed customers who never ask. This guide on how to hire local movers in New York gives you seven questions to ask before you sign, the answers to listen for, and how to check a mover's license with the state.
+
+## 7 questions to ask a moving company before you sign
+
+### 1. "What is your NYSDOT or USDOT number?"
+
+Which license a mover needs depends on where you are going:
+
+- **A move that starts and ends in New York**, say Beacon to Kingston, requires a household goods certificate from the New York State Department of Transportation. Movers must show the certificate number in their advertising and on the bill of lading ([NYSDOT](https://www.dot.ny.gov/divisions/operating/osss/truck/registration-licensing)).
+- **A move across state lines** requires registration with the Federal Motor Carrier Safety Administration and a USDOT number ([FMCSA](https://www.fmcsa.dot.gov/protect-your-move)).
+
+**Good answer:** the number, right away, and an invitation to check it. **Bad answer:** "We're fully covered, don't worry." To verify a New York certificate, NYSDOT says to call 518-457-6512 or email nymoving@dot.ny.gov ([NYSDOT mover's guide](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf)). For an interstate mover, look the USDOT number up on FMCSA's site.
+
+### 2. "Will you give me a written binding estimate after seeing everything?"
+
+Estimates come in three kinds:
+
+- **Non-binding:** the mover's best guess. The final bill depends on the actual time or weight. On interstate moves, federal rules cap what the mover can demand at delivery at 110% of a non-binding estimate, with any balance billed later ([49 CFR 375.407](https://www.law.cornell.edu/cfr/text/49/375.407)).
+- **Binding:** a fixed price for the listed items and services. In New York, a written binding estimate must be signed and dated by both sides and based on a physical inspection of the goods ([NYSDOT mover's guide](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf)).
+- **Not-to-exceed:** a price ceiling; if the job comes in smaller, you pay less. Common on interstate moves.
+
+Many local New York moves are priced by the hour. That is legitimate, but ask for the hourly rate, crew size, minimums and travel time in writing, and compare it with a binding estimate where the mover offers one. **Bad answer:** a firm price over the phone without seeing your home.
+
+### 3. "What does your valuation coverage pay if something breaks?"
+
+Movers provide **valuation**, a limit on their liability, not insurance. The limits are set by regulation, and the cheap option is very cheap:
+
+- **Within New York,** unless you sign it down, the mover's liability on an hourly move is the value you declare or $2,500, whichever is greater; on a weight-based move, your declared value or $1.25 per pound of the shipment. If you write in "30 cents per pound per article" (hourly) or "60 cents per pound per article" (weight), you give most of that up. A declared value costs 50 cents per $100 ([NYSDOT mover's guide](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf)).
+- **Across state lines,** full value protection, where the mover repairs, replaces or pays the replacement value, is the default unless you waive it in writing for released value ([49 CFR 375.201](https://www.law.cornell.edu/cfr/text/49/375.201)).
+
+At 60 cents a pound, a 50-pound television that is destroyed is worth $30 to the mover. Read the valuation section of the bill of lading before you sign it, and check what your homeowners or renters policy covers in transit.
+
+### 4. "Will your own employees do the move?"
+
+A **carrier** has its own trucks and crews. A **broker** sells your job to a carrier, sometimes one you have never heard of. If the company works with "partners," ask for the name and license number of the company that will actually show up, and check that one.
+
+**Good answer:** "Our own crew, in our own trucks." **Bad answer:** anything vague about who will arrive.
+
+### 5. "How and when do I pay?"
+
+A small card deposit to hold a busy summer date is common. A large deposit, or cash only, is a warning sign. Get the payment terms, accepted methods and any extra charges (stairs, long carries, shuttles, packing materials) in writing.
+
+### 6. "Can I talk with three recent customers near me?"
+
+Online reviews help, but a conversation with someone who moved within Dutchess, Orange or Ulster County last month tells you more. Ask them whether the final bill matched the estimate, whether the crew was on time, and how any damage was handled.
+
+### 7. "How do you handle a damage claim?"
+
+The answer should be specific. In New York, note any visible damage or missing items on the inventory or delivery receipt before the crew leaves. A claim should normally be filed within 90 days of delivery; the mover must acknowledge it in writing within 30 days and pay, decline or make a firm settlement offer within 90 days, then update you every 30 days if it cannot ([NYSDOT mover's guide](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf)).
+
+**Bad answer:** "Our guys are careful, just call us."
+
+## Red flags when hiring a mover
+
+- A quote far below everyone else's
+- A phone answered "Movers" instead of a company name
+- No street address you can verify
+- A large deposit, or cash only
+- A price given without seeing your belongings
+- No license number, or reluctance to give one
+- For a move within New York, no copy of NYSDOT's "Summary of Information for Shippers of Household Goods," which movers must hand you at a face-to-face meeting before the move
+
+## Your mover-hiring plan
+
+1. **Collect names four to six weeks out,** from people you trust, then check reviews.
+2. **Get three in-home or live video estimates.** Never accept a phone quote.
+3. **Ask all seven questions** and write down the answers.
+4. **Verify the license** with NYSDOT (518-457-6512, nymoving@dot.ny.gov) or FMCSA before you sign.
+5. **Read the bill of lading:** the estimate type, the valuation you chose, the inventory and every service and charge. If it is not in writing, it is not in the deal.
+
+For everything else on the calendar, use our [8-week moving checklist](/blog/ultimate-8-week-moving-checklist) and [packing tips](/blog/packing-tips-hacks-for-moving). Relocating from outside the area? Read our [newcomer's guide to the Hudson Valley](/blog/relocating-to-hudson-valley-ny-guide). If you would like names of movers our clients have used, [get in touch](/connect), or start your search on our [buying guide](/buying).
+
+## Frequently asked questions
+
+### How do I know if a moving company is legitimate in New York?
+
+Ask for its NYSDOT certificate number for a move within New York, or its USDOT number for an interstate move, and verify it: NYSDOT at 518-457-6512 or nymoving@dot.ny.gov, or FMCSA's website.
+
+### What is the difference between a binding and a non-binding moving estimate?
+
+A binding estimate is a fixed price for the listed items and services. A non-binding estimate is a guess, and the final bill depends on actual time or weight.
+
+### Do I have to pay movers up front?
+
+A small deposit to reserve a date can be normal; a large deposit or a demand for cash is a red flag. Get the payment terms in writing.
+
+### What is released value protection?
+
+A minimal liability level, such as 60 cents per pound per article, that you accept by signing for it. It pays very little for light, valuable items.
+
+### How long do I have to file a moving damage claim in New York?
+
+NYSDOT advises filing within 90 days of delivery, unless there are unusual circumstances. Note visible damage on the delivery receipt before the crew leaves.
+
+## Sources
+
+- New York State Department of Transportation, [registration and licensing](https://www.dot.ny.gov/divisions/operating/osss/truck/registration-licensing) and [The Mover's Guide to Transporting Household Goods in New York State](https://www.dot.ny.gov/divisions/operating/osss/repository/HHG%20Binder-%20Updated%202-28-24.pdf), including the consumer "Summary of Information"
+- Federal Motor Carrier Safety Administration, [Protect Your Move](https://www.fmcsa.dot.gov/protect-your-move)
+- 49 CFR [375.201](https://www.law.cornell.edu/cfr/text/49/375.201) and [375.407](https://www.law.cornell.edu/cfr/text/49/375.407) (Cornell Legal Information Institute)
+
+Checked against these sources on September 24, 2026.`;

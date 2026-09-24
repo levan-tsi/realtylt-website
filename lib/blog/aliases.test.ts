@@ -56,7 +56,6 @@ const PENDING_CRM = new Set<string>([
   "high-roi-renovations-new-york",
   "seller-closing-costs-new-york-state-guide",
   "packing-tips-hacks-for-moving",
-  "how-to-hire-local-movers-ny",
   "relocating-to-hudson-valley-ny-guide",
   "rent-vs-buy-hudson-valley-ny",
 ]);
@@ -65,7 +64,7 @@ const PENDING_CRM = new Set<string>([
  * Same rule: may only shrink, and must be empty when the round is done. */
 const PENDING_LINK_TARGETS = new Set<string>([
   "packing-tips-hacks-for-moving",
-  "how-to-hire-local-movers-ny",
+  "relocating-to-hudson-valley-ny-guide",
 ]);
 
 const LIVE = new Set(POSTS.map((p) => p.slug));
