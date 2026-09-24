@@ -2366,3 +2366,108 @@ overflow at 1440/390/320; day pages diffed against `1b2aab9` at 1440 and 390; th
 re-cut (`_scratch-r57-video.mjs` on `/`); `git diff --stat` outside the home page's files,
 `next.config.ts`, the cover images, `ATTRIBUTIONS.md`, `SceneCredit.tsx` and tests empty.
 Rules: ONE server on the shared `.next`; never a dev server while :3102 runs; short outages.
+
+### Round 13, the builder's numbers (commits `31974b9` `2a15e8a` `4e87b6c`; for the orchestrator to re-run)
+
+All on the production build of `4e87b6c` on :3102 (the home page, no flag: the MapLibre ground),
+probes `scripts/_scratch-r57l-*.mjs` (gitignored), outputs under `scripts/_scratch-r57/13/`. Slow 4G
+= round 12's CDP numbers (562.5 ms latency, 1.44 Mbps down). Headed Chrome, a fresh profile a run.
+
+**A probe artefact found first, and it moves round 12's slow numbers.** Every round-12 probe blocked
+`/api/media/` and `/api/lead` with Playwright's `ctx.route`, and ANY route turns the browser's HTTP
+cache off for the context. Measured: the map's worker then downloaded `maplibre-gl-shared.mjs` a
+second time (145 KB, 2.4 s on Slow 4G, in series before any tile) and the TileJSON twice, which no
+visitor does. The round-13 probes block by CDP `Network.setBlockedURLs` (`_scratch-r57l-lib.mjs`
+`safePage`), cache on: the worker's copy is then a 0 KB revalidation. So round 12's "26 s" was
+partly the instrument; the fair full-map arm on this build is below.
+
+**1. The switch.** `lib/home-map.ts`: `ml` default (unset or unknown), `g3d` only with the flag and
+the key (without the key: `ml`), `night` on the flag; `coverFor` gives each map its own cover
+(tested). `/` renders `MlGround`; static (ISR), curl 6 to 7 ms a response. The lab is deleted (one
+source of truth), so the four lab lines in Header, FooterShell, `lib/site.ts` and the
+search-instrument test are back to `1b2aab9` byte for byte (`git diff 1b2aab9 HEAD --
+components/site lib/site.ts` = SceneCredit only). Google's path behind its flag, from a real build
+(HEAD with `NEXT_PUBLIC_HOME_MAP=g3d` in a temporary worktree on :3103, since removed): Google's
+map, our 445 lights, our names, "Map: Google." shown, first steady 6.2 s
+(`13/g3d-flag-1440.png`).
+
+**2. CSP, measured** (`_scratch-r57l-cspmeasure`): with neither host the map drew nothing and the
+console refused `tiles.openfreemap.org/planet` and `s3.amazonaws.com/elevation-tiles-prod/...`,
+both under connect-src; with both in connect-src only, 0 violations through every stop. img-src
+unchanged. On the final build the frames walk logged 0 CSP violations.
+
+**3. The cover from this map** (`scripts/make-ml-cover.mjs`, committed): the running home page at
+`?cover=0`, everything but the map and our lights hidden, the territory idle, the lights planned and
+drawn by the live layer, the map's box screenshotted: 1583 x 1000 (the 1425 x 900 box at 1.11x, so
+`bg-cover` scales it by exactly 0.9) and 780 x 1688. Headed Chrome, not headless (the GPU path the
+visitor has). webp q35: **39.1 KB and 35.7 KB** (were 31.4 / 28.6; q45 46.8 / 42.6; q60 58.6 /
+52.9). Cover vs the first idle frame, the page's words over both (round 9's metric): **1440 2.44
+levels, 1.4 % over 24; 390 2.59, 1.4 %** (bar 6.9 / 4.2; q60 2.18 / 2.51). Looked at
+(`13/cover/dissolve-ends-{1440,390}.jpg`): the same map, the same lights in the same places; the
+dissolve adds only our names. Google's cover moved unchanged to `home-g3d-cover*.webp`.
+
+**4. The slow line** (`slow-line.ts`, `style.ts COARSE`, tested). DevTools' Slow 4G reports
+`effectiveType` "3g", so the connection rule fires before the map is made: no terrain, no
+hillshade, no terrain source, no elevation grid (367 KB), and the territory from the vector tiles
+capped at zoom 6 (3 tiles, 466 KB, against 9 to 12 full tiles, 1.1 to 1.6 MB), the full tiles from
+zoom 10 with an overlap to 11.5. The 2 s first-tile rule covers browsers without the API (it drops
+terrain and hillshade after the style is set). The cover's cap no longer FAILS a map that has drawn
+nothing at 8 s (it did on every slow visit: the first tile comes at 12 to 18 s); the cover, a frame
+of this map, holds until the territory is whole.
+
+| territory whole / cover gone, s | 1440 fast | 390 fast | 1440 Slow 4G | 390 Slow 4G |
+|---|---|---|---|---|
+| before: Google (:3102 on `590a253` = the round's base home) | 9.9 / 13.4 | 5.5 / 8.4 | not in 25 s / not in 25 s | not in 25 s / not in 25 s |
+| before: MapLibre full map (`?slow=0`, cache on) | | | 27.6 / 16.7 (cap, partial) | 25.3 / 16.9 (cap, partial) |
+| after, first-15 probe (analytics blocked) | **2.05 / 2.09** | **1.76 / 1.77** | **13.9 / 13.9** | **12.6 / 12.6** |
+| after, timeline probe (analytics not blocked) | | | 15.0 / 15.0 | 14.1 / 14.1 |
+
+**Not met, said plainly: 10 s on Slow 4G.** 12.6 to 15.0 s. The timeline (`_scratch-r57l-slowtl`,
+page and worker): the page's own bytes (fonts 140 KB, Next's chunks ~330 KB, chat 38 KB, the
+lights 131 KB) and the library (292 KB) share ~130 KB/s, so the map's import lands at 7.5 to 8.7 s
+(after hydration); worker, TileJSON and the three coarse tiles take 4 to 6 s more. What would still
+move it: the map made before hydration (an inline module), zoom-5 coarse tiles (2 tiles, 289 KB,
+~1.2 s, a sparser road web: not taken), and the page's non-map bytes. The fast line is unchanged
+(whole in 1.8 to 2.4 s from navigation in every run of this round).
+
+**5. The page's own scroll cost into Featured** (`_scratch-r57l-scrolltrace`, map blocked, CDP
+trace). OURS, fixed: every scroll frame ran 16 to 32 ms of forced style and layout in our rAF
+(`placeScrims` wrote `--g3d-hole-y` on the element holding the whole page, which every descendant
+inherits, then read rectangles). Now reads first, then writes, the hole by the element's own
+mask-position: smooth scrolls into the intake and Featured show no main-thread task over 16 ms
+(before: 16 to 32 ms tasks, two per scroll). NOT ours, left: single frames of 35 to 62 ms, mostly on
+the probe's instant `scrollTo` jump, are GPU raster of the newly shown content; removing the scrims,
+the content mask, every backdrop blur or the cover does not change them (A/B, two runs each).
+
+**6. Everything the Google ground had** (`_scratch-r57l-behave`, `-hover`, `-reduced`): the claims
+(before the reveal "Point at one" hidden, after shown; no "Map: Google." on this ground); hover
+**50 of 50** at Queens 1440 (7 px aim error, hit test 0.007 ms mean); the click flew in and asked for
+the listing 810 ms after; taps at the phone's territory **30 of 30, twice** (7 px aim); a featured
+card's focus flies to its home, lights it and opens its label ("Pleasant Valley $1,395,000 3 bd,
+2.5 ba"); a county row's hover flies there (Queens, 2.6 s, its towns named) and its click opens
+`/top-areas/queens`; reduced motion = a cut (1 to 3 move events, the lights drawn once); JS off:
+the MapLibre cover with its shades (`13/behave/nojs-1440.png`; the browser still fetches the two
+preloaded library modules, 292 KB, as the lab did); no WebGL: "no webgl2", the cover stays, the
+pointing claim hidden.
+
+**Gates.** Lag, cold, 1440 x5: worst in-flight frame **27.7 / 48.6 / 62.5 / 41.7 / 34.6 ms** (one of
+five over 60: dutchess to highlands, 1.17 s into the flight; the same flight was round 12's 97 ms
+once), flight frames over 34 ms per whole walk 0 to 4, first idle 1.9 to 2.4 s; 390 x2: **20.8 /
+34.4 ms**, window worst 48.7 / 69.6. Frames at every stop both widths
+(`13/frames/sheet-{1440,390}.jpg`, looked at: as round 12's lab). Contrast: 390 **0** under the
+floor; 1440 **2**, the AI and Connect pills. Calibration (our lights vs `map.project`): median 0.08
+to 0.44 px at seven stops, p90 at most 1.29; max 0.91 / 1.43 / 1.83 px at hero, dutchess and
+highlands (within 2 px), 8.9 at Westchester, 5.1 Manhattan, 4.3 harbour (single homes on steep
+ground). Overflow 0 at 1440, 390, 320 at five depths. Day pages against `1b2aab9` (built on :3103):
+17 of 20 renders 0 px; 1440 listing page 9,611 px and 1440 blog 417 px and 390 /buying 386 px, all
+render timing (the header's "Sign in" drawn in one render and not the other, a "Photograph coming
+soon" not yet loaded, faint photo resampling); a second pair of renders differed in other places
+the same ways. tsc clean; vitest **1936 passing, 145 files** (1924 + 12). Videos re-cut on `/`:
+`docs/design-r57-video/r57-desktop.mp4` 70 s, `r57-phone.mp4` 61 s (untracked; the listing photos
+show the placeholder on this machine). Files outside the brief's list: `scripts/make-ml-cover.mjs`
+(new, the cover's render), two usage lines of `scripts/make-map-cover.mjs` (its output is now
+`home-g3d-cover`), and the lab lines removed from Header, FooterShell and the search-instrument
+test (back to the base).
+
+**:3102 this round.** Four rebuilds, outages 69, 72, 79 and 66 s, each back with its stylesheets;
+never a second server on the shared `.next`. Left running on the build of `4e87b6c`.
