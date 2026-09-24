@@ -859,3 +859,82 @@ Added after round 4:
 10. Google's script failing to load (seen twice in round 4's runs): prove the poster-stays path
     on a simulated failure (abort the script route on the first request only, then let it
     through on reload), no console error loop, the caption honest.
+
+## 5. The owner's verdict mid-round (2026-09-23, verbatim, after rounds 1 to 4)
+
+> "It's definitely getting better, the real map is better, but you have to work on the light
+> dots and those listings, and can you make that real map in a dark mode, or is it a night
+> also; when it starts it's still the old bad map with a lot of lights, then when you scroll
+> down the real map shows up but sometimes it freezes, and when you go up you have the new and
+> better clean real map instead of the old one if you go up later; so work on those, and make
+> that real map a dark place, and those light dots, listings, distribute properly with
+> geolocation, and make it really cool design and smooth transitions."
+
+Read as orders:
+1. **The real map is the direction; make it DARK.** Google's 3D map has no dark mode
+   (`DESIGN-ROUND57.md` round 2 facts), so the night is ours: a night grade over the imagery.
+2. **The lights and the listings are not finished**: they must sit exactly where the homes
+   are, be distributed as the homes are (not thinned into a lattice, not a blob), and be
+   designed ("really cool") with smooth transitions.
+3. **What he saw at the start, "the old bad map with a lot of lights", is the LOAD COVER**: our
+   night still with the round-55 lamp carpet (re-graded to dusk in round 2), which stands for
+   10 to 11 s on a cold laptop before the real map is revealed; scrolling lifts it early and
+   interrupts the shader warm-up, hence "sometimes it freezes". The cover must look like the
+   dark real map's own first frame, and the early scroll must not freeze.
+4. **Smooth transitions** everywhere: the cover to the map, the flights, the light tiers, the
+   labels.
+
+### Round 6 brief (for builder 6): the night real map, our lights on it
+
+1. **The night grade.** A veil layer over the map element (below the words, above the map): a
+   deep blue-black, not pure black (the imagery must still read: coastline, water darker than
+   land, the river, the ridges), tuned by frames at three strengths at four stops both widths,
+   the owner's taste reference is realtylt.com/ai (black and glow, one hue). With the map dark
+   the word scrims can go much lighter or away (frames and the contrast kit decide). Google's
+   attribution stays unobscured (the logo hole stays clear of the veil or the veil is light
+   enough there; measure). HYBRID at the territory shot keeps Google's names, white on dark now.
+2. **Our own light layer.** The listing lights leave Google's markers (`Marker3DElement`) and
+   are drawn by us on a canvas above the veil, below the words: every drawn home projected by
+   `camera.ts` from the map's camera each animation frame during a flight and once when steady
+   (read the camera from the element's properties or its change events; measure the per-frame
+   cost at the county ceilings: it must stay under 1.5 ms at 1440). This requires the
+   projection CALIBRATED against Google's drawn positions to 2 px at every stop (builder 5's A3
+   work if it landed, else do it here: draw a few Google markers at known coordinates in a
+   probe, read their pixel positions, fit the error, fix the model: fov convention, the
+   ellipsoid, the altitude reference). The glyph designed on the canvas: a warm-white core, a
+   soft halo, additive blending, the size and halo by altitude with the tiers EASED (no pops
+   between tiers), the hovered or focused light brighter and larger, the phone's lights visible.
+   Distribution: the homes where they are; keep the by-altitude ceilings so the city is never
+   a blob, but prefer a thinning that keeps the true density pattern (denser where homes are
+   denser) over an even lattice; frames decide, side by side. Hover, tap, click and the label
+   now use the same projection as the drawing, so the label sits on its light exactly. No
+   Google markers means no marker adds at boot or on flights: report the boot and flight
+   tables before and after.
+3. **The cover, rebuilt.** A still that looks like the dark real map's first frame at the
+   territory shot: our elevation render in the same night grade, the water and land as they
+   read on the veiled imagery, NO lamp carpet, and the listing lights as the same glyphs in the
+   same places (drawn from the same table and the same projection at the hero camera). Wide
+   and tall. The dissolve from it to the live map must be a change of nothing but detail
+   (frames before, during, after at both widths; a pixel diff of cover vs first steady frame
+   reported as a number). The dusk and day covers retire from the default path (`?cover=`
+   may keep them for comparison); `ATTRIBUTIONS.md` updated.
+4. **The reveal and the early scroll.** Reveal at first steady plus the warm path (the
+   shader compile stays under the cover); the cover holds through the warm path even if the
+   visitor scrolls (bounded; never past 14 s; builder 5's item 9 numbers rule); when the cover
+   lifts on a scrolled page the map must already be at that section's shot (no flight the
+   visitor watches from the wrong place).
+5. **Transitions.** The cover dissolve 600 to 800 ms; the light tiers eased over the flight;
+   the labels fade with the flights; the section flights stay Google's eased flights; the
+   fly-in to a listing fades the words (builder 5's A4). Reduced motion: cuts, our layer
+   redraws once per cut.
+6. **Fallbacks unchanged**: no key = the night flight, `gmp-error` or blocked script = the
+   cover stays, JS off = the cover, no WebGL = the cover.
+
+Gates: frames at every stop both widths (three veil strengths at four stops first, then the
+chosen one everywhere); the cover-vs-first-frame diff; the cold lag probe x3 and warm x1 at
+1440, cold x2 at 390, with boot marker adds gone and our layer's per-frame cost in the table;
+the contrast kit at every stop (0 under 4.5:1 outside the logo corner at 390; at 1440 only the
+two pills); the pointer probe of round 3 re-run (label on its light within 2 px at three stops);
+tsc; vitest only up (the projection fit, the eased tiers, the cover-hold rule tested); overflow
+at 1440/390/320; day pages untouched (`git diff --stat` outside the home page's files empty).
+Do not touch: CSP, `/search`, `lib/site.ts`, `Header.tsx`, the fallback order.
