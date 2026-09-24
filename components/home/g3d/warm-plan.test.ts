@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { STALL_PATH, warmPlan } from "./warm-plan";
+import { PHONE_WARM_SHOTS, STALL_PATH, warmPlan } from "./warm-plan";
 import type { ShotName } from "../night/shots";
 
 const pageShots: ShotName[] = ["dutchess", "highlands", "westchester", "ulster", "harbour", "region"];
@@ -18,9 +18,14 @@ describe("the pre-warm plan", () => {
     expect(p.budgetMs).toBeGreaterThan(5000);
   });
 
-  it("keeps a phone on the one-shot jump (its flights never stalled)", () => {
+  it("round 57.10: on a phone at the territory shot, jumps to the first TWO shots whatever they take", () => {
+    // Measured cold at 390: with both steps the first flight's worst frame is 90 ms; with none, or
+    // with only Dutchess (a slower line made step one outlast the old 1.5 s budget), one 271 to
+    // 292 ms frame at that flight's landing, 4 runs of 4. The cover's 14 s cap bounds the walk.
     const p = warmPlan({ pageShots, initial: "hero", narrow: true, q: q() });
-    expect(p).toMatchObject({ shots: pageShots, mode: "jump", budgetMs: 1500 });
+    expect(p).toMatchObject({ shots: ["dutchess", "highlands"], mode: "jump" });
+    expect(p.shots).toHaveLength(PHONE_WARM_SHOTS);
+    expect(p.budgetMs).toBeGreaterThanOrEqual(14_000);
     expect(p.flyMs).toBeUndefined();
   });
 

@@ -43,6 +43,12 @@ export const PATH_SETTLE_MS = 600;
 export const PATH_BACK_MS = 2000;
 /** The one-shot jump's budget (round 56 phase 1b). */
 export const JUMP_BUDGET_MS = 1500;
+/** A phone at the territory shot jumps to the page's first TWO shots under the cover (round 57.10).
+ * The 1.5 s budget let a fast line take both (each step 1.3 to 1.6 s) and a slower one only the
+ * first (1.7 to 1.8 s): then the first flight's landing stalled 278 and 292 ms, as with no walk at
+ * all (271, 278), against 90 ms with both. So both, always; the cover's 14 s cap (sharp-gate.ts)
+ * bounds the walk instead of the budget. */
+export const PHONE_WARM_SHOTS = 2;
 
 type Query = { get(name: string): string | null };
 
@@ -67,6 +73,9 @@ export function warmPlan(o: { pageShots: readonly ShotName[]; initial: ShotName;
       budgetMs: budget(20_000),
       open: q.get("warmOpen") === "1",
     };
+  }
+  if (auto && narrow && initial === "hero" && !asked.length) {
+    return { shots: pageShots.slice(0, PHONE_WARM_SHOTS), mode: "jump", budgetMs: budget(20_000), settleMs: numOr(q.get("warmSettle"), undefined), backMs: numOr(q.get("warmBack"), undefined) };
   }
   const lite = pageShots.filter((n) => !(AREA_FLIGHT as readonly string[]).includes(n) || (AREA_FLIGHT as readonly string[]).indexOf(n) < 2);
   return {
