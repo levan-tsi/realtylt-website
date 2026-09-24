@@ -80,7 +80,13 @@ const CSP = [
   // `keyhole-pa.googleapis.com` (the photorealistic 3D tiles), `mw1.gstatic.com` and
   // `www.gstatic.com` (its assets). Those three, exact, nothing wider. maps.googleapis.com was
   // already here for /search's 2D map.
-  "connect-src 'self' https://app.realtylt.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://keyhole-pa.googleapis.com https://mw1.gstatic.com https://www.gstatic.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
+  // 2026-09-24 (round 57.13): the home page's ground becomes the MapLibre night map (keyless, open
+  // data; docs/parity/DESIGN-ROUND57.md §9). MEASURED on the running build under this policy before
+  // the change: the map drew nothing and the console refused exactly two hosts under connect-src,
+  // `tiles.openfreemap.org` (the TileJSON and the vector tiles, fetched by the map's worker) and
+  // `s3.amazonaws.com` (the AWS Open Data terrain PNGs, fetched too). With both here and nowhere
+  // else: 0 violations through a walk of every stop, so img-src needs neither. Exact hosts.
+  "connect-src 'self' https://tiles.openfreemap.org https://s3.amazonaws.com https://app.realtylt.com https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.mlsgrid.com https://n8n.srv1017745.hstgr.cloud https://realtylt-crm-web.vercel.app https://*.supabase.co https://maps.googleapis.com https://keyhole-pa.googleapis.com https://mw1.gstatic.com https://www.gstatic.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://ad.doubleclick.net https://stats.g.doubleclick.net https://www.google.com wss://generativelanguage.googleapis.com https://generativelanguage.googleapis.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",

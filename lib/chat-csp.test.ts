@@ -82,6 +82,23 @@ describe("the chat widget and the site's CSP", () => {
     expect(sources.some((s) => /\*\.googleapis\.com|\*\.gstatic\.com/.test(s))).toBe(false);
   });
 
+  it("allows the two hosts the MapLibre night map needs, measured (round 57.13), exact and connect-src only", () => {
+    // Measured on the running build with the site's own policy: with neither host the map drew
+    // nothing and the console refused `tiles.openfreemap.org/planet` (the TileJSON and the vector
+    // tiles, fetched by the map's worker) and `s3.amazonaws.com/elevation-tiles-prod/...` (the
+    // terrain PNGs, fetched too) under connect-src; with both in connect-src alone, 0 violations
+    // through a walk of every stop. So img-src stays as it was, and no wildcard over either host.
+    const sources = connectSrc();
+    for (const origin of ["https://tiles.openfreemap.org", "https://s3.amazonaws.com"]) {
+      expect(allows(sources, origin), `connect-src does not allow ${origin}, so the home page's map cannot load`).toBe(true);
+    }
+    expect(sources.some((s) => /\*\.openfreemap\.org|\*\.amazonaws\.com/.test(s))).toBe(false);
+    const cfg = fs.readFileSync(path.join(ROOT, "next.config.ts"), "utf8");
+    const img = cfg.match(/"img-src ([^"]*)"/)?.[1] ?? "";
+    expect(img).not.toContain("openfreemap");
+    expect(img).not.toContain("amazonaws");
+  });
+
   it("recognises a wildcard source, so the matcher is not accidentally exact-only", () => {
     expect(allows(["https://*.example.com"], "https://a.example.com")).toBe(true);
     expect(allows(["https://*.example.com"], "https://example.com")).toBe(true);
