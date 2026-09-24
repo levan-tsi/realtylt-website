@@ -26,8 +26,9 @@ describe("what the home page's words may claim", () => {
 
   it("the page renders the cover state: the Google and pointing claims hidden, the lights shown", () => {
     const page = readFileSync("app/page.tsx", "utf8");
-    expect(page).toMatch(/<span data-map-claim hidden>/);
-    expect(page).toMatch(/<span data-point-claim hidden>/);
+    // rendered invisible (their room kept, so the reveal moves nothing), the lights shown
+    expect(page).toMatch(/<span data-map-claim className="invisible">/);
+    expect(page).toMatch(/<span data-point-claim className="invisible">/);
     expect((page.match(/data-lights-claim(?! hidden)/g) ?? []).length).toBeGreaterThanOrEqual(3);
   });
 });

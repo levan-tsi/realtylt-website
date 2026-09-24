@@ -223,14 +223,17 @@ export default async function HomePage() {
               <p data-quiet className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
                 {g3d ? (
                   <>
-                    {/* The claim follows the runtime (round 57.2): hidden until Google's map has
-                        drawn (G3dGround shows it), so JS off or a failed map says nothing untrue. */}
-                    <span data-map-claim hidden>
-                      Map: Google.{" "}
-                    </span>
+                    {/* The claims follow the runtime (round 57.2, components/home/g3d/claims.ts):
+                        Google and the pointing are said only while the live map with its lights
+                        stands behind, so JS off or a failed map says nothing untrue. Round 57.5:
+                        they come LAST and are hidden by visibility, their room kept, so showing
+                        them at the reveal moves nothing (CLS). */}
                     <span data-lights-claim>Every light is a home listed on OneKey&reg; MLS, standing where it stands. </span>
-                    <span data-point-claim hidden>
-                      Point at one to see its town and price.
+                    <span data-point-claim className="invisible">
+                      Point at one to see its town and price.{" "}
+                    </span>
+                    <span data-map-claim className="invisible">
+                      Map: Google.
                     </span>
                   </>
                 ) : (

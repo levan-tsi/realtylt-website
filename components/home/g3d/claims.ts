@@ -20,13 +20,13 @@ export function claims(map: MapState, lights: LightsState): { map: boolean; poin
   return { map: live, point: live && lights === "some", lights: !(live && lights === "none") };
 }
 
-/** Shows or hides each claim on the page (the attribute `hidden`). */
+/** Shows or hides each claim on the page. The Google and pointing claims keep their room (they
+ * are rendered `invisible` and shown by visibility), so the reveal, which shows them, moves no
+ * line of the page (CLS). The lights claims leave the flow (`hidden`): that happens only when the
+ * lights fail. */
 export function applyClaims(c: { map: boolean; point: boolean; lights: boolean }, root: ParentNode = document) {
-  const set = (sel: string, on: boolean) =>
-    root.querySelectorAll<HTMLElement>(sel).forEach((e) => {
-      e.hidden = !on;
-    });
-  set("[data-map-claim]", c.map);
-  set("[data-point-claim]", c.point);
-  set("[data-lights-claim]", c.lights);
+  const each = (sel: string, f: (e: HTMLElement) => void) => root.querySelectorAll<HTMLElement>(sel).forEach(f);
+  each("[data-map-claim]", (e) => void (e.style.visibility = c.map ? "visible" : "hidden"));
+  each("[data-point-claim]", (e) => void (e.style.visibility = c.point ? "visible" : "hidden"));
+  each("[data-lights-claim]", (e) => void (e.hidden = !c.lights));
 }
