@@ -77,7 +77,6 @@ const PENDING_CRM = new Set<string>([
   "how-to-find-screen-tenants-ny",
   "short-term-vs-long-term-rentals-hudson-valley",
   "hiring-property-management-company-hudson-valley",
-  "how-much-house-can-i-afford-ny-guide",
   "why-you-need-real-estate-attorney-ny",
   "relocating-to-hudson-valley-ny-guide",
   "rent-vs-buy-hudson-valley-ny",

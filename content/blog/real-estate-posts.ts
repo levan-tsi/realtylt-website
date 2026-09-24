@@ -292,3 +292,119 @@ $1,209,750 for a one-unit home, the same as the rest of the New York metro area 
 - Federal Housing Finance Agency, [2026 conforming loan limits](https://www.fhfa.gov/news/news-release/fhfa-announces-conforming-loan-limit-values-for-2026) and [county list](https://www.fhfa.gov/data/conforming-loan-limit)
 
 Limits, premiums and fees were checked against these sources on September 24, 2026. Your lender's own rules can be stricter than the program minimums.`;
+
+export const HOW_MUCH_HOUSE_POST = `"How much house can I afford?" is the question that starts almost every home search. Online calculators answer it in a second, but they usually show the most a bank might lend you, not what you can comfortably carry, and they rarely know what property taxes cost in the Hudson Valley. This guide shows the simple math behind those calculators, with a worked New York example at September 2026 mortgage rates, so you can build a budget you trust before you talk to a lender.
+
+## The 28/36 guideline: a conservative starting point
+
+The most common rule of thumb for how much house you can afford has two parts:
+
+- **28% (front-end):** your total monthly housing payment should be no more than 28% of your gross monthly income.
+- **36% (back-end):** all your monthly debt payments, including that housing payment, should be no more than 36% of your gross monthly income.
+
+The housing payment is often called **PITI**: principal, interest, property taxes and homeowners insurance (plus mortgage insurance or HOA dues where they apply). Your debt-to-income ratio (DTI) is all your monthly debt payments divided by your gross monthly income ([CFPB](https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-en-1791/)).
+
+Be clear about what 28/36 is. It is a budgeting guideline, not a lender's rule, and lenders often approve more. Fannie Mae, for example, allows a total DTI of up to 50% on loans approved through its automated underwriting, and 36% to 45% on loans underwritten by hand ([Fannie Mae Selling Guide B3-6-02](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios)). That gap is exactly why a pre-approval amount and a comfortable budget are different numbers. Using 28/36 keeps you on the comfortable side of it.
+
+## Step 1: Find your maximum monthly housing payment
+
+Here is the math with an example buyer.
+
+### A) Start with gross monthly income
+
+Lenders use income before taxes and deductions. A $120,000 salary is $10,000 a month.
+
+### B) Apply the 28% limit
+
+$10,000 x 0.28 = **$2,800** a month for housing.
+
+### C) Apply the 36% limit
+
+$10,000 x 0.36 = **$3,600** a month for all debts combined.
+
+### D) Subtract your other debts
+
+Our buyer has a $500 car payment and a $300 student loan, $800 in total. $3,600 minus $800 leaves **$2,800** for housing.
+
+Take the lower of the results from B and D. Here both are $2,800, so that is the housing budget.
+
+## Step 2: Turn the monthly payment into a home price in the Hudson Valley
+
+This is where generic calculators go wrong in New York. Property taxes vary widely from town to town and school district to school district across Westchester, Putnam, Dutchess, Orange, Ulster and Rockland, and in many of them the tax bill is a large share of the monthly payment. Always use the actual tax bill for a house you are considering (it is on the listing, or ask your agent), and you can look up a municipality's rates and assessment figures in the state's [ORPTS Municipal Data Portal](https://www.tax.ny.gov/pit/property/munidataportal.htm).
+
+For the example, assume an annual tax bill of $10,800 and a homeowners insurance premium of $1,800 a year. Both are assumptions for illustration; get real quotes and the real tax bill for your own numbers.
+
+1. Maximum housing payment: **$2,800**
+2. Minus property taxes ($10,800 / 12): **$900**
+3. Minus homeowners insurance ($1,800 / 12): **$150**
+4. Left for principal and interest: **$1,750** a month
+
+### From payment to price
+
+Freddie Mac's weekly survey put the average 30-year fixed rate at 7.03% on September 24, 2026 ([Freddie Mac PMMS](https://www.freddiemac.com/pmms)). At that rate, $1,750 a month of principal and interest supports a loan of about **$262,000**. Add a down payment of $66,000 and the budget is about **$328,000**, with 20% down, so there is no private mortgage insurance to add.
+
+Rates move the answer a lot. The same $1,750 supports about $292,000 at 6% and about $238,500 at 8%. Your own quoted rate depends on your credit, loan type and points, so treat the survey average as a reference, not a quote.
+
+In short:
+
+- Gross monthly income: $10,000
+- Maximum housing payment (lower of the 28% and 36% tests): $2,800
+- Less taxes and insurance: $1,050
+- Principal and interest: $1,750
+- Loan supported at 7.03%, 30 years: about $262,000
+- Plus down payment: $66,000
+- Home budget: about $328,000
+
+For how much you need to put down, and the programs that lower it, read [how much you really need for a down payment in the Hudson Valley](/blog/down-payment-hudson-valley-ny).
+
+## Don't max out: the costs a lender's math leaves out
+
+That $328,000 is a ceiling, not a target. The lender's calculation stops at the mortgage payment and your known debts; owning a house does not.
+
+- **Maintenance.** Budget for routine upkeep every year: gutters, servicing the heating system, painting, small repairs. Many owners set aside around 1% of the purchase price a year as a planning figure; older houses usually need more.
+- **Big repairs.** Roofs, heating and cooling systems, water heaters and septic systems wear out on their own schedule. Keep a separate fund, and use the [home inspection](/blog/home-inspection-checklist-hudson-valley-ny) to learn the age and condition of each before you buy.
+- **Utilities.** Moving from an apartment to a house usually means higher heating, electric, water and sewer bills, none of which count in your DTI.
+- **Closing costs and moving.** These come due before you move in. Our [guide to buyer closing costs in New York](/blog/buyer-closing-costs-new-york) lists them.
+
+Many buyers who are happy years later shopped below their maximum on purpose, leaving room for savings and for life. A buffer of 10% to 15% below your calculated ceiling is a sensible place to start.
+
+## Your home affordability blueprint
+
+1. **Gross monthly income:** annual salary divided by 12.
+2. **Monthly debts:** car loans, student loans, credit card minimums, other loans.
+3. **Housing budget:** the lower of income x 0.28, or (income x 0.36) minus debts.
+4. **Work back to a price:** subtract the real tax bill and an insurance quote, then find the loan the remaining payment supports at a current rate, and add your down payment.
+5. **Confirm it with a lender.** Your math is an estimate; a pre-approval makes it real. See [what lenders look for in a pre-approval](/blog/mortgage-pre-approval-requirements-ny), and our [financing page](/financing) for how we connect buyers with lenders.
+
+When your budget is set, search homes in that range on our [home search](/search), or [talk with us](/connect) about the towns where it goes furthest.
+
+## Frequently asked questions
+
+### What is the 28/36 rule for mortgages?
+
+A budgeting guideline: keep your monthly housing payment at or below 28% of your gross monthly income, and all monthly debts, including housing, at or below 36%. Lenders often approve higher ratios, so 28/36 is the conservative end.
+
+### Do lenders look at gross or net income?
+
+Gross income, meaning your pay before taxes and deductions. That is why a comfortable budget should also be checked against your take-home pay.
+
+### How much income do I need for a $500,000 house in New York?
+
+It depends on your down payment, the property taxes on that specific house, insurance and your rate. As an illustration: with 20% down ($100,000), a $400,000 loan at 7.03% for 30 years costs about $2,670 a month in principal and interest. Add, say, $1,250 a month in taxes and $150 in insurance and the payment is about $4,070, which is 28% of roughly $174,000 a year in gross income. A lower tax bill or a lower rate reduces that figure.
+
+### Does a pre-approval tell me what I can afford?
+
+It tells you what a lender is willing to lend, which is often more than a comfortable budget. Use your own 28/36 math and your real monthly spending to decide how much of the pre-approval to use.
+
+### Why do Hudson Valley property taxes matter so much?
+
+Because they are part of the monthly payment. Two houses at the same price can carry very different tax bills depending on the town and school district, and that difference comes straight out of what you can borrow.
+
+## Sources
+
+- Consumer Financial Protection Bureau, [what is a debt-to-income ratio](https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-en-1791/)
+- Fannie Mae, [Selling Guide B3-6-02, debt-to-income ratios](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+- New York State Department of Taxation and Finance, [ORPTS Municipal Data Portal](https://www.tax.ny.gov/pit/property/munidataportal.htm)
+
+The rate and the calculations were checked on September 24, 2026. Loan amounts are computed with the standard 30-year amortization formula; your lender's figures will reflect your actual rate, fees and mortgage insurance.`;

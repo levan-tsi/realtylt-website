@@ -28,7 +28,7 @@ import {
   SKIP_TRACING_POST,
   WORKFLOW_AUTOMATION_POST,
 } from "./ai-posts";
-import { FIRST_TIME_BUYER_CHECKLIST_POST, MORTGAGE_TYPES_POST } from "./real-estate-posts";
+import { FIRST_TIME_BUYER_CHECKLIST_POST, HOW_MUCH_HOUSE_POST, MORTGAGE_TYPES_POST } from "./real-estate-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -645,6 +645,24 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "how-much-house-can-i-afford-ny-guide",
+    cluster: "buying",
+    title: "\"How Much House Can I Afford?\" A Simple Guide to Calculating Your Real Budget",
+    seoTitle: "How Much House Can I Afford in NY? A 2026 Budget Guide",
+    /** Buyer Education #8, reposted 2026-09-24. Slug = the CRM drip link (day 490) and the draft's. */
+    date: "2026-01-29",
+    updated: "2026-09-24",
+    excerpt:
+      "The simple math lenders use, worked through with a Hudson Valley example at September 2026 rates, and the costs their calculation leaves out.",
+    seoDescription:
+      "How much house can I afford in New York? The 28/36 rule, a worked Hudson Valley example at 2026 mortgage rates, and the costs a lender's math leaves out.",
+    cover: "/images/listings/house-10.jpg",
+    body: [],
+    placeholder: false,
+    markdown: HOW_MUCH_HOUSE_POST,
+    aliases: ["how-much-house-can-i-afford"],
   },
   {
     slug: "fha-va-conventional-mortgage-loans-ny",
