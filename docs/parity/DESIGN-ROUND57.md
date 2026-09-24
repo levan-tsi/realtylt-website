@@ -1869,3 +1869,20 @@ Gates: frames at every stop both widths night and day; the transition frames; la
 times; the lag table; the contrast kit (0 at 390, the two pills at 1440); tsc; vitest only up
 (the shot table, the veil rule); overflow at 1440/390/320; the ladder rule (`cameras.ts`)
 re-examined for the new ranges with numbers.
+
+### Round 10, the orchestrator's verification (2026-09-24, HEAD `4f405db`, :3102 on `18a29b2`)
+
+Re-run, not read: tsc clean; vitest **1884 / 1884** (139 files). My cold lag run landed on the
+slow line the builder described: first draw at 11.8 s, the walk skipped by the cap (`warmSteps
+[]`), the cover gone at 12.1 s, and the Westchester stall back at **250 ms**, exactly the
+failure the builder named. So the round's finding stands (the ugly stretch was our own cover,
+soft at 0.13 of the map's sharpness, held 4 s past a sharp map; now about 2.2 s, breathing,
+capped) and its one open trade-off is real on this line tonight. Accepted, with the fix
+assigned to round 11 as its item 0: the cap must not skip the compile walk; the cover's cap
+becomes the later of 14 s and the first draw plus the walk's own budget (about 2.3 s), so a
+slow-line visitor waits two more seconds under a breathing cover instead of meeting a
+quarter-second freeze later; tested; the phone unchanged.
+
+Addendum to the round 11 brief: item 0 above; and `tilesQuiet` (300 ms with no tile, at least
+250 ms after the cut) is the "landed frame is sharp" signal for the flight-as-transition rule,
+with Google's steady event or a floor beside it on a view the map has not drawn yet.
