@@ -2133,3 +2133,168 @@ adapted; worst frame under 60 ms cold); the bundle added (maplibre-gl gzipped); 
 stop both widths next to round 11's Google frames; a video. Gates: tsc, vitest only up (the
 shot table, the style's tokens), overflow, contrast on the words. Report which hosts, which
 licences, the numbers, and the frames.
+
+### Round 12, the builder's numbers (commits `ce1bf43` `5cca330` `b88dabc` `2c90117` `590a253`; for the orchestrator to re-run)
+
+All measured on the production build on :3102 (RLT_LAB=1), probes `scripts/_scratch-r57k-*.mjs`
+(gitignored), outputs under `scripts/_scratch-r57/12/`. Cold = a fresh Chrome profile per run,
+headed. The lab's CSP is the site's own header plus the two hosts, added by the probe only
+(`_scratch-r57k-lib.mjs` guard); `next.config.ts` untouched.
+
+**What was built.** `/lab/ml` = the home page's sections word for word over `MlGround`
+(`components/home/ml/`): MapLibre GL JS 6.11.2 (BSD-3-Clause), our night style (`style.ts`, tokens
+tested), OpenFreeMap vector tiles, AWS terrain tiles (terrain at 1.6x plus a moonlit hillshade),
+buildings from zoom 13, fog and a black sky, no style labels (our names from `labels.ts`/`towns.ts`
+placed with this map's projection), the same light layer (round 8's counts, gap and glow;
+`light-layer.ts` takes an optional projector, the home page's path unchanged), hover, tap, click,
+the featured cards, the scrims, today's night cover until the opening shot is drawn. The library is
+served from our origin (`public/maplibre/6.11.2/`, the package's own files) and imported at run time
+by the lab only.
+
+**Hosts the lab needs** (connect-src and img-src): `https://tiles.openfreemap.org` (TileJSON and
+vector tiles, fetched by the map's worker) and `https://s3.amazonaws.com` (terrain PNGs). No glyph
+or sprite host (the style draws no text). The worker is same-origin (`worker-src 'self'` suffices).
+
+**Licences, quoted.** OpenFreeMap (openfreemap.org, read 2026-09-24): "Using our public instance
+is completely free: there are no limits on the number of map views or requests. There's no
+registration, no user database, no API keys, and no cookies." "Is commercial usage allowed? Yes."
+"Attribution is required ... you must add the following attribution: OpenFreeMap © OpenMapTiles
+Data from OpenStreetMap. You do not need to display the OpenFreeMap part, but it is nice if you
+do." Terms of service: provided "as-is", may be discontinued "at any time without notice". AWS
+Terrain Tiles (registry.opendata.aws/terrain-tiles; licence = tilezen/joerd docs/attribution.md):
+"Attribution is required for many terrain tile data providers"; for this region "United States 3DEP
+(formerly NED) and global GMTED2010 and SRTM terrain data courtesy of the U.S. Geological Survey"
+and "Global ETOPO1 terrain data U.S. National Oceanic and Atmospheric Administration". So the map's
+corner says "© OpenStreetMap contributors / © OpenMapTiles · OpenFreeMap" (OpenMapTiles is REQUIRED
+by those terms: one name more than the brief's two), and the lab's footer credit names the terrain
+sources.
+
+**Bundle.** The site's bundles carry none of MapLibre: `/lab/ml` route 16.7 kB, first load 246 kB.
+The library itself, fetched by the lab only, gzipped: 149 KB (`maplibre-gl.mjs`) + 147 KB
+(`-shared.mjs`) + 6 KB (worker) = **302 KB**. The home page `/`: first load 249 kB before, 250 kB
+after (its page chunk 40.8 kB -> 20 kB: the light layer moved into a chunk shared with the lab;
+the same code).
+
+**Projection, calibrated** (`_scratch-r57k-calib.mjs`, 1440): our lights (the map's own 3D pixel
+matrix, our USGS heights x 1.6) against `map.project()`: median 0.05 to 0.42 px at seven stops, p90
+under 1.2 px, worst 6 px (Manhattan: our heights against the terrain tiles'); mid-flight 0.11 px
+median. Our rebuilt camera (`geo.ts`, the plan's projection for a flight's destination) against the
+map's matrix: 0.002 px median, 0.006 px max.
+
+**Load, cold** (`_scratch-r57k-boot.mjs`; ms from navigation; "drawn" = every tile of the
+territory drawn, MapLibre's `idle`, which is when the cover lifts):
+
+| run | TTFB | FCP | lib imported | map first paint | territory drawn | FCP -> paint | FCP -> drawn |
+|---|---|---|---|---|---|---|---|
+| 1440 fast #1 | 952 | 1300 | 1516 | 2096 | 3026 | 796 | 1726 |
+| 1440 fast #2 | 933 | 1388 | 1525 | 2192 | 3043 | 804 | 1655 |
+| 1440 fast #3 | 702 | 1216 | 1345 | 1957 | 2789 | 741 | 1573 |
+| 390 fast #1 | 765 | 1192 | 1400 | 2542 | 2728 | 1350 | 1536 |
+| 390 fast #2 | 856 | 1272 | 1398 | 2005 | 2745 | 733 | 1473 |
+| 1440 Slow 4G #1 | 771 | 2556 | 7187 | 12309 | 26108 | 9753 | 23552 |
+| 1440 Slow 4G #2 | 911 | 2528 | 7271 | 12270 | 26175 | 9742 | 23647 |
+| 390 Slow 4G | 3998 | 5664 | 10457 | 15290 | 26903 | 9626 | 21239 |
+| 1440 Slow 4G, no terrain or hillshade | 815 | 2660 | 7120 | 14153 | 18051 | 11493 | 15391 |
+
+Against the targets: the territory is drawn **under 2 s after the page's own first paint on a fast
+line (1.47 to 1.73 s), NOT under 2 s from navigation (2.7 to 3.0 s)**; 0.7 to 0.95 s of that is this
+lab's server render (force-dynamic, with the database: `/` answers in 5 to 15 ms, the lab in 470 to
+950 ms, curl). **Slow 4G fails the 6 s target by far: 26 s to the whole territory, 12 s to the first
+map frame** (the cover's 8 s cap lifts at 15 s onto a partly drawn map). Why, by bytes
+(`_scratch-r57k-bytes.mjs`): the territory needs 13 vector tiles, 2.5 MB decoded (about 1.7 MB on
+the wire at the 0.51 to 0.70 ratio measured on three tiles), plus 10 terrain PNGs, 0.73 MB (were
+20, 1.5 MB, before `DEM_TILE`/`DEM_MAXZOOM`); at Slow 4G's ~180 KB/s that alone is ~13 s. A walk
+through every stop: 476 vector tiles (37.9 MB decoded) and 176 terrain tiles (15.6 MB; were 405,
+38 MB).
+
+**The cover, decided: kept.** The map's first frame comes 0.73 to 1.35 s after the page's first
+paint and the territory is whole 1.5 to 1.7 s after it on a fast line: over the brief's 1 s, so
+today's night cover holds until the opening shot is drawn (reveal on `idle`, cap 8 s from the map's
+creation), then dissolves in 700 ms. `?cover=0` is the other arm (a black ground for ~1 to 2 s).
+Frames of the dissolve's two ends (`12/cover/`): at 1440 the same composition and the same lights
+at the same places; the cover's ground is Google's moonlit blue relief, the map's a charcoal ground
+with a silver road web, so the dissolve adds roads and names and cools the ground a little. At 390
+the cover's city stands lower and larger than the map's (the cover was shot from the Google map's
+46-degree phone camera; the map's phone territory is at 55). A cover rendered from this map's own
+first frame would make the dissolve a change of detail only (not built: the brief said today's
+cover or none).
+
+**Frames during every flight, cold** (`_scratch-r57k-lag.mjs`: rAF intervals from each section
+change to its landing, the page walked through all 17 changes; "in flight" = from the `flyTo` on;
+"window" also counts the frames of the page's own scroll into the new section):
+
+| run | worst frame in flight | frames > 34 ms in flights (whole walk) | worst frame in window | MapLibre render, main thread, mean / worst p95 | light layer mean |
+|---|---|---|---|---|---|
+| 1440 cold #1 | 41.7 ms | 5 | 69.5 ms | 3.14 / 6.7 ms | 1.42 ms |
+| 1440 cold #2 | 97.1 ms (dutchess>highlands, 5 ms after the flight began) | 2 | 97.1 | 2.55 / 7.0 | 1.29 |
+| 1440 cold #3 | 34.7 | 2 | 69.4 | 2.31 / 5.6 | 1.12 |
+| 1440 cold, final build | 41.6 | 2 | 69.5 | 2.49 / 5.0 | 1.25 |
+| 390 cold #1 | 27.9 | 0 | 41.6 | 2.21 / 4.4 | 0.67 |
+| 390 cold #2 | 41.5 | 1 | 48.6 | 1.89 / 4.5 | 0.66 |
+| 390 cold, final build | 34.8 | 1 | 55.6 | 2.20 / 4.1 | 0.69 |
+
+The one frame over 60 ms (97 ms, once in four 1440 runs) and the window worsts of 55 to 70 ms are
+the PAGE's scroll into "Featured listings" and "Why work with us": with MapLibre blocked and no map
+at all (`_scratch-r57k-pageonly.mjs`) the same scrolls cost 62.6 ms (into Featured, and into the
+intake) and 41.8 ms (into Why). The flights themselves: worst 28 to 42 ms, 0 to 5 frames over 34 ms
+per whole walk (Google's round 11: worst flight frame 76 to 97 ms, 16 to 20 frames over 34 ms per
+flight under the veil). Each stop's tiles are all drawn as the camera lands: flight start to idle
+median 2.15 s (the flight's own 1.6 to 2.6 s), landing to idle 30 to 620 ms.
+
+**Cost of terrain and buildings, cold 1440** (main thread, the map's `_render` timed; GPU time is
+not exposed to a probe, only as frame intervals): full 2.31 to 3.14 ms mean; no terrain 2.14 ms
+(worst in flight 27.8 ms); no buildings 2.08 ms (34.6 ms); no terrain, buildings or hillshade
+1.81 ms (34.7 ms). The frame intervals do not tell the variants apart, and terrain does not slow the
+load (without it the territory was drawn at 2.7 and 3.8 s, with it 2.8 to 3.0 s).
+
+**Pointer** (`_scratch-r57k-hover.mjs`): Queens at 1440, 50 pointer positions, each a drawn light
+plus up to 7 px of aim error: **50 of 50** named the nearest light; hit test 0.008 ms mean, 0.2 ms
+max; a click flew in and asked for the listing's route 678 ms after the click. The phone's
+territory, 30 taps with up to 10 px error: 28 named the nearest light, 2 named none.
+
+**Reduced motion**: a section change is a cut (1 to 3 `move` events, no flight), the lights drawn
+once.
+
+**Frames and look** (`12/final/`: `sheet-1440-a.png`, `sheet-1440-b.png`, `sheet-390.png`; beside
+Google's round 11 frames in `12/compare/google-vs-maplibre-{1440,390}.png`; videos
+`docs/design-r57-video/r57k-ml-desktop.mp4` 70 s and `r57k-ml-phone.mp4` 64 s, untracked). The
+territory: Staten Island to the Catskills' edge in one frame, our names on it, the lights as round
+8 drew them (445 at 1440, 260 at 390), the land charcoal with a faint moonlit relief, the water
+black, the coast and the river traced by a shore hairline, the road web silver and brightest round
+the city. Next to Google: at the territory the two read alike (the same lights in the same places),
+the vector map adds the road web and is sharp edge to edge. At the chapters and counties (9 to 20
+km, pitch 60) Google's close photographs have more detail (roofs, bridges, Manhattan's towers in
+texture); the vector map is cleaner and darker: relief, shore, roads and blocks drawn as lines,
+Manhattan's buildings as dark extrusions, the lights the only warmth, crisp at every height and at
+every moment of a flight (no tile ever reads soft or grey). It is a night map, not a night
+photograph.
+
+**Decisions the brief left open.** Terrain exaggeration 1.6 (true heights barely read at 145 km).
+Buildings from zoom 13 (the boroughs' 9 to 10 km shots are zoom 12.8 to 13 on a laptop, so they
+rise as the camera arrives). Terrain tiles declared 512 px to zoom 12 (half the bytes, no visible
+loss in side-by-side frames). The chapters and counties at 9 to 20 km instead of round 11's 6 to 12
+(close in, the vector map was black hillside with a handful of lights); the signature places kept,
+each county's solved to stand right of the list on a laptop and in the middle on a phone. Staten
+Island turned to look over the island (97 of its 107 homes in view at 1440, was 22). The phone's
+territory at 140 km (the brief's 55 degrees left the city small). The cover kept (above).
+
+**Gates.** `npx tsc --noEmit` clean. `npx vitest run`: **1924 passing, 144 files** (1887 + 37: the
+shot table, the style's tokens, the camera, the names, the planner's input). Overflow on `/lab/ml`:
+0 px at 1440, 390 and 320 at five scroll depths. Contrast kit on `/lab/ml` at six stops (hero,
+dutchess, highlands, westchester, queens, harbour): 390: 0 under the floor; 1440: 2, the "AI" and
+"Connect" pills the kit misreads. The home page unchanged: `/` at 1440 on its cover (Google's map
+held back) and with JavaScript off, round 57's base (`1b2aab9`, built in a temporary worktree on
+:3103, since removed) against this branch's build: 0 px apart; a later repeat differed by 562 px,
+all inside the hero's live count (x 163..208, y 481..519: 15,711 became 15,712), the page's text
+identical with digits masked.
+
+**Not met, said plainly.** The 2 s target holds only from the page's first paint (from navigation
+2.7 to 3.0 s, most of the gap the lab's server render); Slow 4G is 26 s to the whole territory (the
+tiles' weight), nowhere near 6 s. Options for the next round: a lighter first view on a slow line
+(no terrain and hillshade: 18 s), a cover rendered from this map so a long hold looks finished,
+fewer or lower tiles at the territory.
+
+**:3102 during this round.** Running the dev server on :3101 rewrote the shared `.next`, and the
+production preview on :3102 served its pages WITHOUT their CSS for about 25 minutes (from ~14:08,
+when the dev server started, to the rebuild at ~14:33); after that, five rebuilds of 70 to 124 s
+each. Left running on the build of `590a253`; the dev server stopped.
