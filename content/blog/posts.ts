@@ -33,6 +33,7 @@ import {
   FIRST_TIME_BUYER_CHECKLIST_POST,
   HOW_MUCH_HOUSE_POST,
   MORTGAGE_TYPES_POST,
+  PRE_APPROVAL_POST,
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
@@ -652,6 +653,24 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "mortgage-pre-approval-requirements-ny",
+    cluster: "buying",
+    title: "Getting Pre-Approved for a Mortgage: What Lenders Are Looking For",
+    seoTitle: "Mortgage Pre-Approval Requirements in NY: A 2026 Guide",
+    /** Buyer Education #3, reposted 2026-09-24 at the draft's own slug. The draft's "in 2025-26"
+     * was dropped from the H1: the page says 2026 where a figure is dated. */
+    date: "2026-01-14",
+    updated: "2026-09-24",
+    excerpt:
+      "What lenders check before they put a number in writing: credit, debt-to-income, income and assets, with the documents to gather and how to make your letter count with sellers.",
+    seoDescription:
+      "Mortgage pre-approval requirements in New York for 2026: credit scores, debt-to-income limits, income and asset rules, and the documents lenders ask for.",
+    cover: "/images/listings/house-02.jpg",
+    body: [],
+    placeholder: false,
+    markdown: PRE_APPROVAL_POST,
   },
   {
     slug: "down-payment-hudson-valley-ny",

@@ -707,3 +707,112 @@ Often, yes. SONYMA's DPAL, the Homebuyer Dream Program and NYC's HomeFirst can e
 - NYS Homes and Community Renewal, [DPAL](https://hcr.ny.gov/down-payment-assistant-loan-dpal); Federal Home Loan Bank of New York, [Homebuyer Dream Program](https://www.fhlbny.com/community/housing-programs/hdp-suite); NYC HPD, [HomeFirst](https://www.nyc.gov/site/hpd/services-and-information/homefirst-down-payment-assistance-program.page)
 
 Program figures were checked against these sources on September 24, 2026. Assistance programs change their limits and funding every year; confirm with your lender.`;
+
+export const PRE_APPROVAL_POST = `A mortgage pre-approval is the step that turns you from a browser into a buyer a seller takes seriously. It sounds like an exam, but it is closer to a financial check-up: a lender looks at four things and tells you, in writing, how much it is prepared to lend. This guide covers the mortgage pre-approval requirements lenders apply in New York in 2026, the documents to gather, and how to make your letter carry weight with Hudson Valley sellers.
+
+## Pre-approval vs pre-qualification: what actually matters
+
+Many guides draw a hard line between the two words. The Consumer Financial Protection Bureau is more candid: both terms refer to a letter saying a lender is generally willing to lend to you up to an amount, based on certain assumptions, and lenders use the words differently, so "the words they use don't tell you much about a particular lender's process" ([CFPB](https://www.consumerfinance.gov/ask-cfpb/whats-the-difference-between-a-prequalification-letter-and-a-preapproval-letter-en-127/)).
+
+What matters is whether the lender verified your information. A letter based on documents the lender has checked (pay stubs, tax returns, bank statements, a credit report) is the one a seller trusts. A letter based on numbers you typed into a form is only an estimate. The CFPB also suggests getting preapproved early so credit problems surface while there is time to fix them, and asking a local agent whether a given lender's letter will be taken seriously.
+
+## The four things lenders look at in 2026
+
+### 1. Your credit
+
+Credit affects both whether you are approved and the rate you pay. Minimums depend on the loan:
+
+- **Conventional:** Fannie Mae removed its hard 620 minimum for loans run through its Desktop Underwriter system in November 2025, though manually underwritten loans and many lenders still use 620 ([Fannie Mae](https://singlefamily.fanniemae.com/applications-technology/desktop-underwriter-desktop-originator/desktop-underwriter-credit-risk-assessment-updates)).
+- **FHA:** 580 or higher for the minimum 3.5% down; 500 to 579 with 10% down ([HUD](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined)).
+- **VA and USDA:** the agencies set no minimum score of their own; lenders set theirs.
+
+If your score is in the high 500s or low 600s, the choice between an FHA loan now and a conventional loan after a few months of credit repair has long-term consequences, because FHA's annual premium lasts the life of the loan with less than 10% down. Our guide to [FHA, VA and conventional loans](/blog/fha-va-conventional-mortgage-loans-ny) lays out that trade-off.
+
+### 2. Your debt-to-income ratio
+
+Your DTI is all your monthly debt payments divided by your gross monthly income ([CFPB](https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-en-1791/)). Example: $500 car loan + $400 student loans + $150 card minimums = $1,050, on $7,000 gross monthly income, is a DTI of 15% before the new mortgage.
+
+The old idea of a hard 43% ceiling is out of date. The CFPB replaced the 43% DTI limit in the general Qualified Mortgage definition with a price-based test; for applications since October 1, 2022, only the new definition applies ([CFPB](https://www.consumerfinance.gov/rules-policy/final-rules/qualified-mortgage-definition-under-truth-lending-act-regulation-z-general-qm-loan-definition/)). Fannie Mae allows up to 50% on loans approved through Desktop Underwriter, and 36% to 45% on manually underwritten loans ([Fannie Mae Selling Guide B3-6-02](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios)). A DTI in the mid-40s does not automatically disqualify you, but a lower one leaves room in your budget. To set a comfortable number, read [how much house you can afford](/blog/how-much-house-can-i-afford-ny-guide).
+
+### 3. Your income and employment
+
+Lenders want income that is stable and likely to continue, usually shown over roughly two years.
+
+- **Salaried or hourly:** recent pay stubs, W-2s for two years, and usually a verification of employment call.
+- **Self-employed or 1099:** full personal and business tax returns, often for two years, and a year-to-date profit and loss statement. Lenders typically average self-employment income, so a strong recent year does not fully count on its own.
+- **Commission, bonus or overtime:** lenders look for a history showing it is consistent before they count it.
+
+### 4. Your assets for the down payment and closing costs
+
+Lenders confirm that you have enough cash and that it came from an acceptable source.
+
+- **Statements.** For a purchase, Fannie Mae requires account statements covering the most recent full two months of activity ([Fannie Mae Selling Guide B3-4.2-01](https://selling-guide.fanniemae.com/sel/b3-4.2-01/verification-deposits-and-assets)). Provide every page, including the blank ones.
+- **Large deposits.** Fannie Mae defines a large deposit as a single deposit over 50% of your total monthly qualifying income; if you need those funds, the lender must document that they came from an acceptable source ([Fannie Mae Selling Guide B3-4.2-02](https://selling-guide.fanniemae.com/sel/b3-4.2-02/depository-accounts)). Avoid moving cash around or depositing cash without a paper trail while you are buying.
+- **Gifts from family.** Common and acceptable with a gift letter that states the amount, the donor's name, address, phone and relationship to you, and that no repayment is expected ([Fannie Mae Selling Guide B3-4.3-04](https://selling-guide.fanniemae.com/sel/b3-4.3-04/personal-gifts)).
+
+Remember closing costs as well as the down payment; see [how much you really need for a down payment](/blog/down-payment-hudson-valley-ny).
+
+## Your pre-approval document checklist
+
+**Identification**
+
+- Government-issued photo ID and your Social Security number.
+
+**Income**
+
+- Pay stubs covering the most recent 30 days.
+- W-2s from all employers for the past two years.
+- Complete federal tax returns, all pages and schedules, for the past two years.
+- If self-employed: a year-to-date profit and loss statement and business tax returns.
+
+**Assets**
+
+- The two most recent monthly statements for every checking, savings and investment or retirement account, all pages.
+
+**Debts**
+
+- A list of every monthly debt: car loans, student loans, credit cards, personal loans, with balances and minimum payments.
+
+**If they apply**
+
+- A signed gift letter.
+- A divorce decree or court order covering alimony or child support.
+- Bankruptcy filing and discharge papers.
+
+## Why a lender the local market knows can help
+
+In a competitive Hudson Valley situation, the letter is also a signal. Listing agents often prefer a pre-approval from a loan officer they can reach quickly and who has closed on time in the area before, and an underwriter used to the region's older houses, wells and septic systems. That is a matter of reputation and responsiveness, not a rule, so ask your agent which lenders have a strong local track record. Our [financing page](/financing) explains how we connect buyers with lenders, and our guide to [making a winning offer](/blog/winning-offer-competitive-market-ny-hudson-valley) shows how the letter fits into an offer.
+
+## Your next step
+
+Credit, DTI, income and assets: prepare those four and the pre-approval becomes routine. If you would like introductions to lenders who work in your county, [talk with us](/connect), and see the full sequence in our [first-time home buyer checklist](/blog/first-time-home-buyer-ny-10-step-checklist).
+
+## Frequently asked questions
+
+### What is the difference between pre-qualification and pre-approval?
+
+Lenders use the words differently. The CFPB advises focusing on the process: a letter based on information the lender has verified is stronger than one based on what you reported. Ask the lender what it checked.
+
+### What documents are needed for a mortgage pre-approval?
+
+ID, 30 days of pay stubs, two years of W-2s and tax returns, the two most recent monthly statements for all accounts (all pages), a list of your debts, and where relevant a gift letter, divorce decree or bankruptcy papers.
+
+### What is a good debt-to-income ratio in 2026?
+
+Lower is safer. Fannie Mae allows up to 50% through its automated underwriting and 36% to 45% when a loan is underwritten by hand, but a ratio in the 30s leaves more room in your monthly budget.
+
+### Does a pre-approval hurt my credit?
+
+The lender will usually check your credit. According to the CFPB, multiple mortgage credit checks within a 45-day window are recorded as a single inquiry, so you can compare several lenders without extra damage, as long as you shop within that window.
+
+### How long does a pre-approval last?
+
+Letters carry an expiration date set by the lender, and your documents go stale as new statements and pay stubs arrive. Check the date on your letter and update it before you make an offer if needed.
+
+## Sources
+
+- Consumer Financial Protection Bureau, [prequalification vs preapproval](https://www.consumerfinance.gov/ask-cfpb/whats-the-difference-between-a-prequalification-letter-and-a-preapproval-letter-en-127/), [what happens when a mortgage lender checks my credit](https://www.consumerfinance.gov/ask-cfpb/what-exactly-happens-when-a-mortgage-lender-checks-my-credit-en-2005/), [debt-to-income ratio](https://www.consumerfinance.gov/ask-cfpb/what-is-a-debt-to-income-ratio-en-1791/) and [General QM loan definition](https://www.consumerfinance.gov/rules-policy/final-rules/qualified-mortgage-definition-under-truth-lending-act-regulation-z-general-qm-loan-definition/)
+- Fannie Mae, [Desktop Underwriter credit update](https://singlefamily.fanniemae.com/applications-technology/desktop-underwriter-desktop-originator/desktop-underwriter-credit-risk-assessment-updates) and Selling Guide [B3-6-02](https://selling-guide.fanniemae.com/sel/b3-6-02/debt-income-ratios), [B3-4.2-01](https://selling-guide.fanniemae.com/sel/b3-4.2-01/verification-deposits-and-assets), [B3-4.2-02](https://selling-guide.fanniemae.com/sel/b3-4.2-02/depository-accounts), [B3-4.3-04](https://selling-guide.fanniemae.com/sel/b3-4.3-04/personal-gifts)
+- HUD, [FHA minimum credit score](https://answers.hud.gov/FHA/s/article/Does-FHA-require-a-minimum-credit-score-and-how-is-it-determined)
+
+Checked against these sources on September 24, 2026. Individual lenders can add requirements on top of these program rules.`;
