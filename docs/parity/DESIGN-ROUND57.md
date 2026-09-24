@@ -2298,3 +2298,71 @@ fewer or lower tiles at the territory.
 production preview on :3102 served its pages WITHOUT their CSS for about 25 minutes (from ~14:08,
 when the dev server started, to the rebuild at ~14:33); after that, five rebuilds of 70 to 124 s
 each. Left running on the build of `590a253`; the dev server stopped.
+
+### Round 12, the orchestrator's verification and the decision (2026-09-24, HEAD `72e5345`, :3102 on `590a253`)
+
+Re-run, not read: tsc clean; vitest **1924 / 1924** (144 files); `/` and `/lab/ml` both serve
+with their stylesheets (the builder's 25-minute CSS outage from a second server on the shared
+`.next` is over; the rule "never a dev server beside :3102" stands, and it cost the owner a
+broken page while he was looking). My cold run of the lab's lag probe at 1440: the map's
+first paint at **2.3 s**, first idle at 3.3 s, the worst in-flight frame **41.7 ms**, fourteen of
+seventeen flights with no frame over 34 ms, MapLibre's render 2 to 3.6 ms a frame, our layer
+0.4 to 1.2 ms. Google on the same machine: first steady 5.3 to 12 s, worst flight frame 76 to
+97 ms, 16 to 20 frames over 34 per flight. Looked at `12/compare/google-vs-maplibre-1440.png`,
+`12/final/manhattan-1440.png`, `12/final/hero-390.png`: at the territory the two read alike
+with the same lights; close in MapLibre is a crisp, designed night map (the street grid as
+fine lines, the parks dark, the warm lights the only warmth, sharp at every height and every
+moment of a flight) where Google is a night photograph with more texture and its coarseness
+high up. The phone territory places all our names over a clean road web.
+
+**Decision: the MapLibre night map becomes the home page's ground** (round 13), behind
+`NEXT_PUBLIC_HOME_MAP` with `ml` the default and `g3d` and `night` one switch away. It answers
+the owner's four asks at once: fast (2 to 3 s to the whole territory against 9 to 12 to
+Google's reveal), good at every zoom, no key and no Google load on the home page, and the
+design he approved unchanged (the dark territory, the lights, the names, the flights, the
+click). Known costs, recorded: on Slow 4G the territory takes 26 s (terrain and 13 vector tiles;
+round 13 lightens it), the lab's server render is 0.5 to 0.95 s where `/` is 5 to 15 ms (a lab
+artefact to keep out of the home page), the cover is still Google's camera (round 13 renders it
+from this map), OpenFreeMap is "as-is" and may be discontinued (a self-hosted PMTiles copy is
+the fallback if it ever is), and the CSP needs two hosts (`tiles.openfreemap.org`,
+`s3.amazonaws.com`) added with this measured reason.
+
+### Round 13 brief (for builder 13): the MapLibre night map on the home page
+
+1. **The switch.** `lib/home-map.ts` resolves `NEXT_PUBLIC_HOME_MAP`: `ml` (default when
+   unset), `g3d` (needs the Maps key), `night`; tested. `app/page.tsx` renders `MlGround` for
+   `ml` with the same sections and copy; the lab page becomes a thin twin or is deleted (one
+   source of truth, as round 1 did with the Google lab); `NIGHT_ROUTES`, the header and the
+   footer treat `/` as they do today. The home page's server render stays 5 to 15 ms (no
+   `force-dynamic`, the map's files preloaded as the lab does).
+2. **CSP** (`next.config.ts`): add `https://tiles.openfreemap.org` to `connect-src` and
+   `https://s3.amazonaws.com` to `connect-src` and `img-src` (whichever the tiles and terrain
+   need, measured with the console), the test in `lib/chat-csp.test.ts` updated; nothing else
+   in that file changes; say in the commit that this is the measured reason.
+3. **The cover, from this map**: render the territory shot from MapLibre itself (headless, the
+   same style, the same lights and glow from the same plan) into `public/images/home-night-cover.webp`
+   and `-tall.webp` at both widths so the dissolve is invisible (a pixel diff to the first idle
+   frame, reported, must be under round 9's 6.9 / 4.2); keep the file sizes in range;
+   `ATTRIBUTIONS.md` and `SceneCredit.tsx` follow the real sources (OpenStreetMap, OpenMapTiles
+   and OpenFreeMap, the USGS and NOAA terrain).
+4. **Slow lines**: when the connection is slow (`navigator.connection.effectiveType` of `3g` or
+   `2g`, or the first vector tile taking more than 2 s), skip the terrain and the hillshade
+   and draw the flat night map (the lights and names carry it), so the territory is whole
+   within 10 s on Slow 4G (26 today); measured on Slow 4G at 1440 and 390, cold, before and
+   after; the fast line unchanged (territory whole under 3 s).
+5. **The page's own scroll cost** into "Featured listings" (62 ms with the map blocked): find
+   the cause (a layout or a paint of the rail) and fix it if it is ours; report either way.
+6. **Everything the Google ground had stays true on the MapLibre ground**: the caption's
+   claims, the hover label on its light, the click's fly-in and route, the phone tap, the
+   featured cards' focus preview, the county rows' navigate-on-click and hover preview,
+   reduced motion, JS off (the cover), no WebGL (the cover), the day pages byte-identical.
+
+Gates: the first-fifteen-seconds probe on `/` (frames every 250 ms; the cover to the map)
+both widths fast and Slow 4G; the lag probe on `/` cold x3 at 1440 and cold x2 at 390 (worst
+in-flight frame under 60 ms); frames at every stop both widths; the contrast kit (0 at 390,
+the two pills at 1440); the calibration probe (label on its light within 2 px at three stops);
+the hover and tap probes; tsc; vitest only up (the resolver, the slow-line rule, the CSP test);
+overflow at 1440/390/320; day pages diffed against `1b2aab9` at 1440 and 390; the videos
+re-cut (`_scratch-r57-video.mjs` on `/`); `git diff --stat` outside the home page's files,
+`next.config.ts`, the cover images, `ATTRIBUTIONS.md`, `SceneCredit.tsx` and tests empty.
+Rules: ONE server on the shared `.next`; never a dev server while :3102 runs; short outages.
