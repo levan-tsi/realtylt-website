@@ -31,6 +31,7 @@ import { LightLayer, type LayerCamera } from "./light-layer";
 import { focalOf, glowLevel, homesEcef, keyOrder, planDensity, projectAll, projectHome, representedCounts } from "./light-plan";
 import { backWaitMs, earlyScroll } from "./warm-plan";
 import { QUIET_MIN_MS, coverCap, holdLeft, quietBack, tilesQuiet, walkFits } from "./sharp-gate";
+import { veilLift, type LiftBy } from "./flight-veil";
 import type { MapPin } from "@/lib/idx/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -62,8 +63,10 @@ export interface G3dStats {
   loads: number;
   /** The map's first finished frame (under the poster). */
   navToFirstSteady: number | null;
-  /** Tiles the page saw arrive before the reveal (sharp-gate.ts). */
+  /** Tiles the page saw arrive (sharp-gate.ts), the whole visit. */
   tiles: number;
+  /** Round 57.11 (flight-veil.ts): each landing's time to sharp, and what said so. */
+  lifts: { shot: string | null; ms: number; by: LiftBy }[];
   /** How the walk's return ended: Google's steady, the tiles quiet, or the time limit. */
   backBy: "steady" | "quiet" | "cap" | null;
   /** How long the pre-warm walk took, and each step (null: no walk). */
@@ -160,6 +163,8 @@ export class G3dController {
       onReveal: () => void;
       onLand: () => void;
       onFlightStart: () => void;
+      /** The landed frame is sharp (flight-veil.ts veilLift): the flight's veil may lift. */
+      onSharp?: (by: LiftBy) => void;
       onError: (msg: string) => void;
       /** The shot the map should open on (the page may be reloaded mid-scroll). */
       initial: ShotName;
@@ -293,6 +298,7 @@ export class G3dController {
     this.layer?.stop();
     clearTimeout(this.landTimer);
     clearTimeout(this.pollTimer);
+    clearInterval(this.sharpPoll);
     const el = this.el;
     if (!el) return;
     el.removeEventListener("gmp-steadychange", this.onSteady as EventListener);
@@ -317,6 +323,7 @@ export class G3dController {
 
   private onSteady = (e: Event & { isSteady?: boolean }) => {
     this.steadyNow = !!e.isSteady;
+    if (this.steadyNow) this.lastSteadyAt = performance.now();
     for (const w of [...this.steadyWaiters]) w(this.steadyNow);
     const next = this.gate.setSteady(this.steadyNow, performance.now());
     if (next && this.revealed) this.go(next);
@@ -382,7 +389,8 @@ export class G3dController {
 
   private reveal() {
     this.revealed = true;
-    this.unwatchTiles();
+    // Round 57.11: the tile clock keeps running after the reveal: every landing asks it whether the
+    // landed frame is sharp (flight-veil.ts).
     this.steadyAt = performance.now();
     performance.mark("g3d:steady");
     this.opts.onReveal();
@@ -658,6 +666,8 @@ export class G3dController {
     const from = this.cam ?? target;
     this.nextLeg = null;
     this.flights++;
+    this.flightStartAt = performance.now();
+    clearInterval(this.sharpPoll);
     this.flying = true;
     this.gate.started();
     this.opts.onFlightStart();
@@ -694,9 +704,45 @@ export class G3dController {
     this.at = this.goingTo;
     this.layer?.setFlying(false);
     this.opts.onLand();
+    this.watchSharp();
     const next = this.gate.landed(performance.now());
     if (next) return this.go(next);
     this.pump();
+  }
+
+  // ---- THE LANDED FRAME, SHARP (round 57.11, flight-veil.ts) -------------------------------------
+  // After every landing the tile clock is asked, every 50 ms, whether the frame is sharp; the answer
+  // (or the 2.5 s bound) lifts the flight's veil. A new flight stops the watch.
+
+  private sharpPoll: ReturnType<typeof setInterval> | undefined;
+  private flightStartAt = -Infinity;
+  private lastSteadyAt = -Infinity;
+  /** The shots whose landed frame was sharp by the tiles or Google (not by the bound). */
+  private sharpShots = new Set<string>();
+  private lifts: { shot: string | null; ms: number; by: LiftBy }[] = [];
+
+  private watchSharp() {
+    clearInterval(this.sharpPoll);
+    const landedAt = performance.now();
+    const shot = this.at;
+    const check = () => {
+      const now = performance.now();
+      const by = veilLift({
+        now,
+        landedAt,
+        lastTile: this.lastTile,
+        steady: this.steadyNow && this.lastSteadyAt > this.flightStartAt,
+        drawn: shot !== null && this.sharpShots.has(shot),
+        watching: this.tileObs !== null,
+      });
+      if (!by) return;
+      clearInterval(this.sharpPoll);
+      if (shot && by !== "cap") this.sharpShots.add(shot);
+      this.lifts.push({ shot, ms: Math.round(now - landedAt), by });
+      if (this.lifts.length > 40) this.lifts.shift();
+      this.opts.onSharp?.(by);
+    };
+    this.sharpPoll = setInterval(check, 50);
   }
 
   /** The gate's hook (it asks for marker work once the map is still): the layer needs none. */
@@ -867,6 +913,7 @@ export class G3dController {
       loads,
       navToFirstSteady: this.firstSteadyAt === null ? null : Math.round(this.firstSteadyAt),
       tiles: this.tiles,
+      lifts: this.lifts,
       backBy: this.backBy,
       warmMs: this.warmMs,
       warmSteps: this.warmSteps,

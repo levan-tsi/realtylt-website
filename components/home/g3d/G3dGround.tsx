@@ -22,6 +22,7 @@ import { mapIdFrom, modeChoice, type ModeChoice } from "./map-options";
 import { camOverrides, durOverrides } from "./lab-query";
 import { featuredGlyph } from "./glyph";
 import { nightGrade, type NightGrade } from "./night";
+import { VEIL_IN_MS, VEIL_OUT_MS, veilDepth } from "./flight-veil";
 import { applyClaims, claims, type LightsState, type MapState } from "./claims";
 import { cameraShowing, clickAction, labelContent, namesOverlap, openPoint, placeHoverLabel, tapNext, type LabelContent, type Rect, type TapState } from "./interaction";
 
@@ -279,6 +280,18 @@ export function G3dGround({
   /** The night grade (night.ts) and the lights' thinning (`?thin=lattice` compares round 57.2's). */
   const [night, setNight] = useState<NightGrade | null>(nightGrade(null).grade);
   const lightCanvas = useRef<HTMLCanvasElement>(null);
+  /** THE FLIGHT'S VEIL (round 57.11, flight-veil.ts): black over the graded map and under our lights,
+   * deepened as a flight starts, lifted when the landed frame is sharp. `?fveil=0` turns it off,
+   * `?fveil=0.7` sets its depth (the lab's comparison). */
+  const flightVeil = useRef<HTMLDivElement>(null);
+  const setFlightVeil = (flying: boolean, reduced: boolean, depth?: number) => {
+    const el = flightVeil.current;
+    if (!el) return;
+    const o = veilDepth({ flying, depth });
+    el.style.transition = reduced ? "none" : flying ? `opacity ${VEIL_IN_MS}ms cubic-bezier(0.2, 0, 0, 1)` : `opacity ${VEIL_OUT_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    el.style.opacity = String(o);
+    el.dataset.state = flying ? "deep" : "clear";
+  };
   const [error, setError] = useState<string | null>(null);
   const [current, setCurrent] = useState<AreaShot | null>(null);
   /** The home the pointer (or a tap) is naming: its index, where its listing is (the town's search
@@ -689,6 +702,8 @@ export function G3dGround({
     // Highlands-to-Westchester path once, which compiles the GPU shader behind that flight's 236 ms
     // stall; the phone keeps the one-shot jump. The lab's switches are listed in warm-plan.ts.
     const q = new URLSearchParams(window.location.search);
+    const veilQ = q.get("fveil");
+    const veilD = veilQ !== null && veilQ.trim() !== "" && Number.isFinite(Number(veilQ)) ? Number(veilQ) : undefined;
     const pageShots = [...new Set(names.current)].filter((n) => n !== initial);
     const plan = warmPlan({ pageShots, initial, narrow: isNarrow({ width: window.innerWidth }), q });
     const c = new G3dController({
@@ -735,11 +750,13 @@ export function G3dGround({
         showFocusRef.current();
       },
       onFlightStart: () => {
+        setFlightVeil(true, reduced, veilD);
         hideHover();
         hideLabel();
         showTerritoryRef.current();
         showTownsRef.current();
       },
+      onSharp: () => setFlightVeil(false, reduced, veilD),
       onError: (m) => {
         // Once, whatever fails: the poster comes back (or never left) and stays.
         if (failed.current) return;
@@ -1201,6 +1218,8 @@ export function G3dGround({
         <div ref={host} className="absolute inset-0" inert style={night ? { filter: night.filter } : undefined} />
         {/* THE NIGHT'S FLOOR (night.ts): a deep blue-black screened into the graded map's shadows. */}
         {night ? <div aria-hidden className="absolute inset-0" style={{ background: night.tint, mixBlendMode: "screen" }} /> : null}
+        {/* THE FLIGHT'S VEIL (flight-veil.ts): over the night, under our lights, clear of Google's logo. */}
+        <div ref={flightVeil} aria-hidden data-g3d-flight-veil data-state="clear" className="absolute inset-0 bg-black" style={{ opacity: 0, WebkitMaskImage: LOGO_HOLE, maskImage: LOGO_HOLE }} />
         {/* OUR LIGHTS (light-layer.ts): over the night, under the scrims and the words. */}
         <canvas ref={lightCanvas} aria-hidden data-g3d-lights className="absolute inset-0 h-full w-full" style={{ mixBlendMode: "plus-lighter" }} />
       </div>
