@@ -1371,3 +1371,126 @@ must never read as a freeze (the cover's lights breathe softly, or the cover dri
 so something moves while it holds); shave the boot's critical path where it is ours (script
 order, preloads, `fetchPriority`, the lights fetch in parallel with the map). Report the
 first-steady, reveal and sharp-reveal times before and after, both widths.
+
+### Round 8, the builder's numbers (commit `17161cc`; for the orchestrator to re-run)
+
+Production build on :3102 (the code of `17161cc`), headed Chrome, RTX 2060, cold = a fresh
+profile per run. Instruments (gitignored): `scripts/_scratch-r57g-sim.mjs` (the live planner over
+the real homes at every stop's round-7 camera, offline), `-bench.mjs` (the plan's cost),
+`-frames.mjs` (round 7's plus the least on-screen gap per stop), `-hover.mjs` (the mouse's gap),
+`-cost.mjs` (the layer per frame during a flight into a stop), `-lag.mjs`, `-table.cjs`,
+`-calib.mjs`, `-contrast.mjs`. Outputs under `scripts/_scratch-r57/8/`.
+
+**1. Counts, by frames.** One smooth power law of the range (cameras.ts `pxPerLight`: 2,100 px
+of window per light at 30 km, power 0.2, a phone 0.42 of that; `MAX_LIGHTS` 2,400); round 57.2's
+tiers (130 / 380 / 900) are gone, tested: coming down 2 % never adds more than 4 %. The first
+build (power 1.1) drew 971 lights at the Dutchess chapter, a starfield over the whole frame and
+under the words; nearly flat keeps the lights' density on screen balanced as the camera comes
+down (the owner's "balance it out"), and the gap holds the cities. Drawn per stop, round 7 ->
+round 8:
+
+| stop | 1440 | 390 |
+|---|---|---|
+| territory | 130 -> **445** | 72 -> **251** |
+| Dutchess / Highlands / Westchester chapters | 245 / 380 / 356 -> 511 / 588 / 555 | 72 / 110 / 74 -> 308 / 326 / 248 |
+| Ulster / Dutchess Co. / Orange / Putnam / Rockland / Westchester Co. | 191 / 202 / 130 / 194 / 362 / 231 -> 330 / 413 / 403 / 182 / 296 / 438 | 72 / 72 / 72 / 72 / 102 / 72 -> 158 / 296 / 134 / 102 / 169 / 297 |
+| Bronx / Manhattan / Queens / Brooklyn / Staten Island | 240 / 169 / 380 / 380 / 85 -> 179 / 109 / 481 / 388 / 72 | 129 / 161 / 98 / 152 / 67 -> 117 / 94 / 166 / 216 / 54 |
+| harbour / region | 380 / 291 -> 610 / 531 | 124 / 74 -> 364 / 324 |
+
+Said plainly: the Bronx, Manhattan, Staten Island and Putnam draw FEWER than round 7 (and the
+phone's Bronx, Manhattan and Staten Island), because round 7's gap there was 8 to 11 px, under the
+pointer's reach; with the 14 px floor the gap, not the count, binds in the boroughs. Frames:
+`8/after/<stop>-{1440,390}.png`, round 7 beside round 8 in `8/after/sheet-before-after-{1440,390}.png`.
+Looked at: the territory reads as the market (the city a warm field, the valley a scatter, every
+county lit); Westchester County's south glows and its north is points; Manhattan is a lit island;
+Queens is full, its parks and cemeteries dark holes in the glow.
+
+**2. The gap that keeps the mouse honest** (`densityGap`): 12 px at the territory, `CITY_GAP` 14 px
+from 60 km down (eased in log range between 120 and 60 km), 14 px on a phone at every height.
+Least on-screen gap measured per stop: 12.0 at the territory, 13.0 to 14.8 at every other stop
+(1440), 14.0 to 14.3 (390). The hover probe at Queens 1440 (50 drawn lights on open ground; the
+pointer comes from an empty place to the light plus a random aim error; pass = the page lights
+THAT light and the label opens): gap 16 -> **50 / 50** at 5 and 8 px error (396 lights); gap 14
+-> **50 / 50** at 5 and 7 px (478 lights). Both resolve every position, so 14, the lowest the
+brief allows, for the owner's "in cities it should be a little more"; a second light is inside
+the 14 px hit radius at 20 of 50 positions (26 at 7 px), the nearest wins. Final build: 50 / 50 at
+5 and at 7 px. Phone: **30 / 30** taps on 30 lights at the territory shot named the home (a tap on
+the words between them puts the label out; at Queens only 8 lights stand clear of the list at
+390). The probe's first versions failed 9 of 50 and 29 of 30: its own pointer path crossed a
+county row (a flight to Staten Island) and its "elsewhere" tap landed on a light twice (a listing
+opened); fixed in the probe, not the page.
+
+**3. The stable choice** (`planDensity` `keep`): among the homes the camera reaches in the fixed
+order before its budget fills, the lit ones are taken first (held to the gap and the budget),
+then the rest. Tested: coming down, every lit home in the new view stays and the new ones arrive
+around them; going back up returns 98 %+ of the high camera's own plan (the rest are homes at the
+low view's own edge); a flight within one view returns it exactly; without `keep` the gap alone
+drops lit homes on the way down (the reshuffle; on the real homes, round 7's planner kept 137 of
+209 at Westchester and 2 of 25 at the harbour). The tier easing of round 6 is unchanged. The order
+is still round 6's hash of the home's index (the cover script uses it too).
+
+**4. The neighbourhood glow** (glyph.ts): the core as before; the near halo tightened (9..13 px at
+0.54 -> 6..8 px at 0.5; the wider one summed into a blob at 14 px spacing); and a wide soft warm
+GLOW (20 px at the territory to 32 px close in, about one and a half gaps; `GLOW_RGB` 255,196,132,
+the halo's warmth deeper; profile (1-u^2)^2), added like the rest. The first build's 31 px glow at
+Queens summed into a flat tan blanket (`8/glow/`), so the radius came in. **Each light's glow is
+weighted by the homes it stands for** (`representedCounts`: every home on screen goes to its
+nearest drawn light within 1.5 gaps; five steps 0.4 / 0.7 / 1 / 1.35 / 1.7 of the view's median),
+so the density shows in the glow where the gap has made the points even. Strength chosen by frames
+at three strengths, three stops, both widths (`8/glow2/sheet-{hero,westchester-county,queens}-{1440,390}.png`,
+columns 0.08 / 0.12 / 0.18; `8/glow2/crop-queens-1440.png`): **0.12**. At 0.18 Queens hazes and the
+city at the territory becomes a glow patch; at 0.08 the territory's clusters barely warm their
+ground; at 0.12 the city warms, Westchester's south glows over its north, Queens' parks read as
+dark holes, and every core stands on its own. The hovered or focused light: core x1.6 to white,
+halo x1.45, glow x1.5 and its strength x2, a cubic ease-out over 140 ms coming up and round 6's
+smoothstep going down (`8/hover/desk/swell-1440.png`: the lit light over Forest Hills, its label
+beside it). The page's `?glow=0.08|0.12|0.18|0` and `?gap=14..20` compare.
+
+**5. Cost.** The layer per frame on camera events during a flight into the fullest stops
+(`8/cost-{1440,390}.json`, mean / p95 / max ms): 1440 harbour (610 lights) **0.62 / 1.0 / 2.7**,
+region 0.70 / 0.9 / 1.2, Westchester 0.81 / 1.2 / 4.6, hero -> Dutchess 0.87 / 1.5 / 6.7; 390
+harbour (364) **0.49 / 0.8 / 1.9**, Westchester 0.52 / 0.9 / 1.4, hero -> Dutchess 0.70 / 1.2 /
+2.8, region 0.73 / 1.2 / 3.8. So under 2 ms at 1440 everywhere; on the phone the mean is under 1
+ms on every flight, the p95 1.2 on two of four (not under 1 there, said plainly). Two changes made
+it so: bakes read the light's radial profile from a table an eighth of a device pixel fine (the
+first build called glyphAdd per pixel on 4x larger sprites and five glow steps: layer maxima of 7
+to 22 ms in its lag runs, `8/lag-v1/`), and a frame makes at most two new bakes (the others keep
+last frame's sprite for a frame). The plan (with the counts) is 1 to 5 ms at 1440 and up to 8 ms
+at the phone's territory (round 7: 0.2 to 1.7), once per flight start.
+
+Lag, cold (`8/lag/`, final build):
+
+| | 1440 x3 | 390 x3 |
+|---|---|---|
+| boot worst / over 34 | 438 / 42, 424 / 32, 424 / 24 | 431 / 32, 431 / 25, 410 / 21 |
+| the page's Westchester flight | **27.8 / 34.7 / 48.6** | 90.4 / 131.9 / 90.3 |
+| worst flight frame of the scroll | **83.5 / 83.3 / 97.3** | 90.4 / 131.9 / 90.3 |
+| flights' frames over 34, sum | 68 / 67 / 119 | 29 / 8 / 72 |
+| marker adds / in the DOM | 0 / 0 | 0 / 0 |
+| first steady / cover gone, s | 6.1 / 9.8, 5.9 / 9.9, 5.5 / 9.2 | 5.3 / 9.5, 5.4 / 9.5, 5.2 / 9.1 |
+| layer per frame over the scroll, mean / p95 / max | 0.75-0.88 / 1.3-1.5 / 5.9-18 | 0.58-0.60 / 1.2 / 8-13 |
+
+At 1440 the Westchester flight holds under 60 ms and the worst flight frame under 140 ms in all
+three; boot is unchanged (round 7: first steady 6.2 s, cover gone 9.9 s). At 390 the Westchester
+flight is 90.3 / 90.4 as in round 6 (90.3 x3; the record has no round-7 phone lag) and once 131.9,
+a single frame at the landing (2.6 s into a 2.4 s flight, where round 6's undiagnosed 278 ms was).
+An intermediate build's run (`8/lag-v2/desk-2`) had the shader warm-up miss under the cover (the
+walk's flight 125 ms, not ~250) and then a 243 ms Westchester stall: the known 1-in-17 of round 6,
+seen once in 9 cold 1440 runs this round. The over-34 sums vary run to run (56 to 119).
+
+**6. Gates.** Contrast kit (`8/contrast/`): 1440 = 2 (AI and Connect, the pills the kit misreads),
+390 = **0** outside the logo hole (7 text-stops inside it, faded on purpose); lowest real text 4.53
+(the chapter headings over the lights, unchanged). Calibration (`8/calib*/`, a red Google marker
+against our dot per home): 1440 steady max **2.4 / 2.2 / 3.6 px** at the territory, Westchester
+County and Queens (medians 2.0 to 2.5), mid-flight max 3.5 to 4.1; 390 steady medians 2.0 to 2.1,
+max 6.0 / 2.4 / 13.7 (one Queens outlier; with lights 14 px apart the probe may pair a red marker
+with the neighbouring dot; not diagnosed, like round 6's three 11 to 19 px phone outliers).
+Overflow 0 at 1440 / 390 / 320 at five scroll positions. tsc clean; vitest **1849 -> 1861** (138
+files). Nothing outside `components/home/g3d/` changed.
+
+**Left for rounds 9 and 10.** The cover (`make-map-cover.mjs`) still bakes round 7's 130 lights and
+its per-pixel loop reaches only the halo's radius: at the reveal the live layer ADDS lights (the
+old ones nearly a subset, the same hash order) and the glow. Round 9's re-render needs the script's
+loop radius at `reachOf(g)`, `densityGap(range, narrow)` for the phone, and the glow steps. A kept
+light's glow step can change at a flight's start (its share of the homes changes with the view), a
+small step in a faint glow; not measured as visible. The plan costs 1 to 8 ms once per flight.
