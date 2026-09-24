@@ -1638,6 +1638,163 @@ and the cover drifts (diff rose to 8.0 within an hour). Round 10 orders by listi
 `light-plan.ts` (stable across syncs; only the new and gone homes change) and the handoff
 records the cover re-render (`scripts/make-map-cover.mjs`) as a release step.
 
+### Round 10, the builder's numbers (commits `dffdf6c` `3a88bc4` `4732761` `819e91e` `18a29b2`; for the orchestrator to re-run)
+
+Production build on :3102, headed Chrome, RTX 2060, cold = a fresh profile per run. Instruments
+(gitignored): `scripts/_scratch-r57i-see.mjs` (a CDP screencast, a frame every 250 ms for 15 s, a
+contact sheet, the map's SHARPNESS per frame = the Laplacian's variance over a map region
+against the same page's settled frame; `--mode=map` hides the cover, our lights, the shades and
+the words so the number is Google's tiles alone; `--early=`, `--slow` = DevTools' Slow 4G by CDP),
+`-boot.mjs` (the boot's clock, interleaved A/B, no screencast), `-lag.mjs` (round 9's) and
+`-lagsum.mjs`, `-drift.mjs`, `-live.mjs`, `-dissolve.mjs` (`--still` = reduced motion, the breath
+off), `-breath.mjs`, `-canvas.mjs`, `-xhr.mjs`, `-compare.mjs`. Outputs under `scripts/_scratch-r57/10/`.
+**Said first: the line changed under this round.** At the start Google's first tile came at 1.6 to
+1.9 s and the territory first drew at 4.6 to 6.0 s; from mid-round the same probes saw the first
+tile at 2.8 to 4.8 s and the first draw at 9 to 15 s (a curl of Google's 828 KB wasm: 1.1 to 3.0
+MB/s). So every before/after below is an INTERLEAVED pair on the same line, or says which line.
+
+**1. The ugly stretch, named: the cover itself, held still over a map that was already sharp.**
+Before (`c9d9a92`, fast line, `see/base-*`): the visitor sees our cover from 0.5 s to 9.4 s at
+1440 (8.6 s at 390), and nothing on it moves. Its sharpness is **0.13** of the live map's at 1440
+(0.55 at 390: the tall cover is denser; `see/base-see-1440/sheet.jpg`). Under it, Google's map alone
+(`--mode=map`) is blank-blurred (0.01) until the tiles have streamed, then 0.6 to 0.88 at 5.0 s and
+**0.96 to 1.0 at 5.5 to 6.0 s**; `gmp-steadychange` says steady 0.2 to 0.8 s after that. Then the
+cover held **3.7 s more at 1440 (4.0 to 4.2 s at 390)**: the walk's steps (1.7 s: the Highlands set,
+the 400 ms compile flight to Westchester) and then **2.0 s waiting for a steady event that never
+came**, over a territory that was back at 0.94 to 0.95 sharp 250 ms after the return and whose
+tiles had stopped arriving 300 ms after it. The reveal itself was NOT onto soft tiles (1.0 at the
+reveal on the fast line), and the first flights do not pop: after the reveal the Dutchess flight
+lands at 0.98 to 1.0 of its settled sharpness at 1440 (tiles stop 0.3 s before the landing) and
+0.96 to 1.0 at 390 (`see/pop-dutchess-*`). So the stretch the owner called "bad quality till it
+loads ... maybe it just froze" is our soft still, motionless, 4 s longer than the map needed.
+On Slow 4G (`see/base-slow-*`): the page's JS arrives at 3.7 s, the Maps script is asked for at
+4.0 s, Google's 828 KB wasm streams 8.8 to 18.1 s (sharing the line with our elevation, 367 KB, and
+lights, 133 KB), the first tile comes at 18.4 s, the map is 0.92 sharp at 28 s and not steady by
+45 s: the cover holds 45 s, still.
+
+**2. The fixes.**
+- *The sharp gate* (`sharp-gate.ts`, 6 tests; `3a88bc4`, `18a29b2`). The page cannot read Google's
+  pixels (the map's canvas is out of reach, `-canvas.mjs`; the tiles are not the page's XHR or
+  fetch, `-xhr.mjs`) but it sees every tile arrive (resource timing, `rt/earth`). The walk's return
+  to the shot the map already drew is drawn when no tile has come for **300 ms** (at least 250 ms
+  after the cut). **Threshold, measured**: the map at that moment is **0.96 / 0.98 at 1440 and 0.99 /
+  0.99 at 390** of its settled sharpness, 1.0 by the end of the 700 ms dissolve (`see/final-map-*`),
+  i.e. the rule is "at least 0.9 of settled at the reveal frame", met in 4 of 4. The first draw
+  stays Google's steady: a quiet rule for it was built and measured, and on the slower line it fired
+  during a pause of the stream over a map still at **0.01** (`see/v2-map-1440-1`), so it was taken
+  out. A visitor's NEW section after an early scroll also waits for steady (`quietBack`), and a
+  steady within 500 ms of a cut does not count as a draw. `?sharp=0` puts round 9's waits back.
+- *The 14 s cap.* The walk starts only with 2.6 s of room before 14 s, no step starts without room
+  for itself and the return, and every wait under the cover ends by the cap. Before the map has
+  drawn at all the cover stays (an undrawn map is worse than our picture: Slow 4G, above). The price,
+  said plainly: when the first draw comes after about 11.4 s the compile walk is skipped and the
+  1440 visitor meets the Westchester stall once (measured on the slow line: 243 / 271 / 333 ms,
+  `lag/fin3-desk-*`).
+- *The breath* (`4732761`): a copy of the cover added over itself with `contrast(3)` (the ground,
+  everything under mid-grey, goes to black; only the lights and their glow add), its opacity 0 ->
+  **0.35** -> 0 over **4.2 s**, ease-in-out, on the compositor. Chosen by frames
+  (`breath/levels-1440.png` without the filter: the sea and land lift with the lights, mean 29.7 ->
+  38.2 at 0.3; `levels-1440-f.png` with it: 29.7 -> 31.6 at 0.35, the city's glow swells; 0.45 and
+  up turns orange). Measured in the running page: the cover's mean level over the map region
+  oscillates 28.4 to 29.9 with the 4.2 s period (before: 28.5 flat for 9 s). Reduced motion: 0
+  animations. Not drawn with JS off or after a map failure.
+- *The phone's walk* (`819e91e`): both first shots always (Dutchess, the Highlands), bounded by the
+  cap instead of the 1.5 s budget. On the slower line step one took 1.73 and 1.83 s, the old budget
+  stopped the walk after it, and the first flight's landing stalled **292 and 278 ms**, as with no
+  walk (`?warm=0`: 271, 278 on the fast line): 4 of 4. With both: 90.3 / 97.3 / 104.2 and 90.3 /
+  97.1 ms.
+- *The pre-warm budget, decided*: nothing added. The walk already visits the Highlands and
+  Westchester (1440) or Dutchess and the Highlands (390), and the first flights land sharp (above);
+  pre-warming more would only lengthen the cover.
+- *The boot's critical path*: **tried and reverted**. An inline script in the page's HTML starting
+  the Maps script before hydration (`mapsBoot`, adopted by `loadMaps`), cold A/B x5 at 1440: the
+  script asked for at 281 ms against 534, but the map element created LATER (1,064 against 987 ms:
+  Google's modules compete with hydration) and the reveal the same (7.8 against 7.9 s); on Slow 4G
+  x2: the script at 1.1 s against 4.0 s and the element at 5.1 against 7.7 s, yet the first tile at
+  19.2 against 19.0 s and the first draw at 44 s either way (the line is the limit, not our order).
+  Not shipped. Deferring our lights and elevation behind Google's wasm would free ~500 KB on Slow 4G
+  (about 2.5 s of a 45 s load) and nothing on a fast line: not built. The lights already load in
+  parallel with the map (asked for at 0.5 s, done by 0.6 to 0.9 s on a fast line, long before the
+  first draw).
+
+**3. The times, before and after.**
+
+| | before | after |
+|---|---|---|
+| 1440, cover's hold after the first draw, interleaved x4 / x3 (`boot/final-ab-1440`) | 3.67 / 3.69 / 3.70 / 3.71 s | **2.16 / 2.24 / 2.44 s** |
+| 390, the same, x3 (`boot/final-ab-390`) | 4.17 / 4.24 / 4.37 s | **1.86 / 2.14 / 2.49 s** |
+| 1440 reveal, median of the A/B | 11.83 s | **9.37 s** |
+| 390 reveal, median of the A/B | 9.85 s | **7.94 s** |
+| 1440 fast line, lag runs (first draw / cover gone) | 5.1-5.8 / 9.0-9.4 s (round 9) | 5.7-6.6 / **7.8-8.8 s** (`lag/final-desk-2..4`) |
+| slow line, one pair each (`see/last-*`): 1440 first draw / cover gone | 14.8 / 18.9 s | 13.6 / **13.9 s** (walk skipped by the cap) |
+| slow line, 390 | 11.1 / 17.5 s | 8.7 / **13.3 s** |
+| sharpness at the reveal, map alone | 1.0 (fast line) | **0.96 / 0.98 (1440), 0.99 / 0.99 (390)** |
+| Slow 4G, 1440 | map drawn ~44 s, cover still until then | the same ~44 s (bandwidth), the cover breathes |
+
+Frames at 2, 5, 8, 11 and 14 s (`compare-1440.png`, `compare-390.png`; rows: round 9 on the fast
+line, `?sharp=0` and the final build as a pair on the slow line, and the early scroll): on the fast
+line round 9 shows the still cover at 2, 5 and 8 s and the live map at 11 and 14; on the slow line
+both builds show the cover through 11 s, the final one breathing; at 14 s the final 390 shows the
+map (lifted at 13.3 s) and the final 1440 is mid-lift (13.9 s), while the `?sharp=0` pair holds to
+17.5 and 18.9 s. Sharpness of what is seen, by second (`see/*/summary.json rows`): round 9 1440 0.13
+until 9 s then 0.98 to 1.0; the final build at 1440 on the slow line (`see/final-see-1440`, lifted
+at 13.5 s) 0.13 to 0.20 (the breath) until 13 s, 0.69 at 14, 1.0 at 15.
+
+**The early scroll** (cold 1440, the scroll N s after navigation; `lag/early-*` on the fast line,
+build before `18a29b2`; `lag/fin3-early-*` on the slow line, final build):
+
+| scroll at | line | first draw | cover gone | held after the scroll | the page's Westchester flight | worst page flight |
+|---|---|---|---|---|---|---|
+| 3.0 s | fast | 7.4 s | 11.2 s | 8.2 s | **242.8** (the walk's compile flight made 166.7 ms, not ~250: round 6's 1-in-17 miss) | 242.8 |
+| 4.5 s | fast | 5.9 s | 9.6 s | 5.1 s | 27.8 | 62.6 |
+| 6.0 s | fast | 6.1 s | 8.4 s | 2.4 s | 34.6 | 83.4 |
+| 3.0 s | slow | never inside the 21 s scroll (every section a new cut, none steady) | held through the scroll | - | - | - |
+| 4.5 s | slow | 12.6 s | 12.9 s | 8.4 s | not flown (the scroll had passed it) | 271 |
+| 6.0 s | slow | 13.3 s | 13.7 s | 7.7 s | 270.9 (walk skipped by the cap) | 270.9 |
+
+The longest hold after a scroll: 8.4 s. Once in the fast runs the compile flight under the cover
+did not compile (known since round 6, not diagnosed).
+
+**4. The cover drift** (`dffdf6c`). `keyOrder(placeKeys(x, y))`: each home keyed by its place on
+the lights' 16-bit grid, recovered exactly (the payload carries no listing id: 6 bytes a home, and
+an id would grow the load; the place is the listing's own and stable across syncs; units at one
+place keep their list order). On the real homes (`-drift.mjs`, the hero plan at 1440 before and
+after a simulated sync): +4 listings, by index **91 of 445** lit homes stay (20 %), by place
+**445** (100 %); +4 -4: 102 vs 445; +40 -40: 71 (16 %) vs 442 (99.3 %). Covers re-rendered,
+`--check`: 1440 **442 of 445** same homes, places within 0.01 px, glow step 442; 390 **220 of
+233** (the phone's walk is a timed jump, as round 9). Cover vs first steady frame, breath off
+(`dissolve/default-still`): **1440 6.90 / 6.89** levels (round 9: 6.92), **390 4.06** (round 9:
+4.23). With the breath on, the diff depends on its phase: 6.91 / 7.05 and 4.06 to 4.82.
+
+**5. Lag, the final build** (`18a29b2`, the slow line: first draw 9.3 to 11.3 s; `lag/fin4-*`):
+
+| | 1440 x3 | 390 x2 |
+|---|---|---|
+| the page's Westchester flight | **55.2 / 41.5 / 41.7** | 90.3 / 97.1 |
+| worst page flight frame | **76.4 / 104.0 / 83.2** | 90.3 / 97.1 |
+| first draw / cover gone, s | 10.3 / 12.6, 11.3 / 13.8, 11.0 / 13.6 | 9.3 / 13.9, 9.3 / 14.03 |
+| the walk's compile frame (under the cover) | 299 / 285 / 271 | - |
+| boot worst / over 34 | 375 / 28, 507 / 39, 347 / 37 | 368 / 24, 347 / 18 |
+
+On the fast line earlier (the sharp-gate build): 1440 Westchester 27.8 / 27.8 / 41.6, worst 76 / 77
+/ 90, cover gone 8.2 / 7.8 / 8.8 s. The phone's Westchester flight is 90 ms as in every round (the
+60 ms bar is the laptop's). The one phone cover at 14.03 s is the cap's timer, 30 ms over.
+
+**6. Gates.** tsc clean; vitest **1874 -> 1884** (138 -> 139 files: light-plan +4, sharp-gate +6,
+warm-plan one test rewritten). Overflow 0 at 1440 / 390 / 320, five scroll positions each. The diff
+since round 9 touches only `components/home/g3d/`, the cover script and the two covers (nothing in
+`lib/`, `app/`, CSP, `/search`, `night.ts`, `light-layer.ts`, `glyph.ts`). Two lag runs of ~40 lost
+the map: once Google's script failed to load (`load: Cannot read properties of undefined (reading
+'maps')`, as round 4 saw), once the early scroll on the slow line never let it settle; both left
+the cover, as designed.
+
+**For round 11** (§8): `sharp-gate.ts tilesQuiet` is the in-page "landed frame is sharp" signal the
+brief asks for (tiles quiet 300 ms), measured 0.94 to 0.99 of settled where the tiles are resident;
+on a NEW view it must be paired with Google's steady or a floor, because a slow stream pauses.
+
+**:3102** runs the final build (the code of `18a29b2`). Down seven times this round (stop, build,
+start): 67, 89, 66, 59, 58, 74 and 61 s.
+
 ## 8. The owner's third verdict (2026-09-24, verbatim), the evidence, and round 11
 
 > "When you start on the page, it still loads with really, really bad quality, and then it
