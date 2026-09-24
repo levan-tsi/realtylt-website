@@ -59,7 +59,7 @@ import {
   SELLER_MISTAKES_POST,
   SELLING_TIMELINE_POST,
 } from "./seller-posts";
-import { SEASONAL_MAINTENANCE_POST } from "./homeowner-posts";
+import { SEASONAL_MAINTENANCE_POST, UNDER_1000_POST } from "./homeowner-posts";
 import { AUDIT_FLAGSHIP } from "./audit-scenes";
 import { CUSTOM_FLAGSHIP } from "./custom-scenes";
 import { CLONE_FLAGSHIP } from "./clone-scenes";
@@ -676,6 +676,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "high-roi-home-improvements-under-1000",
+    cluster: "owning",
+    title: "9 High-ROI Home Improvements You Can Tackle for Under $1,000",
+    seoTitle: "9 High-ROI Home Improvements Under $1,000 in New York",
+    /** Homeownership #2, reposted 2026-09-24. Slug = the CRM drip link (day 36) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2026-03-25",
+    updated: "2026-09-24",
+    excerpt:
+      "Nine small, visible updates that change how a home looks in photos and feels at a showing, with lead-safe painting and electrical safety points for older Hudson Valley houses.",
+    seoDescription:
+      "Nine high-ROI home improvements under $1,000: entry, paint, lighting, hardware, faucets, smart thermostat, grout, power washing, and lead-safe tips.",
+    cover: "/images/listings/house-14.jpg",
+    body: [],
+    placeholder: false,
+    markdown: UNDER_1000_POST,
+    aliases: ["high-roi-improvements-under-1000"],
   },
   {
     slug: "seasonal-home-maintenance-checklist-hudson-valley",
