@@ -583,3 +583,85 @@ From recent sales of comparable, fully renovated homes nearby, adjusted for size
 - Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
 
 Checked against these sources on September 24, 2026. Example figures are assumptions; payments are computed with the standard amortization formula.`;
+
+export const BEST_TOWNS_POST = `"Where is the best place to invest in the Hudson Valley?" has no single answer, because the region is not one market. The better question is which town fits your strategy. This guide to the best places to invest in real estate in the Hudson Valley matches four strategies to five markets, using public 2026 rent data and the local factors that actually move returns, including rules that surprise newcomers.
+
+## First choose a strategy
+
+- **Cash flow:** steady monthly income after every expense. Works best where purchase prices are moderate relative to rents and tenant demand is deep and not seasonal.
+- **Appreciation:** long-term growth in value, often with thin or negative cash flow early. Works best where demand is strong and housing supply is limited.
+- **Stability:** high-quality assets in established markets with high-income renters; lower yields, lower risk.
+- **Growth and revitalization:** places with visible public and private investment, where both rents and values may rise, with more uncertainty.
+
+## A public benchmark for rents
+
+HUD's fiscal 2026 Fair Market Rents give a consistent, official reference for two-bedroom rents (including utilities, set near the 40th percentile of the market):
+
+- **Dutchess and Orange counties** (Kiryas Joel-Poughkeepsie-Newburgh metro): $1,979 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999))
+- **Ulster County** (Kingston metro): $1,818 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611199999))
+- **Westchester, Putnam and Rockland:** $2,910 ([HUD USER](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611999999))
+
+Actual rents for a renovated unit near a train station can be well above these. Use them as a floor-to-middle reference, then check current comparable listings.
+
+## Cash flow: Poughkeepsie
+
+Poughkeepsie's tenant demand rests on institutions: Vassar College and Marist College, MidHudson Regional Hospital (part of the Westchester Medical Center Health Network), and a Metro-North station that makes it a lower-cost option for commuters. Purchase prices are moderate for the region relative to rents, which is what makes cash flow possible. The city was also named the Mid-Hudson winner of $10 million in the eighth round of New York's Downtown Revitalization Initiative ([NYS Homes and Community Renewal](https://hcr.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward)), which can support downtown improvements.
+
+Watch for: older housing stock with deferred maintenance, block-by-block differences, and property taxes; underwrite each building on its real numbers.
+
+## Appreciation: Beacon
+
+Beacon's draw is well known: Dia:Beacon, a walkable Main Street, Metro-North service to Grand Central and a compact supply of housing. That combination has pushed prices high relative to rents, so buyers are mostly betting on appreciation and should expect modest or negative early cash flow. Compare prices and rents on the specific street before assuming the trend will continue.
+
+## Stability: White Plains
+
+White Plains is Westchester's county seat and a commercial and legal center with federal and state courts, which supports a deep pool of professional renters. Prices and entry costs are high, and returns are more about stability and tenant quality than yield. In Westchester, the two-bedroom Fair Market Rent is $2,910, among the highest in the region.
+
+## Growth with rules to know: Kingston
+
+Kingston's Stockade District and Rondout waterfront, and its arts and restaurant scene, have drawn new residents and investment. Know the local rules before you buy: in 2022 Kingston adopted the state's Emergency Tenant Protection Act, which applies rent stabilization to buildings with six or more units built before 1974, after a city vacancy survey found a rate of 1.57% ([City of Kingston](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)). Rent stabilization is administered by New York State Homes and Community Renewal ([HCR](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act)). It does not affect one- to five-unit buildings, but it matters a great deal for larger older buildings.
+
+## High risk, high potential: Newburgh
+
+Newburgh has one of the region's great collections of historic architecture and a Hudson River waterfront, and it has seen significant nonprofit and public investment in housing and downtown revival. It also has a longer history of disinvestment than its neighbors. It suits experienced, well-capitalized investors who can manage major renovations, work with the city's building department and hold for the long term, not first-time buyers.
+
+## Your investment plan
+
+1. **Define your goals in numbers:** target monthly cash flow, minimum cash-on-cash return, budget, and how much renovation risk you will take.
+2. **Pick one primary and one backup market** that fit those goals.
+3. **Analyze at the block and building level.** The town sets the context; the block and the building decide the return. Learn the metrics in [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny) and compare property types in [multi-family vs single-family investing](/blog/multi-family-vs-single-family-investing-ny).
+4. **Acquire carefully:** local rules (rent stabilization, rental registration, short-term rental limits), inspection, a real rent roll, and your own numbers.
+
+Browse towns on our [top areas pages](/top-areas) and listings on our [home search](/search), or [talk with us](/connect) about matching a market to your goals.
+
+This article is general information, not financial advice.
+
+## Frequently asked questions
+
+### Is the Hudson Valley a good place to invest in real estate?
+
+It can be, if the market matches the strategy. Proximity to New York City, rail access and a diverse set of towns support demand, but returns vary sharply by town, block and building, and high prices and taxes make careful underwriting essential.
+
+### Is Poughkeepsie a good place to invest?
+
+For cash-flow investors it is one of the more promising Hudson Valley markets, thanks to colleges, a major hospital, rail access and moderate prices relative to rents, plus a 2025 Downtown Revitalization Initiative award. Each building still has to work on its own numbers.
+
+### Are rental properties profitable in Westchester County?
+
+They can be, but mainly as stable, lower-yield holdings. High prices and taxes mean cash flow is harder to achieve, even with a two-bedroom Fair Market Rent of $2,910 in 2026.
+
+### Does rent stabilization apply in Kingston?
+
+For buildings with six or more units built before 1974, yes, since Kingston adopted the Emergency Tenant Protection Act in 2022. Smaller buildings are not covered.
+
+### What are HUD Fair Market Rents?
+
+HUD's annual estimates of typical rents, including utilities, set near the 40th percentile for standard units in each metro area. They are a useful public benchmark but not a ceiling on what a renovated unit can rent for.
+
+## Sources
+
+- HUD USER, FY2026 Fair Market Rents: [Dutchess and Orange](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3602799999), [Ulster](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611199999), [Westchester](https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?fmrtype=Final&selection_type=county&fips=3611999999)
+- NYS Homes and Community Renewal, [Mid-Hudson Downtown Revitalization Initiative winners](https://hcr.ny.gov/news/governor-hochul-announces-mid-hudson-winners-downtown-revitalization-initiative-and-ny-forward) and [rent stabilization and the Emergency Tenant Protection Act](https://hcr.ny.gov/rent-stabilization-and-emergency-tenant-protection-act)
+- City of Kingston, [ETPA implementation fact sheet](https://kingston-ny.gov/filestorage/8399/8469/48370/ETPA_Implementation_Fact_Sheet_Kingston_New_York.pdf)
+
+Checked against these sources on September 24, 2026.`;

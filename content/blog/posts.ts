@@ -41,6 +41,7 @@ import {
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
 import {
+  BEST_TOWNS_POST,
   BRRRR_POST,
   FIRST_RENTAL_POST,
   HOUSE_HACKING_POST,
@@ -670,6 +671,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "best-places-to-invest-hudson-valley",
+    cluster: "investing",
+    title: "Which Hudson Valley Towns Offer the Best Opportunities for Real Estate Investors?",
+    seoTitle: "Best Places to Invest in Real Estate in the Hudson Valley",
+    /** Investing #6, reposted 2026-09-24. Slug = the CRM drip link (day 302) and the draft's;
+     * the drip doc's alternate redirects here. The H1 drops the draft's "A 2025 Analyst Report". */
+    date: "2026-05-06",
+    updated: "2026-09-24",
+    excerpt:
+      "Match the town to the strategy: Poughkeepsie for cash flow, Beacon for appreciation, White Plains for stability, Kingston and Newburgh for growth, with 2026 HUD rent benchmarks and local rules.",
+    seoDescription:
+      "The best places to invest in real estate in the Hudson Valley by strategy: Poughkeepsie, Beacon, White Plains, Kingston and Newburgh, with 2026 rent data.",
+    cover: "/images/counties/rockland.jpg",
+    body: [],
+    placeholder: false,
+    markdown: BEST_TOWNS_POST,
+    aliases: ["hudson-valley-towns-best-for-real-estate-investors"],
   },
   {
     slug: "brrrr-method-hudson-valley",
