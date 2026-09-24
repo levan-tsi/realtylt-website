@@ -1058,8 +1058,9 @@ from our grid); a frame projects them from the camera the element reports.
   Manhattan): median 1.9 to 2.3 px, **max 2.6 px**; the error is a constant (+0.4, +1.9) px at every
   range from 145 km to 21 km, i.e. screen-space (the marker image's own anchor), not the projection's
   geometry. One red dot of 39 was half hidden by a Google label (23 px of 68) and gave 9.3 px; not
-  counted. Not measured at 390 (the phone's shades hid the red dots; the probe hides them now but was
-  not re-run at 390).
+  counted. At 390 (40 lights, the same five stops): 37 within 2.4 px with the same constant
+  (-0.1, +1.9); three far off (18.7 and 19.2 px at the territory, 11.3 at Queens), not diagnosed (at
+  1440 the one such case was a red dot half hidden by a Google label).
 
 **3. The cover** (`c72584a`). `make-map-cover.mjs --look=night`: our relief and water in the tones
 measured on the graded live frame (land 21..39, the Sound and the harbour 24,33,58, offshore
