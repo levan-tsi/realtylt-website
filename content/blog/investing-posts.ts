@@ -368,3 +368,110 @@ It is one kind of ROI: annual pre-tax cash flow divided by the cash you invested
 - IRS, [Publication 527, residential rental property](https://www.irs.gov/publications/p527)
 
 Checked against these sources on September 24, 2026. All example figures are assumptions; results are computed with the standard amortization formula.`;
+
+export const MULTI_VS_SINGLE_POST = `Single-family rental or small multi-family? It is the first strategic choice most new investors make, and it shapes your cash flow, your workload, your risk and your exit. This guide compares multi-family vs single-family investing in New York, with a side-by-side example at 2026 rates and the Hudson Valley context that changes the answer from town to town.
+
+## The two contenders
+
+- **Single-family rental (SFR):** one home, one household, such as a three-bedroom colonial in Fishkill or a ranch in Hyde Park.
+- **Small multi-family:** one building with two to four units, such as a duplex in Poughkeepsie or a three-family in Newburgh. Fannie Mae's single-family programs cover buildings of one to four units ([Fannie Mae Selling Guide B2-3-01](https://selling-guide.fanniemae.com/sel/b2-3-01/general-property-eligibility)); five or more units is commercial lending.
+
+## Single-family rentals
+
+### Pros
+
+- **Easier entry.** Lower prices mean smaller down payments. Fannie Mae allows 15% down on a one-unit investment purchase, against 25% on a two- to four-unit investment property ([Fannie Mae Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf)).
+- **Value follows the homebuyer market.** A single-family home is valued by comparable sales, so demand from owner-occupants, schools and neighborhood appeal support its price.
+- **Simpler management:** one tenant, one lease, one set of repairs.
+- **Broad tenant demand** from households who want a yard and privacy.
+- **Easier to sell,** because owner-occupants as well as investors can buy it.
+
+### Cons
+
+- **Less cash flow** per dollar invested, because one rent carries every cost.
+- **All-or-nothing vacancy.** When the tenant leaves, income drops to zero while the mortgage, taxes and insurance continue.
+- **Slow to scale:** ten units means ten purchases.
+
+## Small multi-family
+
+### Pros
+
+- **More income per building,** from several rents.
+- **Scale:** two to four units in one purchase, one loan and one closing.
+- **Spread-out vacancy.** One empty unit in a four-family still leaves 75% of the rent coming in.
+- **Some shared costs:** one roof, one insurance policy, one tax bill.
+
+### Cons
+
+- **More cash to enter:** a higher price, 25% down for an investor, and reserves; Fannie Mae requires six months of reserves on investment properties run through Desktop Underwriter ([Fannie Mae Selling Guide B3-4.1-01](https://selling-guide.fanniemae.com/sel/b3-4.1-01/minimum-reserve-requirements)).
+- **More management:** more tenants, more calls, more leases and occasional disputes between neighbors.
+- **Fewer buyers when you sell,** mostly other investors, although owner-occupants can buy two- to four-unit homes too.
+
+## Side by side at 2026 rates
+
+Both properties below are hypothetical, with the same 25% down for comparability and an assumed 7.5% investor rate (above the 7.03% 30-year survey average Freddie Mac reported on September 24, 2026, [PMMS](https://www.freddiemac.com/pmms)). Taxes, insurance and rents are assumptions; operating costs are 15% of rent (5% vacancy, 5% repairs, 5% capital reserve).
+
+**Single-family rental**
+
+- Price $430,000; down $107,500; loan $322,500
+- Principal and interest: $2,255
+- Taxes $1,000, insurance $110: PITI $3,365
+- Rent $3,500; operating costs $525
+- **Monthly cash flow: about minus $390** (minus $4,680 a year, minus 4.4% on the down payment)
+
+**Two-family duplex**
+
+- Price $675,000; down $168,750; loan $506,250
+- Principal and interest: $3,540
+- Taxes $1,500, insurance $220: PITI $5,260
+- Rent $5,200 ($2,600 a unit); operating costs $780
+- **Monthly cash flow: about minus $840** (minus $10,077 a year, minus 6.0% on the down payment)
+
+At these prices and rates, both lose money with a standard investor down payment, mainly because of interest costs and property taxes. That is not a verdict against investing; it tells you what has to change:
+
+1. **A lower price,** through negotiation or a property that needs work.
+2. **Higher rent,** by improving units the market will pay more for.
+3. **A larger down payment,** which reduces debt service.
+4. **House hacking the duplex.** Living in one unit lets you use owner-occupant financing (FHA 3.5% down, or conventional 5% down on two to four units) and turns the rent into a large reduction in your own housing cost. See [house hacking in the Hudson Valley](/blog/house-hacking-hudson-valley-ny).
+
+To run your own numbers, use the formulas in [how to calculate ROI and cap rate](/blog/calculate-roi-cap-rate-investment-property-ny).
+
+## Which fits the Hudson Valley?
+
+Location should come first, then property type.
+
+- **Cities with multi-family stock and commuter or institutional demand,** such as Peekskill, Poughkeepsie, Newburgh and Kingston, are where small multi-family buildings are concentrated, and where house hacking and value-add strategies are most common.
+- **Single-family towns with strong schools and owner-occupant demand,** such as Wappingers Falls, Fishkill or Hyde Park, tend to suit a single-family rental held for long-term value and a stable family tenant.
+
+Our guide to [the best Hudson Valley towns for investors](/blog/best-places-to-invest-hudson-valley) looks at each, and you can compare listings on our [home search](/search).
+
+This article is general information, not financial advice.
+
+## Frequently asked questions
+
+### Is it easier to finance a single-family or a multi-family property?
+
+For one to four units, both use residential loans. A one-unit investment property needs at least 15% down under Fannie Mae's rules; a two- to four-unit investment property needs 25%. Owner-occupants can buy two to four units with 3.5% (FHA) or 5% (conventional) down. Five or more units require commercial financing.
+
+### Do multi-family homes appreciate faster?
+
+Not necessarily. Single-family values follow comparable home sales; income properties are valued largely on their net operating income, so raising rents or cutting costs can raise value even in a flat market.
+
+### Is it harder to sell a multi-family property?
+
+Usually somewhat, because most buyers are investors. Two- to four-unit buildings can also attract owner-occupants who plan to house hack.
+
+### What is the 50% rule?
+
+A rough screening guideline that operating expenses (not the mortgage) consume about half of gross rent over time. It is a quick filter, not a substitute for the actual taxes, insurance and costs of a specific property.
+
+### Can I use an FHA loan for a single-family rental?
+
+Not for a property you will not live in. FHA requires owner occupancy, but you can use it to buy a two- to four-unit home, live in one unit and rent the others.
+
+## Sources
+
+- Fannie Mae, [Selling Guide B2-3-01, general property eligibility](https://selling-guide.fanniemae.com/sel/b2-3-01/general-property-eligibility), [Eligibility Matrix](https://www.fanniemae.com/content/eligibility_information/eligibility-matrix.pdf) and [B3-4.1-01, minimum reserves](https://selling-guide.fanniemae.com/sel/b3-4.1-01/minimum-reserve-requirements)
+- Freddie Mac, [Primary Mortgage Market Survey](https://www.freddiemac.com/pmms)
+
+Checked against these sources on September 24, 2026. Example figures are assumptions, computed with the standard amortization formula.`;

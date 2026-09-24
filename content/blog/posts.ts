@@ -40,7 +40,7 @@ import {
   REAL_ESTATE_ATTORNEY_POST,
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
-import { FIRST_RENTAL_POST, HOUSE_HACKING_POST, ROI_CAP_RATE_POST } from "./investing-posts";
+import { FIRST_RENTAL_POST, HOUSE_HACKING_POST, MULTI_VS_SINGLE_POST, ROI_CAP_RATE_POST } from "./investing-posts";
 import {
   FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
@@ -664,6 +664,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "multi-family-vs-single-family-investing-ny",
+    cluster: "investing",
+    title: "The Pros and Cons of Investing in Multi-Family vs. Single-Family Homes",
+    seoTitle: "Multi-Family vs Single-Family Investing in NY: Pros and Cons",
+    /** Investing #4, reposted 2026-09-24. Slug = the CRM drip link (day 274) and the draft's;
+     * the drip doc's alternate redirects here. */
+    date: "2026-01-07",
+    updated: "2026-09-24",
+    excerpt:
+      "Cash flow, vacancy risk, financing, management and resale compared, with a side-by-side single-family and duplex example at 2026 rates and what the Hudson Valley changes.",
+    seoDescription:
+      "Multi-family vs single-family investing in NY: financing, cash flow, vacancy, management and resale, with a side-by-side example at 2026 rates and costs.",
+    cover: "/images/counties/ulster.jpg",
+    body: [],
+    placeholder: false,
+    markdown: MULTI_VS_SINGLE_POST,
+    aliases: ["pros-cons-investing-multi-family-vs-single-family"],
   },
   {
     slug: "calculate-roi-cap-rate-investment-property-ny",
