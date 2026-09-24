@@ -475,3 +475,106 @@ Generally no. Buyers look longer and talk more freely when the owner is out.
 - National Association of REALTORS, [FSBOs reach all-time low](https://www.nar.realtor/magazine/real-estate-news/fsbos-reach-all-time-low-more-sellers-rely-on-agents)
 
 Checked against these sources on September 24, 2026 (NAR figures from its 2025 Profile).`;
+
+export const FSBO_VS_AGENT_POST = `Every seller wants to know how to walk away with the most money. For many, the first idea is to sell the house themselves, For Sale By Owner (FSBO), and keep the commission. That is a reasonable starting point. The real question is whether it leaves you with more money after the sale, and in New York the answer involves more than a commission calculation. This guide sets out FSBO vs using an agent in New York, pros and cons, with the latest national data and the parts of the process that are specific to this state.
+
+## Why FSBO appeals
+
+### Control
+
+You set the price, write the listing, choose the photos, schedule every showing and make every decision.
+
+### Saving the listing side of the commission
+
+This is the main reason. Since August 17, 2024, commissions are openly negotiable and set out in written agreements, and any compensation offered to a buyer's agent is a separate decision ([National Association of REALTORS](https://www.nar.realtor/the-facts/what-the-nar-settlement-means-for-home-buyers-and-sellers)). A FSBO seller avoids paying a listing agent, though many still agree to pay something toward the buyer's agent to keep buyers with agents interested. The saving is real only if you sell for a similar price and just as smoothly, which is the assumption to test.
+
+## What the data and the process say
+
+### The price gap
+
+In the National Association of REALTORS 2025 Profile of Home Buyers and Sellers, FSBO homes sold for a median $360,000 and agent-assisted homes for a median $425,000, and FSBO sales fell to 5% of all sales, an all-time low ([NAR](https://www.nar.realtor/magazine/real-estate-news/fsbos-reach-all-time-low-more-sellers-rely-on-agents)). Be careful with that comparison: the two groups are different houses in different places, and many FSBO sales are to friends or relatives, so the gap does not prove what any one house would have fetched with an agent. But it is consistent year after year, and NAR also reports that FSBO sellers most often struggled with pricing, preparing the home and selling within their timeframe, and that 40% did not actively market their homes.
+
+### Marketing and exposure
+
+- **The MLS.** Most buyers work with agents who search the local multiple listing service (OneKey MLS across much of the Hudson Valley and New York City). A FSBO seller can buy a flat-fee MLS entry, but someone still has to answer agents, arrange showings and negotiate.
+- **Presentation.** Professional photography, floor plans and a well-written description are what get a listing clicked.
+- **Reach.** Agents market to other agents and their own buyer lists, often before a home is public.
+
+### The workload
+
+As a FSBO seller you are the pricing analyst, marketer, receptionist for every call and message, showing host, the person who checks each buyer's pre-approval or proof of funds (see [what a real pre-approval involves](/blog/mortgage-pre-approval-requirements-ny)), and the project manager coordinating attorneys, inspectors and appraisers to a closing date.
+
+### Negotiation
+
+In most FSBO deals you negotiate against the buyer's agent, a professional whose job is to get their client the best price and terms. You are also emotionally invested in the house, which makes objective negotiation over price, inspection requests and appraisal gaps harder.
+
+### Legal and safety exposure
+
+- **Disclosure.** Since March 20, 2024, sellers of most one- to four-family homes must complete New York's Property Condition Disclosure Statement before the buyer signs, and the $500 credit alternative is gone ([New York State Bar Association](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)). A FSBO seller completes it without an agent's experience of what buyers ask about. See [seller disclosures in New York](/blog/seller-disclosure-requirements-new-york).
+- **Fair housing.** Your advertising and your choice of buyer must comply with federal and New York fair housing law.
+- **Safety.** You will be letting strangers into your home without a brokerage's showing procedures. Verify identities, never show alone, and secure valuables and medications.
+
+## The New York factor: you still need an attorney
+
+In New York, sellers and buyers each use a real estate attorney as a matter of standard practice, and only a lawyer may be paid to prepare deeds and other instruments for someone else ([NY Judiciary Law 484](https://www.nysenate.gov/legislation/laws/JUD/484)). Downstate, the seller's attorney drafts the contract of sale. So "doing it yourself" still means hiring and paying a professional; our guide to [why you need a real estate attorney in New York](/blog/why-you-need-real-estate-attorney-ny) explains the role.
+
+## When FSBO makes sense
+
+The clearest case is when you already have the buyer: a relative, a friend, a neighbor or your tenant. NAR notes that selling to someone you know is one of the most common reasons owners sell by themselves. With the buyer found, the hardest parts of a sale (pricing to the market, marketing, showings) largely disappear. You will still need an attorney, a fair price supported by an appraisal if the buyer is financing, and the disclosure form.
+
+## How to decide: a strategic blueprint
+
+### 1. Run a net proceeds comparison
+
+A seller's net sheet estimates what you keep after:
+
+- your mortgage payoff;
+- any commission you agree to pay, listing side and buyer side;
+- New York's real estate transfer tax, normally paid by the seller at $2 for each $500 of the price, which is 0.4% ([NYS Department of Taxation and Finance](https://www.tax.ny.gov/bus/transfer/rptidx.htm));
+- your attorney's fee;
+- other closing costs and any concessions.
+
+Model both routes with a realistic sale price for each, not the same price for both.
+
+### 2. Audit your marketing
+
+Can you produce professional photos and copy, get onto the MLS, and answer every inquiry quickly, including evenings and weekends?
+
+### 3. Assess your risk tolerance
+
+Are you comfortable handling the disclosure form, fair housing rules, negotiations and showings on your own?
+
+## The real question is your net
+
+The goal is not to avoid a commission; it is to keep the most money with acceptable risk and effort. For most sellers marketing to the open market, the data and the process favor professional representation. To see both routes with your own numbers, request a [home valuation](/home-value) and a net sheet, see our [selling page](/selling), or [talk with us](/connect). For the pitfalls to avoid either way, read [common mistakes Hudson Valley home sellers make](/blog/common-home-seller-mistakes-hudson-valley).
+
+## Frequently asked questions
+
+### Do FSBO homes really sell for less?
+
+In NAR's 2025 Profile, the median FSBO home sold for $360,000 against $425,000 for agent-assisted homes. The groups differ in location and type of home, and many FSBO sales are to people the seller knows, so the gap is not a precise measure for any single house, but it has been consistent over many years.
+
+### What share of homes sell FSBO?
+
+About 5% in NAR's 2025 Profile, an all-time low; 91% of sellers used an agent.
+
+### Do I need a lawyer to sell my house myself in New York?
+
+In practice, yes. Sellers and buyers in New York each normally hire a real estate attorney, and the contract of sale is drafted and negotiated by the attorneys.
+
+### Do FSBO sellers still pay a buyer's agent?
+
+Many choose to offer something, because most buyers work with agents. Since August 2024 any such compensation is negotiable and must be set out clearly; it is your decision.
+
+### What are the legal risks of selling a house yourself in New York?
+
+Completing the mandatory property condition disclosure accurately, complying with fair housing law in advertising and buyer selection, and making sure the contract protects you, which is why your attorney is essential.
+
+## Sources
+
+- National Association of REALTORS, [FSBOs reach all-time low (2025 Profile)](https://www.nar.realtor/magazine/real-estate-news/fsbos-reach-all-time-low-more-sellers-rely-on-agents) and [what the settlement means for buyers and sellers](https://www.nar.realtor/the-facts/what-the-nar-settlement-means-for-home-buyers-and-sellers)
+- New York State Bar Association, [Property Condition Disclosure Act amendments](https://nysba.org/pcda-amended-500-seller-credit-deleted-and-additional-questions-added-to-pcds/)
+- New York State Senate, [Judiciary Law 484](https://www.nysenate.gov/legislation/laws/JUD/484)
+- NYS Department of Taxation and Finance, [real estate transfer tax](https://www.tax.ny.gov/bus/transfer/rptidx.htm)
+
+Checked against these sources on September 24, 2026.`;

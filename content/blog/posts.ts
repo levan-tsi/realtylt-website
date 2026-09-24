@@ -41,6 +41,7 @@ import {
   WINNING_OFFER_POST,
 } from "./real-estate-posts";
 import {
+  FSBO_VS_AGENT_POST,
   SELLER_DISCLOSURE_POST,
   SELLER_INSPECTION_PREP_POST,
   SELLER_MISTAKES_POST,
@@ -662,6 +663,25 @@ export const POSTS: BlogPost[] = ([
     cover: "/images/listings/house-16.jpg",
     body: PLACEHOLDER_BODY("the five renovations with the best resale return in New York, and the popular ones that don't pay back"),
     placeholder: true,
+  },
+  {
+    slug: "fsbo-vs-agent-new-york-guide",
+    cluster: "selling",
+    title: "For Sale By Owner (FSBO) vs. Using an Agent: The Pros and Cons in New York",
+    seoTitle: "FSBO vs Agent in New York: The Pros and Cons in 2026",
+    /** Seller Education #9, reposted 2026-09-24. Slug = the CRM drip link (day 120) and the
+     * draft's; the drip doc's alternate redirects here. */
+    date: "2026-07-15",
+    updated: "2026-09-24",
+    excerpt:
+      "What selling by owner really involves in New York: the 2025 NAR price data read honestly, the workload, the mandatory disclosure, the attorney you still need, and when FSBO fits.",
+    seoDescription:
+      "FSBO vs an agent in New York: NAR's 2025 price data, marketing, negotiation, the mandatory disclosure and attorney, and the one case where FSBO makes sense.",
+    cover: "/images/listings/house-01.jpg",
+    body: [],
+    placeholder: false,
+    markdown: FSBO_VS_AGENT_POST,
+    aliases: ["fsbo-vs-using-agent-pros-cons-ny"],
   },
   {
     slug: "common-home-seller-mistakes-hudson-valley",
