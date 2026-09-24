@@ -78,8 +78,7 @@ export function Header() {
   // picture. It scrolls away with the page (not sticky): the map is the page's first statement
   // and a bar pinned across it forever would be the loudest thing on it.
   const night = isNightRoute(pathname);
-  // Round 57.12: the MapLibre lab (/lab/ml) is the home page's twin over a fixed map, so it too.
-  const overHero = pathname === "/" || pathname === "/lab/ml";
+  const overHero = pathname === "/";
 
   const closeMobile = () => {
     setOpen(false);

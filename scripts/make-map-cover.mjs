@@ -38,8 +38,8 @@
 // slope faces the light. Outside the grid the night look reads the coastline (land, sea, and how far
 // from the shore); the dusk and day looks fade into haze there.
 //
-//   node scripts/make-map-cover.mjs --look=night --width=1600 --height=1000 --homes=... --vp=1425x900 --out=public/images/home-night-cover.webp
-//   node scripts/make-map-cover.mjs --look=night --width=780 --height=1688 --homes=... --vp=390x844 --out=public/images/home-night-cover-tall.webp
+//   node scripts/make-map-cover.mjs --look=night --width=1600 --height=1000 --homes=... --vp=1425x900 --out=public/images/home-g3d-cover.webp
+//   node scripts/make-map-cover.mjs --look=night --width=780 --height=1688 --homes=... --vp=390x844 --out=public/images/home-g3d-cover-tall.webp
 //   node scripts/make-map-cover.mjs --look=dusk|day --width=1600 --height=1000 [--lights=night.webp] --out=public/images/...
 //
 // The TypeScript is read through jiti (as make-night-poster.mjs).

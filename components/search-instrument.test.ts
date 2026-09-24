@@ -52,10 +52,7 @@ describe("the search instrument", () => {
     // they landed on. It is the same instrument now, and it is pinned like the other two.
     // Round 57: the round-56 real-map lab's copy of the home hero is gone; the real map is the home
     // page's own ground now (app/page.tsx, lib/home-map.ts), one hero for both grounds.
-    // Round 57.12: the MapLibre lab (/lab/ml, RLT_LAB=1 only) carries the home hero word for word,
-    // so its instrument is pinned with the home page's.
     expect(files.sort()).toEqual([
-      "app/lab/ml/page.tsx",
       "app/page.tsx",
       "components/leads/HomeValueForm.tsx",
       "components/search/SearchClient.tsx",

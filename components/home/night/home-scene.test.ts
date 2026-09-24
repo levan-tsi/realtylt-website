@@ -233,12 +233,16 @@ describe("the footer over the scene", () => {
     expect(shell).toContain("style={style}");
   });
 
-  it("credits the MapLibre lab's own sources on the lab only (round 57.12)", () => {
+  it("credits the MapLibre map's own sources on the home page when it is the ground (round 57.13)", () => {
     const credit = fs.readFileSync(path.join(ROOT, "components/site/SceneCredit.tsx"), "utf8");
-    expect(credit).toContain('if (pathname === "/lab/ml")');
+    expect(credit).toContain('if (ground === "ml")');
     expect(credit).toContain("© OpenStreetMap contributors");
-    expect(credit).toContain("© OpenMapTiles");
+    expect(credit).toContain("© OpenMapTiles, OpenFreeMap");
     expect(credit).toContain("USGS 3DEP, SRTM and GMTED2010; NOAA ETOPO1");
+    // The lab is gone (one source of truth): no route but the home page carries a credit.
+    expect(credit).not.toContain("/lab/ml");
+    const attributions = fs.readFileSync(path.join(ROOT, "public/images/ATTRIBUTIONS.md"), "utf8");
+    expect(attributions).toContain("scripts/make-ml-cover.mjs");
   });
 
   it("carries the terrain credit on the home page only, in the words the sources ask for", () => {

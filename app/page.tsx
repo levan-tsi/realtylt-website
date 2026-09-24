@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { preload } from "react-dom";
+import { preconnect, preload, preloadModule } from "react-dom";
 import Link from "next/link";
 import { Button, PRESS } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -14,7 +14,10 @@ import { NightGround } from "@/components/home/night/NightGround";
 import { AreaChapter } from "@/components/home/night/AreaChapter";
 import { G3dGround } from "@/components/home/g3d/G3dGround";
 import { G3dAreaChapter } from "@/components/home/g3d/G3dAreaChapter";
-import { COVERS, homeCover, homeMap } from "@/lib/home-map";
+import { MlGround } from "@/components/home/ml/MlGround";
+import { MlAreaChapter } from "@/components/home/ml/MlAreaChapter";
+import { MAPLIBRE_URL } from "@/components/home/ml/style";
+import { COVERS, coverFor, homeCover, homeMap } from "@/lib/home-map";
 import { listingPath } from "@/lib/idx/listing-url";
 import { AREA_ROWS } from "@/components/home/night/areas";
 import { AREA_FLIGHT } from "@/components/home/night/shots";
@@ -66,33 +69,52 @@ export default async function HomePage() {
   // The hero's number. Null when there is no database or it does not answer: the sentence then
   // simply says "Homes for sale", rather than print a number nobody measured.
   const activeCount = isDbConfigured() ? await getActiveSaleCount().catch(() => null) : null;
-  // THE GROUND (round 57, lib/home-map.ts): Google's 3D map with our homes lit on it whenever the
-  // browser key is present, our own night flight when `NEXT_PUBLIC_HOME_MAP=night` or there is no
-  // key. One page, one set of sections; the few words that describe the picture follow the ground,
-  // so neither version says something untrue about what is behind it.
+  // THE GROUND (lib/home-map.ts): since round 57.13 the MapLibre night map with our homes lit on it
+  // (components/home/ml/, keyless); Google's 3D map when `NEXT_PUBLIC_HOME_MAP=g3d` and the key is
+  // present; our own night flight when `NEXT_PUBLIC_HOME_MAP=night`. One page, one set of sections;
+  // the few words that describe the picture follow the ground, so no version says something untrue
+  // about what is behind it. `mapped`: a real map with our lights on it (MapLibre's or Google's),
+  // whose words are the same; only Google's says "Map: Google.".
   const ground = homeMap({ NEXT_PUBLIC_HOME_MAP: process.env.NEXT_PUBLIC_HOME_MAP, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY });
   const g3d = ground === "g3d";
+  const mapped = ground !== "night";
   // Round 57.2: on the real map the hero's small words carry their own soft shadow, so the scrim
   // under them can be lighter and read as shade rather than a panel (G3dGround SCRIM_*).
-  const halo = g3d ? "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]" : "";
-  // On the real map our cover is the load cover for 5 to 9 s: fetched with the document, not when
-  // the CSS asks (G3dGround), the tall still for a phone and the wide one for a laptop (round 57.2,
-  // lib/home-map.ts COVERS; since round 57.6 the night map's own first frame).
-  const cover = COVERS[homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER })];
-  if (g3d) {
+  const halo = mapped ? "[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_14px_rgba(0,0,0,0.65)]" : "";
+  // On a real map our cover is the load cover: fetched with the document, not when the CSS asks,
+  // the tall still for a phone and the wide one for a laptop (round 57.2). Each map's cover is its
+  // own first frame from its own camera (lib/home-map.ts coverFor; round 57.13).
+  const cover = coverFor(ground, homeCover({ NEXT_PUBLIC_HOME_COVER: process.env.NEXT_PUBLIC_HOME_COVER }));
+  if (mapped) {
     preload(cover.tall, { as: "image", fetchPriority: "high", media: "(max-width: 1023px)" });
     preload(cover.wide, { as: "image", fetchPriority: "high", media: "(min-width: 1024px)" });
   }
+  if (ground === "ml") {
+    // The map's code and first bytes asked for with the document, not after hydration (round 57.12,
+    // measured: the import started 0.5 to 0.8 s after DOMContentLoaded without these): the library's
+    // two modules (the worker imports the same shared file from the cache), the vector tiles'
+    // TileJSON, and a connection to each tile host.
+    preloadModule(MAPLIBRE_URL, { as: "script" });
+    preloadModule(MAPLIBRE_URL.replace("maplibre-gl.mjs", "maplibre-gl-shared.mjs"), { as: "script" });
+    preload("https://tiles.openfreemap.org/planet", { as: "fetch", crossOrigin: "anonymous" });
+    preconnect("https://tiles.openfreemap.org", { crossOrigin: "anonymous" });
+    preconnect("https://s3.amazonaws.com", { crossOrigin: "anonymous" });
+  }
+  const featuredHomes = featured
+    .filter((l) => l.lat && l.lng)
+    .slice(0, 8)
+    .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l), price: l.price, beds: l.beds, baths: l.baths, address: l.address, city: l.city }));
   const Ground = ({ children }: { children: ReactNode }) =>
-    g3d ? (
+    ground === "ml" ? (
+      <MlGround poster={cover} tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }} featured={featuredHomes}>
+        {children}
+      </MlGround>
+    ) : g3d ? (
       <G3dGround
         poster={cover}
         covers={COVERS}
         tail={{ shot: "region", veil: 0.86, veilPhone: 0.93 }}
-        featured={featured
-          .filter((l) => l.lat && l.lng)
-          .slice(0, 8)
-          .map((l) => ({ id: l.id, lat: l.lat, lng: l.lng, title: `$${l.price.toLocaleString("en-US")}, ${l.address}, ${l.city}`, href: listingPath(l), price: l.price, beds: l.beds, baths: l.baths, address: l.address, city: l.city }))}
+        featured={featuredHomes}
       >
         {children}
       </G3dGround>
@@ -145,7 +167,7 @@ export default async function HomePage() {
               column covers the whole first screen whether or not it has words at that point. */}
           {/* On the real map the phone's words stop 96 px above the bottom so the two links sit
               above Google's logo corner, which nothing of ours may cover (round 56 phase 1b). */}
-          <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${g3d ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
+          <div className={`rlt-hero-pad pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-[1250px] flex-col justify-between px-4 ${mapped ? "pb-24" : "pb-10"} pt-32 lg:justify-end lg:px-8 lg:pb-24 lg:pt-40`}>
             {/* Round 57.2: the eyebrow and the headline are each their own quiet block, so the map's
                 shadow can be lighter under the large, bold headline ("soft", G3dGround SOFT_SHARE, at
                 lg) and full under the small grey eyebrow (measured with the contrast kit). */}
@@ -168,10 +190,10 @@ export default async function HomePage() {
                 {activeCount ? (
                   <>
                     <span className="font-semibold tabular-nums text-ink">{activeCount.toLocaleString("en-US")}</span> homes for sale
-                    right now, from Poughkeepsie to the five boroughs. {g3d ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
+                    right now, from Poughkeepsie to the five boroughs. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}
                   </>
                 ) : (
-                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {g3d ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
+                  <>Homes for sale right now, from Poughkeepsie to the five boroughs. {mapped ? <span data-lights-claim>Every light on the map is one of them.</span> : "The bright lights below are them."}</>
                 )}
               </p>
               {/* One instrument (components/search-instrument.test.ts pins the geometry: 16px
@@ -221,7 +243,7 @@ export default async function HomePage() {
                   listing data drawn on the land, so it carries the MLS credit the rails below
                   carry. In the text column, never over the city. */}
               <p data-quiet className={`mt-10 hidden w-fit max-w-[26rem] text-[13px] leading-snug text-stone lg:block ${halo}`}>
-                {g3d ? (
+                {mapped ? (
                   <>
                     {/* The claims follow the runtime (round 57.2, components/home/g3d/claims.ts):
                         Google and the pointing are said only while the live map with its lights
@@ -232,9 +254,11 @@ export default async function HomePage() {
                     <span data-point-claim className="invisible">
                       Point at one to see its town and price.{" "}
                     </span>
-                    <span data-map-claim className="invisible">
-                      Map: Google.
-                    </span>
+                    {g3d ? (
+                      <span data-map-claim className="invisible">
+                        Map: Google.
+                      </span>
+                    ) : null}
                   </>
                 ) : (
                   <>
@@ -344,10 +368,10 @@ export default async function HomePage() {
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-stone">
                   Six counties of the Hudson Valley and all five boroughs.{" "}
-                  {g3d ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
+                  {mapped ? <span data-lights-claim>Every light is a home for sale there right now.</span> : "Every bright light is a home for sale there right now."}
                 </p>
               </Reveal>
-              {g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
+              {ground === "ml" ? <MlAreaChapter rows={AREA_ROWS} /> : g3d ? <G3dAreaChapter rows={AREA_ROWS} /> : <AreaChapter rows={AREA_ROWS} />}
             </div>
           </div>
         </section>
